@@ -68,20 +68,14 @@
                 </xar:if>
 
                 <option value="">-------------</option>
-                <option value="MYALL"><xar:mlstring>My Tickets</xar:mlstring></option>
-
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0)">
+                    <option value="MYPERSONAL"><xar:mlstring>My Tickets</xar:mlstring></option>
+                    <option value="MYASSIGNEDALL"><xar:mlstring>My Assigned Tickets</xar:mlstring></option>
+                    <option value="UNASSIGNED"><xar:mlstring>Unassigned Tickets</xar:mlstring></option>
+                    <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
+                <xar:else />
+                    <option value="MYALL"><xar:mlstring>My Tickets</xar:mlstring></option>
                 </xar:if>
-
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="MYASSIGNEDALL"><xar:mlstring>My Assigned Tickets</xar:mlstring></option>
-                </xar:if>
-
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="UNASSIGNED"><xar:mlstring>All Unassigned Tickets</xar:mlstring></option>
-                </xar:if>
-
                 </select>
             </td>
             <xar:if condition="!empty($companies)">
@@ -98,20 +92,21 @@
             	</select>
             </td>
             </xar:if>
-
         </tr>
     </table>
     </form>
 </xar:if>
 
 <table width="100%" class="xar-border-thin xar-margin-thickends" cellspacing="1" cellpadding="2">
+<xar:comment>
     <tr class="xar-align-center">
         <th colspan="12">
             #xarSessionGetVar('ResultTitle')#
         </th>
     </tr>
+</xar:comment>
     <tr class="xar-align-center">
-        <th>
+        <th class="xar-padding-thick">
             <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'TICKET_ID', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
             <xar:mlstring>Ticket</xar:mlstring>#
             </a>

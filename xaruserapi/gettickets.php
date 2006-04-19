@@ -82,6 +82,7 @@ function helpdesk_userapi_gettickets($args)
                 'level' => isset($level) ? $level : null,
                 'limit_gids' => !empty($company) ? array($company) : null,
                 // This exception insures that the tech assigned to the ticket can see it.
+                // NOTE: At this point this is prolly not need but just want to make sure first.
                 'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
             )
         );
@@ -93,7 +94,7 @@ function helpdesk_userapi_gettickets($args)
     }
 
     // Get items Ticket Number/Date/Subject/Status/Last Update
-    $sql  = ' SELECT ' . join(', ', $fields);
+    $sql  = 'SELECT ' . join(', ', $fields);
     $sql .= ' FROM ' .join(', ', $tables);
 
     if( !empty($catid) && count(array($catid)) > 0 )
@@ -124,24 +125,29 @@ function helpdesk_userapi_gettickets($args)
     switch($selection)
     {
         case 'MYALL':
-            xarSessionSetVar('ResultTitle', xarML('All My Tickets'));
-            //$where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
-            //$bindvars[] = (int)$userid;
-            //$bindvars[] = (int)$userid;
+            //xarSessionSetVar('ResultTitle', xarML('My Tickets'));
+            break;
+
+        // Mainly for reps so they can see tickets they are involved with
+        case 'MYPERSONAL':
+            //xarSessionSetVar('ResultTitle', xarML('My Tickets'));
+            $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
+            $bindvars[] = (int)$userid;
+            $bindvars[] = (int)$userid;
             break;
 
         case 'ALL':
-            xarSessionSetVar('ResultTitle', xarML('All Tickets'));
+            //xarSessionSetVar('ResultTitle', xarML('All Tickets'));
             break;
 
         case 'MYASSIGNEDALL':
-            xarSessionSetVar('ResultTitle', xarML('All My Assigned Tickets'));
+            //xarSessionSetVar('ResultTitle', xarML('My Assigned Tickets'));
             $where[] = "xar_assignedto = ?";
-            $bindvars[] = $userid;
+            $bindvars[] = (int)$userid;
             break;
 
         case 'UNASSIGNED':
-            xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
+            //xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
             $where[] = "xar_assignedto < ?";
             $bindvars[] = 2;
             break;
@@ -222,8 +228,8 @@ function helpdesk_userapi_gettickets($args)
         Put items into result array
     */
     $tickets = array();
-    while( list($tid,        $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
-                $assignedto, $openedby,   $closedby) = $results->fields )
+    while( (list($tid,        $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
+                $assignedto, $openedby,   $closedby) = $results->fields) != null )
     {
         $tickets[$tid] = array(
             'ticket_id'     => $tid,

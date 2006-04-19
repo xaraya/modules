@@ -45,13 +45,19 @@ function helpdesk_user_view($args)
         'catid' => ''
     );
 
-    foreach( $check_session_vars as $var => $value )
+    $invalidate_startnum = false;
+    foreach( $check_session_vars as $var => $default_value )
     {
-        if( empty($$var) )
+        $old_var = xarSessionGetVar("Modules.helpdesk.view.$var");
+        if( empty($$var) && !empty($old_var) ){ $$var = $old_var; }
+        elseif( empty($$var) ){ $$var = $default_value; }
+        // If any filter has changed we need to start over
+        if( $old_var != $$var && $var != 'startnum' && $invalidate_startnum == false )
         {
-            $$var = xarSessionGetVar("Modules.helpdesk.view.$var");
+            $invalidate_startnum = true;
+            xarSessionSetVar("Modules.helpdesk.view.startnum", $startnum=1);
         }
-        if( empty($$var) ){ $$var = $value; }
+        // If a filter is -1 we no longer need to use it
         if( $$var == -1 ){ $$var = ''; }
         xarSessionSetVar("Modules.helpdesk.view.$var", $$var);
     }
@@ -81,6 +87,7 @@ function helpdesk_user_view($args)
             'keywords'     => $keywords
         )
     );
+
     /*
         Counts the number of tickets in the system
     */
@@ -118,6 +125,7 @@ function helpdesk_user_view($args)
 
     $data['selections'] = array(
         'MYALL'         => xarML('My Tickets'),
+        'MYPERSONAL'    => xarML('My Tickets'),
         'ALL'           => xarML('All Tickets'),
         'MYASSIGNEDALL' => xarML('My Assigned Tickets'),
         'UNASSIGNED'    => xarML('Unassigned Tickets')
