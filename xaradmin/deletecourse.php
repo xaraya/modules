@@ -2,7 +2,7 @@
 /**
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
 /**
  * delete a course
  *
- * @author Michel V
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $ 'courseid' the id of the course to be deleted
  * @param  $ 'confirm' confirm that this item can be deleted
  */
@@ -22,7 +22,7 @@ function courses_admin_deletecourse($args)
     extract($args);
     if (!xarVarFetch('courseid', 'id', $courseid)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $courseid = $objectid;
@@ -70,7 +70,7 @@ function courses_admin_deletecourse($args)
                                         array('courseid' => $courseid)));
 
     if (($countplanned) > 0) {
-        xarSessionSetVar('statusmsg', xarML('This course has been planned for #(1) times', $countplanned));
+        xarSessionSetVar('statusmsg', xarML('This course has been planned #(1) times', $countplanned));
         xarResponseRedirect(xarModURL('courses', 'admin', 'deletecourse', array('courseid'=>$courseid)));//, 'statusMSG'=> $statusMSG
         return ; // throw back
     }
