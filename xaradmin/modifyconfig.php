@@ -32,7 +32,6 @@ function helpdesk_admin_modifyconfig()
     // Add an authorisation ID - this adds a hidden field in the form that
     // contains an authorisation ID.  The authorisation ID is very important in
     // preventing certain attacks on the website
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['authid'] = xarSecGenAuthKey();
 
     $data['statuses'] = "xarModAPIFunc('helpdesk', 'user', 'gets',

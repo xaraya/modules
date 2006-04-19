@@ -23,6 +23,7 @@
 
     <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="itemid" value="#$tid#" />
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <input name="add_comment" type="submit" value="#xarML('Commit')#" />
     </div>
     </form>

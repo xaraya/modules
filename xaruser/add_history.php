@@ -6,6 +6,8 @@
  */
 function helpdesk_user_add_history($args)
 {
+    if( !xarSecConfirmAuthKey() ){ return false; }
+
     extract($args);
 
     xarModAPILoad('helpdesk');

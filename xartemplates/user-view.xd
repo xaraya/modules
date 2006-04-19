@@ -181,8 +181,8 @@
     <xar:foreach in="$tickets" value="$ticket">
         <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
         <tr class="#$class#">
-            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>
-            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id, 'authkey' => xarSecGenAuthKey()))#" title="View Ticket">#$ticket['subject']#</a>&nbsp;</td>
+            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id))#" title="View Ticket">#$ticket_id#</a>&nbsp;</td>
+            <td><a href="#xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id))#" title="View Ticket">#$ticket['subject']#</a>&nbsp;</td>
             <xar:if condition="$showstatusinsummary">
             <td>#$ticket['status']#</td>
             </xar:if>
