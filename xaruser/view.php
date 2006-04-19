@@ -31,7 +31,7 @@ function helpdesk_user_view($args)
     if( !xarVarFetch('startnum',     'str:1:',  $startnum,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('statusfilter', 'str:1:',  $statusfilter,null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('company',      'str:1:',  $company,     null,  XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('catid',        'str',     $catid,       null,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('catid',        'str',     $catid,       '',  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('search_fields','array', $search_fields, null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('keywords',     'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
@@ -45,21 +45,26 @@ function helpdesk_user_view($args)
         'catid' => ''
     );
 
-    $invalidate_startnum = false;
     foreach( $check_session_vars as $var => $default_value )
     {
-        $old_var = xarSessionGetVar("Modules.helpdesk.view.$var");
-        if( empty($$var) && !empty($old_var) ){ $$var = $old_var; }
-        elseif( empty($$var) ){ $$var = $default_value; }
-        // If any filter has changed we need to start over
-        if( $old_var != $$var && $var != 'startnum' && $invalidate_startnum == false )
+        // Hack to deal with category ids
+        if( $var != 'catid' )
         {
-            $invalidate_startnum = true;
-            xarSessionSetVar("Modules.helpdesk.view.startnum", $startnum=1);
+            $old_var = xarSessionGetVar("Modules.helpdesk.view.$var");
+            if( empty($$var) )
+            {
+                if( !empty($old_var) ){ $$var = $old_var; }
+                else{ $$var = $default_value; }
+            }
+            // If any filter has changed we need to start over
+            if( $old_var != $$var && $var != 'startnum' && $startnum != 1 )
+            {
+                xarSessionSetVar("Modules.helpdesk.view.startnum", $startnum=1);
+            }
+            // If a filter is -1 we no longer need to use it
+            if( $$var == -1 ){ $$var = ''; }
+            xarSessionSetVar("Modules.helpdesk.view.$var", $$var);
         }
-        // If a filter is -1 we no longer need to use it
-        if( $$var == -1 ){ $$var = ''; }
-        xarSessionSetVar("Modules.helpdesk.view.$var", $$var);
     }
 
     $data = array();
