@@ -30,8 +30,8 @@ function courses_admin_modifycourse($args)
     // Get parameters from whatever input we need.
     if (!xarVarFetch('courseid', 'id', $courseid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return; // array?
+//    if (!xarVarFetch('itemtype', 'int', $itemtype, 3, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'array', $invalid, array(), XARVAR_NOT_REQUIRED)) return; // array?
 
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
