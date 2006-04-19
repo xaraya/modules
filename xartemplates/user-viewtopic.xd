@@ -69,25 +69,28 @@
 
                 <div>
                     <xar:if condition="xarThemeIsAvailable('print')">
-                    <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
-                        <xar:mlstring>
-                            Print this topic
-                        </xar:mlstring>
-                    </a>
-                    ::
+                        <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
+                            <xar:mlstring>Print this topic</xar:mlstring>
+                        </a> |
                     </xar:if>
-                    <xar:if condition="!empty($tsubscribed)">
-                        <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
-                            <xar:mlstring>
-                                Unsubscribe from topic
-                            </xar:mlstring>
-                        </a>
-                    <xar:else/>
-                        <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
-                            <xar:mlstring>
-                                Subscribe to topic
-                            </xar:mlstring>
-                        </a>
+                    <xar:if condition="$tsubrights eq 1">
+                        <xar:if condition="$tsubscribed eq 1">
+                            <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
+                                <xar:mlstring>Unsubscribe from topic</xar:mlstring>
+                            </a>
+                        </xar:if>
+                        <xar:if condition="$tsubscribed eq 0">
+                            <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
+                                <xar:mlstring>Subscribe to topic</xar:mlstring>
+                            </a>
+                        </xar:if>
+                    <xar:else />
+                        <xar:if condition="$tsubscribed eq 1">
+                            <xar:mlstring>You are subscribed</xar:mlstring>
+                        </xar:if>
+                        <xar:if condition="$tsubscribed eq 0">
+                            <xar:mlstring>You are not subscribed</xar:mlstring>
+                        </xar:if>
                     </xar:if>
                 </div>
 

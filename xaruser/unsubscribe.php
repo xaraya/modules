@@ -20,12 +20,12 @@ function xarbb_user_unsubscribe()
     if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
 
     // All we need is who and where.
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
 
     // Do not allow specifying the uid via URL parameters !
     // FIXME: Why not? Can the administrator not be allowed to subscribe
     // or unsubscribe other users?
-    $uid = (int) xarUserGetVar('uid');
+    $uid = (int)xarUserGetVar('uid');
 
     // Get the topic data
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));

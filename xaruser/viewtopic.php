@@ -89,6 +89,7 @@ function xarbb_user_viewtopic($args)
     } else {
         $allowhtml = false;
     }
+
     if (isset($settings['allowbbcode'])) {
         $allowbbcode = $settings['allowbbcode'];
     } else {
@@ -96,7 +97,6 @@ function xarbb_user_viewtopic($args)
     }
 
     $postsperpage = $settings['postsperpage'];
-
 
     // Security Check
     if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
@@ -144,21 +144,21 @@ function xarbb_user_viewtopic($args)
 
     $data['items'] = array();
 
-// CHECKME: retrieve from session variable, module user variable or URL param
-//          depending on how customisable/cacheable we want to make this ?
-//    $postsortby = 'celko'; // unsupported - see below
+    // CHECKME: retrieve from session variable, module user variable or URL param
+    //          depending on how customisable/cacheable we want to make this ?
+    //    $postsortby = 'celko'; // unsupported - see below
     if (!empty($settings['postsortorder'])) {
         $postsortorder = $settings['postsortorder'];
     } else {
         $postsortorder = 'ASC';
     }
 
-// TODO: support threaded/nested display too - cfr. bug 1443
-//    $postrender = 'flat';
+    // TODO: support threaded/nested display too - cfr. bug 1443
+    //    $postrender = 'flat';
 
-// Note: comments get_multiple() can only return comments in Celko order or reverse Celko order
-//       at the moment. This is equivalent to sorting by cid or time here - other postsortby
-//       options would require a lot more work, so I would forget about those for now...
+    // Note: comments get_multiple() can only return comments in Celko order or reverse Celko order
+    //       at the moment. This is equivalent to sorting by cid or time here - other postsortby
+    //       options would require a lot more work, so I would forget about those for now...
     if (!empty($postsortorder) && strtoupper($postsortorder) == 'DESC') {
         $reverse = true;
     } else {
@@ -176,11 +176,6 @@ function xarbb_user_viewtopic($args)
         )
     );
 
-/*
-    $todolist = array();
-    $todolist['transform'] = array();
-*/
-
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
@@ -193,39 +188,20 @@ function xarbb_user_viewtopic($args)
             $comment['xar_title'] = xarVarPrepForDisplay($comment['xar_title']);
         }
 
-/*
-        $todolist['transform'][] = $i . 'xar_text';
-        $todolist[$i.'xar_text'] =& $comments[$i]['xar_text'];
-        $todolist['transform'][] = $i . 'xar_title';
-        $todolist[$i.'xar_title'] =& $comments[$i]['xar_title'];
-*/
         // This has to come after the html call.
         list($comments[$i]['xar_text'], $comments[$i]['xar_title']) = xarModCallHooks(
             'item', 'transform', $tid,
             array($comment['xar_text'], $comment['xar_title']),
             'xarbb', $data['fid']
         );
-            //Bug 4836 again
-            $comments[$i]['xar_title'] = str_replace("<p>", "", $comments[$i]['xar_title']);
-            $comments[$i]['xar_title'] = str_replace("</p>", "", $comments[$i]['xar_title']);
 
-// TODO: retrieve all post counts at once ?
+        // Bug 4836 again
+        $comments[$i]['xar_title'] = str_replace("<p>", "", $comments[$i]['xar_title']);
+        $comments[$i]['xar_title'] = str_replace("</p>", "", $comments[$i]['xar_title']);
+
+        // TODO: retrieve all post counts at once ?
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
-
-/*
-// TODO: retrieve all user info at once ?
-        // The user API function is called
-        $comments[$i]['userdata'] = xarModAPIFunc('roles',
-                                             'user',
-                                             'get',
-                                              array('uid' => $comment['xar_uid']));
-
-        //format reply poster's registration date
-        //$comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
-        //Add datestamp so users can format in template, existing templates are still OK
-        $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
-*/
 
         $isposter[$comment['xar_uid']] = 1;
 
@@ -236,15 +212,6 @@ function xarbb_user_viewtopic($args)
     }
 
     $data['posterlist'] = array_keys($isposter);
-
-/*
-    $todolist = xarModCallHooks('item',
-                                'transform',
-                                $tid,
-                                $todolist,
-                                'xarbb',
-                                $data['fid']);
-*/
 
     if (count($data['posterlist']) > 0) {
 /* the performance issue seems to be in comments author count, really, so this is not a solution
@@ -280,11 +247,12 @@ function xarbb_user_viewtopic($args)
     // End individual Replies
 
      //Add datestamp so users can format in template, existing templates are still OK
-    $regdatestamp=$posterdata['date_reg'];
+    $regdatestamp = $posterdata['date_reg'];
 
     //Forum Name and Links
     // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
+
     // $data['posterdate'] = $regdate;
     $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
@@ -319,6 +287,7 @@ function xarbb_user_viewtopic($args)
 
     //pass the bbcodeswitch
     $data['allowbbcode'] = $allowbbcode;
+
     //pass the htmlmod switch
     $data['allowhtml'] = $allowhtml;
 
@@ -349,19 +318,40 @@ function xarbb_user_viewtopic($args)
     $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
     // Lets check our options as well for a dual status topic
-    if (!empty($topic['toptions'])){
+    if (!empty($topic['toptions'])) {
         $topicoptions = unserialize($data['toptions']);
+
         // OK, just need to trick the topic now if the conditions are set.
         if (!empty($topicoptions['lock'])){
             $data['tstatus'] = 3;
         }
+
         // Check if we subscribed already
+        // Tell the template:
+        //  1 = subscribed
+        //  0 = not subscribed
         if (xarUserIsLoggedIn()) {
             $uid = (int)xarUserGetVar('uid');
             if (!empty($topicoptions['subscribers']) && in_array($uid, $topicoptions['subscribers'])) {
                 $data['tsubscribed'] = 1;
+            } else {
+                $data['tsubscribed'] = 0;
             }
+
+        } else {
+            // Not logged in, so cannot be subscribed.
+            $data['tsubscribed'] = 0;
         }
+    } else {
+        $data['tsubscribed'] = 0;
+    }
+
+    // User needs post permission on this topic in order to subscribe.
+    // The APIs dictate this.
+    if (xarSecurityCheck('PostxarBB', 0, 'Forum', $topic['catid'] . ':' . $topic['fid'])) {
+        $data['tsubrights'] = 1;
+    } else {
+        $data['tsubrights'] = 0;
     }
 
     return $data;
