@@ -79,13 +79,21 @@ function xarbb_user_main()
         // Count of categories
         $totalitems = count($items);
 
+        // Loop for the selected categories (all one of it!)
         for ($i = 0; $i < $totalitems; $i++) {
             // Assume category category array is zero-based index.
             $item = $items[$i];
 
             // The user API function is called
             $args['basecat'] = $item['cid'];
-            $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
+            $cats = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
+            $items[$i]['cbchild'] = array();
+            foreach($cats as $cat) {
+                if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $cat['cid'] . ':All')) {
+                    $items[$i]['cbchild'][] = $cat;
+                }
+            }
+            
             $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
 
             // Security check: remove forums the user should not see
@@ -98,15 +106,21 @@ function xarbb_user_main()
                     // This is the 'mark all forums as read' option.
                     if (isset($read)) {
                         // Reset the time last visit for the forum.
-                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $forum['fid'], 'value' => $now));
+                        xarModAPIfunc(
+                            'xarbb', 'admin', 'set_cookie',
+                            array('name' => 'f_' . $forum['fid'], 'value' => $now)
+                        );
 
                         // Also set the topic tracking flags, so there are no topics within
                         // the forum marked as unread.
 
-                        // We can simple clear all entried in the topic tracking array, since we 
+                        // We can simply clear all entries in the topic tracking array, since we 
                         // have set the last visited time on the forum itself.
                         $topic_tracking = array();
-                        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $forum['fid'], 'value' => serialize($topic_tracking)));
+                        xarModAPIfunc(
+                            'xarbb', 'admin', 'set_cookie',
+                            array('name' => 'topics_' . $forum['fid'], 'value' => serialize($topic_tracking))
+                        );
                     }
                 }
 
@@ -140,6 +154,7 @@ function xarbb_user_main()
             // Apply privileges to the child categories before accepting and displaying them.
             $args['basecat'] = $item['cid'];
             $child_cats = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
+            $items[$i]['cbchild'] = array();
             foreach($child_cats as $child_cat) {
                 if (xarSecurityCheck('ViewxarBB', 0, 'Forum', $child_cat['cid'] . ':All')) {
                     $items[$i]['cbchild'][] = $child_cat;
