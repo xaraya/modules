@@ -1,48 +1,42 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-  <tr>
-    <th align="center">#$menutitle#</th>
-  </tr>
-</table>
-<br />
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
 
 <h2><xar:mlstring>Add a Dynamic Example</xar:mlstring></h2>
+    <xar:set name="withupload">#$object->upload#</xar:set>
+    <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+    <xar:if condition="!empty($withupload)">
+        <xar:set name="enctype">'multipart/form-data'</xar:set>
+    </xar:if>
+    <xar:if condition="!empty($preview)">
+        <fieldset>
+            <legend><xar:mlstring>Preview</xar:mlstring></legend>
 
-<xar:if condition="!empty($preview)">
-  <table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-      <td align="center">
-        <xar:mlstring>Preview</xar:mlstring>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <xar:data-display object="$object" tplmodule="dyn_example" />
-      </td>
-    </tr>
-  </table>
-</xar:if>
+                <xar:data-display object="$object" tplmodule="dyn_example" />
+        </fieldset>
+    </xar:if>
 
-<xar:set name="withupload">#$object->upload#</xar:set>
-<xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
-<xar:if condition="!empty($withupload)">
-  <xar:set name="enctype">'multipart/form-data'</xar:set>
-</xar:if>
-<form method="post" action="#xarModURL('dyn_example','admin','create')#" enctype="#$enctype#">
+<form method="post" action="&xar-modurl-dyn_example-admin-create;" enctype="#$enctype#">
   <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-  <table width="100%" border="0" cellpadding="4" cellspacing="0">
-    <!-- this does most of the hard work :) -->
-    <xar:data-form object="$object" tplmodule="dyn_example" />
-    <tr><td colspan="2">
+  <fieldset>
+      <legend>
+          <xar:mlstring>Create new</xar:mlstring>
+      </legend>
+        <!-- this does most of the hard work :) -->
+        <xar:data-form object="$object" tplmodule="dyn_example" />
+
+       <div class="xar-form-input-wrapper">
         #$hooks#
-    </td></tr>
-    <tr>
-      <td colspan="2" align="center">
+        </div>
+        <div class="xar-form-input-wrapper-after">
         <input type="submit" name="preview" value="#xarML('Preview')#" />
         &nbsp;&nbsp;&nbsp;
         <input type="submit" value="#xarML('Create')#" />
-      </td>
-    </tr>
-  </table>
+        </div>
 </form>
+</div>
 

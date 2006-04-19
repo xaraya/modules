@@ -1,4 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- alternative common admin menu method -->
+
 <table border="1" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <th align="center">#$menutitle#</th>

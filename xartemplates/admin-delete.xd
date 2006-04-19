@@ -1,25 +1,33 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">#$menutitle#</th>
-    </tr>
-</table>
-<br />
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>Delete Dynamic Example Item</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-dyn_example-admin-delete;">
+    <fieldset>
+        <legend>
+            <xar:mlstring>Delete Confirmation</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="confirm">
+                <xar:mlstring>Confirm deleting this item ?</xar:mlstring>
+            </label>
 
-<h2><xar:mlstring>Delete Dynamic Example Item</xar:mlstring></h2>
+            <xar:data-display object="$object" tplmodule="dyn_example" />
+        </div>
+    </fieldset>
 
-<div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
+    <div class="xar-form-input-wrapper-after">
 
-<xar:data-display object="$object" tplmodule="dyn_example" />
-
-<div align="center">
-<form method="post" action="#xarModURL('dyn_example', 'admin', 'delete')#">
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-
-    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
-</form>
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+        <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
+    </div>
+    </form>
 </div>
 

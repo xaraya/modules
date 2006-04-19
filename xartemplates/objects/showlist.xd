@@ -10,7 +10,7 @@
 
 <p class="xar-accent">
     <xar:mlstring>
-        Template : modules/dyn_example/xartemplates/objects/showlist.xd<br/>
+        Template : <strong>modules/dyn_example/xartemplates/objects/showlist.xd</strong><br/>
         This is a generic admin list template for objects in the dyn_example module (if you want that)
     </xar:mlstring>
 </p>

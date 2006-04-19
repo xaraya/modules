@@ -1,57 +1,65 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">#$menutitle#</th>
-    </tr>
-</table>
-<br />
+<!-- common admin menu for this module - remove link to the current function -->
 
-<h2><xar:mlstring>List of Dynamic Examples</xar:mlstring></h2>
+<div class="xar-mod-head">
+  <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+
+  <h2><xar:mlstring>List of Dynamic Examples</xar:mlstring></h2>
+
+  <h3><xar:mlstring>APPROACH # 1 : the &lt;xar:data-list ...&gt; tag</xar:mlstring></h3>
+
+  <p class="xar-form-input-wrapper-before">
+      <xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
+      and present them according to its default </xar:mlstring>objects/showlist.xd<xar:mlstring> template.</xar:mlstring>
+  </p>
+
+  <xar:data-list module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />
+
+  <p class="xar-form-input-wrapper-before"><xar:mlstring>If you want to provide your own presentation here, you can specify a
+     different <code>layout="..."</code> to use in the default template, or you can specify your
+     own <code>template="..."</code> here as well.</xar:mlstring></p>
 
 
 
-<p><b><xar:mlstring>APPROACH # 1 : the &lt;xar:data-list ...&gt; tag</xar:mlstring></b></p>
+  <h3><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</xar:mlstring></h3>
 
-<p><xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
-     and present them according to its default objects/showlist.xd template.</xar:mlstring></p>
+  <p class="xar-form-input-wrapper-before">
+      <xar:mlstring>This tag will retrieve the properties and values from DynamicData and
+      make them available in the 'properties' and 'values' variables in your template.</xar:mlstring>
+  </p>
 
-<xar:data-list module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />
+   <xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
 
-<p><xar:mlstring>If you want to provide your own presentation here, you can specify a
-     different layout="..." to use in the default template, or you can specify your
-     own template="..." here as well.</xar:mlstring></p>
+  <p class="xar-form-input-wrapper-before">
+      <xar:mlstring>You can then use those variables to build your own layout.
+          The <code>&lt;xar:data-label...&gt;</code> and <code>&lt;xar:data-output...&gt;</code> tags allow
+          you to show individual labels or value outputs in the template.
+      </xar:mlstring>
+  </p>
 
-
-
-<p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</xar:mlstring></b></p>
-
-<p><xar:mlstring>This tag will retrieve the properties and values from DynamicData and
-     make them available in the 'properties' and 'values' variables in your template.</xar:mlstring></p>
-
-<xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
-
-<p><xar:mlstring>You can then use those variables to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
-
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+  <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
     <tr>
         <xar:foreach in="$properties" key="$name">
-            <th align="center"><xar:data-label property="$properties[$name]" /></th>
+            <th class="xar-align-center"><xar:data-label property="$properties[$name]" /></th>
         </xar:foreach>
-        <th align="center"><xar:mlstring>Options</xar:mlstring></th>
+        <th class="xar-align-center"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$values" key="$itemid" value="$fields">
     <tr>
         <xar:foreach in="$properties" key="$name">
             <xar:if condition="!empty($fields[$name])">
-            <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+              <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
             <xar:else />
-            <td>&nbsp;</td>
+              <td>&nbsp;</td>
             </xar:if>
         </xar:foreach>
-        <td>
-            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
-            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
-            <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
+        <td width="30%" class="xar-align-center">
+            <a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="&xar-modurl-dyn_example-user-modify;&amp;itemid=#$itemid#"><xar:mlstring>Edit</xar:mlstring></a> |
+            <a href="&xar-modurl-dyn_example-user-delete;&amp;itemid=#$itemid#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>
     </xar:foreach>
@@ -59,31 +67,37 @@
         <xar:foreach in="$properties" key="$name">
             <td>&nbsp;</td>
         </xar:foreach>
-        <td><a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a></td>
+        <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
 
 
 
-<p><b><xar:mlstring>APPROACH # 3 : getting the object list via API</xar:mlstring></b></p>
+  <h3><xar:mlstring>APPROACH # 3 : getting the object list via API</xar:mlstring></h3>
 
-<p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-list object="$mylist"&gt;,</xar:mlstring></p>
+  <p>
+      <xar:mlstring>After retrieving the object list via API, you can pass along the whole
+      object list to the template and use: </xar:mlstring> <code>&lt;xar:data-list object="$mylist"&gt;,</code>
+  </p>
 
-<xar:data-list object="$mylist" tplmodule="dyn_example" />
+  <xar:data-list object="$mylist" tplmodule="dyn_example" />
 
-<p><xar:mlstring>or pass along the properties and values and work like in APPROACH # 2 - see the user view for an example of that.</xar:mlstring></p>
+  <p><xar:mlstring>or pass along the properties and values and work like in APPROACH # 2 -
+      see the user view for an example of that.</xar:mlstring>
+  </p>
 
+  <h3><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></h3>
 
-
-<p><b><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></b></p>
-
-<p><xar:mlstring>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</xar:mlstring></p>
+  <p>
+      <xar:mlstring>Here you'll have to handle the output format of the values yourself -
+      in the module code and/or template...</xar:mlstring>
+  </p>
 
 <xar:if condition="!empty($items) and count($items) gt 0">
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
     <tr>
     <xar:foreach in="$labels" value="$label">
-        <th>#$label#</th>
+        <th class="xar-align-center">#$label#</th>
     </xar:foreach>
     </tr>
     <xar:foreach in="$items" key="$itemid" value="$fields">
@@ -91,10 +105,10 @@
         <xar:foreach in="$fields" key="$name" value="$value">
             <td>#$value#</td>
         </xar:foreach>
-        <td>
-            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
-            <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
-            <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
+        <td width="30%" class="xar-align-center">
+            <a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="&xar-modurl-dyn_example-user-modify;&amp;itemid=#$itemid#"><xar:mlstring>Edit</xar:mlstring></a> |
+            <a href="&xar-modurl-dyn_example-user-delete;&amp;itemid=#$itemid#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>
     </xar:foreach>
@@ -102,9 +116,10 @@
         <xar:foreach in="$fields" key="$name">
             <td>&nbsp;</td>
         </xar:foreach>
-        <td><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
+        <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
 <xar:else/>
     <a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a>
 </xar:if>
+</div>

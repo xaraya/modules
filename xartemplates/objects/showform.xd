@@ -1,22 +1,26 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="empty($layout) or $layout eq 'default'">
-    <tr align="left" valign="middle">
-        <td colspan="2" class="xar-accent">
-            <xar:mlstring>
-                Template : modules/dyn_example/xartemplates/objects/showform.xd<br/>
+    <p class="xar-form-input-wrapper-before">
+        <xar:mlstring>
+                Template : <strong>modules/dyn_example/xartemplates/objects/showform.xd</strong><br/>
                 This is a generic form template for objects in the dyn_example module (if you want that)
-            </xar:mlstring>
-        </td>
-    </tr>
+        </xar:mlstring>
+    </p>
     <xar:foreach in="$properties" key="$name" value="$property">
-        <tr align="left" valign="middle">
-            <td><xar:data-label property="$properties[$name]" label="id" /> </td>
-            <td><xar:data-input property="$properties[$name]" /> </td>
-        </tr>
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties[$name]" label="id" />
+            <xar:data-input property="$properties[$name]" />
+        </div>
     </xar:foreach>
 <xar:else />
-    <xar:mlstring>Specify your own layout here...</xar:mlstring>
-    <br /><br />
-    <xar:mlstring>You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype</xar:mlstring>
+    <p>
+        <xar:mlstring>Specify your own layout here...</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            You can also specify a separate template, e.g. if you want to handle
+            individual fields differently for a particular module / itemtype
+        </xar:mlstring>
+    </p>
 </xar:if>
 

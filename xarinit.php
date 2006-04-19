@@ -159,7 +159,7 @@ function dyn_example_init()
  * stop doing it the hard way *
  */
 
-    xarModSetVar('dyn_example','bold',0);
+    xarModSetVar('dyn_example','bold',false);
     xarModSetVar('dyn_example','itemsperpage',20);
 
     /**

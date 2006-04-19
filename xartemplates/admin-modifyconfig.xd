@@ -1,39 +1,38 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">#$menutitle#</th>
-    </tr>
-</table>
-<br />
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+  <h2><xar:mlstring>Modify Default Configuration</xar:mlstring></h2>
+  <p class="xar-form-input-before">
+      <xar:mlstring>This uses dynamic module settings, i.e. you can add/remove settings for 
+          your module dynamically too. But you could use the 'normal' hard-coded approach 
+          here as well...
+      </xar:mlstring>
+  </p>
 
-<h2><xar:mlstring>Modify Default Configuration</xar:mlstring></h2>
-
-<p><xar:mlstring>This uses dynamic module settings, i.e. you can add/remove settings for your module dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
-
-<form method="post" action="#xarModURL('dyn_example','admin','updateconfig')#">
-<input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
-<input type="hidden" name="modid" value="#xarModGetIDFromName('modules')#" />
-<input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
-<input type="hidden" name="itemid" value="1" />
-<input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
-
-<table border="0" cellspacing="0" cellpadding="4">
-
-<xar:data-form module="modules" itemtype="66" itemid="1" />
-
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
-</table>
-
-<br />
-<input type="submit" value="#$submitlabel#" />
+<form method="post" action="&xar-modurl-dyn_example-admin-updateconfig;">
+  <fieldset>
+    <legend><xar:mlstring>Modify Configuration</xar:mlstring></legend>
+    <xar:data-form module="modules" itemtype="66" itemid="1" />
+  </fieldset>
+    #$hooks#
+  <div class="xar-form-input-after">
+    <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
+    <input type="hidden" name="modid" value="#xarModGetIDFromName('modules')#" />
+    <input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
+    <input type="hidden" name="itemid" value="1" />
+    <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
+    <input type="submit" value="#$submitlabel#" />
+  </div>
 </form>
 
-<br />
+<p class="xar-form-input-wrapper-before">
 <em><xar:mlstring>Note : your users will only be able to override those settings that you make available as user settings</xar:mlstring></em>
-<br /><br />
-
+</p>
+<br />
 <h2><xar:mlstring>Dynamic Data Configuration</xar:mlstring></h2>
 
 <h3><xar:mlstring>Dynamic Example</xar:mlstring></h3>
@@ -55,3 +54,4 @@
 <xar:set name="extrainfo">array('module' => 'roles', 'itemtype' => $modid)</xar:set>
 <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
 
+</div>
