@@ -3,7 +3,7 @@
  * Admin function to view items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,17 +11,22 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
  * Admin view of all courses
+ *
+ * This view shows all details of all courses, including hidden ones.
+ *
  * @param ['catid'] ID of category , defaults to NULL
+ * @param string sortby Default: name
+ * @param string sortorder Defaults to DESC
+ * @return array Data for template
  */
 function courses_admin_viewcourses()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'isset',  $catid,    NULL,  XARVAR_DONT_SET))     return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name'))                     return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,   'DESC',  XARVAR_NOT_REQUIRED))return;
+    if (!xarVarFetch('startnum', 'int:1:',         $startnum,  1,      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',          $catid,     NULL,   XARVAR_DONT_SET))     return;
+    if (!xarVarFetch('sortby',   'str:1:',         $sortby,    'name', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template

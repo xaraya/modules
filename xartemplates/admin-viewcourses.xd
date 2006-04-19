@@ -26,6 +26,7 @@
                 <xar:else />
                     <th>#$numberlabel#</th>
                 </xar:if>
+                <th>Type ID</th>
                 <th>Hidden?</th>
                 <th>#$optionslabel#</th>
             </tr>
@@ -40,6 +41,7 @@
                </xar:if>
             </td>
             <td>#$item['number']#</td>
+            <td>#$item['coursetype']#</td>
             <xar:if condition="$item['hidecourse'] eq 1">
                 <td class="coursehidden">&nbsp;</td>
             <xar:else />
