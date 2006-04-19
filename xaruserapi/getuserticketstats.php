@@ -27,8 +27,9 @@ function helpdesk_userapi_getuserticketstats($args)
     $qmarks = "?" . str_repeat(",?", count($resolved_statuses)-1);
     $sql = "SELECT count(xar_id)
             FROM $helpdesktable
-            WHERE (xar_statusid IN ($qmarks) AND xar_openedby = ?)";
+            WHERE (xar_statusid IN ($qmarks) AND (xar_openedby = ? OR xar_assignedto = ?))";
     $bindvars = $resolved_statuses;
+    $bindvars[] = $userid;
     $bindvars[] = $userid;
     $results = $dbconn->Execute($sql, $bindvars);
     if ( !$results ){ return false; }
@@ -38,8 +39,8 @@ function helpdesk_userapi_getuserticketstats($args)
     // Now Get total count
     $sql = "SELECT count(xar_id)
             FROM  $helpdesktable
-            WHERE xar_openedby = ?";
-    $bindvars = array($userid);
+            WHERE xar_openedby = ? OR xar_assignedto = ?";
+    $bindvars = array($userid,$userid);
     $results = $dbconn->Execute($sql, $bindvars);
     if ( !$results ){ return false; }
     list($totalcount) = $results->fields;
