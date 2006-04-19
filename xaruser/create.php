@@ -24,7 +24,7 @@ function helpdesk_user_create($args)
     if( !xarSecConfirmAuthKey() )
     {
         xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
-        return true;
+        return false;
     }
 
     // Get some info about the mod and a ticket type id

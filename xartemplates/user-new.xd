@@ -46,10 +46,7 @@
 
   <form action="#$action#" method="POST" name="newticket" enctype="multipart/form-data">
 
-    <xar:if condition="$enforceauthkey">
-      <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-    </xar:if>
-
+    <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="userid" value="#$userid#" />
 
     <xar:if condition="!$editaccess">

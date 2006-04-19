@@ -37,8 +37,7 @@ function helpdesk_user_delete($args)
 
     if( !empty($confirm) )
     {
-        $enforceauthkey = xarModGetVar('helpdesk', 'EnforceAuthKey');
-        if ( $enforceauthkey && !xarSecConfirmAuthKey() ){ return false; }
+        if( !xarSecConfirmAuthKey() ){ return false; }
 
         $item = array();
         $item['objectid'] = $tid;

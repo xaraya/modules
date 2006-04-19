@@ -29,7 +29,6 @@ function helpdesk_admin_updateconfig()
 
     if( $itemtype == TICKET_ITEMTYPE )
     {
-        if( !xarVarFetch('enforceauthkey',       'isset', $enforceauthkey, '') ){ return false; }
         if( !xarVarFetch('rowsperpage',          'isset', $rowsperpage, '') ){ return false; }
         if( !xarVarFetch('pagecountlimit',       'isset', $pagecountlimit, '') ){ return false; }
         if( !xarVarFetch('anonymouscansubmit',   'isset', $anonymouscansubmit, '') ){ return false; }
@@ -61,7 +60,6 @@ function helpdesk_admin_updateconfig()
         // might be unset, so it is important to check them all and assign them
         // default values if required
         // These two lines may be needed when images are added to the Help Desk
-        xarModSetVar('helpdesk', 'EnforceAuthKey',          $enforceauthkey);
         xarModSetVar('helpdesk', 'Default rows per page',   $rowsperpage);
         xarModSetVar('helpdesk', 'Page Count Limit',        $pagecountlimit);
         xarModSetVar('helpdesk', 'Anonymous can Submit',    $anonymouscansubmit);

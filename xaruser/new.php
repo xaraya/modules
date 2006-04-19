@@ -96,7 +96,6 @@ function helpdesk_user_new()
     $item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
     $data['hooks'] = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
 
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['action']  = xarModURL('helpdesk', 'user', 'create');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
 

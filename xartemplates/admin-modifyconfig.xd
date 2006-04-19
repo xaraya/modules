@@ -17,11 +17,6 @@
             <a href="http://www.abrasiontechnology.com/">Abrasion Technology</a>
         </div>
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label"><xar:mlstring>Enforce Form Authorization</xar:mlstring></label>
-            <xar:set name="$checked">xarModGetVar('helpdesk', 'EnforceAuthKey')?'checked="checked"':''</xar:set>
-            <input type="checkbox" name="enforceauthkey" value="1" #$checked# />
-        </div>
-        <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Allow Users to check status</xar:mlstring></label>
             <xar:set name="$checked">xarModGetVar('helpdesk', 'User can check status')?'checked="checked"':''</xar:set>
             <input type="checkbox" name="usercancheckstatus" value="1" #$checked# />

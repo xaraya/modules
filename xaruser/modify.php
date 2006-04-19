@@ -43,8 +43,7 @@ function helpdesk_user_modify($args)
     // If we have confirmation do the update
     if( !empty($confirm) )
     {
-        $enforceauthkey = xarModGetVar('helpdesk', 'EnforceAuthKey');
-        if ( $enforceauthkey && !xarSecConfirmAuthKey() ){ return false; }
+        if ( !xarSecConfirmAuthKey() ){ return false; }
 
         if( !xarVarFetch('userid',     'str:1:',  $userid,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('name',       'str:1:',  $name,  null,  XARVAR_NOT_REQUIRED) ){ return false; }
@@ -152,7 +151,6 @@ function helpdesk_user_modify($args)
     $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
     $data['EditAccess']     = xarSecurityCheck('edithelpdesk', 0);
     $data['UserLoggedIn']   = xarUserIsLoggedIn();
-    $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
     $data['summary']        = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
