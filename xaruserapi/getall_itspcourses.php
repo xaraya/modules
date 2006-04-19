@@ -20,7 +20,7 @@
  * @param int itspid The id of the ITSP to look for
  * @param int pitemid The id of the planitem to look (OPTIONAL)
  * @since 18 feb 2006
- * @return array Empty, of items, or false on failure
+ * @return array Array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_getall_itspcourses($args)
@@ -67,19 +67,19 @@ function itsp_userapi_getall_itspcourses($args)
      */
     $icoursestable = $xartable['itsp_itsp_courses'];
     $query = "SELECT xar_icourseid,
-               xar_pitemid,
-               xar_icoursetitle,
-               xar_icourseloc,
-               xar_icoursedesc,
-               xar_icoursecredits,
-               xar_icourselevel,
-               xar_icourseresult,
-               xar_icoursedate,
-               xar_dateappr,
-               xar_datemodi,
-               xar_modiby
-              FROM $icoursestable
-              WHERE xar_itspid = $itspid";
+                   xar_pitemid,
+                   xar_icoursetitle,
+                   xar_icourseloc,
+                   xar_icoursedesc,
+                   xar_icoursecredits,
+                   xar_icourselevel,
+                   xar_icourseresult,
+                   xar_icoursedate,
+                   xar_dateappr,
+                   xar_datemodi,
+                   xar_modiby
+                  FROM $icoursestable
+                  WHERE xar_itspid = $itspid";
     if (!empty($pitemid)) {
        $query .= " AND xar_pitemid = $pitemid ";
     }
@@ -91,7 +91,7 @@ function itsp_userapi_getall_itspcourses($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icoursecredits, $icourselevel, $icourseresult,
         $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
+        if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
             $items[] = array('icourseid'      => $icourseid,
                              'pitemid'        => $pitemid,
                              'icoursetitle'   => $icoursetitle,

@@ -81,23 +81,21 @@ function itsp_userapi_getall_courselinks($args)
      * the exception so we just return
      */
     if (!$result) return;
-    /* Put items into result array.  Note that each item is checked
-     * individually to ensure that the user is allowed *at least* OVERVIEW
-     * access to it before it is added to the results array.
-     * If more severe restrictions apply, e.g. for READ access to display
-     * the details of the item, this *must* be verified by your function.
+    /* Put items into result array.
+     * TODO: The security check here fails. It does withhold all items, even
+     * when the user has read rights.
      */
     for (; !$result->EOF; $result->MoveNext()) {
         list($courselinkid, $lcourseid, $pitemid, $dateappr,
                $datemodi,$modiby) = $result->fields;
-        if (xarSecurityCheck('ViewITSP', 0, 'ITSP', "$itspid:All:All")) {
+      //  if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
             $items[] = array('courselinkid' => $courselinkid,
                              'lcourseid'    => $lcourseid,
                              'pitemid'      => $pitemid,
                              'dateappr'     => $dateappr,
                              'datemodi'     => $datemodi,
                              'modiby'       => $modiby);
-        }
+      //  }
     }
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with

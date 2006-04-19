@@ -65,7 +65,7 @@ function itsp_user_itsp($args)
     $planid = $item['planid'];
     $userid = $item['userid'];
     // Security check
-    if (!xarSecurityCheck('ReadITSP',0,'ITSP',"$itspid:$planid:$userid")) {
+    if (!xarSecurityCheck('ReadITSP',1,'ITSP',"$itspid:$planid:$userid")) {
        return $data;
     }
 
