@@ -12,7 +12,14 @@
  * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo dalle Nogare
-*/
+ */
+/**
+ * Update a topic with a new reply
+ *
+ * @param int tid topic id
+ * @param int modify
+ * @return array
+ */
 
 function xarbb_user_updatetopic()
 {
