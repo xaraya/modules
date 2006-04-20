@@ -285,10 +285,10 @@ function xarbb_user_viewtopic($args)
         $data['hooks']['changelog'] = '';
     }
 
-    //pass the bbcodeswitch
+    // Pass the bbcodeswitch
     $data['allowbbcode'] = $allowbbcode;
 
-    //pass the htmlmod switch
+    // Pass the htmlmod switch
     $data['allowhtml'] = $allowhtml;
 
     // Let's suppress the hitcount hook from showing.

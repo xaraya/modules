@@ -1,7 +1,9 @@
 <xar:comment>
   License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
+
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+
 <script type="text/javascript" >
   <!--
       // Enter name of mandatory fields
@@ -10,274 +12,250 @@
       var fieldDescription = Array("Forum Name", "Forum Description");
       //-->
 </script>
+
 <div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>
-      xarBB Administration
-    </xar:mlstring>
-  </span>
+    <span class="xar-mod-title">
+        <xar:mlstring>xarBB Administration</xar:mlstring>
+    </span>
 </div>
+
 <div class="xar-mod-body">
- <xar:template type="module" file="admin-menu" />
-  <h2><xar:mlstring>Manage Forums</xar:mlstring></h2>
-  <xar:template file="navtabs" type="module" />
-  <xar:template file="navtabs-action" type="module" />
-  <xar:if condition="!empty($warning)">
-    <p>
-      #$warning#
-    </p>
-  </xar:if>
-  <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-      <p class="xar-form-input-wrapper-after xar-error">#xarSessionGetVar('statusmsg')#</p>
-  </xar:if>
-  <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
-  <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-    <fieldset >
-      <legend>
-        <strong>
-          <xar:mlstring>
-            Forum Description
-          </xar:mlstring>
-        </strong>
-      </legend>
-      <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-      <input type="hidden" name="fid" id="fid" value="#$fid#" />
-      <div class="xar-form-input-wrapper">
-        <label for="fname" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
-          <xar:mlstring>
-            Forum Name
-          </xar:mlstring>
-        </label>
-        <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="fdesc" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
-          <xar:mlstring>
-            Forum Description
-          </xar:mlstring>
-        </label>
-        <textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="fstatus" class="xar-form-label" title="#xarML('The status of the forum that is being created.')#">
-          <xar:mlstring>
-            Forum Status
-          </xar:mlstring>
-        </label>
-        <select name="fstatus" id="fstatus" size="1">
-          <xar:if condition="$fstatus eq 0">
-            <option value="0" selected="selected">
-              <xar:mlstring>
-                Ready
-              </xar:mlstring>
-            </option>
-            <option value="1">
-              <xar:mlstring>
-                Locked
-              </xar:mlstring>
-            </option>
-            <xar:else />
-            <option value="0">
-              <xar:mlstring>
-                Ready
-              </xar:mlstring>
-            </option>
-            <option value="1" selected="selected">
-              <xar:mlstring>
-                Locked
-              </xar:mlstring>
-            </option>
-          </xar:if>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>
-        <strong>
-          <xar:mlstring>
-            Hooks Configuration
-          </xar:mlstring>
-        </strong>
-      </legend>
-      #$hooks#
-    </fieldset>
-    <xar:comment>
-      Since there is no separate configuration screen for forums, we include
-      the dynamic data configuration (if any) here...
-    </xar:comment>
-    <xar:if condition="xarModIsHooked('dynamicdata','xarbb',$fid)">
-      <fieldset class="formelements xar-norm">
-        <legend>
-          <strong>
-            <xar:mlstring>
-              Dynamic Data
-            </xar:mlstring>
-          </strong>
-        </legend>
-        <xar:set name="extrainfo">array('module' => 'xarbb', 'itemtype' => $fid)</xar:set>
-        <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
-      </fieldset>
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>Manage Forums</xar:mlstring></h2>
+    <xar:template file="navtabs" type="module" />
+    <xar:template file="navtabs-action" type="module" />
+    <xar:if condition="!empty($warning)">
+        <p>#$warning#</p>
     </xar:if>
-    <fieldset>
-      <legend>
-        <xar:mlstring>
-          Forum Configuration
-        </xar:mlstring>
-        
-      </legend>
-      <div class="xar-form-input-wrapper">
-        <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
-          <xar:mlstring>
-            Topics per forum page view
-          </xar:mlstring>
-        </label>
-        <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="topicsortby" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
-          <xar:mlstring>
-            Sort topics by
-          </xar:mlstring>
-        </label>
-        <select name="topicsortby" id="topicsortby">
-          <xar:if condition="!empty($topicsortby) and $topicsortby eq 'tid'">
-            <option value="tid" selected="selected"><xar:mlstring>Topic</xar:mlstring></option>
-            <option value="time"><xar:mlstring>Last Post</xar:mlstring></option>
-            <xar:else/>
-            <option value="tid"><xar:mlstring>Topic</xar:mlstring></option>
-            <option value="time" selected="selected"><xar:mlstring>Last Post</xar:mlstring></option>
-          </xar:if>
-        </select>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="topicsortorder" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
-          <xar:mlstring>
-            Topic sort order
-          </xar:mlstring>
-        </label>
-        <select name="topicsortorder" id="topicsortorder">
-          <xar:if condition="empty($topicsortorder) or $topicsortorder eq 'DESC'">
-            <option value="ASC"><xar:mlstring>Ascending</xar:mlstring></option>
-            <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
-            <xar:else/>
-            <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
-            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
-          </xar:if>
-        </select>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="hottopic" class="xar-form-label" title="#xarML('Threshhold for individual topics to be considered hot.')#">
-          <xar:mlstring>
-            Hot Topic
-          </xar:mlstring>
-        </label>
-        <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
-          <xar:mlstring>
-            Posts per topic page view
-          </xar:mlstring>
-        </label>
-        <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="postsortorder" class="xar-form-label" title="#xarML('The sort order for posts in each topic.')#">
-          <xar:mlstring>
-            Post sort order
-          </xar:mlstring>
-        </label>
-        <select name="postsortorder" id="postsortorder">
-          <xar:if condition="empty($postsortorder) or $postsortorder eq 'ASC'">
-            <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
-            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
-            <xar:else/>
-            <option value="ASC"><xar:mlstring>Ascending</xar:mlstring></option>
-            <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
-          </xar:if>
-        </select>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="allowhtml"  class="xar-form-label" title="#xarML('Allow HTML in this forum.')#">
-          <xar:mlstring>
-            Allow HTML
-          </xar:mlstring>
-        </label>
-        <xar:if condition="$allowhtml">
-          <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
-          <xar:else />
-          <input type="checkbox" name="allowhtml" id="allowhtml"  />
+
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p class="xar-form-input-wrapper-after xar-error">#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+    <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
+
+    <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset >
+            <legend>
+                <strong>
+                    <xar:mlstring>Forum Description</xar:mlstring>
+                </strong>
+            </legend>
+
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+
+            <div class="xar-form-input-wrapper">
+                <label for="fname" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
+                    <xar:mlstring>Forum Name</xar:mlstring>
+                </label>
+                <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="fdesc" class="xar-form-label" title="#xarML('The name of the forum that you are creating.')#">
+                    <xar:mlstring>Forum Description</xar:mlstring>
+                </label>
+                <textarea name="fdesc" rows="10" cols="50">#xarVarPrepForDisplay($fdesc)#</textarea>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="fstatus" class="xar-form-label" title="#xarML('The status of the forum that is being created.')#">
+                    <xar:mlstring>Forum Status</xar:mlstring>
+                </label>
+
+                <select name="fstatus" id="fstatus" size="1">
+                    <xar:if condition="$fstatus eq 0">
+                        <option value="0" selected="selected">
+                            <xar:mlstring>Ready</xar:mlstring>
+                        </option>
+                        <option value="1">
+                            <xar:mlstring>Locked</xar:mlstring>
+                        </option>
+                    <xar:else />
+                        <option value="0">
+                            <xar:mlstring>Ready</xar:mlstring>
+                        </option>
+                        <option value="1" selected="selected">
+                            <xar:mlstring>Locked</xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                <xar:mlstring>Hooks Configuration</xar:mlstring>
+            </legend>
+            <div>#$hooks#</div>
+        </fieldset>
+
+        <xar:comment>
+            Since there is no separate configuration screen for forums, we include
+            the dynamic data configuration (if any) here...
+        </xar:comment>
+
+        <xar:if condition="xarModIsHooked('dynamicdata','xarbb',$fid)">
+            <fieldset class="formelements xar-norm">
+                <legend>
+                    <xar:mlstring>Dynamic Data</xar:mlstring>
+                </legend>
+                <xar:set name="extrainfo">array('module' => 'xarbb', 'itemtype' => $fid)</xar:set>
+                <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
+            </fieldset>
         </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="allowbbcode"  class="xar-form-label" title="#xarML('Allow BBCode in this forum.')#">
-          <xar:mlstring>
-            Allow BBCode
-          </xar:mlstring>
-        </label>
-        <xar:if condition="xarModIsAvailable('bbcode')">
-          <xar:if condition="$allowbbcode">
-            <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
-            <xar:else />
-            <input type="checkbox" name="allowbbcode" id="allowbbcode"  />
-          </xar:if>
-          <xar:else />
-          <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
-        </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper" >
-        <label for="editstamp"  class="xar-form-label" title="#xarML('Default value for Topic Edit Stamp use.')#">
-          <xar:mlstring>
-            Use Topic Edit Stamp?
-          </xar:mlstring>
-        </label>
-        <select name="editstamp" id="editstamp">
-          <xar:if condition="$editstamp eq '0'">
-            <option value="0" selected="selected"><xar:mlstring>None</xar:mlstring></option>
-            <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
-            <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
-            <xar:elseif condition="$editstamp eq '1'" />
-            <option value="0"><xar:mlstring>None</xar:mlstring></option>
-            <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-            <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
-            <xar:elseif condition="$editstamp eq '2'"/>
-            <option value="0"><xar:mlstring>None</xar:mlstring></option>
-            <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
-            <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
-          </xar:if>
-        </select>
-      </div>
-      <xar:if condition="xarModIsAvailable('newsgroups') and xarModGetVar('xarbb','masternntpsetting')">
-        <div class="xar-form-input-wrapper">
-          <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
-            <xar:mlstring>
-              NNTP Association
-            </xar:mlstring>
-          </label>
-          <select name="nntp" id="nntp">
-            <xar:foreach in="$items" key="$name" value="$info">
-              <xar:if condition="$name eq $nntp">
-                <option value="#$name#" selected="selected">#$name#</option>
-                <xar:else/>
-                <option value="#$name#">#$name#</option>
-              </xar:if>
-            </xar:foreach>
-          </select>
-        </div>
-      </xar:if>
-    </fieldset>
-    <fieldset>
-      <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Submit')#" />
-      </div>
-    </fieldset>
-  </form>
+
+        <fieldset>
+            <legend>
+                <xar:mlstring>Forum Configuration</xar:mlstring>
+            </legend>
+
+            <div class="xar-form-input-wrapper">
+                <label for="topicsperpage" class="xar-form-label" title="#xarML('The number of topics to show per page in this forum.')#">
+                    <xar:mlstring>Topics per forum page view</xar:mlstring>
+                </label>
+                <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="topicsortby" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
+                    <xar:mlstring>Sort topics by</xar:mlstring>
+                </label>
+                <select name="topicsortby" id="topicsortby">
+                    <xar:if condition="!empty($topicsortby) and $topicsortby eq 'tid'">
+                        <option value="tid" selected="selected"><xar:mlstring>Topic</xar:mlstring></option>
+                        <option value="time"><xar:mlstring>Last Post</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="tid"><xar:mlstring>Topic</xar:mlstring></option>
+                        <option value="time" selected="selected"><xar:mlstring>Last Post</xar:mlstring></option>
+                    </xar:if>
+                </select>
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="topicsortorder" class="xar-form-label" title="#xarML('The sort field for topics in this forum.')#">
+                    <xar:mlstring>Topic sort order</xar:mlstring>
+                </label>
+
+                <select name="topicsortorder" id="topicsortorder">
+                    <xar:if condition="empty($topicsortorder) or $topicsortorder eq 'DESC'">
+                        <option value="ASC"><xar:mlstring>Ascending</xar:mlstring></option>
+                        <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
+                        <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
+                    </xar:if>
+                </select>
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="hottopic" class="xar-form-label" title="#xarML('Threshhold for individual topics to be considered hot.')#">
+                    <xar:mlstring>Hot Topic</xar:mlstring>
+                </label>
+                <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="postsperpage" class="xar-form-label" title="#xarML('The number of posts to show per page in each topic.')#">
+                    <xar:mlstring>Posts per topic page view</xar:mlstring>
+                </label>
+                <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="postsortorder" class="xar-form-label" title="#xarML('The sort order for posts in each topic.')#">
+                    <xar:mlstring>Post sort order</xar:mlstring>
+                </label>
+                <select name="postsortorder" id="postsortorder">
+                    <xar:if condition="empty($postsortorder) or $postsortorder eq 'ASC'">
+                        <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
+                        <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="ASC"><xar:mlstring>Ascending</xar:mlstring></option>
+                        <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
+                    </xar:if>
+                </select>
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="allowhtml"  class="xar-form-label" title="#xarML('Allow HTML in this forum.')#">
+                    <xar:mlstring>Allow HTML</xar:mlstring>
+                </label>
+                <xar:if condition="!empty($allowhtml)">
+                    <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowhtml" id="allowhtml"  />
+                </xar:if>
+          </div>
+
+          <div class="xar-form-input-wrapper">
+                <label for="allowbbcode"  class="xar-form-label" title="#xarML('Allow BBCode in this forum.')#">
+                    <xar:mlstring>Allow BBCode</xar:mlstring>
+                </label>
+                <xar:if condition="xarModIsAvailable('bbcode')">
+                    <xar:if condition="!empty($allowbbcode)">
+                        <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="allowbbcode" id="allowbbcode"  />
+                    </xar:if>
+                <xar:else />
+                    <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
+                </xar:if>
+          </div>
+
+          <div class="xar-form-input-wrapper" >
+                <label for="editstamp"  class="xar-form-label" title="#xarML('Default value for Topic Edit Stamp use.')#">
+                    <xar:mlstring>Use Topic Edit Stamp?</xar:mlstring>
+                </label>
+                <select name="editstamp" id="editstamp">
+                    <xar:if condition="$editstamp eq '0'">
+                        <option value="0" selected="selected"><xar:mlstring>None</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+                    <xar:elseif condition="$editstamp eq '1'" />
+                        <option value="0"><xar:mlstring>None</xar:mlstring></option>
+                        <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                        <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+                    <xar:elseif condition="$editstamp eq '2'"/>
+                        <option value="0"><xar:mlstring>None</xar:mlstring></option>
+                        <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                        <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+                    </xar:if>
+                </select>
+          </div>
+
+          <xar:if condition="xarModIsAvailable('newsgroups') and xarModGetVar('xarbb', 'masternntpsetting')">
+                <div class="xar-form-input-wrapper">
+                    <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
+                        <xar:mlstring>NNTP Association</xar:mlstring>
+                    </label>
+                    <select name="nntp" id="nntp">
+                        <xar:foreach in="$items" key="$name" value="$info">
+                            <xar:if condition="$name eq $nntp">
+                                <option value="#$name#" selected="selected">#$name#</option>
+                            <xar:else/>
+                                <option value="#$name#">#$name#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </div>
+            </xar:if>
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Submit')#" />
+            </div>
+        </fieldset>
+    </form>
 </div>
 
 <xar:comment>
-  <xar:if condition="xarModIsAvailable('nntp')">
-    <div class="xar-form-input-wrapper">
-      <label for="linknntp" class="xar-form-label" title="#xarML('Link this forum to nntp.')#">
+    <xar:if condition="xarModIsAvailable('nntp')">
+        <div class="xar-form-input-wrapper">
+            <label for="linknntp" class="xar-form-label" title="#xarML('Link this forum to nntp.')#">
         <xar:mlstring>
           Link to NNTP
         </xar:mlstring>

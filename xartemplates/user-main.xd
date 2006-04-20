@@ -14,8 +14,8 @@
     </div>
 </xar:if>
 
-<div id="xarbb-topics">
-    <xar:if condition="xarUserIsLoggedIn()">
+<xar:if condition="xarUserIsLoggedIn()">
+    <div id="xarbb-topics">
         <ul>
             <li>
                 <a href="&xar-modurl-xarbb-user-searchtopics;&amp;from=#$lastvisitdate#">
@@ -33,52 +33,62 @@
                 </a>
             </li>
         </ul>
-    </xar:if>
-    <xar:if condition="xarUserIsLoggedIn()">
+
         <ul class="xar-sub">
             <li>
-                <xar:mlstring>You last visited on</xar:mlstring>
-                #xarLocaleGetFormattedDate('medium', $lastvisitdate)# #xarLocaleGetFormattedTime('medium', $lastvisitdate)#
+                <xar:ml>
+                    <xar:mlstring>You last visited on #(1) at #(2)</xar:mlstring>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('medium', $lastvisitdate)#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedTime('medium', $lastvisitdate)#</xar:mlvar>
+                </xar:ml>
             </li>
             <li>
-                <xar:mlstring>The current time is</xar:mlstring>
-                #xarLocaleGetFormattedDate('medium', $now)# #xarLocaleGetFormattedTime('medium', $now)#
+                <xar:ml>
+                    <xar:mlstring>The current time is #(1) #(2)</xar:mlstring>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('medium', $now)#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedTime('medium', $now)#</xar:mlvar>
+                </xar:ml>
             </li>
         </ul>
-    </xar:if>
-</div>
+
+        <div style="clear: both;";></div>
+    </div>
+</xar:if>
 
 <h4>
     <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
             #$xarbbtitle#
         <xar:else />
-            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)# 
+            #xarVarPrepForDisplay(xarModGetVar('themes', 'SiteName'))#
+            #xarVarPrepForDisplay(xarModGetVar('themes', 'SiteTitleSeparator'))#
+            #xarVarPrepForDisplay(xarModGetVar('themes', 'SiteSlogan'))# 
         </xar:if>
-        #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        #xarVarPrepForDisplay(xarModGetVar('themes', 'SiteTitleSeparator'))#
         <xar:mlstring>Forum Index</xar:mlstring>
     </a>
 </h4>
 
 <div class="xarbb-tablewrapper">
     <xar:if condition="empty($items)">
-        <p><xar:mlstring>There are no forums under this category to which you have access.</xar:mlstring></p>
+        <p><xar:mlstring>There are no forums or categories under this category to which you have access.</xar:mlstring></p>
     <xar:else />
         <table>
             <tr>
-                <th>
+                <th scope="col">
                     <xar:mlstring>Forum</xar:mlstring>
                 </th>
-                <th>
+                <th scope="col">
                     <xar:mlstring>Topics</xar:mlstring>
                 </th>
-                <th>
+                <th scope="col">
                     <xar:mlstring>Posts</xar:mlstring>
                 </th>
-                <th>
+                <th scope="col">
                     <xar:mlstring>Last Post</xar:mlstring>
                 </th>
             </tr>
+
             <xar:loop name="$items">
                 <tr class="xar-accent">
                     <td class="forumgroup" colspan="5">
@@ -87,7 +97,7 @@
                                 <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' =&gt; $loop:item.cid))#">
                                     #$loop:item.catname# 
                                 </a>
-                                <xar:else />
+                            <xar:else />
                                 <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' =&gt; $loop:item.cid))#">
                                     #$loop:item.name# 
                                 </a>
@@ -95,6 +105,7 @@
                         </h4>
                     </td>
                 </tr>
+
                 <xar:foreach in="$loop:item.cbchild" value="$cats">
                     <tr class="xar-accent">
                         <td>

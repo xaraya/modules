@@ -53,6 +53,7 @@ function xarbb_user_viewforum()
     $data['xbbname'] = xarModGetVar('themes', 'SiteName');
 
     $topicsperpage = $settings['topicsperpage'];
+    $postsperpage = $settings['postsperpage'];
 
     // TODO, should be a forum setting
     $hotTopic = $settings['hottopic'];
@@ -253,7 +254,7 @@ function xarbb_user_viewforum()
         $topics[$i]['topicpager'] = xarTplGetPager(
             1, $topic['treplies'],
             xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%', 'tid' => $topic['tid'])),
-            $topicsperpage, array(), 'multipage'
+            $postsperpage, array(), 'multipage'
         );
     }
     xarbb_user_viewforum__sort_topics($topics);
@@ -287,6 +288,7 @@ function xarbb_user_viewforum()
         xarModURL('xarbb', 'user', 'viewforum', array('startnum' => '%%', 'fid' => $fid)),
         $settings['topicsperpage']
     );
+
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
 
