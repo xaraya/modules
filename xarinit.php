@@ -32,7 +32,7 @@ function courses_init()
     $fields = array(
         'xar_courseid'      => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_name'          => array('type' => 'varchar', 'size' => 100, 'null' => false),
-        'xar_number'        => array('type' => 'varchar', 'size' => 5, 'null' => false),
+        'xar_number'        => array('type' => 'varchar', 'size' => 10, 'null' => false),
         'xar_type'          => array('type' => 'varchar', 'size' => 10, 'default' => 'NULL'),
         'xar_level'         => array('type' => 'varchar', 'size' => 20, 'default' => 'NULL'),
         'xar_shortdesc'     => array('null'=>FALSE, 'type'=>'text'),
@@ -745,6 +745,14 @@ function courses_upgrade($oldversion)
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->alterColumn($coursestable, 'xar_contact X NULL');
         case '0.5.0':
+            // Enlarge number field
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            xarDBLoadTableMaintenanceAPI();
+            $coursestable = $xartable['courses'];
+            $result = $datadict->alterColumn($coursestable, 'xar_number C(10)');
+        case '0.6.0':
             break;
     }
     // Update successful

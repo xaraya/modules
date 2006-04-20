@@ -18,7 +18,7 @@
  * @param string $name the name of the course to be created
  * @param string $number the number of the course to be created
  * @param int $coursetype the number of the course to be created
- * @param  $level the number of the course to be created
+ * @param int $level the number of the course to be created
  * @param string $shortdesc the number of the course to be created
  * @param int $intendedcredits the number of the course to be created
  * @param string $freq the number of the course to be created
@@ -36,7 +36,7 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('name',        'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number',      'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursetype',  'int:1:', $coursetype, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level',       'isset', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',       'int::',  $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc',   'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'float::', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq',        'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
