@@ -118,7 +118,7 @@ function courses_user_view()
     $data['pager'] = '';
     $data['pager'] = xarTplGetPager($startnum,
                     xarModAPIFunc('courses', 'user', 'countitems', array('catid' => $catid)),
-                    xarModURL('courses', 'user', 'view', array('startnum' => '%%','sortby' => $sortby, 'catid' => $catid)),
+                    xarModURL('courses', 'user', 'view', array('startnum' => '%%','sortby' => $sortby, 'catid' => $catid,'sortorder' => $sortorder)),
                     xarModGetUserVar('courses', 'itemsperpage', $uid));
     $data['ShowShortDescchecked'] = xarModGetVar('courses', 'ShowShortDesc') ? 'checked="checked"' : '';
     // Changing the name of the page
