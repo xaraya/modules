@@ -14,6 +14,8 @@
             <xar:categories-navigation layout="trails" showchildren="1" module="courses" showcatcount="0" showempty="1" />
         </div>
         <h3> <xar:mlstring>The course listing</xar:mlstring></h3>
+        #$pager#
+        <br />
         <table>
         <thead>
             <tr>

@@ -29,8 +29,8 @@ function courses_admin_viewallplanned()
 {
     if (!xarVarFetch('startnum', 'int:1:',          $startnum,  1,            XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'isset',           $catid,     NULL,           XARVAR_DONT_SET))     return;
-    if (!xarVarFetch('sortby',   'str:1:',          $sortby,    'planningid',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:',  $sortorder,'DESC',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby',   'str:1:',          $sortby,    'startdate',   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:',  $sortorder, 'DESC',  XARVAR_NOT_REQUIRED)) return;
 
     // Add the admin menu
     $data = xarModAPIFunc('courses', 'admin', 'menu');

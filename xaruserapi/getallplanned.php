@@ -22,20 +22,28 @@
  * @param str sortorder $how to sort (default DESC)
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @todo MichelV <1> rewrite category call as categories are hooked to coursetypes now
  */
 function courses_userapi_getallplanned($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum', 'int:1:',         $startnum,  1,           XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:',         $numitems, -1,           XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',   'str:1:',         $sortby,   'planningid', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder,'DESC',       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'int:1:',         $catid,    NULL,           XARVAR_DONT_SET)) return;
 
     $items = array();
     // Security check
     if (!xarSecurityCheck('ReadCourses')) return;
 
+    if (!isset($sortby) || (isset($sortby) && !in_array($sortby,array('planningid','courseid','credits','courseyear','startdate')))) {
+        $sortby ='startdate';
+    }
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $numitems = -1;
+    }
+    if (!isset($sortorder) || (isset($sortorder) && !in_array($sortorder, array('DESC','ASC')))) {
+        $sortorder = 'DESC';
+    }
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -80,7 +88,7 @@ function courses_userapi_getallplanned($args)
 
     // TODO: how to select by cat ids (automatically) when needed ???
     // 2=planned courses
-    if (!empty($catid) && xarModIsHooked('categories','courses', 2)) {
+    if (!empty($catid) && xarModIsHooked('categories','courses')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
