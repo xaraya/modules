@@ -20,14 +20,14 @@
  * @param int startnum Starting number when there are many items to show
  * @param int catid The category id
  * @param string sortby Sortby parameter (standard on name)
- *
- * @todo MichelV Call the next date this course will be taking place
+ * @return array Information for the template
  */
 function courses_user_view()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, '1',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'id',     $catid,    NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'name')) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1,        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'id',     $catid,    NULL,     XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'number', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC', $sortorder,   'ASC', XARVAR_NOT_REQUIRED)) return;
     // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
 
@@ -46,7 +46,8 @@ function courses_user_view()
         array('startnum' => $startnum,
               'numitems' => xarModGetUserVar('courses','itemsperpage',$uid),
               'sortby' => $sortby,
-              'catid' => $catid));
+              'catid' => $catid,
+              'sortorder' => $sortorder));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Loop through each item and display it.
@@ -85,7 +86,8 @@ function courses_user_view()
                                        'view',
                                        array('startnum' => 1,
                                              'sortby' => 'name',
-                                             'catid' => $catid));
+                                             'catid' => $catid,
+                                             'sortorder' =>$sortorder));
     } else {
         $data['snamelink'] = '';
     }
@@ -95,7 +97,8 @@ function courses_user_view()
                                        'view',
                                        array('startnum' => 1,
                                              'sortby' => 'shortdesc',
-                                             'catid' => $catid));
+                                             'catid' => $catid,
+                                             'sortorder' =>$sortorder));
     } else {
         $data['sdesclink'] = '';
     }
@@ -105,7 +108,8 @@ function courses_user_view()
                                        'view',
                                        array('startnum' => 1,
                                              'sortby' => 'number',
-                                             'catid' => $catid));
+                                             'catid' => $catid,
+                                             'sortorder' =>$sortorder));
     } else {
         $data['snumberlink'] = '';
     }

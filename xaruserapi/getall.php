@@ -3,7 +3,7 @@
  * Get all courses
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -27,20 +27,27 @@
 function courses_userapi_getall($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum',   'int:1:',         $startnum,   1,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems',   'int:1:',         $numitems,   -1,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level',      'int:1:',         $level,      0,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'int:1:',         $coursetype, 0,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',      'int:1:',         $catid,      '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',     'str:1:',         $sortby,     'name',  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder',  'enum:DESC:ASC:', $sortorder,  'DESC',  XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
     $valid = array('name','shortdesc','number');
     if (!isset($sortby) || !in_array($sortby,$valid)) { // Should be orderby and then sortby ASC DESC
-        $sortby = 'name';
+        $sortby = 'number';
     }
-
+    if (!isset($level) || !is_numeric($level)) {
+        $level = 0;
+    }
+    if (!isset($coursetype) || !is_numeric($coursetype)) {
+        $coursetype = 0;
+    }
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $numitems = -1;
+    }
+    if (!isset($sortorder) || (isset($sortorder) && !in_array($sortorder, array('DESC','ASC')))) {
+        $sortorder = 'DESC';
+    }
     $items = array();
     if (!xarSecurityCheck('ViewCourses')) return;
     // Get database setup
