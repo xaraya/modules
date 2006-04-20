@@ -22,6 +22,8 @@ function xarbb_user_viewforumrss()
     // Security Check
     // - although 'getforum' already has security checks and will not return
     // forums for which the user does not have access.
+    // TODO: need to handle it a bit better than this (until the RSS theme has its own
+    // custom method of handling system errors). Just need to ensure the RSS feed is valid.
     if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
 
     // The user API function is called

@@ -51,14 +51,6 @@ function xarbb_user_main()
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle');
     $data['xarbbtitle'] = (isset($xarbbtitle) ? $xarbbtitle : '');
 
-    // Login
-    // TODO: Should the return URL be the same page that the user logged into,
-    // rather than the module main page?
-    $data['return_url'] = xarModURL('xarbb', 'user', 'main');
-
-    // TODO: move text to template
-    $data['submitlabel']= xarML('Submit');
-
     // List the categories available as well
 
     // A category that the user has selected.

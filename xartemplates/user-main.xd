@@ -1,16 +1,19 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
+
 <xar:comment>
     lets minimize use of tables for layout and use instead a css-driven template 
 </xar:comment>
 
 <xar:style scope="module" file="xarbb-layout" />
+
 <xar:if condition="isset($catid)">
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
     </div>
 </xar:if>
+
 <div id="xarbb-topics">
     <xar:if condition="xarUserIsLoggedIn()">
         <ul>
@@ -44,6 +47,7 @@
         </ul>
     </xar:if>
 </div>
+
 <h4>
     <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
@@ -55,6 +59,7 @@
         <xar:mlstring>Forum Index</xar:mlstring>
     </a>
 </h4>
+
 <div class="xarbb-tablewrapper">
     <xar:if condition="empty($items)">
         <p><xar:mlstring>There are no forums under this category to which you have access.</xar:mlstring></p>
@@ -197,6 +202,7 @@
         </table>
     </xar:if>
 </div>
+
 <div class="xarbb-noteswrapper">
     <xar:if condition="xarUserIsLoggedIn()">
         <span class="xar-sub leftnote">
@@ -209,52 +215,15 @@
         <xar:mlstring>All times are GMT</xar:mlstring>
     </span>
 </div>
-<xar:if condition="!xarUserIsLoggedIn()">
-    <xar:comment>FIXME: what is all this login stuff doing here?</xar:comment>
-    <form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-        <div class="xar-accent xarbb-noteswrapper xar-title">
-            <xar:mlstring>Log in</xar:mlstring>
-        </div>
-        <div id="xarbb-loginwrapper">
-            <span class="xar-sub">
-                <label for="uname">
-                    <xar:mlstring>Username:</xar:mlstring>
-                </label>
-                <input type="text" name="uname" id="uname" maxlength="64" size="10" />
-                <label for="pass">
-                    <xar:mlstring>Password:</xar:mlstring>
-                </label>
-                <input type="password" name="pass" id="pass" maxlength="64" size="10" />
-                <xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
-                    <label for="rememberme">
-                        <xar:mlstring>Remember me</xar:mlstring>
-                    </label>
-                    <input type="checkbox" name="rememberme" id="rememberme" value="1" />
-                </xar:if>
-                <input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
-                <input type="submit" value="#$submitlabel#" />
-            </span>
-        </div>
-    </form>
-</xar:if>
-<div class="xarbb-legendwrapper">
-    <span class="xar-sub">
-        <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
-        <xar:mlstring>New posts</xar:mlstring>
-    </span>
-    <span class="xar-sub">
-        <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post in forum')#" />
-        <xar:mlstring>No new posts</xar:mlstring>
-    </span>
-    <span class="xar-sub">
-        <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Forum locked for entry')#" />
-        <xar:mlstring>Forum Locked</xar:mlstring>
-    </span>
-    <span class="xar-sub">
-        <img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('More categories')#" />
-        <xar:mlstring>Category Folder</xar:mlstring>
-    </span>
+
+<xar:comment>
+<div id="xarbb-loginwrapper">
+    <xar:block module="roles" type="login" showlogout="1" />
 </div>
+</xar:comment>
+
+<xar:template file="overview-legend" type="module" />
+
 <xar:if condition="!empty($pager)">
     #$pager#
 </xar:if>

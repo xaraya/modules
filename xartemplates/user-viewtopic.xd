@@ -7,6 +7,12 @@
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <xar:base-include-javascript filename="confirmlink.js" module="base" position="head"/>
 
+<xar:comment>
+<div id="xarbb-loginwrapper">
+    <xar:block module="roles" type="login" showlogout="1" />
+</div>
+</xar:comment>
+
 <xar:if condition="$post ne '1'">
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
@@ -17,15 +23,11 @@
                 Approach 1 : via redirect in viewtopic FIXME: insert link to previous/next topic here with the right CSS stuff ? 
                 <span class="xar-sub">
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#">
-                        <xar:mlstring>
-                            Previous Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Previous Topic</xar:mlstring>
                     </a>
                     | 
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#">
-                        <xar:mlstring>
-                            Next Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Next Topic</xar:mlstring>
                     </a>
                 </span>
             </xar:comment>
@@ -41,14 +43,10 @@
                 </xar:set>
                 <xar:if condition="!empty($previd)">
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#">
-                        <xar:mlstring>
-                            Previous Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Previous Topic</xar:mlstring>
                     </a>
-                    <xar:else />
-                    <xar:mlstring>
-                        Previous Topic 
-                    </xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Previous Topic</xar:mlstring>
                 </xar:if>
                 | 
                 <xar:set name="nextid">
@@ -56,116 +54,104 @@
                 </xar:set>
                 <xar:if condition="!empty($nextid)">
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#">
-                        <xar:mlstring>
-                            Next Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Next Topic</xar:mlstring>
                     </a>
-                    <xar:else />
-                    <xar:mlstring>
-                        Next Topic 
-                    </xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Next Topic</xar:mlstring>
                 </xar:if>
             </div>
 
-                <div>
-                    <xar:if condition="xarThemeIsAvailable('print')">
-                        <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
-                            <xar:mlstring>Print this topic</xar:mlstring>
-                        </a> |
+            <div>
+                <xar:if condition="xarThemeIsAvailable('print')">
+                    <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
+                        <xar:mlstring>Print this topic</xar:mlstring>
+                    </a> |
+                </xar:if>
+                <xar:if condition="$tsubrights eq 1">
+                    <xar:if condition="$tsubscribed eq 1">
+                        <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
+                            <xar:mlstring>Unsubscribe from topic</xar:mlstring>
+                        </a>
                     </xar:if>
-                    <xar:if condition="$tsubrights eq 1">
-                        <xar:if condition="$tsubscribed eq 1">
-                            <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
-                                <xar:mlstring>Unsubscribe from topic</xar:mlstring>
-                            </a>
-                        </xar:if>
-                        <xar:if condition="$tsubscribed eq 0">
-                            <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
-                                <xar:mlstring>Subscribe to topic</xar:mlstring>
-                            </a>
-                        </xar:if>
-                    <xar:else />
-                        <xar:if condition="$tsubscribed eq 1">
-                            <xar:mlstring>You are subscribed</xar:mlstring>
-                        </xar:if>
-                        <xar:if condition="$tsubscribed eq 0">
-                            <xar:mlstring>You are not subscribed</xar:mlstring>
-                        </xar:if>
+                    <xar:if condition="$tsubscribed eq 0">
+                        <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
+                            <xar:mlstring>Subscribe to topic</xar:mlstring>
+                        </a>
                     </xar:if>
-                </div>
+                <xar:else />
+                    <xar:if condition="$tsubscribed eq 1">
+                        <xar:mlstring>You are subscribed</xar:mlstring>
+                    </xar:if>
+                    <xar:if condition="$tsubscribed eq 0">
+                        <xar:mlstring>You are not subscribed</xar:mlstring>
+                    </xar:if>
+                </xar:if>
+            </div>
 
         </div>
     </div>
+
     <div id="top">
-        <strong>
-            #$ttitle# 
-        </strong>
+        <strong>#$ttitle#</strong>
     </div>
+
     <xar:if condition="!empty($pager)">
         <div class="xar-sub">
-            <strong>
-                #$pager# 
-            </strong>
+            <strong>#$pager#</strong>
         </div>
     </xar:if>
+
     <form action="#xarModUrl('xarbb', 'user', 'jump')#" method="post">
         <div class="xarbb-noteswrapper">
             <strong>
-                <xar:mlstring>
-                    Forum Jump 
-                </xar:mlstring>
+                <xar:mlstring>Forum Jump</xar:mlstring>
             </strong>
             <br />
             <select name="f" onchange="this.form.submit();">
                 <optgroup label="#xarML('Options')#">
                     <option value="#$fid#" selected="selected">
-                        <xar:mlstring>
-                            Please select forum 
-                        </xar:mlstring>
+                        <xar:mlstring>Please select forum</xar:mlstring>
                     </option>
-                    <option value="#$fid#">
-                        -------------------- 
-                    </option>
+                    <option value="#$fid#">--------------------</option>
                 </optgroup>
                 <optgroup label="#xarML('Forums')#">
                     <xar:loop name="$forums">
-                        <option value="#$loop:item['fid']#">
-                            #$loop:item['fname']# 
-                        </option>
+                        <option value="#$loop:item['fid']#">#$loop:item['fname']#</option>
                     </xar:loop>
                 </optgroup>
             </select>
             <input type="submit" class="button" value="#xarML('Jump')#" />
         </div>
     </form>
+
     <div class="xarbb-topiccontrols">
         <xar:template file="topiccontrols" type="module" />
     </div>
 </xar:if>
+
 <div class="xarbb-tablewrapper">
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
         #$hooks['polls']# 
     </xar:if>
+
     <xar:comment>
         if you have other dynamic user fields that you want to include in this template, add them to the fieldlist 
     </xar:comment>
+
     <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
     <table>
         <tr>
             <th>
-                <xar:mlstring>
-                    Author 
-                </xar:mlstring>
+                <xar:mlstring>Author</xar:mlstring>
             </th>
             <th>
-                <xar:mlstring>
-                    Message 
-                </xar:mlstring>
+                <xar:mlstring>Message</xar:mlstring>
             </th>
         </tr>
         <xar:comment>
             Display the Topic Post itself - unless it is not the first pager page 
         </xar:comment>
+
         <xar:if condition="$startnum eq 1">
             <tr>
                 <td class="xar-norm author">
@@ -181,28 +167,20 @@
                             <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                             <br />
                         </xar:if>
-                        <xar:mlstring>
-                            Joined 
-                        </xar:mlstring>
+                        <xar:mlstring>Joined</xar:mlstring>
                         : #xarLocaleGetFormattedDate('medium', $posterdatestamp)# 
                         <br />
-                        <xar:mlstring>
-                            Posts 
-                        </xar:mlstring>
+                        <xar:mlstring>Posts</xar:mlstring>
                         : #$usertopics# 
                         <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
                             <br />
-                            <xar:mlstring>
-                                Location 
-                            </xar:mlstring>
+                            <xar:mlstring>Location</xar:mlstring>
                             : 
                             <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                         </xar:if>
                         <br />
                         <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $tposter))#">
-                            <xar:mlstring>
-                                Other Topics
-                            </xar:mlstring>
+                            <xar:mlstring>Other Topics</xar:mlstring>
                         </a>
                     </div>
                 </td>
@@ -210,9 +188,7 @@
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
                             <span class="xar-sub">
-                                <xar:mlstring>
-                                    Posted 
-                                </xar:mlstring>
+                                <xar:mlstring>Posted</xar:mlstring>
                                 : #xarLocaleGetFormattedDate('medium', $tftime)# #xarLocaleGetFormattedTime('medium', $tftime)# 
                             </span>
                         </div>
@@ -223,26 +199,31 @@
                                         <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
                                             <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
-                                                <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" /></a>
+                                                <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" />
+                                            </a>
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $tposter">
                                         <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#" title="#xarML('Edit')#">
-                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
+                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
+                                        </a>
                                     <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
                                             <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#" title="#xarML('Edit')#">
-                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
+                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
+                                            </a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete')#">
-                                        <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/></a>
+                                        <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
+                                    </a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $thostname))#" title="#xarML('Check IP')#">
-                                        <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/></a>
+                                        <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/>
+                                    </a>
                                 </xar:sec>
                             </xar:if>
                         </div>
@@ -251,9 +232,7 @@
                         </xar:comment>
                         <div style="float:left;">
                             <strong class="xar-sub">
-                                <xar:mlstring>
-                                    Subject 
-                                </xar:mlstring>
+                                <xar:mlstring>Subject</xar:mlstring>
                                 : #$transformedtitle# 
                             </strong>
                         </div>
@@ -277,10 +256,10 @@
                         <xar:data-getitem name="$topicprops" module="xarbb" itemtype="$fid" itemid="$tid" />
                         <xar:if condition="!empty($topicprops)">
                             <div>
-                            <xar:foreach in="$topicprops" key="$propname">
-                                <p><xar:data-label property="$topicprops[$propname]" /> :
-                                <xar:data-output property="$topicprops[$propname]" /> </p>
-                            </xar:foreach>
+                                <xar:foreach in="$topicprops" key="$propname">
+                                    <p><xar:data-label property="$topicprops[$propname]" /> :
+                                    <xar:data-output property="$topicprops[$propname]" /></p>
+                                </xar:foreach>
                             </div>
                          </xar:if>
                     </xar:if>
@@ -289,17 +268,13 @@
             <tr>
                 <td class="xar-norm author">
                     <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
-                        <xar:mlstring>
-                            Back to top 
-                        </xar:mlstring>
+                        <xar:mlstring>Back to top</xar:mlstring>
                     </a>
                     <xar:if condition="isset($changelog)">
                         <xar:sec mask="ModxarBB" catch="false">
                             <br />
                             <a href="#xarModUrl('changelog', 'admin', 'showlog', array('modid' => '300', 'itemtype' => $fid, 'itemid' => $tid))#">
-                                <xar:mlstring>
-                                    View changes 
-                                </xar:mlstring>
+                                <xar:mlstring>View changes</xar:mlstring>
                             </a>
                         </xar:sec>
                     </xar:if>
@@ -307,7 +282,7 @@
                 <td class="xar-alt">
                     <xar:if condition="xarUserIsLoggedIn()">
                         <xar:comment>
-                            jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
+                            FIXME: jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
                         </xar:comment>
                         <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
                             <img src="#xarTplGetImage('new/icon_profile.gif')#" alt="#xarML('Profile')#" />
@@ -349,18 +324,16 @@
                 </td>
             </tr>
         </xar:if>
+
         <xar:comment>
             start the post replies and add alternating row colors 
         </xar:comment>
+
         <xar:foreach in="$items" value="$item" key="$key">
             <xar:if condition="(($key+1) % 2)">
-                <xar:set name="myclass">
-                    'xar-accent' 
-                </xar:set>
-                <xar:else />
-                <xar:set name="myclass">
-                    'xar-norm' 
-                </xar:set>
+                <xar:set name="myclass">'xar-accent'</xar:set>
+            <xar:else />
+                <xar:set name="myclass">'xar-norm'</xar:set>
             </xar:if>
             <tr>
                 <td class="xar-norm author">
@@ -374,18 +347,14 @@
                             </a>
                             <xar:else />
                             <xar:sec catch="false" mask="modXarBB">
-                                <xar:mlstring>
-                                    Anonymous 
-                                </xar:mlstring>
+                                <xar:mlstring>Anonymous</xar:mlstring>
                                 (#$item['xar_author']#) 
-                                <xar:else />
-                                <xar:mlstring>
-                                    Anonymous 
-                                </xar:mlstring>
+                            <xar:else />
+                                <xar:mlstring>Anonymous</xar:mlstring>
                             </xar:sec>
                         </xar:if>
                     </strong>
-<!--  <xar:if condition="xarUserIsLoggedIn()"> -->
+
                     <span class="xar-sub">
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <br />
@@ -393,42 +362,29 @@
                                 <xar:data-output property="$properties['avatar']" value="$posterdata[$item['xar_uid']]['avatar']" />
                                 <br />
                             </xar:if>
-                            <xar:mlstring>
-                                Joined 
-                            </xar:mlstring>
+                            <xar:mlstring>Joined</xar:mlstring>
                             : #xarLocaleGetFormattedDate('medium',$item['commenterdatestamp'])# 
                             <br />
-                            <xar:mlstring>
-                                Posts 
-                            </xar:mlstring>
-                            : #$item['usertopics']# 
+                            <xar:mlstring>Posts</xar:mlstring>: #$item['usertopics']# 
                             <br />
                             <xar:if condition="isset($properties['location']) and !empty($posterdata[$item['xar_uid']]['location'])">
-                                <xar:mlstring>
-                                    Location 
-                                </xar:mlstring>
-                                : 
+                                <xar:mlstring>Location</xar:mlstring>: 
                                 <xar:data-output property="$properties['location']" value="$posterdata[$item['xar_uid']]['location']" />
                                 <br />
                             </xar:if>
                         </xar:if>
                         <br />
                         <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $item['xar_uid']))#">
-                            <xar:mlstring>
-                                Other Topics
-                            </xar:mlstring>
+                            <xar:mlstring>Other Topics</xar:mlstring>
                         </a>
                     </span>
-<!--  </xar:if> -->
                 </td>
                 <td class="#$myclass# message">
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
                             <span class="xar-sub">
-                                <xar:mlstring>
-                                    Posted 
-                                </xar:mlstring>
-                                : #xarLocaleGetFormattedDate('medium', $item['xar_datetime'])# #xarLocaleGetFormattedTime('medium', $item['xar_datetime'])# 
+                                <xar:mlstring>Posted</xar:mlstring>:
+                                #xarLocaleGetFormattedDate('medium', $item['xar_datetime'])# #xarLocaleGetFormattedTime('medium', $item['xar_datetime'])# 
                             </span>
                         </div>
                         <div class="rightnote">
@@ -436,44 +392,45 @@
                                 <xar:if condition="$tstatus ne 3">
                                     <xar:sec mask="PostxarBB" catch="false">
                                         <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
-<!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
-                                                <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" /></a>
+                                                <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" />
+                                            </a>
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $item['xar_uid']">
                                         <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
-                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
-                                        <xar:else />
+                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
+                                        </a>
+                                    <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
-                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/></a>
+                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
+                                            </a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?').' '.xarVarPrepfordisplay($item['xar_title'])#?')" title="#xarML('Delete')#">
-                                        <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/></a>
+                                        <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
+                                    </a>
                                 </xar:sec>
                                 <xar:sec mask="AdminxarBB" catch="false">
                                     <a href="#xarModUrl('xarbb', 'admin', 'checkip', array('ip' => $item['xar_hostname']))#" title="#xarML('Check IP')#">
-                                        <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/></a>
+                                        <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/>
+                                    </a>
                                 </xar:sec>
                             </xar:if>
                         </div>
                         <div style="float:left;">
                             <strong class="xar-sub">
-                                <xar:mlstring>
-                                    Subject 
-                                </xar:mlstring>
-                                : 
+                                <xar:mlstring>Subject</xar:mlstring>:
                                 <a name="#$item['xar_cid']#" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
-                                    #$item['xar_title']# 
+                                    #$item['xar_title']#
                                 </a>
                             </strong>
                         </div>
                     </div>
-                    <div style="clear:left;">
+                    <div style="clear: left;">
                         #$item['xar_text']# 
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <xar:if condition="isset($properties['signature']) and !empty($posterdata[$item['xar_uid']]['signature'])">
@@ -488,25 +445,22 @@
             <tr>
                 <td class="xar-norm author">
                     <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
-                        <xar:mlstring>
-                            Back to top 
-                        </xar:mlstring>
+                        <xar:mlstring>Back to top</xar:mlstring>
                     </a>
                     <xar:if condition="isset($changelog)">
                         <xar:sec mask="ModxarBB" catch="false">
                             <br />
                             <a href="#xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $item['xar_cid']))#">
-                                <xar:mlstring>
-                                    View changes 
-                                </xar:mlstring>
+                                <xar:mlstring>View changes</xar:mlstring>
                             </a>
                         </xar:sec>
                     </xar:if>
                 </td>
+
                 <td class="xar-alt">
                     <xar:if condition="xarUserIsLoggedIn()">
                         <xar:comment>
-                            jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
+                            FIXME: jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
                         </xar:comment>
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
@@ -552,6 +506,7 @@
         </xar:foreach>
     </table>
 </div>
+
 <xar:if condition="$post ne '1'">
     <div class="xarbb-topiccontrols">
         <xar:template file="topiccontrols" type="module" />
@@ -559,15 +514,11 @@
             Approach 1 : via redirect in viewtopic FIXME: insert link to previous/next topic here with the right CSS stuff ? 
             <span class="xar-sub">
                 <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#">
-                    <xar:mlstring>
-                        Previous Topic 
-                    </xar:mlstring>
+                    <xar:mlstring>Previous Topic</xar:mlstring>
                 </a>
                 | 
                 <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#">
-                    <xar:mlstring>
-                        Next Topic 
-                    </xar:mlstring>
+                    <xar:mlstring>Next Topic</xar:mlstring>
                 </a>
             </span>
         </xar:comment>
@@ -582,14 +533,10 @@
                 </xar:set>
                 <xar:if condition="!empty($previd)">
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#">
-                        <xar:mlstring>
-                            Previous Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Previous Topic</xar:mlstring>
                     </a>
-                    <xar:else />
-                    <xar:mlstring>
-                        Previous Topic 
-                    </xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Previous Topic</xar:mlstring>
                 </xar:if>
                 | 
                 <xar:set name="nextid">
@@ -597,22 +544,16 @@
                 </xar:set>
                 <xar:if condition="!empty($nextid)">
                     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#">
-                        <xar:mlstring>
-                            Next Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Next Topic</xar:mlstring>
                     </a>
-                    <xar:else />
-                    <xar:mlstring>
-                        Next Topic 
-                    </xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Next Topic</xar:mlstring>
                 </xar:if>
             </span>
         </xar:comment>
         <xar:if condition="!empty($pager)">
             <span class="xar-sub">
-                <strong>
-                    #$pager# 
-                </strong>
+                <strong>#$pager#</strong>
             </span>
         </xar:if>
     </div>
@@ -629,7 +570,8 @@
             </xar:if>
             <xar:sec mask="DeletexarBB" catch="false">
                 <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?').' '.xarVarPrepfordisplay($ttitle)#?')" title="#xarML('Delete topic')#">
-                    <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/></a>
+                    <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
+                </a>
             </xar:sec>
             <a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#" title="#xarML('Move topic')#"><img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" /></a>
         </div>
@@ -641,10 +583,7 @@
             <form action="#xarModUrl('xarbb', 'user', 'quickreply', array('tid' => $tid))#" method="post" id="post">
                 <p>
                     <div class="xar-sub">
-                        <xar:mlstring>
-                            Quick Reply
-                        </xar:mlstring>
-                        :
+                        <xar:mlstring>Quick Reply</xar:mlstring>:
                     </div>
                     <textarea name='text' rows='4' cols='60' wrap='virtual' id="text" tabindex="2"></textarea>
                     <input type="hidden" name="title" id="title" value="#xarVarPrepForDisplay($ttitle)#" />
@@ -658,6 +597,7 @@
         </xar:sec>
     </xar:if>
 </xar:if>
+
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
         <xar:comment>

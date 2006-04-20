@@ -1,0 +1,50 @@
+<xar:comment>
+    Display legends for posts and topics
+</xar:comment>
+
+<div>
+    <div class="xarbb-legendwrapper">
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
+            <xar:mlstring>New post</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post')#" />
+            <xar:mlstring>No new posts</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+            <xar:mlstring>Announcement</xar:mlstring>
+        </span>
+    </div>
+
+    <div class="xarbb-legendwrapper">
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+            <xar:mlstring>New announcement</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
+            <xar:mlstring>New hot topic post</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
+            <xar:mlstring>Hot topic</xar:mlstring>
+        </span>
+    </div>
+
+    <div class="xarbb-legendwrapper">
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+            <xar:mlstring>Sticky</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+            <xar:mlstring>New sticky</xar:mlstring>
+        </span>
+        <span class="xar-sub spacedout">
+            <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
+            <xar:mlstring>Locked</xar:mlstring>
+        </span>
+    </div>
+</div>

@@ -52,10 +52,6 @@ function xarbb_user_viewforum()
     $data['showcats'] = $settings['showcats'];
     $data['xbbname'] = xarModGetVar('themes', 'SiteName');
 
-    // Login
-    $data['return_url'] = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid));
-    $data['submitlabel'] = xarML('Submit');
-
     $topicsperpage = $settings['topicsperpage'];
 
     // TODO, should be a forum setting

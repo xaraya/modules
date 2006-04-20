@@ -89,9 +89,7 @@
         </xar:sec>
         <span class="xar-sub">
             <a href="#xarModUrl('xarbb', 'user', 'main')#">
-                <xar:mlstring>
-                    Forum Index 
-                </xar:mlstring>
+                <xar:mlstring>Forum Index</xar:mlstring>
             </a>
             -&gt; 
             <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
@@ -268,6 +266,7 @@
         </xar:loop>
     </table>
 </div>
+
 <div class="xarbb-noteswrapper">
     <div class="xarbb-topiccontrols">
         <xar:sec mask="PostxarBB" catch="false">
@@ -296,106 +295,15 @@
     </div>
     <div class="xar-sub rightnote">
         <xar:if condition="!empty($pager)">
-            <strong>
-                #$pager# 
-            </strong>
+            #$pager# 
         </xar:if>
     </div>
 </div>
-<div class="xarbb-legendwrapper">
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
-        <xar:mlstring>
-            New post 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post')#" />
-        <xar:mlstring>
-            No new posts 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
-        <xar:mlstring>
-            Announcement 
-        </xar:mlstring>
-    </span>
+
+<xar:template file="forum-legend" type="module" />
+
+<xar:comment>
+<div id="xarbb-loginwrapper">
+    <xar:block module="roles" type="login" showlogout="1" />
 </div>
-<div class="xarbb-legendwrapper">
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
-        <xar:mlstring>
-            New announcement 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
-        <xar:mlstring>
-            New hot topic post 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
-        <xar:mlstring>
-            Hot topic 
-        </xar:mlstring>
-    </span>
-</div>
-<div class="xarbb-legendwrapper">
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
-        <xar:mlstring>
-            Sticky 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
-        <xar:mlstring>
-            New sticky 
-        </xar:mlstring>
-    </span>
-    <span class="xar-sub spacedout">
-        <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
-        <xar:mlstring>
-            Locked 
-        </xar:mlstring>
-    </span>
-</div>
-<xar:if condition="!xarUserIsLoggedIn()">
-    <form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-        <div class="xar-accent xarbb-noteswrapper xar-title">
-            <xar:mlstring>
-                Log in 
-            </xar:mlstring>
-        </div>
-        <div id="xarbb-loginwrapper">
-            <span class="xar-sub">
-                <label for="uname">
-                    <xar:mlstring>
-                        Username 
-                    </xar:mlstring>
-                    : 
-                </label>
-                <input type="text" name="uname" id="uname" maxlength="64" size="10" />
-                <label for="pass">
-                    <xar:mlstring>
-                        Password 
-                    </xar:mlstring>
-                    : 
-                </label>
-                <input type="password" name="pass" id="pass" maxlength="64" size="10" />
-                <xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
-                    <label for="rememberme">
-                        <xar:mlstring>
-                            Remember me 
-                        </xar:mlstring>
-                    </label>
-                    <input type="checkbox" name="rememberme" id="rememberme" value="1" />
-                </xar:if>
-                <input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
-                <input type="submit" value="#$submitlabel#" />
-            </span>
-        </div>
-    </form>
-</xar:if>
+</xar:comment>

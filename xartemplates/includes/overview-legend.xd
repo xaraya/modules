@@ -1,0 +1,22 @@
+<xar:comment>
+    Show legend for forums overview (the 'main' function)
+</xar:comment>
+
+<div class="xarbb-legendwrapper">
+    <span class="xar-sub">
+        <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
+        <xar:mlstring>New posts</xar:mlstring>
+    </span>
+    <span class="xar-sub">
+        <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post in forum')#" />
+        <xar:mlstring>No new posts</xar:mlstring>
+    </span>
+    <span class="xar-sub">
+        <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Forum locked for entry')#" />
+        <xar:mlstring>Forum Locked</xar:mlstring>
+    </span>
+    <span class="xar-sub">
+        <img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('More categories')#" />
+        <xar:mlstring>Category Folder</xar:mlstring>
+    </span>
+</div>
