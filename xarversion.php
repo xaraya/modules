@@ -24,7 +24,7 @@ $modversion['official']       = 0;
 $modversion['author']         = 'Vassilis Stratigakis';
 $modversion['contact']        = 'http://www.netforgers.com/';
 $modversion['admin']          = 1;
-$modversion['user']           = 0;
+$modversion['user']           = 1;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 ?>

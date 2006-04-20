@@ -11,16 +11,17 @@
 </script>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Userpoints Ranks Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Add A New Rank</xar:mlstring></h2><br />
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>Add A New Rank</xar:mlstring></h2>
     <form method="post" action="&xar-modurl-userpoints-admin-createrank;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                <label for="name" class="xar-form-label" title="#xarML('The name of the new rank.')#">#$ranknamelabel#</label>:
+                <label for="name" class="xar-form-label" title="#xarML('The name of the new rank.')#">#$ranknamelabel#:</label>
                 <xar:if condition="isset($rankname)">
                     <input type="text" name="rankname" id="rankname" size="32" maxlength="32" value="#$rankname#" />
                 <xar:else />
@@ -31,7 +32,7 @@
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="rankminscore" class="xar-form-label" title="#xarML('The minimum score to attain this rank.')#">#$rankminscorelabel#</label>:
+                <label for="rankminscore" class="xar-form-label" title="#xarML('The minimum score to attain this rank.')#">#$rankminscorelabel#:</label>
                 <xar:if condition="isset($rankminscore)">
                     <input type="text" name="rankminscore" id="rankminscore" size="5" maxlength="5" value="#$rankminscore#" />
                     <xar:if condition="!empty($invalid['rankminscore'])">

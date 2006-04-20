@@ -1,49 +1,49 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>
-  Administration - </xar:mlstring>Userpoints</span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/userpoints/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif','userpoints')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
             <em><xar:mlstring>Userpoints is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>The userpoints module is a utility module that allows you to add a 
-                score for level of participation of your users. Users earn 
+                <li><xar:mlstring>The userpoints module is a utility module that allows you to add a
+                score for level of participation of your users. Users earn
                 points based on what type of content they submit.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>
-            From the Modules Administration configure the userpoints hook with any content module that you would like to 
-            count score for.</xar:mlstring></div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included blocks at this time.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The userpoints hook is a display hook to allow content modules to 
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+      <p><xar:mlstring>
+            From the Modules Administration configure the userpoints hook with any content module that you would like to
+            count score for.</xar:mlstring>
+      </p>
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+      <p><xar:mlstring>There are no included blocks at this time.</xar:mlstring></p>
+
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+      <p><xar:mlstring>The userpoints hook is a display hook to allow content modules to
             score points.</xar:mlstring>
-        </div>
-    </div>
+      </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Userpoints module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Userpoints Extension page at</xar:mlstring> <a title="#xarML('Userpoints Module - Xaraya Extension 782')#" href="http://www.xaraya.com/index.php/release/782.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Userpoints found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/userpoints/" title="#xarML('Related documentation on Userpoints')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Userpoints Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-04-16
+  </p>
 </div>
+

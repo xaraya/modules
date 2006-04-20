@@ -1,78 +1,65 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ratings Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Statistics</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<xar:if condition="empty($modid)">
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>View Statistics</xar:mlstring></h2>
+    <xar:if condition="empty($modid)">
+        <table class="xar-fullwidth xar-noborder"  cellpadding="2" cellspacing="1">
             <tr>
-                <th align="center" valign="center" width="20%">
-                    <xar:mlstring><b>Module<br />Name</b></xar:mlstring>
+                <th class="xar-align-center xar-valign-middle" width="20%">
+                    <xar:mlstring>Module Name</xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="20%">
-                    <xar:mlstring><b>Module<br />Items</b></xar:mlstring>
+                <th class="xar-align-center xar-valign-middle"  width="20%">
+                    <xar:mlstring>Module Items</xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="20%">
-                    <xar:mlstring><b>Total<br />Ratings</b></xar:mlstring>
+                <th class="xar-align-center xar-valign-middle"  width="20%">
+                    <xar:mlstring>Total Ratings</xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="20%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                <th class="xar-align-center xar-valign-middle"  width="20%">
+                    <xar:mlstring>Action</xar:mlstring>
                 </th>
-            </tr>
-
-            <tr>
-                <td colspan="4">
-                    &nbsp;
-                </td>
             </tr>
 
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                 <tr>
-                    <td colspan="4" align="center">
-                        <br />
+                    <td colspan="4" class="xar-align-center">
+                        <p>
                         <xar:mlstring>
                             There are currently no ratings in the database...
                         </xar:mlstring>
-                        <br />
-                        <br />
+                        </p>
                     </td>
                 </tr>
             <xar:else />
-                <tr>
-                    <td colspan="4">
-                        <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                    </td>
-                </tr>
                 <xar:foreach in="$moditems" value="$moditem">
                     <tr>
-                        <td align="center" valign="center" width="20%">
+                        <td class="xar-align-center xar-valign-middle" width="20%">
                             <a href="#$moditem['link']#">#$moditem['name']#</a>
                         </td>
-                        <td align="center" valign="center" width="20%">
+                        <td class="xar-align-center xar-valign-middle" width="20%">
                             #$moditem['numitems']#
                         </td>
-                        <td align="center" valign="center" width="20%">
+                        <td class="xar-align-center xar-valign-middle" width="20%">
                             #$moditem['numratings']#
                         </td>
-                        <td align="center" valign="center" width="20%">
-                            <a href="#$moditem['delete']#"><b>Delete</b></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">
-                            <div class="xar-norm-outline" style=" margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        <td class="xar-align-center xar-valign-middle" width="20%">
+                            <a href="#$moditem['delete']#"><strong>Delete</strong></a>
                         </td>
                     </tr>
                 </xar:foreach>
                 <tr>
-                    <td align="center" valign="center" width="20%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                    <td class="xar-align-center xar-valign-middle" width="20%">
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>
                     </td>
-                    <td align="center" valign="center" width="20%">
-                        <b>#$numitems#</b>
+                    <td class="xar-align-center xar-valign-middle" width="20%">
+                        <strong>#$numitems#</strong>
                     </td>
-                    <td align="center" valign="center" width="20%">
-                        <b>#$numratings#</b>
+                    <td class="xar-align-center xar-valign-middle" width="20%">
+                        <strong>#$numratings#</strong>
                     </td>
-                    <td align="center" valign="center" width="20%">
+                    <td class="xar-align-center xar-valign-middle" width="20%">
                         <a href="#$delete#">Delete All</a>
                     </td>
                 </tr>
@@ -80,9 +67,9 @@
 
             <tr>
                 <td colspan="4">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                    <div class="xar-accent xar-norm-outline xar-margin-topthick">
                         <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all ratings associated with a particular
+                            By clicking on <strong>Delete</strong> you can delete all ratings associated with a particular
                             module. Clicking on a module will take you to that module's statistics page containing
                             the figures for each of that module's items that have ratings associated with them.
                             From there you can delete all ratings associated with a particular item.
@@ -94,89 +81,72 @@
 <xar:else/>
     <h3><xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml></h3>
 
-        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <table class="xar-fullwidth xar-noborder"  cellpadding="2" cellspacing="1">
             <tr>
-                <th align="center" valign="center" width="25%">
+                <th class="xar-align-center xar-valign-middle" width="25%">
                     <xar:if condition="empty($sortlink['itemid'])">
-                        <xar:mlstring><b>Item<br />Id</b></xar:mlstring>
+                        <xar:mlstring>Item Id</xar:mlstring>
                     <xar:else/>
-                        <a href="#$sortlink['itemid']#"><xar:mlstring><b>Item<br />Id</b></xar:mlstring></a>
+                        <a href="#$sortlink['itemid']#"><xar:mlstring><strong>Item<br />Id</strong></xar:mlstring></a>
                     </xar:if>
                 </th>
-                <th align="center" valign="center" width="25%">
+                <th class="xar-align-center xar-valign-middle" width="25%">
                     <xar:if condition="empty($sortlink['numratings'])">
-                        <xar:mlstring><b>Total<br />Ratings</b></xar:mlstring>
+                        <xar:mlstring>Total Ratings</xar:mlstring>
                     <xar:else/>
-                        <a href="#$sortlink['numratings']#"><xar:mlstring><b>Total<br />Ratings</b></xar:mlstring></a>
+                        <a href="#$sortlink['numratings']#"><xar:mlstring>Total Ratings</xar:mlstring></a>
                     </xar:if>
                 </th>
-                <th align="center" valign="center" width="25%">
+                <th class="xar-align-center xar-valign-middle" width="25%">
                     <xar:if condition="empty($sortlink['rating'])">
-                        <xar:mlstring><b>Current<br />Rating</b></xar:mlstring>
+                        <xar:mlstring>Current Rating</xar:mlstring>
                     <xar:else/>
-                        <a href="#$sortlink['rating']#"><xar:mlstring><b>Current<br />Rating</b></xar:mlstring></a>
+                        <a href="#$sortlink['rating']#"><xar:mlstring>Current Rating</xar:mlstring></a>
                     </xar:if>
                 </th>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Action</b></xar:mlstring>
+                <th class="xar-align-center xar-valign-middle" width="25%">
+                    <xar:mlstring>Action</xar:mlstring>
                 </th>
-            </tr>
-
-            <tr>
-                <td colspan="4">
-                    &nbsp;
-                </td>
             </tr>
 
             <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                 <tr>
-                    <td colspan="4" align="center">
-                        <br />
+                    <td colspan="4" class="xar-align-center">
+                        <p>
                         <xar:mlstring>
                             There are currently no ratings attached to this module...
                         </xar:mlstring>
-                        <br />
-                        <br />
+                        </p>
                     </td>
                 </tr>
             <xar:else />
-                <tr>
-                    <td colspan="4">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
-                    </td>
-                </tr>
                 <xar:foreach in="$moditems" key="$itemid" value="$moditem">
                     <tr>
-                        <td align="center" valign="center" width="25%">
+                        <td  class="xar-align-center xar-valign-middle" width="25%">
                             #$itemid#
                         </td>
-                        <td align="center" valign="center" width="25%">
+                        <td  class="xar-align-center xar-valign-middle" width="25%">
                             #$moditem['numratings']#
                         </td>
-                        <td align="center" valign="center" width="25%">
+                        <td  class="xar-align-center xar-valign-middle" width="25%">
                             #$moditem['rating']#
                         </td>
-                        <td align="center" valign="center" width="25%">
-                            <a href="#$moditem['delete']#"><b>Delete</b></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                        <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
+                        <td  class="xar-align-center xar-valign-middle" width="25%">
+                            <a href="#$moditem['delete']#"><strong>Delete</strong></a>
                         </td>
                     </tr>
                 </xar:foreach>
                 <tr>
-                    <td align="right" valign="center" width="25%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                    <td  class="xar-align-right xar-valign-middle" width="25%">
+                        <strong><xar:mlstring>Grand Total</xar:mlstring></strong>:
                     </td>
-                    <td align="center" valign="center" width="25%">
-                        <b>#$numratings#</b>
+                    <td  class="xar-align-center xar-valign-middle" width="25%">
+                        <strong>#$numratings#</strong>
                     </td>
-                    <td align="center" valign="center" width="25%">
-                        <b><xar:mlstring>N/A</xar:mlstring></b>
+                    <td  class="xar-align-center xar-valign-middle" width="25%">
+                        <strong><xar:mlstring>N/A</xar:mlstring></strong>
                     </td>
-                    <td align="center" valign="center" width="25%">
+                    <td  class="xar-align-center xar-valign-middle" width="25%">
                         <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
@@ -184,9 +154,9 @@
 
             <tr>
                 <td colspan="4">
-                    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                    <div class="xar-accent xar-norm-outline">
                         <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all ratings associated with a particular
+                            By clicking on <strong>Delete</strong> you can delete all ratings associated with a particular
                             module's item.
                         </xar:mlstring>
                     </div>
@@ -195,4 +165,4 @@
         </table>
 </xar:if>
 </div>
-</div>
+

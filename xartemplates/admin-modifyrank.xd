@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <!-- This Javascript will check for required fields before the form is submitted. -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
@@ -15,7 +14,8 @@
     <span class="xar-mod-title"><xar:mlstring>Userpoints Ranks Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>Modify Rank</xar:mlstring></h2>
     <form method="post" action="&xar-modurl-userpoints-admin-updaterank;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend><xar:mlstring>Modify Rank</xar:mlstring></legend>
@@ -50,9 +50,9 @@
                 </xar:if>
             </div>
         </fieldset>
-        <fieldset>
+        <div class="xar-form-input-wrapper-before">
         #$hooks#
-        </fieldset>
+        </div>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />

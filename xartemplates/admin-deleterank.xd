@@ -1,42 +1,33 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Userpoints Ranks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Rank</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<!-- the specific template for the current admin function comes here -->
-
-
-<div align="center">#$confirmtext#</div><br />
-<form method="post" action="&xar-modurl-userpoints-admin-deleterank;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" id="confirm" value="true" />
-    <input type="hidden" name="id" id="exid" value="#$id#" />
-
-    <table border="0" width="300">
-        <tr>
-            <td>
-                #$itemid#:
-            </td>
-            <td>
-                #$id#
-            </td>
-        </tr>
-        <tr>
-            <td>
-                #$ranknamelabel#:
-            </td>
-            <td>
-                #$ranknamevalue#
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>Delete Rank</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-userpoints-admin-deleterank;">
+    <fieldset>
+        <legend>#$confirmtext#</legend>
+        <div class="xar-form-input-wrapper">
+            <label for="itemid" class="xar-form-label">
+                #$itemid#:
+            </label>
+                #$id#
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="rankvalue" class="xar-form-label">
+                #$ranknamelabel#:
+            </label>
+                #$ranknamevalue#
+        </div>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="confirm" id="confirm" value="true" />
+        <input type="hidden" name="id" id="exid" value="#$id#" />
+        <input type="submit" value="#$confirmbutton#"  />
+    </div>
+</form>
 </div>

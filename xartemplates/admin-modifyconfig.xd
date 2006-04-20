@@ -1,95 +1,84 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
-
-<form method="post" action="&xar-modurl-userpoints-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-
-    <table border="0" width="100%" cellspacing="1" cellpadding="8">
-        <tr>
-            <th align="center"><xar:mlstring>Module Settings</xar:mlstring></th>
-        </tr>
-    </table>
-    <br />
-    <table border="0" cellpadding="8" cellspacing="0">
-        <tr><td><label for="ranksperpage">#$ranksperlabel#</label></td>
-        <td><input type="text" name="ranksperpage" id="ranksperpage" size="3" maxlength="3" value="#$rankspervalue#" /></td></tr>
-        <tr><td><label for="showadminscore">#$showadminlabel#</label></td>
-        <td><input type="checkbox" name="showadminscore" id="showadminscore" value="1" #$showadminchecked# /></td></tr>
-        <tr><td><label for="showanonscore">#$showanonlabel#</label></td>
-        <td><input type="checkbox" name="showanonscore" id="showanonscore" value="1" #$showanonchecked# /></td></tr>
-        <tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
-    </table>
-    <table border="0" width="100%" cellspacing="1" cellpadding="8">
-        <tr>
-            <th align="center"><xar:mlstring>Score Settings</xar:mlstring></th>
-        </tr>
-    </table>
-    <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring><b>Create Points:</b> Points awarded for the creation of an item of this type</xar:mlstring></li>
-                <li><xar:mlstring><b>Delete Points:</b> Points subtracted for the deletion of an item of this type (Don't use a negative value)</xar:mlstring></li>
-                <li><xar:mlstring><b>Display Points:</b> Points awarded for viewing an item of this type</xar:mlstring></li>
-                <li><xar:mlstring><b>Update Points:</b> Points awarded for updating an item of this type</xar:mlstring></li>
-                <li><xar:mlstring><b>Frontpage Points:</b> Extra points awarded to items of this type that make it to frontpage status (Only applicable to the articles module)</xar:mlstring></li>
-            </ul>
-            <br />
-            <em><xar:mlstring>The points are of type xxxx.xx .That means you can award/subtract from 0.00 up to 9999.99 for an item.</xar:mlstring></em>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Userpoints Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>Configure</xar:mlstring></h2>
+    <form method="post" action="&xar-modurl-userpoints-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+    <fieldset>
+        <legend><xar:mlstring>Module Settings</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" for="ranksperpage">#$ranksperlabel#</label>
+            <input type="text" name="ranksperpage" id="ranksperpage" size="3" maxlength="3" value="#$rankspervalue#" />
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <input type="checkbox" name="showadminscore" id="showadminscore" value="1" #$showadminchecked# />
+            <label for="showadminscore">#$showadminlabel#</label>
 
         </div>
-        <br />
-
-    <table border="0" cellpadding="8" cellspacing="0">
+        <div class="xar-form-input-wrapper-after">
+            <input type="checkbox" name="showanonscore" id="showanonscore" value="1" #$showanonchecked# />
+            <label for="showanonscore">#$showanonlabel#</label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# />
+            <label for="shorturls">#$shorturlslabel#</label>
+        </div>
+    </fieldset>
+    <form method="post" action="&xar-modurl-userpoints-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
+    <fieldset>
+        <legend><xar:mlstring>Score Settings</xar:mlstring></legend>
+        <p class="xar-form-input-wrapper-before">
+            <ul>
+                <li><xar:mlstring><strong>Create Points:</strong> Points awarded for the creation of an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><strong>Delete Points:</strong> Points subtracted for the deletion of an item of this type (Don't use a negative value)</xar:mlstring></li>
+                <li><xar:mlstring><strong>Display Points:</strong> Points awarded for viewing an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><strong>Update Points:</strong> Points awarded for updating an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><strong>Frontpage Points:</strong> Extra points awarded to items of this type that make it to frontpage status (Only applicable to the articles module)</xar:mlstring></li>
+            </ul>
+         </p>
+         <p class="xar-form-input-wrapper-before">
+             <em><xar:mlstring>The points are of type xxxx.xx .That means you can award/subtract from 0.00 up to 9999.99 for an item.</xar:mlstring></em>
+         </p>
 
         <xar:foreach in="$settings" key="$modname" value="$config">
-            <tr>
-                <td colspan="2"><b>#$config['label']#</b></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Create Points:</xar:mlstring></td>
-                <td>
-
-            <input type="text" name="createscore[#$modname#]" id="createscore[#$modname#]" size="3" maxlength="7" value="#$config['create_score']#" />
-
-                </td>
-            </tr>
-                    <tr>
-                <td><xar:mlstring>Delete Points:</xar:mlstring></td>
-                <td>
-
-            <input type="text" name="deletescore[#$modname#]" id="deletescore[#$modname#]" size="3" maxlength="7" value="#$config['delete_score']#" />
-
-                </td>
-            </tr>
-                    <tr>
-                <td><xar:mlstring>Display Points:</xar:mlstring></td>
-                <td>
-
-            <input type="text" name="displayscore[#$modname#]" id="displayscore[#$modname#]" size="3" maxlength="7" value="#$config['display_score']#" />
-
-                </td>
-            </tr>
-                    <tr>
-                <td><xar:mlstring>Update Points:</xar:mlstring></td>
-                <td>
-
-            <input type="text" name="updatescore[#$modname#]" id="updatescore[#$modname#]" size="3" maxlength="7" value="#$config['update_score']#" />
-
-                </td>
-            </tr>
-                    <tr>
-                <td><xar:mlstring>Frontpage Points:</xar:mlstring></td>
-                <td>
-
-            <input type="text" name="frontpagescore[#$modname#]" id="frontpagescore[#$modname#]" size="3" maxlength="7" value="#$config['frontpage_score']#" />
-
-                </td>
-            </tr>
+            <h4>#$config['label']#</h4>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="createscore[#$modname#]">
+                    <xar:mlstring>Create Points:</xar:mlstring>
+                </label>
+                <input type="text" name="createscore[#$modname#]" id="createscore[#$modname#]" size="3" maxlength="7" value="#$config['create_score']#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="deletescore[#$modname#]">
+                    <xar:mlstring>Delete Points:</xar:mlstring>
+                </label>
+                <input type="text" name="deletescore[#$modname#]" id="deletescore[#$modname#]" size="3" maxlength="7" value="#$config['delete_score']#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="displayscore[#$modname#]">
+                    <xar:mlstring>Display Points:</xar:mlstring>
+                </label>
+                <input type="text" name="displayscore[#$modname#]" id="displayscore[#$modname#]" size="3" maxlength="7" value="#$config['display_score']#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="updatescore[#$modname#]">
+                    <xar:mlstring>Update Points:</xar:mlstring>
+                </label>
+                <input type="text" name="updatescore[#$modname#]" id="updatescore[#$modname#]" size="3" maxlength="7" value="#$config['update_score']#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" for="frontpagescore[#$modname#]">
+                    <xar:mlstring>Frontpage Points:</xar:mlstring>
+                </label>
+                <input type="text" name="frontpagescore[#$modname#]" id="frontpagescore[#$modname#]" size="3" maxlength="7" value="#$config['frontpage_score']#" />
+            </div>
         </xar:foreach>
-    </table>
-    <br /><br />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="submit" value="Update Userpoints Configuration" />
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="Update Userpoints Configuration" />
+    </div>
 </form>
 </div>
