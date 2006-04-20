@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Delete topic replies for a given topic
  * 
@@ -10,38 +11,45 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
+
 /**
  * delete replies
  * @param $args['tid'] Topic id
  * @returns bool
  * @return true on success, false on failure
  */
+
 function xarbb_adminapi_deleteallreplies($args)
 {
     extract($args);
 
     // Argument check
     if (!isset($tid))  {
-        $msg = xarML('Invalid Parameter Count in #(1), #(2), #(3)', 'admin', 'deleteallreplies', 'xarbb');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
-    // get topic id
-    $topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
+    // Get topic id
+    $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
 
-    if (!$topic){
-        $msg = xarML('Could not get topic in #(1), #(2), #(3)', 'admin', 'deleteallreplies', 'xarbb');
+    if (!$topic) {
+        $msg = xarML('Could not get topic');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
-    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    if (!xarSecurityCheck('ModxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
     xarModAPIFunc('comments', 'admin', 'delete_object_nodes',
-                  array('modid' => xarModGetIdFromName('xarbb'),
-                        'itemtype' => $topic['fid'],
-                        'objectid' => $tid));
+        array(
+            'modid' => xarModGetIdFromName('xarbb'),
+            'itemtype' => $topic['fid'],
+            'objectid' => $tid
+        )
+    );
+
     return true;
 }
+
 ?>

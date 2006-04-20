@@ -19,39 +19,36 @@
  */
 function xarbb_adminapi_getmenulinks()
 {
-
- 
-    if (xarSecurityCheck('AddxarBB', 0,'Forum')) {
-
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'admin',
-                                                  'new'),
-                              'title' => xarML('Add a New forum'),
-                              'label' => xarML('Add'));
+    if (xarSecurityCheck('AddxarBB', 0, 'Forum')) {
+        $menulinks[] = array(
+            'url'   => xarModURL('xarbb', 'admin', 'new'),
+            'title' => xarML('Add a New forum'),
+            'label' => xarML('Add')
+        );
     }
 
-    if (xarSecurityCheck('EditxarBB', 0,'Forum')) {
-
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'admin',
-                                                  'view'),
-                              'title' => xarML('View and Edit Forums'),
-                              'label' => xarML('View'));
+    if (xarSecurityCheck('EditxarBB', 0, 'Forum')) {
+        $menulinks[] = array(
+            'url'   => xarModURL('xarbb', 'admin', 'view'),
+            'title' => xarML('View and Edit Forums'),
+            'label' => xarML('View')
+        );
     }
-    if (xarSecurityCheck('EditxarBB', 0,'Forum')) {
 
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'admin',
-                                                  'reorder'),
-                              'title' => xarML('Reorder Forums'),
-                              'label' => xarML('Reorder Forums'));
+    if (xarSecurityCheck('EditxarBB', 0, 'Forum')) {
+        $menulinks[] = array(
+            'url'   => xarModURL('xarbb', 'admin', 'reorder'),
+            'title' => xarML('Reorder Forums'),
+            'label' => xarML('Reorder Forums')
+        );
     }
+
     if (xarSecurityCheck('AdminxarBB', 0)) {
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the XarBB'),
-                              'label' => xarML('Modify Config'));
+        $menulinks[] = array(
+            'url'   => xarModURL('xarbb', 'admin', 'modifyconfig'),
+            'title' => xarML('Modify the configuration for the XarBB'),
+            'label' => xarML('Modify Config')
+        );
     }
 
     if (empty($menulinks)){
@@ -60,4 +57,5 @@ function xarbb_adminapi_getmenulinks()
 
     return $menulinks;
 }
+
 ?>

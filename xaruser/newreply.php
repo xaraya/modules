@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Add a new topic reply
  *
@@ -12,9 +13,11 @@
  * @author John Cox
  * @author Jo Dalle Nogare
 */
+
 /**
  * @TODO Finish this function.
  */
+
 function xarbb_user_newreply()
 {
     if (!xarVarFetch('tid', 'int:1:', $tid, '', XARVAR_NOT_REQUIRED)) return;
@@ -32,13 +35,16 @@ function xarbb_user_newreply()
             xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
             return;
         }
+
         $settings               = unserialize(xarModGetVar('xarbb', 'settings.' . $data['fid']));
         $data['allowhtml']      = $settings['allowhtml'];
         $data['allowbbcode']    = $settings['allowbbcode'];
-        $allowhtml= isset($data['allowhtml']) ? $data['allowhtml'] : false;
-        $allowbbcode= isset($data['allowbbcode']) ? $data['allowbbcode'] : false;
+
+        $allowhtml= (!empty($data['allowhtml']) ? $data['allowhtml'] : false);
+        $allowbbcode= (!empty($data['allowbbcode']) ? $data['allowbbcode'] : false);
 
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
+
         if (($phase == 'quote') && ($allowbbcode == true)){
             $package['text'] = '[quote]' . $data['tpost'] . '[/quote]';
         }elseif (($phase == 'quote') && ($allowhtml == true)){

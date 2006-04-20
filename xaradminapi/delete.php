@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Delete a forum
  * 
@@ -10,12 +11,14 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
+
 /**
  * delete a forum
  * @param $args['fid'] ID of the forum
  * @returns bool
  * @return true on success, false on failure
  */
+
 function xarbb_adminapi_delete($args)
 {
     extract($args);
@@ -24,6 +27,7 @@ function xarbb_adminapi_delete($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+
     // The user API function is called.
     $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
     if (empty($data)) return;
@@ -50,11 +54,12 @@ function xarbb_adminapi_delete($args)
 
     // Let any hooks know that we have deleted a forum
     $args['module'] = 'xarbb';
-    $args['itemtype'] = 0; // forum
+    $args['itemtype'] = 0;
     $args['itemid'] = $fid;
     xarModCallHooks('item', 'delete', $fid, $args);
  
     // Let the calling process know that we have finished successfully
     return true;
 }
+
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Update a forum topic
  *
@@ -10,10 +11,11 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
+
 function xarbb_user_locktopic()
 {
-    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
-    if (!xarVarFetch('tstatus', 'int', $tstatus)) return;
+    if (!xarVarFetch('tid', 'id', $tid)) return;
+    if (!xarVarFetch('tstatus', 'int:0:2', $tstatus)) return;
     if (!xarVarFetch('options', 'int', $options, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Need to handle locked topics
@@ -25,18 +27,20 @@ function xarbb_user_locktopic()
     if (!xarSecurityCheck('ModxarBB', 1, 'Forum', $forum['catid'] . ':' . $forum['fid'])) return;
 
     // We need to handle the stickies and announcements as well.
-    if (!empty($options)){
+    if (!empty($options)) {
         // First lets not kill any other options:
         if (!empty($data['toptions'])){
             $topicoptions = unserialize($data['toptions']);
-            $topicoptions['lock'] = array();
-            array_push($topicoptions['lock'], true);
+            $topicoptions['lock'] = true;
             $mergedarray = serialize($topicoptions);
         } else {
-            $topicoptions['lock'] = array(true);
+            $topicoptions = array('lock' => true);
             $mergedarray = serialize($topicoptions);
         }
+
         // And then we update the topic options
+        // TODO: all this serialize/unserialize stuff is silly - why can't it
+        // all be done in the APIs.
         if (!xarModAPIFunc('xarbb', 'user', 'updatetopic',
             array(
                 'tid'      => $tid,
@@ -46,17 +50,18 @@ function xarbb_user_locktopic()
         ) return;
     } else {
         // Let's check to see if this is a dual status
-        if ($tstatus == 0){
+        if ($tstatus == 0) {
             if (!empty($data['toptions'])){
                 $topicoptions = unserialize($data['toptions']);
                 // OK, question of the day, is there anything in the $shadow var?
                 if (!empty($topicoptions['lock'])) {
-                    //Welp, its dual status, need to change that for consistancy sake.
-                    $topicoptions['lock'] = NULL;
+                    // Welp, its dual status, need to change that for consistancy sake.
+                    $topicoptions['lock'] = false;
                     $mergedarray = serialize($topicoptions);
                 }
             }
         }
+
         // Check to see if we have a mergedarray value
         if (!empty($mergedarray)){
             // All that, and its just a regular old topic
@@ -82,4 +87,5 @@ function xarbb_user_locktopic()
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
     return;
 }
+
 ?>
