@@ -4,25 +4,26 @@
 <xar:style scope="module" file="xarbb-layout" />
 
 <xar:style scope="module" module="xarbb" file="xarbb-layout" />
+
+<xar:comment>FIXME: this belongs in the page header</xar:comment>
 <meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
 
 <h4>
     <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
-       <xar:if condition="!empty($xarbbtitle)">
-        #$xarbbtitle#
+        <xar:if condition="!empty($xarbbtitle)">
+            #$xarbbtitle#
         <xar:else />
-        #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
+            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
         </xar:if>
         #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
-        <xar:mlstring>
-            Forum Index
-        </xar:mlstring>
+        <xar:mlstring>Forum Index</xar:mlstring>
     </a>
 </h4>
+
 <div class="xarbb-tablewrapper">
     <table>
         <tr>
-            <th>
+            <th scope="col">
                 <xar:mlstring>Information</xar:mlstring>
             </th>
         </tr>

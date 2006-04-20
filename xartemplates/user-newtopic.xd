@@ -1,9 +1,11 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
+
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
 </xar:comment>
+
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
@@ -28,30 +30,27 @@
         </a>
     </span>
 </div>
-<xar:if condition="isset($preview)">
+<xar:if condition="!empty($preview)">
     <div class="xarbb-tablewrapper">
         <table>
             <tr>
                 <th>
-                    <xar:mlstring>
-                        Preview 
-                    </xar:mlstring>
+                    <xar:mlstring>Preview</xar:mlstring>
                 </th>
             </tr>
+
             <tr>
                 <td class="xar-accent">
                     <span>
-                        <xar:mlstring>
-                            Posted 
-                        </xar:mlstring>
-                        : #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', time())# &nbsp; 
-                        <xar:mlstring>
-                            Post subject 
-                        </xar:mlstring>
-                        : #$transformedtitle# 
+                        <xar:ml>
+                            <xar:mlstring>Posted #(1) Post subject #(2)</xar:mlstring>
+                            <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', time())#</xar:mlvar>
+                            <xar:mlvar>#$transformedtitle#</xar:mlvar>
+                        </xar:ml>
                     </span>
                 </td>
             </tr>
+
             <tr>
                 <td class="xar-norm">
                     #$transformedtext#
@@ -70,59 +69,48 @@
         </table>
     </div>
 </xar:if>
+
 <div class="xarbb-tablewrapper">
-<xar:comment>
-    If you intend to provide an upload field via DD here, you need to change the
-    enctype="application/x-www-form-urlencoded" to enctype="multipart/form-data"
-    in the form tag below.
-    Otherwise, users can also reference uploaded files by using #file:NN# in the body,
-    if you enable the uploads hooks for xarbb (for all forums or a particular forum).
-</xar:comment>
+    <xar:comment>
+        If you intend to provide an upload field via DD here, you need to change the
+        enctype="application/x-www-form-urlencoded" to enctype="multipart/form-data"
+        in the form tag below.
+        Otherwise, users can also reference uploaded files by using #file:NN# in the body,
+        if you enable the uploads hooks for xarbb (for all forums or a particular forum).
+    </xar:comment>
+
     <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
                     <xar:if condition="!isset($tid)">
-                        <xar:mlstring>
-                            Add a New Topic 
-                        </xar:mlstring>
-                        <xar:else />
-                        <xar:mlstring>
-                            Edit Topic 
-                        </xar:mlstring>
+                        <xar:mlstring>Add a New Topic</xar:mlstring>
+                    <xar:else />
+                        <xar:mlstring>Edit Topic</xar:mlstring>
                     </xar:if>
                 </th>
             </tr>
+
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Name 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Name:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
                     #xarUserGetVar('name')# / 
                     <xar:if condition="xarUserIsLoggedIn()">
                         <a href="#xarModUrl('roles', 'user', 'account')#">
-                            <xar:mlstring>
-                                Your Account 
-                            </xar:mlstring>
+                            <xar:mlstring>Your Account</xar:mlstring>
                         </a>
                         <xar:else />
                         <a href="#xarModUrl('roles', 'user', 'account')#">
-                            <xar:mlstring>
-                                Log In | Register 
-                            </xar:mlstring>
+                            <xar:mlstring>Log In | Register</xar:mlstring>
                         </a>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Subject 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Subject:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
                     <input type="text" name="ttitle" id="ttitle" value="#xarVarPrepForDisplay($ttitle)#" size="45" maxlength="60" tabindex="1" />
@@ -131,188 +119,101 @@
             <xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)">
                 <tr>
                     <td class="xar-accent xar-title newtopictitle">
-                        <xar:mlstring>
-                            Form Controls 
-                        </xar:mlstring>
-                        : 
+                        <xar:mlstring>Form Controls:</xar:mlstring>
                     </td>
                     <td class="xar-norm newtopicfield">
                         #$formhooks['formdisplay']# 
                     </td>
                 </tr>
             </xar:if>
+
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Body 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Body</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
                     <textarea name="tpost" id="tpost" rows="15" cols="35" tabindex="2">#xarVarPrepForDisplay($tpost)#</textarea>
                 </td>
             </tr>
+
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-<!-- Uggghhh, here is the tough one.  Need to be able to show the options for this forum.  Also need to be able to turn off (selective) different option.  DB design is going to need to change to allow for a serialized entry here, and then a ton of new code I would imagine.  We are going to need this for the nntp integration.  Also, we need to add the data types to allow hooking to each individual module.  UGGGHHHH freaking UGGGHHHH -->
-<!-- For the time being, let's just get the announcement, etc going. -->
-                    <xar:mlstring>
-                        Options 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Options:</xar:mlstring> 
                     <div class="xar-sub">
-                        <xar:mlstring>
-                            HTML is 
-                        </xar:mlstring>
-                        <xar:if condition="xarModIsHooked('html','xarbb',$fid)">
-                            <span style="color: green;">
-                                On 
-                            </span>
-                            <xar:else />
-                            <span style="color: red;">
-                                Off 
-                            </span>
+                        <xar:comment>
+                            FIXME: not translatable
+                        </xar:comment>
+
+                        <xar:mlstring>HTML is</xar:mlstring>&nbsp;
+                        <xar:if condition="!empty($allowhtml)">
+                            <span style="color: green;">On</span>
+                        <xar:else />
+                            <span style="color: red;">Off</span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>
-                            BBCode is 
-                        </xar:mlstring>
+                        <xar:mlstring>BBCode is</xar:mlstring>&nbsp;
                         <xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)">
-                            <span style="color: green;">
-                                On 
-                            </span>
-                            <xar:else />
-                            <span style="color: red;">
-                                Off 
-                            </span>
+                            <span style="color: green;">On</span>
+                        <xar:else />
+                            <span style="color: red;">Off</span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>
-                            Smilies are
-                        </xar:mlstring>
+                        <xar:mlstring>Smilies are</xar:mlstring>&nbsp;
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
                             <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
-                                <xar:mlstring>
-                                    On 
-                                </xar:mlstring>
+                                <xar:mlstring>On</xar:mlstring>
                             </a>
                         <xar:else />
-                            <span style="color: red;">
-                                Off 
-                            </span>
+                            <span style="color: red;">Off</span>
                         </xar:if>
                     </div>
                 </td>
+
                 <td class="xar-norm newtopicfield">
                     <xar:sec mask="ModxarBB" catch="false">
                         <xar:if condition="!isset($tstatus)">
                             <select name="tstatus" id="tstatus" size="1">
                                 <option value="0" selected="selected">
-                                    <xar:mlstring>
-                                        Normal 
-                                    </xar:mlstring>
+                                    <xar:mlstring>Normal</xar:mlstring>
                                 </option>
                                 <option value="1">
-                                    <xar:mlstring>
-                                        Announcement 
-                                    </xar:mlstring>
+                                    <xar:mlstring>Announcement</xar:mlstring>
                                 </option>
                                 <option value="2">
-                                    <xar:mlstring>
-                                        Sticky 
-                                    </xar:mlstring>
-                                </option>
-                                <option value="3">
-                                    <xar:mlstring>
-                                        Locked 
-                                    </xar:mlstring>
+                                    <xar:mlstring>Sticky</xar:mlstring>
                                 </option>
                             </select>
-                            <xar:else />
+                        <xar:else />
                             <select name="tstatus" id="tstatus" size="1">
                                 <xar:if condition="$tstatus eq 0">
                                     <option value="0" selected="selected">
-                                        <xar:mlstring>
-                                            Normal 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Normal</xar:mlstring>
                                     </option>
                                     <option value="1">
-                                        <xar:mlstring>
-                                            Announcement 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Announcement</xar:mlstring>
                                     </option>
                                     <option value="2">
-                                        <xar:mlstring>
-                                            Sticky 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Sticky</xar:mlstring>
                                     </option>
-                                    <option value="3">
-                                        <xar:mlstring>
-                                            Locked 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:elseif condition="$tstatus eq 1" />
+                                <xar:elseif condition="$tstatus eq 1" />
                                     <option value="0">
-                                        <xar:mlstring>
-                                            Normal 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Normal</xar:mlstring>
                                     </option>
                                     <option value="1" selected="selected">
-                                        <xar:mlstring>
-                                            Announcement 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Announcement</xar:mlstring>
                                     </option>
                                     <option value="2">
-                                        <xar:mlstring>
-                                            Sticky 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Sticky</xar:mlstring>
                                     </option>
-                                    <option value="3">
-                                        <xar:mlstring>
-                                            Locked 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:elseif condition="$tstatus eq 2" />
+                                <xar:elseif condition="$tstatus eq 2" />
                                     <option value="0">
-                                        <xar:mlstring>
-                                            Normal 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Normal</xar:mlstring>
                                     </option>
                                     <option value="1">
-                                        <xar:mlstring>
-                                            Announcement 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Announcement</xar:mlstring>
                                     </option>
                                     <option value="2" selected="selected">
-                                        <xar:mlstring>
-                                            Sticky 
-                                        </xar:mlstring>
-                                    </option>
-                                    <option value="3">
-                                        <xar:mlstring>
-                                            Locked 
-                                        </xar:mlstring>
-                                    </option>
-                                    <xar:elseif condition="$tstatus eq 3" />
-                                    <option value="0">
-                                        <xar:mlstring>
-                                            Normal 
-                                        </xar:mlstring>
-                                    </option>
-                                    <option value="1">
-                                        <xar:mlstring>
-                                            Announcement 
-                                        </xar:mlstring>
-                                    </option>
-                                    <option value="2">
-                                        <xar:mlstring>
-                                            Sticky 
-                                        </xar:mlstring>
-                                    </option>
-                                    <option value="3" selected="selected">
-                                        <xar:mlstring>
-                                            Locked 
-                                        </xar:mlstring>
+                                        <xar:mlstring>Sticky</xar:mlstring>
                                     </option>
                                 </xar:if>
                             </select>
@@ -320,15 +221,15 @@
                     </xar:sec>
                 </td>
             </tr>
+
             <xar:if condition="!empty($hooks) and count($hooks) gt 0">
                 <xar:foreach in="$hooks" key="$hookmodule">
                     <tr align="left" valign="middle">
-                        <td colspan="2">
-                            #$hooks[$hookmodule]# 
-                        </td>
+                        <td colspan="2">#$hooks[$hookmodule]#</td>
                     </tr>
                 </xar:foreach>
             </xar:if>
+
             <tr>
                 <td class="xar-accent newtopicbottom" colspan="2">
                     <xar:if condition="isset($tid)">
@@ -337,18 +238,17 @@
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
                     <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
-                    <input type="submit" id="preview" name="preview" value="#$previewlabel#" />
+                    <input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
                     &nbsp; 
-                    <input type="submit" value="#$submitlabel#"  tabindex="3" />
+                    <input type="submit" name="submit" value="#xarML('Submit')#" tabindex="3" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
+
 <div class="xarbb-noteswrapper">
     <span class="xar-sub rightnote">
-        <xar:mlstring>
-            All times are GMT 
-        </xar:mlstring>
+        <xar:mlstring>All times are GMT</xar:mlstring>
     </span>
 </div>

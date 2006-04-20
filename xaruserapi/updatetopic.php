@@ -11,6 +11,7 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
+
 /**
  * create a new forum
  * @author John Cox
@@ -90,43 +91,43 @@ function xarbb_userapi_updatetopic($args)
     // Update item
     $query = "UPDATE $xbbtopicstable SET ";
     if (isset($fid)){
-        $update[] = "xar_fid =? ";
+        $update[] = "xar_fid = ? ";
         $bindvars[] = $fid;
     }
     if (isset($ttitle)){
-        $update[] = "xar_ttitle =? ";
+        $update[] = "xar_ttitle = ? ";
         $bindvars[] = $ttitle;
     }
     if (isset($tpost)){
-        $update[] = "xar_tpost =? ";
+        $update[] = "xar_tpost = ? ";
         $bindvars[] = $tpost;
     }
     if (isset($tposter)){
-        $update[] = "xar_tposter =? ";
+        $update[] = "xar_tposter = ? ";
         $bindvars[] = $tposter;
     }
     if (isset($time)){
-        $update[] = "xar_ttime =? ";
+        $update[] = "xar_ttime = ? ";
         $bindvars[] = $time;
     }
     if (isset($treplies)){
-        $update[] = "xar_treplies =? ";
+        $update[] = "xar_treplies = ? ";
         $bindvars[] = $treplies;
     }
     if (isset($treplier)){
-        $update[] = "xar_treplier =? ";
+        $update[] = "xar_treplier = ? ";
         $bindvars[] = $treplier;
     }
     if (isset($tftime)){
-        $update[] = "xar_tftime =? ";
+        $update[] = "xar_tftime = ? ";
         $bindvars[] = $tftime;
     }
     if (isset($tstatus)){
-        $update[] = "xar_tstatus =? ";
+        $update[] = "xar_tstatus = ? ";
         $bindvars[] = $tstatus;
     }
     if (isset($toptions)){
-        $update[] = "xar_toptions =? ";
+        $update[] = "xar_toptions = ? ";
         $bindvars[] = $toptions;
     }
 
