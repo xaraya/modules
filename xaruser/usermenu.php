@@ -23,8 +23,10 @@ function dyn_example_user_usermenu($args)
     extract($args);
     // Security check  - if the user has read access to the menu, show a
     // link to display the details of the item
-    if (!xarSecurityCheck('ViewDynExample',0)) return;
-
+    if (!xarSecurityCheck('ViewDynExample',0)) {
+         $data='';
+           return $data;
+     }
     // First, lets find out where we are in our logic. If the phase
     // variable is set, we will load the correct page in the loop.
     if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
