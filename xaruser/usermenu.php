@@ -23,7 +23,7 @@
 function courses_user_usermenu($args)
 {
     // Security check
-    if (!xarSecurityCheck('ViewCourses')) return;
+    if (!xarSecurityCheck('ViewCourses',0)) return '';
     extract($args);
 
     if (!xarVarFetch('phase',    'str:1:100', $phase,    'menu', XARVAR_NOT_REQUIRED)) return;
