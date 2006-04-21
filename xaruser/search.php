@@ -17,7 +17,7 @@ function googlesearch_user_search()
     xarVarFetch('q', 'str:0:', $q, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
 
     // Security Check
-    if(!xarSecurityCheck('Overviewgooglesearch')) return;
+    if(!xarSecurityCheck('Overviewgooglesearch',0)) return '';
 
 /*
     $args['params']['key']          = xarModGetUserVar('googlesearch', 'license-key');
