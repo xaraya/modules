@@ -63,7 +63,8 @@ function julian_user_viewevents($args)
         // Set the end date to the last month and last day of the selected year.
         $enddate=$bl_data['selected_year']."-12-31";
     }
-
+    // Bullet style
+    $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     // Get the events for the selected year.
    // $bl_data['event_array'] = xarModAPIFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     // Set the url to this page in session as the last page viewed.
