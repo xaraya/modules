@@ -10,7 +10,7 @@ function trackback_user_displayhook($args)
 {
     extract($args);
     // Security Check
-    if(!xarSecurityCheck('Viewtrackback')) return;
+    if(!xarSecurityCheck('Viewtrackback',0)) return '';
 
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'user', 'displayhook', 'trackback');
