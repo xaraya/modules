@@ -25,7 +25,12 @@ function example_user_usermenu($args)
     /* Security check  - if the user has read access to the menu, show a
      * link to display the details of the item
      */
-    if (!xarSecurityCheck('ViewExample')) return;
+    /* Don't show an error in user menu if user does not have privs
+       Doing so will block the usermenu appearing and any other tabs they do have privs to
+       Just don't display this module's User Menu Tab
+     */
+     if (!xarSecurityCheck('ViewExample',0)) return;
+
 
     /* First, lets find out where we are in our logic. If the phase
      * variable is set, we will load the correct page in the loop.
