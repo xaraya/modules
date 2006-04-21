@@ -18,14 +18,14 @@ being set to blank.
 <xar:set name="$navMonthUrl">#xarModURL('julian','user','month',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navYearUrl">#xarModURL('julian','user','year',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navAddUrl">#xarModURL('julian','user','addevent',array('cal_date'=>$cal_date))#</xar:set>
-<xar:set name="$navEventsUrl">#xarModURL('julian','user','viewevents',array('cal_date'=>$cal_date))#</xar:set>
+<xar:set name="$navEventsUrl">#xarModURL('julian','user','viewevents')#</xar:set>
 <xar:set name="$navAlertsUrl">#xarModURL('julian','user','alerts',array('cal_date'=>$cal_date))#</xar:set>
 <xar:set name="$navCategoriesUrl">#xarModURL('julian','admin','modifycategories',array('cal_date'=>$cal_date))#</xar:set>
 
 <div class="xar-julian-header">
     <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc)#</xar:set>
     <dl class="xar-tabs">
-        <dt class="help"><xar:mlstring>View types</xar:mlstring>:</dt>
+        <dt class="help"><xar:mlstring>Graphical views:</xar:mlstring></dt>
         <xar:if condition="$whatFunc eq 'day'">
             <dd class="active"><a href="#$navDayUrl#"><xar:mlstring>Day</xar:mlstring></a></dd>
         <xar:else />
@@ -53,10 +53,11 @@ being set to blank.
                 <dd><a href="#$navAddUrl#"><xar:mlstring>Add event</xar:mlstring></a></dd>
             </xar:if>
         </xar:if>
+
         <xar:if condition="$whatFunc eq 'viewevents'">
-            <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+            <dd class="active"><a href="#$navEventsUrl#"><xar:mlstring>Listing</xar:mlstring></a></dd>
         <xar:else />
-          <dd><a href="#$navEventsUrl#"><xar:mlstring>Events</xar:mlstring></a></dd>
+          <dd><a href="#$navEventsUrl#"><xar:mlstring>Listing</xar:mlstring></a></dd>
         </xar:if>
 
         <xar:if condition="xarUserIsLoggedIn()">
