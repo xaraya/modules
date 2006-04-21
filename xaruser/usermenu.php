@@ -21,7 +21,7 @@ function ebulletin_user_usermenu($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('VieweBulletin')) return;
+    if (!xarSecurityCheck('VieweBulletin',0)) return '';
 
           # use phase to decide what to do
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
