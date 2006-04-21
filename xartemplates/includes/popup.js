@@ -5,7 +5,7 @@
 ***********************************************/
 
 var newWin = null;
-function popUp(strURL, strType, strHeight, strWidth) {
+function xarbb_popUp(strURL, strType, strHeight, strWidth) {
  if (newWin != null && !newWin.closed)
    newWin.close();
  var strOptions="";

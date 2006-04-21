@@ -87,8 +87,8 @@
                     </xar:if>
                 </xar:if>
             </div>
-
         </div>
+        <div style="clear: both;"></div>
     </div>
 
     <div id="top">
@@ -126,6 +126,7 @@
 
     <div class="xarbb-topiccontrols">
         <xar:template file="topiccontrols" type="module" />
+        <div style="clear: both;"></div>
     </div>
 </xar:if>
 
@@ -158,7 +159,7 @@
                     <div>
                         <strong>
                             <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
-                                #$postername# 
+                                #$postername#
                             </a>
                         </strong>
                     </div>
@@ -236,6 +237,7 @@
                                 : #$transformedtitle# 
                             </strong>
                         </div>
+                        <div style="clear: both;"></div>
                     </div>
                     <div>
                         #$transformedtext# 
@@ -429,6 +431,7 @@
                                 </a>
                             </strong>
                         </div>
+                        <div style="clear: both;"></div>
                     </div>
                     <div style="clear: left;">
                         #$item['xar_text']# 

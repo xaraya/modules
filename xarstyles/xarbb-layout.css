@@ -8,20 +8,21 @@ div#xarbb-topics {
 }
 div.xarbb-tablewrapper {
     zoom: 100%;
-    float: left;
-    width: 99%;
-    margin: .5em 0;
+    /*float: left;*/
+    width: auto;
+    margin: 0;
+	padding: 0;
 }
 div.xarbb-noteswrapper {
     float: none;
-    width: 99%;
+    width: auto;
     margin: .5em 0;
 }
 
 div.xarbb-topiccontrols,
 div.xarbb-messagecontrols {
-    float: left;
-    width: 99%;
+    /*float: left;
+    width: 99%;*/
     margin: .5em 0;
 }
 
@@ -113,11 +114,11 @@ div.xarbb-tablewrapper table td.author {
 div.xarbb-tablewrapper table td.authorname { width: 7em; }
 
 div.xarbb-tablewrapper table td.lastpost {
-    width: 8em;
+    width: 10em;
     white-space: nowrap;
 }
 
-div.xarbb-tablewrapper table td.stats { width: 6em; }
+div.xarbb-tablewrapper table td.stats { width: 4em; }
 
 div.xarbb-tablewrapper table td.message {
     border: 0 none;
@@ -216,3 +217,8 @@ div.xarbb-topiccontrols a.cssbutton span.closedtopicicon {
 
 div.xarbb-topiccontrols a.cssbutton span.postreplyicon { background-position: -30px 0px; }
 div.xarbb-topiccontrols a.cssbutton span.closedtopicicon { background-position: -60px 0px; }
+
+div.xarbb-noteswrapper .xar-pager {
+	text-weight: bold;
+}
+

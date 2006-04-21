@@ -7,8 +7,9 @@
 </xar:comment>
 
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:base-include-javascript module="xarbb" filename="popup.js" position="head" />
+
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -17,6 +18,7 @@
     var fieldDescription = Array("Topic Subject", "Topic body text");
 //-->
 </script>
+
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
         <a href="&xar-modurl-xarbb-user-main;">
@@ -24,12 +26,15 @@
                 Forum Index 
             </xar:mlstring>
         </a>
-        -&gt; 
+        <span style="font-size: larger;">&#187;</span>
         <a href="&xar-modurl-xarbb-user-viewforum;&amp;fid=#$fid#">
             #$fname# 
         </a>
     </span>
+
+    <div style="clear: both;"></div>
 </div>
+
 <xar:if condition="!empty($preview)">
     <div class="xarbb-tablewrapper">
         <table>
@@ -79,7 +84,7 @@
         if you enable the uploads hooks for xarbb (for all forums or a particular forum).
     </xar:comment>
 
-    <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formcheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
@@ -160,7 +165,7 @@
                         <br />
                         <xar:mlstring>Smilies are</xar:mlstring>&nbsp;
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
-                            <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                            <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="xarbb_popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </a>
                         <xar:else />

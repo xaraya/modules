@@ -4,9 +4,12 @@
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
 </xar:comment>
+
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
+
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
+
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -15,27 +18,33 @@
     var fieldDescription = Array("Reply Post Subject", "Reply Post body text");
 //-->
 </script>
+
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
         <a href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
             #$xarbbtitle#
         <xar:else />
-            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
+            #xarModGetVar('themes', 'SiteName', 0)#
+            #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+            #xarModGetVar('themes', 'SiteSlogan', 0)#
         </xar:if>
             #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
         <xar:mlstring>
             Forum Index 
         </xar:mlstring>
         </a>
-        ->
+        <span style="font-size: larger;">&#187;</span>
         <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
             #$fname# 
         </a>
     </span>
+
+    <div style="clear: both;"></div>
 </div>
+
 <div class="xarbb-tablewrapper">
-    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formcheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
@@ -177,7 +186,7 @@
                             Smilies are 
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
-                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="xarbb_popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>
                                     On 
                                 </xar:mlstring>

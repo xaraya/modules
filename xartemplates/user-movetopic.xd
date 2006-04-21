@@ -5,14 +5,10 @@
                 &nbsp;&nbsp;&nbsp;
                 <a href="#xarModUrl('xarbb', 'user', 'main')#">
                     #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
-                    <xar:mlstring>
-                        Forum Index
-                    </xar:mlstring>
+                    <xar:mlstring>Forum Index</xar:mlstring>
                 </a> 
-                -> 
-                <xar:mlstring>
-                    Move Topic
-                </xar:mlstring>
+                <span style="font-size: larger;">&#187;</span> 
+                <xar:mlstring>Move Topic</xar:mlstring>
             </span>
         </td>
     </tr>
@@ -22,19 +18,16 @@
 <table width="98%" border="0" class="forumline">
     <tr>
         <th>
-            <xar:mlstring>
-                Confirm
-            </xar:mlstring>
+            <xar:mlstring>Confirm</xar:mlstring>
         </th>
     </tr>
     <tr>    
         <td class="xar-norm" align="center">
             <br />
             <label for="fid">
-                <xar:mlstring>
-                    Move to forum
-                </xar:mlstring>
+                <xar:mlstring>Move to forum</xar:mlstring>
             </label>&nbsp; 
+
             <select name="fid">
                 <xar:loop name="$items">
                 <xar:set name="curfid">#$loop:item['fid']#</xar:set>
@@ -43,6 +36,7 @@
                 </xar:if>
                 </xar:loop>
             </select><br />
+
             <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
@@ -59,21 +53,23 @@
                 </tr>
             </table>
             <br />
-            <xar:mlstring>
-                Are you sure you want to move the selected topic?
-            </xar:mlstring>
+
+            <xar:mlstring>Are you sure you want to move the selected topic?</xar:mlstring>
+
             <br />
             <br />
+
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="tid" value="#$tid#" />
             <input type="hidden" name="phase" value="update" />
             <input type="submit" name="confirm" value="#$submitlabel#" />
+
             &nbsp;&nbsp;
+
             <a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid))#">
-                <xar:mlstring>
-                    Cancel move of topic
-                </xar:mlstring>
+                <xar:mlstring>Cancel move of topic</xar:mlstring>
             </a>
+
             <br />
             <br />
         </td>
@@ -85,6 +81,7 @@
     </tr>
 </table>
 </form>
+
 <table width="98%" border="0">
     <tr> 
         <td align="left" valign="middle" width="100%">
@@ -92,14 +89,10 @@
                 &nbsp;&nbsp;&nbsp;
                 <a href="#xarModUrl('xarbb', 'user', 'main')#">
                     #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
-                    <xar:mlstring>
-                        Forum Index
-                    </xar:mlstring>
+                    <xar:mlstring>Forum Index</xar:mlstring>
                 </a> 
-                -> 
-                <xar:mlstring>
-                    Move Topic
-                </xar:mlstring>
+                <span style="font-size: larger;">&#187;</span>
+                <xar:mlstring>Move Topic</xar:mlstring>
             </span>
         </td>
     </tr>

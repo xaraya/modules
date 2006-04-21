@@ -76,12 +76,15 @@
         <table>
             <tr>
                 <th scope="col">
+                    <xar:mlstring>&nbsp;</xar:mlstring>
+                </th>
+                <th scope="col">
                     <xar:mlstring>Forum</xar:mlstring>
                 </th>
-                <th scope="col">
+                <th scope="col" style="text-align: center;">
                     <xar:mlstring>Topics</xar:mlstring>
                 </th>
-                <th scope="col">
+                <th scope="col" style="text-align: center;">
                     <xar:mlstring>Posts</xar:mlstring>
                 </th>
                 <th scope="col">
@@ -91,7 +94,7 @@
 
             <xar:loop name="$items">
                 <tr class="xar-accent">
-                    <td class="forumgroup" colspan="5">
+                    <td class="forumgroup" colspan="6">
                         <h4>
                             <xar:if condition="isset($loop:item['catname'])">
                                 <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' =&gt; $loop:item.cid))#">
@@ -111,34 +114,17 @@
                         <td>
                             <img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('Category')#" />
                         </td>
-                        <td class="forumname">
+                        <td class="forumname" colspan="4">
                             <span class="xar-title">
                                 <a href="#xarModURL('xarbb', 'user', 'main', array('catid' =&gt; $cats.cid))#" title="#$cats.name#">
-                                    #$cats.name# 
+                                    #$cats.name#
                                 </a>
-                                <br />
                             </span>
-                            <span>
-                                #$cats.description# 
-                                <br />
-                            </span>
-                        </td>
-                        <td>
-                            <span class="xar-sub">
-    <!-- #$forum['ftopics']# -->
-                            </span>
-                            <span class="xar-sub">
-    <!-- #$forum['fposts']# -->
-                            </span>
-                        </td>
-                        <td class="xar-norm lastpost">
-                            <span class="gensmall">
-    <!-- #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
-                        <strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum.fposter))#">#$forum.name#</a> -->
-                            </span>
+                            <br />#$cats.description# 
                         </td>
                     </tr>
                 </xar:foreach>
+
                 <xar:foreach in="$loop:item.forums" value="$forum">
                     <tr>
                         <td class="xar-norm icon">
@@ -154,54 +140,43 @@
                             </xar:if>
                             <img src="#$image#" alt="#$alt#" />
                         </td>
+
                         <td class="xar-norm forumname">
                             <span class="xar-title">
                                 <xar:if condition="$forum.fstatus ne 1">
                                     <a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $forum.fid))#" title="#$forum.fname#">
-                                        #$forum.fname# 
+                                        #$forum.fname#
                                     </a>
-                                    <br />
-                                    <xar:else />
+                                <xar:else />
                                     #$forum.fname# 
-                                    <br />
                                 </xar:if>
-                            </span>
-                            <span class="xar-norm">
-                                #$forum.fdesc# 
                                 <br />
                             </span>
+                            <span class="xar-norm">#$forum.fdesc#</span>
                         </td>
-                        <td class="xar-accent stats">
-                            <div class="xar-sub xarbb-noteswrapper">
-                                <span class="leftnote">
-                                    <xar:mlstring>Topics:</xar:mlstring>
-                                </span>
-                                <strong class="rightnote">
-                                    #$forum.ftopics# 
-                                </strong>
-                                <span class="leftnote">
-                                    <xar:mlstring>Posts:</xar:mlstring>
-                                </span>
-                                <strong class="rightnote">
-                                    #$forum.fposts# 
-                                </strong>
-                            </div>
+                        <td class="xar-accent stats" style="text-align: center;">
+                            #$forum.ftopics# 
+                        </td>
+                        <td class="xar-accent stats" style="text-align: center;">
+                            #$forum.fposts# 
                         </td>
                         <td class="xar-norm lastpost">
                             <span class="xar-sub">
                                 <xar:if condition="$forum.ftopics gt '0'">
-                                    #xarLocaleGetFormattedDate('medium', $forum.fpostid)# #xarLocaleGetFormattedTime('medium', $forum.fpostid)#
-                                    <br />
-                                    <xar:if condition="!empty($forum.foptions.ttitle)">
-                                        <a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' =&gt; $forum.foptions.tid))#">#$forum.foptions.ttitle#</a>
-                                        <br />
-                                    </xar:if>
-                                    <strong>
-                                       <xar:mlstring>By</xar:mlstring>:
-                                    </strong>
+                                    <xar:ml>
+                                        <xar:mlstring>#(1) #(2) by:</xar:mlstring>
+                                        <xar:mlvar>#xarLocaleGetFormattedDate('medium', $forum.fpostid)#</xar:mlvar>
+                                        <xar:mlvar>#xarLocaleGetFormattedTime('medium', $forum.fpostid)#</xar:mlvar>
+                                    </xar:ml>
+                                    <xar:comment>FIXME: (a) anonymous gets a link (it shouldn't); (b) text does not translate</xar:comment>
                                     <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $forum.fposter))#">
                                         #$forum.name#
                                     </a>
+                                    <xar:if condition="!empty($forum.foptions.ttitle)">
+                                        <br /><a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' =&gt; $forum.foptions.tid))#">
+                                            #xarVarPrepForDisplay($forum.foptions.ttitle)#
+                                        </a>
+                                    </xar:if>
                                 <xar:else />
                                     <xar:mlstring>No posts</xar:mlstring>
                                 </xar:if>
