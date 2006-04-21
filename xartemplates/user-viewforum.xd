@@ -40,36 +40,14 @@
     </div>
 
     <h1>
-        <a class=" xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+        <a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
             #xarVarPrepForDisplay($fname)#
         </a>
     </h1>
 
-    <xar:comment>TODO: this is used somewhere else too - make it an include</xar:comment>
-    <form action="#xarModUrl('xarbb', 'user', 'jump')#" method="post">
-        <div class="xarbb-noteswrapper">
-            <strong>
-                <xar:mlstring>Forum Jump</xar:mlstring>
-            </strong>
-            <br />
-            <select name="f" onchange="this.form.submit();">
-                <optgroup label="#xarML('Options')#">
-                    <option value="#$fid#" selected="selected">
-                        <xar:mlstring>Please select forum</xar:mlstring>
-                    </option>
-                    <option value="#$fid#">--------------------</option>
-                </optgroup>
-                <optgroup label="#xarML('Forums')#">
-                    <xar:loop name="$forums">
-                        <option value="#$loop:item['fid']#">
-                            #$loop:item['fname']# 
-                        </option>
-                    </xar:loop>
-                </optgroup>
-            </select>
-            <input type="submit" class="button" value="#xarML('Jump')#" />
-        </div>
-    </form>
+    <div class="xarbb-topiccontrols">
+        <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)"/>
+    </div>
 
     <div class="xarbb-topiccontrols">
         <xar:sec mask="PostxarBB" catch="false">
@@ -97,19 +75,22 @@
 <div class="xarbb-tablewrapper">
     <table>
         <tr>
-            <th>
+            <th scope="col">
                 <xar:mlstring>View</xar:mlstring>
             </th>
-            <th>
+            <th scope="col">
                 <xar:mlstring>Topic</xar:mlstring>
             </th>
-            <th>
+            <th scope="col">
                 <xar:mlstring>Author</xar:mlstring>
             </th>
-            <th>
-                <xar:mlstring>Posts</xar:mlstring>
+            <th scope="col" style="text-align: center;">
+                <xar:mlstring>Replies</xar:mlstring>
             </th>
-            <th>
+            <th scope="col" style="text-align: center;">
+                <xar:mlstring>Views</xar:mlstring>
+            </th>
+            <th scope="col">
                 <xar:mlstring>Last Post</xar:mlstring>
             </th>
         </tr>
@@ -185,22 +166,14 @@
                     </a>
                 </td>
 
-                <td class="xar-norm stats">
-                    <div class="xar-sub xarbb-noteswrapper">
-                        <span class="leftnote">
-                            <xar:mlstring>Replies:</xar:mlstring>
-                        </span>
-                        <strong class="rightnote">
-                            #$loop:item['comments']# 
-                        </strong>
-                        <span class="leftnote">
-                            <xar:mlstring>Views:</xar:mlstring>
-                        </span>
-                        <strong class="rightnote">
-                            #$loop:item['hitcount']# 
-                        </strong>
-                    </div>
+                <td class="xar-accent stats" style="text-align: center;">
+                    #$loop:item['comments']#
                 </td>
+
+                <td class="xar-accent stats" style="text-align: center;">
+                    #$loop:item['hitcount']# 
+                </td>
+
                 <td class="xar-accent lastpost">
                     <div class="xar-sub">
                         #xarLocaleGetFormattedDate('medium', $loop:item['ttime'])# #xarLocaleGetFormattedTime('medium', $loop:item['ttime'])# 

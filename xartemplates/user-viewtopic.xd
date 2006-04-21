@@ -17,26 +17,9 @@
     <div class="xarbb-noteswrapper">
         <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
     </div>
+
     <div class="xarbb-noteswrapper">
         <div class="xar-sub rightnote">
-            <xar:comment>
-                Approach 1 : via redirect in viewtopic FIXME: insert link to previous/next topic here with the right CSS stuff ? 
-                <span class="xar-sub">
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#">
-                        <xar:mlstring>Previous Topic</xar:mlstring>
-                    </a>
-                    | 
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#">
-                        <xar:mlstring>Next Topic</xar:mlstring>
-                    </a>
-                </span>
-            </xar:comment>
-            <xar:comment>
-                Approach 2 : show previous/next topic directly in viewtopic instead of redirecting (unsupported) 
-            </xar:comment>
-            <xar:comment>
-                Approach 3 : retrieve the previous/next topic id here 
-            </xar:comment>
             <div>
                 <xar:set name="previd">
                     #xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))# 
@@ -91,38 +74,19 @@
         <div style="clear: both;"></div>
     </div>
 
-    <div id="top">
-        <strong>#$ttitle#</strong>
-    </div>
+    <h1>
+        <a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid))#">
+            #xarVarPrepForDisplay($ttitle)#
+        </a>
+    </h1>
 
     <xar:if condition="!empty($pager)">
-        <div class="xar-sub">
-            <strong>#$pager#</strong>
-        </div>
+        <div class="xar-sub">#$pager#</div>
     </xar:if>
 
-    <form action="#xarModUrl('xarbb', 'user', 'jump')#" method="post">
-        <div class="xarbb-noteswrapper">
-            <strong>
-                <xar:mlstring>Forum Jump</xar:mlstring>
-            </strong>
-            <br />
-            <select name="f" onchange="this.form.submit();">
-                <optgroup label="#xarML('Options')#">
-                    <option value="#$fid#" selected="selected">
-                        <xar:mlstring>Please select forum</xar:mlstring>
-                    </option>
-                    <option value="#$fid#">--------------------</option>
-                </optgroup>
-                <optgroup label="#xarML('Forums')#">
-                    <xar:loop name="$forums">
-                        <option value="#$loop:item['fid']#">#$loop:item['fname']#</option>
-                    </xar:loop>
-                </optgroup>
-            </select>
-            <input type="submit" class="button" value="#xarML('Jump')#" />
-        </div>
-    </form>
+    <div class="xarbb-topiccontrols">
+        <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)"/>
+    </div>
 
     <div class="xarbb-topiccontrols">
         <xar:template file="topiccontrols" type="module" />
@@ -149,6 +113,7 @@
                 <xar:mlstring>Message</xar:mlstring>
             </th>
         </tr>
+
         <xar:comment>
             Display the Topic Post itself - unless it is not the first pager page 
         </xar:comment>
@@ -168,15 +133,14 @@
                             <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                             <br />
                         </xar:if>
-                        <xar:mlstring>Joined</xar:mlstring>
-                        : #xarLocaleGetFormattedDate('medium', $posterdatestamp)# 
+                        <xar:mlstring>Joined:</xar:mlstring>
+                        #xarLocaleGetFormattedDate('medium', $posterdatestamp)# 
                         <br />
-                        <xar:mlstring>Posts</xar:mlstring>
-                        : #$usertopics# 
+                        <xar:mlstring>Posts:</xar:mlstring>
+                        #$usertopics# 
                         <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
                             <br />
-                            <xar:mlstring>Location</xar:mlstring>
-                            : 
+                            <xar:mlstring>Location:</xar:mlstring>
                             <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                         </xar:if>
                         <br />
@@ -189,8 +153,11 @@
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
                             <span class="xar-sub">
-                                <xar:mlstring>Posted</xar:mlstring>
-                                : #xarLocaleGetFormattedDate('medium', $tftime)# #xarLocaleGetFormattedTime('medium', $tftime)# 
+                                <xar:ml>
+                                    <xar:mlstring>Posted #(1) at #(2)</xar:mlstring>
+                                    <xar:mlvar>#xarLocaleGetFormattedDate('medium', $tftime)#</xar:mlvar>
+                                    <xar:mlvar>#xarLocaleGetFormattedTime('medium', $tftime)#</xar:mlvar>
+                                </xar:ml>
                             </span>
                         </div>
                         <div class="rightnote">
@@ -228,6 +195,7 @@
                                 </xar:sec>
                             </xar:if>
                         </div>
+
                         <xar:comment>
                             Placement of subject for full width of message containing div
                         </xar:comment>
@@ -239,6 +207,7 @@
                         </div>
                         <div style="clear: both;"></div>
                     </div>
+
                     <div>
                         #$transformedtext# 
                         <xar:if condition="isset($properties['signature']) and !empty($posterdata[$tposter]['signature'])">
@@ -267,6 +236,7 @@
                     </xar:if>
                 </td>
             </tr>
+
             <tr>
                 <td class="xar-norm author">
                     <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
@@ -337,6 +307,7 @@
             <xar:else />
                 <xar:set name="myclass">'xar-norm'</xar:set>
             </xar:if>
+
             <tr>
                 <td class="xar-norm author">
                     <strong>
@@ -381,6 +352,7 @@
                         </a>
                     </span>
                 </td>
+
                 <td class="#$myclass# message">
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
@@ -433,6 +405,7 @@
                         </div>
                         <div style="clear: both;"></div>
                     </div>
+
                     <div style="clear: left;">
                         #$item['xar_text']# 
                         <xar:if condition="$item['xar_postanon'] eq 0">
@@ -445,6 +418,7 @@
                     </div>
                 </td>
             </tr>
+
             <tr>
                 <td class="xar-norm author">
                     <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
@@ -513,50 +487,10 @@
 <xar:if condition="$post ne '1'">
     <div class="xarbb-topiccontrols">
         <xar:template file="topiccontrols" type="module" />
-        <xar:comment>
-            Approach 1 : via redirect in viewtopic FIXME: insert link to previous/next topic here with the right CSS stuff ? 
-            <span class="xar-sub">
-                <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#">
-                    <xar:mlstring>Previous Topic</xar:mlstring>
-                </a>
-                | 
-                <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#">
-                    <xar:mlstring>Next Topic</xar:mlstring>
-                </a>
-            </span>
-        </xar:comment>
-        <xar:comment>
-            Approach 2 : show previous/next topic directly in viewtopic instead of redirecting (unsupported) 
-        </xar:comment>
-        <xar:comment>
-            Approach 3 : retrieve the previous/next topic id here 
-            <span class="xar-sub">
-                <xar:set name="previd">
-                    #xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))# 
-                </xar:set>
-                <xar:if condition="!empty($previd)">
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#">
-                        <xar:mlstring>Previous Topic</xar:mlstring>
-                    </a>
-                <xar:else />
-                    <xar:mlstring>Previous Topic</xar:mlstring>
-                </xar:if>
-                | 
-                <xar:set name="nextid">
-                    #xarModAPIFunc('xarbb','user','getnexttopicid',array('fid' => $fid, 'ttime' => $ttime))# 
-                </xar:set>
-                <xar:if condition="!empty($nextid)">
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#">
-                        <xar:mlstring>Next Topic</xar:mlstring>
-                    </a>
-                <xar:else />
-                    <xar:mlstring>Next Topic</xar:mlstring>
-                </xar:if>
-            </span>
-        </xar:comment>
+
         <xar:if condition="!empty($pager)">
             <span class="xar-sub">
-                <strong>#$pager#</strong>
+                #$pager#
             </span>
         </xar:if>
     </div>
@@ -580,6 +514,7 @@
         </div>
     </xar:sec>
 </xar:if>
+
 <xar:if condition="$tstatus ne 3">
     <xar:if condition="$post ne '1'">
         <xar:sec mask="PostxarBB" catch="false">
@@ -605,8 +540,6 @@
     <xar:foreach in="$hooks" key="$hookmodule">
         <xar:comment>
             xarbb already deals with comments directly via API, using itemtype 0 (for now ?)
-        </xar:comment>
-        <xar:comment>
             and polls are already inserted at the top for a nicer display
         </xar:comment>
         <xar:if condition="$hookmodule ne 'comments' and $hookmodule ne 'polls'">

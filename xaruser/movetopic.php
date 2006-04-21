@@ -13,7 +13,7 @@
 function xarbb_user_movetopic()
 {
     if (!xarVarFetch('phase', 'str:1:10', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tid','int:1:',$tid)) return;
+    if (!xarVarFetch('tid', 'int:1:', $tid)) return;
 
     // Need to handle locked topics
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
@@ -24,7 +24,6 @@ function xarbb_user_movetopic()
     if (!xarSecurityCheck('ModxarBB', 1, 'Forum', $forum['catid'] . ':' . $forum['fid'])) return;
 
     switch(strtolower($phase)) {
-
         case 'form':
         default:
             // The user API function is called
@@ -32,36 +31,29 @@ function xarbb_user_movetopic()
             
             // For the dropdown list
             $data['items'] = $forums;
-            $data['submitlabel'] = xarML('Submit');
             $data['authid'] = xarSecGenAuthKey();
+            $data['newtitle'] = xarML('Moved -- #(1)', $data['ttitle']);
             break;
 
         case 'update':
             if (!xarVarFetch('shadow', 'checkbox', $shadow, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('newtitle', 'str:1:120', $newtitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('fid', 'int:1:', $fid)) return;
+
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
-            // First let's move the topic
-            // Actually, lets do this last.  Should not affect anything, but we need to reference 
-            // the shadowed topic so we can delete that later if needed.
-            /*
-            if (!xarModAPIFunc('xarbb',
-                            'user',
-                            'updatetopic',
-                             array('fid'      => $fid,
-                                   'tid'      => $tid))) return;
-            */
+
             // Then update the new forum
             if (!xarModAPIFunc('xarbb', 'user', 'updateforumview',
-            array(
-                'fid'      => $fid,
-                'tid'      => $tid,
-                'ttitle'   => $data['ttitle'],
-                'treplies' => $data['treplies'],
-                'topics'   => 1,
-                'replies'  => $data['treplies'] + 1,
-                'move'     => 'positive',
-                'fposter'  => $data['tposter'])
+                array(
+                    'fid'      => $fid,
+                    'tid'      => $tid,
+                    'ttitle'   => $data['ttitle'],
+                    'treplies' => $data['treplies'],
+                    'topics'   => 1,
+                    'replies'  => $data['treplies'] + 1,
+                    'move'     => 'positive',
+                    'fposter'  => $data['tposter'])
                 )
             ) return;
 
@@ -91,6 +83,7 @@ function xarbb_user_movetopic()
                 $last = array('tid' => 0, 'ttitle' => '', 'treplies' => 0);
                 $tposter = $data['tposter'];
             }
+
             // Then update the old forum
             if (!xarModAPIFunc('xarbb', 'user', 'updateforumview',
                 array(
@@ -106,15 +99,17 @@ function xarbb_user_movetopic()
             ) return;
 
             // Now let's check to see if there is a shadow post
-            if ($shadow != false){
-            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
-                $ttitle = xarML('Moved') . ' -- ' . $data['ttitle'];
+            if ($shadow != false) {
+                // Need to create a topic so we don't get the nasty empty error when viewing the forum.
+                if (empty($newtitle)) {
+                    $newtitle = xarML('Moved') . ' -- ' . $data['ttitle'];
+                }
                 $tpost = $tid;
 
                 $shadow = xarModAPIFunc('xarbb', 'user', 'createtopic',
                     array(
                         'fid'      => $data['fid'],
-                        'ttitle'   => $ttitle,
+                        'ttitle'   => $newtitle,
                         'tpost'    => $tpost,
                         'tposter'  => $data['tposter'],
                         'treplier' => $data['treplier'],
@@ -142,12 +137,11 @@ function xarbb_user_movetopic()
                         'fid'      => $fid,
                         'ttime'    => $data['ttime'],
                         'toptions' => $mergedarray,
-                        'tid'      => $tid)
+                        'tid'      => $tid
                     )
-                ) return;
-
-            // No Shadow, No Reference
+                )) return;
             } else {
+                // No Shadow, No Reference
                 if (!xarModAPIFunc('xarbb', 'user', 'updatetopic',
                     array(
                         'fid'      => $fid,

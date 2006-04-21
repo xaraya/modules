@@ -1,43 +1,31 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
+
 <xar:comment>
     using css-driven buttons, requested by miko for easier ML management, implemented by andyv 
 </xar:comment>
+
 <xar:if condition="$tstatus ne 3">
     <xar:sec mask="PostxarBB" catch="false">
         <xar:template file="newtopic-ml-button" type="module" />
         <xar:template file="postreply-ml-button" type="module" />
-        <xar:comment>
-<!-- old image icons, left here for reference -->
-            <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-                <img src="#xarTplGetImage('new/post.gif')" alt="#xarML('New topic')"/> 
-            </a>
-            <a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-                <img src="#xarTplGetImage('new/reply.gif')#" alt="#xarML('New reply')#"/> 
-            </a>
-        </xar:comment>
     </xar:sec>
-    <xar:else />
+<xar:else />
     <xar:sec mask="PostxarBB" catch="false">
         <xar:template file="closedtopic-ml-button" type="module" />
-        <xar:comment>
-<!-- old image icons, left here for reference -->
-            <img src="#xarTplGetImage('new/reply-locked.gif')#" alt="#xarML('CLosed Topic')#"/> 
-        </xar:comment>
     </xar:sec>
 </xar:if>
+
 <span class="xar-sub">
     <a href="#xarModUrl('xarbb', 'user', 'main')#">
-        <xar:mlstring>
-            Forum Index 
-        </xar:mlstring>
+        <xar:mlstring>Forum Index</xar:mlstring>
     </a>
-    -&gt; 
+    <span style="font-size: larger;">&#187;</span>
     <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
         #$catname# 
     </a>
-    -&gt; 
+    <span style="font-size: larger;">&#187;</span>
     <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
         #$fname# 
     </a>

@@ -22,9 +22,7 @@
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
         <a href="&xar-modurl-xarbb-user-main;">
-            <xar:mlstring>
-                Forum Index 
-            </xar:mlstring>
+            <xar:mlstring>Forum Index</xar:mlstring>
         </a>
         <span style="font-size: larger;">&#187;</span>
         <a href="&xar-modurl-xarbb-user-viewforum;&amp;fid=#$fid#">
@@ -60,9 +58,7 @@
                 <td class="xar-norm">
                     #$transformedtext#
                     <xar:if condition="isset($properties['signature']) and count($properties) gt 0">
-                        <xar:set name="$hide">
-                            $properties['signature']->value 
-                        </xar:set>
+                        <xar:set name="$hide">$properties['signature']->value</xar:set>
                         <xar:if condition="$hide">
                             <p class="hiddensignature">
                                 <xar:data-output property="$properties['signature']" />

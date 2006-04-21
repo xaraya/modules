@@ -1,6 +1,9 @@
 /* debug rule - dont uncomment */
 /* * { outline: 1px dotted orange; } */
 /* lets minimize use of tables for layout and use instead css-driven templates */
+
+/* TODO: far too many floats here - we should remove some, and avoid a lot of clearing */
+
 div#xarbb-topics {
     float: none;
     width: 99%;
@@ -111,7 +114,9 @@ div.xarbb-tablewrapper table td.author {
     vertical-align: top;
 }
 
-div.xarbb-tablewrapper table td.authorname { width: 7em; }
+div.xarbb-tablewrapper table td.authorname {
+	width: 10em;
+}
 
 div.xarbb-tablewrapper table td.lastpost {
     width: 10em;
@@ -160,11 +165,13 @@ div.xarbb-noteswrapper .rightnote {
 
 /* login form */
 div#xarbb-loginwrapper {
-    width: 100%;
+    clear: both;
     text-align: center;
 }
 
-div#xarbb-loginwrapper label { padding: 0 .2em 0 1em; }
+div#xarbb-loginwrapper label {
+	padding: 0 .2em 0 1em;
+}
 
 /* legend icons */
 div.xarbb-legendwrapper {
@@ -174,7 +181,9 @@ div.xarbb-legendwrapper {
     text-align: center;
 }
 
-div.xarbb-legendwrapper span { padding: 0 .2em 0 1em; }
+div.xarbb-legendwrapper span {
+	padding: 0 .2em 0 1em;
+}
 
 div.xarbb-legendwrapper span.spacedout {
     width: 15em;
@@ -188,7 +197,9 @@ div.xarbb-topiccontrols span img {
     display: inline;
 }
 
-div.xarbb-topiccontrols span a { padding: 0 .2em; }
+div.xarbb-topiccontrols span a {
+	padding: 0 .2em;
+}
 
 /* Note from andyv - make button more cross-theme robust */
 div#mainmodulearea div.xarbb-topiccontrols a.cssbutton,
@@ -218,7 +229,8 @@ div.xarbb-topiccontrols a.cssbutton span.closedtopicicon {
 div.xarbb-topiccontrols a.cssbutton span.postreplyicon { background-position: -30px 0px; }
 div.xarbb-topiccontrols a.cssbutton span.closedtopicicon { background-position: -60px 0px; }
 
-div.xarbb-noteswrapper .xar-pager {
+/* Make the standard pager bolder */
+div.xarbb-noteswrapper div.xar-pager * {
 	text-weight: bold;
 }
 
