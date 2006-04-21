@@ -3,7 +3,7 @@
  * Display the user menu hook
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,9 +29,13 @@ function example_user_usermenu($args)
        Doing so will block the usermenu appearing and any other tabs they do have privs to
        Just don't display this module's User Menu Tab
      */
-     if (!xarSecurityCheck('ViewExample',0)) return;
-
-
+     if (!xarSecurityCheck('ViewExample',0)) {
+         $data='';  
+         /* in this specific case return empty (not null) so hooks continue.
+            Evalue if you need to return null of false for other hooks 
+         */
+         return $data;
+     }
     /* First, lets find out where we are in our logic. If the phase
      * variable is set, we will load the correct page in the loop.
      */
