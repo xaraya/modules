@@ -15,25 +15,28 @@
  * @returns integer
  * @returns number of links in the database
  */
+
 function xarbb_userapi_counttopics($args)
 {
     extract($args);
 
     if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', '', 'userapi', 'counttopics', 'xarbb');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
-    $query = "SELECT COUNT(1)
-              FROM $xbbtopicstable            
-              WHERE xar_fid = ?";
+    $query = "SELECT COUNT(1) FROM $xbbtopicstable WHERE xar_fid = ?";
     $result =& $dbconn->Execute($query, array($fid));
+
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();
+
     return $numitems;
 }
+
 ?>

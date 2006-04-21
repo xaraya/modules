@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Update a forum
  * 

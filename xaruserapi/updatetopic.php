@@ -46,7 +46,7 @@ function xarbb_userapi_updatetopic($args)
     );
 
     foreach($params as $vvar => $dummy) {
-        if (isset($$vvar)) {
+        if (isset($args[$vvar])) {
             $set = true;
             break;
         }
@@ -59,13 +59,14 @@ function xarbb_userapi_updatetopic($args)
     // Argument check - make sure that at least on paramter is present
     // if not then set an appropriate error message and return
     if (isset($invalid)) {
-        $msg = xarML('Invalid Parameter Count');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     // For sec check.
-    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
+    $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
+    if (empty($topic)) return;
 
     // Security Check
     // It would have to be ModxarBB, but because posting results in an update, it has to be post permission

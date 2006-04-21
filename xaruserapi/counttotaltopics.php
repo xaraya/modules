@@ -15,40 +15,46 @@
  * @returns integer
  * @returns number of links in the database
  */
+
 function xarbb_userapi_counttotaltopics($args)
 {
     extract($args);
 
-   // Optional argument
+    // Optional argument
     if (!isset($startnum)) {
         $startnum = 1;
     }
+
     if (!isset($numitems)) {
         $numitems = -1;
     }
+
     if (!isset($where)) {
-    $where='';
+        $where = '';
     }
+
     if (!isset($wherevalue)){
-    $wherevalue='';
+        $wherevalue = '';
     }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
-    $query = "SELECT COUNT(1)
-              FROM $xbbtopicstable ";
+    $query = "SELECT COUNT(1) FROM $xbbtopicstable ";
 
-   if ($where<>''){
-       if ($where=='replies'){ //searching for unanswered topics
-          $query .= "WHERE xar_treplies = '0'";
-       }elseif ($where=='uid'){
-          $query .= "WHERE xar_tposter = '{$wherevalue}'";
-       }elseif ($where =='from'){
-         $query .= "WHERE xar_ttime > '{$wherevalue}'";
-       }
-   }
+    if ($where <> '') {
+        if ($where=='replies') {
+            //searching for unanswered topics
+            $query .= "WHERE xar_treplies = '0'";
+        } elseif ($where == 'uid') {
+            $query .= "WHERE xar_tposter = '{$wherevalue}'";
+        } elseif ($where == 'from') {
+            $query .= "WHERE xar_ttime > '{$wherevalue}'";
+        }
+    }
+
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     } else {
@@ -62,4 +68,5 @@ function xarbb_userapi_counttotaltopics($args)
     $result->Close();
     return $numitems;
 }
+
 ?>

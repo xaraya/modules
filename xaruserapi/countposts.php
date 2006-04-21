@@ -15,16 +15,15 @@
  * @returns integer
  * @returns number of links in the database
  */
+
 function xarbb_userapi_countposts($args)
 {
     static $countcache = array();
     extract($args);
 
     if (!isset($uid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'userapi', 'get', 'xarbb');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -36,17 +35,22 @@ function xarbb_userapi_countposts($args)
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
 
-    $query = "SELECT COUNT(1)
-              FROM $xbbtopicstable
-              WHERE xar_tposter = ?";
+    $query = "SELECT COUNT(1) FROM $xbbtopicstable WHERE xar_tposter = ?";
     $result =& $dbconn->Execute($query,array((int)$uid));
     if (!$result) return;
+
     list($numitems) = $result->fields;
     $result->Close();
+
     // While we are here, how many replies have been made as well?
-    $replies = xarModAPIFunc('comments', 'user', 'get_author_count', array('modid' => xarModGetIdFromName('xarbb'), 'author' => $uid));
+    $replies = xarModAPIFunc(
+        'comments', 'user', 'get_author_count',
+        array('modid' => xarModGetIdFromName('xarbb'), 'author' => $uid)
+    );
     $total = $numitems + $replies;
     $countcache[$uid] = $total;
+
     return $total;
 }
+
 ?>
