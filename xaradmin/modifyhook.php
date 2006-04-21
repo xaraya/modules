@@ -70,7 +70,7 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
-    if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return;
+    if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return '';
 
 //retrieve the list of allowed delimiters.  use the first one as the default.
     $delimiters = xarModGetVar('keywords','delimiters');

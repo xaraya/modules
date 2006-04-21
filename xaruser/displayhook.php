@@ -24,7 +24,7 @@
  */
 function keywords_user_displayhook($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurityCheck('ReadKeywords',0)) return '';
 
     extract($args);
 
