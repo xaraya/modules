@@ -54,9 +54,10 @@ function comments_user_usermenu($args)
             break;
         }
 
-        return $data;
+    } else {
+       $data=''; //make sure hooks in usermenu don't fail because this function returns unset
     }
-
+        return $data;
 }
 
 ?>
