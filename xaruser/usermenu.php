@@ -21,7 +21,7 @@
 function legis_user_usermenu($args)
 {
     extract($args);
-    if (!xarSecurityCheck('ViewLegis')) return;
+    if (!xarSecurityCheck('ViewLegis',0)) return '';
     
     /* First, lets find out where we are in our logic.  If the phase
      * variable is set, we will load the correct page in the loop.
