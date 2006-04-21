@@ -36,9 +36,14 @@ function julian_user_viewevent()
     if (!xarVarFetch('cal_date','int',$cal_date, date('dmY'), XARVAR_NOT_REQUIRED)) return; // str here?
 
     // Security check
-
-    if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:All:All:All")) { // TODO: improve
-        return;
+    if (is_numeric($event_id)) {
+        if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:All:All:All")) { // TODO: improve
+            return;
+        }
+    } else {
+        if (!xarSecurityCheck('ReadJulian', 1)) {
+            return;
+        }
     }
     // TODO: make this an API for linked event
     // establish a db connection
