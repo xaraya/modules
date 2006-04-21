@@ -26,7 +26,11 @@
         </dd>
     </xar:sec>
     <xar:sec mask="EditAutolinks" catch="false">
-        <xar:set name="tabclass">$activetab=='viewtype'?'active':''</xar:set>
+        <xar:if condition="$activetab eq 'viewtype' or $activetab eq 'modifytype' or $activetab eq 'deletetype'">
+           <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+        </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-autolinks-admin-viewtype;">
             <xar:mlstring>View Types</xar:mlstring>
