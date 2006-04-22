@@ -22,7 +22,9 @@ function xarbb_userapi_sendnntp($args)
 {
     // Get arguments from argument array
     extract($args);
+
     include_once 'modules/xarbb/xarclass/NNTP.php';
+
     //$tpost      = wordwrap($tpost, 72, "\n", 1);
     $email      = xarUserGetVar('email');
     $name       = xarUserGetVar('name');

@@ -105,7 +105,8 @@ function xarbb_userapi_decode_shorturl($params)
             $args['tid'] = $id;
             $func = 'newreply';
     }
-  // updatetopic
+
+    // updatetopic
     if (preg_match('/^updatetopic/i', $params[0]) && !empty($id)) {
        $args['tid'] = $id;
        $func = 'updatetopic';

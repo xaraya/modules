@@ -1,0 +1,78 @@
+
+Summary
+=======
+xarBB consists of forums (itemtypes), containing posted topics (items)
+each having many replies (comments).
+
+This is a technical discussion, related to the 
+
+Special Approaches
+==================
+The comments module provides storage for replies to topics. This is
+achieved with a mix of API calls and direct access to the comments
+tables. There is no need or reason to hook the comments module.
+
+Read counts of topics are handled by the hitcount module. Again,
+there is no reason to hook it, as the APIs are used directly,
+creating a permanent dependancy.
+
+Future Developments
+===================
+Since comments module tables are accessed directly, it would make
+more sense to pull the replies directly into the module as a custom
+table. There is a high risk in one module breaking the other through
+unexpected table or data changes.
+
+Many of the APIs duplicate much of what they do. Some combining could
+be done, to reduce the amount of duplication. This would be a necessary
+first step before any other changes, because other changes rely on
+the API to be updated, and we want to do that in as few places as
+possible.
+
+The hitcount module tracks views of posts, yet other stats for posts
+are stored in the topic itself. Consider dropping use of the hitcount
+module as a permanent fixture, and moving the hits into the topics
+table, if it really is that much of a core function. It would then
+still be possible to hook other hitcount-like modules to gather
+other hit information.
+
+The concept of a locked topic is muddled. It started off as a topic
+'type' setting (known in the module as the 'tstatus'). The type
+declares topics as stickies, announcements or normal. Whether it is 
+locked or not is really independant of the type, but it seems to
+have been added to that list of tstatuses.
+
+A start has been made to move the loced status onto the array of
+informatation stored in the toptions column of the topic. This
+should be fuly completed. The 'type/tstatus' needs to remain as
+a separate database column, since it is used for selection and
+ordering at the database level.
+
+An approach that would have made more sense would be to separate
+'type' and 'status' into separate database columns. The status
+could then include more than just 'locked/unlocked', for example
+'posted', 'published', 'unapproved', 'hidden', 'deleted' - just
+about any general workflow-related status, making the ability to
+control topics extremely flexible.
+
+The number of topics in a forum scales well. The number of
+comments on a topic scales well. What does not scale well is the
+number of forums, since there are too many loops that retrieve
+all forums, before applying security checks to them. Allowing the
+module to scale to hundreds or thousands of forums would be useful
+in a number of circumstances, including development control centres.
+A different approach to forum brosing would be needed to do this,
+for example, the ability to mark a forum as not being in the
+normal forum browsing screens, but accessible only either directly
+or by some forum search screen (there is no forum search screen
+yet).
+
+Multiple categories for a forum is not yet supported. The ability
+to place a forum in several (or no) categories would be a big
+benefit when controlling access to the forums through category-
+based security. This is where the APIs need merging together first
+since this is complicated stuff, and should not be duplicated
+many times.
+
+Also the ability to chose which base [or not] categories are
+used in the main entry screen.

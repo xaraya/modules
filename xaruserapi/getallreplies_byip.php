@@ -32,17 +32,15 @@ function xarbb_userapi_getallreplies_byip($args)
 {
     extract($args);
 
-    if ( !isset($modid) || empty($modid) ) {
-        $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-                                 'modid', $modid, 'userapi', 'get_multiple', 'comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Invalid #(1) [#(2)]', 'modid', $modid);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
     // Optional argument for Pager - 
     // for those modules that use comments and require this
-     if (!isset($startnum)) {
+    if (!isset($startnum)) {
         $startnum = 1;
     } 
     if (!isset($numitems)) {
@@ -70,15 +68,15 @@ function xarbb_userapi_getallreplies_byip($args)
         $bindvars[] = $hostname;
     }
 
-
     $sql .= " ORDER BY $ctable[left]";
 
     //Add select limit for modules that call this function and need Pager
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);
     } else {
-       $result =& $dbconn->Execute($sql,$bindvars);
+        $result =& $dbconn->Execute($sql, $bindvars);
     }
+
     //$result =& $dbconn->Execute($sql);
     if (!$result) return;
 

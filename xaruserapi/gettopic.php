@@ -21,6 +21,7 @@
 function xarbb_userapi_gettopic($args)
 {
     extract($args);
+
     if (!isset($tid)) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -31,14 +32,16 @@ function xarbb_userapi_gettopic($args)
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
     $xbbforumstable = $xartable['xbbforums'];
+
     // Get link
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                   array('cids' => array(),
-                                        'modid' => xarModGetIDFromName('xarbb')));
+    $categoriesdef = xarModAPIFunc(
+        'categories','user','leftjoin',
+        array('cids' => array(), 'modid' => xarModGetIDFromName('xarbb'))
+    );
     if (empty($categoriesdef)) return;
 
-// CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
-//          Do we want to support that in the future ?
+    // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
+    //          Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
     $query = "SELECT xar_tid, $xbbtopicstable.xar_fid, xar_ttitle, xar_tpost, xar_tposter, xar_ttime,"
@@ -60,6 +63,7 @@ function xarbb_userapi_gettopic($args)
     }
     list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname, $toptions, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
+
     // Bug 4307
     // if (!xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid")) return;
     $topic = array(

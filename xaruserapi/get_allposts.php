@@ -35,20 +35,14 @@ function xarbb_userapi_get_allposts($args)
     extract($args);
     $modid=xarModGetIDFromName('xarbb');
 
-    if ( !isset($modid) || empty($modid) ) {
-        $msg = xarML(
-            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-            'modid', $modid, 'userapi', 'get_multiple', 'comments'
-        );
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Invalid #(1) [#(2)]', 'modid', $modid);
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
-    if ( (!isset($objectid) || empty($objectid)) && !isset($author) ) {
-        $msg = xarML(
-            'Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
-            'objectid', $objectid, 'userapi', 'get_multiple', 'comments'
-        );
+    if ((!isset($objectid) || empty($objectid)) && !isset($author)) {
+        $msg = xarML('Invalid #(1) [#(2)]', 'objectid', $objectid);
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     } elseif (!isset($objectid) && isset($author)) {
@@ -99,7 +93,8 @@ function xarbb_userapi_get_allposts($args)
               FROM  $xartable[comments]
              WHERE  $ctable[modid]=? AND $ctable[objectid]=?
                AND  $ctable[status]=?";
-// objectid is still a string for now
+
+    // objectid is still a string for now
     $bindvars = array((int) $modid, (string) $objectid, (int) $status);
 
 
@@ -120,7 +115,6 @@ function xarbb_userapi_get_allposts($args)
         $bindvars[] =  (int) $nodelr['xar_right'];
     }
 
-
     $sql .= " ORDER BY $ctable[cdate] DESC";
 
     //Add select limit for modules that call this function and need Pager
@@ -129,6 +123,7 @@ function xarbb_userapi_get_allposts($args)
     } else {
         $result =& $dbconn->Execute($query,$bindvars);
     }
+
     //$result =& $dbconn->Execute($sql);
     if (!$result) return;
 
@@ -138,7 +133,7 @@ function xarbb_userapi_get_allposts($args)
     }
 
     if (!xarModLoad('comments','renderer')) {
-        $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
+        $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;
     }

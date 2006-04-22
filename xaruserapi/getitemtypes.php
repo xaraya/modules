@@ -20,16 +20,17 @@ function xarbb_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-    $forums = xarModAPIFunc('xarbb',
-                            'user',
-                            'getallforums');
+    $forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
-    foreach($forums as $forum){
+    foreach($forums as $forum) {
         $itemtypevalue = $forum['fid'];
-        $itemtypes[$itemtypevalue] = array('label' => $forum['fname'] . ' ' . xarML('Forum'),
-                                           'title' => xarML('Individual Forum Configuration'),
-                                           'url' => xarModURL('xarbb','user','viewforum',array('fid' => $forum['fid'])));
+        $itemtypes[$itemtypevalue] = array(
+            'label' => xarML('#(1) Forum', $forum['fname']),
+            'title' => xarML('Individual Forum Configuration'),
+            'url' => xarModURL('xarbb', 'user', 'viewforum', array('fid' => $forum['fid']))
+        );
     }
+
     return $itemtypes;
 }
 

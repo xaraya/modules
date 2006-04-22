@@ -32,7 +32,7 @@ function xarbb_userapi_countforums($args)
     $wheres = array();
 
     if (@is_array($filter["catids"]) && xarModIsHooked('categories', 'xarbb', 1)) {
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
             array('cids' => $filter["catids"], 'modid' => xarModGetIDFromName('xarbb'))
         );
 

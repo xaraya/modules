@@ -12,44 +12,41 @@ function xarbb_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    $forums = xarModAPIFunc('xarbb',
-                            'user',
-                            'getallforums');
+    $forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
     // Get the category assignments for these forums
     $fidlist = array();
     foreach ($forums as $forum) {
         $fidlist[] = $forum['fid'];
     }
-    $cids = xarModAPIFunc('categories',
-                          'user',
-                          'getlinks',
-                          array('iids' => $fidlist,
-                                'reverse' => 1,
-                                'modid' => xarModGetIDFromName('xarbb')));
+    $cids = xarModAPIFunc('categories', 'user', 'getlinks',
+        array('iids' => $fidlist, 'reverse' => 1, 'modid' => xarModGetIDFromName('xarbb'))
+    );
 
     foreach ($forums as $forum) {
         $pass = true;
         if (isset($cids[$forum['fid']]) && count($cids[$forum['fid']]) > 0) {
             // Note: if forums are assigned to more than 1 category (= future), then we need read access to all here
             foreach ($cids[$forum['fid']] as $cid) {
-// CHECKME: are you sure the security instance looks like <catid>:<forumid> here ?
-                if (!xarSecurityCheck('ReadxarBB',0,'Forum',$cid.':'.$forum['fid'])) {
+                if (!xarSecurityCheck('ReadxarBB', 0, 'Forum', $cid . ':' . $forum['fid'])) {
                     $pass = false;
                     break;
                 }
             }
-        } elseif (!xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid'])) {
+        } elseif (!xarSecurityCheck('ReadxarBB', 0, 'Forum', 'All:' . $forum['fid'])) {
             $pass = false;
         }
+
         if($pass) {
-        $menulinks[] = Array('url'   => xarModURL('xarbb',
-                                                  'user',
-                                                  'viewforum', array('fid' => $forum['fid'])),
-                             'title' => $forum['fname'],
-                             'label' => $forum['fname']);
+            $menulinks[] = array(
+                'url'   => xarModURL('xarbb', 'user', 'viewforum', array('fid' => $forum['fid'])),
+                'title' => $forum['fname'],
+                'label' => $forum['fname']
+            );
         }
     }
+
     return $menulinks;
 }
+
 ?>

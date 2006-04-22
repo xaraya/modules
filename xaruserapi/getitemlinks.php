@@ -26,38 +26,39 @@ function xarbb_userapi_getitemlinks($args)
 
     // forums
     if (empty($itemtype)) {
-         $forums = xarModAPIFunc('xarbb','user','getallforums');
-         if (empty($forums)) {
-             return $itemlinks;
-         }
-         foreach ($forums as $forum) {
-             if (!empty($itemids) && !in_array($forum['fid'],$itemids)) continue;
-             $itemlinks[$forum['fid']] = array('url'   => xarModURL('xarbb', 'user', 'viewforum',
-                                                                 array('fid' => $forum['fid'])),
-                                               'title' => xarML('View Forum'),
-                                               'label' => xarVarPrepForDisplay($forum['fname']));
-         }
+        $forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
+        if (empty($forums)) {
+            return $itemlinks;
+        }
+        foreach ($forums as $forum) {
+            if (!empty($itemids) && !in_array($forum['fid'], $itemids)) continue;
 
-    // topics
+            $itemlinks[$forum['fid']] = array(
+                'url'   => xarModURL('xarbb', 'user', 'viewforum', array('fid' => $forum['fid'])),
+                'title' => xarML('View Forum'),
+                'label' => xarVarPrepForDisplay($forum['fname'])
+            );
+         }
     } else {
-         if (empty($itemids)) {
-             $topics = xarModAPIFunc('xarbb','user','getalltopics',
-                                     array('fid' => $itemtype));
-         } else {
-             $topics = xarModAPIFunc('xarbb','user','getalltopics',
-                                     array('tids' => $itemids));
-         }
-         if (empty($topics)) {
-             return $itemlinks;
-         }
-         foreach ($topics as $topic) {
-             $itemlinks[$topic['tid']] = array('url'   => xarModURL('xarbb', 'user', 'viewtopic',
-                                                                 array('tid' => $topic['tid'])),
-                                               'title' => xarML('View Topic'),
-                                               'label' => xarVarPrepForDisplay($topic['ttitle']));
-         }
+        // topics
+        if (empty($itemids)) {
+            $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics', array('fid' => $itemtype));
+        } else {
+            $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics', array('tids' => $itemids));
+        }
+        if (empty($topics)) {
+            return $itemlinks;
+        }
+        foreach ($topics as $topic) {
+            $itemlinks[$topic['tid']] = array(
+                'url'   => xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $topic['tid'])),
+                'title' => xarML('View Topic'),
+                'label' => xarVarPrepForDisplay($topic['ttitle'])
+            );
+        }
     }
 
     return $itemlinks;
 }
+
 ?>

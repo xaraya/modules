@@ -28,6 +28,7 @@ function xarbb_userapi_searchtopics($args)
     $xartable =& xarDBGetTables();
     $ctable = &$xartable['xbbtopics'];
     $where = '';
+
     // initialize the commentlist array
     $commentlist = array();
     $sql = "SELECT  xar_ttitle,
@@ -76,7 +77,7 @@ function xarbb_userapi_searchtopics($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_author'] = xarUserGetVar('name',$row['xar_tposter']);
+        $row['xar_author'] = xarUserGetVar('name', $row['xar_tposter']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
@@ -84,4 +85,5 @@ function xarbb_userapi_searchtopics($args)
     $result->Close();
     return $commentlist;
 }
+
 ?>

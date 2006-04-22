@@ -21,7 +21,7 @@ function xarbb_userapi_getforum($args)
     extract($args);
 
     if (empty($fid) && empty($fname)) {
-        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -55,10 +55,11 @@ function xarbb_userapi_getforum($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']}";
+
     if (!empty($fid) && is_numeric($fid)) {
         $query .= " AND xar_fid = ?";
         $bindvars[] = $fid;
-    }elseif (!empty($forder) && is_numeric($forder)) {
+    } elseif (!empty($forder) && is_numeric($forder)) {
         $query .= " AND xar_forder = ?";
         $bindvars[] = $forder;
     } else {
@@ -69,7 +70,7 @@ function xarbb_userapi_getforum($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-// FIXME: if forums are assigned to more than 1 category, this will only return the first one
+    // FIXME: if forums are assigned to more than 1 category, this will only return the first one
     list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $forder, $catid) = $result->fields;
     $result->Close();
 

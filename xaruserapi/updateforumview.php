@@ -33,7 +33,7 @@ function xarbb_userapi_updateforumview($args)
 
     // Argument check
     if (empty($fid)) {
-        $msg = xarML('Invalid Parameter Count in #(1)api_#(2) in module #(3)', 'user', 'updateforumsview', 'xarbb');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -48,18 +48,18 @@ function xarbb_userapi_updateforumview($args)
     } else {
         $time = time();
     }
+
     $options = array();
     $options['tid'] = $tid;
     $options['ttitle'] = $ttitle;
-    $options['treplies'] = empty($treplies) ? 0 : $treplies;
+    $options['treplies'] = (empty($treplies) ? 0 : $treplies);
     $options = serialize($options);
 
-// TODO: shouldn't xar_fpostid contain the last post id someday ?
+    // TODO: shouldn't xar_fpostid contain the last post id someday ?
 
     // Update the forum
-    $query = "UPDATE $xbbforumstable
-            SET xar_fpostid     = ?,
-                xar_foptions    = ?,";
+    $query = "UPDATE $xbbforumstable SET xar_fpostid = ?, xar_foptions = ?,";
+
     if (!empty($topics) && is_numeric($topics)) {
         if ($move == 'positive') {
             $query .= " xar_ftopics = (xar_ftopics + $topics),";
@@ -69,6 +69,7 @@ function xarbb_userapi_updateforumview($args)
     } elseif (isset($ftopics) && is_numeric($ftopics)) { // for sync
         $query .= " xar_ftopics = $ftopics,";
     }
+
     if (!empty($replies) && is_numeric($replies)) {
         if ($move == 'positive') {
             $query .= " xar_fposts = (xar_fposts + $replies),";
@@ -78,11 +79,14 @@ function xarbb_userapi_updateforumview($args)
     } elseif (isset($fposts) && is_numeric($fposts)) { // for sync
         $query .= " xar_fposts = $fposts,";
     }
+
     $query .= "   xar_fposter   = ?
             WHERE xar_fid       = ?";
     $result =& $dbconn->Execute($query, array($time, $options, $fposter, $fid));
     if (!$result) return;
+
     // Let the calling process know that we have finished successfully
     return true;
 }
+
 ?>

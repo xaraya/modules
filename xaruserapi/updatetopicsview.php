@@ -20,23 +20,17 @@ function xarbb_userapi_updatetopicsview($args)
 
     // Argument check
     if (!isset($tid)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid parameter count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($treplies)) {
-        $topic = xarModAPIFunc('xarbb',
-                              'user',
-                              'gettopic',
-                              array('tid' => $tid));
+        $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
 
         if (empty($topic)) {
             $msg = xarML('No Such Topic Present');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                            'MISSING_DATA',
-                             new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
 
@@ -48,37 +42,37 @@ function xarbb_userapi_updatetopicsview($args)
         $modid = xarModGetIDFromName('xarbb');
         $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
 
-        $treplies = xarModAPIFunc('comments','user','get_count',
-                                  array('modid' => $modid,
-                                        'itemtype' => $topic['fid'],
-                                        'objectid' => $tid));
+        $treplies = xarModAPIFunc('comments', 'user', 'get_count',
+            array('modid' => $modid, 'itemtype' => $topic['fid'], 'objectid' => $tid)
+        );
+
         // get the last comment
-        $comments = xarModAPIFunc('comments',
-                                  'user',
-                                  'get_multiple',
-                                  array('modid'    => $modid,
-                                        'itemtype' => $topic['fid'],
-                                        'objectid' => $tid,
-                                        'startnum' => $treplies,
-                                        'numitems' => 1));
-        $totalcomments=count($comments);
-        $isanon=0;
-        if ($totalcomments >0) {
+        $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
+            array(
+                'modid'    => $modid,
+                'itemtype' => $topic['fid'],
+                'objectid' => $tid,
+                'startnum' => $treplies,
+                'numitems' => 1
+            )
+        );
+
+        $totalcomments = count($comments);
+        $isanon = 0;
+        if ($totalcomments > 0) {
             $isanon=$comments[$totalcomments-1]['xar_postanon'];
             $time = $comments[$totalcomments-1]['xar_datetime'];
         }
-        if ($isanon==1) {
+
+        if ($isanon == 1) {
             $treplier = $anonuid;
-        } elseif ($totalcomments >0) {
+        } elseif ($totalcomments > 0) {
             $treplier = $comments[$totalcomments-1]['xar_uid'];
         }
 
     }
 
-    $param = array(
-        "tid" => $tid,
-        "treplies" => $treplies,
-        );
+    $param = array("tid" => $tid, "treplies" => $treplies);
 
     if (isset($treplier)) {
         $param["treplier"] = $treplier;
@@ -95,7 +89,7 @@ function xarbb_userapi_updatetopicsview($args)
     $param['nohooks'] = true;
   
     // Update the topic: call api func
-    if(!xarModAPIFunc('xarbb','user','updatetopic',$param)) return;
+    if (!xarModAPIFunc('xarbb', 'user', 'updatetopic', $param)) return;
 
     // Let the calling process know that we have finished successfully
     return true;

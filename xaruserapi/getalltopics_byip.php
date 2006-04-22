@@ -41,24 +41,28 @@ function xarbb_userapi_getalltopics_byip($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+
     $xbbtopicstable = $xartable['xbbtopics'];
     $xbbforumstable = $xartable['xbbforums'];
+
     if (!xarModAPILoad('categories', 'user')) return;
+
     // Get link
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                   array('cids' => $cids,
-                                        'modid' => xarModGetIDFromName('xarbb')));
+    $categoriesdef = xarModAPIFunc(
+        'categories','user','leftjoin',
+        array('cids' => $cids, 'modid' => xarModGetIDFromName('xarbb'))
+    );
   
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
     // Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
-    $query = "SELECT xar_tposter,
-                     xar_thostname
-            FROM $xbbtopicstable ";
+    $query = "SELECT xar_tposter, xar_thostname FROM $xbbtopicstable ";
+
     // Get by UID
     $query .= "WHERE $xbbtopicstable.xar_thostname = ?";
     $bindvars = array($ip);
+
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
@@ -73,10 +77,11 @@ function xarbb_userapi_getalltopics_byip($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($tposter, $thostname) = $result->fields;
 
-        $topics[] = array('tposter'    => $tposter,
-                          'thostname'  => $thostname);
+        $topics[] = array('tposter'    => $tposter, 'thostname'  => $thostname);
     }
+
     $result->Close();
     return $topics;
 }
+
 ?>

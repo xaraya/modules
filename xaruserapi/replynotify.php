@@ -14,7 +14,7 @@ function xarbb_userapi_replynotify($args)
 {
     extract($args);
     if (empty($tid)) {
-        $msg = xarML('Invalid Parameter Count');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -23,7 +23,7 @@ function xarbb_userapi_replynotify($args)
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
 
     // Let's see if there are subscribers, else move on, nothing to see.
-    if (!empty($data['toptions'])){
+    if (!empty($data['toptions'])) {
         $topicoptions = unserialize($data['toptions']);
     } else {
         return true;
@@ -68,7 +68,6 @@ function xarbb_userapi_replynotify($args)
         ) return;
     }
 
-    // Blee da Blee, that's all folks.
     return true;
 }
 

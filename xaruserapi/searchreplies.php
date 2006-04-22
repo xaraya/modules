@@ -32,6 +32,7 @@ function xarbb_userapi_searchreplies($args)
     // initialize the commentlist array
     $commentlist = array();
 
+    // TODO: hard-coded '300'?
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_date,
                     $ctable[author] AS xar_author,
@@ -67,6 +68,7 @@ function xarbb_userapi_searchreplies($args)
         if (isset($title) || isset($text)) {
             $sql .= " OR ";
         }
+
         if ($author == 'anonymous') {
             $sql .= " $ctable[author] = ? OR $ctable[postanon] = ?";
             $bindvars[] = $uid;
@@ -93,11 +95,13 @@ function xarbb_userapi_searchreplies($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_name'] = xarUserGetVar('name',$row['xar_author']);
+        $row['xar_name'] = xarUserGetVar('name', $row['xar_author']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
+
     $result->Close();
     return $commentlist;
 }
+
 ?>

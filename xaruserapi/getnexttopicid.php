@@ -24,8 +24,7 @@ function xarbb_userapi_getnexttopicid($args)
     extract($args);
 
     if (empty($tid) && (empty($fid) || empty($ttime))) {
-        $msg = xarML('Invalid Parameter Count in #(1) function #(2) of module #(3)',
-                     'userapi', 'getnexttopicid', 'xarbb');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -40,7 +39,7 @@ function xarbb_userapi_getnexttopicid($args)
                   FROM $xbbtopicstable
                   WHERE xar_fid = ? AND xar_ttime > ?
                   ORDER BY xar_ttime ASC";
-        $result =& $dbconn->SelectLimit($query, 1, 0, array((int)$fid,(int)$ttime));
+        $result =& $dbconn->SelectLimit($query, 1, 0, array((int)$fid, (int)$ttime));
     } else {
         $query = "SELECT t1.xar_tid
                   FROM $xbbtopicstable t1, $xbbtopicstable t2
@@ -59,8 +58,8 @@ function xarbb_userapi_getnexttopicid($args)
 
     $result->Close();
 
-// let viewtopic worry about security check - we're only getting a topicid here
-//    if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
+    // let viewtopic worry about security check - we're only getting a topicid here
+    //    if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
 
     return $topicid;
 }

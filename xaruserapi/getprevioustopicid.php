@@ -24,8 +24,7 @@ function xarbb_userapi_getprevioustopicid($args)
     extract($args);
 
     if (empty($tid) && (empty($fid) || empty($ttime))) {
-        $msg = xarML('Invalid Parameter Count in #(1) function #(2) of module #(3)',
-                     'userapi', 'getprevioustopicid', 'xarbb');
+        $msg = xarML('Invalid parameter count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -59,8 +58,8 @@ function xarbb_userapi_getprevioustopicid($args)
 
     $result->Close();
 
-// let viewtopic worry about security check - we're only getting a topicid here
-//    if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
+    // let viewtopic worry about security check - we're only getting a topicid here
+    //    if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
 
     return $topicid;
 }

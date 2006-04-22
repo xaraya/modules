@@ -22,7 +22,7 @@ function xarbb_userapi_getalltopics_byunanswered($args)
 {
     extract($args);
 
-     // Optional argument
+    // Optional argument
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -35,13 +35,16 @@ function xarbb_userapi_getalltopics_byunanswered($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+
     $xbbtopicstable = $xartable['xbbtopics'];
     $xbbforumstable = $xartable['xbbforums'];
     if (!xarModAPILoad('categories', 'user')) return;
+
     // Get link
-    $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                   array('cids' => $cids,
-                                        'modid' => xarModGetIDFromName('xarbb')));
+    $categoriesdef = xarModAPIFunc(
+        'categories', 'user', 'leftjoin',
+        array('cids' => $cids, 'modid' => xarModGetIDFromName('xarbb'))
+    );
   
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
     // Do we want to support that in the future ?
@@ -70,6 +73,7 @@ function xarbb_userapi_getalltopics_byunanswered($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
+
     // Get by UID
     $query .= "AND $xbbtopicstable.xar_treplies = 0";
         //bug # 2531 -  prevent duplicates now
@@ -92,28 +96,32 @@ function xarbb_userapi_getalltopics_byunanswered($args)
         list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
         $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
 
-        if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))    {
-            $topics[] = array('tid'     => $tid,
-                   'fid'     => $fid,
-                   'ttitle'  => $ttitle,
-                   'tpost'   => $tpost,
-                   'tposter' => $tposter,
-                   'ttime'   => $ttime,
-                   'tftime'  => $tftime,
-                   'treplies'=> $treplies,
-                   'tstatus' => $tstatus,
-                   'treplier'=> $treplier,
-                   'fname'   => $fname,
-                   'fdesc'   => $fdesc,
-                   'ftopics' => $ftopics,
-                   'fposts'  => $fposts,
-                   'fposter' => $fposter,
-                   'fpostid' => $fpostid,
-                   'fstatus' => $fstatus,
-                   'catid'   => $catid);
+        if (xarSecurityCheck('ReadxarBB', 0, 'Forum', "$catid:$fid")) {
+            $topics[] = array(
+                'tid'     => $tid,
+                'fid'     => $fid,
+                'ttitle'  => $ttitle,
+                'tpost'   => $tpost,
+                'tposter' => $tposter,
+                'ttime'   => $ttime,
+                'tftime'  => $tftime,
+                'treplies'=> $treplies,
+                'tstatus' => $tstatus,
+                'treplier'=> $treplier,
+                'fname'   => $fname,
+                'fdesc'   => $fdesc,
+                'ftopics' => $ftopics,
+                'fposts'  => $fposts,
+                'fposter' => $fposter,
+                'fpostid' => $fpostid,
+                'fstatus' => $fstatus,
+                'catid'   => $catid
+            );
         }
     }
+
     $result->Close();
     return $topics;
 }
+
 ?>

@@ -21,21 +21,19 @@ function xarbb_userapi_formhooks($args)
     $hooks = array();
     // call the right hooks, i.e. not the ones for the comments module :)
     //<jojodee> also add the correct itemtype - we can then call specific form transform
-    $hooks['formaction'] =  xarModCallHooks('item', 'formaction', '', array(), 'xarbb',$itemtype);
-    $hooks['formdisplay'] = xarModCallHooks('item', 'formdisplay','', array(), 'xarbb',$itemtype);
-
-
+    $hooks['formaction'] =  xarModCallHooks('item', 'formaction', '', array(), 'xarbb', $itemtype);
+    $hooks['formdisplay'] = xarModCallHooks('item', 'formdisplay','', array(), 'xarbb', $itemtype);
 
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';
     } elseif (is_array($hooks['formaction'])) {
-        $hooks['formaction'] = join('',$hooks['formaction']);
+        $hooks['formaction'] = join('', $hooks['formaction']);
     }
 
     if (empty($hooks['formdisplay'])){
         $hooks['formdisplay'] = '';
     } elseif (is_array($hooks['formdisplay'])) {
-        $hooks['formdisplay'] = join('',$hooks['formdisplay']);
+        $hooks['formdisplay'] = join('', $hooks['formdisplay']);
     }
 
     return $hooks;
