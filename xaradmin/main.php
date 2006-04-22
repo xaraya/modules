@@ -26,7 +26,7 @@ function keywords_admin_main()
 {
     // Security Check
     if (!xarSecurityCheck('AdminKeywords')) return;
-    //xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
+    xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
     // success
     return array();//true;
 }
