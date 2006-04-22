@@ -1,0 +1,25 @@
+<xar:comment>
+    Controls for a forum
+    TODO: make the newtopic button more relevant - need POST privilage
+    on this specific forum, not just general post privilege on *at least
+    one* forum (which it is here).
+</xar:comment>
+
+<xar:sec mask="PostxarBB" catch="false">
+    <xar:template file="newtopic-ml-button" type="module" />
+</xar:sec>
+
+<span class="xar-sub">
+    <a href="#xarModUrl('xarbb', 'user', 'main')#">
+        <xar:mlstring>Forum Index</xar:mlstring>
+    </a>
+    <span style="font-size: larger;">&#187;</span>
+    <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+        #$catname# 
+    </a>
+    <span style="font-size: larger;">&#187;</span>
+    <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+        #$fname# 
+    </a>
+</span>
+

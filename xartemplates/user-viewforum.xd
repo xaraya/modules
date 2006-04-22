@@ -49,27 +49,11 @@
         </h1>
 
         <div class="xarbb-topiccontrols">
-            <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)"/>
+            <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)" />
         </div>
 
         <div class="xarbb-topiccontrols">
-            <xar:sec mask="PostxarBB" catch="false">
-                <xar:template file="newtopic-ml-button" type="module" />
-            </xar:sec>
-
-            <span class="xar-sub">
-                <a href="#xarModUrl('xarbb', 'user', 'main')#">
-                    <xar:mlstring>Forum Index</xar:mlstring>
-                </a>
-                <span style="font-size: larger;">&#187;</span>
-                <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
-                    #$catname# 
-                </a>
-                <span style="font-size: larger;">&#187;</span>
-                <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-                    #$fname# 
-                </a>
-            </span>
+            <xar:template file="forum-topic-controls" type="module" />
         </div>
     </div>
     <div style="clear: both;"></div>
@@ -191,37 +175,21 @@
             </tr>
         </xar:loop>
     </table>
+
     <div style="clear: both;"></div>
 </div>
+
 
 <xar:comment>Bottom zone - the topic footer</xar:comment>
 <div class="xarbb-noteswrapper">
     <div class="xarbb-topiccontrols">
-        <xar:sec mask="PostxarBB" catch="false">
-            <xar:template file="newtopic-ml-button" type="module" />
-            <xar:comment>
-                <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-                    <img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
-                </a>
-            </xar:comment>
-        </xar:sec>
-        <span class="xar-sub">
-            <a href="#xarModUrl('xarbb', 'user', 'main')#">
-                <xar:mlstring>Forum Index</xar:mlstring>
-            </a>
-            <span style="font-size: larger;">&#187;</span>
-            <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
-                #$catname# 
-            </a>
-            <span style="font-size: larger;">&#187;</span>
-            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-                #$fname# 
-            </a>
-        </span>
+        <xar:template file="forum-topic-controls" type="module" />
     </div>
+
     <div class="xar-sub rightnote">
         <xar:if condition="!empty($pager)">#$pager#</xar:if>
     </div>
+
     <div style="clear: both;"></div>
 </div>
 
