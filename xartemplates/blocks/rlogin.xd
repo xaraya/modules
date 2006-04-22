@@ -29,15 +29,9 @@
 
     <xar:if condition="xarModGetVar('registration', 'allowregistration')">
         <p>
-            <xar:if condition="xarModGetVar('registration', 'minage') eq 0">
-                <a href="&xar-modurl-registration-user-register;&amp;phase=registerform">
+            <a href="&xar-modurl-registration-user-main;">
                     <xar:mlstring>Register new account</xar:mlstring>
-                </a>
-            <xar:else />
-                <a href="&xar-modurl-registration-user-register;&amp;phase=checkage">
-                    <xar:mlstring>Register new account</xar:mlstring>
-                </a>
-            </xar:if>
+            </a>
         </p>
     </xar:if>
 
