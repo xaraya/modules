@@ -76,60 +76,13 @@ president@whitehouse.gov';
     $ips = '';
     $disallowedips = serialize($ips);
     xarModSetVar('registration', 'disallowedips', $disallowedips);
-   //Let's check for an authsystem login block
-    $dbconn =& xarDBGetConn();
-    $tables =& xarDBGetTables();
-
-    $sitePrefix = xarDBGetSiteTablePrefix();
-    $blocktypeTable = $sitePrefix .'_block_types';
-    $blockinstanceTable = $sitePrefix .'_block_instances';
-        $query = "SELECT xar_id,
-                         xar_type,
-                         xar_module
-                         FROM $blocktypeTable
-                 WHERE xar_type='login' and xar_module='authsystem'";
-        $result =& $dbconn->Execute($query);
-        if (!$result) return;
-        list($blocktypeid,$blocktype,$module)= $result->fields;
-        $blocktype = array('id' => $blocktypeid,
-                           'blocktype' => $blocktype,
-                           'module'=> $module);
-
-       if (is_array($blocktype) && $blocktype['module']=='authsystem') {
-       $blocktypeid=$blocktype['id'];
-       //Find the block instance
-       $query = "SELECT xar_id
-                         FROM $blockinstanceTable
-                 WHERE xar_type_id=?";
-        $result =& $dbconn->Execute($query,array($blocktypeid));
-        list($blockid)= $result->fields;
-        if (isset($blockid)) {
-           // remove this login block type and block from authsystem
-    	    $result = xarModAPIfunc('blocks', 'admin', 'delete_instance', array('bid'=>$blockid));
-        }
-       }
-
-    // Register blocks
+   // Register blocks - same as authsystem but has a registration link
     $tid = xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
             array('modName' => 'registration',
                 'blockType' => 'rlogin'));
     if (!$tid) return;
-
-
-    if (!xarModAPIFunc('blocks', 'user', 'get', array('name'  => 'rlogin'))) {
-        $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
-        if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
-                           array('title'    => 'User Access',
-                                 'name'     => 'rlogin',
-                                 'type'     => $tid,
-                                 'groups'    => array($rightgroup),
-                                 'template' => '',
-                                 'state'    => 2))) {
-            return;
-        }
-    }
 
     return true;
 }
