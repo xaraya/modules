@@ -31,11 +31,13 @@ function registration_user_main()
 		xarResponseRedirect(xarModURL($authenticationmod,
 									  'user',
 									  'showloginform'));
-	} else {
-		xarResponseRedirect(xarModURL('registration',
-									  'user',
-									  'register'));
-
+	} else { //allow user to register
+        $minage = xarModGetVar('registration', 'minage');
+		if (($minage)>0) {
+            xarResponseRedirect(xarModURL('registration','user','register', array('phase'=>'checkage')));
+        }else{
+            xarResponseRedirect(xarModURL('registration','user','register'));
+        }
 	}
 	return true;
 }
