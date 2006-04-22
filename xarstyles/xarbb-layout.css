@@ -65,7 +65,7 @@ div.xarbb-messagecontrols .rightnote {
 
 /* forum table - perfectly styleable with css - see http://www.w3.org/TR/REC-CSS2/tables.html */
 div#xarbb-tablewrapper {
-    float: left;
+    /*float: left;*/
     width: 100%;
     text-align: center;
 }
@@ -173,29 +173,67 @@ div#xarbb-loginwrapper label {
 	padding: 0 .2em 0 1em;
 }
 
-/* legend icons */
+
+/* legend icons (no longer used in default templates) */
 div.xarbb-legendwrapper {
     width: 100%;
     float: left;
     margin-top: .5em;
     text-align: center;
 }
-
 div.xarbb-legendwrapper span {
 	padding: 0 .2em 0 1em;
 }
-
 div.xarbb-legendwrapper span.spacedout {
     width: 15em;
     float: left;
     text-align: left;
 }
-
 div.xarbb-legendwrapper span img,
 div.xarbb-topiccontrols span img {
     vertical-align: middle;
     display: inline;
 }
+
+
+
+/*
+	New legend styles (with semantics).
+	Here you can control what gets displayed, put the legend
+	into a box etc.
+*/
+div.xarbb-legendwrapper2 {
+	margin: 1em 0;
+	clear: both;
+}
+div.xarbb-legendwrapper2 dl {
+	text-align: left;
+    width: auto;
+    float: none;
+	padding: 0;
+	margin: 0;
+}
+div.xarbb-legendwrapper2 h2 {
+	text-align: center;
+}
+div.xarbb-legendwrapper2 dl dt {
+	/* We are going to hide the definition terms for now, but display them if you want
+	   titles on each group of legend icons. */
+	display: none;
+}
+div.xarbb-legendwrapper2 dl dd {
+	display: inline;
+	width: 15em;
+	white-space: pre;
+	float: left;
+	padding: 0.5em 0;
+}
+div.xarbb-legendwrapper2 dl dd img {
+    vertical-align: middle;
+    display: inline;
+}
+
+
 
 div.xarbb-topiccontrols span a {
 	padding: 0 .2em;
