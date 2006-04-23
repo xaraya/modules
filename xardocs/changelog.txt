@@ -445,3 +445,5 @@ Bug 5554 partly MLS string building
 Bug 5530 Type in alerts
 Bug 5504 Don't put all fields in linked events
 Bug 5525 Rewrite colorizing of bullet, to validate better.
+Bug 5597 Viewevents now checks for access to linked events
+-Rewrite of viewevent template. That uses now divs to style it. No more tables... be aware when you have created your own.
