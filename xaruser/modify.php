@@ -40,6 +40,16 @@ function helpdesk_user_modify($args)
     );
     if( !$has_security ){ return false; }
 
+    /*
+        Get the ticket Data
+    */
+    $ticket = xarModAPIFunc('helpdesk','user','getticket',
+        array(
+            'tid'            => $tid,
+            'security_level' => SECURITY_WRITE
+        )
+    );
+
     // If we have confirmation do the update
     if( !empty($confirm) )
     {
@@ -83,7 +93,8 @@ function helpdesk_user_modify($args)
         {
             $mailaction = 'closed';
             $params['mailaction'] = $mailaction;
-            $params['email']      = xarUserGetVar('email', $openedby);
+            // This breaks if an anon user.  Nee
+            $params['email']      = $ticket['email'];
             $params['status']     = $statusid;
             $mail = xarModFunc('helpdesk','user','sendmail', $params);
             // Check if the email has been sent.
@@ -100,21 +111,8 @@ function helpdesk_user_modify($args)
         return true;
     }
 
-    /*
-        Get the ticket Data, if we can not get it then we must not have privs for it.
-    */
-    $data['ticketdata']   = xarModAPIFunc('helpdesk','user','getticket',
-        array(
-            'tid'            => $tid,
-            'security_level' => SECURITY_WRITE
-        )
-    );
-    if( empty($data['ticketdata']) )
-    {
-        $msg = xarML("You do not have the proper security clearance to view this ticket!");
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
-        return false;
-    }
+    $data = array();
+    $data['ticketdata'] = $ticket;
 
     /*
         These funcs should be rethought once we get the rest working

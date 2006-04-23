@@ -68,6 +68,7 @@ function helpdesk_user_add_history($args)
                     'subject'     => $ticket['subject'],
                     'status'      => $statusid,
                     'openedby'    => $ticket['openedby'],
+                    'email'       => $ticket['email'], // done for anon submitted tickets
                     'assignedto'  => $ticket['assignedto'],
                     'closedby'    => $ticket['closedby'],
                     'comment'     => $comment,
@@ -91,6 +92,7 @@ function helpdesk_user_add_history($args)
                 'subject'     => $ticket['subject'],
                 'status'      => $statusid,
                 'openedby'    => $ticket['openedby'],
+                'email'       => $ticket['email'], // done for anon submitted tickets
                 'assignedto'  => $ticket['assignedto'],
                 'closedby'    => $ticket['closedby'],
                 'comment'     => $comment,

@@ -44,6 +44,8 @@ function helpdesk_user_sendmail($args)
         'priority'    => isset($priority) ? $priority : null,
         'status'      => $status,
         'openedby'    => $openedby,
+        // Not perfect but a start
+        'openedby_email'=> isset($email) ? $email : xarUserGetVar('email',$openedby),
         'assignedto'  => $assignedto,
         'closedby'    => $closedby,
         // Issue and notes vars are only needed for new tickets
@@ -70,7 +72,7 @@ function helpdesk_user_sendmail($args)
             $mail_args = array();
             $mail_args['userid'] = $ticket_args['openedby'];
             $mail_args['name'] = xarUserGetVar('name',$ticket_args['openedby']);
-            $mail_args['email'] = xarUserGetVar('email',$ticket_args['openedby']);
+            $mail_args['email'] = $ticket_args['openedby_email'];
             $mail_args['mailsubject'] =
                 xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
             $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
@@ -117,7 +119,11 @@ function helpdesk_user_sendmail($args)
                     $mail_args = array();
                     $mail_args['userid'] = $ticket_args[$user];
                     $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
-                    $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
+                    // done for anon submitted tickets
+                    if( $user == 'openedby' )
+                        $mail_args['email'] = $ticket_args['openedby_email'];
+                    else
+                        $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
                     $mail_args['mailsubject'] =
                         "Closed: " . xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
                     $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
@@ -149,7 +155,11 @@ function helpdesk_user_sendmail($args)
                     $mail_args = array();
                     $mail_args['userid'] = $ticket_args[$user];
                     $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
-                    $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
+                    // done for anon submitted tickets
+                    if( $user == 'openedby' )
+                        $mail_args['email'] = $ticket_args['openedby_email'];
+                    else
+                        $mail_args['email'] = xarUserGetVar('email',$ticket_args[$user]);
                     $mail_args['mailsubject'] =
                         xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
                     $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
@@ -174,6 +184,7 @@ function helpdesk_user_sendmail($args)
 
 function helpdesk_userapi_sendmail($mail_args, $htmlmessage=null, $textmessage=null)
 {
+    return true;
     $usermail = false;
     if( isset($mail_args['email']) )
     {

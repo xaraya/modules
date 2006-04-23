@@ -20,13 +20,13 @@
 function helpdesk_user_create($args)
 {
     if( !xarSecurityCheck('readhelpdesk') ){ return false; }
-
+/*
     if( !xarSecConfirmAuthKey() )
     {
         xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
         return false;
     }
-
+*/
     // Get some info about the mod and a ticket type id
     $modid = xarModGetIDFromName('helpdesk');
     xarModAPILoad('helpdesk');
@@ -37,7 +37,7 @@ function helpdesk_user_create($args)
     if( !xarVarFetch('userid',   'int:1:',   $userid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( empty($userid) ){ $userid = xarUserGetVar('uid'); }
     if( !xarVarFetch('phone',    'str:1:',   $phone,     '', XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('email',    'email:1:', $email,     '', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('email',    'str:1:',   $email,     '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('domain',   'str:1:',   $domain,    '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('subject',  'str:1:',   $subject,   '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('nontech',  'str:1:',   $nontech,   '', XARVAR_NOT_REQUIRED) ){ return false; }
@@ -53,6 +53,10 @@ function helpdesk_user_create($args)
     if( !xarVarFetch('cids',     'array',    $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('closeonsubmit','int', $closeonsubmit,0,XARVAR_NOT_REQUIRED) ){ return false; }
     //extract($args);
+
+    if( empty($name) ){ $name = xarUserGetVar('name', $openedby); }
+    if( empty($email) ){ $email = xarUserGetVar('email', $openedby); }
+    if( !isset($phone) ){ $phone = ''; }
 
     // If it is closed by someone, the ticket must be closed
     if( !empty($closedby) ){ $status = xarModGetVar('helpdesk', 'default_resolved_status'); }
@@ -112,6 +116,7 @@ function helpdesk_user_create($args)
     $mail = xarModFunc('helpdesk','user','sendmail',
         array(
             'phone'       => $phone,
+            'email'       => $email, // Needed for anon submitted tickets
             'subject'     => $subject,
             'domain'      => $domain,
             'source'      => $source,
@@ -126,7 +131,6 @@ function helpdesk_user_create($args)
             'mailaction'  => 'new'
         )
     );
-
     // Check if the email has been sent.
     if( $mail === false )
     {

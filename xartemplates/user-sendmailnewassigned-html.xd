@@ -9,7 +9,7 @@
 </p>
 <p>
     <strong><xar:mlstring>Name of submitter:</xar:mlstring></strong> #xarUserGetVar('name', $openedby)# <br />
-    <strong><xar:mlstring>Email of submitter:</xar:mlstring></strong> #xarUserGetVar('email', $openedby)#
+    <strong><xar:mlstring>Email of submitter:</xar:mlstring></strong> #$openedby_email#
 </p>
 <p>
     <strong><xar:mlstring>Subject:</xar:mlstring></strong> #$subject#

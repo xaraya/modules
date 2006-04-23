@@ -50,7 +50,8 @@ function helpdesk_userapi_getticket($args)
         'xar_id',
         'xar_updated',
         'xar_name',
-        'xar_phone'
+        'xar_phone',
+        'xar_email'
     );
     $tables = array($db_table);
     $left_join = array();
@@ -94,7 +95,7 @@ function helpdesk_userapi_getticket($args)
 
     list($priorityid, $sourceid, $openedby,   $subject,  $domain,
          $ticketdate, $statusid, $assignedto, $closedby, $ticket_id,
-         $lastupdate, $name,     $phone) = $results->fields;
+         $lastupdate, $name,     $phone,      $email) = $results->fields;
 
     $cats = xarModAPIFunc('categories', 'user', 'getitemcats',
         array(
@@ -108,6 +109,7 @@ function helpdesk_userapi_getticket($args)
         'tid'           => $ticket_id,
         'name'          => $name,
         'phone'         => $phone,
+        'email'         => $email,
         'priority'      => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid)),
         'prioritycolor' => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'priority', 'itemid' => $priorityid, 'field'=>'color')),
         'source'        => xarModAPIFunc('helpdesk', 'user', 'get', array('object' => 'source', 'itemid'   => $sourceid)),
