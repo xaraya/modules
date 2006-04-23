@@ -18,88 +18,85 @@
         </div>
         <h2>#$summary#</h2>
 
-        <ul class="xar-julian-eventlist">
-            <li style="color:#$color#;">
-                <div class="li-content">
-                    <div class="icons">
-                        <xar:if condition="xarModGetVar('julian','ical_links')">
-                            <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
-                                <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
-                            </a>
-                        </xar:if>
-                    </div>
-                    <xar:if condition="!$isallday">
-                         #$time# #$duration#
-                    <xar:else />
-                        #$time# <xar:mlstring>All Day Event</xar:mlstring>
-                    </xar:if>
-                </div>
-            </li>
-        </ul>
+        <div style="color:#$color#;display:inline">
+            <div class="icons" style="clear:none;vertical-align:middle">#$Bullet#
+                <xar:if condition="xarModGetVar('julian','ical_links')">
+                    <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
+                        <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
+                    </a>
+                </xar:if>
+            </div>
+            <xar:if condition="!$isallday">
+                 #$time# #$duration#
+            <xar:else />
+                #$time# <xar:mlstring>All Day Event</xar:mlstring>
+            </xar:if>
+        </div>
 
         <div id="table" style="margin-left:20px;">
             <div style="clear:both">
-                <div style="valign:top;float:left">
-                    <xar:set name="$hasLocation">0</xar:set>
-                    <xar:if condition="strcmp($location,'')">
-                    <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
-                        #$location#<br />
-                        <xar:set name="$hasLocation">1</xar:set>
+                <div style="vertical-align:top;float:left;width:30%">
+                    <xar:if condition="!empty($location) || !empty($street1) || !empty($street2) || !empty($state) || !empty($zip)">
+                        <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
+                        <xar:if condition="!empty($location)">
+                            #$location#<br />
+                        </xar:if>
+                        <xar:if condition="strcmp($street1,'')">
+                            #$street1#<br />
+                        </xar:if>
+                        <xar:if condition="strcmp($street2,'')">
+                            #$street2#<br />
+                        </xar:if>
+                            #$city#
+                        <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
+                             ,&nbsp;
+                        </xar:if>
+                        <xar:if condition="strcmp($state,'')">
+                            #$state#
+                        </xar:if>
+                        <xar:if condition="!empty($zip)">
+                             &nbsp;&nbsp;#$zip#
+                        </xar:if>
+                    <xar:comment>You can use this if you want to show a message
+                    <xar:else />
+                        <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
+                        <xar:mlstring>Unknown</xar:mlstring>
+                    </xar:comment>
                     </xar:if>
-                    <xar:if condition="strcmp($street1,'')">
-                        #$street1#<br />
-                        <xar:set name="$hasLocation">1</xar:set>
+                    <xar:if condition="!empty($contact) || !empty($phone) || !empty($email) | !empty($URL)" >
+                        <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
+                        <xar:if condition="strcmp($contact,'')">
+                             #$contact#<br />
+                        </xar:if>
+                        <xar:if condition="strcmp($phone,'')">
+                           Phone: #$phone#<br />
+                        </xar:if>
+                        <xar:if condition="!empty($email)">
+                            <a href="mailto:#$email#">#$email#</a><br />
+                        </xar:if>
+                        <xar:if condition="!empty($URL)">
+                            <a href="#$URL#">#$URL#</a><br />
+                        </xar:if>
+                    <xar:comment> Use this if you want to show a note
+                    <xar:else />
+                        <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
+                        <xar:mlstring>None</xar:mlstring><br />
+                    </xar:comment>
                     </xar:if>
-                    <xar:if condition="strcmp($street2,'')">
-                        #$street2#<br />
-                        <xar:set name="$hasLocation">1</xar:set>
+                    <xar:if condition="!empty($fee)">
+                        <strong><xar:mlstring>Fee:</xar:mlstring></strong><br />#$fee#
+                    <xar:comment> Use this if you want to show a note
+                    <xar:else />
+                        <strong><xar:mlstring>Fee:</xar:mlstring></strong><br /><xar:mlstring>Unknown</xar:mlstring>
+                    </xar:comment>
                     </xar:if>
-                        #$city#
-                    <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
-                         ,&nbsp;
-                    </xar:if>
-                    <xar:if condition="strcmp($state,'')">
-                        #$state#
-                    </xar:if>
-                    <xar:if condition="!empty($zip)">
-                         &nbsp;&nbsp;#$zip#
-                    </xar:if>
-                    <xar:if condition="strcmp($city,'') || strcmp($state,'') || strcmp($zip,'')">
-                         <xar:set name="$hasLocation">1</xar:set>
-                    </xar:if>
-                    <xar:if condition="!$hasLocation">
-                         <xar:mlstring>Unknown</xar:mlstring>
-                    </xar:if>
-                    <br />
-                    <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
-                    <xar:set name="$hasContact">0</xar:set>
-                    <xar:if condition="strcmp($contact,'')">
-                         #$contact#<br />
-                         <xar:set name="$hasContact">1</xar:set>
-                    </xar:if>
-                    <xar:if condition="strcmp($phone,'')">
-                       Phone: #$phone#<br />
-                        <xar:set name="$hasContact">1</xar:set>
-                    </xar:if>
-                    <xar:if condition="!empty($email)">
-                        <a href="mailto:#$email#">#$email#</a><br />
-                        <xar:set name="$hasContact">1</xar:set>
-                    </xar:if>
-                    <xar:if condition="!empty($URL)">
-                        <a href="#$URL#">#$URL#</a><br />
-                        <xar:set name="$hasContact">1</xar:set>
-                    </xar:if>
-                    <xar:if condition="!$hasContact">
-                         <xar:mlstring>None</xar:mlstring><br />
-                    </xar:if>
-                    <strong><xar:mlstring>Fee:</xar:mlstring></strong><br />#$fee#
-                     </div>
-                     <div style="width:60%;valign:top;float:right">
-                         <strong><xar:mlstring>Description:</xar:mlstring></strong><br />#$description#
-                     </div>
+                </div>
+                <div style="width:60%;valign:top;float:right">
+                    <strong><xar:mlstring>Description:</xar:mlstring></strong><br />#$description#
+                </div>
                 </div>
                 <div style="clear:both">
-                     <div style="valign:top">
+                     <div style="valign:top;width:100%">
                          <strong><xar:mlstring>Posted By:</xar:mlstring></strong>&nbsp;&nbsp;#$organizer# <xar:mlstring>on</xar:mlstring> #$datecreated#
                      </div>
                 </div>

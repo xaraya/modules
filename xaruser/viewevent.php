@@ -99,7 +99,7 @@ function julian_user_viewevent()
    if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) {
         return;
    }
-
+   $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
    // Make an admin adjustable time format
    $dateformat=xarModGetVar('julian', 'dateformat');
    $timeformat=xarModGetVar('julian', 'timeformat');
