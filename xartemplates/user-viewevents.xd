@@ -170,9 +170,9 @@
                 <td>
                   <xar:if condition="$loop:item['eRrule'] != 0">
                     <xar:mlstring>Repeated Event - Started</xar:mlstring>
-                    #$loop:item['eStart'] ['viewdate']#
-                  <xar:elseif condition="$loop:item['eStart']['timestamp'] != 0" />
-                    #$loop:item['eStart'] ['viewdate']#
+                    #$loop:item['eStart']['viewdate']#
+                  <xar:elseif condition="!empty($loop:item['eStart']['viewdate'])" />
+                    #$loop:item['eStart']['viewdate']#
                   <xar:else />
                     <xar:mlstring>N/A</xar:mlstring>
                   </xar:if>
