@@ -168,9 +168,12 @@
             <xar:loop name="$events">
               <tr class="xar-julian-calendar-day xar-julian-days-event">
                 <td>
-                  <xar:if condition="$loop:item['eRrule'] != 0">
-                    <xar:mlstring>Repeated Event - Started</xar:mlstring>
-                    #$loop:item['eStart']['viewdate']#
+                  <xar:if condition="$loop:item['eRrule'] gt 0">
+                  <xar:ml>
+                    <xar:mlstring>From #(1) to #(2)</xar:mlstring>
+                    <xar:mlvar>#$loop:item['eStart']['viewdate']#</xar:mlvar>
+                    <xar:mlvar>#$loop:item['eRecur']['viewdate']#</xar:mlvar>
+                  </xar:ml>
                   <xar:elseif condition="!empty($loop:item['eStart']['viewdate'])" />
                     #$loop:item['eStart']['viewdate']#
                   <xar:else />

@@ -53,7 +53,7 @@ function julian_user_edit()
        // TODO: With the new get.php this should be rewritten
        list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
     }
-
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     //Date time from item
     //setting start date time variables
     $hour = date("h",strtotime($item['dtstart'])); //12 hour format

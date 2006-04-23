@@ -360,7 +360,7 @@ function julian_userapi_getevents($args)
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
                   $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
               }
-              if ($eRecur['timestamp'] == '0000-00-00 00:00:00') {
+              if ($eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
                   $eRecur['mon'] = "";
                   $eRecur['day'] = "";
                   $eRecur['year'] = "";

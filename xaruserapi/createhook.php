@@ -146,6 +146,7 @@ function julian_userapi_createhook($args)
     switch($event_repeat) {
         case 0:
             // no recurrence
+            $event_repeat_freq_type = 0;
             break;
         case 1:
             // repeating every x time units
