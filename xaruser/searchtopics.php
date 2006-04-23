@@ -20,7 +20,8 @@ function xarbb_user_searchtopics()
     if (!xarVarFetch('by', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('replies', 'int:0', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('from', 'int', $from, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('from', 'int:1', $from, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ip', 'str:1:20', $ip, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Security check probably not good enough as is.
     // TODO: we need to check the security on the forum itself - the fid and the cid
@@ -57,11 +58,17 @@ function xarbb_user_searchtopics()
                 array('fid' => $fid, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
             );
         }
-    } elseif (!empty($from)){
+    } elseif (!empty($from)) {
         $data['message'] = xarML('Topics since your last visit');
         $topics = xarModAPIFunc(
             'xarbb', 'user', 'getalltopics_bytime',
             array('from' => $from, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
+        );
+    } elseif (!empty($ip)) {
+        $data['message'] = xarML('Topics posted from IP address');
+        $topics = xarModAPIFunc(
+            'xarbb', 'user', 'getalltopics_byip',
+            array('ip' => $ip, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
         );
     }
 

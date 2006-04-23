@@ -18,16 +18,9 @@
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
- * @param integer    $itemtype  the item type that these nodes belong to
- * @param integer    $objectid  (optional) the id of the item that these nodes belong to
- * @param integer    $cid       (optional) the id of a comment
- * @param integer    $status    (optional) only pull comments with this status
- * @param integer    $author    (optional) only pull comments by this author
- * @returns array     an array of comments or an empty array if no comments
- *                   found for the particular modid/objectid pair, or raise an
- *                   exception and return false.
+ * @todo This is function actually returns all posters (reply authors) *not* the replies
  */
+
 function xarbb_userapi_getallreplies_byip($args) 
 {
     extract($args);

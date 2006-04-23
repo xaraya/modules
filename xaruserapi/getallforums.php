@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Get all forums
  * 
@@ -13,19 +14,17 @@
 /**
  * get all forums
  * @returns array
- * @return array of links, or false on failure
+ * @return array of zero or more forums, or NULL on failure
+ * @todo Support 'cids' and 'fids' arrays, 
  */
+
 function xarbb_userapi_getallforums($args)
 {
     extract($args);
 
     // Optional arguments
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
+    if (!isset($startnum)) {$startnum = 1;}
+    if (!isset($numitems)) {$numitems = -1;}
 
     // Security Check
     if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
@@ -62,7 +61,8 @@ function xarbb_userapi_getallforums($args)
         }
     }
 
-    $query .= " ORDER BY xar_forder"; // Set her3 to ensure display of forum ordering by this column 
+    // Set to ensure display of forum ordering by this column
+    $query .= " ORDER BY xar_forder";
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
@@ -71,7 +71,6 @@ function xarbb_userapi_getallforums($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $foptions, $forder, $cid) = $result->fields;
 
-        //if ((empty($catid) && xarSecurityCheck('ViewxarBB', 0, 'Forum', "All:$fid")) || (!empty($catid) && xarSecurityCheck('ViewxarBB', 0, 'Forum', "$catid:$fid"))) {
         if (xarSecurityCheck('ViewxarBB', 0, 'Forum', "$cid:$fid")) {
             $forums[] = array(
                 'fid'     => $fid,

@@ -15,6 +15,8 @@
  * get all topics
  *
  * @param $args['fid'] forum id, or
+ * @param $args['fids'] array of forum ids
+ * @param $args['tid'] topic id, or
  * @param $args['tids'] array of topic ids
  * @param $args['sortby'] string optional sort field (default 'time')
  * @param $args['order'] string optional sort order (default 'DESC' for time, replies etc.)
@@ -28,20 +30,34 @@ function xarbb_userapi_getalltopics($args)
     extract($args);
 
     // Optional argument
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    } 
-    if (empty($cids)) {
-        $cids = array();
-    }
+    if (!isset($startnum)) {$startnum = 1;}
+    // CHECKME: should numitems just be left NULL?
+    if (!isset($numitems)) {$numitems = -1;} 
 
-    if (empty($fid) && empty($tids)) {
+    if (empty($fids)) {$fids = array();}
+    if (empty($tids)) {$tids = array();}
+
+    // A single category or an array can be supplied.
+    if (!empty($cid)) {$cids = array($cid);}
+    if (empty($cids)) {$cids = array();}
+
+    // Ultimately, this function can be called with no paramaters.
+    /*if (empty($fid) && empty($tids)) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
+    }*/
+
+    // We need to restrict the query by forums to which the
+    // user has access. If no forum IDs have been passed in
+    // then go grab them now.
+    if (empty($fid) && empty($fids)) {
+        $all_forums = xarModAPIfunc('xarbb', 'user', 'getallforums',
+            array('cids' => $cids, 'fids' => $fids)
+        );
+        foreach($all_forums as $forum) {
+            $fids[] = $forum['fid'];
+        }
     }
  
     $dbconn =& xarDBGetConn();
@@ -59,33 +75,68 @@ function xarbb_userapi_getalltopics($args)
     if (empty($categoriesdef)) return;
 
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
-    // Do we want to support that in the future?
-    // make only one query to speed up
-    // Get links
-    //Fix for duplicates listings of topics with topic itemtypes - select distinct - get bug #2335
+    // Do we want to support that in the future? (Yes, but will need a major overhaul to do so)
+    // Fix for duplicate listings of topics with topic itemtypes - select distinct - get bug #2335
     $bindvars = array();
     $query = "SELECT xar_tid, $xbbtopicstable.xar_fid, xar_ttitle, xar_tpost, xar_tposter,"
         . " xar_ttime, xar_tftime, xar_treplies, xar_tstatus, xar_treplier, xar_toptions,"
         . " xar_fname, xar_fdesc, xar_ftopics, xar_fposts, xar_fposter, xar_fpostid,"
-        . " {$categoriesdef['cid']}"
+        . " xar_fstatus, xar_thostname, {$categoriesdef['cid']}"
         . " FROM $xbbtopicstable "
         . " LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid"
         . " LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid"
         . " {$categoriesdef['more']}"
-        . " WHERE {$categoriesdef['where']} ";
+        . " WHERE {$categoriesdef['where']}";
 
+    // bug #2335 - some older upgrades of xarbb seem to need the following to prevent duplicates
+    $query .= " AND {$categoriesdef['itemtype']} = 0";
+
+    // Single forum ID
     if (isset($fid)) {
-        $query .= "AND $xbbforumstable.xar_fid = ? ";
+        $query .= " AND $xbbforumstable.xar_fid = ? ";
         $bindvars[] = $fid;
-        //#bug 2335 - some older upgrades of xarbb seem to need the following to prevent duplicates
-        $query .= " AND {$categoriesdef['itemtype']} = 0";
-    } elseif (count($tids) > 0) {
+    }
+    
+    // List of forum IDs
+    if (count($fids) > 0) {
+        $bindvars = array_merge($bindvars, $fids);
+        $query .= " AND $xbbtopicstable.xar_fid IN (?" . str_repeat(',?', count($fids) - 1) . ")";
+    }
+
+    // Single topic ID
+    if (isset($tid)) {
+        $query .= " AND xar_tid = ? ";
+        $bindvars[] = (int)$tid;
+    }
+    
+    // List of topic IDs
+    if (count($tids) > 0) {
         $bindvars = array_merge($bindvars, $tids);
         $query .= " AND xar_tid IN (?" . str_repeat(',?', count($tids) - 1) . ")";
     }
+
+    // Get by UID
+    if (!empty($uid)) {
+        $query .= " AND $xbbtopicstable.xar_tposter = ?";
+        $bindvars[] = (int)$uid;
+    }
+
+    // Get by IP
+    if (!empty($ip)) {
+        $query .= " AND $xbbtopicstable.xar_thostname = ?";
+        $bindvars[] = (string)$ip;
+    }
+
+    // Get by timestamp from
+    if (!empty($from)) {
+        $query .= " AND $xbbtopicstable.xar_ttime >= ? ";
+        $bindvars[] = (int)$from;
+    }
+
     if (empty($sortby)) {
         $sortby = 'time';
     }
+
     switch ($sortby) {
         /*
         // TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
@@ -127,7 +178,8 @@ function xarbb_userapi_getalltopics($args)
             if (!empty($order) && strtoupper($order) == 'DESC') {
                 $query .= " ORDER BY xar_tposter DESC";
             } else {
-                $query .= " ORDER BY xar_tposter ASC"; // default ascending
+                // default ascending
+                $query .= " ORDER BY xar_tposter ASC";
             }
             break;
 
@@ -135,7 +187,8 @@ function xarbb_userapi_getalltopics($args)
             if (!empty($order) && strtoupper($order) == 'ASC') {
                 $query .= " ORDER BY xar_tid ASC";
             } else {
-                $query .= " ORDER BY xar_tid DESC"; // default descending
+                // default descending
+                $query .= " ORDER BY xar_tid DESC";
             }
             break;
 
@@ -144,7 +197,8 @@ function xarbb_userapi_getalltopics($args)
             if (!empty($order) && strtoupper($order) == 'ASC') {
                 $query .= " ORDER BY xar_ttime ASC";
             } else {
-                $query .= " ORDER BY xar_ttime DESC"; // default descending
+                // default descending
+                $query .= " ORDER BY xar_ttime DESC";
             }
             break;
     }
@@ -173,8 +227,14 @@ function xarbb_userapi_getalltopics($args)
 
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus, $treplier, $toptions,
-        $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $catid) = $result->fields;
+        list(
+            $tid, $fid, $ttitle, $tpost, $tposter,
+            $ttime, $tftime, $treplies, $tstatus, $treplier,
+            $toptions,
+            $fname, $fdesc, $ftopics,
+            $fposts, $fposter, $fpostid, $fstatus, $thostname,
+            $catid
+        ) = $result->fields;
 
         if (xarSecurityCheck('ReadxarBB', 0, 'Forum', "$catid:$fid")) {
             $topic = array(
@@ -195,7 +255,9 @@ function xarbb_userapi_getalltopics($args)
                 'fposts'  => $fposts,
                 'fposter' => $fposter,
                 'fpostid' => $fpostid,
-                'catid'   => $catid
+                'fstatus' => $fstatus,
+                'catid'   => $catid,
+                'thostname' => $thostname,
             );
 
             //
@@ -219,7 +281,8 @@ function xarbb_userapi_getalltopics($args)
             // Some combinations do not have icons, but we determine that in the display
             // template, not here. These simple flags can replace the topic image number
             // and provide more flexibility to the theme.
-            // TODO: put this stuff into getalltopics() so it is available everywhere.
+            // TODO: include checks on the 'new' flag, which will involve checking
+            // details of the current user.
             $topic['icon_flags'] = array();
 
             $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));

@@ -212,13 +212,15 @@ div.xarbb-legendwrapper2 dl {
     float: none;
 	padding: 0;
 	margin: 0;
+	line-height: 100%;
 }
 div.xarbb-legendwrapper2 h2 {
 	text-align: center;
 }
 div.xarbb-legendwrapper2 dl dt {
-	/* We are going to hide the definition terms for now, but display them if you want
-	   titles on each group of legend icons. */
+	/* We are going to hide the definition terms for now,
+	   but display them if you want as titles on each
+	   group of legend icons. */
 	display: none;
 }
 div.xarbb-legendwrapper2 dl dd {
@@ -227,6 +229,7 @@ div.xarbb-legendwrapper2 dl dd {
 	white-space: pre;
 	float: left;
 	padding: 0.5em 0;
+	margin: 0;
 }
 div.xarbb-legendwrapper2 dl dd img {
     vertical-align: middle;
