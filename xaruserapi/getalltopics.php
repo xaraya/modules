@@ -44,14 +44,6 @@ function xarbb_userapi_getalltopics($args)
         return;
     }
  
-    // Why do this look-up multiple times?  Return the cache instead.
-    //<jojodee> Why here? I thought this was all topics for a given forum -not ALL topics
-    //so we have to cache per forum
-    /*if (xarVarIsCached('xarbb.topics', 'alltopicscache')){
-        $topics = xarVarGetCached('xarbb.topics', 'alltopicscache');
-        return $topics;
-    }*/
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
@@ -95,9 +87,9 @@ function xarbb_userapi_getalltopics($args)
         $sortby = 'time';
     }
     switch ($sortby) {
-/*
-// TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
-//       but this causes unnecessary overhead if we don't want to sort by them :-)
+        /*
+        // TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
+        //       but this causes unnecessary overhead if we don't want to sort by them :-)
         case 'title':
             if (!empty($order) && strtoupper($order) == 'DESC') {
                 $query .= " ORDER BY xar_ttitle DESC";
@@ -129,7 +121,8 @@ function xarbb_userapi_getalltopics($args)
                 $query .= " ORDER BY xar_treplies DESC"; // default descending
             }
             break;
-*/
+        */
+
         case 'poster':
             if (!empty($order) && strtoupper($order) == 'DESC') {
                 $query .= " ORDER BY xar_tposter DESC";
@@ -164,13 +157,27 @@ function xarbb_userapi_getalltopics($args)
     }
     if (!$result) return;
  
+    // TODO: centralise these default settings - used in create() too
+    $topic_types = array(
+        0 => 'normal',
+        1 => 'announce',
+        2 => 'sticky',
+        3 => 'locked',
+        5 => 'shadow'
+    );
+    $default_options = array(
+        'lock' => false,
+        'subscribers' => array(),
+        'shadow' => NULL,
+    );
+
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus, $treplier, $toptions,
         $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $catid) = $result->fields;
 
         if (xarSecurityCheck('ReadxarBB', 0, 'Forum', "$catid:$fid")) {
-            $topics[] = array(
+            $topic = array(
                 'tid'     => $tid,
                 'fid'     => $fid,
                 'ttitle'  => $ttitle,
@@ -190,6 +197,43 @@ function xarbb_userapi_getalltopics($args)
                 'fpostid' => $fpostid,
                 'catid'   => $catid
             );
+
+            //
+            // Expand a few items.
+            //
+
+            if (!empty($toptions)) {
+                $options = unserialize($toptions);
+                // Merge the arrays (toptions will overwrite options where keys are the same)
+                $options = array_merge($default_options, $options);
+            } else {
+                $options = $default_options;
+            }
+
+            // Set up the array of flags for the topic icons.
+            // The icon (or some other flag or visual property) is decided from three different axis:
+            // - type = normal/announce/sticky/locked/shadow/unknown (though 'locked' is deprecated as a type)
+            // - hot = true/false
+            // - new = true/false
+            // - locked = true/false
+            // Some combinations do not have icons, but we determine that in the display
+            // template, not here. These simple flags can replace the topic image number
+            // and provide more flexibility to the theme.
+            // TODO: put this stuff into getalltopics() so it is available everywhere.
+            $topic['icon_flags'] = array();
+
+            $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
+            $hot_topic = $settings['hottopic'];
+
+            if (isset($topic_types[$topic['tstatus']])) {
+                $topic['icon_flags']['type'] = $topic_types[$topic['tstatus']];
+            } else {
+                $topic['icon_flags']['type'] = 'unknown';
+            }
+            $topic['icon_flags']['hot'] = (($topic['treplies'] > $hot_topic) ? true : false); 
+            $topic['icon_flags']['lock'] = (!empty($topic['options']['lock']) ? true : false);
+
+            $topics[] = $topic;
         }
     }
 

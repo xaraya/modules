@@ -1,0 +1,52 @@
+<xar:comment>
+    Just show the topic icon, according to its state.
+    This is now done in one template so it can be used from many places,
+    and can be customised from the one place, and be reflected throughout.
+
+    Input params:
+        type = 'normal'/'announce'/'sticky'/'locked'/'unknown'/'shadow'
+        hot = true/false
+        new = true/false
+        lock = true/false
+
+    TODO: perhaps 'shadow' should be a flag, rather than a true type,
+    since the shadow is just a pointer to another topic, which could
+    be normal, sticky, etc.
+</xar:comment>
+
+<xar:if condition="$type eq 'shadow'">
+    <img src="#xarTplGetImage('new/folder_shadow.gif')#" alt="#xarML('Shadow topic')#" />
+</xar:if>
+<xar:if condition="$type eq 'normal'">
+    <xar:if condition="!empty($new)">
+        <xar:if condition="!empty($hot)">
+            <img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
+        </xar:if>
+    <xar:else />
+        <xar:if condition="!empty($hot)">
+            <img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No New post')#" />
+        </xar:if>
+    </xar:if>
+</xar:if>
+<xar:if condition="$type eq 'announce'">
+    <xar:if condition="!empty($new)">
+        <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+    <xar:else />
+        <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+    </xar:if>
+</xar:if>
+<xar:if condition="$type eq 'sticky'">
+    <xar:if condition="!empty($new)">
+        <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+    <xar:else />
+        <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+    </xar:if>
+</xar:if>
+<xar:comment>The type 'locked' is deprecated, but we still check the 'lock' flag.</xar:comment>
+<xar:if condition="$type eq 'locked' or !empty($lock)">
+    <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
+</xar:if>

@@ -18,7 +18,7 @@ function xarbb_user_viewforum()
     // Get parameters from whatever input we need
     if (!xarVarFetch('startnum', 'int:1', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fid', 'id', $fid)) return;
-    if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('read', 'bool', $read, false, XARVAR_DONT_SET)) return;
 
     // The user API function is called.
     $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
@@ -54,9 +54,6 @@ function xarbb_user_viewforum()
 
     $topicsperpage = $settings['topicsperpage'];
     $postsperpage = $settings['postsperpage'];
-
-    // TODO, should be a forum setting
-    $hotTopic = $settings['hottopic'];
 
     // CHECKME: retrieve from session variable, module user variable or URL param
     // depending on how customisable/cacheable we want to make this?
@@ -111,7 +108,7 @@ function xarbb_user_viewforum()
     // TODO: move this to a separate API, as we need to do this deserialisation thing a lot.
     // TODO: perhaps we can remove topics from this list after they are aged out, perhaps after
     // 24 hours, or some cofigurable value? This would help to keep the array size down.
-    if (!isset($read)) {
+    if (empty($read)) {
         // Normal handling
         $topic_tracking = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'topics_' . $fid));
         if (empty($topic_tracking)) {
@@ -154,66 +151,28 @@ function xarbb_user_viewforum()
             $new_topic = false;
         }
 
+        // TODO: can be suppress transform of title? Block tags and anchors are the main problem.
         list($topics[$i]['ttitle'], $topics[$i]['tpost']) = xarModCallHooks(
             'item', 'transform', $fid,
             array($topic['ttitle'], $topic['tpost']),
             'xarbb', $fid
         );
 
-        // CHECKME: what does this bit do?
+        // CHECKME: what does this bit do? Why the 24 hours thing?
         if (isset($lastvisitsession)) {
             $data['lastvisitdate'] = $lastvisitcompared;
         } else {
             $data['lastvisitdate'] = time() - 60*60*24;
         }
 
-        $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
-        $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
+        $topics[$i]['tpost'] = $topic['tpost'];
+        $topics[$i]['comments'] = $topic['treplies'];
+        $topics[$i]['icon_flags']['new'] = ($new_topic ? true : false);
 
-        switch(strtolower($topic['tstatus'])) {
-            // Just a regular old topic
-            case '0':
-            default:
-                if (!$new_topic) {
-                    // More comments than our hottopic setting, therefore should be hot, but not new.
-                    if ($topics[$i]['comments'] > $hotTopic) {
-                        $topics[$i]['timeimage'] = 1;
-                    // Else should be a regular old boring topic
-                    } else {
-                        $topics[$i]['timeimage'] = 2;
-                    }
-                } else {
-                    // OOF, look at this topic, hot and new.
-                    if ($topics[$i]['comments'] > $hotTopic) {
-                        $topics[$i]['timeimage'] = 3;
-                    // Else should be a regular old boring topic that has a new post
-                    } else {
-                        $topics[$i]['timeimage'] = 9;
-                    }
-                }
-                break;
-            // Announcement topic
-            case '1':
-                if (!$new_topic) {
-                    $topics[$i]['timeimage'] = 4;
-                } else {
-                    $topics[$i]['timeimage'] = 5;
-                }
-
-                break;
-            // Sticky topic
-            case '2':
-                if (!$new_topic) {
-                    $topics[$i]['timeimage'] = 6;
-                } else {
-                    $topics[$i]['timeimage'] = 7;
-                }
-                break;
-            // Locked
-            case '3':
-                $topics[$i]['timeimage'] = 8;
-                break;
-        }
+        // The timeimage thing (the entire switch statement) has been removed - we no longer need it.
+        // Set a default image for old templates.
+        // Please check the default template to see how the icon can be displayed via a sub-template
+        $topics[$i]['timeimage'] = 2;
 
         if (!empty($hits[$topic['tid']])) {
             $topics[$i]['hitcount'] = $hits[$topic['tid']];
@@ -278,7 +237,6 @@ function xarbb_user_viewforum()
         $slice_size = count($topic_tracking) - $max_topic_tracking;
         for (; $slice_size > 0; $slice_size--) array_pop($topic_tracking);
     }
-    // TODO: provide user with ability to reset this array, to mark all topics as read.
     xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $fid, 'value' => serialize($topic_tracking)));
 
     // Call the xarTPL helper function to produce a pager in case of there
@@ -292,7 +250,7 @@ function xarbb_user_viewforum()
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
 
-    // Forum Jump
+    // Forum Jump data
     $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
     return $data;

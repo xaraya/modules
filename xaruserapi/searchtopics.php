@@ -67,8 +67,7 @@ function xarbb_userapi_searchtopics($args)
     $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
-    // if we have nothing to return
-    // we return nothing ;) duh? lol
+    // If we have nothing to return
     if ($result->EOF) {
         return array();
     }

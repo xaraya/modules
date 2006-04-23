@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View a list of topics in a forum
  * 
@@ -11,18 +12,21 @@
  * @author John Cox
  * @fixme There is a lot that needs updating in this script, to bring into line with other scripts.
 */
+
 function xarbb_user_searchtopics()
 {
     // Get parameters from whatever input we need
     if (!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('by', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('replies', 'id', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('replies', 'int:0', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'int', $from, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Security check probably not good enough as is.
+    // TODO: we need to check the security on the forum itself - the fid and the cid
     if (!xarSecurityCheck('ReadxarBB')) return;
     
+    // TODO: we have settings for the individual forum.
     $xarsettings= xarModGetVar('xarbb', 'settings');
     if (!empty($xarsettings)) {
         $settings = unserialize($xarsettings);
@@ -33,13 +37,14 @@ function xarbb_user_searchtopics()
     $hotTopic = xarModGetVar('xarbb', 'hottopic');
 
     // The user API function is called
+    // TODO: how many APIs? Could we merge all these into one?
     if (!empty($uid)) {
         $data['message'] = xarML('Your topics');
         $topics = xarModAPIFunc(
             'xarbb', 'user', 'getalltopics_byuid',
             array('uid' => $uid, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
         );
-    } elseif (!empty($replies)) {
+    } elseif (isset($replies)) {
         $data['message'] = xarML('Unanswered topics');
         if (!isset($fid)) {
             $topics = xarModAPIFunc(
@@ -61,14 +66,18 @@ function xarbb_user_searchtopics()
     }
 
     $totaltopics = count($topics);
+
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
-        $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
-        $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
+
+        $topics[$i]['tpost'] = $topic['tpost'];
+        $topics[$i]['comments'] = $topic['treplies'];
+
         $fid = $topic['fid'];
         $tid = $topic['tid'];
 
         // Check to see if forum is locked
+        // TODO: check the 'lock' option value.
         if ($topic['fstatus'] == 1) {
             // TODO: move markup to the template
             $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
@@ -94,15 +103,11 @@ function xarbb_user_searchtopics()
             }
 
             $tid = $topic['tid'];
-            // FIXME: a cookie value for each topic is overkill (it is - we no longer do that)
-            //$cookie_t = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 't_' . $tid));
-            if (!empty($cookie_t)){
-                $topictimecompare = $cookie_t;
-            } else {
-                $topictimecompare = '';
-            }
-        }
 
+            // FIXME: Check the topic tracking arrays to get the read status
+            $topictimecompare = '';
+        }
+        
         // FIXME: the 'viewtopic' script does it differently, and without the markup - copy code over.
         switch(strtolower($topic['tstatus'])) {
             // Just a regular old topic
@@ -127,9 +132,9 @@ function xarbb_user_searchtopics()
                     }
                 }
                 break;
+
             // Announcement topic
             case '1':
-
                 if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])) {
                     $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
                 } else {
@@ -151,6 +156,8 @@ function xarbb_user_searchtopics()
                 break;
         }
 
+
+        
         if ($topics[$i]['comments'] == 0) {
             $topics[$i]['authorid'] = $topic['tposter'];
         } else {
@@ -179,7 +186,8 @@ function xarbb_user_searchtopics()
         $topics[$i]['name'] = $getname['name'];
 
     }
-    //initialize some vars for search
+
+    // Initialize some vars for search
     $where='';
     $wherevalue='';
     $data['items'] = $topics;
@@ -188,22 +196,21 @@ function xarbb_user_searchtopics()
         if (!empty($uid)) {
             $data['pager'] = xarTplGetPager(
                 $startnumitem,
-                xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('where' =>'uid', 'wherevalue'=>$uid)),
+                xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('where' =>'uid', 'wherevalue' => $uid)),
                 xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%', 'by' => $uid)),
                 $topicsperpage
             );
         } elseif (!empty($replies)) {
-
             $data['pager'] = xarTplGetPager(
                 $startnumitem,
-                xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('wherevalue'=>$replies,'where' =>'replies')),
+                xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('wherevalue' => $replies, 'where' => 'replies')),
                 xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%', 'replies' => $replies)),
                 $topicsperpage
             );
         } elseif (!empty($from)) {
             $data['pager'] = xarTplGetPager(
                 $startnumitem,
-                xarModAPIFunc('xarbb', 'user', 'counttotaltopics',array('wherevalue'=>$from,'where' =>'from')),
+                xarModAPIFunc('xarbb', 'user', 'counttotaltopics',array('wherevalue' => $from,'where' => 'from')),
                 xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%', 'from' => $from)),
                 $topicsperpage
             );

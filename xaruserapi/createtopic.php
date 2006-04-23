@@ -25,6 +25,7 @@ function xarbb_userapi_createtopic($args)
     // 1 Announcement
     // 2 Sticky
     // 3 Locked // TODO: remove this, as 'locked' is an option, rather than a type
+    // 5 Shadow
 
     // Get arguments from argument array
     extract($args);
@@ -99,7 +100,7 @@ function xarbb_userapi_createtopic($args)
 
     // Set the default options.
     // TODO: can we pass any of these in for setting when the topic is first created?
-    // TODO: centralise these defaults.
+    // TODO: centralise these defaults - also in getalltopics().
     $options = array(
         'lock' => false,
         'subscribers' => array(),

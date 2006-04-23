@@ -9,6 +9,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
+ * @todo Merge this with serachtopics() since it does the same thing, only with a count(*) in the select part
 */
 /**
  * count the number of links in the database
@@ -42,23 +43,33 @@ function xarbb_userapi_counttotaltopics($args)
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
+    $bind = array();
     $query = "SELECT COUNT(1) FROM $xbbtopicstable ";
 
     if ($where <> '') {
-        if ($where=='replies') {
-            //searching for unanswered topics
-            $query .= "WHERE xar_treplies = '0'";
+        if ($where == 'replies') {
+            // Searching for unanswered topics
+            if (empty($wherevalue) || !is_numeric($wherevalue)) {
+                // 0 - where there are no replies
+                $query .= "WHERE xar_treplies = 0";
+            } else {
+                // >0 - where there are at least that number of replies
+                $query .= "WHERE xar_treplies >= ?";
+                $bind = (int)$wherevalue;
+            }
         } elseif ($where == 'uid') {
-            $query .= "WHERE xar_tposter = '{$wherevalue}'";
+            $query .= "WHERE xar_tposter = ?";
+            $bind = (int)$wherevalue;
         } elseif ($where == 'from') {
-            $query .= "WHERE xar_ttime > '{$wherevalue}'";
+            $query .= "WHERE xar_ttime >= ?";
+            $bind = (int)$wherevalue;
         }
     }
 
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $bind);
     }
 
     if (!$result) return;
