@@ -129,7 +129,7 @@ function julian_userapi_decode_shorturl($params)
         // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
             // just make sure it's a valid eid
-            if(preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+            if(preg_match('/^(\d+)\$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1];
             }
         }
@@ -138,7 +138,7 @@ function julian_userapi_decode_shorturl($params)
         // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
             // just make sure it's a valid eid
-            if(preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+            if(preg_match('/^(\d+)\$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1];
             }
         }
@@ -169,7 +169,7 @@ function julian_userapi_decode_shorturl($params)
             if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1];
             }
-            elseif (preg_match('/^(\d+)\_link.html$/',$params[2],$matches)) {
+            elseif (preg_match('/^(\d+)\_link$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1].'_link';
             }
         }
@@ -181,7 +181,7 @@ function julian_userapi_decode_shorturl($params)
             // just make sure it's a valid event_id
             if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1];
-            } elseif (preg_match('/^(\d+)\_link.html$/',$params[2],$matches)) {
+            } elseif (preg_match('/^(\d+)\_link$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1].'_link';
             }
         }

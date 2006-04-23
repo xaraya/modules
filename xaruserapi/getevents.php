@@ -22,13 +22,13 @@
  * @copyright (C) 2004 by Metrostat Technologies, Inc.
  * @link http://www.metrostat.net
  * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @param array $args an array of arguments
- * @param int $args['startnum'] start with this item number (default 1)
- * @param int $args['numitems'] the number of items to retrieve (default -1 = all)
+ * @param array  $args an array of arguments
+ * @param int    $args['startnum'] start with this item number (default 1)
+ * @param int    $args['numitems'] the number of items to retrieve (default -1 = all)
  * @param string $args['sortby'] sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
- * @param int $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
+ * @param int    $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
  * @param string $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
- * @param int $args['catid'] Category ID
+ * @param int    $args['catid'] Category ID
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: rewrite some queries for pgsql
@@ -228,16 +228,6 @@ function julian_userapi_getevents($args)
                   $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
                   $eRecur['viewdate'] = date("$dateformat",strtotime($eRecur['timestamp']));
               }
-              /*
-              if ($eDue['timestamp'] == 0 || empty($eDue['timestamp'])) {
-                  $eDue['mon'] = "";
-                  $eDue['day'] = "";
-                  $eDue['year'] = "";
-              } else {
-                  $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-                  $eDue['viewdate'] = date("$dateformat",strtotime($eDue['timestamp']));
-              }
-              */
              $items[] = array('eID' => $eID,
                               'eName' => $eName,
                               'eDescription' => $eDescription,
@@ -318,19 +308,6 @@ function julian_userapi_getevents($args)
     // Put items into result array
     for (; !$result_linked->EOF; $result_linked->MoveNext()) {
         list($eID,
-        //     $eName,
-        //     $eDescription,
-        //     $eStreet1,
-        //     $eStreet2,
-        //     $eCity,
-        //     $eState,
-        //     $eZip,
-        //     $eEmail,
-        //     $ePhone,
-        //     $eLocation,
-        //     $eUrl,
-        //     $eContact,
-        //     $eOrganizer,
              $hook_modid,
              $hook_itemtype,
              $hook_iid,
@@ -370,15 +347,7 @@ function julian_userapi_getevents($args)
                   $eRecur['linkdate'] = date("Ymd",strtotime($eRecurUntil['timestamp']));
                   $eRecur['viewdate'] = date("$dateformat",strtotime($eRecurUntil['timestamp']));
               }
-/*              if ($eDue['timestamp'] == 0) {
-                  $eDue['mon'] = "";
-                  $eDue['day'] = "";
-                  $eDue['year'] = "";
-              } else {
-                  $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-                  $eDue['viewdate'] = date("$dateformat",strtotime($eDue['timestamp']));
-              }
-*/
+
              $items[] = array('eID' => $eID.'_link',
                               'eName' => $eSummary,
                               'eDescription' => $itemlinks['description'],

@@ -57,67 +57,59 @@ function julian_userapi_encode_shorturl($args)
             // right now we'll just default to the month view
             if(isset($cal_date) && !empty($cal_date)) $path .= xarVarPrepForDisplay($cal_date).'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= xarVarPrepForDisplay($cal_user).'/';
-            $path .= 'index.html';
             break;
 
         case 'day':
             $path .= 'day/';
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
-            $path .= 'index.html';
             break;
 
         case 'week':
             $path .= 'week/';
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
-            $path .= 'index.html';
             break;
 
         case 'month':
             $path .= 'month/';
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
-            $path .= 'index.html';
             break;
 
         case 'year':
             $path .= 'year/';
             if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
             if(isset($cal_user) && !empty($cal_user)) $path .= $cal_user.'/';
-            $path .= 'index.html';
             break;
 
         case 'addevent':
             $path .= 'addevent/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
-            $path .= 'index.html';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date;
             break;
         case 'viewevents':
             $path .= 'viewevents/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
-            $path .= 'index.html';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date;
             break;
         case 'alerts':
             $path .= 'alerts/';
-            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date.'/';
-            $path .= 'index.html';
+            if(isset($cal_date) && !empty($cal_date)) $path .= $cal_date;
             break;
         case 'edit':
             $path .= 'edit/';
-            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id;
             break;
         case 'updateevent':
             $path .= 'updateevent/';
-            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id;
             break;
         case 'viewevent':
             $path .= 'display/';
-            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id;
             break;
         case 'export':
             $path .= 'export/';
-            if(isset($event_id) && !empty($event_id)) $path .= $event_id.'.html';
+            if(isset($event_id) && !empty($event_id)) $path .= $event_id;
             break;
         case 'jump':
             $path .= 'jump/';
@@ -128,6 +120,7 @@ function julian_userapi_encode_shorturl($args)
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
             $join = '&';
+            $path = $path.'?';
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
         }
@@ -140,6 +133,16 @@ function julian_userapi_encode_shorturl($args)
                 $catid = join('-', $cids);
             }
             $path .= $join . 'catid=' . $catid;
+        }
+
+        if (isset($numitems)) {
+            $path .= $join . 'numitems=' . $numitems;
+        }
+        if (isset($sortby)) {
+            $path .= $join . 'sortby=' . $sortby;
+        }
+        if (isset($orderby)) {
+            $path .= $join . 'orderby=' . $orderby;
         }
     }
 
