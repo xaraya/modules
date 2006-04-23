@@ -37,73 +37,72 @@
             </li>
         </ul>
 
-         <xar:comment>Can be done better I think</xar:comment>
-         <table>
-                <tr>
-                     <td width="60%" valign="top">
+        <div id="table" style="margin-left:20px;">
+            <div style="clear:both">
+                <div style="valign:top;float:left">
+                    <xar:set name="$hasLocation">0</xar:set>
+                    <xar:if condition="strcmp($location,'')">
+                    <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
+                        #$location#<br />
+                        <xar:set name="$hasLocation">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="strcmp($street1,'')">
+                        #$street1#<br />
+                        <xar:set name="$hasLocation">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="strcmp($street2,'')">
+                        #$street2#<br />
+                        <xar:set name="$hasLocation">1</xar:set>
+                    </xar:if>
+                        #$city#
+                    <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
+                         ,&nbsp;
+                    </xar:if>
+                    <xar:if condition="strcmp($state,'')">
+                        #$state#
+                    </xar:if>
+                    <xar:if condition="!empty($zip)">
+                         &nbsp;&nbsp;#$zip#
+                    </xar:if>
+                    <xar:if condition="strcmp($city,'') || strcmp($state,'') || strcmp($zip,'')">
+                         <xar:set name="$hasLocation">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="!$hasLocation">
+                         <xar:mlstring>Unknown</xar:mlstring>
+                    </xar:if>
+                    <br />
+                    <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
+                    <xar:set name="$hasContact">0</xar:set>
+                    <xar:if condition="strcmp($contact,'')">
+                         #$contact#<br />
+                         <xar:set name="$hasContact">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="strcmp($phone,'')">
+                       Phone: #$phone#<br />
+                        <xar:set name="$hasContact">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="!empty($email)">
+                        <a href="mailto:#$email#">#$email#</a><br />
+                        <xar:set name="$hasContact">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="!empty($URL)">
+                        <a href="#$URL#">#$URL#</a><br />
+                        <xar:set name="$hasContact">1</xar:set>
+                    </xar:if>
+                    <xar:if condition="!$hasContact">
+                         <xar:mlstring>None</xar:mlstring><br />
+                    </xar:if>
+                    <strong><xar:mlstring>Fee:</xar:mlstring></strong><br />#$fee#
+                     </div>
+                     <div style="width:60%;valign:top;float:right">
                          <strong><xar:mlstring>Description:</xar:mlstring></strong><br />#$description#
-                     </td>
-                     <td valign="top">
-                            <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
-                            <xar:set name="$hasLocation">0</xar:set>
-                            <xar:if condition="strcmp($location,'')">
-                                #$location#<br />
-                                <xar:set name="$hasLocation">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="strcmp($street1,'')">
-                                #$street1#<br />
-                                <xar:set name="$hasLocation">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="strcmp($street2,'')">
-                                #$street2#<br />
-                                <xar:set name="$hasLocation">1</xar:set>
-                            </xar:if>
-                            #$city#
-                            <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
-                                 ,&nbsp;
-                            </xar:if>
-                            <xar:if condition="strcmp($state,'')">
-                                #$state#
-                            </xar:if>
-                            <xar:if condition="!empty($zip)">
-                                 &nbsp;&nbsp;#$zip#
-                            </xar:if>
-                            <xar:if condition="strcmp($city,'') || strcmp($state,'') || strcmp($zip,'')">
-                                 <xar:set name="$hasLocation">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="!$hasLocation">
-                                 <xar:mlstring>Unknown</xar:mlstring>
-                            </xar:if>
-                            <br />
-                            <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
-                            <xar:set name="$hasContact">0</xar:set>
-                            <xar:if condition="strcmp($contact,'')">
-                                 #$contact#<br />
-                                 <xar:set name="$hasContact">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="strcmp($phone,'')">
-                               Phone: #$phone#<br />
-                                <xar:set name="$hasContact">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="!empty($email)">
-                                <a href="mailto:#$email#">#$email#</a><br />
-                                <xar:set name="$hasContact">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="!empty($URL)">
-                                <a href="#$URL#">#$URL#</a><br />
-                                <xar:set name="$hasContact">1</xar:set>
-                            </xar:if>
-                            <xar:if condition="!$hasContact">
-                                 <xar:mlstring>None</xar:mlstring><br />
-                            </xar:if>
-                            <strong><xar:mlstring>Fee:</xar:mlstring></strong><br />#$fee#
-                     </td>
-                </tr>
-                <tr>
-                     <td valign="top" colspan="2">
-                            <strong><xar:mlstring>Posted By:</xar:mlstring></strong>&nbsp;&nbsp;#$organizer# <xar:mlstring>on</xar:mlstring> #$datecreated#
-                     </td>
-                </tr>
+                     </div>
+                </div>
+                <div style="clear:both">
+                     <div style="valign:top">
+                         <strong><xar:mlstring>Posted By:</xar:mlstring></strong>&nbsp;&nbsp;#$organizer# <xar:mlstring>on</xar:mlstring> #$datecreated#
+                     </div>
+                </div>
                 <!-- if you want to extend this module with dynamic data, you can retrieve
                 //   that data in the code via APIs, or use e.g. the following BL tags here.
                 //   For the different options, see the overview of dynamicdata...
@@ -119,17 +118,16 @@
                             <td><xar:data-output property="$properties[$name]" /></td>
                         </xar:foreach>
                     </xar:if>
-                    </tr>
+                    </div>
                 </xar:if>
-         </table>
+         </div>
         <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
-         <fieldset>
-            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+            <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
                 #$hookoutput[$hookmodule]#
                 </xar:foreach>
-        </fieldset>
+            </fieldset>
         </xar:if>
-
     </div>
 </div>
