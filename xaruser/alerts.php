@@ -75,7 +75,7 @@ function julian_user_alerts($args)
     $data['categories'] = $categories;
     // TODO: Where is this good for? remove?
     $data['cal_date']   = $cal_date;
-
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     return $data;
 }
 ?>
