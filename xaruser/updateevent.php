@@ -285,47 +285,47 @@ function julian_user_updateevent()
                 ?,
                 ?,
                 ?);";
-                $created =date("Y-m-d H:i:s");
+        $created =date("Y-m-d H:i:s");
 
-                $bindvars = array (0
-                                  , $event_allday
-                                  , (int) $uidnow
-                                  , $contact
-                                  , $website
-                                  , $summary
-                                  , $description
-                                  , (int) $class
-                                  , 0
-                                  , 1
-                                  , $share
-                                  , $location
-                                  , $street1
-                                  , $street2
-                                  , $city
-                                  , $state
-                                  , $zip
-                                  , $phone
-                                  , $email
-                                  , $fee
-                                  , $category
-                                  , $rrule
-                                  , (int) $recur_freq
-                                  , $recur_until == '' ? NULL : $recur_until
-                                  , (int) $recur_count
-                                  , (int) $recur_interval
-                                  , $duration
-                                  , $eventstartdate == '' ? NULL : $eventstartdate
-                                  , 1
-                                  , $created);
-                $result = $dbconn->Execute($query, $bindvars);
-                if (!$result) return;
+        $bindvars = array (0
+                          , $event_allday
+                          , (int) $uidnow
+                          , $contact
+                          , $website
+                          , $summary
+                          , $description
+                          , (int) $class
+                          , 0
+                          , 1
+                          , $share
+                          , $location
+                          , $street1
+                          , $street2
+                          , $city
+                          , $state
+                          , $zip
+                          , $phone
+                          , $email
+                          , $fee
+                          , $category
+                          , $rrule
+                          , (int) $recur_freq
+                          , $recur_until == '' ? NULL : $recur_until
+                          , (int) $recur_count
+                          , (int) $recur_interval
+                          , $duration
+                          , $eventstartdate == '' ? NULL : $eventstartdate
+                          , 1
+                          , $created);
+        $result = $dbconn->Execute($query, $bindvars);
+        if (!$result) return;
 
-                /* Get the ID of the item that we inserted. It is possible, depending
-                 * on your database, that this is different from $nextId as obtained
-                 * above, so it is better to be safe than sorry in this situation
-                 */
-                 // 'serial' is PostGres7 specific
-                $id = $dbconn->Insert_ID($event_table, 'event_id', 'serial');
+        /* Get the ID of the item that we inserted. It is possible, depending
+         * on your database, that this is different from $nextId as obtained
+         * above, so it is better to be safe than sorry in this situation
+         */
+         // 'serial' is PostGres7 specific
+        $id = $dbconn->Insert_ID($event_table, 'event_id', 'serial');
 
         // Call the hooks. Event is new, we have just created it.
         $item = array();

@@ -45,6 +45,8 @@ function julian_user_addevent($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
+    // Add bullet for header
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
     $data['todays_month'] = date("n",strtotime($cal_date));
     $data['todays_year'] = date("Y",strtotime($cal_date));

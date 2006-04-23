@@ -121,7 +121,8 @@ function julian_user_viewevent()
    $bl_data['authid'] = xarSecGenAuthKey();
    // Add obfuscator: for later Bug 4971
    // $bl_data['email'] = xarModAPIFunc('sitecontact', 'user', 'obfuemail', array('email'=>$bl_data['email']));
-
+   // Add bullet for header
+   $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
    /* Get rid of the NULLs */
 
     if (isset($bl_data['phone'])) {

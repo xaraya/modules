@@ -349,53 +349,59 @@ function julian_userapi_getevents($args)
              $eRecurUntil
              ) = $result_linked->fields;
 
-          // Change date formats from UNIX timestamp to something readable.
-          if ($eStart['timestamp'] == 0) {
-              $eStart['mon'] = "";
-              $eStart['day'] = "";
-              $eStart['year'] = "";
-          } else {
-              $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-              $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
-          }
-          if ($eRecur['timestamp'] == 0) {
-              $eRecur['mon'] = "";
-              $eRecur['day'] = "";
-              $eRecur['year'] = "";
-          } else {
-              $eRecur['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-              $eRecur['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
-          }
-          if ($eDue['timestamp'] == 0) {
-              $eDue['mon'] = "";
-              $eDue['day'] = "";
-              $eDue['year'] = "";
-          } else {
-              $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-              $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
-          }
+        $itemlinks = xarModAPIFunc('julian', 'user', 'geteventinfo',
+                         array('iid'     => $hook_iid,
+                               'itemtype'=> $hook_itemtype,
+                               'modid'   => $hook_modid));
+        if (!empty($itemlinks['description'])) {
+              // Change date formats from UNIX timestamp to something readable.
+              if ($eStart['timestamp'] == 0) {
+                  $eStart['mon'] = "";
+                  $eStart['day'] = "";
+                  $eStart['year'] = "";
+              } else {
+                  $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
+                  $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+              }
+              if ($eRecur['timestamp'] == 0) {
+                  $eRecur['mon'] = "";
+                  $eRecur['day'] = "";
+                  $eRecur['year'] = "";
+              } else {
+                  $eRecur['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
+                  $eRecur['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+              }
+              if ($eDue['timestamp'] == 0) {
+                  $eDue['mon'] = "";
+                  $eDue['day'] = "";
+                  $eDue['year'] = "";
+              } else {
+                  $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
+                  $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+              }
 
-         $items[] = array('eID' => $eID.'_link',
-                          'eName' => $eSummary,
-                          'eDescription' => '',
-                          'eStreet1' => '',
-                          'eStreet2' => '',
-                          'eCity' => '',
-                          'eState' => '',
-                          'eZip' => '',
-                          'eEmail' => '',
-                          'ePhone' => '',
-                          'eLocation' => '',
-                          'eUrl' => '',
-                          'eContact' => '',
-                          'eOrganizer' => '',
-                          'eStart' => $eStart,
-                          'eRecur' => $eRecur,
-                          'eDue' => $eDue,
-                          'eDuration' => $eDuration,
-                          'eRrule' => $eRrule,
-                          'eIsallday' => $eIsallday,
-                          'eFee' => '');
+             $items[] = array('eID' => $eID.'_link',
+                              'eName' => $eSummary,
+                              'eDescription' => '',
+                              'eStreet1' => '',
+                              'eStreet2' => '',
+                              'eCity' => '',
+                              'eState' => '',
+                              'eZip' => '',
+                              'eEmail' => '',
+                              'ePhone' => '',
+                              'eLocation' => '',
+                              'eUrl' => '',
+                              'eContact' => '',
+                              'eOrganizer' => '',
+                              'eStart' => $eStart,
+                              'eRecur' => $eRecur,
+                              'eDue' => $eDue,
+                              'eDuration' => $eDuration,
+                              'eRrule' => $eRrule,
+                              'eIsallday' => $eIsallday,
+                              'eFee' => '');
+        }
     }
 
     // Close linked result set

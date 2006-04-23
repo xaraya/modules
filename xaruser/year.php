@@ -47,7 +47,7 @@ function julian_user_year($args)
     $data['year'] = $c->getCalendarYear($data['selected_year']);
     $data['shortDayNames'] = $c->getShortDayNames($cal_sdow);
     $data['calendar'] = $c;
-
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     // set the start day to the first month and day of the selected year
     $startdate=$data['selected_year']."-01-01";
     // set the end date to the last month and last day of the selected year
