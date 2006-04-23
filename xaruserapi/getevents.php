@@ -360,10 +360,12 @@ function julian_userapi_getevents($args)
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
                   $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
               }
-              if ($eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
+              if ($eRrule ==0) {//$eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
                   $eRecur['mon'] = "";
                   $eRecur['day'] = "";
                   $eRecur['year'] = "";
+                  $eRecur['linkdate'] = '';
+                  $eRecur['viewdate'] = '';
               } else {
                   $eRecur['linkdate'] = date("Ymd",strtotime($eRecurUntil['timestamp']));
                   $eRecur['viewdate'] = date("$dateformat",strtotime($eRecurUntil['timestamp']));
