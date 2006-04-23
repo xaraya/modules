@@ -17,7 +17,7 @@
  *
  * enter date/time for a new item - hook for ('item','new','GUI')
  *
- * @author  JornB MichelV. <michelv@xaraya.com>
+ * @author  JornB, MichelV. <michelv@xaraya.com>
  * @access  public
  * @param   $extrainfo
  * @return  array tplinfo
