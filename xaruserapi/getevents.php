@@ -85,7 +85,8 @@ function julian_userapi_getevents($args)
 
     $items = array();
 
-
+    // Make an admin adjustable time format
+    $dateformat=xarModGetVar('julian', 'dateformat');
 
     // Load categories API.
     // Needed?
@@ -151,7 +152,7 @@ function julian_userapi_getevents($args)
     if ((!empty($startdate))&& (!empty($enddate))) {
         $query .= " DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
     }
-
+    // This is double now, as the array is being sorted anyway
     if (isset($sortby)) {
         switch ($sortby) {
             case 'eventDate':
@@ -219,7 +220,7 @@ function julian_userapi_getevents($args)
                   $eStart['year'] = "";
               } else {
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-                  $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+                  $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
               }
               if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
                   $eRecur['mon'] = "";
@@ -227,7 +228,7 @@ function julian_userapi_getevents($args)
                   $eRecur['year'] = "";
               } else {
                   $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
-                  $eRecur['viewdate'] = date("m-d-Y",strtotime($eRecur['timestamp']));
+                  $eRecur['viewdate'] = date("$dateformat",strtotime($eRecur['timestamp']));
               }
               if ($eDue['timestamp'] == 0 || empty($eDue['timestamp'])) {
                   $eDue['mon'] = "";
@@ -235,7 +236,7 @@ function julian_userapi_getevents($args)
                   $eDue['year'] = "";
               } else {
                   $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-                  $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+                  $eDue['viewdate'] = date("$dateformat",strtotime($eDue['timestamp']));
               }
 
              $items[] = array('eID' => $eID,
@@ -295,7 +296,6 @@ function julian_userapi_getevents($args)
                          DATE_FORMAT(dtstart,'%Y-%m-%d') as fStartDate
                  FROM $event_linkage_table";
 
-
     if ((!empty($startdate))&& (!empty($enddate))){
         $query_linked .= " WHERE DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') <= $enddate";
     }
@@ -353,6 +353,7 @@ function julian_userapi_getevents($args)
                          array('iid'     => $hook_iid,
                                'itemtype'=> $hook_itemtype,
                                'modid'   => $hook_modid));
+
         if (!empty($itemlinks['description'])) {
               // Change date formats from UNIX timestamp to something readable.
               if ($eStart['timestamp'] == 0) {
@@ -361,7 +362,7 @@ function julian_userapi_getevents($args)
                   $eStart['year'] = "";
               } else {
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-                  $eStart['viewdate'] = date("m-d-Y",strtotime($eStart['timestamp']));
+                  $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
               }
               if ($eRecur['timestamp'] == 0) {
                   $eRecur['mon'] = "";
@@ -369,7 +370,7 @@ function julian_userapi_getevents($args)
                   $eRecur['year'] = "";
               } else {
                   $eRecur['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-                  $eRecur['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+                  $eRecur['viewdate'] = date("$dateformat",strtotime($eDue['timestamp']));
               }
               if ($eDue['timestamp'] == 0) {
                   $eDue['mon'] = "";
@@ -377,12 +378,12 @@ function julian_userapi_getevents($args)
                   $eDue['year'] = "";
               } else {
                   $eDue['linkdate'] = date("Ymd",strtotime($eDue['timestamp']));
-                  $eDue['viewdate'] = date("m-d-Y",strtotime($eDue['timestamp']));
+                  $eDue['viewdate'] = date("$dateformat",strtotime($eDue['timestamp']));
               }
 
              $items[] = array('eID' => $eID.'_link',
                               'eName' => $eSummary,
-                              'eDescription' => '',
+                              'eDescription' => $itemlinks['description'],
                               'eStreet1' => '',
                               'eStreet2' => '',
                               'eCity' => '',
@@ -403,11 +404,56 @@ function julian_userapi_getevents($args)
                               'eFee' => '');
         }
     }
-
     // Close linked result set
     $result_linked->Close();
 
+    // Sort all items
+    usort($items, 'datecompare');
+
     // Return the items
     return $items;
+}
+
+/**
+ * Sort the array
+ * @param string sortby
+ * @param array Array of item
+ * @return int 0, -1 or 1 depending of the sort needed
+ * @since 23 April 2006
+ */
+function datecompare($x, $y)
+{
+    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'eventDate', XARVAR_NOT_REQUIRED)) return;
+
+    switch ($sortby) {
+        case 'eventDate':
+            $sort = 'eStart';
+            break;
+        case 'eventName':
+            $sort = 'eName';
+            break;
+        case 'eventDesc':
+            $sort = 'eDescription';
+            break;
+        case 'eventLocn':
+            $sort = 'eLocation';
+            break;
+        case 'eventCont':
+            $sort = 'eContact';
+            break;
+        case 'eventFee':
+            $sort = 'eFee';
+            break;
+    }
+
+    if ( $x[$sort] == $y[$sort] ) {
+        return 0;
+    }
+    else if ( $x[$sort] < $y[$sort] ) {
+        return -1;
+    }
+    else {
+        return 1;
+    }
 }
 ?>
