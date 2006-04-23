@@ -41,6 +41,7 @@ function xarbb_user_viewforum()
     $lastvisitthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $fid));
     $lastvisitallforums = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
 
+    // CHECKME: Not sure what this is for anymore. It gets passed to the template.
     $lastvisitcompared = max($lastvisitthisforum, $lastvisitallforums);
 
     // And now we kill all of this work and just move on.
@@ -223,7 +224,8 @@ function xarbb_user_viewforum()
     // Sort and truncate it, limiting it to N elements.
     // TODO: should this be configurable, i.e. the number of topics to keep
     // track of, for each forum?
-    $max_topic_tracking = 100;
+    // Make the maximum large enough to track up to five pages of topics.
+    $max_topic_tracking = (!empty($topicsperpage) ? $topicsperpage*5 : 100);
     if (count($topic_tracking) > $max_topic_tracking) {
         // We need to remove the oldest topics from the array.
         // These will be the lowest non-zero element values.

@@ -18,11 +18,17 @@
  * @param $args['fids'] array of forum ids
  * @param $args['tid'] topic id, or
  * @param $args['tids'] array of topic ids
+ * @param $args['uid'] user id
+ * @param $args['from'] integer from timestamp (unix time)
+ * @param $args['minreplies'] integer minimum number of replies
+ * @param $args['maxreplies'] integer minimum number of replies
+ * @param $args['ip'] string topics from a given IP address
  * @param $args['sortby'] string optional sort field (default 'time')
  * @param $args['order'] string optional sort order (default 'DESC' for time, replies etc.)
  * @param $args['cids'] array of category ids
  * @returns array
  * @return array of links, or false on failure
+ * @todo allow this function to be used to return counts, as well as items, the difficulty being privilege checking
  */
 
 function xarbb_userapi_getalltopics($args)
@@ -41,16 +47,10 @@ function xarbb_userapi_getalltopics($args)
     if (!empty($cid)) {$cids = array($cid);}
     if (empty($cids)) {$cids = array();}
 
-    // Ultimately, this function can be called with no paramaters.
-    /*if (empty($fid) && empty($tids)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }*/
-
     // We need to restrict the query by forums to which the
     // user has access. If no forum IDs have been passed in
     // then go grab them now.
+    // TODO: getallforums() does not use the cids or fids - it would help if it did.
     if (empty($fid) && empty($fids)) {
         $all_forums = xarModAPIfunc('xarbb', 'user', 'getallforums',
             array('cids' => $cids, 'fids' => $fids)
@@ -62,6 +62,7 @@ function xarbb_userapi_getalltopics($args)
  
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+
     $xbbtopicstable = $xartable['xbbtopics'];
     $xbbforumstable = $xartable['xbbforums'];
 
@@ -131,6 +132,12 @@ function xarbb_userapi_getalltopics($args)
     if (!empty($from)) {
         $query .= " AND $xbbtopicstable.xar_ttime >= ? ";
         $bindvars[] = (int)$from;
+    }
+
+    // Get by maximum number of replies
+    if (isset($maxreplies) && is_numeric($maxreplies)) {
+        $query .= " AND $xbbtopicstable.xar_treplies <= ? ";
+        $bindvars[] = (int)$maxreplies;
     }
 
     if (empty($sortby)) {
@@ -225,7 +232,13 @@ function xarbb_userapi_getalltopics($args)
         'shadow' => NULL,
     );
 
+    // Main topics array.
     $topics = array();
+
+    // For topic tracking.
+    $forum_last_visited = array();
+    $forum_topic_tracking = array();
+
     for (; !$result->EOF; $result->MoveNext()) {
         list(
             $tid, $fid, $ttitle, $tpost, $tposter,
@@ -296,6 +309,30 @@ function xarbb_userapi_getalltopics($args)
             $topic['icon_flags']['hot'] = (($topic['treplies'] > $hot_topic) ? true : false); 
             $topic['icon_flags']['lock'] = (!empty($topic['options']['lock']) ? true : false);
 
+            //
+            // Check whether the topic is 'new' (i.e. unread) or not.
+            //
+            if (!isset($forum_last_visited[$fid])) {
+                // If we don't have topic tracking details for this forum, then fetch it now.
+                $forum_last_visited[$fid] = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $fid));
+                $forum_topic_tracking[$fid] = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'topics_' . $fid));
+                if (empty($forum_topic_tracking[$fid])) {
+                    $forum_topic_tracking[$fid] = array();
+                } else {
+                    $forum_topic_tracking[$fid] = unserialize($forum_topic_tracking[$fid]);
+                }
+            }
+            // Topic is new if the tracking array says it is,
+            // or has a later timestamp than the last tracked time
+            // or it is newer then the last visited time
+            if (isset($forum_topic_tracking[$fid][$tid])) {
+                $topic['icon_flags']['new'] = 
+                    (($forum_topic_tracking[$fid][$tid] == 0 || $forum_topic_tracking[$fid][$tid] < $ttime) ? true : false);
+            } else {
+                $topic['icon_flags']['new'] = (($ttime > $forum_last_visited[$fid]) ? true : false);
+            }
+
+            // Add this topic to the return array.
             $topics[] = $topic;
         }
     }

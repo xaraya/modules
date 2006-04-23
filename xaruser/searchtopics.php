@@ -19,7 +19,7 @@ function xarbb_user_searchtopics()
     if (!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('by', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('replies', 'int:0', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('replies', 'int:0:1', $replies, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('from', 'int:1', $from, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ip', 'str:1:20', $ip, NULL, XARVAR_NOT_REQUIRED)) return;
 
@@ -42,26 +42,26 @@ function xarbb_user_searchtopics()
     if (!empty($uid)) {
         $data['message'] = xarML('Your topics');
         $topics = xarModAPIFunc(
-            'xarbb', 'user', 'getalltopics_byuid',
+            'xarbb', 'user', 'getalltopics',
             array('uid' => $uid, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
         );
     } elseif (isset($replies)) {
         $data['message'] = xarML('Unanswered topics');
         if (!isset($fid)) {
             $topics = xarModAPIFunc(
-                'xarbb', 'user', 'getalltopics_byunanswered',
-                array('startnum' => $startnumitem, 'numitems' => $topicsperpage)
+                'xarbb', 'user', 'getalltopics',
+                array('maxreplies' => 0, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
             );
         } else {
             $topics = xarModAPIFunc(
-                'xarbb', 'user', 'getalltopics_byunanswered',
-                array('fid' => $fid, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
+                'xarbb', 'user', 'getalltopics',
+                array('maxreplies' => 0, 'fid' => $fid, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
             );
         }
     } elseif (!empty($from)) {
         $data['message'] = xarML('Topics since your last visit');
         $topics = xarModAPIFunc(
-            'xarbb', 'user', 'getalltopics_bytime',
+            'xarbb', 'user', 'getalltopics',
             array('from' => $from, 'startnum' => $startnumitem, 'numitems' => $topicsperpage)
         );
     } elseif (!empty($ip)) {
@@ -114,56 +114,6 @@ function xarbb_user_searchtopics()
             // FIXME: Check the topic tracking arrays to get the read status
             $topictimecompare = '';
         }
-        
-        // FIXME: the 'viewtopic' script does it differently, and without the markup - copy code over.
-        switch(strtolower($topic['tstatus'])) {
-            // Just a regular old topic
-            case '0':
-            default:
-                // FIXME: move all this markup to the templates
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])) {
-                    // More comments than our hottopic setting, therefore should be hot, but not new.
-                    if ($topics[$i]['comments'] > $hotTopic){
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-                    // Else should be a regular old boring topic
-                    } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
-                    }
-                } else {
-                    // OOF, look at this topic, hot and new.
-                    if ($topics[$i]['comments'] > $hotTopic) {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
-                    // Else should be a regular old boring topic that has a new post
-                    } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
-                    }
-                }
-                break;
-
-            // Announcement topic
-            case '1':
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])) {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
-                } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce_new.gif') . '" alt="'.xarML('New Announcement').'" />';
-                }
-
-                break;
-            // Sticky topic
-            case '2':
-                if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])) {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky.gif') . '" alt="'.xarML('Sticky').'" />';
-                } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
-                }
-                break;
-            // Locked
-            case '3':
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New posts').'" />';
-                break;
-        }
-
-
         
         if ($topics[$i]['comments'] == 0) {
             $topics[$i]['authorid'] = $topic['tposter'];
