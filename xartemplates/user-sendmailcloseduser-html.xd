@@ -6,7 +6,7 @@
 <p>
 <xar:ml>
     <xar:mlstring>
-        The ticket ##(1) that you submitted to our helpdesk system has been closed.
+        Ticket ###(1) has been closed.
     </xar:mlstring>
     <xar:mlvar>#$tid#</xar:mlvar>
 </xar:ml>
@@ -15,6 +15,13 @@
 <p>
     <strong><xar:mlstring>Subject:</xar:mlstring></strong> #$subject#
 </p>
+
+<xar:if condition="!empty($comment_html)">
+<p>
+    <strong><xar:mlstring>Comment:</xar:mlstring></strong><br />
+    #$comment_html#
+</p>
+</xar:if>
 
 <p>
     <strong><xar:mlstring>View your ticket:</xar:mlstring></strong> <br />

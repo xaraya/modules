@@ -1,11 +1,19 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:mlstring>Dear</xar:mlstring> #$name#,
 
-<xar:mlstring>
-    The ticket that you submitted to our helpdesk system has been closed.
-</xar:mlstring>
+<xar:ml>
+    <xar:mlstring>
+        Ticket ###(1) has been closed.
+    </xar:mlstring>
+    <xar:mlvar>#$tid#</xar:mlvar>
+</xar:ml>
 
 <xar:mlstring>Subject:</xar:mlstring> #$subject#
+
+<xar:if condition="!empty($comment)">
+    <xar:mlstring>Comment:</xar:mlstring>&nbsp;
+    <xar:var name="comment" />
+</xar:if>
 
 <xar:mlstring>Link to your ticket:</xar:mlstring>&nbsp;
 #$viewticket#
