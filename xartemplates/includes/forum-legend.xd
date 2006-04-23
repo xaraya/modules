@@ -4,25 +4,16 @@
 
 <div class="xarbb-legendwrapper2">
     <h2><xar:mlstring>Legend</xar:mlstring></h2>
-    <dl class="xar-sub">
-        <dt><xar:mlstring>Normal topic</xar:mlstring></dt>
-        <dd><img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New posts')#" /><xar:mlstring>New posts</xar:mlstring></dd>
-        <dd><img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new posts')#" /><xar:mlstring>No new posts</xar:mlstring></dd>
-
-        <dt><xar:mlstring>Announcement</xar:mlstring></dt>
-        <dd><img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" /><xar:mlstring>New announcement</xar:mlstring></dd>
-        <dd><img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" /><xar:mlstring>Announcement</xar:mlstring></dd>
-
-        <dt><xar:mlstring>Hot topic</xar:mlstring></dt>
-        <dd><img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic posts')#" /><xar:mlstring>New hot topic posts</xar:mlstring></dd>
-        <dd><img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" /><xar:mlstring>Hot topic</xar:mlstring></dd>
-
-        <dt><xar:mlstring>Sticky</xar:mlstring></dt>
-        <dd><img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" /><xar:mlstring>Sticky topic</xar:mlstring></dd>
-        <dd><img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" /><xar:mlstring>New sticky topic</xar:mlstring></dd>
-
-        <dt><xar:mlstring>Locked</xar:mlstring></dt>
-        <dd><img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" /><xar:mlstring>Locked topic</xar:mlstring></dd>
-    </dl>
+<dl class="xar-sub">
+<dt><xar:mlstring>Normal topic</xar:mlstring></dt><dd><img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New posts')#" /><xar:mlstring>New posts</xar:mlstring></dd>
+<dd><img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new posts')#" /><xar:mlstring>No new posts</xar:mlstring></dd>
+<dt><xar:mlstring>Announcement</xar:mlstring></dt><dd><img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" /><xar:mlstring>New announcement</xar:mlstring></dd>
+<dd><img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" /><xar:mlstring>Announcement</xar:mlstring></dd>
+<dt><xar:mlstring>Hot topic</xar:mlstring></dt><dd><img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic posts')#" /><xar:mlstring>New hot topic posts</xar:mlstring></dd>
+<dd><img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" /><xar:mlstring>Hot topic</xar:mlstring></dd>
+<dt><xar:mlstring>Sticky</xar:mlstring></dt><dd><img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" /><xar:mlstring>Sticky topic</xar:mlstring></dd>
+<dd><img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" /><xar:mlstring>New sticky topic</xar:mlstring></dd>
+<dt><xar:mlstring>Locked</xar:mlstring></dt><dd><img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" /><xar:mlstring>Locked topic</xar:mlstring></dd>
+</dl>
     <div style="clear: both;"></div>
 </div>
