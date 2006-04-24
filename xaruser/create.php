@@ -20,13 +20,13 @@
 function helpdesk_user_create($args)
 {
     if( !xarSecurityCheck('readhelpdesk') ){ return false; }
-/*
+
     if( !xarSecConfirmAuthKey() )
     {
         xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
         return false;
     }
-*/
+
     // Get some info about the mod and a ticket type id
     $modid = xarModGetIDFromName('helpdesk');
     xarModAPILoad('helpdesk');
@@ -55,8 +55,18 @@ function helpdesk_user_create($args)
     //extract($args);
 
     if( empty($name) ){ $name = xarUserGetVar('name', $openedby); }
-    if( empty($email) ){ $email = xarUserGetVar('email', $openedby); }
-    if( !isset($phone) ){ $phone = ''; }
+    $tmp_email = xarUserGetVar('email', $openedby);
+    if( xarCurrentErrorID() == 'NOT_LOGGED_IN' )
+    {
+        // caused for anonymous users just use the email address already entered
+        xarErrorHandled();
+    }
+    else if( $tmp_email != false )
+    {
+        // user was logged in we could get the an email address
+        $email = $tmp_email;
+    }
+
 
     // If it is closed by someone, the ticket must be closed
     if( !empty($closedby) ){ $status = xarModGetVar('helpdesk', 'default_resolved_status'); }

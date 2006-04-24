@@ -103,8 +103,7 @@ function helpdesk_user_sendmail($args)
                 $data = array_merge($ticket_args, $mail_args);
                 $textmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $data, 'text');
                 $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $data, 'html');
-                helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
-
+                $result = helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
             }
             break;
 
@@ -188,7 +187,6 @@ function helpdesk_user_sendmail($args)
  */
 function helpdesk_userapi_sendmail($mail_args, $htmlmessage=null, $textmessage=null)
 {
- //   return true;
     $usermail = false;
     if( isset($mail_args['email']) )
     {
@@ -200,8 +198,6 @@ function helpdesk_userapi_sendmail($mail_args, $htmlmessage=null, $textmessage=n
                 'subject'      => $mail_args['mailsubject'],
                 'htmlmessage'  => $htmlmessage,
                 'message'      => $textmessage,
-                //'from'         => $femail,
-                //'fromname'     => $fromname
             )
         );
     }
