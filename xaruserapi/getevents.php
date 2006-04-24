@@ -216,6 +216,8 @@ function julian_userapi_getevents($args)
                   $eStart['mon'] = "";
                   $eStart['day'] = "";
                   $eStart['year'] = "";
+                  $eStart['linkdate'] = '';
+                  $eStart['viewdate'] = '';
               } else {
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
                   $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
@@ -224,8 +226,10 @@ function julian_userapi_getevents($args)
                   $eRecur['mon'] = "";
                   $eRecur['day'] = "";
                   $eRecur['year'] = "";
+                  $eRecur['linkdate'] = '';
+                  $eRecur['viewdate'] = '';
               } else {
-                  $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));//eDue?
+                  $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));
                   $eRecur['viewdate'] = date("$dateformat",strtotime($eRecur['timestamp']));
               }
              $items[] = array('eID' => $eID,
@@ -333,6 +337,8 @@ function julian_userapi_getevents($args)
                   $eStart['mon'] = "";
                   $eStart['day'] = "";
                   $eStart['year'] = "";
+                  $eStart['linkdate'] = '';
+                  $eStart['viewdate'] = '';
               } else {
                   $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
                   $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
