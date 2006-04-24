@@ -181,10 +181,14 @@ function helpdesk_user_sendmail($args)
 
     return true;
 }
-
+/**
+ * Send the actual email
+ * @param
+ * @return
+ */
 function helpdesk_userapi_sendmail($mail_args, $htmlmessage=null, $textmessage=null)
 {
-    return true;
+ //   return true;
     $usermail = false;
     if( isset($mail_args['email']) )
     {
