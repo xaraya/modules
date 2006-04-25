@@ -69,7 +69,7 @@ function courses_admin_modifyplanned($args)
     $data['cancelbutton']   = xarVarPrepForDisplay(xarML('Cancel'));
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1003));
-    $data['year'] = xarModAPIFunc('courses', 'user', 'gets',
+    $data['years'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1005));
     $data['authid']         = xarSecGenAuthKey();
     $data['menutitle']      = xarVarPrepForDisplay(xarML('Edit a planned course'));

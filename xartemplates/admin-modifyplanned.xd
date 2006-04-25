@@ -55,8 +55,12 @@
                             </span>
                         </label>
                             <select name="year">
-                            <xar:loop name="$year">
-                                <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                            <xar:loop name="$years">
+                                <xar:if condition="$loop:item['yearid'] eq $planneddata.courseyear">
+                                    <option value="#$loop:item['yearid']#" selected=selected>#$loop:item['year']#</option>
+                                <xar:else />
+                                    <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                                </xar:if>
                             </xar:loop>
                             </select>
                     </div>
