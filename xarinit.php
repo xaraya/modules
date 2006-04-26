@@ -28,7 +28,7 @@ function messages_init()
     xarModSetVar('messages', 'from', 'Webmaster@YourSite.com');
     xarModSetVar('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
     xarModSetVar('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
-    xarModSetVar('messages', 'SupportShortURLs', 0 );
+    xarModSetVar('messages', 'SupportShortURLs', false );
 
     // read_messages is intended only for users
     // it will store the message id of each message that

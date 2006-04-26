@@ -22,7 +22,7 @@ function messages_userapi_getmenulinks ( $args )
     // not that he/she doesn't.
 
 
-    if (xarSecurityCheck('ViewMessages', 0) == true) {
+    if (xarSecurityCheck('ReadMessages', 0) == true) {
         // The main menu will look for this array and return it for a tree
         // view of the module. We are just looking for three items in the
         // array, the url, which we need to use the xarModURL function, the
@@ -34,15 +34,18 @@ function messages_userapi_getmenulinks ( $args )
             'url'      => xarModURL('messages', 'user', 'display'),
             'title'    => 'Look at the Messages',
             'label'    => 'Display Messages' );
+    }
 
+    if (xarSecurityCheck('AddMessages', 0) == true) {
         $menulinks[] = array(
             'url'      => xarModURL('messages', 'user', 'send', array('action' => 'post')),
             'title'    => 'Send a message to someone',
             'label'    => 'Send Message' );
 
-    } else {
+    } 
+
         $menulinks = '';
-    }
+    
 
     // The final thing that we need to do in this function is return the values back
     // to the main menu for display.

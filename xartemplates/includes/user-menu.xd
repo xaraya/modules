@@ -9,18 +9,19 @@
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:sec mask="ViewMessages" catch="false">
+    <xar:sec mask="ReadMessages" catch="false">
         <xar:if condition="$activetab eq 'display' or $activetab eq 'view'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
             <xar:set name="tabclass">''</xar:set>
-
         </xar:if>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-messages-user-display;">
             <xar:mlstring>Display Messages</xar:mlstring>
           </a>
         </dd>
+    </xar:sec>
+    <xar:sec mask="AddMessages" catch="false">
         <xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-messages-user-send;&amp;action=post">

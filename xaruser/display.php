@@ -14,8 +14,8 @@
 function messages_user_display( )
 {
     // Security check
-    if (!xarSecurityCheck('ViewMessages', 0)) {
-        return $data['error'] = xarML('You are not permitted to view messages.');
+    if (!xarSecurityCheck('ReadMessages', 0)) {
+        return $data['error'] = xarML('You are not permitted to read messages.');
     }
 
 
