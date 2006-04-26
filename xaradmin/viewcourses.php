@@ -111,40 +111,36 @@ function courses_admin_viewcourses()
     $data['sortorder'] = $sortorder;
     $data['sortby'] = $sortby;
 
+    if (strcmp($sortorder, 'DESC')==0) {
+        $sort ='ASC';
+    } else {
+        $sort = 'DESC';
+    }
+
     // Create sort by URLs
-    if ($sortby != 'name' ) {
-        $data['snamelink'] = xarModURL('courses',
-                                       'admin',
-                                       'viewcourses',
-                                       array('startnum' => 1,
-                                             'sortby' => 'name',
-                                             'sortorder' => $sortorder,
-                                             'catid' => $catid));
-    } else {
-        $data['snamelink'] = '';
-    }
-    if ($sortby != 'shortdesc' ) {
-        $data['sdesclink'] = xarModURL('courses',
-                                       'admin',
-                                       'viewcourses',
-                                       array('startnum' => 1,
-                                             'sortby' => 'shortdesc',
-                                             'sortorder' => $sortorder,
-                                             'catid' => $catid));
-    } else {
-        $data['sdesclink'] = '';
-    }
-    if ($sortby != 'number' ) {
-        $data['snumberlink'] = xarModURL('courses',
-                                        'admin',
-                                        'viewcourses',
-                                        array('startnum' => 1,
-                                              'sortby' => 'number',
-                                              'sortorder' => $sortorder,
-                                              'catid' => $catid));
-    } else {
-        $data['snumberlink'] = '';
-    }
+    $data['snamelink'] = xarModURL('courses',
+                                   'admin',
+                                   'viewcourses',
+                                   array('startnum' => 1,
+                                         'sortby' => 'name',
+                                         'sortorder' => $sort,
+                                         'catid' => $catid));
+
+    $data['sdesclink'] = xarModURL('courses',
+                                   'admin',
+                                   'viewcourses',
+                                   array('startnum' => 1,
+                                         'sortby' => 'shortdesc',
+                                         'sortorder' => $sort,
+                                         'catid' => $catid));
+
+    $data['snumberlink'] = xarModURL('courses',
+                                    'admin',
+                                    'viewcourses',
+                                    array('startnum' => 1,
+                                          'sortby' => 'number',
+                                          'sortorder' => $sort,
+                                          'catid' => $catid));
 
     // Return the template variables defined in this function
     return $data;

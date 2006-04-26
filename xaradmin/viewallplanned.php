@@ -3,7 +3,7 @@
  * Standard all planned courses
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,20 +17,19 @@
  * Deliver all info to display a page with all planned courses.
  * This function should also allow for easy sorting and searching
  *
- * @author Michel V.
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param int startnum
  * @param int catid
  * @param str sortby
  * @param str sortorder
- * @returns array with all planned courses
- * @return array
+ * @return array with all planned courses
  */
 function courses_admin_viewallplanned()
 {
-    if (!xarVarFetch('startnum', 'int:1:',          $startnum,  1,            XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'isset',           $catid,     NULL,           XARVAR_DONT_SET))     return;
-    if (!xarVarFetch('sortby',   'str:1:',          $sortby,    'startdate',   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:',  $sortorder, 'DESC',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',          $startnum,  1,           XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'isset',           $catid,     NULL,        XARVAR_DONT_SET))     return;
+    if (!xarVarFetch('sortby',   'str:1:',          $sortby,    'startdate', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:',  $sortorder, 'DESC',      XARVAR_NOT_REQUIRED)) return;
 
     // Add the admin menu
     $data = xarModAPIFunc('courses', 'admin', 'menu');
@@ -120,6 +119,7 @@ function courses_admin_viewallplanned()
 
             $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
             $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
+            $items[$i]['number'] = xarVarPrepForDisplay($course['number']);
             $items[$i]['startdate'] = $items[$i]['startdate'];
             $items[$i]['enddate'] = $items[$i]['enddate'];
         // End for()
@@ -128,6 +128,43 @@ function courses_admin_viewallplanned()
         // Add the array of items to the template variables
         $data['items'] = $items;
     }
+    if (strcmp($sortorder, 'DESC')==0) {
+        $sort ='ASC';
+    } else {
+        $sort = 'DESC';
+    }
+    // Create sort by URLs
+    if ($sortby != 'name' ) {
+        $data['snamelink'] = xarModURL('courses',
+                                       'admin',
+                                       'viewallplanned',
+                                       array('startnum' => 1,
+                                             'sortby' => 'name',
+                                             'sortorder' => $sort,
+                                             'catid' => $catid));
+    } else {
+        $data['snamelink'] = '';
+    }
+
+    $data['sdatelink'] = xarModURL('courses',
+                                   'admin',
+                                   'viewallplanned',
+                                   array('startnum' => 1,
+                                         'sortby' => 'startdate',
+                                         'sortorder' => $sort,
+                                         'catid' => $catid));
+    if ($sortby != 'number' ) {
+        $data['snumberlink'] = xarModURL('courses',
+                                        'admin',
+                                        'viewallplanned',
+                                        array('startnum' => 1,
+                                              'sortby' => 'number',
+                                              'sortorder' => $sort,
+                                              'catid' => $catid));
+    } else {
+        $data['snumberlink'] = '';
+    }
+
 
     // Return the template variables defined in this function
     return $data;

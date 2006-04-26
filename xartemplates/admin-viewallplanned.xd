@@ -14,23 +14,37 @@
     <table>
         <thead>
         <tr>
-            <th><xar:mlstring>Name</xar:mlstring></th>
-            <th><xar:mlstring>Startdate</xar:mlstring></th>
+            <xar:if condition="$snumberlink != ''">
+                <th><a href="#$snumberlink#"><xar:mlstring>Number</xar:mlstring></a></th>
+            <xar:else />
+                <th><xar:mlstring>Number</xar:mlstring></th>
+            </xar:if>
+            <xar:if condition="$snamelink != ''">
+                <th><a href="#$snamelink#"><xar:mlstring>Title</xar:mlstring></a></th>
+            <xar:else />
+                <th><xar:mlstring>Title</xar:mlstring></th>
+            </xar:if>
+            <xar:if condition="$sdatelink != ''">
+                <th><a href="#$sdatelink#"><xar:mlstring>Startdate</xar:mlstring></a></th>
+            <xar:else />
+                <th><xar:mlstring>Startdate</xar:mlstring></th>
+            </xar:if>
             <th><xar:mlstring>Enddate</xar:mlstring></th>
-            <th><xar:mlstring>Min/Max Participants</xar:mlstring></th>
+            <th><xar:mlstring>Min/Max</xar:mlstring></th>
             <th><xar:mlstring>Participants</xar:mlstring></th>
             <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         </thead>
         <xar:foreach in="$items" value="$item">
         <tr>
-            <th>
+            <th>#$item['number']#</th>
+            <td>
                <xar:if condition="empty($item['displayurl'])">
                    #$item['name']#
                <xar:else />
                    <a href="#$item['displayurl']#">#$item['name']#</a>
                </xar:if>
-            </th>
+            </td>
             <xar:if condition="$item['hideplanning'] eq 1">
                 <td class="coursehidden">
             <xar:else />

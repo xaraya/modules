@@ -16,15 +16,15 @@
     <table>
         <thead>
             <tr>
-                <xar:if condition="$snamelink != ''">
-                    <th><a href="#$snamelink#"><xar:mlstring>Course Name</xar:mlstring></a></th>
-                <xar:else />
-                    <th><xar:mlstring>Course Name</xar:mlstring></th>
-                </xar:if>
                 <xar:if condition="$snumberlink != ''">
                     <th><a href="#$snumberlink#"><xar:mlstring>Number</xar:mlstring></a></th>
                 <xar:else />
                     <th><xar:mlstring>Number</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$snamelink != ''">
+                    <th><a href="#$snamelink#"><xar:mlstring>Course Name</xar:mlstring></a></th>
+                <xar:else />
+                    <th><xar:mlstring>Course Name</xar:mlstring></th>
                 </xar:if>
                 <th><xar:mlstring>Type ID</xar:mlstring></th>
                 <th><xar:mlstring>Next</xar:mlstring></th>
@@ -33,6 +33,7 @@
         </thead>
         <xar:foreach in="$items" value="$item">
         <tr>
+            <td>#$item['number']#</td>
             <td>
                <xar:if condition="empty($item['displayurl'])">
                   #$item['name']#
@@ -40,7 +41,7 @@
                   <a href="#$item['displayurl']#">#$item['name']#</a>
                </xar:if>
             </td>
-            <td>#$item['number']#</td>
+
             <td>#$item['coursetype']#</td>
             <xar:if condition="$item['hidecourse'] eq 1">
                 <td class="coursehidden">
