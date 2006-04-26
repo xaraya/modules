@@ -26,7 +26,7 @@ function courses_admin_viewcourses()
     if (!xarVarFetch('startnum', 'int:1:',         $startnum,  1,      XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'isset',          $catid,     NULL,   XARVAR_DONT_SET))     return;
     if (!xarVarFetch('sortby',   'str:1:',         $sortby,    'name', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC:', $sortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable
     $data = xarModAPIFunc('courses', 'admin', 'menu');
     // Initialise the variable that will hold the items, so that the template
@@ -85,6 +85,12 @@ function courses_admin_viewcourses()
                 'user',
                 'display',
                 array('courseid' => $item['courseid']));
+            $allplanned = xarModApiFunc('courses','user','getplandates',array('courseid'=> $courseid,'startafter'=>time()));
+            if (!empty($allplanned)) {
+                $items[$i]['next'] = $allplanned[0]['startdate'];
+            } else {
+                $items[$i]['next'] = '';
+            }
         } else {
             $items[$i]['displayurl'] = '';
         }
@@ -101,10 +107,6 @@ function courses_admin_viewcourses()
     }
     // Add the array of items to the template variables
     $data['items'] = $items;
-    // Specify some labels for display
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name'));
-    $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarML('Course Options'));
     $data['catid'] = $catid;
     $data['sortorder'] = $sortorder;
     $data['sortby'] = $sortby;

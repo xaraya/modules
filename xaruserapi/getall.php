@@ -46,7 +46,7 @@ function courses_userapi_getall($args)
         $numitems = -1;
     }
     if (!isset($sortorder) || (isset($sortorder) && !in_array($sortorder, array('DESC','ASC')))) {
-        $sortorder = 'DESC';
+        $sortorder = 'ASC';
     }
     $items = array();
     if (!xarSecurityCheck('ViewCourses')) return;
