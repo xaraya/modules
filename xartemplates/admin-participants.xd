@@ -22,7 +22,7 @@
                 </thead>
                 <xar:foreach in="$items" value="$item">
                 <tr>
-                    <td>#xarUserGetVar('name',$item['userid'])#</td>
+                    <td><a href="#xarModURL('roles','user','display',array('uid'=>$item.userid))#">#xarUserGetVar('name',$item['userid'])#</a></td>
                     <td>#xarUserGetVar('email',$item['userid'])#</td>
                     <td>#xarLocaleGetFormattedDate('medium', $item['regdate'])#</td>
                     <td>#$item['statusname']#</td>
