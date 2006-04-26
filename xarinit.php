@@ -38,13 +38,13 @@ function sitecontact_init()
               xar_optiontext      X      NotNull    DEFAULT '',
               xar_webconfirmtext  X      NotNull    DEFAULT '',
               xar_notetouser      X      NotNull    DEFAULT '',
-              xar_allowcopy       L      NotNull    DEFAULT 0,
-              xar_usehtmlemail    L      NotNull    DEFAULT 0,
+              xar_allowcopy       I1     NotNull    DEFAULT 0,
+              xar_usehtmlemail    I1     NotNull    DEFAULT 0,
               xar_scdefaultemail  C(254) NotNull    DEFAULT '',
               xar_scdefaultname   C(254) NotNull    DEFAULT '',
-              xar_scactive        L      NotNull    DEFAULT 1,
-              xar_savedata        L      NotNull    DEFAULT 0,
-              xar_permissioncheck L      NotNull    DEFAULT 0,
+              xar_scactive        I1     NotNull    DEFAULT 1,
+              xar_savedata        I1     NotNull    DEFAULT 0,
+              xar_permissioncheck I1     NotNull    DEFAULT 0,
               xar_termslink       C(254) NotNull    DEFAULT '',
               xar_soptions        X      NotNull    DEFAULT ''
               ";
@@ -82,7 +82,7 @@ function sitecontact_init()
                         'Dear %%username%%\n\nThis message confirms your email has been sent.\n\nThank you for your feedback.\n\nAdministrator\n%%sitename%%\n-------------------------------------------------------------',
                         '1',
                         '0',
-                        '$defaultemail',
+                        ?,
                         'Site Admin',
                         1,
                         0,
@@ -91,7 +91,8 @@ function sitecontact_init()
                         ''
                         )";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array($defaultemail);
+    $result = &$dbconn->Execute($query,$bindvars);
            if (!$result) {return;}
 
     xarModSetVar('sitecontact', 'savedata', 0);
@@ -230,7 +231,7 @@ function sitecontact_upgrade($oldversion)
             /* Get a data dictionary object with all the item create methods in it */
             $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-            $fields= "xar_scid            I      AUTO       PRIMARY,
+            $fields= "xar_scid           I      AUTO       PRIMARY,
                       xar_sctypename     C(100) NotNull    DEFAULT '',
                       xar_sctypedesc     C(254) NotNull    DEFAULT '',
                       xar_customtext     X      NotNull    DEFAULT '',
@@ -238,11 +239,11 @@ function sitecontact_upgrade($oldversion)
                       xar_optiontext     X      NotNull    DEFAULT '',
                       xar_webconfirmtext X      NotNull    DEFAULT '',
                       xar_notetouser     X      NotNull    DEFAULT '',
-                      xar_allowcopy      L      NotNull    DEFAULT 0,
-                      xar_usehtmlemail   L      NotNull    DEFAULT 0,
+                      xar_allowcopy      I1     NotNull    DEFAULT 0,
+                      xar_usehtmlemail   I1     NotNull    DEFAULT 0,
                       xar_scdefaultemail C(254) NotNull    DEFAULT '',
                       xar_scdefaultname  C(254) NotNull    DEFAULT '',
-                      xar_scactive       L      NotNull    DEFAULT 1
+                      xar_scactive       I1     NotNull    DEFAULT 1
               ";
             $result = $datadict->changeTable($sitecontactTable, $fields);
             if (!$result) {return;}
@@ -287,8 +288,9 @@ function sitecontact_upgrade($oldversion)
                         1
                         )";
 
-                        $result =& $dbconn->Execute($query);
-           if (!$result) {return;}
+                $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$userhtmlemail,$scdefaultemail,$scdefaultname);
+                $result = &$dbconn->Execute($query,$bindvars);           
+                if (!$result) {return;}
            return sitecontact_upgrade('0.4.0');
        case '0.4.0':
            xarModSetVar('sitecontact', 'savedata', 0);
@@ -305,8 +307,8 @@ function sitecontact_upgrade($oldversion)
            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
            /* Add a few more fields */
-            $fields= "xar_savedata        L      NotNull    DEFAULT 0,
-                      xar_permissioncheck L      NotNull    DEFAULT 0,
+            $fields= "xar_savedata        I1     NotNull    DEFAULT 0,
+                      xar_permissioncheck I1     NotNull    DEFAULT 0,
                       xar_termslink       C(254) NotNull    DEFAULT '',
                       xar_soptions        X      NotNull    DEFAULT ''
                      ";
