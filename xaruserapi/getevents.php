@@ -210,7 +210,7 @@ function julian_userapi_getevents($args)
              $eIsallday,
              $eFee) = $result->fields;
           // Security check
-          if (xarSecurityCheck('ReadJulian', 0, 'Item', "$event_id:$eOrganizer:$eCalendarID:All")) {
+          if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
               // Change date formats from UNIX timestamp to something readable.
               if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
                   $eStart['mon'] = "";
