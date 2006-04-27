@@ -25,7 +25,7 @@
 
 $modversion['id']           = '910';
 $modversion['name']         = 'Help Desk';
-$modversion['version'] = '0.7.8';
+$modversion['version'] = '0.8.0';
 $modversion['displayname']  = xarML('Help Desk');
 $modversion['description']  = 'Helpdesk Module';
 $modversion['credits']      = 'docs/credits.txt';

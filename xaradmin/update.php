@@ -92,7 +92,8 @@ function helpdesk_admin_update($args)
     // update the item
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
-                // Let's take care of the hooks
+
+    // Let's take care of the hooks
     $item = array();
     $item['module']   = 'helpdesk';
     $item['itemid']   = $itemid;

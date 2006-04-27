@@ -1,3 +1,11 @@
+v.0.8.0 - April 26, 2006
+--------------------------
+- Improved email notifications
+- Security setup wizard
+- UI tweaks and cleaning
+- Removed dependency on the owner module
+- Additional bug fixes
+
 v0.7.2 - December 20, 2005
 --------------------------
 - Usability improments to the view tickets function
