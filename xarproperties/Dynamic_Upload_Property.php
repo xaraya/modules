@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
@@ -75,7 +75,18 @@ class Dynamic_Upload_Property extends Dynamic_Property
             }
         }
     }
-
+    function checkInput($name='', $value = null)
+    {
+        if (empty($name)) {
+            $name = 'dd_'.$this->id;
+        }
+        // store the fieldname for validations who need them (e.g. file uploads)
+        $this->fieldname = $name;
+        if (!isset($value)) {
+            if (!xarVarFetch($name, 'isset', $value,  NULL, XARVAR_DONT_SET)) {return;}
+        }
+        return $this->validateValue($value);
+    }
     function validateValue($value = null)
     {
         // convert old Upload values if necessary
