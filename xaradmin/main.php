@@ -21,11 +21,9 @@ function netquery_admin_main()
                              'label' => xarML('Online Manual'));
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     if (!xarSecurityCheck('AdminNetquery')) return;
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        return $data;
-    } else {
-        xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
-    }
+
+    xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
+    
     return $data;
 }
 ?>

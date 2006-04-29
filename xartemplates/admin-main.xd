@@ -1,3 +1,22 @@
+<xar:set name="cfglink">array('url'   => xarModURL('netquery', 'admin', 'config'),
+                             'title' => xarML('Return to main configuration'),
+                             'label' => xarML('Modify Configuration'));</xar:set>
+<xar:set name="wivlink">array('url'   => xarModURL('netquery', 'admin', 'wiview'),
+                             'title' => xarML('View-edit whois TLD/server links'),
+                             'label' => xarML('Edit Whois Links'));</xar:set>
+<xar:set name="ptvlink">array('url'   => xarModURL('netquery', 'admin', 'ptview'),
+                             'title' => xarML('View-edit port services/exploits'),
+                             'label' => xarML('Edit Port Services'));</xar:set>
+<xar:set name="flvlink">array('url'   => xarModURL('netquery', 'admin', 'flview'),
+                             'title' => xarML('View-edit service category flags'),
+                             'label' => xarML('Edit Category Flags'));</xar:set>
+<xar:set name="lgvlink">array('url'   => xarModURL('netquery', 'admin', 'lgview'),
+                             'title' => xarML('View-edit looking glass routers'),
+                             'label' => xarML('Edit LG Routers'));</xar:set>
+
+<xar:set name="hlplink">array('url'   => 'modules/netquery/xardocs/manual.html#admin',
+                             'title' => xarML('Netquery online manual'),
+                             'label' => xarML('Online Manual'));</xar:set>
 <div class="xar-mod-head">
 <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
@@ -5,31 +24,23 @@
 
 <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/netquery/xarimages/admin.gif')" >
-                <img src="modules/netquery/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/netquery/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p>
             <xar:mlstring>The Netquery module includes multidomain and IP/AS whois, DNS queries,
             email address validation, port services lookup, HTTP requests, ping, traceroute and
             looking glass router interrogation functions. Availability of each query type, local
             and remote execution, and all entries in the whois, port services and looking glass
             data tables are configurable.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h2>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
+        </h2>
         <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <p>
             <xar:mlstring>From the administration menu, you have five choices:</xar:mlstring>
             <ul>
             <li><a href="#$cfglink.url#">#$cfglink.label#</a><xar:mlstring>: From this
@@ -48,13 +59,13 @@
             menu option, you can edit, add or delete "looking glass" router entries overriding
             default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
             </ul>
-        </div>
+        </p>
         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
+        </h3>
         <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <p>
             <ul>
                 <li><xar:mlstring>Client Info</xar:mlstring></li>
                 <li><xar:mlstring>Whois Domain</xar:mlstring></li>
@@ -67,20 +78,20 @@
                 <li><xar:mlstring>Ping Host</xar:mlstring></li>
                 <li><xar:mlstring>Traceroute</xar:mlstring></li>
             </ul>
-        </div>
+        </p>
         <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
+        </h3>
         <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <p>
             <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
-        </div>
+        </p>
         <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+        <h3>
             <xar:mlstring>Extended information about this module can be found in the</xar:mlstring>
             <a href='javascript:openwindow("#$hlplink.url#");'>#$hlplink.label#</a>
-        </div>
+        </h3>
     </div>
 
 <script type="text/javascript">

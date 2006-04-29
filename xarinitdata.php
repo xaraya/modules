@@ -178,25 +178,25 @@ function create_lgroutertable()
         address           C(100)     NOTNULL     DEFAULT '',
         username          C(20)      NOTNULL     DEFAULT '',
         password          C(20)      NOTNULL     DEFAULT '',
-        zebra             L          NOTNULL     DEFAULT 0,
+        zebra             L          NOTNULL     DEFAULT false,
         zebra_port        I          NOTNULL     DEFAULT 0,
         zebra_password    C(20)      NOTNULL     DEFAULT '',
-        ripd              L          NOTNULL     DEFAULT 0,
+        ripd              L          NOTNULL     DEFAULT false,
         ripd_port         I          NOTNULL     DEFAULT 0,
         ripd_password     C(20)      NOTNULL     DEFAULT '',
-        ripngd            L          NOTNULL     DEFAULT 0,
+        ripngd            L          NOTNULL     DEFAULT false,
         ripngd_port       I          NOTNULL     DEFAULT 0,
         ripngd_password   C(20)      NOTNULL     DEFAULT '',
-        ospfd             L          NOTNULL     DEFAULT 0,
+        ospfd             L          NOTNULL     DEFAULT false,
         ospfd_port        I          NOTNULL     DEFAULT 0,
         ospfd_password    C(20)      NOTNULL     DEFAULT '',
-        bgpd              L          NOTNULL     DEFAULT 0,
+        bgpd              L          NOTNULL     DEFAULT false,
         bgpd_port         I          NOTNULL     DEFAULT 0,
         bgpd_password     C(20)      NOTNULL     DEFAULT '',
-        ospf6d            L          NOTNULL     DEFAULT 0,
+        ospf6d            L          NOTNULL     DEFAULT false,
         ospf6d_port       I          NOTNULL     DEFAULT 0,
         ospf6d_password   C(20)      NOTNULL     DEFAULT '',
-        use_argc          L          NOTNULL     DEFAULT 0
+        use_argc          L          NOTNULL     DEFAULT false
     ";
     $result = $datadict->changeTable($LGRouterTable, $LGRouterFields);
     if (!$result) return;
