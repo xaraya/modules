@@ -33,7 +33,7 @@ function wiki_init()
     xarModSetVar('wiki', 'ExtlinkNewWindow', true);
     xarModSetVar('wiki', 'IntlinkNewWindow', false);
     // dont touch this one.
-    xarModSetVar('wiki', 'FieldSeparator', "\263");
+    xarModSetVar('wiki', 'FieldSeparator', "|"); //\263 fails on postgres 7.4 bug 5613
     // Set up module hooks
     if (!xarModRegisterHook('item',
             'transform',
