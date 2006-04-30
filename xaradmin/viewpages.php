@@ -29,7 +29,7 @@ function xarpages_admin_viewpages()
 
     if (empty($data['pages'])) {
         // TODO: pass to template.
-        return xarML('NO PAGES DEFINED');
+        return $data;//xarML('NO PAGES DEFINED');
     } else {
         $data['pages'] = xarModAPIfunc('xarpages', 'tree', 'array_maptree', $data['pages']);
     }

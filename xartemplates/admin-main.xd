@@ -1,4 +1,4 @@
-  <xar:template type="module" file="admin-menu" />
+<xar:template type="module" file="admin-menu" />
 <div lang="en-GB">
 <h2>Overview</h2>
 <p>Xarpages is basically a module for managing pages on a site. It's main aim is to provide a rigid framework within which a site designer can structure the site from a visitor's point of view. There is an emphasis on a hierarchical page structure, which feeds into the menus and short URLs.</p>
