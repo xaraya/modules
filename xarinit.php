@@ -210,9 +210,9 @@ function sitecontact_upgrade($oldversion)
         case '0.3.0':
            xarModSetVar('sitecontact', 'useModuleAlias',0);
            xarModSetVar('sitecontact', 'aliasname','');
-             return sitecontact_upgrade('0.3.5');
+             return sitecontact_upgrade('0.4.0');
              break;
-        case '0.3.5':
+        case '0.4.0':
           // Remove incomplete module hook until ready
            if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
               'sitecontact', 'user', 'usermenu')) {
@@ -220,8 +220,12 @@ function sitecontact_upgrade($oldversion)
            }
             /* New modvars */
             xarModSetVar('sitecontact', 'defaultform',1);
-            xarModSetVar('sitecontact', 'scactive',1);            
+            xarModSetVar('sitecontact', 'scactive',1);
             xarModSetVar('sitecontact', 'defaultsort','scid');
+            xarModSetVar('sitecontact', 'savedata', 0);
+            xarModSetVar('sitecontact', 'termslink', '');
+            xarModSetVar('sitecontact', 'soptions', '');
+            xarModSetVar('sitecontact', 'permissioncheck', 0);
             /* Setup our table for holding the different contact itemtype forms */
             $dbconn =& xarDBGetConn();
             $xarTables =& xarDBGetTables();
@@ -259,7 +263,7 @@ function sitecontact_upgrade($oldversion)
             $notetouser = xarModGetVar('sitecontact', 'notetouser');
             $scdefaultname=xarModGetVar('sitecontact', 'scdefaultname');
             $sitecontactTable = $xarTables['sitecontact'];
-           $query ="INSERT INTO $sitecontactTable
+            $query ="INSERT INTO $sitecontactTable
                   (xar_scid,
                    xar_sctypename,
                    xar_sctypedesc,
@@ -291,35 +295,31 @@ function sitecontact_upgrade($oldversion)
                 $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$userhtmlemail,$scdefaultemail,$scdefaultname);
                 $result = &$dbconn->Execute($query,$bindvars);           
                 if (!$result) {return;}
-           return sitecontact_upgrade('0.4.0');
-       case '0.4.0':
-           xarModSetVar('sitecontact', 'savedata', 0);
-           xarModSetVar('sitecontact', 'termslink', '');
-           xarModSetVar('sitecontact', 'soptions', '');
-           xarModSetVar('sitecontact', 'permissioncheck', 0);
+
+
           
-           $dbconn =& xarDBGetConn();
-           $xarTables =& xarDBGetTables();
+               $dbconn =& xarDBGetConn();
+               $xarTables =& xarDBGetTables();
 
-           $sitecontactTable = $xarTables['sitecontact'];
+               $sitecontactTable = $xarTables['sitecontact'];
 
-           /* Get a data dictionary object with all the item create methods in it */
-           $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+               /* Get a data dictionary object with all the item create methods in it */
+               $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-           /* Add a few more fields */
-            $fields= "xar_savedata        I1     NotNull    DEFAULT 0,
-                      xar_permissioncheck I1     NotNull    DEFAULT 0,
-                      xar_termslink       C(254) NotNull    DEFAULT '',
-                      xar_soptions        X      NotNull    DEFAULT ''
+               /* Add a few more fields */
+                $fields= "xar_savedata        I1     NotNull    DEFAULT 0,
+                          xar_permissioncheck I1     NotNull    DEFAULT 0,
+                          xar_termslink       C(254) NotNull    DEFAULT '',
+                          xar_soptions        X      NotNull    DEFAULT ''
                      ";
-            $result = $datadict->changeTable($sitecontactTable, $fields);
-            if (!$result) {return;}
-            
-           /* Enable dynamicdata hooks for sitecontact forms - now a dependency */
-           if (xarModIsAvailable('dynamicdata')) {
-               xarModAPIFunc('modules','admin','enablehooks',
+                $result = $datadict->changeTable($sitecontactTable, $fields);
+                if (!$result) {return;}
+
+               /* Enable dynamicdata hooks for sitecontact forms - now a dependency */
+               if (xarModIsAvailable('dynamicdata')) {
+                   xarModAPIFunc('modules','admin','enablehooks',
                        array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
-           }
+               }
 
            return sitecontact_upgrade('0.5.0');
             break;
