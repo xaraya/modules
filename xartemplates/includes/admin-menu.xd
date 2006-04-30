@@ -3,6 +3,7 @@
 <xar:style scope="module" module="base" file="navtabs" />
 
 <xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
@@ -49,11 +50,13 @@
           </a>
         </dd>
     </xar:sec>
+    <xar:sec mask="EditXarpagesPagetype" catch="false">
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-xarpages-admin-overview;" title="#xarML('View overview documenatation of xarPages')#">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
+    </xar:sec>
   </dl>
 </div>

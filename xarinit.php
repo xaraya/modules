@@ -62,7 +62,7 @@ function xarpages_init()
         xar_decode_url      C(100)      Null,
         xar_function        C(100)      Null,
         xar_status          C(20)       NotNull DEFAULT 'ACTIVE',
-        xar_alias           L           NotNull DEFAULT 0
+        xar_alias           I1          NotNull DEFAULT 0
     ";
 
     // Create or alter the table as necessary.
