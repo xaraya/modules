@@ -43,18 +43,19 @@ function registration_init()
 #
 # Define modvars
 #
-    xarModSetVar('registration', 'allowregistration', 1);
-    xarModSetVar('registration', 'requirevalidation', 1);
-    xarModSetVar('registration', 'uniqueemail', 1);
-    xarModSetVar('registration', 'askwelcomeemail', 1);
-    xarModSetVar('registration', 'askvalidationemail', 1);
-    xarModSetVar('registration', 'askdeactivationemail', 1);
-    xarModSetVar('registration', 'askpendingemail', 1);
-    xarModSetVar('registration', 'askpasswordemail', 1);
+    xarModSetVar('registration', 'allowregistration', true);
+    xarModSetVar('registration', 'requirevalidation', true);
+    xarModSetVar('registration', 'uniqueemail', true);
+    xarModSetVar('registration', 'askwelcomeemail', true);
+    xarModSetVar('registration', 'askvalidationemail', true);
+    xarModSetVar('registration', 'askdeactivationemail', true);
+    xarModSetVar('registration', 'askpendingemail', true);
+    xarModSetVar('registration', 'askpasswordemail', true);
     //xarModSetVar('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
-	//xarModSetVar('registration', 'lockouttime', 15); // to authsystem
-	//xarModSetVar('registration', 'lockouttries', 3); // to authsystem
+	xarModSetVar('registration', 'lockouttime', 15); // to authsystem
+	xarModSetVar('registration', 'lockouttries', 3); // to authsystem
     xarModSetVar('registration', 'minage', 13);
+    xarModSetVar('registration', 'uselockout', false);    
 
 /*---------------------------------------------------------------
 * Set disallowed names

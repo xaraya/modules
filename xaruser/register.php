@@ -316,6 +316,7 @@ function registration_user_register()
             $now = time();
             $requireValidation = xarModGetVar('registration', 'requirevalidation');
             if ($requireValidation == false) {
+
                 $pending = xarModGetVar('registration', 'explicitapproval');
                 if ($pending == 1) $state = ROLES_STATE_PENDING;
                 else $state = ROLES_STATE_ACTIVE;
@@ -364,13 +365,12 @@ function registration_user_register()
                 }
 
                 //Insert the user into the default users group
-                $userRole = xarModGetVar('registration', 'defaultgroup');
+                $userRole = xarModGetVar('roles', 'defaultgroup');
 
                  // Get the group id
-                $defaultRole = xarModAPIFunc('roles', 'user', 'get', array('name'  => $userRole));
+                $defaultRole = xarModAPIFunc('roles', 'user', 'get', array('name'  => $userRole,'type' => 1));
 
                 if (empty($defaultRole)) return;
-
                 // Make the user a member of the users role
                 if(!xarMakeRoleMemberByID($uid, $defaultRole['uid'])) return;
                 xarModSetVar('roles', 'lastuser', $uid);
@@ -390,7 +390,8 @@ function registration_user_register()
                                    array('uname' => $username,
                                          'pass' => $pass,
                                          'rememberme' => 0));
-                    xarResponseRedirect('index.php');
+                    $redirect=xarServerGetBaseURL();
+                    xarResponseRedirect($redirect);
                 }
             } else {
                 // Create user - this will also create the dynamic properties (if any) via the create hook
