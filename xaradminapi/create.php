@@ -44,18 +44,22 @@ function headlines_adminapi_create($args)
               xar_url,
               xar_order)
             VALUES (
-              $nextId,
+              ?,
               ?,
               ?)";
 
-    $bindvars = array($url, $order);
+    $bindvars = array($nextId, $url, $order);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the item that we inserted
     $hid = $dbconn->PO_Insert_ID($headlinestable, 'xar_hid');
     // Let any hooks know that we have created a new link
-    xarModCallHooks('item', 'create', $hid, 'hid');
+
+    $item['module']='headlines';
+    $item['itemid']=$hid;
+    xarModCallHooks('item', 'create', $hid, $item);
+
     // Return the id of the newly created link to the calling process
     return $hid;
 }
