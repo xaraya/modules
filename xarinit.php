@@ -292,7 +292,7 @@ function sitecontact_upgrade($oldversion)
                         1
                         )";
 
-                $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$userhtmlemail,$scdefaultemail,$scdefaultname);
+                $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$usehtmlemail,$scdefaultemail,$scdefaultname);
                 $result = &$dbconn->Execute($query,$bindvars);           
                 if (!$result) {return;}
 
