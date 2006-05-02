@@ -19,28 +19,46 @@
   </h3>
   <p>
             <xar:mlstring>
-            From the menu, you have three choices.  "Modify Configuration", "Add Headlines", and "View Headlines".
+            From the menu, you have three choices:
             </xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Modify Configuration -- Allows you to update the global configuration for the module.</xar:mlstring></li>
-                <li><xar:mlstring>View Headlines -- Allows you to view, edit and delete headlines that you have active for your site.</xar:mlstring></li>
-                <li><xar:mlstring>Add Headlines -- Allows you to add a new syndication headline for processing.</xar:mlstring></li>
-            </ul>
+            <ol>
+                <li><xar:mlstring><strong>Add Headlines</strong>: Add a new syndication headline for processing.</xar:mlstring></li>
+                <li><xar:mlstring><strong>Manage Headlines</strong>: View, edit and delete headlines that you have added to your site.
+                        Add alternative titles and headlines for your feeds, and order the display of the feeds
+                    </xar:mlstring>
+                </li>
+                <li><xar:mlstring><strong>Modify Configuration</strong>: Update the global configuration for the module.
+                         Here you can set </xar:mlstring>
+                         <ul>
+                           <li><xar:mlstring>the number of feeds per page</xar:mlstring></li>
+                           <li><xar:mlstring>optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items.</xar:mlstring></li>
+                           <li><xar:mlstring>choose which content to import to your selected publication type. Feed, Title, Description and an optional link to the originating feed item can also be added in your publication type summary field.
+                              </xar:mlstring>
+                           </ul>
+                </li>
+             </ol>
 
        </p>
+        <p>
+            <xar:mlstring>
+            Hook the Categories module to Headlines to classify your feeds by category on display.
+            </xar:mlstring>
+        </p>
   <h3>
     <xar:mlstring>Included Blocks</xar:mlstring>
   </h3>
   <p>
             <ul>
-                <li><xar:mlstring>rss</xar:mlstring></li>
+                <li><xar:mlstring><strong>RSS Block</strong> allows you to provide selected feeds in blocks on your siten and define number of items, title, and refresh times.</xar:mlstring></li>
+                <li><xar:mlstring><strong>Cloud Block</strong> Creates a cloud block from blog feeds, using Ping module to notify of updates and Scheduler module to update.</xar:mlstring></li>
+
             </ul>
        </p>
   <h3>
     <xar:mlstring>Included Hooks</xar:mlstring>
   </h3>
   <p>
-            <xar:mlstring>There are no included hooks</xar:mlstring>
+            <xar:mlstring>There are no included hooks with Headlines</xar:mlstring>
   </p>
         <h3>
             <xar:mlstring>Credits</xar:mlstring>
