@@ -1,19 +1,6 @@
+<xar:style module="xarbb" scope="module" file="bbcode" />
 <xar:if condition="!empty($who)">
-    <p>
-        #xarML('Quote')# #$who#:
-    </p>
-    <div style="width: 90%; overflow: auto;">
-        <blockquote>
-            #$quote#
-        </blockquote>
-    </div>
+    <dl class="bbcode-quote"><dt><xar:ml><xar:mlstring>Quote #(1):</xar:mlstring><xar:mlvar>#xarVarPrepForDisplay($who)#</xar:mlvar></xar:ml></dt><dd><blockquote>#$quote#</blockquote></dd></dl>
 <xar:else />
-    <p>
-        #xarML('Quote')#:
-    </p>
-    <div style="width: 90%; overflow: auto;">
-        <blockquote>
-            #$quote#
-        </blockquote>
-    </div>
+    <dl class="bbcode-quote"><dt><xar:mlstring>Quote:</xar:mlstring></dt><dd><blockquote>#$quote#</blockquote></dd></dl>
 </xar:if>
