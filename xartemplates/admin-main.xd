@@ -24,9 +24,8 @@
 
 <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="#xarTplGetImage('admin.gif','netquery')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
         <p>
