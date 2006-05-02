@@ -77,6 +77,12 @@
                <xar:else />
                    <a href="#$item['teachersurl']#">#$item['teacherstitle']#</a>
                </xar:if>
+               |
+               <xar:if condition="empty($item['copyurl'])">
+                   #$item['copytitle']#
+               <xar:else />
+                   <a href="#$item['copyurl']#">#$item['copytitle']#</a>
+               </xar:if>
             </td>
         </tr>
         </xar:foreach>

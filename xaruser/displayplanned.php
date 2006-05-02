@@ -103,6 +103,15 @@ function courses_user_displayplanned($args)
     } else {
         $data['editlink'] ='';
     }
+    // Security check
+    if (xarSecurityCheck('AddCourses', 0,'Course', "$courseid:$planningid:All")) {
+        $data['copylink'] = xarModURL('courses',
+                'admin',
+                'copyplanned',
+                array('planningid' => $planningid));
+    } else {
+        $data['copylink'] ='';
+    }
     // Get the number of months that we will show in the past
     $nummonths = xarModGetVar('courses', 'OldPlannedMonths');
     $startafter = mktime(0, 0, 0, date("m")-$nummonths, date("d"), date("Y"));

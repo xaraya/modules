@@ -73,6 +73,7 @@ function courses_admin_viewallplanned()
         for ($i = 0; $i < count($items); $i++) {
             $item = $items[$i];
             $planningid = $item['planningid'];
+            $courseid = $item['courseid'];
             $hideplanning = $item['hideplanning'];
             if (xarSecurityCheck('EditCourses', 0, 'Course',"All:$planningid:All")) {
                 $items[$i]['editurl'] = xarModURL('courses',
@@ -84,7 +85,7 @@ function courses_admin_viewallplanned()
             }
             $items[$i]['edittitle'] = xarML('Edit');
 
-            if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
+            if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
                 $items[$i]['participantsurl'] = xarModURL('courses',
                     'admin',
                     'participants',
@@ -98,7 +99,7 @@ function courses_admin_viewallplanned()
                                                        array('planningid' => $planningid)
                                                        );
 
-            if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:$planningid:All")) {
+            if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:$planningid:All")) {
                 $items[$i]['displayurl'] = xarModURL('courses',
                     'user',
                     'displayplanned',
@@ -107,7 +108,7 @@ function courses_admin_viewallplanned()
                 $items[$i]['displayurl'] = '';
             }
 
-            if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
+            if (xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
                 $items[$i]['teachersurl'] = xarModURL('courses',
                     'admin',
                     'teachers',
@@ -116,6 +117,15 @@ function courses_admin_viewallplanned()
                 $items[$i]['teachersurl'] = '';
             }
             $items[$i]['teacherstitle'] = xarML('Teachers');
+            if (xarSecurityCheck('AddCourses', 0, 'Course', "$courseid:$planningid:All")) {
+                $items[$i]['copyurl'] = xarModURL('courses',
+                    'admin',
+                    'copyplanned',
+                    array('planningid' => $planningid));
+            } else {
+                $items[$i]['copyurl'] = '';
+            }
+            $items[$i]['copytitle'] = xarML('Copy');
 
             $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
             $items[$i]['name'] = xarVarPrepForDisplay($course['name']);

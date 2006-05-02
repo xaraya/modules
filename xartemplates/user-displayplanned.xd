@@ -8,7 +8,10 @@
     <p>#xarSessionGetVar('statusmsg')#</p>
 </xar:if>
 <xar:if condition="!empty($editlink)">
-    <a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>
+    [<a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>]
+</xar:if>
+<xar:if condition="!empty($copylink)">
+    [<a href="#$copylink#"><xar:mlstring>Copy this planned course</xar:mlstring></a>]
 </xar:if>
 <xar:comment> Replace with a working navigation or category name
     <xar:if condition="xarModIsHooked('categories','courses')">
