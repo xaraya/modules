@@ -20,4 +20,7 @@ This software is still BETA. This means that it should NOT be used on a producti
 
 You will need to create coursetypes now before you can add a course to one of those types. A coursetype can hold configuration options
 Compare to pubtypes in articles.
-
+Version 0.6.0
+Added function to copy planned courses
+Enlarged some fields in size so they can contain more data
+Improved security checks

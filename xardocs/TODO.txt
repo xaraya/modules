@@ -6,7 +6,7 @@
     -Overview of courses that are planned (needs improvement)
     -Enroll [done]
     -Check enrolled [done]
-    -Historic view (Done via usermenu)
+    -Historic view [Done via usermenu]
     -Search function in course descriptions (Done for some fields, needs improvements)
 5. Think about payment options (We at SENSE don't need them)
 6. Finish course planning interface (Partly done)
@@ -14,13 +14,13 @@
 8. Deadlines for enrolling [done]
 9. Block for upcoming courses and their deadlines [in progress]
 10. Minimum/max participants (Partly done, need check for enroll)
-11. Improve the admin functions
+11. Improve the admin functions [added copy function]
 12. Link teachers to the planned courses, besides showing their addresses
 13. Link course coordinators to courses [done]
 14. Check all security functions [done mostly]
 15. Short URLs. [in progress]
 16. Integration with categories [done, needs checking]
-17. Redefine itemtypes for coursetypes.
+17. Redefine itemtypes for coursetypes. [done, planned courses left to see]
 
 ad 17. Courses that are itemtypes are not the solution
     the level needs to be higher. Therefore we need to add real course types. Those can have different behaviours [in progress].
