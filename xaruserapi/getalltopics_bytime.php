@@ -16,7 +16,7 @@
  * @param $args['fid'] forum id, or
  * @param $args['tids'] array of topic ids
  * @returns array
- * @deprecated
+ * @deprec 2006-05-01 - functionality now built into getalltopics()
  */
 function xarbb_userapi_getalltopics_bytime($args)
 {

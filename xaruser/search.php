@@ -9,14 +9,16 @@
  * @author John Cox
 */
 /**
- * Searches all -active- comments based on a set criteria
+ * Searches all active comments based on a set criteria.
+ * Used by the search hooks module.
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
  * @returns mixed description of return
- * @todo Fix this properly or remove it - there is a very confusing approach adopted here
+ * @fixme Form is not quite working right; form items are not 'xarbb' qualified.
  */
-function xarbb_user_search( $args ) 
+
+function xarbb_user_search($args)
 {
     if (!xarVarFetch('startnum', 'int:1', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
@@ -24,9 +26,6 @@ function xarbb_user_search( $args )
     if (!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
-
-//$parsed = xarModAPIfunc('xarbb', 'user', 'parse_searchwords', array('q' => $q, 'columns' => array('title', 'text')));
-//var_dump($parsed);
 
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
@@ -107,9 +106,20 @@ function xarbb_user_search( $args )
 
     $search['modid'] = xarModGetIDFromName('xarbb');
 
-    // Get topics and replies separately.
     $data['replies'] = xarModAPIFunc('xarbb', 'user', 'searchreplies', $search);
-    $data['topics'] = xarModAPIFunc('xarbb', 'user', 'searchtopics', $search);
+
+    // Search criteria for the topic search.
+    $topicsearch = array();
+    if (!empty($search['uid'])) $topicsearch['uid'] = $search['uid'];
+    $topicsearch['q'] = $q;
+    $topicsearch['startnum'] = $startnum;
+    $topicsearch['numitems'] = $numitems;
+    $areas = array();
+    if (!empty($header['title'])) $areas[] = 'title';
+    if (!empty($header['text'])) $areas[] = 'post';
+    $topicsearch['qarea'] = implode(',', $areas);
+
+    $data['topics'] = xarModAPIfunc('xarbb', 'user', 'getalltopics', $topicsearch);
 
     $data['hide'] = $q;
     $data['header'] = $header;

@@ -30,7 +30,7 @@ function xarbb_userapi_counttopics($args)
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
     $query = "SELECT COUNT(1) FROM $xbbtopicstable WHERE xar_fid = ?";
-    $result =& $dbconn->Execute($query, array($fid));
+    $result =& $dbconn->Execute($query, array((int)$fid));
 
     if (!$result) return;
     list($numitems) = $result->fields;

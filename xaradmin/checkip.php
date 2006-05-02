@@ -16,7 +16,7 @@ function xarbb_admin_checkip()
 {
     if(!xarSecurityCheck('AdminxarBB')) return; 
 
-    if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('ip', 'str:1:20', $ip)) return;
 
     // FIXME: we actually want to retrieve all posters of topics and replies
@@ -29,7 +29,7 @@ function xarbb_admin_checkip()
     $topics = xarModAPIFunc('xarbb', 'user', 'getalltopics_byip',
         array(
             'ip' => $ip,
-            'startnum' => $startnumitem,
+            'startnum' => $startnum,
             'numitems' => xarModGetVar('xarbb', 'topicsperpage')
         )
     );
@@ -39,7 +39,7 @@ function xarbb_admin_checkip()
         array(
             'modid'    => xarModGetIDFromName('xarbb'),
             'hostname' => $ip,
-            'startnum' => $startnumitem,
+            'startnum' => $startnum,
             'numitems' => xarModGetVar('xarbb', 'topicsperpage')
         )
     );

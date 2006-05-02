@@ -10,7 +10,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
- * @deprecated 23-APR-2006
+ * @deprec 2006-05-01 - functionality now built into getalltopics()
 */
 /**
  * get all topics

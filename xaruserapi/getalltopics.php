@@ -29,6 +29,7 @@
  * @param $args['q'] string list of search terms (words)
  * @param $args['qrule'] string default rule
  * @param $args['qarea'] string csv list of areas to search (title, post)
+ * @param $args['getcount'] boolean Requests that the function just return a count of topics, rather than the topics
  * @returns array
  * @return array of links, or false on failure
  * @todo allow this function to be used to return counts, as well as items, the difficulty being privilege checking
@@ -82,11 +83,17 @@ function xarbb_userapi_getalltopics($args)
     // Do we want to support that in the future? (Yes, but will need a major overhaul to do so)
     // Fix for duplicate listings of topics with topic itemtypes - select distinct - get bug #2335
     $bindvars = array();
-    $query = "SELECT xar_tid, $xbbtopicstable.xar_fid, xar_ttitle, xar_tpost, xar_tposter,"
-        . " xar_ttime, xar_tftime, xar_treplies, xar_tstatus, xar_treplier, xar_toptions,"
-        . " xar_fname, xar_fdesc, xar_ftopics, xar_fposts, xar_fposter, xar_fpostid,"
-        . " xar_fstatus, xar_thostname, {$categoriesdef['cid']}"
-        . " FROM $xbbtopicstable "
+
+    if (empty($getcount)) {
+        $query = "SELECT xar_tid, $xbbtopicstable.xar_fid, xar_ttitle, xar_tpost, xar_tposter,"
+            . " xar_ttime, xar_tftime, xar_treplies, xar_tstatus, xar_treplier, xar_toptions,"
+            . " xar_fname, xar_fdesc, xar_ftopics, xar_fposts, xar_fposter, xar_fpostid,"
+            . " xar_fstatus, xar_thostname, {$categoriesdef['cid']}";
+    } else {
+        $query = "SELECT COUNT(*)";
+    }
+
+    $query .= " FROM $xbbtopicstable "
         . " LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid"
         . " LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid"
         . " {$categoriesdef['more']}"
@@ -166,79 +173,82 @@ function xarbb_userapi_getalltopics($args)
         }
     }
 
-    if (empty($sortby)) {
-        $sortby = 'time';
-    }
+    // No need to sort if just fetching a count.
+    if (empty($getcount)) {
+        if (empty($sortby)) {
+            $sortby = 'time';
+        }
 
-    switch ($sortby) {
-        /*
-        // TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
-        //       but this causes unnecessary overhead if we don't want to sort by them :-)
-        case 'title':
-            if (!empty($order) && strtoupper($order) == 'DESC') {
-                $query .= " ORDER BY xar_ttitle DESC";
-            } else {
-                $query .= " ORDER BY xar_ttitle ASC"; // default ascending
-            }
-            break;
+        switch ($sortby) {
+            /*
+            // TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
+            //       but this causes unnecessary overhead if we don't want to sort by them :-)
+            case 'title':
+                if (!empty($order) && strtoupper($order) == 'DESC') {
+                    $query .= " ORDER BY xar_ttitle DESC";
+                } else {
+                    $query .= " ORDER BY xar_ttitle ASC"; // default ascending
+                }
+                break;
 
-        case 'replier':
-            if (!empty($order) && strtoupper($order) == 'DESC') {
-                $query .= " ORDER BY xar_treplier DESC";
-            } else {
-                $query .= " ORDER BY xar_treplier ASC"; // default ascending
-            }
-            break;
+            case 'replier':
+                if (!empty($order) && strtoupper($order) == 'DESC') {
+                    $query .= " ORDER BY xar_treplier DESC";
+                } else {
+                    $query .= " ORDER BY xar_treplier ASC"; // default ascending
+                }
+                break;
 
-        case 'ftime': // time of first post (= topic)
-            if (!empty($order) && strtoupper($order) == 'ASC') {
-                $query .= " ORDER BY xar_tftime ASC";
-            } else {
-                $query .= " ORDER BY xar_tftime DESC"; // default descending
-            }
-            break;
+            case 'ftime': // time of first post (= topic)
+                if (!empty($order) && strtoupper($order) == 'ASC') {
+                    $query .= " ORDER BY xar_tftime ASC";
+                } else {
+                    $query .= " ORDER BY xar_tftime DESC"; // default descending
+                }
+                break;
 
-        case 'replies':
-            if (!empty($order) && strtoupper($order) == 'ASC') {
-                $query .= " ORDER BY xar_treplies ASC";
-            } else {
-                $query .= " ORDER BY xar_treplies DESC"; // default descending
-            }
-            break;
-        */
+            case 'replies':
+                if (!empty($order) && strtoupper($order) == 'ASC') {
+                    $query .= " ORDER BY xar_treplies ASC";
+                } else {
+                    $query .= " ORDER BY xar_treplies DESC"; // default descending
+                }
+                break;
+            */
 
-        case 'poster':
-            if (!empty($order) && strtoupper($order) == 'DESC') {
-                $query .= " ORDER BY xar_tposter DESC";
-            } else {
-                // default ascending
-                $query .= " ORDER BY xar_tposter ASC";
-            }
-            break;
+            case 'poster':
+                if (!empty($order) && strtoupper($order) == 'DESC') {
+                    $query .= " ORDER BY xar_tposter DESC";
+                } else {
+                    // default ascending
+                    $query .= " ORDER BY xar_tposter ASC";
+                }
+                break;
 
-        case 'tid':
-            if (!empty($order) && strtoupper($order) == 'ASC') {
-                $query .= " ORDER BY xar_tid ASC";
-            } else {
-                // default descending
-                $query .= " ORDER BY xar_tid DESC";
-            }
-            break;
+            case 'tid':
+                if (!empty($order) && strtoupper($order) == 'ASC') {
+                    $query .= " ORDER BY xar_tid ASC";
+                } else {
+                    // default descending
+                    $query .= " ORDER BY xar_tid DESC";
+                }
+                break;
 
-        case 'time':
-        default:
-            if (!empty($order) && strtoupper($order) == 'ASC') {
-                $query .= " ORDER BY xar_ttime ASC";
-            } else {
-                // default descending
-                $query .= " ORDER BY xar_ttime DESC";
-            }
-            break;
+            case 'time':
+            default:
+                if (!empty($order) && strtoupper($order) == 'ASC') {
+                    $query .= " ORDER BY xar_ttime ASC";
+                } else {
+                    // default descending
+                    $query .= " ORDER BY xar_ttime DESC";
+                }
+                break;
+        }
     }
 
     // Need to run the query and add $numitems to ensure pager works
-    if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
+    if (isset($numitems) && is_numeric($numitems) && empty($getcount)) {
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
         $result =& $dbconn->Execute($query, $bindvars);
     }
@@ -266,6 +276,12 @@ function xarbb_userapi_getalltopics($args)
     $forum_topic_tracking = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
+        // If fetching a count, then get the first row and exit the loop.
+        if (!empty($getcount)) {
+            list($topics) = $result->fields;
+            break;
+        }
+
         list(
             $tid, $fid, $ttitle, $tpost, $tposter,
             $ttime, $tftime, $treplies, $tstatus, $treplier,

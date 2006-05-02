@@ -1,18 +1,14 @@
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')"></xar:if>
 
 <h2><xar:mlstring>Search in xarBB</xar:mlstring></h2>
 
 <xar:if condition="empty($topics) AND empty($replies) AND !empty($hide)">
-    <h3>
-        <xar:mlstring>No topics found matching your criteria.</xar:mlstring>
-    </h3>
+    <h3><xar:mlstring>No topics found matching your criteria.</xar:mlstring></h3>
 </xar:if>
 
 <xar:if condition="!empty($topics)">
-    <h3>
-        <xar:mlstring>Topics Found:</xar:mlstring>
-    </h3>
+    <h3><xar:mlstring>Topics Found:</xar:mlstring></h3>
+
     <ul>
         <xar:loop name="$topics">
             <li>
@@ -20,11 +16,13 @@
                     #$loop:item.ttitle# 
                 </a>
                 <xar:mlstring>By</xar:mlstring>
-                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.tposter))#">
+                <a href="#xarModURL('roles', 'user', 'display', array('uid' => $loop:item.tposter))#">
                     #xarUserGetVar('name', $loop:item.tposter)#
                 </a>
-                <xar:mlstring>On</xar:mlstring>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item.ttime)# 
+                <xar:ml>
+                    <xar:mlstring>On #(1)</xar:mlstring>
+                    <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item.ttime)#</xar:mlvar>
+                </xar:ml>
             </li>
         </xar:loop>
     </ul>

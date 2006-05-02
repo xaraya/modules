@@ -9,75 +9,21 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
- * @todo Merge this with serachtopics() since it does the same thing, only with a count(*) in the select part
+ * @deprec 2006-05-01 This does the same as getalltopics() in 'count' mode. It is no longer used in this module.
 */
 /**
  * count the number of links in the database
  * @returns integer
- * @returns number of links in the database
+ * @returns number of topics that match the criteria
  */
 
 function xarbb_userapi_counttotaltopics($args)
 {
-    extract($args);
+    $args['getcount'] = true;
 
-    // Optional argument
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
+    $count = xarModAPIfunc('xarbb', 'user', 'getalltopics', $args);
 
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-
-    if (!isset($where)) {
-        $where = '';
-    }
-
-    if (!isset($wherevalue)){
-        $wherevalue = '';
-    }
-
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    $xbbtopicstable = $xartable['xbbtopics'];
-
-    $bind = array();
-    $query = "SELECT COUNT(1) FROM $xbbtopicstable ";
-
-    if ($where <> '') {
-        if ($where == 'replies') {
-            // Searching for unanswered topics
-            if (empty($wherevalue) || !is_numeric($wherevalue)) {
-                // 0 - where there are no replies
-                $query .= "WHERE xar_treplies = 0";
-            } else {
-                // >0 - where there are at least that number of replies
-                $query .= "WHERE xar_treplies >= ?";
-                $bind = (int)$wherevalue;
-            }
-        } elseif ($where == 'uid') {
-            $query .= "WHERE xar_tposter = ?";
-            $bind = (int)$wherevalue;
-        } elseif ($where == 'from') {
-            $query .= "WHERE xar_ttime >= ?";
-            $bind = (int)$wherevalue;
-        }
-    }
-
-    if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bind);
-    } else {
-        $result =& $dbconn->Execute($query, $bind);
-    }
-
-    if (!$result) return;
-
-    list($numitems) = $result->fields;
-
-    $result->Close();
-    return $numitems;
+    return $count;
 }
 
 ?>

@@ -17,7 +17,7 @@
  * @param $args['tids'] array of topic ids
  * @returns array
  * @return array of links, or false on failure
- * @deprecated
+ * @deprec 2006-05-01 - functionality now built into getalltopics()
  */
 function xarbb_userapi_getalltopics_byunanswered($args)
 {

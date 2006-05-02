@@ -21,9 +21,7 @@
 
 function xarbb_userapi_searchtopics($args) 
 {
-    if (empty($args)) {
-        return;
-    }
+    if (empty($args)) return;
 
     extract($args);
 
