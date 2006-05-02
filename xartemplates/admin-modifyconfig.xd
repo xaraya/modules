@@ -62,6 +62,11 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
+                <p class="xar-form-container-after">
+                    <xar:mlstring>
+                        Your publication type must already exist in the Articles module and have at least a title and summary field.
+                    </xar:mlstring>
+                </p>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="uniqueid" class="xar-form-label" title="#xarML('Determine what makes a headline unique.')#">
