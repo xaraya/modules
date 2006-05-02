@@ -3,7 +3,7 @@
  * Admin function to view items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,7 +16,9 @@
  *
  * This view shows all details of all courses, including hidden ones.
  *
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param ['catid'] ID of category , defaults to NULL
+ * @param int startnum Number to start with in view
  * @param string sortby Default: name
  * @param string sortorder Defaults to DESC
  * @return array Data for template

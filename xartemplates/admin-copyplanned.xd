@@ -1,0 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <h3><xar:mlstring>Please confirm copying the following planned course to a new one</xar:mlstring></h3>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+    <form method="post" action="&xar-modurl-courses-admin-copyplanned;">
+        <fieldset>
+            <legend>
+                <strong><xar:mlstring>Course details</xar:mlstring></strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="name" class="required xar-form-label">
+                    <span class="help" title="#xarML('The name of this course.')#">
+                    <xar:mlstring>Course Name</xar:mlstring>
+                    </span>
+                </label>
+                #$coursename#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="planningid" class="required xar-form-label">
+                    <span class="help" title="#xarML('The id of the planning to be copied.')#">
+                    <xar:mlstring>Original Planning ID</xar:mlstring>
+                    </span>
+                </label>
+                #$planningid#
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+            <input type="submit" value="#xarML('Copy Planned Course')#" />
+        </div>
+    </form>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
