@@ -39,7 +39,7 @@ function xarbb_userapi_countposts($args)
     $result =& $dbconn->Execute($query,array((int)$uid));
     if (!$result) return;
 
-    list($numitems) = $result->fields;
+    list($topics) = $result->fields;
     $result->Close();
 
     // While we are here, how many replies have been made as well?
@@ -47,7 +47,8 @@ function xarbb_userapi_countposts($args)
         'comments', 'user', 'get_author_count',
         array('modid' => xarModGetIdFromName('xarbb'), 'author' => $uid)
     );
-    $total = $numitems + $replies;
+
+    $total = $topics + $replies;
     $countcache[$uid] = $total;
 
     return $total;

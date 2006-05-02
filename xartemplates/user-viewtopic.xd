@@ -4,12 +4,13 @@
 <xar:comment>
     using css-driven template, avoiding excess tables for layout, especially nested ones 
 </xar:comment>
+
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <xar:base-include-javascript filename="confirmlink.js" module="base" position="head"/>
 
 <xar:comment>
 <div id="xarbb-loginwrapper">
-    <xar:block module="roles" type="login" showlogout="1" />
+    <xar:block module="roles" type="login" showlogout="0" />
 </div>
 </xar:comment>
 
@@ -22,10 +23,10 @@
         <div class="xar-sub rightnote">
             <div>
                 <xar:set name="previd">
-                    #xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))# 
+                    #xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' =&gt; $fid, 'ttime' =&gt; $ttime))# 
                 </xar:set>
                 <xar:if condition="!empty($previd)">
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#">
+                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' =&gt; $previd))#">
                         <xar:mlstring>Previous Topic</xar:mlstring>
                     </a>
                 <xar:else />
@@ -33,10 +34,10 @@
                 </xar:if>
                 | 
                 <xar:set name="nextid">
-                    #xarModAPIFunc('xarbb','user','getnexttopicid',array('fid' => $fid, 'ttime' => $ttime))# 
+                    #xarModAPIFunc('xarbb','user','getnexttopicid',array('fid' =&gt; $fid, 'ttime' =&gt; $ttime))# 
                 </xar:set>
                 <xar:if condition="!empty($nextid)">
-                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#">
+                    <a href="#xarModURL('xarbb','user','viewtopic',array('tid' =&gt; $nextid))#">
                         <xar:mlstring>Next Topic</xar:mlstring>
                     </a>
                 <xar:else />
@@ -46,18 +47,18 @@
 
             <div>
                 <xar:if condition="xarThemeIsAvailable('print')">
-                    <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
+                    <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' =&gt; $tid, 'theme' =&gt; 'print'))#">
                         <xar:mlstring>Print this topic</xar:mlstring>
                     </a> |
                 </xar:if>
                 <xar:if condition="$tsubrights eq 1">
                     <xar:if condition="$tsubscribed eq 1">
-                        <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' => $tid))#">
+                        <a href="#xarModUrl('xarbb', 'user', 'unsubscribe', array('tid' =&gt; $tid))#">
                             <xar:mlstring>Unsubscribe from topic</xar:mlstring>
                         </a>
                     </xar:if>
                     <xar:if condition="$tsubscribed eq 0">
-                        <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid))#">
+                        <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' =&gt; $tid))#">
                             <xar:mlstring>Subscribe to topic</xar:mlstring>
                         </a>
                     </xar:if>
@@ -123,7 +124,7 @@
                 <td class="xar-norm author">
                     <div>
                         <strong>
-                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $tposter))#">
                                 #$postername#
                             </a>
                         </strong>
@@ -133,22 +134,27 @@
                             <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                             <br />
                         </xar:if>
-                        <xar:mlstring>Joined:</xar:mlstring>
-                        #xarLocaleGetFormattedDate('medium', $posterdatestamp)# 
+                        <xar:ml>
+                            <xar:mlstring>Joined: #(1)</xar:mlstring>
+                            <xar:mlvar>#xarLocaleGetFormattedDate('medium', $posterdatestamp)#</xar:mlvar>
+                        </xar:ml>
                         <br />
-                        <xar:mlstring>Posts:</xar:mlstring>
-                        #$usertopics# 
+                        <xar:ml>
+                            <xar:mlstring>Posts: #(1)</xar:mlstring>
+                            <xar:mlvar>#$usertopics#</xar:mlvar>
+                        </xar:ml>
                         <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
                             <br />
                             <xar:mlstring>Location:</xar:mlstring>
                             <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
                         </xar:if>
                         <br />
-                        <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $tposter))#">
+                        <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' =&gt; $tposter))#">
                             <xar:mlstring>Other Topics</xar:mlstring>
                         </a>
                     </div>
                 </td>
+
                 <td class="xar-norm message">
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
@@ -201,8 +207,10 @@
                         </xar:comment>
                         <div style="float:left;">
                             <strong class="xar-sub">
-                                <xar:mlstring>Subject</xar:mlstring>
-                                : #$transformedtitle# 
+                                <xar:ml>
+                                    <xar:mlstring>Subject: #(1)</xar:mlstring>
+                                    <xar:mlvar>#$transformedtitle#</xar:mlvar>
+                                </xar:ml>
                             </strong>
                         </div>
                         <div style="clear: both;"></div>
