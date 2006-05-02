@@ -20,7 +20,8 @@
  * @param $args['fdesc'] description of forum
  * @param $args['tid'] topic id to update
  * @returns int
- * @return autolink ID on success, false on failure
+ * @return true on success, NULL on failure
+ * @todo support an 'options' array that merges into an existing 'toptions' array.
  */
 
 function xarbb_userapi_updatetopic($args)
@@ -65,6 +66,9 @@ function xarbb_userapi_updatetopic($args)
     }
 
     // For sec check.
+    // Note: this now returns an 'options' pre-expanded array; merge $options into this, if supplied.
+    // TOOD: work out how to merge in the subscribers sub-array, since there are several ways in which
+    // the merge could be intended (perhaps subscribers_replace, subscribers_add and subscribers_remove arrays?)
     $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
     if (empty($topic)) return;
 

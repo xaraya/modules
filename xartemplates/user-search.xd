@@ -1,116 +1,96 @@
 <xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
 </xar:if>
 
-<h2>
-    <xar:mlstring>
-        Search in xarBB
-    </xar:mlstring>
-</h2>
+<h2><xar:mlstring>Search in xarBB</xar:mlstring></h2>
 
 <xar:if condition="empty($topics) AND empty($replies) AND !empty($hide)">
     <h3>
-        <xar:mlstring>
-            No topics found matching your criteria.
-        </xar:mlstring>
+        <xar:mlstring>No topics found matching your criteria.</xar:mlstring>
     </h3>
 </xar:if>
 
 <xar:if condition="!empty($topics)">
-    <br />
     <h3>
-        <xar:mlstring>
-            Topics Found
-        </xar:mlstring>
-        :
+        <xar:mlstring>Topics Found:</xar:mlstring>
     </h3>
     <ul>
         <xar:loop name="$topics">
             <li>
-                <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tid']))#">
-                    #$loop:item['xar_ttitle']# 
+                <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.tid))#">
+                    #$loop:item.ttitle# 
                 </a>
-                <xar:mlstring>
-                    By
-                </xar:mlstring>
-                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_tposter']))#">
-                    #$loop:item['xar_author']# 
+                <xar:mlstring>By</xar:mlstring>
+                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.tposter))#">
+                    #xarUserGetVar('name', $loop:item.tposter)#
                 </a>
-                <xar:mlstring>
-                    On
-                </xar:mlstring>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['xar_ttime'])# 
+                <xar:mlstring>On</xar:mlstring>
+                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item.ttime)# 
             </li>
         </xar:loop>
     </ul>
 </xar:if>
 
-
 <xar:if condition="!empty($replies)">
     <xar:if condition="empty($topics)">
-        <br />
         <h3>
-            <xar:mlstring>
-                Topics Found
-            </xar:mlstring>
-            :
+            <xar:mlstring>Replies Found:</xar:mlstring>
         </h3>
     </xar:if>
     <ul>
-    <xar:loop name="$replies">
+        <xar:loop name="$replies">
             <li>
-                <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_objectid']))#">
-                    #$loop:item['xar_title']# 
+                <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item.xar_objectid))#">
+                    #$loop:item.xar_title# 
                 </a>
                 <xar:mlstring>
                     By
                 </xar:mlstring>
-                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_author']))#">
-                    #$loop:item['xar_name']# 
+                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.xar_author))#">
+                    #$loop:item.xar_name# 
                 </a>
                 <xar:mlstring>
                     On
                 </xar:mlstring>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['xar_date'])# 
+                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item.xar_date)# 
             </li>
         </xar:loop>
     </ul>
 </xar:if>
 
 <p>
-<xar:mlstring>
-    Search on
-</xar:mlstring>
-: 
+    <xar:mlstring>Search on:</xar:mlstring>
 </p>
-<xar:if condition="$header['title'] eq '1'">
-    <input type="checkbox" name="header[title]" value="1" checked="checked" />
+
+<p>
+    <xar:if condition="$header.title eq '1'">
+        <input type="checkbox" name="header[title]" id="header_title" value="1" checked="checked" />
     <xar:else />
-    <input type="checkbox" name="header[title]" value="1" />
-</xar:if>
-<label for="header[title]">
-    <xar:mlstring>
-        Title
-    </xar:mlstring>
-</label>
-<br />
-<xar:if condition="$header['text'] eq '1'">
-    <input type="checkbox" name="header[text]" value="1" checked="checked" />
+        <input type="checkbox" name="header[title]" id="header_title" value="1" />
+    </xar:if>
+    <label for="header_title">
+        <xar:mlstring>Title</xar:mlstring>
+    </label>
+</p>
+
+<p>
+    <xar:if condition="$header.text eq '1'">
+        <input type="checkbox" name="header[text]" id="header_text" value="1" checked="checked" />
     <xar:else />
-    <input type="checkbox" name="header[text]" value="1" />
-</xar:if>
-<label for="header[text]">
-    <xar:mlstring>
-        Text
-    </xar:mlstring>
-</label>
-<br />
-<xar:if condition="$header['author'] eq '1'">
-    <input type="checkbox" name="header[author]" value="1" checked="checked" />
+        <input type="checkbox" name="header[text]" id="header_text" value="1" />
+    </xar:if>
+    <label for="header_text">
+        <xar:mlstring>Text</xar:mlstring>
+    </label>
+</p>
+
+<p>
+    <xar:if condition="$header.author eq '1'">
+        <input type="checkbox" name="header[author]" id="header_author" value="1" checked="checked" />
     <xar:else />
-    <input type="checkbox" name="header[author]" value="1" />
-</xar:if>
-<xar:mlstring>
-    Author
-</xar:mlstring>
-<br />
-<br />
+        <input type="checkbox" name="header[author]" id="header_author" value="1" />
+    </xar:if>
+    <label for="header_author">
+        <xar:mlstring>Author</xar:mlstring>
+    </label>
+</p>
+

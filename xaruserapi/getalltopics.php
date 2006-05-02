@@ -18,7 +18,7 @@
  * @param $args['fids'] array of forum ids
  * @param $args['tid'] topic id, or
  * @param $args['tids'] array of topic ids
- * @param $args['uid'] user id
+ * @param $args['uid'] user id (poster)
  * @param $args['from'] integer from timestamp (unix time)
  * @param $args['minreplies'] integer minimum number of replies
  * @param $args['maxreplies'] integer minimum number of replies
@@ -26,6 +26,9 @@
  * @param $args['sortby'] string optional sort field (default 'time')
  * @param $args['order'] string optional sort order (default 'DESC' for time, replies etc.)
  * @param $args['cids'] array of category ids
+ * @param $args['q'] string list of search terms (words)
+ * @param $args['qrule'] string default rule
+ * @param $args['qarea'] string csv list of areas to search (title, post)
  * @returns array
  * @return array of links, or false on failure
  * @todo allow this function to be used to return counts, as well as items, the difficulty being privilege checking
@@ -138,6 +141,29 @@ function xarbb_userapi_getalltopics($args)
     if (isset($maxreplies) && is_numeric($maxreplies)) {
         $query .= " AND $xbbtopicstable.xar_treplies <= ? ";
         $bindvars[] = (int)$maxreplies;
+    }
+
+    // Query string words.
+    if (!empty($q)) {
+        if (empty($qrule)) $rule = 'and';
+        if (empty($qarea)) $qarea = 'title';
+        $qarea = explode(',', $qarea);
+        $qarea = array_flip($qarea);
+        $columns = array();
+        if (isset($qarea['title'])) $columns[] = 'xar_ttitle';
+        if (isset($qarea['post'])) $columns[] = 'xar_tpost';
+
+        // Parse the query string
+        $q_parsed = xarModAPIfunc(
+            'xarbb', 'user', 'parse_searchwords',
+            array('q' => $q, 'columns' => $columns)
+        );
+
+        // If we have an additional where-clause, then stick it into the query.
+        if (!empty($q_parsed['where'])) {
+            $query .= ' AND (' . $q_parsed['where'] . ')';
+            $bindvars = array_merge($bindvars, $q_parsed['bind']);
+        }
     }
 
     if (empty($sortby)) {
@@ -338,10 +364,6 @@ function xarbb_userapi_getalltopics($args)
     }
 
     $result->Close();
-
-    // Save some variables to (temporary) cache for use in blocks etc.
-    // If we ain't using it, then lets not set it...
-    // xarVarSetCached('xarbb.topics','alltopicscache',$topics);
 
     return $topics;
 }

@@ -14,6 +14,7 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
  * @returns mixed description of return
+ * @todo Fix this properly or remove it - there is a very confusing approach adopted here
  */
 function xarbb_user_search( $args ) 
 {
@@ -23,6 +24,9 @@ function xarbb_user_search( $args )
     if (!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
+
+//$parsed = xarModAPIfunc('xarbb', 'user', 'parse_searchwords', array('q' => $q, 'columns' => array('title', 'text')));
+//var_dump($parsed);
 
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
@@ -41,8 +45,6 @@ function xarbb_user_search( $args )
         }
     }
 
-    // 
-    $q = "%$q%";
     $search['title'] = $q;
 
     // Default parameters
@@ -105,6 +107,7 @@ function xarbb_user_search( $args )
 
     $search['modid'] = xarModGetIDFromName('xarbb');
 
+    // Get topics and replies separately.
     $data['replies'] = xarModAPIFunc('xarbb', 'user', 'searchreplies', $search);
     $data['topics'] = xarModAPIFunc('xarbb', 'user', 'searchtopics', $search);
 
