@@ -52,7 +52,7 @@ function headlines_cloudblock_display($blockinfo)
     // In order to have the list up to date, we need to call the var again.
     // Otherwise the search term is one off of the searches.
     $search = xarModGetVar('headlines', 'rsscloud');
-
+    $feedcontent=array();
     if (empty($search)){
         $insert['title'] = 'None Configured';
         $insert['link'] = 'None Configured';
