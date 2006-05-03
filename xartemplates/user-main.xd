@@ -1,8 +1,10 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:template file="file-pager" type="module" /></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body">
+    <h2><xar:template file="file-pager" type="module" /></h2>
+
+    <xar:template file="statusmsg" type="module" />
 
 <xar:set name="$folderactions"><xar:template file="folder-actions" type="module" /></xar:set>
 #$folderactions#
@@ -50,8 +52,6 @@
 </xar:foreach>
 </table>
 
-
 <xar:if condition="count($files) gt 20">#$folderactions#</xar:if>
 
-</div>
 </div>

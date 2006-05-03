@@ -1,54 +1,40 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:template file="file-pager" type="module" /></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body">
+    <h2><xar:template file="file-pager" type="module" /></h2>
+    <xar:template file="file-actions" type="module" />
 
-<xar:if condition="!empty($status)"><p class="xar-align-center xar-style-bold">#$status#</p></xar:if>
+    <xar:template file="statusmsg" type="module" />
+    <xar:if condition="!empty($status)">
+        <p class="xar-align-center xar-style-bold">#$status#</p>
+    </xar:if>
 
-<xar:template file="file-actions" type="module" />
-
-<!-- IMAGE -->
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 20%; text-align: right;">
- &nbsp;
-</span>
-<span style="float: right; width: 78%; text-align: left;">
-    <img src="#$item['image_big']#" alt="#$item['mime']#" />
-</span>
-</div>
-
+    <!-- IMAGE -->
+    <div class="xar-form-input-wrapper">
+        <img src="#$item['image_big']#" alt="#$item['mime']#" />
+    </div>
 <!-- FILE -->
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Location of file')#"><xar:mlstring>File</xar:mlstring>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">#$item['viewpath']#</span>
-</div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Location of file')#"><xar:mlstring>File</xar:mlstring>:</label>
+        #$item['viewpath']#
+    </div>
 
 <!-- MODIFIED -->
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Modified')#"><xar:mlstring>Modified</xar:mlstring>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">#$item['hrmodified']#</span>
-</div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Modified')#"><xar:mlstring>Modified</xar:mlstring>:</label>
+        #$item['hrmodified']#
+    </div>
 
 <!-- MIMETYPE -->
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Type')#"><xar:mlstring>Type</xar:mlstring>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">#$item['mime']#</span>
-</div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Type')#"><xar:mlstring>Type</xar:mlstring>:</label>
+        #$item['mime']#
+    </div>
 
 <!-- SIZE -->
-<div style="clear: both; padding-top: 10px;">
-<span style="float: left; width: 20%; text-align: right;">
-    <span class="help" title="#xarML('Size')#"><xar:mlstring>Size</xar:mlstring>:</span>
-</span>
-<span style="float: right; width: 78%; text-align: left;">#$item['hrsize']#</span>
-</div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Size')#"><xar:mlstring>Size</xar:mlstring>:</label>
+        #$item['hrsize']#
+    </div>
 
-</div>
 </div>

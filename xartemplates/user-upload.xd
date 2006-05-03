@@ -1,33 +1,34 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Item</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body"><h2><xar:mlstring>File Upload</xar:mlstring></h2>
+
+    <xar:template file="statusmsg" type="module" />
 
     <form method="post" action="#xarModUrl('files', 'user', 'upload')#" enctype="multipart/form-data">
-        <input type="hidden" name="MAX_FILE_SIZE" value="#$max_size#" />
-
-        <h3 class="xar-align-center"><xar:mlstring>Select file(s) to upload:</xar:mlstring></h3>
-        <p>Maximum total size allowed is <b>#$hrsize#</b>.</p>
-
-        <p>
+    <fieldset>
+        <legend><xar:mlstring>File Upload Selection</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Select file(s) to upload:</xar:mlstring></label>
+            <div class="xar-form-container-after">
             <input type="file" name="userfile[]" size="48" /><br />
             <input type="file" name="userfile[]" size="48" /><br />
             <input type="file" name="userfile[]" size="48" /><br />
             <input type="file" name="userfile[]" size="48" /><br />
             <input type="file" name="userfile[]" size="48" /><br />
-        </p>
-
-        <div class="xar-clear-both">
-            <input type="submit" value="#xarML('Upload')#" /> &nbsp;
-            <a href="#xarModURL('files', 'user', 'main', array('path' => $urlpath))#"><xar:mlstring>Cancel</xar:mlstring></a>
+            </div>
         </div>
+        <p class="xar-form-input-wrapper-after">Maximum total size allowed is <strong>#$hrsize#</strong>.</p>
 
-
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" value="#xarML('Upload')#" /> &nbsp;
+        <a href="#xarModURL('files', 'user', 'main', array('path' => $urlpath))#"><xar:mlstring>Cancel</xar:mlstring></a>
+        <input type="hidden" name="MAX_FILE_SIZE" value="#$max_size#" />
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="path" id="path" value="#$urlpath#" />
         <input type="hidden" name="entered" id="entered" value="1" />
-
+    </div>
     </form>
-</div>
+
 </div>

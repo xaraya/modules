@@ -1,29 +1,27 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:template file="file-pager" type="module" /></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body">
+   <h2><xar:template file="file-pager" type="module" /></h2>
 
-<h2><xar:mlstring>Edit File</xar:mlstring></h2>
+   <xar:template file="statusmsg" type="module" />
 
+   <h2><xar:mlstring>Edit File</xar:mlstring></h2>
 
     <form method="post" action="#xarModUrl('files', 'user', 'update')#">
-
-        <div class="xar-clear-both">
+    <fieldset>
+        <legend><xar:mlstring>Modify File</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('File path')#"><xar:mlstring>File content</xar:mlstring></label>
+            <textarea name="contents" id="contents" cols="80" rows="30">#$contents#</textarea>
+        </div>
+    </fieldset>
+        <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Save')#" /> &nbsp;
             <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="path" id="path" value="#$urlpath#" />
         </div>
-
-        <textarea name="contents" cols="100" rows="30">#$contents#</textarea>
-
-        <div class="xar-clear-both">
-            <input type="submit" value="#xarML('Save')#" /> &nbsp;
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
-        </div>
-
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="path" id="path" value="#$urlpath#" />
-
     </form>
 
 </div>

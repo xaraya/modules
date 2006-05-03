@@ -1,11 +1,22 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>New Item</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body">
+    <h2><xar:ml>
+        <xar:mlstring>New #(1)</xar:mlstring>
+        <xar:mlvar>#$itemtype#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <xar:template file="statusmsg" type="module" />
 
     <form method="post" action="#xarModUrl('files', 'user', 'new')#">
-
+    <fieldset>
+        <legend>
+            <xar:ml>
+            <xar:mlstring>Add new #(1)</xar:mlstring>
+                <xar:mlvar>#$itemtype#</xar:mlvar>
+            </xar:ml>
+        </legend>
         <h3 class="xar-align-center">
             <xar:ml>
                 <xar:mlstring>Enter a name for this new #(1):</xar:mlstring>
@@ -13,18 +24,19 @@
             </xar:ml>
         </h3>
 
-        <p>#$path#<xar:if condition="$path ne '/'">/</xar:if>
-             <input type="text" name="name" size="40" /></p>
-
-        <div class="xar-clear-both xar-align-center">
-            <input type="submit" value="#xarML('Create')#" /> &nbsp;
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('File path')#">#$path#</label>
+              <xar:if condition="$path ne '/'">/</xar:if>
+             <input type="text" name="name" size="40" />
         </div>
-
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" value="#xarML('Create')#" />
+            <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
         <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="path" id="path" value="#$urlpath#" />
-
+    </div>
     </form>
-</div>
+
 </div>
