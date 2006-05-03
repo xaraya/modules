@@ -53,6 +53,8 @@ else
 	$GLOBALS["UserFilesDirectory"] = GetRootPath() . $GLOBALS["UserFilesPath"] ;
 }
 
+$GLOBALS["AllowedTypes"]= $Config['AllowedResources']['Types'];
+
 DoResponse() ;
 
 function DoResponse()
@@ -64,9 +66,10 @@ function DoResponse()
 	$sCommand		= $_GET['Command'] ;
 	$sResourceType	= $_GET['Type'] ;
 	$sCurrentFolder	= $_GET['CurrentFolder'] ;
+	$AllowedTypes	= $GLOBALS['AllowedTypes'] ;
 
 	// Check if it is an allowed type.
-	if ( !in_array( $sResourceType, array('File','Image','Flash','Media') ) )
+	if ( !in_array( $sResourceType, $AllowedTypes))//array('File','Image','Flash','Media') ) )
 		return ;
 
 	// Check the current folder syntax (must begin and start with a slash).

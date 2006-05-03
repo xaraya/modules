@@ -12,7 +12,7 @@
     // Revision: 1.3                   Date: 08/12/2005
     // ================================================
      /**
-    * xarTinyMCE  imagelibrary and filebrowser integration
+    * xarTinyMCE  imanager, ibrowser and filebrowser integration
     * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
     * @link http://www.xaraya.com
     * @subpackage xarTinyMCE
@@ -21,7 +21,7 @@
     */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
-    * INSTRUCTIONS: The main configuration file for the xarTinyMCE image browsers and tinyfck
+    * INSTRUCTIONS: The main configuration file for the xarTinyMCE ibrowser, imanager and filebrowser
     *
     * 1. Copy this file to var/tinymce/tinymceconfig.inc
     * 2. Please make sure you check all configurations settings
@@ -30,9 +30,11 @@
     *     - $cfg['ilibs'] - **VERY IMPORTANT*** make sure you set these to browse and upload images
     *     - $cfg['ilibs_dir']  - set this if you want DYNAMIC image directory browsing/creation
     *     - $cfg['ilibs_inc'] - make sure you uncomment this line for DYNAMIC image directory browsing
+    *     - $cfg['filebrowser_dir'] - filebrowser main directory MUST BE SET and CORRECTLY
     * 4. Check directories exist and are writeable (eg chmod 0755 or 0777) else it WILL NOT WORK!!
     *     - $cfg['ilibs'] and $cfg['ilibs_dir'] and
     *       the dynamic library directory if used ...$cfg['ilibs_inc']. Uncomment this for dynamic image dirs
+    *     - $cfg['filebrowser_dir'] should be writeable eg chmod 07555 or 0777 depending on server setup
     *     - $PHPTHUMB_CONFIG['cache_directory'] as set below
     *     - $cfg['temp'] eg var/cache as set below
     */
@@ -108,27 +110,45 @@
         ), */
     );
     //-------------------------------------------------------------------------
-    // use static image libraries   
+    // ibrowser and imanager - use static image libraries
     $cfg['ilibs'] = array (                                                             // image library path with slashes; absolute to root directory - please make sure that the directories have write permissions   
         array (                                                                     
-
              'value'    => '/var/uploads/',
-            'text'      => 'Stock Images',
+             'text'      => 'Stock Images',
         ),
 
-                array (
+        array (
             'value'     => '/var/images/',
             'text'      => 'Image Library',
         ),
     );
     //-------------------------------------------------------------------------
-    // use dynamic image libraries - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
+    //IMANAGER and IBROWSER settings
+    // use DYNAMIC IMAGE LIBRARIES  - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
     // image directories to be scanned
-    $cfg['filebrowser_dir']= 'var/images/'; //relative to your installation directory, trailing slash
-    $cfg['ilibs_dir']      = array('/var/images/');                         // image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
-    $cfg['ilibs_dir_show'] = true;                                                      // show main library (true) or only sub-dirs (false)
+    $cfg['ilibs_dir']      = array('/var/images/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
+    $cfg['ilibs_dir_show'] = true;                  // show main library (true) or only sub-dirs (false)
      //You must uncomment the following to get dynamic library creation and scanning
     $cfg['ilibs_inc']      = 'scripts/rdirs.php';   // uncomment to allow dynamic file library
+    //-------------------------------------------------------------------------
+    //FILEBROWSER only settings - you MUST set this correctly
+    $cfg['filebrowser_dir']= 'var/images/'; //Filebrowser will look for images here and create allowed types directories
+
+    // Configurations below can be left at default
+    //Types of media users can 'browse' - remove type to prevent browsing of that type. Do not change names unless you know what you are doing. You can remo
+    $Config['AllowedResources']['Types']	= array('File','Images','Flash','Media') ;
+
+    $Config['AllowedExtensions']['File']	= array() ;
+    $Config['DeniedExtensions']['File']		= array('php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
+
+    $Config['AllowedExtensions']['Image']	= array('jpg','gif','jpeg','png') ;
+    $Config['DeniedExtensions']['Image']	= array() ;
+
+    $Config['AllowedExtensions']['Flash']	= array('swf','fla') ;
+    $Config['DeniedExtensions']['Flash']	= array() ;
+
+    $Config['AllowedExtensions']['Media']	= array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
+    $Config['DeniedExtensions']['Media']	= array() ;
 
     /* -------------------------------------------------------------------------
      * NOTE: You should usually  ****NOT*** need to make changes to variables beyond this line!

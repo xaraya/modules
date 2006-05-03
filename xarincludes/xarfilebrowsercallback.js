@@ -17,6 +17,9 @@ function xarfilebrowsercallback(field_name, url, type, win)
     case "file":
         cType = "File";
         break;
+    case "media":
+        cType = "Media";
+        break;
     }
 
     if (enableAutoTypeSelection && cType) {
