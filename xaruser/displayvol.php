@@ -2,13 +2,14 @@
 /**
  * Display the terms in a volume
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Encyclopedia Module
- * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @link http://xaraya.com/index.php/release/221.html
+ * @author Marc Lutolf
  */
 
 include_once 'modules/encyclopedia/xarclasses/encyclopediaquery.php';
@@ -67,12 +68,13 @@ function encyclopedia_user_displayvol()
         'S', 'T', 'U', 'V', 'W', 'X',
         'Y', 'Z'
     );
-
-    /*$volumes = xarModAPIFunc('encyclopedia',
+    //this was commented out - if so the templates errors with undefined $volumes var
+    //uncommented for now
+    $volumes = xarModAPIFunc('encyclopedia',
                           'user',
                           'vols');
     $data['volumes'] = array_merge(array(array('id' => 0, 'name' => xarML("All Volumes"))), $volumes);
-    */
+
     $data['total'] = 0;
     $data['items'] = array();
     $data['msg'] = '';
