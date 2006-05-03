@@ -75,7 +75,7 @@ function xarbb_user_newreply()
             }
         }
     }
-    $topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid));
+    $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
     if (empty($topic)) return;
 
     // Security Check
@@ -97,7 +97,7 @@ function xarbb_user_newreply()
             }
         }
     } else {
-           if (!xarSecurityCheck('PostxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
+        if (!xarSecurityCheck('PostxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
     }
 
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
@@ -111,15 +111,15 @@ function xarbb_user_newreply()
 
     if ($phase == 'edit') {
         $action = 'modify';
-        $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
+        $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
     } else {
         $action = 'reply';
-        $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid));
+        $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic', array('tid' => $tid));
     }
 
-    $receipt['post_url']    = xarModUrl('comments', 'user', $action, array('tid' => $tid));
+    $receipt['post_url']    = xarModURL('comments', 'user', $action, array('tid' => $tid));
     $receipt['action']      = $action;
-    $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
+    //$receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 
     $package['name']        = xarUserGetVar('name');
     $package['uid']         = xarUserGetVar('uid');
@@ -136,9 +136,10 @@ function xarbb_user_newreply()
     $data['header']     = $header;
     $data['authid']     = xarSecGenAuthkey();
 
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Reply to ') . $data['ttitle']));
+    xarTplSetPageTitle(xarML('Reply to #(1)', $data['ttitle']));
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $data['xarbbtitle'] = (isset($xarbbtitle) ? $xarbbtitle : '');
+
     return $data;
 }
 

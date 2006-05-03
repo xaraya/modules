@@ -44,22 +44,19 @@
 </div>
 
 <div class="xarbb-tablewrapper">
-    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formcheck(this, fieldRequired, fieldDescription);">
+    <form action="#$receipt.post_url#" method="post" name="post" id="post" onsubmit="return xar_base_formcheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
-                    <xar:mlstring>
-                        Reply to 
-                    </xar:mlstring>
-                    : #$ttitle# 
+                    <xar:ml>
+                        <xar:mlstring>Reply to: #(1)</xar:mlstring>
+                        <xar:mlvar>#$ttitle#</xar:mlvar>
+                    </xar:ml>
                 </th>
             </tr>
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Name 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Name:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
                     <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
@@ -69,42 +66,35 @@
                         <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
                             [ 
                             <a class="xar-norm" href="&xar-modurl-roles-user-logout;">
-                                <xar:mlstring>
-                                    Logout 
-                                </xar:mlstring>
+                                <xar:mlstring>Logout</xar:mlstring>
                             </a>
                             ] 
                         </xar:if>
                         <xar:if condition="xarModGetVar('comments','AllowPostAsAnon') eq '1'">
                             <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
                                 <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked" />
-                                <xar:else />
+                            <xar:else />
                                 <input type="checkbox" name="package[postanon]" id="package-postanon" />
                             </xar:if>
-                            <xar:mlstring>
-                                Post anonymously 
-                            </xar:mlstring>
+                            <xar:mlstring>Post anonymously</xar:mlstring>
                             <br />
                         </xar:if>
-                        <xar:else />
+                    <xar:else />
                         #$package['name']# 
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Subject 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Subject:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
-                   <xar:set name="re"><xar:mlstring>Re: </xar:mlstring></xar:set>
+                    <xar:set name="re"><xar:mlstring>Re: </xar:mlstring></xar:set>
                     <xar:if condition="isset($package['new_title'])">
                         <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#$re# #xarVarPrepForDisplay($package['new_title'])#" tabindex="1" />
                         <xar:elseif condition="!empty($package['title'])" tabindex="1" />
                         <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#$re# #xarVarPrepForDisplay($package['title'])#" />
-                        <xar:else />
+                    <xar:else />
                         <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="" tabindex="1" />
                     </xar:if>
                 </td>
@@ -112,90 +102,65 @@
             <xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
                 <tr>
                     <td class="xar-accent xar-title newtopictitle">
-                        <xar:mlstring>
-                            Form Controls 
-                        </xar:mlstring>
-                        : 
+                        <xar:mlstring>Form Controls:</xar:mlstring>
                     </td>
                     <td class="xar-norm newtopicfield">
-                        #$hooks['formdisplay']# 
+                        #$hooks.formdisplay#
                     </td>
                 </tr>
             </xar:if>
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>
-                        Body 
-                    </xar:mlstring>
-                    : 
+                    <xar:mlstring>Body:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
                     <xar:if condition="isset($package['text'])">
-                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2">#xarVarPrepForDisplay($package['text'])#</textarea>
-                        <xar:else />
+                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2">#xarVarPrepForDisplay($package.text)#</textarea>
+                    <xar:else />
                         <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2"></textarea>
                     </xar:if>
                 </td>
             </tr>
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-<!-- Uggghhh, here is the tough one.  Need to be able to show the options for this forum.  Also need to be able to turn off (selective) different option.  DB design is going to need to change to allow for a serialized entry here, and then a ton of new code I would imagine.  We are going to need this for the nntp integration.  Also, we need to add the data types to allow hooking to each individual module.  UGGGHHHH freaking UGGGHHHH -->
-<!-- For the time being, let's just get the announcement, etc going. -->
-                    <xar:mlstring>
-                        Options 
-                    </xar:mlstring>
-                    : 
+                    <xar:comment>
+                        FIXME: These options are displayed in other templates in a different way - consolidate
+                        FIXME: The options are not dependant on just the hooks - they are set per forum.
+                    </xar:comment>
+                    <xar:mlstring>Options:</xar:mlstring>
                     <br />
                     <br />
                     <div class="xar-sub">
-                        <xar:mlstring>
-                            HTML is 
-                        </xar:mlstring>
+                        <xar:mlstring>HTML is</xar:mlstring>
                         <xar:if condition="xarModIsHooked('html', 'xarbb', $fid)">
                             <span style="color: green;">
-                                <xar:mlstring>
-                                    On 
-                                </xar:mlstring>
+                                <xar:mlstring>On</xar:mlstring>
                             </span>
                             <xar:else />
                             <span style="color: red;">
-                                <xar:mlstring>
-                                    Off 
-                                </xar:mlstring>
+                                <xar:mlstring>Off</xar:mlstring>
                             </span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>
-                            BBCode is 
-                        </xar:mlstring>
+                        <xar:mlstring>BBCode is</xar:mlstring>
                         <xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
                             <span style="color: green;">
-                                <xar:mlstring>
-                                    On 
-                                </xar:mlstring>
+                                <xar:mlstring>On</xar:mlstring>
                             </span>
-                            <xar:else />
+                        <xar:else />
                             <span style="color: red;">
-                                <xar:mlstring>
-                                    Off 
-                                </xar:mlstring>
+                                <xar:mlstring>Off</xar:mlstring>
                             </span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>
-                            Smilies are 
-                        </xar:mlstring>
+                        <xar:mlstring>Smilies are</xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
                             <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="xarbb_popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
-                                <xar:mlstring>
-                                    On 
-                                </xar:mlstring>
+                                <xar:mlstring>On</xar:mlstring>
                             </a>
                             <xar:else />
                             <span style="color: red;">
-                                <xar:mlstring>
-                                    Off 
-                                </xar:mlstring>
+                                <xar:mlstring>Off</xar:mlstring>
                             </span>
                         </xar:if>
                     </div>
@@ -206,19 +171,19 @@
             <tr>
                 <td class="xar-accent newtopicbottom" colspan="2">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" />
-                    <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" />
-                    <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 
-                    <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
+                    <input type="hidden" name="header[modid]" id="header-modid" value="#$header.modid#" />
+                    <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header.objectid#" />
+                    <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header.itemtype#" /> 
+                    <xar:if condition="!isset($header.pid) or empty($header.pid)">
                         <input type="hidden" name="header[pid]" id="header-pid" value="0" />
                     <xar:else />
-                        <input type="hidden" name="header[pid]" id="header-pid" value="#$header['pid']#" />
+                        <input type="hidden" name="header[pid]" id="header-pid" value="#$header.pid#" />
                     </xar:if>
                     <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
-                        <input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" />
+                        <input type="hidden" name="header[cid]" id="header-cid" value="#$header.cid#" />
                     </xar:if>
-                    <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
-                    <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />
+                    <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt.returnurl.decoded#" />
+                    <xar:comment><input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /></xar:comment>
                     <input type="hidden" name="receipt[action]" id="receipt-action"/>
                     <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" tabindex="3" />
                     &nbsp;&nbsp; 
@@ -229,13 +194,13 @@
         </table>
     </form>
 </div>
+
 <div class="xarbb-noteswrapper">
     <span class="xar-sub rightnote">
-        <xar:mlstring>
-            All times are GMT
-        </xar:mlstring>
+        <xar:mlstring>All times are GMT</xar:mlstring>
     </span>
+    <div style="clear: both;"></div>
 </div>
 
-<xar:set name="topic_view">xarModFunc('xarbb','user','viewtopic', array('tid' => $tid, 'post' => 1));</xar:set>
+<xar:set name="topic_view">#xarModFunc('xarbb','user','viewtopic', array('tid' =&gt; $tid, 'post' =&gt; 1))#</xar:set>
 #$topic_view#
