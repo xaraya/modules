@@ -32,6 +32,8 @@ function helpdesk_user_create($args)
     xarModAPILoad('helpdesk');
     $itemtype = TICKET_ITEMTYPE;
 
+    extract($args);
+
     // Get parameters from whatever input we need.
     if( !xarVarFetch('name',     'str:1:',   $name,      '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('userid',   'int:1:',   $userid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
@@ -50,10 +52,11 @@ function helpdesk_user_create($args)
     if( !xarVarFetch('closedby', 'int:1:',   $closedby,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('issue',    'html:basic',$issue,     '', XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('notes',    'html:basic',$notes,     '', XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('cids',     'array',    $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('new_cids', 'array', $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('closeonsubmit','int', $closeonsubmit,0,XARVAR_NOT_REQUIRED) ){ return false; }
-    //extract($args);
-
+    //
+    //echo count($cids);
+    //die;
     if( empty($name) ){ $name = xarUserGetVar('name', $openedby); }
     $tmp_email = xarUserGetVar('email', $openedby);
     if( xarCurrentErrorID() == 'NOT_LOGGED_IN' )
@@ -73,7 +76,7 @@ function helpdesk_user_create($args)
 
     // If there is not assigned to rep we will try and
     // find a rep to assign the ticket to
-    if( empty($assignedto) )
+    if( $assignedto == 0)
     {
         $assignedto = xarModAPIFunc('helpdesk', 'user', 'assignto',
             array('cids' => $cids)
