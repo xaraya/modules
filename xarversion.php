@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/15.html
  * @author Volodymyr Metenchuk
  */
-$modversion['name']                 = 'Ephemerids';
+$modversion['name']                 = 'ephemerids';
 $modversion['id']                   = '15';
 $modversion['version']              = '1.5.0';
 $modversion['displayname']          = xarML('Ephemerids');

@@ -1,8 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+<xar:template type="module" module="ephemerids" file="admin-menu" />
 <h2><xar:mlstring>Ephemerids Module Overview</xar:mlstring></h2>
-<div align="center">
 
 <form method="post" action="&xar-modurl-ephemerids-admin-delete;" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" value="#$authid#" />
@@ -12,10 +12,9 @@
 
     <p><xar:mlstring>Confirm deletion of Ephemerid</xar:mlstring></p>
 
-    <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set> 
+    <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set>
     <input type="submit" value="#$submitbutton#"  tabindex="1" /><br /><br />
-    
+
     <a href="&xar-modurl-ephemerids-admin-main;"><xar:mlstring>Cancel deletion of Ephemerid</xar:mlstring></a>
-</form>        
-</div>
+</form>
 </div>

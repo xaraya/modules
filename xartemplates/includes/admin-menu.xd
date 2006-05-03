@@ -1,0 +1,49 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AddEphemerids" catch="false">
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-ephemerids-admin-new;">
+            <xar:mlstring>Add Item</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="EditEphemerids" catch="false">
+        <xar:if condition="$activetab eq 'view' or $activetab eq 'modify' or $activetab eq 'delete'" >
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-ephemerids-admin-view;" >
+                <xar:mlstring>View Items</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminEphemerids" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-ephemerids-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+
+    <xar:sec mask="EditEphemerids" catch="false">
+    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-ephemerids-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    </xar:sec>
+  </dl>
+</div>

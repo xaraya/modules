@@ -1,39 +1,31 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Ephemerids</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Ephemerids is a content module</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Allows the use of "On this date in history..."  Have historical references displayed within a block.</xar:mlstring></li>
-            </ul>
-            <xar:mlstring>When you login as a website administrator, you are able to add, delete, view, and modify these historical references to your choosing.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>Ephemerids -- Displays the content that you add depending on the day of the year.</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no included hooks.</xar:mlstring>
-        </div>
-    </div>
+  <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
+  <xar:template type="module" module="ephemerids" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif','ephemerids')#" class="xar-module-icon" alt="official icon" width="63" height="60" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+      <em><xar:mlstring>Ephemerids is a content module</xar:mlstring></em>
+      <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+  </p>
+  <ul>
+      <li><xar:mlstring>Allows the use of "On this date in history..."  Have historical references displayed within a block.</xar:mlstring></li>
+  </ul>
+
+  <p><xar:mlstring>When you login as a website administrator, you are able to add, delete, view, and modify these historical references to your choosing.</xar:mlstring>
+  </p>
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+      <ul>
+          <li><xar:mlstring>Ephemerids -- Displays the content that you add depending on the day of the year.</xar:mlstring></li>
+      </ul>
+   <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+       <p><xar:mlstring>There are no included hooks.</xar:mlstring></p>
 </div>

@@ -1,6 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+    <xar:template type="module" module="ephemerids" file="admin-menu" />
 <h2><xar:mlstring>Modify Ephemerid</xar:mlstring></h2>
 <div align="center">
 

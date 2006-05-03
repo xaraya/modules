@@ -1,29 +1,22 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+    <xar:template type="module" module="ephemerids" file="admin-menu" />
     <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
     <form method="post" action="#xarModURL('ephemerids', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <table border="0" width="100%">
-            <tr>
-                <td>
-                    <table border="0" width="100%">
-                        <tr>
-                            <td align="left" valign="middle">
-                                <xar:mlstring>Items Per Page</xar:mlstring>
-                            </td>
-                            <td align="left" valign="middle">
-                                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('ephemerids', 'itemsperpage')#" />
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
+    <fieldset>
+        <legend><xar:mlstring>General Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
+          <xar:mlstring>Items Per Page:</xar:mlstring>
+        </label>
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('ephemerids', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+      </div>
+      </fieldset>
         <xar:set name="$updatebutton"><xar:mlstring>Update Ephemerids Configuration</xar:mlstring></xar:set>
-        <p>
+        <p class="xar-form-input-wrapper-after;">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="submit" value="#$updatebutton#"  tabindex="3" />
         </p>
     </form>

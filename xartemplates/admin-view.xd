@@ -1,9 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ephemerids Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Ephemerids List</xar:mlstring></h2>
+  <xar:template type="module" module="ephemerids" file="admin-menu" />
+  <h2><xar:mlstring>Ephemerids List</xar:mlstring></h2>
 
-<table border="0" width="100%" cellpadding="2" cellspacing="0">
+  <table border="0" width="100%" cellpadding="2" cellspacing="0">
     <tr>
         <th>#$typelabel#</th>
         <th>#$daylabel#</th>

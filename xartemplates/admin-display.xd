@@ -2,6 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Ephemerids List</xar:mlstring></h2>
+    <xar:template type="module" module="ephemerids" file="admin-menu" />
 <table border="0" cellspacing="0" cellpadding="2" width="100%">
     <tr align="center">
         <td align="center">
