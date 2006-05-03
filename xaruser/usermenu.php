@@ -30,10 +30,8 @@ function example_user_usermenu($args)
        Just don't display this module's User Menu Tab
      */
      if (!xarSecurityCheck('ViewExample',0)) {
-         $data='';  
-         /* in this specific case return empty (not null) so hooks continue.
-            Evalue if you need to return null of false for other hooks 
-         */
+         $data='';
+         /* Make sure in this specific case return empty (not null) so hooks continue. */
          return $data;
      }
     /* First, lets find out where we are in our logic. If the phase
