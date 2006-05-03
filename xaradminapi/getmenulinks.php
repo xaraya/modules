@@ -3,7 +3,7 @@
  * Xaraya Referers
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  * @subpackage Referer Module
@@ -12,7 +12,6 @@
 /**
  * utility function pass individual menu items to the admin panels
  * 
- * @author the Example module development team 
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */

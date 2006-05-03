@@ -20,11 +20,9 @@ function referer_admin_main()
     // Security Check
     if (!xarSecurityCheck('EditReferer')) return; 
     // we only really need to show the default view (overview in this case)
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('referer', 'admin', 'view'));
-    } 
+
+    xarResponseRedirect(xarModURL('referer', 'admin', 'view'));
+
     // success
     return true;
 } 

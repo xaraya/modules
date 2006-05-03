@@ -3,6 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>Referer Administration</xar:mlstring></span>
         </div>
 <div class="xar-mod-body">
+    <xar:template type="module" module="referer" file="admin-menu" />
     <img src="#xarTplGetImage('admin_generic.gif', 'base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
@@ -18,9 +19,9 @@
             </ul>
             <xar:mlstring>When logged in as administrator, you have the option of viewing the referers or configuring the module. Currently you can set the number of referers to be listed.</xar:mlstring>
     </p>
-    <h3>
+    <h2>
             <xar:mlstring>How to use it?</xar:mlstring>
-    </h3>
+    </h2>
     <p>
             <xar:mlstring>View the referers.  This allows you to see where your traffic originates.</xar:mlstring>
     </p>
@@ -35,10 +36,5 @@
     </h3>
     <p>
             <xar:mlstring>There are no included hooks with this module.</xar:mlstring>
-    </p>
-        </div>
-<div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
     </p>
 </div>
