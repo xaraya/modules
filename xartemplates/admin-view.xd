@@ -17,6 +17,7 @@
     <span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+  <xar:template type="module" module="lists" file="admin-menu" />
     <h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
     <div class="xar-mod-lists-view" style="margin: auto;">
 
