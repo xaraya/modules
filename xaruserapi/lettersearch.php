@@ -48,9 +48,9 @@ function encyclopedia_userapi_lettersearch($args)
     // We finished assembling the query. Now run it.
     if(!$cs->run()) return;
 
-    if (xarModGetVar('Encyclopedia', 'longdisplay') == 1)
+    if (xarModGetVar('Encyclopedia', 'longdisplay') == 1) {
         return $cs->output();
-    else
+    } else {
         foreach($cs->output() as $item) {
 //            if (xarSecurityCheck('ReadEncyclopedia',0,'Volume',$term . "::" . $id))
                 $items[] = $item;
