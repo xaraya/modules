@@ -173,7 +173,7 @@
                                 <xar:mlstring>Start Date:</xar:mlstring>
                             </span>
                         </label>
-                        <select name="event_month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
+                        <select name="event_month" title="#xarML('Event Date: Month')#" onchange="populateSelect(this, this.form.event_day, this.form.event_year)">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 12" iter="$i++">
                             <xar:if condition="$i lt 10">
@@ -189,7 +189,7 @@
                             <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                         </xar:for>
                         </select>
-                        <select name="event_day" title="#xarML('Event Date:Day')#">
+                        <select name="event_day" title="#xarML('Event Date: Day')#" onchange="populateSelect(this.form.event_month, this, this.form.event_year)">
                             <option value=""></option>
                         <xar:for start="$i = 1" test="$i le 31" iter="$i++">
                             <xar:if condition="$i lt 10">
@@ -204,7 +204,7 @@
                             <option value="#$currDay#" #$daySelected#>#$currDay#</option>
                         </xar:for>
                         </select>
-                        <select name="event_year" title="#xarML('Event Date:Year')#" onchange="populateSelect(this.form.month, this.form.day, this)">
+                        <select name="event_year" title="#xarML('Event Date: Year')#" onchange="populateSelect(this.form.event_month, this.form.event_day, this)">
                             <option value=""></option>
                         <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                             <xar:set name="$yearSelected">""</xar:set>
