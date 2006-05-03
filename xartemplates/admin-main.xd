@@ -134,7 +134,8 @@
                <li><xar:mlstring>Directionality - plug in for better support of right to left languages.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
                <li><xar:mlstring>List Styles - add list style types to your lists</xar:mlstring></li>
-
+               <li><xar:mlstring>Layer - support for create/remove and z-index block elements</xar:mlstring></li>
+               <li><xar:mlstring>Style - Adds CSS style editing support to enable you to edit almost any CSS style property in a visual way</xar:mlstring></li>
             </ol>
         <h3>
             <xar:mlstring>Custom and Multiple Configurations</xar:mlstring>

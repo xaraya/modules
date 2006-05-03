@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.0.4
+INSTALLATION AND USE - XarTinyMCE Version 1.1.0
 
-UPGRADES to 1.0.4:
+UPGRADES to 1.1.0:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -9,11 +9,13 @@ browse compatibility, and further options for customization.
 
 The current version of this Xaraya integration provides for
 configuration options via a user interface in the admin configuration area for XarTinyMCE.
-There is also integration of an Image Browser.
-This version sees new functionality in the Image Browser.
-Image manager for xartinymce is also available for download separately.
+There is also integration of an multipurpose filebrowser in addition to ibrowser a specific image browser.
+This version sees new functionality with enhanced block formats, new layer
+and style plugins and better filebrowser integration.
+Image manager (imanager) for xartinymce is also available for download separately.
 
-NOTE: Make sure you use the NEW CONFIGURATION FILE for ibrowser in tinymce/xartemplates/includes directory.
+NOTE: Make sure you use the NEW COMBINED CONFIGURATION FILE for 
+      filebrowser, ibrowser and imanager found in tinymce/xartemplates/includes directory.
 
 
 ****************************
@@ -42,7 +44,7 @@ Please read the Overview Documentation in the TinyMCE administration area for mo
 
 ******************************
 
-To UPGRADE to Version 1.0.4:
+To UPGRADE to Version 1.1.0:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
@@ -62,9 +64,7 @@ When you are ready to upgrade your tinymce files:
    Click Upgrade
    Click Activate
 
-4. Go to your admin Dynamic Data -> Property Types -> Flush Property Cache
-
-5. Go to Administration -> XarTinyMCE -> Modify Config
+4. Go to Administration -> XarTinyMCE -> Modify Config
    Go to ***each*** TAB and ensure the values are as required.
    Make sure you check any new or upgraded options are filled in.
    **Click Submit button**** on EACH screen to confirm and update the configuration and 
@@ -73,7 +73,12 @@ When you are ready to upgrade your tinymce files:
 
 MAJOR CHANGES
 *************
-Version 1.0.4 has unified configuration file 'tinymceconfig.inc' that replaces 
+Version 1.1.0 has unified and futher enhanced configuration file 'tinymceconfig.inc' that replaces
+the ibrowserconfig.inc and imanagerconfig.inc files. It is used for the new filebrowser, ibrowser and imanager.
+It should be located in var/tinymce directory instead of the var/ibrowser directory.
+Please make sure you update this file. Also check new additional blockformats for the drop down selection format list.
+
+Version 1.0.4 has unified configuration file 'tinymceconfig.inc' that replaces
 the ibrowserconfig.inc and imanagerconfig.inc files. It should be located in var/tinymce directory
 instead of the var/ibrowser directory. Please make sure you update this file.
 
@@ -91,31 +96,23 @@ This is recommended for w3c standards support.
 
 IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
 ******************************
-This is a new Ibrowser image manager plugin with version 1.0.0 of xartinymce.
+There is a new filebrowser and updated ibrowser image manager plugin with version 1.1.0 of xartinymce.
 
-Please make sure you copy the NEW ibrowserconfig.inc file in
-modules/tinymce/xartemplates/includes/ibrowserconfig.inc to your
-var/ibrowser/ directory and update the configuration settings there.
+Please make sure you copy the NEW tinymceconfig.inc file in
+modules/tinymce/xartemplates/includes/tinymceconfig.inc to your
+var/tinymce/ directory and update the configuration settings there.
 
-THERE IS A NEW IBROWSER CONFIGURATION FILE - Please update your old one.
-
-Only relative paths are available at the moment until full ibrowser integration is completed.
+THERE IS A NEW FILEBROWSER/IBROWSER/IMANAGER CONFIGURATION FILE - Please update your old one.
 
 Most settings will work as is, but you must set the image libraries to your own.
-Also, keep in mind that using Xaraya's inbuilt Uploads and Images module
-is much more secure. If you use the image browser, please be sure once you have
-modified the file, to chmod the ibrowserconfig.inc file chmod 444 so it is not writeable.
 
-Using the ibrowser also means that the path to your images will be available to those
-browsing your site.
+Using the filebrowser, ibrowser, imanager means that the path to your images will be available to those
+browsing your site. If you want obfuscated paths and file names, please use the Xaraya Uploads module.
 
-For added security, turn off Upload ability in the IBrowser and use the Uploads and Images module.
-Point your Image library to the Image module's directory or trusted directory of Uploads.
+For added security, turn off Upload ability in the filebrowser, or the iBrowser and iManager plugins and 
+use the Uploads and Images module. Point your Image library to the Image module's directory or 
+trusted directory of Uploads.
 
-An alternative to using the IBrowser is to install the Images and Uploads modules.
-You can attach an Upload DD field to your articles and upload images to an image
-or trusted directory. From there you can drag the link of the file to your wysiwyg editor.
-Alternatively - cut and paste the image to your WYSIWYG editor from word or a supported image editor.
 
    That's it!
 ******************************

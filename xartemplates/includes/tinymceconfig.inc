@@ -189,7 +189,6 @@
     $cfg['fonts']       = dirname($_SERVER['PHP_SELF']) . '/fonts/';                    // ttf font dir; absolute path
     $cfg['mask']        = dirname($_SERVER['PHP_SELF']) . '/masks/';                    // mask dir; absolute path
     $cfg['olay']        = dirname($_SERVER['PHP_SELF']) . '/olays/';                    // overlay dir; absolute path
-
     $cfg['mark']        = dirname($_SERVER['PHP_SELF']) . '/wmarks/';                   // watermarks dir; absolute path
     $cfg['pop_url']     = $cfg['scripts'] . 'popup.php';                                // popup dir; relative to 'script' dir
     $cfg['temp']        = $realpath.'/var/cache';                   // temp dir; e.g. 'D:/www/temp'

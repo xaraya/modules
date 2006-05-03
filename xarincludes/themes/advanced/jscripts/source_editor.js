@@ -18,7 +18,7 @@ function onLoadInit() {
 	document.forms[0].htmlSource.value = fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id')));
 	resizeInputs();
 
-	if (tinyMCE.getParam("theme_advanced_source_editor_wrap", false)) {
+	if (tinyMCE.getParam("theme_advanced_source_editor_wrap", true)) {
 		setWrap('soft');
 		document.forms[0].wraped.checked = true;
 	}
