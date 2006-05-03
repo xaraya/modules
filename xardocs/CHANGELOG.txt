@@ -1,3 +1,11 @@
+* Version 1.1.0 4 May 06
+- Includes upstream project version 2.0.6
+- New plugins to manage layers, and edit css styles, fixed list style plugin
+- Better integration of filebrowser with config available in the tinymceconfig.inc file
+- Configuration for ibrowser, imanager and filebrowser in one configuration file for easier management
+- Enhanced Block formatting now includes other block formats including divs, blockquote,
+- Lots of bug fixes for xhref problems and related
+
 * Version 1.0.4 29 Mar 06
 - Includes tinymce upstream project version 2.0.5.1
 - Updated and reduced number  of language files - only UTF-8 included
