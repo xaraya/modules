@@ -1,33 +1,36 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="statusmsg" type="module" />
+<div class="xar-mod-body">
+    <xar:template type="module" module="files" file="admin-menu" />
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
-<table border="0" cellspacing="1" cellpadding="8">
+    <xar:template file="statusmsg" type="module" />
 
-<form method="post" action="&xar-modurl-files-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <form method="post" action="&xar-modurl-files-admin-updateconfig;">
+    <fieldset>
+        <legend><xar:mlstring>General Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper-after">
+            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /></td></tr>
+            <label for="shorturls"><xar:mlstring>Support short URLs</xar:mlstring></label>
+        </div>
+        <div class="xar-form-input-wrapper">
+              <label class="xar-form-label" for="archive_dir"><xar:mlstring>Archive Directory</xar:mlstring></label>
+             <input type="text" name="archive_dir" id="archive_dir" size="48" value="#$archive_dir#" />
+        </div>
 
-    <tr><td><label for="shorturls"><xar:mlstring>Support short URLs</xar:mlstring></label></td>
-    <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /></td></tr>
-
-    <tr><td><label for="archive_dir"><xar:mlstring>Archive Directory</xar:mlstring></label></td>
-    <td><input type="text" name="archive_dir" id="archive_dir" size="48" value="#$archive_dir#" /></td></tr>
-
-
-    <xar:comment> *** Hook output *** </xar:comment>
-    <xar:if condition="!empty($hookoutput)">
-        <xar:foreach in="$hookoutput" key="$hookmodule">
-            <tr><td colspan="2">#$hookoutput[$hookmodule]#</td></tr>
-        </xar:foreach>
-    </xar:if>
-
-    <tr><td colspan="2" align="center"><input type="submit" value="#xarML('Update')#" /></td></tr>
-
-</form>
-
-</table>
-
-</div>
+        <xar:comment> *** Hook output *** </xar:comment>
+        <xar:if condition="!empty($hookoutput)">
+        <div class="xar-form-input-wrapper-after;">
+            <xar:foreach in="$hookoutput" key="$hookmodule">
+                <tr><td colspan="2">#$hookoutput[$hookmodule]#</td></tr>
+            </xar:foreach>
+         </div>
+         </xar:if>
+    </fieldset>
+    <p class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Update')#" />
+    </p>
+    </form>
 </div>
