@@ -110,9 +110,12 @@
         ), */
     );
     //-------------------------------------------------------------------------
-    // ibrowser and imanager - use static image libraries
-    $cfg['ilibs'] = array (                                                             // image library path with slashes; absolute to root directory - please make sure that the directories have write permissions   
-        array (                                                                     
+    // ibrowser and imanager - change to use for static image libraries
+    //- change the value and text description to suit your own directories, use more or less array entries as necessary
+    $cfg['ilibs'] = array (
+         // image library path with slashes; absolute to xaraya doc root directory
+         //- please make sure that the directories have write permissions
+        array (
              'value'    => '/var/uploads/',
              'text'      => 'Stock Images',
         ),
@@ -124,7 +127,7 @@
     );
     //-------------------------------------------------------------------------
     //IMANAGER and IBROWSER settings
-    // use DYNAMIC IMAGE LIBRARIES  - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
+    // if you want to use DYNAMIC IMAGE LIBRARIES  - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
     // image directories to be scanned
     $cfg['ilibs_dir']      = array('/var/images/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
     $cfg['ilibs_dir_show'] = true;                  // show main library (true) or only sub-dirs (false)
