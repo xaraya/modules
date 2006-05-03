@@ -2,11 +2,13 @@
 /**
  * Encyclopedia Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
  * @subpackage Encyclopedia Module
+ * @link http://xaraya.com/index.php/release/221.html
  * @author Marc Lutolf
  * @originalauthor Rebecca Smallwood, http://orodruin.sourceforge.net
  */
@@ -17,7 +19,7 @@
  * may lead to inablity of the system to process
  * the file correctly, resulting in unexpected results.
  */
-$modversion['name']           = 'Encyclopedia';
+$modversion['name']           = 'encyclopedia';
 $modversion['id']             = '221';
 $modversion['version']        = '0.9';
 $modversion['displayname']    = xarML('Encyclopedia');
