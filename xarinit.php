@@ -3,7 +3,7 @@
  * xarTinyMCE initialization
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -53,7 +53,7 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinybr', 0);
     xarModSetVar('tinymce', 'tinypara', 1);
     xarModSetVar('tinymce', 'tinyinvalid', '');
-    xarModSetVar('tinymce', 'tinyadvformat', '');
+    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
     //xarModSetVar('tinymce', 'useibrowser', 0);
     xarModSetVar('tinymce', 'tinyeditorcss','');
     //xarModSetVar('tinymce', 'tinynowrap',0);
@@ -133,11 +133,13 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce', 'striplinebreaks',1);
         xarModSetVar('tinymce',  'sourceformat',1);
         xarModSetVar('tinymce',  'usefilebrowser',0);
-        break;
       return tinymce_upgrade('1.0.4');
 
     case '1.0.4':
-
+    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
+        return tinymce_upgrade('1.1.0');
+       break;
+    case '1.1.0': //current version
        break;
     }
     return true;
