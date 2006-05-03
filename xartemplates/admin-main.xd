@@ -1,40 +1,25 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Encyclopedia Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Encyclopedia Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/encyclopedia/xarimages/admin.gif')" >
-                <img src="modules/Encyclopedia/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/encyclopedia/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>What is it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The Encyclopedia module is a simple application for collecting data in a structured way.</xar:mlstring> <xar:mlstring>It is based on the Encyclopedia module for PostNuke originally written by Rebecca Smallwood.</xar:mlstring></p>
-            <p>
-            <xar:mlstring>Each Encyclopedia can have multiple volumes. In each volume the entries are organized in alphabetical order and searchable.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-                 <ul>
-                    <li><xar:mlstring>The module currently does not use any blocks</xar:mlstring></li>
-                </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The Encyclopedia module currently does not use any hooks.</xar:mlstring></p>
-        </div>
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <p><xar:mlstring>Extended information about this module can be found in the module's docs folder.</xar:mlstring></p>
-        </div>
-    </div>
+  <xar:template type="module" module="encyclopedia" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','encyclopedia')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+      <p><xar:mlstring>The Encyclopedia module is a simple application for collecting data in a structured way.</xar:mlstring> <xar:mlstring>It is based on the Encyclopedia module for PostNuke originally written by Rebecca Smallwood.</xar:mlstring></p>
+      <p>
+            <xar:mlstring>Each Encyclopedia can have multiple volumes. In each volume the entries are organized in alphabetical order and searchable.</xar:mlstring>
+      </p>
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+      <p>
+          <ul>
+              <li><xar:mlstring>The module currently does not use any blocks</xar:mlstring></li>
+          </ul>
+      </p>
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+      <p><xar:mlstring>The Encyclopedia module currently does not use any hooks.</xar:mlstring></p>
+
 </div>

@@ -4,15 +4,14 @@
 		<xar:mlstring>Administration - Encyclopedia</xar:mlstring>
 	</span>
 </div>
-
 <div class="xar-mod-body">
-    <h2 style="width:100%;height:1.5em;">
+  <xar:template type="module" module="encyclopedia" file="admin-menu" />
+    <h2>
 		<xar:mlstring>
 			New Entry
 		</xar:mlstring>
     </h2>
-	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-	</xar:if>
+    <xar:style scope="module" module="base" file="navtabs" />
 	<dl class="xar-tabs">
 		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
 			<a href="#xarModURL('encyclopedia','admin','getrecent')#">
@@ -20,10 +19,8 @@
 			</a>
 		</dd>    
 	</dl>
-	<div style="text-align: center; margin: auto;">
 		<form name="entryform" id="entryform" class="xar-fullwidth"  action="#xarModURL('encyclopedia', 'admin', 'addentry')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<div style="text-align: left">
 			<table class="xar-fullwidth xar-noborder" cellpadding="2" cellspacing="0">
 				<xar:comment> this does most of the hard work :)</xar:comment>
 				<xar:data-form object="$object" />
@@ -36,5 +33,4 @@
 			<xar:set name="addlabel"><xar:mlstring>Add</xar:mlstring></xar:set>
 			<input type="submit" value="#$addlabel#" tabindex="2" />
 		</form>
-	</div>
 </div>

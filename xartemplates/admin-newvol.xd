@@ -5,23 +5,21 @@
 	</span>
 </div>
 
-
 <div class="xar-mod-body">
-    <h2 style="width:100%;height:1.5em;">
+  <xar:template type="module" module="encyclopedia" file="admin-menu" />
+    <h2>
 		<xar:mlstring>
 			New Volume
 		</xar:mlstring>
     </h2>
-	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-	</xar:if>
+    <xar:style scope="module" module="base" file="navtabs" />
 	<dl class="xar-tabs">
-		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+		<dd  class="active xar-float-right xar-align-left" style="margin-right: .5em;">
 			<a href="#xarModURL('encyclopedia','admin','volumes')#">
 				<xar:mlstring>View Volumes</xar:mlstring>
 			</a>
-		</dd>    
+		</dd>
 	</dl>
-	<div style="text-align: center; margin: auto;">
 		<form name="entryform" id="entryform" class="xar-fullwidth"  action="#xarModURL('encyclopedia', 'admin', 'newvol')#" method="post" enctype="application/x-www-form-urlencoded">
 			<input type="hidden" name="authid" id="authid" value="#$authid#" />
 			<input type="hidden" name="confirmed" id="confirmed" value="1" />
@@ -40,8 +38,7 @@
 						<label for="description"><xar:mlstring>Description</xar:mlstring></label>
 					</td>
 					<td>
-						<textarea name="description" id="description" rows="4" cols="40" tabindex="2" />#$description#
-						</textarea>
+						<textarea name="description" id="description" rows="4" cols="40" tabindex="2" >#$description#</textarea>
 					</td>
 				</tr>
 			</table>
