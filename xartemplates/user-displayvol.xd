@@ -4,10 +4,7 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>View Entries</xar:mlstring></h2>
-    <div style="margin: auto;">
-
-        <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-        </xar:if>
+    <xar:style scope="module" module="base" file="navtabs" />
 		<dl class="xar-tabs">
 			<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
 				<a href="#xarModURL('encyclopedia','user','main')#">
@@ -56,7 +53,7 @@
 		</xar:if>
 
 	<xar:if condition="$phase eq 1">
-		<div>
+
 			<form method="post" action="#xarModURL('encyclopedia', 'user', 'displayvol', array('phase' => 0, 'confirmed' => 1))#">
 				<table>
 					<tr>
@@ -75,7 +72,7 @@
 						<td>
 							<label for="vid"><xar:mlstring>Volume</xar:mlstring>:</label>
 						</td>
-						<td>					
+						<td>
 							<select name="vid" id="vid" size="1" tabindex="1">
 								<xar:loop name="$volumes">
 									<option value="#$loop:item['id']#">
@@ -109,7 +106,7 @@
 			<xar:mlstring>Search condition</xar:mlstring>: 
 			<b>#xarVarPrepForDisplay($msg)#</b>
 			<br /><br />
-		</div>
+
 	</xar:if>
 			<xar:if condition="!empty($message)">
 				<p>#xarVarPrepForDisplay($message)#</p>
@@ -167,5 +164,4 @@
 				</div>
 			</xar:if>
 		</xar:if>
-    </div>
 </div>

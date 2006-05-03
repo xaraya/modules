@@ -5,11 +5,10 @@
 	</span>
 </div>
 <div class="xar-mod-body">
-    <h2 style="width:100%;height:1.5em;">
+    <h2>
 		#xarModGetVar('encyclopedia', 'welcome')#
     </h2>
-	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
-	</xar:if>
+    <xar:style scope="module" module="base" file="navtabs" />
 	<dl class="xar-tabs">
 		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
 			<a href="#xarModURL('encyclopedia','user','newentry')#">
@@ -20,7 +19,6 @@
 	<xar:if condition="count($rows) eq 0">
 		<xar:mlstring>The encyclopedia is empty</xar:mlstring>		
 	<xar:else />
-		<div class="xar-norm-outline" style="margin-top:1px; width:100%;">
 			<table  class="xar-fullwidth" style="border-spacing:1px; padding:0;">
 				<tr>
 					<th style="width: 100; text-align: left; padding-left: .5em;">
@@ -46,10 +44,8 @@
 				</xar:loop>
 				</tr>
 			</table>
-			<div>
-				<br />
+				<p>
 				<xar:mlstring>The number of entries in the encyclopedia is</xar:mlstring> #$numitems#
-			</div>
-		</div>
+				</p>
 	</xar:if>
 </div>
