@@ -15,10 +15,11 @@ function xarbb_userapi_formhooks($args)
 {
     extract($args);
     if (!isset($itemtype) || empty($itemtype)) {
-       $itemtype='0';
+       $itemtype = '0';
     }
 
     $hooks = array();
+
     // call the right hooks, i.e. not the ones for the comments module :)
     //<jojodee> also add the correct itemtype - we can then call specific form transform
     $hooks['formaction'] =  xarModCallHooks('item', 'formaction', '', array(), 'xarbb', $itemtype);

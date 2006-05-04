@@ -21,8 +21,8 @@ function xarbb_admin_new()
     // Get parameters
     if (!xarVarFetch('fstatus','int', $data['fstatus'], 0)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('new_cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('new_cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
@@ -52,7 +52,7 @@ function xarbb_admin_new()
             $data['topicsortby']     = !isset($settings['topicsortby']) ? 'time' :$settings['topicsortby'];
             $data['topicsortorder']  = !isset($settings['topicsortorder']) ? 'DESC' :$settings['topicsortorder'];
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
-            $data['editstamp']       = 0;// default is zero !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
+            $data['editstamp']       = 0; // default is zero !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
@@ -69,15 +69,17 @@ function xarbb_admin_new()
             } else {
                 $data['hooks'] = $hooks;
             }
-            $masternntpsetting=xarModGetVar('xarbb','masternntpsetting');
-            $masternntpsetting  = !isset($masternntpsetting) ? false :$masternntpsetting;
+
+            $masternntpsetting = xarModGetVar('xarbb', 'masternntpsetting');
+            $masternntpsetting = (!isset($masternntpsetting) ? false :$masternntpsetting);
+
             //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
             //even if the nntp settings are not available. Review when nntp is available
             if (xarModIsAvailable('newsgroups') && $masternntpsetting){
                 // get the current list of newsgroups
-                $data['items'] = xarModAPIFunc('newsgroups','user','getgroups',
-                                               array('nocache' => true));
-                $grouplist = xarModGetVar('newsgroups','grouplist');
+                $data['items'] = xarModAPIFunc('newsgroups', 'user', 'getgroups', array('nocache' => true));
+                $grouplist = xarModGetVar('newsgroups', 'grouplist');
+
                 if (!empty($grouplist)) {
                     $selected = unserialize($grouplist);
                     // get list of selected newsgroups
@@ -113,27 +115,26 @@ function xarbb_admin_new()
             $tposter = xarUserGetVar('uid');
 
             // The API function is called
-            $newfid= xarModAPIFunc('xarbb',
-                                   'admin',
-                                  'create',
-                               array('fname'    => $data['fname'],
-                                     'fdesc'    => $data['fdesc'],
-                                     'cids'     => $data['cids'],
-                                     'fposter'  => $tposter,
-                                     'ftopics'  => 1,
-                                     'fposts'   => 1,
-                                     'fstatus'  => $data['fstatus']));
-        if (!$newfid) return; 
+            $newfid= xarModAPIFunc('xarbb', 'admin', 'create',
+                array(
+                    'fname'    => $data['fname'],
+                    'fdesc'    => $data['fdesc'],
+                    'cids'     => $data['cids'],
+                    'fposter'  => $tposter,
+                    'ftopics'  => 1,
+                    'fposts'   => 1,
+                    'fstatus'  => $data['fstatus']
+                )
+            );
 
-           // Get New Forum ID
-            $forum = xarModAPIFunc('xarbb',
-                                   'user',
-                                   'getforum',
-                                   array('fid' => $newfid));
+            if (!$newfid) return; 
+
+            // Get New Forum ID
+            $forum = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $newfid));
 
             // Recovery procedure in case the forum is no longer assigned to any category
             if (empty($forum['fid'])) {
-                $forums = xarModAPIFunc('xarbb','user','getallforums');
+                $forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
                 foreach ($forums as $info) {
                     if ($info['fid'] == $newfid) {
                         $forum = $info;
@@ -147,34 +148,36 @@ function xarbb_admin_new()
                 }
             }
 
-                // Need to create a topic so we don't get the nasty empty error when viewing the forum.
-            $ttitle = xarML('Welcome to ').$forum['fname'];
-            $tpost = xarML('This is the first topic for ').$forum['fname'];
+            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
+            $ttitle = xarML('Welcome to #(1)', $forum['fname']);
+            $tpost = xarML('This is the first topic for #(1)', $forum['fname']);
 
-            $tid= xarModAPIFunc('xarbb',
-                               'user',
-                               'createtopic',
-                               array('fid'      => $forum['fid'],
-                                     'ttitle'   => $ttitle,
-                                     'tpost'    => $tpost,
-                                     'tposter'  => $tposter));
-           if (!$tid) return;
+            $tid = xarModAPIFunc('xarbb', 'user', 'createtopic',
+                array(
+                    'fid'      => $forum['fid'],
+                    'ttitle'   => $ttitle,
+                    'tpost'    => $tpost,
+                    'tposter'  => $tposter
+                )
+            );
+            if (!$tid) return;
 
             // Enable bbcode hooks for new xarbb forum
             if (xarModIsAvailable('bbcode')) {
                 if ($allowbbcode) {
-                    xarModAPIFunc('modules','admin','enablehooks',
+                    xarModAPIFunc('modules', 'admin', 'enablehooks',
                             array('callerModName'    => 'xarbb',
                                   'callerItemType'   => $forum['fid'],
                                   'hookModName'      => 'bbcode'));
                 } else {
-                    xarModAPIFunc('modules','admin','disablehooks',
+                    xarModAPIFunc('modules', 'admin', 'disablehooks',
                             array('callerModName'    => 'xarbb',
                                   'callerItemType'   => $forum['fid'],
                                   'hookModName'      => 'bbcode'));
                 }
             }
-            // Enable html hooks for xarbb forums
+
+            // Enable html hooks for xarbb forum
             if (xarModIsAvailable('html')) {
                 if ($allowhtml) {
                     xarModAPIFunc('modules','admin','enablehooks',
@@ -203,11 +206,12 @@ function xarbb_admin_new()
             $settings['showcats']           = $showcats;
             $settings['nntp']               = $nntp;
 
-            xarModSetVar('xarbb', 'settings.'.$forum['fid'], serialize($settings));
+            xarModSetVar('xarbb', 'settings.' . $forum['fid'], serialize($settings));
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
             break;
     }
     // Return the output
  return $data;
 }
+
 ?>

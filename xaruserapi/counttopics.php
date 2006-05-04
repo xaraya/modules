@@ -14,6 +14,7 @@
  * count the number of links in the database
  * @returns integer
  * @returns number of links in the database
+ * @todo fid should not have to be mandatory, also what about IP, authors, etc?
  */
 
 function xarbb_userapi_counttopics($args)

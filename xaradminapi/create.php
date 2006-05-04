@@ -37,7 +37,7 @@ function xarbb_adminapi_create($args)
         $invalid[] = 'fdesc';
     } 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'admin', 'create', 'xarbb');
+        $msg = xarML('Invalid #(1)', join(', ', $invalid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } 
@@ -56,12 +56,12 @@ function xarbb_adminapi_create($args)
     // Default categories is none
     if (empty($cids) || !is_array($cids) ||
         // catch common mistake of using array('') instead of array()
-        (count($cids) > 0 && empty($cids[0])) ) {
+        (count($cids) > 0 && empty($cids[0]))) {
         $cids = array();
         // for security check below
         $args['cids'] = $cids;
     } else {
-        $args['cids'] = array_values(preg_grep('/\d+/',$cids));
+        $args['cids'] = array_values(preg_grep('/\d+/', $cids));
     }
 
     // Get datbase setup
@@ -80,16 +80,10 @@ function xarbb_adminapi_create($args)
     } 
 
     // Add item
-    $query = "INSERT INTO $xbbforumstable (
-              xar_fid,
-              xar_fname,
-              xar_fdesc,
-              xar_ftopics,
-              xar_fposts,
-              xar_fposter,
-              xar_fpostid,
-              xar_fstatus)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO $xbbforumstable ("
+        . " xar_fid, xar_fname, xar_fdesc, xar_ftopics,"
+        . " xar_fposts, xar_fposter, xar_fpostid, xar_fstatus)"
+        . " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $result =& $dbconn->Execute($query, array($nextId, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus));
     if (!$result) return;
@@ -119,8 +113,8 @@ function xarbb_adminapi_create($args)
     $result->close();
 
     if (empty($cids)) {
-        //Set them to the master categories
-        $cids = explode(';',xarModGetVar('xarbb', 'mastercids'));
+        // Set them to the master categories
+        $cids = explode(';', xarModGetVar('xarbb', 'mastercids'));
     }
 
     // Let any hooks know that we have created a new forum
@@ -132,5 +126,6 @@ function xarbb_adminapi_create($args)
 
     // Return the id of the newly created link to the calling process
     return $fid;
-} 
+}
+
 ?>

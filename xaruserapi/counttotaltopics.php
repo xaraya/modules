@@ -9,7 +9,7 @@
  *
  * @subpackage  xarbb Module
  * @author John Cox
- * @deprec 2006-05-01 This does the same as getalltopics() in 'count' mode. It is no longer used in this module.
+ * @deprec 2006-05-01 This does the same as getalltopics() in 'count' mode. This is no longer used in this module.
 */
 /**
  * count the number of links in the database

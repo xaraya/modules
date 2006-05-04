@@ -57,20 +57,12 @@ function xarbb_userapi_get_allposts($args)
 
     // Optional argument for Pager - 
     // for those modules that use comments and require this
-    if (!isset($startnum)) {
-        $startnum = 1;
-    } 
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-    if (!isset($status) || empty($status)) {
-        $status = 2;
-    }
+    if (!isset($startnum)) $startnum = 1;
+    if (!isset($numitems)) $numitems = -1;
+    if (!isset($status) || empty($status)) $status = 2;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
-    $ctable = &$xartable['comments_column'];
 
     // initialize the commentlist array
     $commentlist = array();
@@ -78,48 +70,47 @@ function xarbb_userapi_get_allposts($args)
     // if the depth is zero then we
     // only want one comment
     
-    $sql = "SELECT  $ctable[title] AS xar_title,
-                    $ctable[cdate] AS xar_datetime,
-                    $ctable[hostname] AS xar_hostname,
-                    $ctable[comment] AS xar_text,
-                    $ctable[author] AS xar_author,
-                    $ctable[author] AS xar_uid,
-                    $ctable[cid] AS xar_cid,
-                    $ctable[pid] AS xar_pid,
-                    $ctable[status] AS xar_status,
-                    $ctable[left] AS xar_left,
-                    $ctable[right] AS xar_right,
-                    $ctable[postanon] AS xar_postanon
-              FROM  $xartable[comments]
-             WHERE  $ctable[modid]=? AND $ctable[objectid]=?
-               AND  $ctable[status]=?";
+    $sql = "SELECT  c_tab.xar_title AS xar_title,
+                    c_tab.xar_date AS xar_datetime,
+                    c_tab.xar_hostname,
+                    c_tab.xar_text,
+                    c_tab.xar_author,
+                    c_tab.xar_author AS xar_uid,
+                    c_tab.xar_cid,
+                    c_tab.xar_pid,
+                    c_tab.xar_status,
+                    c_tab.xar_left,
+                    c_tab.xar_right,
+                    c_tab.xar_anonpost AS xar_postanon
+              FROM  $xartable[comments] AS c_tab
+             WHERE  c_tab.xar_modid = ? AND c_tab.xar_objectid = ?
+               AND  c_tab.xar_status = ?";
 
     // objectid is still a string for now
     $bindvars = array((int) $modid, (string) $objectid, (int) $status);
 
-
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]=?";
+        $sql .= " AND c_tab.xar_itemtype = ?";
         $bindvars[] = (int) $itemtype;
     }
 
     if (isset($author) && $author > 0) {
-        $sql .= " AND $ctable[author] = ?";
+        $sql .= " AND c_tab.xar_author = ?";
         $bindvars[] = (int) $author;
     }
 
     if ($cid > 0) {
-        $sql .= " AND ($ctable[left] >= ?";
+        $sql .= " AND (c_tab.xar_left >= ?";
         $bindvars[] = (int) $nodelr['xar_left'];
-        $sql .= " AND  $ctable[right] <= ?)";
+        $sql .= " AND c_tab.xar_right <= ?)";
         $bindvars[] =  (int) $nodelr['xar_right'];
     }
 
-    $sql .= " ORDER BY $ctable[cdate] DESC";
+    $sql .= " ORDER BY c_tab.xar_date DESC";
 
     //Add select limit for modules that call this function and need Pager
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);
     } else {
         $result =& $dbconn->Execute($query,$bindvars);
     }
@@ -132,7 +123,7 @@ function xarbb_userapi_get_allposts($args)
         return array();
     }
 
-    if (!xarModLoad('comments','renderer')) {
+    if (!xarModLoad('comments', 'renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;

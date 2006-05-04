@@ -22,13 +22,13 @@ function xarbb_admin_newhook($args)
     extract($args);
 
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'newhook', 'xarbb');
+        $msg = xarML('Invalid #(1)', 'extrainfo');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $msg;
     }
 
     if (!isset($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'newhook', 'xarbb');
+        $msg = xarML('Invalid #(1)', 'object ID');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $msg;
     }
@@ -43,7 +43,7 @@ function xarbb_admin_newhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'newhook', 'xarbb');
+        $msg = xarML('Invalid #(1)', 'module name');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $msg;
     }
@@ -59,15 +59,12 @@ function xarbb_admin_newhook($args)
     } else {
         $itemid = $objectid;
     }
+
     if (empty($itemid)) {
         $itemid = 0;
     }
 
-    $data['items'] = xarModAPIFunc('xarbb',
-                                   'user',
-                                   'getallforums');
-
-
+    $data['items'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
     if (isset($extrainfo['xarbb_forum'])) {
         $xarbb_forum = $extrainfo['xarbb_forum'];
@@ -82,9 +79,12 @@ function xarbb_admin_newhook($args)
     $default=$xarbb_forum;
     
     return xarTplModule('xarbb','admin','newhook',
-                        array('xarbb_forum' => $xarbb_forum,
-                              'default' => $xarbb_forum,
-                              'items' =>$data['items']));
+        array(
+            'xarbb_forum' => $xarbb_forum,
+            'default' => $xarbb_forum,
+            'items' =>$data['items']
+        )
+    );
 }
 
 ?>

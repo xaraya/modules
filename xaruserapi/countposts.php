@@ -1,6 +1,8 @@
 <?php
 /**
- * Count the number of posts for a user
+ * Count the number of posts for a user.
+ * Posts include all topics and all comments.
+ * Counts are totals, regardless of the privileges of the current user.
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
@@ -11,9 +13,9 @@
  * @author John Cox
 */
 /**
- * count the number of links in the database
  * @returns integer
- * @returns number of links in the database
+ * @todo extend this count function so can count posts in forums, topics, for users etc.
+ * @todo Doh! Why are there so many different API functions for counting the same things!
  */
 
 function xarbb_userapi_countposts($args)
@@ -27,9 +29,7 @@ function xarbb_userapi_countposts($args)
         return;
     }
 
-    if (isset($countcache[$uid])) {
-        return $countcache[$uid];
-    }
+    if (isset($countcache[$uid])) return $countcache[$uid];
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

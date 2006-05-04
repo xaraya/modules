@@ -11,9 +11,10 @@
  * @author John Cox
 */
 /**
- * count the number of links in the database
  * @returns integer
- * @returns number of links in the database
+ * @returns number of forums in the database
+ * @param catids array List of category IDs
+ * @param fid int Forum ID (why? it would always be zero or one)
  */
 
 function xarbb_userapi_countforums($args)
@@ -31,9 +32,9 @@ function xarbb_userapi_countforums($args)
     $joins = array();
     $wheres = array();
 
-    if (@is_array($filter["catids"]) && xarModIsHooked('categories', 'xarbb', 1)) {
+    if (!empty($catids) && is_array($catids) && xarModIsHooked('categories', 'xarbb', 1)) {
         $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
-            array('cids' => $filter["catids"], 'modid' => xarModGetIDFromName('xarbb'))
+            array('cids' => $catids, 'modid' => xarModGetIDFromName('xarbb'))
         );
 
         if (!empty($categoriesdef)) {
@@ -49,12 +50,12 @@ function xarbb_userapi_countforums($args)
         }
     }
 
-    if (isset($filter["fid"])) {
-        $wheres[] = "xar_fid = " . $filter["fid"];
+    if (isset($fid)) {
+        $wheres[] = "xar_fid = " . (int)$fid;
     }
 
     if (count($wheres) > 0) {
-        $where = " WHERE ". join(" AND ",$wheres)." ";
+        $where = " WHERE " . join(" AND ", $wheres)." ";
     } else {
         $where = "";
     }

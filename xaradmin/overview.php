@@ -22,16 +22,15 @@
  */
 function xarbb_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminxarBB',0)) return;
+    // Security Check
+    if (!xarSecurityCheck('AdminxarBB', 0)) return;
 
     $data=array();
     
-    /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
-     */
+    // if there is a separate overview function return data to it
+    // else just call the main function that usually displays the overview 
 
-    return xarTplModule('xarbb', 'admin', 'main', $data,'main');
+    return xarTplModule('xarbb', 'admin', 'main', $data, 'main');
 }
 
 ?>
