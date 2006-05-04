@@ -506,8 +506,8 @@
                <xar:mlstring>Additional regex for allowed tags and attributes. </xar:mlstring>
                <a href="modules/tinymce/xarincludes/docs/option_valid_elements.html"><xar:mlstring>Check the Defaults</xar:mlstring></a>
                <xar:mlstring> before adding new allowed tags and attributes here.  Any added elements here are are added to the default with the <strong>extended_valid_elements</strong>
-               config option. Separate each tag with a comma. *[*] allows all tags and attributes. If you have HTML module installed, its settings will override and 
-               filter all tags (but not individual attributes).</xar:mlstring>
+               config option. Separate each tag with a comma. *[*] allows all tags and attributes. If you have HTML module installed, its settings will override and
+               prevent tags being rendered (but not filter out individual tags, or specific attributes).</xar:mlstring>
             </div>
 
             <div class="xar-form-input-wrapper">

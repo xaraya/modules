@@ -3,8 +3,8 @@
 
 function TinyMCE_Engine() {
 	this.majorVersion = "2";
-	this.minorVersion = "0.6";
-	this.releaseDate = "2006-05-03";
+	this.minorVersion = "0.6.1";
+	this.releaseDate = "2006-05-04";
 
 	this.instances = new Array();
 	this.switchClassCache = new Array();
@@ -3586,7 +3586,7 @@ TinyMCE_Control.prototype = {
 	},
 
 	triggerSave : function(skip_cleanup, skip_callback) {
-		var e, nl, i, s;
+		var e, nl = new Array(), i, s;
 
 		this.switchSettings();
 		s = tinyMCE.settings;
@@ -3594,7 +3594,6 @@ TinyMCE_Control.prototype = {
 		// Force hidden tabs visible while serializing
 		if (tinyMCE.isMSIE && !tinyMCE.isOpera) {
 			e = this.iframeElement;
-			nl = new Array();
 
 			do {
 				if (e.style && e.style.display == 'none') {

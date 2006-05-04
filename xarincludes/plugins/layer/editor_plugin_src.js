@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.1 $
- * $Date: 2006/05/03 10:46:41 $
+ * $Revision: 1.2 $
+ * $Date: 2006/05/03 14:12:12 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -88,10 +88,6 @@ var TinyMCE_LayerPlugin = {
 		switch (command) {
 			case "mceInsertLayer":
 				self._insertLayer();
-				return true;
-
-			case "mceStyleProps":
-				self._styleProps();
 				return true;
 
 			case "mceMoveForward":

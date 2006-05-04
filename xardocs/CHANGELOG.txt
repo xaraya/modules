@@ -1,5 +1,5 @@
 * Version 1.1.0 4 May 06
-- Includes upstream project version 2.0.6
+- Includes upstream project version 2.0.6.1
 - New plugins to manage layers, and edit css styles, fixed list style plugin
 - Better integration of filebrowser with config available in the tinymceconfig.inc file
 - Configuration for ibrowser, imanager and filebrowser in one configuration file for easier management
