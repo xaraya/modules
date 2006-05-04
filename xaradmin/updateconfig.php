@@ -335,7 +335,6 @@ function tinymce_admin_updateconfig()
            /* get rid of all white space first */
            $extended = xarModGetVar('tinymce','tinyextended');
            $extended = preg_replace('/[ |\s]*\s+/','',$extended);
-           //$extended = preg_replace('/\s\s+/','',$extended);
             //$jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
             $jstext .='extended_valid_elements : "'.$extended.'", ';
         }
