@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2005 Frederico Caldeira Knabben
@@ -22,7 +22,7 @@ function GetUrlFromPath( $resourceType, $folderPath )
 {
 	if ( $resourceType == '' )
 		return RemoveFromEnd( $GLOBALS["UserFilesPath"], '/' ) . $folderPath ;
-	else
+	else 
 		return $GLOBALS["UserFilesPath"] . $resourceType . $folderPath ;
 }
 

@@ -27,6 +27,7 @@ if (is_file('../../../../../../var/tinymce/tinymceconfig.inc')) {
 }else{
     include_once '../../../../xartemplates/includes/tinymceconfig.inc';
 }
+
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = $cfg['filebrowser_dir'];//'./var/images/' ;
 // Fill the following value it you prefer to specify the absolute path for the
@@ -34,7 +35,9 @@ $Config['UserFilesPath'] = $cfg['filebrowser_dir'];//'./var/images/' ;
 // link or alias. Examples: 'C:\\MySite\\UserFiles\\' or '/root/mysite/UserFiles/'.
 // Attention: The 'UserFilesPath' must point to the same directory.
 
-$Config['UserFilesAbsolutePath'] = $cfg['root_dir'].$cfg['ilibs_dir'][0];
+
+$Config['UserFilesAbsolutePath']        = $cfg['root_dir'].$cfg['ilibs_dir'][0];
+
 $Config['AllowedResources']['Types']	= array('File','Image','Flash','Media');
 
 $Config['AllowedExtensions']['File']	= $Config['AllowedExtensions']['File'];//array() ;
