@@ -17,7 +17,10 @@
         <label for="refpid"><xar:mlstring>In relation to this page</xar:mlstring></label>
         <select name="refpid" id="refpid">
             <xar:loop name="$pages">
-                <xar:if condition="$loop:item.left eq $page.left-1">
+                <xar:if condition="$loop:item.pid eq $refpid">
+                    <option value="#$loop:item.pid#"
+                    selected="selected">#$loop:item.slash_separated#</option>
+                <xar:elseif condition="$loop:item.left eq $page.left-1" />
                     <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
                     <xar:set name="$position">'firstchild'</xar:set>
                 <xar:elseif condition="$loop:item.right eq $page.left-1" />

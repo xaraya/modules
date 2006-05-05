@@ -80,7 +80,8 @@ function xarpages_admin_modifypage()
         // item and position/offset already set.
         // Perhaps we just need to set it to insert after (same level) the previously
         // created item?
-        $data['insertpoint'] = $insertpoint;
+        $data['insertpoint'] = $insertpoint; // Deprecated
+        $data['refpid'] = $insertpoint;
         $data['position'] = $position;
 
         $data['func'] = 'create';
