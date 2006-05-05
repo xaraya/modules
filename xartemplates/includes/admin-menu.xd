@@ -9,7 +9,7 @@
         <dt class="help" title="Choose an action to perform">
             <xar:mlstring>Actions:</xar:mlstring>
         </dt>
-        <xar:sec mask="adminhelpdesk" catch="false">
+        <xar:sec mask="AdminSecurity" catch="false">
             <xar:set name="manage_funcs">array('hook_settings')</xar:set>
             <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
             <dd class="#$tabclass#">
