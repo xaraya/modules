@@ -22,9 +22,9 @@
                             <strong><xar:mlstring>Page Type</xar:mlstring></strong>
                         </legend>
 
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-
                         <div>
+                            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                            <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
                             <label for="ptid"><xar:mlstring>Page type</xar:mlstring></label>
                             <select name="ptid" id="ptid">
                                 <xar:loop name="$pagetypes">
@@ -55,11 +55,11 @@
                         <strong><xar:mlstring>Page Attributes</xar:mlstring></strong>
                     </legend>
 
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                    <input type="hidden" name="pid" id="pid" value="#$pid#" />
-                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-
                     <p class="param">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="hidden" name="pid" id="pid" value="#$pid#" />
+                        <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                        <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
                         <label for="pagetype_name" title="#xarVarPrepForDisplay($page.pagetype.desc)#"><xar:mlstring>Page Type</xar:mlstring></label>
                         <input type="text" name="pagetype_name" id="pagetype_name" value="#xarVarPrepForDisplay($page.pagetype.name)#" size="32" maxlength="64" disabled="disabled" />
                     </p>

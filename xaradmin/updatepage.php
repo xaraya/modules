@@ -50,6 +50,8 @@ function xarpages_admin_updatepage()
 
     if (!xarVarFetch('alias', 'int:0:1', $alias, 0, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
+
     // Validate the status against the list available.
     $statuses = xarModAPIfunc('xarpages', 'user', 'getstatuses');
     if (!xarVarFetch('status', 'pre:upper:enum:' . implode(':', array_keys($statuses)), $status, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -128,10 +130,14 @@ function xarpages_admin_updatepage()
                 )
             );
         } else {
-            xarResponseRedirect(xarModUrl('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
+            xarResponseRedirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
         }
     } else {
-        xarResponseRedirect(xarModUrl('xarpages', 'admin', 'viewpages'));
+        if (!empty($return_url)) {
+            xarResponseRedirect($return_url);
+        } else {
+            xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+        }
     }
 
     return true;

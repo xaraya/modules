@@ -17,4 +17,9 @@
             </xar:if>
         </xar:if>
     </xar:loop>
+
+    <xar:comment>Provide an edit link if we have privileges</xar:comment>
+    <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+        [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+    </xar:if>
 </div>

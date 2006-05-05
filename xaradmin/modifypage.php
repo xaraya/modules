@@ -20,7 +20,11 @@ function xarpages_admin_modifypage()
     if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
 
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
+
     $data = array();
+
+    $data['return_url'] = $return_url;
 
     // TODO: move this.
     $data['batch'] = 0;
