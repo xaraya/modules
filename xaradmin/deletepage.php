@@ -17,6 +17,7 @@ function xarpages_admin_deletepage()
 {
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
     // Get page information
     $page = xarModAPIFunc(
@@ -37,7 +38,7 @@ function xarpages_admin_deletepage()
 
     // Check for confirmation
     if (empty($confirm)) {
-        $data = array('page' => $page);
+        $data = array('page' => $page, 'return_url' => $return_url);
         $data['authkey'] = xarSecGenAuthKey();
 
         $data['count'] = xarModAPIfunc(
@@ -58,7 +59,11 @@ function xarpages_admin_deletepage()
         array('pid' => $pid))
     ) return;
 
-    xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
+    } else {
+        xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    }
 
     return true;
 }

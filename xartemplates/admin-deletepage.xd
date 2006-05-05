@@ -23,6 +23,7 @@
             <p>
                 <input type="hidden" name="pid" id="pid" value="#$page.pid#" />
                 <input type="hidden" name="authid" id="authid" value="#$authkey#" />
+                <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
                 <input type="submit" name="confirm" id="confirmyes" value="#xarML('Yes')#" />
             </p>
         </form>
