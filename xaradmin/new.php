@@ -54,16 +54,16 @@ function articles_admin_new($args)
     if (empty($ptid)) {
         $ptid = '';
     // TODO: check by category too ?
-        if (!xarSecurityCheck('SubmitArticles',0)) {
-            $msg = xarML('You have no permission to submit Articles');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        if (!xarSecurityCheck('SubmitArticles')) {
+               $msg = xarML('You have no permission to submit Articles');
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                             new SystemException($msg));
-            return;
+                return;
         }
     } else {
         if (isset($article['cids']) && count($article['cids']) > 0) {
             foreach ($article['cids'] as $cid) {
-                if (!xarSecurityCheck('SubmitArticles',0,'Article',"$ptid:$cid:All:All")) {
+                if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:$cid:All:All")) {
                     $catinfo = xarModAPIFunc('categories', 'user', 'getcatinfo',
                                              array('cid' => $cid));
                     if (empty($catinfo['name'])) {
@@ -77,7 +77,7 @@ function articles_admin_new($args)
                 }
             }
         } else {
-            if (!xarSecurityCheck('SubmitArticles',0,'Article',"$ptid:All:All:All")) {
+            if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:All:All:All")) {
                 $msg = xarML('You have no permission to submit #(1)',
                              $pubtypes[$ptid]['descr']);
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

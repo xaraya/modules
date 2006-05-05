@@ -34,7 +34,9 @@ function articles_admin_pubtypes()
     } else {
         if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
     }
-
+    if (!isset($action)) {
+        xarSessionSetVar('statusmsg', '');
+    }
     // Initialise the template variables
     $data = array();
     $data['pubtypes'] = array();
@@ -146,11 +148,10 @@ function articles_admin_pubtypes()
                                     'config' => $config))) {
                 return; // throw back
             } else {
-                // Redirect to the admin view page
+                // Redirect back to the admin modify page to continue editing publication type
                 xarSessionSetVar('statusmsg',
                                 xarML('Publication type updated'));
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
-                                              array('action' => 'view')));
+                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
             }
         } elseif ($action == 'confirm') {
