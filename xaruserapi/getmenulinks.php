@@ -1,10 +1,20 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Workflow module development team
  * @return array containing the menulinks for the main menu items.
  */
 function workflow_userapi_getmenulinks()

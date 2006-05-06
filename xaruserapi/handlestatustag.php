@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * Handle <xar:workflow-status ...> workflow status tags
  * Format : <xar:workflow-status/>
@@ -8,8 +19,7 @@
  *       or <xar:workflow-status template="flat" />
  *
  * @param $args array containing the item that you want to display, or fields
- * @returns string
- * @return the PHP code needed to invoke showstatus() in the BL template
+ * @return string the PHP code needed to invoke showstatus() in the BL template
  */
 function workflow_userapi_handlestatustag($args)
 {

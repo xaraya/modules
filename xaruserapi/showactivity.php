@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * show the result of a workflow activity (called via <xar:workflow-activity tag)
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  */
 function workflow_userapi_showactivity($args)
 {

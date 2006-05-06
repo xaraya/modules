@@ -1,9 +1,19 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * utility function to retrieve the list of item types of this module (if any)
  *
- * @returns array
  * @return array containing the item types and their description
  */
 function workflow_userapi_getitemtypes($args)

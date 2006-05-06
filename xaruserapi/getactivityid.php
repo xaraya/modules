@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
   Addition to the workflow module when there is a need
   to retrieve the activityid.
@@ -7,7 +18,7 @@
   @author Mike Dunn submitted by Court Shrock
   @access public
   @param $activityName the name of the activity you need an id for (required)
-  @returns workflow activityid
+  @return int workflow activityid
 */
 function workflow_userapi_getActivityId($args) {
   extract($args);

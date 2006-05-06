@@ -1,11 +1,21 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * utility function to pass individual item links to whoever
  *
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item ids to get
- * @returns array
  * @return array containing the itemlink(s) for the item(s).
  */
 function workflow_userapi_getitemlinks($args)
