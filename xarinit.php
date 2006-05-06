@@ -199,19 +199,16 @@ function sitecontact_upgrade($oldversion)
         //Add two mod vars in version 0.0.2
             xarModSetVar('sitecontact', 'usehtmlemail', 0);
             xarModSetVar('sitecontact', 'allowcopy', 1);
-            return sitecontact_upgrade('0.0.2');
+
         case '0.0.2':
             // Code to upgrade from version 1.0 goes here
-           return sitecontact_upgrade('0.2.0');
-            break;
+
        case '0.2.0':
-           return sitecontact_upgrade('0.3.0');
-            break;
+
         case '0.3.0':
            xarModSetVar('sitecontact', 'useModuleAlias',0);
            xarModSetVar('sitecontact', 'aliasname','');
-             return sitecontact_upgrade('0.3.5');
-             break;
+
         case '0.3.5':
           // Remove incomplete module hook until ready
            if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
@@ -293,8 +290,7 @@ function sitecontact_upgrade($oldversion)
                 $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$usehtmlemail,$scdefaultemail,$scdefaultname);
                 $result = &$dbconn->Execute($query,$bindvars);           
                 if (!$result) {return;}
-            return sitecontact_upgrade('0.4.0');
-            break;
+
 
         case '0.4.0':
             /* New modvars */
@@ -325,12 +321,9 @@ function sitecontact_upgrade($oldversion)
                xarModAPIFunc('modules','admin','enablehooks',
                    array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
            }
-           return sitecontact_upgrade('0.4.1');
-           break;
+
         case '0.4.1':
 
-           return sitecontact_upgrade('0.5.0');
-            break;
         case '0.5.0':
              break;
     }
