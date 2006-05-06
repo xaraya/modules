@@ -1,29 +1,29 @@
 <?php
 /**
- * File: $Id$
- * 
- * Workflow table definitions function
- * 
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * Workflow initialization functions
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage workflow
- * @author mikespub
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
  */
-
 /**
  * Return workflow table names to xaraya
- * 
+ *
  * This function is called internally by the core whenever the module is
- * loaded.  It is loaded by xarMod__loadDbInfo().
- * 
- * @access private 
- * @return array 
+ * loaded. It is loaded by xarMod__loadDbInfo().
+ *
+ * @access private
+ * @return array
  */
 function workflow_xartables()
-{ 
+{
     // Initialise table array
-    $xarTables = array(); 
+    $xarTables = array();
 
     $prefix = xarDBGetSiteTablePrefix();
 
@@ -41,6 +41,6 @@ function workflow_xartables()
 
     // Return the table information
     return $xarTables;
-} 
+}
 
 ?>
