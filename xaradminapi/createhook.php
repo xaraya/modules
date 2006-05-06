@@ -1,12 +1,22 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * start a create activity for a module item - hook for ('item','create','GUI')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns array
- * @return extrainfo array
+ * @return array extrainfo array
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function workflow_adminapi_createhook($args)
