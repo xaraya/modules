@@ -445,12 +445,14 @@ function workflow_init()
 /**
  * upgrade the workflow module from an old version
  * This function can be called multiple times
+ * @return bool true on success
  */
 function workflow_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 1.0:
+        case '1.0':
+        case '1.0.0':
             // Code to upgrade from version 1.0 goes here
 
             // set default activityId for create, update and delete hooks
@@ -478,7 +480,8 @@ function workflow_upgrade($oldversion)
             }
             // fall through to next upgrade
 
-        case 1.1:
+        case '1.1':
+        case '1.1.0':
             // Code to upgrade from version 1.1 goes here
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -511,7 +514,8 @@ function workflow_upgrade($oldversion)
             }
             // fall through to next upgrade
 
-        case 1.2:
+        case '1.2':
+        case '1.2.0':
             // Re-compile all activities with new compiler code
             include_once('modules/workflow/tiki-setup.php');
             include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
@@ -539,7 +543,8 @@ function workflow_upgrade($oldversion)
             xarModSetVar('workflow','seenlist','');
             // fall through to next upgrade
 
-        case 1.3:
+        case '1.3':
+        case '1.3.0':
             // show the instances that are assigned/accessible to you (i.e. your task list)
             xarTplRegisterTag('workflow', 'workflow-instances',
                               array(),
@@ -547,7 +552,6 @@ function workflow_upgrade($oldversion)
             // fall through to next upgrade
         case '1.4':
         case '1.4.0':
-        case 1.4:
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
 
@@ -562,8 +566,7 @@ function workflow_upgrade($oldversion)
                                            'default' => ''));
             $dbconn->execute($sql);
         case '1.5.0':
-        case 2.0:
-            // Code to upgrade from version 2.0 goes here
+            // Code to upgrade from version 1.5.0 goes here
             break;
     }
     // Update successful
@@ -574,6 +577,7 @@ function workflow_upgrade($oldversion)
  * delete the workflow module
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success
  */
 function workflow_delete()
 {
