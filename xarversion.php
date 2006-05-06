@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow initialization functions
+ * Workflow - based on Galaxia Workflow Engine
  *
  * @package modules
  * @copyright (C) 2003-2006 The Digital Development Foundation

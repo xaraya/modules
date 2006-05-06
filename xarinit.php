@@ -1,14 +1,16 @@
 <?php
 /**
  * Workflow initialization functions
- * 
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage workflow
- * @author mikespub
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Miko
  */
-
 /**
  * initialise the workflow module
  * This function is only ever called once during the lifetime of a particular
@@ -21,7 +23,7 @@ function workflow_init()
 
     xarDBLoadTableMaintenanceAPI();
 
-    // Galaxia developers use quotes around column names. 
+    // Galaxia developers use quotes around column names.
     // Since PostgreSQL creates column names in lowercase by
     // default, the column names must be surrounded by quotes.
     $dbtype  = xarCore_getSystemVar('DB.Type');
@@ -626,7 +628,7 @@ function workflow_delete()
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'workflow', 'user', 'usermenu')) {
         return false;
-    } 
+    }
 */
 
     // Unregister BL tags
@@ -639,7 +641,7 @@ function workflow_delete()
 
     // Remove Masks and Instances
     xarRemoveMasks('workflow');
-    xarRemoveInstances('workflow'); 
+    xarRemoveInstances('workflow');
 
     // Deletion successful
     return true;

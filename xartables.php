@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow initialization functions
+ * Workflow Module
  *
  * @package modules
  * @copyright (C) 2003-2006 The Digital Development Foundation
@@ -9,7 +9,7 @@
  *
  * @subpackage Workflow Module
  * @link http://xaraya.com/index.php/release/188.html
- * @author Workflow Module Development Team
+ * @author Miko
  */
 /**
  * Return workflow table names to xaraya
