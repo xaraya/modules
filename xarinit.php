@@ -9,7 +9,7 @@
  *
  * @subpackage Workflow Module
  * @link http://xaraya.com/index.php/release/188.html
- * @author Miko
+ * @author mikespub
  */
 /**
  * initialise the workflow module

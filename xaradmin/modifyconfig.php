@@ -1,17 +1,28 @@
 <?php
-
+/**
+ * Workflow Module
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Workflow Module
+ * @link http://xaraya.com/index.php/release/188.html
+ * @author Workflow Module Development Team
+ */
 /**
  * Update the configuration parameters of the module based on data from the modification form
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  * @param no $ parameters
  * @return true on success or void on failure
  * @throws no exceptions
  * @todo nothing
  */
 function workflow_admin_modifyconfig()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
