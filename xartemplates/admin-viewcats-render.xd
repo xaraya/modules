@@ -90,12 +90,13 @@
         </xar:if>
     </td>
 </tr>
+<tr><td>
 <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
-<tr><td><xar:mlstring>Categories per page:</xar:mlstring>&nbsp;&nbsp;
+<xar:mlstring>Categories per page:</xar:mlstring>&nbsp;&nbsp;
     <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
     <input type="submit" value="#$reloadlabel#" />
-</td></tr>
 </form>
+</td></tr>
 <tr><td><xar:mlstring>Categories Total:</xar:mlstring>&nbsp;&nbsp;#$pagertotal#</td></tr>
 </table>
 
