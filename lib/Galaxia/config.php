@@ -57,14 +57,17 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 global $dbGalaxia;
 if (!isset($dbGalaxia)) {
-    $dbGalaxia =& xarDBGetConn();
 
     // Set the fetch mode to assoc by default (needed by lib/Galaxia)
     if(defined('ADODB_FETCH_ASSOC')) {
+        $dbGalaxia = xarDBNewConn();
+        
         // Adodb can set fetch mode on the whole connection, so lets do that in any case
         $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
         define('GALAXIA_FETCHMODE',ADODB_FETCH_ASSOC);
     } elseif(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
+        $dbGalaxia =& xarDBGetConn();
+
         // This means we're in the 2 series of Xaraya
         // To prevent parse errors in php 4, we can not use the class constant here, even if this code doesnt
         // actually run, because php errors out with a parse error.
