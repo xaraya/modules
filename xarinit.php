@@ -243,14 +243,15 @@ function example_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      * These masks are used in the module for the security checks
      */
-
+    /* First for the blocks */
     xarRegisterMask('ReadExampleBlock', 'All', 'example', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ViewExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADD');
+    /* Then for all operations */
+    xarRegisterMask('ViewExample',   'All', 'example', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadExample',   'All', 'example', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditExample',   'All', 'example', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddExample',    'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADD');
     xarRegisterMask('DeleteExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('AdminExample',  'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     /* Initialisation successful so return true */
     return true;
@@ -297,16 +298,19 @@ function example_upgrade($oldversion)
                 $exampletable, 'xar_number I NotNull Default 0'
             );
             if (!$result) return;
-            /* At the end of the successful completion of this function we
+            /* At the end of the successful completion of this function you can
              * recurse the upgrade to handle any other upgrades that need
-             * to be done. This allows us to upgrade from any version to
-             * the current version with ease
+             * to be done. In normal cases this is not necessary, as the switch
+             * will continue with the next step untill it hits a break
+             * return example_upgrade('1.0');
              */
-            return example_upgrade('1.0');
         case '1.0':
-             return example_upgrade('1.0.0');
+             /* Previously one was allowed to use two digit version numbers
+              * You are adviced to use three digits in all next versions of your module
+              * We still need to catch all possible versions, as 1.0 is not the same as 1.0.0
+              */
         case '1.0.0':
-            /* Code to upgrade from version 1.0 goes here */
+            /* Code to upgrade from version 1.0.0 goes here */
             /* Register search hook */
             if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
                return false;
@@ -316,9 +320,9 @@ function example_upgrade($oldversion)
              */
             xarModSetVar('example', 'useModuleAlias',false);
             xarModSetVar('example','aliasname','');
-            return example_upgrade('1.5.0');
         case '1.5.0': /* current version */
             /* Code to upgrade from version 1.5.0 goes here */
+            /* We break out now, being at the end of the upgrade process */
             break;
     }
     /* Update successful */
