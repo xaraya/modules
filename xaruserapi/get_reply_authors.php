@@ -11,7 +11,6 @@
 */
 /**
  * Get a list of authors who have replied to topics.
- * Replaces 'getallreplies_byip'.
  *
  * @author Jason Judge
  * @access public

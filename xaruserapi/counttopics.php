@@ -15,6 +15,8 @@
  * @returns integer
  * @returns number of links in the database
  * @todo fid should not have to be mandatory, also what about IP, authors, etc?
+ * @todo Move this count to the admin API, since it does a raw count with no privilege checks
+ * @note Counting topics against a range of criteria, with privilege checks, is done in user api getalltopics()
  */
 
 function xarbb_userapi_counttopics($args)
