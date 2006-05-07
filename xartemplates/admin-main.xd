@@ -12,10 +12,13 @@
             HTML WYSIWYG editor released as Open Source under LGPL by Moxiecode Systems AB</xar:mlstring></em>
         </p>
         <p><xar:mlstring>xarTinyMCE module integrates the TinyMCE application by </xar:mlstring><a href="http://tinymce.moxiecode.com/" title="Moxiecode">http://tinymce.moxiecode.com</a>
-            <xar:mlstring> for use within your Xaraya web site. This module allows configuration options via the GUI in the Xaraya Administration area for xarTinyMCE.&nbsp; It has a number
-            of nice features over similar editors, with&nbsp; multiple browser support, (currently Mozilla, MSIE and FireFox) and support for XHTML 1.0 strict markup. There are powerful
+            <xar:mlstring> for use within your Xaraya web site. It has a number of nice features with&nbsp; multiple browser support, (currently Mozilla, MSIE, FireFox, Opera) and support for XHTML 1.0 strict markup. There are powerful
             features for not only allowing or disallowing xhtml tags (like the Xaraya HTML module), but also what attributes, and&nbsp; attribute values to allow. You can enhance
-            xarTinyMCE further with plugins!</xar:mlstring>
+            xarTinyMCE further with some of the bundled plugins!</xar:mlstring>
+        </p>
+        <p><xar:mlstring>Version 1.1 introduces integration of the filebrowser directly into xartinymce allowing you to browse folders and files for uploading or linking, rename files and create directories according
+           to the configuration file.
+        </xar:mlstring>
         </p>
 
         <h3>
@@ -110,9 +113,7 @@
             Plug in list in the Modify Configuration settings. Some plugins require an extra button added in your Advanced Theme configuration,
             whereas others (like advimage and advlink) do not but require allowed element string added to appropriate configuration area. These include:</xar:mlstring></p>
             <ol>
-                <li><xar:mlstring>Image Browser (ibrowser) - browse your image libraries and select a file to insert to
-                your textarea. Upload a file if you have allowed uploads in the configuration. See the configuration area for more detail</xar:mlstring></li>
-                <li><xar:mlstring>Emotions - click to add fancy emoticons</xar:mlstring></li>
+               <li><xar:mlstring>Emotions - click to add fancy emoticons</xar:mlstring></li>
                 <li><xar:mlstring>ISpell spell checker - only available for IE</xar:mlstring></li>
                 <li><xar:mlstring>Preview and Zoom - zoom is only available in IE</xar:mlstring></li>
                 <li><xar:mlstring>Time - click to add time in configured format</xar:mlstring></li>
@@ -128,7 +129,6 @@
                <li><xar:mlstring>Table - plug in to add table controls. Add <strong>table</strong> to Plugins, and either <strong>tablecontrols</strong> for all table controls, or the specific controls such as <strong>table, rowprops</strong> and so on, as per plugin documentation, to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Contextmenu - plug in to add context menu for tables, images and flash.</xar:mlstring></li>
                <li><xar:mlstring>Lorem - adds text for fill in documents.</xar:mlstring></li>
-               <li><xar:mlstring>Dictionary - lookup word in Merriam-Webster Online dictionary.</xar:mlstring></li>
                <li><xar:mlstring>Fullscreen - toggle to edit in full screen.</xar:mlstring></li>
                <li><xar:mlstring>Paste - text and MS Word paste plugin.</xar:mlstring></li>
                <li><xar:mlstring>Directionality - plug in for better support of right to left languages.</xar:mlstring></li>
@@ -137,8 +137,11 @@
                <li><xar:mlstring>Layer - support for create/remove and z-index block elements</xar:mlstring></li>
                <li><xar:mlstring>Style - Adds CSS style editing support to enable you to edit almost any CSS style property in a visual way</xar:mlstring></li>
                <li><xar:mlstring>Spellchecker - Spellchecking for all browsers using Google and ajax, or aspell if you have it installed in php. Defaults to Google and English.</xar:mlstring></li>
-
             </ol>
+            <p><xar:mlstring>Further <strong>plugins that are customized and tested for xartinymce</strong> can be downloaded from the </xar:mlstring><a href="http://xaraya.com/~jojodee"><xar:mlstring>Xaraya website</xar:mlstring></a>.
+            <xar:mlstring>These include the previously bundled IBrowser (image upload and browse), IManager (full featured image upload, browse and editing with all the features of phpthumbs, and Dictionary lookup plugin.
+            </xar:mlstring>
+            </p>
         <h3>
             <xar:mlstring>Custom and Multiple Configurations</xar:mlstring>
         </h3>
@@ -182,6 +185,6 @@ tinyMCE.init({
                  <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found at </xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="#xarML('Related documentation on XarTinyMCE')#"><xar:mlstring>Xaraya Documentation</xar:mlstring></a>
                  </li>
              </ul>
-            <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.9.2&nbsp; 2006-02-xx
+            <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 3.0.0&nbsp; 2006-05-02
             </p>
    </div>

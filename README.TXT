@@ -9,10 +9,14 @@ browse compatibility, and further options for customization.
 
 The current version of this Xaraya integration provides for
 configuration options via a user interface in the admin configuration area for XarTinyMCE.
-There is also integration of an multipurpose filebrowser in addition to ibrowser a specific image browser.
+There is also integration of a multipurpose Filebrowser allowing you to browse, upload, and link file, 
+or create and rename files and directories.
+
 This version sees new functionality with enhanced block formats, new layer
 and style plugins and better filebrowser integration.
-Image manager (imanager) for xartinymce is also available for download separately.
+
+Image manager (imanager), along with IBrowser (PREVIOUSLY BUNDLED) and a number of other custom xartinymce plugins are
+available for download separately at http://xaraya.com/~jojodee/
 
 NOTE: Make sure you use the NEW COMBINED CONFIGURATION FILE for 
       filebrowser, ibrowser and imanager found in tinymce/xartemplates/includes directory.
@@ -94,9 +98,10 @@ set the class used to activate or deactivate your textareas in custom configurat
 This is recommended for w3c standards support.
 
 
-IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
+IMAGE BROWSER (IBROWSER), IMAGE MANAGER (IMANAGER), FILEBROWSER and  SECURITY
 ******************************
-There is a new filebrowser and updated ibrowser image manager plugin with version 1.1.0 of xartinymce.
+Filebrowser now comes as a general file and image browser integrated into xartinymce.
+The updated xartinymce ibrowser and image manager plugin can be downloaded at http://xaraya.com/~jojodee.
 
 Please make sure you copy the NEW tinymceconfig.inc file in
 modules/tinymce/xartemplates/includes/tinymceconfig.inc to your

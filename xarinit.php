@@ -111,13 +111,12 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce', 'tinytilemap',1);
         xarModSetVar('tinymce', 'tinyenablepath',1);
         xarModSetVar('tinymce', 'tinyresizehorizontal',0);
-        return tinymce_upgrade('0.9.0');
 
     case '0.9.0':
         xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
         xarModSetVar('tinymce', 'tinyeditordeselector','');
     case '0.9.2':
-            return tinymce_upgrade('1.0.0');
+
     case '1.0.0':
             xarModSetVar('tinymce', 'tinycompressor',0);
             xarModSetVar('tinymce', 'tinycleanup',1);
@@ -125,19 +124,18 @@ function tinymce_upgrade($oldversion)
             xarModDelVar('tinymce', 'tinynowrap');
             return tinymce_upgrade('1.0.1');
     case '1.0.1':
-         return tinymce_upgrade('1.0.2');
+
     case '1.0.2':
            xarModSetVar('tinymce', 'tinyentity_encoding','raw');
-      return tinymce_upgrade('1.0.3');
+
     case '1.0.3': //current version
         xarModSetVar('tinymce', 'striplinebreaks',1);
         xarModSetVar('tinymce',  'sourceformat',1);
         xarModSetVar('tinymce',  'usefilebrowser',0);
-      return tinymce_upgrade('1.0.4');
 
     case '1.0.4':
     xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
-        return tinymce_upgrade('1.1.0');
+
        break;
     case '1.1.0': //current version
        break;
