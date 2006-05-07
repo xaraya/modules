@@ -20,7 +20,6 @@
  * @author original Carl P. Corliss (aka rabbitt)
  * @author Jo Dalle Nogare (jojodee)
  * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
  * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid  (optional) the id of the item that these nodes belong to
  * @param integer    $cid       (optional) the id of a comment
@@ -29,17 +28,13 @@
  * @returns array     an array of comments or an empty array if no comments
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
+ * @todo Make these paramaters more relevant to xarBB - i.e. fid, tid etc.
  */
 function xarbb_userapi_get_allposts($args)
 {
     extract($args);
-    $modid=xarModGetIDFromName('xarbb');
 
-    if (!isset($modid) || empty($modid)) {
-        $msg = xarML('Invalid #(1) [#(2)]', 'modid', $modid);
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
-    }
+    $modid = xarModGetIDFromName('xarbb');
 
     if ((!isset($objectid) || empty($objectid)) && !isset($author)) {
         $msg = xarML('Invalid #(1) [#(2)]', 'objectid', $objectid);
