@@ -3,7 +3,8 @@
 // Divert PHP errors to the normal error stack
 function autolinks_userapi__transform_errhandler($errorType, $errorString, $errorFile, $errorLine)
 {
-    if (!error_reporting()) {return;}
+    //if (!error_reporting()) {return;}
+    if (!error_reporting() || !($errorType & (E_ALL | E_NOTICE | E_WARNING))) return;
     $msg = "File: " . $errorFile. "; Line: " . $errorLine . "; ". $errorString;
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return;
@@ -26,6 +27,7 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
 
     // Execute the template.
     set_error_handler('autolinks_userapi__transform_errhandler');
+
     $replace = xarTplModule(
         'autolinks',
         xarModGetVar('autolinks', 'templatebase'),
