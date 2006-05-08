@@ -57,8 +57,8 @@
             <tr>
                 <td class="xar-norm">
                     #$transformedtext#
-                    <xar:if condition="isset($properties['signature']) and count($properties) gt 0">
-                        <xar:set name="$hide">$properties['signature']->value</xar:set>
+                    <xar:if condition="isset($properties.signature) and count($properties) gt 0">
+                        <xar:set name="$hide">#$properties.signature-&gt;value#</xar:set>
                         <xar:if condition="$hide">
                             <p class="hiddensignature">
                                 <xar:data-output property="$properties['signature']" />
@@ -102,7 +102,7 @@
                         <a href="#xarModUrl('roles', 'user', 'account')#">
                             <xar:mlstring>Your Account</xar:mlstring>
                         </a>
-                        <xar:else />
+                    <xar:else />
                         <a href="#xarModUrl('roles', 'user', 'account')#">
                             <xar:mlstring>Log In | Register</xar:mlstring>
                         </a>
@@ -123,7 +123,7 @@
                         <xar:mlstring>Form Controls:</xar:mlstring>
                     </td>
                     <td class="xar-norm newtopicfield">
-                        #$formhooks['formdisplay']# 
+                        #$formhooks.formdisplay# 
                     </td>
                 </tr>
             </xar:if>
@@ -143,6 +143,7 @@
                     <div class="xar-sub">
                         <xar:comment>
                             FIXME: not translatable
+                            FIXME: this construct also appears in other places = duplication
                         </xar:comment>
 
                         <xar:mlstring>HTML is</xar:mlstring>&nbsp;
@@ -230,21 +231,20 @@
                     </tr>
                 </xar:foreach>
             </xar:if>
-
-            <tr>
-                <td class="xar-accent newtopicbottom" colspan="2">
-                    <xar:if condition="isset($tid)">
-                        <input type="hidden" name="tid" id="tid" value="#$tid#" />
-                    </xar:if>
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="fid" id="fid" value="#$fid#" />
-                    <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
-                    <input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
-                    &nbsp; 
-                    <input type="submit" name="submit" value="#xarML('Submit')#" tabindex="3" />
-                </td>
-            </tr>
         </table>
+
+        <div class="newtopicbottom">
+            <xar:if condition="isset($tid)">
+                <input type="hidden" name="tid" id="tid" value="#$tid#" />
+            </xar:if>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+            <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
+
+            <input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
+            &nbsp; 
+            <input type="submit" name="submit" value="#xarML('Submit')#" tabindex="3" />
+        </div>
     </form>
 </div>
 

@@ -20,68 +20,67 @@
 
 function xarbb_user_newreply()
 {
-    if (!xarVarFetch('tid', 'int:1:', $tid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cid', 'int:1:', $cid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cid', 'id', $cid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:quote:edit', $phase, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Let's get the title, and check to see if we are
-    if ((!empty($tid)) && (empty($cid))){
-        // The user API function is called
-
-        $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
-
-        if ($data['tstatus'] == 3) {
-            $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
-            xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
-            return;
-        }
-
-        $settings               = unserialize(xarModGetVar('xarbb', 'settings.' . $data['fid']));
-        $data['allowhtml']      = $settings['allowhtml'];
-        $data['allowbbcode']    = $settings['allowbbcode'];
-
-        $allowhtml= (!empty($data['allowhtml']) ? $data['allowhtml'] : false);
-        $allowbbcode= (!empty($data['allowbbcode']) ? $data['allowbbcode'] : false);
-
-        $package['title'] = xarVarPrepForDisplay($data['ttitle']);
-
-        if (($phase == 'quote') && ($allowbbcode == true)){
-            $package['text'] = '[quote]' . $data['tpost'] . '[/quote]';
-        }elseif (($phase == 'quote') && ($allowhtml == true)){
-            $package['text'] = '<blockquote>' . $data['tpost'] . '</blockquote>';
-        } elseif ($phase == 'edit') {
-            $package['text'] = $data['tpost'];
-        }
-    } elseif (!empty($cid)){
-        $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
-        $settings               = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
-        $data['allowhtml']      = $settings['allowhtml'];
-        $data['allowbbcode']    = $settings['allowbbcode'];
-        $allowhtml= isset($data['allowhtml']) ? $data['allowhtml'] : false;
-        $allowbbcode= isset($data['allowbbcode']) ? $data['allowbbcode'] : false;
-
-        // The user API function is called
-        $data = xarModAPIFunc('comments', 'user', 'get_one', array('cid' => $cid));
-
-        foreach ($data as $comment){
-            $package['title'] = $comment['xar_title']; //prepped in template
-            $package['postanon'] = $comment['xar_postanon'];
-            if (($phase == 'quote') && ($allowbbcode == true)){
-                $package['text'] = '[quote]' . $comment['xar_text'] . '[/quote]';
-            }elseif (($phase == 'quote') && ($allowhtml == true)){
-                $package['text'] = '<blockquote>' . $comment['xar_text'] . '</blockquote>';
-             } elseif ($phase == 'edit') {
-                $package['text'] = $comment['xar_text'];
-            }
-        }
-    }
+    // TODO: So, is the topic ID required ot not? If not, then how do we get the topic from a comment ID?
     $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
     if (empty($topic)) return;
 
+    // TODO: check the locked status, which is independent of the topic status.
+    // TODO: display a nicer error message, rather than a system error.
+    // FIXME: having this check here implies no error is raised if a user replies to a reply of a locked thread...?
+    if ($topic['tstatus'] == 3) {
+        $msg = xarML('Topic -- #(1) -- has been locked by administrator', $topic['ttitle']);
+        xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
+        return;
+    }
+
+    // Fetch the comment if we are replying to one..
+    if (!empty($cid)) {
+        $comment = xarModAPIFunc('comments', 'user', 'get_one', array('cid' => $cid));
+        // Just want the first element from the array-of-one.
+        $comment = reset($comment);
+    }
+
+    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
+
+    $allowhtml = (!empty($settings['allowhtml']) ? true : false);
+    $allowbbcode = (!empty($settings['allowbbcode']) ? true : false);
+
+    if (empty($cid)) {
+        $package['title'] = $topic['ttitle'];
+
+        if (($phase == 'quote') && ($allowbbcode == true)) {
+            // CHECKME: if the original topic poster is anonymous, ensure we don't expose their identity.
+            $package['text'] = '[quote=' . xarUsergetVar('name', $topic['tposter']) . ']'
+                . $topic['tpost'] . '[/quote]';
+        } elseif (($phase == 'quote') && ($allowhtml == true)) {
+            $package['text'] = '<blockquote>' . $topic['tpost'] . '</blockquote>';
+        } elseif ($phase == 'edit') {
+            $package['text'] = $topic['tpost'];
+        }
+    } elseif (!empty($cid)) {
+        $package['title'] = $comment['xar_title'];
+
+        // CHECKME: this assignment makes replies to an anonymous reply, also anonymouse. Is this desired?
+        $package['postanon'] = $comment['xar_postanon'];
+
+        if (($phase == 'quote') && ($allowbbcode == true)){
+            $package['text'] = '[quote=' . (!empty($comment['xar_postanon']) ? xarML('Anonymous') : $comment['xar_author']) . ']'
+                . $comment['xar_text'] . '[/quote]';
+        } elseif (($phase == 'quote') && ($allowhtml == true)){
+            $package['text'] = '<blockquote>' . $comment['xar_text'] . '</blockquote>';
+        } elseif ($phase == 'edit') {
+            $package['text'] = $comment['xar_text'];
+        }
+    }
+
     // Security Check
     if ($phase == 'edit'){
+        // FIXME: can we make this assumption?
         if (!xarUserIsLoggedIn()) {
-            unset($cid);
             $msg = xarML('You do not have access to modify this topic.');
             xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
@@ -90,8 +89,10 @@ function xarbb_user_newreply()
         $uid = xarUserGetVar('uid');
         if (!xarSecurityCheck('ModxarBB', 0, 'Forum', $topic['catid'] . ':' . $topic['fid'])) {
             // No Privs, Hows about this is my comment?
-            if ($uid != $data[0]['xar_uid']) {
+            // FIXME: we have not checked whether this is a comment! Is 'edit' phase really supported?
+            if ($uid != $comment['xar_uid']) {
                 // Nope?  Lets return
+                // TODO: needs to be templated.
                 $message = xarML('You do not have access to modify this reply');
                 return $message;
             }
@@ -100,15 +101,17 @@ function xarbb_user_newreply()
         if (!xarSecurityCheck('PostxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
     }
 
-    $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
+    // Initialise the data array.
+    $data = $topic;
 
-    // Var Set-up
+    // Some configuration variables for the comments module.
     $header['input-title']  = xarML('Post a Reply');
     $header['modid']        = xarModGetIDFromName('xarbb');
     $header['objectid']     = $tid;
     $header['itemtype']     = $data['fid'];
     $header['cid']          = $cid;
 
+    // TODO: can we return the user back closer to where they came from - the comment they just added perhaps?
     if ($phase == 'edit') {
         $action = 'modify';
         $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
@@ -119,12 +122,12 @@ function xarbb_user_newreply()
 
     $receipt['post_url']    = xarModURL('comments', 'user', $action, array('tid' => $tid));
     $receipt['action']      = $action;
-    //$receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 
     $package['name']        = xarUserGetVar('name');
     $package['uid']         = xarUserGetVar('uid');
 
-    //Add images
+    // Add images
+    // FIXME: images to go in templates.
     $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="' . xarML('Profile') . '" />';
 
     // Form Hooks
@@ -137,6 +140,7 @@ function xarbb_user_newreply()
     $data['authid']     = xarSecGenAuthkey();
 
     xarTplSetPageTitle(xarML('Reply to #(1)', $data['ttitle']));
+
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $data['xarbbtitle'] = (isset($xarbbtitle) ? $xarbbtitle : '');
 

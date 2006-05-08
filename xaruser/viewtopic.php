@@ -139,8 +139,8 @@ function xarbb_user_viewtopic($args)
     $isposter[$data['tposter']] = 1;
 
     // Get the individual posts for the topic
-    $header['modid']        = xarModGetIDFromName('xarbb');
-    $header['objectid']     = $tid;
+    $header['modid'] = xarModGetIDFromName('xarbb');
+    $header['objectid'] = $tid;
 
     $data['items'] = array();
 
@@ -156,9 +156,10 @@ function xarbb_user_viewtopic($args)
     // TODO: support threaded/nested display too - cfr. bug 1443
     //    $postrender = 'flat';
 
-    // Note: comments get_multiple() can only return comments in Celko order or reverse Celko order
-    //       at the moment. This is equivalent to sorting by cid or time here - other postsortby
-    //       options would require a lot more work, so I would forget about those for now...
+    // Note: 
+    // comments get_multiple() can only return comments in Celko order or reverse Celko order
+    // at the moment. This is equivalent to sorting by cid or time here - other postsortby
+    // options would require a lot more work, so I would forget about those for now...
     if (!empty($postsortorder) && strtoupper($postsortorder) == 'DESC') {
         $reverse = true;
     } else {
@@ -214,21 +215,8 @@ function xarbb_user_viewtopic($args)
     $data['posterlist'] = array_keys($isposter);
 
     if (count($data['posterlist']) > 0) {
-/* the performance issue seems to be in comments author count, really, so this is not a solution
-        $data['usertopics'] = xarModAPIFunc('xarbb','user','countpostslist',
-                                            array('uidlist' => $data['posterlist']));
-        // TODO: support of legacy templates - get rid of this later on
-        for ($i = 0; $i < $totalcomments; $i++) {
-            $uid = $comments[$i]['xar_uid'];
-            if (isset($data['usertopics'][$uid])) {
-                $comments[$i]['usertopics'] = $data['usertopics'][$uid];
-            } else {
-                $comments[$i]['usertopics'] = 0;
-            }
-        }
-*/
         $data['userdata'] = xarModAPIFunc(
-            'roles','user','getall',
+            'roles', 'user', 'getall',
             array('order' => 'uid', 'uidlist' => $data['posterlist'])
         );
 
@@ -250,7 +238,6 @@ function xarbb_user_viewtopic($args)
     $regdatestamp = $posterdata['date_reg'];
 
     //Forum Name and Links
-    // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
 
     // $data['posterdate'] = $regdate;
