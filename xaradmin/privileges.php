@@ -9,6 +9,7 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
+
 /**
  * Manage definition of instances for privileges (unfinished)
  */
@@ -17,8 +18,8 @@ function xarbb_admin_privileges($args)
 {
     extract($args);
 
-    // Priviledge Mask
-    if (!xarVarFetch('fid',          'isset', $fid,        'All')) {return;}       // Forum ID
+    // Privilege Mask
+    if (!xarVarFetch('fid',          'isset', $fid,         'All')) {return;}       // Forum ID
     if (!xarVarFetch('cid',          'isset', $cid,         'All', XARVAR_NOT_REQUIRED)) {return;}      // Categorie ID
     if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}      // Categorie IDs
 
@@ -38,10 +39,9 @@ function xarbb_admin_privileges($args)
         if (count($parts) > 0 && !empty($parts[0])) $cid = $parts[0];
         if (count($parts) > 1 && !empty($parts[1])) $fid = $parts[1];
         if (count($parts) > 2 && !empty($parts[2])) $fname = $parts[2];
-//        if (count($parts) > 3 && !empty($parts[3])) $aid = $parts[3];
     }
 
-    if (!xarSecurityCheck('AdminxarBB',1,'Forum',"$cid:$fid")) return;
+    if (!xarSecurityCheck('AdminxarBB', 1, 'Forum', "$cid:$fid")) return;
 
     // TODO: figure out how to handle more than 1 category in instances
     if (isset($cids) && is_array($cids)) {
@@ -57,10 +57,10 @@ function xarbb_admin_privileges($args)
     // TODO: figure out how to handle groups of users and/or the current user (later)
 
     $filter = array();
-    if($cid != "All") $filter["catids"] = array($cid);
-    if($fid != "All") $filter["fid"] = $fid;
+    if ($cid != "All") $filter["catids"] = array($cid);
+    if ($fid != "All") $filter["fid"] = $fid;
 
-    $numitems = xarModAPIFunc('xarbb', 'user', 'countforums', array($filter);
+    $numitems = xarModAPIFunc('xarbb', 'user', 'countforums', array($filter));
 
     if ($cid != 'All') {
         $fids = xarModAPIFunc('xarbb', 'user', 'getallforums', array("assoc" => "fid", "catid" => $cid));
@@ -68,7 +68,7 @@ function xarbb_admin_privileges($args)
         $fids = xarModAPIFunc('xarbb', 'user', 'getallforums', array("assoc" => "fid"));
     }
 
-    if(!in_array($fid,array_keys($fids))) $fid = 'All';
+    if (!in_array($fid, array_keys($fids))) $fid = 'All';
 
     // Define the new instance
     $newinstance = array();
@@ -77,7 +77,7 @@ function xarbb_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $pid = xarReturnPrivilege($extpid, $extname, $extrealm, $extmodule, $extcomponent, $newinstance, $extlevel);
         if (empty($pid)) {
             return; // throw back
         }
@@ -90,8 +90,8 @@ function xarbb_admin_privileges($args)
     $data = array(
         'cid'          => $cid,
         'fid'          => $fid,
-        'cids'          => $cids,
-        'fids'          => $fids,
+        'cids'         => $cids,
+        'fids'         => $fids,
         'numitems'     => $numitems,
         'extpid'       => $extpid,
         'extname'      => $extname,
@@ -99,12 +99,13 @@ function xarbb_admin_privileges($args)
         'extmodule'    => $extmodule,
         'extcomponent' => $extcomponent,
         'extlevel'     => $extlevel,
-        'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+        'extinstance'  => xarVarPrepForDisplay(join(':', $newinstance)),
     );
 
     $catlist = array();
-    // Forum = Itemtype 1 (is it now 0?)
-    $cidstring = xarModGetVar('xarBB', 'mastercids.1');
+
+    // Master category IDs for this module.
+    $cidstring = xarModGetVar('xarBB', 'mastercids');
 
     if (!empty($cidstring)) {
         $rootcats = explode (';', $cidstring);
@@ -119,6 +120,7 @@ function xarbb_admin_privileges($args)
     }
 
     $data['cats'] = array();
+
     foreach (array_keys($catlist) as $catid) {
         $data['cats'][] = xarModAPIFunc(
             'categories', 'visual', 'makeselect',

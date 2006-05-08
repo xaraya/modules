@@ -5,48 +5,48 @@ TODO: layout, security checks etc
 <ul>
 <xar:foreach in="$items" value="$item">
   <li>
-    <xar:set name="textdisplay">$item['title']</xar:set>
+    <xar:set name="textdisplay">$item.title</xar:set>
     <xar:comment>
-        <xar:if condition="$vars['titleortext'] eq 'on'">
-            <xar:set name="textdisplay">$item['title']</xar:set>
+        <xar:if condition="$vars.titleortext eq 'on'">
+            <xar:set name="textdisplay">$item.title</xar:set>
         <xar:else />
-            <xar:set name="textdisplay">$item['ptext']</xar:set>
+            <xar:set name="textdisplay">$item.ptext</xar:set>
         </xar:if>
     </xar:comment>
-    <xar:if condition="!empty($item['link'])">
-        <xar:if condition="$vars['addlink'] eq '1'" >
+    <xar:if condition="!empty($item.link)">
+        <xar:if condition="$vars.addlink eq '1'" >
             #$textdisplay#
-        <xar:elseif condition="$vars['addlink'] eq '2'" />
-            <a href="#$item['link']#">#$textdisplay#</a>
+        <xar:elseif condition="$vars.addlink eq '2'" />
+            <a href="#$item.link#">#$textdisplay#</a>
         </xar:if>
-    <xar:elseif condition="empty($item['link']) AND $vars['addlink'] eq '1'" />
+    <xar:elseif condition="empty($item.link) AND $vars.addlink eq '1'" />
             #$textdisplay#
     </xar:if>
-    <xar:if condition="$vars['addauthor'] eq '1'">
-        <xar:if condition="!empty($item['poster']) AND !($item['anon'] eq '1')">
+    <xar:if condition="$vars.addauthor eq '1'">
+        <xar:if condition="!empty($item.poster) AND !($item.anon eq '1')">
             <xar:mlstring>by </xar:mlstring>
-                    #$item['postername']#
+                    #$item.postername#
         <xar:else />
             <xar:mlstring>by Anonymous</xar:mlstring>
         </xar:if>
-    <xar:elseif condition="$vars['addauthor'] eq '2'" />
-        <xar:if condition="!empty($item['poster']) AND !($item['anon'] eq '1')">
-            <xar:mlstring>by</xar:mlstring> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['poster']))#">
-                    #$item['postername']#</a>
+    <xar:elseif condition="$vars.addauthor eq '2'" />
+        <xar:if condition="!empty($item.poster) AND !($item.anon eq '1')">
+            <xar:mlstring>by</xar:mlstring> <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $item.poster))#">
+                    #$item.postername#</a>
         <xar:else />
             <xar:mlstring>by Anonymous</xar:mlstring>
         </xar:if>
     </xar:if>
-    <xar:if condition="$vars['adddate'] eq 1">
-        <xar:mlstring> on </xar:mlstring>#xarLocaleFormatDate('%d %b %Y', $item['ptime'])#
+    <xar:if condition="$vars.adddate eq 1">
+        <xar:mlstring> on </xar:mlstring>#xarLocaleFormatDate('%d %b %Y', $item.ptime)#
     </xar:if>
 
-    <xar:if condition="empty($item['flink']) AND $vars['forumlink'] eq '1'">
-       <xar:mlstring> in </xar:mlstring>#$item['fname']#
-    <xar:elseif condition="$vars['forumlink'] eq '1'" />
-        <xar:mlstring> in </xar:mlstring>#$item['fname']#
-    <xar:elseif condition="$vars['forumlink'] eq '2'" />
-        <xar:mlstring> in </xar:mlstring><a href="#$item['flink']#">#$item['fname']#</a>
+    <xar:if condition="empty($item.flink) AND $vars.forumlink eq '1'">
+       <xar:mlstring> in </xar:mlstring>#$item.fname#
+    <xar:elseif condition="$vars.forumlink eq '1'" />
+        <xar:mlstring> in </xar:mlstring>#$item.fname#
+    <xar:elseif condition="$vars.forumlink eq '2'" />
+        <xar:mlstring> in </xar:mlstring><a href="#$item.flink#">#$item.fname#</a>
     </xar:if>
   </li>
 </xar:foreach>
@@ -55,5 +55,5 @@ TODO: layout, security checks etc
 <xar:mlstring>Browse the forums</xar:mlstring></a></p>
 
 <xar:else />
-<xar:mlstring>Sorry - you do not have access to the forums</xar:mlstring>
+    <xar:mlstring>Sorry - you do not have access to the forums</xar:mlstring>
 </xar:sec>
