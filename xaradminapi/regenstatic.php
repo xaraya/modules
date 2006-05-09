@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Regenerate the page output cache of URLs in sessionless list
  *
  * @package modules
@@ -12,18 +12,10 @@
  */
 /**
  * regenerate the page output cache of URLs in the session-less list
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 Xaraya
- * @link http://www.xaraya.com
- *
- * @subpackage xarCacheManager module
  * @author jsb
  *
- * @returns void
  * @return void
-*/
-
+ */
 function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
 {
     $urls = array();
@@ -33,16 +25,16 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
     if (!defined('XARCACHE_IS_ENABLED') || !defined('XARCACHE_PAGE_IS_ENABLED')) {
         return;
     }
-    
+
     xarOutputFlushCached('static', $outputCacheDir . 'page');
     $configKeys = array('Page.SessionLess');
     $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                      array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
 
     $urls = $sessionlessurls['Page.SessionLess'];
-    
+
     if (!$nolimit) {
-        // randomize the order of the urls just in case the timelimit cuts the 
+        // randomize the order of the urls just in case the timelimit cuts the
         // process short - no need to always drop the same pages.
         shuffle($urls);
 
@@ -58,7 +50,7 @@ function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
         }
         if (!$nolimit && time() > $timelimit) break;
     }
-    
+
     return;
 
 }

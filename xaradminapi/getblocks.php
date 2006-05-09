@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Get configuration of block caching for blocks
  *
  * @package modules
@@ -13,8 +13,7 @@
 /**
  * get configuration of block caching for all blocks
  *
- * @returns array
- * @return array of block caching configurations
+ * @return array Block caching configurations
  */
 function xarcachemanager_adminapi_getblocks($args)
 {
@@ -62,7 +61,7 @@ function xarcachemanager_adminapi_getblocks($args)
                                           array('starttime' => $cacheexpire,
                                                 'direction' => 'from'));
         }
-        
+
         $key = $bid2key[$bid];
         $blocks[$key]['nocache'] = $nocache;
         $blocks[$key]['pageshared'] = $pageshared;

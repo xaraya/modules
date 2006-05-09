@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Flush the appropriate cache
  *
  * @package modules
@@ -15,9 +15,8 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns array
- * @return extrainfo array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return array extrainfo array
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_createhook($args)
@@ -101,7 +100,7 @@ function xarcachemanager_adminapi_createhook($args)
                      // delete cachekey of each module autolinks is hooked to.
             $hooklist = xarModAPIFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
-            
+
             foreach ($modhooks as $hookedmodname => $hookedmod) {
                 $cacheKey = "$hookedmodname-";
                 xarOutputFlushCached($cacheKey);
@@ -121,7 +120,7 @@ function xarcachemanager_adminapi_createhook($args)
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
         xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }
-    
+
     return $extrainfo;
 }
 

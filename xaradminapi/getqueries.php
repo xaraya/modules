@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Get queries caching config
  *
  * @package modules
@@ -13,7 +13,6 @@
 /**
  * get configuration of query caching for expensive queries
  *
- * @returns array
  * @return array of query caching configurations
  */
 function xarcachemanager_adminapi_getqueries($args)
