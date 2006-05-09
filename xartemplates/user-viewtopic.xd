@@ -123,14 +123,12 @@
             <tr>
                 <td class="xar-norm author">
                     <div>
-                        <strong>
-                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $tposter))#">
-                                #$postername#
-                            </a>
-                        </strong>
+                        <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $tposter))#">
+                            #$postername#
+                        </a>
                     </div>
                     <div class="xar-sub">
-                        <xar:if condition="isset($properties['avatar']) and !empty($posterdata[$tposter]['avatar'])">
+                        <xar:if condition="isset($properties.avatar) and !empty($posterdata[$tposter]['avatar'])">
                             <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
                             <br />
                         </xar:if>
@@ -143,7 +141,7 @@
                             <xar:mlstring>Posts: #(1)</xar:mlstring>
                             <xar:mlvar>#$usertopics#</xar:mlvar>
                         </xar:ml>
-                        <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
+                        <xar:if condition="isset($properties.location) and !empty($posterdata[$tposter]['location'])">
                             <br />
                             <xar:mlstring>Location:</xar:mlstring>
                             <xar:data-output property="$properties['location']" value="$posterdata[$tposter]['location']" />
@@ -170,7 +168,7 @@
                             <xar:if condition="xarUserIsLoggedIn()">
                                 <xar:if condition="$tstatus ne 3">
                                     <xar:sec mask="PostxarBB" catch="false">
-                                        <xar:if condition="(isset($allowbbcode) and ($allowbbcode eq 'true')) or (isset($allowhtml) and ($allowhtml eq 'true'))">
+                                        <xar:if condition="$allowbbcodeor $allowhtml">
                                             <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
                                                 <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" />

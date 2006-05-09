@@ -340,8 +340,8 @@ function xarbb_userapi_getalltopics($args)
             // details of the current user.
             $topic['icon_flags'] = array();
 
-            $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
-            $hot_topic = $settings['hottopic'];
+            $forum = xarModAPIfunc('xarbb', 'user', 'getforum', array('fid' => $fid));
+            $hot_topic = $forum['settings']['hottopic'];
 
             if (isset($topic_types[$topic['tstatus']])) {
                 $topic['icon_flags']['type'] = $topic_types[$topic['tstatus']];

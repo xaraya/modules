@@ -28,28 +28,25 @@ function xarbb_user_viewforum()
 
     if ($data['fstatus'] == 1) {
         // FIXME: this same message keeps cropping up over and over - could it be centralised?
+        // FIXME: nicer handling of this error required.
         $msg = xarML('Forum -- #(1) -- has been locked by administrator', $data['fname']);
         xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
 
     // Security Check
-    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
+    // CHECKME: the security check has already been done in the getforum API?
+    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum', $data['catid'] . ":$fid")) return;
     xarTplSetPageTitle($data['fname']);
 
     // Grab the last visit timestamps.
     $lastvisitthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $fid));
-    $lastvisitallforums = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
 
-    // CHECKME: Not sure what this is for anymore. It gets passed to the template.
-    $lastvisitcompared = max($lastvisitthisforum, $lastvisitallforums);
-
-    // And now we kill all of this work and just move on.
     xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
 
     // Settings and display
     $data['items'] = array();
-    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
+    $settings = $data['settings'];
     $data['showcats'] = $settings['showcats'];
     $data['xbbname'] = xarModGetVar('themes', 'SiteName');
 
@@ -170,16 +167,10 @@ function xarbb_user_viewforum()
         $topics[$i]['comments'] = $topic['treplies'];
         $topics[$i]['icon_flags']['new'] = ($new_topic ? true : false);
 
-        // The timeimage thing (the entire switch statement) has been removed - we no longer need it.
-        // Set a default image for old templates.
-        // Please check the default template to see how the icon can be displayed via a sub-template
+        // Set a default image for old templates. (legacy support)
         $topics[$i]['timeimage'] = 2;
 
-        if (!empty($hits[$topic['tid']])) {
-            $topics[$i]['hitcount'] = $hits[$topic['tid']];
-        } else {
-            $topics[$i]['hitcount'] = 0;
-        }
+        $topics[$i]['hitcount'] = (!empty($hits[$topic['tid']]) ? $hits[$topic['tid']] : 0);
 
         // CHECKME: is this relevant without the hitcount module?
         if (!$topics[$i]['hitcount']) {

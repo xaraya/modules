@@ -1,12 +1,10 @@
-<p>
-        <strong><xar:mlstring>Special Options</xar:mlstring></strong>
-</p>
+<h2><xar:mlstring>Special Options</xar:mlstring></h2>
 
 <div class="xar-form-input-wrapper">
     <label for="addtopics" title="#xarML('Check to show latest topics')#" class="xar-form-label">
         <xar:mlstring>Show latest topics:</xar:mlstring>
     </label>
-     <xar:if condition="$addtopics eq 'on'">
+    <xar:if condition="$addtopics eq 'on'">
         <input type="checkbox" name="addtopics" value="1" checked="checked" tabindex="1" />
     <xar:else/>
         <input type="checkbox" name="addtopics" value="1" tabindex="1" />
@@ -17,7 +15,7 @@
     <label for="addposts" title="#xarML('Check to show latest replies')#" class="xar-form-label">
         <xar:mlstring>Show latest replies:</xar:mlstring>
     </label>
-         <xar:if condition="$addposts eq 'on'">
+        <xar:if condition="$addposts eq 'on'">
             <input type="checkbox" name="addposts" value="1" checked="checked" tabindex="2" />
         <xar:else/>
             <input type="checkbox" name="addposts" value="1" tabindex="2" />
@@ -39,7 +37,7 @@
     <label for="howmany" title="#xarML('Total topics and replies to display (or last replies)')#" class="xar-form-label">
         <xar:mlstring>Topics and replies to display:</xar:mlstring>
     </label>
-        <input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="4" />
+    <input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="4" />
 </div>
 
 
@@ -47,26 +45,26 @@
     <label for="truncate" title="#xarML('Truncate long titles to no more than how many characters?')#" class="xar-form-label">
         <xar:mlstring>Truncate titles to (chars):</xar:mlstring>
     </label>
-        <input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="5" />
+    <input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="5" />
 </div>
 
 <div class="xar-form-input-wrapper">
     <label for="forumid[]" title="#xarML('Choose to include topics and posts from the following forums.')#" class="xar-form-label">
         <xar:mlstring>Include topics and posts from the following forums</xar:mlstring>
     </label>
-         <select name="forumid[]" tabindex="5" multiple="multiple" size="5">
-            <xar:foreach in="$forumlist" key="$key" value="$value">
-                <xar:if condition="$key eq '0' and in_array(0,$forumid)">
-                    <option value="all" selected="selected"><xar:mlstring>All Forums</xar:mlstring></option>
-                <xar:elseif condition="$key eq '0'" />
-                    <option value="all" ><xar:mlstring>All Forums</xar:mlstring></option>
-                <xar:elseif condition="in_array($key,$forumid)" />
-                    <option value="#$key#" selected="selected">#$value#</option>
-                <xar:else/>
-                    <option value="#$key#">#$value#</option>
-                </xar:if>
-            </xar:foreach>
-        </select>
+     <select name="forumid[]" tabindex="5" multiple="multiple" size="5">
+        <xar:foreach in="$forumlist" key="$key" value="$value">
+            <xar:if condition="$key eq '0' and in_array(0,$forumid)">
+                <option value="all" selected="selected"><xar:mlstring>All Forums</xar:mlstring></option>
+            <xar:elseif condition="$key eq '0'" />
+                <option value="all" ><xar:mlstring>All Forums</xar:mlstring></option>
+            <xar:elseif condition="in_array($key,$forumid)" />
+                <option value="#$key#" selected="selected">#$value#</option>
+            <xar:else/>
+                <option value="#$key#">#$value#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
 </div>
 
 
@@ -74,74 +72,74 @@
     <label for="addlink" title="#xarML('Choose how to display the topic title')#" class="xar-form-label">
         <xar:mlstring>Topic title</xar:mlstring>
     </label>
-        <select tabindex="5" name="addlink">
-            <xar:if condition="$addlink eq '1'">
-                <option value="1" selected="selected"><xar:mlstring>Show without a link</xar:mlstring></option>
-            <xar:else/>
-                <option value="1"><xar:mlstring>Show without a link</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$addlink eq '2'">
-                <option value="2" selected="selected"><xar:mlstring>Show with link to topic</xar:mlstring></option>
-            <xar:else/>
-                <option value="2"><xar:mlstring>Show with link to topic</xar:mlstring></option>
-            </xar:if>
-        </select>
+    <select tabindex="5" name="addlink">
+        <xar:if condition="$addlink eq '1'">
+            <option value="1" selected="selected"><xar:mlstring>Show without a link</xar:mlstring></option>
+        <xar:else/>
+            <option value="1"><xar:mlstring>Show without a link</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$addlink eq '2'">
+            <option value="2" selected="selected"><xar:mlstring>Show with link to topic</xar:mlstring></option>
+        <xar:else/>
+            <option value="2"><xar:mlstring>Show with link to topic</xar:mlstring></option>
+        </xar:if>
+    </select>
 </div>
 
 <div class="xar-form-input-wrapper">
     <label for="addauthor" title="#xarML('Choose how to display author')#" class="xar-form-label">
         <xar:mlstring>Author name</xar:mlstring>
     </label>
-        <select name="addauthor" tabindex="6" >
-            <xar:if condition="$addauthor eq '0'">
-                <option value="0" selected="selected"><xar:mlstring>Don't show</xar:mlstring></option>
-            <xar:else/>
-                <option value="0"><xar:mlstring>Don't show</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$addauthor eq '1'">
-                <option value="1" selected="selected"><xar:mlstring>Show without link</xar:mlstring></option>
-            <xar:else/>
-                <option value="1"><xar:mlstring>Show without link</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$addauthor eq '2'">
-                <option value="2" selected="selected" disabled="disabled"><xar:mlstring>Show with link to author info</xar:mlstring></option>
-            <xar:else/>
-                <option value="2" disabled="disabled"><xar:mlstring>Show with link to author info</xar:mlstring></option>
-            </xar:if>
-        </select>
+    <select name="addauthor" tabindex="6" >
+        <xar:if condition="$addauthor eq '0'">
+            <option value="0" selected="selected"><xar:mlstring>Don't show</xar:mlstring></option>
+        <xar:else/>
+            <option value="0"><xar:mlstring>Don't show</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$addauthor eq '1'">
+            <option value="1" selected="selected"><xar:mlstring>Show without link</xar:mlstring></option>
+        <xar:else/>
+            <option value="1"><xar:mlstring>Show without link</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$addauthor eq '2'">
+            <option value="2" selected="selected" disabled="disabled"><xar:mlstring>Show with link to author info</xar:mlstring></option>
+        <xar:else/>
+            <option value="2" disabled="disabled"><xar:mlstring>Show with link to author info</xar:mlstring></option>
+        </xar:if>
+    </select>
 </div>
 <div class="xar-form-input-wrapper">
     <label for="forumlink" title="#xarML('Choose how to display the forum title')#" class="xar-form-label">
         <xar:mlstring>Show forum title</xar:mlstring>
     </label>
-         <select tabindex="7" name="forumlink">
-            <xar:if condition="$forumlink eq '0'">
-                <option value="0" selected="selected"><xar:mlstring>Don't show</xar:mlstring></option>
-            <xar:else/>
-                <option value="0"><xar:mlstring>Don't show</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$forumlink eq '1'">
-                <option value="1" selected="selected"><xar:mlstring>Show without a link</xar:mlstring></option>
-            <xar:else/>
-                <option value="1"><xar:mlstring>Show without a link</xar:mlstring></option>
-            </xar:if>
-            <xar:if condition="$forumlink eq '2'">
-                <option value="2" selected="selected"><xar:mlstring>Show with link to forum</xar:mlstring></option>
-            <xar:else/>
-                <option value="2"><xar:mlstring>Show with link to forum</xar:mlstring></option>
-            </xar:if>
-        </select>
+     <select tabindex="7" name="forumlink">
+        <xar:if condition="$forumlink eq '0'">
+            <option value="0" selected="selected"><xar:mlstring>Don't show</xar:mlstring></option>
+        <xar:else/>
+            <option value="0"><xar:mlstring>Don't show</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$forumlink eq '1'">
+            <option value="1" selected="selected"><xar:mlstring>Show without a link</xar:mlstring></option>
+        <xar:else/>
+            <option value="1"><xar:mlstring>Show without a link</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$forumlink eq '2'">
+            <option value="2" selected="selected"><xar:mlstring>Show with link to forum</xar:mlstring></option>
+        <xar:else/>
+            <option value="2"><xar:mlstring>Show with link to forum</xar:mlstring></option>
+        </xar:if>
+    </select>
 </div>
 
 <div class="xar-form-input-wrapper">
     <label for="adddate" title="#xarML('Add date of post?')#" class="xar-form-label">
         <xar:mlstring>Add date</xar:mlstring>
     </label>
-        <xar:if condition="$adddate eq 'on'">
-            <input type="checkbox" name="adddate" value="1" checked="checked" tabindex="9" />
-        <xar:else/>
-            <input type="checkbox" name="adddate" value="1" tabindex="9" />
-        </xar:if>
+    <xar:if condition="$adddate eq 'on'">
+        <input type="checkbox" name="adddate" value="1" checked="checked" tabindex="9" />
+    <xar:else/>
+        <input type="checkbox" name="adddate" value="1" tabindex="9" />
+    </xar:if>
 </div>
 
 <xar:comment>
@@ -149,10 +147,10 @@
     <label for="titleortext" title="#xarML('Show post text instead of title')#" class="xar-form-label">
         <xar:mlstring>Show post text instead of title?</xar:mlstring>
     </label>
-        <xar:if condition="$titleortext eq 'on'">
-            <input type="checkbox" name="titleortext" value="1" checked="checked" tabindex="10" />
-        <xar:else/>
-            <input type="checkbox" name="titleortext" value="1" tabindex="10" />
-        </xar:if>
+    <xar:if condition="$titleortext eq 'on'">
+        <input type="checkbox" name="titleortext" value="1" checked="checked" tabindex="10" />
+    <xar:else/>
+        <input type="checkbox" name="titleortext" value="1" tabindex="10" />
+    </xar:if>
 </div>
 </xar:comment>

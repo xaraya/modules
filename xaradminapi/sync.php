@@ -43,10 +43,11 @@ function xarbb_adminapi_sync($args)
         $fid = $forum['fid'];
 
         // Get the settings for this forum
-        $settings = xarModGetVar('xarbb', 'settings.' . $fid);
-        if (isset($settings)){
-            $settings = unserialize($settings);
-        }
+        //$settings = xarModGetVar('xarbb', 'settings.' . $fid);
+        //if (isset($settings)){
+        //    $settings = unserialize($settings);
+        //}
+        $settings = $forum['settings'];
 
         // get the number of topics
         $forum['ftopics'] = xarModAPIFunc('xarbb', 'user', 'counttopics', array('fid' => $fid));

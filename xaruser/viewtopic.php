@@ -70,7 +70,7 @@ function xarbb_user_viewtopic($args)
         xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'topics_' . $fid, 'value' => serialize($topic_tracking)));
     }
 
-
+    // TODO: centralise this ('locked' error appears in many places)
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
         xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
@@ -83,23 +83,15 @@ function xarbb_user_viewtopic($args)
     xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
     xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $now));
 
-    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
-    if (isset($settings['allowhtml'])) {
-        $allowhtml = $settings['allowhtml'];
-    } else {
-        $allowhtml = false;
-    }
-
-    if (isset($settings['allowbbcode'])) {
-        $allowbbcode = $settings['allowbbcode'];
-    } else {
-        $allowbbcode = false;
-    }
+    $forum = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
+    $settings = $forum['settings'];
+    $allowhtml = $settings['allowhtml'];
+    $allowbbcode = $settings['allowbbcode'];
 
     $postsperpage = $settings['postsperpage'];
 
     // Security Check
-    if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
+    if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', "$catid:$fid")) return;
 
     // Data for the template.
     $data = $topic;
@@ -122,6 +114,7 @@ function xarbb_user_viewtopic($args)
     );
 
     // Bug 4836
+    // FIXME: fix this at source, not a hack here.
     $data['transformedtitle'] = str_replace("<p>", "", $data['transformedtitle']);
     $data['transformedtitle'] = str_replace("</p>", "", $data['transformedtitle']);
     // End
@@ -153,9 +146,6 @@ function xarbb_user_viewtopic($args)
         $postsortorder = 'ASC';
     }
 
-    // TODO: support threaded/nested display too - cfr. bug 1443
-    //    $postrender = 'flat';
-
     // Note: 
     // comments get_multiple() can only return comments in Celko order or reverse Celko order
     // at the moment. This is equivalent to sorting by cid or time here - other postsortby
@@ -177,7 +167,7 @@ function xarbb_user_viewtopic($args)
         )
     );
 
-    $totalcomments=count($comments);
+    $totalcomments = count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
 
@@ -197,10 +187,11 @@ function xarbb_user_viewtopic($args)
         );
 
         // Bug 4836 again
+        // FIXME: fix this at source, not a hack here.
         $comments[$i]['xar_title'] = str_replace("<p>", "", $comments[$i]['xar_title']);
         $comments[$i]['xar_title'] = str_replace("</p>", "", $comments[$i]['xar_title']);
 
-        // TODO: retrieve all post counts at once ?
+        // TODO: retrieve all post counts at once?
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
 
@@ -234,27 +225,27 @@ function xarbb_user_viewtopic($args)
 
     // End individual Replies
 
-     //Add datestamp so users can format in template, existing templates are still OK
+    // Add datestamp so users can format in template, existing templates are still OK
     $regdatestamp = $posterdata['date_reg'];
 
-    //Forum Name and Links
+    // Forum Name and Links
     $data['postername'] = $posterdata['name'];
 
     // $data['posterdate'] = $regdate;
     $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
-    $data['xbbname']    = xarModGetVar('themes', 'SiteName');
+    $data['xbbname'] = xarModGetVar('themes', 'SiteName');
 
     //Pager data - to prevent topic should on every additional pager page
     $data['startnum'] = $startnum;
 
     // Images
     // These are dependant on the time functions being changed
-    $data['post']       = $post;
+    $data['post'] = $post;
 
     $item = array();
     $item['module'] = 'xarbb';
-    $item['itemtype'] = $data['fid']; // Forum Topics
+    $item['itemtype'] = $data['fid'];
     $item['itemid'] = $tid;
 
 
