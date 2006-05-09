@@ -848,11 +848,11 @@ function articles_user_view($args)
         $article['notes'] = xarVarPrepHTMLDisplay($article['notes']);
         if ($dotransform) {
             $article['itemtype'] = $article['pubtypeid'];
-        // TODO: what about transforming DD fields ?
+            // TODO: what about transforming DD fields?
             if ($titletransform) {
-                $article['transform'] = array('title','summary','notes');
+                $article['transform'] = array('title','summary','body','notes');
             } else {
-                $article['transform'] = array('summary','notes');
+                $article['transform'] = array('summary','body','notes');
             }
             $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
         }
