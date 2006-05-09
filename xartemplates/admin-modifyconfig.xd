@@ -202,7 +202,7 @@
             <div class="xar-form-input-wrapper">
                 <label for="pagesizelimit" class="xar-form-label" title="#xarML('Limits the disk usage of the page cache to the specified number of megabytes.')#">
                     <xar:mlstring>Page Cache Size Limit (in MB):</xar:mlstring>
-                </label></span></td>
+                </label></span>
                 <input type="text" name="pagesizelimit" id="pagesizelimit" value="#$settings.PageSizeLimit#" size="4" maxlength="4" />
             </div>
             <div class="xar-form-input-wrapper">
