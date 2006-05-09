@@ -267,8 +267,10 @@ function autolinks_userapi__transform($args)
             {
                 // Use back-assertion "(?<!\/)>" (closing brace '>' not preceded by '/')
                 // to ensure the first tag is not closed.
-                $tag_preg .= '|' . "<" . $exclude_element . "[^>]*(?<!\/)>"
-                   . ".*?" . "<\/" . $exclude_element . ">$wspreg*";
+                // And use word bondary assertion "\b" (the element must not be followed by a letter,
+                // so substrings don't match, e.g. 'a' and 'address')
+                $tag_preg .= '|' . "<" . $exclude_element . "\b[^>]*(?<!\/)>"
+                   . ".*?" . "<\/" . $exclude_element . "\b>$wspreg*";
             }
         }
 
