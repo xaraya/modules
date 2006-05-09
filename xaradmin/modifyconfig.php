@@ -87,6 +87,10 @@ function xarpages_admin_modifyconfig()
         $data['transformfields'] = $transformfields;
     }
 
+    // Check any problem aliases
+    $problem_aliases = xarModAPIfunc('xarpages', 'user', 'getaliases', array('mincount' => 2));
+    $data['problem_aliases'] = $problem_aliases;
+
     $data['authid'] = xarSecGenAuthKey();
 
     // Config hooks for all page types.

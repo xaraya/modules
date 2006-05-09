@@ -142,4 +142,21 @@
             </p>
         </form>
     </div>
+
+    <xar:if condition="!empty($problem_aliases)">
+        <h2><xar:mlstring>Problem Aliases</xar:mlstring></h2>
+        <p><xar:mlstring>The following aliases are used on pages that have duplicate names.
+        It is advisable to rename the duplicates, or reset the alias flag.</xar:mlstring></p>
+        <ul>
+            <xar:loop name="$problem_aliases">
+                <li>
+                    <xar:ml>
+                        <xar:mlstring>'#(1)' - #(2) pages</xar:mlstring>
+                        <xar:mlvar>#$loop:key#</xar:mlvar>
+                        <xar:mlvar>#$loop:item#</xar:mlvar>
+                    </xar:ml>
+                </li>
+            </xar:loop>
+        </ul>
+    </xar:if>
 </div>
