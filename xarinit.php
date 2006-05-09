@@ -62,8 +62,8 @@ function autolinks_init()
         xar_title           C(100)      Null    DEFAULT '',
         xar_url             C(200)      NotNull DEFAULT '',
         xar_comment         C(200)      Null    DEFAULT '',
-        xar_enabled         L           NotNull DEFAULT 1,
-        xar_match_re        L           NotNull DEFAULT 0,
+        xar_enabled         I1           NotNull DEFAULT 1,
+        xar_match_re        I1           NotNull DEFAULT 0,
         xar_sample          C(200)      Null    DEFAULT '',
         xar_type_tid        I           NotNull DEFAULT 0,
         xar_cache_replace   X           Null
@@ -97,7 +97,7 @@ function autolinks_init()
         xar_tid             I       AUTO    PRIMARY,
         xar_type_name       C(60)   NotNull DEFAULT '',
         xar_template_name   C(60)   NotNull DEFAULT '',
-        xar_dynamic_replace L       NotNull DEFAULT 0,
+        xar_dynamic_replace I1       NotNull DEFAULT 0,
         xar_link_itemtype   I       NotNull DEFAULT 0,
         xar_type_desc       X
     ";
@@ -211,7 +211,7 @@ function autolinks_upgrade($oldversion)
 
             // Add columns to the Autolinks table.
             $flds = "
-                xar_enabled         L           NotNull DEFAULT 1
+                xar_enabled         I1           NotNull DEFAULT 1
             ";
 
             // Until we have a better method of handling errors, it is safer to continue.
@@ -223,7 +223,7 @@ function autolinks_upgrade($oldversion)
 
             // Add columns to the Autolinks table.
             $flds = "
-                xar_match_re        L           NotNull DEFAULT 0,
+                xar_match_re        I1           NotNull DEFAULT 0,
                 xar_sample          C(200)      Null    DEFAULT '',
                 xar_cache_replace   X           Null
             ";
@@ -293,7 +293,7 @@ function autolinks_upgrade($oldversion)
                 xar_tid             I       AUTO    PRIMARY,
                 xar_type_name       C(60)   NotNull,
                 xar_template_name   C(60)   NotNull,
-                xar_dynamic_replace L       NotNull DEFAULT 0,
+                xar_dynamic_replace I1       NotNull DEFAULT 0,
                 xar_link_itemtype   I       NotNull DEFAULT 0,
                 xar_type_desc       X
             ";
