@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Update entry for an item
  *
  * @package modules
@@ -15,10 +15,9 @@
  * Optional $extrainfo['xarcachemanager_remark'] from arguments, or 'xarcachemanager_remark' from input
  *
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- * todo - actually raise errors, get intelligent and specific about cache files to remove
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_updateconfighook($args)
 {

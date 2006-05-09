@@ -1,6 +1,6 @@
 <?php
-/*
- *Construct output array
+/**
+ * Construct output array
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -13,10 +13,8 @@
 /**
  * @author jsb
  *
- * @returns array
- * @return array of cache types, with key set to cache type and value set to its settings
-*/
-
+ * @return array Cache types, with key set to cache type and value set to its settings
+ */
 function xarcachemanager_adminapi_getcachetypes()
 {
     static $cachetypes;

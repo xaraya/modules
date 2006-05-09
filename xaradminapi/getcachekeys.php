@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Construct an array of current cache keys
  *
  * @package modules
@@ -12,11 +12,11 @@
  */
 /**
  * Construct an array of the current cache keys
+ *
  * @author jsb
  *
  * @param $type cachetype to start the search for cachekeys
- * @returns array
- * @return sorted array of cachekeys
+ * @return array sorted array of cachekeys
 */
 
 function xarcachemanager_adminapi_getcachekeys($type = '')
@@ -36,7 +36,7 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     if (!empty($xarOutput_cacheCollection)) {
         $cachedir = $xarOutput_cacheCollection;
     } else {
-        $cachedir = xarCore_getVarDirPath() . '/cache/output';
+        $cachedir = xarCoreGetVarDirPath() . '/cache/output';
     }
 
     // default cache storage is 'filesystem' if necessary

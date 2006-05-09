@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Get cache size
  *
  * @package modules
@@ -14,8 +14,7 @@
  * @author jsb
  *
  * @param $type cachetype to get the size for
- * @returns int
- * @return size of the cache
+ * @return int size of the cache
 */
 
 function xarcachemanager_adminapi_getcachesize($type = '')

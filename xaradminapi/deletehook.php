@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Delete entry for a module item
  *
  * @package modules
@@ -15,9 +15,8 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_deletehook($args)
@@ -89,7 +88,7 @@ function xarcachemanager_adminapi_deletehook($args)
                          $blocksettings WHERE xar_bid = $objectid ";
                 $result =& $dbconn->Execute($query);
             }
-                
+
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
             xarOutputFlushCached('', $outputCacheDir . 'paage');
@@ -97,7 +96,7 @@ function xarcachemanager_adminapi_deletehook($args)
             $cacheKey = "-blockid" . $objectid;
             xarOutputFlushCached($cacheKey, $outputCacheDir . 'block');
             break;
-        case 'articles': 
+        case 'articles':
             xarOutputFlushCached('articles-');
             // a status update might mean a new menulink and new base homepage
             xarOutputFlushCached('base');
@@ -114,7 +113,7 @@ function xarcachemanager_adminapi_deletehook($args)
                      // delete cachekey of each module autolinks is hooked to.
             $hooklist = xarModAPIFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
-            
+
             foreach ($modhooks as $hookedmodname => $hookedmod) {
                 $cacheKey = "$hookedmodname-";
                 xarOutputFlushCached($cacheKey);

@@ -11,15 +11,15 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb
  */
-/*
+/**
+ * construct an array of output cache subdirectories
+ *
  * @param $dir directory to start the search for subdirectories in
- * @returns array
- * @return sorted array of cache sub directories, with key set to directory name and value set to path
+ * @return array sorted array of cache sub directories, with key set to directory name and value set to path
  * @todo do not include empty directories in the array
-*/
-
+ */
 function xarcachemanager_adminapi_getcachedirs($dir = FALSE)
-{   
+{
     $cachedirs = array();
 
     if ($dir && is_dir($dir)) {
@@ -37,6 +37,6 @@ function xarcachemanager_adminapi_getcachedirs($dir = FALSE)
         }
     }
     asort($cachedirs);
-    return $cachedirs;         
+    return $cachedirs;
 }
 ?>

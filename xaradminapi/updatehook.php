@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Update hooks
  *
  * @package modules
@@ -16,8 +16,7 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * todo - actually raise errors, get intelligent and specific about cache files to remove
  */
@@ -79,13 +78,13 @@ function xarcachemanager_adminapi_updatehook($args)
     switch($modname) {
         case 'blocks':
             // first, if authorized, save the new settings
-            if (file_exists($outputCacheDir . 'cache.blocklevel') && 
+            if (file_exists($outputCacheDir . 'cache.blocklevel') &&
                 xarSecurityCheck('AdminXarCache', 0)) {
                 xarVarFetch('nocache', 'isset', $nocache, 0, XARVAR_NOT_REQUIRED);
                 xarVarFetch('pageshared', 'isset', $pageshared, 0, XARVAR_NOT_REQUIRED);
                 xarVarFetch('usershared', 'isset', $usershared, 0, XARVAR_NOT_REQUIRED);
                 xarVarFetch('cacheexpire', 'str:1:9', $cacheexpire, NULL, XARVAR_NOT_REQUIRED);
-    
+
                 if (empty($nocache)) {
                     $nocache = 0;
                 }
@@ -100,7 +99,7 @@ function xarcachemanager_adminapi_updatehook($args)
                                                   array('starttime' => $cacheexpire,
                                                         'direction' => 'to'));
                 }
-    
+
                 $systemPrefix = xarDBGetSystemTablePrefix();
                 $blocksettings = $systemPrefix . '_cache_blocks';
                 $dbconn =& xarDBGetConn();
@@ -121,7 +120,7 @@ function xarcachemanager_adminapi_updatehook($args)
                 $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
                 $result =& $dbconn->Execute($query,$bindvars);
             }
-            
+
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
             xarOutputFlushCached('', $outputCacheDir . 'page');
@@ -160,7 +159,7 @@ function xarcachemanager_adminapi_updatehook($args)
             xarOutputFlushCached($cacheKey);
             break;
     }
-    
+
     if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
         xarModAPIFunc( 'xarcachemanager', 'admin', 'regenstatic');
     }

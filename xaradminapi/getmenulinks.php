@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Utility function for menulinks
  *
  * @package modules
@@ -14,7 +14,6 @@
  * utility function pass individual menu items to the main menu
  *
  * @author jsb| mikespub
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function xarcachemanager_adminapi_getmenulinks()
