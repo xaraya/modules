@@ -1,4 +1,5 @@
 <xar:template file="publinks" type="module" />
+
 <xar:if condition="!empty($ptid) or !empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
 </xar:if>
@@ -8,26 +9,22 @@
         and also a separate user-view-frontpage.xd template for the articles frontpage
     </xar:comment>
 
+<xar:template file="navtabs-user" type="module" />
+
+<xar:template file="alphapager" type="module" />
+
 <xar:if condition="!empty($author) or !empty($pubdate)">
     <h2>
         <xar:if condition="!empty($pubdate)">
             <xar:ml>
-                <xar:mlstring>
-                    Publication Date : #(1) 
-                </xar:mlstring>
-                <xar:mlvar>
-                    #$pubdate# 
-                </xar:mlvar>
+                <xar:mlstring>Publication Date : #(1)</xar:mlstring>
+                <xar:mlvar>#$pubdate#</xar:mlvar>
             </xar:ml>
         </xar:if>
         <xar:if condition="!empty($author)">
             <xar:ml>
-                <xar:mlstring>
-                    By Author : #(1) 
-                </xar:mlstring>
-                <xar:mlvar>
-                    #$author# 
-                </xar:mlvar>
+                <xar:mlstring>By Author : #(1)</xar:mlstring>
+                <xar:mlvar>#$author#</xar:mlvar>
             </xar:ml>
         </xar:if>
     </h2>
@@ -57,37 +54,29 @@
 
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
-        <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
-            <xar:mlstring>
-                single-column display 
-            </xar:mlstring>
+        <a href="#xarModURL('articles','user','view',array('numcols' =&gt; 1))#">
+            <xar:mlstring>single-column display</xar:mlstring>
         </a>
-        <xar:else />
+    <xar:else />
         <a href="#xarModURL('articles','user','view')#">
             <xar:ml>
-                <xar:mlstring>
-                    #(1)-column display 
-                </xar:mlstring>
-                <xar:mlvar>
-                    #$showcols# 
-                </xar:mlvar>
+                <xar:mlstring>#(1)-column display</xar:mlstring>
+                <xar:mlvar>#$showcols#</xar:mlvar>
             </xar:ml>
         </a>
     </xar:if>
 </xar:if>
 
-<xar:template file="alphapager" type="module" />
-
 <div class="xar-align-center">
-<xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-    <p>#$viewpager#</p> 
+    <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
+    <div>#$viewpager#</div>
     <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
         <xar:mlstring>Sort by </xar:mlstring>
         <xar:foreach in="$sortlinks" value="$sortitem">
-            <xar:if condition="!empty($sortitem['slink'])">
-                <a href="#$sortitem['slink']#">#$sortitem['stitle']#</a>
+            <xar:if condition="!empty($sortitem.slink)">
+                <a href="#$sortitem.slink#">#$sortitem.stitle#</a>
             <xar:else/>
-                #$sortitem['stitle']#
+                #$sortitem.stitle#
             </xar:if>
         </xar:foreach>
     </xar:if>
@@ -97,4 +86,3 @@
     <xar:categories-navigation layout="prevnext" />
 </xar:if>
 
-<xar:template file="navtabs-user" type="module" />

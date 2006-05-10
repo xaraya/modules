@@ -4,7 +4,7 @@
     <xar:if condition="xarTplAddStyleLink('articles', 'alphapager')"></xar:if>
 
     <div class="alphapager-wrapper">
-        <a href="#xarServerGetCurrentURL(array('letter' => null,'startnum' => null))#"><xar:mlstring>All</xar:mlstring></a>
+        <a href="#xarServerGetCurrentURL(array('letter' =&gt; null,'startnum' =&gt; null))#"><xar:mlstring>All</xar:mlstring></a>
         <xar:for start="$i = 65" test="$i le 90" iter="$i++">
             <xar:set name="$curletter">chr($i)</xar:set>
     
