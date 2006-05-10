@@ -9,32 +9,25 @@
 </div>
 <div class="xar-mod-body">
 
-<p><xar:var name="menu" /></p>
+    <xar:module main="false" module="helpdesk" func="menu" />
 
-<p>
-   <xar:ml>
-       <xar:mlstring>Your ticket has been submitted! Please reference ticket number #(1) when referencing this issue.</xar:mlstring>
-       <xar:mlvar>#$return_val#</xar:mlvar>
-   </xar:ml>
-</p>
+    <p>
+       <xar:ml>
+           <xar:mlstring>Your ticket has been submitted! Please reference ticket number ###(1) when referencing this issue.</xar:mlstring>
+           <xar:mlvar>#$return_val#</xar:mlvar>
+       </xar:ml>
+    </p>
 
-<xar:if condition="xarUserIsLoggedIn()">
-    <form action="#xarModURL('helpdesk', 'user', 'display')#" method="post" name="viewticket">
-        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-        <input type="hidden" name="activity"  value="sendnewticket" />
-        <input type="hidden" name="userid"    value="#$userid#" />
-        <input type="hidden" name="ticket_id" value="#$return_val#" />
-
+    <xar:if condition="xarUserIsLoggedIn()">
+        <xar:set name="link_url">xarModURL('helpdesk', 'user', 'display', array('tid' => $tid))</xar:set>
         <xar:if condition="$enabledimages">
-            <a href="javascript:document.viewticket.submit();" title="View Ticket">
+            <a href="#$link_url#" title="View Ticket">
                 <img src="#xarTplGetImage('viewticket.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
-            <a href="javascript:document.viewticket.submit();" title="View Ticket">
+            <a href="#$link_url#" title="View Ticket">
                 [<xar:mlstring>View Tickets</xar:mlstring>]</a>
         </xar:if>
-    </form>
-</xar:if>
+    </xar:if>
 
-<p><xar:var name="summaryfooter" /></p>
-
+    <xar:module main="false" module="helpdesk" func="summaryfooter" />
 </div>

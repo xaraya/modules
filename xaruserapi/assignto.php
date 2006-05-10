@@ -21,23 +21,19 @@
 function helpdesk_userapi_assignto($args)
 {
     extract($args);
-    //MichelV: Is this still necessary when replacing named itemids with id numer?
-    if( !xarModAPILoad('helpdesk') ){
-        return false;
-    }
 
     // Get reps for further processing
     $reps = xarModAPIFunc('dynamicdata', 'user', 'getitems',
         array(
             'module' => 'helpdesk',
-            'itemtype' => 10
+            'itemtype' => REPRESENTATIVE_ITEMTYPE
         )
     );
 
     $cats = xarModAPIFunc('categories', 'user', 'getlinks',
         array(
             'modid'    => xarModGetIdFromName('helpdesk'),
-            'itemtype' => 10,
+            'itemtype' => REPRESENTATIVE_ITEMTYPE,
             'cids'     => $cids
         )
     );
