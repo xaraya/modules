@@ -17,21 +17,21 @@
  */
 function xarbb_admin_delete($args)
 {
+    extract($args);
+
     // Get parameters
     if (!xarVarFetch('fid', 'int:1:', $fid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
-    extract($args);
+    if (!xarVarFetch('confirmation', 'str:1:', $confirmation, '', XARVAR_NOT_REQUIRED)) return;
+
+
     // The user API function is called.
-    $data = xarModAPIFunc('xarbb',
-                          'user',
-                          'getforum',
-                          array('fid' => $fid));
+    $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
 
     if (empty($data)) return;
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB', 1, 'Forum', $data['catid'].':'.$data['fid'])) return;
+    if (!xarSecurityCheck('DeletexarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -44,19 +44,15 @@ function xarbb_admin_delete($args)
 
         // For Tabs:
         // The user API function is called
-        $links = xarModAPIFunc('xarbb',
-                               'user',
-                               'getallforums');
-        $totlinks=count($links);
+        $links = xarModAPIFunc('xarbb', 'user', 'getallforums');
+        $totlinks = count($links);
+
         // Check individual permissions for Edit / Delete
         for ($i = 0; $i < $totlinks; $i++) {
             $link = $links[$i];
 
             if (xarSecurityCheck('EditxarBB', 0)) {
-                $links[$i]['editurl'] = xarModURL('xarbb',
-                                                  'admin',
-                                                  'modify',
-                                                  array('fid' => $link['fid']));
+                $links[$i]['editurl'] = xarModURL('xarbb', 'admin', 'modify', array('fid' => $link['fid']));
             } else {
                 $links[$i]['editurl'] = '';
             }
@@ -66,6 +62,7 @@ function xarbb_admin_delete($args)
         $data['tabs'] = $links;
         $data['action'] = '2';
         $data['forumname'] = $data['fname'];
+
         //Load Template
         return $data;
     }
@@ -76,21 +73,18 @@ function xarbb_admin_delete($args)
     if (!xarSecConfirmAuthKey()) return;
 
 
-    $topics =  xarModAPIFunc('xarbb','user','getalltopics', array('fid' => $fid));
+    $topics =  xarModAPIFunc('xarbb', 'user', 'getalltopics', array('fid' => $fid));
 
-    if (count($topics) >0) { //check to make sure there are topics to delete
-    // need to delete the topics first then the forum.
-        if (!xarModAPIFunc('xarbb',
-                              'admin',
-                           'deletealltopics',
-                                array('fid' => $fid))) return;
+    if (count($topics) > 0) { //check to make sure there are topics to delete
+        // need to delete the topics first then the forum.
+        if (!xarModAPIFunc('xarbb', 'admin', 'deletealltopics', array('fid' => $fid))) return;
     }
-    if (!xarModAPIFunc('xarbb',
-                       'admin',
-                       'delete',
-                        array('fid' => $fid))) return;
 
-    xarSessionSetVar('statusmsg', xarML('Forum deleted!'));
+    $newforum = xarModAPIFunc('xarbb', 'admin', 'delete', array('fid' => $fid));
+    if (empty($newforum)) return;
+
+    xarSessionSetVar('statusmsg', xarML('Forum deleted'));
+
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
 

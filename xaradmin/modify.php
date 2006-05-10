@@ -15,8 +15,10 @@
  * @author John Cox
  * @function to modify an existing forum
 */
-function xarbb_admin_modify()
+function xarbb_admin_modify($args)
 {
+    extract($args);
+
     // Get parameters
     if (!xarVarFetch('fid', 'id', $fid)) return;
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -26,9 +28,7 @@ function xarbb_admin_modify()
     switch(strtolower($phase)) {
         case 'form':
         default:
-            if (!isset($fid)) {
-                xarSessionSetVar('statusmsg', '');
-            }
+            if (!isset($fid)) xarSessionSetVar('statusmsg', '');
 
             // The user API function is called.
             $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
@@ -55,13 +55,9 @@ function xarbb_admin_modify()
             if (!xarSecurityCheck('EditxarBB', 1, 'Forum', $data['catid'] . ':' . $data['fid'])) return;
 
             // Get the settings for this forum
-            $settings = xarModGetVar('xarbb', 'settings.' . $fid);
-            if (isset($settings)){
-                $settings = unserialize($settings);
-            } else {
-                xarModSetVar('xarbb', 'settings.' . $fid, '');
-            }
+            $settings = $data['settings'];
 
+            // TODO: use the default settings for the module rather than yet another set of defaults defined here.
             if (isset($settings) && is_array($settings)) {
                 $data['topicsperpage']          = empty($settings['topicsperpage']) ? 20 : $settings['topicsperpage'];
                 $data['topicsortby']            = empty($settings['topicsortby']) ? 'time' :$settings['topicsortby'];
@@ -104,19 +100,21 @@ function xarbb_admin_modify()
             if (!isset($data['nntp'])) {
                 $data['nntp'] = '';
             }
-            $masternntpsetting=xarModGetVar('xarbb','masternntpsetting');
-            $masternntpsetting  = !isset($masternntpsetting) ? false :$masternntpsetting;
+            $masternntpsetting = xarModGetVar('xarbb','masternntpsetting');
+            $masternntpsetting = !isset($masternntpsetting) ? false :$masternntpsetting;
             //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
             //even if the nntp settings are not available. Review when nntp is available
 
             if (xarModIsAvailable('newsgroups') && $masternntpsetting){
                 // get the current list of newsgroups
-                $data['items'] = xarModAPIFunc('newsgroups','user','getgroups', array('nocache' => true));
-                $grouplist = xarModGetVar('newsgroups','grouplist');
+                $data['items'] = xarModAPIFunc('newsgroups', 'user', 'getgroups', array('nocache' => true));
+                $grouplist = xarModGetVar('newsgroups', 'grouplist');
                 if (!empty($grouplist)) {
                     $selected = unserialize($grouplist);
+
                     // get list of selected newsgroups
                     $data['selected'] = array_keys($selected);
+
                     // update description of selected newsgroups
                     foreach ($selected as $group => $info) {
                         if (isset($data['items'][$group]) && isset($info['desc'])) {
@@ -167,20 +165,21 @@ function xarbb_admin_modify()
             $data['forumname'] = $data['fname'];
             break;
 
+        // TODO: yet another set of defaults redefined in yet another place - centralise them.
         case 'update':
             if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('fstatus','int', $fstatus, 0)) return;
-            if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fstatus', 'int', $fstatus, 0)) return;
+            if (!xarVarFetch('postsperpage', 'int:1:', $postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('hottopic','int:1:',$hottopic, 20 ,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('hottopic', 'int:1:', $hottopic, 20 ,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('topicsperpage', 'int:1:', $topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsortby', 'str:1:', $topicsortby, 'time', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsortorder', 'str:1:', $topicsortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('editstamp','int:1:', $editstamp, 0 ,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('allowhtml', 'checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('allowbbcode', 'checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('editstamp', 'int:1:', $editstamp, 0 ,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('showcats', 'checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntp', 'str:1:', $nntp, '', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code.
@@ -215,9 +214,9 @@ function xarbb_admin_modify()
 
             // Enable bbcode hooks for modified forum
             if (xarModIsAvailable('bbcode')) {
-                //Make sure the overall module hook is disabled so we can do each forum
+                // Make sure the overall module hook is disabled so we can do each forum
                 xarModAPIFunc(
-                    'modules','admin','disablehooks',
+                    'modules', 'admin', 'disablehooks',
                     array(
                         'callerModName'    => 'xarbb',
                         'callerItemType'   => 0,
