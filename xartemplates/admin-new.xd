@@ -41,12 +41,23 @@
 
          <fieldset>
              <legend>Actions</legend>
+
              <div class="xar-form-input-wrapper-after">
-             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-             <input type="hidden" name="itemtype" value="#$itemtype#" />
-             <input type="submit" name="preview" value="#xarML('Preview')#" />
-             <input type="submit" value="#xarML('Create')#" />
+                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                 <input type="hidden" name="itemtype" value="#$itemtype#" />
+                 <input type="submit" name="preview" value="#xarML('Preview')#" />
+                 <input type="submit" value="#xarML('Create')#" />
              </div>
+
+            <xar:if condition="$itemtype eq REPRESENTATIVE_ITEMTYPE">
+                <div class="xar-form-input-wrapper">
+                    <xar:mlstring>
+                        Note: Creating a representative will place the selected user into your defined
+                        reprentatives group.  If you have not have defined such a group please do so now
+                        before create a representative.
+                    </xar:mlstring>
+                </div>
+            </xar:if>
         </fieldset>
     </form>
 </div>
