@@ -8,7 +8,7 @@
      </xar:ml>
   </p>
    <p>
-       <a href="#xarModURL('registration','user','register')#">
+       <a href="#$submitlink#">
            <xar:ml><xar:mlstring>I am #(1) or older</xar:mlstring><xar:mlvar>#$minage#</xar:mlvar></xar:ml>
        </a>
    </p>

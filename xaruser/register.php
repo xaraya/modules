@@ -57,7 +57,8 @@ function registration_user_register()
 
         case 'checkage':
             $minage = xarModGetVar('registration', 'minage');
-            $data = xarTplModule('registration','user', 'checkage', array('minage'    => $minage));
+            $submitlink=xarModURL('registration','user','register',array('phase'=>'registerform'));
+            $data = xarTplModule('registration','user', 'checkage', array('minage'    => $minage,'submitlink'=>$submitlink));
             break;
 
         case 'registerform': //Make this default now login is handled by authsystem
