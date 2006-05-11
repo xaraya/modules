@@ -50,24 +50,26 @@ function registration_userapi_encode_shorturl($args)
     $path[] = $module;
 
     if ($func == 'main') {
-         $path[] = 'main';
+         $path[] = '';
         // Consume the 'func' parameter only.
         unset($get['func']);
     } elseif ($func == 'terms' || $func == 'privacy') {
         $path[] = $func;
         unset($get['func']);
-
     } elseif ($func == 'register') {
             $path[] = 'register';
             if (!empty($phase)) {
                 // Bug 4404: registerform and registration are aliases.
-                if ($phase == 'registerform' || $phase == 'registration' || $phase == 'checkage') {
-                    unset($args['phase']);
-                    $path[] = $phase=='checkage'?'checkage':'';//($phase == 'registerform' ? 'registration' : $phase);
-                } else {
+                 if ($phase =='checkage' || $phase =='registerform' || $phase=='registration') {
+                        $path[] = $phase=='checkage'?'checkage':$phase;
+                 } else {
                     // unsupported phase - must be passed via forms
                 }
             }
+            unset($get['func']);
+            unset($get['phase']);
+            unset($args['phase']);
+            unset($phase);
     } else {
         //hmmm
     }

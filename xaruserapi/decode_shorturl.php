@@ -30,6 +30,7 @@
 function registration_userapi_decode_shorturl($params)
 {
     $args = array();
+
     $module = 'registration';
     /* Check and see if we have a module alias */
     $aliasisset = xarModGetVar('registration', 'useModuleAlias');
@@ -67,11 +68,13 @@ function registration_userapi_decode_shorturl($params)
             } else {
                 // unsupported phase - must be passed via forms
             }
+        } else {
+        
         }
         return array('register', $args);
 
     } else {
-
+     //not supported
     }
 
     // default : return nothing -> no short URL decoded
