@@ -22,7 +22,7 @@ function registration_userapi_getmenulinks()
 		if (!xarUserIsLoggedIn()){
 			$menulinks[] = array('url'   => xarModURL('registration',
 													  'user',
-													  'register'),
+													  'main'),
 								 'title' => xarML('Register'),
 								 'label' => xarML('Register'));
 		}
