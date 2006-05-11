@@ -15,6 +15,13 @@ function helpdesk_user_add_history($args)
     if( !xarVarFetch('comment', 'html:basic', $comment,  null) ){ return false; }
     extract($args);
 
+    if( empty($comment) )
+    {
+        $msg = xarML("Missing required comment.");
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', $msg);
+        return false;
+    }
+
     $has_security = xarModAPIFunc('security', 'user', 'check',
         array(
             'modid'     => xarModGetIDFromName('helpdesk'),

@@ -20,7 +20,7 @@
 /* This program is opensource so you can do whatever    */
 /* you want with it.                                    */
 /*                                                      */
-/* http://www.dimensionquest.net            */
+/* http://www.dimensionquest.net                        */
 /********************************************************/
 
 /**
