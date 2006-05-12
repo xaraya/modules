@@ -28,13 +28,14 @@ function articles_user_view($args)
     if (!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('q',        'str',   $q,         NULL, XARVAR_NOT_REQUIRED)) {return;}
+    // TODO: put the query string through a proper parser, so searches on multiple words can be done.
+    if (!xarVarFetch('q',        'pre:trim:passthru:str:1:200',   $q,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     // can't use list enum here, because we don't know which sorts might be used
     // True - but we can provide some form of validation and normalisation.
     // The original 'regexp:/^[\w,]*$/' lets through *any* non-space character.
     // This validation will accept a list of comma-separated words, and will lower-case, trim
     // and strip out non-alphanumeric characters from each word.
-    if (!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sort',     'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('authorid', 'id',    $authorid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('pubdate',  'str:1', $pubdate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -44,10 +45,7 @@ function articles_user_view($args)
     //    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Added to impliment an Alpha Pager
-    if(!xarVarFetch('letter', 'str', $letter,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-
-    // TODO: put the query string through a proper parser, so searches on multiple words can be done.
-    if (trim($q) === '') $q = NULL;
+    if (!xarVarFetch('letter', 'pre:lower:passthru:str:1:20', $letter, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
@@ -355,39 +353,19 @@ function articles_user_view($args)
     if (empty($where)) $where = null;
 
     // Modify the where clause if an Alpha filter has been specified.
-    if (!empty($letter))
-    {
-        $letter = strtoupper($letter);
-        if ( preg_match("/^[a-z|A-Z]$/", $letter) )
-        {
+    if (!empty($letter)) {
+        // We will allow up to three initial letters, anything more than that is assumed to be 'Other'.
+        // Need to also be very wary of SQL injection, since we are not using bind variables here.
+        // TODO: take into account international characters.
+        if (preg_match('/^[a-z]{1,3}$/i', $letter)) {
             $extrawhere = "title LIKE '$letter%'";
         } else {
-            $extrawhere= " title NOT LIKE 'a%'"
-                        ." and title NOT LIKE 'b%'"
-                        ." and title NOT LIKE 'c%'"
-                        ." and title NOT LIKE 'd%'"
-                        ." and title NOT LIKE 'e%'"
-                        ." and title NOT LIKE 'f%'"
-                        ." and title NOT LIKE 'g%'"
-                        ." and title NOT LIKE 'h%'"
-                        ." and title NOT LIKE 'i%'"
-                        ." and title NOT LIKE 'j%'"
-                        ." and title NOT LIKE 'k%'"
-                        ." and title NOT LIKE 'l%'"
-                        ." and title NOT LIKE 'm%'"
-                        ." and title NOT LIKE 'n%'"
-                        ." and title NOT LIKE 'o%'"
-                        ." and title NOT LIKE 'p%'"
-                        ." and title NOT LIKE 'q%'"
-                        ." and title NOT LIKE 'r%'"
-                        ." and title NOT LIKE 's%'"
-                        ." and title NOT LIKE 't%'"
-                        ." and title NOT LIKE 'u%'"
-                        ." and title NOT LIKE 'v%'"
-                        ." and title NOT LIKE 'w%'"
-                        ." and title NOT LIKE 'x%'"
-                        ." and title NOT LIKE 'y%'"
-                        ." and title NOT LIKE 'z%'";
+            // Loop through the alphabet for the 'not in' part.
+            $letterwhere = array();
+            for($i = ord('a'); $i <= ord('z'); $i++) {
+                $letterwhere[] = "title NOT LIKE '" . chr($i) . "%'";
+            }
+            $extrawhere = implode(' and ', $letterwhere);
         }
         if ($where == null) {
             $where = $extrawhere;
@@ -422,13 +400,15 @@ function articles_user_view($args)
         if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
              return; // throw back
         } elseif (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
-            // get back the reason in string format
+            // Get back the reason in string format
             $reason = xarCurrentError();
-            if (!empty($reason)) {
-                $reason = ' - ' . xarML('Reason') . ' : ' . $reason->toString();
-            }
         }
-        $data['output'] = xarML('Failed to retrieve articles') . $reason;
+
+        if (!empty($reason)) {
+            $data['output'] = xarML('Failed to retrieve articles - reason: #(2)', $reason->toString());
+        } else {
+            $data['output'] = xarML('Failed to retrieve articles');
+        }
         return $data;
     }
 
