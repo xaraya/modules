@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div>
     <xar:if condition="$canvote">
-        <form method="post" action="#xarModUrl('polls', 'user', 'vote')#">
+        <form method="post" action="&xar-modurl-polls-user-vote;">
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="pid" value="#$pid#" />
             <input type="hidden" name="returnurl" value="#$returnurl#" />
@@ -20,7 +20,7 @@
                     </label>
                 </div>
             </xar:for>
-            <div class="xar-align-center">                
+            <div class="xar-align-center">
                 <input type="submit" value="#$buttonlabel#" />
             </div>
         </form>
@@ -36,7 +36,7 @@
                 </b>
                 [ #$loop:item['percentage']#%
                 <xar:if condition="$showtotalvotes eq 1">
-                    &nbsp;(#$loop:item['votes']#) 
+                    &nbsp;(#$loop:item['votes']#)
                 </xar:if>
                 ]
             </div>
@@ -55,12 +55,12 @@
                 </div>
             </xar:if>
         </xar:loop>
-    </xar:if>    
+    </xar:if>
     <xar:if condition="$previewresults or empty($canvote)">
-        <div class="xar-align-center xar-clearboth"> 
+        <div class="xar-align-center xar-clearboth">
             <a href="#$resultsurl#">
                 <xar:mlstring>Results</xar:mlstring>
             </a>
         </div>
-    </xar:if>    
+    </xar:if>
 </div>
