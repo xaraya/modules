@@ -18,11 +18,11 @@ function polls_admin_create()
 {
     // Get parameters
 
-    if (!xarVarFetch('polltype', 'str:1:', $polltype, 'single', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('private', 'int:0:1', $private, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('title', 'str:1:', $title, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_date', 'str:1:', $start_date, time(),  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_date', 'str:1:', $end_date, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('polltype',    'str:1:',  $polltype,   'single', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private',     'int:0:1', $private,    0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title',       'str:1:',  $title,      NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_date',  'str:1:',  $start_date, time(),  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_date',    'str:1:',  $end_date,   NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -61,9 +61,6 @@ function polls_admin_create()
         // adjust for the user's timezone offset
         $end_date -= xarMLS_userOffset() * 3600;
         }
-
-
-
 
     // Pass to API
     $pid = xarModAPIFunc('polls',

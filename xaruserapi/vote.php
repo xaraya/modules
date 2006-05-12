@@ -7,16 +7,15 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls Module
+ * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-
 /**
  * vote on an item
  * @param $args['pid'] id of poll to vote on
  * @param $args['options'] options with vote information
- * @returns array
- * @return item array, or false on failure
+ * @return array with item, or false on failure
  */
 function polls_userapi_vote($args)
 {
