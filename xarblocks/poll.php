@@ -1,23 +1,22 @@
 <?php
-/*
+/**
+ * Polls block
  *
- * Polls Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls Module
+ * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 /**
  * initialise block
+ * return bool true
  */
 function polls_pollblock_init()
 {
-    // Security
-    // xarSecAddSchema('Polls:Pollblock:', 'Block title::');
     return true;
 }
 
@@ -164,6 +163,7 @@ function polls_pollblock_modify($blockinfo)
 
 /**
  * update block settings
+ * @return array $blockinfo
  */
 function polls_pollblock_update($blockinfo)
 {

@@ -1,22 +1,23 @@
 <?php
 /**
- * Polls Module
+ * Polls module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls Module
+ * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 /**
  * create an entry for a module item - hook for ('item','new','GUI')
  *
  * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
+ * @param array $args['extrainfo'] extra information
  * @return string hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_admin_newhook($args)
 {
