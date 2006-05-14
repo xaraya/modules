@@ -35,7 +35,7 @@ function sitecontact_user_main()
     if(!xarSecurityCheck('ViewSiteContact')) return;
 
     /*  Generate a onetime authorisation code for this operation */
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey('sitecontact');
 
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
