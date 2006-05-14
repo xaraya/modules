@@ -1,6 +1,5 @@
 
 <xar:comment> START::OVERLIB JAVASCRIPT INITIALIZATION </xar:comment>
 <script type="text/javascript" src="modules/overlib/config.inc.js"></script>
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script src="modules/overlib/overlib_mini.js" type="text/javascript"><xar:comment> overLIB (c) Erik Bosrup </xar:comment></script>
+<script src="modules/overlib/overlib/Mini/overlib_mini.js" type="text/javascript"><xar:comment> overLIB (c) Erik Bosrup </xar:comment></script>
 <xar:comment> END::OVERLIB JAVASCRIPT INITIALIZATION </xar:comment>
