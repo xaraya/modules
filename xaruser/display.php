@@ -44,7 +44,7 @@ function files_user_display($args)
     if (xarSecurityCheck('ViewFiles', 0) && !is_dir($realpath) && is_readable($realpath)) {
         $options['view'] = true;
     }
-    if (xarSecurityCheck('EditFiles', 0) && $path != '/' && in_array($item['mime'], $text_mimes)) {
+    if (xarSecurityCheck('EditFiles', 0) && $path != '/' && in_array($item['mime'], $text_mimes) && is_writable($realpath)) {
         $options['edit'] = true;
     }
     if (xarSecurityCheck('DeleteFiles', 0) && $path != '/' && is_writable($realpath)) {

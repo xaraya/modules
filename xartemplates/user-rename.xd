@@ -9,10 +9,11 @@
     <fieldset>
         <legend><xar:mlstring>Rename Options</xar:mlstring></legend>
         <h3 class="xar-align-center">
-            <xar:ml>
-                <xar:mlstring>Enter a new name for this #(1):</xar:mlstring>
-                <xar:mlvar>#$itemtype#</xar:mlvar>
-            </xar:ml>
+            <xar:if condition="$itemtype eq 'folder'">
+                <xar:mlstring>Enter a new name for this folder:</xar:mlstring>
+            <xar:elseif condition="$itemtype eq 'file'" />
+                <xar:mlstring>Enter a new name for this file:</xar:mlstring>
+            </xar:if>
         </h3>
 
         <xar:set name="$dirname">dirname($path)</xar:set>
