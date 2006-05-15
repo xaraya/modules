@@ -168,7 +168,7 @@
                             <xar:if condition="xarUserIsLoggedIn()">
                                 <xar:if condition="$tstatus ne 3">
                                     <xar:sec mask="PostxarBB" catch="false">
-                                        <xar:if condition="$allowbbcodeor $allowhtml">
+                                        <xar:if condition="$allowbbcode or $allowhtml">
                                             <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
                                                 <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" />
