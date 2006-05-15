@@ -87,8 +87,9 @@ function xarbb_user_viewtopic($args)
     $settings = $forum['settings'];
     $allowhtml = $settings['allowhtml'];
     $allowbbcode = $settings['allowbbcode'];
-
     $postsperpage = $settings['postsperpage'];
+
+    $catid=(int)$forum['catid'];
 
     // Security Check
     if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', "$catid:$fid")) return;
