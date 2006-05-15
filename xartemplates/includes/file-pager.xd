@@ -1,12 +1,12 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
+<a href="&xar-modurl-files-user-main;"><xar:mlstring>files://</xar:mlstring></a>
 <xar:loop name="$pathparts">
-	<xar:set name="$pathpart">#$loop:item#</xar:set>
-	<xar:set name="$parent">dirname($pathpart)</xar:set>
-	<a href="#xarModURL('files', 'user', 'main', array('path' => $parent))#">/</a>
+    <xar:if condition="empty($loop:key)"><xar:continue /></xar:if>
+
 	<xar:if condition="($loop:index + 1) eq count($pathparts) and isset($item) and !$item['is_dir']">
 		<a href="#xarModURL('files', 'user', 'display', array('path' => $loop:item))#">#$loop:key#</a>
 	<xar:else />
-		<a href="#xarModURL('files', 'user', 'main', array('path' => $loop:item))#">#$loop:key#</a>
+		<a href="#xarModURL('files', 'user', 'main', array('path' => $loop:item))#">#$loop:key# /</a>
 	</xar:if>
 </xar:loop>
