@@ -18,34 +18,38 @@
  * @param $args['withtopics'] bool update topics too (optional, default false)
  * @returns void
 */
-function xarbb_admin_sync()
+function xarbb_admin_sync($args)
 {
     // Security Check
-    if (!xarSecurityCheck('EditxarBB',1,'Forum')) return;
+    if (!xarSecurityCheck('EditxarBB', 1, 'Forum')) return;
+
+    extract($args);
 
     // Get parameters
     if (!xarVarFetch('fid','id', $fid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('withtopics','bool', $withtopics, false, XARVAR_NOT_REQUIRED)) return;
     xarSessionSetVar('statusmsg', '');
+
     // Pass arguments to the API function
-    if (!xarModAPIFunc('xarbb','admin','sync',
-                       array('fid'        => $fid,
-                             'withtopics' => $withtopics))) {
-       if ($withtopics) {
-          xarSessionSetVar('statusmsg', xarML('Problem syncing forum topics!'));
-       } else {
-          xarSessionSetVar('statusmsg', xarML('Problem syncing forum!'));
-       }
+    $syncresult = xarModAPIFunc('xarbb', 'admin', 'sync', array('fid' => $fid, 'withtopics' => $withtopics));
+    if (empty($syncresult)) {
+        if ($withtopics) {
+            xarSessionSetVar('statusmsg', xarML('Problem syncing forum topics'));
+        } else {
+            xarSessionSetVar('statusmsg', xarML('Problem syncing forum'));
+        }
 
         return;
     }
     if ($withtopics) {
         xarSessionSetVar('statusmsg', xarML('Forum topics successfully synced'));
-       } else {
+    } else {
         xarSessionSetVar('statusmsg', xarML('Forum successfully synced'));
-       }
+    }
+
     // redirect
-    xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify',array('fid'=> $fid)));
+    xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify', array('fid'=> $fid)));
+
     return true;
 }
 ?>

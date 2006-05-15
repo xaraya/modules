@@ -151,11 +151,16 @@ function xarbb_user_viewtopic($args)
     // comments get_multiple() can only return comments in Celko order or reverse Celko order
     // at the moment. This is equivalent to sorting by cid or time here - other postsortby
     // options would require a lot more work, so I would forget about those for now...
+    // ...really?
     if (!empty($postsortorder) && strtoupper($postsortorder) == 'DESC') {
         $reverse = true;
     } else {
         $reverse = false; // default normal Celko order
     }
+
+    //
+    // TODO: Fetch the replies from getallreplies(), once that has been implemented.
+    //
 
     $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
         array(

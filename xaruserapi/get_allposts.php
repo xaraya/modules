@@ -9,6 +9,7 @@
  * @subpackage  xarbb Module
  * @author John Cox, jojodee
 */
+
 /**
  * Get a single comment or a list of comments for a forum. Depending on the parameters passed
  * you can retrieve either a single comment, a complete list of comments, a complete
@@ -29,7 +30,12 @@
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
  * @todo Make these paramaters more relevant to xarBB - i.e. fid, tid etc.
+ * @todo Move this (the modified version) to getallreplies()
+ * @todo Make the return values consistent with the topics variables (i.e. no xar_* name prefixes)
+ * @todo Make sure threaded views are supported
+ * @todo Can we get this data through the comments API?
  */
+
 function xarbb_userapi_get_allposts($args)
 {
     extract($args);
