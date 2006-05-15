@@ -46,9 +46,9 @@ function files_userapi_get($args)
         // note: mime module doesn't do folders, so we have to do it ourselves
         $mime = 'fs/directory';
         $image_big = xarTplGetImage('fs-directory.png', 'mime');
-        $image_small = xarTplGetImage('fs-directory-13x16.png', 'mime');
+        $image_small = xarTplGetImage('fs-directory-16x16.png', 'mime');
         if (empty($image_big)) $image_big = xarTplGetImage('fs-directory.png');
-        if (empty($image_small)) $image_small = xarTplGetImage('fs-directory-13x16.png');
+        if (empty($image_small)) $image_small = xarTplGetImage('fs-directory-16x16.png');
         if (empty($image_small)) $image_small = $image_big;
     } else {
         $mime = xarModAPIFunc('mime', 'user', 'analyze_file',
@@ -57,7 +57,7 @@ function files_userapi_get($args)
             array('mimeType' => $mime));
         $image_small = xarModAPIFunc('mime', 'user', 'get_mime_image',
             array('mimeType' => $mime,
-                'fileSuffix' => '-13x16.png|-13x16.gif|.png|.gif'));
+                'fileSuffix' => '-16x16.png|-16x16.gif|.png|.gif'));
     }
 
     // make url-compatible path

@@ -20,8 +20,8 @@
 <xar:foreach in="$files" value="$item">
 <tr>
     <xar:if condition="$item['is_dir']">
-        <td width="13">
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#xarTplGetImage('fs-directory-13x16.png')#" alt="#xarML('dir')#" width="13" height="16" /></a>
+        <td width="16">
+            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#xarTplGetImage('fs-directory-16x16.png')#" alt="#xarML('dir')#" width="16" height="16" /></a>
         </td>
         <td>
             <xar:if condition="$item['file'] eq '.'">
@@ -39,8 +39,8 @@
             </xar:if>
         </td>
     <xar:else />
-        <td width="13">
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#$item['image_small']#" alt="#xarML('file')#" width="13" height="16" /></a>
+        <td width="16">
+            <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Details')#"><img src="#$item['image_small']#" alt="#xarML('file')#" width="16" height="16" /></a>
         </td>
         <td>
             <a href="#xarModURL('files', 'user', 'download', array('path' => $item['urlpath']))#" title="#xarML('Download this file')#">#$item['file']#</a>

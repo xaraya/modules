@@ -27,7 +27,7 @@
 # License: GPL (as if a script this simple deserves any licensing...)
 #####################################################################
 
-SIZE=13x16
+SIZE=16x16
 
 for i in $*; do
 	BASE=${i:0:$((${#i}-4))}

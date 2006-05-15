@@ -1,9 +1,9 @@
 Description
 ---------------
-The Files module parallels file managing tools most commonly seen in cPanel and
-other web hosting administrative interfaces.  It is intended for groups such as
-project committees and executive boards to make file swapping easy for people
-who are not proficient users of FTP, SFTP, etc.
+The Files module emulates the file managers commonly seen in web hosting
+administrative interfaces such as cPanel.  Its intent is for file swapping
+among project committees and executive boards whose members are no
+tech-savvy or for which FTP is otherwise too complicated to use.
 
 
 Dependencies
