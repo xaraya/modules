@@ -166,7 +166,7 @@ function julian_userapi_decode_shorturl($params)
         // if we have a 2nd parameter it should be an event id
         if(!empty($params[2])) {
             // just make sure it's a valid event_id
-            if (preg_match('/^(\d+)\.html$/',$params[2],$matches)) {
+            if (preg_match('/^(\d+)$/',$params[2],$matches)) {
                 $args['event_id'] = $matches[1];
             }
             elseif (preg_match('/^(\d+)\_link$/',$params[2],$matches)) {

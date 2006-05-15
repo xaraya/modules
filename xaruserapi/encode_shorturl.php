@@ -118,9 +118,9 @@ function julian_userapi_encode_shorturl($args)
     }
 
     /* add some other module arguments as standard URL parameters */
-    if (!empty($path)) {
-            $join = '&';
-            $path = $path.'?';
+    if (isset($startnum) || isset($catid) || isset($cids) || isset($numitems) || isset($sortby) || isset($orderby)) {
+        $join = '&';
+        $path = $path.'?';
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
         }
