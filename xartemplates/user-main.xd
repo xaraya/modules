@@ -47,7 +47,13 @@
         </td>
     </xar:if>
     <td width="10%">#$item['hrsize']#</td>
-    <td width="25%">#$item['hrmodified']#</td>
+    <td width="25%" class="xar-nowrap">
+        <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('medium', $item['modified'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('medium', $item['modified'])#</xar:mlvar>
+        </xar:ml>
+    </td>
 </tr>
 </xar:foreach>
 </table>

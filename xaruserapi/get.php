@@ -97,8 +97,6 @@ function files_userapi_get($args)
         'is_executable' => is_executable($realpath),
         'created'       => $created,
         'modified'      => $modified,
-        'hrmodified'    => date('d M Y h:i A', $modified),
-        'hrcreated'     => date('d M Y h:i A', $created),
         'mime'          => $mime
     );
 

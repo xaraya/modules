@@ -22,7 +22,11 @@
 <!-- MODIFIED -->
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label" title="#xarML('Modified')#"><xar:mlstring>Modified</xar:mlstring>:</label>
-        #$item['hrmodified']#
+        <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('medium', $item['modified'])#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('medium', $item['modified'])#</xar:mlvar>
+        </xar:ml>
     </div>
 
 <!-- MIMETYPE -->
