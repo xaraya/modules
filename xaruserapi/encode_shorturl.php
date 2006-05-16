@@ -32,13 +32,17 @@ function files_userapi_encode_shorturl($args)
     * renamed to $uri.
     */
 
-    // we cannot continue without a function
+    // Check if we have something to work with
     if (!isset($func)) return;
 
-    // set defaults
+    // use module alias if set
+    $usemodulealias = xarModGetVar('files', 'useModuleAlias');
+    $aliasname = xarModGetVar('files', 'aliasname');
+    $module = ($usemodulealias) ? $aliasname : 'files';
+
+    // set basic path vars
     $uri = '';
     $join = '?';
-    $module = 'files';
 
     // determine base URL
     if ($func == 'main') {

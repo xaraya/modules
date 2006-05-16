@@ -1,7 +1,8 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<xar:template type="module" file="user-header" />
 <div class="xar-mod-body">
+
     <h2>
         <xar:if condition="$itemtype eq 'folder'">
             <xar:mlstring>New folder</xar:mlstring>
@@ -10,38 +11,41 @@
         </xar:if>
     </h2>
 
-    <xar:template file="statusmsg" type="module" />
+    <xar:template file="folder-actions" type="module" />
+    <xar:template file="file-pager" type="module" />
 
-    <form method="post" action="#xarModUrl('files', 'user', 'new')#">
-    <fieldset>
-        <legend>
-            <xar:if condition="$itemtype eq 'folder'">
-                <xar:mlstring>Add new folder</xar:mlstring>
-            <xar:elseif condition="$itemtype eq 'file'" />
-                <xar:mlstring>Add new file</xar:mlstring>
-            </xar:if>
-        </legend>
-        <h3 class="xar-align-center">
-            <xar:if condition="$itemtype eq 'folder'">
-                <xar:mlstring>Enter a name for this new folder:</xar:mlstring>
-            <xar:elseif condition="$itemtype eq 'file'" />
-                <xar:mlstring>Enter a name for this new file:</xar:mlstring>
-            </xar:if>
-        </h3>
+    <form method="post" action="&xar-modurl-files-user-new;">
+        <fieldset>
+            <legend>
+                <xar:if condition="$itemtype eq 'folder'">
+                    <xar:mlstring>Add new folder</xar:mlstring>
+                <xar:elseif condition="$itemtype eq 'file'" />
+                    <xar:mlstring>Add new file</xar:mlstring>
+                </xar:if>
+            </legend>
+            <h3 class="xar-align-center">
+                <xar:if condition="$itemtype eq 'folder'">
+                    <xar:mlstring>Enter a name for this new folder:</xar:mlstring>
+                <xar:elseif condition="$itemtype eq 'file'" />
+                    <xar:mlstring>Enter a name for this new file:</xar:mlstring>
+                </xar:if>
+            </h3>
 
-        <div class="xar-form-input-wrapper">
-            <label class="xar-form-label" title="#xarML('File path')#">#$path#</label>
-              <xar:if condition="$path ne '/'">/</xar:if>
-             <input type="text" name="name" size="40" />
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('File path')#">
+                    #$path#
+                    <xar:if condition="$path ne '/'">/</xar:if>
+                </label>
+                <input type="text" name="name" size="35" />
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Create')#" />
+                <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="path" id="path" value="#$urlpath#" />
         </div>
-    </fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Create')#" />
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
-        <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="path" id="path" value="#$urlpath#" />
-    </div>
     </form>
 
 </div>

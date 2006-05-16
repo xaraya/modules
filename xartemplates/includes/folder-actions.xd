@@ -1,33 +1,50 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
- 
-<xar:if condition="xarTplAddStyleLink('files', 'navtabs')"></xar:if>
+
+<xar:style scope="module" file="navtabs" module="base" />
 <dl class="xar-tabs">
     <dt class="help">
         <xar:mlstring>Actions</xar:mlstring>:
     </dt>
 
+    <xar:set name="activetab">$_bl_module_func</xar:set>
+
+    <xar:if condition="$activetab eq 'main'">
+        <dd class="active"><a href="#xarServerGetCurrentURL()#">
+            <xar:mlstring>Browse</xar:mlstring></a>
+        </dd>
+    </xar:if>
+
     <xar:if condition="!empty($options['add'])">
-        <dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'folder'))#">
+
+        <xar:set name="tabclass">($activetab == 'new' and $itemtype == 'folder') ? 'active' : ''</xar:set>
+        <dd class="#$tabclass#"><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'folder'))#">
             <xar:mlstring>New Folder</xar:mlstring></a>
         </dd>
-        <dd><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'file'))#">
+
+        <xar:set name="tabclass">($activetab == 'new' and $itemtype == 'file') ? 'active' : ''</xar:set>
+        <dd class="#$tabclass#"><a href="#xarModURL('files', 'user', 'new', array('path' => $urlpath, 'itemtype' => 'file'))#">
             <xar:mlstring>New File</xar:mlstring></a>
         </dd>
-        <dd><a href="#xarModURL('files', 'user', 'upload', array('path' => $urlpath))#">
+
+        <xar:set name="tabclass">($activetab == 'upload') ? 'active' : ''</xar:set>
+        <dd class="#$tabclass#"><a href="#xarModURL('files', 'user', 'upload', array('path' => $urlpath))#">
             <xar:mlstring>Upload File</xar:mlstring></a>
         </dd>
     </xar:if>
 
     <xar:comment>
     <xar:if condition="!empty($options['delete'])">
-        <dd><a href="#xarModURL('files', 'user', 'rename', array('path' => $urlpath))#">
+
+        <xar:set name="tabclass">($activetab == 'rename') ? 'active' : ''</xar:set>
+        <dd class="#$tabclass#"><a href="#xarModURL('files', 'user', 'rename', array('path' => $urlpath))#">
             <xar:mlstring>Rename</xar:mlstring></a>
         </dd>
-        <dd><a href="#xarModURL('files', 'user', 'delete', array('path' => $urlpath))#">
+
+        <xar:set name="tabclass">($activetab == 'delete') ? 'active' : ''</xar:set>
+        <dd class="#$tabclass#"><a href="#xarModURL('files', 'user', 'delete', array('path' => $urlpath))#">
             <xar:mlstring>Delete</xar:mlstring></a>
         </dd>
     </xar:if>
     </xar:comment>
 
 </dl>
-<br />

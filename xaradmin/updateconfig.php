@@ -16,12 +16,13 @@
 */
 function files_admin_updateconfig()
 {
-    // security checks
-    if (!xarSecurityCheck('AdminFiles', 1)) return;
+    // security check
     if (!xarSecConfirmAuthKey()) return;
 
     // get HTTP vars
-    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('supportshorturls', 'checkbox', $supportshorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('usemodulealias', 'checkbox', $usemodulealias, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('archive_dir', 'str:0', $archive_dir, xarPreCoreGetVarDirPath().'/files', XARVAR_NOT_REQUIRED)) return;
 
     // validate archive dir
@@ -31,15 +32,27 @@ function files_admin_updateconfig()
         return;
     }
 
+    // validate and clean up module alias
+    $aliasname = trim($aliasname);
+    $aliasname = str_replace(' ', '_', $aliasname);
+    $currentalias = xarModGetVar('files', 'aliasname');
+    if ($usemodulealias && $aliasname) {
+        if (!xarModSetAlias($aliasname, 'files')) return;
+    } elseif ($currentalias) {
+        xarModDelAlias($currentalias, 'files');
+    }
+
     // save module vars
-    xarModSetVar('files', 'SupportShortURLs', $shorturls);
+    xarModSetVar('files', 'SupportShortURLs', $supportshorturls);
+    xarModSetVar('files', 'useModuleAlias', $usemodulealias);
+    xarModSetVar('files', 'aliasname', $aliasname);
     xarModSetVar('files', 'archive_dir', $archive_dir);
 
     // call updateconfig hooks
     xarModCallHooks('module', 'updateconfig', 'files', array('module' => 'files'));
 
-    // set status and return to modifyconfig page
-    xarSessionSetVar('statusmsg', xarML('Configuration saved!'));
+    // set session var and redirect to modifyconfig page
+    xarSessionSetVar('statusmsg', xarML('Configuration successfully updated!'));
     xarResponseRedirect(xarModURL('files', 'admin', 'modifyconfig'));
 
     // success

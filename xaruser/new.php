@@ -43,6 +43,19 @@ function files_user_new($args)
     // if no name given, show the GUI
     if (empty($name)) {
 
+        $archive_dir = xarModGetVar('files', 'archive_dir');
+
+        // generate options
+        $options = array();
+        if (is_writable("$archive_dir/$path")) {
+            if (xarSecurityCheck('AddFiles', 0)) {
+                $options['add'] = true;
+            }
+            if (xarSecurityCheck('DeleteFiles', 0)) {
+                $options['delete'] = true;
+            }
+        }
+
         // initialize template array
         $data = xarModAPIFunc('files', 'admin', 'menu');
 
@@ -52,6 +65,9 @@ function files_user_new($args)
         $data['itemtype'] = $itemtype;
         $data['urlpath'] = xarModAPIFunc('files', 'user', 'urlpath',
             array('path' => $path));
+        $data['pathparts'] = xarModAPIFunc('files', 'user', 'getfilepager', array('path' => $path));
+        $data['options'] = $options;
+
 
         return $data;
     }

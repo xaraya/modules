@@ -1,5 +1,0 @@
-<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-
-<xar:if condition="$statusmsg">
-    <p class="xar-accent xar-align-center">#$statusmsg#</p>
-</xar:if>

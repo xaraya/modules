@@ -1,21 +1,22 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<xar:template type="module" file="user-header" />
 <div class="xar-mod-body">
-   <h2><xar:template file="file-pager" type="module" /></h2>
 
-   <xar:template file="statusmsg" type="module" />
+    <h2><xar:mlstring>Edit File</xar:mlstring></h2>
 
-   <h2><xar:mlstring>Edit File</xar:mlstring></h2>
+    <xar:template file="file-actions" type="module" />
+    <xar:template file="file-pager" type="module" />
 
-    <form method="post" action="#xarModUrl('files', 'user', 'update')#">
-    <fieldset>
-        <legend><xar:mlstring>Modify File</xar:mlstring></legend>
-        <div class="xar-form-input-wrapper">
-            <label class="xar-form-label" title="#xarML('File path')#"><xar:mlstring>File content</xar:mlstring></label>
-            <textarea name="contents" id="contents" cols="80" rows="30">#$contents#</textarea>
-        </div>
-    </fieldset>
+    <form method="post" action="&xar-modurl-files-user-update;">
+
+        <fieldset>
+            <legend><xar:mlstring>Modify File</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('File path')#"><xar:mlstring>File content</xar:mlstring></label>
+                <textarea name="contents" id="contents" cols="80" rows="30">#$contents#</textarea>
+            </div>
+        </fieldset>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#xarML('Save')#" /> &nbsp;
             <a href="#xarModURL('files', 'user', 'display', array('path' => $item['urlpath']))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
@@ -24,5 +25,4 @@
         </div>
     </form>
 
-</div>
 </div>

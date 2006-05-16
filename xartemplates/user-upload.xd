@@ -1,23 +1,32 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>File Upload</xar:mlstring></h2>
+<xar:base-include-javascript module="files" filename="multifile_compressed.js" position="head" />
 
-    <xar:template file="statusmsg" type="module" />
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
 
-    <form method="post" action="#xarModUrl('files', 'user', 'upload')#" enctype="multipart/form-data">
+    <h2><xar:mlstring>File Upload</xar:mlstring></h2>
+
+    <xar:template file="folder-actions" type="module" />
+    <xar:template file="file-pager" type="module" />
+
+    <form method="post" action="&xar-modurl-files-user-upload;" enctype="multipart/form-data">
     <fieldset>
         <legend><xar:mlstring>File Upload Selection</xar:mlstring></legend>
+
         <div class="xar-form-input-wrapper">
-        <label class="xar-form-label"><xar:mlstring>Select file(s) to upload:</xar:mlstring></label>
-            <div class="xar-form-container-after">
-            <input type="file" name="userfile[]" size="48" /><br />
-            <input type="file" name="userfile[]" size="48" /><br />
-            <input type="file" name="userfile[]" size="48" /><br />
-            <input type="file" name="userfile[]" size="48" /><br />
-            <input type="file" name="userfile[]" size="48" /><br />
-            </div>
+            <label class="xar-form-label" for="userfile"><xar:mlstring>Select file(s) to upload:</xar:mlstring></label>
+            <input type="file" id="userfile" />
         </div>
+        <div class="xar-form-input-wrapper">
+            <div id="files_list"></div>
+        </div>
+
+        <script type="text/javascript">
+            var multi_selector = new MultiSelector(document.getElementById('files_list'));
+            multi_selector.addElement(document.getElementById('userfile'));
+        </script>
+
         <p class="xar-form-input-wrapper-after">Maximum total size allowed is <strong>#$hrsize#</strong>.</p>
 
     </fieldset>

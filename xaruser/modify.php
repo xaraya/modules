@@ -32,11 +32,11 @@ function files_user_modify($args)
     // clean and validate path
     $path = xarModAPIFunc('files', 'user', 'cleanpath',
         array('path' => $path, 'type' => 'file', 'mode' => 'write'));
-    if (empty($path) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get item details
     $item = xarModAPIFunc('files', 'user', 'get', array('path' => $path));
-    if (empty($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // make sure file is plaintext
     $text_mimes = xarModAPIFunc('files', 'user', 'getmimetext');
@@ -54,6 +54,21 @@ function files_user_modify($args)
     $newlines = 0;
     if (!empty($matches[0])) $newlines = count($matches[0]);
 
+    $archive_dir = xarModGetVar('files', 'archive_dir');
+    $realpath = $item['realpath'];
+
+    // generate options menu
+    $options = array();
+    if (xarSecurityCheck('ViewFiles', 0) && !is_dir($realpath) && is_readable($realpath)) {
+        $options['view'] = true;
+    }
+    if (xarSecurityCheck('EditFiles', 0) && $path != '/' && in_array($item['mime'], $text_mimes) && is_writable($realpath)) {
+        $options['edit'] = true;
+    }
+    if (xarSecurityCheck('DeleteFiles', 0) && $path != '/' && is_writable($realpath)) {
+        $options['delete'] = true;
+    }
+
     // initialize template data array
     $data = xarModAPIFunc('files', 'admin', 'menu');
 
@@ -65,6 +80,8 @@ function files_user_modify($args)
     $data['authid'] = xarSecGenAuthKey();
     $data['contents'] = $contents;
     $data['newlines'] = $newlines;
+    $data['pathparts'] = xarModAPIFunc('files', 'user', 'getfilepager', array('path' => $path));
+    $data['options'] = $options;
 
     return $data;
 }

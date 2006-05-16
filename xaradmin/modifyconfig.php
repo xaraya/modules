@@ -19,16 +19,26 @@ function files_admin_modifyconfig()
     // security check
     if (!xarSecurityCheck('AdminFiles')) return;
 
-    // initialize template vars
-    $data = xarModAPIFunc('files', 'admin', 'menu');
+    // get module vars
+    $supportshorturls    = xarModGetVar('files', 'SupportShortURLs');
+    $usemodulealias      = xarModGetVar('files', 'useModuleAlias');
+    $aliasname           = xarModGetVar('files', 'aliasname');
+    $archive_dir         = xarModGetVar('files', 'archive_dir');
 
-    $data['authid'] = xarSecGenAuthKey();
-    $data['shorturls'] = xarModGetVar('files', 'SupportShortURLs') ? 'checked' : '';
-    $data['archive_dir'] = xarModGetVar('files', 'archive_dir');
+    // set template vars
+    $data = array();
+    $data['supportshorturls']  = $supportshorturls;
+    $data['usemodulealias']    = $usemodulealias;
+    $data['aliasname']         = $aliasname;
+    $data['archive_dir']       = $archive_dir;
 
-    // call modifyconfig hooks
+    // add other vars to template
+    $data['authid']   = xarSecGenAuthKey();
+
+    // get modifyconfig hooks
     $data['hookoutput'] = xarModCallHooks('module', 'modifyconfig', 'files',
-        array('module' => 'files'));
+        array('module' => 'files')
+    );
 
     return $data;
 }

@@ -28,11 +28,11 @@ function files_user_display($args)
 
     // clean up the path and validate it
     $path = xarModAPIFunc('files', 'user', 'cleanpath', array('path' => $path));
-    if (empty($path) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // get info on this file
     $item = xarModAPIFunc('files', 'user', 'get', array('path' => $path));
-    if (empty($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // prepare for setting options
     $archive_dir = xarModGetVar('files', 'archive_dir');

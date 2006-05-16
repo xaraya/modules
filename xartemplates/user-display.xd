@@ -1,25 +1,25 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body">
-    <h2><xar:template file="file-pager" type="module" /></h2>
-    <xar:template file="file-actions" type="module" />
 
-    <xar:template file="statusmsg" type="module" />
-    <xar:if condition="!empty($status)">
-        <p class="xar-align-center xar-style-bold">#$status#</p>
-    </xar:if>
+<xar:template type="module" file="user-header" />
+<div class="xar-mod-body">
+
+    <h2><xar:mlstring>File Display</xar:mlstring></h2>
+
+    <xar:template file="file-actions" type="module" />
+    <xar:template file="file-pager" type="module" />
 
     <!-- IMAGE -->
-    <div class="xar-form-input-wrapper">
+    <div class="xar-form-input-wrapper-after">
         <img src="#$item['image_big']#" alt="#$item['mime']#" />
     </div>
-<!-- FILE -->
+
+    <!-- FILE -->
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label" title="#xarML('Location of file')#"><xar:mlstring>File</xar:mlstring>:</label>
         #$item['viewpath']#
     </div>
 
-<!-- MODIFIED -->
+    <!-- MODIFIED -->
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label" title="#xarML('Modified')#"><xar:mlstring>Modified</xar:mlstring>:</label>
         <xar:ml>
@@ -29,13 +29,13 @@
         </xar:ml>
     </div>
 
-<!-- MIMETYPE -->
+    <!-- MIMETYPE -->
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label" title="#xarML('Type')#"><xar:mlstring>Type</xar:mlstring>:</label>
         #$item['mime']#
     </div>
 
-<!-- SIZE -->
+    <!-- SIZE -->
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label" title="#xarML('Size')#"><xar:mlstring>Size</xar:mlstring>:</label>
         #$item['hrsize']#

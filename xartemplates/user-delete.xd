@@ -1,61 +1,63 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<xar:template type="module" file="user-header" />
 <div class="xar-mod-body">
+
     <h2><xar:mlstring>Delete Item</xar:mlstring></h2>
 
-    <xar:template file="statusmsg" type="module" />
+    <xar:template file="file-actions" type="module" />
+    <xar:template file="file-pager" type="module" />
 
-    <form method="post" action="#xarModUrl('files', 'user', 'delete')#">
-    <fieldset>
-        <legend><xar:mlstring>Confirm File Deletion</xar:mlstring></legend>
-        <xar:if condition="$item['is_dir']">
-            <h3 class="xar-align-center"><xar:mlstring>Are you sure you want to delete this folder and ALL items under it?</xar:mlstring></h3>
-        <xar:else />
-            <h3 class="xar-align-center"><xar:mlstring>Are you sure you want to delete this file?</xar:mlstring></h3>
-        </xar:if>
+    <form method="post" action="&xar-modurl-files-user-delete;">
+        <fieldset>
+            <legend><xar:mlstring>Confirm File Deletion</xar:mlstring></legend>
+            <xar:if condition="$item['is_dir']">
+                <h3 class="xar-align-center"><xar:mlstring>Are you sure you want to delete this folder and ALL items under it?</xar:mlstring></h3>
+            <xar:else />
+                <h3 class="xar-align-center"><xar:mlstring>Are you sure you want to delete this file?</xar:mlstring></h3>
+            </xar:if>
 
+            <!-- FILE -->
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('Location of file')#"><xar:mlstring>File</xar:mlstring>:</label>
+                #$item['viewpath']#
+            </div>
 
-<!-- FILE -->
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label" title="#xarML('Location of file')#"><xar:mlstring>File</xar:mlstring>:</label>
-        #$item['viewpath']#
-    </div>
+            <!-- CREATED -->
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('Created')#"><xar:mlstring>Created</xar:mlstring>:</label>
+                <xar:ml>
+                    <xar:mlstring>#(1) #(2)</xar:mlstring>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('medium', $item['created'])#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedTime('medium', $item['created'])#</xar:mlvar>
+                </xar:ml>
+            </div>
 
-<!-- CREATED -->
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label" title="#xarML('Created')#"><xar:mlstring>Created</xar:mlstring>:</label>
-        <xar:ml>
-            <xar:mlstring>#(1) #(2)</xar:mlstring>
-            <xar:mlvar>#xarLocaleGetFormattedDate('medium', $item['created'])#</xar:mlvar>
-            <xar:mlvar>#xarLocaleGetFormattedTime('medium', $item['created'])#</xar:mlvar>
-        </xar:ml>
-    </div>
+            <!-- MIMETYPE -->
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('Type')#"><xar:mlstring>Type</xar:mlstring>:</label>
+            <xar:if condition="$item['is_dir']">
+                <xar:mlstring>directory</xar:mlstring>
+            <xar:else />
+                #$item['mime']#
+            </xar:if>
+            </div>
 
-<!-- MIMETYPE -->
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label" title="#xarML('Type')#"><xar:mlstring>Type</xar:mlstring>:</label>
-    <xar:if condition="$item['is_dir']">
-        <xar:mlstring>directory</xar:mlstring>
-    <xar:else />
-        #$item['mime']#
-    </xar:if>
-    </div>
+            <!-- SIZE -->
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label" title="#xarML('Size')#"><xar:mlstring>Size</xar:mlstring>:</label>
+                #$item['hrsize']#
+            </div>
+        </fieldset>
 
-<!-- SIZE -->
-    <div class="xar-form-input-wrapper">
-         <label class="xar-form-label" title="#xarML('Size')#"><xar:mlstring>Size</xar:mlstring>:</label>
-        #$item['hrsize']#
-    </div>
-    </fieldset>
-    <div class="xar-form-input-wrapper-after">
-        <input type="submit" value="#xarML('Confirm')#" /> &nbsp;
-            <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Confirm')#" /> &nbsp;
+                <a href="#xarModURL('files', 'user', 'display', array('path' => $urlpath))#" title="#xarML('Cancel')#"><xar:mlstring>Cancel</xar:mlstring></a>
 
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="confirm" id="confirm" value="true" />
-        <input type="hidden" name="path" id="path" value="#$urlpath#" />
-    </div>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="path" id="path" value="#$urlpath#" />
+        </div>
     </form>
-</div>
+
 </div>

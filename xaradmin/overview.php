@@ -17,14 +17,10 @@
  */
 function files_admin_overview()
 {
-    // security check
     if (!xarSecurityCheck('AdminFiles', 0)) return;
 
-    // initialize template data
-    $data = xarModAPIFunc('files', 'admin', 'menu');
-
-    // return output of main admin function (the overview page)
-    return xarTplModule('files', 'admin', 'main', $data, 'main');
+    $data = array();
+    return $data;
 }
 
 ?>

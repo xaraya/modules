@@ -44,12 +44,47 @@ function files_user_rename($args)
 
     // clean and validate path
     $path = xarModAPIFunc('files', 'user', 'cleanpath',
-        array('path' => $path, 'type' => 'file', 'mode' => 'write'));
-    if (empty($path) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+        array('path' => $path, 'type' => $itemtype, 'mode' => 'write'));
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // if no name given, show the GUI
     if (empty($name)) {
 
+        $item = xarModAPIFunc('files', 'user', 'get', array('path' => $path));
+        if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+        $archive_dir = xarModGetVar('files', 'archive_dir');
+
+        if (is_dir("$archive_dir/$path")) {
+
+            // generate options
+            $options = array();
+            if (is_writable("$archive_dir/$path")) {
+                if (xarSecurityCheck('AddFiles', 0)) {
+                    $options['add'] = true;
+                }
+                if (xarSecurityCheck('DeleteFiles', 0)) {
+                    $options['delete'] = true;
+                }
+            }
+        } else {
+
+            $realpath = $item['realpath'];
+            $text_mimes = xarModAPIFunc('files', 'user', 'getmimetext');
+
+            // generate options menu
+            $options = array();
+            if (xarSecurityCheck('ViewFiles', 0) && !is_dir($realpath) && is_readable($realpath)) {
+                $options['view'] = true;
+            }
+            if (xarSecurityCheck('EditFiles', 0) && $path != '/' && in_array($item['mime'], $text_mimes) && is_writable($realpath)) {
+                $options['edit'] = true;
+            }
+            if (xarSecurityCheck('DeleteFiles', 0) && $path != '/' && is_writable($realpath)) {
+                $options['delete'] = true;
+            }
+
+        }
         // initialize the template array
         $data = xarModAPIFunc('files', 'admin', 'menu');
 
@@ -59,6 +94,9 @@ function files_user_rename($args)
         $data['itemtype'] = $itemtype;
         $data['urlpath'] = xarModAPIFunc('files', 'user', 'urlpath',
             array('path' => $path));
+        $data['pathparts'] = xarModAPIFunc('files', 'user', 'getfilepager', array('path' => $path));
+        $data['item'] = $item;
+        $data['options'] = $options;
 
         return $data;
     }
