@@ -31,8 +31,7 @@ function window_userapi_get($args)
         $bindvars[] = $itemid;
     } else {
         $wherelist = array();
-        $fieldlist = array('title','summary','authorid','pubdate','pubtypeid',
-                           'notes','status','body','language');
+        $fieldlist = array('name','alias');
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
                 $wherelist[] = "xar_$field = ?";
