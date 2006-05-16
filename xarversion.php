@@ -13,7 +13,7 @@
 */
 $modversion['name']           = 'files';
 $modversion['id']             = '554';
-$modversion['version']        = '0.5.1';
+$modversion['version']        = '0.6.0';
 $modversion['displayname']    = xarML('File Manager');
 $modversion['description']    = 'File Manager for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
