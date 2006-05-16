@@ -1,25 +1,7 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Window Appication Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Window Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <xar:template type="module" module="window" file="admin-menu" />
 <h2><xar:mlstring>URL Specific Settings</xar:mlstring></h2>
-
-<xar:comment> Prior Menuing
-<table border="0" width="50%">
-    <tr align="center" valign="middle">
-        <td align="center" valign="middle">
-            <a href="#xarModURL('window','admin','general')#">
-            <xar:mlstring>General Settings</xar:mlstring>
-            </a>
-
-        </td>
-        <td align="center" valign="middle">
-            <xar:mlstring>URL Specific Settings</xar:mlstring>
-        </td>
-    </tr>
-</table>
-</xar:comment>
-
-
 
 <form action="#$action#" method="post" enctype="application/x-www-form-urlencoded">
 

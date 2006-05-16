@@ -1,24 +1,22 @@
 <?php
 /**
- * File: $Id
+ * External page entry point
  *
- * The main user function
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
- * @subpackage adminpanels module
- * @author Andy Varganov <andyv@xaraya.com>
-*/
-/**
- * Incorporate external sites or apps
  *
+ * @subpackage window
+ * @link http://xaraya.com/index.php/release/3002.html
+ * @author Marc Lutolf
+ * @author Yassen Yotov (CyberOto)
  * @author  Shawn McKenzie (AbraCadaver)
- * @author  Yassen Yotov (CyberOto)
- * @access  public
- * @param   no parameters
+ */
+
+/**
+ * External page entry point
+ *
  * @return  data on success or void on falure
  * @throws  XAR_SYSTEM_EXCEPTION, 'NOT_ALLOWED'
 */
@@ -37,15 +35,14 @@ function window_user_main($args)
     $hsize = xarModGetVar('window', 'hsize');
     $security = xarModGetVar('window', 'security');
 
-    if (!xarVarFetch('page', 'str', $page, "", XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('title', 'str', $title, "External Application", XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('page', 'str', $page, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title', 'str', $title, xarML('External Application'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hsize', 'str', $hsize, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('vsize', 'str', $vsize, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('auto_resize', 'str', $auto_resize, Null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('auto_resize', 'str', $auto_resize, NULL, XARVAR_NOT_REQUIRED)) return;
 
-    if($security)
-    {
-    if (!xarSecurityCheck('ReadWindow')) return;
+    if ($security) {
+        if (!xarSecurityCheck('ReadWindow')) return;
 
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
@@ -57,12 +54,10 @@ function window_user_main($args)
         $db_checked = 0;
 
         if(!$result->EOF) {
-            while(list($id, $name, $alias, $reg_user_only1, $open_direct1, $use_fixed_title1, $auto_resize1, $vsize1, $hsize1) = $result->fields)
-            {
+            while(list($id, $name, $alias, $reg_user_only1, $open_direct1, $use_fixed_title1, $auto_resize1, $vsize1, $hsize1) = $result->fields) {
 
                 // Check if URL is in DB
-                if (($alias == $page) || ($name == $page) || ($name == "http://".$page))
-                {
+                if (($alias == $page) || ($name == $page) || ($name == "http://".$page)) {
                     $db_checked = 1;
                     $page = $name;
                     // Override global settings
@@ -79,8 +74,7 @@ function window_user_main($args)
         }
 
         // Nope - display a message and quit
-        if(!$db_checked)
-        {
+        if(!$db_checked) {
             $msg = xarML('No URLs in the database that match your page.',
                 'window');
             xarErrorSet(XAR_USER_EXCEPTION,
@@ -90,13 +84,12 @@ function window_user_main($args)
         }
     }
 
-// Store URL parts in array
+    // Store URL parts in array
     $url_parts = parse_url($page);
 
 
-// Check that a page was specified
-    if(!isset($page) || ($page==""))
-    {
+    // Check that a page was specified
+    if(!isset($page) || ($page == '')) {
         $msg = xarML('No page to display was specified.',
             'window');
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -105,9 +98,8 @@ function window_user_main($args)
         return;
     }
 
-// Check for not entered in browser location window if set
-    if(!$_SERVER["REMOTE_ADDR"] && !$no_user_entry)
-    {
+    // Check for not entered in browser location window if set
+    if (!$_SERVER['REMOTE_ADDR'] && !$no_user_entry) {
         $msg = xarML('You cannot access this page via a link.',
             'window');
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -116,19 +108,17 @@ function window_user_main($args)
         return;
     }
 
-// Check for not local page if set
+    // Check for not local page if set
     if($allow_local_only &&
-        ($url_parts['host'] != $_SERVER["SERVER_NAME"]) &&
-        ($url_parts['host'] != $_SERVER["HTTP_HOST"]))
-    {
+        ($url_parts['host'] != $_SERVER['SERVER_NAME']) &&
+        ($url_parts['host'] != $_SERVER['HTTP_HOST'])) {
         $msg = xarML('Only pages off your local server can be displayed.', 'window');
         xarErrorSet(XAR_USER_EXCEPTION, 'NOT_ALLOWED', new DefaultUserException($msg));
         return;
     }
 
-// Check that user is registered and logged in if set
-    if(!xarUserIsLoggedIn() && ($reg_user_only))
-    {
+    // Check that user is registered and logged in if set
+    if(!xarUserIsLoggedIn() && ($reg_user_only)) {
         $msg = xarML('Only registered users can view this page.',
             'window');
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -137,49 +127,49 @@ function window_user_main($args)
         return;
     }
 
-// Everything is good - ready to display
+    // Everything is good - ready to display
 
-// Check for fixed title and use it
+    // Check for fixed title and use it
     // Check if title was passed in URL
     if(!$title) {
         if($use_fixed_title) {
-            $title = "External Application";
+            $title = 'External Application';
         }
         else {
-            $title = "";
+            $title = '';
         }
     }
     else {
-        $end_title = "";
+        $end_title = '';
     }
 
-// Add the Open Direct link if set
-    if($open_direct)
-    {
-        if($use_fixed_title)
-        {
+    // Add the Open Direct link if set
+    if ($open_direct) {
+        if($use_fixed_title) {
             $title .= "<br />[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
         }
-        else
-        {
+        else {
             $title .= "[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
         }
     }
 
     // Check if height, width or resize were passed in URL
-    if(isset($height)) {
+    if (isset($height)) {
         $vsize = $height;
-        $auto_resize = false; }
+        $auto_resize = false; 
+    }
 
     if(isset($width)) {
-        $hsize = $width; }
-    elseif(!$hsize) {
-        $hsize = "100%"; }
+        $hsize = $width;
+    } elseif (!$hsize) {
+        $hsize = '100%'; 
+    }
 
-    if(isset($resize) && $resize == 1) {
-        $auto_resize = true; }
+    if (isset($resize) && $resize == 1) {
+        $auto_resize = true; 
+    }
 
-    if (isset($id)){
+    if (isset($id)) {
         $data['hooks'] = xarModCallHooks('item', 'display', $id, array('itemtype'  => $id,
                                                                        'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
                                                                 'window');

@@ -1,42 +1,23 @@
 <?php
-// ----------------------------------------------------------------------
-// Xaraya Applications Framework
-// Ported as a Xaraya module by Marc Lutolf.
-// http://www.xaraya.com/
-// ----------------------------------------------------------------------
-// Based on: POST-NUKE Content Management System
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// ----------------------------------------------------------------------
-// Original Author of file: Yassen Yotov
-// ----------------------------------------------------------------------
+/**
+ * Module Initialization Functions
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage window
+ * @link http://xaraya.com/index.php/release/3002.html
+ * @author Marc Lutolf
+ * @author Yassen Yotov (CyberOto)
+ */
 
 function window_init()
 {
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-
-    $sitePrefix = xarDBGetSiteTablePrefix();
-    $tables['window'] = $sitePrefix . '_window';
 
     $query = xarDBCreateTable($tables['window'],
         array('xar_id' => array('type' => 'integer',
@@ -90,10 +71,13 @@ function window_init()
     //Set security checkinkg for URL
     xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
 
-    xarRegisterMask('AdminWindow','All','window','All','All','ACCESS_ADMIN');
-    xarRegisterMask('ReadWindow','All','window','All','All','ACCESS_READ');
+    xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminWindow',  'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
-    // Initialisation successful
     return true;
 }
 
@@ -105,6 +89,12 @@ function window_upgrade($oldversion)
             break;
         case '1.0.1':
             $modversion['user'] = 0;
+            break;
+        case '1.0.3';
+            xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
+            xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
             break;
     }
     return true;
@@ -122,9 +112,9 @@ function window_delete()
 
     xarRemoveMasks('window');
     xarRemoveInstances('window');
-    // Drop all ModVars
+
     xarModDelAllVars('window');
-    //Success
+
     return true;
 }
 ?>

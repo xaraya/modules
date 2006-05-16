@@ -22,8 +22,7 @@ function window_adminapi_addurl($args)
 
 //    $data = array();
 //    $data['authid'] = xarSecGenAuthKey();
-    if($host!=""&&$alias!="")
-    {
+    if ($host!=""&&$alias!="") {
         //Sanitize Url
         //To do: more complex checking
         $host_arr = parse_url($host);
@@ -83,27 +82,18 @@ function window_adminapi_addurl($args)
         }
         */
         
-        if($window_status == "add")
-        {
-            // Get next ID in table
-            $nextId = $dbconn->GenId($urltable);
-
-            $query = "INSERT
-                    INTO $urltable
-                    (xar_id, xar_name, xar_alias, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize)
-                    VALUES ($nextId,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?)";
-            $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize);
-        }
-        else
-        {
+        if($window_status == "add") {
+            $fargs['name']            = $host;
+            $fargs['alias']           = $alias;
+            $fargs['reg_user_only']   = $reg_user_only;
+            $fargs['open_direct']     = $open_direct;
+            $fargs['use_fixed_title'] = $use_fixed_title;
+            $fargs['auto_resize']     = $auto_resize;
+            $fargs['vsize']           = $vsize;
+            $fargs['hsize']           = $hsize;
+            $itemid = xarModAPIFunc('window', 'admin', 'create', $fargs);
+            if (!$itemid) return false;
+        } else {
             $query = "UPDATE
                     $urltable
                     SET xar_name            = ?,
@@ -116,9 +106,10 @@ function window_adminapi_addurl($args)
                         xar_hsize           = ?
                     WHERE xar_id = ?";
             $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $id);
+            $result =& $dbconn->Execute($query,$bindvars);
+            if (!$result) return false;
         }
-        $result =& $dbconn->Execute($query,$bindvars);
-        if (!$result) return false;
+        
     }
         xarResponseRedirect(xarModURL('window', 'admin', 'addurl'));
 }
