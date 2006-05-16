@@ -25,7 +25,7 @@
 function categories_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('Admincategories')) return;
+    if (!xarSecurityCheck('AdminCategories')) return;
 
     $data=array();
 
