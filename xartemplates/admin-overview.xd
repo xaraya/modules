@@ -1,0 +1,71 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<xar:template type="module" file="admin-header" />
+<div class="xar-mod-body">
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>The Files module emulates the file managers commonly seen in web hosting
+administrative interfaces such as <a href="http://www.cpanel.net/">cPanel</a>.  Its intent is for file swapping
+among project committees and executive boards whose members are no
+tech-savvy or for which FTP is otherwise too complicated to use.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Installation Notes</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>After installing this module, some further work is needed:</xar:mlstring>
+    </p>
+
+    <ol>
+        <li>
+            <xar:ml>
+                <xar:mlstring><em>Create and set permissions for your archive directory</em> - Go to <a href="#(1)">Modify Config</a> and enter your preferred archive directory.  Make sure the directory exists and is writable by your web server.</xar:mlstring>
+                <xar:mlvar>#xarModURL('files', 'admin', 'modifyconfig')#</xar:mlvar>
+            </xar:ml>
+        </li>
+        <li>
+            <xar:mlstring>
+                <em>Check Roles and Privileges</em> - make sure everyone has acceptable levels of access.  This module obeys standard masks!
+            </xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring><em>Make mime thumbnails prettier!</em> - See <a href="modules/files/contrib/README">modules/files/contrib/README</a> for more.</xar:mlstring>
+        </li>
+    </ol>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>Use the tabs and file pager to navigate, and to perform the desired functions.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>None</xar:mlstring></li>
+    </ul>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+
+    <ul>
+        <li><xar:mlstring>None</xar:mlstring></li>
+    </ul>
+
+   <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+
+   <ul>
+      <li><xar:mlstring>Documentation folder: <code>modules/files/xardocs/</code></xar:mlstring>
+      </li>
+      <li><xar:mlstring>This module's page at Xaraya.com: <a href="http://www.xaraya.com/index.php/release/554.html">Xaraya Extension and Releases</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Bugs and feature requests: <a href="http://bugs.xaraya.com/">Xaraya Bug Tracker</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Support issues of general interest: <a href="http://xaraya.curtisfarnham.com/forums/">Forums at the author's website</a></xar:mlstring>
+      </li>
+      <li><xar:mlstring>Everything else: <a href="http://xaraya.curtisfarnham.com/contact/">Contact form at the author's website</a></xar:mlstring>
+      </li>
+  </ul>
+
+</div>

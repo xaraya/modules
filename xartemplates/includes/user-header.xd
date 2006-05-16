@@ -1,0 +1,14 @@
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<xar:set name="$statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Files</xar:mlstring></span>
+
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center">#$statusmsg#</p>
+    </xar:if>
+
+</div>
+
