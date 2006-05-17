@@ -86,8 +86,8 @@
           <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
             <input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" /> 
           </xar:if>
-          <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> 
-          <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> 
+          <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
+          <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />-->
           <input type="hidden" name="receipt[action]" id="receipt-action" /> 
           <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" /> 
           <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" />
@@ -164,7 +164,7 @@
             <input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" /> 
           </xar:if>
           <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> 
-          <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> 
+          <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />-->
           <input type="hidden" name="receipt[action]" id="receipt-action"/> 
           <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" /> 
           <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" />
