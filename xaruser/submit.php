@@ -28,6 +28,16 @@ function itsp_user_submit($args)
     if (!xarVarFetch('itspid', 'id', $itspid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('confirm',  'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('useraction', 'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
+
+    $data = array;
+
+    if (($itspid < 1) || (empty($useraction)); {
+        return $data;
+    }
+    if(!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
+        return;
+    }
 /*
     if (!xarVarFetch('useremail', 'str:1:', $useremail, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('requesttext', 'str:1:', $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
