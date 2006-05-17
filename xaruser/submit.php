@@ -16,7 +16,10 @@
  *
  * When a user submits the ITSP, it is sent to the education office for approval
  * @author MichelV <michelv@xarayahosting.nl>
- * @param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
+ * @param int itspid
+ * @param string return_url
+ * @param bool confirm
+ * @param string useraction
  * @since 16 May 2006
  * @return bool true on success of submission
  */
@@ -30,29 +33,15 @@ function itsp_user_submit($args)
     if (!xarVarFetch('confirm',  'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('useraction', 'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
 
-    $data = array;
+    $data = array();
 
-    if (($itspid < 1) || (empty($useraction)); {
+    if (($itspid < 1) || (empty($useraction))) {
         return $data;
     }
     if(!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
         return;
     }
-/*
-    if (!xarVarFetch('useremail', 'str:1:', $useremail, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('requesttext', 'str:1:', $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('company', 'str:1:', $company, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('usermessage', 'str:1:', $usermessage, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useripaddress', 'str:1:', $useripaddress, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
-    if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
 
-*/
 /*    //Put all set data in an array for later processing
      $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
                 'sctypename'      => array(xarML('Form'),$sctypename),
@@ -72,25 +61,7 @@ function itsp_user_submit($args)
                 'bccrecipients'   => array(xarML('BCC'),$bccrecipients),
                 'ccrecipients'    => array(xarML('CC'),$ccrecipients)
                 );
-*/
 
-    /* process BCC Recipient list
-    $bccrecipientarray=array();
-    $bccrec=array();
-    $bcctemp=array();
-    if (isset($bccrecipients) && !empty($bccrecipients)) {
-      $bccrecipientarray=explode(';',$bccrecipients);
-      if (is_array($bccrecipientarray)) {
-          foreach ($bccrecipientarray as $recipientkey=>$v) {
-             $bcctemp[]=explode(',',$v);
-          }
-          foreach ($bcctemp as $recipient=>$values) {
-              $bccrec[$values[0]]=isset($values[1])?$values[1]:'';
-          }
-      }
-    }
-    $bccrecipients=$bccrec;
-*/
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
