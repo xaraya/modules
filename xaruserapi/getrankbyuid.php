@@ -1,8 +1,4 @@
 <?php
-//Going to make some calls from the other functions
-require_once('getallranks.php');    
-require_once('get.php');    
-
 /**
  * Get a rankname for a user
  *
@@ -26,15 +22,24 @@ require_once('get.php');
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function userpoints_userapi_getrankbyuid($args) {
-    
+
     extract($args);
-    
-    if(isset($uid) && $uid!="") {
-        $user_score = userpoints_userapi_get( array('uid' => $uid) );
-    } 
-       
-	$aRanks = userpoints_userapi_getallranks($args);
-    $user_rank = "";
+
+   // Argument check
+    if (!isset($uid) || !is_numeric($uid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+            'rank ID', 'user', 'getrankbyuid', 'userpoints');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
+
+    if(isset($uid) && $uid!='') {
+        $user_score = xarModAPIFunc('userpoints','user','get', array('uid' => $uid));
+    }
+
+	$aRanks = xarModAPIFunc('userpoints','user','getallranks',array($args));
+    $user_rank = '';
     $user_rid=0;
     $old_score = 0; //needed because we are doing a search
 
