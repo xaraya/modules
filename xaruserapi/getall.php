@@ -9,42 +9,26 @@
  *
  * @subpackage window
  * @link http://xaraya.com/index.php/release/3002.html
- * @author window
+ * @author Johnny Robeson
  */
 
 /**
  * Get all items
  *
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @returns array
+ * @param $args[numitems] the number of items to retrieve (default -1 = all)
+ * @param $args[startnum] start with this item number (default 1)
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function window_userapi_getall($args)
 {
     extract($args);
 
-    if (!isset($startnum)) {
+    if (!isset($startnum) || !is_numeric($startnum)) {
         $startnum = 1;
     }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-
-    $invalid = array();
-    if (!isset($startnum) || !is_numeric($startnum)) {
-        $invalid[] = 'startnum';
-    }
     if (!isset($numitems) || !is_numeric($numitems)) {
-        $invalid[] = 'numitems';
-    }
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'user', 'getall', 'Window');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
+        $numitems = -1;
     }
 
     $items = array();
@@ -72,9 +56,9 @@ function window_userapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
-        if (xarSecurityCheck('ViewWindow', 0, 'Item', "$name:All:$id")) {
-            $items[] = array('id'              => $id,
+        list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+        if (xarSecurityCheck('ViewWindow', 0, 'Item', "$name:All:$itemid")) {
+            $items[] = array('itemid'          => $itemid,
                              'name'            => $name,
                              'alias'           => $alias,
                              'reg_user_only'   => $reg_user_only,

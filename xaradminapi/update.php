@@ -1,6 +1,6 @@
 <?php
 /**
- * Create an item
+ * Update an item
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -13,8 +13,9 @@
  */
 
 /**
- * Create an item
+ * Update an item
  *
+ * @param int    $args[itemid]
  * @param string $args[name] name of the item
  * @param string $args[alias]
  * @param int    $args[reg_user_only]
@@ -26,24 +27,35 @@
  * @return int item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function window_adminapi_create($args)
+function window_adminapi_update($args)
 {
     extract($args);
 
     $invalid = array();
+    if (!isset($itemid) || !is_numeric($itemid)) {
+        $invalid[] = 'itemid';
+    }
     if (!isset($name) || !is_string($name)) {
         $invalid[] = 'name';
     }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'create', 'window');
+            join(', ', $invalid), 'admin', 'update', 'window');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
 
-    if (!xarSecurityCheck('AddWindow', 1, 'Item', "$name:All:All")) {
+    $item = xarModAPIFunc('window', 'user', 'get',
+                    array('itemid' => $itemid));
+
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
+    if (!xarSecurityCheck('EditWindow', 1, 'Item', "$item[name]:All:$itemid")) {
+        return;
+    }
+    if (!xarSecurityCheck('EditWindow', 1, 'Item', "$name:All:$itemid")) {
         return;
     }
 
@@ -61,31 +73,29 @@ function window_adminapi_create($args)
 
     $windowtable = $xartable['window'];
 
-    $nextId = $dbconn->GenId($windowtable);
+    $query = "UPDATE $windowtable
+              SET xar_name            = ?,
+                  xar_alias           = ?,
+                  xar_reg_user_only   = ?,
+                  xar_open_direct     = ?,
+                  xar_use_fixed_title = ?,
+                  xar_auto_resize     = ?,
+                  xar_vsize           = ?,
+                  xar_hsize           = ?
+              WHERE xar_id = ?";
+    $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $itemid);
 
-    $query = "INSERT INTO $windowtable
-                    (xar_id, xar_name, xar_alias, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize)
-                    VALUES (?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?,
-                            ?)";
-    $bindvars = array($nextId, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize);
     $result = &$dbconn->Execute($query,$bindvars);
-
     if (!$result) return;
 
-    $itemid = $dbconn->PO_Insert_ID($windowtable, 'xar_id');
     /*
-    $item = $args;
-    $item['module'] = 'example';
-    $item['itemid'] = $exid;
-    xarModCallHooks('item', 'create', $exid, $item);
+    $item['module'] = 'window';
+    $item['itemid'] = $itemid;
+
+    $item['itemtype'] = NULL;
+    $item['name'] = $name;
+    xarModCallHooks('item', 'update', $itemid, $item);
     */
-    return $itemid;
+    return true;
 }
 ?>

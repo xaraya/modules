@@ -1,16 +1,29 @@
 <?php
+/**
+ * Get menu info
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage window
+ * @link http://xaraya.com/index.php/release/3002.html
+ * @author Marc Lutolf
+ */
+
+/**
+ * Get menu info
+ *
+ * @return array data
+ */
 function window_adminapi_menu()
 {
-    // Initialise the array that will hold the menu configuration
-    $menu = array();
+    $data = array();
 
-    // Specify the menu title to be used in your blocklayout template
-    $menu['menutitle'] = xarML('Applications Window Administration');
+    $data['menutitle'] = xarML('Window Administration');
+    $data['status'] = '';
 
-    // Preset some status variable
-    $menu['status'] = '';
-
-    // Return the array containing the menu configuration
-    return $menu;
+    return $data;
 }
 ?>

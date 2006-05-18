@@ -12,7 +12,7 @@ function window_adminapi_addurl($args)
     if (!xarVarFetch('hsize', 'str', $hsize, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('host', 'str', $host, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alias', 'str', $alias, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('id', 'id', $id, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lang_action', 'str', $lang_action, 'Add', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('window_status', 'str', $window_status, 'add', XARVAR_NOT_REQUIRED)) return;
 
@@ -22,34 +22,29 @@ function window_adminapi_addurl($args)
 
 //    $data = array();
 //    $data['authid'] = xarSecGenAuthKey();
-    if ($host!=""&&$alias!="") {
+    if ($host !='' && $alias != '') {
         //Sanitize Url
         //To do: more complex checking
         $host_arr = parse_url($host);
 
         //Get rid of whitespaces
-        $alias = str_replace(" ", "_", $alias);
+        $alias = str_replace(' ', '_', $alias);
 
-        if(is_array($host_arr))
-        {
-            $host = "";
-            if(empty($host_arr['scheme'])) $host = "http://";
-            else $host = $host_arr['scheme'] . "://";
+        if (is_array($host_arr)) {
+            $host = '';
+            if (empty($host_arr['scheme'])) {
+                $host = 'http://';
+            } else {
+                $host = $host_arr['scheme'] . '://';
+            }
 
-            if(!empty($host_arr['host'])) $host .= $host_arr['host'];
-            if(!empty($host_arr['port'])) $host .= ":" . $host_arr['port'];
-            if(!empty($host_arr['path'])) $host .= "" . $host_arr['path'];
-            if(!empty($host_arr['query'])) $host .= "?" . $host_arr['query'];
+            if (!empty($host_arr['host']))  $host .= $host_arr['host'];
+            if (!empty($host_arr['port']))  $host .= ':' . $host_arr['port'];
+            if (!empty($host_arr['path']))  $host .= '' . $host_arr['path'];
+            if (!empty($host_arr['query'])) $host .= '?' . $host_arr['query'];
 
-//            $output->Text($host_arr['scheme']."|");
-//            $output->Text($host_arr['host']);
-//            $output->Text($host_arr['port']);
-//            $output->Text($host_arr['path']);
-//            $output->Text($host_arr['query']);
             $data['message'] = '';
-        }
-        else
-        {
+        } else {
             $data['message'] = xarML('Bad URL');
             return false;
         }
@@ -71,43 +66,29 @@ function window_adminapi_addurl($args)
 
         /*
         // Check for $hsize
-        if(strstr($hsize, "%"))
-        {
+        if(strstr($hsize, "%")) {
             $hzise1 = (int) $hsize;
             $hsize1 = $hsize1."%";
-        }
-        else
-        {
+        } else {
             $hzise1 = (int) $hsize;
         }
         */
-        
-        if($window_status == "add") {
-            $fargs['name']            = $host;
-            $fargs['alias']           = $alias;
-            $fargs['reg_user_only']   = $reg_user_only;
-            $fargs['open_direct']     = $open_direct;
-            $fargs['use_fixed_title'] = $use_fixed_title;
-            $fargs['auto_resize']     = $auto_resize;
-            $fargs['vsize']           = $vsize;
-            $fargs['hsize']           = $hsize;
+        $fargs['name']            = $host;
+        $fargs['alias']           = $alias;
+        $fargs['reg_user_only']   = $reg_user_only;
+        $fargs['open_direct']     = $open_direct;
+        $fargs['use_fixed_title'] = $use_fixed_title;
+        $fargs['auto_resize']     = $auto_resize;
+        $fargs['vsize']           = $vsize;
+        $fargs['hsize']           = $hsize;
+
+        if ($window_status == 'add') {
             $itemid = xarModAPIFunc('window', 'admin', 'create', $fargs);
             if (!$itemid) return false;
         } else {
-            $query = "UPDATE
-                    $urltable
-                    SET xar_name            = ?,
-                        xar_alias           = ?,
-                        xar_reg_user_only   = ?,
-                        xar_open_direct     = ?,
-                        xar_use_fixed_title = ?,
-                        xar_auto_resize     = ?,
-                        xar_vsize           = ?,
-                        xar_hsize           = ?
-                    WHERE xar_id = ?";
-            $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $id);
-            $result =& $dbconn->Execute($query,$bindvars);
-            if (!$result) return false;
+            if (!xarModAPIFunc('window', 'admin', 'update', $fargs)) {
+                return false;
+            }
         }
         
     }
