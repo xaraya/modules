@@ -23,39 +23,25 @@ function security_init()
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $sec_fields = "
-		xar_modid      I NotNull DEFAULT 0,
-		xar_itemtype   I NotNull DEFAULT 0,
-		xar_itemid     I NotNull DEFAULT 0,
-		xar_userlevel  I NotNull DEFAULT 0,
-		xar_grouplevel I NotNull DEFAULT 0,
-		xar_worldlevel I NotNull DEFAULT 0
+		modid      I NotNull PRIMARY DEFAULT 0,
+		itemtype   I NotNull PRIMARY DEFAULT 0,
+		itemid     I NotNull PRIMARY DEFAULT 0,
+		uid        I NotNull PRIMARY DEFAULT 0,
+		xoverview  I1 NotNull DEFAULT 0,
+		xread      I1 NotNull DEFAULT 0,
+		xcomment   I1 NotNull DEFAULT 0,
+		xwrite     I1 NotNull DEFAULT 0,
+		xmanage    I1 NotNull DEFAULT 0,
+		xadmin     I1 NotNull DEFAULT 0
     ";
     /* Create or alter the table as necessary */
-    $result = $datadict->changeTable($xartable['security'], $sec_fields);
+    $result = $datadict->changeTable($xartable['security_roles'], $sec_fields);
     if (!$result) {return;}
 
     $result = $datadict->createIndex(
         "i_{$prefix}_security_combo",
-        $xartable['security'],
-        array('xar_modid', 'xar_itemtype', 'xar_itemid')
-    );
-    if (!$result) {return;}
-
-	$sec_group_fields = "
-        xar_modid    I NotNull DEFAULT 0,
-        xar_itemtype I NotNull DEFAULT 0,
-        xar_itemid   I NotNull DEFAULT 0,
-        xar_gid      I NotNull DEFAULT 0,
-        xar_level    I NotNull DEFAULT 0
-    ";
-    /* Create or alter the table as necessary */
-    $result = $datadict->changeTable($xartable['security_group_levels'], $sec_group_fields);
-    if (!$result) {return;}
-
-    $result = $datadict->createIndex(
-        "i_{$prefix}_security_group_levels_combo",
-        $xartable['security_group_levels'],
-        array('xar_modid', 'xar_itemtype', 'xar_itemid')
+        $xartable['security_roles'],
+        array('modid', 'itemtype', 'itemid')
     );
     if (!$result) {return;}
 
@@ -107,8 +93,37 @@ function security_upgrade($oldversion)
         case '0.8.0':
         case '0.8.1':
         case '0.8.2':
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+            $sec_fields = "
+        		modid      I NotNull PRIMARY DEFAULT 0,
+        		itemtype   I NotNull PRIMARY DEFAULT 0,
+        		itemid     I NotNull PRIMARY DEFAULT 0,
+        		uid        I NotNull PRIMARY DEFAULT 0,
+        		xoverview  I1 NotNull DEFAULT 0,
+        		xread      I1 NotNull DEFAULT 0,
+        		xcomment   I1 NotNull DEFAULT 0,
+        		xwrite     I1 NotNull DEFAULT 0,
+        		xmanage    I1 NotNull DEFAULT 0,
+        		xadmin     I1 NotNull DEFAULT 0
+            ";
+            /* Create or alter the table as necessary */
+            $result = $datadict->changeTable($xartable['security_roles'], $sec_fields);
+            if (!$result) {return;}
+
+            $result = $datadict->createIndex(
+                "i_{$prefix}_security_combo",
+                $xartable['security_roles'],
+                array('modid', 'itemtype', 'itemid')
+            );
+            if (!$result) {return;}
+
             $result = security_upgrade_082();
             if( !$result ){ return false; }
+            break;
+
+        case '0.8.3':
+        case '0.9.0':
             break;
 
         default:
@@ -134,9 +149,7 @@ function security_delete()
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     /* Drop the security tables */
-    $result = $datadict->dropTable($xartable['security']);
-    if( !$result ){ return false; }
-    $result = $datadict->dropTable($xartable['security_group_levels']);
+    $result = $datadict->dropTable($xartable['security_roles']);
     if( !$result ){ return false; }
 
     // cleans up the module vars
