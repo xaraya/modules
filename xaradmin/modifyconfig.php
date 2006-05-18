@@ -14,13 +14,14 @@
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
+ *
+ * @todo MichelV Make Hooks an array, here and in template
  */
 function subitems_admin_modifyconfig()
 {
     $data = xarModAPIFunc('subitems', 'admin', 'menu');
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+    // Security check
     if (!xarSecurityCheck('AdminSubitems')) return;
 
     // Generate a one-time authorisation code for this operation
@@ -29,7 +30,6 @@ function subitems_admin_modifyconfig()
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('subitems', 'SupportShortURLs') ? true : false;
-    //
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'subitems',
         array('module' => 'subitems','itemtype' => 1));

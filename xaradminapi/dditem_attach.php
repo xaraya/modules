@@ -15,11 +15,11 @@
  * create a new subitems item
  *
  * @author the subitems module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
- * @returns int
- * @return subitems item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param ID $args['objectid'] name of the item
+ * @param ID $args['itemid'] number of the item
+ * @param ID $args['ddid'] ID of the Dynamic Data object
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, DATABASE_ERROR
  */
 function subitems_adminapi_dditem_attach($args)
 {

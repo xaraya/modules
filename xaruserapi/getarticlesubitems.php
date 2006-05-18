@@ -12,12 +12,11 @@
  * @author Subitems Module Development Team
  */
 /**
- * get a the sub-items of an article
+ * get the sub-items of an article
  *
  * @param  $args ['aid'] id of article
  * @param  $args ['ptid'] id of article
- * @returns array
- * @return item array, or false on failure
+ * @return array item array, or false on failure
  */
 function subitems_userapi_getarticlesubitems($args)
 {

@@ -11,22 +11,20 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
-
 /**
  * Return Subitems table names to xaraya
  *
  * This function is called internally by the core whenever the module is
- * loaded.  It is loaded by xarMod__loadDbInfo().
+ * loaded. It is loaded by xarMod__loadDbInfo().
  *
  * @access private
- * @return array
+ * @return array xarTables with table name
  */
 function subitems_xartables()
 {
     // Initialise table array
     $xarTables = array();
-    // Get the name for the example item table.  This is not necessary
-    // but helps in the following statements and keeps them readable
+    // Get the name for the table.
     $exampleTable = xarDBGetSiteTablePrefix() . '_subitems';
     // Set the table name
     $xarTables['subitems_ddids'] = $exampleTable.'_ddids';
