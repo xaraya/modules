@@ -85,15 +85,15 @@ function helpdesk_admin_setup_security($args)
     /*
         Check security levels
     */
-    if( $settings['levels']['user'] >= 60 ){ $data['security_user_levels_ok'] = true; }
+    if( helpdesk_level_to_numeric($settings['levels']['user']) >= 60 ){ $data['security_user_levels_ok'] = true; }
     else{ $data['security_user_levels_ok'] = false; }
 
-    if( isset($settings['levels']['groups'][$tech_group_id])
-        and $settings['levels']['groups'][$tech_group_id] >= 60 )
+    if( isset($settings['levels'][$tech_group_id])
+        and helpdesk_level_to_numeric($settings['levels'][$tech_group_id]) >= 60 )
     { $data['security_tech_levels_ok'] = true; }
     else{ $data['security_tech_levels_ok'] = false; }
 
-    if( $settings['levels']['world'] == 0 ){ $data['security_world_levels_ok'] = true; }
+    if( helpdesk_level_to_numeric($settings['levels'][0]) == 0 ){ $data['security_world_levels_ok'] = true; }
     else{ $data['security_world_levels_ok'] = false; }
 
     /*
@@ -141,19 +141,40 @@ function helpdesk_admin_setup_security($args)
         $update_security_levels = false;
         if( $data['security_user_levels_ok'] == false )
         {
-            $settings['levels']['user'] = 60;
+            $settings['levels']['user'] = array(
+                'overwrite' => 1
+                , 'read'    => 1
+                , 'comment' => 1
+                , 'write'   => 1
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
             $update_security_levels = true;
         }
 
         if( $data['security_tech_levels_ok'] == false && $tech_group_id > 0 )
         {
-            $settings['levels']['groups'][$tech_group_id] = 60;
+            $settings['levels'][$tech_group_id] = array(
+                'overwrite' => 1
+                , 'read'    => 1
+                , 'comment' => 1
+                , 'write'   => 1
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
             $update_security_levels = true;
         }
 
         if( $data['security_world_levels_ok'] == false )
         {
-            $settings['levels']['world'] = 0;
+            $settings['levels'][0] = array(
+                'overwrite' => 0
+                , 'read'    => 0
+                , 'comment' => 0
+                , 'write'   => 0
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
             // Also forcing default group level
             // if user is runnning this they want
             // a low default group level
@@ -194,4 +215,29 @@ function helpdesk_admin_setup_security($args)
 
     return xarTplModule('helpdesk', 'admin', 'setup_security', $data);
 }
+
+function helpdesk_level_to_numeric($level)
+{
+    xarModAPILoad('security');
+    $map = array(
+        'overview'  => SECURITY_OVERVIEW
+        , 'read'    => SECURITY_READ
+        , 'comment' => SECURITY_COMMENT
+        , 'write'   => SECURITY_WRITE
+        , 'manage'  => SECURITY_MANAGE
+        , 'admin'   => SECURITY_ADMIN
+    );
+
+    $numeric_level = 0;
+    foreach( $level as $key => $value )
+    {
+        if( $value == 1 )
+        {
+            $numeric_level += $map[$key];
+        }
+    }
+
+    return $numeric_level;
+}
+
 ?>
