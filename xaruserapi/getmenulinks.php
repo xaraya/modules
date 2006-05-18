@@ -19,7 +19,7 @@
  * @return array containing the menulinks for the main menu items.
  */
 function userpoints_userapi_getmenulinks()
-
+{
     if (xarSecurityCheck('ReadUserpoints', 0)) {
         $menulinks[] = array('url' => xarModURL('userpoints','user','display'),
 
