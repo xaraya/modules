@@ -5,12 +5,12 @@ TODO: layout, security checks etc
 <ul>
 <xar:foreach in="$items" value="$item">
   <li>
-    <xar:set name="textdisplay">$item.title</xar:set>
+    <xar:set name="textdisplay">$item['title']</xar:set>
     <xar:comment>
         <xar:if condition="$vars.titleortext eq 'on'">
-            <xar:set name="textdisplay">$item.title</xar:set>
+            <xar:set name="textdisplay">$item['title']</xar:set>
         <xar:else />
-            <xar:set name="textdisplay">$item.ptext</xar:set>
+            <xar:set name="textdisplay">$item['ptext']</xar:set>
         </xar:if>
     </xar:comment>
     <xar:if condition="!empty($item.link)">
