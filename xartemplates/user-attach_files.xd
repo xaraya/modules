@@ -1,12 +1,11 @@
 <xar:base-include-javascript filename="switchImport.js" />
 <xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+<div class="xar-form-container-after">
+    <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+    <xar:if condition="!empty($invalid)">
+        <span class="xar-error">#$invalid#</span>
+    </xar:if>
 
-<div class="xar-uploads-clearer">&nbsp;</div>
-<xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
-<xar:if condition="!empty($invalid)">
-    <span class="xar-error">#$invalid#</span>
-</xar:if>
-<p>
     <xar:if condition="$methods['trusted'] eq TRUE">
         <a class="xar-uploads-action" onClick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
            name="attach_trusted" title="#xarML('Attach file from Trusted Directory')#">Trusted</a> |
@@ -46,6 +45,7 @@
     <div id="#$id#_attach_stored" style="display: none;">
         <xar:template file="attach_stored" type="module" />
     </div>
-    
+
     <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
-</p>
+
+</div>
