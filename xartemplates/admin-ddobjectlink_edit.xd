@@ -36,8 +36,8 @@
                     <span style="color:red">#$template.error:msg#</span>
                 </xar:if>
             </div>
-             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Sorting:</xar:mlstring></label>
+            <div class="xar-form-input-wrapper">
+                <label for="sortby" class="xar-form-label" title="#xarML('Choose the sort option. Leave empty to sort on itemid.')#"><xar:mlstring>Sort by:</xar:mlstring></label>
                 <select name="sortby">
                     <option value=""></option>
                     <xar:foreach in="$properties" key="$name" value="$property" >
@@ -48,6 +48,9 @@
                         </xar:if>
                     </xar:foreach>
                 </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="sortmode" class="xar-form-label" title="#xarML('Choose the sort order.')#"><xar:mlstring>Sort order (empty is itemid):</xar:mlstring></label>
                 <select name="sortmode">
                     <xar:if condition="in_array('ASC',$sort['value'])">
                         <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
