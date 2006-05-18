@@ -12,7 +12,7 @@
  */
 $modversion['name'] = 'Security';
 $modversion['id'] = '270';
-$modversion['version'] = '0.8.2';
+$modversion['version'] = '0.8.3';
 $modversion['description'] = 'Security provides unix style privileges for xaraya items.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

@@ -14,21 +14,29 @@ function security_adminapi_create_group_level($args)
 {
     extract($args);
 
-    xarModAPILoad('security', 'user');
-
-    // Set the default
-    //$level = SECURITY_READ;
+    if( !xarModAPILoad('security', 'user') ){ return false; }
 
     // Get DB conn ready
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $table = $xartable['security_group_levels'];
+    $securityRolesTable = $xartable['security_roles'];
 
-    $query = "INSERT INTO $table (xar_modid, xar_itemtype, xar_itemid, xar_gid, xar_level)
-        VALUES ( ?, ?, ?, ?, ? )
-    ";
-    $bindvars = array( $modid, $itemtype, $itemid, $group, $level );
+    $query = "INSERT INTO $securityRolesTable "
+        . "(modid, itemtype, itemid, uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin)"
+        . "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    $bindvars = array(
+        isset($modid)      ? $modid    : 0
+        , isset($itemtype) ? $itemtype : 0
+        , isset($itemid)   ? $itemid   : 0
+        , isset($role_id)  ? $role_id  : 0
+        , isset($level['overview'])? 1 : 0
+        , isset($level['read'])    ? 1 : 0
+        , isset($level['comment']) ? 1 : 0
+        , isset($level['write'])   ? 1 : 0
+        , isset($level['manage'])  ? 1 : 0
+        , isset($level['admin'])   ? 1 : 0
+    );
 
     $result = $dbconn->Execute($query, $bindvars);
     if( !$result ) return false;

@@ -17,32 +17,28 @@
 */
 function security_admin_creategroupsecurity($args)
 {
-    xarVarFetch('modid',    'id', $modid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemid',   'id', $itemid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('group',    'id', $group, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('modid',    'id', $modid,     0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemtype', 'id', $itemtype,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemid',   'id', $itemid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('group',    'id', $role_id,   0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
     extract($args);
 
-    xarModAPILoad('security', 'user');
+    if( !xarModAPILoad('security', 'user') ){ return false; }
 
-    // Set the default
-    $level = SECURITY_READ;
-
-    // Get DB conn ready
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    $table = $xartable['security_group_levels'];
-
-    $query = "INSERT INTO $table (xar_modid, xar_itemtype, xar_itemid, xar_gid, xar_level)
-        VALUES ( ?, ?, ?, ?, ? )
-    ";
-    $bindvars = array( $modid, $itemtype, $itemid, $group, $level );
-
-    $result = $dbconn->Execute($query, $bindvars);
-    if( !$result ) return false;
+    xarModAPIFunc('security', 'admin', 'create_group_level',
+        array(
+            'modid'    => $modid,
+            'itemtype' => $itemtype,
+            'itemid'   => $itemid,
+            'role_id'  => $role_id,
+            'levels'   => array(
+                'overview' => 1,
+                'read' => 1
+            )
+        )
+    );
 
     xarResponseRedirect($returnUrl);
 

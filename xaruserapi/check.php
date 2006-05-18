@@ -26,17 +26,6 @@ function security_userapi_check($args)
 
     if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
 
-    // Not really needed
-    /*$cache_name = md5(serialize($args));
-    if( xarVarIsCached('security', $cache_name) )
-    {
-        return xarVarGetCached('security', $cache_name);
-    }*/
-
-    // Get current user and groups
-    $currentUserId = xarUserGetVar('uid');
-    $groups = array();
-
     // Get Module Settings
     $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
         array(
@@ -49,97 +38,68 @@ function security_userapi_check($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $secTable = $xartable['security'];
-    $secGroupLevelTable = $xartable['security_group_levels'];
-
+    $secRolesTable = $xartable['security_roles'];
 
     $bindvars = array();
     $where = array();
+
+    switch( $level )
+    {
+        case SECURITY_ADMIN:
+            $field = 'xadmin';
+            break;
+        case SECURITY_MANAGE:
+            $field = 'xmanage';
+            break;
+        case SECURITY_WRITE:
+            $field = 'xwrite';
+            break;
+        case SECURITY_COMMENT:
+            $field = 'xcomment';
+            break;
+        case SECURITY_READ:
+            $field = 'xread';
+            break;
+        case SECURITY_OVERVIEW:
+            $field = 'xoverview';
+            break;
+        default:
+            $field = 'xread';
+    }
+
     $query = "
-        SELECT xar_userlevel, xar_worldlevel,
-               $secGroupLevelTable.xar_gid, $secGroupLevelTable.xar_level
-        FROM $secTable
+        SELECT $field
+        FROM $secRolesTable
     ";
 
-    // Make sure the need module API's are loaded
-    if( xarModIsAvailable('owner') and is_null($settings['owner']) )
-    {
-        xarModAPILoad('owner', 'user');
-        $ownerTable = $xartable['owner'];
-        $query .= "
-            LEFT JOIN $ownerTable ON
-                $secTable.xar_modid    = $ownerTable.xar_modid  AND
-                $secTable.xar_itemtype = $ownerTable.xar_itemtype AND
-                $secTable.xar_itemid   = $ownerTable.xar_itemid
-        ";
-    }
-    elseif( !is_null($settings['owner']) and count($settings['owner']) == 3 )
-    {
-        $query .= "
-            LEFT JOIN {$settings['owner']['table']} ON
-            $secTable.xar_itemid = {$settings['owner']['primary_key']}
-        ";
-    }
+    $where[] = "$secRolesTable.modid = ?";
+    $bindvars[] = isset($modid) ? (int)$modid : 0;
+    $where[] = "$secRolesTable.itemtype = ?";
+    $bindvars[] = isset($itemtype) ? (int)$itemtype : 0;
+    $where[] = "$secRolesTable.itemid = ?";
+    $bindvars[] = isset($itemid) ? (int)$itemid : 0;
 
-    $query .= "
-        LEFT JOIN $secGroupLevelTable ON
-            $secTable.xar_modid    = $secGroupLevelTable.xar_modid AND
-            $secTable.xar_itemtype = $secGroupLevelTable.xar_itemtype AND
-            $secTable.xar_itemid   = $secGroupLevelTable.xar_itemid
-    ";
-
-    if( !empty($modid) )
-    {
-        $where[] = "$secTable.xar_modid = ?";
-        $bindvars[] = (int)$modid;
-    }
-    if( !empty($itemtype) )
-    {
-        $where[] = "$secTable.xar_itemtype = ?";
-        $bindvars[] = (int)$itemtype;
-    }
-    if( !empty($itemid) )
-    {
-        $where[] = "$secTable.xar_itemid = ?";
-        $bindvars[] = (int)$itemid;
-    }
-
-    // User Check
-    $currentUserId = (int)$currentUserId;
-    $level = (int)$level;
-    if( !is_null($settings['owner']) and count($settings['owner']) == 3 )
-    {
-        $secCheck[] = " ( $secTable.xar_userlevel & $level AND
-            {$settings['owner']['table']}.{$settings['owner']['column']} = ? ) ";
-        $bindvars[] = $currentUserId;
-    }
-    else
-    {
-        $secCheck[] = " ( $secTable.xar_userlevel & $level AND $ownerTable.xar_uid = ? ) ";
-        $bindvars[] = $currentUserId;
-    }
 
     //Check Groups
-    // TODO: Maybe join on the roles members table for this prolly faster
+    $uids = array(0, xarUserGetVar('uid'));
     $roles = new xarRoles();
-    $user = $roles->getRole($currentUserId);
-    $parents = $user->getParents();
-    foreach( $parents as $parent )
+    $user = $roles->getRole(xarUserGetVar('uid'));
+    $tmp = $user->getParents();
+    foreach( $tmp as $u )
     {
-        $secCheck[] = " ( $secGroupLevelTable.xar_gid = {$parent->uid} AND xar_level & $level ) ";
+        $uids[] = $u->uid;
     }
+    $where[] = "uid IN (". join(', ', $uids) .")";
+
 
     // Check for world
-    $secCheck[] = " ( $secTable.xar_worldlevel & $level ) ";
-
-    $where[] = " ( " . join(" OR ", $secCheck) . " ) ";
+    $where[] = "$field = 1";
 
     if( count($where) > 0 )
     {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    //var_dump($query);
     $result = $dbconn->Execute($query, $bindvars);
 
     if( $result->EOF )
@@ -150,11 +110,9 @@ function security_userapi_check($args)
             xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', $msg);
         }
 
-        //xarVarSetCached('security', $cache_name, false);
         return false;
     }
 
-    //xarVarSetCached('security', $cache_name, true);
     return true;
 }
 ?>

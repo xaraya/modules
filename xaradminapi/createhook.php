@@ -24,15 +24,14 @@ function security_adminapi_createhook($args)
     xarModAPILoad('security', 'user');
 
     // setup vars for insertion
-    $modid = '';
     if( !empty($extrainfo['module']) )
         $modid = xarModGetIdFromName($extrainfo['module']);
 
-    $itemtype = '';
+    $itemtype = 0;
     if( !empty($extrainfo['itemtype']) )
         $itemtype = $extrainfo['itemtype'];
 
-    $itemid = '';
+    $itemid = 0;
     if( !empty($objectid) )
         $itemid = $objectid;
 
@@ -56,6 +55,17 @@ function security_adminapi_createhook($args)
         )
     );
 
+    // Find owner so that we can sub user with user id
+    $owner_id = xarModAPIFunc('security', 'user', 'get_owner_id',
+        array(
+            'modid'    => isset($modid) ? $modid : null,
+            'itemtype' => isset($itemtype) ? $itemtype : null,
+            'itemid'   => isset($itemid) ? $itemid : null
+        )
+    );
+    $settings['levels'][$owner_id] = $settings['levels']['user'];
+    unset($settings['levels']['user']);
+
     /*
         Check if there are any extra security group
     */
@@ -71,11 +81,11 @@ function security_adminapi_createhook($args)
         {
             if(
                 empty($settings['exclude_groups'][$group]) &&
-                empty($settings['levels']['groups'][$group]) &&
+                empty($settings['levels'][$group]) &&
                 $group > 2
             )
             {
-                $settings['levels']['groups'][$group] = $settings['levels']['user'];
+                $settings['levels'][$group] = $settings['levels'][$owner_id];
             }
         }
     }
@@ -88,11 +98,11 @@ function security_adminapi_createhook($args)
         {
             if(
                 empty($settings['exclude_groups'][$parent->uid]) &&
-                empty($settings['levels']['groups'][$parent->uid]) &&
+                empty($settings['levels'][$parent->uid]) &&
                 $parent->uid > 2
             )
             {
-                $settings['levels']['groups'][$parent->uid] = $settings['default_group_level'];
+                $settings['levels'][$parent->uid] = $settings['default_group_level'];
             }
         }
     }
@@ -102,7 +112,8 @@ function security_adminapi_createhook($args)
         'itemid'   => $itemid,
         'settings' => $settings
     );
-    xarModAPIFunc('security', 'admin', 'create', $sargs);
+    $result = xarModAPIFunc('security', 'admin', 'create', $sargs);
+	if( !$result ){ return false; }
 
     return $extrainfo;
 }

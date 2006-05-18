@@ -23,10 +23,10 @@ function security_admin_hook_settings($args)
 
     if( !xarSecurityCheck('AdminSecurity') ) return false;
 
-    if( !xarVarFetch('reload', 'str', $reload, null, XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('reload',        'str', $reload, null, XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('submit_button', 'str', $submit, null, XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('mod_itemtype', 'str', $mod_itemtype, null, XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('owner_table', 'str', $owner_table, null, XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('mod_itemtype',  'str', $mod_itemtype, null, XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('owner_table',   'str', $owner_table, null, XARVAR_NOT_REQUIRED) ){ return false; }
 
     // Get default settings to start with
     @list( $module, $itemtype ) = split('-', $mod_itemtype);
@@ -46,9 +46,13 @@ function security_admin_hook_settings($args)
         if( !xarVarFetch('default_group_level', 'int', $default_group_level, 48, XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('primary_key', 'str', $primary_key, null, XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('owner_column', 'str', $owner_column, null, XARVAR_NOT_REQUIRED) ){ return false; }
-        if( !xarVarFetch('user',   'array', $user,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
-        if( !xarVarFetch('groups', 'array', $groups, array(), XARVAR_NOT_REQUIRED) ){ return false; }
-        if( !xarVarFetch('world',  'array', $world,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
+
+        if( !xarVarFetch('overview', 'array', $overview,array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('read',     'array', $read,    array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('comment',  'array', $comment, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('write',    'array', $write,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
 
         $exclude_gids = array();
         foreach( $e_gids as $e_gids ){ $exclude_gids[$e_gids] = $e_gids; }
@@ -59,31 +63,40 @@ function security_admin_hook_settings($args)
         if( !empty($owner_column) ){ $owner['column'] = $owner_column; }
         if( !empty($primary_key) ){ $owner['primary_key'] = $primary_key; }
 
+        $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
+        $levels = array();
         // Calc all new levels
-        $userLevel = 0;
-        foreach( $user as $part ){ $userLevel += $part; }
-
-        $groupsLevel = array();
-        foreach( $groups as $key => $group )
+        foreach( $secLevels as $secLevel )
         {
-            $groupsLevel[$key] = 0;
-            foreach( $group as $part ){ $groupsLevel[$key] += $part; }
-            if( $groupsLevel[$key] == 0 ){ unset($groupsLevel[$key]); }
+            foreach( $$secLevel['name'] as $role_id => $value )
+            {
+                $levels[$role_id][$secLevel['name']] = $value;
+            }
         }
 
-        $worldLevel = 0;
-        foreach( $world as $part ){ $worldLevel += $part; }
+        foreach( $levels as $role_id => $level_type )
+        {
+            foreach( $secLevels as $secLevel )
+            {
+                if( !isset($levels[$role_id][$secLevel['name']]) )
+                    $levels[$role_id][$secLevel['name']] = 0;
+            }
+        }
 
         $settings = array(
             'exclude_groups' => $exclude_gids,
             'default_group_level' => $default_group_level,
             'owner' => $owner,
-            'levels' => array(
-                'user'   => $userLevel,
-                'groups' => $groupsLevel,
-                'world'  => $worldLevel
+            'levels' => $levels
+        );
+        $result = xarModAPIFunc('security', 'admin', 'set_hook_settings',
+            array(
+                'modid' => !empty($module)?xarModGetIdFromName($module):null,
+                'itemtype' => $itemtype,
+                'settings' => $settings
             )
         );
+
     }
 
     if( !empty($submit) )
@@ -100,13 +113,14 @@ function security_admin_hook_settings($args)
         else if( $submit == 'Add Group' )
         {
             if( !xarVarFetch('group', 'int', $group, null) ){ return false; }
-            /*$settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-                array(
-                    'modid'    => $modid,
-                    'itemtype' => $itemtype
-                )
-            );*/
-            $settings['levels']['groups'][$group] = 0;
+            $settings['levels'][$group] = array(
+                'overview'  => 0
+                , 'read'    => 0
+                , 'comment' => 0
+                , 'write'   => 0
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
         }
         // Save the updated settings
         $result = xarModAPIFunc('security', 'admin', 'set_hook_settings',
@@ -129,16 +143,7 @@ function security_admin_hook_settings($args)
     */
     $secMap = array();
     $data['sec_levels'] = xarModAPIFunc('security', 'user', 'getlevels');
-    foreach( $data['sec_levels'] as $secLevel )
-    {
-        $currentLevel = $secLevel['level'];
-        $data['sec_map']['user'][$currentLevel] = $levels['user'] & $currentLevel;
-        $data['sec_map']['world'][$currentLevel] = $levels['world'] & $currentLevel;
-        foreach( $levels['groups'] as $gid => $group )
-        {
-            $data['sec_map'][$gid][$currentLevel] = $group & $currentLevel;
-        }
-    }
+    $data['sec_map'] = $settings['levels'];
 
     $data['hook_list'] = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
         array(

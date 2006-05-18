@@ -25,18 +25,25 @@ function security_adminapi_delete($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $table = $xartable['security'];
-    $groupTable = $xartable['security_group_levels'];
+    $table = $xartable['security_roles'];
 
-    $sql = "DELETE FROM $table WHERE xar_modid = ? ";
+    $sql = "DELETE FROM $table WHERE modid = ? ";
     $bindvars = array($modid);
-    $result = $dbconn->Execute($sql, $bindvars);
-    if( !$result ) return false;
 
-    $sql = "DELETE FROM $groupTable WHERE xar_modid = ? ";
-    $bindvars = array($modid);
+    if( isset($itemtype) )
+    {
+        $sql .= " AND itemtype = ? ";
+        $bindvars[] = $itemtype;
+    }
+
+    if( isset($itemid) )
+    {
+        $sql .= " AND itemid = ? ";
+        $bindvars[] = $itemid;
+    }
+
     $result = $dbconn->Execute($sql, $bindvars);
-    if( !$result ) return false;
+    if( !$result ){ return false; }
 
     return true;
 }

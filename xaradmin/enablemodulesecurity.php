@@ -21,7 +21,7 @@ function security_admin_enablemodulesecurity($args)
 {
     if( !xarSecurityCheck('AdminSecurity') ) return false;
 
-    xarModAPILoad('Security');
+    xarModAPILoad('security');
     $default_user_level  = SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN;
     $default_group_level  = SECURITY_OVERVIEW+SECURITY_READ;
     $default_world_level  = SECURITY_OVERVIEW+SECURITY_READ;
@@ -107,9 +107,9 @@ function security_admin_enablemodulesecurity($args)
 
     $data = array();
 
-    $data['modid'] = $modid;
-    $data['gid'] = $gid;
-    $data['tables']  = $dict->getTables();
+    $data['modid']       = $modid;
+    $data['gid']         = $gid;
+    $data['tables']      = $dict->getTables();
     $data['user_level']  = $user_level;
     $data['group_level'] = $group_level;
     $data['world_level'] = $world_level;

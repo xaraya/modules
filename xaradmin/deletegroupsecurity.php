@@ -19,38 +19,28 @@ function security_admin_deletegroupsecurity($args)
 {
     extract($args);
 
-    xarVarFetch('modid',    'id', $modid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemid',   'id', $itemid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('gid',      'id', $group, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('modid',    'id', $modid,     0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemtype', 'id', $itemtype,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemid',   'id', $itemid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('group',    'id', $role_id,   0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
     // Get DB conn ready
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $table = $xartable['security_group_levels'];
+    $secRolesTable = $xartable['security_roles'];
 
-    $query = "DELETE FROM $table
-    ";
-    $where[] = " xar_modid = ? ";
-    $bindvars[] = $modid;
+    $query = "DELETE FROM $secRolesTable ";
+    $where[] = " modid = ? ";
+    $bindvars[] = isset($modid) ? $modid : 0;
+    $where[] = " itemtype = ? ";
+    $bindvars[] = isset($itemtype) ? $itemtype : 0;
+    $where[] = " itemid = ? ";
+    $bindvars[] = isset($itemtype) ? $itemid : 0;
+    $where[] = " uid = ? ";
+    $bindvars[] = $role_id;
 
-    if($itemtype)
-    {
-        $where[] = " xar_itemtype = ? ";
-        $bindvars[] = $itemtype;
-    }
-    if($itemid)
-    {
-        $where[] = " xar_itemid = ? ";
-        $bindvars[] = $itemid;
-    }
-    if($group)
-    {
-        $where[] = " xar_gid = ? ";
-        $bindvars[] = $group;
-    }
     $query .= " WHERE " . join(" AND ", $where);
 
     $result = $dbconn->Execute($query, $bindvars);

@@ -19,18 +19,21 @@
 */
 function security_admin_updatesecurity($args)
 {
-    xarVarFetch('modid',    'id', $modid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemid',   'id', $itemid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('modid',    'id', $modid,     0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemtype', 'id', $itemtype,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('itemid',   'id', $itemid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
-    xarVarFetch('user',   'array', $user,   array(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('groups', 'array', $groups, array(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('world',  'array', $world,  array(), XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('overview', 'array', $overview,array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('read',     'array', $read,    array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('comment',  'array', $comment, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('write',    'array', $write,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
 
     extract($args);
 
-    xarModAPILoad('security', 'user');
+    if( !xarModAPILoad('security', 'user') ){ return false; }
 
     /*
         If user has SECURITY_ADMIN level or is a site admin let them
@@ -47,28 +50,19 @@ function security_admin_updatesecurity($args)
     );
     if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
 
-    // Calc all new levels
-    $userLevel = 0;
-    foreach( $user as $part )
-        $userLevel += $part;
+    $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
+    $levels = array();
 
-    $groupsLevel = array();
-    foreach( $groups as $key => $group )
+    // Read checks from form and setup the levels for storage
+    foreach( $secLevels as $secLevel )
     {
-        $groupsLevel[$key] = 0;
-        foreach( $group as $part )
-            $groupsLevel[$key] += $part;
+        foreach( $$secLevel['name'] as $role_id => $value )
+        {
+            $levels[$role_id][$secLevel['name']] = $value;
+        }
     }
 
-    $worldLevel = 0;
-    foreach( $world as $part )
-        $worldLevel += $part;
-
-    $settings['levels'] = array(
-        'user' => $userLevel,
-        'groups' => $groupsLevel,
-        'world' => $worldLevel
-    );
+    $settings['levels'] = $levels;
     $sargs = array(
         'modid'    => $modid,
         'itemtype' => $itemtype,

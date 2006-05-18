@@ -24,15 +24,15 @@ function security_adminapi_updatehook($args)
     xarModAPILoad('security', 'user');
 
     // setup vars
-    $modid = '';
+    $modid = 0;
     if( !empty($extrainfo['module']) )
         $modid = xarModGetIdFromName($extrainfo['module']);
 
-    $itemtype = '';
+    $itemtype = 0;
     if( !empty($extrainfo['itemtype']) )
         $itemtype = $extrainfo['itemtype'];
 
-    $itemid = '';
+    $itemid = 0;
     if( !empty($objectid) )
         $itemid = $objectid;
 
@@ -45,13 +45,17 @@ function security_adminapi_updatehook($args)
             'hide_exception' => true
         )
     );
-    if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
+    if( !$has_admin_security ){ return ''; }
 
     // Do a little poll to see if
-    xarVarFetch('user',   'array', $user,   array(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('groups', 'array', $groups, array(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('world',  'array', $world,  array(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('group',  'int',   $group,  0,       XARVAR_NOT_REQUIRED);
+    if( !xarVarFetch('group',  'int',   $group,  0,       XARVAR_NOT_REQUIRED) ){ return false; }
+
+    if( !xarVarFetch('overview', 'array', $overview,array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('read',     'array', $read,    array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('comment',  'array', $comment, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('write',    'array', $write,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
 
     if( $group > 0 )
     {
@@ -61,33 +65,24 @@ function security_adminapi_updatehook($args)
                 'itemtype' => $itemtype,
                 'itemid'   => $itemid,
                 'group'    => $group,
-                'level'    => SECURITY_READ
+                'level'    => array('read' => 1)
             )
         );
     }
 
-    // Calc all new levels
-    $userLevel = 0;
-    foreach( $user as $part )
-        $userLevel += $part;
+    $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
+    $levels = array();
 
-    $groupsLevel = array();
-    foreach( $groups as $key => $group )
+    // Calc all new levels
+    foreach( $secLevels as $secLevel )
     {
-        $groupsLevel[$key] = 0;
-        foreach( $group as $part )
-            $groupsLevel[$key] += $part;
+        foreach( $$secLevel['name'] as $role_id => $value )
+        {
+            $levels[$role_id][$secLevel['name']] = $value;
+        }
     }
 
-    $worldLevel = 0;
-    foreach( $world as $part )
-        $worldLevel += $part;
-
-    $settings['levels'] = array(
-        'user' => $userLevel,
-        'groups' => $groupsLevel,
-        'world' => $worldLevel
-    );
+    $settings['levels'] = $levels;
     $sargs = array(
         'modid'    => $modid,
         'itemtype' => $itemtype,
@@ -95,30 +90,6 @@ function security_adminapi_updatehook($args)
         'settings' => $settings
     );
     xarModAPIFunc('security', 'admin', 'update', $sargs);
-
-    /*
-
-    // Check to see if we have an entry already
-    $securityExists = xarModAPIFunc('security', 'user', 'securityexists',
-        array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid));
-
-    // If this has not been owned before set ownership to current user
-    if( !$securityExists )
-    {
-       xarModAPIFunc('security', 'admin', 'createhook', $args);
-    }
-    else
-    {
-    $sargs = array(
-        'modid'    => $modid,
-        'itemtype' => $itemtype,
-        'itemid'   => $itemid,
-        'settings' => $settings
-    );
-    xarModAPIFunc('security', 'admin', 'create', $sargs);
-
-    }
-    */
 
     return $extrainfo;
 }

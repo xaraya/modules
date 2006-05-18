@@ -55,10 +55,58 @@ function security_userapi_get_default_settings($args)
     if( !isset($settings['levels']) )
     {
         $settings['levels'] = array(
-            'user' => SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN,
-            'groups' => array(),
-            'world' => SECURITY_OVERVIEW+SECURITY_READ
+            'user' => array(
+                'overview'  => 1
+                , 'read'    => 1
+                , 'comment' => 1
+                , 'write'   => 1
+                , 'manage'  => 1
+                , 'admin'   => 1
+            ),
+            0 => array(
+                'overview'  => 1
+                , 'read'    => 1
+                , 'comment' => 0
+                , 'write'   => 0
+                , 'manage'  => 0
+                , 'admin'   => 0
+            )
         );
+    }
+
+    // Code to convert old levels to new style
+    if( !is_array($settings['levels']['user']) )
+    {
+        // Move groups down a level
+        if( isset($settings['levels']['groups']) )
+        {
+            foreach( $settings['levels']['groups'] as $uid => $level )
+            {
+                $settings['levels'][$uid] = $level;
+            }
+            unset($settings['levels']['groups']);
+        }
+        if( isset($settings['levels']['world']) )
+        {
+            $settings['levels'][0] = $settings['levels']['world'];
+            unset($settings['levels']['world']);
+        }
+
+        // Now convert from int to an array
+        foreach( $settings['levels'] as $key => $value )
+        {
+            if( !is_array($value) )
+            {
+                $settings['levels'][$key] = array(
+                    'overview' => $value & SECURITY_OVERVIEW ? 1 : 0
+                    ,'read' => $value & SECURITY_READ ? 1 : 0
+                    ,'comment' => $value & SECURITY_COMMENT ? 1 : 0
+                    ,'write' => $value & SECURITY_WRITE ? 1 : 0
+                    ,'manage' => $value & SECURITY_MANAGE ? 1 : 0
+                    ,'admin' => $value & SECURITY_ADMIN ? 1 : 0
+                );
+            }
+        }
     }
 
     return $settings;

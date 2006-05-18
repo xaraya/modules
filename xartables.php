@@ -28,6 +28,7 @@ function security_xartables()
     // Table name
     $xartable['security'] = $table;
     $xartable['security_group_levels'] = $table . '_group_levels';
+    $xartable['security_roles'] = $table . '_roles';
 
     // Return table information
     return $xartable;

@@ -30,7 +30,7 @@ function security_admin_changesecurity($args)
     if( !empty($extrainfo['itemtype']) )
         $itemtype = $extrainfo['itemtype'];
 
-    $itemid = '';
+    $itemid = 0;
     if( !empty($objectid) ){ $itemid = $objectid; }
 
     if( !empty($extrainfo['returnurl']) )
@@ -79,7 +79,7 @@ function security_admin_changesecurity($args)
             'hide_exception' => true
         )
     );
-    if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
+    if( !$has_admin_security ){ return ''; }
 
     /*
         Get all the current security and owner info
@@ -149,12 +149,18 @@ function security_admin_changesecurity($args)
     foreach( $secLevels as $secLevel )
     {
         $currentLevel = $secLevel['level'];
-        $tmp = $levels['user'] & $secLevel['level'];
-        $secMap['user'][$currentLevel] = $levels['user'] & $currentLevel;
-        $secMap['world'][$currentLevel] = $levels['world'] & $currentLevel;
-        foreach( $levels['groups'] as $gid => $group )
+        $currentLevel = $secLevel['name'];
+
+        if( isset($levels[$owner['uid']]) )
+            $secMap['user'][$currentLevel] = $levels[$owner['uid']][$currentLevel];
+        else
+            $secMap['user'][$currentLevel] = 0;
+
+        $secMap['world'][$currentLevel] = $levels[0][$currentLevel];
+        foreach( $levels as $gid => $group )
         {
-            $secMap[$gid][$currentLevel] = $group & $currentLevel;
+            if( $gid != 0 and $gid != $owner['uid'] && isset($levels[$gid]) )
+                $secMap[$gid][$currentLevel] = $levels[$gid][$currentLevel];
         }
     }
 
@@ -166,6 +172,7 @@ function security_admin_changesecurity($args)
     {
         $data['standalone'] = false;
     }
+    $data['owner']    = $owner['uid'];
     $data['secLevels']= $secLevels; // different security levels
     $data['secMap']   = $secMap; // Security Map
     $data['levels']   = $levels; // Sec levels for each group
@@ -179,6 +186,6 @@ function security_admin_changesecurity($args)
     $data['action']   = xarModURL('security', 'admin', 'creategroupsecurity');
     $data['returnurl']= $returnUrl;
 
-    return $data;
+    return xarTplModule('security', 'admin', 'changesecurity', $data);
 }
 ?>

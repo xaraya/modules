@@ -42,8 +42,7 @@ function security_userapi_get($args)
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $table = $xartable['security'];
-    $groupLevelsTable = $xartable['security_group_levels'];
+    $table = $xartable['security_roles'];
 
     /*
         Get the user and world levels first
@@ -53,22 +52,22 @@ function security_userapi_get($args)
     $bindvars = array();
     $where = array();
     $query = "
-        SELECT xar_userlevel, xar_worldlevel
+        SELECT uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin
         FROM $table
     ";
     if( !empty($modid) )
     {
-        $where[] = " xar_modid = ? ";
+        $where[] = " modid = ? ";
         $bindvars[] = $modid;
     }
     if( !empty($itemtype) )
     {
-        $where[] = " xar_itemtype = ? ";
+        $where[] = " itemtype = ? ";
         $bindvars[] = $itemtype;
     }
     if( !empty($itemid) )
     {
-        $where[] = " xar_itemid = ? ";
+        $where[] = " itemid = ? ";
         $bindvars[] = $itemid;
     }
     if( count($where) > 0 )
@@ -79,28 +78,31 @@ function security_userapi_get($args)
     if( !$result ){ return false; }
     if( $result->EOF ){ return array(); }
 
-    list($u, $w) = $result->fields;
-    $level = array('user' => $u, 'world' => $w);
-
-    /*
-        Now Get all the group privs
-    */
-    $query = "
-        SELECT xar_gid, xar_level
-        FROM $groupLevelsTable
-    ";
-    if( count($where) > 0 )
+    $level = array();
+    while( (list($uid, $overview, $read, 
+    	$comment, $write, $manage, $admin) = $result->fields) != null )
     {
-        $query .= ' WHERE ' . join(' AND ', $where);
-    }
-    $result = $dbconn->Execute($query, $bindvars);
-    if( !$result ){ return false; }
-
-    $level['groups'] = array();
-    while( (list($gid, $l) = $result->fields) != null )
-    {
-        $level['groups'][$gid] = $l;
+        $level[$uid] = array(
+        	'overview' => $overview,
+        	'read' 	   => $read,
+        	'comment'  => $comment,
+        	'write'    => $write,
+        	'manage'   => $manage,
+        	'admin'    => $admin
+        );
         $result->MoveNext();
+    }
+
+    if( !isset($level[0]) )
+    { 
+        $level[0] = array(
+        	'overview' => 0,
+        	'read' 	   => 0,
+        	'comment'  => 0,
+        	'write'    => 0,
+        	'manage'   => 0,
+        	'admin'    => 0
+        ); 
     }
 
     return $level;
