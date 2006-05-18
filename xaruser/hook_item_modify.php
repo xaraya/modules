@@ -11,6 +11,11 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
+/**
+ * Hook to modify an item
+ *
+ * @return array
+ */
 function subitems_user_hook_item_modify($args)
 {
     extract($args);

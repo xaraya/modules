@@ -11,6 +11,11 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
+/**
+ * Hook to add new subitem
+ * @param array $extrainfo Array with info for hook
+ * @return array
+ */
 function subitems_user_hook_item_new($args)
 {
     extract($args);
