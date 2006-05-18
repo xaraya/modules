@@ -23,7 +23,7 @@
               <xar:mlstring>Configured Hooks</xar:mlstring>
           </legend>
           <div class="xar-form-input-wrapper-after">
-                        #$hooks#
+              #$hooks#
           </div>
       </fieldset>
           <div class="xar-form-input-wrapper-after">

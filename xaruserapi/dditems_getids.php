@@ -15,9 +15,8 @@
  * get a specific item
  *
  * @author the subitems module development team
- * @param  $args ['warid'] id of subitems item to get
- * @returns array
- * @return item array, or false on failure
+ * @param  id $args ['warid'] id of subitems item to get
+ * @return array item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function subitems_userapi_dditems_getids($args)

@@ -11,6 +11,10 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
+/**
+ * Display the item via a hook
+ * @return array
+ */
 function subitems_user_hook_item_display($args)
 {
     extract($args);
