@@ -1,5 +1,12 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Userpoints Type Values</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Userpoints Types</xar:mlstring></h2>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Userpoints Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="userpoints" file="admin-menu" />
+    <h2><xar:mlstring>Userpoints Types</xar:mlstring></h2>
     <table summary="">
     <tr>
         <th><xar:mlstring>Module</xar:mlstring></th>
