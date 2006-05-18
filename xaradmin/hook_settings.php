@@ -70,7 +70,7 @@ function security_admin_hook_settings($args)
         {
             foreach( $$secLevel['name'] as $role_id => $value )
             {
-                $levels[$role_id][$secLevel['name']] = $value;
+                $levels[$role_id][$secLevel['name']] = 1;
             }
         }
 
@@ -81,6 +81,30 @@ function security_admin_hook_settings($args)
                 if( !isset($levels[$role_id][$secLevel['name']]) )
                     $levels[$role_id][$secLevel['name']] = 0;
             }
+        }
+
+        if( !isset($levels['user']) )
+        {
+            $levels['user'] = array(
+                'overview'  => 0
+                , 'read'    => 0
+                , 'comment' => 0
+                , 'write'   => 0
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
+        }
+
+        if( !isset($levels[0]) )
+        {
+            $levels[0] = array(
+                'overview'  => 0
+                , 'read'    => 0
+                , 'comment' => 0
+                , 'write'   => 0
+                , 'manage'  => 0
+                , 'admin'   => 0
+            );
         }
 
         $settings = array(

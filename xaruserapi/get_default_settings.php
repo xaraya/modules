@@ -52,25 +52,28 @@ function security_userapi_get_default_settings($args)
     {
         $settings['default_group_level'] = SECURITY_OVERVIEW+SECURITY_READ;
     }
-    if( !isset($settings['levels']) )
+
+    if( !isset($settings['levels']['user']) )
     {
-        $settings['levels'] = array(
-            'user' => array(
-                'overview'  => 1
-                , 'read'    => 1
-                , 'comment' => 1
-                , 'write'   => 1
-                , 'manage'  => 1
-                , 'admin'   => 1
-            ),
-            0 => array(
-                'overview'  => 1
-                , 'read'    => 1
-                , 'comment' => 0
-                , 'write'   => 0
-                , 'manage'  => 0
-                , 'admin'   => 0
-            )
+        $settings['levels']['user'] = array(
+            'overview'  => 0
+            , 'read'    => 0
+            , 'comment' => 0
+            , 'write'   => 0
+            , 'manage'  => 0
+            , 'admin'   => 0
+        );
+    }
+
+    if( !isset($settings['levels'][0]) )
+    {
+        $settings['levels'][0] = array(
+            'overview'  => 0
+            , 'read'    => 0
+            , 'comment' => 0
+            , 'write'   => 0
+            , 'manage'  => 0
+            , 'admin'   => 0
         );
     }
 
