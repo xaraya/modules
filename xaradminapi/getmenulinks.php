@@ -1,24 +1,39 @@
 <?php
+/**
+ * Pass individual menu items to the admin menu
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage window
+ * @link http://xaraya.com/index.php/release/3002.html
+ * @author Marc Lutolf
+ */
+
+/**
+ * Pass individual menu items to the admin  menu
+ *
+ * @return array containing the menulinks for the main menu items.
+ */
 function window_adminapi_getmenulinks()
 {
-
-// Security Check
     if (xarSecurityCheck('AdminWindow',0)) {
-        $menulinks[] = Array('url'   => xarModURL('window',
-                                                  'admin',
-                                                  'general'),
-                              'title' => xarML('General Settings'),
-                              'label' => xarML('General Settings'));
-    }
-
-    if (xarSecurityCheck('AdminWindow',0)) {
-        $menulinks[] = Array('url'   => xarModURL('window',
+        $menulinks[] = array('url'   => xarModURL('window',
                                                   'admin',
                                                   'addurl'),
                               'title' => xarML('Specific Settings'),
                               'label' => xarML('Specific Settings'));
     }
-
+    if (xarSecurityCheck('AddWindow',0)) {
+        $menulinks[] = array('url'   => xarModURL('window',
+                                                  'admin',
+                                                  'general'),
+                              'title' => xarML('Modify the configuration for the module'),
+                              'label' => xarML('Modify Config'));
+    }
+    
     if (empty($menulinks)){
         $menulinks = '';
     }
