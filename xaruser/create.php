@@ -3,7 +3,7 @@
  * Standard function to create a new item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,8 +15,15 @@
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('maxercalls','admin','new') to create a new item
  *
- * @param  $ 'calldatetime' the date and time of the call to be created
- * @param  $ 'remarks' any remarks regarding this call to be created
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param  int $callhours the date and time of the call to be created
+ * @param  int $callminutes the date and time of the call to be created
+ * @param  int $callday the date and time of the call to be created
+ * @param  int $callmonth the date and time of the call to be created
+ * @param  int $callyear the date and time of the call to be created
+ * @param  int $calltext the type of text reported
+ * @param  string $remarks any remarks regarding this call to be created
+ * @return bool true on success
  */
 function maxercalls_user_create($args)
 {
@@ -31,11 +38,8 @@ function maxercalls_user_create($args)
     if (!xarVarFetch('calltext', 'int:1:', $calltext)) return;
     if (!xarVarFetch('owner', 'int::', $owner, $owner, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('itemtype', 'int:1:', $itemtype, 1,XARVAR_NOT_REQUIRED )) return;
-    // Argument check - make sure that all required arguments are present
-    // and in the right format, if not then return to the add form with the
-    // values that are there and a message with a session var.  If you perform
-    // this check now, you could do away with the check in the API along with
-    // the exception that comes with it.
+
+    // Argument check
     //$item = xarModAPIFunc('maxercalls',
     //                      'user',
     //                     'validateitem',
@@ -93,11 +97,9 @@ function maxercalls_user_create($args)
                                 'owner' => $owner,
                                 'invalid' => $invalid));
     } */
-    // Confirm authorisation code.  This checks that the form had a valid
-    // authorisation code attached to it.  If it did not then the function will
-    // proceed no further as it is possible that this is an attempt at sending
-    // in false data to the system
+    // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+
     $enteruid = xarUserGetVar('uid');
     $enterts = date("Y-m-d H:i:s");
 
