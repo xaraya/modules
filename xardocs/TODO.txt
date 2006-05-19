@@ -27,3 +27,6 @@ ad 17. Courses that are itemtypes are not the solution
 
 18 Enable digits in credits (eg 1.5) [done version 0.4.0]
 19 Add check on teacher status in usermenu
+20 Enable Myself role for teachers and coordinators
+21 Call for courses in usermenu when user is coordinator
+22 Add students to a student via admin interface
