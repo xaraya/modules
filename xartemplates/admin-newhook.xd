@@ -1,25 +1,23 @@
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Add this entry to which forum.  Summary only.')#"><label for="xarbb_forum"><xar:mlstring>Add to forum</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <select name="xarbb_forum" id="xarbb_forum">
-            <option value="">
-                <xar:mlstring>
-                    No Forum Selected
-                </xar:mlstring>
-            </option>
-            <xar:loop name="$items">
-                <xar:if condition="$loop:item.fid eq $default">
-                    <option value="#$loop:item.fid#" selected="selected">
-                        #$loop:item.fname#
-                    </option>
-                    <xar:else />
-                    <option value="#$loop:item.fid#">
-                        #$loop:item.fname#
-                    </option>
-                </xar:if>
-            </xar:loop>
-        </select>
-    </span>
-    </div>
+<div class="xar-form-input-wrapper">
+    <label for="xarbb_forum" class="xar-form-label" title="#xarML('Add this entry to which forum.  Summary only.')#">
+        <xar:mlstring>Forum for topic creation</xar:mlstring>:
+    </label>
+    <select name="xarbb_forum" id="xarbb_forum">
+        <option value="">
+        <xar:mlstring>
+            No Forum Selected
+        </xar:mlstring>
+        </option>
+        <xar:loop name="$items">
+            <xar:if condition="$loop:item.fid eq $default">
+                <option value="#$loop:item.fid#" selected="selected">
+                    #$loop:item.fname#
+                </option>
+            <xar:else />
+                <option value="#$loop:item.fid#">
+                    #$loop:item.fname#
+                </option>
+            </xar:if>
+         </xar:loop>
+    </select>
+</div>
