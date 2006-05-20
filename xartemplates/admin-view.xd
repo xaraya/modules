@@ -113,7 +113,7 @@
                                     </xar:if>
                                 </td>
                             </xar:if>
-                            <td class="xar-align-center" class="xar-norm">
+                            <td class="xar-align-center xar-norm">
                                 <xar:if condition="empty($item['viewurl'])">
                                     #$item['viewtitle']# 
                                     <xar:else />
