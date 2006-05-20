@@ -1,27 +1,28 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <div class="xar-form-input-wrapper">
         <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
-        <xar:mlstring>Keywords</xar:mlstring>:
+            <xar:mlstring>Keywords</xar:mlstring>:
         </label>
-    
-        <xar:if condition="$restricted eq 0">
-                <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
-            </div>
-       <div class="xar-form-input-wrapper">
-            <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
-                <xar:mlstring>Allowed delimiters</xar:mlstring>: 
-            </label>
-            #$delimiters#
+
+    <xar:if condition="$restricted eq 0">
+        <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+            <xar:mlstring>Allowed delimiters</xar:mlstring>:
+        </label>
+        #$delimiters#
+    </div>
     <xar:else />
-    
-    <xar:base-include-javascript filename="selectbox.js"/>
-    
-    <script type="text/javascript">
+
+        <xar:base-include-javascript filename="selectbox.js"/>
+
+        <script type="text/javascript">
         var opt = new OptionTransfer("list1","list2");
         opt.setAutoSort(true);
         opt.setDelimiter("#$delimiter#");
         opt.saveNewRightOptions("keywords");
-    </script>
+        </script>
         <table class="xar-noborder">
                 <tr>
                 <th class="xar-align-center">
@@ -30,7 +31,7 @@
                         </xar:mlstring>
                 </th>
                 <th class="xar-align-center">
-                    <img name="pix" src="#xarTplGetImage('pix.gif','keywords')#" alt="" /> 
+                    <img name="pix" src="#xarTplGetImage('pix.gif','keywords')#" alt="" />
                 </th>
                 <th class="xar-align-center">
                         <xar:mlstring>
@@ -40,11 +41,11 @@
                 </tr>
                 <tr>
                 <td class="xar-align-center">
-                        <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1"> 
+                        <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1">
                             <xar:foreach in="$keywords" value="$item">
                                 <option name="keywords" value="#$item#">#$item#</option>
                             </xar:foreach>
-                        </select> 
+                        </select>
                     </td>
                 <td class="xar-align-center">
                         <p>
@@ -61,15 +62,15 @@
                         </p>
                     </td>
                 <td class="xar-align-center">
-                        <select ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2"> 
-                        </select> 
+                        <select ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2">
+                        </select>
                     </td>
                 </tr>
         </table>
         <input type="hidden" size="70" name="keywords" id="keywords"/>
-        </div>
+    </div>
     <script type="text/javascript">
         opt.init(document.forms['post']);
     </script>
-    </xar:if>           
-</div>
+    </xar:if>
+

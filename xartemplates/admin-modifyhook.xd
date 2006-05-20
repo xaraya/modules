@@ -1,28 +1,28 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
     <div class="xar-form-input-wrapper">
         <label for="keywords" class="xar-form-label" title="#xarML('Select the keywords for this item.')#">
-        <xar:mlstring>Keywords</xar:mlstring>:
+            <xar:mlstring>Keywords</xar:mlstring>:
         </label>
-    
-        <xar:if condition="$restricted eq 0">
-                <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
-            </div>
-       <div class="xar-form-input-wrapper">
-            <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
-                <xar:mlstring>Allowed delimiters</xar:mlstring>: 
-            </label>
-            #$delimiters#
-        <xar:else />
-            <xar:base-include-javascript filename="selectbox.js"/>
-            
-            <script type="text/javascript">
+
+    <xar:if condition="$restricted eq 0">
+        <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
+            <xar:mlstring>Allowed delimiters</xar:mlstring>:
+        </label>
+        #$delimiters#
+    </div>
+    <xar:else />
+        <xar:base-include-javascript filename="selectbox.js"/>
+        <script type="text/javascript">
                 var opt = new OptionTransfer("list1","list2");
                 opt.setAutoSort(true);
                 opt.setDelimiter("#$delimiter#");
                 opt.saveNewRightOptions("keywords");
-            </script>
-        <table class="xar-noborder">
-                        <tr>
+        </script>
+            <table class="xar-noborder">
+                <tr>
                 <th class="xar-align-center">
                     <xar:mlstring>List of keywords</xar:mlstring>
                 </th>
@@ -62,12 +62,12 @@
                                     </xar:foreach>
                                 </select> 
                             </td>
-                        </tr>
-                </table>
-            <input type="hidden" size="70" name="keywords" id="keywords"/> 
-            </div>
-            <script type="text/javascript">
-                opt.init(document.forms['post']);
-            </script>
-        </xar:if>   
-</div>
+                    </tr>
+            </table>
+        <input type="hidden" size="70" name="keywords" id="keywords"/>
+    </div>
+        <script type="text/javascript">
+            opt.init(document.forms['post']);
+        </script>
+    </xar:if>
+
