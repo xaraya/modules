@@ -77,7 +77,7 @@
       <li><xar:mlstring>Registration Module Extension page at</xar:mlstring> <a title="#xarML('Registration Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/30205.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
       </li>
-      <li><xar:mlstring>Related tutorials and documentation on Roles module at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+      <li><xar:mlstring>Related tutorials and documentation on Registration module at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
       </li>
       <li><xar:mlstring>Extended information for Developers at</xar:mlstring> <a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#"><xar:mlstring>Xaraya RFC-30</xar:mlstring></a>
       </li>
