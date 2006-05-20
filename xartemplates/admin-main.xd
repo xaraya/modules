@@ -36,9 +36,17 @@
     <h4><xar:mlstring>A. Configurations Options for Administrators</xar:mlstring></h4>
     <p><xar:mlstring>The following options are available through the Modify Config link in the Admin Panel Registration menu.</xar:mlstring></p>
      <ol>
-        <li><xar:mlstring><strong>General Options tab :</strong> allows you to set short urls and options for display of Terms of Service and Privacy Policy.</xar:mlstring></li>
-        <li><xar:mlstring><strong>Registration Options tab :</strong> provides options for user registration including default group for new uers, allowing of registration, minimum registration age, notification emails to users and the designated site administrator, enabling users to set their own password and minimum password length, display of Roles module dynamic data fields, and requirement for unique email address.</strong></xar:mlstring></li>
-        <li><xar:mlstring><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking registrations on the basis of User Names, IP address or email address.</strong></xar:mlstring></li>
+        <li><xar:mlstring><strong>General Options tab :</strong> allows you to set short urls and options for display of
+             Terms of Service and Privacy Policy.</xar:mlstring>
+        </li>
+        <li><xar:mlstring><strong>Registration Options tab :</strong> provides options for user registration including default
+            group for new users, allowing of registration, minimum registration age, notification emails to users and 
+            the designated site administrator, enabling users to set their own password and minimum password length, 
+            display of Roles module dynamic data fields, and requirement for unique email address.</xar:mlstring>
+        </li>
+        <li><xar:mlstring><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking
+            registrations on the basis of User Names, IP address or email address.</strong></xar:mlstring>
+        </li>
      </ol>
      <h4><xar:mlstring>B. User Menu Options</xar:mlstring></h4>
      <ol>
