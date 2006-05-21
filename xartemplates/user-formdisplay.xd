@@ -8,7 +8,7 @@
     <input type="button" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic;" onclick="bbstyle(2)" onmouseover="document.post.helpbox.value='#xarML("Italic text: [i]text[/i]  (alt+i)")#'; return true" />
     <input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline;" onclick="bbstyle(4)" onmouseover="document.post.helpbox.value='#xarML("Underline text: [u]text[/u]  (alt+u)")#'; return true" />
     <input type="button" accesskey="q" name="addbbcode6" value="Quote" onclick="bbstyle(6)" onmouseover="document.post.helpbox.value='#xarML("Quote text: [quote]text[/quote]  (alt+q)")#'; return true" />
-    <input type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" onmouseover="document.post.helpbox.value='#xarML("Code display: [code]code[/code]  (alt+c)")#'; return true" />
+    <input type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" onmouseover="document.post.helpbox.value='#xarML("Code display: [code=xml]code[/code] (alt+c)")#'; return true" />
     <input type="button" accesskey="p" name="addbbcode14" value="Img" onclick="bbstyle(14)" onmouseover="document.post.helpbox.value='#xarML("Insert image: [img]http://image_url[/img]  (alt+p)")#'; return true" />
     <input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline;" onclick="bbstyle(16)" onmouseover="document.post.helpbox.value='#xarML("Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]  (alt+w)")#'; return true" />
 </span>

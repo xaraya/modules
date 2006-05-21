@@ -27,7 +27,7 @@ z_help = "Paragraph: [p]text[/p]  (alt+z)";
 i_help = "Italic text: [i]text[/i]  (alt+i)";
 u_help = "Underline text: [u]text[/u]  (alt+u)";
 q_help = "Quote text: [quote]text[/quote]  (alt+q)";
-c_help = "Code display: [code]code[/code]  (alt+c)";
+c_help = "Code display: [code=xml]code[/code]  (alt+c)";
 p_help = "Insert image: [img]http://image_url[/img]  (alt+p)";
 w_help = "Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]  (alt+w)";
 a_help = "Close all open bbCode tags";
@@ -39,7 +39,7 @@ o_help = "Ordered list: [list=]text[/list]  (alt+o)";
 
 // Define the bbCode tags
 bbcode = new Array();
-bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[p]','[/p]');
+bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code=xml]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[p]','[/p]');
 imageTag = false;
 
 // Shows the help messages in the helpline window
