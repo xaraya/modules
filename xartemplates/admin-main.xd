@@ -4,7 +4,8 @@
     <span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <img src="modules/lists/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <xar:template type="module" module="lists" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif','lists')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 

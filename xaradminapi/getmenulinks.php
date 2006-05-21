@@ -14,19 +14,11 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Lists module development team
  * @return array containing the menulinks for the main menu items.
  */
 function lists_adminapi_getmenulinks()
 {
-    // Security Check
-    //if (xarSecurityCheck('EditLists',0)) {
-        $menulinks[] = array(
-            'url'   => xarModURL('lists', 'admin', 'overview'),
-            'title' => xarML('Overview'),
-            'label' => xarML('Overview'));
-    //}
     // Security Check
     //if (xarSecurityCheck('EditLists',0)) {
         $menulinks[] = array(
@@ -43,7 +35,7 @@ function lists_adminapi_getmenulinks()
     //}
 
     if (empty($menulinks)){
-        $menulinks = '';
+        $menulinks = array();
     }
 
     return $menulinks;

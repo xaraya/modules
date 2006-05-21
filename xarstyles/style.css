@@ -1,0 +1,87 @@
+/* Styles for the lists module only */
+
+/* xar-mod-lists-view is used in the lists view screen */
+
+div.xar-mod-lists-view label {
+    float: left;
+    clear: left;
+    text-align: right;
+    width: 6em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div.xar-mod-lists-view input, div.xar-mod-lists textarea, div.xar-mod-lists checkbox {
+    float: left;
+    clear: right;
+    text-align: left;
+    border: 1px solid black;
+    margin-bottom: 0.5em;
+}
+/* Common to all levels */
+div.xar-mod-lists-view ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+div.xar-mod-lists-view ul {
+    padding-left: 1px;
+}
+div.xar-mod-lists-view ul.edit, div.xar-mod-lists ul.new {
+    border-left: none;
+}
+div.xar-mod-lists-view ul.edit li, div.xar-mod-lists ul.new li {
+    padding-left: 0px;
+    padding-top: 18px;
+}
+div.xar-mod-lists-view li {
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-left: 18px;
+}
+
+/* Least specific - list type */
+div.xar-mod-lists-view ul {
+    border-left: 1px solid #ccffcc; /*green;*/
+}
+div.xar-mod-lists-view li {
+    background-image: url(../xarimages/li-listtype-icon.gif);
+}
+div.xar-mod-lists-view ul.edit li {
+    background-image: url(../xarimages/li-listtype-edit.gif);
+}
+div.xar-mod-lists-view ul.new li {
+    background-image: url(../xarimages/li-listtype-new.gif);
+}
+
+/* Next specific - lists */
+div.xar-mod-lists-view ul ul {
+    border-left: 1px solid #ffcccc; /*red;*/
+}
+div.xar-mod-lists-view li li {
+    background-image: url(../xarimages/li-list-icon.gif);
+}
+div.xar-mod-lists-view li li ul.edit li {
+    background-image: url(../xarimages/li-list-edit.gif);
+}
+div.xar-mod-lists-view li ul.new li {
+    background-image: url(../xarimages/li-list-new.gif);
+}
+
+/* Next specific - list items */
+div.xar-mod-lists-view ul ul ul {
+    border-left: 1px solid #ccccff; /*blue;*/
+}
+div.xar-mod-lists-view li li li {
+    background-image: url(../xarimages/li-listitem-icon.gif);
+}
+div.xar-mod-lists-view li li li ul.edit li {
+    background-image: url(../xarimages/li-listitem-edit.gif);
+}
+div.xar-mod-lists-view li li ul.new li {
+    background-image: url(../xarimages/li-listitem-new.gif);
+}
+
+div.xar-mod-lists-view br {
+    clear: both;
+}

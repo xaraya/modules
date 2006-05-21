@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:style scope="module" module="lists" file="lists" />
+<xar:style scope="module" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <xar:if condition="empty($tid) and empty($lid)">
@@ -17,6 +17,7 @@
     <span class="xar-mod-title"><xar:mlstring>Lists Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+  <xar:template type="module" module="lists" file="admin-menu" />
     <h2><xar:mlstring>Lists Overview</xar:mlstring> - #$title#</h2>
     <div class="xar-mod-lists-view" style="margin: auto;">
 
@@ -254,7 +255,7 @@
                                                 #xarVarPrepForDisplay($loop:item.item_code)# =
                                                 #xarVarPrepForDisplay($loop:item.item_short_name)#
                                                 [<a href="#$loop:item.urledit#" title="#$label_edit_list_item#">#$label_edit_list_item#</a>]
-                                                [<a href="#$loop:item.urldelete#" title="#$label_edit_list_item#" onClick="return xar_base_confirmLink(this, '#xarML('Delete list item ').' '.xarVarPrepfordisplay($loop:item.item_short_name)#?')">#$label_delete_list_item#</a>]
+                                                [<a href="#$loop:item.urldelete#" title="#$label_edit_list_item#" onClick="return xar_base_confirmLink(this, '#xarML('Delete list item ')#.' '.#xarVarPrepfordisplay($loop:item.item_short_name)#?')">#$label_delete_list_item#</a>]
                                                 <xar:if condition="!empty($loop:item.item_long_name)">
                                                     <br /><em>#xarVarPrepForDisplay($loop:item.item_long_name)#</em>
                                                 </xar:if>
@@ -349,7 +350,6 @@
                 </li>
             </ul>
         </xar:if>
-
 
         <!-- TODO: add the pager here -->
     </div>
