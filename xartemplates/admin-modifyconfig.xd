@@ -34,7 +34,7 @@
         </xar:if>
         <label for="dolinebreak" title="#xarML('Check this if you would like the HTML module to provide linebreaks on content.')#">
             <xar:mlstring>
-              Transform Linebreaks
+              "Smart" Transform of linebreaks (considers html tags)
             </xar:mlstring>
         </label>
       </div>
@@ -43,7 +43,7 @@
             <a href="&xar-modurl-modules-admin-hooks;&amp;hook=html"><xar:mlstring>hook HTML module</xar:mlstring></a><xar:mlstring> to your article pubtypes or other content items.</xar:mlstring>
         </p>
         <p class="xar-form-input-wrapper-after">
-        <xar:mlstring><strong>NOTE:</strong> You <strong>do not</strong> hook HTML module if you want to allow HTML tags on your site. Installing the HTML module and setting the allowed tags is enough.</xar:mlstring>
+        <xar:mlstring><strong>NOTE: Do not</strong> hook the HTML module if you only want to allow HTML tags on your site. Installing the HTML module and setting the allowed tags is enough.</xar:mlstring>
         </p>
     </fieldset>
       <xar:if condition="!empty($hooks)">
