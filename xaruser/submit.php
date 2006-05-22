@@ -1,6 +1,6 @@
 <?php
 /**
- * ITSP initialization functions
+ * ITSP submit an ITSP
  *
  * @package modules
  * @copyright (C) 2006 The Digital Development Foundation
@@ -15,11 +15,15 @@
  * Submit the ITSP
  *
  * When a user submits the ITSP, it is sent to the education office for approval
+ * Copies are sent to the student and to the supervisor.
+ * Other updates to the status can be done from this function as well
+ *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int itspid
  * @param string return_url
  * @param bool confirm
  * @param string useraction
+ * @param int newstatus The new status of the ITSP
  * @since 16 May 2006
  * @return bool true on success of submission
  */
@@ -208,7 +212,7 @@ function itsp_user_submit($args)
     }
 
 
-
+            break;
         case 5:
 
         case 6:
