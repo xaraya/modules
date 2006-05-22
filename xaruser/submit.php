@@ -82,7 +82,7 @@ function itsp_user_submit($args)
         if (empty($fromname)) {
             $fromname = xarModGetVar('mail', 'adminname');
         }
-
+        $itspurl = XarModURL('itsp','user','itsp',array('itspid'=>$itspid));
         // Send emails
         $UseStatusVersions = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
         if ($UseStatusVersions) {
@@ -95,7 +95,7 @@ function itsp_user_submit($args)
         $studenthtmlarray= array('notetouser' => $htmlnotetouser,
                               'studentname'   => $studentname,
                               'studentemail'  => $studentemail,
-                              'company'    => $htmlcompany,
+                              'itspurl'    => $itspurl,
                               'requesttext'=> $htmlsubject,
                               'usermessage'=> $htmlusermessage,
                               'sitename'   => $sitename,
@@ -110,7 +110,7 @@ function itsp_user_submit($args)
         $studenttextarray =array('notetouser' => $textnotetouser,
                               'studentname'   => $studentname,
                               'studentemail'  => $studentemail,
-                              'requesttext'=> $textsubject,
+                              'itspurl'    => $itspurl,
                               'usermessage'=> $textusermessage,
                               'sitename'   => $sitename,
                               'siteurl'    => $siteurl);
@@ -211,26 +211,11 @@ function itsp_user_submit($args)
 
     }
 
-    /* comments in emails is a problem - set it manually for this module
-       let's make it contingent on the mail module var - as that is what
-       seems intuitively the correct thing
-
-    $themecomments = xarModGetVar('themes','ShowTemplates');
-    $mailcomments = xarModGetVar('mail','ShowTemplates');
-    if ($mailcomments == 1) {
-        xarModSetVar('themes','ShowTemplates',1);
-    } else {
-        xarModSetVar('themes','ShowTemplates',0);
-    }
-    */
-
-    /* Set the theme comments back */
-    xarModSetVar('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
     if (isset($return_url)) {
         xarResponseRedirect(xarModURL($return_url));
     } else {
-        xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1', 'scid'=>$data['scid'])));
+        xarResponseRedirect(xarModURL('itsp', 'user', 'itsp'));
     }
     /* Return */
     return true;
