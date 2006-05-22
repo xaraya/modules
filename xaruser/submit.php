@@ -32,6 +32,7 @@ function itsp_user_submit($args)
     if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('confirm',  'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('useraction', 'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('newstatus', 'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
@@ -42,28 +43,35 @@ function itsp_user_submit($args)
         return;
     }
 
-/*    //Put all set data in an array for later processing
-     $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
-                'sctypename'      => array(xarML('Form'),$sctypename),
-                'scform'          => array(xarML('Form Name'),$scform),
-                'username'        => array(xarML('Name'),$username),
-                'useremail'       => array(xarML('Email'),$useremail),
-                'requesttext'     => array(xarML('Subject'),$requesttext),
-                'company'         => array(xarML('Organization'),$company),
-                'usermessage'     => array(xarML('Message'),$usermessage),
-                'useripaddress'   => array(xarML('IP'),$useripaddress),
-                'userreferer'     => array(xarML('Referrer'),$userreferer),
-                'sendcopy'        => array(xarML('Copy?'),$sendcopy),
-                'savedata'        => array(xarML('Allow Save?'),$savedata),
-                'permissioncheck' => array(xarML('Check permission?'),$permissioncheck),
-                'permission'      => array(xarML('Agree to save?'),$permission),
-                'termslink'       => array(xarML('Terms provided'),$termslink),
-                'bccrecipients'   => array(xarML('BCC'),$bccrecipients),
-                'ccrecipients'    => array(xarML('CC'),$ccrecipients)
-                );
-
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
+
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+
+    // Only status id < 4 can lead to submit
+    if (($itspid['itspstatus'] < 4 ) || ($newstatus == 0)){
+        // Show form
+        return $data;
+    }
+
+    switch ($newstatus) {
+        case 1:
+
+        case 2:
+
+        case 3:
+
+        case 4:
+        // User submits the ITSP
+        // Send emails
+
+
+        case 5:
+
+        case 6:
+
+    }
+
 
     $formdata=array();
     $formdata2=array();
