@@ -3,30 +3,26 @@
  * Update an itsp item
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage ITSP Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
 /**
- * Update an itsp item
+ * Update an itsp with a new status (and others maybe)
  *
- * @author the ITSP module development team
- * @param  $args ['exid'] the ID of the item
- * @param  $args ['name'] the new name of the item
- * @param  $args ['number'] the new number of the item
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param  $args ['itspid'] the ID of the item
+ * @param  $args ['newstatus'] the new name of the item
+ * @since 22 May 2006
+ * @return bool true on success of update
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_userapi_update($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other
-     * places such as the environment is not allowed, as that makes
-     * assumptions that will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Argument check - make sure that all required arguments are present
      * and in the right format, if not then set an appropriate error
@@ -35,15 +31,13 @@ function itsp_userapi_update($args)
      * report all those that are invalid at the same time...
      */
     $invalid = array();
-    if (!isset($exid) || !is_numeric($exid)) {
+    if (!isset($itspid) || !is_numeric($itspid)) {
         $invalid[] = 'item ID';
     }
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
+    if (!isset($newstatus) || !is_numeric($newstatus)) {
+        $invalid[] = 'new status ID';
     }
-    if (!isset($number) || !is_numeric($number)) {
-        $invalid[] = 'number';
-    }
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'user', 'update', 'ITSP');
@@ -59,32 +53,20 @@ function itsp_userapi_update($args)
     $item = xarModAPIFunc('itsp',
         'user',
         'get',
-        array('exid' => $exid));
+        array('itspid' => $itspid));
     /*Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    /* Security check - important to do this as early on as possible to
-     * avoid potential security holes or just too much wasted processing.
-     * However, in this case we had to wait until we could obtain the item
-     * name to complete the instance information so this is the first
-     * chance we get to do the check
-     * Note that at this stage we have two sets of item information, the
-     * pre-modification and the post-modification. We need to check against
-     * both of these to ensure that whoever is doing the modification has
-     * suitable permissions to edit the item otherwise people can potentially
-     * edit areas to which they do not have suitable access
-     */
+    /* Security check
+
     if (!xarSecurityCheck('EditITSP', 1, 'Item', "$item[name]:All:$exid")) {
         return;
     }
     if (!xarSecurityCheck('EditITSP', 1, 'Item', "$name:All:$exid")) {
         return;
     }
-    /* Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-     * return arrays but we handle them differently. For xarDBGetConn()
-     * we currently just want the first item, which is the official
-     * database handle. For xarDBGetTables() we want to keep the entire
-     * tables array together for easy reference later on
+    */
+    /* Get database setup
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -92,16 +74,16 @@ function itsp_userapi_update($args)
      * are getting - $table and $column don't cut it in more complex
      * modules
      */
-    $itsptable = $xartable['itsp'];
+    $itsptable = $xartable['itsp_itsp'];
     /* Update the item - the formatting here is not mandatory, but it does
      * make the SQL statement relatively easy to read. Also, separating
      * out the sql statement from the Execute() command allows for simpler
      * debug operation if it is ever needed
      */
     $query = "UPDATE $itsptable
-            SET xar_name =?, xar_number = ?
-            WHERE xar_exid = ?";
-    $bindvars = array($name, $number, $exid);
+            SET xar_itspstatus =?
+            WHERE xar_itspid = ?";
+    $bindvars = array($newstatus, $itspid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
@@ -111,10 +93,11 @@ function itsp_userapi_update($args)
      * update hook we're passing the updated $item array as the extra info
      */
     $item['module'] = 'itsp';
-    $item['itemid'] = $exid;
-    $item['name'] = $name;
-    $item['number'] = $number;
-    xarModCallHooks('item', 'update', $exid, $item);
+    $item['itemtype'] = 2;
+    $item['itemid'] = $itspid;
+    $item['itspstatus'] = $newstatus;
+
+    xarModCallHooks('item', 'update', $itspid, $item);
 
     /* Let the calling process know that we have finished successfully */
     return true;

@@ -1,0 +1,35 @@
+<p>#$notetouser#</p>
+<xar:mlstring>You submitted the following information:</xar:mlstring>
+<p>
+    <xar:mlstring>Name:</xar:mlstring> #$username#
+</p>
+<p>
+    <xar:mlstring>Email:</xar:mlstring> #$useremail#
+</p>
+<p>
+    <xar:mlstring>Organization:</xar:mlstring> #$company#
+</p>
+<p>
+    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
+</p>
+<p>
+    <xar:mlstring>Comments:</xar:mlstring> #$usermessage#
+</p>
+
+ <xar:if condition="isset($propdata) and count($propdata) gt 0">
+    <xar:foreach in="$propdata" key="$name">
+<p>
+    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
+</p>
+    </xar:foreach>
+</xar:if>
+
+
+<hr />
+<p>
+    #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+</p>
+<p>
+    #$todaydate#
+</p>
+

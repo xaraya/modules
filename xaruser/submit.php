@@ -63,107 +63,15 @@ function itsp_user_submit($args)
 
         case 4:
         // User submits the ITSP
-        // Send emails
 
-
-        case 5:
-
-        case 6:
-
-    }
-
-
-    $formdata=array();
-    $formdata2=array();
-    $data['submit'] = xarML('Submit');
-    //See if we have a form name that exists and is active
-    if (isset($sctypename) && trim($sctypename) <> '') {
-       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
-    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
-       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-    } else {
-     //hmm something would be wrong
-    }
-
-
-    /* Security Check - caused some problems here with anon browsing and cachemanager
-     * should be ok now - review
-     * if(!xarSecurityCheck('ReadSiteContact')) return;
-     */
-
-    $notetouser = $formdata['notetouser'];
-    if (!isset($notetouser)){
-        $notetouser = xarModGetVar('sitecontact','defaultnote');
-    }
-    $usehtmlemail= $formdata['usehtmlemail'];
-    $allowcopy = $formdata['allowcopy'];
-    $optiontext = $formdata['optiontext'];
-    $optionset = array();
-    $selectitem=array();
-    $adminemail = xarModGetVar('mail','adminmail');
-    $mainemail=$formdata['scdefaultemail'];
-
-    $optionset=explode(',',$optiontext);
-    $data['optionset']=$optionset;
-    $optionitems=array();
-    foreach ($optionset as $optionitem) {
-      $optionitems[]=explode(';',$optionitem);
-    }
-    foreach ($optionitems as $optionid) {
-        if (trim($optionid[0])==trim($requesttext)) {
-            if (isset($optionid[1])) {
-                $setmail=$optionid[1];
-            }else{
-                $setmail=$mainemail;
-            }
+        if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
+            // todo: add error
+            return $data;
         }
-    }
-    if (!isset($setmail) ) {
-       $setmail = $formdata['scdefaultemail'];;
-   }
-    $data['setmail']=$setmail;
-    $today = getdate();
-    $month = $today['month'];
-    $mday = $today['mday'];
-    $year = $today['year'];
-    $todaydate = $mday.' '.$month.', '.$year;
 
-    $notetouser = preg_replace('/%%username%%/',
-                            $username,
-                            $notetouser);
-    $notetouser = preg_replace('/%%useremail%%/',
-                            $useremail,
-                            $notetouser);
-    $notetouser = preg_replace('/%%requesttext%%/',
-                            $requesttext,
-                            $notetouser);
-    $notetouser = preg_replace('/%%company%%/',
-                            $company,
-                            $notetouser);
-
-    $sendname=$formdata['scdefaultname'];;
-    if (!isset($sendname)) {
-        $adminname= xarModGetVar('mail','adminname');
-        $sendname=$adminname;
-    }
-    $sitename = xarModGetVar('themes','SiteName');
-    $siteurl = xarServerGetBaseURL();
-    $subject = $requesttext;
-
-    /* comments in emails is a problem - set it manually for this module
-       let's make it contingent on the mail module var - as that is what
-       seems intuitively the correct thing
-    */
-    $themecomments = xarModGetVar('themes','ShowTemplates');
-    $mailcomments = xarModGetVar('mail','ShowTemplates');
-    if ($mailcomments == 1) {
-        xarModSetVar('themes','ShowTemplates',1);
-    } else {
-        xarModSetVar('themes','ShowTemplates',0);
-    }
-
-
-    /* Prepare the html text message to user */
+        // Send emails
+    /* Prepare the html text message to user
+       Overdone? */
 
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
@@ -172,13 +80,6 @@ function itsp_user_submit($args)
     $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
 
-
-       /* jojodee: html_entity_decode only available in php >=4.3
-        * $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
-        * $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
-        *  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
-        * $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
-        */
         if (!empty($data['sctypename'])){
              $htmltemplate = 'html-' . $data['sctypename'];
              $texttemplate = 'text-' . $data['sctypename'];
@@ -197,10 +98,10 @@ function itsp_user_submit($args)
                               'propdata'    => $propdata,
                               'todaydate'  => $todaydate);
 
-        $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray,$htmltemplate);
+        $userhtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$userhtmlarray,$htmltemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
-            $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
+            $userhtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$userhtmlarray,'html');
         }
         /* prepare the text message to user */
         $textsubject = strtr($requesttext,$trans);
@@ -305,11 +206,106 @@ function itsp_user_submit($args)
     } else {
         if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
     }
-    if (isset($attachpath) && !empty($attachpath)){
-        if (file_exists($attachpath)) {
-            unlink("{$attachpath}");
+
+
+
+        case 5:
+
+        case 6:
+
+    }
+
+
+    $formdata=array();
+    $formdata2=array();
+    $data['submit'] = xarML('Submit');
+    //See if we have a form name that exists and is active
+    if (isset($sctypename) && trim($sctypename) <> '') {
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
+    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
+       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+    } else {
+     //hmm something would be wrong
+    }
+
+
+    /* Security Check - caused some problems here with anon browsing and cachemanager
+     * should be ok now - review
+     * if(!xarSecurityCheck('ReadSiteContact')) return;
+     */
+
+    $notetouser = $formdata['notetouser'];
+    if (!isset($notetouser)){
+        $notetouser = xarModGetVar('sitecontact','defaultnote');
+    }
+    $usehtmlemail= $formdata['usehtmlemail'];
+    $allowcopy = $formdata['allowcopy'];
+    $optiontext = $formdata['optiontext'];
+    $optionset = array();
+    $selectitem=array();
+    $adminemail = xarModGetVar('mail','adminmail');
+    $mainemail=$formdata['scdefaultemail'];
+
+    $optionset=explode(',',$optiontext);
+    $data['optionset']=$optionset;
+    $optionitems=array();
+    foreach ($optionset as $optionitem) {
+      $optionitems[]=explode(';',$optionitem);
+    }
+    foreach ($optionitems as $optionid) {
+        if (trim($optionid[0])==trim($requesttext)) {
+            if (isset($optionid[1])) {
+                $setmail=$optionid[1];
+            }else{
+                $setmail=$mainemail;
+            }
         }
     }
+    if (!isset($setmail) ) {
+       $setmail = $formdata['scdefaultemail'];;
+   }
+    $data['setmail']=$setmail;
+    $today = getdate();
+    $month = $today['month'];
+    $mday = $today['mday'];
+    $year = $today['year'];
+    $todaydate = $mday.' '.$month.', '.$year;
+
+    $notetouser = preg_replace('/%%username%%/',
+                            $username,
+                            $notetouser);
+    $notetouser = preg_replace('/%%useremail%%/',
+                            $useremail,
+                            $notetouser);
+    $notetouser = preg_replace('/%%requesttext%%/',
+                            $requesttext,
+                            $notetouser);
+    $notetouser = preg_replace('/%%company%%/',
+                            $company,
+                            $notetouser);
+
+    $sendname=$formdata['scdefaultname'];;
+    if (!isset($sendname)) {
+        $adminname= xarModGetVar('mail','adminname');
+        $sendname=$adminname;
+    }
+    $sitename = xarModGetVar('themes','SiteName');
+    $siteurl = xarServerGetBaseURL();
+    $subject = $requesttext;
+
+    /* comments in emails is a problem - set it manually for this module
+       let's make it contingent on the mail module var - as that is what
+       seems intuitively the correct thing
+    */
+    $themecomments = xarModGetVar('themes','ShowTemplates');
+    $mailcomments = xarModGetVar('mail','ShowTemplates');
+    if ($mailcomments == 1) {
+        xarModSetVar('themes','ShowTemplates',1);
+    } else {
+        xarModSetVar('themes','ShowTemplates',0);
+    }
+
+
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
