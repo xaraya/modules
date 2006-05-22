@@ -1,7 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
+
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
@@ -32,15 +31,22 @@
         <label for="bold" class="xar-form-label" title="#xarML('Use bold for example items.')#">
           <xar:mlstring>Display ITSP Items In Bold?</xar:mlstring>
         </label>
-        <xar:if condition="$boldchecked">
-          <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
+        <xar:if condition="$OverrideSVchecked">
+          <input type="checkbox" name="OverrideSV" id="OverrideSV" value="1" checked="checked"/>
           <xar:else/>
-          <input type="checkbox" name="bold" id="bold" value="1" />
+          <input type="checkbox" name="OverrideSV" id="OverrideSV" value="1" />
         </xar:if>
       </div>
-
       <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
+        <label for="officemail" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+          <xar:mlstring>
+            Email address to submit the ITSP to
+          </xar:mlstring>
+        </label>
+        <input type="text" name="officemail" id="officemail" value="#xarModGetVar('itsp', 'officemail')#" size="32" maxlength="100" />
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page')#">
           <xar:mlstring>ITSP Items Per Page:</xar:mlstring>
         </label>
         <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />

@@ -38,8 +38,8 @@ function itsp_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
 
     /* Specify some values for display */
-    $data['boldchecked'] = xarModGetVar('itsp', 'bold') ? true : false;
-    $data['itemsvalue'] = xarModGetVar('itsp', 'itemsperpage');
+    $data['OverrideSVchecked'] = xarModGetVar('itsp', 'OverrideSV') ? true : false;
+
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your
      * admin-modifyconfig.xd template.

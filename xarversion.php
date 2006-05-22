@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'itsp'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '572';
-$modversion['version']        = '0.3.6'; /* three point version number */
+$modversion['version']        = '0.3.7'; /* three point version number */
 $modversion['displayname']    = xarML('ITSP');
 $modversion['description']    = 'Individual Training and Supervision Plan for students';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -23,7 +23,7 @@ $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'MichelV';
-$modversion['contact']        = 'http://www.sense.nl/';
+$modversion['contact']        = 'http://www.xarayahosting.nl/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';

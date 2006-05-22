@@ -255,14 +255,10 @@ This table deals with the free courses. So: how to add the custom courses/items 
                     'parent_id' => $itspcid));
         }
     }
-    /* Set up an initial value for a module variable.  Note that all module
-     * variables should be initialised with some value in this way rather
-     * than just left blank, this helps the user-side code and means that
-     * there doesn't need to be a check to see if the variable is set in
-     * the rest of the code as it always will be
-     */
-    //xarModSetVar('itsp', 'bold', 0);
+    /* The email address to submit the ITSP to */
+    xarModSetVar('itsp', 'officemail', 'office@yourdomain.com');
     xarModSetVar('itsp', 'itemsperpage', 10);
+    xarModSetVar('itsp', 'OverrideSV', 0);
     /* If your module supports short URLs, the website administrator should
      * be able to turn it on or off in your module administration.
      * Use the standard module var name for short url support.
@@ -524,6 +520,9 @@ function itsp_upgrade($oldversion)
                   )
               );
               xarDefineInstance('itsp', 'ITSP', $instances);
+        case '0.3.6':
+            xarModSetVar('itsp', 'officemail', 'office@yourdomain.com');
+            xarModSetVar('itsp', 'OverrideSV', 0);
         case '0.3.6':
             break;
     }
