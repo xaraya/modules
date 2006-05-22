@@ -509,7 +509,7 @@
                     <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'options' => 1, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" /></a>
                 </xar:if>
                 <xar:else />
-                <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#" title="#xarML('Lock topic')#"><img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" /></a>
+                <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#" title="#xarML('Unlock topic')#"><img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" /></a>
             </xar:if>
             <xar:sec mask="DeletexarBB" catch="false">
                 <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?')#?')" title="#xarML('Delete topic')#">

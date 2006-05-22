@@ -15,7 +15,7 @@
 function xarbb_user_locktopic()
 {
     if (!xarVarFetch('tid', 'id', $tid)) return;
-    if (!xarVarFetch('tstatus', 'int:0:2', $tstatus)) return;
+    if (!xarVarFetch('tstatus', 'int:0:3', $tstatus)) return;
     if (!xarVarFetch('options', 'int', $options, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Need to handle locked topics
