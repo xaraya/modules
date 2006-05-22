@@ -1,6 +1,6 @@
 <strong><xar:ml>
 <xar:mlstring>Dear #(1)</xar:mlstring>
-<xar:mlvar>#$username#</xar:mlvar>
+<xar:mlvar>#$studentname#</xar:mlvar>
 </xar:ml>
 <xar:mlstring>You submitted your ITSP.</xar:mlstring>
 <p>

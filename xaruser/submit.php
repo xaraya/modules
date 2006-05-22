@@ -92,14 +92,10 @@ function itsp_user_submit($args)
              $htmltemplate =  'html';
              $texttemplate =  'text';
         }
-        $studenthtmlarray= array('notetouser' => $htmlnotetouser,
+        $studenthtmlarray= array(
                               'studentname'   => $studentname,
                               'studentemail'  => $studentemail,
-                              'itspurl'    => $itspurl,
-                              'requesttext'=> $htmlsubject,
-                              'usermessage'=> $htmlusermessage,
-                              'sitename'   => $sitename,
-                              'siteurl'    => $siteurl);
+                              'itspurl'    => $itspurl);
 
         $studenthtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$studenthtmlarray,$htmltemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
@@ -107,13 +103,10 @@ function itsp_user_submit($args)
             $studenthtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$studenthtmlarray,'html');
         }
 
-        $studenttextarray =array('notetouser' => $textnotetouser,
+        $studenttextarray =array(
                               'studentname'   => $studentname,
                               'studentemail'  => $studentemail,
-                              'itspurl'    => $itspurl,
-                              'usermessage'=> $textusermessage,
-                              'sitename'   => $sitename,
-                              'siteurl'    => $siteurl);
+                              'itspurl'    => $itspurl);
 
          $studenttextmessage= xarTplModule('sitecontact','user','usermail', $studenttextarray,$texttemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
