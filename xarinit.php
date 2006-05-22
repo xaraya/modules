@@ -259,6 +259,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
     xarModSetVar('itsp', 'officemail', 'office@yourdomain.com');
     xarModSetVar('itsp', 'itemsperpage', 10);
     xarModSetVar('itsp', 'OverrideSV', 0);
+    xarModSetVar('itsp', 'UseStatusVersions', 0);
     /* If your module supports short URLs, the website administrator should
      * be able to turn it on or off in your module administration.
      * Use the standard module var name for short url support.
@@ -523,6 +524,7 @@ function itsp_upgrade($oldversion)
         case '0.3.6':
             xarModSetVar('itsp', 'officemail', 'office@yourdomain.com');
             xarModSetVar('itsp', 'OverrideSV', 0);
+            xarModSetVar('itsp', 'UseStatusVersions', 0);
         case '0.3.6':
             break;
     }

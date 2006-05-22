@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage ITSP Module
- * @link http://xaraya.com/index.php/release/36.html
+ * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
 

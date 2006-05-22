@@ -39,7 +39,7 @@ function itsp_admin_modifyconfig()
 
     /* Specify some values for display */
     $data['OverrideSVchecked'] = xarModGetVar('itsp', 'OverrideSV') ? true : false;
-
+    $data['UseStatusVersionschecked'] = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
     /* Note : if you don't plan on providing encode/decode functions for
      * short URLs (see xaruserapi.php), you should remove this from your
      * admin-modifyconfig.xd template.

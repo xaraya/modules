@@ -51,7 +51,7 @@ function itsp_user_submit($args)
     if (!xarSecConfirmAuthKey()) return;
 
     $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
-
+    $data['itsp'] = $itsp;
     // Only status id < 4 can lead to submit
     if (($itspid['itspstatus'] < 4 ) || ($newstatus == 0)){
         // Show form
@@ -74,24 +74,15 @@ function itsp_user_submit($args)
         }
 
         // Send emails
-    /* Prepare the html text message to user
-       Overdone? */
-
-    $trans = get_html_translation_table(HTML_ENTITIES);
-    $trans = array_flip($trans);
-    $htmlsubject = strtr(xarVarPrepHTMLDisplay($requesttext), $trans);
-    $htmlcompany = strtr(xarVarPrepHTMLDisplay($company), $trans);
-    $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
-    $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
-
-        if (!empty($data['sctypename'])){
-             $htmltemplate = 'html-' . $data['sctypename'];
-             $texttemplate = 'text-' . $data['sctypename'];
+        $UseStatusVersions = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
+        if ($UseStatusVersions) {
+             $htmltemplate = 'html-' . $itsp['itspstatus'];
+             $texttemplate = 'text-' . $itsp['itspstatus'];
         } else {
              $htmltemplate =  'html';
              $texttemplate =  'text';
         }
-       $userhtmlarray= array('notetouser' => $htmlnotetouser,
+        $userhtmlarray= array('notetouser' => $htmlnotetouser,
                               'username'   => $username,
                               'useremail'  => $useremail,
                               'company'    => $htmlcompany,
@@ -102,10 +93,10 @@ function itsp_user_submit($args)
                               'propdata'    => $propdata,
                               'todaydate'  => $todaydate);
 
-        $userhtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$userhtmlarray,$htmltemplate);
+        $studenthtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$studenthtmlarray,$htmltemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
-            $userhtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$userhtmlarray,'html');
+            $studenthtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$studenthtmlarray,'html');
         }
         /* prepare the text message to user */
         $textsubject = strtr($requesttext,$trans);
@@ -113,7 +104,7 @@ function itsp_user_submit($args)
         $textusermessage = strtr($usermessage,$trans);
         $textnotetouser = strtr($notetouser,$trans);
 
-        $usertextarray =array('notetouser' => $textnotetouser,
+        $studenttextarray =array('notetouser' => $textnotetouser,
                               'username'   => $username,
                               'useremail'  => $useremail,
                               'company'    => $textcompany,
@@ -124,10 +115,10 @@ function itsp_user_submit($args)
                               'propdata'    => $propdata,
                               'todaydate'  => $todaydate);
 
-         $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
+         $studenttextmessage= xarTplModule('sitecontact','user','usermail', $studenttextarray,$texttemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
-            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
+            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$studenttextarray,'text');
         }
 
    if (($allowcopy) and ($sendcopy)) {
@@ -154,7 +145,7 @@ function itsp_user_submit($args)
     }
     /* now let's do the html message to admin */
 
-    $adminhtmlarray=array('notetouser' => $htmlnotetouser,
+    $officehtmlarray=array('notetouser' => $htmlnotetouser,
                           'username'   => $username,
                           'useremail'  => $useremail,
                           'company'    => $htmlcompany,
@@ -167,12 +158,12 @@ function itsp_user_submit($args)
                           'propdata'    => $propdata,
                           'userreferer' => $userreferer);
 
-    $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
+    $officehtmlmessage= xarTplModule('sitecontact','user','submitmail-office',$officehtmlarray,$htmltemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
-        $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
+        $officehtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officehtmlarray,'html');
     }
-    $admintextarray =  array('notetouser' => $textnotetouser,
+    $officetextarray =  array('notetouser' => $textnotetouser,
                              'username'   => $username,
                              'useremail'  => $useremail,
                              'company'    => $textcompany,
@@ -186,10 +177,10 @@ function itsp_user_submit($args)
                              'userreferer' => $userreferer);
 
     /* Let's do admin text message */
-    $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
+    $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
-        $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
+        $officetextmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officetextarray,'text');
     }
 
     /* send email to admin */
@@ -300,7 +291,7 @@ function itsp_user_submit($args)
     /* comments in emails is a problem - set it manually for this module
        let's make it contingent on the mail module var - as that is what
        seems intuitively the correct thing
-    */
+
     $themecomments = xarModGetVar('themes','ShowTemplates');
     $mailcomments = xarModGetVar('mail','ShowTemplates');
     if ($mailcomments == 1) {
@@ -308,7 +299,7 @@ function itsp_user_submit($args)
     } else {
         xarModSetVar('themes','ShowTemplates',0);
     }
-
+    */
 
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);

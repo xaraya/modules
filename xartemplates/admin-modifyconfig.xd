@@ -64,14 +64,26 @@
           <input type="checkbox" name="shorturls" id="shorturls" value="1" />
         </xar:if>
       </div>
+      <div class="xar-form-input-wrapper">
+        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+          <xar:mlstring>
+            Use status in emails
+          </xar:mlstring>
+        </label>
+        <xar:if condition="$UseStatusVersionschecked">
+          <input type="checkbox" name="UseStatusVersions" id="UseStatusVersions" value="1" checked="checked" />
+          <xar:else />
+          <input type="checkbox" name="UseStatusVersions" id="UseStatusVersions" value="1" />
+        </xar:if>
 
+      </div>
       <div class="xar-form-input-wrapper">
         <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
           <xar:mlstring>
             Use a module alias
           </xar:mlstring>
         </label>
-        <xar:if condition="xarModGetVar('example', 'useModuleAlias')">
+        <xar:if condition="xarModGetVar('itsp', 'useModuleAlias')">
           <input type="checkbox" name="modulealias" id="modulealias" value="1" checked="checked" />
           <xar:else />
           <input type="checkbox" name="modulealias" id="modulealias" value="1" />
@@ -84,7 +96,7 @@
             Module Alias Name
           </xar:mlstring>
         </label>
-        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('example', 'aliasname')#" size="32" maxlength="100" />
+        <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('itsp', 'aliasname')#" size="32" maxlength="100" />
       </div>
 
     </fieldset>

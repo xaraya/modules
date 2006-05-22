@@ -30,7 +30,7 @@ function itsp_user_create($args)
     if (!xarVarFetch('invalid',       'str:1:', $invalid,       '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userid',        'int:1:', $userid,        xarUserGetVar('uid'),  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planid',        'int:1:', $planid,        $planid,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itspstatus',    'str:1:', $itspstatus,    'Added',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspstatus',    'int:1:', $itspstatus,    0,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('datesubm',      'int:1:', $datesubm,      $datesubm,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateappr',      'int:1:', $dateappr,      $dateappr,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('datecertreq',   'int:1:', $datecertreq,   $datecertreq,  XARVAR_NOT_REQUIRED)) return;
@@ -77,7 +77,7 @@ function itsp_user_create($args)
                             'create',
                               array('userid'        => $userid,
                                     'planid'        => $planid,
-                                    'itspstatus'    => $itspstatus,//TODO: Make adjustable
+                                    'itspstatus'    => $itspstatus,
                                     'datesubm'      => 0,
                                     'dateappr'      => 0,
                                     'datecertreq'   => 0,

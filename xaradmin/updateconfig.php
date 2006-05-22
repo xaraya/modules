@@ -26,11 +26,12 @@ function itsp_admin_updateconfig()
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('UseStatusVersions',  'checkbox', $UseStatusVersions,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.
      */
     xarModSetVar('itsp', 'OverrideSV', $OverrideSV);
+    xarModSetVar('itsp', 'UseStatusVersions', $UseStatusVersions);
     xarModSetVar('itsp', 'officemail', $officemail);
     xarModSetVar('itsp', 'itemsperpage', $itemsperpage);
     xarModSetVar('itsp', 'SupportShortURLs', $shorturls);
