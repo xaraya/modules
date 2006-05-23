@@ -86,6 +86,7 @@ function window_adminapi_addurl($args)
             $itemid = xarModAPIFunc('window', 'admin', 'create', $fargs);
             if (!$itemid) return false;
         } else {
+            $fargs['itemid'] = $itemid;
             if (!xarModAPIFunc('window', 'admin', 'update', $fargs)) {
                 return false;
             }
