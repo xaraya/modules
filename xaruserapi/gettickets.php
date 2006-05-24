@@ -27,6 +27,8 @@ function helpdesk_userapi_gettickets($args)
     if( !isset($startnum) ){ $startnum = 1; }
     if( !isset($numitems) ){ $numitems = 20; }
     if( !isset($count) ){ $count = false; }
+    if( !isset($selection) ){ $selection = ''; }
+    if( !isset($sortorder) ){ $sortorder = ''; }
 
     // Database information
     $dbconn         =& xarDBGetConn();
@@ -159,7 +161,7 @@ function helpdesk_userapi_gettickets($args)
     if( !empty($statusfilter) )
     {
         $where[] = "xar_statusid = ? ";
-        $bindvars[] = $statusfilter;
+        $bindvars[] = (int)$statusfilter;
     }
 
     /*
@@ -177,6 +179,12 @@ function helpdesk_userapi_gettickets($args)
                 $whereor[] = "(xar_$field LIKE " . $dbconn->qstr("%$word%") . ")";
             }
         }
+    }
+
+    if( isset($itemids) && is_array($itemids) && count($itemids) > 0 )
+    {
+        $where[] = " xar_id IN (?" . str_repeat(',?', count($itemids)-1) . ") ";
+        foreach( $itemids as $itemid ){ $bindvars[] = (int)$itemid; }
     }
 
     /*
