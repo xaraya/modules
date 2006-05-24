@@ -226,7 +226,7 @@ function registration_user_register()
             }
 
             if (empty($agreetoterms)){
-                $invalid['agreetoterms'] = xarML('You must agree to the terms and conditions of this website.');
+                $invalid['agreetoterms'] = xarML('You must agree to the terms and conditions of this website to register an account.');
             }
 
             // Check password and set

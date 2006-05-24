@@ -108,10 +108,11 @@
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
                     <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a> <xar:mlstring>and</xar:mlstring> <a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                  </label>
-                 <xar:if condition="!empty($invalid['agreetoterms'])">
-                     <span class="xar-error">#$invalid['agreetoterms']#</span>
-                 </xar:if>
             </div>
+                 <xar:if condition="!empty($invalid['agreetoterms'])">
+                     <div class="xar-form-wrapper-after xar-error">#$invalid['agreetoterms']#</div>
+                 </xar:if>
+
             <xar:else />
             <input type="hidden" name="agreetoterms" id="agreetoterms" value="1" />
             </xar:if>

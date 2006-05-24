@@ -191,6 +191,7 @@
                             </xar:mlstring>
                         </label>
                         <input type="text" name="minage" id="minage" value="#xarModGetVar('registration', 'minage')#" maxlength="3" class="xar-form-textshort" />
+                        A value of 0 disables the age check.
                     </div>
                     <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModGetVar('registration', 'chooseownpassword')">
