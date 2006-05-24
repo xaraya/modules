@@ -1,12 +1,17 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Account Validation</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Start Validation</xar:mlstring></h2>
-<p><xar:mlstring>Your account has not yet been activated.  You need to finish these final steps in order to complete your registration.</xar:mlstring> </p>
+
+<xar:if condition="isset($sent) and $sent eq '1'">
+    <p><xar:mlstring>Your validation code has been sent again.</xar:mlstring></p>
+<xar:else />
+    <p><xar:mlstring>Your account has not yet been activated.  You need to finish these final steps in order to complete your registration.</xar:mlstring> </p>
+</xar:if>
 
 <xar:if condition="!empty($valcode)">
     <p><xar:mlstring>To continue, please follow</xar:mlstring> <a href="&xar-modurl-registration-user-getvalidation;&amp;phase=getvalidate&amp;uname=#xarVarPrepForDisplay($uname)#&amp;valcode=#$valcode#"><xar:mlstring>this link</xar:mlstring></a>.</p>
 <xar:else />
-    <form action="&xar-modurl-registration-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="&xar-modurl-roles-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
         <div>
     <p><xar:mlstring>Please enter your username and validation code below</xar:mlstring>:</p>
         <input type="hidden" name="phase" id="phase" value="getvalidate" />
@@ -28,12 +33,8 @@
         </div>
     </form>
 
-    <xar:if condition="!empty($sent)">
-        <p><xar:mlstring>Your validation code has been sent again.</xar:mlstring></p>
-    </xar:if>
-
     <p><xar:mlstring>If you did not receive your validation code, we will try to resend it now.</xar:mlstring></p>
-    <form action="&xar-modurl-registration-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="&xar-modurl-roles-user-getvalidation;" method="post" enctype="application/x-www-form-urlencoded">
              <div>
         <input type="hidden" name="phase" id="phase" value="resend" />
         <label for="unameresend"><xar:mlstring>Username</xar:mlstring>:</label>&nbsp;<input type="text" name="uname" id="unameresend" value="#$uname#" />

@@ -100,7 +100,7 @@ function registration_admin_modifyconfig()
                     xarModSetVar('registration', 'allowregistration', $allowregistration);
                     xarModSetVar('registration', 'minage', $minage);
                     xarModSetVar('registration', 'sendnotice', $sendnotice);
-                    xarModSetVar('registration', 'explicitapproval', $explicitapproval);
+                    xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModSetVar('registration', 'requirevalidation', $requirevalidation);
                     xarModSetVar('registration', 'showdynamic', $showdynamic);
                     xarModSetVar('registration', 'sendwelcomeemail', $sendwelcomeemail);
