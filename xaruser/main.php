@@ -19,8 +19,9 @@
  *
  * @author Jo Dalle Nogare
  */
-function sitecontact_user_main()
+function sitecontact_user_main($args)
 {
+    extract($args);
     $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
 
     if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
@@ -160,18 +161,20 @@ function sitecontact_user_main()
         $data['message']='';
         $data['messagetxt'] = '';
     }
+
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
     $data['permissioncheck']=$formdata['permissioncheck'];
     $data['savedata']=$formdata['savedata'];
-    $data['termslink']=$formdata['termslink'];    
+    $data['termslink']=$formdata['termslink'];
     if (!empty($data['sctypename'])){
         $template = 'main-' . $data['sctypename'];
     } else {
         $template =  'main';
     }
+   $data['scform']=$data['sctypename'];
 
-	$templatedata = xarTplModule('sitecontact', 'user', $template, $data);
+	$templatedata = xarTplModule('sitecontact', 'user', 'main', $data, $template);
 
 	if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
