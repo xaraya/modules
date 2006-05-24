@@ -148,7 +148,10 @@
 
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="xarModGetVar('helpdesk', 'Enable Images')">
-                    <input type="image" src="#xarTplGetImage('submit.gif', 'helpdesk')#" name="create" value="Submit" onclick="return xar_helpdesk_validateTicket();" />
+                    <input type="hidden" name="create"  value="create"/>
+                    <a name="button" href="javascript://" onclick="xar_helpdesk_validateTicket();">
+                        <img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0" alt="#xarML('Submit ticket.')#" />
+                    </a>
                 <xar:else />
                     <input type="submit" name="create" value="Submit" onclick="return xar_helpdesk_validateTicket();" />
                 </xar:if>
