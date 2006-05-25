@@ -303,6 +303,29 @@
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
+                        <label for="extreg" class="xar-form-label">
+                            <span class="help" title="#xarML('When checked, a user is redirected to the URL below when he enrolls in a course.')#">
+                            <xar:mlstring>Use external registration</xar:mlstring>
+                            </span>
+                        </label>
+                        <xar:if condition="$use_extreg">
+                            <xar:data-input name="extreg" type="14" value="1" checked="checked" />
+                        <xar:else />
+                            <xar:data-input name="extreg" type="14" value="1" checked="checked" />
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="regurl" class="xar-form-label">
+                            <span class="help" title="#xarML('The URL to redirect to when external registration is used.')#">
+                            <xar:mlstring>External Registration URL</xar:mlstring>
+                            </span>
+                        </label>
+                        <input type="text" name="regurl" id="regurl" value="#$planneddata.regurl#" maxlength="255" class="xar-form-textlong" />
+                        <xar:if condition="!empty($invalid['regurl'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid regurl description</xar:mlstring></span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
                         <label for="hideplanning" class="xar-form-label">
                             <span class="help" title="#xarML('Hide this planning from being viewed by site users.')#">
                             <xar:mlstring>Hide this occurence</xar:mlstring>

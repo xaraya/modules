@@ -3,7 +3,7 @@
  * Update a planned course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * update a planned course
  *
- * @author the Courses module development team
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param  $args ['planningid'] the ID of the course
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
@@ -74,6 +74,8 @@ function courses_adminapi_updateplanned($args)
                            xar_material =?,
                            xar_info =?,
                            xar_program =?,
+                           xar_extreg =?,
+                           xar_regurl =?,
                            xar_minparticipants =?,
                            xar_maxparticipants =?,
                            xar_closedate =?,
@@ -82,7 +84,7 @@ function courses_adminapi_updateplanned($args)
                         WHERE xar_planningid = $planningid";
 
     $bindvars = array($planningid, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-                      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants,
+                      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $extreg, $regurl, $minparticipants,
                       $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised

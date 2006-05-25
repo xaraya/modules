@@ -44,13 +44,16 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('aim', 'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('method', 'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('location', 'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('costs', 'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('material', 'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate', 'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate', 'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('info', 'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('location',        'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('costs',           'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('program',         'str:1:', $progra, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('regurl',          'str:5:255', $regurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',         'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
@@ -149,7 +152,9 @@ function courses_admin_updateplanned($args)
                                 'location' => $location,
                                 'material' => $material,
                                 'info' => $info,
-                                'program' => $program,
+                                'program'       => $program,
+                                'extreg'        => $extreg,
+                                'regurl'            => $regurl,
                                 'minparticipants' => $minparticipants,
                                 'maxparticipants' => $maxparticipants,
                                 'closedate' => $closedate,
@@ -162,27 +167,29 @@ function courses_admin_updateplanned($args)
     if (!xarModAPIFunc('courses',
                        'admin',
                        'updateplanned',
-                       array(   'planningid' => $planningid,
-                                'name' => $name,
-                                'number' => $number,
-                                'year' => $year,
-                                'credits' => $credits,
-                                'creditsmin' => $creditsmin,
-                                'creditsmax' => $creditsmax,
-                                'startdate' => $startdate,
-                                'enddate' => $enddate,
-                                'prerequisites' => $prerequisites,
-                                'aim' => $aim,
-                                'method' => $method,
-                                'longdesc' => $longdesc,
-                                'costs' => $costs,
-                                'committee' => $committee,
-                                'coordinators' => $coordinators,
-                                'lecturers' => $lecturers,
-                                'location' => $location,
-                                'material' => $material,
-                                'info' => $info,
-                                'program' => $program,
+                       array(   'planningid'        => $planningid,
+                                'name'              => $name,
+                                'number'            => $number,
+                                'year'              => $year,
+                                'credits'           => $credits,
+                                'creditsmin'        => $creditsmin,
+                                'creditsmax'        => $creditsmax,
+                                'startdate'         => $startdate,
+                                'enddate'           => $enddate,
+                                'prerequisites'     => $prerequisites,
+                                'aim'               => $aim,
+                                'method'            => $method,
+                                'longdesc'          => $longdesc,
+                                'costs'             => $costs,
+                                'committee'         => $committee,
+                                'coordinators'      => $coordinators,
+                                'lecturers'         => $lecturers,
+                                'location'          => $location,
+                                'material'          => $material,
+                                'info'              => $info,
+                                'program'           => $program,
+                                'extreg'            => $extreg,
+                                'regurl'            => $regurl,
                                 'minparticipants' => $minparticipants,
                                 'maxparticipants' => $maxparticipants,
                                 'closedate' => $closedate,
