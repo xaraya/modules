@@ -25,21 +25,36 @@
           </xar:mlstring>
         </strong>
       </legend>
+      <p class="xar-form-input-wrapper-after">
+          <xar:mlstring>You may choose either or both of the following linebreak transforms:</xar:mlstring>
+      </p>
       <div class="xar-form-input-wrapper-after">
-
         <xar:if condition="xarModGetVar('html', 'dolinebreak')">
           <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" checked="checked" />
           <xar:else />
           <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" />
         </xar:if>
-        <label for="dolinebreak" title="#xarML('Check this if you would like the HTML module to provide linebreaks on content.')#">
+        <label for="dolinebreak" title="#xarML('HTML module will provide smart linebreaks on content.')#">
             <xar:mlstring>
-              "Smart" Transform of linebreaks (considers html tags)
+              "Smart" Transform (considers html tags)
+            </xar:mlstring>
+        </label>
+      </div>
+      <div class="xar-form-input-wrapper-after">
+
+        <xar:if condition="xarModGetVar('html', 'dobreak')">
+          <input type="checkbox" name="dobreak" id="dobreak" value="1" checked="checked" />
+          <xar:else />
+          <input type="checkbox" name="dobreak" id="dobreak" value="1" />
+        </xar:if>
+        <label for="dobreak" title="#xarML('HTML module will do a simple transform of linebreaks to &lt;br /&gt;')#">
+            <xar:mlstring>
+              Simple transform of newlines to line breaks &lt;br /&gt;
             </xar:mlstring>
         </label>
       </div>
         <p class="xar-form-input-wrapper-after">
-            <xar:mlstring>For this linebreak transform to take effect, you must </xar:mlstring>
+            <xar:mlstring>For these transforms to take effect, you must </xar:mlstring>
             <a href="&xar-modurl-modules-admin-hooks;&amp;hook=html"><xar:mlstring>hook HTML module</xar:mlstring></a><xar:mlstring> to your article pubtypes or other content items.</xar:mlstring>
         </p>
         <p class="xar-form-input-wrapper-after">
