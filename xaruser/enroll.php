@@ -65,12 +65,15 @@ function courses_user_enroll($args)
                           array('planningid' => $planningid));
     if (!isset($planitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
+    // See if we have an external registration
+    $use_extreg = $planitem['extreg'] ? true : false;
     if (!$confirm) {
         // No confirmation yet, present form
         $data=array();
         $data['planitem'] = $planitem;
         $data['confirm'] = $confirm;
         $data['planningid'] = $planningid;
+        $data['use_extreg'] = $use_extreg;
         $data['authid'] = xarSecGenAuthKey();
         $data['coursename'] = xarModApiFunc('courses','user','getcoursename',array('planningid' => $planningid));
         // Show confirmation form
