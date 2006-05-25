@@ -14,17 +14,17 @@
     <table>
         <thead>
         <tr>
-            <xar:if condition="$snumberlink != ''">
+            <xar:if condition="!empty($snumberlink)">
                 <th><a href="#$snumberlink#"><xar:mlstring>Number</xar:mlstring></a></th>
             <xar:else />
                 <th><xar:mlstring>Number</xar:mlstring></th>
             </xar:if>
-            <xar:if condition="$snamelink != ''">
+            <xar:if condition="!empty($snamelink)">
                 <th><a href="#$snamelink#"><xar:mlstring>Title</xar:mlstring></a></th>
             <xar:else />
                 <th><xar:mlstring>Title</xar:mlstring></th>
             </xar:if>
-            <xar:if condition="$sdatelink != ''">
+            <xar:if condition="!empty($sdatelink)">
                 <th><a href="#$sdatelink#"><xar:mlstring>Startdate</xar:mlstring></a></th>
             <xar:else />
                 <th><xar:mlstring>Startdate</xar:mlstring></th>

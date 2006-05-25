@@ -155,14 +155,17 @@ function courses_admin_viewallplanned()
     } else {
         $data['snamelink'] = '';
     }
-
-    $data['sdatelink'] = xarModURL('courses',
+    if ($sortby != 'startdate' ) {
+        $data['sdatelink'] = xarModURL('courses',
                                    'admin',
                                    'viewallplanned',
                                    array('startnum' => 1,
                                          'sortby' => 'startdate',
                                          'sortorder' => $sort,
                                          'catid' => $catid));
+    } else {
+        $data['sdatelink'] = '';
+    }
     if ($sortby != 'number' ) {
         $data['snumberlink'] = xarModURL('courses',
                                         'admin',
