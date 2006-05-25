@@ -28,6 +28,7 @@ function courses_admin_modifyconfig()
     $data['hideemptyfieldschecked'] = xarModGetVar('courses', 'HideEmptyFields') ? 'checked="checked"' : '';
     $data['itemsvalue']             = xarModGetVar('courses', 'itemsperpage');
     $data['ShowShortDescchecked']   = xarModGetVar('courses', 'ShowShortDesc') ? 'checked="checked"' : '';
+    $data['SendConfirmsForExtregchecked']   = xarModGetVar('courses', 'SendConfirmsForExtreg') ? 'checked="checked"' : '';
     $data['DefaultTeacherType']     = xarModGetVar('courses','DefaultTeacherType');
     $data['updatebutton']           = xarVarPrepForDisplay(xarML('Update Configuration'));
     $data['AlwaysNotify']           = xarModGetVar('courses', 'AlwaysNotify');

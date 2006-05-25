@@ -222,6 +222,8 @@ function courses_init()
     xarModSetVar('courses', 'hideplanningmsg', 'This occurence is currently hidden for display');
     // Set standard group to users
     xarModSetVar('courses', 'coord_group', 5);
+    // Set var for external confirms
+    xarModSetVar('courses', 'SendConfirmsForExtreg', false);
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -764,6 +766,8 @@ function courses_upgrade($oldversion)
             $result = $datadict->addColumn($planningtable, 'xar_regurl C(255) null default "" ');
             $result = $datadict->addColumn($planningtable, 'xar_extreg I(1) notnull default 0 ');
             if (!$result) return;
+            // Set var for external confirms
+            xarModSetVar('courses', 'SendConfirmsForExtreg', false);
         case '0.7.0':
 
             break;

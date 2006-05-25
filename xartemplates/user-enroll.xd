@@ -36,6 +36,13 @@
                  </label>
                  #$planitem.location#
             </div>
+
+            <xar:if condition="$use_extreg">
+                <xar:ml>
+                <xar:mlstring>You will be redirected to #(1) when you choose to enroll</xar:mlstring>
+                <xar:mlvar>#$planitem['regurl']#</xar:mlvar>
+                </xar:ml>
+            </xar:if>
             <div class="xar-form-input-wrapper-after">
             <form method="post" action="&xar-modurl-courses-user-enroll;">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />

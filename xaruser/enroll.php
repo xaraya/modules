@@ -67,6 +67,7 @@ function courses_user_enroll($args)
 
     // See if we have an external registration
     $use_extreg = $planitem['extreg'] ? true : false;
+    $sendalways = xarModGetVar('courses', 'SendConfirmsForExtreg') ? true : false;
     if (!$confirm) {
         // No confirmation yet, present form
         $data=array();
@@ -92,20 +93,28 @@ function courses_user_enroll($args)
                                         'planningid' => $planningid,
                                         'studstatus' => $studstatus));
         if (!isset($enrollid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-        // TODO: make this a better one
-        $regdate = time();
-        // Call sendconfirm messages
-        $sendconfirm = xarModFunc('courses',
-                                  'user',
-                                  'sendconfirms',
-                                  array('userid'     => xarUserGetVar('uid'),
-                                        'planningid' => $planningid,
-                                        'studstatus' => $studstatus,
-                                        'regdate'    => $regdate,
-                                        'enrollid'   => $enrollid
-                                        ));
-        if(!$sendconfirm) return false;
-        xarSessionSetVar('statusmsg', xarML('You have been enrolled'));
+
+        if (!$use_extreg || ($use_extreg && $sendalways)) {
+            // TODO: make this a better one
+            $regdate = time();
+            // Call sendconfirm messages
+            $sendconfirm = xarModFunc('courses',
+                                      'user',
+                                      'sendconfirms',
+                                      array('userid'     => xarUserGetVar('uid'),
+                                            'planningid' => $planningid,
+                                            'studstatus' => $studstatus,
+                                            'regdate'    => $regdate,
+                                            'enrollid'   => $enrollid
+                                            ));
+            if(!$sendconfirm) return false;
+            xarSessionSetVar('statusmsg', xarML('You have been enrolled'));
+        }
+        // redirect to the external registration
+        if ($use_extreg && !empty($planitem['regurl'])) {
+            xarResponseRedirect($planitem['regurl']);
+            return true;
+        }
     }
 
     // This function generated no output, and so now it is complete we redirect

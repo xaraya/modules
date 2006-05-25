@@ -3,7 +3,7 @@
  * Update configuration parameters of the module with information passed back by the modification form
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,6 +15,8 @@
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
  *
+ * @author Courses module development team
+ * @param
  * @return true
  */
 function courses_admin_updateconfig()
@@ -29,6 +31,7 @@ function courses_admin_updateconfig()
     if (!xarVarFetch('ShowShortDesc',   'checkbox', $ShowShortDesc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',       'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',     'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('SendConfirmsForExtreg',     'checkbox', $SendConfirmsForExtreg,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coord_group',     'int',      $coord_group, 5, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('OldPlannedMonths',     'int::',      $OldPlannedMonths, 12, XARVAR_NOT_REQUIRED)) return;
     // Confirm authorisation code.
@@ -44,6 +47,7 @@ function courses_admin_updateconfig()
     xarModSetVar('courses', 'DefaultTeacherType', $DefaultTeacherType);
     xarModSetVar('courses', 'coord_group', $coord_group);
     xarModSetVar('courses', 'OldPlannedMonths', $OldPlannedMonths);
+    xarModSetVar('courses', 'SendConfirmsForExtreg', $SendConfirmsForExtreg);
     // Alias name
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('courses', 'useModuleAlias', $modulealias);
