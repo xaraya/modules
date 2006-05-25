@@ -172,9 +172,9 @@ function sitecontact_user_main($args)
     } else {
         $template =  'main';
     }
-   $data['scform']=$data['sctypename'];
-
-	$templatedata = xarTplModule('sitecontact', 'user', 'main', $data, $template);
+    $data['scform']=$data['sctypename'];
+    
+	$templatedata = xarTplModule('sitecontact', 'user', $template, $data);
 
 	if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
