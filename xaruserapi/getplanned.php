@@ -79,7 +79,7 @@ function courses_userapi_getplanned($args)
     // Put items into result array.
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $regurl, $exturl, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
+          $location, $material, $info, $program, $regurl, $extreg, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")) {
             $item = array(
                         'planningid'    => $planningid,

@@ -196,6 +196,17 @@
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid lecturers description</xar:mlstring></span>
                     </xar:if>
                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="program" class="xar-form-label">
+                        <span class="help" title="#xarML('Other program on this course.')#">
+                        <xar:mlstring>The course programme</xar:mlstring>
+                        </span>
+                    </label>
+                    <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
+                    <xar:if condition="!empty($invalid['program'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid program description</xar:mlstring></span>
+                    </xar:if>
+                </div>
            </fieldset>
            <fieldset>
                 <legend>
@@ -286,12 +297,31 @@
                 <div class="xar-form-input-wrapper">
                     <label for="info" class="xar-form-label">
                         <span class="help" title="#xarML('Other info on this course.')#">
-                        #$infolabel#
+                        <xar:mlstring>Other info</xar:mlstring>
                         </span>
                     </label>
                     <textarea class="fullright" name="info" id="info" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['info'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid info description</xar:mlstring></span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="extreg" class="xar-form-label">
+                        <span class="help" title="#xarML('When checked, a user is redirected to the URL below when he enrolls in a course.')#">
+                        <xar:mlstring>Use external registration</xar:mlstring>
+                        </span>
+                    </label>
+                    <xar:data-input name="extreg" type="14" value="$extreg" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="regurl" class="xar-form-label">
+                        <span class="help" title="#xarML('The URL to redirect to when external registration is used.')#">
+                        <xar:mlstring>External Registration URL</xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="text" name="regurl" id="regurl" value="#$regurl#" maxlength="255" class="xar-form-textlong" />
+                    <xar:if condition="!empty($invalid['regurl'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid regurl description</xar:mlstring></span>
                     </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
@@ -310,7 +340,7 @@
                 <div style="clear: both; padding-top: 10px;">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
+                    <span class="help" title="#xarML('Enter detailed contact regurlrmation for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                  <xar:data-input name="contact" type="3" value="$contact" />
@@ -326,7 +356,7 @@
                 <div style="clear: both; padding-top: 10px;">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('Enter detailed contact information for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
+                    <span class="help" title="#xarML('Enter detailed contact regurlrmation for this course.')#"><label for="contact">#$contactlabel#</label>:</span>
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                  <xar:data-input name="contact" type="3" value="$item['contact']" />

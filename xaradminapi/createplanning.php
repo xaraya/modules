@@ -72,15 +72,17 @@ function courses_adminapi_createplanning($args)
                            xar_material,
                            xar_info,
                            xar_program,
+                           xar_extreg,
+                           xar_regurl,
                            xar_minparticipants,
                            xar_maxparticipants,
                            xar_closedate,
                            xar_hideplanning,
                            xar_last_modified)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array($nextId, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-     $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified);
+     $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $extreg, $regurl, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

@@ -42,6 +42,8 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('location',        'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('regurl',          'str:1:255', $regurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning',    'int::', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
@@ -104,6 +106,8 @@ function courses_admin_createplanning($args)
                                 'material' => $material,
                                 'info' => $info,
                                 'program' => $program,
+                                'extreg'        => $extreg,
+                                'regurl'        => $regurl,
                                 'hideplanning' => $hideplanning,
                                 'minparticipants'=> $minparticipants,
                                 'maxparticipants'=> $maxparticipants,
@@ -117,26 +121,28 @@ function courses_admin_createplanning($args)
     $planningid = xarModAPIFunc('courses',
                           'admin',
                           'createplanning',
-                          array('courseid' => $courseid,
-                                'year' => $year,
-                                'credits' => $credits,
-                                'creditsmin' => $creditsmin,
-                                'creditsmax' => $creditsmax,
-                                'startdate' => $startdate,
-                                'enddate' => $enddate,
-                                'prerequisites' => $prerequisites,
-                                'aim' => $aim,
-                                'method' => $method,
-                                'longdesc' => $longdesc,
-                                'costs' => $costs,
-                                'committee' => $committee,
-                                'coordinators' => $coordinators,
+                          array('courseid'  => $courseid,
+                                'year'          => $year,
+                                'credits'       => $credits,
+                                'creditsmin'        => $creditsmin,
+                                'creditsmax'        => $creditsmax,
+                                'startdate'         => $startdate,
+                                'enddate'           => $enddate,
+                                'prerequisites'     => $prerequisites,
+                                'aim'               => $aim,
+                                'method'            => $method,
+                                'longdesc'          => $longdesc,
+                                'costs'             => $costs,
+                                'committee'         => $committee,
+                                'coordinators'      => $coordinators,
                                 'lecturers' => $lecturers,
                                 'location' => $location,
                                 'material' => $material,
                                 'info' => $info,
-                                'program' => $program,
-                                'hideplanning' => $hideplanning,
+                                'program'       => $program,
+                                'extreg'        => $extreg,
+                                'regurl'            => $regurl,
+                                'hideplanning'      => $hideplanning,
                                 'minparticipants'=> $minparticipants,
                                 'maxparticipants'=> $maxparticipants,
                                 'closedate'=> $closedate));

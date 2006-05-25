@@ -46,6 +46,10 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning',    'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('program',         'str:1:', $progra, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('regurl',          'str:1:255', $regurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',         'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
@@ -100,7 +104,6 @@ function courses_admin_plancourse($args)
     $data['maxpartlabel'] = xarVarPrepForDisplay(xarML('Maximum Participants'));
     $data['closedatelabel'] = xarVarPrepForDisplay(xarML('Registration closing date'));
     $data['hideplanninglabel'] = xarVarPrepForDisplay(xarML('Hide this occurence'));
-    $data['infolabel'] = xarVarPrepForDisplay(xarML('Other Course info'));
     $data['addplanningbutton'] = xarVarPrepForDisplay(xarML('Add planning'));
     $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
 
@@ -208,6 +211,22 @@ function courses_admin_plancourse($args)
         $data['hideplanning'] = '';
     } else {
         $data['hideplanning'] = $hideplanning;
+    }
+    if (empty($info)) {
+        $data['info'] = '';
+    } else {
+        $data['info'] = $info;
+    }
+    if (empty($extreg)) {
+        $data['extreg'] = false;
+    } else {
+        $data['extreg'] = $extreg;
+    }
+
+    if (empty($regurl)) {
+        $data['regurl'] = '';
+    } else {
+        $data['regurl'] = $regurl;
     }
     if (empty($maxparticipants)) {
         $data['maxparticipants'] = '';

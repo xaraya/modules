@@ -762,7 +762,7 @@ function courses_upgrade($oldversion)
             // Apply changes
             xarDBLoadTableMaintenanceAPI();
             $result = $datadict->addColumn($planningtable, 'xar_regurl C(255) null default "" ');
-            $result = $datadict->addColumn($planningtable, 'xar_exturl I(1) notnull default 0 ');
+            $result = $datadict->addColumn($planningtable, 'xar_extreg I(1) notnull default 0 ');
             if (!$result) return;
         case '0.7.0':
 
