@@ -1,11 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="security" filename="changeInputName.js" />
+
 <fieldset>
     <legend>Security Levels</legend>
 
     <xar:if condition="$standalone eq true">
         <div class="xar-align-center  xar-floatleft" style="width: 44%;">
         <form name="" action="#xarModURL('security', 'admin', 'updatesecurity')#" method="POST">
+
             <xar:template file="security-form" />
+
             <div class="xar-align-center">
                 <input type="hidden" name="modid" value="#$modid#" />
                 <input type="hidden" name="itemtype" value="#$itemtype#" />
@@ -15,35 +19,9 @@
             </div>
         </form>
         </div>
-
-        <xar:if condition="!empty($user_groups)">
-            <div class="xar-align-center xar-floatright" style="width: 48%;">
-            <form name="addgroup" action="#$action#" method="POST">
-                <select name="group">
-                    <option value="0">Add group to security table.</option>
-                    <xar:foreach in="$user_groups" value="$group">
-                        <option value="#$group.uid#"><xar:var name="group.name" /></option>
-                    </xar:foreach>
-                </select>
-                <input type="hidden" name="modid" value="#$modid#" />
-                <input type="hidden" name="itemtype" value="#$itemtype#" />
-                <input type="hidden" name="itemid" value="#$itemid#" />
-                <input type="hidden" name="returnurl" value="#$returnurl#" />
-                <input type="submit" name="submit" value="#xarML('Add Group')#" />
-            </form>
-            </div>
-        </xar:if>
     <xar:else />
         <div class="xar-align-center  xar-floatleft" style="width: 44%;">
             <xar:template file="security-form" />
-        </div>
-        <div class="xar-align-center xar-floatright" style="width: 48%;">
-            <select name="group">
-                <option value="0">Add group to security table.</option>
-                <xar:foreach in="$user_groups" value="$group">
-                    <option value="#$group.uid#"><xar:var name="group.name" /></option>
-                </xar:foreach>
-            </select>
         </div>
     </xar:if>
 </fieldset>

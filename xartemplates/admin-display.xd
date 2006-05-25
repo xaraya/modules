@@ -1,0 +1,50 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Security Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <xar:set name="$has_security">xarModAPIFunc('security', 'user', 'check',
+        array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid))
+    </xar:set>
+    <xar:if condition="$has_security">
+        <div class="xar-floatright">
+        <a href="#xarModURL('security', 'admin', 'modify', array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid, 'level' => SECURITY_ADMIN, 'hide_exception' => true))#">[Modify]</a>
+        </div>
+    </xar:if>
+
+    <a href="#$item.url#"><h2><xar:var name="item.label" /></h2></a>
+
+    <xar:set name="width">100/(count($levels)+1)</xar:set>
+    <table width="100%">
+        <tr>
+            <th>User</th>
+            <xar:foreach in="$levels" key="$key" value="$level">
+                <th width="#$width#%">#$level.label#</th>
+            </xar:foreach>
+        </tr>
+        <xar:foreach in="$security" key="$role_id" value="$user_sec">
+            <tr>
+                <xar:if condition="$role_id eq 0">
+                    <td><xar:mlstring>Everybody</xar:mlstring></td>
+                <xar:else />
+                    <td>#$user_sec.username#</td>
+                </xar:if>
+                <xar:foreach in="$user_sec.levels" key="$key" value="$level">
+                    <td>
+                        <xar:if condition="$level eq 0">
+                            <xar:mlstring>No</xar:mlstring>
+                        <xar:else />
+                            <xar:mlstring>Yes</xar:mlstring>
+                        </xar:if>
+                    </td>
+                </xar:foreach>
+            </tr>
+        </xar:foreach>
+    </table>
+
+</div>

@@ -86,8 +86,8 @@ function security_admin_changesecurity($args)
     */
     // Make sure their are levels if not quit
     $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
-    $levels = xarModAPIFunc('security', 'user', 'get', $args);
-    if( !$levels ) return '';
+    $security = xarModAPIFunc('security', 'user', 'get', $args);
+    if( !$security ) return '';
 
     // Make user this has an owner otherwise quit
     if( is_null($settings['owner']) )
@@ -109,17 +109,6 @@ function security_admin_changesecurity($args)
         $owner['uid'] = $result->fields[0];
     }
 
-
-    /*
-        Get all the groups just incase it's needed for display purposes
-    */
-    $all_groups = xarModAPIFunc('roles', 'user', 'getallgroups');
-    $groupCache = array();
-    foreach( $all_groups as $key => $group )
-    {
-        $groupCache[$group['uid']] = $group;
-    }
-
     /*
         If an admin allow admin to change privs as if they were the owner.
         This allows the admin to assign privs how ever they want even if the
@@ -132,7 +121,7 @@ function security_admin_changesecurity($args)
         These groups are used in the Add groups menu thing to create new group privs
     */
     if( xarSecurityCheck('AdminPanel', 0) )
-        $groups = $all_groups;
+        $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
     else
         $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
 
@@ -141,28 +130,6 @@ function security_admin_changesecurity($args)
     $groups = $tmp;
 
     $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
-
-    /*
-        Calc Security Levels and make a Map
-    */
-    $secMap = array();
-    foreach( $secLevels as $secLevel )
-    {
-        $currentLevel = $secLevel['level'];
-        $currentLevel = $secLevel['name'];
-
-        if( isset($levels[$owner['uid']]) )
-            $secMap['user'][$currentLevel] = $levels[$owner['uid']][$currentLevel];
-        else
-            $secMap['user'][$currentLevel] = 0;
-
-        $secMap['world'][$currentLevel] = $levels[0][$currentLevel];
-        foreach( $levels as $gid => $group )
-        {
-            if( $gid != 0 and $gid != $owner['uid'] && isset($levels[$gid]) )
-                $secMap[$gid][$currentLevel] = $levels[$gid][$currentLevel];
-        }
-    }
 
     /*
         Setup vars for the template
@@ -174,12 +141,8 @@ function security_admin_changesecurity($args)
     }
     $data['owner']    = $owner['uid'];
     $data['secLevels']= $secLevels; // different security levels
-    $data['secMap']   = $secMap; // Security Map
-    $data['levels']   = $levels; // Sec levels for each group
-    $data['all_groups'] = $all_groups;
+    $data['security']   = $security; // Sec levels for each group
     $data['user_groups']   = $groups; // Groups user is in
-    $data['groupCache']= $groupCache;
-    $data['showRemove']= count($groupCache) > 1 ? true : false;
     $data['modid']    = $modid;
     $data['itemtype'] = $itemtype;
     $data['itemid']   = $itemid;

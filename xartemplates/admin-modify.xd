@@ -1,0 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Security Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <a href="#$item.url#"><h2><xar:var name="item.label" /></h2></a>
+
+    <form action="&xar-modurl-security-admin-modify;" method="POST">
+    <xar:set name="width">100/(count($levels)+1)</xar:set>
+    <table width="100%">
+        <tr>
+            <th>User</th>
+            <xar:foreach in="$levels" key="$key" value="$level">
+                <th width="#$width#%">#$level.label#</th>
+            </xar:foreach>
+        </tr>
+        <xar:foreach in="$security" key="$role_id" value="$user_sec">
+            <tr>
+                <xar:if condition="$role_id eq 0">
+                    <td><xar:mlstring>Everybody</xar:mlstring></td>
+                <xar:else />
+                    <td>#$user_sec.username#</td>
+                </xar:if>
+                <xar:foreach in="$user_sec.levels" key="$key" value="$level">
+                    <td>
+                        <xar:if condition="$level eq 0">
+                            <input type="checkbox" name="#$key#[#$role_id#]" value="1" />
+                        <xar:else />
+                            <input type="checkbox" name="#$key#[#$role_id#]" value="1" checked="checked" />
+                        </xar:if>
+                    </td>
+                </xar:foreach>
+            </tr>
+        </xar:foreach>
+    </table>
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="modid" value="#$modid#" />
+            <input type="hidden" name="itemtype" value="#$itemtype#" />
+            <input type="hidden" name="itemid" value="#$itemid#" />
+            <input type="submit" name="submit" value="#xarML('Modify')#" />
+        </div>
+
+    </fieldset>
+    </form>
+
+</div>

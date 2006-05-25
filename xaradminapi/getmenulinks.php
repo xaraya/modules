@@ -29,6 +29,11 @@ function security_adminapi_getmenulinks()
             'label' => xarML('Overview')
         );
 
+        $menulinks[] = Array(
+            'url'   => xarModURL('security', 'admin', 'view'),
+            'title' => xarML('View Security'),
+            'label' => xarML('View Security')
+        );
 
         $menulinks[] = Array(
             'url'   => xarModURL('security', 'admin', 'hook_settings'),

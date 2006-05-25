@@ -44,17 +44,25 @@ function security_userapi_get($args)
 
     $table = $xartable['security_roles'];
 
+    $fields = array('uid', 'xoverview', 'xread', 'xcomment', 'xwrite', 'xmanage', 'xadmin');
+    $where = array();
+    $bindvars = array();
+    $leftjoins = array();
+
+    if( xarModIsAvailable('roles') )
+    {
+        $roles_def = xarModAPIFunc('roles', 'user', 'leftjoin');
+        $fields[] = $roles_def['name'];
+        $leftjoins[] = "LEFT JOIN {$roles_def['table']} ON {$roles_def['field']} = uid ";
+    }
+
     /*
         Get the user and world levels first
         If they don't exist then we can not have group
         levels so we return and empty array()
     */
-    $bindvars = array();
-    $where = array();
-    $query = "
-        SELECT uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin
-        FROM $table
-    ";
+    $query = "SELECT " . join(', ', $fields) . " "
+        . "FROM $table ";
     if( !empty($modid) )
     {
         $where[] = " modid = ? ";
@@ -70,41 +78,60 @@ function security_userapi_get($args)
         $where[] = " itemid = ? ";
         $bindvars[] = $itemid;
     }
+    if( count($leftjoins) > 0 )
+    {
+        $query .= join(' ', $leftjoins);
+    }
     if( count($where) > 0 )
     {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
+
+    $query .= "ORDER BY uid ";
+
     $result = $dbconn->Execute($query, $bindvars);
     if( !$result ){ return false; }
     if( $result->EOF ){ return array(); }
 
     $level = array();
-    while( (list($uid, $overview, $read, 
-    	$comment, $write, $manage, $admin) = $result->fields) != null )
+    $security = array();
+    while( (list($uid, $overview, $read,
+    	$comment, $write, $manage, $admin, $username) = $result->fields) != null )
     {
-        $level[$uid] = array(
-        	'overview' => $overview,
-        	'read' 	   => $read,
-        	'comment'  => $comment,
-        	'write'    => $write,
-        	'manage'   => $manage,
-        	'admin'    => $admin
+        $security[$uid] = array(
+            'username' => $username,
+            'levels' => array(
+            	'overview' => $overview,
+            	'read' 	   => $read,
+            	'comment'  => $comment,
+            	'write'    => $write,
+            	'manage'   => $manage,
+            	'admin'    => $admin
+            )
         );
+
+//        $level[$uid] = array(
+//            'username' => $username,
+//        );
         $result->MoveNext();
     }
 
-    if( !isset($level[0]) )
-    { 
-        $level[0] = array(
-        	'overview' => 0,
-        	'read' 	   => 0,
-        	'comment'  => 0,
-        	'write'    => 0,
-        	'manage'   => 0,
-        	'admin'    => 0
-        ); 
+    if( !isset($security[0]) )
+    {
+        $security[0] = array(
+            'username' => xarML('Everybody'),
+            'levels' => array(
+            	'overview' => 0,
+            	'read' 	   => 0,
+            	'comment'  => 0,
+            	'write'    => 0,
+            	'manage'   => 0,
+            	'admin'    => 0
+            )
+        );
+        ksort($security);
     }
 
-    return $level;
+    return $security;
 }
 ?>

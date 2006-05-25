@@ -1,4 +1,43 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+
+
+<xar:set name="width">100/(count($secLevels)+1)</xar:set>
+<table width="100%" class="xar-norm-outline">
+    <tr>
+        <th>User</th>
+        <xar:foreach in="$secLevels" key="$key" value="$level">
+            <th width="#$width#%">#$level.label#</th>
+        </xar:foreach>
+    </tr>
+    <xar:set name="count">0</xar:set>
+    <xar:foreach in="$security" key="$role_id" value="$user_sec">
+        <xar:if condition="$count % 2 eq 0">
+            <xar:set name="class">'xar-norm'</xar:set>
+        <xar:else />
+            <xar:set name="class">'xar-alt'</xar:set>
+        </xar:if>
+        <tr class="#$class#">
+            <xar:if condition="$role_id eq 0">
+                <td><xar:mlstring>Everybody</xar:mlstring></td>
+            <xar:else />
+                <td>#$user_sec.username#</td>
+            </xar:if>
+            <xar:foreach in="$user_sec.levels" key="$key" value="$level">
+                <td>
+                    <xar:if condition="$level eq 0">
+                        <input type="checkbox" name="#$key#[#$role_id#]" value="1" />
+                    <xar:else />
+                        <input type="checkbox" name="#$key#[#$role_id#]" value="1" checked="checked" />
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        </tr>
+        <xar:set name="count">$count+1</xar:set>
+    </xar:foreach>
+</table>
+
+<xar:comment>
 <table border="1" style="margin-right: auto; margin-left: auto;" class="xar-align-center">
     <tr>
         <th><xar:mlstring>Access</xar:mlstring></th>
@@ -65,3 +104,4 @@
     </tr>
     </xar:foreach>
 </table>
+</xar:comment>

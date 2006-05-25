@@ -57,18 +57,18 @@ function security_adminapi_updatehook($args)
     if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
 
-    if( $group > 0 )
-    {
-        $result = xarModAPIFunc('security', 'admin', 'create_group_level',
-            array(
-                'modid'    => $modid,
-                'itemtype' => $itemtype,
-                'itemid'   => $itemid,
-                'group'    => $group,
-                'level'    => array('read' => 1)
-            )
-        );
-    }
+//    if( $group > 0 )
+//    {
+//        $result = xarModAPIFunc('security', 'admin', 'create_group_level',
+//            array(
+//                'modid'    => $modid,
+//                'itemtype' => $itemtype,
+//                'itemid'   => $itemid,
+//                'group'    => $group,
+//                'level'    => array('read' => 1)
+//            )
+//        );
+//    }
 
     $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
     $levels = array();
@@ -78,7 +78,10 @@ function security_adminapi_updatehook($args)
     {
         foreach( $$secLevel['name'] as $role_id => $value )
         {
-            $levels[$role_id][$secLevel['name']] = $value;
+            if( $role_id > -1 )
+            {
+                $levels[$role_id][$secLevel['name']] = $value;
+            }
         }
     }
 

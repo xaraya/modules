@@ -48,7 +48,7 @@ function security_admin_updatesecurity($args)
             'hide_exception' => true
         )
     );
-    if( !$has_admin_security && !xarSecurityCheck('AdminPanel', 0) ){ return ''; }
+    if( !$has_admin_security ){ return ''; }
 
     $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
     $levels = array();
@@ -58,7 +58,10 @@ function security_admin_updatesecurity($args)
     {
         foreach( $$secLevel['name'] as $role_id => $value )
         {
-            $levels[$role_id][$secLevel['name']] = $value;
+            if( $role_id > -1 )
+            {
+                $levels[$role_id][$secLevel['name']] = $value;
+            }
         }
     }
 

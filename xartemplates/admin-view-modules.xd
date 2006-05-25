@@ -1,0 +1,36 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Security Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+
+    <table width="100%">
+        <tr>
+            <th><xar:mlstring>Module</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+
+        <xar:set name="count">0</xar:set>
+        <xar:foreach in="$items" key="$modid" value="$value">
+            <xar:if condition="$count % 2 eq 0">
+                <xar:set name="class">'xar-norm'</xar:set>
+            <xar:else />
+                <xar:set name="class">'xar-alt'</xar:set>
+            </xar:if>
+            <tr class="#$class#">
+                <td>#xarModGetNameFromId($modid)#</td>
+                <td>
+                    <a href="#xarModURL('security', 'admin', 'view', array('mode' => 'itemtypes', 'modid' => $modid))#"><xar:mlstring>View Details</xar:mlstring></a>
+                </td>
+            </tr>
+            <xar:set name="count">$count+1</xar:set>
+        </xar:foreach>
+
+    </table>
+
+</div>
