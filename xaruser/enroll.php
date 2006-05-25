@@ -20,7 +20,7 @@
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
  * @param bool
- * @Access PUBLIC
+ * @access PUBLIC
  * @return mixed
  * @todo MichelV <1> Create admin configurable standard student status
  *

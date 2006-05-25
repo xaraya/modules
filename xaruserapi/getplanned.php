@@ -3,7 +3,7 @@
  * Get a planned course
  *
  * @package modules
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * get a specific planned course
  *
- * @author MichelV
+ * @author MichelV <michelv@xarayahosting.nl>
  * @param int planningid $ ID of a specific planned course
  * @return array item with array of parameters, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -63,6 +63,8 @@ function courses_userapi_getplanned($args)
                    xar_material,
                    xar_info,
                    xar_program,
+                   xar_regurl,
+                   xar_extreg,
                    xar_hideplanning,
                    xar_minparticipants,
                    xar_maxparticipants,
@@ -77,35 +79,37 @@ function courses_userapi_getplanned($args)
     // Put items into result array.
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
+          $location, $material, $info, $program, $regurl, $exturl, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")) {
             $item = array(
                         'planningid'    => $planningid,
                         'courseid'      => $courseid,
-                        'credits'    => $credits,
-                        'creditsmin' => $creditsmin,
-                        'creditsmax' => $creditsmax,
-                        'courseyear' => $courseyear,
-                        'startdate'  => $startdate,
-                        'enddate'    => $enddate,
+                        'credits'       => $credits,
+                        'creditsmin'    => $creditsmin,
+                        'creditsmax'    => $creditsmax,
+                        'courseyear'    => $courseyear,
+                        'startdate'     => $startdate,
+                        'enddate'       => $enddate,
                         'prerequisites' => $prerequisites,
-                        'aim'        => $aim,
-                        'method'     => $method,
-                        'language'   => $language,
-                        'longdesc'   => $longdesc,
-                        'costs'      => $costs,
-                        'committee'  => $committee,
-                        'coordinators' => $coordinators,
-                        'lecturers'  => $lecturers,
-                        'location'   => $location,
-                        'material'   => $material,
-                        'info'       => $info,
-                        'program'    => $program,
-                        'hideplanning' => $hideplanning,
+                        'aim'           => $aim,
+                        'method'        => $method,
+                        'language'      => $language,
+                        'longdesc'      => $longdesc,
+                        'costs'         => $costs,
+                        'committee'     => $committee,
+                        'coordinators'  => $coordinators,
+                        'lecturers'     => $lecturers,
+                        'location'      => $location,
+                        'material'      => $material,
+                        'info'          => $info,
+                        'program'       => $program,
+                        'regurl'          => $regurl,
+                        'extreg'          => $extreg,
+                        'hideplanning'    => $hideplanning,
                         'minparticipants' => $minparticipants,
                         'maxparticipants' => $maxparticipants,
-                        'closedate' => $closedate,
-                        'last_modified' => $last_modified
+                        'closedate'       => $closedate,
+                        'last_modified'   => $last_modified
                         );
         }
     //}

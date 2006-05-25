@@ -3,7 +3,7 @@
  * Get all planned courses
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -79,6 +79,8 @@ function courses_userapi_getallplanned($args)
                    xar_material,
                    xar_info,
                    xar_program,
+                   xar_regurl,
+                   xar_extreg,
                    xar_hideplanning,
                    xar_minparticipants,
                    xar_maxparticipants,
@@ -120,7 +122,7 @@ function courses_userapi_getallplanned($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified) = $result->fields;
+          $location, $material, $info, $program, $regurl, $exturl, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")){
 
             $items[] = array(
@@ -144,6 +146,8 @@ function courses_userapi_getallplanned($args)
             'material'   => $material,
             'info'       => $info,
             'program'    => $program,
+            'regurl'          => $regurl,
+            'extreg'          => $extreg,
             'hideplanning' => $hideplanning,
             'minparticipants' => $minparticipants,
             'maxparticipants' => $maxparticipants,

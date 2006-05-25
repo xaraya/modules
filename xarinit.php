@@ -74,6 +74,8 @@ function courses_init()
         'xar_material'      => array('null'=>TRUE, 'type'=>'text'),
         'xar_info'          => array('null'=>TRUE, 'type'=>'text'),
         'xar_program'       => array('null'=>TRUE, 'type'=>'text'),
+        'xar_regurl'        => array('null'=>FALSE, 'type'=>'varchar','size'=>255, 'default'=>''),
+        'xar_extreg'        => array('type'=>'integer','size' => 1,'null'=>FALSE, 'default' => '0'),
         'xar_hideplanning'  => array('type' => 'integer', 'size' => 'tiny', 'null' => false, 'default' => '0'),
         'xar_minparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_maxparticipants' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
@@ -753,6 +755,17 @@ function courses_upgrade($oldversion)
             $coursestable = $xartable['courses'];
             $result = $datadict->alterColumn($coursestable, 'xar_number C(10)');
         case '0.6.0':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($planningtable, 'xar_regurl C(255) null default "" ');
+            $result = $datadict->addColumn($planningtable, 'xar_exturl I(1) notnull default 0 ');
+            if (!$result) return;
+        case '0.7.0':
+
             break;
     }
     // Update successful
