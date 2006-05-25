@@ -24,3 +24,7 @@ Version 0.6.0
 Added function to copy planned courses
 Enlarged some fields in size so they can contain more data
 Improved security checks
+Version 0.7.0
+Added option to have external registration
+Many templates upgrades
+Compatible with Xaraya 1.1
