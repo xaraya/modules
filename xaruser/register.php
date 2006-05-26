@@ -147,7 +147,7 @@ function registration_user_register()
             }
 
             // current values (in case some field is invalid, we'll return to the previous template)
-            // TODO: MichelV: evaluate if we want to pass the password.
+            // Pass back all values again so the user only has to type in incorrect values that are highlighted
             $values = array('username' => $username,
                             'realname' => $realname,
                             'email'    => $email,
@@ -155,17 +155,24 @@ function registration_user_register()
                             'pass2'    => $pass2);
             // TODO: MichelV Call hooks here, others than just dyn data [in progress]
             /* Call hooks here with a special type: the phase of registration */
-            $values['module'] = 'registration';
-            $hooks = xarModCallHooks('item', $phase, '', $values);
 
+            /* jojodee - update with new hook info, but do we really want this GUI hook here?
+                         Removed the $values being pass as password will be displayed in plan text view
+                         in the user check registration form. Updated with standard hooks info.
+                         Comment out until the use is identified and the problems ironed out.
+
+            $item = array();
+            $item['module'] = 'registration';
+            $item['itemtype'] = 0;
+            $item['itemid']='';
+            $hooks = xarModCallHooks('item', $phase,'', $item);
+           */
             if (empty($hooks)) {
                 $hookoutput = array();
             } else {
-                /* You can use the output from individual hooks in your template too, e.g. with
-                 * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-                 */
-                $hookoutput = $hooks;
+                 $hookoutput = $hooks;
             }
+
             // invalid fields (we'll check this below)
             $invalid = array();
 
@@ -299,7 +306,19 @@ function registration_user_register()
                 $properties = array();
                 $isvalid = true;
             }
+    $item = array();
+    $item['module'] = 'roles';
+    $hooks = xarModCallHooks('item', 'new', '', $item);
 
+    if (empty($hooks)) {
+        $data['hookoutput'] = array();
+    } else {
+        /* You can use the output from individual hooks in your template too, e.g. with
+         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+         */
+        $data['hookoutput'] = $hooks;
+    }
+    $data['hooks'] = '';
             // new authorisation code
             $authid = xarSecGenAuthKey();
 
