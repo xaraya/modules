@@ -306,19 +306,7 @@ function registration_user_register()
                 $properties = array();
                 $isvalid = true;
             }
-    $item = array();
-    $item['module'] = 'roles';
-    $hooks = xarModCallHooks('item', 'new', '', $item);
-
-    if (empty($hooks)) {
-        $data['hookoutput'] = array();
-    } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-         */
-        $data['hookoutput'] = $hooks;
-    }
-    $data['hooks'] = '';
+ 
             // new authorisation code
             $authid = xarSecGenAuthKey();
 
