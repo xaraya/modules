@@ -10,7 +10,6 @@
  * @subpackage Registration module
  * @link http://xaraya.com/index.php/release/30205.html
  */
-
 /**
  * validate a user variable
  * @access public
@@ -20,8 +19,7 @@
  * @param var the variable to validate
  * @param type the type of the validation to perform
  * @param args optional array with validation-specific settings
- * @returns bool
- * @return true if the validation was successful, false otherwise
+ * @return bool true if the validation was successful, false otherwise
  * @todo move this to xarVar* api
  */
 function registration_userapi_validatevar($args)
@@ -35,7 +33,7 @@ function registration_userapi_validatevar($args)
 
     switch ($type) {
         case 'email':
-        default;
+        default:
             // all characters must be 7 bit ascii
             $length = strlen($var);
             $idx = 0;

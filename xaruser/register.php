@@ -1,6 +1,6 @@
 <?php
 /**
- * Add new user
+ * Register a new user
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -11,7 +11,8 @@
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
- * add new user
+ * Let a new user register
+ *
  * Multiple steps to create a new user, as follows:
  *  - get user to agree to terms and conditions (if required)
  *  - get initial information from user
@@ -20,6 +21,7 @@
  *  - obtain administration permission for account (if required)
  *  - activate account
  *  - send welcome email (if required)
+ *
  * @author  Marc Lutolf <marcinmilan@xaraya.com>
  * @author Jo Dalle Nogare
  * @TODO jojodee - rethink and provide cleaner separation between roles, authsystem/authentication and registration
@@ -67,7 +69,7 @@ function registration_user_register()
             $authid = xarSecGenAuthKey();
 
             // current values (none)
-            $values = array('username'    => '',
+            $values = array('username' => '',
                             'realname' => '',
                             'email'    => '',
                             'pass1'    => '',
@@ -77,6 +79,7 @@ function registration_user_register()
             $invalid = array();
 
             // dynamic properties (if any)
+            // TODO: MichelV Call hooks here, others than just dyn data
             $properties = null;
             $withupload = (int) FALSE;
             if (xarModIsAvailable('dynamicdata')) {
@@ -95,12 +98,12 @@ function registration_user_register()
                     }
                 }
             }
-            $data = xarTplModule('registration','user', 'registerform', array('authid'     => $authid,
+            $data = xarTplModule('registration','user', 'registerform', array('authid' => $authid,
                                                                        'values'     => $values,
                                                                        'invalid'    => $invalid,
                                                                        'properties' => $properties,
                                                                        'withupload' => isset($withupload) ? $withupload : (int) FALSE,
-                                                                       'userlabel' => xarML('New User')));
+                                                                       'userlabel'  => xarML('New User')));
             break;
 
         case 'checkregistration':
