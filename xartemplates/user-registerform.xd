@@ -119,18 +119,18 @@
         </fieldset>
         <xar:if condition="xarModGetVar('registration', 'showdynamic')" >
             <xar:if condition="isset($properties)">
-            <fieldset>
-                <legend><xar:mlstring>User Details</xar:mlstring></legend>
-                    <xar:foreach in="$properties" key="$name">
-                        <xar:set name="formlabel">$properties[$name]->id</xar:set>
-                        <div class="xar-form-input-wrapper">
-                            <label for="dd_#$formlabel#" class="xar-form-label" title="#xarML('Please enter required information')#">
-                                <xar:data-label property="$properties[$name]" />:
-                            </label>
-                            <xar:data-input property="$properties[$name]" />
-                        </div>
-                    </xar:foreach>
-            </fieldset>
+                <fieldset>
+                    <legend><xar:mlstring>User Details</xar:mlstring></legend>
+                        <xar:foreach in="$properties" key="$name">
+                            <xar:set name="formlabel">$properties[$name]->id</xar:set>
+                            <div class="xar-form-input-wrapper">
+                                <label for="dd_#$formlabel#" class="xar-form-label" title="#xarML('Please enter required information')#">
+                                    <xar:data-label property="$properties[$name]" />:
+                                </label>
+                                <xar:data-input property="$properties[$name]" />
+                            </div>
+                        </xar:foreach>
+                </fieldset>
             </xar:if>
         </xar:if>
         <xar:if condition="!empty($hookoutput)">

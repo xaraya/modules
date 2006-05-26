@@ -147,6 +147,7 @@ function registration_user_register()
             }
 
             // current values (in case some field is invalid, we'll return to the previous template)
+            // TODO: MichelV: evaluate if we want to pass the password.
             $values = array('username' => $username,
                             'realname' => $realname,
                             'email'    => $email,
