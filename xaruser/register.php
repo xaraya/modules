@@ -152,7 +152,19 @@ function registration_user_register()
                             'email'    => $email,
                             'pass1'    => $pass1,
                             'pass2'    => $pass2);
+            // TODO: MichelV Call hooks here, others than just dyn data [in progress]
+            /* Call hooks here with a special type: the phase of registration */
+            $values['module'] = 'registration';
+            $hooks = xarModCallHooks('item', $phase, '', $values);
 
+            if (empty($hooks)) {
+                $hookoutput = array();
+            } else {
+                /* You can use the output from individual hooks in your template too, e.g. with
+                 * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+                 */
+                $hookoutput = $hooks;
+            }
             // invalid fields (we'll check this below)
             $invalid = array();
 
@@ -297,19 +309,21 @@ function registration_user_register()
                                                                                  'values'      => $values,
                                                                                  'invalid'     => $invalid,
                                                                                  'properties'  => $properties,
+                                                                                 'hookoutput'  => $hookoutput,
                                                                                  'createlabel' => xarML('Create Account'),
                                                                                  'userlabel'   => xarML('New User')));
             }
 
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration', array('username'    => $username,
-                                                                             'email'     => $email,
-                                                                             'realname'  => $realname,
-                                                                             'pass'      => $pass,
-                                                                             'ip'        => $ip,
-                                                                             'authid'    => $authid,
-                                                                             'properties' => $properties,
-                                                                             'createlabel' => xarML('Create Account')));
+                                                                                     'email'       => $email,
+                                                                                     'realname'    => $realname,
+                                                                                     'pass'        => $pass,
+                                                                                     'ip'          => $ip,
+                                                                                     'authid'      => $authid,
+                                                                                     'properties'  => $properties,
+                                                                                     'hookoutput'  => $hookoutput,
+                                                                                     'createlabel' => xarML('Create Account')));
 
             break;
         case 'createuser':
@@ -331,22 +345,30 @@ function registration_user_register()
                                       'user',
                                       'makepass');
             $now = time();
+
+
             $requireValidation = xarModGetVar('registration', 'requirevalidation');
+
             if ($requireValidation == false) {
 
                 $pending = xarModGetVar('registration', 'explicitapproval');
                 if ($pending == 1) $state = ROLES_STATE_PENDING;
                 else $state = ROLES_STATE_ACTIVE;
+                $userdata = array('uname'  => $username,
+                                'realname' => $realname,
+                                'email'    => $email,
+                                'pass'     => $pass,
+                                'date'     => $now,
+                                'valcode'  => $confcode,
+                                'state'    => $state);
 
-                $uid = xarModAPIFunc('roles', 'admin', 'create',
-                                      array('uname' => $username,
-                                            'realname' => $realname,
-                                            'email' => $email,
-                                            'pass'  => $pass,
-                                            'date'     => $now,
-                                            'valcode'  => $confcode,
-                                            'state'   => $state));
+                $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
+
                 if ($uid == 0) return;
+                /* Call hooks in here for the moment */
+                $userdata['module'] = 'registration';
+                $userdata['itemid'] = $uid;
+                xarModCallHooks('item', 'create', $uid, $userdata);
 
                 // Send an e-mail to the admin
                 if (xarModGetVar('registration', 'sendnotice')) {
@@ -411,18 +433,22 @@ function registration_user_register()
                     xarResponseRedirect($redirect);
                 }
             } else {
+                $userdata = array('uname'    => $username,
+                                    'realname' => $realname,
+                                    'email'    => $email,
+                                    'pass'     => $pass,
+                                    'date'     => $now,
+                                    'valcode'  => $confcode,
+                                    'state'    => ROLES_STATE_NOTVALIDATED);
                 // Create user - this will also create the dynamic properties (if any) via the create hook
-                $uid = xarModAPIFunc('roles', 'admin', 'create',
-                                      array('uname'    => $username,
-                                            'realname' => $realname,
-                                            'email'    => $email,
-                                            'pass'     => $pass,
-                                            'date'     => $now,
-                                            'valcode'  => $confcode,
-                                            'state'    => ROLES_STATE_NOTVALIDATED));
+                $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata );
 
                 // Check for user creation failure
                 if ($uid == 0) return;
+                /* Call hooks in here for the moment */
+                $userdata['module'] = 'registration';
+                $userdata['itemid'] = $uid;
+                xarModCallHooks('item', 'create', $uid, $userdata);
 
                 //Insert the user into the default users role
                 $userRole = xarModGetVar('roles', 'defaultgroup');
