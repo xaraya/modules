@@ -13,33 +13,34 @@
 /**
  * the main user function
  * This function is the default function, and is called whenever the module is
- * initiated without defining arguments.  Function decides if user is logged in
- * and returns user to correct location.
- * @author  Marc Lutolf <marcinmilan@xaraya.com>
-*/
+ * initiated without defining arguments. Function decides if user is logged in
+ * and returns user to correct location to register.
+ * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @return bool
+ */
 function registration_user_main()
 {
 
     $allowregistration = xarModGetVar('registration', 'allowregistration');
 
-	if (xarUserIsLoggedIn()) {
-	   xarResponseRedirect(xarModURL('registration',
-									 'user',
-									 'terms'));
-	} elseif ($allowregistration != true) {
+    if (xarUserIsLoggedIn()) {
+       xarResponseRedirect(xarModURL('registration',
+                                     'user',
+                                     'terms'));
+    } elseif ($allowregistration != true) {
         $authenticationmod=xarModGetNameFromId(xarModGetVar('roles','defaultauthmodule'));
-		xarResponseRedirect(xarModURL($authenticationmod,
-									  'user',
-									  'showloginform'));
-	} else { //allow user to register
+        xarResponseRedirect(xarModURL($authenticationmod,
+                                      'user',
+                                      'showloginform'));
+    } else { //allow user to register
         $minage = xarModGetVar('registration', 'minage');
-		if (($minage)>0) {
+        if (($minage)>0) {
             xarResponseRedirect(xarModURL('registration','user','register', array('phase'=>'checkage')));
         }else{
             xarResponseRedirect(xarModURL('registration','user','register'));
         }
-	}
-	return true;
+    }
+    return true;
 }
 
 ?>

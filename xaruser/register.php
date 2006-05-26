@@ -79,7 +79,7 @@ function registration_user_register()
             $invalid = array();
 
             // dynamic properties (if any)
-            // TODO: MichelV Call hooks here, others than just dyn data
+
             $properties = null;
             $withupload = (int) FALSE;
             if (xarModIsAvailable('dynamicdata')) {
@@ -98,10 +98,24 @@ function registration_user_register()
                     }
                 }
             }
+            // TODO: MichelV Call hooks here, others than just dyn data [in progress]
+            $values['module'] = 'registration';
+            $hooks = xarModCallHooks('item', 'new', '', $values);
+
+            if (empty($hooks)) {
+                $hookoutput = array();
+            } else {
+                /* You can use the output from individual hooks in your template too, e.g. with
+                 * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
+                 */
+                $hookoutput = $hooks;
+            }
+
             $data = xarTplModule('registration','user', 'registerform', array('authid' => $authid,
                                                                        'values'     => $values,
                                                                        'invalid'    => $invalid,
                                                                        'properties' => $properties,
+                                                                       'hookoutput' => $hooks,
                                                                        'withupload' => isset($withupload) ? $withupload : (int) FALSE,
                                                                        'userlabel'  => xarML('New User')));
             break;
@@ -192,8 +206,7 @@ function registration_user_register()
             // check if the email is empty
             if (empty($email)){
                 $invalid['email'] = xarML('You must provide a valid email address to continue.');
-            }
-            else {
+            } else {
 
                 $emailcheck = xarModAPIFunc('registration',
                                             'user',
@@ -216,16 +229,16 @@ function registration_user_register()
 
                 }
 
-                    // check for disallowed email addresses
-                    $disallowedemails = xarModGetVar('registration','disallowedemails');
-                 if (!empty($disallowedemails)) {
-                        $disallowedemails = unserialize($disallowedemails);
-                        $disallowedemails = explode("\r\n", $disallowedemails);
-                        if (in_array ($email, $disallowedemails)) {
-                            $invalid['email'] = xarML('That email address is either reserved or not allowed on this website');
-                        }
+                // check for disallowed email addresses
+                $disallowedemails = xarModGetVar('registration','disallowedemails');
+                if (!empty($disallowedemails)) {
+                    $disallowedemails = unserialize($disallowedemails);
+                    $disallowedemails = explode("\r\n", $disallowedemails);
+                    if (in_array ($email, $disallowedemails)) {
+                        $invalid['email'] = xarML('That email address is either reserved or not allowed on this website');
+                    }
 
-                 }
+                }
             }
 
             if (empty($agreetoterms)){
@@ -280,12 +293,12 @@ function registration_user_register()
             // check if any of the fields (or dynamic properties) were invalid
             if (count($invalid) > 0 || !$isvalid) {
                 // if so, return to the previous template
-                return xarTplModule('registration','user', 'registerform', array('authid'     => $authid,
-                                                                          'values'     => $values,
-                                                                          'invalid'    => $invalid,
-                                                                          'properties' => $properties,
-                                                                          'createlabel' => xarML('Create Account'),
-                                                                          'userlabel' => xarML('New User')));
+                return xarTplModule('registration','user', 'registerform', array('authid'      => $authid,
+                                                                                 'values'      => $values,
+                                                                                 'invalid'     => $invalid,
+                                                                                 'properties'  => $properties,
+                                                                                 'createlabel' => xarML('Create Account'),
+                                                                                 'userlabel'   => xarML('New User')));
             }
 
             // everything seems OK -> go on to the next step
@@ -400,14 +413,13 @@ function registration_user_register()
             } else {
                 // Create user - this will also create the dynamic properties (if any) via the create hook
                 $uid = xarModAPIFunc('roles', 'admin', 'create',
-                                      array('uname' => $username,
+                                      array('uname'    => $username,
                                             'realname' => $realname,
-                                            'email' => $email,
-                                            'pass'  => $pass,
+                                            'email'    => $email,
+                                            'pass'     => $pass,
                                             'date'     => $now,
                                             'valcode'  => $confcode,
-                                            'state'   => ROLES_STATE_NOTVALIDATED));
-
+                                            'state'    => ROLES_STATE_NOTVALIDATED));
 
                 // Check for user creation failure
                 if ($uid == 0) return;

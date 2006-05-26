@@ -24,7 +24,6 @@
  */
 function registration_userapi_validatevar($args)
 {
-
     extract($args);
 
     if (empty($type)) {
