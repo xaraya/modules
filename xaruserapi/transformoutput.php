@@ -49,7 +49,7 @@ function html_userapi_transformoutput($args)
             $transformed[] = html_userapitransformoutput($text);
         }
     } else {
-        $transformed = html_userapitransformoutput($text);
+        $transformed = html_userapitransformoutput($extrainfo);
     }
 
     return $transformed;
