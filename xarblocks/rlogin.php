@@ -3,18 +3,20 @@
  * Login via a block.
  *
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Registration module
  * @link http://xaraya.com/index.php/release/30205.html
  */
- 
-/* Login via a block.
+
+/**
+ * Login via a block.
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @author Jim McDonald
  * initialise block
+ * @return array
  */
 function registration_rloginblock_init()
 {
@@ -30,6 +32,7 @@ function registration_rloginblock_init()
 
 /**
  * get information on block
+ * @return array
  */
 function registration_rloginblock_info()
 {
@@ -43,6 +46,7 @@ function registration_rloginblock_info()
 /**
  * Display func.
  * @param $blockinfo array containing title,content
+ * @return array $blockinfo
  */
 function registration_rloginblock_display($blockinfo)
 {

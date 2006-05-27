@@ -165,7 +165,7 @@ function registration_user_register()
             $item = array();
             $item['module'] = 'registration';
             $item['itemid']='';
-            $item['values'] = $values;
+            $item['values'] = $values; // TODO: this includes the password. Do we want this?
             $item['phase'] = $phase;
             $hooks = xarModCallHooks('item', 'new','', $item);
 

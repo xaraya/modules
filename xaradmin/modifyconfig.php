@@ -27,37 +27,37 @@ function registration_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                     $data['shorturlschecked'] = xarModGetVar('registration', 'SupportShortURLs') ? true : false;
-					$data['uselockout'] =  xarModGetVar('registration', 'uselockout') ? 'checked' : '';
-					$data['lockouttime'] = xarModGetVar('registration', 'lockouttime')? xarModGetVar('registration', 'lockouttime'): 15; //minutes
-					$data['lockouttries'] = xarModGetVar('registration', 'lockouttries') ? xarModGetVar('registration', 'lockouttries'): 3;
+                    $data['uselockout'] =  xarModGetVar('registration', 'uselockout') ? 'checked' : '';
+                    $data['lockouttime'] = xarModGetVar('registration', 'lockouttime')? xarModGetVar('registration', 'lockouttime'): 15; //minutes
+                    $data['lockouttries'] = xarModGetVar('registration', 'lockouttries') ? xarModGetVar('registration', 'lockouttries'): 3;
                     break;
                 case 'registration':
-					// create the dropdown of groups for the template display
-					// get the array of all groups
-					// remove duplicate entries from the list of groups
-					$roles = new xarRoles();
-					$groups = array();
-					$names = array();
-					foreach($roles->getgroups() as $temp) {
-						$nam = $temp['name'];
-						if (!in_array($nam, $names)) {
-							array_push($names, $nam);
-							array_push($groups, $temp);
-						}
-					}
-					$data['groups'] = $groups;
-					//Use the same modvar here. It is now putback in Roles again so Roles can use the var too without mod dependencies.
-					$data['defaultgroup'] = xarModGetVar('roles', 'defaultgroup');
+                    // create the dropdown of groups for the template display
+                    // get the array of all groups
+                    // remove duplicate entries from the list of groups
+                    $roles = new xarRoles();
+                    $groups = array();
+                    $names = array();
+                    foreach($roles->getgroups() as $temp) {
+                        $nam = $temp['name'];
+                        if (!in_array($nam, $names)) {
+                            array_push($names, $nam);
+                            array_push($groups, $temp);
+                        }
+                    }
+                    $data['groups'] = $groups;
+                    //Use the same modvar here. It is now putback in Roles again so Roles can use the var too without mod dependencies.
+                    $data['defaultgroup'] = xarModGetVar('roles', 'defaultgroup');
                     break;
                 case 'filtering':
-					$checkip = xarModGetVar('registration', 'disallowedips');
-					if (empty($checkip)) {
-						$ip = serialize('10.0.0.1');
-						xarModSetVar('registration', 'disallowedips', $ip);
-					}
-					$data['ips'] = unserialize(xarModGetVar('registration', 'disallowedips'));
-					$data['emails'] = unserialize(xarModGetVar('registration', 'disallowedemails'));
-					$data['names'] = unserialize(xarModGetVar('registration', 'disallowednames'));
+                    $checkip = xarModGetVar('registration', 'disallowedips');
+                    if (empty($checkip)) {
+                        $ip = serialize('10.0.0.1');
+                        xarModSetVar('registration', 'disallowedips', $ip);
+                    }
+                    $data['ips'] = unserialize(xarModGetVar('registration', 'disallowedips'));
+                    $data['emails'] = unserialize(xarModGetVar('registration', 'disallowedemails'));
+                    $data['names'] = unserialize(xarModGetVar('registration', 'disallowednames'));
                     break;
                 default:
                     break;

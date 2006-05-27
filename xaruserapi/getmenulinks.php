@@ -10,22 +10,23 @@
  * @subpackage Registration module
  * @link http://xaraya.com/index.php/release/30205.html
  */
-/*
+/**
  * Standard function to get main menu links
  * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @return array
  */
 function registration_userapi_getmenulinks()
 {
 
     if (xarModGetVar('registration', 'allowregistration')){
     // Security check
-		if (!xarUserIsLoggedIn()){
-			$menulinks[] = array('url'   => xarModURL('registration',
-													  'user',
-													  'main'),
-								 'title' => xarML('Register'),
-								 'label' => xarML('Register'));
-		}
+        if (!xarUserIsLoggedIn()){
+            $menulinks[] = array('url'   => xarModURL('registration',
+                                                      'user',
+                                                      'main'),
+                                 'title' => xarML('Register'),
+                                 'label' => xarML('Register'));
+        }
     }
     if (xarModGetVar('registration', 'showprivacy')){
         $menulinks[] = array('url'   => xarModURL('registration',

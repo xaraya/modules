@@ -40,8 +40,8 @@
              Terms of Service and Privacy Policy.</xar:mlstring>
         </li>
         <li><xar:mlstring><strong>Registration Options tab :</strong> provides options for user registration including default
-            group for new users, allowing of registration, minimum registration age, notification emails to users and 
-            the designated site administrator, enabling users to set their own password and minimum password length, 
+            group for new users, allowing of registration, minimum registration age, notification emails to users and
+            the designated site administrator, enabling users to set their own password and minimum password length,
             display of Roles module dynamic data fields, and requirement for unique email address.</xar:mlstring>
         </li>
         <li><xar:mlstring><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking
