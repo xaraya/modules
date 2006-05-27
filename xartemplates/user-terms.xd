@@ -69,8 +69,13 @@
 
     <xar:set name="curnum">++$curnum</xar:set>
     <h3 id="responsible">#$curnum#.&nbsp;<xar:mlstring>Your Responsibilities and Registration Obligations</xar:mlstring></h3>
-        <p><xar:mlstring>In order to use this web site, you must</xar:mlstring> 
-        <a href="&xar-modurl-registration-user-main;"><xar:mlstring>register</xar:mlstring></a> <xar:mlstring>on our site, and agree to provide truthful information when requested.</xar:mlstring>
+        <p>
+            <xar:ml>
+            <xar:mlstring>In order to use this web site, you must <a href="#(1)">register</a> on our site, 
+                and agree to provide truthful information when requested.
+            </xar:mlstring>
+            <xar:mlvar>#$reglink#</xar:mlvar>
+            </xar:ml>
         <xar:if condition="xarModGetVar('registration', 'minage') gt '0'" >
         <xar:ml>
             <xar:mlstring>You must also be at least the age of #(1) (#(2)) or older.</xar:mlstring>
