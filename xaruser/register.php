@@ -98,9 +98,14 @@ function registration_user_register()
                     }
                 }
             }
-            // TODO: MichelV Call hooks here, others than just dyn data [in progress]
-            $values['module'] = 'registration';
-            $hooks = xarModCallHooks('item', 'new', '', $values);
+            /* Call hooks here, others than just dyn data
+             * We pass the phase in here to tell the hook it should check the data
+             */
+            $item['module'] = 'registration';
+            $item['itemid'] = '';
+            $item['values'] = $values;
+            $item['phase'] = $phase;
+            $hooks = xarModCallHooks('item', 'new', '', $item);
 
             if (empty($hooks)) {
                 $hookoutput = array();
@@ -115,7 +120,7 @@ function registration_user_register()
                                                                        'values'     => $values,
                                                                        'invalid'    => $invalid,
                                                                        'properties' => $properties,
-                                                                       'hookoutput' => $hooks,
+                                                                       'hookoutput' => $hookoutput,
                                                                        'withupload' => isset($withupload) ? $withupload : (int) FALSE,
                                                                        'userlabel'  => xarML('New User')));
             break;
@@ -153,20 +158,17 @@ function registration_user_register()
                             'email'    => $email,
                             'pass1'    => $pass1,
                             'pass2'    => $pass2);
-            // TODO: MichelV Call hooks here, others than just dyn data [in progress]
-            /* Call hooks here with a special type: the phase of registration */
 
-            /* jojodee - update with new hook info, but do we really want this GUI hook here?
-                         Removed the $values being pass as password will be displayed in plan text view
-                         in the user check registration form. Updated with standard hooks info.
-                         Comment out until the use is identified and the problems ironed out.
-
+            /* Call hooks here, others than just dyn data
+             * We pass the phase in here to tell the hook it should check the data
+             */
             $item = array();
             $item['module'] = 'registration';
-            $item['itemtype'] = 0;
             $item['itemid']='';
-            $hooks = xarModCallHooks('item', $phase,'', $item);
-           */
+            $item['values'] = $values;
+            $item['phase'] = $phase;
+            $hooks = xarModCallHooks('item', 'new','', $item);
+
             if (empty($hooks)) {
                 $hookoutput = array();
             } else {
@@ -306,7 +308,7 @@ function registration_user_register()
                 $properties = array();
                 $isvalid = true;
             }
- 
+
             // new authorisation code
             $authid = xarSecGenAuthKey();
 
@@ -373,7 +375,11 @@ function registration_user_register()
                 $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
 
                 if ($uid == 0) return;
-                /* Call hooks in here for the moment */
+
+                /* Call hooks in here
+                 * This might be double as the roles hook will also call the create,
+                 * but the new hook wasn't called there, so no data is passed
+                 */
                 $userdata['module'] = 'registration';
                 $userdata['itemid'] = $uid;
                 xarModCallHooks('item', 'create', $uid, $userdata);
@@ -453,6 +459,7 @@ function registration_user_register()
 
                 // Check for user creation failure
                 if ($uid == 0) return;
+
                 /* Call hooks in here for the moment */
                 $userdata['module'] = 'registration';
                 $userdata['itemid'] = $uid;

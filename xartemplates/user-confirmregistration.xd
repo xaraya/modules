@@ -39,10 +39,8 @@
                 </fieldset>
             </xar:if>
         </xar:if>
-        <xar:comment>
-        This shows all the data the user has entered another time        </xar:comment>
+        <xar:comment>Call the hooks here, loop over each one of them</xar:comment>
         <xar:if condition="!empty($hookoutput)">
-        <div style="display:none">
             <fieldset>
                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                     <xar:foreach in="$hookoutput" key="$hookmodule">
@@ -58,7 +56,6 @@
                     #$hookoutput[$hookmodule]#
                     </xar:foreach>
             </fieldset>
-        </div>
         </xar:if>
 
         <fieldset>
