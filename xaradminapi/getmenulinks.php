@@ -15,7 +15,6 @@
  *
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function registration_adminapi_getmenulinks()

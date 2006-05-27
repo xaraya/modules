@@ -17,9 +17,9 @@
         <xar:mlstring>The Registration module handles management of User Registration on your site, and options for user registration. </xar:mlstring>
     </p>
     <p>
-        <xar:mlstring>The Registration module is useful when used in conjunction with :</xar:mlstring></p>
+        <xar:mlstring>The Registration module is useful when used in conjunction with:</xar:mlstring></p>
         <ul>
-           <li><xar:mlstring>an authentication module (in a default installation this is <strong>Authsystem</strong> in Core) that handles the users' login and authentication process</xar:mlstring></li>
+           <li><xar:mlstring>an authentication module (in a default installation this is <strong>Authsystem</strong> in Core) that handles the users' login and authentication process.</xar:mlstring></li>
            <li><xar:mlstring>the <strong>Roles</strong> module that manages Roles on your site. Registered users can be assigned to roles that you setup and configure on your site.</xar:mlstring></li>
         </ul>
     </p>
@@ -31,12 +31,13 @@
         <li><xar:mlstring><strong>Add the Registration module</strong> to your module directory if it is not already present.</xar:mlstring></li>
          <li><xar:mlstring><strong>Install and activate</strong> the Registration module via the Module module.</xar:mlstring></li>
          <li><xar:mlstring><strong>Configure options </strong>through the Admin Panel Modify Config link. General, registration and filter options are available.</xar:mlstring></li>
-         <li><xar:mlstring><strong>Check user privileges</strong>. Depending on choices you made at installation time, and additional privilege setups, you may need to create additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</xar:mlstring></p>
+         <li><xar:mlstring><strong>Check user privileges</strong>. Depending on choices you made at installation time, and additional privilege setups, you may need to create
+         additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</xar:mlstring></p>
     </ol>
     <h4><xar:mlstring>A. Configurations Options for Administrators</xar:mlstring></h4>
     <p><xar:mlstring>The following options are available through the Modify Config link in the Admin Panel Registration menu.</xar:mlstring></p>
      <ol>
-        <li><xar:mlstring><strong>General Options tab :</strong> allows you to set short urls and options for display of
+        <li><xar:mlstring><strong>General Options tab:</strong> allows you to set short urls and options for display of
              Terms of Service and Privacy Policy.</xar:mlstring>
         </li>
         <li><xar:mlstring><strong>Registration Options tab :</strong> provides options for user registration including default
@@ -59,7 +60,7 @@
     </h3>
     <ul>
         <li>
-            <xar:mlstring><strong>Login Block</strong> allows users to login and also contains a link to user Registration. </xar:mlstring>
+            <xar:mlstring><strong>Login Block</strong> allows users to login and also contains a link to user Registration. This block is used instead of the roles login block.</xar:mlstring>
         </li>
     </ul>
     <br />
