@@ -27,7 +27,6 @@ function julian_user_newhook($args)
     extract($args);
     if (!xarVarFetch('event_summary', 'str:1:100', $event_summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_repeat', 'int:0:4', $event_repeat, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('event_repeat_frequency', 'int', $event_repeat_frequency, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_repeat_on_day', 'int', $event_repeat_on_day, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_repeat_on_num', 'int', $event_repeat_on_num, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_repeat_on_freq', 'int', $event_repeat_on_freq, '', XARVAR_NOT_REQUIRED)) return;
@@ -42,7 +41,7 @@ function julian_user_newhook($args)
    if (!xarVarFetch('event_allday','int:0:1',$event_allday,0, XARVAR_NOT_REQUIRED)) return;
 
     // start time
-   if (!xarVarFetch('event_starttimeh','int::',$event_starttimeh,0, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('event_starttimeh','int::',$event_starttimeh,12, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('event_starttimem','int::',$event_starttimem,0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('event_startampm', 'int:1:2',$event_startampm,1, XARVAR_NOT_REQUIRED)) return;    // 1=AM, 2=PM
 
@@ -51,17 +50,11 @@ function julian_user_newhook($args)
    if (!xarVarFetch('event_dur_minutes','int::',$event_dur_minutes,0, XARVAR_NOT_REQUIRED)) return;
     // Return array
     $data = array();
-
     $data['event_summary'] = $event_summary;
-   // $event_startdate = time();
-  //  $event_enddate = time();
-
     $data['event_month'] = $event_month;
     $data['event_year'] = $event_year;
     $data['event_day'] = $event_day;
-
     $data['event_allday'] = true;
-
     $data['event_endyear'] = $event_endyear;
     $data['event_endmonth'] = $event_endmonth;
     $data['event_endday'] = $event_endday;
@@ -75,18 +68,18 @@ function julian_user_newhook($args)
     $data['event_repeat_on_num'] = $event_repeat_on_num;    // instance within month (1st, 2nd, ..., last=5)
     $data['event_repeat_on_freq'] = $event_repeat_on_freq;    // frequency (every x months)
 
+    // Start AM/PM (default = AM)
+    $data['event_startampm'] = $event_startampm;    // true=PM, false=AM
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }
-
-
 
     // Building start hour options (default = 12)
     $start_hour_options = '';
     for($i = 1;$i <= 12; $i++) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $start_hour_options.='<option value="'.$i.'"';
-        if ($i == 12) $start_hour_options.= " SELECTED";
+        if ($i == $event_starttimeh) $start_hour_options.= " SELECTED";
         $start_hour_options.='>'.$j.'</option>';
     }
     $data['start_hour_options'] = $start_hour_options;
@@ -108,6 +101,7 @@ function julian_user_newhook($args)
     for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $start_minute_options.='<option value="'.$j.'"';
+        if ($j == $event_starttimem) $start_minute_options.= " SELECTED";
         $start_minute_options.='>'.$j.'</option>';
     }
     $data['start_minute_options'] = $start_minute_options;
@@ -129,24 +123,21 @@ function julian_user_newhook($args)
     for($i = 0;$i < $minend; $i = $i + $DurMinInterval) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $dur_minute_options.='<option value="'.$j.'"';
+        if ($j == $event_dur_minutes) $dur_minute_options.= " SELECTED";
         $dur_minute_options.='>'.$j.'</option>';
     }
     $data['dur_minute_options'] = $dur_minute_options;
 
-    // Start AM/PM (default = AM)
-    $data['event_startampm'] = false;    // true=PM, false=AM
 
     // Building duration hour options (default = 1)
     $dur_hour_options = '';
     for($i = 0;$i <= 24; $i++) {
         $j = str_pad($i,2,"0",STR_PAD_LEFT);
         $dur_hour_options.='<option value="'.$i.'"';
-        if ($i == 1) $dur_hour_options.= " selected";
+        if ($i == $event_dur_hours) $dur_hour_options.= " selected";
         $dur_hour_options.='>'.$j.'</option>';
     }
     $data['dur_hour_options'] = $dur_hour_options;
-
-
 
    //Setting freq type selection (days,weeks,months,years)
    for ($i = 1; $i < 5; $i++) {
@@ -157,21 +148,38 @@ function julian_user_newhook($args)
    //Setting repeat on num selection
    for ($i = 1; $i < 6; $i++) {
      $data['repeat_on_num_selected'][$i] = '';
+     if ($i == $event_repeat_on_num) {
+         $data['repeat_on_num_selected'][$i] = 'selected';
+     }
    }
- //  $data['repeat_on_num_selected'][$i] = 'selected';
+
    //Setting allday checked
-   $data['allday_checked'][0] = '';
-   $data['allday_checked'][1] = 'checked';
-   $data['timeddisabled'] = '';
+   if ($event_allday ==  1) {
+       // is allday
+       $data['allday_checked'][1] = '';
+       $data['allday_checked'][0] = 'checked';
+       $data['timeddisabled'] = 'disabled';
+   } else {
+       $data['allday_checked'][0] = '';
+       $data['allday_checked'][1] = 'checked';
+       $data['timeddisabled'] = '';
+   }
+
    //Setting repeat on day selection
    for ($i = 1; $i < 8; $i++) {
      $data['repeat_on_day_selection'][$i] = '';
+     if ($i == $event_repeat_on_day) {
+         $data['repeat_on_day_selection'][$i] = 'selected';
+     }
    }
    //Setting event repeat selection
    for ($i = 0; $i < 3; $i++) {
      $data['event_repeat_checked'][$i] = '';
+     if ($i == $event_repeat) {
+         $data['event_repeat_checked'][$i] = 'checked';
+     }
    }
-   $data['event_repeat_checked'][0] = "checked";
+
 
     // Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
     // event_repeat tells the type of repeat
