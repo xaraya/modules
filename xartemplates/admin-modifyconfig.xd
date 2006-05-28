@@ -227,6 +227,16 @@
                             </xar:mlstring>
                         </label>
                     </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="sendnotice" class="xar-form-label" title="#xarML('Email address for admin notification')#">
+                            <xar:mlstring>
+                                Email for notification to Admin
+                            </xar:mlstring>
+                        </label>
+                        <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150" />
+
+                    </div>
+
                     <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModGetVar('registration', 'explicitapproval')">
                             <input type="checkbox" name="explicitapproval" id="explicitapproval" value="1" checked="checked" />
@@ -302,7 +312,21 @@
                         </div>
                     </xar:comment>
                 </xar:if>
-                <div class="xar-form-input-wrapper-after">
+                <div class="xar-form-input-wrapper-before">
+                <p>
+                    <xar:set name="mailconfigure">xarModUrl('roles','admin','modifynotice')</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>
+                            You may also wish to configure email notification for changes that Administrators make to User account Status (eg pending to active).
+                            To do this go to <a href="#(1)">Roles Messaging configuration</a>.
+                        </xar:mlstring>
+                        <xar:mlvar>
+                           #$mailconfigure#
+                        </xar:mlvar>
+                    </xar:ml>
+                </p>
+                </div>
+                <div class="xar-form-input-wrapper-after xar-padding-thick">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />

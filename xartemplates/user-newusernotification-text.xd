@@ -1,0 +1,22 @@
+<xar:mlstring>Dear</xar:mlstring> #$adminname#,
+
+
+<xar:mlstring>A user registered with the following details at: </xar:mlstring> #$sitename#
+
+
+<xar:mlstring>Status: </xar:mlstring>#$pending#
+
+<xar:mlstring>User ID: </xar:mlstring>#$uid#
+
+<xar:mlstring>User Display Name: </xar:mlstring>#$userrealname#
+
+<xar:mlstring>Username: </xar:mlstring>#$username#
+
+<xar:mlstring>User email: </xar:mlstring>#$useremail#
+
+#$terms#
+
+
+<xar:mlstring>You can access the this user account when logged it at </xar:mlstring>#$rolelink#
+
+-------------------------------------------------------------
