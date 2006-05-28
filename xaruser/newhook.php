@@ -180,7 +180,6 @@ function julian_user_newhook($args)
      }
    }
 
-
     // Determining which end date radio to check. 0 index indicates this event has an end date and 1 index means it does not
     // event_repeat tells the type of repeat
     $event_endtype_checked[0] = '';

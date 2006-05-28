@@ -657,6 +657,7 @@ function julian_upgrade($oldversion)
             xarModSetVar('julian', 'SupportShortURLs', 0);
         case '0.4.3':
         case '0.4.4':
+        case '0.4.5':
             break;
     }
     // Update successful
