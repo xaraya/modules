@@ -53,17 +53,6 @@ function security_admin_changesecurity($args)
             'itemtype' => $itemtype
         )
     );
-    if( !$has_security )
-    {
-        xarModAPIFunc('security', 'admin', 'create',
-            array(
-                'modid'    => $modid,
-                'itemtype' => $itemtype,
-                'itemid'   => $itemid,
-                'settings' => $settings
-            )
-        );
-    }
 
     /*
         If user has SECURITY_ADMIN level or is a site admin let them
@@ -87,7 +76,7 @@ function security_admin_changesecurity($args)
     // Make sure their are levels if not quit
     $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
     $security = xarModAPIFunc('security', 'user', 'get', $args);
-    if( !$security ) return '';
+    //if( !$security ) return '';
 
     // Make user this has an owner otherwise quit
     if( is_null($settings['owner']) )

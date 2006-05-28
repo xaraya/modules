@@ -1,4 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="security" filename="changeInputName.js" />
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Security Administration - Hook Settings</xar:mlstring>
@@ -111,6 +113,7 @@
     <fieldset>
         <legend><xar:mlstring>Security</xar:mlstring></legend>
 
+        <xar:comment>
         <xar:if condition="!empty($all_groups)">
         <div class="xar-floatright" style="width: 40%;">
         <select name="group">
@@ -121,6 +124,7 @@
             <input type="submit" name="submit_button" value="#xarML('Add Group')#" />
         </div>
         </xar:if>
+        </xar:comment>
 
         <xar:template file="security-table" />
 
