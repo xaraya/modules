@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
 /**
  * Provide GUI for new hook
  *
@@ -27,24 +26,60 @@ function julian_user_newhook($args)
 {
     extract($args);
     if (!xarVarFetch('event_summary', 'str:1:100', $event_summary, xarML('Not Entered'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat', 'int:0:4', $event_repeat, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat_frequency', 'int', $event_repeat_frequency, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat_on_day', 'int', $event_repeat_on_day, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat_on_num', 'int', $event_repeat_on_num, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat_on_freq', 'int', $event_repeat_on_freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_repeat_freq', 'int', $event_repeat_freq, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_month', 'int', $event_month, date('m'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_day', 'int', $event_day, date('d'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_year', 'int', $event_year, date('Y'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_endmonth', 'int', $event_endmonth, date('m'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_endday', 'int', $event_endday, date('d'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_endyear', 'int', $event_endyear, date('Y'), XARVAR_NOT_REQUIRED)) return;
+    // all day event (otherwise timed)
+   if (!xarVarFetch('event_allday','int:0:1',$event_allday,0, XARVAR_NOT_REQUIRED)) return;
+
+    // start time
+   if (!xarVarFetch('event_starttimeh','int::',$event_starttimeh,0, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('event_starttimem','int::',$event_starttimem,0, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('event_startampm', 'int:1:2',$event_startampm,1, XARVAR_NOT_REQUIRED)) return;    // 1=AM, 2=PM
+
+    // duration
+   if (!xarVarFetch('event_dur_hours',  'int::',$event_dur_hours,  1, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('event_dur_minutes','int::',$event_dur_minutes,0, XARVAR_NOT_REQUIRED)) return;
+    // Return array
+    $data = array();
+
+    $data['event_summary'] = $event_summary;
+   // $event_startdate = time();
+  //  $event_enddate = time();
+
+    $data['event_month'] = $event_month;
+    $data['event_year'] = $event_year;
+    $data['event_day'] = $event_day;
+
+    $data['event_allday'] = true;
+
+    $data['event_endyear'] = $event_endyear;
+    $data['event_endmonth'] = $event_endmonth;
+    $data['event_endday'] = $event_endday;
+
+    // Repeat-every defaults.
+    $data['event_repeat'] = $event_repeat;    // frequency unit (day=1, week=2, month=3, year=4)
+    $data['event_repeat_freq'] = $event_repeat_freq;    // frequency (every x time units)
+
+    // Repeat-on defaults
+    $data['event_repeat_on_day'] = $event_repeat_on_day;    // day of the week
+    $data['event_repeat_on_num'] = $event_repeat_on_num;    // instance within month (1st, 2nd, ..., last=5)
+    $data['event_repeat_on_freq'] = $event_repeat_on_freq;    // frequency (every x months)
 
     if (!isset($extrainfo)) {
         $extrainfo = array();
     }
 
-    $data = array();
-    $data['event_summary'] = $event_summary;
-    $event_startdate = time();
-    $event_enddate = time();
 
-    $data['event_month'] = 1;
-    $data['event_year'] = 1;
-    $data['event_day'] = 1;
-
-    $data['event_allday'] = true;
-
-    list($data['event_year'],   $data['event_month'],   $data['event_day'])    = explode("-",date("Y-m-d",$event_startdate));
-    list($data['event_endyear'],$data['event_endmonth'],$data['event_endday']) = explode("-",date("Y-m-d",$event_enddate));
 
     // Building start hour options (default = 12)
     $start_hour_options = '';
@@ -111,17 +146,7 @@ function julian_user_newhook($args)
     }
     $data['dur_hour_options'] = $dur_hour_options;
 
-    // Type of recurrence (0=none, 1=every, 2=on)
-    $data['event_repeat'] = 0;
 
-    // Repeat-every defaults.
-    $data['event_repeat'] = 0;    // frequency unit (day=1, week=2, month=3, year=4)
-    $data['event_repeat_freq'] = '';    // frequency (every x time units)
-
-    // Repeat-on defaults
-    $data['event_repeat_on_day'] = 0;    // day of the week
-    $data['event_repeat_on_num'] = 0;    // instance within month (1st, 2nd, ..., last=5)
-    $data['event_repeat_on_freq'] = '';    // frequency (every x months)
 
    //Setting freq type selection (days,weeks,months,years)
    for ($i = 1; $i < 5; $i++) {
