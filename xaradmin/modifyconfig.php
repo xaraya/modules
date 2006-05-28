@@ -48,6 +48,9 @@ function registration_admin_modifyconfig()
                     $data['groups'] = $groups;
                     //Use the same modvar here. It is now putback in Roles again so Roles can use the var too without mod dependencies.
                     $data['defaultgroup'] = xarModGetVar('roles', 'defaultgroup');
+                    $notifyemail = xarModGetVar('registration','notifyemail');
+                    if (!isset($notifyemail) || trim ($notifyemail)=='')$notifyemail = xarModGetVar('mail','adminmail');
+                    $data['notifyemail']=$notifyemail;
                     break;
                 case 'filtering':
                     $checkip = xarModGetVar('registration', 'disallowedips');
@@ -95,10 +98,12 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('sendwelcomeemail', 'checkbox', $sendwelcomeemail, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('minpasslength', 'int:1', $minpasslength, 5, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('uniqueemail', 'checkbox', $uniqueemail, xarModGetVar('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('notifyemail', 'str:1:150', $notifyemail, xarModGetVar('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
                     xarModSetVar('registration', 'chooseownpassword', $chooseownpassword);
                     xarModSetVar('roles', 'defaultgroup', $defaultgroup);
                     xarModSetVar('registration', 'allowregistration', $allowregistration);
                     xarModSetVar('registration', 'minage', $minage);
+                    xarModSetVar('registration', 'notifyemail', $notifyemail);
                     xarModSetVar('registration', 'sendnotice', $sendnotice);
                     xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModSetVar('registration', 'requirevalidation', $requirevalidation);
