@@ -21,7 +21,7 @@
                 <table width="99%" cellspacing="0" cellpadding="2" border="0" bgcolor="#eeeeee">
                     <xar:foreach in="$categories" key="$cat_id">
                         <tr>
-                            <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">#$BulletForm#</font>&nbsp;#$categories[$cat_id]['name']#</td>
+                            <td width="85%"><font size="3" color="#$categories[$cat_id]['color']#">#$Bullet#</font>&nbsp;#$categories[$cat_id]['name']#</td>
                             <td align="right">
                                   <xar:set name="$deletecat">addslashes($categories[$cat_id]['name'])</xar:set>
 

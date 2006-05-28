@@ -105,7 +105,7 @@ function julian_admin_modifycategories()
         $js_names .= '"'.$info['name'].'",';
         $js_colors .= '"'.$info['color'].'",';
     }
-    $data['BulletForm'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     $data['js_names_array'] = "var Names = new Array(".substr($js_names,0,-1).")\n";
     $data['js_colors_array'] = "var Colors = new Array(".substr($js_colors,0,-1).")\n";
     $data['categories'] = $categories;

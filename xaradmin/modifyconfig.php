@@ -37,6 +37,7 @@ function julian_admin_modifyconfig()
     //$data['timeform']  = xarModGetVar('julian','timeform');
     // The form of the bullet in lists
     $data['BulletForm'] = xarModGetVar('julian', 'BulletForm');
+    $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     // Number of items per page
     $data['numitems']   = xarModGetVar('julian','numitems');
     // Standards
