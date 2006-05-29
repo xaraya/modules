@@ -2,6 +2,9 @@
 <p>
    <xar:mlstring>Student Name:</xar:mlstring> #$studentname#
 </p>
+<p>
+    <xar:mlstring>New status:</xar:mlstring> #$newstatusname#
+</p>
 <hr />
 <p>
     <xar:mlstring>Email:</xar:mlstring> #$studentemail#
