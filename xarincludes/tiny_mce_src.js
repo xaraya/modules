@@ -3,8 +3,8 @@
 
 function TinyMCE_Engine() {
 	this.majorVersion = "2";
-	this.minorVersion = "0.6.1";
-	this.releaseDate = "2006-05-04";
+	this.minorVersion = "0.6";
+	this.releaseDate = "2006-05-03";
 
 	this.instances = new Array();
 	this.switchClassCache = new Array();
@@ -48,7 +48,7 @@ function TinyMCE_Engine() {
 
 TinyMCE_Engine.prototype = {
 	init : function(settings) {
-		var theme;
+		var theme, nl, baseHREF = "";
 
 		this.settings = settings;
 
@@ -59,6 +59,13 @@ TinyMCE_Engine.prototype = {
 		// Get script base path
 		if (!tinyMCE.baseURL) {
 			var elements = document.getElementsByTagName('script');
+
+			// If base element found, add that infront of baseURL
+			nl = document.getElementsByTagName('base');
+			for (var i=0; i<nl.length; i++) {
+				if (nl[i].href)
+					baseHREF = nl[i].href;
+			}
 
 			for (var i=0; i<elements.length; i++) {
 				if (elements[i].src && (elements[i].src.indexOf("tiny_mce.js") != -1 || elements[i].src.indexOf("tiny_mce_dev.js") != -1 || elements[i].src.indexOf("tiny_mce_src.js") != -1 || elements[i].src.indexOf("tiny_mce_gzip") != -1)) {
@@ -71,7 +78,12 @@ TinyMCE_Engine.prototype = {
 					if (settings.exec_mode == "src" || settings.exec_mode == "normal")
 						tinyMCE.srcMode = settings.exec_mode == "src" ? '_src' : '';
 
-					tinyMCE.baseURL = src;
+					// Force it absolute if page has a base href
+					if (baseHREF != "" && src.indexOf('://') == -1)
+						tinyMCE.baseURL = baseHREF + src;
+					else
+						tinyMCE.baseURL = src;
+
 					break;
 				}
 			}
@@ -186,7 +198,7 @@ TinyMCE_Engine.prototype = {
 			return;
 
 		// If not super absolute make it so
-		var baseHREF = tinyMCE.settings['document_base_url'];
+		baseHREF = tinyMCE.settings['document_base_url'];
 		var h = document.location.href;
 		var p = h.indexOf('://');
 		if (p > 0 && document.location.protocol != "file:") {
@@ -6691,6 +6703,24 @@ TinyMCE_Menu.prototype = tinyMCE.extend(TinyMCE_Layer.prototype, {
 		tinyMCE.lastMenu = this;
 	}
 });
+
+/* file:jscripts/tiny_mce/classes/TinyMCE_Compatibility.class.js */
+
+if (!Function.prototype.call) {
+	Function.prototype.call = function() {
+		var a = arguments, s = a[0], i, as = '', r, o;
+
+		for (i=1; i<a.length; i++)
+			as += (i > 1 ? ',' : '') + 'a[' + i + ']';
+
+		o = s._fu;
+		s._fu = this;
+		r = eval('s._fu(' + as + ')');
+		s._fu = o;
+
+		return r;
+	};
+};
 
 /* file:jscripts/tiny_mce/classes/TinyMCE_Debug.class.js */
 

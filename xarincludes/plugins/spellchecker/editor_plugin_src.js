@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.3 $
- * $Date: 2006/03/15 09:47:18 $
+ * $Revision: 1.5 $
+ * $Date: 2006/05/24 13:52:51 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -90,8 +90,8 @@ var TinyMCE_SpellCheckerPlugin = {
         inst.spellCheckerLang = 'en';
 		self._buildSettingsMenu(inst, null);
 
-		e = self._getBlockBoxLayer(inst).create('div', 'mceBlockBox', document.getElementById(inst.editorId + '_parent'));
-		self._getMsgBoxLayer(inst).create('div', 'mceMsgBox', document.getElementById(inst.editorId + '_parent'));
+		e = self._getBlockBoxLayer(inst).create('span', 'mceBlockBox', document.getElementById(inst.editorId + '_parent'));
+		self._getMsgBoxLayer(inst).create('span', 'mceMsgBox', document.getElementById(inst.editorId + '_parent'));
 	},
 
 	_getMsgBoxLayer : function(inst) {
@@ -498,6 +498,7 @@ var TinyMCE_SpellCheckerPlugin = {
 		for (i=0; i<nl.length; i++) {
 			nv = nl[i].nodeValue;
 			if (r1.test(nv) || r2.test(nv) || r3.test(nv) || r4.test(nv)) {
+				nv = tinyMCE.xmlEncode(nv);
 				nv = nv.replace(r5, '<span class="mceItemHiddenSpellWord">$1</span>$2');
 				nv = nv.replace(r3, '<span class="mceItemHiddenSpellWord">$1</span>$2');
 

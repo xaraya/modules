@@ -1,7 +1,7 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.2 $
- * $Date: 2006/05/03 14:12:12 $
+ * $Revision: 1.3 $
+ * $Date: 2006/05/06 20:03:32 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -66,16 +66,16 @@ var TinyMCE_LayerPlugin = {
 	getControlHTML : function(cn) {
 		switch (cn) {
 			case "moveforward":
-				return tinyMCE.getButtonHTML(cn, 'lang_layer_forward_desc', '{$pluginurl}/images/forward.gif', 'mceMoveForward', true);
+				return tinyMCE.getButtonHTML(cn, 'lang_layer_forward_desc', '{$pluginurl}/images/moveforward.gif', 'mceMoveForward', true);
 
 			case "movebackward":
-				return tinyMCE.getButtonHTML(cn, 'lang_layer_backward_desc', '{$pluginurl}/images/backward.gif', 'mceMoveBackward', true);
+				return tinyMCE.getButtonHTML(cn, 'lang_layer_backward_desc', '{$pluginurl}/images/movebackward.gif', 'mceMoveBackward', true);
 
 			case "absolute":
 				return tinyMCE.getButtonHTML(cn, 'lang_layer_absolute_desc', '{$pluginurl}/images/absolute.gif', 'mceMakeAbsolute', true);
 
 			case "insertlayer":
-				return tinyMCE.getButtonHTML(cn, 'lang_layer_insertlayer_desc', '{$pluginurl}/images/insert_layer.gif', 'mceInsertLayer', true);
+				return tinyMCE.getButtonHTML(cn, 'lang_layer_insertlayer_desc', '{$pluginurl}/images/insertlayer.gif', 'mceInsertLayer', true);
 		}
 
 		return "";

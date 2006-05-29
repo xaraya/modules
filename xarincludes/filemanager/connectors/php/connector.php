@@ -25,7 +25,8 @@ include('basexml.php') ;
 include('commands.php') ;
 
 if ( !$Config['Enabled'] )
-	SendError( 1, 'This connector is disabled. Please check the "filemanager/browser/default/connectors/php/config.php" file' ) ;
+//	SendError( 1, 'This connector is disabled. Please check the "filemanager/browser/default/connectors/php/config.php" file' ) ;
+	SendError( 1, 'The xartinymce filebrowser and upload capability is currently disabled.' ) ;
 
 // Get the "UserFiles" path.
 $GLOBALS["UserFilesPath"] = '' ;

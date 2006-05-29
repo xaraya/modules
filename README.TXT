@@ -20,6 +20,7 @@ available for download separately at http://xaraya.com/~jojodee/
 
 NOTE: Make sure you use the NEW COMBINED CONFIGURATION FILE for 
       filebrowser, ibrowser and imanager found in tinymce/xartemplates/includes directory.
+      The ibrowserconfig.inc and imanagerconfig.inc files are deprecated and no longer used.
 
 
 ****************************

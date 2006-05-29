@@ -1,3 +1,7 @@
+* Version 1.1.x
+- Add on/off switch for filebrowser in the tinymceconfig.inc file
+- Some bug fixes related to IE, base element and relative URLs, and style plugin fix
+
 * Version 1.1.0 7 May 06
 - Includes upstream project version 2.0.6.1
 - New plugins to manage layers, and edit css styles, fixed list style plugin

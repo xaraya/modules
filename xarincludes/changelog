@@ -1,4 +1,14 @@
-Version 2.0.6 (2005-05-03)
+Version 2.0.7 (2006-xx-xx)
+	Fixed bug where TinyMCE didn't load if a base element and relative URL to TinyMCE where used in MSIE.
+	Fixed bug where TinyMCE didn't function in MSIE 5.0.1 because call method wasn't available. 
+	Renamed some image names in style and layer plugins for compatiblity with Drupal.
+	Fixed some HTML and CSS issues with the style properties plugin.
+	Fixed so the addMCEControl method returns the new editor instance id.
+	Fixed translation issues with the style properties dialog, patch contributed by TOMASIAN.
+Version 2.0.6.1 (2006-05-04)
+	Fixed issue where the layer and style plugins couldn't be added in incorrect order.
+	Fixed issue with Firefox nl not beeing defined in triggerSave correctly.
+Version 2.0.6 (2006-05-03)
 	Added new theme_advanced_source_editor_wrap option, this gives the possibility to force word wrapping.
 	Added new support for using div,blockquote,dt,dd,code,samp as a items in the theme_advanced_blockformats option.
 	Added new strict_loading_mode option, this switches the loading method from document.write to DOM.
@@ -23,11 +33,11 @@ Version 2.0.6 (2005-05-03)
 	Fixed issue where TinyMCE couldn't be loaded in a XML document.
 	Fixed issue with contextmenu beeing placed outside of visible area on Gecko browsers.
 	Fixed issue whith area tag not being closed.
-Version 2.0.5.1 (2005-03-22)
+Version 2.0.5.1 (2006-03-22)
 	Fixed bug where emtpy paragraphs sometimes got removed in MSIE.
 	Fixed bug where autosave plugin was running even in fullscreen mode.
 	Fixed bug where browse and color image button urls in form_utils.js where hardcoded.
-Version 2.0.5 (2005-03-21)
+Version 2.0.5 (2006-03-21)
 	Added API docs for the TinyMCE_Popup class that is used by all dialogs in TinyMCE.
 	Added new TinyMCE_Layer class to the core of TinyMCE plugins will be using this later on.
 	Added new loadPlugin function, use this to load external plugins.

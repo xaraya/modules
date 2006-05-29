@@ -1,14 +1,14 @@
 /**
  * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.1 $
- * $Date: 2006/05/03 10:46:42 $
+ * $Revision: 1.3 $
+ * $Date: 2006/05/06 20:03:57 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('style', 'en');
+tinyMCE.importPluginLanguagePack('style', 'en,fr');
 
 var TinyMCE_StylePlugin = {
 	getInfo : function() {
@@ -24,7 +24,7 @@ var TinyMCE_StylePlugin = {
 	getControlHTML : function(cn) {
 		switch (cn) {
 			case "styleprops":
-				return tinyMCE.getButtonHTML(cn, 'lang_style_styleinfo_desc', '{$pluginurl}/images/style_info.gif', 'mceStyleProps', true);
+				return tinyMCE.getButtonHTML(cn, 'lang_style_styleinfo_desc', '{$pluginurl}/images/styleprops.gif', 'mceStyleProps', true);
 		}
 
 		return "";

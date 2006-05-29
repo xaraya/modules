@@ -129,13 +129,16 @@
     //IMANAGER and IBROWSER settings
     // if you want to use DYNAMIC IMAGE LIBRARIES  - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
     // image directories to be scanned
-    $cfg['ilibs_dir']      = array('/var/images/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
+    $cfg['ilibs_dir']      = array('/var/uploads/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
     $cfg['ilibs_dir_show'] = true;                  // show main library (true) or only sub-dirs (false)
      //You must uncomment the following to get dynamic library creation and scanning
     $cfg['ilibs_inc']      = 'scripts/rdirs.php';   // uncomment to allow dynamic file library
+
     //-------------------------------------------------------------------------
     //FILEBROWSER only settings - you MUST set this correctly
     $cfg['filebrowser_dir']= 'var/images/'; //Filebrowser will look for images here and create allowed types directories
+
+    $cfg['Enabled'] = 1 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
 
     // Configurations below can be left at default
     //Types of media users can 'browse' - remove type to prevent browsing of that type. Do not change names unless you know what you are doing. You can remo
