@@ -121,7 +121,7 @@ function itsp_admin_create_pitem($args)
     xarSessionSetVar('statusmsg', xarML('ITSP Plan item was successfully created!'));
 
     // Add this new plan item to the plan if planid was set
-    if($planid) {
+    if(!empty($planid)) {
         if ((!xarModAPIFunc('itsp',
                           'admin',
                           'create_plink',

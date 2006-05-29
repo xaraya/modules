@@ -13,23 +13,14 @@
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>
-  <!-- the specific template for the current admin function comes here -->
-
-  <!-- Start form - note we do not use api functions to create the recipient URL of
-       this form, but entity instead.  All URLs should be generated this way to ensure
-       compatibility with future versions of Xaraya.
-    -->
-
-    <form method="post" id="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-
-
+    <form method="post" id="post" action="&xar-modurl-itsp-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
     <!-- Use standard xaraya classes for form elements -->
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
       <div class="xar-form-input-wrapper">
-        <label for="bold" class="xar-form-label" title="#xarML('Use bold for example items.')#">
-          <xar:mlstring>Display ITSP Items In Bold?</xar:mlstring>
+        <label for="bold" class="xar-form-label" title="#xarML('Do not use status for an ITSP in the module.')#">
+          <xar:mlstring>Override Status Versions?</xar:mlstring>
         </label>
         <xar:if condition="$OverrideSVchecked">
           <input type="checkbox" name="OverrideSV" id="OverrideSV" value="1" checked="checked"/>
@@ -65,7 +56,7 @@
         </xar:if>
       </div>
       <div class="xar-form-input-wrapper">
-        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+        <label for="UseStatusVersions" class="xar-form-label" title="#xarML('Use different versions for emailing according to status')#">
           <xar:mlstring>
             Use status in emails
           </xar:mlstring>

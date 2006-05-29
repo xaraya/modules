@@ -24,12 +24,7 @@
 function itsp_userapi_update($args)
 {
     extract($args);
-    /* Argument check - make sure that all required arguments are present
-     * and in the right format, if not then set an appropriate error
-     * message and return
-     * Note : since we have several arguments we want to check here, we'll
-     * report all those that are invalid at the same time...
-     */
+    /* Argument check */
     $invalid = array();
     if (!isset($itspid) || !is_numeric($itspid)) {
         $invalid[] = 'item ID';
@@ -45,17 +40,13 @@ function itsp_userapi_update($args)
             new SystemException($msg));
         return;
     }
-    /* The user API function is called. This takes the item ID which
-     * we obtained from the input and gets us the information on the
-     * appropriate item. If the item does not exist we post an appropriate
-     * message and return
-     */
+    /* The user API function is called. */
     $item = xarModAPIFunc('itsp',
         'user',
         'get',
         array('itspid' => $itspid));
     /*Check for exceptions */
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return false; // throw back
 
     /* Security check
 
@@ -70,10 +61,6 @@ function itsp_userapi_update($args)
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    /* It's good practice to name the table and column definitions you
-     * are getting - $table and $column don't cut it in more complex
-     * modules
-     */
     $itsptable = $xartable['itsp_itsp'];
     /* Update the item - the formatting here is not mandatory, but it does
      * make the SQL statement relatively easy to read. Also, separating

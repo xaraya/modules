@@ -75,14 +75,16 @@ function itsp_user_submit($args)
             return $data;
         }
         // Check from
-        if (empty($from)) {
-            $from = xarModGetVar('mail', 'adminmail');
+
+        $officemail = xarModGetVar('itsp', 'officemail');
+        if (empty($officemail)) {
+            $officemail = xarModGetVar('mail', 'adminmail');
         }
         // Check fromname
         if (empty($fromname)) {
             $fromname = xarModGetVar('mail', 'adminname');
         }
-        $itspurl = XarModURL('itsp','user','itsp',array('itspid'=>$itspid));
+        $itspurl = xarModURL('itsp','user','itsp',array('itspid'=>$itspid));
         // Send emails
         $UseStatusVersions = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
         if ($UseStatusVersions) {
@@ -123,7 +125,7 @@ function itsp_user_submit($args)
                         'subject'      => $subject,
                         'message'      => $studenttextmessage,
                         'htmlmessage'  => $studenthtmlmessage,
-                        'from'         => $from,
+                        'from'         => $officemail,
                         'fromname'     => $fromname,
                         'attachName'   => $attachname,
                         'attachPath'   => $attachpath,
@@ -137,8 +139,9 @@ function itsp_user_submit($args)
                 if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
             }
         }
-        /* now let's do the html message to the office */
 
+        /* now let's do the html message to the office */
+        $subject = xarML('An ITSP has been submitted');
         $officehtmlarray=array('notetouser' => $htmlnotetouser,
                               'studentname'   => $studentname,
                               'studentemail'  => $studentemail,
@@ -170,7 +173,7 @@ function itsp_user_submit($args)
                                  'propdata'    => $propdata,
                                  'userreferer' => $userreferer);
 
-        /* Let's do admin text message */
+        /* Let's do office text message */
         $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
@@ -178,17 +181,17 @@ function itsp_user_submit($args)
         }
 
         /* send email to admin */
-        $args = array('info'         => $setmail,
+        $args = array('info'         => $officemail,
                       'name'         => $sendname,
-                      'ccrecipients' => $ccrecipients,
-                      'bccrecipients' => $bccrecipients,
+                 //     'ccrecipients' => $ccrecipients,
+                 //     'bccrecipients' => $bccrecipients,
                       'subject'      => $subject,
                       'message'      => $admintextmessage,
                       'htmlmessage'  => $adminhtmlmessage,
                       'from'         => $studentemail,
                       'fromname'     => $studentname,
-                      'attachName'   => $attachname,
-                      'attachPath'   => $attachpath,
+                 //     'attachName'   => $attachname,
+                 //     'attachPath'   => $attachpath,
                       'usetemplates' => false);
         if ($usehtmlemail != 1) {
             if (!xarModAPIFunc('mail','admin','sendmail', $args))return;

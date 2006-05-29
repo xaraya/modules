@@ -11,17 +11,14 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author MichelV
  */
-
 /**
  * Get status information
  *
  * @author MichelV <michelv@xarayahosting.nl
  * @return array with status info data
  */
-function itsp_userapi_getstatusinfo($args)
+function itsp_userapi_getstatusinfo()
 {
-    extract($args);
-
         $statusoptions=array();
         $statusoptions[0] = xarML('Added'); // Standard status
         $statusoptions[1] = xarML('In progress'); // After first change of student
