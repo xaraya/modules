@@ -58,7 +58,7 @@
       <div class="xar-form-input-wrapper">
         <label for="UseStatusVersions" class="xar-form-label" title="#xarML('Use different versions for emailing according to status')#">
           <xar:mlstring>
-            Use status in emails
+            Use status in email templates
           </xar:mlstring>
         </label>
         <xar:if condition="$UseStatusVersionschecked">
@@ -96,36 +96,16 @@
       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
       <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
-          <!--
-              You can display individual hooks if you want using xar:if statements
-
-              <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                #$hooks['categories']#
-              </xar:if>
-
-              or display them all with one command as follows
-              -->
           #$hooks[$hookmodule]#
         </xar:foreach>
       </xar:if>
     </fieldset>
 
     <div class="xar-form-input-wrapper-after">
-        <!--
-        Add an authorisation ID - this adds a hidden field in the form that
-        contains an authorisation ID.  The authorisation ID is very important in
-        preventing certain attacks on the website
-        -->
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
         <input type="submit" value="#xarML('Update Configuration')#" />
     </div>
 
   </form>
 </div>
-<!--
-     // clear the status message
-     // we put this in an if tag to prevent the function from
-     // showing '1' in the page
-  -->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

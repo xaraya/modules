@@ -62,149 +62,117 @@ function itsp_user_submit($args)
     $studentemail = xarUserGetVar('email',$itsp['userid']);
     switch ($newstatus) {
         case 1:
-
+            break;
         case 2:
-
+            break;
         case 3:
-
+            break;
         case 4:
-        // User submits the ITSP
+            // User submits the ITSP
 
-        if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
-            // todo: add error
-            return $data;
-        }
-        // Check from
+            // Check status
+            $stati = xarModApiFunc('itsp','user','getstatusinfo');
+            $newstatusname = $stati[$newstatus];
 
-        $officemail = xarModGetVar('itsp', 'officemail');
-        if (empty($officemail)) {
-            $officemail = xarModGetVar('mail', 'adminmail');
-        }
-        // Check fromname
-        if (empty($fromname)) {
-            $fromname = xarModGetVar('mail', 'adminname');
-        }
-        $itspurl = xarModURL('itsp','user','itsp',array('itspid'=>$itspid));
-        // Send emails
-        $UseStatusVersions = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
-        if ($UseStatusVersions) {
-             $htmltemplate = 'html-' . $itsp['itspstatus'];
-             $texttemplate = 'text-' . $itsp['itspstatus'];
-        } else {
-             $htmltemplate =  'html';
-             $texttemplate =  'text';
-        }
-        $studenthtmlarray= array(
-                              'studentname'   => $studentname,
-                              'studentemail'  => $studentemail,
-                              'itspurl'    => $itspurl);
-
-        $studenthtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$studenthtmlarray,$htmltemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $studenthtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$studenthtmlarray,'html');
-        }
-
-        $studenttextarray =array(
-                              'studentname'   => $studentname,
-                              'studentemail'  => $studentemail,
-                              'itspurl'    => $itspurl);
-
-         $studenttextmessage= xarTplModule('sitecontact','user','usermail', $studenttextarray,$texttemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$studenttextarray,'text');
-        }
-
-
-       if (($allowcopy) and ($sendcopy)) {
-          /* let's send a copy of the feedback form to the sender
-          * if it is permitted by admin, and the user wants it */
-          $args = array('info'         => $studentemail,
-                        'name'         => $studentname,
-                        'subject'      => $subject,
-                        'message'      => $studenttextmessage,
-                        'htmlmessage'  => $studenthtmlmessage,
-                        'from'         => $officemail,
-                        'fromname'     => $fromname,
-                        'attachName'   => $attachname,
-                        'attachPath'   => $attachpath,
-                        'usetemplates' => false);
-
-            /* send mail to user , if html email let's do that  else just send text*/
-            if ($usehtmlemail != 1) {
-                if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
-
-            } else {/*it's html email */
-                if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
+            if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
+                // todo: add error
+                return $data;
             }
-        }
+            // Check from
 
-        /* now let's do the html message to the office */
-        $subject = xarML('An ITSP has been submitted');
-        $officehtmlarray=array('notetouser' => $htmlnotetouser,
-                              'studentname'   => $studentname,
-                              'studentemail'  => $studentemail,
-                              'company'    => $htmlcompany,
-                              'requesttext'=> $htmlsubject,
-                              'usermessage'=> $htmlusermessage,
-                              'sitename'   => $sitename,
-                              'siteurl'    => $siteurl,
-                              'todaydate'  => $todaydate,
-                              'useripaddress' => $useripaddress,
-                              'propdata'    => $propdata,
-                              'userreferer' => $userreferer);
+            $officemail = xarModGetVar('itsp', 'officemail');
+            if (empty($officemail)) {
+                $officemail = xarModGetVar('mail', 'adminmail');
+            }
+            // Check fromname
+            if (empty($fromname)) {
+                $fromname = xarModGetVar('mail', 'adminname');
+            }
+            $itspurl = xarModURL('itsp','user','itsp',array('itspid'=>$itspid));
+            // Send emails
+            $UseStatusVersions = xarModGetVar('itsp', 'UseStatusVersions') ? true : false;
+            if ($UseStatusVersions) {
+                 $htmltemplate = 'html-' . $itsp['itspstatus'];
+                 $texttemplate = 'text-' . $itsp['itspstatus'];
+            } else {
+                 $htmltemplate =  'html';
+                 $texttemplate =  'text';
+            }
+            $studenthtmlarray= array(
+                                  'studentname'   => $studentname,
+                                  'studentemail'  => $studentemail,
+                                  'itspurl'       => $itspurl,
+                                  'newstatusname' => $newstatusname);
 
-        $officehtmlmessage= xarTplModule('sitecontact','user','submitmail-office',$officehtmlarray,$htmltemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $officehtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officehtmlarray,'html');
-        }
-        $officetextarray =  array('notetouser' => $textnotetouser,
-                                 'studentname'   => $studentname,
-                                 'studentemail'  => $studentemail,
-                                 'company'    => $textcompany,
-                                 'requesttext'=> $textsubject,
-                                 'usermessage'=> $textusermessage,
-                                 'sitename'   => $sitename,
-                                 'siteurl'    => $siteurl,
-                                 'todaydate'  => $todaydate,
-                                 'useripaddress' => $useripaddress,
-                                 'propdata'    => $propdata,
-                                 'userreferer' => $userreferer);
+            $studenthtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$studenthtmlarray,$htmltemplate);
+            if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+                xarErrorHandled();
+                $studenthtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$studenthtmlarray,'html');
+            }
 
-        /* Let's do office text message */
-        $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $officetextmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officetextarray,'text');
-        }
+            $studenttextarray =array(
+                                  'studentname'   => $studentname,
+                                  'studentemail'  => $studentemail,
+                                  'itspurl'       => $itspurl,
+                                  'newstatusname' => $newstatusname);
 
-        /* send email to admin */
-        $args = array('info'         => $officemail,
-                      'name'         => $sendname,
-                 //     'ccrecipients' => $ccrecipients,
-                 //     'bccrecipients' => $bccrecipients,
-                      'subject'      => $subject,
-                      'message'      => $admintextmessage,
-                      'htmlmessage'  => $adminhtmlmessage,
-                      'from'         => $studentemail,
-                      'fromname'     => $studentname,
-                 //     'attachName'   => $attachname,
-                 //     'attachPath'   => $attachpath,
-                      'usetemplates' => false);
-        if ($usehtmlemail != 1) {
-            if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
-        } else {
-            if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
-        }
+            $studenttextmessage= xarTplModule('sitecontact','user','usermail', $studenttextarray,$texttemplate);
+            if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+                xarErrorHandled();
+                $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$studenttextarray,'text');
+            }
 
+            /* now let's do the html message to the office */
+            $subject = xarML('An ITSP has been submitted');
+            $todaydate = xarLocaleGetFormattedDate('long');
+            $officehtmlarray=array('studentname'   => $studentname,
+                                  'studentemail'  => $studentemail,
+                                  'itspurl'       => $itspurl,
+                                  'newstatusname' => $newstatusname,
+                                  'todaydate'  => $todaydate);
+
+            $officehtmlmessage= xarTplModule('sitecontact','user','submitmail-office',$officehtmlarray,$htmltemplate);
+            if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+                xarErrorHandled();
+                $officehtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officehtmlarray,'html');
+            }
+            $officetextarray = array('studentname'   => $studentname,
+                                  'studentemail'  => $studentemail,
+                                  'itspurl'       => $itspurl,
+                                  'newstatusname' => $newstatusname,
+                                  'todaydate'  => $todaydate);
+
+            /* Let's do office text message */
+            $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
+            if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+                xarErrorHandled();
+                $officetextmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officetextarray,'text');
+            }
+
+            /* send email to admin */
+            $args = array('info'         => $officemail,
+                          'name'         => $sendname,
+                     //     'ccrecipients' => $ccrecipients,
+                     //     'bccrecipients' => $bccrecipients,
+                          'subject'      => $subject,
+                          'message'      => $admintextmessage,
+                          'htmlmessage'  => $adminhtmlmessage,
+                          'from'         => $studentemail,
+                          'fromname'     => $studentname,
+                     //     'attachName'   => $attachname,
+                     //     'attachPath'   => $attachpath,
+                          'usetemplates' => false);
+            if ($usehtmlemail != 1) {
+                if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
+            } else {
+                if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
+            }
 
             break;
         case 5:
-
+            break;
         case 6:
-
+            break;
     }
 
     /* lets update status and display updated configuration */
