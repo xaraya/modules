@@ -76,15 +76,10 @@ function registration_admin_modifyconfig()
                 default:
                     if (!xarVarFetch('showterms', 'checkbox', $showterms, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('showprivacy', 'checkbox', $showprivacy, false, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('uselockout', 'checkbox', $uselockout, true, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('lockouttime', 'int:1:', $lockouttime, 15, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                    if (!xarVarFetch('lockouttries', 'int:1:', $lockouttries, 3, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     xarModSetVar('registration', 'SupportShortURLs', $shorturls);
                     xarModSetVar('registration', 'showterms', $showterms);
                     xarModSetVar('registration', 'showprivacy', $showprivacy);
-                    xarModSetVar('registration', 'uselockout', $uselockout);
-                    xarModSetVar('registration', 'lockouttime', $lockouttime);
-                    xarModSetVar('registration', 'lockouttries', $lockouttries);
+
                     break;
                 case 'registration':
                     if (!xarVarFetch('defaultgroup', 'str:1', $defaultgroup, 'Users', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -104,7 +99,7 @@ function registration_admin_modifyconfig()
                     xarModSetVar('registration', 'allowregistration', $allowregistration);
                     xarModSetVar('registration', 'minage', $minage);
                     xarModSetVar('registration', 'notifyemail', $notifyemail);
-                    xarModSetVar('registration', 'sendnotice', $sendnotice);
+                    xarModSetVar('registration', 'sendnotice', $sendnotice); 
                     xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModSetVar('registration', 'requirevalidation', $requirevalidation);
                     xarModSetVar('registration', 'showdynamic', $showdynamic);
