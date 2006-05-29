@@ -400,13 +400,12 @@ function registration_user_register()
                 xarModCallHooks('item', 'create', $uid, $userdata);
 
                 // Send an e-mail to the admin if notification is required, 
-                // what? just those that don't need to validate ...
+                // same updated to the getvalidation users in Roles module - need to review that
 
                 if (xarModGetVar('registration', 'sendnotice')) {
-
+                    $terms= '';
                     if (xarModGetVar('registration', 'showterms') == 1) {
                         // User has agreed to the terms and conditions.
-                        $terms= '';
                         $terms = xarML('This user has agreed to the site terms and conditions.');
                     }
 

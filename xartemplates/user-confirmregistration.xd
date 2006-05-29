@@ -59,7 +59,10 @@
         </xar:if>
 
         <fieldset>
-            <div class="xar-form-input-wrapper-after">
+            <p class="xar-form-input-wrapper-before">
+                <xar:mlstring>Please review the above information and check it for correctness. Click Create Account to continue.</xar:mlstring>
+            </p>
+            <div class="xar-form-input-wrapper-after xar-padding-thick">
                 <input type="submit" value="#$createlabel#" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="createuser" />
