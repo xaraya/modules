@@ -22,44 +22,51 @@
  */
 function registration_init()
 {
-# --------------------------------------------------------
-#
-# Set up masks
-#
+/** --------------------------------------------------------
+ * Set up masks
+ */
     xarRegisterMask('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRegistration','All','registration','All','All','ACCESS_EDIT');
     xarRegisterMask('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
 
-# --------------------------------------------------------
-#
-# Set up privileges
-#
+/** --------------------------------------------------------
+ * Set up privileges
+ */
     xarRegisterPrivilege('AdminRegistration','All','registration','All','All','ACCESS_ADMIN','Admin the Registration module');
     xarRegisterPrivilege('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW','View the User Access block');
     xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View the User Access block');
 
-# --------------------------------------------------------
-#
-# Define modvars
-#
+/** --------------------------------------------------------
+ * Define modvars
+ */
     xarModSetVar('registration', 'allowregistration', true);
     xarModSetVar('registration', 'requirevalidation', true);
     xarModSetVar('registration', 'uniqueemail', true);
-    xarModSetVar('registration', 'askwelcomeemail', true);
-    xarModSetVar('registration', 'askvalidationemail', true);
-    xarModSetVar('registration', 'askdeactivationemail', true);
-    xarModSetVar('registration', 'askpendingemail', true);
-    xarModSetVar('registration', 'askpasswordemail', true);
+    xarModSetVar('registration', 'askwelcomeemail', true); // not in reg atm, leave in roles?
+    xarModSetVar('registration', 'askvalidationemail', true); // not in reg atm, leave in roles?
+    xarModSetVar('registration', 'askdeactivationemail', true);// not in reg atm, leave in roles?
+    xarModSetVar('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
+    xarModSetVar('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
     //xarModSetVar('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
-	xarModSetVar('registration', 'lockouttime', 15); // to authsystem
-	xarModSetVar('registration', 'lockouttries', 3); // to authsystem
     xarModSetVar('registration', 'minage', 13);
-    xarModSetVar('registration', 'uselockout', false);    
 
-/*---------------------------------------------------------------
-* Set disallowed names
-*/
+    //we need these too
+    xarModSetVar('registration', 'SupportShortURLs', false);
+    xarModSetVar('registration', 'showterms', true);
+    xarModSetVar('registration', 'showprivacy', true);
+    xarModSetVar('registration', 'chooseownpassword', false);
+    xarModSetVar('registration', 'notifyemail', xarModGetVar('mail', 'adminmail'));
+    xarModSetVar('registration', 'sendnotice', false);
+    xarModSetVar('registration', 'explicitapproval', false);
+    xarModSetVar('registration', 'showdynamic', false);
+    xarModSetVar('registration', 'sendwelcomeemail', false);
+    xarModSetVar('registration', 'minpasslength', 5);
+
+
+/** ---------------------------------------------------------------
+ * Set disallowed names
+ */
     $names = 'Admin
 Root
 Linux';
@@ -71,9 +78,9 @@ president@whitehouse.gov';
     $disallowedemails = serialize($emails);
     xarModSetVar('registration', 'disallowedemails', $disallowedemails);
 
-/*---------------------------------------------------------------
-* Set disallowed IPs
-*/
+/** ---------------------------------------------------------------
+ * Set disallowed IPs
+ */
     $ips = '';
     $disallowedips = serialize($ips);
     xarModSetVar('registration', 'disallowedips', $disallowedips);
@@ -105,6 +112,14 @@ function registration_upgrade($oldVersion)
     // Upgrade dependent on old version number
     switch ($oldVersion) {
         case '1.0.0':
+        //set new vars
+        xarModSetVar('registration', 'notifyemail', xarModGetVar('mail', 'adminmail'));
+
+        //delete old vars
+	    xarModDelVar('registration', 'lockouttime'); // to authsystem
+	    xarModDelVar('registration', 'lockouttries'); // to authsystem
+        xarModDelVar('registration', 'uselockout'); // to authsystem
+
             break;
         case '1.2.0':
             // Code to upgrade from version 2.0 goes here
@@ -123,10 +138,9 @@ function registration_upgrade($oldVersion)
  */
 function registration_delete()
 {
-# --------------------------------------------------------
-#
-# Delete block details for this module (for now)
-#
+/** --------------------------------------------------------
+ * Delete block details for this module (for now)
+ *
     $blocktypes = xarModAPIfunc(
         'blocks', 'user', 'getallblocktypes',
         array('module' => 'registration')

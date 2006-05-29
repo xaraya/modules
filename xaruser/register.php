@@ -436,7 +436,8 @@ function registration_user_register()
                 if(!xarMakeRoleMemberByID($uid, $defaultRole['uid'])) return;
                 xarModSetVar('roles', 'lastuser', $uid);
 
-                if ($pending == 1) $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
+                if ($pending == 1) $data = xarTplModule('roles','user', 'getvalidation', $tplvars); 
+                //Note this template is for validation, and validation and pending, now also used for pending alone
                 else {
                      //send welcome email (option)
                     if (xarModGetVar('registration', 'sendwelcomeemail')) {
@@ -455,6 +456,9 @@ function registration_user_register()
                     xarResponseRedirect($redirect);
                 }
             } else {
+                //jojodee - how to discriminate between new user requiring validation and existing one with changed email?
+                // We do not want to add another state as this has widespread impact through many functions
+
                 $userdata = array('uname'    => $username,
                                     'realname' => $realname,
                                     'email'    => $email,
