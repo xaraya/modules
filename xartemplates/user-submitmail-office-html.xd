@@ -1,47 +1,19 @@
+<h4>The status of an ITSP has been changed</h4>
 <p>
-   <xar:mlstring>Submitted By:</xar:mlstring> #$username#
+   <xar:mlstring>Student Name:</xar:mlstring> #$studentname#
 </p>
 <hr />
 <p>
-    <xar:mlstring>Email:</xar:mlstring> #$useremail#
+    <xar:mlstring>Email:</xar:mlstring> #$studentemail#
 </p>
 <p>
-   <xar:mlstring>Organization:</xar:mlstring> #$company#
+    <xar:mlstring>Link to the ITSP:</xar:mlstring>
+    <a href="#$itspurl#">#$itspurl#</a>
 </p>
-<p>
-    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
-</p>
-<p>
-<xar:mlstring>Comments:</xar:mlstring>
-</p>
-<p>
-    #$usermessage#
-</p>
-
-<xar:if condition="isset($propdata) and count($propdata) gt 0">
-    <xar:foreach in="$propdata" key="$name">
-<p>
-    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
-</p>
-    </xar:foreach>
-</xar:if>
 
 <hr />
 <p>
-    <xar:mlstring>User information:</xar:mlstring>
+    <xar:mlstring>Date of submission:</xar:mlstring>#xarLocaleGetFormattedDate('long', $todaydate)#
 </p>
-<p>
-    <xar:mlstring>Sender:</xar:mlstring> #$useripaddress#
-</p>
-<p>
-    <xar:mlstring>Referer:</xar:mlstring> #$userreferer#
-</p>
-<hr />
-<p>
-<xar:mlstring>Site Name:</xar:mlstring> #$sitename#
-</p>
-<p>
-    <xar:mlstring>Site URL:</xar:mlstring> #$siteurl#
-</p>
-<p>#$todaydate#</p>
+
 

@@ -32,11 +32,11 @@ function itsp_user_submit($args)
     extract($args);
 
     /* Get parameters */
-    if (!xarVarFetch('itspid', 'id', $itspid, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('confirm',  'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('useraction', 'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('newstatus', 'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',      'id',     $itspid,     0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url',  'isset',  $return_url, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('confirm',     'isset',  $confirm,    NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('useraction',  'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('newstatus',   'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
@@ -62,8 +62,10 @@ function itsp_user_submit($args)
     $studentemail = xarUserGetVar('email',$itsp['userid']);
     switch ($newstatus) {
         case 1:
+            // In progress
             break;
         case 2:
+            // Send request to supervisor
             break;
         case 3:
             break;
@@ -124,12 +126,12 @@ function itsp_user_submit($args)
 
             /* now let's do the html message to the office */
             $subject = xarML('An ITSP has been submitted');
-            $todaydate = xarLocaleGetFormattedDate('long');
+
             $officehtmlarray=array('studentname'   => $studentname,
                                   'studentemail'  => $studentemail,
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname,
-                                  'todaydate'  => $todaydate);
+                                  'todaydate'  => time());
 
             $officehtmlmessage= xarTplModule('sitecontact','user','submitmail-office',$officehtmlarray,$htmltemplate);
             if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
@@ -140,7 +142,7 @@ function itsp_user_submit($args)
                                   'studentemail'  => $studentemail,
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname,
-                                  'todaydate'  => $todaydate);
+                                  'todaydate'  => time());
 
             /* Let's do office text message */
             $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
@@ -170,8 +172,10 @@ function itsp_user_submit($args)
 
             break;
         case 5:
+            // Approved
             break;
         case 6:
+            // Closed, not open anymore, ready for certificate
             break;
     }
 
