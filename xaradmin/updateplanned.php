@@ -19,6 +19,7 @@
  * @param  string $ 'name' the name of the course to be updated
  * @param  string $ 'number' the number of the course to be updated
  * @return bool true on success
+ * @todo MichelV: check those standard settings for $data array
  */
 function courses_admin_updateplanned($args)
 {
@@ -57,7 +58,7 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning', 'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('last_modified', 'int', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
@@ -76,7 +77,7 @@ function courses_admin_updateplanned($args)
           }
     }
 
-    if (empty($nameid)) {
+    if (empty($name)) {
         $data['name'] = '';
     } else {
         $data['name'] = $name;
@@ -121,11 +122,7 @@ function courses_admin_updateplanned($args)
     } else {
         $data['contact'] = $contact;
     }
-    if (empty($hideplanning)) {
-        $data['hideplanning'] = '';
-    } else {
-        $data['hideplanning'] = $hideplanning;
-    }
+    $data['hideplanning'] = $hideplanning;
 
     // check if we have any errors
     if (count($invalid) > 0) {

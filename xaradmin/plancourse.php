@@ -44,7 +44,7 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning',    'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $progra, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
@@ -206,23 +206,12 @@ function courses_admin_plancourse($args)
     } else {
         $data['location'] = $location;
     }
-
-    if (empty($hideplanning)) {
-        $data['hideplanning'] = '';
-    } else {
-        $data['hideplanning'] = $hideplanning;
-    }
+    $data['hideplanning'] = $hideplanning;
     if (empty($info)) {
         $data['info'] = '';
     } else {
         $data['info'] = $info;
     }
-    if (empty($extreg)) {
-        $data['extreg'] = false;
-    } else {
-        $data['extreg'] = $extreg;
-    }
-
     if (empty($regurl)) {
         $data['regurl'] = '';
     } else {

@@ -45,7 +45,7 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('regurl',          'str:1:255', $regurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning',    'int::', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int:1:', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate',       'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;

@@ -57,7 +57,7 @@ function courses_admin_modifyplanned($args)
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate', 'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'int:1:', $hideplanning, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning', 'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('last_modified', 'int', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
@@ -98,7 +98,7 @@ function courses_admin_modifyplanned($args)
     $data['contactlabel']   = xarVarPrepForDisplay(xarML('Course Contact details'));
 
     $data['cancelbutton']   = xarVarPrepForDisplay(xarML('Cancel'));
-    $data['use_extreg'] = $planneddata['extreg'] ? true : false;
+
     $data['level'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1003));
     $data['years'] = xarModAPIFunc('courses', 'user', 'gets',

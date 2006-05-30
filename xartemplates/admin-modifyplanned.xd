@@ -308,11 +308,7 @@
                             <xar:mlstring>Use external registration</xar:mlstring>
                             </span>
                         </label>
-                        <xar:if condition="$use_extreg">
-                            <xar:data-input name="extreg" type="14" value="1" checked="checked" />
-                        <xar:else />
-                            <xar:data-input name="extreg" type="14" value="1" checked="checked" />
-                        </xar:if>
+                        <xar:data-input name="extreg" type="14" value="$planneddata['extreg']" checked="checked" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="regurl" class="xar-form-label">
