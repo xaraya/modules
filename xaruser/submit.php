@@ -61,6 +61,7 @@ function itsp_user_submit($args)
 */
     $studentname = xarUserGetVar('name',$itsp['userid']);
     $studentemail = xarUserGetVar('email',$itsp['userid']);
+    $usehtmlemail= 1;// TODO: keep this?
     switch ($newstatus) {
         case 1:
             // In progress
@@ -124,6 +125,26 @@ function itsp_user_submit($args)
                 xarErrorHandled();
                 $usertextmessage= xarTplModule('itsp', 'user', 'submitmail-student',$studenttextarray,'text');
             }
+            /* now let's do the html message to the student */
+            $subject = xarML('You have submitted your ITSP');
+            /* send email to the office */
+            $args = array('info'         => $studentemail,
+                          'name'         => $studentname,
+                     //     'ccrecipients' => $ccrecipients,
+                     //     'bccrecipients' => $bccrecipients,
+                          'subject'      => $subject,
+                          'message'      => $studenttextmessage,
+                          'htmlmessage'  => $studenthtmlmessage,
+                          'from'         => $officemail,
+                          'fromname'     => xarML('ITSP office'),
+                     //     'attachName'   => $attachname,
+                     //     'attachPath'   => $attachpath,
+                          'usetemplates' => false);
+            if ($usehtmlemail != 1) {
+                if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
+            } else {
+                if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
+            }
 
             /* now let's do the html message to the office */
             $subject = xarML('An ITSP has been submitted');
@@ -152,7 +173,7 @@ function itsp_user_submit($args)
                 $officetextmessage= xarTplModule('itsp', 'user', 'submitmail-office',$officetextarray,'text');
             }
 
-            /* send email to admin */
+            /* send email to the office */
             $args = array('info'         => $officemail,
                           'name'         => xarML('ITSP office'),
                      //     'ccrecipients' => $ccrecipients,
