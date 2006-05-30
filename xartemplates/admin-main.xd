@@ -1,37 +1,39 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>LogConfig Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+    <xar:template file="menu" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="float:right;padding:10px;">
-            <xar:if condition="file_exists('modules/base/xarimages/admin.gif')" >
-                <img src="modules/base/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-            <xar:else />
-                <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
-            </xar:if>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>What is it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>The LogConfig Module controls the Xaraya logging system.</xar:mlstring></p>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>How to use it?</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
-            <ul>
-                <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration.</xar:mlstring></li>
-                <li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
-                <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
+        <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+
+        <p><xar:mlstring>The LogConfig Module controls the Xaraya logging system.</xar:mlstring></p>
+        
+        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
+        <ul>
+            <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration.</xar:mlstring></li>
+            <li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
+            <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
         </ul>
-        </div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring>Fallback System:</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
-        </div>
-    </div>
+
+        <p><xar:mlstring>Fallback System:</xar:mlstring></p>
+        <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
+        <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>Further information on the LogConfig module can be found at</xar:mlstring>
+        </p>
+        <ul>
+            <li><xar:mlstring>LogConfig Extension page at</xar:mlstring> <a title="#xarML('LogConfig Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
+                <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            </li>
+            <li><xar:mlstring>Related tutorials and documentation on LogConfig found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/logconfig/" title="#xarML('Related documentation on LogConfig')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+            </li>
+        </ul>
+        <p class="xar-sub">
+            <strong>&nbsp;<xar:mlstring>LogConfig Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-05-29
+        </p>
 </div>

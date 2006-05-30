@@ -63,6 +63,14 @@ function logconfig_adminapi_getmenulinks()
                                   'label' => xarML('Turn logging off'),
                                   'func' => 'switchonoff');
         }
+        $menulinks[] = Array('url'   => xarModURL('logconfig',
+                                                   'admin',
+                                                   'overview'),
+                              'title' => xarML('Overview'),
+                              'label' => xarML('Overview'),
+                              'func' => 'main');
+
+
     }
 
     return $menulinks;

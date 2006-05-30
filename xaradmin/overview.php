@@ -14,13 +14,13 @@
 /**
  * the main administration function
  */
-function logconfig_admin_main()
+function logconfig_admin_overview()
 {
     if (!xarSecurityCheck('AdminLogConfig')) return;
 
     $data = xarModAPIFunc('logconfig','admin','menu');
 
-    xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
+    return xarTplModule('logconfig', 'admin', 'main', $data,'main');
 
     // Return the template variables defined in this function
     return $data;

@@ -16,13 +16,11 @@
  */
 function logconfig_admin_modify($args)
 {
-    list($itemid,
-         $objectid,
-         $itemtype)= xarVarCleanFromInput('itemid',
-                                                                      'objectid',
-                                                                      'itemtype');
-
     extract($args);
+  
+    if (!xarVarFetch('itemid',   'id',   $itemid)) return;
+    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'id',     $itemtype, $itemtype, XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $itemid = $objectid;
