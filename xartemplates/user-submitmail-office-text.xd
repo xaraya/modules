@@ -1,20 +1,13 @@
-<h4>The status of an ITSP has been changed</h4>
-<p>
-   <xar:mlstring>Student Name:</xar:mlstring> #$studentname#
-</p>
-<p>
-    <xar:mlstring>New status:</xar:mlstring> #$newstatusname#
-</p>
-<hr />
-<p>
-    <xar:mlstring>Email:</xar:mlstring> #$studentemail#
-</p>
-<p>
-    <xar:mlstring>Link to the ITSP:</xar:mlstring>
-    <a href="#$itspurl#">#$itspurl#</a>
-</p>
+<xar:mlstring>The status of an ITSP has been changed</xar:mlstring>
 
-<hr />
-<p>
-    <xar:mlstring>Date of submission:</xar:mlstring>#xarLocaleGetFormattedDate('long', $todaydate)#
-</p>
+<xar:mlstring>Student Name:</xar:mlstring> #$studentname#
+
+<xar:mlstring>New status:</xar:mlstring> #$newstatusname#
+
+<xar:mlstring>Email:</xar:mlstring> #$studentemail#
+
+<xar:mlstring>Link to the ITSP:</xar:mlstring>
+#$itspurl#
+
+<xar:mlstring>Date of submission:</xar:mlstring> #xarLocaleGetFormattedDate('long', $todaydate)#
+

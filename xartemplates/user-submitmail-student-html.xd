@@ -1,12 +1,12 @@
 <xar:ml>
-<xar:mlstring>Dear #(1)</xar:mlstring>
+<xar:mlstring>Dear #(1) ,</xar:mlstring>
 <xar:mlvar>#$studentname#</xar:mlvar>
-</xar:ml>
-<xar:mlstring>You submitted your ITSP.</xar:mlstring>
+</xar:ml><br />
+<strong><xar:mlstring>You have submitted your ITSP.</xar:mlstring></strong>
 <p>
     <xar:mlstring>Our Education Desk will review your ITSP and inform you about the decision.</xar:mlstring><br />
     <xar:mlstring>Meanwhile, you can review your ITSP online via:</xar:mlstring>
-    <a href="#$itspurl#">#$itspurl#</a><br />
+    <a href="#$itspurl#">#$itspurl#</a>
 
 </p>
 <hr />

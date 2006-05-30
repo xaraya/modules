@@ -1,4 +1,4 @@
-<h4>The status of an ITSP has been changed</h4>
+<h4><xar:mlstring>The status of an ITSP has been changed</xar:mlstring></h4>
 <p>
    <xar:mlstring>Student Name:</xar:mlstring> #$studentname#
 </p>
@@ -16,7 +16,7 @@
 
 <hr />
 <p>
-    <xar:mlstring>Date of submission:</xar:mlstring>#xarLocaleGetFormattedDate('long', $todaydate)#
+    <xar:mlstring>Date of submission:</xar:mlstring> #xarLocaleGetFormattedDate('long', $todaydate)#
 </p>
 
 

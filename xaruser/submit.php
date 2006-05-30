@@ -203,7 +203,7 @@ function itsp_user_submit($args)
 
     /* lets update status and display updated configuration */
     if (isset($return_url)) {
-        xarResponseRedirect(xarModURL($return_url));
+        xarResponseRedirect($return_url);
     } else {
         xarResponseRedirect(xarModURL('itsp', 'user', 'itsp'));
     }
