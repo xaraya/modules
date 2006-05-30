@@ -5,7 +5,7 @@
 <xar:mlstring>You submitted your ITSP.</xar:mlstring>
 <p>
     <xar:mlstring>Our Education Desk will review your ITSP and inform you about the decision.</xar:mlstring><br />
-    <xar:mlstring>Meanwhile, you can review your ITSP online via:<xar:mlstring>
+    <xar:mlstring>Meanwhile, you can review your ITSP online via:</xar:mlstring>
     <a href="#$itspurl#">#$itspurl#</a><br />
 
 </p>

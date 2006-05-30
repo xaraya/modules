@@ -154,12 +154,12 @@ function itsp_user_submit($args)
 
             /* send email to admin */
             $args = array('info'         => $officemail,
-                          'name'         => $sendname,
+                          'name'         => xarML('ITSP office'),
                      //     'ccrecipients' => $ccrecipients,
                      //     'bccrecipients' => $bccrecipients,
                           'subject'      => $subject,
-                          'message'      => $admintextmessage,
-                          'htmlmessage'  => $adminhtmlmessage,
+                          'message'      => $officetextmessage,
+                          'htmlmessage'  => $officehtmlmessage,
                           'from'         => $studentemail,
                           'fromname'     => $studentname,
                      //     'attachName'   => $attachname,

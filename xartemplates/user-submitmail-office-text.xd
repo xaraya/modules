@@ -1,37 +1,20 @@
-<xar:mlstring>Submitted By:</xar:mlstring> #$username#
+<h4>The status of an ITSP has been changed</h4>
+<p>
+   <xar:mlstring>Student Name:</xar:mlstring> #$studentname#
+</p>
+<p>
+    <xar:mlstring>New status:</xar:mlstring> #$newstatusname#
+</p>
+<hr />
+<p>
+    <xar:mlstring>Email:</xar:mlstring> #$studentemail#
+</p>
+<p>
+    <xar:mlstring>Link to the ITSP:</xar:mlstring>
+    <a href="#$itspurl#">#$itspurl#</a>
+</p>
 
--------------------------------------------------------------
-
-<xar:mlstring>Email:</xar:mlstring> #$useremail#
-
-<xar:mlstring>Organization:</xar:mlstring> #$company#
-
-<xar:mlstring>Subject:</xar:mlstring> #$requesttext#
-
-<xar:mlstring>Comments:</xar:mlstring>
-
-#$usermessage#
-
- <xar:if condition="isset($propdata) and count($propdata) gt 0">
-    <xar:foreach in="$propdata" key="$name">
-
-#$propdata[$name]['label']#: #$propdata[$name]['value']#
-
-    </xar:foreach>
-</xar:if>
-
--------------------------------------------------------------
-
-<xar:mlstring>User information:</xar:mlstring>
-
-<xar:mlstring>Sender:</xar:mlstring> #$useripaddress#
-
-<xar:mlstring>Referer:</xar:mlstring> #$userreferer#
-
--------------------------------------------------------------
-
-#$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
-
-#$todaydate#
-
-
+<hr />
+<p>
+    <xar:mlstring>Date of submission:</xar:mlstring>#xarLocaleGetFormattedDate('long', $todaydate)#
+</p>
