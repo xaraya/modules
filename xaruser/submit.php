@@ -62,6 +62,10 @@ function itsp_user_submit($args)
     $studentname = xarUserGetVar('name',$itsp['userid']);
     $studentemail = xarUserGetVar('email',$itsp['userid']);
     $usehtmlemail= 1;// TODO: keep this?
+    // Check status
+    $stati = xarModApiFunc('itsp','user','getstatusinfo');
+    $oldstatusname = $stati[$itsp['itspstatus']];
+    $newstatusname = $stati[$newstatus];
     switch ($newstatus) {
         case 1:
             // In progress
@@ -73,11 +77,6 @@ function itsp_user_submit($args)
             break;
         case 4:
             // User submits the ITSP
-
-            // Check status
-            $stati = xarModApiFunc('itsp','user','getstatusinfo');
-            $newstatusname = $stati[$newstatus];
-
             if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
                 // todo: add error
                 return $data;
@@ -153,6 +152,7 @@ function itsp_user_submit($args)
                                   'studentemail'  => $studentemail,
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname,
+                                  'oldstatusname' => $oldstatusname,
                                   'todaydate'  => time());
 
             $officehtmlmessage= xarTplModule('itsp','user','submitmail-office',$officehtmlarray,$htmltemplate);
@@ -164,6 +164,7 @@ function itsp_user_submit($args)
                                   'studentemail'  => $studentemail,
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname,
+                                  'oldstatusname' => $oldstatusname,
                                   'todaydate'  => time());
 
             /* Let's do office text message */

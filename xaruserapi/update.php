@@ -57,6 +57,8 @@ function itsp_userapi_update($args)
         return;
     }
     */
+    $datemodi = time();
+    $modiby = xarUserGetVar('uid');
     /* Get database setup
      */
     $dbconn =& xarDBGetConn();
@@ -68,9 +70,11 @@ function itsp_userapi_update($args)
      * debug operation if it is ever needed
      */
     $query = "UPDATE $itsptable
-            SET xar_itspstatus =?
+            SET xar_itspstatus =?,
+                xar_modiby =?,
+                xar_datemodi =?
             WHERE xar_itspid = ?";
-    $bindvars = array($newstatus, $itspid);
+    $bindvars = array($newstatus, $modiby, $datemodi, $itspid);
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

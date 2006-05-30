@@ -55,13 +55,21 @@ function itsp_user_itsp($args)
                               'get_itspid',
                               array('itspid' => $itspid));
     }
-    $data['itspid'] = $item['itspid'];
-    // First see if there is an id to get.
 
     if (empty($item)) {
         xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
         return $data;
     }
+
+    $data['itspid'] = $item['itspid'];
+    // First see if there is an id to get.
+    // Check status
+    $stati = xarModApiFunc('itsp','user','getstatusinfo');
+    $data['stati'] = $stati;
+    $itspstatus = $item['itspstatus'];
+    $data['statusname'] = $stati[$itspstatus];
+    $data['itspstatus'] = $itspstatus;
+
     $planid = $item['planid'];
     $userid = $item['userid'];
     // Security check

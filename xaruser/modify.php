@@ -113,6 +113,7 @@ function itsp_user_modify($args)
                 break;
             // The default will pull all linked courses. These can hold any type of courses
             // The source here is the template name that will be used.
+            case 'external':
             default:
                 // get all linked courses that already have been added to the ITSP for this pitemid
                 $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
@@ -158,15 +159,6 @@ function itsp_user_modify($args)
                 $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
                 $data['invalid'] = $invalid;
 
-                if (empty($hooks)) {
-                    $data['hookoutput'] = array();
-                } else {
-                    /* You can use the output from individual hooks in your template too, e.g. with
-                     * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-                     */
-                    $data['hookoutput'] = $hooks;
-                }
-                $data['hooks'] = '';
                 /* For E_ALL purposes, we need to check to make sure the vars are set.
                  * If they are not set, then we need to set them empty to surpress errors
                  */
@@ -219,6 +211,14 @@ function itsp_user_modify($args)
 
     $data['pitemid'] = $pitemid;
 
+    // See if the user can edit
+    $canedit = false;
+    $itspstatus = $itsp['itspstatus'];
+    if ($itspstatus < 4 || $itspstatus == 5) {
+        $canedit = true;
+    }
+    $data['canedit'] = $canedit;
+    // Call hooks
     $item['module'] = 'itsp';
     $item['itemtype'] = 2;
     $hooks = array();
@@ -228,6 +228,7 @@ function itsp_user_modify($args)
     $data['authid']      = xarSecGenAuthKey();
     $data['hookoutput']  = $hooks;
     $data['item']        = $item;
+
     return $data;
 }
 ?>

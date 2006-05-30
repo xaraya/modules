@@ -98,21 +98,25 @@
                 </xar:foreach>
             </fieldset>
             </xar:if>
-            <fieldset>
-                <legend><xar:mlstring>Submit your ITSP</xar:mlstring></legend>
-                <div class="xar-form-input-wrapper-after">
-            <!--
-                // Add an authorisation ID - this adds a hidden field in the form that
-                // contains an authorisation ID. The authorisation ID is very important in
-                // preventing certain attacks on the website
-            -->
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
-                    <input type="hidden" name="newstatus" id="newstatus" value="4" />
-                    <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
-                    <input type="submit" value="#xarML('Submit')#" />
-                </div>
-            </fieldset>
+
+            <xar:if condition="$itspstatus lt 4">
+            <p><xar:mlstring>Currently, your ITSP has not been submitted yet to the Education Desk. Submitting your ITSP means that it will be send to the
+            Education Desk and be reviewed for approval. You cannot make any changes to it during this review stage.</xar:mlstring><br />
+
+                <fieldset>
+                    <legend><xar:mlstring>Submit your ITSP</xar:mlstring></legend>
+                    <div class="xar-form-input-wrapper-after">
+                    <xar:mlstring>Press this button if you want to submit your ITSP. The ITSP will be locked untill it is approved</xar:mlstring><br />
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+                        <input type="hidden" name="newstatus" id="newstatus" value="4" />
+                        <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
+                        <input type="submit" value="#xarML('Submit')#" />
+                    </div>
+                </fieldset>
+            <xar:elseif condition="$itspstatus eq 4" />
+                <p><xar:mlstring> You have submitted your ITSP. You can not make changes to it untill it has been approved.</xar:mlstring></p>
+            </xar:if>
         </form>
     </xar:if>
     <!-- if you want to extend this module with dynamic data, you can retrieve
