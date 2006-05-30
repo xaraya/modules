@@ -19,14 +19,18 @@
  * module given the information passed back by the modification form
  * @author ITSP module development team
  */
-function itsp_admin_updateconfig()
+function itsp_admin_updateconfig($args)
 {
+    extract($args);
+
     if (!xarVarFetch('OverrideSV',   'checkbox', $OverrideSV, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('officemail',    'email',   $officemail, xarModGetVar('mail','adminmail'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('UseStatusVersions',  'checkbox', $UseStatusVersions,false,XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.
      */

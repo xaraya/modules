@@ -18,6 +18,10 @@
         <xar:mlvar>#xarUserGetVar('name')#</xar:mlvar>
     </xar:ml>
     </p>
+    <p>
+        <xar:mlstring>A summary of your ITSP is shown below. If you have added enough credits,
+        then you will be able to submit the ITSP.</xar:mlstring>
+    </p>
     <xar:comment> Show the plan details, coming from $plan</xar:comment>
     <xar:if condition="empty($plan)">
         <strong><xar:mlstring>Please choose an education plan first</xar:mlstring>&nbsp;
@@ -111,4 +115,9 @@
         </xar:foreach>
     </xar:if>
 </div>
+
+<h3><xar:mlstring>Submit your ITSP</xar:mlstring></h3>
+
+
+
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

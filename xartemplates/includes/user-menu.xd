@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs')"></xar:if>
+<xar:style scope="module" module="base" file="navtabs" />
 <xar:if condition="!empty($planid)">
     <xar:set name="$navPlanUrl">#xarModURL('itsp','user','display',array('planid'=>$planid))#</xar:set>
 <xar:else />

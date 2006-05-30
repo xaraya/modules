@@ -19,7 +19,7 @@
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
       <div class="xar-form-input-wrapper">
-        <label for="bold" class="xar-form-label" title="#xarML('Do not use status for an ITSP in the module.')#">
+        <label for="OverrideSV" class="xar-form-label" title="#xarML('Do not use status for an ITSP in the module.')#">
           <xar:mlstring>Override Status Versions?</xar:mlstring>
         </label>
         <xar:if condition="$OverrideSVchecked">
@@ -40,7 +40,7 @@
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page')#">
           <xar:mlstring>ITSP Items Per Page:</xar:mlstring>
         </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('itsp', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
       </div>
     </fieldset>
     <fieldset>
