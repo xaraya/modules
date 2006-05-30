@@ -12,12 +12,15 @@
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
+    <p><em><xar:mlstring>Status of the ITSP: </xar:mlstring> #$statusname#</em></p>
+    <br />
     <p>
     <xar:ml>
         <xar:mlstring>Welcome #(1)</xar:mlstring>
         <xar:mlvar>#xarUserGetVar('name')#</xar:mlvar>
     </xar:ml>
     </p>
+
     <p>
         <xar:mlstring>A summary of your ITSP is shown below. If you have added enough credits,
         then you will be able to submit the ITSP.</xar:mlstring>
