@@ -1,4 +1,4 @@
-<strong><xar:ml>
+<xar:ml>
 <xar:mlstring>Dear #(1)</xar:mlstring>
 <xar:mlvar>#$studentname#</xar:mlvar>
 </xar:ml>

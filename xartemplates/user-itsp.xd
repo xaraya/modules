@@ -28,7 +28,7 @@
         <a href="#xarModUrl('itsp','user','view')#"><xar:mlstring>here</xar:mlstring></a>
         </strong>
     <xar:else />
-        <form>
+        <form method="post" action="&xar-modurl-itsp-user-submit;">
             <fieldset>
                 <legend><xar:mlstring>Information</xar:mlstring></legend>
                 <div class="xar-form-input-wrapper">
@@ -90,6 +90,29 @@
                     </table>
                 </div>
             </fieldset>
+            <!-- add the output from the different display hooks here -->
+            <xar:if condition="!empty($hookoutput)">
+            <fieldset>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                    #$hookoutput[$hookmodule]#
+                </xar:foreach>
+            </fieldset>
+            </xar:if>
+            <fieldset>
+                <legend><xar:mlstring>Submit your ITSP</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper-after">
+            <!--
+                // Add an authorisation ID - this adds a hidden field in the form that
+                // contains an authorisation ID. The authorisation ID is very important in
+                // preventing certain attacks on the website
+            -->
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+                    <input type="hidden" name="newstatus" id="newstatus" value="4" />
+                    <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
+                    <input type="submit" value="#xarML('Submit')#" />
+                </div>
+            </fieldset>
         </form>
     </xar:if>
     <!-- if you want to extend this module with dynamic data, you can retrieve
@@ -108,16 +131,7 @@
         </xar:if>
     </xar:if>
 
-    <!-- add the output from the different display hooks here -->
-    <xar:if condition="!empty($hookoutput)">
-        <xar:foreach in="$hookoutput" key="$hookmodule">
-            #$hookoutput[$hookmodule]#
-        </xar:foreach>
-    </xar:if>
+
 </div>
-
-<h3><xar:mlstring>Submit your ITSP</xar:mlstring></h3>
-
-
 
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

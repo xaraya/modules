@@ -35,15 +35,15 @@ function itsp_user_submit($args)
     if (!xarVarFetch('itspid',      'id',     $itspid,     0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url',  'isset',  $return_url, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('confirm',     'isset',  $confirm,    NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('useraction',  'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
+ //   if (!xarVarFetch('useraction',  'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('newstatus',   'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
-    if (($itspid < 1) || (empty($useraction))) {
+    if (($itspid < 1) || (empty($newstatus))) {
         return $data;
     }
-    if(!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
         return;
     }
 
@@ -52,12 +52,13 @@ function itsp_user_submit($args)
 
     $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
     $data['itsp'] = $itsp;
+    /*
     // Only status id < 4 can lead to submit
-    if (($itspid['itspstatus'] < 4 ) || ($newstatus == 0)){
+    if (($itsp['itspstatus'] < 4 ) || ($newstatus == 0)){
         // Show form
         return $data;
     }
-
+*/
     $studentname = xarUserGetVar('name',$itsp['userid']);
     $studentemail = xarUserGetVar('email',$itsp['userid']);
     switch ($newstatus) {
@@ -97,8 +98,8 @@ function itsp_user_submit($args)
                  $htmltemplate = 'html-' . $itsp['itspstatus'];
                  $texttemplate = 'text-' . $itsp['itspstatus'];
             } else {
-                 $htmltemplate =  'html';
-                 $texttemplate =  'text';
+                 $htmltemplate = 'html';
+                 $texttemplate = 'text';
             }
             $studenthtmlarray= array(
                                   'studentname'   => $studentname,
@@ -106,10 +107,10 @@ function itsp_user_submit($args)
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname);
 
-            $studenthtmlmessage= xarTplModule('sitecontact','user','submitmail-student',$studenthtmlarray,$htmltemplate);
+            $studenthtmlmessage= xarTplModule('itsp','user','submitmail-student',$studenthtmlarray,$htmltemplate);
             if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
                 xarErrorHandled();
-                $studenthtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-student',$studenthtmlarray,'html');
+                $studenthtmlmessage= xarTplModule('itsp', 'user', 'submitmail-student',$studenthtmlarray,'html');
             }
 
             $studenttextarray =array(
@@ -118,10 +119,10 @@ function itsp_user_submit($args)
                                   'itspurl'       => $itspurl,
                                   'newstatusname' => $newstatusname);
 
-            $studenttextmessage= xarTplModule('sitecontact','user','usermail', $studenttextarray,$texttemplate);
+            $studenttextmessage= xarTplModule('itsp','user','submitmail-student', $studenttextarray,$texttemplate);
             if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
                 xarErrorHandled();
-                $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$studenttextarray,'text');
+                $usertextmessage= xarTplModule('itsp', 'user', 'submitmail-student',$studenttextarray,'text');
             }
 
             /* now let's do the html message to the office */
@@ -133,10 +134,10 @@ function itsp_user_submit($args)
                                   'newstatusname' => $newstatusname,
                                   'todaydate'  => time());
 
-            $officehtmlmessage= xarTplModule('sitecontact','user','submitmail-office',$officehtmlarray,$htmltemplate);
+            $officehtmlmessage= xarTplModule('itsp','user','submitmail-office',$officehtmlarray,$htmltemplate);
             if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
                 xarErrorHandled();
-                $officehtmlmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officehtmlarray,'html');
+                $officehtmlmessage= xarTplModule('itsp', 'user', 'submitmail-office',$officehtmlarray,'html');
             }
             $officetextarray = array('studentname'   => $studentname,
                                   'studentemail'  => $studentemail,
@@ -145,10 +146,10 @@ function itsp_user_submit($args)
                                   'todaydate'  => time());
 
             /* Let's do office text message */
-            $officetextmessage= xarTplModule('sitecontact','user','submitmail-office',$officetextarray,$texttemplate);
+            $officetextmessage= xarTplModule('itsp','user','submitmail-office',$officetextarray,$texttemplate);
             if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
                 xarErrorHandled();
-                $officetextmessage= xarTplModule('sitecontact', 'user', 'submitmail-office',$officetextarray,'text');
+                $officetextmessage= xarTplModule('itsp', 'user', 'submitmail-office',$officetextarray,'text');
             }
 
             /* send email to admin */

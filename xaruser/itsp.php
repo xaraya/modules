@@ -55,7 +55,7 @@ function itsp_user_itsp($args)
                               'get_itspid',
                               array('itspid' => $itspid));
     }
-    $data['itspid'] = $itspid;
+    $data['itspid'] = $item['itspid'];
     // First see if there is an id to get.
 
     if (empty($item)) {
@@ -76,27 +76,8 @@ function itsp_user_itsp($args)
     $plan = xarModApiFunc('itsp','user','get_plan',array('planid' => $planid));
     if (empty($plan) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $data['plan'] = $plan;
-    // Get the planitems for this plan in the ITSP
-    //$pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
-    // These are already in $data
-
-
-    // Do this in the menu
-    // $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid')));
- //   xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
-
-    /* Let any transformation hooks know that we want to transform some text.
-     * You'll need to specify the item id, and an array containing the names of all
-     * the pieces of text that you want to transform (e.g. for autolinks, wiki,
-     * smilies, bbcode, ...).
-
-    $item['transform'] = array('name');
-    $item = xarModCallHooks('item','transform', $itspid, $item);
-    // Fill in the details of the item.
-    $data['name_value'] = $item['name'];
-    $data['number_value'] = $item['number'];
-*/
-    //$data['is_bold'] = xarModGetVar('itsp', 'bold');
+    // Security
+    $data['authid'] = xarSecGenAuthKey();
 
     xarVarSetCached('Blocks.itsp', 'itspid', $itspid);
     /* Let any hooks know that we are displaying an item.

@@ -27,7 +27,7 @@ function itsp_userapi_getstatusinfo()
         $statusoptions[4] = xarML('Submitted'); // Sent to the office, closed for editing
         $statusoptions[5] = xarML('Approved');
         $statusoptions[6] = xarML('Closed');
-        $data['statusoptions']=$statusoptions;
+        $data=$statusoptions;
 
         return $data;
 }
