@@ -3,7 +3,7 @@
  * Calculate date for previous view
  *
  * @package modules
- * @copyright (C) 2005 by The Digital Development Foundation
+ * @copyright (C) 2005-2006 by The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,12 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-/*
+/**
  *  Calculates the new date for the previous view. The view or "cal_type" is incremented by
  *  an interval of "cal_interval" starting from "cal_date".
+ *
+ * @param string func The function to perform
+ * @return mixed. Returns to the url for viewing.
  */
 
 function julian_userapi_prev($args=array())
@@ -22,9 +25,12 @@ function julian_userapi_prev($args=array())
     // what function are we in
     xarVarFetch('func','str::',$func);
 
-    extract($args); unset($args);
+    extract($args);
+    unset($args);
 
-    if(!isset($cal_interval)) $cal_interval = 1;
+    if(!isset($cal_interval)) {
+        $cal_interval = 1;
+    }
 
     xarVarValidate('int::', $cal_date);
     xarVarValidate('int:1:', $cal_interval);
@@ -45,6 +51,17 @@ function julian_userapi_prev($args=array())
             break;
 
         case 'month' :
+            // Bug 5733 Subtract superfluous day
+            if($d == 31) {
+                switch($m) {
+                    case 7:
+                    case 5:
+                    case 3:
+                    case 12:
+                    case 10:
+                        $d -= $cal_interval;
+                }
+            }
             $m -= $cal_interval;
             break;
 

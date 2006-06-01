@@ -49,6 +49,20 @@ function julian_userapi_next($args=array())
             break;
 
         case 'month' :
+            // Bug 5733 Subtract superfluous day
+            if($d == 31) {
+                switch($m) {
+                    case 8:
+                    case 10:
+                    case 3:
+                    case 5:
+                        $d -= $cal_interval;
+                        break;
+                    case 1:
+                        $d -= 3;
+                        break;
+                }
+            }
             $m += $cal_interval;
             break;
 
