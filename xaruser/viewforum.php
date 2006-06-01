@@ -37,6 +37,7 @@ function xarbb_user_viewforum()
     // Security Check
     // CHECKME: the security check has already been done in the getforum API?
     if (!xarSecurityCheck('ViewxarBB', 1, 'Forum', $data['catid'] . ":$fid")) return;
+
     xarTplSetPageTitle($data['fname']);
 
     // Grab the last visit timestamps.

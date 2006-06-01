@@ -16,9 +16,10 @@
 function xarbb_admin_new()
 {
     // Security Check
-    if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
+    if (!xarSecurityCheck('AddxarBB', 1, 'Forum')) return;
 
     // Get parameters
+    // TODO: define these defaults in ONE place only.
     if (!xarVarFetch('fstatus','int', $data['fstatus'], 0)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
@@ -39,13 +40,16 @@ function xarbb_admin_new()
 
         case 'form':
         default:
-
             if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
+
+            // Default forum settings
             $xarsettings= xarModGetVar('xarbb', 'settings');
             if (!empty($xarsettings)) {
                 $settings = unserialize($xarsettings);
             }
+
+            // TODO: define these defaults in ONE place only.
             $data['postsperpage']    = !isset($settings['postsperpage']) ? 20 :$settings['postsperpage'];
             $data['postsortorder']   = !isset($settings['postsortorder']) ? 'ASC' :$settings['postsortorder'];
             $data['topicsperpage']   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
@@ -65,7 +69,7 @@ function xarbb_admin_new()
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
-                $data['hooks'] = join('',$hooks);
+                $data['hooks'] = join('', $hooks);
             } else {
                 $data['hooks'] = $hooks;
             }
@@ -177,6 +181,8 @@ function xarbb_admin_new()
                 }
             }
 
+            // FIXME: *allowing* HTML and *transforming* text to HTML are two different things;
+            // remove this hook dependancy here. This has already been done for modified forums.
             // Enable html hooks for xarbb forum
             if (xarModIsAvailable('html')) {
                 if ($allowhtml) {
@@ -191,7 +197,6 @@ function xarbb_admin_new()
                                   'hookModName'      => 'html'));
                 }
             }
-
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
@@ -210,8 +215,9 @@ function xarbb_admin_new()
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
             break;
     }
+
     // Return the output
- return $data;
+    return $data;
 }
 
 ?>

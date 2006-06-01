@@ -19,7 +19,8 @@ function xarbb_user_printtopic($args)
     extract($args);
     // redirect to previous/next topic
 
-    if (!$topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid))) return;
+    $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
+    if (empty($topic)) return;
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
@@ -27,17 +28,14 @@ function xarbb_user_printtopic($args)
         return;
     }
 
+    $forum = xarModAPIfunc('xarbb', 'user', 'getforum', array('fid' => $topic['fid']));
+    $settings = $forum['settings'];
 
-    $settings               = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
-    $allowhtml              = $settings['allowhtml'];
-    if (isset($settings['allowbbcode'])) {
-        $allowbbcode = $settings['allowbbcode'];
-    } else {
-        $allowbbcode = false;
-    }
+    $allowhtml = $settings['allowhtml'];
+    $allowbbcode = $settings['allowbbcode'];
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
+    if (!xarSecurityCheck('ReadxarBB', 1, 'Forum', $topic['catid'] . ':' . $topic['fid'])) return;
 
     // The user API function is called and returns all forum and topic data
     //<jojodee> Do we need to call this again?
@@ -59,7 +57,7 @@ function xarbb_user_printtopic($args)
         $data['ttitle'] = xarVarPrepForDisplay($data['ttitle']);
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['ttitle']));
+    xarTplSetPageTitle($data['ttitle']);
     
     // The user API function is called
     $posterdata = xarModAPIFunc('roles', 'user', 'get', array('uid' => $data['tposter']));
@@ -121,20 +119,6 @@ function xarbb_user_printtopic($args)
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
 
-        /*
-        // TODO: retrieve all user info at once ?
-        // The user API function is called
-        $comments[$i]['userdata'] = xarModAPIFunc('roles',
-                                             'user',
-                                             'get',
-                                              array('uid' => $comment['xar_uid']));
-
-        //format reply poster's registration date
-        //$comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
-        //Add datestamp so users can format in template, existing templates are still OK
-        $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
-        */
-
         $isposter[$comment['xar_uid']] = 1;
 
         //format the post reply date consistently with topic post date
@@ -145,30 +129,7 @@ function xarbb_user_printtopic($args)
 
     $data['posterlist'] = array_keys($isposter);
 
-    /*
-    $todolist = xarModCallHooks('item',
-                                'transform',
-                                $tid,
-                                $todolist,
-                                'xarbb',
-                                $data['fid']);
-    */
-
     if (count($data['posterlist']) > 0) {
-        /* the performance issue seems to be in comments author count, really, so this is not a solution
-        $data['usertopics'] = xarModAPIFunc('xarbb','user','countpostslist',
-                                            array('uidlist' => $data['posterlist']));
-        // TODO: support of legacy templates - get rid of this later on
-        for ($i = 0; $i < $totalcomments; $i++) {
-            $uid = $comments[$i]['xar_uid'];
-            if (isset($data['usertopics'][$uid])) {
-                $comments[$i]['usertopics'] = $data['usertopics'][$uid];
-            } else {
-                $comments[$i]['usertopics'] = 0;
-            }
-        }
-        */
-
         $data['userdata'] = xarModAPIFunc(
             'roles','user','getall',
             array('order' => 'uid', 'uidlist' => $data['posterlist'])

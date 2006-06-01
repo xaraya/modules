@@ -57,36 +57,36 @@ function xarbb_latestpostsblock_modify($blockinfo)
     }
 */
 
-   //We have getallforums function now, so let's use that and clean out this silly mess
-   $forumlist=array();
-   $forumset=array();
-   $forumset =xarModAPIFunc('xarbb','user','getallforums');
-   $forumlist[0]='all';
-   if (!empty($forumset)) {
-       foreach ($forumset as $forumitem) {
-                        $fid=$forumitem['fid'];
-                        $forumitem[$fid] = ' - ' . $forumitem['fname'];
-                        $forumlist[$fid]=$forumitem[$fid];
-       }
-   }
+    // We have getallforums function now, so let's use that and clean out this silly mess
+    $forumlist = array();
+    $forumset = array();
+    $forumset = xarModAPIFunc('xarbb', 'user', 'getallforums');
+    $forumlist[0] = 'all';
+    if (!empty($forumset)) {
+        foreach ($forumset as $forumitem) {
+            $fid=$forumitem['fid'];
+            $forumitem[$fid] = ' - ' . $forumitem['fname'];
+            $forumlist[$fid] = $forumitem[$fid];
+        }
+    }
 
 
     // Send content to template
-    $output =  array(
-                                'addtopics'   => $vars['addtopics'],
-                                'addposts'    => $vars['addposts'],
-                                'latestpost'  => $vars['latestpost'],
-                                'howmany'     => $vars['howmany'],
-                                'forumid'     => $vars['forumid'],
-                                'forumlist'   => $forumlist,
-                                'addauthor'   => $vars['addauthor'],
-                                'addlink'     => $vars['addlink'],
-                                'addobject'   => $vars['addobject'],
-                                'adddate'     => $vars['adddate'],
-                                //'titleortext' => $vars['titleortext'],
-                                'truncate'    => $vars['truncate'],
-                                'forumlink'   => $vars['forumlink']
-                                );
+    $output = array(
+        'addtopics'   => $vars['addtopics'],
+        'addposts'    => $vars['addposts'],
+        'latestpost'  => $vars['latestpost'],
+        'howmany'     => $vars['howmany'],
+        'forumid'     => $vars['forumid'],
+        'forumlist'   => $forumlist,
+        'addauthor'   => $vars['addauthor'],
+        'addlink'     => $vars['addlink'],
+        'addobject'   => $vars['addobject'],
+        'adddate'     => $vars['adddate'],
+        //'titleortext' => $vars['titleortext'],
+        'truncate'    => $vars['truncate'],
+        'forumlink'   => $vars['forumlink']
+    );
 
     // Return output
     return $output;
@@ -112,4 +112,5 @@ function xarbb_latestpostsblock_update($blockinfo)
 
     return $blockinfo;
 }
+
 ?>

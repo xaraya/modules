@@ -26,6 +26,7 @@ function xarbb_admin_modifyconfig()
             if (!empty($xarsettings)) {
                 $settings = unserialize($xarsettings);
             }
+            // TODO: define these defaults in ONE place only.
             $data['postsperpage']    = !isset($settings['postsperpage']) ? 20 :$settings['postsperpage'];
             $data['postsortorder']   = !isset($settings['postsortorder']) ? 'ASC' :$settings['postsortorder'];
             $data['topicsperpage']   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
@@ -58,6 +59,7 @@ function xarbb_admin_modifyconfig()
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
  
+            // TODO: define these defaults in ONE place only.
             if (!xarVarFetch('hottopic','int:1:',$hottopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postsperpage','int:1:',$postsperpage,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
@@ -107,7 +109,7 @@ function xarbb_admin_modifyconfig()
             $settings['nntpserver']         = $nntpserver;
             $settings['nntpgroup']          = $nntpgroup;
 
-            //Set default settings
+            // Set default settings
             xarModSetVar('xarbb', 'settings', serialize($settings));
  
             // Module alias for short URLs
@@ -147,4 +149,5 @@ function xarbb_admin_modifyconfig()
     }
     return $data;
 }
+
 ?>

@@ -44,10 +44,11 @@ function xarbb_user_newreply()
         $comment = reset($comment);
     }
 
-    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $topic['fid']));
+    $forum = xarModAPIfunc('xarbb', 'user', 'getforum', array('fid' => $topic['fid']));
+    $settings = $forum['settings'];
 
-    $allowhtml = (!empty($settings['allowhtml']) ? true : false);
-    $allowbbcode = (!empty($settings['allowbbcode']) ? true : false);
+    $allowhtml = $settings['allowhtml'];
+    $allowbbcode = $settings['allowbbcode'];
 
     if (empty($cid)) {
         $package['title'] = $topic['ttitle'];

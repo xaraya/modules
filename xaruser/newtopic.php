@@ -29,34 +29,31 @@ function xarbb_user_newtopic()
     if (!xarVarFetch('redirect', 'str', $redirect, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('preview', 'str:1:50', $preview, '', XARVAR_DONT_SET)) return;
 
-    if(isset($tid))    {
+    if (isset($tid)) {
         // The user API function is called.
         $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
-    } else  {
+        if (!empty($data)) $forum = xarModAPIfunc('xarbb', 'user', 'getforum', array('fid' => $data['fid']));
+    } elseif(isset($fid)) {
         // The user API function is called.
         $data = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
+        $forum = $data;
+    } else {
+        // Neither fid nor tid supplied.
+        $msg = xarML('No topic or forum identified');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (empty($data)) return;
 
-    if (isset($fid)) {
-        $data['fid'] = $fid;
-    }
+    if (isset($fid)) $data['fid'] = $fid;
 
-    $settings = unserialize(xarModGetVar('xarbb', 'settings.' . $data['fid']));
+    $settings = $forum['settings'];
 
-    if (isset($settings['allowhtml'])) {
-        $allowhtml = $settings['allowhtml'];
-    } else {
-        $allowhtml = false;
-    }
+    $allowhtml = $settings['allowhtml'];
     $data['allowhtml'] = $allowhtml;
 
-    if (isset($settings['allowbbcode'])) {
-        $allowbbcode = $settings['allowbbcode'];
-    } else {
-        $allowbbcode = false;
-    }
+    $allowbbcode = $settings['allowbbcode'];
     $data['allowbbcode'] = $allowbbcode;
 
     if (isset($settings['editstamp'])) {
@@ -71,6 +68,7 @@ function xarbb_user_newtopic()
         $uid = xarUserGetVar('uid');
         if (!xarSecurityCheck('ModxarBB', 0, 'Forum', $data['catid'] . ':' . $data['fid'])) {
             // No privs, but this could be my comment.
+            // FIXME: support proper 'Myself' privileges.
             if ($uid != $data['tposter']){
                 // Nope?  Lets return
                 $message = xarML('You do not have access to modify this topic.');
@@ -202,7 +200,7 @@ function xarbb_user_newtopic()
                     )
                 );
 
-                $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
+                $settings   = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
 
                 // We don't want to update the forum counter on an updated reply.
                 if (!xarModAPIFunc('xarbb', 'user', 'updateforumview',

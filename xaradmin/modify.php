@@ -100,12 +100,12 @@ function xarbb_admin_modify($args)
             if (!isset($data['nntp'])) {
                 $data['nntp'] = '';
             }
-            $masternntpsetting = xarModGetVar('xarbb','masternntpsetting');
+            $masternntpsetting = xarModGetVar('xarbb', 'masternntpsetting');
             $masternntpsetting = !isset($masternntpsetting) ? false :$masternntpsetting;
             //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
             //even if the nntp settings are not available. Review when nntp is available
 
-            if (xarModIsAvailable('newsgroups') && $masternntpsetting){
+            if (xarModIsAvailable('newsgroups') && $masternntpsetting) {
                 // get the current list of newsgroups
                 $data['items'] = xarModAPIFunc('newsgroups', 'user', 'getgroups', array('nocache' => true));
                 $grouplist = xarModGetVar('newsgroups', 'grouplist');
@@ -145,7 +145,7 @@ function xarbb_admin_modify($args)
             // For Tabs:
             // The user API function is called
             $links = xarModAPIFunc('xarbb', 'user', 'getallforums');
-            $totlinks=count($links);
+            $totlinks = count($links);
 
             // Check individual permissions for Edit / Delete
             for ($i = 0; $i < $totlinks; $i++) {

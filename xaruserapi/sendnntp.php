@@ -29,7 +29,10 @@ function xarbb_userapi_sendnntp($args)
     $email      = xarUserGetVar('email');
     $name       = xarUserGetVar('name');
     $from       = $email .'('. $name .')';
-    $settings   = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
+
+    $forum = xarModAPIfunc('xarbb', 'user', 'getforum', array('fid' => $fid));
+    $settings   = $forum['settings'];
+
     $server     = $settings['nntpserver'];
     $port       = $settings['nntpport'];
     $group      = $settings['nntpgroup'];

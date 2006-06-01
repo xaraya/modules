@@ -100,6 +100,7 @@ function xarbb_userapi_getallforums($args)
 
     // Now fill in any gaps in the default settings.
     // TODO: store these centrally, for use when resetting defaults.
+    // This must be the 10th place these same defaults are stored ;-)
     $default_settings = array(
         'postsperpage' => 20,
         'postsortorder' => 'ASC',
