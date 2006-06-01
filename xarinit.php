@@ -84,6 +84,7 @@ function security_upgrade($oldversion)
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    $prefix   =  xarDBGetSiteTablePrefix();
 
     // Upgrade dependent on old version number
     switch($oldversion) {
