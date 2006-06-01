@@ -63,6 +63,7 @@ div.xarbb-messagecontrols .rightnote {
     text-align: right;
 }
 
+
 /* forum table - perfectly styleable with css - see http://www.w3.org/TR/REC-CSS2/tables.html */
 div#xarbb-tablewrapper {
     /*float: left;*/
@@ -194,7 +195,6 @@ div.xarbb-topiccontrols span img {
     vertical-align: middle;
     display: inline;
 }
-
 
 
 /*

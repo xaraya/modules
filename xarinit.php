@@ -54,7 +54,7 @@ function xarbb_init()
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
-
+ 
     // TID -- Topic ID
     // FID -- Forum ID the topic belongs to
     // TTITLE -- The title of the topic
