@@ -126,7 +126,7 @@ function html_userapitransformoutput($text)
         // A <br/> for a single newline, on its own, with no tags immediately surrounding it.
         // This allows breaks within a paragraph (where double-newlines define the paragraphs)
         // Preserve any additional white space
-        $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br/>'."\n".'$2', $text);
+        $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);
 
         // Remove a <br> before a block tag
         // TODO: this does not include all block tags, h1-6, tables etc?
