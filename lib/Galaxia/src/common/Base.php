@@ -10,19 +10,21 @@ class Base extends Observable {
     public $db;  // The ADODB object used to access the database
     public $num_queries = 0;
 
-  // Constructor receiving a ADODB database object.
-  function __construct($db=null)
-  {
-    if(!$db) {
-        // Try to save the day
-        $db = &xarDbGetConn();
+    // Constructor receiving a ADODB database object.
+    function __construct($db=null)
+    {
         if(!$db) {
-            // Show the childs class which errored out, but also show we detected it here
-            throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+            // Try to save the day
+            global $dbGalaxia;
+            if (!isset($dbGalaxia)) {
+                // Show the childs class which errored out, but also show we detected it here
+                throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+            }
+            $this->db = $dbGalaxia;
+        } else {
+            $this->db = $db;
         }
     }
-    $this->db = $db;
-  }
 
     // copied from tikilib.php
     function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
