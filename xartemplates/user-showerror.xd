@@ -1,0 +1,25 @@
+
+<xar:comment>
+    This provides the means to display an error message while staying in the context of the module.
+    TODO: provide a few useful links and back-links
+    TODO: use a switch-statement instead of the series of if-statements
+</xar:comment>
+
+<xar:if condition="$errortype eq 'NOTOPIC'">
+    <xar:set name="$message">
+        <xar:ml>
+            <xar:mlstring>Topic '#(1)' does not exist, has been deleted, or you do not have access to it.</xar:mlstring>
+            <xar:mlvar>#$tid#</xar:mlvar>
+        </xar:ml>
+    </xar:set>
+<xar:else />
+    <xar:ml>
+        <xar:mlstring>Unknown error type '#(1)'</xar:mlstring>
+        <xar:mlvar>#$errortype#</xar:mlvar>
+    </xar:ml>
+</xar:if>
+
+
+<h1><xar:mlstring>Error</xar:mlstring></h1>
+<p>#$message#</p>
+

@@ -180,42 +180,6 @@ function xarbb_userapi_getalltopics($args)
         }
 
         switch ($sortby) {
-            /*
-            // TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
-            //       but this causes unnecessary overhead if we don't want to sort by them :-)
-            case 'title':
-                if (!empty($order) && strtoupper($order) == 'DESC') {
-                    $query .= " ORDER BY xar_ttitle DESC";
-                } else {
-                    $query .= " ORDER BY xar_ttitle ASC"; // default ascending
-                }
-                break;
-
-            case 'replier':
-                if (!empty($order) && strtoupper($order) == 'DESC') {
-                    $query .= " ORDER BY xar_treplier DESC";
-                } else {
-                    $query .= " ORDER BY xar_treplier ASC"; // default ascending
-                }
-                break;
-
-            case 'ftime': // time of first post (= topic)
-                if (!empty($order) && strtoupper($order) == 'ASC') {
-                    $query .= " ORDER BY xar_tftime ASC";
-                } else {
-                    $query .= " ORDER BY xar_tftime DESC"; // default descending
-                }
-                break;
-
-            case 'replies':
-                if (!empty($order) && strtoupper($order) == 'ASC') {
-                    $query .= " ORDER BY xar_treplies ASC";
-                } else {
-                    $query .= " ORDER BY xar_treplies DESC"; // default descending
-                }
-                break;
-            */
-
             case 'poster':
                 if (!empty($order) && strtoupper($order) == 'DESC') {
                     $query .= " ORDER BY xar_tposter DESC";

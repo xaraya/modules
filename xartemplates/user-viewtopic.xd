@@ -2,16 +2,16 @@
     License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
 <xar:comment>
-    using css-driven template, avoiding excess tables for layout, especially nested ones 
+    using css-driven template, avoiding excess tables for layout, especially nested ones
+    FIXME: whole chunks of duplication in this template handle topic and replies, although they
+    are essentially formatted the same. Duplication to be removed.
 </xar:comment>
 
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 <xar:base-include-javascript filename="confirmlink.js" module="base" position="head"/>
 
 <xar:comment>
-<div id="xarbb-loginwrapper">
-    <xar:block module="roles" type="login" showlogout="0" />
-</div>
+<div id="xarbb-loginwrapper"><xar:block module="roles" type="login" showlogout="0" /></div>
 </xar:comment>
 
 <xar:if condition="$post ne '1'">
@@ -76,9 +76,7 @@
     </div>
 
     <h1>
-        <a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid))#">
-            #$ttitle#
-        </a>
+        <a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid))#">#$ttitle#</a>
     </h1>
 
     <xar:if condition="!empty($pager)">
@@ -87,6 +85,7 @@
 
     <div class="xarbb-topiccontrols">
         <xar:template file="jump-menu" type="module" subdata="array('forums'=&gt;$forums,'fid'=&gt;$fid)"/>
+        <div style="clear: both;"></div>
     </div>
 
     <div class="xarbb-topiccontrols">
@@ -96,21 +95,19 @@
 </xar:if>
 
 <div class="xarbb-tablewrapper">
-    <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
-        #$hooks['polls']# 
-    </xar:if>
+    <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">#$hooks.polls#</xar:if>
 
     <xar:comment>
         if you have other dynamic user fields that you want to include in this template, add them to the fieldlist 
     </xar:comment>
-
     <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+
     <table>
         <tr>
-            <th>
+            <th scope="col">
                 <xar:mlstring>Author</xar:mlstring>
             </th>
-            <th>
+            <th scope="col">
                 <xar:mlstring>Message</xar:mlstring>
             </th>
         </tr>
@@ -123,9 +120,7 @@
             <tr>
                 <td class="xar-norm author">
                     <div>
-                        <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $tposter))#">
-                            #$postername#
-                        </a>
+                        <a href="#xarModUrl('roles', 'user', 'display', array('uid' =&gt; $tposter))#">#$postername#</a>
                     </div>
                     <div class="xar-sub">
                         <xar:if condition="isset($properties.avatar) and !empty($posterdata[$tposter]['avatar'])">
@@ -133,12 +128,8 @@
                             <br />
                         </xar:if>
                         <xar:ml>
-                            <xar:mlstring>Joined: #(1)</xar:mlstring>
+                            <xar:mlstring>Joined: #(1)<br/>Posts: #(2)</xar:mlstring>
                             <xar:mlvar>#xarLocaleGetFormattedDate('medium', $posterdatestamp)#</xar:mlvar>
-                        </xar:ml>
-                        <br />
-                        <xar:ml>
-                            <xar:mlstring>Posts: #(1)</xar:mlstring>
                             <xar:mlvar>#$usertopics#</xar:mlvar>
                         </xar:ml>
                         <xar:if condition="isset($properties.location) and !empty($posterdata[$tposter]['location'])">
@@ -164,12 +155,12 @@
                                 </xar:ml>
                             </span>
                         </div>
-                        <div class="rightnote">
-                            <xar:if condition="xarUserIsLoggedIn()">
+
+                        <xar:if condition="xarUserIsLoggedIn()">
+                            <div class="rightnote">
                                 <xar:if condition="$tstatus ne 3">
                                     <xar:sec mask="PostxarBB" catch="false">
                                         <xar:if condition="$allowbbcode or $allowhtml">
-                                            <!-- <xar:if condition="xarModIsAvailable('bbcode')"> -->
                                             <a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#" title="#xarML('Quote')#">
                                                 <img src="#xarTplGetImage('new/icon_quote.gif')#" alt="#xarML('Quote')#" />
                                             </a>
@@ -197,8 +188,8 @@
                                         <img src="#xarTplGetImage('new/icon_ip.gif')#" alt="#xarML('IP')#"/>
                                     </a>
                                 </xar:sec>
-                            </xar:if>
-                        </div>
+                            </div>
+                        </xar:if>
 
                         <xar:comment>
                             Placement of subject for full width of message containing div
@@ -324,7 +315,7 @@
                             <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
                                 #$item['xar_author']# 
                             </a>
-                            <xar:else />
+                        <xar:else />
                             <xar:sec catch="false" mask="modXarBB">
                                 <xar:mlstring>Anonymous</xar:mlstring>
                                 (#$item['xar_author']#) 
@@ -341,13 +332,14 @@
                                 <xar:data-output property="$properties['avatar']" value="$posterdata[$item['xar_uid']]['avatar']" />
                                 <br />
                             </xar:if>
-                            <xar:mlstring>Joined</xar:mlstring>
-                            : #xarLocaleGetFormattedDate('medium',$item['commenterdatestamp'])# 
-                            <br />
-                            <xar:mlstring>Posts</xar:mlstring>: #$item['usertopics']# 
+                            <xar:ml>
+                                <xar:mlstring>Joined #(1)<br/>Posts: #(2)</xar:mlstring>
+                                <xar:mlvar>#xarLocaleGetFormattedDate('medium',$item['commenterdatestamp'])#</xar:mlvar>
+                                <xar:mlvar>#$item['usertopics']#</xar:mlvar>
+                            </xar:ml>
                             <br />
                             <xar:if condition="isset($properties['location']) and !empty($posterdata[$item['xar_uid']]['location'])">
-                                <xar:mlstring>Location</xar:mlstring>: 
+                                <xar:mlstring>Location:</xar:mlstring>
                                 <xar:data-output property="$properties['location']" value="$posterdata[$item['xar_uid']]['location']" />
                                 <br />
                             </xar:if>
@@ -404,7 +396,7 @@
                         <div style="float:left;">
                             <strong class="xar-sub">
                                 <xar:mlstring>Subject</xar:mlstring>:
-                                <a name="#$item['xar_cid']#" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
+                                <a name="#$item['xar_cid']#" href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
                                     #$item['xar_title']#
                                 </a>
                             </strong>
@@ -525,17 +517,13 @@
     <xar:if condition="$post ne '1'">
         <xar:sec mask="PostxarBB" catch="false">
             <form action="#xarModUrl('xarbb', 'user', 'quickreply', array('tid' => $tid))#" method="post" id="post">
+                <h3><xar:mlstring>Quick Reply:</xar:mlstring></h3>
                 <p>
-                    <div class="xar-sub">
-                        <xar:mlstring>Quick Reply</xar:mlstring>:
-                    </div>
-                    <textarea name='text' rows='4' cols='60' wrap='virtual' id="text" tabindex="2"></textarea>
+                    <textarea style="height: 8em; width: 50%;" name='text' wrap="virtual" id="text" tabindex="2"></textarea>
                     <input type="hidden" name="title" id="title" value="#xarVarPrepForDisplay($ttitle)#" />
                     <input type="hidden" name="tid" id="header-objectid" value="#$tid#" />
                     <input type="hidden" name="fid" id="header-itemtype" value="#$fid#" />
-                    <div>
-                        <input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('Submit')#" tabindex="4" />
-                    </div>
+                    <br /><input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('Submit')#" tabindex="4" />
                 </p>
             </form>
         </xar:sec>

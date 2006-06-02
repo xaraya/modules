@@ -33,8 +33,7 @@ function xarbb_userapi_gettopic($args)
     }
 
     if (count($topics) == 0) {
-        $msg = xarML('Selected topic does not exist');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
+        // Handle any errors, pertaining to missing topics, at the receiving end.
         return;
     }
 

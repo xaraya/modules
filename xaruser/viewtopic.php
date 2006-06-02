@@ -47,7 +47,7 @@ function xarbb_user_viewtopic($args)
 
     $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
     // TODO: redirect to a nicer error page within xarBB if the topic does not exist.
-    if (empty($topic)) return;
+    if (empty($topic)) return xarModFunc('xarbb', 'user', 'showerror', array('errortype' => 'NOTOPIC', 'tid' => $tid));
 
     $fid = $topic['fid'];
 
