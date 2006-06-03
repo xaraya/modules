@@ -1,9 +1,9 @@
 <xar:comment> Displays the URL in square brackets after the keyword </xar:comment>
-<xar:set name="$title">#$title#</xar:set>
+<xar:set name="title">#$title#</xar:set>
 <xar:if condition="empty($target)">
-    <xar:set name="$target">''</xar:set>
+    <xar:set name="target">''</xar:set>
 </xar:if>
 <xar:if condition="empty($style)">
-    <xar:set name="$style">''</xar:set>
+    <xar:set name="style">''</xar:set>
 </xar:if>
-#$match# [<a href="#url#" title="#$title#" style="#$style#" target="#$target#">#$url#</a>]
+#$match# [<a href="#$url#" title="#$title#" style="#$style#" target="#$target#">#$url#</a>]
