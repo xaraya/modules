@@ -85,7 +85,7 @@ function helpdesk_userapi_gettickets($args)
                 'limit_gids' => !empty($company) ? array($company) : null,
                 // This exception insures that the tech assigned to the ticket can see it.
                 // NOTE: At this point this is prolly not need but just want to make sure first.
-                'exception' => 'xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid'))
+                'exceptions' => array('xar_assignedto = ' . $dbconn->qstr(xarUserGetVar('uid')))
             )
         );
         if( count($security_def) > 0 )
@@ -93,7 +93,7 @@ function helpdesk_userapi_gettickets($args)
             if( isset($security_def['left_join']) )
                 $left_join[] = " {$security_def['left_join']} ";
             if( isset($security_def['where']) )
-                $where[] = "( {$security_def['where']} )";
+                $where[] = " {$security_def['where']} ";
         }
     }
 
@@ -193,7 +193,7 @@ function helpdesk_userapi_gettickets($args)
     if( count($left_join) > 0 ){ $sql .= join(' ', $left_join); }
     if( count($whereor) > 0 ){ $where[] = '(' . join(' OR ', $whereor) . ')'; }
     if( count($where) > 0 ){ $sql .= ' WHERE ' . join(' AND ', $where); }
-    if( $count != true ){ $sql .= " GROUP BY xar_id"; }
+    //if( $count != true ){ $sql .= " GROUP BY xar_id"; }
 
     switch($sortorder)
     {
@@ -201,7 +201,7 @@ function helpdesk_userapi_gettickets($args)
             $sql .= " ORDER BY xar_id $order";
             break;
         case 'DATEUPDATED':
-            $sql .= " ORDER BY xar_lastupdate $order";
+            $sql .= " ORDER BY xar_updated $order";
             break;
         case 'DATE':
             $sql .= " ORDER BY xar_date $order";
