@@ -29,6 +29,7 @@ function security_userapi_leftjoin($args)
     $info = array();
 
     if( !isset($level) ){ $level = SECURITY_OVERVIEW; }
+    if( !isset($exceptions) ){ $exceptions = array(); }
 
     // Get current user and groups
     $currentUserId = xarUserGetVar('uid');
@@ -41,7 +42,7 @@ function security_userapi_leftjoin($args)
     $secRolesTable = $xartable['security_roles'];
 
     $where = array();
-
+    $join = array();
     if( !empty($modid) ){ $where[] = "$secRolesTable.modid = $modid "; }
     if( !empty($itemtype) ){ $where[] = "$secRolesTable.itemtype = $itemtype "; }
     if( !empty($iids) )
@@ -103,17 +104,24 @@ function security_userapi_leftjoin($args)
         NOTE: But this also allows admins to use other limits or
               exclude params like the $limit_gids var
     */
-    if( xarSecurityCheck('AdminPanel', 0) ){ $exceptions = " 'TRUE' = 'TRUE' "; }
+    if( xarSecurityCheck('AdminPanel', 0) )
+    {
+        $skip_exceptions = true;
+        // Still needed if limit_gids is set
+        $exceptions[] = " 'TRUE' = 'TRUE' ";
+    }
 
     if( !empty($exceptions) )
     {
         if( isset($limit_gids) and count($limit_gids) > 0 )
         {
-            $where[] = " ( $level OR $exceptions ) ";
+            $where[] = " ( $level OR " . join(' OR ', $exceptions) . ") ";
         }
         else
         {
-             $where[] = " $level OR $exceptions ";
+             // Admin user and no limit are needed so we do not need to do anything
+             if( isset($skip_exceptions) ){ $where = array(); }
+             else{ $where[] = " $level OR " . join(' OR ', $exceptions) . " "; }
         }
     }
     else
