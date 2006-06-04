@@ -50,61 +50,52 @@ function security_userapi_leftjoin($args)
             $where[] = "$secRolesTable.itemid = $iids";
         else if( is_array($iids) )
             $where[] = "$secRolesTable.itemid IN ( " . join(', ', $iids) . " )";
-
     }
     else if( !empty($itemid) )
     {
         $where[] = "$secRolesTable.itemid = $itemid";
     }
 
-    $secCheck = array();
-
-    // world is 0.
-    $uids = array(0, $currentUserId);
-
     //Check Groups
-    $roles = new xarRoles();
-    $user = $roles->getRole($currentUserId);
-    $tmp = $user->getParents();
-    $parents = array();
-    //  Listing all uids
-    if( !isset($limit_gids)  ){ $limit_gids = array(); }
-    foreach( $tmp as $u )
+    if( isset($limit_gids) and count($limit_gids) > 0 )
     {
-        if( count($limit_gids) > 0 )
-        {
-            if( in_array($u->uid, $limit_gids) ){ $uids[] = $u->uid; }
-        }
-        else
+        $uids = $limit_gids;
+    }
+    else
+    {
+        $roles = new xarRoles();
+        $user = $roles->getRole($currentUserId);
+        $tmp = $user->getParents();
+        $uids = array(0, $currentUserId);
+        foreach( $tmp as $u )
         {
             $uids[] = $u->uid;
         }
     }
-    $where[] = "uid IN (". join(', ', $uids) .")  ";
+    $where[] = "$secRolesTable.uid IN (". join(', ', $uids) .")  ";
 
-    // TODO add switch for various levels
     switch( $level )
     {
         case SECURITY_ADMIN:
-            $where[] = "xadmin = 1";
+            $level = "$secRolesTable.xadmin = 1";
             break;
         case SECURITY_MANAGE:
-            $where[] = "xmanage = 1";
+            $level = "$secRolesTable.xmanage = 1";
             break;
         case SECURITY_WRITE:
-            $where[] = "xwrite = 1";
+            $level = "$secRolesTable.xwrite = 1";
             break;
         case SECURITY_COMMENT:
-            $where[] = "xcomment = 1";
+            $level = "$secRolesTable.xcomment = 1";
             break;
         case SECURITY_READ:
-            $where[] = "xread = 1";
+            $level = "$secRolesTable.xread = 1";
             break;
         case SECURITY_OVERVIEW:
-            $where[] = "xoverview = 1";
+            $level = "$secRolesTable.xoverview = 1";
             break;
         default:
-            $where[] = "xread = 1";
+            $level = "$secRolesTable.xread = 1";
     }
 
     /*
@@ -114,11 +105,27 @@ function security_userapi_leftjoin($args)
     */
     if( xarSecurityCheck('AdminPanel', 0) ){ $exceptions = " 'TRUE' = 'TRUE' "; }
 
+    if( !empty($exceptions) )
+    {
+        if( isset($limit_gids) and count($limit_gids) > 0 )
+        {
+            $where[] = " ( $level OR $exceptions ) ";
+        }
+        else
+        {
+             $where[] = " $level OR $exceptions ";
+        }
+    }
+    else
+    {
+        $where[] = " $level ";
+    }
+
+
     if( count($where) > 0 )
     {
-        $info['where'] = "(SELECT COUNT(*) FROM xar_security_roles
-            WHERE "  . join(' AND ', $where) . " > 0 )";
-        if( !empty($exceptions) ){ $info['where'] = " ({$info['where']} OR $exceptions) "; }
+        $info['where'] = "( SELECT count(*) > 0 FROM {$secRolesTable} "
+            . "WHERE "  . join(' AND ', $where) . " )";
     }
 
     return $info;
