@@ -229,7 +229,21 @@ function security_upgrade_082()
             . "IF(xar_level & 1 > 0, 1 , 0) "
             . "FROM $group_table";
         $result = $dbconn->Execute($query);
-        if( !$result ){ return false; }
+
+        if( !$result )
+        {
+            if( xarCurrentErrorID() == 'DATABASE_ERROR_QUERY' )
+            {
+                // Duplicate entry can happen and we don't want that to stop the upgrade.
+                xarErrorHandled();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //if( !$result ){ return false; }
 
         /* Drop the security tables */
         $result = $datadict->dropTable($group_table);
@@ -244,7 +258,6 @@ function security_upgrade_082()
                 'hookModName' => 'security'
             )
         );
-        //var_dump($hook_list);
 
         foreach( $hook_list as $module_name => $itemtypes )
         {
@@ -257,7 +270,7 @@ function security_upgrade_082()
                         'itemtype' => $itemtype
                     )
                 );
-                //var_dump($settings);
+
                 if( count($settings['owner']) == 3 )
                 {
                     $owner = $settings['owner'];
@@ -273,7 +286,7 @@ function security_upgrade_082()
                         . "IF(xar_userlevel & 2 > 0, 1 , 0), "
                         . "IF(xar_userlevel & 1 > 0, 1 , 0) "
                         . "FROM $sec_table "
-                        . "LEFT JOIN {$owner['table']} ON {$owner['table']}.{$owner['primary_key']} = $sec_table.xar_itemid "
+                        . "INNER JOIN {$owner['table']} ON {$owner['table']}.{$owner['primary_key']} = $sec_table.xar_itemid "
                         . "WHERE $sec_table.xar_modid  = $modid "
                         . "AND $sec_table.xar_itemtype = $itemtype "
                         ;
@@ -293,7 +306,7 @@ function security_upgrade_082()
                         . "IF(xar_userlevel & 2 > 0, 1 , 0), "
                         . "IF(xar_userlevel & 1 > 0, 1 , 0) "
                         . "FROM $sec_table "
-                        . "LEFT JOIN $owner_table ON $owner_table.xar_modid = $sec_table.xar_modid "
+                        . "INNER JOIN $owner_table ON $owner_table.xar_modid = $sec_table.xar_modid "
                         . "AND $owner_table.xar_itemtype = $sec_table.xar_itemtype "
                         . "AND $owner_table.xar_itemid = $sec_table.xar_itemid "
                         . "WHERE $sec_table.xar_modid  = $modid "
@@ -304,7 +317,6 @@ function security_upgrade_082()
                 }
             }
         }
-
 
         // Now convert the world values. Should be very easy
         $query = " INSERT INTO $roles_table (modid, itemtype, itemid, uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin ) "
@@ -318,7 +330,6 @@ function security_upgrade_082()
             . "FROM $sec_table";
         $result = $dbconn->Execute($query);
         if( !$result ){ return false; }
-
 
         $result = $datadict->dropTable($xartable['security']);
         if( !$result ){ return false; }
