@@ -227,23 +227,10 @@ function security_upgrade_082()
             . "IF(xar_level & 4 > 0, 1 , 0), "
             . "IF(xar_level & 2 > 0, 1 , 0), "
             . "IF(xar_level & 1 > 0, 1 , 0) "
-            . "FROM $group_table";
+            . "FROM $group_table "
+            . "GROUP BY xar_modid, xar_itemtype, xar_itemid, xar_gid ";
         $result = $dbconn->Execute($query);
-
-        if( !$result )
-        {
-            if( xarCurrentErrorID() == 'DATABASE_ERROR_QUERY' )
-            {
-                // Duplicate entry can happen and we don't want that to stop the upgrade.
-                xarErrorHandled();
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        //if( !$result ){ return false; }
+        if( !$result ){ return false; }
 
         /* Drop the security tables */
         $result = $datadict->dropTable($group_table);
