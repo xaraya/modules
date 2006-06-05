@@ -83,9 +83,33 @@ function courses_adminapi_updateplanned($args)
                            xar_last_modified =?
                         WHERE xar_planningid = $planningid";
 
-    $bindvars = array($planningid, $courseid, $year, $credits, $creditsmin, $creditsmax, $startdate, $enddate, $prerequisites, $aim, $method, $longdesc,
-                      $costs, $committee, $coordinators, $lecturers, $location, $material, $info, $program, $extreg, $regurl, $minparticipants,
-                      $maxparticipants, $closedate, $hideplanning, $last_modified);
+    $bindvars = array($planningid,
+                      $courseid,
+                      $year,
+                      $credits,
+                      $creditsmin,
+                      $creditsmax,
+                      $startdate,
+                      $enddate,
+                      $prerequisites,
+                      $aim,
+                      $method,
+                      $longdesc,
+                      $costs,
+                      $committee,
+                      $coordinators,
+                      $lecturers,
+                      $location,
+                      $material,
+                      $info,
+                      $program,
+                      $extreg  ? 1 : 0,
+                      $regurl,
+                      $minparticipants,
+                      $maxparticipants,
+                      $closedate,
+                      $hideplanning  ? 1 : 0,
+                      $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
