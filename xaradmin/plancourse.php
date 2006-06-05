@@ -139,29 +139,29 @@ function courses_admin_plancourse($args)
         $data['level'] = $level;
     }
 
-     if (empty($credits)) {
+    if (empty($credits)) {
         $data['credits'] = '';
     } else {
         $data['credits'] = $credits;
     }
-     if (empty($creditsmin)) {
+    if (empty($creditsmin)) {
         $data['creditsmin'] = '';
     } else {
         $data['creditsmin'] = $creditsmin;
     }
-     if (empty($creditsmax)) {
+    if (empty($creditsmax)) {
         $data['creditsmax'] = '';
     } else {
         $data['creditsmax'] = $creditsmax;
     }
 
-     if (empty($shortdesc)) {
+    if (empty($shortdesc)) {
         $data['shortdesc'] = '';
     } else {
         $data['shortdesc'] = $shortdesc;
     }
 
-     if (empty($prerequisites)) {
+    if (empty($prerequisites)) {
         $data['prerequisites'] = '';
     } else {
         $data['prerequisites'] = $prerequisites;
@@ -206,7 +206,7 @@ function courses_admin_plancourse($args)
     } else {
         $data['location'] = $location;
     }
-    $data['hideplanning'] = $hideplanning;
+
     if (empty($info)) {
         $data['info'] = '';
     } else {
@@ -233,7 +233,8 @@ function courses_admin_plancourse($args)
     } else {
         $data['closedate'] = $closedate;
     }
-
+    $data['hideplanning'] = $hideplanning;
+    $data['extreg'] = $extreg;
     // Return the template variables defined in this function
     return $data;
 }
