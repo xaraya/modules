@@ -450,3 +450,4 @@ Bug 5597 Viewevents now checks for access to linked events
 0.4.5
 Improve hook settings: hooks should now remember more values, when form is returned
 Bug 5713 Bullet in modifycategories
+Bug 5610 Clean up of viewevents.php
