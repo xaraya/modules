@@ -449,3 +449,4 @@ Bug 5597 Viewevents now checks for access to linked events
 -Rewrite of viewevent template. That uses now divs to style it. No more tables... be aware when you have created your own.
 0.4.5
 Improve hook settings: hooks should now remember more values, when form is returned
+Bug 5713 Bullet in modifycategories
