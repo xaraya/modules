@@ -106,7 +106,7 @@ function courses_userapi_getall($args)
         $query .= " AND xar_level = $level ";
     }
     // Level selection
-    if (($coursetype > 0) && is_int($coursetype)) {
+    if (isset($coursetype) && ($coursetype > 0)) {
         $query .= " AND xar_type = $coursetype ";
     }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;

@@ -34,7 +34,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     /**
     * Options available to course selection
     * ===================================
-    * $pitemrules = "type:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
+    * $pitemrules = "coursetype:$rule_type;level:$rule_level;category:$rule_cat;source:$rule_source";
     * Options take the form:
     *   option-type:option-value;
     * We ignore source, only take 'internal' requests ;)
