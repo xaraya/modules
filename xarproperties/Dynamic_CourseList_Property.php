@@ -129,7 +129,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             if (empty($this->showlist)) {
                 // Simple case (default) -
                 foreach ($courses as $course) {
-                    $options[] = array('id' => $course['courseid'], 'name' => xarVarPrepForDisplay($course['name']));
+                    $name = xarVarPrepForDisplay($course['number']).' '.xarVarPrepForDisplay($course['name']);
+                    $options[] = array('id' => $course['courseid'], 'name' => $name);
                 }
             } else {
                 // Complex case: allow specific fields to be selected.
@@ -220,7 +221,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                     // Remove invalid elements (fields that are not valid).
                     $showfilter = create_function(
                     // TODO: improve this listing
-                        '$a', 'return preg_match(\'/^[-]?(name|credits|mincredit|desc)$/\', $a);'
+                        '$a', 'return preg_match(\'/^[-]?(number|name|credits|mincredit|desc)$/\', $a);'
                     );
                     $this->showlist = array_filter($this->showlist, $showfilter);
                 }
