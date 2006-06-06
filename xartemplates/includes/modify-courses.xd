@@ -26,7 +26,7 @@
                   <xar:mlstring>Add course:</xar:mlstring>
              </label>
              <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
-             <xar:data-input name="lcourseid" type="courselist" validation="$pitemrules"/>
+             <xar:data-input name="lcourseid" type="courselist" validation="$pitemrules" show="number,name"/>
         </div>
     </fieldset>
 </xar:if>
