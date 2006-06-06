@@ -18,6 +18,7 @@
  * @param $args['modname'] name of the calling module
  * @param $args['itemtype'] optional item type for the item
  * @param $args['itemid'] int item id
+ * @param $args['editor'] optional editor of the changelog entries
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -34,6 +35,7 @@ function changelog_adminapi_delete($args)
     $changelogtable = $xartable['changelog'];
 
     $query = "DELETE FROM $changelogtable ";
+    $bindvars = array();
     if (!empty($modid)) {
         if (!is_numeric($modid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -51,10 +53,19 @@ function changelog_adminapi_delete($args)
         $bindvars[] = (int) $modid;
         $bindvars[] = (int) $itemtype;
 
-        if (!empty($itemid)) {
+        if (!empty($itemid) && is_numeric($itemid)) {
             $query .= " AND xar_itemid = ?";
             $bindvars[] = (int) $itemid;
         }
+
+        if (!empty($editor) && is_numeric($editor)) {
+            $query .= " AND xar_editor = ?";
+            $bindvars[] = (int) $editor;
+        }
+
+    } elseif (!empty($editor) && is_numeric($editor)) {
+        $query .= " WHERE xar_editor = ?";
+        $bindvars[] = (int) $editor;
     }
 
     $result =& $dbconn->Execute($query, $bindvars);

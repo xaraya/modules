@@ -24,10 +24,17 @@ function changelog_admin_view()
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startnum', 'isset', $startnum,     1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('editor',   'isset', $editor,    NULL, XARVAR_DONT_SET)) {return;}
+
+    if (empty($editor) || !is_numeric($editor)) {
+        $editor = null;
+    }
 
     $data = array();
+    $data['editor'] = $editor;
 
-    $modlist = xarModAPIFunc('changelog','user','getmodules');
+    $modlist = xarModAPIFunc('changelog','user','getmodules',
+                             array('editor' => $editor));
 
     if (empty($modid)) {
         $data['moditems'] = array();
@@ -57,16 +64,19 @@ function changelog_admin_view()
                 }
                 $moditem['link'] = xarModURL('changelog','admin','view',
                                              array('modid' => $modid,
-                                                   'itemtype' => empty($itemtype) ? null : $itemtype));
+                                                   'itemtype' => empty($itemtype) ? null : $itemtype,
+                                                   'editor' => $editor));
                 $moditem['delete'] = xarModURL('changelog','admin','delete',
                                                array('modid' => $modid,
-                                                     'itemtype' => empty($itemtype) ? null : $itemtype));
+                                                     'itemtype' => empty($itemtype) ? null : $itemtype,
+                                                     'editor' => $editor));
                 $data['moditems'][] = $moditem;
                 $data['numitems'] += $moditem['numitems'];
                 $data['numchanges'] += $moditem['numchanges'];
             }
         }
-        $data['delete'] = xarModURL('changelog','admin','delete');
+        $data['delete'] = xarModURL('changelog','admin','delete',
+                                    array('editor' => $editor));
     } else {
         $modinfo = xarModGetInfo($modid);
         if (empty($itemtype)) {
@@ -108,6 +118,7 @@ function changelog_admin_view()
                                             xarModURL('changelog','admin','view',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
+                                                            'editor' => $editor,
                                                             'sort' => $sort,
                                                             'startnum' => '%%')),
                                             $numstats);
@@ -118,6 +129,7 @@ function changelog_admin_view()
         $getitems = xarModAPIFunc('changelog','user','getitems',
                                   array('modid' => $modid,
                                         'itemtype' => $itemtype,
+                                        'editor' => $editor,
                                         'numitems' => $numstats,
                                         'startnum' => $startnum,
                                         'sort' => $sort));
@@ -142,7 +154,8 @@ function changelog_admin_view()
             $data['moditems'][$itemid]['delete'] = xarModURL('changelog','admin','delete',
                                                              array('modid' => $modid,
                                                                    'itemtype' => $itemtype,
-                                                                   'itemid' => $itemid));
+                                                                   'itemid' => $itemid,
+                                                                   'editor' => $editor));
             if (isset($itemlinks[$itemid])) {
                 $data['moditems'][$itemid]['link'] = $itemlinks[$itemid]['url'];
                 $data['moditems'][$itemid]['title'] = $itemlinks[$itemid]['label'];
@@ -152,14 +165,16 @@ function changelog_admin_view()
         unset($itemlinks);
         $data['delete'] = xarModURL('changelog','admin','delete',
                                     array('modid' => $modid,
-                                          'itemtype' => $itemtype));
+                                          'itemtype' => $itemtype,
+                                          'editor' => $editor));
         $data['sortlink'] = array();
         if (empty($sort) || $sort == 'itemid') {
              $data['sortlink']['itemid'] = '';
         } else {
              $data['sortlink']['itemid'] = xarModURL('changelog','admin','view',
                                                      array('modid' => $modid,
-                                                           'itemtype' => $itemtype));
+                                                           'itemtype' => $itemtype,
+                                                           'editor' => $editor));
         }
         if (!empty($sort) && $sort == 'numchanges') {
              $data['sortlink']['numchanges'] = '';
@@ -167,6 +182,7 @@ function changelog_admin_view()
              $data['sortlink']['numchanges'] = xarModURL('changelog','admin','view',
                                                          array('modid' => $modid,
                                                                'itemtype' => $itemtype,
+                                                               'editor' => $editor,
                                                                'sort' => 'numchanges'));
         }
     }

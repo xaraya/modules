@@ -23,6 +23,7 @@ function changelog_admin_delete()
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('editor',   'isset', $editor,    NULL, XARVAR_DONT_SET)) {return;}
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -30,6 +31,7 @@ function changelog_admin_delete()
         $data['modid'] = $modid;
         $data['itemtype'] = $itemtype;
         $data['itemid'] = $itemid;
+        $data['editor'] = $editor;
 
         $what = '';
         if (!empty($modid)) {
@@ -64,6 +66,7 @@ function changelog_admin_delete()
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
                              'itemid' => $itemid,
+                             'editor' => $editor,
                              'confirm' => $confirm))) {
         return;
     }

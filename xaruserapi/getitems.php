@@ -17,6 +17,7 @@
  * @param $args['modid'] module id you want items from
  * @param $args['itemtype'] item type of the items (only 1 type supported per call)
  * @param $args['itemids'] array of item IDs
+ * @param $args['editor'] optional editor of the changelog entries
  * @param $args['sort'] string sort by itemid (default) or numhits
  * @param $args['numitems'] number of items to return
  * @param $args['startnum'] start at this number (1-based)
@@ -79,6 +80,10 @@ function changelog_userapi_getitems($args)
                  AND xar_itemtype = ?";
     $bindvars = array((int) $modid, (int) $itemtype);
 
+    if (!empty($editor) && is_numeric($editor)) {
+        $query .= " AND xar_editor = ? ";
+        $bindvars[] = (int) $editor;
+    }
     if (count($itemids) > 0) {
         $allids = join(', ',$itemids);
         $query .= " AND xar_itemid IN ( ? ) ";

@@ -14,11 +14,14 @@
 /**
  * get the list of modules where we're tracking item changes
  *
+ * @param $args['editor'] optional editor of the changelog entries
  * @returns array
  * @return $array[$modid][$itemtype] = array('items' => $numitems,'changes' => $numchanges);
  */
 function changelog_userapi_getmodules($args)
 {
+    extract($args);
+
 // Security Check
    if (!xarSecurityCheck('ReadChangeLog')) return;
 
@@ -28,11 +31,19 @@ function changelog_userapi_getmodules($args)
     $changelogtable = $xartable['changelog'];
 
     // Get items
-    $query = "SELECT xar_moduleid, xar_itemtype, COUNT(DISTINCT xar_itemid), COUNT(*)
-            FROM $changelogtable
-            GROUP BY xar_moduleid, xar_itemtype";
+    if (!empty($editor) && is_numeric($editor)) {
+        $query = "SELECT xar_moduleid, xar_itemtype, COUNT(DISTINCT xar_itemid), COUNT(*)
+                FROM $changelogtable
+                WHERE xar_editor = ?
+                GROUP BY xar_moduleid, xar_itemtype";
+        $result =& $dbconn->Execute($query, array((int)$editor));
+    } else {
+        $query = "SELECT xar_moduleid, xar_itemtype, COUNT(DISTINCT xar_itemid), COUNT(*)
+                FROM $changelogtable
+                GROUP BY xar_moduleid, xar_itemtype";
+        $result =& $dbconn->Execute($query);
+    }
 
-    $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $modlist = array();
