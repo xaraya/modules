@@ -127,6 +127,29 @@ function changelog_adminapi_updatehook($args)
         }
         $fields[$field] = $value;
     }
+    // Check if we need to include any DD fields
+    $withdd = xarModGetVar('changelog','withdd');
+    if (empty($withdd)) {
+        $withdd = '';
+    }
+    $withdd = explode(';',$withdd);
+    if (xarModIsHooked('dynamicdata',$modname,$itemtype) && !empty($withdd) &&
+        (in_array($modname,$withdd) || in_array("$modname.$itemtype",$withdd))) {
+        // Note: we need to make sure the DD hook is called before the changelog hook here
+        $ddfields = xarModAPIFunc('dynamicdata','user','getitem',
+                                  array('modid' => $modid,
+                                        'itemtype' => $itemtype,
+                                        'itemid' => $itemid));
+        if (!empty($ddfields)) {
+            foreach ($ddfields as $field => $value) {
+                // skip fields we don't want here
+                if (!empty($fieldlist) && !in_array($field,$fieldlist)) {
+                    continue;
+                }
+                $fields[$field] = $value;
+            }
+        }
+    }
     $content = serialize($fields);
     $fields = array();
 

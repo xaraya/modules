@@ -30,6 +30,16 @@
             <input type="text" name="changelog[#$modname#]" id="changelog_#$modname#" value="#$config['changelog']#" size="40" />
             <xar:mlstring>(comma-separated list)</xar:mlstring>
         </div>
+        <xar:if condition="!empty($config['includedd'])">
+            <div class="xar-form-input-wrapper">
+            <label for="includedd_#$modname#" class="xar-form-label"><xar:mlstring>Include DD fields:</xar:mlstring></label>
+            <xar:if condition="$config['includedd'] gt 1">
+                <input type="checkbox" name="includedd[#$modname#]" id="includedd_#$modname#" value="1" checked="checked" />
+            <xar:else/>
+                <input type="checkbox" name="includedd[#$modname#]" id="includedd_#$modname#" value="1" />
+            </xar:if>
+            </div>
+        </xar:if>
     </xar:foreach>
     </table>
     </fieldset>

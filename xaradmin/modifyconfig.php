@@ -31,7 +31,13 @@ function changelog_admin_modifyconfig()
 
     $changelog = xarModGetVar('changelog','default');
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
-                                         'changelog' => $changelog);
+                                         'changelog' => $changelog,
+                                         'includedd' => 0);
+    $withdd = xarModGetVar('changelog','withdd');
+    if (empty($withdd)) {
+        $withdd = '';
+    }
+    $withdd = explode(';',$withdd);
 
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'changelog'));
@@ -55,17 +61,37 @@ function changelog_admin_modifyconfig()
                         $type = xarML('type #(1)',$itemtype);
                         $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
                     }
+                    if (xarModIsHooked('dynamicdata',$modname,$itemtype)) {
+                        if (!empty($withdd) && in_array("$modname.$itemtype",$withdd)) {
+                            $includedd = 2;
+                        } else {
+                            $includedd = 1;
+                        }
+                    } else {
+                        $includedd = 0;
+                    }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
-                                                                    'changelog'   => $changelog);
+                                                                    'changelog' => $changelog,
+                                                                    'includedd' => $includedd);
                 }
             } else {
                 $changelog = xarModGetVar('changelog', $modname);
                 if (empty($changelog)) {
                     $changelog = '';
                 }
+                if (xarModIsHooked('dynamicdata',$modname)) {
+                    if (!empty($withdd) && in_array($modname,$withdd)) {
+                        $includedd = 2;
+                    } else {
+                        $includedd = 1;
+                    }
+                } else {
+                    $includedd = 0;
+                }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
-                                                    'changelog'   => $changelog);
+                                                    'changelog' => $changelog,
+                                                    'includedd' => $includedd);
             }
         }
     }
