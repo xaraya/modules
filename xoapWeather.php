@@ -233,7 +233,16 @@ class xoapWeather
 
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
-        $days =& $tree['children'][2]['children'];
+        
+         if ($tree['children'][2]['name'] == 'dayf') {
+       		$days =& $tree['children'][2]['children'];
+        } else {
+        	$days =& $tree['children'][3]['children'];
+ 
+        }
+      
+        
+       // $days =& $tree['children'][2]['children'];
 
         $forecast[0]['linkOne']     = '';
         $forecast[0]['titleOne']    = '';
@@ -326,7 +335,12 @@ class xoapWeather
 
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
-        $cc   =& $tree['children'][2];
+        
+        if ($tree['children'][2]['name'] == 'cc') {
+       		$cc =& $tree['children'][2];
+        } else {
+        	$cc =& $tree['children'][3];	
+        }
 
         $cc['linkOne']     = '';
         $cc['titleOne']    = '';
