@@ -32,25 +32,44 @@ function scheduler_admin_modifyconfig()
     } else {
         $data['jobs'] = unserialize($jobs);
     }
+    $maxid = xarModGetVar('scheduler','maxjobid');
+    if (!isset($maxid)) {
+        // re-number jobs starting from 1 and save maxid
+        $maxid = 0;
+        $newjobs = array();
+        foreach ($data['jobs'] as $job) {
+            $maxid++;
+            $newjobs[$maxid] = $job;
+        }
+        xarModSetVar('scheduler','maxjobid',$maxid);
+        $serialjobs = serialize($newjobs);
+        xarModSetVar('scheduler','jobs',$serialjobs);
+        $data['jobs'] = $newjobs;
+    }
+
     if (!xarVarFetch('addjob','str',$addjob,'',XARVAR_NOT_REQUIRED)) return;
     if (!empty($addjob) && preg_match('/^(\w+);(\w+);(\w+)$/',$addjob,$matches)) {
-        $data['jobs'][] = array(
-                                'module' => $matches[1],
-                                'type' => $matches[2],
-                                'func' => $matches[3],
-                                'interval' => '',
-                                'lastrun' => '',
-                                'result' => ''
-                               );
+        $maxid++;
+        xarModSetVar('scheduler','maxjobid',$maxid);
+        $data['jobs'][$maxid] = array(
+                                      'module' => $matches[1],
+                                      'type' => $matches[2],
+                                      'func' => $matches[3],
+                                      'interval' => '',
+                                      'config' => array(),
+                                      'lastrun' => '',
+                                      'result' => ''
+                                     );
     }
-    $data['jobs'][] = array(
-                            'module' => '',
-                            'type' => '',
-                            'func' => '',
-                            'interval' => '',
-                            'lastrun' => '',
-                            'result' => ''
-                           );
+    $data['jobs'][0] = array(
+                             'module' => '',
+                             'type' => '',
+                             'func' => '',
+                             'interval' => '',
+                             'config' => array(),
+                             'lastrun' => '',
+                             'result' => ''
+                            );
     $data['lastrun'] = xarModGetVar('scheduler','lastrun');
 
     $modules = xarModAPIFunc('modules', 'admin', 'getlist', 

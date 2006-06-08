@@ -8,6 +8,9 @@
  * @param  $args ['type'] type
  * @param  $args ['func'] API function
  * @param  $args ['interval'] interval
+ * @param  $args ['config'] extra configuration like params, startdate, enddate, crontab, ... (optional)
+ * @param  $args ['lastrun'] lastrun (optional)
+ * @param  $args ['result'] result (optional)
  * @returns int
  * @return job id on success, void on failure
  */
@@ -53,22 +56,39 @@ function scheduler_adminapi_create($args)
             return;
         }
     }
+    $maxid = xarModGetVar('scheduler','maxjobid');
+    if (!isset($maxid)) {
+        // re-number jobs starting from 1 and save maxid
+        $maxid = 0;
+        $newjobs = array();
+        foreach ($jobs as $job) {
+            $maxid++;
+            $newjobs[$maxid] = $job;
+        }
+        $jobs = $newjobs;
+    }
+    $maxid++;
+    xarModSetVar('scheduler','maxjobid',$maxid);
+    if (empty($config)) {
+        $config = array();
+    }
     if (empty($lastrun)) {
         $lastrun = 0;
     }
     if (empty($result)) {
         $result = '';
     }
-    $jobs[] = array('module' => $module,
-                    'type' => $type,
-                    'func' => $func,
-                    'interval' => $interval,
-                    'lastrun' => $lastrun,
-                    'result' => $result);
+    $jobs[$maxid] = array('module' => $module,
+                          'type' => $type,
+                          'func' => $func,
+                          'interval' => $interval,
+                          'config' => $config,
+                          'lastrun' => $lastrun,
+                          'result' => $result);
     $serialjobs = serialize($jobs);
     xarModSetVar('scheduler','jobs',$serialjobs);
 
-    $itemid = count($jobs) - 1;
+    $itemid = $maxid;
 
     $item = $args;
     $item['module'] = 'scheduler';

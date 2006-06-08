@@ -21,18 +21,38 @@ function scheduler_admin_updateconfig()
 
     if (!xarVarFetch('reset','isset',$reset,0,XARVAR_NOT_REQUIRED)) return;
 
+    $serialjobs = xarModGetVar('scheduler', 'jobs');
+    if (empty($serialjobs)) {
+        $oldjobs = array();
+    } else {
+        $oldjobs = unserialize($serialjobs);
+    }
+
     if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
     if (empty($jobs)) {
         $jobs = array();
     }
     $savejobs = array();
-    foreach ($jobs as $job) {
+    foreach ($jobs as $id => $job) {
         if (!empty($job['module']) && !empty($job['type']) && !empty($job['func']) && !empty($job['interval'])) {
             if (!empty($reset)) {
                 $job['lastrun'] = 0;
                 $job['result'] = '';
             }
-            $savejobs[] = $job;
+            if (empty($id)) {
+                // get the next job id
+                $maxid = xarModGetVar('scheduler','maxjobid');
+                if (empty($maxid)) $maxid = 0;
+                $maxid++;
+                xarModSetVar('scheduler','maxjobid',$maxid);
+                $id = $maxid;
+            } elseif (!empty($oldjobs[$id])) {
+                // get the extra configuration from the original job
+                if (isset($oldjobs[$id]['config'])) {
+                    $job['config'] = $oldjobs[$id]['config'];
+                }
+            }
+            $savejobs[$id] = $job;
         }
     }
     $serialjobs = serialize($savejobs);

@@ -7,8 +7,9 @@
  * @param  $args ['module'] module +
  * @param  $args ['type'] type +
  * @param  $args ['func'] API function, or
- * @param  $args ['itemid'] job id (not unique over time), and
+ * @param  $args ['itemid'] job id, and
  * @param  $args ['interval'] interval (optional)
+ * @param  $args ['config'] extra configuration like params, startdate, enddate, crontab, ... (optional)
  * @param  $args ['lastrun'] lastrun (optional)
  * @param  $args ['result'] result (optional)
  * @returns int
@@ -84,6 +85,9 @@ function scheduler_adminapi_update($args)
     }
     if (!empty($interval)) {
         $jobs[$itemid]['interval'] = $interval;
+    }
+    if (isset($config)) {
+        $jobs[$itemid]['config'] = $config;
     }
     if (isset($lastrun)) {
         $jobs[$itemid]['lastrun'] = $lastrun;

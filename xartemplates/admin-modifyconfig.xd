@@ -18,6 +18,7 @@
             </legend>
             <table class="xar-fullwidth">  
   <tr>
+    <th><xar:mlstring>ID</xar:mlstring></th>
     <th><xar:mlstring>Module</xar:mlstring></th>
     <th><xar:mlstring>Type</xar:mlstring></th>
     <th><xar:mlstring>API Function</xar:mlstring></th>
@@ -27,6 +28,13 @@
   </tr>
   <xar:foreach in="$jobs" key="$id" value="$job">
     <tr>
+                    <td class="xar-align-center">
+        <xar:if condition="!empty($id)">
+          <a href="#xarModURL('scheduler','admin','modify',array('itemid' => $id))#" title="#xarML('Edit Configuration')#">
+            #$id#
+          </a>
+        </xar:if>
+      </td>
                     <td class="xar-align-center">
         <select name="jobs[#$id#][module]">
           <xar:if condition="$jobs[$id]['module'] eq ''">

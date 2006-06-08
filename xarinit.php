@@ -46,6 +46,12 @@ function scheduler_upgrade($oldversion)
                                      'blockType' => 'trigger'))) return;
             // fall through to the next upgrade
 
+        case '1.1.0':
+            // fall through to the next upgrade
+
+        case '1.2.0':
+            // fall through to the next upgrade
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;

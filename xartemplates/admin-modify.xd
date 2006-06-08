@@ -1,0 +1,142 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Scheduler Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" module="scheduler" file="admin-menu" />
+    <h2>
+        <xar:ml><xar:mlstring>Modify Scheduler Job #(1)</xar:mlstring><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+    </h2>
+
+    <p>
+        <xar:mlstring>
+            This allows you to configure additional options for this job, e.g. to specify a start- and end-date for it, or use a cron-like format for scheduling it.
+        </xar:mlstring>
+    </p>
+<form method="post" action="&xar-modurl-scheduler-admin-modify;">
+  <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+  <input type="hidden" name="authid" id="authid" value="#$authid#" />
+  <fieldset>
+    <legend>
+      <xar:mlstring>Job Information</xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+      <label for="module" class="xar-form-label">
+        <xar:mlstring>Module</xar:mlstring>
+      </label>
+      #$module#
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="type" class="xar-form-label">
+        <xar:mlstring>Type</xar:mlstring>
+      </label>
+      #$type#
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="func" class="xar-form-label">
+        <xar:mlstring>API Function</xar:mlstring>
+      </label>
+      #$func#
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_params" class="xar-form-label">
+        <xar:mlstring>Parameters</xar:mlstring>
+      </label>
+      <input type="text" name="config[params]" id="config_params" value="#$config['params']#" />
+      <xar:mlstring>example: array('ptid' => 1)</xar:mlstring>
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="interval" class="xar-form-label">
+        <xar:mlstring>Interval</xar:mlstring>
+      </label>
+      <select name="interval" id="interval">
+        <xar:foreach in="$intervals" key="$name" value="$display">
+          <xar:if condition="!empty($interval) and $interval eq $name">
+            <option value="#$name#" selected="selected">#$display#</option>
+          <xar:else/>
+            <option value="#$name#">#$display#</option>
+          </xar:if>
+        </xar:foreach>
+      </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_startdate" class="xar-form-label">
+        <xar:mlstring>Start Date</xar:mlstring>
+      </label>
+      <xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="$config['startdate']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_enddate" class="xar-form-label">
+        <xar:mlstring>End Date</xar:mlstring>
+      </label>
+      <xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="$config['enddate']" />
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>
+      <xar:mlstring>Crontab</xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+      <label for="config_crontab_minute" class="xar-form-label">
+        <xar:mlstring>Minutes (0-59)</xar:mlstring>
+      </label>
+      <input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="#$config['crontab']['minute']#" />
+      <xar:mlstring>example: 0,15,30,45 = every 15 minutes</xar:mlstring>
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_crontab_hour" class="xar-form-label">
+        <xar:mlstring>Hours (0-23)</xar:mlstring>
+      </label>
+      <input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="#$config['crontab']['hour']#" />
+      <xar:mlstring>example: 8-18 = during business hours</xar:mlstring>
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_crontab_day" class="xar-form-label">
+        <xar:mlstring>Days (1-31)</xar:mlstring>
+      </label>
+      <input type="text" name="config[crontab][day]" id="config_crontab_day" value="#$config['crontab']['day']#" />
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_crontab_month" class="xar-form-label">
+        <xar:mlstring>Months (1-12)</xar:mlstring>
+      </label>
+      <input type="text" name="config[crontab][month]" id="config_crontab_month" value="#$config['crontab']['month']#" />
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label for="config_crontab_weekday" class="xar-form-label">
+        <xar:mlstring>Week Days (0-6)</xar:mlstring>
+      </label>
+      <input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="#$config['crontab']['weekday']#" />
+      <xar:mlstring>example: 1-5 = from Monday to Friday</xar:mlstring>
+    </div>
+    <div class="xar-form-input-wrapper">
+      <label class="xar-form-label">
+        <xar:mlstring>Next Run</xar:mlstring>
+      </label>
+      <xar:if condition="$interval eq '0c' and !empty($config['crontab'])">
+        <xar:if condition="empty($config['crontab']['nextrun'])">
+          <xar:set name="nextrun">xarModAPIFunc('scheduler','user','nextrun',$config['crontab'])</xar:set>
+          #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$nextrun)#
+        <xar:else/>
+          #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$config['crontab']['nextrun'])#
+        </xar:if>
+      </xar:if>
+    </div>
+  </fieldset>
+    <div class="xar-form-input-wrapper-after">
+      <xar:if condition="xarModGetVar('scheduler','running')">
+        <xar:mlstring>Warning: jobs are currently running - any changes you make now may be overwritten</xar:mlstring><br/>
+      </xar:if>
+      <input type="submit" name="confirm" value="#xarML('Update Scheduler Job')#" />
+    </div>
+</form>
+    <p>
+        <xar:mlstring>
+            Please note that the scheduler module still needs to be triggered by some external mechanism, and that any crontab interval will apply at the first trigger after the next scheduled run
+            (i.e. if the crontab specifies each Monday at 8:15 and the next trigger comes on Tuesday at 10:45, the job will run then).
+        </xar:mlstring>
+    </p>
+
+</div>

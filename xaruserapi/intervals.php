@@ -12,6 +12,7 @@ function scheduler_userapi_intervals()
     $intervals = array(
                        '0t' => xarML('never'),
                        '1t' => xarML('every trigger'),
+                       '0c' => xarML('see crontab'),
                        '5n' => xarML('every #(1) minutes',5),
                        '10n' => xarML('every #(1) minutes',10),
                        '15n' => xarML('every #(1) minutes',15),

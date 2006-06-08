@@ -20,14 +20,31 @@ function scheduler_userapi_runjobs($args = array())
     foreach ($jobs as $id => $job) {
         $log .= "\n" . $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
         $lastrun = $job['lastrun'];
+        if (!empty($job['config'])) {
+            $config = $job['config'];
+        } else {
+            $config = array();
+        }
 
         // if the interval is 'never', always skip this job
         if ($job['interval'] == '0t') {
             $log .= xarML('skipped');
             continue;
 
-        // if this is the first time we run this job
-        } elseif (empty($lastrun)) {
+        // if we are outside the start- or end-date, skip it
+        } elseif ((!empty($config['startdate']) && $now < $config['startdate']) ||
+                  (!empty($config['enddate']) && $now > $config['enddate'])) {
+            $log .= xarML('skipped');
+            continue;
+
+        // if this is a crontab job and the next run is later, skip it
+        } elseif ($job['interval'] == '0c' && !empty($config['crontab']) &&
+                  !empty($config['crontab']['nextrun']) && $now < $config['crontab']['nextrun'] + 60) {
+            $log .= xarML('skipped');
+            continue;
+
+        // if this is the first time we run this job and it's not a crontab job, always run it
+        } elseif (empty($lastrun) && $job['interval'] != '0c') {
 
         // if the job already ran, check if we need to run it again
         } else {
@@ -77,14 +94,36 @@ function scheduler_userapi_runjobs($args = array())
                         $skip = 1;
                     }
                     break;
+                case 'c': // crontab
+                    if (empty($config['crontab'])) {
+                        $config['crontab'] = array();
+                    }
+                    // check the next run for the cron-like
+                    if (!empty($config['crontab']['nextrun'])) {
+                        if ($now < $config['crontab']['nextrun'] + 60) {
+                            $skip = 1; // in fact, this case is already handled above
+                        } else {
+                            // run it now, and calculate the next run for this job
+                            $jobs[$id]['config']['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+                                                                                       $config['crontab']);
+                        }
+                    } else {
+                        // run it now, and calculate the next run for this job
+                        $jobs[$id]['config']['crontab']['nextrun'] = xarModAPIFunc('scheduler','user','nextrun',
+                                                                                   $config['crontab']);
+                    }
+                    break;
             }
             if ($skip) {
                 $log .= xarML('skipped');
                 continue;
             }
         }
-// TODO: handle arguments ?
-        $output = xarModAPIFunc($job['module'], $job['type'], $job['func'], array(), 0);
+        if (!empty($config['params'])) {
+            @eval('$output = xarModAPIFunc("'.$job['module'].'", "'.$job['type'].'", "'.$job['func'].'", '.$config['params'].', 0);');
+        } else {
+            $output = xarModAPIFunc($job['module'], $job['type'], $job['func'], array(), 0);
+        }
         if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
             $log .= xarML('failed');
@@ -127,6 +166,9 @@ function scheduler_userapi_runjobs($args = array())
 
             $newjobs[$id]['result'] = $jobs[$id]['result'];
             $newjobs[$id]['lastrun'] = $jobs[$id]['lastrun'];
+            if (isset($jobs[$id]['config'])) {
+                $newjobs[$id]['config'] = $jobs[$id]['config'];
+            }
         }
     }
     // update the new jobs

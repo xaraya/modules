@@ -7,7 +7,7 @@
  * @param  $args ['module'] module +
  * @param  $args ['type'] type +
  * @param  $args ['func'] API function, or
- * @param  $args ['itemid'] job id (not unique over time)
+ * @param  $args ['itemid'] job id
  * @returns int
  * @return job id on success, void on failure
  */
