@@ -15,29 +15,27 @@
  */
 function comments_user_display($args) 
 {
-
-    if (!xarSecurityCheck('Comments-Read',0))
-        return;
+    if (!xarSecurityCheck('Comments-Read', 0)) return;
 
     // check if we're coming via a hook call
     if (isset($args['objectid'])) {
         $ishooked = 1;
-
-    // if we're not coming via a hook call
     } else {
+        // if we're not coming via a hook call
         $ishooked = 0;
         // then check for a 'cid' parameter
         if (!empty($args['cid'])) {
             $cid = $args['cid'];
         } else {
-            xarVarFetch('cid','int:1:',$cid,0,XARVAR_NOT_REQUIRED);
+            xarVarFetch('cid', 'int:1:', $cid, 0, XARVAR_NOT_REQUIRED);
         }
         // and set the selected cid to this one
         if (!empty($cid) && !isset($args['selected_cid'])) {
             $args['selected_cid'] = $cid;
         }
     }
-// TODO: now clean up the rest :-)
+
+    // TODO: now clean up the rest :-)
 
     $header   = xarRequestGetVar('header');
     $package  = xarRequestGetVar('package');
@@ -48,10 +46,11 @@ function comments_user_display($args)
     // FIXME: clean up return url handling
 
     $settings_uri = "&amp;depth={$package['settings']['depth']}"
-                  . "&amp;order={$package['settings']['order']}"
-                  . "&amp;sortby={$package['settings']['sortby']}"
-                  . "&amp;render={$package['settings']['render']}";
+        . "&amp;order={$package['settings']['order']}"
+        . "&amp;sortby={$package['settings']['sortby']}"
+        . "&amp;render={$package['settings']['render']}";
 
+    // Fetch the module ID
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
     } elseif (isset($header['modid'])) {
@@ -65,7 +64,7 @@ function comments_user_display($args)
         $args['modid'] = $modid;
         $header['modid'] = $modid;
     } else {
-        xarVarFetch('modid','isset',$modid,NULL,XARVAR_NOT_REQUIRED);
+        xarVarFetch('modid', 'isset', $modid, NULL, XARVAR_NOT_REQUIRED);
         if (empty($modid)) {
             $modid = xarModGetIDFromName(xarModGetName());
         }
@@ -73,6 +72,7 @@ function comments_user_display($args)
         $header['modid'] = $modid;
     }
 
+    // Fetch the itemtype
     if (isset($args['itemtype'])) {
         $header['itemtype'] = $args['itemtype'];
     } elseif (isset($header['itemtype'])) {
@@ -81,17 +81,18 @@ function comments_user_display($args)
         $args['itemtype'] = $args['extrainfo']['itemtype'];
         $header['itemtype'] = $args['extrainfo']['itemtype'];
     } else {
-        xarVarFetch('itemtype','isset',$itemtype,NULL,XARVAR_NOT_REQUIRED);
+        xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_NOT_REQUIRED);
         $args['itemtype'] = $itemtype;
         $header['itemtype'] = $itemtype;
     }
 
+    // Fetch the object ID
     if (isset($args['objectid'])) {
         $header['objectid'] = $args['objectid'];
     } elseif (isset($header['objectid'])) {
         $args['objectid'] = $header['objectid'];
     } else {
-        xarVarFetch('objectid','isset',$objectid,NULL,XARVAR_NOT_REQUIRED);
+        xarVarFetch('objectid','isset', $objectid, NULL, XARVAR_NOT_REQUIRED);
         $args['objectid'] = $objectid;
         $header['objectid'] = $objectid;
     }
@@ -107,9 +108,8 @@ function comments_user_display($args)
     }
 
     if (!xarModLoad('comments','renderer')) {
-        $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD',
-            new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;
     }
 
@@ -117,10 +117,10 @@ function comments_user_display($args)
         $package['comments'] = xarModAPIFunc('comments','user','get_multiple',$header);
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
-                                                                 $package['comments'],
-                                                                 $package['settings']['sortby'],
-                                                                 $package['settings']['order']
-                                                               );
+                $package['comments'],
+                $package['settings']['sortby'],
+                $package['settings']['order']
+            );
         }
     } else {
         $header['cid'] = $header['selected_cid'];
@@ -130,27 +130,18 @@ function comments_user_display($args)
             $header['modid'] = $package['comments'][0]['xar_modid'];
             $header['itemtype'] = $package['comments'][0]['xar_itemtype'];
             $header['objectid'] = $package['comments'][0]['xar_objectid'];
-/*
-            // Call display hooks for categories, dynamicdata etc. (only when displaying individual comments)
-            $args['module'] = 'comments';
-            $args['itemtype'] = 0;
-            $args['itemid'] = $header['cid'];
-            // pass along the current module & itemtype for pubsub (urgh)
-        // FIXME: handle 2nd-level hook calls in a cleaner way - cfr. categories navigation, comments add etc.
-            $args['cid'] = 0; // dummy category
-            $modinfo = xarModGetInfo($header['modid']);
-            $args['current_module'] = $modinfo['name'];
-            $args['current_itemtype'] = $header['itemtype'];
-            $args['current_itemid'] = $header['objectid'];
-            $args['returnurl'] = xarModURL('comments','user','display',array('cid' => $header['cid']));
-            $package['comments'][0]['hooks'] = xarModCallHooks('item', 'display', $header['cid'], $args);
-*/
         }
     }
 
     $package['comments'] = comments_renderer_array_prune_excessdepth(
-                            array('array_list'  => $package['comments'],
-                                  'cutoff'      => $package['settings']['depth']));
+        array(
+            'array_list'    => $package['comments'],
+            'cutoff'        => $package['settings']['depth'],
+            'modid'		    => $args['modid'],
+            'itemtype'      => $args['itemtype'],
+            'objectid'	    => $args['objectid'],
+        )
+    );
 
     if ($package['settings']['render'] == _COM_VIEW_THREADED) {
         $package['comments'] = comments_renderer_array_maptree($package['comments']);
@@ -184,22 +175,23 @@ function comments_user_display($args)
         // get the title and link of the original object
         $modinfo = xarModGetInfo($header['modid']);
         $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
-                                   array('itemtype' => $header['itemtype'],
-                                         'itemids' => array($header['objectid'])),
-                                   // don't throw an exception if this function doesn't exist
-                                   0);
+            array('itemtype' => $header['itemtype'], 'itemids' => array($header['objectid'])),
+            // don't throw an exception if this function doesn't exist
+            0
+        );
+
         if (!empty($itemlinks) && !empty($itemlinks[$header['objectid']])) {
             $url = $itemlinks[$header['objectid']]['url'];
-            if (!strstr($url,'?')) {
+            if (!strstr($url, '?')) {
                 $url .= '?';
             }
             $header['objectlink'] = $itemlinks[$header['objectid']]['url'];
             $header['objecttitle'] = $itemlinks[$header['objectid']]['label'];
         } else {
-            $url = xarModURL($modinfo['name'],'user','main');
+            $url = xarModURL($modinfo['name'], 'user', 'main');
         }
-        $receipt['returnurl'] = array('encoded' => rawurlencode($url),
-                                      'decoded' => $url);
+
+        $receipt['returnurl'] = array('encoded' => rawurlencode($url), 'decoded' => $url);
     } elseif (!isset($receipt['returnurl']['raw'])) {
         if (empty($args['extrainfo'])) {
             $modinfo = xarModGetInfo($args['modid']);
@@ -209,7 +201,7 @@ function comments_user_display($args)
         } elseif (is_string($args['extrainfo'])) {
             $receipt['returnurl']['raw'] = $args['extrainfo'];
         }
-        if (!stristr($receipt['returnurl']['raw'],'?')) {
+        if (!stristr($receipt['returnurl']['raw'], '?')) {
             $receipt['returnurl']['raw'] .= '?';
         }
         $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
@@ -222,7 +214,7 @@ function comments_user_display($args)
         $receipt['returnurl']['decoded'] = $receipt['returnurl']['raw'] . $settings_uri;
     }
 
-    $receipt['post_url']              = xarModURL('comments','user','reply');
+    $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
 
     $hooks = xarModAPIFunc('comments','user','formhooks'); 

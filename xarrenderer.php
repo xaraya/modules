@@ -30,9 +30,9 @@ define('_COM_P_CONNECTOR', 2);
 define('_COM_DASH_CONNECTOR',3);
 define('_COM_T_CONNECTOR', 4);
 define('_COM_L_CONNECTOR', 5);
-define('_COM_I_CONNECTOR',6);
-define('_COM_BLANK_CONNECTOR',7);
-define('_COM_CUTOFF_CONNECTOR',8);
+define('_COM_I_CONNECTOR', 6);
+define('_COM_BLANK_CONNECTOR', 7);
+define('_COM_CUTOFF_CONNECTOR', 8);
 
 
 /**
@@ -80,13 +80,12 @@ define('_COM_CUTOFF_CONNECTOR',8);
  * @returns bool true on success, false otherwise
  *
  */
+
 function comments_renderer_array_markdepths_bychildren(&$comments_list) 
 {
-    
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
-    if (!is_array($comments_list) || !count($comments_list))
-        return false;
+    if (!is_array($comments_list) || !count($comments_list)) return false;
 
     // figure out how man total nodes are in this array,
     $total_nodes = count($comments_list);
@@ -95,24 +94,24 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
     // if not, it's the first time this array has been parsed through
     // this function so initialize each node to have a depth of zero:
     if (!isset($comments_list[0]['depth'])) {
-        for ( $node = 0; $node < $total_nodes ; $node++ ) {
+        for ($node = 0; $node < $total_nodes; $node++) {
             $comments_list[$node]['depth'] = 0;
         }
     }
     
-    for ( $node = 0; $node < $total_nodes ; $node++) {
-
+    for ($node = 0; $node < $total_nodes; $node++) {
         // if the current node has zero (or less) children,
         // skip to the next one
         if ($comments_list[$node]['children'] <= 0) {
             continue;
-        } else {  // otherwise, the node has children so figure out it's last child's index number
+        } else {
+            // otherwise, the node has children so figure out it's last child's index number
             $last_child = $node + $comments_list[$node]['children'];
         }
 
         // now we increment starting at the node's first child up
         // to it's last one adding one to each of it's kids
-        for ($index = $node + 1; ($index <= $last_child) && ($index < $total_nodes) ; $index++) {
+        for ($index = $node + 1; $index <= $last_child && $index < $total_nodes; $index++) {
             $comments_list[$index]['depth'] += 1;
         }
     }
@@ -133,13 +132,11 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
  * @param array   &$comments_list    an array of related (array) items - each item -must- contain a parent id field
  * @returns bool True on success, False otherwise
  */
-function comments_renderer_array_markdepths_bypid(&$comments_list) 
+function comments_renderer_array_markdepths_bypid(&$comments_list)
 {
-
     if (empty($comments_list) || !count($comments_list)) {
         $msg = xarML('Empty comments list');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
-                       new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -152,8 +149,8 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     
     // Initialize parents array and make the first key in it equal
     // to the first node in the array's parentid
-    $parents["PID_{$comments_list[0]['xar_pid']}"] = $depth;
-    
+    $parents['PID_' . $comments_list[0]['xar_pid']] = $depth;
+
     // setup the keys for each comment so that we can
     // easily reference them further down
     foreach($comments_list as $node) {
@@ -182,7 +179,8 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
                 $parents["PID_".$node['xar_pid']] = -1;                
             }
             $ppidkey = "PID_".$comments_list[$node['xar_pid']]['xar_pid'];
-        // CHECKME: when we start with a category 2+ levels deep, $parents['PID_0'] is undefined here
+
+            // CHECKME: when we start with a category 2+ levels deep, $parents['PID_0'] is undefined here
             if (!isset($parents[$ppidkey])) {
                 $parents[$ppidkey] = -1;
             }
@@ -199,14 +197,15 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         $prep_list[$key] = $node;
         $prep_list[$key]['depth'] = $parents["PID_".$node['xar_pid']];
     }
+
     // now we go through and find all the nodes that were marked
     // as parent nodes and add the 'haschildren' field to them
     // setting it to true -- otherwise, if the node wasn't a
     // parent ID we set it's 'haschildren' equal to false
     foreach ($prep_list as $node) {
-        if (isset($parents["PID_".$node['xar_cid']])) {
+        if (isset($parents['PID_' . $node['xar_cid']])) {
             $node['children'] = 1;
-            unset($parents["PID_".$node['xar_cid']]);
+            unset($parents['PID_' . $node['xar_cid']]);
         } else {
             $node['children'] = 0;
         }
@@ -218,19 +217,12 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
     foreach ($new_list as $node) {
-        if (!array_key_exists('remove',$node)) {
+        if (!array_key_exists('remove', $node)) {
             $comments_list[] = $node;
         }
     } 
-    // free up the variables that we
-    // created for this function...
-    unset($new_list);
-    unset($parents);
-    unset($prep_list);
 
     return true;
-
-
 }
 
 
@@ -250,31 +242,33 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
  */
 function comments_renderer_array_prune_excessdepth($args) 
 {
-
     extract($args);
-    if (!is_array($array_list) || !count($array_list)) {
-        return;
-    }
+    if (!is_array($array_list) || !count($array_list)) return;
 
-// TODO: find better way to get min. left & max. right for this list
+    // TODO: find better way to get min. left & max. right for this list
     foreach ($array_list as $node) {
         if (!isset($left)) $left = $node['xar_left'];
         if (!isset($right)) $right = $node['xar_right'];
         if ($node['xar_left'] < $left) $left = $node['xar_left'];
         if ($node['xar_right'] > $right) $right = $node['xar_right'];
     }
-    $countlist = xarModAPIFunc('comments','user','get_childcountlist',
-                               array('left' => $left, 'right' => $right));
+
+    $countlist = xarModAPIFunc('comments', 'user', 'get_childcountlist',
+        array(
+            'left' => $left,
+            'right' => $right,
+            'modid' => $modid,
+            'itemtype' => $itemtype,
+            'objectid' => $objectid
+        )
+    );
 
     $new_list = array();
     foreach ($array_list as $node) {
-
-//        $childcount = comments_userapi_get_childcount($node['xar_cid']);
         $childcount = $countlist[$node['xar_cid']];
 
         if ($cutoff == $node['depth']) {
             if ($childcount) {
-
                 // TODO: change childcount -> xar_childcount
                 // TODO: change children --> xar_children
                 $node['xar_branchout']      = true;
@@ -325,7 +319,6 @@ function comments_renderer_array_prune_excessdepth($args)
 
 function comments_renderer_array_depthbuoy($action, $depth, $value=true) 
 {
-    
     static $matrix = array();
     
     if (empty($matrix)) {
@@ -371,26 +364,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
     // then set up the depth fields for each if that is present,
     // otherwise -- raise an exception.  Also, sort them after
     // assigning depths.
-/*
-    if (isset($CommentList[0]['depth']) < 0) {
-        if (!isset($CommentList[0]['children'])) {
-            if (!isset($CommentList[0]['pid'])) {
-                $msg = xarML('Pid Field is missing');
-                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
-                                new DefaultUserException($msg));
-                return;
-            } else {
-                comments_renderer_array_markdepths_pid($CommentList);
-            }
-        } else {
-            comments_renderer_array_markdepths_bychildren($CommentList);
-        }
-        // if we don't have depths then we can (safely) assume we don't
-        // have a sorted list either -- so sort.
 
-        comments_renderer_array_sort($CommentList, _COM_SORTBY_THREAD, _COM_SORT_ASC);
-    }
-*/
     $current_depth  = 0;         // depth of the current comment in the array
     $next_depth     = 0;         // depth of the next comment in the array (closer to beginning of array)
     $prev_depth     = 0;         // depth of the previous comment in the array (closer to end of array)
@@ -401,8 +375,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
     
     // create the matrix starting from the end and working our way towards
     // the beginning.
-    for ($counter = $listsize; $counter >= 0; ($counter = $counter - 1)) {
-
+    for ($counter = $listsize; $counter >= 0; $counter = $counter - 1) {
         // unmapped matrix for current comment
         $matrix = array_pad(array(0=>0), _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
 
@@ -433,7 +406,6 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
         // soooo if the current depth is -not- zero then we have other connectors so
         // below we figure out what the other connectors are...
         if (0 != $current_depth) {
-
             if ( ($current_depth != $prev_depth) ) {
                 $matrix[$current_depth - 1] = _COM_L_CONNECTOR;
             }
@@ -443,7 +415,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
             if ( $current_depth <= $prev_depth) {
                 // if there is a DepthBuoy set for (current depth -1)
                 // then
-                if ( comments_renderer_array_depthbuoy('get',($current_depth - 1)) === true ) {
+                if (comments_renderer_array_depthbuoy('get',($current_depth - 1)) === true ) {
                     // the DepthBuoy for this depth can now be turned off.
                     comments_renderer_array_depthbuoy('set',($current_depth - 1),false);
                     $matrix[($current_depth - 1)] = _COM_T_CONNECTOR;
@@ -459,14 +431,14 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
             // the matrix working our way from the indice equal to the current comment
             // depth towards the begginning of the array - checking for I connectors
             // and Blank connectors.
-            for ($node = $current_depth; $node >= 0; ($node = $node - 1)) {
-
+            for ($node = $current_depth; $node >= 0; $node -= 1) {
                 // be sure not to overwrite another node in the matrix
                 if (!$matrix[$node]) {
                     // if a depth buoy was set for this depth, add I connector
-                    if (comments_renderer_array_depthbuoy('get',$node) == true) {
+                    if (comments_renderer_array_depthbuoy('get', $node) == true) {
                         $matrix[($node)] = _COM_I_CONNECTOR;
-                    } else {  // otherwise add a blank.gif
+                    } else {
+                        // otherwise add a blank.gif
                         $matrix[($node)] = _COM_BLANK_CONNECTOR;
                     }
                 }
@@ -475,8 +447,8 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 
         // Set depth buoy if the next depth is greater then the current,
         // this way we can remember where to set an I connector :)
-        if (($next_depth > $current_depth) && ($current_depth != 0)) {
-            comments_renderer_array_depthbuoy('set',($current_depth - 1), true);
+        if ($next_depth > $current_depth && $current_depth != 0) {
+            comments_renderer_array_depthbuoy('set', $current_depth - 1, true);
         }
 
         // ok -- once that's all done, take this segment of the whole matrix map (ie.,
@@ -491,6 +463,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
             $CommentList[$counter]['xar_map'] = comments_renderer_array_image_substitution($matrix);
         }            
     }
+
     return $CommentList;
 }
 
@@ -508,11 +481,9 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 
 function comments_renderer_array_image_substitution($matrix, $modName = NULL) 
 {
-    
     $map = array();
     
     foreach ($matrix as $value) {
-        
         switch ($value) {
             case _COM_O_CONNECTOR:
                 $map[] = xarTplGetImage('n_nosub.gif', $modName);
@@ -561,7 +532,6 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL)
  */
 function comments_renderer_array_fieldrelation_compare ($a, $b) 
 {
-
     // get the sort value
     $sort = comments_renderer_array_sortvalue();
     
@@ -570,10 +540,10 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
     // the lineage having it's own array index.
     // As well, we find out how many id's there
     // are for each Lineage.
-    $Family_A = explode(':',$a);
+    $Family_A = explode(':', $a);
     $Family_A_count = count($Family_A);
     
-    $Family_B = explode(':',$b);
+    $Family_B = explode(':', $b);
     $Family_B_count = count($Family_B);
     
     // We need the lineage with the least amount of id's in
@@ -584,15 +554,13 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
         // matter
         $members_count = $Family_A_count;
     } else {
-        $members_count = (($Family_A_count < $Family_B_count)?
-                                            $Family_A_count : $Family_B_count);
+        $members_count = ($Family_A_count < $Family_B_count ? $Family_A_count : $Family_B_count);
     }
     // here we do the sorting of the toplevel comments in
     // the list by comparing the first ID's in the lineage
     // which are always the top level id's.
     if (is_numeric($Family_A[0]) && is_numeric($Family_B[0])) {
         if ((int) $Family_A[0] != (int) $Family_B[0]) {
-
             if ($sort == _COM_SORT_ASC) {
                 return ((int) $Family_A[0] < (int) $Family_B[0]) ? -1 : 1;
             } elseif ($sort == _COM_SORT_DESC) {
@@ -605,7 +573,6 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
         }
     } else {
         if (strcasecmp($Family_A[0], $Family_B[0]) != 0) {
-
             if ($sort == _COM_SORT_ASC) {
                 return strcasecmp($Family_A[0], $Family_B[0]);
             } elseif ($sort == _COM_SORT_DESC) {
@@ -677,7 +644,6 @@ function comments_renderer_array_sortvalue($value=NULL)
 
 function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) 
 {
-    
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'comment_list','renderer','array_sort',$modName);
@@ -711,7 +677,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         foreach ($comment_list as $node) {
             switch($sortby) {
                 case _COM_SORTBY_TOPIC:
-                    $key = eregi_replace("\:"," ",$node['xar_title']);
+                    $key = eregi_replace("\:", " ", $node['xar_title']);
                     break;
                 case _COM_SORTBY_DATE:
                     $key = 'a' . $node['xar_datetime'];
@@ -800,4 +766,5 @@ function comments_renderer_wrap_words(&$str, $chars)
     }
     //$str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
+
 ?>

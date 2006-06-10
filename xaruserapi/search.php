@@ -9,10 +9,7 @@
  */
 function comments_userapi_search($args) 
 {
-
-    if (empty($args) || count($args) < 1) {
-        return;
-    }
+    if (empty($args) || count($args) < 1) return;
 
     extract($args);
 
@@ -25,7 +22,7 @@ function comments_userapi_search($args)
     // initialize the commentlist array
     $commentlist = array();
 
-    $bindvars = array();
+    $bindvars = array(_COM_STATUS_ON);
 
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_date,
@@ -39,7 +36,7 @@ function comments_userapi_search($args)
                     $ctable[itemtype]  AS xar_itemtype,
                     $ctable[objectid] as xar_objectid
               FROM  $xartable[comments]
-             WHERE  $ctable[status]= "._COM_STATUS_ON."
+             WHERE  $ctable[status]= ?
                AND  (";
 
     if (isset($title)) {
@@ -77,37 +74,40 @@ function comments_userapi_search($args)
 
     // if we have nothing to return
     // we return nothing ;) duh? lol
-    if ($result->EOF) {
-        return array();
-    }
+    if ($result->EOF) return array();
 
     // zip through the list of results and
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        // FIXME Delete after time output testing
-        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_date']);
-        $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
+        $row['xar_author'] = xarUserGetVar('name', $row['xar_author']);
         $commentlist[] = $row;
         $result->MoveNext();
     }
     $result->Close();
 
-    if (!xarModLoad('comments','renderer')) {
-        $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+    if (!xarModLoad('comments', 'renderer')) {
+        $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;
     }
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('Unable to create depth by pid');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException($msg));
         return;
     }
 
     comments_renderer_array_sort($commentlist, _COM_SORTBY_TOPIC, _COM_SORT_ASC);
-    $commentlist = comments_renderer_array_prune_excessdepth(array('array_list'  => $commentlist,
-                                                                   'cutoff'      => _COM_MAX_DEPTH));
+    // FIXME: excess depth cannot be pruned using this function without knowing
+    // the module/itemtype/objectid, which we don't know at this point.
+    /*$commentlist = comments_renderer_array_prune_excessdepth(
+        array(
+            'array_list' => $commentlist,
+            'cutoff' => _COM_MAX_DEPTH,
+        )
+    );*/
+
     comments_renderer_array_maptree($commentlist);
 
     return $commentlist;

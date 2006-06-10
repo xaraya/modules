@@ -23,14 +23,12 @@
 // Purpose of file:  Defines for the comments API
 // ----------------------------------------------------------------------
 
-if (defined('_COM_SORT_ASC')) {
-    return;
-}
+if (defined('_COM_SORT_ASC')) return;
 
 // the following two defines specify the sorting direction which
 // can be either ascending or descending
 define('_COM_SORT_ASC', 1);
-define('_COM_SORT_DESC',2);
+define('_COM_SORT_DESC', 2);
     
 // the following four defines specify the sort order which can be any of
 // the following: author, date, topic, lineage 
@@ -45,24 +43,24 @@ define ('_COM_SORTBY_TOPIC', 4);
 // to entering in a real comment id and getting
 // just that specific comment
 define('_COM_RETRIEVE_ALL', 1);
-define('_COM_VIEW_FLAT','flat');
-define('_COM_VIEW_NESTED','nested');
-define('_COM_VIEW_THREADED','threaded');
+define('_COM_VIEW_FLAT', 'flat');
+define('_COM_VIEW_NESTED', 'nested');
+define('_COM_VIEW_THREADED', 'threaded');
 
 // the following defines are for the $depth variable
 // the -1 (FULL_TREE) tells it to get the full
 // tree/branch and the the 0 (TREE_LEAF) tells the function
 // to acquire just that specific leaf on the tree.
 //
-define('_COM_FULL_TREE',((int) '-1'));
-define('_COM_TREE_LEAF',1);
+define('_COM_FULL_TREE', ((int) '-1'));
+define('_COM_TREE_LEAF', 1);
 
 // Maximum allowable branch depth
-define('_COM_MAX_DEPTH',10);
+define('_COM_MAX_DEPTH', 10);
 
 // Status of comment nodes
-define('_COM_STATUS_OFF',1);
-define('_COM_STATUS_ON',2);
-define('_COM_STATUS_ROOT_NODE',3);
+define('_COM_STATUS_OFF', 1);
+define('_COM_STATUS_ON', 2);
+define('_COM_STATUS_ROOT_NODE', 3);
 
 ?>
