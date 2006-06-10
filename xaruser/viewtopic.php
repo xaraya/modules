@@ -302,11 +302,12 @@ function xarbb_user_viewtopic($args)
     $data['forums'] = xarModAPIFunc('xarbb', 'user', 'getallforums');
 
     // Lets check our options as well for a dual status topic
-    if (!empty($topic['toptions'])) {
-        $topicoptions = unserialize($data['toptions']);
+    if (!empty($topic['options'])) {
 
         // OK, just need to trick the topic now if the conditions are set.
-        if (!empty($topicoptions['lock'])){
+        // TODO: fix this - we don't want to hide the real status (i.e. 'type') of the topic
+        // behind the fact that it is locked.
+        if (!empty($data['options']['lock'])){
             $data['tstatus'] = 3;
         }
 
@@ -316,7 +317,7 @@ function xarbb_user_viewtopic($args)
         //  0 = not subscribed
         if (xarUserIsLoggedIn()) {
             $uid = (int)xarUserGetVar('uid');
-            if (!empty($topicoptions['subscribers']) && in_array($uid, $topicoptions['subscribers'])) {
+            if (!empty($data['options']['subscribers']) && in_array($uid, $data['options']['subscribers'])) {
                 $data['tsubscribed'] = 1;
             } else {
                 $data['tsubscribed'] = 0;
@@ -331,6 +332,7 @@ function xarbb_user_viewtopic($args)
     }
 
     // User needs post permission on this topic in order to subscribe.
+    // TODO: is this a necessary restriction? Why not subscribe to a read-only topic?
     // The APIs dictate this.
     if (xarSecurityCheck('PostxarBB', 0, 'Forum', $topic['catid'] . ':' . $topic['fid'])) {
         $data['tsubrights'] = 1;

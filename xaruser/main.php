@@ -125,9 +125,7 @@ function xarbb_user_main()
         // Get an array of assigned category details for a specific item
 
         $cats = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
-        if (empty($cats)) {
-            $cats = array();
-        }
+        if (empty($cats)) $cats = array();
 
         // Security check: remove categories the user should not see
         $items = array();
@@ -180,16 +178,13 @@ function xarbb_user_main()
     // Add the array of items to the template variables
     $data['items'] = $items;
 
-    // Don't really need to do this for visitors, just users.
-    if (xarUserIsLoggedIn()) {
-        // Check the cookie for the date to display
-        $lastvisitsession = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
+    // Check the cookie for the date to display
+    $lastvisitsession = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
 
-        if (!empty($lastvisitsession)){
-            $data['lastvisitdate'] = $lastvisitsession;
-        } else {
-            $data['lastvisitdate'] = time();
-        }
+    if (!empty($lastvisitsession)){
+        $data['lastvisitdate'] = $lastvisitsession;
+    } else {
+        $data['lastvisitdate'] = $now;
     }
 
     xarTplSetPageTitle(xarML('Forum Index'));
@@ -213,19 +208,16 @@ function xarbb_user_main__getforuminfo($args)
         $forum = $forums[$i];
         //bug #4070 - all posts, topics deleted by last poster still there
         if ($forum['ftopics'] > 0) {
-            $getname = array();
             if (!empty($forum['fposter'])) {
-                // Get the name of the poster.  Does it make sense to split this
-                // to the API, since it is called so often?
-                $getname = xarModAPIFunc('roles', 'user', 'get', array('uid' => $forum['fposter']));
+                // Get the name of the poster.
+                // TODO: Does it make sense to move this to the API, since it is called so often?
+                $username = @xarUserGetVar('name', $forum['fposter']);
             }
-            if (!empty($getname['name'])) {
-                $forums[$i]['name'] = $getname['name'];
-            } else {
-                $forums[$i]['name'] = '-';
-            }
+
+            $forums[$i]['name'] = (!empty($getname['name']) ? $getname['name'] : '-');
         }
 
+        // TODO: this is already unserialized in the API; no need to do it again.
         if (!empty($forum['foptions']) && is_string($forum['foptions'])) {
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
         }

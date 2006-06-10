@@ -85,11 +85,8 @@ function xarbb_userapi_searchreplies($args)
     $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
-    // if we have nothing to return
-    // we return nothing ;) duh? lol
-    if ($result->EOF) {
-        return array();
-    }
+    // If we have nothing to return, then return an empty array.
+    if ($result->EOF) return array();
 
     // zip through the list of results and
     // add it to the array we will return

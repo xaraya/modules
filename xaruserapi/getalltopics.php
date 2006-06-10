@@ -285,11 +285,21 @@ function xarbb_userapi_getalltopics($args)
 
             if (!empty($toptions)) {
                 $options = unserialize($toptions);
+
                 // Merge the arrays (toptions will overwrite options where keys are the same)
                 $options = array_merge($default_options, $options);
             } else {
                 $options = $default_options;
             }
+
+            // Expand the list of subscribers
+            // TODO: ultimately we want to move the subscribers to another place
+            if (!empty($options['subscribers']) && !is_array($options['subscribers'])) {
+                $options['subscribers'] = unserialize($options['subscribers']);
+            }
+
+            // Add the expanded options to the topic
+            $topic['options'] =& $options;
 
             // Set up the array of flags for the topic icons.
             // The icon (or some other flag or visual property) is decided from three different axis:

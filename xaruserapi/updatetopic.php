@@ -86,7 +86,7 @@ function xarbb_userapi_updatetopic($args)
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
 
-    if ((empty($time)) && (empty($toptions))){
+    if ((empty($time)) && (empty($toptions))) {
         $time = time();
     }
 

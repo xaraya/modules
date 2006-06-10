@@ -33,6 +33,7 @@ function xarbb_user_updatetopic()
     // Need to handle locked topics
     $data = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
 
+    // TODO: the locked status is now a topic option, not a main status
     if ($data['tstatus'] == 3) {
         $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
         xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
@@ -52,7 +53,7 @@ function xarbb_user_updatetopic()
         )
     );
 
-    //Don't count up if the topic is being edited ? Need to add modify test here.
+    // Don't count up if the topic is being edited? Need to add modify test here.
     if ($modify != 1) {
         // get the last comment
         $comments = xarModAPIFunc('comments', 'user', 'get_multiple',
@@ -69,8 +70,8 @@ function xarbb_user_updatetopic()
         $isanon = $comments[$totalcomments-1]['xar_postanon'];
         $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
 
-        if ($isanon==1) {
-            $poster=$anonuid;
+        if ($isanon == 1) {
+            $poster = $anonuid;
         } else {
             $poster = xarUserGetVar('uid');
         }
@@ -105,10 +106,10 @@ function xarbb_user_updatetopic()
 
     $data = xarTplModule('xarbb', 'user', 'return',
         array(
-            'forumreturn'     => $forumreturn,
-            'topicreturn'     => $topicreturn,
-            'replyreturn'     => $replyreturn,
-            'xarbbtitle'      => $xarbbtitle
+            'forumreturn'   => $forumreturn,
+            'topicreturn'   => $topicreturn,
+            'replyreturn'   => $replyreturn,
+            'xarbbtitle'    => $xarbbtitle
         )
     );
 

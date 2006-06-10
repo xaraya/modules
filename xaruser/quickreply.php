@@ -20,4 +20,5 @@ function xarbb_user_quickreply()
 
     return $data;
 }
+
 ?>
