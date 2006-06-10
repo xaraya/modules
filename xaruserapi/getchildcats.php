@@ -56,11 +56,18 @@ function articles_userapi_getchildcats($args)
                          array('cid' => $cid));
     // get the counts for all child categories
     if ($count) {
-        $seencid = array();
-        foreach ($list as $info) {
-            $seencid[$info['id']] = 1;
+        if (empty($filter)) {
+            $seencid = array();
+            foreach ($list as $info) {
+                $seencid[$info['id']] = 1;
+            }
+            $childlist = array_keys($seencid);
+            $andcids = false;
+        } else {
+            // we'll combine the parent cid with the filter here
+            $childlist = array('_'.$cid,$filter);
+            $andcids = true;
         }
-        $childlist = array_keys($seencid);
 
         $pubcatcount = xarModAPIFunc('articles',
                                     'user',
@@ -68,6 +75,7 @@ function articles_userapi_getchildcats($args)
                                     // frontpage or approved
                                     array('status' => array(3,2),
                                           'cids' => $childlist,
+                                          'andcids' => $andcids,
                                           'ptid' => $ptid,
                                           'reverse' => 1));
         if (!empty($ptid)) {
@@ -92,8 +100,16 @@ function articles_userapi_getchildcats($args)
                                  array('ptid' => $ptid,
                                        'catid' => $catid));
         $info['name'] = xarVarPrepForDisplay($info['name']);
-        if ($count && isset($pubcatcount[$info['id']][$curptid])) {
-            $info['count'] = $pubcatcount[$info['id']][$curptid];
+        if ($count) {
+            if (isset($pubcatcount[$info['id']][$curptid])) {
+                $info['count'] = $pubcatcount[$info['id']][$curptid];
+            } elseif (!empty($filter) && isset($pubcatcount[$filter.'+'.$info['id']][$curptid])) {
+                $info['count'] = $pubcatcount[$filter.'+'.$info['id']][$curptid];
+            } elseif (!empty($filter) && isset($pubcatcount[$info['id'].'+'.$filter][$curptid])) {
+                $info['count'] = $pubcatcount[$info['id'].'+'.$filter][$curptid];
+            } else {
+                $info['count'] = '';
+            }
         } else {
             $info['count'] = '';
         }

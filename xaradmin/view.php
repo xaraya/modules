@@ -118,12 +118,13 @@ function articles_admin_view($args)
                              'getall',
                              array('startnum' => $startnum,
                                    'numitems' => $numitems,
-                                   'ptid' => $ptid,
+                                   'ptid'     => $ptid,
                                    'authorid' => $authorid,
                                    'language' => $lang,
                                    'pubdate'  => $pubdate,
-                                   'cids' => $cids,
-                                   'status' => $status));
+                                   'cids'     => $cids,
+                                   'andcids'  => $andcids,
+                                   'status'   => $status));
 
     // Save the current admin view, so that we can return to it after update
     $lastview = array('ptid' => $ptid,
@@ -248,6 +249,7 @@ function articles_admin_view($args)
                                                 'language' => $lang,
                                                 'pubdate' => $pubdate,
                                                 'cids' => $cids,
+                                                'andcids' => $andcids,
                                                 'status' => $status)),
                             xarModURL('articles', 'admin', 'view',
                                       array('startnum' => '%%',
