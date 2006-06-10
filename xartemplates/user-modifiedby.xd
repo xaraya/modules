@@ -1,14 +1,11 @@
 
 <xar:if condition="$postanon eq 1 and $isauthor eq 1">
-    <xar:set name="modifiedbyname">xarml('author')</xar:set>
-    <xar:set name="modifiedbyuname">xarml('anonymous')</xar:set>
+    <xar:set name="modifiedbyname">xarML('author')</xar:set>
 <xar:else />
     <xar:set name="modifiedbyname">xarUserGetVar('name')</xar:set>
-    <xar:set name="modifiedbyuname">#xarUserGetVar('uname')#</xar:set>
 </xar:if>
 <xar:ml>
-    <xar:mlstring>[Modified by: #(1) (#(2)) on #(3)]</xar:mlstring>
+    <xar:mlstring>[Modified by: #(1) on #(2)]</xar:mlstring>
     <xar:mlvar>#$modifiedbyname#</xar:mlvar>
-    <xar:mlvar>#$modifiedbyuname#</xar:mlvar>
     <xar:mlvar>#xarLocaleFormatDate("%B %d, %Y %I:%M %p",time())#</xar:mlvar>
 </xar:ml>
