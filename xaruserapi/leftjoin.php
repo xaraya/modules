@@ -128,6 +128,7 @@ function categories_userapi_leftjoin($args)
     // Table definition
     $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
+    $categoriestable = $xartable['categories'];
 
     $leftjoin = array();
 
@@ -161,11 +162,15 @@ function categories_userapi_leftjoin($args)
                                      $catlinks[$i] . '.xar_iid' .
                                  ' AND ' . $leftjoin['modid'] . ' = ' .
                                      $catlinks[$i] . '.xar_modid ';
+            // Note: only for non-0 itemtypes here
+            if (!empty($itemtype)) {
+                $leftjoin['more'] .= ' AND ' . $leftjoin['itemtype'] . ' = ' .
+                                     $catlinks[$i] . '.xar_itemtype ';
+            }
             $leftjoin['cids'][] = $catlinks[$i] . '.xar_cid';
         }
     } elseif (!empty($cidtree)) {
         $leftjoin['table'] = $categorieslinkagetable;
-        $categoriestable = $xartable['categories'];
         $leftjoin['more'] = ' LEFT JOIN ' . $categoriestable .
                             ' ON ' . $categoriestable . '.xar_cid = ' .  $leftjoin['cid'] . ' ';
     } else {
@@ -212,14 +217,51 @@ function categories_userapi_leftjoin($args)
             // select the categories you wanted
             } else {
                 for ($i = 0; $i < count($cids); $i++) {
-                    $where[] = $catlinks[$i] . '.xar_cid = ' . $cids[$i];
+                    if (is_numeric($cids[$i])) {
+                        $where[] = $catlinks[$i] . '.xar_cid = ' . $cids[$i];
+                    } elseif (preg_match('/^_(\d+)$/',$cids[$i],$matches)) {
+                        $tmpcid = $matches[1];
+                        $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $tmpcid));
+                        if (!empty($cat)) {
+                            $leftjoin['more'] .= ' LEFT JOIN ' . $categoriestable . ' cattab' . $i .
+                                                 ' ON cattab' . $i . '.xar_cid = ' .  $catlinks[$i] . '.xar_cid ';
+                            $where[] = 'cattab' . $i . '.xar_left >= ' . $cat['left'];
+                            $where[] = 'cattab' . $i . '.xar_left <= ' . $cat['right'];
+                        }
+                    } else {
+                        // hmmm, what's this ?
+                    }
                 }
             }
             // include all cids here
             $leftjoin['cid'] = join(', ',$leftjoin['cids']);
         } else {
-            $allcids = join(', ', $cids);
-            $where[] = $leftjoin['cid'] . ' IN (' . $allcids . ')';
+            $orcids = array();
+            $tmpwhere = array();
+            for ($i = 0; $i < count($cids); $i++) {
+                if (is_numeric($cids[$i])) {
+                    $orcids[] = $cids[$i];
+                } elseif (preg_match('/^_(\d+)$/',$cids[$i],$matches)) {
+                    $tmpcid = $matches[1];
+                    $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $tmpcid));
+                    if (!empty($cat)) {
+                        $leftjoin['more'] .= ' LEFT JOIN ' . $categoriestable . ' cattab' . $i .
+                                             ' ON cattab' . $i . '.xar_cid = ' .  $leftjoin['cid'];
+                        $tmpwhere[] = '(cattab' . $i . '.xar_left >= ' . $cat['left'] .
+                                      ' AND ' .
+                                      'cattab' . $i . '.xar_left <= ' . $cat['right'] . ')';
+                    }
+                }
+            }
+            if (count($orcids) == 1) {
+                $tmpwhere[] = $leftjoin['cid'] . ' = ' . $orcids[0];
+            } elseif (count($orcids) > 1) {
+                $allcids = join(', ', $orcids);
+                $tmpwhere[] = $leftjoin['cid'] . ' IN (' . $allcids . ')';
+            }
+            if (count($tmpwhere) > 0) {
+                $where[] = '(' . join(' OR ', $tmpwhere) . ')';
+            }
         }
     }
     if (!empty($cidtree)) {
