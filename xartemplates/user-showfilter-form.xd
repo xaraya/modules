@@ -1,0 +1,78 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="toggle.js" />
+<xar:base-include-javascript module="categories" filename="filter.js" />
+
+<xar:set name="cookiepath">@ini_get('session.cookie_path')</xar:set>
+<script type="text/javascript">
+    xar_categories_setfilterconfig('catfilter','#$cookiepath#');
+</script>
+<xar:if condition="!empty($_COOKIE['catfilter'])">
+    <xar:set name="cids">explode(':',$_COOKIE['catfilter'])</xar:set>
+    <xar:set name="cidlabel">array()</xar:set>
+<xar:else/>
+    <xar:set name="cids">array()</xar:set>
+</xar:if>
+<xar:set name="selname">'catfilter1_select'</xar:set>
+
+<div style="margin: auto;">
+<form action="javascript:void(0);">
+<fieldset>
+<legend>
+    <xar:mlstring>Category Filter</xar:mlstring>
+</legend>
+<div>
+<select name="#$selname#" id="#$selname#" onchange="return xar_categories_showselectfilter('#$selname#');">
+    <option value=""></option>
+    <xar:foreach in="$cattrees" key="$cid" value="$catparent">
+        <option value="#$cid#">#$catparent['catlabel']#</option>
+        <xar:if condition="count($cids) gt 0 and in_array($catparent['catid'],$cids)">
+            <xar:set name="dummy">1; $cidlabel[$catparent['catid']] = $catparent['catlabel']</xar:set>
+        </xar:if>
+    </xar:foreach>
+</select>
+<xar:foreach in="$cattrees" key="$cid" value="$catparent">
+    <select name="#$selname#_#$cid#" id="#$selname#_#$cid#" style="display:none;" class="xar-displaynone">
+        <option value=""></option>
+        <xar:foreach in="$catparent['catitems']" value="$catitem">
+            <option value="#$catitem['catid']#">
+            <xar:if condition="count($cids) gt 0 and in_array($catitem['catid'],$cids)">
+                <xar:set name="savecid">1</xar:set>
+                <xar:set name="dummy">1; $cidlabel[$catitem['catid']] = ''</xar:set>
+            <xar:else/>
+                <xar:set name="savecid">0</xar:set>
+            </xar:if>
+            <xar:for start="$i = 1" test="$i lt $catitem['catdepth']" iter="$i++">
+                ---
+                <xar:if condition="!empty($savecid)">
+                    <xar:set name="dummy">1; $cidlabel[$catitem['catid']] .= '--- '</xar:set>
+                </xar:if>
+            </xar:for>
+            #$catitem['catlabel']#
+            <xar:if condition="!empty($savecid)">
+                <xar:set name="dummy">1; $cidlabel[$catitem['catid']] .= $catitem['catlabel']</xar:set>
+            </xar:if>
+            <xar:if condition="!empty($catitem['catcount'])">
+                (#$catitem['catcount']#)
+            </xar:if>
+            </option>
+        </xar:foreach>
+    </select>
+</xar:foreach>
+<input type="submit" value="#xarML('Add')#" onclick="return xar_categories_addselectfilter('#$selname#');" />
+<select name="#selname#_list" id="#$selname#_list">
+    <option value=""></option>
+    <xar:foreach in="$cids" value="$cid">
+        <xar:if condition="!empty($cidlabel[$cid])">
+            <option value="#$cid#">#$cidlabel[$cid]#</option>
+        <xar:else/>
+            <option value="#$cid#"><xar:ml><xar:mlstring>Category #(1)</xar:mlstring><xar:mlvar>#$cid#</xar:mlvar></xar:ml></option>
+        </xar:if>
+    </xar:foreach>
+</select>
+<input type="submit" value="#xarML('Remove')#" onclick="return xar_categories_delselectfilter('#$selname#');" />
+</div>
+Note: this doesn't do anything useful yet :-)
+</fieldset>
+</form>
+</div>
+

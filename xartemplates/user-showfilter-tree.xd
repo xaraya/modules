@@ -1,0 +1,63 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="toggle.js" />
+<xar:base-include-javascript module="categories" filename="filter.js" />
+
+<xar:set name="cookiepath">@ini_get('session.cookie_path')</xar:set>
+<script type="text/javascript">
+    xar_categories_setfilterconfig('catfilter','#$cookiepath#');
+</script>
+<xar:if condition="!empty($_COOKIE['catfilter'])">
+    <xar:set name="cids">explode(':',$_COOKIE['catfilter'])</xar:set>
+<xar:else/>
+    <xar:set name="cids">array()</xar:set>
+</xar:if>
+<xar:set name="on_str">xarML('ON')</xar:set>
+<xar:set name="off_str">xarML('OFF')</xar:set>
+
+<div style="margin: auto;">
+<p><strong><xar:mlstring>Category Filter</xar:mlstring></strong></p>
+<xar:foreach in="$cattrees" key="$cid" value="$catparent">
+    <xar:if condition="!empty($catparent['catitems'])">
+        <a href="javascript:void(0);" title="#xarML('Click to toggle display of children')#" onclick="return toggleDisplay('catfilter_#$cid#');">[+]</a>
+    </xar:if>
+    <xar:if condition="empty($catparent['catlink'])">
+        #$catparent['catlabel']#
+    <xar:else />
+        <a href="#$catparent['catlink']#">#$catparent['catlabel']#</a>
+    </xar:if>
+    <xar:if condition="count($cids) gt 0 and in_array($catparent['catid'],$cids)">
+        <xar:set name="toggle">#$on_str#</xar:set>
+    <xar:else/>
+        <xar:set name="toggle">#$off_str#</xar:set>
+    </xar:if>
+    <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catparent['catid']#','catspan_#$catparent['catid']#','#$on_str#','#$off_str#');"><span id="catspan_#$catparent['catid']#">#$toggle#</span></a>
+    <xar:if condition="!empty($catparent['catcount'])">
+        (#$catparent['catcount']#)
+    </xar:if>
+    <br />
+    <div id="catfilter_#$cid#" style="display:none;" class="xar-displaynone">
+    <xar:foreach in="$catparent['catitems']" value="$catitem">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <xar:for start="$i = 0" test="$i lt $catitem['catdepth']" iter="$i++">
+            &nbsp;&nbsp;&nbsp;
+        </xar:for>
+        <xar:if condition="empty($catitem['catlink'])">
+            #$catitem['catlabel']#
+        <xar:else />
+            <a href="#$catitem['catlink']#">#$catitem['catlabel']#</a>
+        </xar:if>
+        <xar:if condition="count($cids) gt 0 and in_array($catitem['catid'],$cids)">
+            <xar:set name="toggle">#$on_str#</xar:set>
+        <xar:else/>
+            <xar:set name="toggle">#$off_str#</xar:set>
+        </xar:if>
+        <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catitem['catid']#','catspan_#$catitem['catid']#','#$on_str#','#$off_str#');"><span id="catspan_#$catitem['catid']#">#$toggle#</span></a>
+        <xar:if condition="!empty($catitem['catcount'])">
+            (#$catitem['catcount']#)
+        </xar:if>
+        <br />
+    </xar:foreach>
+    </div>
+</xar:foreach>
+</div>
+

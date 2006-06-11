@@ -200,7 +200,10 @@ function categories_init()
     // Register BL tags
     xarTplRegisterTag('categories', 'categories-navigation',
                       array(),
-                      'categories_userapi_navigationTag');
+                      'categories_userapi_navigationtag');
+    xarTplRegisterTag('categories', 'categories-filter',
+                      array(),
+                      'categories_userapi_filtertag');
 
     /*********************************************************************
     * Define instances for this module
@@ -436,6 +439,13 @@ function categories_upgrade($oldversion)
             // fall through to the next upgrade
 
         case '2.3.1':
+            xarTplRegisterTag('categories', 'categories-filter',
+                              array(),
+                              'categories_userapi_filtertag');
+
+            // fall through to the next upgrade
+
+        case '2.3.2':
 
             // fall through to the next upgrade
 
@@ -503,6 +513,7 @@ function categories_delete()
                              'blockType'=> 'navigation'))) return;
 
     xarTplUnregisterTag('categories-navigation');
+    xarTplUnregisterTag('categories-filter');
 
     /**
      * Remove instances and masks
