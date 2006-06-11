@@ -7,6 +7,9 @@
 </div>
 
 <div class="xar-mod-body">
+
+  <xar:template type="module" module="netquery" file="admin-menu" />
+
 <div class="xar-accent">
   <table class="nqinput">
     <tr>

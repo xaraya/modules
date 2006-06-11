@@ -86,7 +86,7 @@ function netquery_adminapi_configapi()
                              'label' => xarML('Edit Category Flags'));
     $data['wivlink'] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
                              'title' => xarML('Edit whois TLD/server links'),
-                             'label' => xarML('Edit Whois Links'));
+                             'label' => xarML('Edit Whois TLDs'));
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
                              'title' => xarML('Edit looking glass settings'),
                              'label' => xarML('Edit LG Settings'));

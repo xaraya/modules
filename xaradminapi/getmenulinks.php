@@ -7,7 +7,7 @@ function netquery_adminapi_getmenulinks()
                              'label' => xarML('Modify Configuration'));
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
                              'title' => xarML('View-edit whois TLD/server links'),
-                             'label' => xarML('Edit Whois Links'));
+                             'label' => xarML('Edit Whois TLDs'));
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
                              'title' => xarML('View-edit port services/exploits'),
                              'label' => xarML('Edit Port Services'));

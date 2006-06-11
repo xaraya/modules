@@ -5,6 +5,9 @@
 </div>
 
 <div class="xar-mod-body">
+
+  <xar:template type="module" module="netquery" file="admin-menu" />
+
   <form action="#xarModURL('netquery', 'admin', 'fldelete')#" method="post" enctype="application/x-www-form-urlencoded">
     <table class="nqinput">
       <tr>
