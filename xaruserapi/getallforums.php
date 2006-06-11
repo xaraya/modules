@@ -133,6 +133,7 @@ function xarbb_userapi_getallforums($args)
             // Add in any missing settings, by overlaying settings onto the global settings.
             $settings = array_merge($global_settings, $settings);
 
+// TODO: merge forums assigned to several categories
             $forums[] = array(
                 'fid'     => $fid,
                 'fname'   => $fname,

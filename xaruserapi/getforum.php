@@ -24,11 +24,15 @@ function xarbb_userapi_getforum($args)
         array_merge($args, array('numitems' => 2))
     );
 
+/*
+// FIXME: forums may be assigned to several categories in the future, so xarbb should accept
+          the fact that catid may contain several category ids (someday)
     if (count($forums) > 1) {
         $msg = xarML('Too many forums matched criteria');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
+*/
 
     if (count($forums) == 0) {
         $msg = xarML('Selected forum does not exist');
