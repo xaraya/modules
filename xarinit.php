@@ -275,20 +275,20 @@ function sitecontact_upgrade($oldversion)
                 VALUES (1,
                         'basic',
                         'Basic contact form',
-                        '$customtext',
-                        '$customtitle',
-                        '$optiontext',
-                        '$webconfirmtext',
-                        '$notetouser',
-                        '$allowcopy',
-                        '$usehtmlemail',
-                        '$scdefaultemail',
-                        '$scdefaultname',
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
                         1
                         )";
 
                 $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$usehtmlemail,$scdefaultemail,$scdefaultname);
-                $result = &$dbconn->Execute($query,$bindvars);           
+                $result = &$dbconn->Execute($query,$bindvars);
                 if (!$result) {return;}
 
 
@@ -321,10 +321,15 @@ function sitecontact_upgrade($oldversion)
                xarModAPIFunc('modules','admin','enablehooks',
                    array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
            }
+           return sitecontact_upgrade('0.5.0'); // Go direct to 0.5.0 to skip the intermediary release
+           break;
+        case '0.4.1': //0.4.1 users missed an intermediary release and the function changes. Take them back
+           return sitecontact_upgrade('0.4.0');
+           break;
+        case '0.5.0': //nothing new here
+             break;
+        case '0.5.1': //current version
 
-        case '0.4.1':
-
-        case '0.5.0':
              break;
     }
     // Update successful
