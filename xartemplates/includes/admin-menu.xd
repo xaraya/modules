@@ -1,0 +1,73 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration Menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminNetquery" catch="false">
+
+      <xar:set name="tabclass">$activetab=='config'?'active':''</xar:set>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-config;" >
+          <xar:mlstring>Configure</xar:mlstring>
+        </a>
+      </dd>
+
+      <xar:if condition="$activetab eq 'wiview' or $activetab eq 'winew' or $activetab eq 'wimodify' or $activetab eq 'widelete'">
+          <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-wiview;">
+          <xar:mlstring>Whois TLDs</xar:mlstring>
+        </a>
+      </dd>
+
+      <xar:if condition="$activetab eq 'ptview' or $activetab eq 'ptnew' or $activetab eq 'ptmodify' or $activetab eq 'ptdelete'">
+          <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-ptview;">
+          <xar:mlstring>Port Services</xar:mlstring>
+        </a>
+      </dd>
+
+      <xar:if condition="$activetab eq 'flview' or $activetab eq 'flnew' or $activetab eq 'flmodify' or $activetab eq 'fldelete'">
+          <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-flview;">
+          <xar:mlstring>Category Flags</xar:mlstring>
+        </a>
+      </dd>
+
+      <xar:if condition="$activetab eq 'lgview' or $activetab eq 'lgnew' or $activetab eq 'lgmodify' or $activetab eq 'lgdelete'">
+          <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+      </xar:if>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-lgview;">
+          <xar:mlstring>LG Routers</xar:mlstring>
+        </a>
+      </dd>
+
+      <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-overview;">
+          <xar:mlstring>Overview</xar:mlstring>
+        </a>
+      </dd>
+
+    </xar:sec>
+  </dl>
+</div>
