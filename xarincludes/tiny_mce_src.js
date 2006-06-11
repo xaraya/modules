@@ -3,8 +3,8 @@
 
 function TinyMCE_Engine() {
 	this.majorVersion = "2";
-	this.minorVersion = "0.6";
-	this.releaseDate = "2006-05-03";
+	this.minorVersion = "0.7";
+	this.releaseDate = "2006-xx-xx";
 
 	this.instances = new Array();
 	this.switchClassCache = new Array();
@@ -1346,6 +1346,53 @@ TinyMCE_Engine.prototype = {
 		return h;
 	},
 
+	getMenuButtonHTML : function(id, lang, img, mcmd, cmd, ui, val) {
+		var h = '', m, x;
+
+		mcmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + mcmd + '\');';
+		cmd = 'tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + cmd + '\'';
+
+		if (typeof(ui) != "undefined" && ui != null)
+			cmd += ',' + ui;
+
+		if (typeof(val) != "undefined" && val != null)
+			cmd += ",'" + val + "'";
+
+		cmd += ');';
+
+		// Use tilemaps when enabled and found and never in MSIE since it loads the tile each time from cache if cahce is disabled
+		if (tinyMCE.getParam('button_tile_map') && (!tinyMCE.isMSIE || tinyMCE.isOpera) && (m = tinyMCE.buttonMap[id]) != null && (tinyMCE.getParam("language") == "en" || img.indexOf('$lang') == -1)) {
+			// Tiled button
+			x = 0 - (m * 20) == 0 ? '0' : 0 - (m * 20);
+			h += '<a id="{$editor_id}_' + id + '" href="javascript:' + cmd + '" onclick="' + cmd + 'return false;" onmousedown="return false;" class="mceTiledButton mceButtonNormal" target="_self">';
+			h += '<img src="{$themeurl}/images/spacer.gif" style="background-position: ' + x + 'px 0" title="{$' + lang + '}" />';
+			h += '<img src="{$themeurl}/images/button_menu.gif" title="{$' + lang + '}" class="mceMenuButton" onclick="' + mcmd + 'return false;" />';
+			h += '</a>';
+		} else {
+			if (tinyMCE.isMSIE && !tinyMCE.isOpera)
+				h += '<span id="{$editor_id}_' + id + '" class="mceMenuButton" onmouseover="tinyMCE._menuButtonEvent(\'over\',this);" onmouseout="tinyMCE._menuButtonEvent(\'out\',this);">';
+			else
+				h += '<span id="{$editor_id}_' + id + '" class="mceMenuButton">';
+
+			h += '<a href="javascript:' + cmd + '" onclick="' + cmd + 'return false;" onmousedown="return false;" class="mceMenuButtonNormal" target="_self">';
+			h += '<img src="' + img + '" title="{$' + lang + '}" /></a>';
+			h += '<a href="javascript:' + mcmd + '" onclick="' + mcmd + 'return false;" onmousedown="return false;"><img src="{$themeurl}/images/button_menu.gif" title="{$' + lang + '}" class="mceMenuButton" />';
+			h += '</a></span>';
+		}
+
+		return h;
+	},
+
+	_menuButtonEvent : function(e, o) {
+		if (o.className == 'mceMenuButtonFocus')
+			return;
+
+		if (e == 'over')
+			o.className = o.className + ' mceMenuHover';
+		else
+			o.className = o.className.replace(/\s.*$/, '');
+	},
+
 	addButtonMap : function(m) {
 		var i, a = m.replace(/\s+/, '').split(',');
 
@@ -2301,6 +2348,7 @@ function TinyMCE_Control(settings) {
 	this.cleanup = new TinyMCE_Cleanup();
 	this.shortcuts = new Array();
 	this.hasMouseMoved = false;
+	this.foreColor = this.backColor = "#999999";
 
 	this.cleanup.init({
 		valid_elements : s.valid_elements,
@@ -2965,10 +3013,15 @@ TinyMCE_Control.prototype = {
 				return;
 
 			case "forecolor":
+				value = value == null ? this.foreColor : value;
+				this.foreColor = value;
 				this.getDoc().execCommand('forecolor', false, value);
 				break;
 
 			case "HiliteColor":
+				value = value == null ? this.backColor : value;
+				this.backColor = value;
+
 				if (tinyMCE.isGecko) {
 					this._setUseCSS(true);
 					this.getDoc().execCommand('hilitecolor', false, value);
@@ -4979,10 +5032,10 @@ TinyMCE_Engine.prototype.switchClass = function(ei, c) {
 	}
 };
 
-TinyMCE_Engine.prototype.getAbsPosition = function(n) {
+TinyMCE_Engine.prototype.getAbsPosition = function(n, cn) {
 	var p = {absLeft : 0, absTop : 0};
 
-	while (n) {
+	while (n && n != cn) {
 		p.absLeft += n.offsetLeft;
 		p.absTop += n.offsetTop;
 		n = n.offsetParent;
@@ -5774,7 +5827,7 @@ TinyMCE_Selection.prototype = {
 			return false;
 
 		if (tinyMCE.isSafari) {
-			sel.setBaseAndExtent(bookmark.startContainer, bookmark.startOffset, bookmark.endContainer, bookmark.endOffset);
+			sel.setBaseAndExtent(bookmark.rng.startContainer, bookmark.rng.startOffset, bookmark.rng.endContainer, bookmark.rng.endOffset);
 			return true;
 		}
 
@@ -5859,7 +5912,7 @@ TinyMCE_Selection.prototype = {
 		if (typeof(to_start) == "undefined")
 			to_start = true;
 
-		if (tinyMCE.isMSIE) {
+		if (tinyMCE.isMSIE && !tinyMCE.isOpera) {
 			rng = inst.getBody().createTextRange();
 
 			try {
@@ -6527,14 +6580,20 @@ TinyMCE_Layer.prototype = {
 
 		if (!this.blockerElement && this.blockMode) {
 			d = this.doc;
-			b = d.createElement("iframe");
+			b = d.getElementById(this.id + "_blocker");
 
-			b.style.cssText = 'display: none; position: absolute; left: 0; top: 0';
-			b.src = 'javascript:false;';
-			b.frameBorder = '0';
-			b.scrolling = 'no';
+			if (!b) {
+				b = d.createElement("iframe");
 
-			d.body.appendChild(b);
+				b.setAttribute('id', this.id + "_blocker");
+				b.style.cssText = 'display: none; position: absolute; left: 0; top: 0';
+				b.src = 'javascript:false;';
+				b.frameBorder = '0';
+				b.scrolling = 'no';
+	
+				d.body.appendChild(b);
+			}
+
 			this.blockerElement = b;
 		}
 
@@ -6553,7 +6612,7 @@ TinyMCE_Layer.prototype = {
 		return p;
 	},
 
-	create : function(n, c, p) {
+	create : function(n, c, p, h) {
 		var d = this.doc, e = d.createElement(n);
 
 		e.setAttribute('id', this.id);
@@ -6564,9 +6623,16 @@ TinyMCE_Layer.prototype = {
 		if (!p)
 			p = d.body;
 
+		if (h)
+			e.innerHTML = h;
+
 		p.appendChild(e);
 
 		return this.element = e;
+	},
+
+	exists : function() {
+		return this.doc.getElementById(this.id) != null;
 	},
 
 	parseInt : function(s) {

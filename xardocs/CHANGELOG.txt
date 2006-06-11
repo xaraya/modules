@@ -1,6 +1,8 @@
 * Version 1.1.x
 - Add on/off switch for filebrowser in the tinymceconfig.inc file
 - Some bug fixes related to IE, base element and relative URLs, and style plugin fix
+- Add new Media plugin for Flash, Shockwave, etc
+- Fix some bugs regarding Layer plugin
 
 * Version 1.1.0 7 May 06
 - Includes upstream project version 2.0.6.1

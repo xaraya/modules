@@ -1,7 +1,5 @@
 /**
- * $RCSfile: mclayer.js,v $
- * $Revision: 1.2 $
- * $Date: 2006/02/06 20:11:09 $
+ * $Id: mclayer.js 5 2006-06-05 19:51:22Z spocke $
  *
  * Moxiecode floating layer script.
  *

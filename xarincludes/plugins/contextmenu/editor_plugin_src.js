@@ -1,7 +1,5 @@
 /**
- * $RCSfile: editor_plugin_src.js,v $
- * $Revision: 1.31 $
- * $Date: 2006/05/03 10:46:41 $
+ * $Id: editor_plugin_src.js 8 2006-06-10 20:13:32Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -302,7 +300,7 @@ TinyMCE_ContextMenu.prototype = {
 	},
 
 	show : function(x, y) {
-		var vp, width, height;
+		var vp, width, height, yo;
 
 		if (this.html == "")
 			return;
@@ -329,9 +327,9 @@ TinyMCE_ContextMenu.prototype = {
 			this.pop.show(x, y, width, height);
 		} else {
 			vp = this.getViewPort();
-
+			yo = tinyMCE.isMSIE5_0 ? document.body.scrollTop : self.pageYOffset;
 			this.contextMenuDiv.style.left = (x > vp.width - width ? vp.width - width : x) + 'px';
-			this.contextMenuDiv.style.top = (y > vp.height - height ? vp.height - height : y) + 'px';
+			this.contextMenuDiv.style.top = (y - yo > vp.height - height ? vp.height - height + yo : y) + 'px';
 			this.contextMenuDiv.style.display = "block";
 		}
 	},

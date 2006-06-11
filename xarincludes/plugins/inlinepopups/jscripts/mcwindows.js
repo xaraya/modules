@@ -1,7 +1,5 @@
 /**
- * $RCSfile: mcwindows.js,v $
- * $Revision: 1.2 $
- * $Date: 2005/10/18 13:59:43 $
+ * $Id: mcwindows.js 5 2006-06-05 19:51:22Z spocke $
  *
  * Moxiecode DHTML Windows script.
  *

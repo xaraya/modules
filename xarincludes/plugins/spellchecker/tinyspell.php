@@ -1,8 +1,6 @@
 <?php
 /**
- * $RCSfile: tinyspell.php,v $
- * $Revision: 1.1 $
- * $Date: 2006/03/14 17:33:47 $
+ * $Id: tinyspell.php 5 2006-06-05 19:51:22Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.

@@ -65,6 +65,12 @@
 	border-top: 1px solid #cccccc;
 }
 
+.mceToolbarContainer {
+	position: relative;
+	left: 0; top: 0;
+	display: block;
+}
+
 .mceStatusbarTop, .mceStatusbarBottom, .mceStatusbar {
 	height: 20px;
 }
@@ -248,28 +254,27 @@ span.mceMenuButtonFocus img.mceMenuButton {
 	margin-left: 0;
 }
 
+span.mceMenuHover img {
+	border: 1px solid #0A246A;
+	background-color: #B6BDD2;
+}
+
+span.mceMenuButtonSelected.mceMenuHover img.mceMenuButton {
+	border: 1px solid #0A246A;
+	background-color: #B6BDD2;
+	border-left: 0;
+}
+
 /* Menu button MSIE specific rules */
 
 * html span.mceMenuButton, * html span.mceMenuButtonFocus {
 	position: relative;
-	left: 0;
-	top: 0;
+	left: 0; top: 0;
 }
 
 * html span.mceMenuButton img, * html span.mceMenuButtonSelected img, * html span.mceMenuButtonFocus img {
 	position: relative;
 	top: 1px;
-}
-
-* html span.mceMenuHover img {
-	border: 1px solid #0A246A;
-	background-color: #B6BDD2;
-}
-
-* html span.mceMenuButtonSelected.mceMenuHover img.mceMenuButton {
-	border: 1px solid #0A246A;
-	background-color: #B6BDD2;
-	border-left: 0;
 }
 
 /* Menu */
@@ -350,4 +355,51 @@ span.mceMenuLine {
 	overflow: hidden;
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.mceColors table, .mceColors td {
+	margin: 0;
+	padding: 2px;
+}
+
+a.mceMoreColors {
+	width: 130px;
+	margin: 0; padding: 0;
+	margin-left: 3px;
+	margin-bottom: 3px;
+	text-align: center;
+	border: 1px solid white;
+}
+
+* html a.mceMoreColors {
+	width: 132px;
+}
+
+.mceColorPreview {
+	position: absolute;
+	left: 0; top: 0;
+	margin-left: 3px; margin-top: 15px;
+	width: 16px;
+	height: 4px;
+	background-color: red;
+}
+
+* html .mceColorPreview {
+	margin-left: 2px; margin-top: 14px;
+}
+
+a.mceMoreColors:hover {
+	border: 1px solid #0A246A;
+}
+
+.mceColors td a {
+	width: 9px;
+	height: 9px;
+	overflow: hidden;
+	border: 1px solid #808080;
+}
+
+* html .mceColors td a {
+	width: 11px;
+	height: 11px;
 }
