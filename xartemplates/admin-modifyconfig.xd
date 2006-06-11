@@ -649,7 +649,7 @@
              <div class="xar-form-input-wrapper-after">
                     <p><xar:mlstring><strong>Available plugins (bundled):</strong> save, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, paste, 
-                     fullscreen, directionality, fullpage, liststyle, layer, style, spellchecker</xar:mlstring></p>
+                     fullscreen, directionality, fullpage, liststyle, layer, style, spellchecker, media</xar:mlstring></p>
              </div>
 
              <xar:if condition="$dateplug">
@@ -712,7 +712,7 @@
                <li><xar:mlstring><strong>Valid button names are</strong> (separate names by comma - no spaces):</xar:mlstring>
                bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table (or separate components as row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col), hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, backcolor, charmap, visualaid, spacer, cut, copy</li>
               <li><xar:mlstring><strong>Valid plugin button options</strong></xar:mlstring> - save, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash, search, replace, print, tablecontrols (all table controls), table, row_props, cell_props, delete_col, delete_row, col_after, col_before, row_after, row_before, 
-              xarpagebreak, lorem, paste (pastetext, pasteword, selectall -  for specific paste plugin buttons), fullscreen, ltr, rtl, fullpage, liststyle, styleprops (for style plugin), insertlayer, moveforward, movebackward, absolute (last four for layer plugin), spellchecker.
+              xarpagebreak, lorem, paste (pastetext, pasteword, selectall -  for specific paste plugin buttons), fullscreen, ltr, rtl, fullpage, liststyle, styleprops (for style plugin), insertlayer, moveforward, movebackward, absolute (last four for layer plugin), spellchecker, media.
                </li>
             </ol>
          </div>
