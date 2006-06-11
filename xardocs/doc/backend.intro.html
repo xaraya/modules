@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: backend :: introduction</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+<div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+  <p>
+    <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+    <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+    <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+  <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+  <p><br />
+    <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+    </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+</div>
+  
+  <div id="content">
+    <h2>Backend API </h2>
+    <div id="summary">
+      <h3>Class Summary</h3>
+      <p>
+        <a href="backend.class.cpaint.html" class="code"><em>object</em> cpaint</a><br />
+        <a href="backend.class.cpaint_node.html" class="code"><em>object</em> cpaint_node</a><br />
+        <a href="backend.class.cpaint_transformer.html" class="code"><em>object</em> cpaint_transformer</a><br />
+      </p>
+    </div>
+    <p>
+      The backend of CPAINT - the server-side part - consists of a single file named <a href="backend.class.cpaint.html" class="code">cpaint2.inc.X</a> whereas X
+      represents the file extension of your desired programming language. Currently versions for PHP and ASP are
+      available.
+    </p>
+    <p>
+      We believe that portability is the major concern for web applications, so we'll see that we get CPAINT
+      ported to other languages as well. Currently we're working on perl and .NET ports.
+    </p>
+    <p>
+      Whatever language you chose, the backend will <em>always</em> work identical. It will always consist of 
+      the same classes with a bunch of methods each for you to access. All methods will be named identically in all languages
+      and will accept the same arguments.
+    </p>
+    <p>
+      In this section of the documentation we'll introduce to you the various methods available in the backend
+      classes of CPAINT. <em>However</em> we'll only introduce the publicly available methods. The others are
+      irrelevant for your daily work.<br />
+      If you need to change or improve CPAINT itself, you'll find JavaDoc-like documentation for all
+      classes, methods and properties in the backend files.
+    </p>
+    <h3>cpaint</h3>
+    <p>
+      The <a href="backend.class.cpaint.html" class="code">cpaint</a> backend class serves two purposes.<br />
+      First, it interprets the parameters sent to your application via the <a href="frontend.intro.html" class="code">CPAINT frontend</a>
+      and calls the right function of your own application.
+      Second, it must be used by your application functions to generate the response for the frontend.
+    </p>
+    <h3>cpaint_node</h3>
+    <p>
+      The <a href="backend.class.cpaint_node.html" class="code">cpaint_node</a> class represents a container
+      for the response or a part of the response that will be sent back to the frontend.
+    </p>
+    <h3>cpaint_transformer</h3>
+    <p>
+      The <a href="backend.class.cpaint_transformer.html" class="code">cpaint_transformer</a> class is
+      being called by the <a href="backend.class.cpaint.html" class="code">cpaint</a> class transparently.<br />
+      It provides the methods to transform the set of <a href="backend.class.cpaint_node.html" class="code">cpaint_node</a> objects
+      into a valid response of the desired type.
+    </p>
+  </div>
+</body>
+</html>

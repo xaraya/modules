@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: upgrade :: frontend changes</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+    <h2>Upgrade: <strong>
+  Frontend Changes</strong></h2>
+    <p>Because CPAINT v2.x is completely object-oriented, the first thing you must do is create an instance of the <a href="frontend.class.cpaint.html" class="code">cpaint</a> object and set any options (<a href="frontend.class.cpaint.set_async.html" class="code">set_async()</a>, <a href="frontend.class.cpaint.set_debug.html" class="code">set_debug()</a>, <a href="frontend.class.cpaint.set_persistent_connection.html" class="code">set_persistent_connection()</a>, <a href="frontend.class.cpaint.set_proxy_url.html" class="code">set_proxy_url()</a>, <a href="frontend.class.cpaint.set_response_type.html" class="code">set_response_type()</a>, and <a href="frontend.class.cpaint.set_transfer_mode.html" class="code">set_transfer_mode()</a>) if you do not wish to use the defaults. You can create the cpaint object inside or outside of your primary JavaScript function, depending on whether or not you want to reuse the object for other backend calls or need to make multiple calls to the JavaScript function.</p>
+    <p>Here is a CPAINT v1.x call in JavaScript and it's equivalent in CPAINT v2.x.</p>
+    <p>v1.x</p>
+  <blockquote>
+    <p class="code">function doAdd() { <br />
+    &nbsp;&nbsp;cpaint_call('calculator.asp', 'GET', 'addNumbers', <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('num1').value, <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('num2').value, updateResults, 'TEXT'<br />
+    &nbsp;&nbsp;); <br />
+    }</p>
+    <p class="code"> function updateResults(calculatorResults) {<br /> 
+      &nbsp;&nbsp;document.getElementById('answer').value = calculatorResults; <br />
+    }</p>
+  </blockquote>
+  <p>v2.x</p>
+  <blockquote>
+  <p class="code"> var cp = new cpaint();<br />
+    cp.set_transfer_mode('get');</p>
+  <p class="code"> function doAdd() {<br />
+      &nbsp;&nbsp;cp.call('calculator.asp', 'add', response, document.getElementById('num1').value,<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('num2').value<br />
+      &nbsp;&nbsp;);<br />
+    } </p>
+  <p class="code">function response(result) {<br />
+    &nbsp;&nbsp;document.getElementById('result').value = result.ajaxResponse[0].data;<br />
+    }</p>
+  </blockquote>
+  <p>In addition, the parameters that <a href="frontend.class.cpaint.call.html" class="code">cpaint.call()</a> accepts is shorter for improved readability and for reuse of the cpaint object. See the <a href="frontend.class.cpaint.call.html" class="code">reference</a> for the exact parameter list. </p>
+  <p>Finally, if you utilize the proxy utility, you no longer have a separate call. For example, these two code blocks pass a query to Google and retrieve the results:</p>
+  <p>v1.x</p>
+  <blockquote>
+    <p class="code">cpaint_get_remote_file('cpaint_proxy.asp', 'http://www.google.com/search', 'GET', <br />
+    &nbsp;&nbsp;'TEXT', googleSearchResults, 'q', 'CPAINT', 'hl', 'en'<br />
+    );</p>
+  </blockquote>
+  <p>v2.x</p>
+  <blockquote>
+    <p class="code">var cp = new cpaint();<br />
+      cp.set_transfer_mode('get');<br />
+      cp.set_response_type('text');<br />
+      cp.set_proxy_url('../../cpaint2_proxy.php');
+    </p>
+    <p class="code">
+      function ping() {<br />
+      &nbsp;&nbsp;cp.call('http://www.google.com/search', '', response, 'q=CPAINT', 'hl=en');<br />
+      &nbsp;&nbsp;return false;<br />
+      }</p>
+    <p class="code"> function response(result) {<br />
+  &nbsp;&nbsp;document.getElementById('response').innerHTML = result;<br />
+  }</p>
+  </blockquote>
+</div>
+</body>
+</html>

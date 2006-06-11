@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: frontend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Developer's Guide : Frontend </h2>
+  <div id="summary">
+    <h3>Frontend Guide: Pages</h3>
+    <p>
+      <a href="usage.frontend.html" class="code">introduction</a><br />
+      <a href="usage.frontend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.frontend.page3.html" class="code">working with CPAINT</a><br />
+      <a href="usage.frontend.page4.html" class="code">using the proxy</a><br />
+      <a href="usage.frontend.page5.html" class="code">non-CPAINT data-sources</a><br />
+      <a href="usage.frontend.page6.html" class="code">browser compatibility tests</a><br />
+    </p>
+  </div>
+  <h3>Using the Proxy Scripts </h3>
+  <p>If you ever need to access data that's on a different server or domain, you will need to use the proxy scripts to access that data. The reason is simple - by default, browsers will not let the XMLHTTP object (or JavaScript) access data that's on a different server or domain. While this was done to stop cross-site browser hijacking, we created the server-side proxy script to maintain security and give you greater flexibility.</p>
+  <p>You can also use the proxy utility to retrieve data from remote servers that emit either plain text, XML, or an XML variant (including, but not limited to WSDL/SOAP, HTML, RSS/RDF, and many more). This includes backend functionality on a remote server that uses  CPAINT. See <a href="backend.proxy.considerations.html">considerations</a> and <a href="backend.proxy.enhanced-usage.html">enhanced usage</a>  for more information. </p>
+  <p>A call to a remote server is essentially the same, with a few exceptions. </p>
+  <ol>
+    <li>You will need to know the input parameters of the remote page or server you are calling.</li>
+    <li>The <span class="code">cpaint2.proxy.???</span> file will need to be located within your server's web root and accessible by the browser.</li>
+    <li> Before calling <a href="frontend.class.cpaint.html" class="code">cpaint.call()</a>, you will need to set the <a href="frontend.class.cpaint.set_proxy_url.html" class="code">cpaint.set_proxy_url()</a> to the location of the <span class="code">cpaint2.proxy.???</span> file.</li>
+  </ol>
+  <p>If the remote script was implemented using cpaint, you can pass the parameters as you would normally, including the <span class="code">remote_method</span> and <span class="code">args</span> parameters. </p>
+  <p><strong>Note:</strong> You can find out if a remote script was implemented using CPAINT v2.x or above by passing the variable <span class="code">api_query</span> either on the querystring or in the POST data in your browser. (You do not need to specify a value after the variable.) If it does, it will reply with a string in the following format:</p>
+  <blockquote>
+    <p class="code">CPAINT v[major].[minor].[revision]/[language] v[language version]</p>
+    <p class="code">major = the major version number (ie: 2)<br />
+    minor = the minor version number (ie: 0)<br />
+    revision = the revision or release number (ie: 0)<br />
+    language = the scripting language used (ie: ASP-VBscript)<br />
+    language version = the version information of the language in use</p>
+    <p class="code">Sample URL:<br />
+http://localhost/cpaint_v2/cpaint.inc.asp?api_query<br />
+<br />
+Sample Response:<br />
+CPAINT v2.0.0/ASP-VBscript </p>
+  </blockquote>
+  <p>However, if the remote script uses something other than CPAINT, you can ignore the <span class="code">remote_method</span> parameter (best to pass an empty string - <span class="code">''</span>) and to put the data to be passed to the remote script in the <span class="code">args</span> parameter(s). For example, if the remote script expected an argument called <span class="code">query</span> and you wanted to pass the value <span class="code">cpaint</span>, the first <span class="code">args</span> parameter should read <span class="code">query=cpaint</span>.  Additional parameters to be passed can be put in additional <span class="code">args</span> parameters.</p>
+  <p>Here's an example HTML file that utilizes the cpaint proxy to retrieve data from <a href="http://www.google.com/" target="_blank">Google</a>. </p>
+  <blockquote class="code">
+    <p>&lt;html&gt;<br />
+      &nbsp;&nbsp;&lt;head&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;google via cpaint&lt;/title&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot; src=&quot;../../cpaint2.inc.js&quot;&gt;&lt;/script&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt!--<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var cp = new cpaint();<br /><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_transfer_mode('get');<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_response_type('text');<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_persistent_connection(false);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_async(true);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_proxy_url('../../cpaint2.proxy.php');<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.set_debug(false);<br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function ping() {<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.call('http://www.google.com/search', '', response, 'q=' + document.getElementById('query').value, 'hl=en');<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function response(result) {<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('response').innerHTML = result;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;//--&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/script&gt;<br />
+      &nbsp;&nbsp;&lt;/head&gt;<br />
+      &nbsp;&nbsp;&lt;body&gt;<br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;form action=&quot;#&quot; onSubmit=&quot;return ping()&quot;&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; id=&quot;query&quot; value=&quot;&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;submit&quot; value=&quot;query google&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id=&quot;response&quot;&gt;&lt;/div&gt;<br />
+      <br />
+      &nbsp;&nbsp;&lt;/body&gt;<br />
+      &lt;/html&gt;</p>
+  </blockquote>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.frontend.page3.html">back to page 3</a>
+  </div>
+      <div id="nav_right">
+        &raquo; <a href="usage.frontend.page5.html">continue to page 5</a>
+      </div>
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: backend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Developer's Guide : Backend </h2>
+  <div id="summary">
+    <h3>Backend Guide: Pages</h3>
+    <p>
+      <a href="usage.backend.html" class="code">introduction</a><br />
+      <a href="usage.backend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.backend.page3.html" class="code">implementation differences</a><br />
+      <a href="usage.backend.page4.html" class="code">generating XML</a><br />
+      <a href="usage.backend.page5.html" class="code">complex return-data</a><br />
+      <a href="usage.backend.page6.html" class="code">arbitrary character encodings</a><br />
+    </p>
+  </div>
+    <h3>Generating the XML </h3>
+    <p>As mentioned above, we use XML by default to return data from the backend. Since we're only returning a single value, we can use the <a href="backend.class.cpaint.set_data.html" class="code">cpaint.set_data()</a> method on the top level to set the data. Use this method in place of function return statements.</p>
+  <blockquote>
+      <h3 class="code">PHP Example</h3>
+      <p class="code">&lt;?php<br />
+      &nbsp;&nbsp;require_once(&quot;cpaint v2/cpaint.inc.php&quot;); <br /><br />
+      &nbsp;&nbsp;$cp = new <a href="backend.class.cpaint.html" class="code">cpaint</a>():<br />
+      &nbsp;&nbsp;$cp-><a href="backend.class.cpaint.register.html" class="code">register</a>('calculate_tax');<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.start.html" class="code">start</a>();<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.return_data.html" class="code">return_data</a>(); </p>
+      <p class="code">
+      &nbsp;&nbsp;function calculate_tax($sales_amount) {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;global $cp; <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<strong>$cp-&gt;<a href="backend.class.cpaint.set_data.html" class="code">set_data</a>($sales_amount * 0.075); </strong><br />
+&nbsp;&nbsp;}<br />
+?&gt;</p>
+    </blockquote>
+    <p>For simple returns, we're now done. The XML that will be returned from the backend will look like (assuming the input value was 1):</p>
+    <blockquote>
+      <p class="code">&lt;ajaxResponse&gt;1.075&lt;/ajaxResponse&gt;</p>
+    </blockquote>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.backend.page3.html">back to page 3</a>
+  </div>
+      <div id="nav_right">
+        &raquo; <a href="usage.backend.page5.html">continue to page 5</a>
+      </div>
+    </p>
+</div>
+</body>
+</html>

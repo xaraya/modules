@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: debugging</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+<div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+  <p>
+    <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+    <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+    <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+  <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+  <p><br />
+    <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+    </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+</div>
+  
+  <div id="content">
+    <h2>Debugging</h2>
+    <p>Starting with the release of CPAINT v2.0.2, a backend debugging utility has been included in the CPAINT distribution archive. For previous releases of CPAINT, the debugger included in v2.0.2 will work with previous v2.x releases.</p>
+    <p>This debugger generates a basic interface for all backend functions (including those not registered with the CPAINT class). While the debugger will co-exist with &quot;live&quot; scripts, we suggest that you remove the debugger when you launch the backend logic on a &quot;live&quot; server that will be used by external users.</p>
+    <p>To use the debugger, simply include the &quot;cpaint2.backend-debugger.php&quot; file in the script containing your backend code after you include the main CPAINT backend classes. </p>
+    <blockquote>
+      <p class="code"><strong>Example:</strong></p>
+      <p class="code">include(&quot;cpaint2.inc.php&quot;);<br />
+        include(&quot;cpaint2.backend-debugger.php&quot;); </p>
+    </blockquote>
+    <p>Then, simply call the backend script <strong>directly </strong>and you should see the debug interface . (If the debugger isn't included, you would normally get the error &quot;A function name was passed that is not allowed to execute on this server.&quot;) <a href="http://cpaint.booleansystems.com/examples/calculator/calculator.php" target="_blank">Here is a live example.</a></p>
+    <p><em><strong>Note: </strong></em>In Internet Explorer, if you use the response type 'TEXT', sometimes the browser will attempt to download the file as a text file, rather than viewing it in the IFRAME.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: frontend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+  <div id="content">
+    <h2>Developer's Guide : Frontend </h2>
+    <div id="summary">
+      <h3>Frontend Guide: Pages</h3>
+      <p>
+        <a href="usage.frontend.html" class="code">introduction</a><br />
+        <a href="usage.frontend.page2.html" class="code">integrating CPAINT</a><br />
+        <a href="usage.frontend.page3.html" class="code">working with CPAINT</a><br />
+        <a href="usage.frontend.page4.html" class="code">using the proxy</a><br />
+        <a href="usage.frontend.page5.html" class="code">non-CPAINT data-sources</a><br />
+        <a href="usage.frontend.page6.html" class="code">browser compatibility tests</a><br />
+      </p>
+    </div>
+    <h3>Browser Compatibility Tests</h3>
+    <p>
+      AJAX is a powerful way to enrich your webpages or to develop complex applications running in your browser.
+      While this is all nice and well there are still users out there on the web with <em>very</em> old browsers which might or might not be able to make use of AJAX and thus, of CPAINT.
+    </p>
+    <p>
+      So it will be your responsibility to decide what to do if a customer visits your page but is unable to make use of the CPAINT features. Be it because his browser does not support some of the techniques, or because he has deactivated JavaScript.
+    </p>
+    <p>
+      However we believe that while it is your responsibility to provide a decent fallback in your application, it is CPAINTs responsibility to determine whether CPAINT can be used or not. <br />
+      So CPAINT (since version 2.0.1) provides a property <a href="frontend.class.cpaint.capable.html" class="code">capable</a> which contains boolean <span class="code">( true | false )</span> whether the browser is able to use CPAINT or not.
+    </p>
+    <blockquote>
+      <pre>
+        &lt;script src="cpaint2.inc.js" type="text/javascript"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript"&gt;
+          &lt;!--
+          var cp = new cpaint();
+          <span style="color: #dd0000">if (cp.capable == true) {</span>
+            cp.set_response_type('XML');
+          <span style="color: #dd0000">}</span>
+    
+          function trigger() {
+            <span style="color: #dd0000">if (cp.capable == true) {</span>
+              cp.call('xml_backend.asp', 'get_XML', parser);
+
+            <span style="color: #dd0000">} else {
+              alert('your browser does not support the features on this page');
+            }</span>
+          }
+          
+          function parser(DOM_struct, XML_source) {
+          }
+          //--&gt;
+        &lt;/script&gt;
+      </pre>
+    </blockquote>
+    <p>
+      The above example tests the CPAINT-capability before CPAINT is configured or used in the <span class="code">trigger()</span> function. If it fails the test a - very useless - error message is displayed.<br />
+      While the use of the <span class="code">capable</span> property is completely optional, we highly encourage you to use it in one way or another.
+    </p>
+    <p>
+      We will gradually improve the tests for CPAINT-capability in later versions of CPAINT as we see fit. Currently Opera, Microsoft Internet Explorer and Gecko based browsers should be able to either pass this test or fail the test gracefully.<br />
+    </p>
+    <p>
+      <strong>However</strong> the infamous Netscape 4.x browser family will throw JavaScript errors even on the test. This browser is too old even for the test in its current implementation. We will see to it in an upcoming release if we get reports that a better test is indeed needed.
+    </p>
+    <p>
+    <div id="nav_left">
+        &laquo; <a href="usage.frontend.page5.html">back to page 5</a>
+    </div>
+    </p>
+  </div>
+</body>
+</html>

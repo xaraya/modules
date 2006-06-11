@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: backend :: cpaint_node</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+<div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+  <p>
+    <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+    <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+    <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+  <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+  <p><br />
+    <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+    </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+</div>
+  
+  <div id="content">
+    <h2>Backend: Class cpaint_node</h2>
+    <div id="summary">
+      <h3>Method Summary</h3>
+      <p>
+        <a href="backend.class.cpaint_node.add_node.html" class="code"><em>object</em> add_node()</a><br />
+        <a href="backend.class.cpaint_node.set_data.html" class="code"><em>void</em> set_data()</a><br />
+        <a href="backend.class.cpaint_node.get_data.html" class="code"><em>mixed</em> get_data()</a><br />
+        <a href="backend.class.cpaint_node.set_id.html" class="code"><em>void</em> set_id()</a><br />
+        <a href="backend.class.cpaint_node.get_id.html" class="code"><em>string</em> get_id()</a><br />
+        <a href="backend.class.cpaint_node.set_attribute.html" class="code"><em>void</em> set_attribute()</a><br />
+        <a href="backend.class.cpaint_node.get_attribute.html" class="code"><em>string</em> get_attribute()</a><br />
+        <a href="backend.class.cpaint_node.set_name.html" class="code"><em>void</em> set_name()</a><br />
+        <a href="backend.class.cpaint_node.get_name.html" class="code"><em>string</em> get_name()</a><br />
+      </p>
+    </div>
+    <p>cpaint response node class</p>
+    <h3>Author(s)</h3>
+    <p>
+      &raquo; Paul Sullivan &lt;<a href="mailto:wiley14|at|gmail.com" style="font-weight: normal;">wiley14|at|gmail.com</a>&gt;<br />
+      &raquo; Dominique Stender &lt;<a href="mailto:dstender|at|st-webdevelopment.de" style="font-weight: normal;">dstender|at|st-webdevelopment.de</a>&gt;
+    </p>
+    <h3>API Tags</h3>
+    <p>
+      &raquo; <strong>Access:</strong> public<br />
+    </p>
+    <h3>Information Tags</h3>
+    <p>
+      &raquo; <strong>Version:</strong> 2.0.2<br /> 
+      &raquo; <strong>Copyright:</strong> Copyright (c) 2005-2006 Paul Sullivan, Dominique Stender - <a href="http://sf.net/projects/cpaint">http://sf.net/projects/cpaint</a><br />
+      &raquo; <strong>License:</strong> released under the terms of the <a href="license.lgpl.html">LGPL</a>.<br />
+    </p>
+    <h3>Description</h3>
+    <p>
+      Objects of the <span class="code">cpaint_node</span> class serve as nodes in the CPAINT backend response.
+    </p>
+    <p>
+      Every node has a <a href="backend.class.cpaint_node.set_name.html" class="code">name</a>, textual <a href="backend.class.cpaint_node.set_data.html" class="code">data</a>
+      and optionally a set of <a href="backend.class.cpaint_node.set_attribute.html" class="code">attributes</a>.<br />
+      Attributes will only be used when the <a href="frontend.class.cpaint.set_response_type.html" class="code">response type</a>
+      is <em>not</em> configured as <span class="code">TEXT</span>.
+    </p>
+    <p>
+      Every node can have an arbitrary amount of nested nodes. New nested nodes are created with <a href="backend.class.cpaint_node.add_node.html" class="code">add_node()</a>.
+    </p>
+  </div>
+</body>
+</html>

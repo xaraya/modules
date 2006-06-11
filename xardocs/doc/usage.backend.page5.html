@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: backend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Developer's Guide : Backend </h2>
+  <div id="summary">
+    <h3>Backend Guide: Pages</h3>
+    <p>
+      <a href="usage.backend.html" class="code">introduction</a><br />
+      <a href="usage.backend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.backend.page3.html" class="code">implementation differences</a><br />
+      <a href="usage.backend.page4.html" class="code">generating XML</a><br />
+      <a href="usage.backend.page5.html" class="code">complex return-data</a><br />
+      <a href="usage.backend.page6.html" class="code">arbitrary character encodings</a><br />
+    </p>
+  </div>
+    <h3>Returning More than One Value </h3>
+    <p>That simple example was great, but most likely, you need to return more than one thing. For traditional application programming, you would normally have to return the results from the functions in an array. However, since we're sending this to the frontend, we can use nested XML tags. </p>
+    <p>Here's an example of a function that returns four different results, simulaneously:</p>
+  <blockquote>
+      <h3 class="code">PHP Example</h3>
+      <p class="code">&lt;?php<br />
+      &nbsp;&nbsp;require_once(&quot;cpaint v2/cpaint.inc.php&quot;); <br /><br />
+      &nbsp;&nbsp;$cp = new <a href="backend.class.cpaint.html" class="code">cpaint</a>():<br />
+      &nbsp;&nbsp;$cp-><a href="backend.class.cpaint.register.html" class="code">register</a>('multi_calc');<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.start.html" class="code">start</a>();<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.return_data.html" class="code">return_data</a>(); </p>
+      <p class="code">
+      &nbsp;&nbsp;function multi_calc($num1, $num2) {<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;global $cp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$add_result = $num1 + $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$subtr_result = $num1 - $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$multi_result = $num1 * $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$div_result = $num1 / $num2; <br />
+      &nbsp;&nbsp;}<br />
+      ?&gt;</p>
+</blockquote>
+    <p>We could use the <a href="backend.class.cpaint.set_attribute.html" class="code">cpaint.set_attribute()</a> method, like we did in the previous example, but that function sets the top-level XML tag, which wouldn't work in this situation. Instead, we're going to use the <a href="backend.class.cpaint.add_node.html" class="code">cpaint.add_node()</a> method which will create our XML tree. In this case, we're going to call it four times, so each one of our results is in a new tag, under the top-level tag, which by default is named <span class="code">ajaxResponse</span>. Then we'll call the <a href="backend.class.cpaint_node.set_data.html" class="code">cpaint.set_data()</a> method for each of those newly created nodes and add the results to the XML tree. </p>
+  <blockquote>
+      <h3 class="code">PHP Example</h3>
+      <p class="code">&lt;?php<br />
+      &nbsp;&nbsp;require_once(&quot;cpaint v2/cpaint.inc.php&quot;); <br /><br />
+      &nbsp;&nbsp;$cp = new <a href="backend.class.cpaint.html" class="code">cpaint</a>():<br />
+      &nbsp;&nbsp;$cp-><a href="backend.class.cpaint.register.html" class="code">register</a>('multi_calc');<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.start.html" class="code">start</a>();<br />
+      &nbsp;&nbsp;$cp-&gt;<a href="backend.class.cpaint.return_data.html" class="code">return_data</a>(); </p>
+      <p class="code">
+      &nbsp;&nbsp;function multi_calc($num1, $num2) {<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;global $cp;<br /><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$add_result = $num1 + $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$subtr_result = $num1 - $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$multi_result = $num1 * $num2;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$div_result = $num1 / $num2; <br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>$<strong>add_result_node</strong> =& $cp-&gt;<a href="backend.class.cpaint.add_node.html" class="code">add_node</a>(&quot;add&quot;);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$<strong>subtr_result_node</strong> =& $cp-&gt;<strong><a href="backend.class.cpaint.add_node.html" class="code">add_node</a></strong>(&quot;subtr&quot;);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$multi_result_node =& $cp-&gt;<strong><a href="backend.class.cpaint.add_node.html" class="code">add_node</a></strong>(&quot;multi&quot;);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$div_result_node =& $cp-&gt;<strong><a href="backend.class.cpaint.add_node.html" class="code">add_node</a></strong>(&quot;div&quot;);<br />
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$add_result_node-&gt;<a href="backend.class.cpaint_node.set_data.html" class="code">set_data</a>($add_result);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$subtr_result_node-&gt;<strong><a href="backend.class.cpaint_node.set_data.html" class="code">set_data</a></strong>($subtr_result);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$<strong>multi_result_node</strong>-&gt;<strong><a href="backend.class.cpaint_node.set_data.html" class="code">set_data</a></strong>($multi_result);<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;$<strong>div_result_node</strong>-&gt;<strong><a href="backend.class.cpaint_node.set_data.html" class="code">set_data</a></strong>($div_result):</strong><br />
+      &nbsp;&nbsp;}<br />
+      ?&gt;</p>
+  </blockquote>
+    <p>Assuming our input for the function was 2 and 4, the XML generated would look like:</p>
+    <blockquote>
+      <p class="code">&lt;ajaxResult&gt;<br />
+        &nbsp;&nbsp;&lt;add&gt;6&lt;/add&gt;<br />
+        &nbsp;&nbsp;&lt;subtr&gt;-2&lt;/subtr&gt;<br />
+        &nbsp;&nbsp;&lt;multi&gt;8&lt;/multi&gt;<br />
+        &nbsp;&nbsp;&lt;div&gt;0.5&lt;/div&gt;<br />
+      &lt;/ajaxResult&gt;</p>
+  </blockquote>
+    <h3>Advanced XML </h3>
+    <p>
+      If you wanted to go one step further and add multiple levels to the XML tree and use attributes, see the API documentation for the functions available to you. 32,000 is the theoretical limit to the number of objects you can add to the tree. Just remember, each tag, even those with the same name, counts againsts this limit. Depending on the language you use, this limit may not apply to you.
+    </p>
+    <p>
+      Due to the frequency of requests regarding this issue a short and mainly uncommented example:<br />
+      To product this XML structure as output...
+    </p>
+      <blockquote>
+      <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;colorPicker&gt;
+  &lt;color&gt;
+    &lt;hex&gt;#fff9f9&lt;/hex&gt;
+    &lt;red&gt;255&lt;/red&gt;
+    &lt;green&gt;249&lt;/green&gt;
+    &lt;blue&gt;249&lt;/blue&gt;
+  &lt;/color&gt;
+  &lt;response id="valid"&gt;
+    &lt;isValid&gt;1&lt;/isValid&gt;
+    &lt;offset id="X"&gt;10&lt;/offset&gt;
+    &lt;offset id="Y"&gt;10&lt;/offset&gt;
+  &lt;/response&gt;
+&lt;/colorPicker&gt;
+      </pre>
+    </blockquote>
+    <p>
+      ...you need to connect the XML nodes in the CPAINT backend like this:
+    </p>
+    <blockquote>
+      <pre>
+// change name of basenode
+$cp->set_name('colorPicker');
+
+// create 'color' node
+$color_node	=& $cp->add_node('color');
+
+// create submodes that actually hold the color information(s)
+$hex_node	=& $color_node->add_node('hex');
+$red_node	=& $color_node->add_node('red');
+$green_node	=& $color_node->add_node('green');
+$blue_node	=& $color_node->add_node('blue');
+
+// create a new result node containing success information and the initial coordinates
+$response_node	=& $cp->add_node('response', 'valid');
+
+// ...and its subnodes
+$validity_node	=& $response_node->add_node('isValid');
+$x_node		=& $response_node->add_node('offset', 'X');
+$y_node		=& $response_node->add_node('offset', 'Y');
+
+// now assign all values
+$hex_node->set_data(sprintf('#%02x%02x%02x', $red, $green, $blue));
+$red_node->set_data($red);
+$green_node->set_data($green);
+$blue_node->set_data($blue);
+$validity_node->set_data($valid);
+$x_node->set_data($x);
+$y_node->set_data($y);        
+      </pre>
+    </blockquote>
+    <p>
+      Note that the nested nodes from the XML are created by calling <a href="backend.class.cpaint.add_node.html" class="code">add_node()</a> on the proper parent nodes. This method is <em>not</em> called on the CPAINT object <span class="code">$cp</span> all the time!
+    </p>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.backend.page4.html">back to page 4</a>
+  </div>
+      <div id="nav_right">
+        &raquo; <a href="usage.backend.page6.html">continue to page 6</a>
+      </div>
+    </p>
+</div>
+</body>
+</html>

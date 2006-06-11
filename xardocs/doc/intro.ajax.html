@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: introduction :: AJAX</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 120px;
+	color: #dd0000;
+}
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+</style></head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p>    <br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+          </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+  </div>
+  
+  <div id="content">
+    <h2>What is AJAX?</h2>
+    <p> AJAX is a culmination of existing technologies that allows web developers to provide a new level of interactivity to their applications.</p>
+    <p>The term AJAX (Asynchronous JavaScript and XML) was coined by Jesse James Garrett in his article entitled <a href="http://www.adaptivepath.com/publications/essays/archives/000385.php" target="_blank">&quot;Ajax: A New Approach to Web Applications&quot;</a> (where he also has some  graphics to help you visualize how AJAX compares to traditional web applications). However, despite media and blog articles, research shows that the methodology now called AJAX predates Garrett's article. For example, <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/rmscpt/Html/rmscpt.asp" target="_blank">Microsoft introduced the Remote Scripting Toolkit for Internet Explorer 4.0</a>, though it only worked with IE and ASP - and in August 2000, <a href="http://www.ashleyit.com/rs/main.htm" target="_blank">Brent Ashley released his JavaScript Remote Scripting toolkit</a>. The introduction of <a href="http://maps.google.com/" target="_blank">Maps</a> and <a href="http://www.google.com/webhp?complete=1&hl=en" target="_blank">Suggest</a> by Google demonstrated that these methodologies were not only useful, but could work across multiple browsers and were within the reach of the smaller developer. </p>
+    <p>On the client side, AJAX uses the XMLHTTP object (introduced by Microsoft in Internet Explorer 4.0 and subsequently implemented by the Mozilla Foundation in Firefox, AOL in Netscape, and Opera in the Opera Browser) to retrieve an HTML or XML document from the server. JavaScript is used to setup the XMLHTTP object, control it, and update the contents of the web page based on the data retrieved from the server. These operations are completely transparent to the user and can  update small sections of a web page (any object, including page divisions, that can be accessed via JavaScript can be manipulated) much faster than submitting a form and reloading the entire page in the browser.</p>
+    <p>On the server side, AJAX can be as simple or as complex as the developer wants. Basically, the data is passed in and returned  the same way as a traditional web application or form. However, additional flags and parameters can be given to call only a single function within a large library or control the content type of the document being returned to the client side. While the &quot;X&quot; in AJAX stands for XML, other content types, such as HTML, JavaScript objects, images, and many other content types can be returned from the server - provided the implementation of JavaScript in the user's browser can handle the payload and manipulation or execution of that data. </p>
+    <p>Because AJAX &quot;changes&quot; the way we expect a browser to operate, potential applications, methodologies, best practices, and caveats are still being discovered.  Though the technologies AJAX build on mature and stable, some older browsers do not have access to the XMLHTTP object and  cannot execute web applications utilizing AJAX. Thus, it is in the developer's hands to decide when and where best to implement AJAX and provide a fallback method for communicating with the server. </p>
+  </div>
+</body>
+</html>

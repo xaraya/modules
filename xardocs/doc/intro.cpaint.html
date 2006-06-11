@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: introduction :: CPAINT</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+    <h2>What is CPAINT?</h2>
+  <p>CPAINT (Cross-Platform Asynchronous INterface Toolkit) is a multi-language toolkit that helps web developers design and implement AJAX web applications with ease and flexibility. It was originally born out of the author's frustration and disappointment with other open-source AJAX toolkits. It is built on the same principles of AJAX, utilizing JavaScript and the XMLHTTP object on the client-side and the appropriate scripting language on the server-side to complete the full circle of data passing from client to server and back. See <a href="intro.features.html">features</a> and the rest of the documentation for additional information. <br />
+  </p>
+  <h3>Client-Side</h3>
+  <p>On the client-side, CPAINT consists of JavaScript classes that:</p>
+  <ol>
+    <li>control the creation and execution of the XMLHTTP object;</li>
+    <li>retrieve the data from the XMLHTTP object and convert XML data into a JavaScript array (if configured); and,</li>
+    <li>execute developer written code for further data manipulation or display.<br />
+    </li>
+  </ol>
+  <h3>Server-Side</h3>
+  <p>On the server-side, CPAINT currently consists of classes that:</p>
+  <ol>
+    <li>retrieve CPAINT control variables and data from the querystring or POST data;</li>
+    <li>execute developer written code for data manipulation or retrieval; and,</li>
+    <li>assist the developer in the construction of properly formatted XML data.<br />
+    </li>
+  </ol>
+  <h3>Proxy Implementation</h3>
+  <p>In addition to helping developers implement AJAX web applications using their own developed code, CPAINT includes a proxy utility that can pass data to code on a remote server, retrieve that data, and pass it to the frontend without breaking JavaScript security rules.</p>
+</div>
+</body>
+</html>

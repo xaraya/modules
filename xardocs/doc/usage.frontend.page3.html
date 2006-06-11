@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: frontend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Developer's Guide : Frontend </h2>
+  <div id="summary">
+    <h3>Frontend Guide: Pages</h3>
+    <p>
+      <a href="usage.frontend.html" class="code">introduction</a><br />
+      <a href="usage.frontend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.frontend.page3.html" class="code">working with CPAINT</a><br />
+      <a href="usage.frontend.page4.html" class="code">using the proxy</a><br />
+      <a href="usage.frontend.page5.html" class="code">non-CPAINT data-sources</a><br />
+      <a href="usage.frontend.page6.html" class="code">browser compatibility tests</a><br />
+    </p>
+  </div>
+  <h3>Working With CPAINT </h3>
+  <p>Continuing from our sales tax example in the <a href="usage.backend.html">backend usage guide</a>, here is our sample HTML file, with two fields (one for user input and one for outputting the result we get from the backend) and a button to fire the CPAINT call.</p>
+  <blockquote>
+    <p class="code">&lt;html&gt;<br />
+      &nbsp;&nbsp;&lt;head&gt;
+      <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Sales tax calculator example&lt;/title&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src=&quot;cpaint2.inc.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt!--<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var cp = new <a href="frontend.class.cpaint.html" class="code">cpaint</a>();<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//--&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/script&gt;<br />
+      &nbsp;&nbsp;&lt;/head&gt;<br />
+      &nbsp;&nbsp;&lt;body&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;form&gt;<br /> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Amount:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; size=&quot;10&quot; maxlength=&quot;10&quot; name=&quot;sales_amount&quot; id=&quot;sales_amount&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br /&gt;&lt;br /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Tax (7.5%):<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; size=&quot;10&quot; name=&quot;sales_tax&quot; id=&quot;sales_tax&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;button&quot; name=&quot;Calculate&quot; value=&quot;Calculate Tax&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br />
+      &nbsp;&nbsp;&lt;/body&gt;<br />
+      &lt;/html&gt;
+</p>
+  </blockquote>
+  <p>Now that we've got our form, next we need to code two functions - one fire the cpaint object and one to handle the results from the backend. These functions will be named <span class="code">calc_tax</span> and <span class="code">tax_results</span>, respectively. These functions can go in the second JavaScript block (directly under the cpaint object constructor). </p>
+  <blockquote class="code">    
+    <p> function calc_tax() {<br>
+&nbsp;&nbsp;cp.<a href="frontend.class.cpaint.call.html" class="code">call</a>('calc_tax.php', 'calculate_tax', tax_results, <br />
+&nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('sales_amount').value);<br />
+  }</p>
+    <p> function tax_results(result) {<br />
+&nbsp;&nbsp;document.getElementById('sales_tax').values = <br />
+&nbsp;&nbsp;&nbsp;&nbsp;result.getElementsByTagName('ajaxResponse').item(0).firstChild.data<br />
+}</p>
+  </blockquote>
+  <p>In the <span class="code">calc_tax</span> function, we execute <a href="frontend.class.cpaint.call.html" class="code">cpaint.call()</a>, which reads the value of the input box with the <span class="code">id</span> of <span class="code">sales_amount</span>, create the XMLHTTP object to communicate with the backend, retrieve the data from the backend, parse the XML into an object array, and pass that object array to the <span class="code">tax_results</span> function. The <span class="code">tax_results</span> function simply updates the input box with the <span class="code">id</span> attribute of <span class="code">sales_tax</span>. </p>
+  <p>That's all there is to it! So our final HTML page looks like this:</p>
+  <blockquote>
+    <p class="code">&lt;html&gt;<br> 
+      &nbsp;&nbsp;&lt;head&gt; <br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Sales tax calculator example&lt;/title&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src=&quot;cpaint2.inc.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;script type=&quot;text/javascript&quot;&gt;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt!--<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var cp = new <a href="frontend.class.cpaint.html" class="code">cpaint</a>();<br><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function calc_tax() {<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cp.<a href="frontend.class.cpaint.call.html" class="code">call</a>('calc_tax.php', 'calculate_tax', tax_results, document.getElementById('sales_amount').value);<br>   
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function tax_results(result) {<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('sales_tax').values = result.getElementsByTagName('ajaxResponse').item(0).firstChild.data<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//--&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/script&gt;<br> 
+      &nbsp;&nbsp;&lt;/head&gt;<br> 
+      &nbsp;&nbsp;&lt;body&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;form&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Amount:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; size=&quot;10&quot; name=&quot;sales_amount&quot; id=&quot;sales_amount&quot; /&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br /&gt;&lt;br /&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Tax (7.5%):<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; size=&quot;10&quot; maxlength=&quot;10&quot; name=&quot;sales_tax&quot; id=&quot;sales_tax&quot; /&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;button&quot; name=&quot;Calculate&quot; value=&quot;Calculate Tax&quot; /&gt;<br> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br> 
+      &nbsp;&nbsp;&lt;/body&gt;<br> 
+    &lt;/html&gt; </p>
+  </blockquote>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.frontend.page2.html">back to page 2</a>
+  </div>
+      <div id="nav_right">
+        &raquo; <a href="usage.frontend.page4.html">continue to page 4</a>
+      </div>
+    </p>
+</div>
+</body>
+</html>

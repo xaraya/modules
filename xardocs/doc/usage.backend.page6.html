@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: backend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+<div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+<br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+  <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+</div>
+  
+<div id="content">
+  <h2>Developer's Guide : Backend </h2>
+  <div id="summary">
+    <h3>Backend Guide: Pages</h3>
+    <p>
+      <a href="usage.backend.html" class="code">introduction</a><br />
+      <a href="usage.backend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.backend.page3.html" class="code">implementation differences</a><br />
+      <a href="usage.backend.page4.html" class="code">generating XML</a><br />
+      <a href="usage.backend.page5.html" class="code">complex return-data</a><br />
+      <a href="usage.backend.page6.html" class="code">arbitrary character encodings</a><br />
+    </p>
+  </div>
+    <h3>Arbitrary Character Sets</h3>
+    <p>
+      Whether you use UTF-8, ISO-8859-1 or more complex character sets like hebrew, arabic, russian or japanese, CPAINT will support them. This means you don't have to worry about character conversion, not about the encoding your visitors browsers use, not about anything.
+    </p>
+    <p>
+      However you <em>should</em> take care that the Webpage uses the correct <span class="code">Content-type</span> meta tag not to give the browsers a hard time.
+    </p>
+    <p>
+      <strong>The CPAINT frontend</strong> works in UTF-8 data wherever possible and will obey the <span class="code">Content-type</span> everywhere else. This means that:<br />
+      &nbsp;&nbsp;&raquo; data sent to the CPAINT backend will be submitted as UTF-8.<br />
+      &nbsp;&nbsp;&raquo; data from the CPAINT backend will be converted into UTF-8.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp; Note that browsers do not have a problem displaying a UTF-8 text in a hebrew (...) website.<br />
+    </p>
+  <p>
+      <strong>The CPAINT backend</strong> works slightly different in every implementation due to language specifics.<br />
+      For <strong>PHP</strong> this means that:<br />
+      &nbsp;&nbsp;&raquo; By default it assumes the character set to be UTF-8.<br />
+      &nbsp;&nbsp;&raquo; If another character set is used CPAINT must be told so via <a href="backend.class.cpaint.start.html" class="code">cpaint.start()</a>.<br />
+      &nbsp;&nbsp;&raquo; CPAINT will make use of the <span class="code">iconv</span> library to convert backend data to UTF-8 before sending it<br />
+      &nbsp;&nbsp;&nbsp;&nbsp; to the frontend wherever possible.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp; If <span class="code">iconv</span> is not installed,<br />
+      &nbsp;&nbsp;&raquo; If the character set is ISO-8859-1, <span class="code">utf8_encode()</span> will be utilized.<br />
+      &nbsp;&nbsp;&raquo; If neither is the case, data will be sent as-is.<br />
+      &nbsp;&nbsp;&raquo; The same logic is applied to incoming frontend data (iconv, utf8_decode(), as-is).<br />
+      &nbsp;&nbsp;&raquo; In any case the correct <span class="code">Content-type</span> will be sent.</p>
+    <p>
+    All backend implementations convert <strong>non-printable characters</strong> 0x00 - 0x20 as well as XML-sensitive characters &amp; &lt; &gt; to representations safe for transmission as XML or plaintext and processing by the XMLHTTP object.<br />
+    In the CPAINT frontend these representations are converted back to their original characters before the data is handed to the frontend application.<br />
+    Thus, we have reason to believe that CPAINT is able to handle <strong>binary data</strong>, although this is currently untested.
+    </p>
+    <h3>Backend Framework Encodings</h3>
+    <p>
+      It is your responsibility as developer to determine the correct character encoding used by your backend applications and databases and feed that information to the CPAINT backend. Faulty encodings will in most cases lead to incorrect incoming / outgoing data, even to crashes of the XMLHTTP object in MSIE sometimes the reasons to which are both quite hard to debug and eliminate.
+    </p>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.backend.page5.html">back to page 5</a>
+  </div>
+    </p>
+</div>
+</body>
+</html>

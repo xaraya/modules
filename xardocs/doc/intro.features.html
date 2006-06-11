@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: introduction :: featurelist</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+    <h2>Features</h2>
+    <p> Not to be slack, but most of the CPAINT features can be found on the <a href="changelog.html">changelog</a>. :-) </p>
+    <p>However, we started CPAINT because we wanted to build a better AJAX toolkit, so here is a discussion of the major features that we believe set CPAINT apart from other open-source AJAX toolkits.<br />
+    </p>
+    <p><strong>Separation of Presentation and Logic</strong></p>
+    <p>This was one of the major reasons why we built CPAINT. The majority of AJAX toolkits available today force you to include both your frontend presentation and backend logic in the same file. While this may work perfectly fine for short code-blocks or smaller web sites, when it comes to building enterprise-strength web applications, code reuse allows the project to be completed by multiple developers and share code across multiple applications. </p>
+    <p>We designed CPAINT so that it truly does not matter how far apart your presentation and logic files are, provided they can both be accessed by the user's browser. (In fact, utilizing the proxy utility, you can  access files that are located on internal servers without having to open them up to the public, files located on other external servers outside the presentation file's domain, or access XML or WSDL servers.)<br />
+    </p>
+    <h3>True to the AJAX Acronym</h3>
+    <p>Most AJAX toolkits do not even support XML, which we believe is a little misleading to say the least. The CPAINT backend allows developers to easily return properly formatted XML to the frontend where it can be used directly or be transformed into a JavaScript object automatically by the CPAINT frontend functions. In addition, we plan on supporting new formats (such as JSON) in the near future. <br />
+    </p>
+    <h3>Single API, Multiple Languages</h3>
+    <p>While some AJAX toolkits support multiple languages (such as PHP, ASP, and PERL), differences exist between each language-specific implementation. We have worked extremely hard to ensure that each implementation is identical across each language that we support now and in the future. This eliminates you from having to learn a new toolkit and API if you happen to develop in heterogeneous environments.<br />
+    </p>
+    <h3>Easy, Flexible API</h3>
+    <p>We wanted CPAINT to be the &quot;swiss army knife&quot; of AJAX toolkits. That means, we have a simple API that can easily be extended or modified to fit your needs. In both the frontend and backend code, we provide you with utility functions, such as those for generating XML on the backend and transforming XML into a JavaScript object on the frontend, that you can utilize if you wish. </p>
+    <p>Because all of the code was refactored and improved in v2.0, you can easily remove these utility functions from the frontend or backend code if you need to save disk space or bandwidth. This also means that we, the developers of CPAINT, will be able to implement and release new functionality for your use in the future without breaking code-compatibility (both CPAINT code and your application code). <br />
+    </p>
+    <h3>Greater Control of the XMLHTTP Object</h3>
+    <p>In the AJAX toolkits we have seen in the past, the developers of that toolkit controls the behavior of the XMLHTTP object, which does not necessarily fit everyone's needs. We've abstracted that control through the use of default flags and configuration options that can be changed statically or dynamically as your code executes. This includes changing the connection type, URI, backend function name, transport method, return data type, synchronicity, and reuse of the XMLHTTP object. <br />
+    </p>
+    <h3>Retrieve Non-local or Non-CPAINT Files </h3>
+    <p>The frontend can work in conjunction with the included proxy utility scripts to retrieve data from remote servers or servers on an internal network that you don't wish to expose to the public. You can also use the frontend to interface with backend functions that was not implemented using CPAINT or retrieve static XML or HTML files - provided they are accessible via the web browser. </p>
+</div>
+</body>
+</html>

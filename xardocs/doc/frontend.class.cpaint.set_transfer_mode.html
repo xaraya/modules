@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: frontend :: cpaint.set_transfer_mode()</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+<div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+<p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a></p>
+  </div>
+  
+  <div id="content">
+    <h2>Frontend: cpaint.set_transfer_mode()</h2>
+    <div id="summary">
+      <h3>cpaint Method Summary</h3>
+      <p>
+        <a href="frontend.class.cpaint.set_debug.html" class="code"><em>void</em> set_debug()</a><br />
+        <a href="frontend.class.cpaint.set_proxy_url.html" class="code"><em>void</em> set_proxy_url()</a><br />
+        <a href="frontend.class.cpaint.set_transfer_mode.html" class="code"><em>void</em> set_transfer_mode()</a><br />
+        <a href="frontend.class.cpaint.set_async.html" class="code"><em>void</em> set_async()</a><br />
+        <a href="frontend.class.cpaint.set_response_type.html" class="code"><em>void</em> set_response_type()</a><br />
+        <a href="frontend.class.cpaint.set_persistent_connection.html" class="code"><em>void</em> set_persistent_connection()</a><br />
+        <a href="frontend.class.cpaint.set_use_cpaint_api.html" class="code"><em>void</em> set_use_cpaint_api()</a><br />
+        <a href="frontend.class.cpaint.call.html" class="code"><em>void</em> call()</a><br />
+      </p>
+      <h3>cpaint Property Summary</h3>
+      <p>
+        <a href="frontend.class.cpaint.capable.html" class="code"><em>boolean</em> capable</a><br />
+      </p>
+    </div>
+    <p>
+      <span class="code"><em>void</em> set_transfer_mode ( <em>string</em> transfer_mode )</span>
+    </p>
+    <p>
+      Sets the HTTP transfer mode.
+    </p>
+    <h3>Class</h3>
+    <p>
+      <a href="frontend.class.cpaint.html" class="code">cpaint</a>
+    </p>
+    <h3>Parameters</h3>
+    <p>
+      <span class="attributetype">&raquo; <em>string</em> </span><span class="attributename">transfer_mode</span>HTTP transfer mode (GET|POST)<br clear="left" />
+    </p>
+    <h3>Return Value</h3>
+    <p>
+      <span class="attributetype">&raquo; <em>void</em> </span><br clear="left" />
+    </p>
+    <h3>API Tags</h3>
+    <p>
+    &raquo; <strong>Access:</strong> public<br />
+    </p>
+    <h3>Default Value</h3>
+    <p>
+      <span class="attributetype">&raquo; GET</span><br clear="left" />
+    </p>
+    <h3>Description</h3>
+    <p>
+      Defines whether CPAINT arguments are passed to the backend via HTTP GET  or HTTP POST.
+    </p>
+    <p>
+      <strong>Please note:</strong> For some reason unknown to the public the Opera browser does not support POST. There is nothing we can do about it, sorry.
+      If the data you need to send from the frontend to the backend does not exceed a certain (browser-dependant) range, you are fine with using GET though.
+    </p>
+    <p>
+      Here are some rough estimates about accepted querystring lengths:<br />
+      <span class="attributename">Opera:</span>~4050 characters<br clear="both" />
+      <span class="attributename">IE4+:</span>2083 characters<br clear="both" />
+      <span class="attributename">Netscape 3 - 4.78:</span>8192 characters<br clear="both" />
+      <span class="attributename">Netscape 6+:</span>~2000 characters<br clear="both" />
+    </p>
+  </div>
+</body>
+</html>

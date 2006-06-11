@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: introduction :: response types</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Response/Data Formats Supported </h2>
+    <p>The CPAINT backend can return data to the frontend in either XML or plain-text format. Here is a list of formats we have tested and which option you should use with <a href="frontend.class.cpaint.set_response_type.html" class="code">set_response_type</a> when setting up the connection in the frontend. These formats work with the remote proxy utility as well.<br />
+    </p>
+    <h3>SGML/XML-based formats</h3>
+    <p><em>      If you wish to use CPAINT to transform these into a JavaScript array or write your own parser in JavaScript, you must use the OBJECT or XML option. If you are simply going to display these to the user, you can use the TEXT option. </em></p>
+    <ul>
+      <li>XML</li>
+      <li>HTML</li>
+      <li>SGML</li>
+      <li>SOAP</li>
+      <li>any other XML-compliant language</li>
+    </ul>
+    <p></p>
+    <h3>E4X</h3>
+    <p>Since version 2.0.2 CPAINT also supports another XML-based format: E4X</p>
+    <p>E4X is a new JavaScript standard that is currently supported by Firefox 1.5 only. This makes it quite impractical for most scenarios but we believe E4X has so much potential that we decided to implement it, to express our support.</p>
+    <p>Read more about E4X <a href="http://www.ecma-international.org/publications/standards/Ecma-357.htm" target="_blank">on the ECMA Website</a>.</p>
+    <p></p>
+    <h3>JSON</h3>
+    <p>Alongside E4X CPAINT supports JSON responses since version 2.0.2</p>
+    <p>
+      This means that the backend developer may return any datatype including (value)objects to the 
+      frontend.
+    </p>
+    <p></p>
+    <h3>Other Formats </h3>
+    <p>Theoretically, JavaScript should be able to handle these and other data formats, but  only text formats have been tested, and binary formats may not work consistently across the different browser/JavaScript implementations, and may require 3rd party libraries/objects to manipulate and/or display.</p>
+    <p>The backend code, regardless of which language, <em>should</em> be able to handle the raw binary data from various formats, but you may need to use 3rd party libraries/objects to manipulate, read, or create these formats. </p>
+    <p><em>Note: This is not a complete list. </em></p>
+    <ul>
+      <li>Plain text</li>
+      <li>JSON (JavaScript Object Notation)</li>
+      <li>PON (PHP Object Notation)</li>
+      <li>JavaScript or VBScript strings/code blocks </li>
+      <li>Images (GIF, JPEG, and PNG)</li>
+      <li>Adobe PDF Format</li>
+      <li>Microsoft Office Formats (Word DOC, Access MDB, Excel XLS, PowerPoint PPT, and others)</li>
+      <li>Executable code (EXEs (ActiveX, MFC, VB, .NET Assemblies), DLLs (ActiveX, MFC, .NET Assemblies))</li>
+  </ul>
+</div>
+</body>
+</html>

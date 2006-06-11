@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="expires" content="Fri, 26 Dec 2003 19:13:00 +0100" />
+  <meta name="language" content="en" />
+  <meta name="robots" content="index,follow" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="author" content="Dominique Stender, Paul Sullivan" />
+  <meta name="date" content="2003-11-26T18:13:00+01:00?" />
+  <meta name="description" content="Documentation for the CPAINT AJAX toolkit" />
+  <meta name="keywords" content="AJAX, CPAINT, Asynchronous JavaScript and XML, XML, JavaScript, PHP, ASP, .NET, Perl" />
+  <title>CPAINT documentation :: developer's guide :: frontend</title>
+  <link rel="stylesheet" href="cpaint.css" media="screen" />
+  <link rel="stylesheet" href="cpaint.print.css" media="print" />
+  <script type="text/javascript" src="js/menu.js"></script>
+  <style type="text/css">
+<!--
+.menu1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight:  bold;
+}
+-->
+  </style>
+</head>
+<body>
+  <p align="right">
+    <br />
+    <a href="http://sf.net/projects/cpaint/">
+      <img src="gfx/css_logo.gif" alt="" border="0" height="51" width="182" alt=""  />
+    </a>
+  </p>
+  <h1>CPAINT :: Cross-Platform Asynchronous INterface Toolkit</h1>
+  <div id="menu">
+    <h2>Contents</h2>
+    <p>
+      <script type="text/javascript">
+      <!--
+        generate_menu();
+      //-->
+      </script>
+    </p>
+    <br /><br /><br />
+    <p>
+      <img src="gfx/xhtml10.gif" alt="" border="0" height="15" width="80" /><br />
+      <img src="gfx/css.gif" alt="" border="0" height="15" width="80" /><br />
+      <a href="http://www.monorom.to/" target="_blank"><img src="gfx/monorom.gif" alt="monorom" border="0" height="15" width="80" /></a><br />
+    <a rel="license" href="http://creativecommons.org/licenses/by/1.0/" target="_blank"><img src="gfx/cc.gif" alt="Creative Commons License" border="0" height="15" width="80" /></a></p>
+    <p><br />
+      <a href="http://creativecommons.org/licenses/by/1.0/" target="_blank" class="menu" rel="license">Project Services By <br />
+      </a><a href="http://sourceforge.net/" target="_blank" class="menu1"><img src="http://sourceforge.net/sflogo.php?group_id=141041&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a> </p>
+  </div>
+  
+<div id="content">
+  <h2>Developer's Guide : Frontend </h2>
+  <div id="summary">
+    <h3>Frontend Guide: Pages</h3>
+    <p>
+      <a href="usage.frontend.html" class="code">introduction</a><br />
+      <a href="usage.frontend.page2.html" class="code">integrating CPAINT</a><br />
+      <a href="usage.frontend.page3.html" class="code">working with CPAINT</a><br />
+      <a href="usage.frontend.page4.html" class="code">using the proxy</a><br />
+      <a href="usage.frontend.page5.html" class="code">non-CPAINT data-sources</a><br />
+      <a href="usage.frontend.page6.html" class="code">browser compatibility tests</a><br />
+    </p>
+  </div>
+  <h3>Integrating the CPAINT Frontend and Creating the Object</h3>
+  <p>Once your design is complete, the next step is to include the CPAINT frontend classes. This can be achieved by putting the following line of code in the <span class="code">head</span> section of the HTML document. (Of course, you might need to point to a different file location.)</p>
+  <blockquote>
+    <p class="code">&lt;script src=&quot;cpaint2.inc.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</p>
+  </blockquote>
+  <p>
+  <strong>Please note</strong> that since CPAINT v2.0 a compressed version of the frontend exists. Its functionality is in every way identical to that of the standard version but all comments and unnecessary whitespace have been removed, reducing it to approx. 50% the size. So if traffic is a concern to you - or you're just being kind - you should use <span class="code">cpaint2.inc.compressed.js</span> instead.
+  </p>
+  <p>Second, you will need to create an instance of the <a href="frontend.class.cpaint.html" class="code">cpaint</a> object. (Note: This cpaint object is different from the backend class of the same name.) Again, in the head section of your HTML document, add the following lines to create an instance named <span class="code">cp</span>. </p>
+  <blockquote>
+    <p class="code">&lt;script type=&quot;text/javascript&quot;&gt;<br />
+      &nbsp;&lt;!--<br />
+      &nbsp;&nbsp;var cp = new cpaint();<br />
+      &nbsp;//--&gt;<br />
+      &lt;/script&gt;</p>
+  </blockquote>
+  <p>You can also set any configuration options, such as <a href="frontend.class.cpaint.set_debug.html">debugging</a>, <a href="frontend.class.cpaint.set_transfer_mode.html">transfer mode</a>, <a href="frontend.class.cpaint.set_async.html">synchronicity</a>, <a href="frontend.class.cpaint.set_response_type.html">response type</a>, and <a href="frontend.class.cpaint.set_persistent_connection.html">connection persistence.</a> (We will get into turning off the CPAINT backend API and proxy connections later.)</p>
+  <p>By default, here are the CPAINT option defaults:</p>
+  <ul>
+    <li>transfer mode = GET</li>
+    <li>asynchronous = true</li>
+    <li>response type = OBJECT</li>
+    <li>persistent connection = false</li>
+    <li>debugging = level 0 (none)</li>
+  </ul>
+    <p>
+  <div id="nav_left">
+        &laquo; <a href="usage.frontend.html">back to page 1</a>
+  </div>
+      <div id="nav_right">
+        &raquo; <a href="usage.frontend.page3.html">continue to page 3</a>
+      </div>
+    </p>
+</div>
+</body>
+</html>
