@@ -56,8 +56,15 @@
     &bull; <a href="#$moditem['link']#">#$moditem['name']#</a> (#$moditem['numitems']#)
     <ul>
     <xar:if condition="!empty($moditem['items'])">
-    <xar:foreach in="$moditem['items']" value="$item">
-       <li> <a href="#$item['url']#" title="#$item['title']#">#$item['label']#</a> </li>
+    <xar:foreach in="$moditem['items']" key="$itemid" value="$item">
+       <xar:if condition="!empty($item['url'])">
+           <li> <a href="#$item['url']#" title="#$item['title']#">#$item['label']#</a> </li>
+       <xar:else/>
+           <xar:comment>
+               we're dealing with unknown items - skip this if you prefer
+               <li> #$item['label']# </li>
+           </xar:comment>
+       </xar:if>
     </xar:foreach>
     </xar:if>
     </ul>

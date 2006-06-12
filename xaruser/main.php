@@ -131,12 +131,18 @@ function categories_user_main()
     if (count($modlist) > 0) {
         foreach ($modlist as $modid => $itemtypes) {
             $modinfo = xarModGetInfo($modid);
+            if (empty($modinfo)) {
+                continue;
+            }
             // Get the list of all item types for this module (if any)
             $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
             foreach ($itemtypes as $itemtype => $stats) {
                 $moditem = array();
+                $moditem['modname'] = $modinfo['name'];
+                $moditem['modid'] = $modid;
+                $moditem['itemtype'] = $itemtype;
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
                     $moditem['link'] = xarModURL($modinfo['name'],'user','main');
@@ -169,8 +175,7 @@ function categories_user_main()
                     } else {
                     // we're dealing with unknown items - skip this if you prefer
                         foreach ($links[$catid] as $iid) {
-                            $moditem['items'][$iid] = array('url'   => xarModURL($modinfo['name'],'user','display',
-                                                                                 array('objectid' => $iid)),
+                            $moditem['items'][$iid] = array('url'   => '',
                                                             'title' => xarML('Display Item'),
                                                             'label' => xarML('item #(1)', $iid));
                         }
