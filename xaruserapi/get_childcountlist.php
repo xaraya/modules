@@ -25,7 +25,7 @@ function comments_userapi_get_childcountlist($args)
     $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
-    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$itemtype, (int)$objectid);
+    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$objectid, (int)$itemtype);
 
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems"
         . " FROM $xartable[comments] AS P1, $xartable[comments] AS P2"
