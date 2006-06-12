@@ -17,6 +17,24 @@ function xar_categories_setfilterconfig(name,path) {
     if (path) {
         xar_categories_filterpath = '; path=' + path;
     }
+    return true;
+}
+
+/**
+ * Get the current category filter from the cookie
+ */
+function xar_categories_getfilter() {
+    var cookie = document.cookie.split('; ');
+
+    var cidlist = new Array();
+    for (var i=0; i < cookie.length; i++) {
+        var crumb = cookie[i].split('=');
+        if (xar_categories_filtername == crumb[0] && crumb[1]) {
+            cidlist = crumb[1].split(':');
+        }
+    }
+
+    return cidlist;
 }
 
 /**
@@ -48,13 +66,31 @@ function xar_categories_delfilter(cid) {
         }
     }
     document.cookie = xar_categories_filtername + '=' + newcids.join(':') + xar_categories_filterpath;
-    return true
+    return true;
 }
+
+/**
+ * Set the current category filter based on the cidlist
+ */
+function xar_categories_setfilter(cidlist) {
+    if (cidlist) {
+        document.cookie = xar_categories_filtername + '=' + cidlist.join(':') + xar_categories_filterpath;
+    } else {
+        document.cookie = xar_categories_filtername + '=' + xar_categories_filterpath;
+    }
+    return true;
+}
+
+/**
+ *
+ * The 'tree' category filter will update the category filter on the fly
+ *
+ */
 
 /**
  * Toggle the category filter ON/OFF for a category id
  */
-function xar_categories_togglefilter(cid, elem, on_str, off_str) {
+function xar_categories_togglefilter(cid, elem, on_str, off_str, doreload) {
     var cidlist = xar_categories_getfilter();
     var newcids = new Array();
     var found = 0;
@@ -80,25 +116,51 @@ function xar_categories_togglefilter(cid, elem, on_str, off_str) {
             document.getElementById(elem).innerHTML = on_str;
         }
     }
-    return true
+    // reload the page
+    if (doreload) {
+        window.location.reload();
+    }
+    return true;
 }
 
 /**
- * Get the current category filter from the cookie
+ * Clear the category filter
  */
-function xar_categories_getfilter() {
-    var cookie = document.cookie.split('; ');
-
-    var cidlist = new Array();
-    for (var i=0; i < cookie.length; i++) {
-        var crumb = cookie[i].split('=');
-        if (xar_categories_filtername == crumb[0] && crumb[1]) {
-            cidlist = crumb[1].split(':');
+function xar_categories_clearfilter(tagtype, elemstart, on_str, off_str, doreload) {
+    document.cookie = xar_categories_filtername + '=' + xar_categories_filterpath;
+    // reload the page
+    if (doreload) {
+        window.location.reload();
+    } else {
+        // find all tagtype elements starting with elemstart
+        var elem = document.getElementsByTagName(tagtype);
+        var len = elem.length;
+        for (var i = 0; i < len; i++) {
+            var elemid = elem[i].getAttribute('id');
+            if (elemid == undefined) {
+                continue;
+            }
+            // and set them OFF
+            if (elemid.substring(0,elemstart.length) == elemstart) {
+                if (elem[i].innerHTML == on_str) {
+                    elem[i].innerHTML = off_str;
+                }
+            }
         }
     }
-
-    return cidlist;
+    return true;
 }
+
+/**
+ *
+ * The 'form' category filter relies on the following ids for the input fields :
+ *
+ *   <selid>       : select containing the base categories
+ *   <selid>_<cid> : select containing the child categories for base category <cid>
+ *   <selid>_list  : select containing the list of selected categories
+ *   <selid>_save  : submit button
+ *
+ */
 
 /**
  * Show the right select box for child categories depending on the selected base category
@@ -131,7 +193,7 @@ function xar_categories_showselectfilter(selid) {
 /**
  * Add a selected child category to the category filter
  */
-function xar_categories_addselectfilter(selid) {
+function xar_categories_addselectfilter(selid, doreload) {
     var selobj = document.getElementById(selid);
     if (selobj == undefined) {
         return true;
@@ -164,8 +226,11 @@ function xar_categories_addselectfilter(selid) {
             var subtext = subselobj.options[subidx].innerHTML;
         }
     }
-    // add the selected category to the filter
-    xar_categories_addfilter(subval);
+    // add the selected category to the filter and reload
+    if (doreload) {
+        xar_categories_addfilter(subval);
+        window.location.reload();
+    }
     // add the selected category to the list
     var listselobj = document.getElementById(selid+'_list');
     if (listselobj == undefined) {
@@ -179,13 +244,21 @@ function xar_categories_addselectfilter(selid) {
         }
     }
     listselobj.options[listselobj.options.length] = new Option(subtext,subval);
+    // enable the Save button
+    var saveselobj = document.getElementById(selid+'_save');
+    if (saveselobj == undefined) {
+        return true;
+    }
+    if (saveselobj.disabled) {
+        saveselobj.disabled = false;
+    }
     return true;
 }
 
 /**
  * Delete a selected category from the category filter
  */
-function xar_categories_delselectfilter(selid) {
+function xar_categories_delselectfilter(selid, doreload) {
     var listselobj = document.getElementById(selid+'_list');
     if (listselobj == undefined) {
         return true;
@@ -198,10 +271,45 @@ function xar_categories_delselectfilter(selid) {
     if (listval < 1) {
         return true;
     }
-    // delete the selected category from the filter
-    xar_categories_delfilter(listval);
+    // delete the selected category from the filter and reload
+    if (doreload) {
+        xar_categories_delfilter(listval);
+        window.location.reload();
+    }
     // remove the selected category from the list
     listselobj.options[listidx] = null;
+    // enable the Save button
+    var saveselobj = document.getElementById(selid+'_save');
+    if (saveselobj == undefined) {
+        return true;
+    }
+    if (saveselobj.disabled) {
+        saveselobj.disabled = false;
+    }
+    return true;
+}
+
+/**
+ * Save the categories list to the category filter
+ */
+function xar_categories_saveselectfilter(selid, doreload) {
+    var listselobj = document.getElementById(selid+'_list');
+    if (listselobj == undefined) {
+        return true;
+    }
+    var cidlist = new Array();
+    for (var i = 0; i < listselobj.options.length; i++) {
+        var listval = listselobj.options[i].value;
+        if (listval > 0) {
+            cidlist[cidlist.length] = listval;
+        }
+    }
+    // always set the category filter here
+    xar_categories_setfilter(cidlist);
+    // reload the page
+    if (doreload) {
+        window.location.reload();
+    }
     return true;
 }
 

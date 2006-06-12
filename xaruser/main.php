@@ -29,8 +29,16 @@ function categories_user_main()
 
     if (!xarModAPILoad('categories','user')) return;
 
+    $catcount = array();
+/*
+    $catcount = xarModAPIFunc('categories','user','deepcount',
+                              array('groupby' => 'category',
+                                    // get the (approximate) count for all categories below $catid
+                                    'cids' => array('_'.$catid)));
+*/
+
     $parents = xarModAPIFunc('categories','user','getparents',
-                            array('cid' => $catid));
+                             array('cid' => $catid));
     $data['parents'] = array();
     $data['hooks'] = '';
     $title = '';
@@ -48,7 +56,12 @@ function categories_user_main()
                 // TODO: do something specific with pubsub, hitcount, comments etc.
                     $data['hooks'] = join('',$hooks);
                 }
-                $data['parents'][] = array('catid' => $catid, 'name' => $info['name'], 'link' => '');
+                if (isset($catcount[$id])) {
+                    $count = $catcount[$id];
+                } else {
+                    $count = 0;
+                }
+                $data['parents'][] = array('catid' => $catid, 'name' => $info['name'], 'link' => '', 'count' => $count);
             } else {
                 $link = xarModURL('categories','user','main',array('catid' => $id));
                 $data['parents'][] = array('catid' => $info['cid'], 'name' => $info['name'], 'link' => $link);
@@ -107,7 +120,12 @@ function categories_user_main()
         reset($letter);
         foreach ($letter as $id => $name) {
             $link = xarModURL('categories','user','main',array('catid' => $id));
-            $data['letters'][] = array('catid' => $id, 'name' => $name, 'link' => $link);
+            if (isset($catcount[$id])) {
+                $count = $catcount[$id];
+            } else {
+                $count = 0;
+            }
+            $data['letters'][] = array('catid' => $id, 'name' => $name, 'link' => $link, 'count' => $count);
         }
     }
     $data['categories'] = array();
@@ -117,7 +135,12 @@ function categories_user_main()
         foreach ($category as $id => $name) {
             $name = preg_replace('/_/',' ',$name);
             $link = xarModURL('categories','user','main',array('catid' => $id));
-            $data['categories'][] = array('catid' => $id, 'name' => $name, 'link' => $link);
+            if (isset($catcount[$id])) {
+                $count = $catcount[$id];
+            } else {
+                $count = 0;
+            }
+            $data['categories'][] = array('catid' => $id, 'name' => $name, 'link' => $link, 'count' => $count);
         }
     }
 

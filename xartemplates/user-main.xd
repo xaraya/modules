@@ -5,6 +5,10 @@
     </xar:mlstring>
 </h2>
 
+<xar:comment>
+    <xar:categories-filter basecids="0" layout="form" doreload="0" />
+</xar:comment>
+
 <xar:if condition="!empty($parents) and count($parents) gt 0">
   <a href="&xar-modurl-categories-user-main;"><xar:mlstring>Browse</xar:mlstring></a>
   <xar:foreach in="$parents" value="$parent">
@@ -13,6 +17,9 @@
       <a href="#$parent['link']#">#$parent['name']#</a>
     <xar:else/>
       <strong>#$parent['name']#</strong>
+      <xar:if condition="!empty($parent['count'])">
+      (#$parent['count']#)
+      </xar:if>
     </xar:if>
   </xar:foreach>
   #$hooks#
@@ -39,7 +46,12 @@
   </xar:if>
   <ul>
   <xar:foreach in="$categories" key="$id" value="$category">
-    <li> <a href="#$category['link']#">#$category['name']#</a> </li>
+    <li>
+      <a href="#$category['link']#">#$category['name']#</a>
+      <xar:if condition="!empty($category['count'])">
+      (#$category['count']#)
+      </xar:if>
+    </li>
     <xar:if condition="$numcats gt 7 and $id eq $miditem">
       </ul></td>
       <td valign="top"><ul>
@@ -70,3 +82,5 @@
     </ul>
   </xar:foreach>
 </xar:if>
+
+

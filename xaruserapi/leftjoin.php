@@ -47,8 +47,8 @@ function categories_userapi_leftjoin($args)
 
     $dbconn =& xarDBGetConn();
 
-    // Required argument ?
-    if (!isset($modid) || !is_numeric($modid)) {
+    // Allow cross-module queries too
+    if (!empty($modid) && !is_numeric($modid)) {
         $msg = xarML('Missing parameter #(1) for #(2)',
                     'modid','categories');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -118,6 +118,18 @@ function categories_userapi_leftjoin($args)
     } else {
         $isdummy = 0;
     }
+
+/*
+if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
+    foreach ($catfilter as $cat) {
+        if (!in_array($cat,$cids)) {
+            $cids[] = (int) $cat;
+        }
+    }
+    sort($cids, SORT_NUMERIC);
+    $andcids = true;
+}
+*/
 
     // trick : cids = array(_NN) corresponds to cidtree = NN
     if (count($cids) == 1 && preg_match('/^_(\d+)$/',$cids[0],$matches)) {

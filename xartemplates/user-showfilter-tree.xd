@@ -11,11 +11,23 @@
 <xar:else/>
     <xar:set name="cids">array()</xar:set>
 </xar:if>
+<xar:if condition="!empty($doreload) and xarServerGetVar('REQUEST_METHOD') eq 'GET'">
+    <xar:comment>
+        We will reload the page here
+    </xar:comment>
+    <xar:set name="doreload">1</xar:set>
+<xar:else/>
+    <xar:comment>
+        We can't reload the page when dealing with a POST
+    </xar:comment>
+    <xar:set name="doreload">0</xar:set>
+</xar:if>
 <xar:set name="on_str">xarML('ON')</xar:set>
 <xar:set name="off_str">xarML('OFF')</xar:set>
 
 <div style="margin: auto;">
-<p><strong><xar:mlstring>Category Filter</xar:mlstring></strong></p>
+<p><strong><a href="javascript:void(0);" title="#xarML('Click to toggle display of categories')#" onclick="return toggleDisplay('catfilter_0');"><xar:mlstring>Category Filter</xar:mlstring></a></strong></p>
+<div id="catfilter_0" style="display:none;" class="xar-displaynone">
 <xar:foreach in="$cattrees" key="$cid" value="$catparent">
     <xar:if condition="!empty($catparent['catitems'])">
         <a href="javascript:void(0);" title="#xarML('Click to toggle display of children')#" onclick="return toggleDisplay('catfilter_#$cid#');">[+]</a>
@@ -30,7 +42,7 @@
     <xar:else/>
         <xar:set name="toggle">#$off_str#</xar:set>
     </xar:if>
-    <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catparent['catid']#','catspan_#$catparent['catid']#','#$on_str#','#$off_str#');"><span id="catspan_#$catparent['catid']#">#$toggle#</span></a>
+    <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catparent['catid']#','catspan_#$catparent['catid']#','#$on_str#','#$off_str#',#$doreload#);"><span id="catspan_#$catparent['catid']#">#$toggle#</span></a>
     <xar:if condition="!empty($catparent['catcount'])">
         (#$catparent['catcount']#)
     </xar:if>
@@ -51,7 +63,7 @@
         <xar:else/>
             <xar:set name="toggle">#$off_str#</xar:set>
         </xar:if>
-        <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catitem['catid']#','catspan_#$catitem['catid']#','#$on_str#','#$off_str#');"><span id="catspan_#$catitem['catid']#">#$toggle#</span></a>
+        <a href="javascript:void(0);" title="#xarML('Click to toggle filter')#" onclick="return xar_categories_togglefilter('#$catitem['catid']#','catspan_#$catitem['catid']#','#$on_str#','#$off_str#',#$doreload#);"><span id="catspan_#$catitem['catid']#">#$toggle#</span></a>
         <xar:if condition="!empty($catitem['catcount'])">
             (#$catitem['catcount']#)
         </xar:if>
@@ -59,5 +71,7 @@
     </xar:foreach>
     </div>
 </xar:foreach>
+[ <a href="javascript:void(0);" title="#xarML('Click to clear filter')#" onclick="return xar_categories_clearfilter('span', 'catspan_','#$on_str#','#$off_str#',#$doreload#);"><xar:mlstring>Clear Filter</xar:mlstring></a> ]
+</div>
 </div>
 

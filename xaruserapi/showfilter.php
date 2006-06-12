@@ -27,6 +27,7 @@
  * @param $args['layout'] string layout to use for the filter (form, tree, ... - default form)
  * @param $args['template'] string override the template that corresponds to this layout (form or tree)
  * @param $args['tplmodule'] string override the module where this template is located (default 'categories')
+ * @param $args['doreload'] integer reload the current page (if possible) after adapting the filter (default 1)
  * @return string containing the HTML (or other) text to output in the BL template
  */
 function categories_userapi_showfilter($args)
@@ -42,6 +43,13 @@ function categories_userapi_showfilter($args)
     // Get requested layout
     if (empty($layout)) {
         $layout = 'form';
+    }
+
+    // Check if we want to reload the page
+    if (!isset($doreload)) {
+        $doreload = 1;
+    } elseif (empty($doreload)) {
+        $doreload = 0;
     }
 
 // TODO: for multi-module pages, we'll need some other reference point(s)
@@ -76,6 +84,17 @@ function categories_userapi_showfilter($args)
     }
     if (empty($itemid)) {
         $itemid = null;
+    }
+
+    // Special case : basecids = array(0) or 0 means the whole categories tree
+    if (isset($basecids)) {
+        if ((is_array($basecids) && count($basecids) == 1 && $basecids[0] === 0)
+            || (is_numeric($basecids) && $basecids === 0)) {
+            $children = xarModAPIFunc('categories','user','getchildren',
+                                      array('cid' => 0));
+            $basecids = array_keys($children);
+            unset($children);
+        }
     }
 
     if (empty($basecids)) {
@@ -240,6 +259,7 @@ function categories_userapi_showfilter($args)
     $data['module'] = $modname;
     $data['itemtype'] = $itemtype;
     $data['itemid'] = $itemid;
+    $data['doreload'] = $doreload;
 
     switch ($layout) {
 

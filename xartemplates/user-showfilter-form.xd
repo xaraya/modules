@@ -12,6 +12,17 @@
 <xar:else/>
     <xar:set name="cids">array()</xar:set>
 </xar:if>
+<xar:if condition="!empty($doreload) and xarServerGetVar('REQUEST_METHOD') eq 'GET'">
+    <xar:comment>
+        We will reload the page here
+    </xar:comment>
+    <xar:set name="doreload">1</xar:set>
+<xar:else/>
+    <xar:comment>
+        We can't reload the page when dealing with a POST
+    </xar:comment>
+    <xar:set name="doreload">0</xar:set>
+</xar:if>
 <xar:set name="selname">'catfilter1_select'</xar:set>
 
 <div style="margin: auto;">
@@ -21,7 +32,8 @@
     <xar:mlstring>Category Filter</xar:mlstring>
 </legend>
 <div>
-<select name="#$selname#" id="#$selname#" onchange="return xar_categories_showselectfilter('#$selname#');">
+<select name="#$selname#" id="#$selname#"
+  onchange="return xar_categories_showselectfilter('#$selname#');">
     <option value=""></option>
     <xar:foreach in="$cattrees" key="$cid" value="$catparent">
         <option value="#$cid#">#$catparent['catlabel']#</option>
@@ -58,7 +70,9 @@
         </xar:foreach>
     </select>
 </xar:foreach>
-<input type="submit" value="#xarML('Add')#" onclick="return xar_categories_addselectfilter('#$selname#');" />
+<input type="submit" value="#xarML('Add')#"
+  onclick="return xar_categories_addselectfilter('#$selname#', 0);" />
+
 <select name="#selname#_list" id="#$selname#_list">
     <option value=""></option>
     <xar:foreach in="$cids" value="$cid">
@@ -69,7 +83,12 @@
         </xar:if>
     </xar:foreach>
 </select>
-<input type="submit" value="#xarML('Remove')#" onclick="return xar_categories_delselectfilter('#$selname#');" />
+<input type="submit" value="#xarML('Remove')#"
+  onclick="return xar_categories_delselectfilter('#$selname#', 0);" />
+
+<input type="submit" id="#$selname#_save" disabled="disabled" value="#xarML('Apply Filter')#"
+  onclick="return xar_categories_saveselectfilter('#$selname#', #$doreload#);" />
+
 </div>
 Note: this doesn't do anything useful yet :-)
 </fieldset>
