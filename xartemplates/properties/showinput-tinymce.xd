@@ -26,6 +26,9 @@ textarea#'.$id.' {
 <xar:set name="buttonon">
     <xar:mlstring>Turn On</xar:mlstring>
 </xar:set>
+<xar:set name="buttonoff">
+    <xar:mlstring>Turn Off</xar:mlstring>
+</xar:set>
 <xar:set name="wysiwygprompt">
     <xar:mlstring>WYSIWYG</xar:mlstring>
 </xar:set>
@@ -45,18 +48,31 @@ textarea#'.$id.' {
 <xar:if condition="xarModGetVar('base','editor') eq 'tinymce' and xarModIsAvailable('tinymce')">
     <xar:template file="tinymce_insert" module="tinymce" type="module" />
 </xar:if>
-<xar:if condition="xarModGetVar('tinymce','usebutton') eq 1 and ($usewysiwyg eq 1)">
-<div class="xar-form-container-after">
-    <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+<!--<xar:if condition="xarModGetVar('tinymce','usebutton') eq 1 and ($usewysiwyg eq 1)">-->
+<xar:if condition="xarModGetVar('tinymce','tinyask') and $usewysiwyg eq '1'">
+  <xar:if condition="xarModGetVar('tinymce','usebutton')">
+    <div class="xar-form-container-after">
+      <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">#$wysiwygprompt#</label>
         <input type="button" value="#$buttonon#" onclick="mce_button_toggle('#$id#', this);" />
     </div>
+  <xar:else />
+    <div class="xar-form-container-after">
+       <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    </div>
+  </xar:if>
 <xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
-    <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+      <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
+  <xar:if condition="xarModGetVar('tinymce','usebutton')">
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">#$wysiwygprompt#</label>
+        <input type="button" value="#$buttonoff#" onclick="mce_button_toggle('#$id#', this);" />
+    </div>
+  </xar:if>
 <xar:else />
     <div class="xar-form-container-after">
     <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>

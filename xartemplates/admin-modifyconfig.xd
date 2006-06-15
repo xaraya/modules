@@ -259,29 +259,31 @@
 
            <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$tinyask">
-                    <input type="checkbox" name="tinyask" id="tinyask" value="1" checked="checked" onchange="submit();" />
+                    <input type="checkbox" name="tinyask" id="tinyask" value="1" checked="checked" />
                 <xar:else/>
-                    <input type="checkbox" name="tinyask" id="tinyask" value="1" onchange="submit();" />
+                    <input type="checkbox" name="tinyask" id="tinyask" value="1" />
                 </xar:if>
-                <label for="tinyask" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">
-                    <xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring>
+                <label for="tinyask" title="#xarML('WYSIWYG is on by default, unless you check to ask user if they wish to use WYSIWYG for each text area')#">
+                    <xar:mlstring>Prompt to use WYSIWYG (popup prompt or on by default)?</xar:mlstring>
                 </label>
             </div>
-            <xar:if condition="$tinyask and (xarModGetVar('tinymce','tinymode') eq 'specific_textareas')">
+            <!--<xar:if condition="$tinyask and (xarModGetVar('tinymce','tinymode') eq 'specific_textareas')">-->
             <div class="xar-form-input-wrapper-after">
              <xar:if condition="$usebutton">
                     <input type="checkbox" name="usebutton" id="usebutton" value="1" checked="checked"/>
                 <xar:else/>
                     <input type="checkbox" name="usebutton" id="usebutton" value="1" />
                 </xar:if>
-                <label for="usebutton" title="#xarML('Use a button to prompt for WYSIWYG or default to popup')#">
-                    <xar:mlstring>Toggle button instead of popup prompt?</xar:mlstring>
+                <label for="usebutton" title="#xarML('Use an on/off toggle button to prompt for WYSIWYG')#">
+                    <xar:mlstring>Display an On/Off Toggle button for WYSIWYG?</xar:mlstring>
                 </label>
                 <xar:mlstring>(xartinymce DD property only)</xar:mlstring>
             </div>
+            <!--
             <xar:else />
                 <xar:set name="usebutton">0</xar:set>
             </xar:if>
+            -->
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$tinytilemap">
                     <input type="checkbox" name="tinytilemap" id="tinytilemap" value="1" checked="checked"/>
