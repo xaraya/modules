@@ -17,7 +17,7 @@ function xproject_user_main()
         return;
     }
 
-    $data = xarModAPIFunc('xproject','user','menu');
+    $data = xarModAPIFunc('xproject','admin','menu');
     $data['welcome'] = xarML('Welcome to the xproject module...');
     return $data;
 }

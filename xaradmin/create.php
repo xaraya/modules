@@ -13,25 +13,39 @@
  */
 function xproject_admin_create($args)
 {
-    list($name,
-        $displaydates,
-        $displayhours,
-        $displayfreq,
+    list($project_name,
         $private,
-        $sendmails,
-        $importantdays,
-        $criticaldays,
-        $billable,
-        $description) =	xarVarCleanFromInput('name',
-                                            'displaydates',
-                                            'displayhours',
-                                            'displayfreq',
+        $description,
+        $clientid,
+        $ownerid,
+        $status,
+        $priority,
+        $importance,
+        $date_approved,
+        $planned_start_date,
+        $planned_end_date,
+        $actual_start_date,
+        $actual_end_date,
+        $hours_planned,
+        $hours_spent,
+        $hours_remaining,
+        $associated_sites) =	xarVarCleanFromInput('project_name',
                                             'private',
-                                            'sendmails',
-                                            'importantdays',
-                                            'criticaldays',
-                                            'billable',
-                                            'description');
+                                            'description',
+                                            'clientid',
+                                            'ownerid',
+                                            'status',
+                                            'priority',
+                                            'importance',
+                                            'date_approved',
+                                            'planned_start_date',
+                                            'planned_end_date',
+                                            'actual_start_date',
+                                            'actual_end_date',
+                                            'hours_planned',
+                                            'hours_spent',
+                                            'hours_remaining',
+                                            'associated_sites');
 
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
@@ -39,24 +53,30 @@ function xproject_admin_create($args)
     $projectid = xarModAPIFunc('xproject',
                         'admin',
                         'create',
-                        array('name' 		=> $name,
-                            'displaydates'	=> $displaydates,
-                            'displayhours'	=> $displayhours,
-                            'displayfreq'	=> $displayfreq,
-                            'private'		=> $private,
-                            'sendmails'		=> $sendmails,
-                            'importantdays'	=> $importantdays,
-                            'criticaldays'	=> $criticaldays,
-                            'billable'		=> $billable,
-                            'description'	=> $description));
+                        array('project_name' 	=> $project_name,
+                            'private'	        => $private,
+                            'description'	    => $description,
+                            'clientid'	        => $clientid,
+                            'ownerid'	        => $ownerid,
+                            'status'	        => $status,
+                            'priority'		    => $priority,
+                            'importance'		=> $importance,
+                            'date_approved'	    => $date_approved,
+                            'planned_start_date'=> $planned_start_date,
+                            'planned_end_date'	=> $planned_end_date,
+                            'actual_start_date' => $actual_start_date,
+                            'actual_end_date'	=> $actual_end_date,
+                            'hours_planned'     => $hours_planned,
+                            'hours_spent'		=> $hours_spent,
+                            'hours_remaining'	=> $hours_remaining,
+                            'associated_sites'	=> $associated_sites));
 
 
-    if (!isset($projectid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+    if (!isset($projectid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
-//    xarResponseRedirect(xarModURL('xproject', 'user', 'display', array('projectid' => $projectid)));
 
     return true;
 }

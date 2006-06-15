@@ -18,7 +18,7 @@ function xproject_user_view($args)
 
     $data = xarModAPIFunc('xproject','user','menu');
 
-    $data['items'] = array();
+    $xprojects = array();
 
     if (!xarSecurityCheck('ViewXProject')) {
         return;
@@ -34,15 +34,13 @@ function xproject_user_view($args)
 
     for ($i = 0; $i < count($xprojects); $i++) {
         $project = $xprojects[$i];
-//		if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_READ)) {
-        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
+        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['link'] = xarModURL('xproject',
                                                'user',
                                                'display',
                                                array('projectid' => $project['projectid']));
         }
-        //if (xarSecAuthAction(0, 'xproject::Projects', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
-        if (xarSecurityCheck('EditXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
+        if (xarSecurityCheck('EditXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['editurl'] = xarModURL('xproject',
                                                'admin',
                                                'modify',
@@ -50,7 +48,7 @@ function xproject_user_view($args)
         } else {
             $xprojects[$i]['editurl'] = '';
         }
-        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "$project[name]:All:$project[projectid]")) {
+        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {
             $xprojects[$i]['deleteurl'] = xarModURL('xproject',
                                                'admin',
                                                'delete',
@@ -60,7 +58,7 @@ function xproject_user_view($args)
         }
     }
 
-    $data['xprojects'] = $xprojects;
+    $data['projects'] = $xprojects;
     $data['pager'] = '';
     return $data;
 }

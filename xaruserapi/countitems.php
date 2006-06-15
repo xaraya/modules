@@ -4,27 +4,24 @@ function xproject_userapi_countitems($args)
 {
 	extract($args);
 	
-	if(empty($parentid)) $parentid = 0;
-	
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
-    $taskcolumn = &$xartable['xproject_column'];
+    $xprojecttable = $xartable['xProjects'];
 
     $sql = "SELECT COUNT(1)
             FROM $xprojecttable
-			WHERE $taskcolumn[parentid] = $parentid";
+			WHERE 1";
     $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
         return false;
     }
 
-    list($numtasks) = $result->fields;
+    list($numitems) = $result->fields;
 
     $result->Close();
 
-    return $numtasks;
+    return $numitems;
 }
 ?>

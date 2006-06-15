@@ -1,34 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common user menu for this module - remove link to the current function -->
 
-<table border="0" width="100%">
-
-    <!-- the variables used in this menu come from example_user_menu() -->
-
-    <tr><th align="center">#$menutitle#</th></tr>
-    <tr><td>
-        <table border="0" width="100%"><tr align="center" valign="middle">
-
-        <!-- a link to a particular menu item -->
-
-        <td width="25%"><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
-
-        <!-- more menu items come here... -->
-
-        <!-- Note : you can also specify simple links directly with blocklayout
-             template tags : e.g. &xar-modurl-example-user-view; -->
-        </tr></table>
-    </td></tr>
-</table>
+    <xar:template type="module" file="user-menu" />
+    
 <br />
-
-<!-- the specific template for the current function comes here -->
-
-<!-- some variable filled in by the function using this template -->
-
-<div align="center"><strong> #$welcome# </strong></div>
-
-

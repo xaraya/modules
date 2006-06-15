@@ -14,9 +14,9 @@
 
 $modversion['name'] = 'xproject';
 $modversion['id'] = '665';
-$modversion['version'] = '0.1.2';
-$modversion['displayname']    = xarML('XProject');
-$modversion['description'] = 'Basic Task/Project Manager';
+$modversion['version'] = '0.2.0';
+$modversion['displayname']    = xarML('xProject');
+$modversion['description'] = 'Project Manager';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
 $modversion['changelog'] = 'docs/changelog.txt';

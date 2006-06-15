@@ -1,83 +1,112 @@
 <?php
-
+/**
+ * Update an example item
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
+ */
+/**
+ * Update an example item
+ *
+ * @author the Example module development team
+ * @param  $args ['exid'] the ID of the item
+ * @param  $args ['name'] the new name of the item
+ * @param  $args ['number'] the new number of the item
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ */
 function xproject_adminapi_update($args)
 {
     extract($args);
 
     $invalid = array();
     if (!isset($projectid) || !is_numeric($projectid)) {
-        $invalid[] = 'item ID';
+        $invalid[] = 'Project ID';
     }
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (!isset($sendmailfreq) || $sendmailfreq == 0) {
-        $invalid[] = 'sendmails';
+    if (!isset($project_name) || !is_string($project_name)) {
+        $invalid[] = 'project_name';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'update', 'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+            join(', ', $invalid), 'admin', 'update', 'Example');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
         return;
     }
 
     $item = xarModAPIFunc('xproject',
-						'user',
-						'get',
-						array('projectid' => $projectid));
-			
-	if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+                            'user',
+                            'get',
+                            array('projectid' => $projectid));
 
-    if (!xarSecAuthAction(0, 'xproject::Project', "$item[name]::$projectid", ACCESS_EDIT)) {
-        $msg = xarML('Not authorized to edit #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
+    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$projectid")) {
         return;
     }
-    if (!xarSecAuthAction(0, 'xproject::Project', "$name::$projectid", ACCESS_EDIT)) {
-        $msg = xarML('Not authorized to edit #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$project_name:All:$projectid")) {
         return;
     }
-		
+
     $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
+    $xprojecttable = $xartable['xProjects'];
 
-    $sql = "UPDATE $xprojecttable
-              SET xar_name = '" . xarVarPrepForStore($name) . "',
-				  xar_description = '" . xarVarPrepForStore($description) . "',
-				  xar_usedatefields = " . ($displaydates ? $displaydates : "NULL") . ",
-				  xar_usehoursfields = " . ($displayhours ? $displayhours : "NULL") . ",
-				  xar_usefreqfields = " . ($displayfreq ? $displayfreq : "NULL") . ",
-				  xar_allowprivate = " . ($private ? $private : "NULL") . ",
-				  xar_importantdays = " . $importantdays . ",
-				  xar_criticaldays = " . $criticaldays . ", 
-				  xar_sendmailfreq = " . $sendmailfreq . ", 
-				  xar_billable = " . ($billable ? $billable : "NULL") . "
-			WHERE xar_projectid = $projectid";
+    $query = "UPDATE $xprojecttable
+            SET project_name =?, 
+                  private = ?, 
+                  description = ?,
+                  clientid = ?,
+                  ownerid = ?,
+                  status = ?,
+                  priority = ?,
+                  importance = ?,
+                  date_approved = ?,
+                  planned_start_date = ?,
+                  planned_end_date = ?,
+                  actual_start_date = ?,
+                  actual_end_date = ?,
+                  hours_planned = ?,
+                  hours_spent = ?,
+                  hours_remaining = ?,
+                  associated_sites = ?
+            WHERE projectid = ?";
 
-    $dbconn->Execute($sql);
+    $bindvars = array(
+              $project_name,
+              $private,
+              $description,
+              $clientid,
+              $ownerid,
+              $status,
+              $priority,
+              $importance,
+              $date_approved,
+              $planned_start_date,
+              $planned_end_date,
+              $actual_start_date,
+              $actual_end_date,
+              $hours_planned,
+              $hours_spent,
+              $hours_remaining,
+              $associated_sites,
+              $projectid);
+              
+    $result = &$dbconn->Execute($query,$bindvars);
 
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$result) return;
 
     $item['module'] = 'xproject';
     $item['itemid'] = $projectid;
-    $item['name'] = $name;
-    $item['description'] = $description;
+    $item['name'] = $project_name;
     xarModCallHooks('item', 'update', $projectid, $item);
 
     return true;
 }
-
 ?>

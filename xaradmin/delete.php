@@ -31,7 +31,8 @@ function xproject_admin_delete($args)
 
     if (!isset($project) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecAuthAction(0, 'xproject::Project', "$project[name]::$projectid", ACCESS_DELETE)) {
+
+    if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$project[project_name]:All:$projectid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xproject', xarVarPrepForDisplay($projectid));
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -45,7 +46,7 @@ function xproject_admin_delete($args)
 
         $data['projectid'] = $projectid;
 
-        $data['name'] = xarVarPrepForDisplay($project['name']);
+        $data['project_name'] = xarVarPrepForDisplay($project['project_name']);
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();

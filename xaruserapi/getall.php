@@ -16,12 +16,6 @@ function xproject_userapi_getall($args)
 {
     extract($args);
 
-//	if (empty($parentid)) $parentid = 0;
-
-//	if ($projectid <= 0) $projectid = xarModGetVar('xproject','private');
-
-//	if (empty($groupid)) $groupid = 0;
-
     if ($startnum == "") {
         $startnum = 1;
     }
@@ -44,8 +38,6 @@ function xproject_userapi_getall($args)
         return;
     }
 
-    $tasks = array();
-
     if (!xarSecurityCheck('ViewXProject', 0, 'Item', "All:All:All")) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'xproject');
@@ -57,25 +49,32 @@ function xproject_userapi_getall($args)
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
+    $xprojecttable = $xartable['xProjects'];
 
-    $sql = "SELECT xar_projectid,
-                   xar_name,
-                   xar_description,
-                   xar_usedatefields,
-                   xar_usehoursfields,
-                   xar_usefreqfields,
-                   xar_allowprivate,
-                   xar_importantdays,
-                   xar_criticaldays,
-                   xar_sendmailfreq,
-                   xar_billable
+    $sql = "SELECT projectid,
+                  project_name,
+                  private,
+                  description,
+                  clientid,
+                  ownerid,
+                  status,
+                  priority,
+                  importance,
+                  date_approved,
+                  planned_start_date,
+                  planned_end_date,
+                  actual_start_date,
+                  actual_end_date,
+                  hours_planned,
+                  hours_spent,
+                  hours_remaining,
+                  associated_sites
             FROM $xprojecttable";
 
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
 //	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
-    $sql .= " ORDER BY xar_name";
+    $sql .= " ORDER BY project_name";
 
 /*
     if ($selected_project != "all") {
@@ -110,38 +109,52 @@ function xproject_userapi_getall($args)
         return;
     }
 
+    $projects = array();
+
     for (; !$result->EOF; $result->MoveNext()) {
         list($projectid,
-            $name,
-            $description,
-            $usedatefields,
-            $usehoursfields,
-            $usefreqfields,
-            $allowprivate,
-            $importantdays,
-            $criticaldays,
-            $sendmailfreq,
-            $billable) = $result->fields;
-        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$name:All:$projectid")) {
-            $numtasks = xarModAPIFunc('xproject', 'tasks', 'countitems', array('projectid' => $projectid));
-            $tasks[] = array('projectid' => $projectid,
-                             'name' => $name,
-                             'description' => $description,
-                             'usedatefields' => ($usedatefields ? "*" : ""),
-                             'usehoursfields' => ($usehoursfields ? "*" : ""),
-                             'usefreqfields' => ($usefreqfields ? "*" : ""),
-                             'allowprivate' => ($allowprivate ? "*" : ""),
-                             'importantdays' => $importantdays,
-                             'criticaldays' => $criticaldays,
-                             'sendmailfreq' => $sendmailfreq,
-                             'billable' => ($billable ? "*" : ""),
-                             'numtasks' => ($numtasks ? $numtasks : 0));
+              $project_name,
+              $private,
+              $description,
+              $clientid,
+              $ownerid,
+              $status,
+              $priority,
+              $importance,
+              $date_approved,
+              $planned_start_date,
+              $planned_end_date,
+              $actual_start_date,
+              $actual_end_date,
+              $hours_planned,
+              $hours_spent,
+              $hours_remaining,
+              $associated_sites) = $result->fields;
+        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
+            $projects[] = array('projectid'         => $projectid,
+                              'project_name'        => $project_name,
+                              'private'             => $private,
+                              'description'         => $description,
+                              'clientid'            => $clientid,
+                              'ownerid'             => $ownerid,
+                              'status'              => $status,
+                              'priority'            => $priority,
+                              'importance'          => $importance,
+                              'date_approved'       => $date_approved == "0000-00-00" ? NULL : $date_approved,
+                              'planned_start_date'  => $planned_start_date == "0000-00-00" ? NULL : $planned_start_date,
+                              'planned_end_date'    => $planned_end_date == "0000-00-00" ? NULL : $planned_end_date,
+                              'actual_start_date'   => $actual_start_date == "0000-00-00" ? NULL : $actual_start_date,
+                              'actual_end_date'     => $actual_end_date == "0000-00-00" ? NULL : $actual_end_date,
+                              'hours_planned'       => $hours_planned,
+                              'hours_spent'         => $hours_spent,
+                              'hours_remaining'     => $hours_remaining,
+                              'associated_sites'    => $associated_sites);
         }
     }
 
     $result->Close();
 
-    return $tasks;
+    return $projects;
 }
 
 ?>

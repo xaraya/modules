@@ -1,6 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<script language="javascript">
 
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
+<script language="javascript">
 function xprojectToggleView(id){
     var el = document.getElementById(id);
     if(el.style.display != 'none'){
@@ -11,38 +14,77 @@ function xprojectToggleView(id){
     }
 }
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body">
-    <h2><xar:mlstring>View Project</xar:mlstring></h2>
-    <div align="center">
-        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-            <tr align="center" valign="middle">
-            <td width="25%"><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
-            <td width="25%"><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
-            <td width="25%"><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
-            <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
-            </tr>
-        </table><br />
 
+<xar:template type="module" file="user-menu" />
+
+<div class="xar-mod-body">
+    <h2 style="text-align: center;">#$project_name#</h2>
+    <div align="center">
         <xar:if condition="!empty($status)">
 
             <h3>#$status#</h3>
         <xar:else />
             <xar:blockgroup name="toxarav" id="toxarav" />
-            <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                <tr>
-                <td class="xar-accent" align="right"><label for="showinfo"><xar:mlstring>Show Project and Task Info</xar:mlstring></label>:
-                <input type="checkbox" name="showinfo" id="showinfo" value="" checked="checked" onclick="xprojectToggleView('xproject_info');"></td>
-                </tr>
-            </table>
             <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
                 <tr valign="top">
-                    <td align="right" width="30%" class="xar-norm"><xar:mlstring>Project</xar:mlstring></td>
-                    <td class="xar-norm">#$name#</td>
+                    <td class="xar-norm"><xar:data-label property="$properties['project_name']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /></td>
                 </tr>
                 <tr valign="top">
-                    <td align="right" class="xar-norm"><xar:mlstring>Description</xar:mlstring></td>
-                    <td class="xar-norm">#$description#</td>
+                    <td class="xar-norm"><xar:data-label property="$properties['status']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['status']" value="$item['status']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['importance']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['priority']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['priority']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['private']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['private']" value="$item['private']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['date_approved']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['date_approved']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['planned_start_date']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['planned_start_date']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['planned_end_date']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['planned_end_date']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['actual_start_date']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['actual_start_date']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['actual_end_date']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['actual_end_date']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['hours_planned']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_planned']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['hours_spent']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_spent']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['hours_remaining']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_remaining']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['description']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['description']" value="$item['priority']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['associated_sites']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['associated_sites']" value="$item['priority']" /></td>
                 </tr>
                 <xar:if condition="!empty($hookoutput)">
                     <tr>
@@ -51,195 +93,10 @@ function xprojectToggleView(id){
                         </td>
                     </tr>
                 </xar:if>
-
-                <xar:if condition="!empty($taskname)">
-                    <tr valign="top">
-                        <td align="right" class="xar-norm">
-                            <xar:mlstring>Task</xar:mlstring>
-                        </td>
-                        <td class="xar-norm">
-                            <b>#$taskname#</b>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <td align="right" class="xar-norm">
-                            <xar:mlstring>Parent Task</xar:mlstring></td>
-                        <td class="xar-norm">
-                            <xar:if condition="isset($taskparent_name)">
-                                    <a href="&xar-modurl-xproject-user-display;&amp;projectid=#$projectid#&amp;taskid=#$taskparent_id#">
-                                        #$taskparent_name#
-                                    </a>
-                            </xar:if>
-                            (<a href="&xar-modurl-xproject-user-display;&amp;projectid=#$projectid#">#$taskroot_name#</a>)
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <td align="right" class="xar-norm">
-                            <xar:mlstring>Description</xar:mlstring>
-                        </td>
-                        <td class="xar-norm">
-                            #$taskdescription#
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <td class="xar-norm">
-                            &nbsp;
-                        </td>
-                        <td class="xar-norm">
-                            [&nbsp;<xar:if condition="empty($curtask_editurl)"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$curtask_editurl#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($curtask_deleteurl)"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$curtask_deleteurl#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
-                        </td>
-                    </tr>
-                </xar:if>
             </table>
-
-            <xar:if condition="!empty($authid)">
-                <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                    <tr class="xar-accent">
-                        <td colspan="2" align="right">
-                            <label for="showtaskform"><xar:mlstring>Add Task Form</xar:mlstring></label>: <input type="checkbox" name="showtaskform" id="showtaskform" value="" checked="checked" onclick="xprojectToggleView('xproject_taskform');">
-                        </td>
-                    </tr>
-                </table>
-
-                <div id="xproject_taskform" style="width: 100%;">
-                    <form method="post" action="&xar-modurl-xproject-tasks-create;" style="margin: 0 0 0 0;">
-                    <input type="hidden" name="authid" value="#$authid#" />
-                    <input type="hidden" name="projectid" value="#$projectid#" />
-                    <input type="hidden" name="parentid" value="#$parentid#" />
-                    <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                        <tr>
-                            <td align="right" valign="top">
-                                <label for="name">#$tasknamelabel#</label>
-                            </td>
-                            <td colspan="3">
-                                <input type="text" name="name" id="name" size="50" maxlength="255">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right" valign="top">
-                                <label for="description"><xar:mlstring>Description</xar:mlstring></label>
-                            </td>
-                            <td colspan="3">
-                                <textarea name="description" id="description" cols="50" rows="3"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td><label for="status">
-                                <xar:mlstring>Status</xar:mlstring></label>
-                                <select name="status" id="status">
-                                <xar:loop name="$statusoptions">
-                                    <option name="status" value="#$loop:item['id']#">#$loop:item['name']#</option>
-                                </xar:loop>
-                                </select>
-                            </td>
-                            <td>
-                                <label for="priority"><xar:mlstring>Priority</xar:mlstring></label> <select name="priority" id="priority">
-                                <xar:loop name="$prioritydropdown">
-                                    <option name="priority" value="#$loop:item['id']#">#$loop:item['name']#</option>
-                                </xar:loop>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="submit" value="#$addbutton#">
-                            </td>
-                        </tr>
-                    </table>
-                    </form>
-                </div>
-            </xar:if>
-            <table border="0" width="100%" cellpadding="2" cellspacing="0">
-                <tr class="xar-accent">
-                    <td colspan="2">
-                        <form action="&xar-modurl-xproject-user-display;" method="post" style="margin: 0 0 0 0;">
-                        <input type="hidden" name="projectid" value="#$projectid#" />
-                        <input type="hidden" name="taskid" value="#$taskid#" />
-                        <select name="filter">
-                        <xar:loop name="$filteroptions">
-                                <xar:if condition="$loop:item['id'] eq $tasklistfilter">
-                                <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-                                <xar:else/>
-                                <option value="#$loop:item['id']#">#$loop:item['name']#</option>
-                                </xar:if>
-                        </xar:loop>
-                        </select>
-                        <input type="submit" value="#$filterbutton#">
-                        </form>
-                    </td>
-                    <td colspan="4" align="right">
-                        <label for="showsubtasks"><xar:mlstring>Sub Tasks</xar:mlstring></label>:
-                        <input type="checkbox" name="showsubtasks" id="showsubtasks" value="" checked="checked" onclick="xprojectToggleView('xproject_tasks');">
-                    </td>
-                </tr>
-            </table>
-
-            <xar:if condition="count($tasks)">
-                <table border="0" width="100%" cellpadding="2" cellspacing="1" id="xproject_tasks" class="xar-accent">
-                    <tr>
-                        <th><xar:mlstring>Tasks</xar:mlstring>: #$numtasks#
-                            <form action="&xar-modurl-xproject-admin-migrate;" method="post" style="margin: 0 0 0 0;">
-                            <input type="hidden" name="authid" value="#$authid#" />
-                            <input type="hidden" name="projectid" value="#$projectid#" />
-                            <input type="hidden" name="parentid" value="#$parentid#" />
-                            <input type="hidden" name="taskid" value="#$taskid#" />
-                        </th>
-                        <th>
-                            <xar:mlstring>Description</xar:mlstring> (<xar:mlstring>Filter</xar:mlstring>: #$tasklistfilter#)
-                        </th>
-                        <th>
-                            !
-                        </th>
-                        <th>
-                            X
-                        </th>
-                        <th>
-                            ##
-                        </th>
-                        <th>
-                            <xar:mlstring>Options</xar:mlstring>
-                        </th>
-                    </tr>
-                    <xar:loop name="$tasks">
-                      <tr valign="top">
-                        <td width="25%" class="xar-norm">
-                            <a href="&xar-modurl-xproject-user-display;&amp;projectid=#$loop:item['projectid']#&amp;taskid=#$loop:item['taskid']#">#$loop:item['name']#</a><br/>
-                            <i>[created: #$loop:item['created']#]<br/>
-                            [modified: #$loop:item['modified']#]<br />
-                            [creator: #$loop:item['createdby']#]<br/>
-                            [assigned to: #$loop:item['assignedto']#]</i>
-                        </td>
-                        <td class="xar-norm">
-                            #$loop:item['description']#
-                        </td>
-                        <td class="xar-norm">
-                            #$loop:item['priority']#
-                        </td>
-                        <td class="xar-norm">
-                            #$loop:item['closed']#
-                        </td>
-                        <td class="xar-norm">
-                            #$loop:item['numsubtasks']#
-                        </td>
-                        <td align="center" class="xar-norm">
-                            <input type="checkbox" name="taskcheck[#$loop:item['taskid']#]" value="1"><input type="submit" name="taskfocus[#$loop:item['taskid']#]" value=" + ">
-                            <br/>
-                           [&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
-                        </td>
-                    </tr>
-                    </xar:loop>
-                    <tr>
-                        <td colspan="6" align="right" class="xar-norm">
-                            <label for="taskoption"><xar:mlstring>Selected Tasks</xar:mlstring></label>: <select name="taskoption" id="taskoption">
-                            <xar:loop name="$taskoptions">
-                                <option name="taskoption" value="#$loop:item['id']#">#$loop:item['name']#</option>
-                            </xar:loop>
-                            </select> <input type="submit" name="submit" value=" X ">
-                        </td>
-                    </tr>
-                </table>
-            </xar:if>
         </xar:if>
+        <xar:template type="module" file="features-new" />
+        <xar:template type="module" file="features-view" />
     </div>
 </div>
+

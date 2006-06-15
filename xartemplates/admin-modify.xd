@@ -1,3 +1,6 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify Project</xar:mlstring></h2>
@@ -5,105 +8,76 @@
 
 <form method="post" action="&xar-modurl-xproject-admin-update;">
 
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="projectid" value="#$projectid#" />
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="projectid" value="#$item.projectid#" />
+<input type="hidden" name="clientid" value="#$item.clientid#" />
+
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
-<tr>
-<td width="25%"><label for="name">Project</label></td>
-<td width="75%" colspan="3"><input type="text" name="name" id="name" value="#$name#" size="50" maxlength="255"></td>
-</tr>
-<tr>
-<td width="25%"><label for="displaydates">Use Date Fields</label></td>
-<td width="20%">
-<xar:if condition="$usedatefields eq 1">
-<input type="checkbox" name="displaydates" id="displaydates" value="1" checked="checked"/>
-<xar:else/>
-<input type="checkbox" name="displaydates" id="displaydates" value="1"/>
-</xar:if>
-</td>
-<td width="25%"><label for="displayhours">Use Hours Fields</label></td>
-<td width="30%">
-<xar:if condition="$usehoursfields eq 1">
-<input type="checkbox" name="displayhours" id="displayhours" value="1" checked="checked"/>
-<xar:else/>
-<input type="checkbox" name="displayhours" id="displayhours" value="1"/>
-</xar:if>
-</td>
-</tr>
-<tr>
-<td><label for="displayfreq">Use Frequency Fields</label></td>
-<td>
-<xar:if condition="$usefreqfields eq 1">
-<input type="checkbox" name="displayfreq" id="displayfreq" value="1" checked="checked"/>
-<xar:else/>
-<input type="checkbox" name="displayfreq" id="displayfreq" value="1"/>
-</xar:if>
-</td>
-<td><label for="private">Make Private</label></td>
-<td>
-<xar:if condition="$allowprivate eq 1">
-<input type="checkbox" name="private" id="private" value="1" checked="checked"/>
-<xar:else/>
-<input type="checkbox" name="private" id="private" value="1"/>
-</xar:if>
-</td>
-</tr>
-<tr>
-<td><label for="sendmailfreq">Email group</label></td>
-<td colspan="3"><select name="sendmailfreq" id="sendmailfreq">
-	<xar:loop name="$sendmailoptions">
-		<xar:if condition="$loop:item['selected'] eq 1">
-      	<option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
-		<xar:else/>
-      	<option value="#$loop:item['id']#">#$loop:item['name']#</option>
-		</xar:if>
-	</xar:loop>
-	</select>
-</td>
-</tr>
-<tr>
-<td><label for="importantdays">Important Days</label></td>
-<td><select name="importantdays" id="importantdays">
-	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
-		<xar:if condition="$i eq $importantdays">
-      	<option value="#$i#" selected="selected">#$i#</option>
-		<xar:else/>
-      	<option value="#$i#">#$i#</option>
-		</xar:if>
-	</xar:for>
-	</select>
-</td>
-<td><label for="criticaldays">Critical Days</label></td>
-<td><select name="criticaldays" id="criticaldays">
-	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
-		<xar:if condition="$i eq $criticaldays">
-      	<option value="#$i#" selected="selected">#$i#</option>
-		<xar:else/>
-      	<option value="#$i#">#$i#</option>
-		</xar:if>
-	</xar:for>
-	</select>
-</td>
-</tr>
-<tr>
-<td width="25%"><label for="billable">Billable</label></td>
-<td colspan="3">
-<xar:if condition="$billable eq 1">
-<input type="checkbox" name="billable" id="billable" value="1" checked="checked"/>
-<xar:else/>
-<input type="checkbox" name="billable" id="billable" value="1"/>
-</xar:if>
-</td>
-</tr>
-<tr>
-<td width="25%" valign="top"><label for="description">Description</label></td>
-<td colspan="3"><textarea name="description" id="description" cols="60" rows="5">#$description#</textarea></td>
-</tr>
-<tr>
-<td colspan="4" align="center"><br />
-    <input type="submit" value="#$updatebutton#"></td>
-</tr>
+    <tr>
+        <td><xar:data-label property="$properties['project_name']" /></td>
+        <td><xar:data-input property="$properties['project_name']" name="project_name" value="$item['project_name']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['private']" /></td>
+        <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['description']" /></td>
+        <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['status']" /></td>
+        <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['priority']" /></td>
+        <td><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['importance']" /></td>
+        <td><xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_approved']" /></td>
+        <td><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['planned_start_date']" /></td>
+        <td><xar:data-input property="$properties['planned_start_date']" name="planned_start_date" value="$item['planned_start_date']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['planned_end_date']" /></td>
+        <td><xar:data-input property="$properties['planned_start_date']" name="planned_start_date" value="$item['planned_start_date']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['actual_start_date']" /></td>
+        <td><xar:data-input property="$properties['actual_start_date']" name="actual_start_date" value="$item['actual_start_date']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['actual_end_date']" /></td>
+        <td><xar:data-input property="$properties['actual_end_date']" name="actual_end_date" value="$item['actual_end_date']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_planned']" /></td>
+        <td><xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_spent']" /></td>
+        <td><xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_remaining']" /></td>
+        <td><xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['associated_sites']" /></td>
+        <td><xar:data-input property="$properties['associated_sites']" name="associated_sites " value="$item['associated_sites']" /></td>
+    </tr>
+    <tr>
+        <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+    </tr>
 </table>
+
 </form>
 </div>
 </div>

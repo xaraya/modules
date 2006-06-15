@@ -2,24 +2,17 @@
 
 function xproject_admin_new()
 {
-    xarModLoad('xproject','user');
-    $data = xarModAPIFunc('xproject','user','menu');
+//    xarModLoad('xproject','user');
+    $data = xarModAPIFunc('xproject','admin','menu');
 
     if (!xarSecurityCheck('AddXProject')) {
         return;
     }
 
     $data['authid'] = xarSecGenAuthKey();
+    $data['clientid'] = xarSessionGetVar('uid');
 
-    $sendmailoptions = array();
-    $sendmailoptions[] = array('id'=>0,'name'=>xarML('Please choose an email option'));
-    $sendmailoptions[] = array('id'=>1,'name'=>xarML("any changes"));
-    $sendmailoptions[] = array('id'=>2,'name'=>xarML("major changes"));
-    $sendmailoptions[] = array('id'=>3,'name'=>xarML("weekly summaries"));
-    $sendmailoptions[] = array('id'=>4,'name'=>xarML("Do NOT send email"));
-    $data['sendmailoptions'] = $sendmailoptions;
-
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
+    $data['addbutton'] = xarVarPrepForDisplay(xarML('Create Project'));
 
     $item = array();
     $item['module'] = 'xproject';

@@ -16,10 +16,12 @@
 function xproject_xartables()
 {
     $xartable = array();
-    $xproject = xarDBGetSiteTablePrefix() . '_xproject';
-    $xartable['xproject'] = $xproject;
-    $xproject_tasks = xarDBGetSiteTablePrefix() . '_xproject_tasks';
-    $xartable['xproject_tasks'] = $xproject_tasks;
+    $xProjects = xarDBGetSiteTablePrefix() . '_xProjects';
+    $xartable['xProjects'] = $xProjects;
+    $xProject_features = xarDBGetSiteTablePrefix() . '_xProject_features';
+    $xartable['xProject_features'] = $xProject_features;
+    $xProject_pages = xarDBGetSiteTablePrefix() . '_xProject_pages';
+    $xartable['xProject_pages'] = $xProject_pages;
     return $xartable;
 }
 ?>

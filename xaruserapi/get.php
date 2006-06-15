@@ -7,7 +7,7 @@ function xproject_userapi_get($args)
     if (!isset($projectid) || !is_numeric($projectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item ID', 'user', 'get', 'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -15,21 +15,28 @@ function xproject_userapi_get($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
+    $xprojecttable = $xartable['xProjects'];
 
-    $query = "SELECT xar_projectid,
-                   xar_name,
-                   xar_description,
-                   xar_usedatefields,
-                   xar_usehoursfields,
-                   xar_usefreqfields,
-                   xar_allowprivate,
-                   xar_importantdays,
-                   xar_criticaldays,
-                   xar_sendmailfreq,
-                   xar_billable
+    $query = "SELECT projectid,
+                  project_name,
+                  private,
+                  description,
+                  clientid,
+                  ownerid,
+                  status,
+                  priority,
+                  importance,
+                  date_approved,
+                  planned_start_date,
+                  planned_end_date,
+                  actual_start_date,
+                  actual_end_date,
+                  hours_planned,
+                  hours_spent,
+                  hours_remaining,
+                  associated_sites
             FROM $xprojecttable
-            WHERE xar_projectid = ?";
+            WHERE projectid = ?";
     $result = &$dbconn->Execute($query,array($projectid));
 
     if (!$result) return;
@@ -37,42 +44,59 @@ function xproject_userapi_get($args)
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This item does not exist');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
     list($projectid,
-        $name,
-        $description,
-        $usedatefields,
-        $usehoursfields,
-        $usefreqfields,
-        $allowprivate,
-        $importantdays,
-        $criticaldays,
-        $sendmailfreq,
-        $billable) = $result->fields;
+          $project_name,
+          $private,
+          $description,
+          $clientid,
+          $ownerid,
+          $status,
+          $priority,
+          $importance,
+          $date_approved,
+          $planned_start_date,
+          $planned_end_date,
+          $actual_start_date,
+          $actual_end_date,
+          $hours_planned,
+          $hours_spent,
+          $hours_remaining,
+          $associated_sites) = $result->fields;
 
     $result->Close();
 
-    if (!xarSecurityCheck('ReadXProject', 1, 'Item', "$name:All:$projectid")) {
+    if (!xarSecurityCheck('ReadXProject', 1, 'Item', "$project_name:All:$projectid")) {
+        $msg = xarML('Not authorized to view this project.');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
-    $task = array('projectid' => $projectid,
-                 'name' => $name,
-                 'description' => $description,
-                 'usedatefields' => $usedatefields,
-                 'usehoursfields' => $usehoursfields,
-                 'usefreqfields' => $usefreqfields,
-                 'allowprivate' => $allowprivate,
-                 'importantdays' => $importantdays,
-                 'criticaldays' => $criticaldays,
-                 'sendmailfreq' => $sendmailfreq,
-                 'billable' => $billable);
+    $item = array('projectid'           => $projectid,
+                  'project_name'        => $project_name,
+                  'private'             => $private,
+                  'description'         => $description,
+                  'clientid'            => $clientid,
+                  'ownerid'             => $ownerid,
+                  'status'              => $status,
+                  'priority'            => $priority,
+                  'importance'          => $importance,
+                  'date_approved'       => $date_approved == "0000-00-00" ? NULL : $date_approved,
+                  'planned_start_date'  => $planned_start_date == "0000-00-00" ? NULL : $planned_start_date,
+                  'planned_end_date'    => $planned_end_date == "0000-00-00" ? NULL : $planned_end_date,
+                  'actual_start_date'   => $actual_start_date == "0000-00-00" ? NULL : $actual_start_date,
+                  'actual_end_date'     => $actual_end_date == "0000-00-00" ? NULL : $actual_end_date,
+                  'hours_planned'       => $hours_planned,
+                  'hours_spent'         => $hours_spent,
+                  'hours_remaining'     => $hours_remaining,
+                  'associated_sites'    => $associated_sites);
 
-    return $task;
+    return $item;
 }
 
 ?>

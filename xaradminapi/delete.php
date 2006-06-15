@@ -31,7 +31,7 @@ function xproject_adminapi_delete($args)
 
     if (!isset($project) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecAuthAction(0, 'xproject::Project', "$project[name]::$projectid", ACCESS_DELETE)) {
+    if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$project[project_name]:All:$projectid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xproject', xarVarPrepForStore($projectid));
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -42,11 +42,11 @@ function xproject_adminapi_delete($args)
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
+    $xprojecttable = $xartable['xProjects'];
 
     // does it have children ?
     $sql = "DELETE FROM $xprojecttable
-            WHERE xar_projectid = " . xarVarPrepForStore($projectid);
+            WHERE projectid = " . $projectid;
     $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {

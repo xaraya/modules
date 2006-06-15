@@ -9,7 +9,7 @@
  *
  * @subpackage XProject Module
  * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
+ * @author St.Ego
  */
 /**
  * initialise the xproject module
@@ -18,192 +18,100 @@
  */
 function xproject_init()
 {
+
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $xarTables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
+    
+    $xProjects_table = $xarTables['xProjects'];
+    $xProjects_fields = array('projectid'           =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'project_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'description'       =>  array('type'=>'text','null'=>FALSE,'default'=>''),
+                                'ownerid'           =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                                'clientid'          =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                                'status'            =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
+                                'importance'        =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
+                                'priority'          =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
+                                'private'           =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
+                                'date_approved'     =>  array('type'=>'time','null'=>TRUE,'default'=>''),
+                                'planned_start_date'=>  array('type'=>'date','null'=>TRUE,'default'=>'ULL'),
+                                'planned_end_date'  =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'actual_start_date' =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'actual_end_date'   =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'hours_planned'     =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+                                'hours_spent'       =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+                                'hours_remaining'   =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+                                'associated_sites'  =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>'') );
+    $query = xarDBCreateTable($xProjects_table,$xProjects_fields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $features_table = $xarTables['xProject_features'];
+    $features_fields = array('featureid'            =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'projectid'         =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                                'feature_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'details'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
+                                'tech_notes'        =>  array('type'=>'text','null'=>FALSE,'default'=>''),
+                                'date_approved'     =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'date_available'    =>  array('type'=>'date','null'=>TRUE) );
+    $query = xarDBCreateTable($features_table,$features_fields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $pages_table = $xarTables['xProject_pages'];
+    $pages_fields = array('pageid'      =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                        'page_name'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                        'status'        =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
+                        'description'   =>  array('type'=>'text','null'=>FALSE,'default'=>''),
+                        'relative_url'  =>  array('type'=>'varchar','size'=>255,'null'=>TRUE) );
+    $query = xarDBCreateTable($pages_table,$pages_fields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $ddata_is_available = xarModIsAvailable('dynamicdata');
+    if (!isset($ddata_is_available)) return;
 
-    $xprojecttable = $xartable['xproject'];
-
-    $fields = array(
-        'xar_projectid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_name'=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
-        'xar_description'=>array('type'=>'blob'),
-        'xar_clientgroup'=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_ownergroup'=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_usedatefields'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_usehoursfields'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_usefreqfields'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_allowprivate'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_importantdays'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_criticaldays'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_sendmailfreq'=>array('type'=>'integer','size'=>'tiny','default'=>'1'),
-        'xar_billable'=>array('type'=>'integer','size'=>'tiny','default'=>'1'));
-
-    $sql = xarDBCreateTable($xprojecttable,$fields);
-    if (empty($sql)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    if (!$ddata_is_available) {
+        $msg = xarML('Please activate the Dynamic Data module first...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
         return;
     }
 
-    $xprojecttable2 = $xartable['xproject_tasks'];
+    $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/projects.xml'));
+    if (empty($projects_objectid)) return;
+    // save the object id for later
+    xarModSetVar('xproject','projects_objectid',$projects_objectid);
 
-    $fields2 = array(
-        'xar_taskid'				=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_parentid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_projectid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_name'				=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
-        'xar_status'				=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_priority'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'1'),
-        'xar_description'		=>array('type'=>'blob'),
-        'xar_private'			=>array('type'=>'integer','null'=>TRUE,'size'=>'tiny', 'default'=>'0'),
-        'xar_creator'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_owner'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_assigner'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_groupid'			=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_date_created'		=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_date_approved'		=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_date_changed'		=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_date_start_planned'	=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_date_start_actual'	=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_date_end_planned'	=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_date_end_actual'	=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_hours_planned'		=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_hours_spent'		=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_hours_remaining'	=>array('type'=>'integer','null'=>TRUE, 'default'=>'0'),
-        'xar_cost'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'xar_recurring'			=>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
-        'xar_periodicity'		=>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
-        'xar_reminder'			=>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'));
-
-    $sql2 = xarDBCreateTable($xprojecttable2,$fields2);
-    if (empty($sql2)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql2);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql2);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $features_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/features.xml'));
+    if (empty($features_objectid)) return;
+    // save the object id for later
+    xarModSetVar('xproject','features_objectid',$features_objectid);
 
 
-    if(xarModIsAvailable('categories'))
-    {
-        $mastercid = xarModAPIFunc('categories',
-                                    'admin',
-                                    'create',
-                                    Array('name' => 'xproject',
-                                          'description' => 'xproject Categories',
-                                          'parent_id' => 0));
-        // Note: you can have more than 1 mastercid (cfr. articles module)
-        xarModSetVar('xproject', 'mastercid', $mastercid);
-        $projectcategories = array();
-        $projectcategories[] = array('name' => "My Tasks",
-                                      'description' => "My Personal ToDo List");
-        $projectcategories[] = array('name' => "Public",
-                                      'description' => "Events open to the public");
-        $projectcategories[] = array('name' => "Administration",
-                                      'description' => "Site Administration");
-        foreach($projectcategories as $project)
-        {
-            $projectsubcid = xarModAPIFunc('categories',
-                                           'admin',
-                                           'create',
-                                           Array('name' => $project['name'],
-                                                 'description' => $project['description'],
-                                                 'parent_id' => $mastercid));
-        }
+    $pages_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/pages.xml'));
+    if (empty($pages_objectid)) return;
+    // save the object id for later
+    xarModSetVar('xproject','pages_objectid',$pages_objectid);
 
-        $statuslistcid = xarModAPIFunc('categories',
-                                    'admin',
-                                    'create',
-                                    Array('name' => 'Status List',
-                                          'description' => 'Master container for status list',
-                                          'parent_id' => 0));
-        // Note: you can have more than 1 mastercid (cfr. articles module)
-        xarModSetVar('xproject', 'statuslistcid', $statuslistcid);
-        $statuslistcategories = array();
-        $statuslistcategories[] = array('name' => "Open",
-                                      'description' => "Task is not yet completed");
-        $statuslistcategories[] = array('name' => "Completed",
-                                      'description' => "Task is completed");
-        foreach($statuslistcategories as $status)
-        {
-            $statusid = xarModAPIFunc('categories',
-                                       'admin',
-                                       'create',
-                                       Array('name' => $status['name'],
-                                                     'description' => $status['description'],
-                                                     'parent_id' => $statuslistcid));
-        }
-    }
-/*
-    if (xarModAPILoad('users', 'admin')) {
-                // Call the API function
-                $state = xarModAPIFunc('users',
-                                                          'admin',
-                                                          'createvar',
-                                                          array('name' => xarML('Email notification on task change'),
-                                                                        'type' => _UDCONST_INTEGER,
-                                                                        'default' => 1));
-
-                $state = xarModAPIFunc('users',
-                                                          'admin',
-                                                          'createvar',
-                                                          array('name' => xarML('Only show tasks assigned to me'),
-                                                                        'type' => _UDCONST_INTEGER,
-                                                                        'default' => 1));
-
-                $state = xarModAPIFunc('users',
-                                                          'admin',
-                                                          'createvar',
-                                                          array('name' => xarML('Primary project / tasklist'),
-                                                                        'type' => _UDCONST_INTEGER,
-                                                                        'default' => 1));
-    } else {
-
-
-        }
-*/
-    xarModSetVar('xproject', 'display_dates', 0);
-    xarModSetVar('xproject', 'display_hours', 0);
-    xarModSetVar('xproject', 'display_frequency', 0);
-    xarModSetVar('xproject', 'ACCESS_RESTRICTED', 0);
-    xarModSetVar('xproject', 'dateformat', 1);
-    xarModSetVar('xproject', 'MAX_DONE', 10);
-    xarModSetVar('xproject', 'MOST_IMPORTANT_DAYS', 3);
-    xarModSetVar('xproject', 'REFRESH_MAIN', 600);
-    xarModSetVar('xproject', 'SEND_MAILS', true);
-    xarModSetVar('xproject', 'SHOW_EXTRA_ASTERISK', 1);
-    xarModSetVar('xproject', 'SHOW_LINE_NUMBERS', true);
-    xarModSetVar('xproject', 'SHOW_PERCENTAGE_IN_TABLE', true);
-    xarModSetVar('xproject', 'SHOW_PRIORITY_IN_TABLE', true);
-    xarModSetVar('xproject', 'TODO_HEADING', 'Task Management Administration');
-    xarModSetVar('xproject', 'VERY_IMPORTANT_DAYS', 3);
-    xarModSetVar('xproject', 'ITEMS_PER_PAGE', 20);
-    xarModSetVar('xproject', 'prioritymax', 10);
+    
+//    $xartable =& xarDBGetTables();
 
     xarModSetVar('xproject', 'SupportShortURLs', 0);
     /* If you provide short URL encoding functions you might want to also
      * provide module aliases and have them set in the module's administration.
      * Use the standard module var names for useModuleAlias and aliasname.
      */
-    xarModSetVar('xproject', 'useModuleAlias',false);
-    xarModSetVar('xproject','aliasname','');
+    xarModSetVar('xproject', 'useModuleAlias', false);
+    xarModSetVar('xproject', 'aliasname', '');
 
 //    xarBlockTypeRegister('xproject', 'first');
 //    xarBlockTypeRegister('xproject', 'others');
@@ -235,35 +143,7 @@ function xproject_upgrade($oldversion)
 {
     switch($oldversion) {
 
-        case '0.1.0':
-            xarModSetVar('xproject', 'SupportShortURLs', 0);
-            /* If you provide short URL encoding functions you might want to also
-             * provide module aliases and have them set in the module's administration.
-             * Use the standard module var names for useModuleAlias and aliasname.
-             */
-            xarModSetVar('xproject', 'useModuleAlias',false);
-            xarModSetVar('xproject','aliasname','');
-            /**
-             * Register the module components that are privileges objects
-             * Format is
-             * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-             */
-    
-            xarRegisterMask('ViewXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-            xarRegisterMask('ReadXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_READ');
-            xarRegisterMask('EditXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_EDIT');
-            xarRegisterMask('AddXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADD');
-            xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_DELETE');
-            xarRegisterMask('AdminXProject', 'All', 'xproject', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-            return xproject_upgrade('0.1.1');
-        case '0.1.1':
-           // Groups
-            xarRegisterMask('ViewXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
-            xarRegisterMask('ReadXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_READ');
-            xarRegisterMask('EditXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_EDIT');
-            xarRegisterMask('AddXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADD');
-            xarRegisterMask('DeleteXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_DELETE');
-            xarRegisterMask('AdminXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADMIN');
+        case '1.0':
             break;
 
     }
@@ -273,23 +153,38 @@ function xproject_upgrade($oldversion)
 
 function xproject_delete()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
     xarDBLoadTableMaintenanceAPI();
-    $sql = xarDBDropTable($xartable['xproject']);
-    if (empty($sql)) return; // throw back
 
-    // Drop the table
-    $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
+    $dbconn   =& xarDBGetConn();
+    $xartable =  xarDBGetTables();
+
+    $query = xarDBDropTable($xartable['xProjects']);
+    $result =& $dbconn->Execute($query);
+
+    $query = xarDBDropTable($xartable['xProject_features']);
+    $result =& $dbconn->Execute($query);
+
+    $query = xarDBDropTable($xartable['xProject_pages']);
+    $result =& $dbconn->Execute($query);
+
+    $projects_objectid = xarModGetVar('xproject','projects_objectid');
+    if (!empty($projects_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
     }
+    xarModDelVar('xproject','projects_objectid');
+    
+    $features_objectid = xarModGetVar('xproject','features_objectid');
+    if (!empty($features_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $features_objectid));
+    }
+    xarModDelVar('xproject','features_objectid');
+
+    $pages_objectid = xarModGetVar('xproject','pages_objectid');
+    if (!empty($pages_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $pages_objectid));
+    }
+    xarModDelVar('xproject','pages_objectid');
+    
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('xproject','aliasname');
@@ -298,7 +193,7 @@ function xproject_delete()
         xarModDelAlias($aliasname,'xproject');
     }
 
-    xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
+//    xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
     /* Delete any module variables */
     xarModDelAllVars('xproject');
 

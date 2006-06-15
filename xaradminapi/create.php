@@ -14,73 +14,71 @@ function xproject_adminapi_create($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (!isset($sendmails) || $sendmails == 0) {
-        $invalid[] = 'sendmails';
+    if (!isset($project_name) || !is_string($project_name)) {
+        $invalid[] = 'project_name';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'admin', 'create', 'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
-    if (!xarSecurityCheck('AddXProject', 1, 'Item', "$name:All:All")) {
+    if (!xarSecurityCheck('AddXProject', 1, 'Item', "$project_name:All:All")) {
         $msg = xarML('Not authorized to add #(1) items',
                     'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $xprojecttable = $xartable['xproject'];
+    $xprojecttable = $xartable['xProjects'];
 
     $nextId = $dbconn->GenId($xprojecttable);
 
     $query = "INSERT INTO $xprojecttable (
-              xar_projectid,
-              xar_name,
-              xar_description,
-              xar_usedatefields,
-              xar_usehoursfields,
-              xar_usefreqfields,
-              xar_allowprivate,
-              xar_importantdays,
-              xar_criticaldays,
-              xar_sendmailfreq,
-              xar_billable)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-            /*
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($description) . "',
-              " . ($displaydates ? $displaydates : "NULL") . ",
-              " . ($displayhours ? $displayhours : "NULL") . ",
-              " . ($displayfreq ? $displayfreq : "NULL") . ",
-              " . ($private ? $private : "NULL") . ",
-              " . $importantdays . ",
-              " . $criticaldays . ",
-              " . $sendmails . ",
-              " . ($billable ? $billable : "NULL") . ")";
-*/
+                  projectid,
+                  project_name,
+                  private,
+                  description,
+                  clientid,
+                  ownerid,
+                  status,
+                  priority,
+                  importance,
+                  date_approved,
+                  planned_start_date,
+                  planned_end_date,
+                  actual_start_date,
+                  actual_end_date,
+                  hours_planned,
+                  hours_spent,
+                  hours_remaining,
+                  associated_sites)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
     $bindvars = array(
               $nextId,
-              $name,
+              $project_name,
+              $private ? $private : "N",
               $description,
-              $displaydates ? $displaydates : NULL,
-              $displayhours ? $displayhours : NULL,
-              $displayfreq ? $displayfreq : NULL,
-              $private ? $private : NULL,
-              $importantdays,
-              $criticaldays,
-              $sendmails,
-              $billable ? $billable : NULL);
+              $clientid,
+              $ownerid,
+              $status,
+              $priority,
+              $importance,
+              $date_approved,
+              $planned_start_date,
+              $planned_end_date,
+              $actual_start_date,
+              $actual_end_date,
+              $hours_planned,
+              $hours_spent,
+              $hours_remaining,
+              $associated_sites ? $associated_sites : "");
+              
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

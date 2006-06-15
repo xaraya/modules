@@ -3,43 +3,64 @@
 function xproject_admin_update($args)
 {
     list($projectid,
-		$name,
-		$displaydates,
-		$displayhours,
-		$displayfreq,
-		$private,
-		$sendmailfreq,
-		$importantdays,
-		$criticaldays,
-		$billable,
-		$description) =	xarVarCleanFromInput('projectid',
-											'name',
-											'displaydates',
-											'displayhours',
-											'displayfreq',
-											'private',
-											'sendmailfreq',
-											'importantdays',
-											'criticaldays',
-											'billable',
-											'description');
+        $project_name,
+        $private,
+        $description,
+        $clientid,
+        $ownerid,
+        $status,
+        $priority,
+        $importance,
+        $date_approved,
+        $planned_start_date,
+        $planned_end_date,
+        $actual_start_date,
+        $actual_end_date,
+        $hours_planned,
+        $hours_spent,
+        $hours_remaining,
+        $associated_sites) =	xarVarCleanFromInput('projectid',
+                                            'project_name',
+                                            'private',
+                                            'description',
+                                            'clientid',
+                                            'ownerid',
+                                            'status',
+                                            'priority',
+                                            'importance',
+                                            'date_approved',
+                                            'planned_start_date',
+                                            'planned_end_date',
+                                            'actual_start_date',
+                                            'actual_end_date',
+                                            'hours_planned',
+                                            'hours_spent',
+                                            'hours_remaining',
+                                            'associated_sites');
 
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
     if(!xarModAPIFunc('xproject',
 					'admin',
 					'update',
-					array('projectid'	=> $projectid,
-						'name' 			=> $name,
-						'displaydates'	=> $displaydates,
-						'displayhours'	=> $displayhours,
-						'displayfreq'	=> $displayfreq,
-						'private'		=> $private,
-						'sendmailfreq'	=> $sendmailfreq,
-						'importantdays'	=> $importantdays,
-						'criticaldays'	=> $criticaldays,
-						'billable'		=> $billable,
-						'description'	=> $description))) {
+					array('projectid'	    => $projectid,
+						'project_name' 	    => $project_name,
+                        'private'	        => $private,
+                        'description'	    => $description,
+                        'clientid'	        => $clientid,
+                        'ownerid'	        => $ownerid,
+                        'status'	        => $status,
+                        'priority'		    => $priority,
+                        'importance'		=> $importance,
+                        'date_approved'	    => $date_approved,
+                        'planned_start_date'=> $planned_start_date,
+                        'planned_end_date'	=> $planned_end_date,
+                        'actual_start_date' => $actual_start_date,
+                        'actual_end_date'	=> $actual_end_date,
+                        'hours_planned'     => $hours_planned,
+                        'hours_spent'		=> $hours_spent,
+                        'hours_remaining'	=> $hours_remaining,
+                        'associated_sites'	=> $associated_sites))) {
 		return;
 	}
 
@@ -47,7 +68,6 @@ function xproject_admin_update($args)
 	xarSessionSetVar('statusmsg', xarML('Project Updated'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
-//    xarResponseRedirect(xarModURL('xproject', 'user', 'display', array('projectid' => $projectid)));
 
     return true;
 }
