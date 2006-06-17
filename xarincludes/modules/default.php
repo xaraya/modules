@@ -184,15 +184,18 @@
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     if (xarUserIsLoggedIn()) {
     $currentuser = xarModAPIFunc('roles','user','get',array('uid' => xarSessionGetVar('uid')));
-        $greeting_string = xarML('Nice to see you again #(1). Would you like to visit our #(2)?',
-        '<span class="greetUser">' . $currentuser['name'] . '</span>',
-        '<a href="' . xarModURL('commerce','user','products_new') . '"><u>new products</u></a>');
+        $greeting_string = xarML('Nice to see you again #(1). ',
+        '<span class="greetUser">' . $currentuser['name'] . '</span>');
+        if (xarModIsAvailable('products')) {
+			$greeting_string .= xarML('Would you like to visit our #(1)?',
+			'<a href="' . xarModURL('products','user','products_new') . '"><u>new products</u></a>');
+        }
     }
     else {
         $greeting_string = xarML('Welcome #(1). Would you like to #(2)? Or would you like to create an #(3) ?',
         '<span class="greetUser">visitor!</span>',
-        '<a href="' . xarModURL('roles','user','login') . '"><u>login</u></a>',
-        '<a href="' . xarModURL('roles','user','register') . '"><u>account</u></a>');
+        '<a href="' . xarModURL('authsystem','user','login') . '"><u>login</u></a>',
+        '<a href="' . xarModURL('registration','user','register') . '"><u>account</u></a>');
     }
 
     $data['text'] = str_replace('{$greeting}',$greeting_string,$shop_content_data['content_text']);

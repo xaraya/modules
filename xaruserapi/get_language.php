@@ -10,14 +10,14 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_language($args) 
+function commerce_userapi_get_language($args)
 {
     extract($args);
-    
+
     // Get the language which matches the locale? strange, but alas.
     // Object = ice_languages
     $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_languages'));
-    $fieldlist = array('id,name,code,image,directory');
+    $fieldlist = array('id','name','code','image','directory');
     if(!isset($locale)) $locale="en_US";
     // TODO: what are we going to do with the bind vars here?
     $condition ="directory = '$locale'";

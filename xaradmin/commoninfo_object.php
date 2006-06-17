@@ -34,8 +34,7 @@ function commerce_admin_commoninfo_object($args = array() )
         // NOT FOUND, (obviously this must be less dramatic than this eventually)
         die('ICE object not found!!!');
     }
-    // We let the DD config determine the fieldlist
-    $data['fieldlist'] = '';
+    $data['fieldlist'] = isset($fieldlist) ? $fieldlist : '';
     $data['moduleid'] = $objectInfo['moduleid'];
     $data['itemtype'] = $objectInfo['itemtype'];
     $data['objectlabel'] = xarML($objectInfo['label']); // What sort of effect does this have?

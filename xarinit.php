@@ -163,7 +163,10 @@ function commerce_init()
     /*
       Our list of objects
     */
-    $ice_objects = array('ice_countries', 'ice_currencies', 'ice_taxclasses',
+    $ice_objects = array(
+    					 'ice_countries',
+    					 'ice_currencies',
+						 'ice_taxclasses',
                          'ice_taxrates', 'ice_languages', 'ice_zones',
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
                          'ice_configuration', 'ice_config_groups',
@@ -192,6 +195,7 @@ function commerce_init()
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
 
+        $objects = array();
         $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
         if (!$objectid) return;
         else $objects[$ice_object] = $objectid;
@@ -606,27 +610,6 @@ function commerce_init()
     $query = "INSERT INTO " . $prefix . "_commerce_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage f¸r diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge‰ndert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ¸ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
 
-
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '1', 'Pending')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '2', 'Offen')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '1', '3', 'Ozhidanie')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '1', 'Processing')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '2', 'In Bearbeitung')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '2', '3', 'Obrabotka')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '1', 'Delivered')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '2', 'Versendet')";
-    if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_commerce_orders_status VALUES ( '3', '3', 'Dostavlen')";
-    if (!$q->run($query)) return;
-
-
        // Default values for discounts and other stuff
     $status_discount = '0.00';
     $status_ot_discount_flag = '1';
@@ -942,6 +925,10 @@ function commerce_upgrade($oldversion)
  */
 function commerce_delete()
 {
+# --------------------------------------------------------
+#
+# Remove database tables
+#
     $tablenameprefix = xarDBGetSiteTablePrefix() . '_commerce_';
     $tables = xarDBGetTables();
     $q = new xenQuery();
@@ -953,36 +940,45 @@ function commerce_delete()
         }
     }
 
-    // Delete the DD objects created by commerce modules
+# --------------------------------------------------------
+#
+# Delete all DD objects created by commerce modules
+#
 	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
 	foreach ($ice_objects as $key => $value)
 	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key));
 
-	// Purge all the roles created by this module
+# --------------------------------------------------------
+#
+# Purge all the roles created by this module
+#
 	$role = xarFindRole('commerceroles');
 	$descendants = $role->getDescendants();
 	foreach ($descendants as $item)
 		if (!$item->purge()) return;
 	if (!$role->purge()) return;
 
-    // Remove Masks and Instances
+# --------------------------------------------------------
+#
+# Remove modvars, masks and privilege instances
+#
+    xarModDelAllVars('commerce');
     xarRemoveMasks('commerce');
     xarRemoveInstances('commerce');
-
-    // Remove Modvars
-    xarModDelAllVars('commerce');
 
     // Remove from the list of commerce modules
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['commerce']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-    // Remove the language block
+# --------------------------------------------------------
+#
+# Remove blocks
+#
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }
-    // Remove the exit menu
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;

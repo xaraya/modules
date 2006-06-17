@@ -28,12 +28,12 @@
     <!-- The left side contains a list of items -->
     <div style="width: 48%; float: left;">
         <xar:if condition="!isset($where)"><xar:set name="where">""</xar:set></xar:if>
-        <xar:data-view module="$moduleid" itemtype="$itemtype" fieldlist="$fieldlist" numitems="$itemsperpage" count="yes" tplmodule="$tplmodule" template="ice" where="$where"/>
+        <xar:data-view module="$moduleid" itemtype="$itemtype" fieldlist="$fieldlist" numitems="$itemsperpage" count="yes" tplmodule="$tplmodule" template="ice" extend="false" where="$where" />
     </div>
     
     <!-- The right side contains detail on the current item -->
     <div style="width: auto; float: right;">
-        <xar:data-display module="$moduleid" itemtype="$itemtype" itemid="$itemid" tplmodule="$tplmodule" template="ice"/>
+        <xar:data-display module="$moduleid" itemtype="$itemtype" itemid="$itemid" tplmodule="$tplmodule" template="ice" extend="false" />
     </div>
     
     <!-- Make sure the fieldset encloses both, regardless of floating or other css trickery -->

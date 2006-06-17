@@ -13,7 +13,7 @@
   </ice_addressformats>
   <ice_addressformats itemid="3">
     <format_id>3</format_id>
-    <name>Sate / Country</name>
+    <name>State / Country</name>
     <format>$firstname $lastname$cr$streets$cr$city$cr$postcode - $statecomma$country</format>
     <summary>$state / $country</summary>
   </ice_addressformats>

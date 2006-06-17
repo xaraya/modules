@@ -35,7 +35,7 @@ function commerce_admin_main()
     else {
         switch(strtolower($branch)) {
             case 'start':
-                xarResponseRedirect(xarModURL('commerce', 'admin', 'start'));
+                xarResponseRedirect(xarModURL('commerce', 'admin', 'modifyconfig'));
                 break;
         }
    }

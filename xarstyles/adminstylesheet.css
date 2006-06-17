@@ -9,7 +9,7 @@
    based on: 
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
    (c) 2002-2003 osCommerce(stylesheet.css,v 1.24 2003/06/02); www.oscommerce.com 
-   (c) 2003	 nextcommerce (stylesheet.css,v 1.12 2003/08/23); www.nextcommerce.org
+   (c) 2003  nextcommerce (stylesheet.css,v 1.12 2003/08/23); www.nextcommerce.org
 
    Released under the GNU General Public License 
    --------------------------------------------------------------*/
@@ -45,7 +45,6 @@ a.splitPageLink:hover { font-family: Verdana, Arial, sans-serif; font-size: 10px
 .menuBoxContent { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; }
 .longDescription { visibility: hidden; display: none; }
 /* page */
-body { background-color: #ffffff; color: #000000; margin: 0px; }
 .headerBar {
  background-color: #cccccc; 
 border-color: #000000; 
