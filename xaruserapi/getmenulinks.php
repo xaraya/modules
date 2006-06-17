@@ -1,33 +1,28 @@
 <?php
 /**
- * File: $Id$
- *
- * Pass admin links to the admin menu
- *
- * @package modules
+ * @package commerce
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
- * @subpackage module name
- * @author Marcel van der Boom <marcel@xaraya.com>
+ * @subpackage carts
+ * @author Marc Lutolf (mfl@netspan.ch)
 */
 
-
 /**
- * Pass individual menu items to the admin menu
+ * Pass individual menu items to the user menu
  *
- * @return array containing the menulinks for the admin menu items.
+ * @return array containing the menulinks for the user menu items.
  */
-function commerce_userapi_getmenulinks()
+function carts_userapi_getmenulinks()
 {
-    $menuLinks[] = array('url'   => xarModURL('commerce','user','start'),
-                         'title' => xarML('Enter the shop'),
-                         'label' => xarML('Shop'));
+    $menulinks[] = array('url'   => xarModURL('carts','user','main'),
+                         'title' => xarML('View cart'),
+                         'label' => xarML('View Cart'));
 
     if (empty($menulinks)){
         $menulinks = '';
     }
 
-    return $menuLinks;
+    return $menulinks;
 }
 ?>

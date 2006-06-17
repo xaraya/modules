@@ -20,22 +20,20 @@
  */
 function carts_adminapi_getmenulinks()
 {
-   /* $menuLinks[] = array('url'   => xarModURL('carts','admin','configuration',array('gID' => 1)),
+   /* $menulinks[] = array('url'   => xarModURL('carts','admin','configuration',array('gID' => 1)),
                          'title' => xarML('Administer the basket'),
                          'label' => xarML('basket'));*/
-
-    $menuLinks[] = array('url'   => xarModURL('carts','admin','modifyconfig'),
-                         'title' => xarML('Config users\'basket'),
-                         'label' => xarML('config'));
-
-    $menuLinks[] = array('url'   => xarModURL('carts','user','shopping_cart'),
+    $menulinks[] = array('url'   => xarModURL('carts','user','shopping_cart'),
                          'title' => xarML('View tour basket'),
                          'label' => xarML('View'));
+	$menulinks[] = Array('url'   => xarModURL('vendors','admin','modifyconfig'),
+						  'title' => xarML('Modify the configuration settings'),
+						  'label' => xarML('Modify Config'));
 
     if (empty($menulinks)){
         $menulinks = '';
     }
 
-    return $menuLinks;
+    return $menulinks;
 }
 ?>

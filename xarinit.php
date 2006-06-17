@@ -73,16 +73,16 @@ function carts_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_carts_customers_basket";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_carts_basket";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_carts_customers_basket (
-      customers_basket_id int NOT NULL auto_increment,
-      customers_id int NOT NULL,
-      products_id tinytext NOT NULL,
-      customers_basket_quantity int(2) NOT NULL,
-      final_price decimal(15,4) NOT NULL,
-      customers_basket_date_added char(8),
-      PRIMARY KEY (customers_basket_id)
+    $query = "CREATE TABLE " . $prefix . "_carts_basket (
+      item_id int NOT NULL auto_increment,
+      customer_id int NOT NULL,
+      product_id tinytext NOT NULL,
+      quantity int(2) NOT NULL,
+      price decimal(15,4) NOT NULL,
+      date_added int NOT NULL,
+      PRIMARY KEY (item_id)
     )";
     if (!$q->run($query)) return;
 
@@ -91,7 +91,7 @@ function carts_init()
     $query = "CREATE TABLE " . $prefix . "_carts_customers_basket_attributes (
       customers_basket_attributes_id int NOT NULL auto_increment,
       customers_id int NOT NULL,
-      products_id tinytext NOT NULL,
+      product_id tinytext NOT NULL,
       products_options_id int NOT NULL,
       products_options_value_id int NOT NULL,
       PRIMARY KEY (customers_basket_attributes_id)
@@ -169,24 +169,20 @@ function carts_init()
                                                                   'name' => 'cartscart',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
-                                                                  
-                                                                  
+
+
 # --------------------------------------------------------
 #
-# Configure Hook
+# Configure hooks
 #
 
     // when a whole module is displayed, e.g. via the modules admin screen
     // (set object ID to the module name !)
-    if (!xarModRegisterHook('item', 'display', 'GUI',
-                           'carts', 'user', 'displayhook')) {
-        return false;
-    }
+    if (!xarModRegisterHook('item', 'display', 'GUI', 'carts', 'user', 'displayhook')) return false;
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'carts', 'user', 'usermenu'))  return false;
 
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'carts', 'user', 'usermenu')) {
-        return false;
-    }
+	xarModRegisterHook('module', 'getconfig', 'API','carts', 'admin', 'getconfighook');
+    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'carts'));
 
 # --------------------------------------------------------
 #
@@ -224,6 +220,10 @@ function carts_upgrade($oldversion)
  */
 function carts_delete()
 {
+# --------------------------------------------------------
+#
+# Remove database tables
+#
     $tablenameprefix = xarDBGetSiteTablePrefix() . '_carts_';
     $tables = xarDBGetTables();
     $q = new xenQuery();
@@ -234,12 +234,47 @@ function carts_delete()
         }
     }
 
+# --------------------------------------------------------
+#
+# Remove modvars, masks and privilege instances
+#
     xarModDelAllVars('carts');
     xarRemoveMasks('carts');
+    xarRemoveInstances('carts');
 
     // The modules module will take care of all the blocks
 
-    // Remove from the list of commerce modules
+# --------------------------------------------------------
+#
+# Delete block types for this module
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'carts')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
+# Remove blocks instances
+#
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'cartscart'));
+    if ($blockinfo) {
+        if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
+    }
+
+# --------------------------------------------------------
+#
+# Remove this module from the list of commerce modules
+#
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['carts']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));

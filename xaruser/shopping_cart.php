@@ -1,6 +1,6 @@
 <?php
 // ----------------------------------------------------------------------
-// Copyright (C) 2005: Fabien Bel (fab@webu.fr)
+// Copyright (C) 2006: Marc Lutolf (mfl@netspan.ch)
 // Purpose of file:  Configuration functions for commerce
 // ----------------------------------------------------------------------
 //  based on:
@@ -9,32 +9,17 @@
 //  (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
-include_once 'modules/carts/xarclasses/shopping_cart.php';
-include_once 'modules/carts/xarclasses/shopping_cart_anonymous.php';
 
-/**
-* Consult the good basket
-* @param $args['iid'] ID of the art
-* @param $args['extrainfo'] extra information
-* @author Fabien Bel fab@webu.fr
-**/
-function carts_user_shopping_cart($args)
+function carts_user_shopping_cart()
 {
-    extract($args);    
-        
-    //We get infos about user because we want to know if the person is an anonymous
-    $user = xarModAPIFunc('roles', 'user', 'get', array ('uid' => xarSessionGetVar('uid')));
-
-   
-   if ($user['uname'] == 'anonymous'){
-         $redirect = xarModUrl('carts','user', 'shopping_cart_anonymous');
-   }
-    else{
-        $redirect = xarModUrl('carts','user', 'shopping_cart_login');
-        
-    }
-     
-   return (xarresponseredirect($redirect));
+	if (xarUserIsLoggedIn()){
+		include_once 'modules/carts/xarclasses/shopping_cart.php';
+		xarResponseRedirect(xarModURL('carts','user', 'shopping_cart_login'));
+	} else{
+		include_once 'modules/carts/xarclasses/shopping_cart_anonymous.php';
+		xarResponseRedirect(xarModURL('carts','user', 'shopping_cart_anonymous'));
+	}
+	return true;
 }
 
 
