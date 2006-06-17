@@ -24,7 +24,7 @@ function products_admin_main()
    // Security Check
 //    if(!xarSecurityCheck('EditProducts')) return;
 
-    xarSessionSetVar('products_statusmsg', xarML('Products Main Menu',
+    xarSessionSetVar('product_statusmsg', xarML('Products Main Menu',
                     'products'));
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}

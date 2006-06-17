@@ -42,7 +42,7 @@ function products_adminapi_getmenulinks()
     if (xarSecurityCheck('EditProducts',0)) {
         $menulinks[] = Array('url'   => xarModURL('products',
                                                   'admin',
-                                                  'products_attributes'),
+                                                  'product_attributes'),
                               'title' => xarML('Add options to products'),
                               'label' => xarML('Product Options'));
     }
@@ -70,10 +70,13 @@ function products_adminapi_getmenulinks()
     if (xarSecurityCheck('EditProducts',0)) {
         $menulinks[] = Array('url'   => xarModURL('products',
                                                   'admin',
-                                                  'products_expected'),
+                                                  'product_expected'),
                               'title' => xarML('Manage products expected'),
                               'label' => xarML('Products Expected'));
     }
+	$menulinks[] = Array('url'   => xarModURL('vendors', 'admin', 'modifyconfig'),
+						  'title' => xarML('Modify the configuration settings'),
+						  'label' => xarML('Modify Config'));
     if (empty($menulinks)){
         $menulinks = '';
     }

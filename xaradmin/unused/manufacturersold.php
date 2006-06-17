@@ -77,9 +77,9 @@ function commerce_admin_manufacturers()
       new xenQuery("delete from " . TABLE_MANUFACTURERS_INFO . " where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
 
       if ($_POST['delete_products'] == 'on') {
-        $products_query = new xenQuery("select products_id from " . TABLE_PRODUCTS . " where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
+        $product_query = new xenQuery("select product_id from " . TABLE_PRODUCTS . " where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
         while ($products = $q->output()) {
-          xtc_remove_product($products['products_id']);
+          xtc_remove_product($products['product_id']);
         }
       } else {
         new xenQuery("update " . TABLE_PRODUCTS . " set manufacturers_id = '' where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
@@ -99,7 +99,7 @@ function commerce_admin_manufacturers()
       if(!$q->run()) return;
   while ($manufacturers = $q->output()) {
     if (((!$_GET['mID']) || (@$_GET['mID'] == $manufacturers['manufacturers_id'])) && (!$mInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
-      $manufacturer_products_query = new xenQuery("select count(*) as products_count from " . TABLE_PRODUCTS . " where manufacturers_id = '" . $manufacturers['manufacturers_id'] . "'");
+      $manufacturer_product_query = new xenQuery("select count(*) as product_count from " . TABLE_PRODUCTS . " where manufacturers_id = '" . $manufacturers['manufacturers_id'] . "'");
       $q = new xenQuery();
       if(!$q->run()) return;
       $manufacturer_products = $q->output();
@@ -186,9 +186,9 @@ function commerce_admin_manufacturers()
       $contents[] = array('text' => '<br><b>' . $mInfo->manufacturers_name . '</b>');
       $contents[] = array('text' => '<br>' . xtc_draw_checkbox_field('delete_image', '', true) . ' ' . TEXT_DELETE_IMAGE);
 
-      if ($mInfo->products_count > 0) {
+      if ($mInfo->product_count > 0) {
         $contents[] = array('text' => '<br>' . xtc_draw_checkbox_field('delete_products') . ' ' . TEXT_DELETE_PRODUCTS);
-        $contents[] = array('text' => '<br>' . sprintf(TEXT_DELETE_WARNING_PRODUCTS, $mInfo->products_count));
+        $contents[] = array('text' => '<br>' . sprintf(TEXT_DELETE_WARNING_PRODUCTS, $mInfo->product_count));
       }
 
       $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_MANUFACTURERS, 'page=' . $_GET['page'] . '&mID=' . $mInfo->manufacturers_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
@@ -202,7 +202,7 @@ function commerce_admin_manufacturers()
         $contents[] = array('text' => '<br>' . TEXT_DATE_ADDED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$mInfo->date_added)));
         if (xarModAPIFunc('commerce','user','not_null',array('arg' => $mInfo->last_modified))) $contents[] = array('text' => TEXT_LAST_MODIFIED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$mInfo->last_modified)));
         $contents[] = array('text' => '<br>' . xtc_info_image($mInfo->manufacturers_image, $mInfo->manufacturers_name));
-        $contents[] = array('text' => '<br>' . TEXT_PRODUCTS . ' ' . $mInfo->products_count);
+        $contents[] = array('text' => '<br>' . TEXT_PRODUCTS . ' ' . $mInfo->product_count);
       }
       break;
   }

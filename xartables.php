@@ -33,17 +33,17 @@ function products_xartables()
     $xartable['products_configuration_group'] = $prefix . '_products_configuration_group';
     $xartable['products_manufacturers'] = $prefix . '_products_manufacturers';
     $xartable['products_manufacturers_info'] = $prefix . '_products_manufacturers_info';
-    $xartable['products_products'] = $prefix . '_products_products';
-    $xartable['products_products_attributes'] = $prefix . '_products_products_attributes';
-    $xartable['products_products_attributes_download'] = $prefix . '_products_products_attributes_download';
-    $xartable['products_products_description'] = $prefix . '_products_products_description';
-    $xartable['products_products_notifications'] = $prefix . '_products_products_notifications';
-    $xartable['products_products_options'] = $prefix . '_products_products_options';
-    $xartable['products_products_options_values'] = $prefix . '_products_products_options_values';
-    $xartable['products_products_options_values_to_products_options'] = $prefix . '_products_products_options_values_to_products_options';
-    $xartable['products_products_graduated_prices'] = $prefix . '_products_products_graduated_prices';
-    $xartable['products_products_to_categories'] = $prefix . '_products_products_to_categories';
-    $xartable['products_products_content'] = $prefix . '_products_products_content';
+    $xartable['products_product'] = $prefix . '_products_product';
+    $xartable['products_product_attributes'] = $prefix . '_products_product_attributes';
+    $xartable['products_product_attributes_download'] = $prefix . '_products_product_attributes_download';
+    $xartable['products_product_description'] = $prefix . '_products_product_description';
+    $xartable['products_product_notifications'] = $prefix . '_products_product_notifications';
+    $xartable['products_product_options'] = $prefix . '_products_product_options';
+    $xartable['products_product_options_values'] = $prefix . '_products_products_option_values';
+    $xartable['products_product_options_values_to_products_options'] = $prefix . '_products_product_options_values_to_product_options';
+    $xartable['products_product_graduated_prices'] = $prefix . '_products_product_graduated_prices';
+    $xartable['products_product_to_categories'] = $prefix . '_products_product_to_categories';
+    $xartable['products_product_content'] = $prefix . '_products_product_content';
     $xartable['products_content_manager'] = $prefix . '_products_content_manager';
 
     return $xartable;

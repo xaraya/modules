@@ -16,51 +16,51 @@ function commerce_userapi_remove_product($args)
     $xartables = xarDBGetTables();
 
     extract($args);
-    $q = new xenQuery('SELECT',$xartables['commerce_products'],'products_image');
-    $q->eq('products_id',$pID);
+    $q = new xenQuery('SELECT',$xartables['commerce_products'],'product_image');
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
     $product_image = $q->row();
 
     $q = new xenQuery('SELECT',$xartables['commerce_products'],'count(*) as total');
-    $q->eq('products_id',$product_image['products_image']);
+    $q->eq('product_id',$product_image['product_image']);
     if(!$q->run()) return;
     $duplicate_image = $q->row();
     if ($duplicate_image['total'] < 2) {
-        if (file_exists('modules/xarimages/popup_images' . $product_image['products_image']))
-            @unlink('modules/xarimages/popup_images' . $product_image['products_image']);
+        if (file_exists('modules/xarimages/popup_images' . $product_image['product_image']))
+            @unlink('modules/xarimages/popup_images' . $product_image['product_image']);
     }
 // START CHANGES
     $image_subdir = 'product_images';
     if (substr($image_subdir, -1) != '/') $image_subdir .= '/';
-    if (file_exists('modules/xarimages/' . $image_subdir . $product_image['products_image']))
-        @unlink('modules/xarimages/' . $image_subdir . $product_image['products_image']);
+    if (file_exists('modules/xarimages/' . $image_subdir . $product_image['product_image']))
+        @unlink('modules/xarimages/' . $image_subdir . $product_image['product_image']);
     }
 // END CHANGES
 
     $q = new xenQuery('DELETE',$xartables['commerce_specials']);
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
     $q = new xenQuery('DELETE',$xartables['commerce_products']);
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
-    $q = new xenQuery('DELETE',$xartables['commerce_products_to_categories']);
-    $q->eq('products_id',$pID);
+    $q = new xenQuery('DELETE',$xartables['commerce_product_to_categories']);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
-    $q = new xenQuery('DELETE',$xartables['commerce_products_descriptions']);
-    $q->eq('products_id',$pID);
+    $q = new xenQuery('DELETE',$xartables['commerce_product_descriptions']);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
-    $q = new xenQuery('DELETE',$xartables['commerce_products_attributes']);
-    $q->eq('products_id',$pID);
+    $q = new xenQuery('DELETE',$xartables['commerce_product_attributes']);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
     $q = new xenQuery('DELETE',$xartables['commerce_customers_basket']);
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
     $q = new xenQuery('DELETE',$xartables['commerce_customers_basket_attributes']);
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
 
     $q = new xenQuery('SELECT',$xartables['commerce_reviews'],'reviews_id');
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
     while ($q->output() as $product_reviews) {
         $q = new xenQuery('DELETE',$xartables['commerce_reviews_description']);
@@ -68,7 +68,7 @@ function commerce_userapi_remove_product($args)
         if(!$q->run()) return;
     }
     $q = new xenQuery('DELETE',$xartables['commerce_reviews']);
-    $q->eq('products_id',$pID);
+    $q->eq('product_id',$pID);
     if(!$q->run()) return;
 }
 ?>

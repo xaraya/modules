@@ -49,7 +49,7 @@ function commerce_adminapi_remove_category($args)
     $q = new xenQuery('DELETE',$xartables['commerce_categories_description']);
     $q->eq('categories_id',$category_id);
     if(!$q->run()) return;
-    $q = new xenQuery('DELETE',$xartables['commerce_products_to_categories']);
+    $q = new xenQuery('DELETE',$xartables['commerce_product_to_categories']);
     $q->eq('categories_id',$category_id);
     if(!$q->run()) return;
 }

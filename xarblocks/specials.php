@@ -63,35 +63,35 @@ function commerce_specialsblock_display($blockinfo)
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 
-    $selectfields = array('p.products_id', 'pd.products_name', 'p.products_price', 'p.products_tax_class_id', 'p.products_image','s.specials_new_products_price');
+    $selectfields = array('p.product_id', 'pd.product_name', 'p.product_price', 'p.product_tax_class_id', 'p.product_image','s.specials_new_product_price');
     $q = new xenQuery("SELECT",$xartables['commerce_products'],$selectfields);
     $q->setalias($xartables['commerce_products'],'p');
-    $q->addtable($xartables['commerce_products_description'],'pd');
+    $q->addtable($xartables['commerce_product_description'],'pd');
     $q->addtable($xartables['commerce_specials'],'s');
-    $q->join('p.products_id', 's.products_id');
-    $q->join('pd.products_id', 's.products_id');
+    $q->join('p.product_id', 's.product_id');
+    $q->join('pd.product_id', 's.product_id');
 //FIXME    $q->eq('pd.language_id', $_SESSION['languages_id']);
     $q->eq('pd.language_id', 1);
-    $q->eq('p.products_status', 1);
+    $q->eq('p.product_status', 1);
     $q->eq('s.status', 1);
     $q->setorder('s.specials_date_added','DESC');
 //FIXME   $q->setrowstodo(MAX_RANDOM_SELECT_SPECIALS);
     if (!$random_product = xarModAPIFunc('commerce','user','random_select',array('query' => $q ))) {
         return '';
     }
-    $data['link'] = xarModURL('commerce','user','product_info.php', array('products_id' =>$random_product['products_id']));
-    $data['image'] = xarTplGetImage('product_images/thumbnail_images/' . $random_product['products_image']);
-    $data['name'] = $random_product['products_name'];
-    $data['price'] =xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$random_product['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
+    $data['link'] = xarModURL('commerce','user','product_info.php', array('product_id' =>$random_product['product_id']));
+    $data['image'] = xarTplGetImage('product_images/thumbnail_images/' . $random_product['product_image']);
+    $data['name'] = $random_product['product_name'];
+    $data['price'] =xarModAPIFunc('commerce','user','get_product_price',array('product_id' =>$random_product['product_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
 
 
-//    $box_content='<a href="' . xarModURL('commerce','user','product_info', 'products_id=' . $random_product["products_id"]) . '">' . xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $random_product['products_image']), $random_product['products_name'], PRODUCT_THUMBNAIL_IMAGE_WIDTH, PRODUCT_THUMBNAIL_IMAGE_HEIGHT) . '</a><br><a href="' . xarModURL('commerce','user','product_info', 'products_id=' . $random_product['products_id']) . '">' . $random_product['products_name'] . '</a><br>'.xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$random_product['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
+//    $box_content='<a href="' . xarModURL('commerce','user','product_info', 'product_id=' . $random_product["product_id"]) . '">' . xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $random_product['product_image']), $random_product['product_name'], PRODUCT_THUMBNAIL_IMAGE_WIDTH, PRODUCT_THUMBNAIL_IMAGE_HEIGHT) . '</a><br><a href="' . xarModURL('commerce','user','product_info', 'product_id=' . $random_product['product_id']) . '">' . $random_product['product_name'] . '</a><br>'.xarModAPIFunc('commerce','user','get_product_price',array('product_id' =>$random_product['product_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
 
     $data['specials_link'] = xarModURL('commerce','user','specials');
 
 
 //    $box_smarty->assign('language', $_SESSION['language']);
-  if ($random_product["products_id"]=='') return '';
+  if ($random_product["product_id"]=='') return '';
 /*          // set cache ID
   if (USE_CACHE=='false') {
   $box_smarty->caching = 0;
@@ -100,7 +100,7 @@ function commerce_specialsblock_display($blockinfo)
   $box_smarty->caching = 1;
   $box_smarty->cache_lifetime=CACHE_LIFETIME;
   $box_smarty->cache_modified_check=CACHE_CHECK;
-  $cache_id = $_SESSION['language'].$random_product["products_id"].$_SESSION['customers_status']['customers_status_name'];
+  $cache_id = $_SESSION['language'].$random_product["product_id"].$_SESSION['customers_status']['customers_status_name'];
   $box_specials= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_specials.html',$cache_id);
   }
 */

@@ -35,7 +35,7 @@ function products_admin_categories()
     if(!xarVarFetch('move_to_category_id',    'int',  $move_to_category_id, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('edit_x',    'int',  $edit_x, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('edit_y',    'int',  $edit_y, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('products_tax_class_id',    'int',  $products_tax_class_id, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('product_tax_class_id',    'int',  $product_tax_class_id, NULL, XARVAR_DONT_SET)) {return;}
 
 if (isset($action)) {
         switch ($action) {
@@ -69,14 +69,14 @@ if (isset($action)) {
                                     'exclude' => 0,
                                     'include_itself' => true));
                     $products = array();
-                    $products_delete = array();
+                    $product_delete = array();
 
                     for ($i = 0, $n = sizeof($categories); $i < $n; $i++) {
-                        $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'products_id');
+                        $q = new xenQuery('SELECT',$xartables['products_product_to_categories'],'product_id');
                         $q->eq('categories_id',$categories[$i]['id']);
                         if(!$q->run()) return;
                         foreach ($q->output() as $product_ids) {
-                            $products[$product_ids['products_id']]['categories'][] = $categories[$i]['id'];
+                            $products[$product_ids['product_id']]['categories'][] = $categories[$i]['id'];
                         }
                     }
 
@@ -86,13 +86,13 @@ if (isset($action)) {
                         for ($i = 0, $n = sizeof($value['categories']); $i < $n; $i++) {
                             $category_ids[] = $value['categories'][$i];
                         }
-                        $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
-                        $q->eq('products_id',$key);
+                        $q = new xenQuery('SELECT',$xartables['products_product_to_categories'],'count(*) AS total');
+                        $q->eq('product_id',$key);
                         $q->notin('categories_id',$category_ids);
                         if(!$q->run()) return;
                         $check = $q->row();
                         if ($check['total'] < 1) {
-                            $products_delete[$key] = $key;
+                            $product_delete[$key] = $key;
                         }
                     }
 
@@ -102,8 +102,8 @@ if (isset($action)) {
                         xarModAPIFUnc('products','admin','remove_category', array('category_id' => $categories[$i]['id']));
                     }
 
-                    reset($products_delete);
-                    while (list($key) = each($products_delete)) {
+                    reset($product_delete);
+                    while (list($key) = each($product_delete)) {
                         xtc_remove_product($key);
                     }
                 }
@@ -117,25 +117,25 @@ if (isset($action)) {
                 xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $cPath, 'pID' => $pID)));
                 break;
             case 'delete_product':
-                $data['product_categories'] = xarModAPIFunc('products','user','generate_category_path', array(
+                $data['products_categories'] = xarModAPIFunc('products','user','generate_category_path', array(
                                             'id' => $pID,
                                             'from' => 'product'));
                 break;
            case 'delete_product_confirm':
-                if(!xarVarFetch('product_categories', 'array',  $product_categories, NULL, XARVAR_DONT_SET)) {return;}
+                if(!xarVarFetch('products_categories', 'array',  $products_categories, NULL, XARVAR_DONT_SET)) {return;}
                 if (isset($pID)) {
-                    for ($i = 0, $n = sizeof($product_categories); $i < $n; $i++) {
-                        $q = new xenQuery('DELETE',$xartables['products_products_to_categories']);
-                        $q->eq('products_id',$pID);
-                        $q->eq('categories_id',$product_categories[$i]);
+                    for ($i = 0, $n = sizeof($products_categories); $i < $n; $i++) {
+                        $q = new xenQuery('DELETE',$xartables['products_product_to_categories']);
+                        $q->eq('product_id',$pID);
+                        $q->eq('categories_id',$products_categories[$i]);
                         $q->qecho();
                         if(!$q->run()) return;
                     }
-                    $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
-                    $q->eq('products_id',$pID);
+                    $q = new xenQuery('SELECT',$xartables['products_product_to_categories'],'count(*) AS total');
+                    $q->eq('product_id',$pID);
                     if(!$q->run()) return;
-                    $product_categories = $q->row();
-                    if ($product_categories['total'] == 0) {
+                    $products_categories = $q->row();
+                    if ($products_categories['total'] == 0) {
                         xarModAPIFunc('products','user','remove_product', array('pID' => $pID));
                     }
                 }
@@ -152,15 +152,15 @@ if (isset($action)) {
                 xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $move_to_category_id, 'cID' => $cID)));
                 break;
             case 'move_product_confirm':
-                $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
-                $q->eq('products_id',$pID);
+                $q = new xenQuery('SELECT',$xartables['products_product_to_categories'],'count(*) AS total');
+                $q->eq('product_id',$pID);
                 $q->eq('categories_id',$move_to_category_id);
                 if(!$q->run()) return;
                 $duplicate_check = $q->row();
                 if ($duplicate_check['total'] < 1) {
-                    $q = new xenQuery('UPDATE',$xartables['products_products_to_categories']);
+                    $q = new xenQuery('UPDATE',$xartables['products_product_to_categories']);
                     $q->addfield('categories_id',$move_to_category_id);
-                    $q->eq('products_id',$pID);
+                    $q->eq('product_id',$pID);
                     $q->eq('categories_id',$cPath);
                     if(!$q->run()) return;
                 }
@@ -169,16 +169,16 @@ if (isset($action)) {
                 break;
 /*            case 'insert_product':
             case 'update_product':
-                if(!xarVarFetch('products_price',    'float',  $products_price, NULL, XARVAR_DONT_SET)) {return;}
-                if(!xarVarFetch('products_date_available',    'str',  $products_date_available, NULL, XARVAR_DONT_SET)) {return;}
+                if(!xarVarFetch('product_price',    'float',  $product_price, NULL, XARVAR_DONT_SET)) {return;}
+                if(!xarVarFetch('product_date_available',    'str',  $product_date_available, NULL, XARVAR_DONT_SET)) {return;}
 
-                // START IN-SOLUTION Zurï¿½ckberechung des Nettopreises falls der Bruttopreis ï¿½bergeben wurde
-                if (PRICE_IS_BRUTTO=='true' && $products_price){
-                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '".$products_tax_class_id."' ");
+                // START IN-SOLUTION Zurückberechung des Nettopreises falls der Bruttopreis übergeben wurde
+                if (PRICE_IS_BRUTTO=='true' && $product_price){
+                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '".$product_tax_class_id."' ");
                     $q = new xenQuery();
                     if(!$q->run()) return;
                     $tax = $q->output();
-                    $products_price = ($products_price/($tax['tax_rate']+100)*100);
+                    $product_price = ($product_price/($tax['tax_rate']+100)*100);
                 }
                 // END IN-SOLUTION
 
@@ -188,35 +188,35 @@ if (isset($action)) {
                     $action = 'new_product';
                 }
                 else {
-                    $products_id = xtc_db_prepare_input($pID);
+                    $product_id = xtc_db_prepare_input($pID);
 
-                    $products_date_available = (date('Y-m-d') < $products_date_available) ? $products_date_available : 'null';
+                    $product_date_available = (date('Y-m-d') < $product_date_available) ? $product_date_available : 'null';
 
-                    if(!xarVarFetch('products_quantity',    'int',  $products_quantity, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('products_model',    'str',  $products_model, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('products_price',    'float',  $products_price, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('products_discount_allowed',    'int',  $products_discount_allowed, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('products_weight',    'float',  $products_weight, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('products_status',    'int',  $products_status, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_quantity',    'int',  $product_quantity, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_model',    'str',  $product_model, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_price',    'float',  $product_price, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_discount_allowed',    'int',  $product_discount_allowed, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_weight',    'float',  $product_weight, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('product_status',    'int',  $product_status, NULL, XARVAR_DONT_SET)) {return;}
                     if(!xarVarFetch('info_template',    'str',  $info_template, NULL, XARVAR_DONT_SET)) {return;}
                     if(!xarVarFetch('options_template',    'str',  $options_template, NULL, XARVAR_DONT_SET)) {return;}
                     if(!xarVarFetch('manufacturers_id',    'int',  $manufacturers_id, NULL, XARVAR_DONT_SET)) {return;}
-                    $q->addfield('products_quantity',xtc_db_prepare_input($products_quantity),
-                    $q->addfield('products_model',xtc_db_prepare_input($products_model),
-                    $q->addfield($q->addfield('products_price',xtc_db_prepare_input($products_price),
-                    $q->addfield('products_discount_allowed',xtc_db_prepare_input($products_discount_allowed),
-                    $q->addfield('products_date_available',$products_date_available,
-                    $q->addfield('products_weight',xtc_db_prepare_input($products_weight),
-                    $q->addfield('products_status',xtc_db_prepare_input($products_status),
-                    $q->addfield('products_tax_class_id',xtc_db_prepare_input($products_tax_class_id),
+                    $q->addfield('product_quantity',xtc_db_prepare_input($product_quantity),
+                    $q->addfield('product_model',xtc_db_prepare_input($product_model),
+                    $q->addfield($q->addfield('product_price',xtc_db_prepare_input($product_price),
+                    $q->addfield('product_discount_allowed',xtc_db_prepare_input($product_discount_allowed),
+                    $q->addfield('product_date_available',$product_date_available,
+                    $q->addfield('product_weight',xtc_db_prepare_input($product_weight),
+                    $q->addfield('product_status',xtc_db_prepare_input($product_status),
+                    $q->addfield('product_tax_class_id',xtc_db_prepare_input($product_tax_class_id),
                     $q->addfield('product_template',xtc_db_prepare_input($info_template),
                     $q->addfield('options_template',xtc_db_prepare_input($options_template),
                     $q->addfield('manufacturers_id',xtc_db_prepare_input($manufacturers_id));
 
 
-                    if ($products_image = new upload('products_image', DIR_FS_CATALOG_ORIGINAL_IMAGES, '777', '', true)) {
-                        $products_image_name = $products_image->filename;
-                        $q->addfield('products_image',xtc_db_prepare_input($products_image_name));
+                    if ($product_image = new upload('product_image', DIR_FS_CATALOG_ORIGINAL_IMAGES, '777', '', true)) {
+                        $product_image_name = $product_image->filename;
+                        $q->addfield('product_image',xtc_db_prepare_input($product_image_name));
 
                         require(DIR_WS_INCLUDES . 'product_thumbnail_images.php');
                         require(DIR_WS_INCLUDES . 'product_info_images.php');
@@ -224,26 +224,26 @@ if (isset($action)) {
 
                     }
                     else {
-                        if(!xarVarFetch('products_previous_image',    'str',  $products_previous_image, NULL, XARVAR_DONT_SET)) {return;}
-                        $products_image_name = $_POST['products_previous_image'];
+                        if(!xarVarFetch('product_previous_image',    'str',  $product_previous_image, NULL, XARVAR_DONT_SET)) {return;}
+                        $product_image_name = $_POST['product_previous_image'];
                     }
 
-                    if(!xarVarFetch('products_image',    'str',  $products_image, NULL, XARVAR_DONT_SET)) {return;}
-                    if (isset($products_image) && xarModAPIFunc('commerce','user','not_null',array('arg' => $products_image)) && ($products_image != 'none')) {
-                        $q->addfield('products_image',xtc_db_prepare_input($products_image));
+                    if(!xarVarFetch('product_image',    'str',  $product_image, NULL, XARVAR_DONT_SET)) {return;}
+                    if (isset($product_image) && xarModAPIFunc('commerce','user','not_null',array('arg' => $product_image)) && ($product_image != 'none')) {
+                        $q->addfield('product_image',xtc_db_prepare_input($product_image));
                     }
 
                     if ($action == 'insert_product') {
-                        $insert_sql_data = array('products_date_added' => 'now()');
+                        $insert_sql_data = array('product_date_added' => 'now()');
                         $sql_data_array = xtc_array_merge($sql_data_array, $insert_sql_data);
                         xtc_db_perform(TABLE_PRODUCTS, $sql_data_array);
-                        $products_id = xtc_db_insert_id();
-                        new xenQuery("insert into " . TABLE_PRODUCTS_TO_CATEGORIES . " (products_id, categories_id) values ('" . $products_id . "', '" . $current_category_id . "')");
+                        $product_id = xtc_db_insert_id();
+                        new xenQuery("insert into " . TABLE_product_TO_CATEGORIES . " (product_id, categories_id) values ('" . $product_id . "', '" . $current_category_id . "')");
                     }
                     elseif ($action == 'update_product') {
-                        $update_sql_data = array('products_last_modified' => 'now()');
+                        $update_sql_data = array('product_last_modified' => 'now()');
                         $sql_data_array = xtc_array_merge($sql_data_array, $update_sql_data);
-                        xtc_db_perform(TABLE_PRODUCTS, $sql_data_array, 'update', 'products_id = \'' . xtc_db_input($products_id) . '\'');
+                        xtc_db_perform(TABLE_PRODUCTS, $sql_data_array, 'update', 'product_id = \'' . xtc_db_input($product_id) . '\'');
                     }
 
                     $languages = xtc_get_languages();
@@ -260,12 +260,12 @@ if (isset($action)) {
                     }
                     for ($col = 0, $n = sizeof($group_data); $col < $n+1; $col++) {
                     if ($group_data[$col]['STATUS_ID'] != '') {
-                    $personal_price = xtc_db_prepare_input($_POST['products_price_' . $group_data[$col]['STATUS_ID']]);
+                    $personal_price = xtc_db_prepare_input($_POST['product_price_' . $group_data[$col]['STATUS_ID']]);
                     if ($personal_price == '' or $personal_price=='0.0000') {
                     $personal_price = '0.00';
                     } else {
                     if (PRICE_IS_BRUTTO=='true'){
-                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $products_tax_class_id . "' ");
+                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $product_tax_class_id . "' ");
                     $q = new xenQuery();
                     if(!$q->run()) return;
                     $tax = $q->output();
@@ -274,7 +274,7 @@ if (isset($action)) {
                     $personal_price=xtc_round($personal_price,PRICE_PRECISION);
                     }
 
-                    new xenQuery("UPDATE personal_offers_by_customers_status_" . $group_data[$col]['STATUS_ID'] . " SET personal_offer = '" . $personal_price . "' WHERE products_id = '" . $products_id . "' AND quantity = '1'");
+                    new xenQuery("UPDATE personal_offers_by_customers_status_" . $group_data[$col]['STATUS_ID'] . " SET personal_offer = '" . $personal_price . "' WHERE product_id = '" . $product_id . "' AND quantity = '1'");
                     }
                 }
                 // end
@@ -290,10 +290,10 @@ if (isset($action)) {
                 }
                 for ($col = 0, $n = sizeof($group_data); $col < $n+1; $col++) {
                     if ($group_data[$col]['STATUS_ID'] != '') {
-                        $quantity = xtc_db_prepare_input($_POST['products_quantity_staffel_' . $group_data[$col]['STATUS_ID']]);
-                        $staffelpreis = xtc_db_prepare_input($_POST['products_price_staffel_' . $group_data[$col]['STATUS_ID']]);
+                        $quantity = xtc_db_prepare_input($_POST['product_quantity_staffel_' . $group_data[$col]['STATUS_ID']]);
+                        $staffelpreis = xtc_db_prepare_input($_POST['product_price_staffel_' . $group_data[$col]['STATUS_ID']]);
                         if ($configuration['price_is_brutto'] == true){
-                            $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $_POST['products_tax_class_id'] . "' ");
+                            $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $_POST['product_tax_class_id'] . "' ");
                             $q = new xenQuery();
                             if(!$q->run()) return;
                             $tax = $q->output();
@@ -301,33 +301,33 @@ if (isset($action)) {
                         }
                         $staffelpreis=xtc_round($staffelpreis,PRICE_PRECISION);
                         if ($staffelpreis!='' && $quantity!='') {
-                            new xenQuery("INSERT INTO personal_offers_by_customers_status_" . $group_data[$col]['STATUS_ID'] . " (price_id, products_id, quantity, personal_offer) VALUES ('', '" . $products_id . "', '" . $quantity . "', '" . $staffelpreis . "')");
+                            new xenQuery("INSERT INTO personal_offers_by_customers_status_" . $group_data[$col]['STATUS_ID'] . " (price_id, product_id, quantity, personal_offer) VALUES ('', '" . $product_id . "', '" . $quantity . "', '" . $staffelpreis . "')");
                         }
                     }
                 }
                 for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
                     $language_id = $languages[$i]['id'];
-                    $q->addfield('products_name',xtc_db_prepare_input($_POST['products_name'][$language_id]));
-                    $q->addfield('products_description',xtc_db_prepare_input($_POST['products_description_'.$language_id]));
-                    $q->addfield('products_short_description',xtc_db_prepare_input($_POST['products_short_description_'.$language_id]));
-                    $q->addfield('products_url',xtc_db_prepare_input($_POST['products_url'][$language_id]));
-                    $q->addfield('products_meta_title',xtc_db_prepare_input($_POST['products_meta_title'][$language_id]));
-                    $q->addfield('products_meta_description',xtc_db_prepare_input($_POST['products_meta_description'][$language_id]));
-                    $q->addfield('products_meta_keywords',xtc_db_prepare_input($_POST['products_meta_keywords'][$language_id]));
+                    $q->addfield('product_name',xtc_db_prepare_input($_POST['product_name'][$language_id]));
+                    $q->addfield('product_description',xtc_db_prepare_input($_POST['product_description_'.$language_id]));
+                    $q->addfield('product_short_description',xtc_db_prepare_input($_POST['product_short_description_'.$language_id]));
+                    $q->addfield('product_url',xtc_db_prepare_input($_POST['product_url'][$language_id]));
+                    $q->addfield('product_meta_title',xtc_db_prepare_input($_POST['product_meta_title'][$language_id]));
+                    $q->addfield('product_meta_description',xtc_db_prepare_input($_POST['product_meta_description'][$language_id]));
+                    $q->addfield('product_meta_keywords',xtc_db_prepare_input($_POST['product_meta_keywords'][$language_id]));
 
                     if ($action == 'insert_product') {
-                    $insert_sql_data = array('products_id' => $products_id,
+                    $insert_sql_data = array('product_id' => $product_id,
                        'language_id' => $language_id);
                     $sql_data_array = xtc_array_merge($sql_data_array, $insert_sql_data);
 
-                    xtc_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array);
+                    xtc_db_perform(TABLE_product_DESCRIPTION, $sql_data_array);
                     }
                     elseif ($action == 'update_product') {
-                        xtc_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array, 'update', 'products_id = \'' . xtc_db_input($products_id) . '\' and language_id = \'' . $language_id . '\'');
+                        xtc_db_perform(TABLE_product_DESCRIPTION, $sql_data_array, 'update', 'product_id = \'' . xtc_db_input($product_id) . '\' and language_id = \'' . $language_id . '\'');
                     }
                 }
 
-                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath, 'pID' => $products_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $cPath, 'pID' => $product_id)));
                 }
                 break;
 */             case 'copy_to_confirm':
@@ -336,15 +336,15 @@ if (isset($action)) {
                 if (isset($pID) && isset($categories_id)) {
                     if ($copy_as == 'link') {
                         if ($categories_id != $cPath) {
-                            $q = new xenQuery('SELECT',$xartables['products_products_to_categories'],'count(*) AS total');
-                            $q->eq('products_id',$pID);
+                            $q = new xenQuery('SELECT',$xartables['product_product_to_categories'],'count(*) AS total');
+                            $q->eq('product_id',$pID);
                             $q->eq('categories_id',$categories_id);
                             if(!$q->run()) return;
                             $check = $q->row();
                             if ($check['total'] < 1) {
-                                $q = new xenQuery('INSERT',$xartables['products_products_to_categories']);
+                                $q = new xenQuery('INSERT',$xartables['product_product_to_categories']);
                                 $q->addfield('categories_id',$categories_id);
-                                $q->addfield('products_id',$pID);
+                                $q->addfield('product_id',$pID);
                                 if(!$q->run()) return;
                             }
                         }
@@ -353,70 +353,70 @@ if (isset($action)) {
                         }
                     }
                     elseif ($copy_as == 'duplicate') {
-                        $q = new xenQuery('SELECT',$xartables['products_products']);
-                        $q->addfields(array('products_quantity',
-                                            'products_model',
-                                            'products_image',
-                                            'products_price',
-                                            'products_discount_allowed',
-                                            'products_date_available',
-                                            'products_date_added',
-                                            'products_weight',
-                                            'products_status',
-                                            'products_tax_class_id',
+                        $q = new xenQuery('SELECT',$xartables['product_products']);
+                        $q->addfields(array('product_quantity',
+                                            'product_model',
+                                            'product_image',
+                                            'product_price',
+                                            'product_discount_allowed',
+                                            'product_date_available',
+                                            'product_date_added',
+                                            'product_weight',
+                                            'product_status',
+                                            'product_tax_class_id',
                                             'manufacturers_id'));
-                        $q->eq('products_id',$pID);
+                        $q->eq('product_id',$pID);
                         if(!$q->run()) return;
                         $product = $q->row();
 
-                        $q = new xenQuery('INSERT',$xartables['products_products']);
-                        $q->addfield('products_quantity',$product['products_quantity']);
-                        $q->addfield('products_model',$product['products_model']);
-                        $q->addfield('products_image',$product['products_image']);
-                        $q->addfield('products_price',$product['products_price']);
-                        $q->addfield('products_discount_allowed',$product['products_discount_allowed']);
-                        $q->addfield('products_date_added',mktime());
-                        $q->addfield('products_date_available',$product['products_date_available']);
-                        $q->addfield('products_weight',$product['products_weight']);
-                        $q->addfield('products_status',0);
-                        $q->addfield('products_tax_class_id',$product['products_tax_class_id']);
+                        $q = new xenQuery('INSERT',$xartables['product_products']);
+                        $q->addfield('product_quantity',$product['product_quantity']);
+                        $q->addfield('product_model',$product['product_model']);
+                        $q->addfield('product_image',$product['product_image']);
+                        $q->addfield('product_price',$product['product_price']);
+                        $q->addfield('product_discount_allowed',$product['product_discount_allowed']);
+                        $q->addfield('product_date_added',mktime());
+                        $q->addfield('product_date_available',$product['product_date_available']);
+                        $q->addfield('product_weight',$product['product_weight']);
+                        $q->addfield('product_status',0);
+                        $q->addfield('product_tax_class_id',$product['product_tax_class_id']);
                         $q->addfield('manufacturers_id',$product['manufacturers_id']);
                         if(!$q->run()) return;
 
-                        $dup_products_id = $q->lastid($xartables['products_products'],'products_id');
+                        $dup_product_id = $q->lastid($xartables['product_products'],'product_id');
 
-                        $q = new xenQuery('SELECT',$xartables['products_products_description']);
+                        $q = new xenQuery('SELECT',$xartables['product_product_description']);
                         $q->addfields(array('language_id',
-                                            'products_name',
-                                            'products_description',
-                                            'products_short_description',
-                                            'products_meta_title',
-                                            'products_meta_description',
-                                            'products_meta_keywords',
-                                            'products_url'));
-                        $q->eq('products_id',$pID);
+                                            'product_name',
+                                            'product_description',
+                                            'product_short_description',
+                                            'product_meta_title',
+                                            'product_meta_description',
+                                            'product_meta_keywords',
+                                            'product_url'));
+                        $q->eq('product_id',$pID);
                         if(!$q->run()) return;
                         foreach ($q->output() as $description) {
-                            $q = new xenQuery('INSERT',$xartables['products_products_description']);
-                            $q->addfield('products_id',$dup_products_id);
+                            $q = new xenQuery('INSERT',$xartables['product_product_description']);
+                            $q->addfield('product_id',$dup_product_id);
                             $q->addfield('language_id',$description['language_id']);
-                            $q->addfield('products_name',$description['products_name']);
-                            $q->addfield('products_description',$description['products_description']);
-                            $q->addfield('products_short_description',$description['products_short_description']);
-                            $q->addfield('products_meta_title',$description['products_meta_title']);
-                            $q->addfield('products_meta_description',$description['products_meta_description']);
-                            $q->addfield('products_meta_keywords',$description['products_meta_keywords']);
-                            $q->addfield('products_url',$description['products_url']);
-                            $q->addfield('products_viewed',0);
+                            $q->addfield('product_name',$description['product_name']);
+                            $q->addfield('product_description',$description['product_description']);
+                            $q->addfield('product_short_description',$description['product_short_description']);
+                            $q->addfield('product_meta_title',$description['product_meta_title']);
+                            $q->addfield('product_meta_description',$description['product_meta_description']);
+                            $q->addfield('product_meta_keywords',$description['product_meta_keywords']);
+                            $q->addfield('product_url',$description['product_url']);
+                            $q->addfield('product_viewed',0);
                             if(!$q->run()) return;
                         }
-                        $q = new xenQuery('INSERT',$xartables['products_products_to_categories']);
-                        $q->addfield('products_id',$dup_products_id);
+                        $q = new xenQuery('INSERT',$xartables['product_product_to_categories']);
+                        $q->addfield('product_id',$dup_product_id);
                         $q->addfield('categories_id',$categories_id);
                         if(!$q->run()) return;
                     }
                 }
-                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $categories_id, 'pID' => $dup_products_id)));
+                xarResponseRedirect(xarModURL('products','admin','categories', array('cPath' => $categories_id, 'pID' => $dup_product_id)));
                 break;
         }
     }
@@ -472,7 +472,7 @@ if (isset($action)) {
         $rows++;
         if ((!isset($cID) && !isset($pID)|| $cID == $items[$i]['categories_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
             $category_childs = array('childs_count' => xarModAPIFunc('products', 'user', 'childs_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
-            $category_products = array('products_count' => xarModAPIFunc('products', 'user', 'products_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
+            $category_products = array('product_count' => xarModAPIFunc('products', 'user', 'product_in_category_count', array('categories_id' => $items[$i]['categories_id'])));
             $cInfo_array = array_merge($items[$i], $category_childs, $category_products);
             $cInfo = new objectInfo($cInfo_array);
             $items[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page,'cID' => $cInfo->categories_id, 'action' => 'edit'));
@@ -484,28 +484,28 @@ if (isset($action)) {
     $data['categories_count'] = $limit;
 
     $q = new xenQuery('SELECT');
-    $q->addtable($xartables['products_products_description'],'pd');
-    $q->addtable($xartables['products_products'],'p');
-    $q->addtable($xartables['products_products_to_categories'],'p2c');
-    $q->addfields(array('p.products_tax_class_id',
-                        'p.products_id',
-                        'pd.products_name',
-                        'p.products_quantity AS quantity',
-                        'p.products_image',
-                        'p.products_price',
-                        'p.products_discount_allowed',
-                        'p.products_date_added',
-                        'p.products_last_modified',
-                        'p.products_date_available',
-                        'p.products_status',
+    $q->addtable($xartables['products_product_description'],'pd');
+    $q->addtable($xartables['products_product'],'p');
+    $q->addtable($xartables['products_product_to_categories'],'p2c');
+    $q->addfields(array('p.product_tax_class_id',
+                        'p.product_id',
+                        'pd.product_name',
+                        'p.product_quantity AS quantity',
+                        'p.product_image',
+                        'p.product_price',
+                        'p.product_discount_allowed',
+                        'p.product_date_added',
+                        'p.product_last_modified',
+                        'p.product_date_available',
+                        'p.product_status',
                         'p2c.categories_id'));
-    $q->join('p.products_id','pd.products_id');
-    $q->join('p.products_id','p2c.products_id');
+    $q->join('p.product_id','pd.product_id');
+    $q->join('p.product_id','p2c.product_id');
     $q->eq('pd.language_id',$currentlang['id']);
 //    $q->setorder('pd.sort_order');
-    $q->addorder('pd.products_name');
+    $q->addorder('pd.product_name');
     if ($search != '') {
-        $q->like('pd.products_name','%" . $search . "%');
+        $q->like('pd.product_name','%" . $search . "%');
     }
     else {
         $q->eq('p2c.categories_id',$cPath);
@@ -520,23 +520,23 @@ if (isset($action)) {
         // Get categories_id for product if search
         if (!empty($search)) $cPath=$items1['categories_id'];
 
-        if ((!isset($cID) && !isset($pID)|| $pID == $items1[$i]['products_id']) && !isset($pInfo) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
+        if ((!isset($cID) && !isset($pID)|| $pID == $items1[$i]['product_id']) && !isset($pInfo) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
             // find out the rating average from customer reviews
             $q = new xenQuery('SELECT',$xartables['commerce_reviews'],array('avg(reviews_rating) / 5 * 100 as average_rating'));
-            $q->eq('products_id',$items1[$i]['products_id']);
+            $q->eq('product_id',$items1[$i]['product_id']);
             if(!$q->run()) return;
             $row = $q->row();
             $items1[$i]['average_rating'] = $row['average_rating'];
             $pInfo = new objectInfo($items1[$i]);
 
-            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page,'pID' => $pInfo->products_id, 'action' => 'edit'));
+            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page,'pID' => $pInfo->product_id, 'action' => 'edit'));
         }
         else {
-            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page, 'pID' => $items1[$i]['products_id']));
+            $items1[$i]['url'] = xarModURL('products','admin','categories',array('page' => $page, 'pID' => $items1[$i]['product_id']));
         }
-        $items1[$i]['check_stock'] = xarModAPIFunc('products','user','get_products_stock', array('products_id' => $items1[$i]['products_id'])) - $items1[$i]['quantity'];
+        $items1[$i]['check_stock'] = xarModAPIFunc('products','user','get_product_stock', array('product_id' => $items1[$i]['product_id'])) - $items1[$i]['quantity'];
     }
-    $data['products_count'] = $limit;
+    $data['product_count'] = $limit;
 
 //    <div id="spiffycalendar" class="text"></div>
 
@@ -576,14 +576,17 @@ if (isset($action)) {
             'cPath' => $cPath,
             'cID' => $cID)));
     //----- new_category_preview (active when ALLOW_CATEGORY_DESCRIPTIONS is 'true') -----
-    } elseif ($action == 'new_category_preview') {
+    }
+    elseif ($action == 'new_category_preview') {
     // removed
-    } elseif ($action == 'new_product') {
+    }
+    elseif ($action == 'new_product') {
         xarResponseRedirect(xarModURL('products','admin','product_screen', array('cPath' => $data['cPath'])));
-    } elseif ($action == 'new_product_preview') {
+    }
+    elseif ($action == 'new_product_preview') {
     // preview removed
-    } else {
-        // from view to screen
+    }
+    else {
         return xarTplModule('products','admin', 'categories_view',$data);
     }
 }
@@ -591,18 +594,18 @@ if (isset($action)) {
 
 
         <xar:comment>                     // START IN-SOLUTION Berechung des Bruttopreises</xar:comment>
-                $price=$pInfo.products_price;
+                $price=$pInfo.product_price;
                 $price=xtc_round($price,PRICE_PRECISION);
-                $price_string=TEXT_PRODUCTS_PRICE_INFO . ' ' . $currencies->format($price);
+                $price_string=TEXT_product_PRICE_INFO . ' ' . $currencies->format($price);
                 if (PRICE_IS_BRUTTO=='true' && ($_GET['read'] == 'only' || $_GET['action'] != 'new_product_preview') ){
                     $price_netto=xtc_round($price,PRICE_PRECISION);
-                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo.products_tax_class_id . "' ");
+                    $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo.product_tax_class_id . "' ");
           $q = new xenQuery();
           if(!$q->run()) return;
                     $tax = $q->output();
                     $price= ($price*($tax[tax_rate]+100)/100);
 
-                    $price_string=TEXT_PRODUCTS_PRICE_INFO . ' ' . $currencies->format($price) . ' - ' . TXT_NETTO . $currencies->format($price_netto);
+                    $price_string=TEXT_product_PRICE_INFO . ' ' . $currencies->format($price) . ' - ' . TXT_NETTO . $currencies->format($price_netto);
 
               }
 
@@ -611,10 +614,10 @@ if (isset($action)) {
                 #$price_string#
                 <br />
                 <xar:mlstring>Max. allowed Discount</xar:mlstring>:
-                #$pInfo.products_discount_allowed#
+                #$pInfo.product_discount_allowed#
                 <br />
                 <xar:mlstring>Quantity</xar:mlstring>:
-                #$pInfo.products_quantity#
+                #$pInfo.product_quantity#
     <xar:comment> END IN-SOLUTION</xar:comment>
 */
 ?>

@@ -26,13 +26,13 @@ function products_admin_manufacturers()
                 // Write to the manufacturers table
                 if(!xarVarFetch('manufacturers_name','str',$manufacturers_name)) {return;}
                 $q = new xenQuery('INSERT');
-                $q->settable($xartables['products_manufacturers']);
+                $q->settable($xartables['product_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
                 $q->addfield('date_added',mktime());
                 if(!$q->run()) return;
-                $lastID = $q->lastid($xartables['products_manufacturers'], 'manufacturers_id');
+                $lastID = $q->lastid($xartables['product_manufacturers'], 'manufacturers_id');
 
-                $q->settable($xartables['products_manufacturers_info']);
+                $q->settable($xartables['product_manufacturers_info']);
                 $q->clearfields();
                 // Write to the manufacturers info table
                 if(!xarVarFetch('manufacturers_url','array',$manufacturers_url_array)) {return;}
@@ -49,13 +49,13 @@ function products_admin_manufacturers()
             case 'save':
                 // Write to the manufacturers table
                 if(!xarVarFetch('manufacturers_name','str',$manufacturers_name)) {return;}
-                $q = new xenQuery('UPDATE', $xartables['products_manufacturers']);
+                $q = new xenQuery('UPDATE', $xartables['product_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
                 $q->addfield('last_modified',mktime());
                 $q->eq('manufacturers_id',$cID);
                 if(!$q->run()) return;
 
-                $q->settable($xartables['products_manufacturers_info']);
+                $q->settable($xartables['product_manufacturers_info']);
                 $q->clearfields();
                 // Write to the manufacturers info table
                 if(!xarVarFetch('manufacturers_url','array',$manufacturers_url_array)) {return;}
@@ -71,30 +71,30 @@ function products_admin_manufacturers()
             case 'deleteconfirm':
                 if(!xarVarFetch('delete_image','str',$delete_image)) {return;}
                 if ($delete_image == 'on') {
-                    $q = new xenQuery('SELECT', $xartables['products_manufacturers'],array('manufacturers_image'));
+                    $q = new xenQuery('SELECT', $xartables['product_manufacturers'],array('manufacturers_image'));
                     $q->eq('manufacturers_id',$cID);
                     if(!$q->run()) return;
                     $manufacturer = $q->row();
                     $image_location = 'modules/products/xarimages/' . $manufacturer['manufacturers_image'];
                     if (file_exists($image_location)) @unlink($image_location);
                 }
-                $q = new xenQuery('DELETE', $xartables['products_manufacturers']);
+                $q = new xenQuery('DELETE', $xartables['product_manufacturers']);
                 $q->eq('manufacturers_id',$cID);
                 if(!$q->run()) return;
-                $q = new xenQuery('DELETE', $xartables['products_manufacturers_info']);
+                $q = new xenQuery('DELETE', $xartables['product_manufacturers_info']);
                 $q->eq('manufacturers_id',$cID);
                 if(!$q->run()) return;
                 if(!xarVarFetch('delete_products','str',$delete_products)) {return;}
                 if ($delete_products == 'on') {
-                    $q = new xenQuery('SELECT', $xartables['products_products']);
+                    $q = new xenQuery('SELECT', $xartables['product_products']);
                     $q->eq('manufacturers_id',$cID);
                     if(!$q->run()) return;
                     foreach ($q->output() as $product) {
-                      xarModAPIFunc('products','admin','remove_product',array('id' =>$products['products_id']));
+                      xarModAPIFunc('products','admin','remove_product',array('id' =>$products['product_id']));
                     }
                 }
                 else {
-                    $q = new xenQuery('UPDATE', $xartables['products_products']);
+                    $q = new xenQuery('UPDATE', $xartables['product_products']);
                     $q->addfield('manufacturers_id','');
                     $q->eq('manufacturers_id',$cID);
                     if(!$q->run()) return;
@@ -109,8 +109,8 @@ function products_admin_manufacturers()
     $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
 
     $q = new xenQuery('SELECT');
-    $q->addtable($xartables['products_manufacturers'], 'm');
-    $q->addtable($xartables['products_manufacturers_info'], 'mi');
+    $q->addtable($xartables['product_manufacturers'], 'm');
+    $q->addtable($xartables['product_manufacturers_info'], 'mi');
     $q->addfields(array('m.manufacturers_id', 'm.manufacturers_name', 'm.manufacturers_image', 'm.date_added', 'm.last_modified'));
     $q->join('mi.manufacturers_id','m.manufacturers_id');
     $q->eq('mi.languages_id',$currentlang['id']);
@@ -131,8 +131,8 @@ function products_admin_manufacturers()
     $limit = count($items);
     for ($i=0;$i<$limit;$i++) {
         if ((!isset($cID) || $cID == $items[$i]['manufacturers_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
-            $q = new xenQuery('SELECT',$xartables['products_products']);
-            $q->addfields('count(*) as products_count');
+            $q = new xenQuery('SELECT',$xartables['product_products']);
+            $q->addfields('count(*) as product_count');
             $q->eq('manufacturers_id',$items[$i]['manufacturers_id']);
             if(!$q->run()) return;
             $manufacturer_products = $q->row();

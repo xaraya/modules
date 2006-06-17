@@ -34,6 +34,6 @@
   $optionTypeTextInstalled = '0';
 
   // If you have Option Type Feature v-1.4 by Chandra Roukema installed - set this to your
-  // PRODUCTS_OPTIONS_VALUE_TEXT_ID value ( usually "0" )
+  // product_OPTIONS_VALUE_TEXT_ID value ( usually "0" )
   $optionTypeTextInstalledID = '0';
 ?>

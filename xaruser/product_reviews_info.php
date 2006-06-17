@@ -20,7 +20,7 @@
   $get_params = xtc_get_all_get_params(array('reviews_id'));
   $get_params = substr($get_params, 0, -1); //remove trailing &
 
-  $reviews_query = new xenQuery("select rd.reviews_text, r.reviews_rating, r.reviews_id, r.products_id, r.customers_name, r.date_added, r.last_modified, r.reviews_read, p.products_id, pd.products_name, p.products_image from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd left join " . TABLE_PRODUCTS . " p on (r.products_id = p.products_id) left join " . TABLE_PRODUCTS_DESCRIPTION . " pd on (p.products_id = pd.products_id and pd.language_id = '". $_SESSION['languages_id'] . "') where r.reviews_id = '" . (int)$_GET['reviews_id'] . "' and r.reviews_id = rd.reviews_id and p.products_status = '1'");
+  $reviews_query = new xenQuery("select rd.reviews_text, r.reviews_rating, r.reviews_id, r.product_id, r.customers_name, r.date_added, r.last_modified, r.reviews_read, p.product_id, pd.product_name, p.product_image from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd left join " . TABLE_PRODUCTS . " p on (r.product_id = p.product_id) left join " . TABLE_product_DESCRIPTION . " pd on (p.product_id = pd.product_id and pd.language_id = '". $_SESSION['languages_id'] . "') where r.reviews_id = '" . (int)$_GET['reviews_id'] . "' and r.reviews_id = rd.reviews_id and p.product_status = '1'");
   if (!$reviews_query->getrows()) xarRedirectResponse(xarModURL('commerce','user','reviews'));
       $q = new xenQuery();
       if(!$q->run()) return;
@@ -36,21 +36,21 @@
 
  require(DIR_WS_INCLUDES . 'header.php');
 
- $data['PRODUCTS_NAME'] = $reviews['products_name'];
+ $data['product_NAME'] = $reviews['product_name'];
  $data['AUTHOR'] = $reviews['customers_name'];
  $data['DATE'] = xarModAPIFunc('commerce','user','date_long',array('raw_date' =>$reviews['date_added']));
  $data['REVIEWS_TEXT'] = nl2br($reviews_text);
  $data['RATING'] = xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'stars_' . $reviews['reviews_rating'] . '.gif'), sprintf(TEXT_OF_5_STARS, $reviews['reviews_rating']));
- $data['PRODUCTS_LINK'] = xarModURL('commerce','user','product_info', 'products_id=' . $reviews['products_id']);
+ $data['product_LINK'] = xarModURL('commerce','user','product_info', 'product_id=' . $reviews['product_id']);
  $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user','product_reviews', $get_params) . '">' .
  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
         'alt' => IMAGE_BUTTON_BACK);
 . '</a>';
- $data['BUTTON_BUY_NOW'] = '<a href="' . xarModURL('commerce','user','default', 'action=buy_now&products_id=' . $reviews['products_id']) . '">' .
+ $data['BUTTON_BUY_NOW'] = '<a href="' . xarModURL('commerce','user','default', 'action=buy_now&product_id=' . $reviews['product_id']) . '">' .
  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_in_cart.gif'),
          'alt' => IMAGE_BUTTON_IN_CART);
 
- $data['IMAGE'] = '<a href="javascript:popupImageWindow(\''. xarModURL('commerce','user',(FILENAME_POPUP_IMAGE, 'pID=' . $reviews['products_id']).'\')">'. xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $reviews['products_image']), $reviews['products_name'], PRODUCT_IMAGE_THUMBNAIL_WIDTH, PRODUCT_IMAGE_THUMBNAIL_HEIGHT, 'align="center" hspace="5" vspace="5"').'<br></a>';
+ $data['IMAGE'] = '<a href="javascript:popupImageWindow(\''. xarModURL('commerce','user',(FILENAME_POPUP_IMAGE, 'pID=' . $reviews['product_id']).'\')">'. xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $reviews['product_image']), $reviews['product_name'], PRODUCT_IMAGE_THUMBNAIL_WIDTH, PRODUCT_IMAGE_THUMBNAIL_HEIGHT, 'align="center" hspace="5" vspace="5"').'<br></a>';
 
   $data['language'] = $_SESSION['language'];
 

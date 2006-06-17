@@ -231,13 +231,13 @@ function products_admin_categories_screen()
     }
     $data['cInfo'] = $cInfo;
 
-    $data['order_array'] = array(array('id' => 'p.products_price','text' => xarML('Price')),
-                       array('id' => 'pd.products_name','text' => xarML('Product Name')),
-                       array('id' => 'p.products_ordered','text' => xarML('Products Ordered')),
-                       array('id' => 'p.products_sort','text' => xarML('Sorting')),
-                       array('id' => 'p.products_weight','text' => xarML('Weight')),
-                       array('id' => 'p.products_quantity','text' => xarML('On Stock')));
-    $data['order_value'] = 'pd.products_name';
+    $data['order_array'] = array(array('id' => 'p.product_price','text' => xarML('Price')),
+                       array('id' => 'pd.product_name','text' => xarML('Product Name')),
+                       array('id' => 'p.product_ordered','text' => xarML('Products Ordered')),
+                       array('id' => 'p.product_sort','text' => xarML('Sorting')),
+                       array('id' => 'p.product_weight','text' => xarML('Weight')),
+                       array('id' => 'p.product_quantity','text' => xarML('On Stock')));
+    $data['order_value'] = 'pd.product_name';
     $data['sort_array'] = array(array('id' => 'ASC','text' => xarML('ASC (1 first)')),
                        array('id' => 'DESC','text' => xarML('DESC (1 last)')));
     return $data;

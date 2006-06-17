@@ -38,7 +38,7 @@ function commerce_user_default()
     //Check where we are in the category tree
     $category_depth = 'top';
     if (isset($cPath)) {
-        $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories']);
+        $q = new xenQuery('SELECT',$xartables['commerce_product_to_categories']);
         $q->addfield('count(*) AS total');
         $q->eq('categories_id',$current_category_id);
         if(!$q->run()) return;
@@ -173,7 +173,7 @@ function commerce_user_default()
             $fsk_lock='';
 /*
             if ($_SESSION['customers_status']['customers_fsk18_display']=='0') {
-                $fsk_lock=' and p.products_fsk18!=1';
+                $fsk_lock=' and p.product_fsk18!=1';
             }
 */
             // show the products of a specified manufacturer
@@ -183,15 +183,15 @@ function commerce_user_default()
                 // sorting query
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['commerce_categories'],'c');
-                    $q->addfields(array('products_sorting',
-                                        'products_sorting2'));
+                    $q->addfields(array('product_sorting',
+                                        'product_sorting2'));
                     $q->eq('categories_id', $filter_id);
                     if (!$q->run()) return;
                     $sorting_data = $q->row();
-                    if (!isset($sorting_data['products_sorting']))
-                        $sorting_data['products_sorting']='pd.products_name';
-                    $q->addorder($sorting_data['products_sorting']);
-                    $q->addorder($sorting_data['products_sorting2']);
+                    if (!isset($sorting_data['product_sorting']))
+                        $sorting_data['product_sorting']='pd.product_name';
+                    $q->addorder($sorting_data['product_sorting']);
+                    $q->addorder($sorting_data['product_sorting2']);
                 // We are asked to show only a specific category
         //          if ($configuration['group_check'] == 'true') {
         //           $group_check="and p.group_ids LIKE '%c_".$_SESSION['customers_status']['customers_status_id']."_group%'";
@@ -221,33 +221,33 @@ function commerce_user_default()
                     $q = new xenQuery('SELECT');
                     $q->setdistinct('DISTINCT');
                     $q->addtable($xartables['commerce_products'],'p');
-                    $q->addtable($xartables['commerce_products_description'],'pd');
+                    $q->addtable($xartables['commerce_product_description'],'pd');
                     $q->addtable($xartables['commerce_manufacturers'],'m');
-                    $q->addtable($xartables['commerce_products_to_categories'],'p2c');
+                    $q->addtable($xartables['commerce_product_to_categories'],'p2c');
                     $q->addtable($xartables['commerce_specials'],'s');
-                    $q->leftjoin('p.products_id', 's.products_id');
+                    $q->leftjoin('p.product_id', 's.product_id');
                     $q->join('p.manufacturers_id', 'm.manufacturers_id');
-                    $q->join('p.products_id', 'pd.products_id');
-                    $q->join('pd.products_id', 'p2c.products_id');
-                    $q->eq('p.products_status', 1);
+                    $q->join('p.product_id', 'pd.product_id');
+                    $q->join('pd.product_id', 'p2c.product_id');
+                    $q->eq('p.product_status', 1);
                     $q->eq('m.manufacturers_id', $m.manufacturers_id);
                     $q->eq('pd.language_id', $currentlang['id']);
                     $q->eq('p2c.categories_id', $filter_id);
-                    $q->addfields(array('p.products_fsk18',
-                                       'p.products_shippingtime',
-                                       'p.products_model',
-                                       'pd.products_name',
+                    $q->addfields(array('p.product_fsk18',
+                                       'p.product_shippingtime',
+                                       'p.product_model',
+                                       'pd.product_name',
                                        'm.manufacturers_name',
-                                       'p.products_quantity',
-                                       'p.products_image',
-                                       'p.products_weight',
-                                       'pd.products_short_description',
-                                       'pd.products_description',
-                                       'p.products_id',
+                                       'p.product_quantity',
+                                       'p.product_image',
+                                       'p.product_weight',
+                                       'pd.product_short_description',
+                                       'pd.product_description',
+                                       'p.product_id',
                                        'p.manufacturers_id',
-                                       'p.products_price',
-                                       'p.products_discount_allowed',
-                                       'p.products_tax_class_id'
+                                       'p.product_price',
+                                       'p.product_discount_allowed',
+                                       'p.product_tax_class_id'
                                 ));
                     //add the sorting here
                                        //".$group_check."
@@ -260,31 +260,31 @@ function commerce_user_default()
         //          }
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['commerce_products'],'p');
-                    $q->addtable($xartables['commerce_products_description'],'pd');
+                    $q->addtable($xartables['commerce_product_description'],'pd');
                     $q->addtable($xartables['commerce_manufacturers'],'m');
                     $q->addtable($xartables['commerce_specials'],'s');
-                    $q->leftjoin('p.products_id', 's.products_id');
+                    $q->leftjoin('p.product_id', 's.product_id');
                     $q->join('p.manufacturers_id', 'm.manufacturers_id');
-                    $q->join('p.products_id', 'pd.products_id');
-                    $q->eq('p.products_status', 1);
+                    $q->join('p.product_id', 'pd.product_id');
+                    $q->eq('p.product_status', 1);
                     $q->eq('m.manufacturers_id', $m.manufacturers_id);
                     $q->eq('pd.language_id', $currentlang['id']);
                     $q->eq('p2c.categories_id', $filter_id);
-                    $q->addfields(array('p.products_fsk18',
-                                       'p.products_shippingtime',
-                                       'p.products_model',
-                                       'pd.products_name',
+                    $q->addfields(array('p.product_fsk18',
+                                       'p.product_shippingtime',
+                                       'p.product_model',
+                                       'pd.product_name',
                                        'm.manufacturers_name',
-                                       'p.products_quantity',
-                                       'p.products_image',
-                                       'p.products_weight',
-                                       'pd.products_short_description',
-                                       'pd.products_description',
-                                       'p.products_id',
+                                       'p.product_quantity',
+                                       'p.product_image',
+                                       'p.product_weight',
+                                       'pd.product_short_description',
+                                       'pd.product_description',
+                                       'p.product_id',
                                        'p.manufacturers_id',
-                                       'p.products_price',
-                                       'p.products_discount_allowed',
-                                       'p.products_tax_class_id'
+                                       'p.product_price',
+                                       'p.product_discount_allowed',
+                                       'p.product_tax_class_id'
                                 ));
                     //add the sorting here
                                        //".$group_check."
@@ -298,45 +298,45 @@ function commerce_user_default()
                 // sorting query
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['commerce_categories'],'c');
-                    $q->addfields(array('products_sorting',
-                                        'products_sorting2'));
+                    $q->addfields(array('product_sorting',
+                                        'product_sorting2'));
                     $q->eq('categories_id', $current_category_id);
                     if (!$q->run()) return;
                     $sorting_data = $q->row();
-                    if (!isset($sorting_data['products_sorting']))
-                        $sorting_data['products_sorting']='pd.products_name';
-                    $q->addorder($sorting_data['products_sorting']);
-                    $q->addorder($sorting_data['products_sorting2']);
+                    if (!isset($sorting_data['product_sorting']))
+                        $sorting_data['product_sorting']='pd.product_name';
+                    $q->addorder($sorting_data['product_sorting']);
+                    $q->addorder($sorting_data['product_sorting2']);
 
                     //          if ($configuration['group_check'] == 'true') {
                     //           $group_check="and p.group_ids LIKE '%c_".$_SESSION['customers_status']['customers_status_id']."_group%'";
                     //           }
 
-                $listing_sql = "select p.products_fsk18,
-                                       p.products_shippingtime,
-                                       p.products_model,
-                                       pd.products_name,
+                $listing_sql = "select p.product_fsk18,
+                                       p.product_shippingtime,
+                                       p.product_model,
+                                       pd.product_name,
                                        m.manufacturers_name,
-                                       p.products_quantity,
-                                       p.products_image,
-                                       p.products_weight,
-                                       pd.products_short_description,
-                                       pd.products_description,
-                                       p.products_id,
+                                       p.product_quantity,
+                                       p.product_image,
+                                       p.product_weight,
+                                       pd.product_short_description,
+                                       pd.product_description,
+                                       p.product_id,
                                        p.manufacturers_id,
-                                       p.products_price,
-                                       p.products_discount_allowed,
-                                       p.products_tax_class_id
+                                       p.product_price,
+                                       p.product_discount_allowed,
+                                       p.product_tax_class_id
                                        from " . TABLE_PRODUCTS . " p, " .
-                                       TABLE_PRODUCTS_DESCRIPTION . " pd, " .
+                                       TABLE_product_DESCRIPTION . " pd, " .
                                        TABLE_MANUFACTURERS . " m, " .
-                                       TABLE_PRODUCTS_TO_CATEGORIES . " p2c left join " .
-                                       TABLE_SPECIALS . " s on p.products_id = s.products_id
-                                       where p.products_status = '1'
+                                       TABLE_product_TO_CATEGORIES . " p2c left join " .
+                                       TABLE_SPECIALS . " s on p.product_id = s.product_id
+                                       where p.product_status = '1'
                                        and p.manufacturers_id = m.manufacturers_id
                                        and m.manufacturers_id = '" . (int)$_GET['filter_id'] . "'
-                                       and p.products_id = p2c.products_id
-                                       and pd.products_id = p2c.products_id
+                                       and p.product_id = p2c.product_id
+                                       and pd.product_id = p2c.product_id
                                        ".$group_check."
                                        and pd.language_id = '" . (int)$_SESSION['languages_id'] . "' ".$fsk_lock."
                                        and p2c.categories_id = '" . $current_category_id . "'".$sorting;
@@ -345,15 +345,15 @@ function commerce_user_default()
                 // sorting query
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['commerce_categories'],'c');
-                    $q->addfields(array('products_sorting',
-                                        'products_sorting2'));
+                    $q->addfields(array('product_sorting',
+                                        'product_sorting2'));
                     $q->eq('categories_id', $current_category_id);
                     if (!$q->run()) return;
                     $sorting_data = $q->row();
-                    if (!isset($sorting_data['products_sorting']))
-                        $sorting_data['products_sorting']='pd.products_name';
-                    $q->addorder($sorting_data['products_sorting']);
-                    $q->addorder($sorting_data['products_sorting2']);
+                    if (!isset($sorting_data['product_sorting']))
+                        $sorting_data['product_sorting']='pd.product_name';
+                    $q->addorder($sorting_data['product_sorting']);
+                    $q->addorder($sorting_data['product_sorting2']);
 
                     // We show them all
                     //          if ($configuration['group_check'] == 'true') {
@@ -362,33 +362,33 @@ function commerce_user_default()
 
 
                     $q = new xenQuery('SELECT');
-                    $q->addtable($xartables['commerce_products_description'],'pd');
+                    $q->addtable($xartables['commerce_product_description'],'pd');
                     $q->addtable($xartables['commerce_products'],'p');
                     $q->addtable($xartables['commerce_manufacturers'],'m');
-                    $q->addtable($xartables['commerce_products_to_categories'],'p2c');
+                    $q->addtable($xartables['commerce_product_to_categories'],'p2c');
                     $q->addtable($xartables['commerce_specials'],'s');
                     $q->leftjoin('p.manufacturers_id', 'm.manufacturers_id');
-                    $q->leftjoin('p.products_id', 's.products_id');
-                    $q->join('p.products_id', 'p2c.products_id');
-                    $q->join('pd.products_id', 'p2c.products_id');
-                    $q->eq('p.products_status', 1);
+                    $q->leftjoin('p.product_id', 's.product_id');
+                    $q->join('p.product_id', 'p2c.product_id');
+                    $q->join('pd.product_id', 'p2c.product_id');
+                    $q->eq('p.product_status', 1);
                     $q->eq('pd.language_id', (int)$currentlang['id']);
                     $q->eq('p2c.categories_id', (int)$current_category_id);
-                    $q->addfields(array('p.products_fsk18',
-                                       'p.products_shippingtime',
-                                       'p.products_model',
-                                       'pd.products_name',
+                    $q->addfields(array('p.product_fsk18',
+                                       'p.product_shippingtime',
+                                       'p.product_model',
+                                       'pd.product_name',
                                        'm.manufacturers_name',
-                                       'p.products_quantity',
-                                       'p.products_image',
-                                       'p.products_weight',
-                                       'pd.products_short_description',
-                                       'pd.products_description',
-                                       'p.products_id',
+                                       'p.product_quantity',
+                                       'p.product_image',
+                                       'p.product_weight',
+                                       'pd.product_short_description',
+                                       'pd.product_description',
+                                       'p.product_id',
                                        'p.manufacturers_id',
-                                       'p.products_price',
-                                       'p.products_discount_allowed',
-                                       'p.products_tax_class_id'
+                                       'p.product_price',
+                                       'p.product_discount_allowed',
+                                       'p.product_tax_class_id'
                                 ));
 //need to add fsk18 and sorting
                 }
@@ -398,13 +398,13 @@ function commerce_user_default()
                 if ($manufacturers_id != 0) {
                     $q = new xenQuery('SELECT DISTINCT');
                     $q->addtable($xartables['commerce_products'],'p');
-                    $q->addtable($xartables['commerce_products_to_categories'],'p2c');
+                    $q->addtable($xartables['commerce_product_to_categories'],'p2c');
                     $q->addtable($xartables['categories'],'xc');
                     $q->addtable($xartables['commerce_categories_description'],'cd');
-                    $q->join('p.products_id', 'p2c.products_id');
+                    $q->join('p.product_id', 'p2c.product_id');
                     $q->join('p2c.categories_id', 'xc.xar_id');
                     $q->join('p2c.categories_id', 'cd.categories_id');
-                    $q->eq('p.products_status', 1);
+                    $q->eq('p.product_status', 1);
                     $q->eq('pd.language_id', (int)$currentlang['id']);
                     $q->eq('p.manufacturers_id', $manufacturers_id);
                     $q->setorder('cd.categories_name');
@@ -415,10 +415,10 @@ function commerce_user_default()
                     $q = new xenQuery('SELECT');
                     $q->setdistinct();
                     $q->addtable($xartables['commerce_products'],'p');
-                    $q->addtable($xartables['commerce_products_to_categories'],'p2c');
+                    $q->addtable($xartables['commerce_product_to_categories'],'p2c');
                     $q->addtable($xartables['commerce_manufacturers'],'m');
                     $q->join('p.manufacturers_id', 'm.manufacturers_id');
-                    $q->join('p.products_id', 'p2c.products_id');
+                    $q->join('p.product_id', 'p2c.product_id');
                     $q->eq('p2c.categories_id', $current_category_id);
                     $q->addfields(array('m.manufacturers_id AS id',
                                        'm.manufacturers_name AS name',

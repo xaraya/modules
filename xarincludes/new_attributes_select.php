@@ -34,7 +34,7 @@ $adminImages = $language ."/admin/images/buttons/";
   echo "<TR>";
   echo "<TD class=\"main\"><SELECT NAME=\"current_product_id\">";
 
-  $query = "SELECT * FROM products_description where products_id LIKE '%' AND language_id = '" . $_SESSION['languages_id'] . "' ORDER BY products_name ASC";
+  $query = "SELECT * FROM product_description where product_id LIKE '%' AND language_id = '" . $_SESSION['languages_id'] . "' ORDER BY product_name ASC";
 
   $result = mysql_query($query) or die(mysql_error());
 
@@ -42,8 +42,8 @@ $adminImages = $language ."/admin/images/buttons/";
 
   if ($matches) {
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-      $title = $line['products_name'];
-      $current_product_id = $line['products_id'];
+      $title = $line['product_name'];
+      $current_product_id = $line['product_id'];
 
       echo "<OPTION VALUE=\"" . $current_product_id . "\">" . $title;
     }
@@ -70,13 +70,13 @@ $adminImages = $language ."/admin/images/buttons/";
   echo "<TR>";
   echo "<TD class=\"main\"><SELECT NAME=\"copy_product_id\">";
 
-  $copy_query = mysql_query("SELECT pd.products_name, pd.products_id FROM products_description pd, products_attributes pa where pa.products_id = pd.products_id AND pd.products_id LIKE '%' AND pd.language_id = '" . $_SESSION['languages_id'] . "' GROUP BY pd.products_id ORDER BY pd.products_name ASC");
+  $copy_query = mysql_query("SELECT pd.product_name, pd.product_id FROM product_description pd, product_attributes pa where pa.product_id = pd.product_id AND pd.product_id LIKE '%' AND pd.language_id = '" . $_SESSION['languages_id'] . "' GROUP BY pd.product_id ORDER BY pd.product_name ASC");
   $copy_count = mysql_num_rows($copy_query);
 
   if ($copy_count) {
       echo '<option value="0">no copy</option>';
       while ($copy_res = mysql_fetch_array($copy_query, MYSQL_ASSOC)) {
-          echo '<option value="' . $copy_res['products_id'] . '">' . $copy_res['products_name'] . '</option>';
+          echo '<option value="' . $copy_res['product_id'] . '">' . $copy_res['product_name'] . '</option>';
       }
   }
   else {

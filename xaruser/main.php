@@ -1,24 +1,39 @@
 <?php
 /**
- * Main user function
+ * Admin interface for the products module
  *
- * @package modules 
- * @copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
- * @link http://www.xaraya.com
- *
- * @subpackage products
- * @author Marc Lutolf
- */
+ * @package Commerce
+ * @subpackage Products Module
+ * @author Marc Lutolf (mfl@netspan.ch)
+ *  -----------------------------------------------------------------------------------------
+ *  based on:
+ *  (c) 2003 XT-Commerce
+ *  (c) 2003  nextcommerce (product_reviews_info.php,v 1.12 2003/08/17); www.nextcommerce.org
+ *  (c) 2002-2003 osCommerce(product_reviews_info.php,v 1.47 2003/02/13); www.oscommerce.com
+ *  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
+*/
+
 /**
  * the main user function
- *
- * This function is the default function, and is called whenever the module is
- * initiated without defining arguments.  Function decides if user is logged in
- * and returns user to correct location.
- *
  */
-function commerce_user_main()
+function products_user_main()
 {
-    return array();
+    if(!xarSecurityCheck('EditProducts')) return;
+
+    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main User Menu',
+                    'commerce'));
+
+    if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
+
+    if (xarModGetVar('adminpanels', 'overview') == 0) {
+        return array();
+    }
+    else {
+        switch(strtolower($branch)) {
+            case 'start':
+                xarResponseRedirect(xarModURL('products', 'user', 'start'));
+                break;
+        }
+   }
 }
 ?>

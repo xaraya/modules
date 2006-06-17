@@ -26,7 +26,7 @@
     $get_params_back = $get_params;
   }
 
-  $product_info_query = new xenQuery("select pd.products_name from " . TABLE_PRODUCTS_DESCRIPTION . " pd left join " . TABLE_PRODUCTS . " p on pd.products_id = p.products_id where pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_status = '1' and pd.products_id = '" . (int)$_GET['products_id'] . "'");
+  $product_info_query = new xenQuery("select pd.product_name from " . TABLE_product_DESCRIPTION . " pd left join " . TABLE_PRODUCTS . " p on pd.product_id = p.product_id where pd.language_id = '" . $_SESSION['languages_id'] . "' and p.product_status = '1' and pd.product_id = '" . (int)$_GET['product_id'] . "'");
   if (!$product_info_query->getrows()) xarRedirectResponse(xarModURL('commerce','user','reviews'));
       $q = new xenQuery();
       if(!$q->run()) return;
@@ -37,11 +37,11 @@
 
  require(DIR_WS_INCLUDES . 'header.php');
 
- $data['PRODUCTS_NAME'] = $product_info['products_name'];
+ $data['product_NAME'] = $product_info['product_name'];
 
 
 $data_reviews=array();
-  $reviews_query = new xenQuery("select reviews_rating, reviews_id, customers_name, date_added, last_modified, reviews_read from " . TABLE_REVIEWS . " where products_id = '" . (int)$_GET['products_id'] . "' order by reviews_id DESC");
+  $reviews_query = new xenQuery("select reviews_rating, reviews_id, customers_name, date_added, last_modified, reviews_read from " . TABLE_REVIEWS . " where product_id = '" . (int)$_GET['product_id'] . "' order by reviews_id DESC");
   if ($reviews_query->getrows()) {
     $row = 0;
       $q = new xenQuery();
@@ -79,7 +79,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
   $smarty->caching = 1;
   $smarty->cache_lifetime=CACHE_LIFETIME;
   $smarty->cache_modified_check=CACHE_CHECK;
-  $cache_id = $_SESSION['language'].$_GET['products_id'];
+  $cache_id = $_SESSION['language'].$_GET['product_id'];
   return data;
   }
   ?>
