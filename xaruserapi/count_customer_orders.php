@@ -10,7 +10,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_count_customer_orders($args)
+function customers_userapi_count_customer_orders($args)
 {
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();

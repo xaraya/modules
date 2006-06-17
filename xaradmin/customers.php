@@ -12,11 +12,12 @@
 
 function customers_admin_customers()
 {
-    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers', 'tplmodule' => 'customers'));
+//    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers', 'tplmodule' => 'customers'));
 //    return xarModFunc('commerce','admin','commoninfo_object',array('objectname' => 'ice_customers'));
+    return array('objectname' => 'ice_customers', 'tplmodule' => 'customers');
 }
 
 /*
-* Review the customers.php file in the unused folder for detrails about validation etc.
+* Review the customers.php file in the unused folder for details about validation etc.
 */
 ?>

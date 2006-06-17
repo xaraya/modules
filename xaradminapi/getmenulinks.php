@@ -1,11 +1,12 @@
 <?php
 
-function foo_adminapi_getmenulinks()
+function customers_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminFoo',0)) {
-        $menulinks[] = Array('url'   => xarModURL('foo',
-                                                  'admin',
-                                                  'modifyconfig'),
+    if (xarSecurityCheck('AdminCustomers',0)) {
+        $menulinks[] = Array('url'   => xarModURL('customers', 'admin', 'customers'),
+                              'title' => xarML('Add, edit, delete customers'),
+                              'label' => xarML('Manage Customers'));
+        $menulinks[] = Array('url'   => xarModURL('customers', 'admin', 'modifyconfig'),
                               'title' => xarML('Modify the configuration settings'),
                               'label' => xarML('Modify Config'));
     }

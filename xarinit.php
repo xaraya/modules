@@ -1,7 +1,85 @@
 <?php
 
+include_once 'modules/xen/xarclasses/xenquery.php';
+//Load Table Maintainance API
+xarDBLoadTableMaintenanceAPI();
+
 function customers_init()
 {
+    $q = new xenQuery();
+    $prefix = xarDBGetSiteTablePrefix();
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_customers_address_book";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_customers_address_book (
+       address_book_id int NOT NULL auto_increment,
+       customers_id int NOT NULL,
+       entry_gender char(1) NOT NULL,
+       entry_company varchar(32),
+       entry_firstname varchar(32) NOT NULL,
+       entry_lastname varchar(32) NOT NULL,
+       entry_street_address varchar(64) NOT NULL,
+       entry_suburb varchar(32),
+       entry_postcode varchar(10) NOT NULL,
+       entry_city varchar(32) NOT NULL,
+       entry_state varchar(32),
+       entry_country_id int DEFAULT '0' NOT NULL,
+       entry_zone_id int DEFAULT '0' NOT NULL,
+       PRIMARY KEY (address_book_id),
+       KEY idx_address_book_customers_id (customers_id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_customers_customers_ip";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_customers_customers_ip (
+      customers_ip_id int(11) NOT NULL auto_increment,
+      customers_id int(11) NOT NULL default '0',
+      customers_ip varchar(15) NOT NULL default '',
+      customers_ip_date datetime NOT NULL default '0000-00-00 00:00:00',
+      customers_host varchar(255) NOT NULL default '',
+      customers_advertiser varchar(30) default NULL,
+      customers_referer_url varchar(255) default NULL,
+      PRIMARY KEY  (customers_ip_id),
+      KEY customers_id (customers_id)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_customers_customers_status";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_customers_customers_status (
+      customers_status_id int(11) NOT NULL default '0',
+      language_id int(11) NOT NULL DEFAULT '1',
+      customers_status_name VARCHAR(32) NOT NULL DEFAULT '',
+      customers_status_public int(1) NOT NULL DEFAULT '1',
+      customers_status_image varchar(64) DEFAULT NULL,
+      customers_status_discount decimal(4,2) DEFAULT '0',
+      customers_status_ot_discount_flag char(1) NOT NULL DEFAULT '0',
+      customers_status_ot_discount decimal(4,2) DEFAULT '0',
+      customers_status_graduated_prices varchar(1) NOT NULL DEFAULT '0',
+      customers_status_show_price int(1) NOT NULL DEFAULT '1',
+      customers_status_show_price_tax int(1) NOT NULL DEFAULT '1',
+      customers_status_add_tax_ot  int(1) NOT NULL DEFAULT '0',
+      customers_status_payment_unallowed varchar(255) NOT NULL,
+      customers_status_shipping_unallowed varchar(255) NOT NULL,
+      customers_status_discount_attributes  int(1) NOT NULL DEFAULT '0',
+      PRIMARY KEY  (customers_status_id,language_id),
+      KEY idx_orders_status_name (customers_status_name)
+    )";
+    if (!$q->run($query)) return;
+
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_customers_customers_status_history";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_customers_customers_status_history (
+      customers_status_history_id int(11) NOT NULL auto_increment,
+      customers_id int(11) NOT NULL default '0',
+      new_value int(5) NOT NULL default '0',
+      old_value int(5) default NULL,
+      date_added datetime NOT NULL default '0000-00-00 00:00:00',
+      customer_notified int(1) default '0',
+      PRIMARY KEY  (customers_status_history_id)
+    )";
+    if (!$q->run($query)) return;
 
 # --------------------------------------------------------
 #
@@ -24,16 +102,14 @@ function customers_init()
 
 # --------------------------------------------------------
 #
-# Set up hooks
+# Configure hooks
 #
     // This is a GUI hook for the roles module that enhances the roles profile page
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'customers', 'user', 'usermenu')) {
-        return false;
-    }
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'customers', 'user', 'usermenu')) return false;
+    xarModAPIFunc('modules', 'admin', 'enablehooks', array('callerModName' => 'roles', 'hookModName' => 'customers'));
 
-    xarModAPIFunc('modules', 'admin', 'enablehooks',
-        array('callerModName' => 'roles', 'hookModName' => 'customers'));
+	xarModRegisterHook('module', 'getconfig', 'API','customers', 'admin', 'getconfighook');
+    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'customers'));
 
 # --------------------------------------------------------
 #
@@ -126,6 +202,10 @@ function customers_upgrade()
 
 function customers_delete()
 {
+# --------------------------------------------------------
+#
+# Remove database tables
+#
     // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();
 
@@ -135,26 +215,36 @@ function customers_delete()
     $query = xarDBDropTable($table);
     if (empty($query)) return; // throw back
 
-    // Delete the DD objects created by this module
+# --------------------------------------------------------
+#
+# Delete the DD objects created by this module
+#
 	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
 	if (isset($ice_objects['ice_customers']))
 		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_customers']));
 
-	// Purge all the roles created by this module
+# --------------------------------------------------------
+#
+# Purge all the roles created by this module
+#
 	$role = xarFindRole('Customers');
 	$descendants = $role->getDescendants();
 	foreach ($descendants as $item)
 		if (!$item->purge()) return;
 	if (!$role->purge()) return;
 
-    // Remove Masks and Instances
+# --------------------------------------------------------
+#
+# Remove modvars, masks and privilege instances
+#
+    xarModDelAllVars('customers');
     xarRemoveMasks('customers');
     xarRemoveInstances('customers');
 
-    // Remove Modvars
-    xarModDelAllVars('customers');
-
-    // Remove from the list of commerce modules
+# --------------------------------------------------------
+#
+# Remove this module from the list of commerce modules
+#
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['customers']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
