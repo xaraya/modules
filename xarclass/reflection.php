@@ -1,4 +1,21 @@
 <?php
+/**
+ * Reflection wrapper to make the reflection info easily accessible
+ *
+ * @package autodoc
+ * @copyright HS-Development BV, 2006-06-17
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://hsdev.com
+ * @author Marcel van der Boom <mrb@hsdev.com>
+ **/
+
+/**
+ * Factory class for reflection info
+ *
+ * Class constructs objects based on the parameters in the getInfo class method.
+ *
+ * @author Marcel van der Boom <mrb@hsdev.com>
+ **/
 class ReflectionInfo
 {
     const FNC = 1;
@@ -7,20 +24,33 @@ class ReflectionInfo
     const CON = 4;
     const INT = 5;
 
+    /**
+     * Factory method to construct a reflection object of a certain type
+     *
+     * @return object
+     * @author Marcel van der Boom
+     **/
     static function &GetInfo($name, $type = ReflectionInfo::FNC)
     {
         switch($type) {
             case ReflectionInfo::FNC: // Function
+                include_once(self::fromhere('function'));
                 $clazz = 'ad_ReflectionFunction';
                 break;
             case ReflectionInfo::CLS: // Class
-            case 5: // Interface
+                include_once(self::fromhere('class'));
                 $clazz = 'ad_ReflectionClass';
                 break;
+            case ReflectionInfo::INT: // Interface
+                include_once(self::fromhere('interface'));
+                $clazz = 'ad_ReflectionInterface';
+                break;
             case ReflectionInfo::EXT: // Extension
+                include_once(self::fromhere('extension'));
                 $clazz = 'ad_ReflectionExtension';
                 break;
             case ReflectionInfo::CON: // Constants
+                include_once(self::fromhere('constant'));
                 $clazz = 'ad_ReflectionConstant';
                 break;
         }
@@ -28,50 +58,25 @@ class ReflectionInfo
         return $object;
     }
 
+    /**
+     * Get the unique ID of a named item
+     *
+     * @return string
+     * @author Marcel van der Boom
+     **/
     static function GetId($name,$type)
     {
         return sha1($type.$name);
     }
-}
-
-class ad_ReflectionFunction extends ReflectionFunction
-{
-    function toArray()
+    /**
+     * Helper method for easy inclusion
+     *
+     * @return void
+     * @author Marcel van der Boom <mrb@hsdev.com>
+     **/
+    static function fromhere($type)
     {
-        $frParams = $this->getParameters();
-        $params = array();
-        foreach($frParams as $frParam) {
-            $params[] = $frParam->toArray();
-        }
-        
-        $info = array (
-                       'id'         => ReflectionInfo::GetId($this->getName(),ReflectionInfo::FNC),
-                       'type'       => 'function',
-                       'name'       => $this->getName(),
-                       'file'       => $this->getFileName(),
-                       'start'      => $this->getStartLine(),
-                       'end'        => $this->getEndLine(),
-                       'returnsref' => $this->returnsReference(),
-                       'params'     => $params,
-                       'statics'    => $this->getStaticVariables(),
-                       'doc'        => $this->getDocComment(),
-                       'raw'        => $this->export($this->getName(),true)
-                       );
-        
-        return $info;
-    }
-
-    function &getParameters()
-    {
-        // This gets an array of ReflectionParameter objects
-        $params =& parent::getParameters();
-        $pars = array();
-        foreach($params as $key => $param) {
-            if($param->getName()) {
-                $pars[$key] = new ad_ReflectionParameter($this->getName(),$param->getName());
-            }
-        }
-        return $pars;
+        return dirname(__FILE__).'/reflection'.$type.'.php';
     }
 }
 
@@ -116,91 +121,6 @@ class ad_ReflectionParameter extends ReflectionParameter
     }
 }
 
-
-class ad_ReflectionClass extends ReflectionClass
-{
-    function toArray()
-    {
-        // Properties
-        $properties = array();
-        $p = $this->getProperties();
-        foreach($p as $key => $property) {
-            $properties[] = $property->toArray();
-        }
-
-        // Methods
-        $methods = array();
-        $m = $this->getMethods();
-        foreach($m as $key => $method) {
-            $methods[] = $method->toArray();
-        }
-
-        // Parent
-        $parent = $this->getParentClass();
-        if($parent) {
-            $parent = $parent->getName();
-            $parentid = ReflectionInfo::GetID($parent,ReflectionInfo::CLS);
-        }
-        // Interfaces
-        $ifs = $this->getInterfaces();
-        $interfaces = array();
-        if(!empty($ifs)) {
-            foreach($ifs as $interface) {
-                $interfaces[] = array('id' => ReflectionInfo::GetID($interface->getName(),ReflectionInfo::INT),
-                                      'name'=>$interface->getName());
-            }
-        }
-        $typeId = $this->isInterface() ? ReflectionInfo::INT : ReflectionInfo::CLS;
-        $info = array (
-                       'id'        => ReflectionInfo::GetID($this->getName(),$typeId),
-                       'type'      => $this->isInterface() ? 'interface' : 'class',
-                       'name'      => $this->getName(),
-                       'file'      => $this->getFileName(),
-                       'start'     => $this->getStartLine(),
-                       'end'       => $this->getEndLine(),
-                       'doc'       => $this->getDocComment(),
-                       'constants' => $this->getConstants(),
-                       'abstract'  => $this->isAbstract(),
-                       'final'     => $this->isFinal(),
-                       'methods'   => $methods,
-                       'parent'    => $parent,
-                       'parentid'  => isset($parentid) ? $parentid : null,
-                       'interfaces'=> $interfaces,
-                       'properties'=> $properties,
-                       'raw'       => $this->export($this->getName(),true),
-                       'extension' => $this->getExtensionName(),
-                       'extensionid' => ReflectionInfo::GetID($this->getExtensionName(),ReflectionInfo::EXT),
-                       'interface' => $this->isInterface()
-                       );
-        return $info;
-    }
-
-    function getConstants()
-    {
-        return parent::getConstants();
-    }
-    
-    function &getMethods()
-    {
-        $methods = parent::getMethods();
-        $meths = array();
-        foreach($methods as $key => $method) {
-            $meths[$key] = new ad_ReflectionMethod($this->getName(),$method->getName());
-        }
-        return $meths;
-    }
-    
-    function &getProperties()
-    {
-        $properties = parent::getProperties();
-        $props = array();
-        foreach($properties as $key => $property) {
-            $props[$key] = new ad_ReflectionProperty($this->getName(),$property->getName());
-        }
-        return $props;
-    }
-}
-
 class ad_ReflectionMethod extends ReflectionMethod
 {
     function toArray()
@@ -238,7 +158,7 @@ class ad_ReflectionMethod extends ReflectionMethod
     function &getParameters()
     {
         // This gets an array of ReflectionParameter objects
-        $params =& parent::getParameters();
+        $params = parent::getParameters();
         $pars = array();
         foreach($params as $key => $param) {
             if($param->getName()) {
@@ -250,66 +170,12 @@ class ad_ReflectionMethod extends ReflectionMethod
     
     function &getDeclaringClass()
     {
-        $dc =& parent::getDeclaringClass();
+        $dc = parent::getDeclaringClass();
         $declaringClass = new ad_ReflectionClass($dc->getName());
         return $declaringClass;
     }
 }
 
-class ad_ReflectionExtension extends ReflectionExtension
-{
-    function &toArray()
-    {
-        // Functions
-        $funcs = $this->getFunctions();
-        $functions = array();
-        foreach($funcs as $index => $function) {
-            $functions[] = $function->toArray();
-        }
-
-        // Classes
-        $classs = $this->getClasses();
-        $classes = array();
-        foreach($classs as $index => $class) {
-            $classes[] = $class->toArray();
-        }
-
-        $info = array(
-                      'id'        => ReflectionInfo::GetID($this->getName(),ReflectionInfo::EXT),
-                      'type'      => 'extension',
-                      'name'      => $this->getName(),
-                      'version'   => $this->getVersion(),
-                      'functions' => $functions,
-                      'constants' => $this->getConstants(),
-                      'classes'   => $classes,
-                      'inientries'=> $this->getINIEntries(),
-                      'raw'       => $this->export($this->getName(),true)
-
-                      );
-        return $info;
-    }
-
-    function &getFunctions()
-    {
-        $funcs = parent::getFunctions();
-        $functions = array();
-        foreach($funcs as $index => $function) {
-            $functions[] = new ad_ReflectionFunction($function->getName());
-        }
-        return $functions;
-    }
-
-    function &getClasses()
-    {
-        $classs = parent::getClasses();
-        $classes = array();
-        foreach($classs as $index => $class) {
-            $classes[] = new ad_ReflectionClass($class->getName());
-        }
-        return $classes;
-    }
-
-}
 
 class ad_ReflectionProperty extends ReflectionProperty
 {
@@ -332,25 +198,5 @@ class ad_ReflectionProperty extends ReflectionProperty
     }
 }
 
-class ad_ReflectionConstant 
-{
-    private $name = '';
 
-    function __construct($name)
-    {
-        $this->name = $name;
-        $tmp = get_defined_constants();
-        $this->value = $tmp[$name];
-    }
-
-    function toArray()
-    {
-        $info = array(
-                      'type' => 'constant',
-                      'name' => $this->name,
-                      'value'=> $this->value,
-                      );
-        return $info;
-    }
-}
 ?>
