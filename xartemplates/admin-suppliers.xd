@@ -1,7 +1,6 @@
 <xar:template file="application_top" type="module" module="commerce" />
 <xar:template file="adminheader" type="module" module="commerce" />
 
-<!-- Everything below is pretty much generically applicable to any object -->
 <div class="xar-mod-body">
     <fieldset>
         <legend>
@@ -12,7 +11,9 @@
         <xar:if condition="!empty($message)">
             <p>#xarVarPrepForDisplay($message)#</p>
         <xar:else />
-            <xar:data-list module="27" itemtype="1001" fieldlist="id,name,description,url,modified" tplmodule="vendors" extend="true" />
+            <xar:set name="returnurl">xarModURL('vendors','admin','suppliers')</xar:set>
+            <xar:set name="info">xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_suppliers'))</xar:set>
+            <xar:data-list module="$info['moduleid']" itemtype="$info['itemtype']" fieldlist="id,name,description,url,modified" tplmodule="vendors" extend="true" returnurl="$returnurl" />
         </xar:if>
     </fieldset>
 </div>

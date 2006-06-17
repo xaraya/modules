@@ -27,13 +27,11 @@ function vendors_init()
 # Set up hooks
 #
     // This is a GUI hook for the roles module that enhances the roles profile page
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'vendors', 'user', 'usermenu')) {
-        return false;
-    }
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'vendors', 'user', 'usermenu')) return false;
+    xarModAPIFunc('modules', 'admin', 'enablehooks', array('callerModName' => 'roles', 'hookModName' => 'vendors'));
 
-    xarModAPIFunc('modules', 'admin', 'enablehooks',
-        array('callerModName' => 'roles', 'hookModName' => 'vendors'));
+	xarModRegisterHook('module', 'getconfig', 'API','vendors', 'admin', 'getconfighook');
+    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'vendors'));
 
 # --------------------------------------------------------
 #
@@ -151,6 +149,10 @@ function vendors_upgrade()
 
 function vendors_delete()
 {
+# --------------------------------------------------------
+#
+# Remove database tables
+#
     // Load table maintenance API
     xarDBLoadTableMaintenanceAPI();
 
@@ -160,14 +162,23 @@ function vendors_delete()
     $query = xarDBDropTable($table);
     if (empty($query)) return; // throw back
 
-    // Delete the DD objects created by this module
+# --------------------------------------------------------
+#
+# Delete the DD objects created by this module
+#
+	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
+	if (isset($ice_objects['ice_customers']))
+		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_customers']));
 	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
 	if (isset($ice_objects['ice_suppliers']))
 		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_suppliers']));
 	if (isset($ice_objects['ice_manufacturers']))
 		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_manufacturers']));
 
-	// Purge all the roles created by this module
+# --------------------------------------------------------
+#
+# Purge all the roles created by this module
+#
 	$role = xarFindRole('Suppliers');
 	$descendants = $role->getDescendants();
 	foreach ($descendants as $item)
@@ -180,14 +191,18 @@ function vendors_delete()
 		if (!$item->purge()) return;
 	if (!$role->purge()) return;
 
-    // Remove Masks and Instances
+# --------------------------------------------------------
+#
+# Remove modvars, masks and privilege instances
+#
+    xarModDelAllVars('vendors');
     xarRemoveMasks('vendors');
     xarRemoveInstances('vendors');
 
-    // Remove Modvars
-    xarModDelAllVars('vendors');
-
-    // Remove from the list of commerce modules
+# --------------------------------------------------------
+#
+# Remove this module from the list of commerce modules
+#
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['vendors']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
