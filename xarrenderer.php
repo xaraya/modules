@@ -265,7 +265,11 @@ function comments_renderer_array_prune_excessdepth($args)
 
     $new_list = array();
     foreach ($array_list as $node) {
-        $childcount = $countlist[$node['xar_cid']];
+        if (isset($countlist[$node['xar_cid']])) {
+            $childcount = $countlist[$node['xar_cid']];
+        } else {
+            $childcount = 0;
+        }
 
         if ($cutoff == $node['depth']) {
             if ($childcount) {

@@ -137,9 +137,9 @@ function comments_user_display($args)
         array(
             'array_list'    => $package['comments'],
             'cutoff'        => $package['settings']['depth'],
-            'modid'		    => $args['modid'],
-            'itemtype'      => $args['itemtype'],
-            'objectid'	    => $args['objectid'],
+            'modid'         => $header['modid'],
+            'itemtype'      => $header['itemtype'],
+            'objectid'	    => $header['objectid'],
         )
     );
 
