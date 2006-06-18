@@ -3,7 +3,7 @@
  * Sitecontact itemtypes
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -88,13 +88,12 @@ function sitecontact_userapi_getcontacttypes($args)
 
     if (!$result) return;
     $sctypes=array();
-
+    
     while (!$result->EOF) {
         list($scid, $sctypename, $sctypedesc, $customtext, $customtitle, $optiontext,
              $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive,
              $savedata,$permissioncheck,$termslink,$soptions) = $result->fields;
-
-            $sctypes[] = array('scid'           => (int)$scid,
+            $sctypes[] =     array('scid'     => (int)$scid,
                                    'sctypename'     => $sctypename,
                                    'sctypedesc'     => $sctypedesc,
                                    'customtext'     => $customtext,
@@ -113,8 +112,7 @@ function sitecontact_userapi_getcontacttypes($args)
                                    'soptions'       => $soptions);
         $result->MoveNext();
     }
-
+  
     return $sctypes;
 }
-
 ?>
