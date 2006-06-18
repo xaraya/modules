@@ -31,15 +31,15 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('useripaddress', 'str:1:', $useripaddress, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
-	if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+	if (!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if (!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
+	if (!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
     if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
     if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('permission', 'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('permission',   'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
@@ -177,6 +177,58 @@ function sitecontact_user_contactus($args)
    } else {
        $attachpath='';
        $attachname='';
+   }
+
+
+   /* Do we want to save the data for this form? */
+   if ($savedata) {
+       // save the form - let it handle save of the hooked dd
+       // First check to see if we needed user permission or not, and if we do the user has agreed
+        if (($permissioncheck && $permission) || !$permissioncheck) {
+           //ok to save
+           $args = array('scid'           => (int)$scid,
+                         'scform'          => $scform,
+                         'username'        => $username,
+                         'useremail'       => $useremail,
+                         'requesttext'     => $requesttext,
+                         'company'         => $company,
+                         'usermessage'     => $usermessage,
+                         'useripaddress'   => $useripaddress,
+                         'userreferer'     => $userreferer,
+                         'sendcopy'        => $sendcopy,
+                         'savedata'        => $savedata,
+                         'permissioncheck' => $permissioncheck,
+                         'permission'      => $permission,
+                         'bccrecipients'   => serialize($bccrecipients),
+                         'ccrecipients'    => serialize($ccrecipients)
+                    );
+         } elseif ($permissioncheck && !$permission) {
+           //what to do - better save a 'blank' spot as missing data?
+           //let's do that for now
+          $args = array('scid'           => (int)$scid,
+                         'scform'          => '',
+                         'username'        => xarML('Missing Value'),
+                         'useremail'       => '',
+                         'requesttext'     => '',
+                         'company'         => '',
+                         'usermessage'     => '',
+                         'useripaddress'   => '',
+                         'userreferer'     => '',
+                         'sendcopy'        => 0,
+                         'savedata'        => $savedata,
+                         'permissioncheck' => $permissioncheck,
+                         'permission'      => $permission,
+                         'bccrecipients'   => '',
+                         'ccrecipients'    => ''
+                    );
+        }
+
+        $newscrid = xarModAPIFunc('sitecontact','admin','create',$args);
+        if (!$newscrid) {
+            //no, don't do anything ... if there is a prob we don't want to disrupt the user feedback
+            //on their emailing
+            //TODO: workout something for this and any other errors related to create reponse portion of process
+        }
    }
 
     /* Security Check - caused some problems here with anon browsing and cachemanager

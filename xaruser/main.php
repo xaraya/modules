@@ -3,7 +3,7 @@
  * Main user function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -53,7 +53,7 @@ function sitecontact_user_main($args)
      //hmm something would be wrong
      $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     }
-
+   
     //now what have we got ..
     if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
         $formdata=$formdata2[0];
@@ -166,7 +166,8 @@ function sitecontact_user_main($args)
     $data['sctypename']=$formdata['sctypename'];
     $data['permissioncheck']=$formdata['permissioncheck'];
     $data['savedata']=$formdata['savedata'];
-    $data['termslink']=$formdata['termslink'];
+    $data['permission']=false; //set it to false and require user to check
+    $data['termslink']=trim($formdata['termslink']);
     if (!empty($data['sctypename'])){
         $template = 'main-' . $data['sctypename'];
     } else {
@@ -180,7 +181,7 @@ function sitecontact_user_main($args)
         xarErrorHandled();
         $templatedata = xarTplModule('sitecontact', 'user', 'main', $data);
 	}
-   return $templatedata;
 
+   return $templatedata;
 }
 ?>
