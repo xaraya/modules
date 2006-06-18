@@ -1,0 +1,143 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Sitecontact Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+      <xar:ml>
+        <xar:mlstring>Response ID: #(1) for #(2) </xar:mlstring>
+        <xar:mlvar>#$scrid#</xar:mlvar>
+        <xar:mlvar>#$formname#</xar:mlvar>
+      </xar:ml>
+    </h2>
+    <xar:if condition="$permissioncheck">
+        <xar:mlstring>A permission check was requested in this form.</xar:mlstring>
+    </xar:if>
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    <xar:else />
+    <fieldset>
+       <legend><xar:mlstring>Resonse</xar:mlstring> #$scrid#</legend>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>User name:</xar:mlstring>
+               </span>
+                #xarVarPrepForDisplay($username)#
+           </p>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Email:</xar:mlstring>
+               </span>
+                #$useremail#
+           </p>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Subject:</xar:mlstring>
+               </span>
+                #xarVarPrepForDisplay($requesttext)#
+           </p>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Organization:</xar:mlstring>
+               </span>
+                #xarVarPrepForDisplay($company)#
+           </p>           
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Message:</xar:mlstring>
+               </span>
+                <span class="xar-form-container">#$usermessage#</span>
+           </p>           
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>User IP:</xar:mlstring>
+               </span>
+               #$useripaddress#
+           </p>      
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Referer:</xar:mlstring>
+               </span>
+               #$userreferer#
+           </p>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Requested a copy?</xar:mlstring>
+               </span>
+               <xar:if condition="$sendcopy">
+                  <xar:mlstring>Yes</xar:mlstring>
+               <xar:else />
+                  <xar:mlstring>No</xar:mlstring>
+               </xar:if>
+           </p>
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Permission given?</xar:mlstring>
+               </span>
+               <xar:if condition="$permission">
+                  <xar:mlstring>Yes</xar:mlstring>
+               <xar:else />
+                  <xar:mlstring>No</xar:mlstring>
+               </xar:if>
+               <xar:if condition="$permissioncheck">
+                   <xar:mlstring> (Permission requested)</xar:mlstring>
+                <xar:else />
+                  <xar:mlstring> (No permission requested)</xar:mlstring>
+               </xar:if>
+           </p> 
+           <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Copy list:</xar:mlstring>
+               </span>
+               <xar:if condition="is_array($ccrecipients)">
+                 <xar:foreach in="$ccrecipients" key="$k" value="$v">
+                 #$k#,
+                 </xar:foreach>
+               <xar:else/>
+                  <xar:mlstring>None</xar:mlstring>
+               </xar:if>
+           </p>
+
+         <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>BB Copy list:</xar:mlstring>
+               </span>
+               <xar:if condition="is_array($bccrecipients)">
+                 <xar:foreach in="$bccrecipients" key="$k" value="$v">
+                 #$k#,
+                 </xar:foreach>
+               <xar:else />
+                  <xar:mlstring>None</xar:mlstring>
+               </xar:if>
+           </p>
+          <p class="xar-form-input-wrapper">
+               <span class="xar-form-label">   
+                   <xar:mlstring>Response Time:</xar:mlstring>
+               </span>
+               #xarLocaleGetFormattedDate('medium', $responsetime)#
+                #xarLocaleGetFormattedTime('medium', $responsetime)#               
+           </p>                                                               
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <xar:data-getitem name="$properties" module="sitecontact" itemid="$scrid" itemtype="$scid" />
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                    <p class="xar-form-input-wrapper">
+                       <span class="xar-form-label">   
+                          <xar:data-label property="$properties[$name]" />:
+                       </span>
+                        <xar:data-output property="$properties[$name]" />
+                    </p>
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+    </fieldset>
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+        <xar:if condition="$hookmodule ne 'dynamicdata'">
+           <p>#$hooks[$hookmodule]#</p>
+        </xar:if>
+        </xar:foreach>
+    </xar:if>    
+</xar:if>
+</div>

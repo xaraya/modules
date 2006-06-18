@@ -170,7 +170,7 @@ function sitecontact_admin_managesctypes()
             }
 
         } else {
-               $sctypes[$id]['deleteurl'] = '';
+               $sctypes[$sctype['scid']]['deleteurl'] = '';
         }
 
         if (xarSecurityCheck('EditSiteContact',0)) {

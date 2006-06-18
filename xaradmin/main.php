@@ -18,7 +18,7 @@
  */
 function sitecontact_admin_main()
 {
-    if (!xarSecurityCheck('EditSiteContact')) return;
+    if (!xarSecurityCheck('EditSiteContact',1)) return;
 
     xarResponseRedirect(xarModURL('sitecontact', 'admin', 'managesctypes',array('action'=>'view')));
 

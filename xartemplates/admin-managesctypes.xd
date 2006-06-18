@@ -114,7 +114,35 @@
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
             muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
         </p>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.savedata">
+                <input type="checkbox" name="savedata" id="savedata" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="savedata" id="savedata" value="1" />
+            </xar:if>
+            <label for="savedata" title="#xarML('Save the site contact form data')#">
+               <xar:mlstring>Save form responses to the database?</xar:mlstring>
+            </label>
 
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.permissioncheck">
+                <input type="checkbox" name="permissioncheck" id="permissioncheck" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="permissioncheck" id="permissioncheck" value="1" />
+            </xar:if>
+            <label for="permissioncheck" title="#xarML('Require user permission for data save?')#">
+               <xar:mlstring>Require user permission for response save in database?</xar:mlstring>
+            </label>
+
+        </div>
+
+         <div class="xar-form-input-wrapper">
+            <label for="termslink" class="xar-form-label" title="#xarML('URL link to your terms.')#">
+               <xar:mlstring>Terms link URL :</xar:mlstring>
+            </label>
+            <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#$item.termslink#" /> [none - leave blank]
+        </div>
     </fieldset>
 
    <fieldset>
@@ -302,6 +330,37 @@
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
             muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
         </p>
+         <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.savedata">
+                <input type="checkbox" name="savedata" id="savedata" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="savedata" id="savedata" value="1" />
+            </xar:if>
+            <label for="savedata" title="#xarML('Save the site contact form data')#">
+               <xar:mlstring>Save form responses to the database?</xar:mlstring>
+            </label>
+
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.permissioncheck">
+                <input type="checkbox" name="permissioncheck" id="permissioncheck" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="permissioncheck" id="permissioncheck" value="1" />
+            </xar:if>
+            <label for="permissioncheck" title="#xarML('Require user permission for data save?')#">
+               <xar:mlstring>Require user permission for response save in database?</xar:mlstring>
+            </label>
+
+        </div>
+
+         <div class="xar-form-input-wrapper">
+            <label for="termslink" class="xar-form-label" title="#xarML('URL link to your terms.')#">
+               <xar:mlstring>Terms link URL :</xar:mlstring>
+            </label>
+            <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#$item.termslink#" /> [none - leave blank]
+        </div>
+
+
     </fieldset>
 
    <fieldset>
@@ -568,6 +627,24 @@
 
             </div>
             </xar:if>
+            <xar:if condition="$item.savedata eq 1 and $item.permissioncheck eq 1">
+                <div class="xar-form-input-wrapper-after">
+                    <input type="checkbox" name="permission" id="permission" value="1" checked="checked" />
+                    <label for="sendcopy" title="#xarML('May we save your response to this form?')#">
+                        <xar:mlstring>
+                            Permit saving of your form response?
+                        </xar:mlstring>
+                    </label>
+                </div>
+                <xar:if condition="$item.termslink ne ''">
+                    <div class="xar-form-input-wrapper">
+                        <label for="termsurl" class="xar-form-label">
+                            <xar:mlstring>Please review our privacy policy:</xar:mlstring>
+                        </label>
+                        <a href="#$item.termslink#"><xar:mlstring>Terms &amp; Privacy Policy</xar:mlstring></a>
+                    </div>
+                </xar:if>
+            </xar:if>
            </fieldset>
 
            <fieldset>
@@ -594,7 +671,7 @@
             <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:foreach in="$sctypes" key="$k" value="$sctype">
-        <tr>
+        <tr> 
             <td class="xar-norm">#$sctype['scid']#</td>
             <td class="xar-norm">#$sctype['sctypename']#</td>
             <td class="xar-norm">#$sctype['sctypedesc']#</td>

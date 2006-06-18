@@ -137,7 +137,7 @@
                 </xar:if>
             </xar:if>
 
-            <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
+            <xar:if condition="$allowcopy">
             <div class="xar-form-input-wrapper-after">
                  <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
@@ -147,6 +147,28 @@
                 </label>
 
             </div>
+            </xar:if>
+            <xar:if condition="$savedata and $permissioncheck">
+                <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$permission">
+                    <input type="checkbox" name="permission" id="permission" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="permission" id="permission" value="1" />
+                </xar:if>
+                     <label for="permission" title="#xarML('May we save your response to this form?')#">
+                        <xar:mlstring>
+                            Permit saving of your form response?
+                        </xar:mlstring>
+                    </label>
+                </div>
+                <xar:if condition="$termslink ne ''">
+                    <div class="xar-form-input-wrapper">
+                        <label for="termsurl" class="xar-form-label">
+                            <xar:mlstring>Please review our privacy policy:</xar:mlstring>
+                        </label>
+                        <a href="#$termslink#"><xar:mlstring>Terms &amp; Privacy Policy</xar:mlstring></a>
+                    </div>
+                </xar:if>
             </xar:if>
            </fieldset>
 

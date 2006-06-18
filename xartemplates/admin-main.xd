@@ -12,18 +12,20 @@
     <h3>
       <xar:mlstring>What is it?</xar:mlstring>
     </h3>
-        <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <em><xar:mlstring>SiteContact
+        <p> <em><xar:mlstring>SiteContact
             is a simple module that allows visitors to easily contact the Site
             Administrator by email. The module allows you to setup one or more forms with different fields and configurations using dynamic data. It comes preinstalled with one default Contact Form.</xar:mlstring></em>
+        </p>
+        <p><xar:mlstring>Administrators can also allow form responses to be saved to the database</xar:mlstring>
         </p>
     <h2>
         <xar:mlstring>How to use it?</xar:mlstring>
     </h2>
-        <p style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Install SiteContact
+        <p> <xar:mlstring>Install SiteContact
             as usual from the administration Module listing. There is one table (sitecontact) currently used to hold different contact form definitions. Then, setup the module configuration in Modify Config option.
             </xar:mlstring>
         </p>
-        <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <p>
             <xar:mlstring>Sitecontact is ready to go. You can use the default form without any further configuration.
             If you want to configure your default contact form, or create further forms, review the following.
             </xar:mlstring>
@@ -133,13 +135,20 @@
         </xar:mlstring><code>var/uploads/resumes;(doc|jpg|tar.gz|zip);1000000</code> <xar:mlstring>In this example the attachment will be temporarily uploaded to the <strong>var/uploads/resume</strong> directory but deleted once the email has been sent. Make sure this temporary upload directory is writeable.</xar:mlstring></li>
 
     </ol>
-
+    <h3>
+        <xar:mlstring>Permissions and Saving SiteContact Forms </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Sitecontact allows administrators to choose form responses to be saved to their database. There is also an option available to Administrators to allow users to give their permission to save data to the database. In this case, the contact forms are still emailed but data will only be saved if user explicitly checks the permission checkbox.</xar:mlstring>
+    </p>
+    <p>    <xar:mlstring>You must give users <strong>Comment</strong> level privileges to submit contact forms which are saved to your database. If forms are not saved, users only require Read level access.</xar:mlstring>
+    </p>
 
     <h3>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h3>
     <p>
-        None at this stage
+       <xar:mlstring>None at this stage</xar:mlstring>
     </p>
     <h3>
         <xar:mlstring>Further Information</xar:mlstring>
