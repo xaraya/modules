@@ -16,6 +16,18 @@
             </a>
         </dd>
     </xar:sec>
+    <xar:sec mask="EditSiteContact" catch="false">
+        <xar:if condition="$activetab eq 'view' or $activetab eq 'display' or $activetab eq 'delete'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-sitecontact-admin-view;">
+            <xar:mlstring>Review Responses</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>    
     <xar:sec mask="AdminSiteContact" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
@@ -24,7 +36,6 @@
           </a>
         </dd>
     </xar:sec>
-    
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-sitecontact-admin-overview;">

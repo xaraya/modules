@@ -1,0 +1,25 @@
+<xar:style module="base" scope="module" file="navtabs" />
+
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            Select Form 
+        </xar:mlstring>
+        : 
+    </dt>
+    <xar:foreach in="$formfilters" value="$formfilter">
+        <xar:if condition="empty($formfilter['flink'])">
+            <dd class="active">
+                <a href="#xarServerGetCurrentURL()#" title="#$formfilter['ftitle']#">
+                    #$formfilter['ftitle']# 
+                </a>
+            </dd>
+            <xar:else />
+            <dd>
+                <a href="#$formfilter['flink']#" title="#$formfilter['ftitle']#">
+                    #$formfilter['ftitle']# 
+                </a>
+            </dd>
+        </xar:if>
+    </xar:foreach>
+</dl>
