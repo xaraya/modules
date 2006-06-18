@@ -1,0 +1,6 @@
+Version 0.6.0 19 June 2006
+- Add form instances for privs
+- New 'save form data to database' options for each form 
+  Users must have Comment level permission on the form to save
+- Optional permission check for user to save
+- View form responses, delete responses
