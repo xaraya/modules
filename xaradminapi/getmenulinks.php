@@ -25,10 +25,14 @@ function sitecontact_adminapi_getmenulinks()
        $menulinks[] = Array('url' => xarModURL('sitecontact','admin','managesctypes'),
             'title' => xarML('Manage the contact forms'),
             'label' => xarML('Manage Contact Forms'));
+        $menulinks[] = Array('url' => xarModURL('sitecontact','admin','view'),
+            'title' => xarML('Manage contact form responses'),
+            'label' => xarML('Review Responses'));
         $menulinks[] = Array('url' => xarModURL('sitecontact','admin','modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
-    }
+    }            
+    
     if (empty($menulinks)) {
         $menulinks = '';
     }
