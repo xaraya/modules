@@ -29,6 +29,8 @@ function commerce_admin_modifyconfig($args)
 			$configcontent[$key] = $row['configcontent'];
 		}
 		array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+	} else {
+		$hooks['tabs'] = array();
 	}
 	$data['hooks'] = $hooks;
     $data['authid'] = xarSecGenAuthKey();
