@@ -95,6 +95,31 @@ function sitecontact_init()
     $result = &$dbconn->Execute($query,$bindvars);
            if (!$result) {return;}
 
+    /* Set up a table for holding any saved data, if that option is chosen */
+    $sitecontactResponseTable = $xarTables['sitecontact_response'];
+
+    /* Get a data dictionary object with all the item create methods in it */
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    $fields= "xar_scrid           I      AUTO       PRIMARY,
+              xar_scid            I      NotNull    DEFAULT 0,
+              xar_username        C(100) NotNull    DEFAULT '',
+              xar_useremail       C(254) NotNull    DEFAULT '',
+              xar_requesttext     C(150) NotNull    DEFAULT '',
+              xar_company         C(150) NotNull    DEFAULT '',
+              xar_usermessage     X      NotNull    DEFAULT '',
+              xar_useripaddress   C(24)  NotNull    DEFAULT '',
+              xar_userreferer     C(254) NotNull    DEFAULT '',
+              xar_sendcopy        I1     NotNull    DEFAULT 0,
+              xar_permission      I1     NotNull    DEFAULT 0,
+              xar_bccrecipients   C(254) NotNull    DEFAULT '',
+              xar_ccrecipients    C(254) NotNull    DEFAULT '',
+              xar_responsetime   I(10)  NotNull    DEFAULT 0
+              ";
+            $result = $datadict->changeTable($sitecontactResponseTable, $fields);
+           if (!$result) {return;}
+
+
     xarModSetVar('sitecontact', 'savedata', 0);
     xarModSetVar('sitecontact', 'termslink', '');
     xarModSetVar('sitecontact', 'soptions', '');
@@ -158,18 +183,19 @@ Administrator
         return false;
     }
  */
-/*
-    $instancestable = $xartable['block_instances'];
-    $typestable = $xartable['block_types'];
-    $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'sitecontact'";
+ 
+/* Define instances for sitecontact forms  */
+
+    $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
     $instances = array(
-        array('header' => 'SiteContact Block Title:',
-              'query' => $query,
-              'limit' => 20
-              )
-        );
-    xarDefineInstance('sitecontact', 'Block', $instances);
-*/
+                        array('header' => 'Form ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance('sitecontact', 'ContactForm', $instances); 
+ 
+
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -179,6 +205,7 @@ Administrator
     xarRegisterMask('ReadSiteContactBlock', 'All', 'sitecontact', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ViewSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
     xarRegisterMask('EditSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_EDIT');//Do we need these?!
     xarRegisterMask('AddSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADD');//Do we need these?!
     xarRegisterMask('DeleteSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_DELETE');//Do we need these?!
@@ -329,6 +356,52 @@ function sitecontact_upgrade($oldversion)
         case '0.5.0': //nothing new here
              break;
         case '0.5.1': //current version
+        
+        $dbconn =& xarDBGetConn();
+        $xarTables =& xarDBGetTables();
+
+        /* Set up a table for holding any saved data, if that option is chosen */
+        $sitecontactResponseTable = $xarTables['sitecontact_response'];
+        $sitecontactTable = $xarTables['sitecontact'];
+        
+        /* Get a data dictionary object with all the item create methods in it */
+        $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+        $fields= "xar_scrid           I      AUTO       PRIMARY,
+                 xar_scid            I      NotNull    DEFAULT 0,
+                 xar_username        C(100) NotNull    DEFAULT '',
+                 xar_useremail       C(254) NotNull    DEFAULT '',
+                 xar_requesttext     C(150) NotNull    DEFAULT '',
+                 xar_company         C(150) NotNull    DEFAULT '',
+                 xar_usermessage     X      NotNull    DEFAULT '',
+                 xar_useripaddress   C(24)  NotNull    DEFAULT '',
+                 xar_userreferer     C(254) NotNull    DEFAULT '',
+                 xar_sendcopy        I1     NotNull    DEFAULT 0,
+                 xar_permission      I1     NotNull    DEFAULT 0,
+                 xar_bccrecipients   C(254) NotNull    DEFAULT '',
+                 xar_ccrecipients    C(254) NotNull    DEFAULT '',
+                 xar_responsetime    I(10)  NotNull    DEFAULT 0
+              ";
+            $result = $datadict->changeTable($sitecontactResponseTable, $fields);
+            if (!$result) {return;}
+
+       //register a new mask for submitting and *saving* a site contact form
+       xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
+
+       /* Define instances for sitecontact forms  */
+
+       $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
+       $instances = array(
+                        array('header' => 'Form ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            )
+                    );
+       xarDefineInstance('sitecontact', 'ContactForm', $instances); 
+
+             break;
+
+       case '0.6.0': //current version
 
              break;
     }
@@ -343,6 +416,25 @@ function sitecontact_upgrade($oldversion)
  */
 function sitecontact_delete()
 {
+ 
+    /* Let's clean up - delete the DD objects we have created if any, for each form type */
+    $formtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
+    $moduleid= xarModGetIDFromName('sitecontact');    
+
+    if (is_array($formtypes)) {
+        foreach ($formtypes as $formtype) {
+            $objectinfo= xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                array('moduleid'=>$moduleid, 'itemtype'=>$formtype['scid']));
+            
+            $objectid= $objectinfo['objectid'];
+            
+            if (!empty($objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+            }
+        }
+    }
+
+
     /* drop the sitecontact table */
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
@@ -350,6 +442,11 @@ function sitecontact_delete()
     $sitecontactTable = $xarTables['sitecontact'];
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $result = $datadict->dropTable($sitecontactTable);
+
+    $sitecontactResponseTable = $xarTables['sitecontact_response'];
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $result = $datadict->dropTable($sitecontactResponseTable);
+
 
     /* Remove any module aliases before deleting module vars */
     $aliasname =xarModGetVar('sitecontact','aliasname');

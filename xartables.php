@@ -30,6 +30,9 @@ function sitecontact_xartables()
     $sitecontactTable     = xarDBGetSiteTablePrefix() . '_sitecontact';
     $xarTables['sitecontact']     = $sitecontactTable;
 
+    $sitecontactResponseTable     = xarDBGetSiteTablePrefix() . '_sitecontact_response';
+    $xarTables['sitecontact_response']     = $sitecontactResponseTable;
+    
     // Return the table information
     return $xarTables;
 } 
