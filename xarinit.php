@@ -354,9 +354,8 @@ function sitecontact_upgrade($oldversion)
            return sitecontact_upgrade('0.4.0');
            break;
         case '0.5.0': //nothing new here
-             break;
+             return sitecontact_upgrade('0.5.1');
         case '0.5.1': //current version
-        
         $dbconn =& xarDBGetConn();
         $xarTables =& xarDBGetTables();
 
@@ -397,10 +396,8 @@ function sitecontact_upgrade($oldversion)
                                 'limit' => 20
                             )
                     );
-       xarDefineInstance('sitecontact', 'ContactForm', $instances); 
-
-             break;
-
+       xarDefineInstance('sitecontact', 'ContactForm', $instances);
+            return sitecontact_upgrade('0.6.0');
        case '0.6.0': //current version
 
              break;
