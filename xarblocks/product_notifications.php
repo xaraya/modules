@@ -58,10 +58,10 @@ function commerce_product_notificationsblock_display($blockinfo)
 
     //$box_content='';
 
-    if (isset($_GET['products_id'])) {
+    if (isset($_GET['product_id'])) {
 
         if (isset($_SESSION['customer_id'])) {
-            $check_query = new xenQuery("select count(*) as count from " . TABLE_PRODUCTS_NOTIFICATIONS . " where products_id = '" . (int)$_GET['products_id'] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");
+            $check_query = new xenQuery("select count(*) as count from " . TABLE_product_NOTIFICATIONS . " where product_id = '" . (int)$_GET['product_id'] . "' and customers_id = '" . $_SESSION['customer_id'] . "'");
             $q = new xenQuery();
             if(!$q->run()) return;
             $check = $q->output();
@@ -74,21 +74,21 @@ function commerce_product_notificationsblock_display($blockinfo)
         $info_box_contents = array();
         if ($notification_exists == true) {
             $box_content =
-                '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' . 
-                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify_remove', $request_type) . 
-                '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_products_notifications_remove.gif'), IMAGE_BUTTON_REMOVE_NOTIFICATIONS) . 
-                '</a></td><td class="infoBoxContents"><a href="' . 
-                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify_remove', $request_type) . 
-                '">' . sprintf(BOX_NOTIFICATIONS_NOTIFY_REMOVE, xarModAPIFunc('commerce','user','get_products_name',array('id' =>$_GET['products_id']))) .
+                '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' .
+                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify_remove', $request_type) .
+                '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_product_notifications_remove.gif'), IMAGE_BUTTON_REMOVE_NOTIFICATIONS) .
+                '</a></td><td class="infoBoxContents"><a href="' .
+                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify_remove', $request_type) .
+                '">' . sprintf(BOX_NOTIFICATIONS_NOTIFY_REMOVE, xarModAPIFunc('commerce','user','get_product_name',array('id' =>$_GET['product_id']))) .
                 '</a></td></tr></table>';
         } else {
-            $box_content = 
-                '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' . 
-                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify', $request_type) . 
-                '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_products_notifications.gif'), IMAGE_BUTTON_NOTIFICATIONS) . 
-                '</a></td><td class="infoBoxContents"><a href="' . 
-                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify', $request_type) . 
-                '">' . sprintf(BOX_NOTIFICATIONS_NOTIFY, xarModAPIFunc('commerce','user','get_products_name',array('id' =>$_GET['products_id']))) .
+            $box_content =
+                '<table border="0" cellspacing="0" cellpadding="2"><tr><td class="infoBoxContents"><a href="' .
+                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify', $request_type) .
+                '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'box_product_notifications.gif'), IMAGE_BUTTON_NOTIFICATIONS) .
+                '</a></td><td class="infoBoxContents"><a href="' .
+                xarModURL('commerce','user',basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=notify', $request_type) .
+                '">' . sprintf(BOX_NOTIFICATIONS_NOTIFY, xarModAPIFunc('commerce','user','get_product_name',array('id' =>$_GET['product_id']))) .
                 '</a></td></tr></table>';
         }
     }
@@ -104,7 +104,7 @@ function commerce_product_notificationsblock_display($blockinfo)
          $box_smarty->caching = 1;
          $box_smarty->cache_lifetime=CACHE_LIFETIME;
          $box_smarty->cache_modified_check=CACHE_CHECK;
-         $cache_id = $_SESSION['language'].$_GET['products_id'];
+         $cache_id = $_SESSION['language'].$_GET['product_id'];
          $box_notifications= $box_smarty->fetch(CURRENT_TEMPLATE.'/boxes/box_notifications.html',$cache_id);
     }
     */

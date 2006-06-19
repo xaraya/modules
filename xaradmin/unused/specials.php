@@ -26,12 +26,12 @@ define ('PRICE_PRECISION','2');
     case 'insert':
       // insert a product on special
       if (substr($_POST['specials_price'], -1) == '%') {
-        $new_special_insert_query = new xenQuery("select products_id, products_price from " . TABLE_PRODUCTS . " where products_id = '" . $_POST['products_id'] . "'");
+        $new_special_insert_query = new xenQuery("select product_id, product_price from " . TABLE_PRODUCTS . " where product_id = '" . $_POST['product_id'] . "'");
       $q = new xenQuery();
       if(!$q->run()) return;
         $new_special_insert = $q->output();
-        $_POST['products_price'] = $new_special_insert['products_price'];
-        $_POST['specials_price'] = ($_POST['products_price'] - (($_POST['specials_price'] / 100) * $_POST['products_price']));
+        $_POST['product_price'] = $new_special_insert['product_price'];
+        $_POST['specials_price'] = ($_POST['product_price'] - (($_POST['specials_price'] / 100) * $_POST['product_price']));
       }
 
       $expires_date = '';
@@ -41,20 +41,20 @@ define ('PRICE_PRECISION','2');
         $expires_date .= (strlen($_POST['day']) == 1) ? '0' . $_POST['day'] : $_POST['day'];
       }
     if (PRICE_IS_BRUTTO==1){
-                $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. products_tax_class_id  and p.products_id = '". $_POST['products_id'] . "' ";
+                $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. product_tax_class_id  and p.product_id = '". $_POST['product_id'] . "' ";
         $tax_query = new xenQuery($sql);
       $q = new xenQuery();
       if(!$q->run()) return;
         $tax = $q->output(;
         $_POST['specials_price'] = ($_POST['specials_price']/($tax[tax_rate]+100)*100);
      }
-      new xenQuery("insert into " . TABLE_SPECIALS . " (products_id, specials_new_products_price, specials_date_added, expires_date, status) values ('" . $_POST['products_id'] . "', '" . $_POST['specials_price'] . "', now(), '" . $expires_date . "', '1')");
+      new xenQuery("insert into " . TABLE_SPECIALS . " (product_id, specials_new_product_price, specials_date_added, expires_date, status) values ('" . $_POST['product_id'] . "', '" . $_POST['specials_price'] . "', now(), '" . $expires_date . "', '1')");
       xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page']));
       break;
 
     case 'update':
       // update a product on special
-      if (substr($_POST['specials_price'], -1) == '%') $_POST['specials_price'] = ($_POST['products_price'] - (($_POST['specials_price'] / 100) * $_POST['products_price']));
+      if (substr($_POST['specials_price'], -1) == '%') $_POST['specials_price'] = ($_POST['product_price'] - (($_POST['specials_price'] / 100) * $_POST['product_price']));
 
       $expires_date = '';
       if ($_POST['day'] && $_POST['month'] && $_POST['year']) {
@@ -63,14 +63,14 @@ define ('PRICE_PRECISION','2');
         $expires_date .= (strlen($_POST['day']) == 1) ? '0' . $_POST['day'] : $_POST['day'];
       }
     if (PRICE_IS_BRUTTO==1){
-                $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. products_tax_class_id  and p.products_id = '". $_POST['products_up_id'] . "' ";
+                $sql="select tr.tax_rate from " . TABLE_TAX_RATES . " tr, " . TABLE_PRODUCTS . " p  where tr.tax_class_id = p. product_tax_class_id  and p.product_id = '". $_POST['product_up_id'] . "' ";
         $tax_query = new xenQuery($sql);
       $q = new xenQuery();
       if(!$q->run()) return;
         $tax = $q->output();
         $_POST['specials_price'] = ($_POST['specials_price']/($tax[tax_rate]+100)*100);
      }
-      new xenQuery("update " . TABLE_SPECIALS . " set specials_new_products_price = '" . $_POST['specials_price'] . "', specials_last_modified = now(), expires_date = '" . $expires_date . "' where specials_id = '" . $_POST['specials_id'] . "'");
+      new xenQuery("update " . TABLE_SPECIALS . " set specials_new_product_price = '" . $_POST['specials_price'] . "', specials_last_modified = now(), expires_date = '" . $expires_date . "' where specials_id = '" . $_POST['specials_id'] . "'");
       xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $specials_id));
       break;
 
@@ -121,7 +121,7 @@ define ('PRICE_PRECISION','2');
     if ( ($_GET['action'] == 'edit') && ($_GET['sID']) ) {
       $form_action = 'update';
 
-      $product_query = new xenQuery("select p.products_tax_class_id, p.products_id, pd.products_name, p.products_price, s.specials_new_products_price, s.expires_date from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_SPECIALS . " s where p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_id = s.products_id and s.specials_id = '" . $_GET['sID'] . "'");
+      $product_query = new xenQuery("select p.product_tax_class_id, p.product_id, pd.product_name, p.product_price, s.specials_new_product_price, s.expires_date from " . TABLE_PRODUCTS . " p, " . TABLE_product_DESCRIPTION . " pd, " . TABLE_SPECIALS . " s where p.product_id = pd.product_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.product_id = s.product_id and s.specials_id = '" . $_GET['sID'] . "'");
       $q = new xenQuery();
       if(!$q->run()) return;
       $product = $q->output();
@@ -133,11 +133,11 @@ define ('PRICE_PRECISION','2');
       // create an array of products on special, which will be excluded from the pull down menu of products
       // (when creating a new product on special)
       $specials_array = array();
-      $specials_query = new xenQuery("select p.products_id from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s where s.products_id = p.products_id");
+      $specials_query = new xenQuery("select p.product_id from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s where s.product_id = p.product_id");
       $q = new xenQuery();
       if(!$q->run()) return;
       while ($specials = $q->output()) {
-        $specials_array[] = $specials['products_id'];
+        $specials_array[] = $specials['product_id'];
       }
     }
 ?>
@@ -146,20 +146,20 @@ define ('PRICE_PRECISION','2');
         <td><br><table border="0" cellspacing="0" cellpadding="2">
           <tr>
             <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; ?>&nbsp;</td>
-            <td class="main"><?php echo ($sInfo->products_name) ? $sInfo->products_name . ' <small>(' . $currencies->format($sInfo->products_price) . ')</small>' : xtc_draw_products_pull_down('products_id', 'style="font-size:10px"', $specials_array);
-<input type="hidden" name="products_price" value="#$sInfo->products_price#">
+            <td class="main"><?php echo ($sInfo->product_name) ? $sInfo->product_name . ' <small>(' . $currencies->format($sInfo->product_price) . ')</small>' : xtc_draw_product_pull_down('product_id', 'style="font-size:10px"', $specials_array);
+<input type="hidden" name="product_price" value="#$sInfo->product_price#">
 
             </td>
           </tr>
 
-                <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; echo ($sInfo->products_name) ? "" :  '('. TXT_NETTO .')'; ?>&nbsp;</td>
+                <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; echo ($sInfo->product_name) ? "" :  '('. TXT_NETTO .')'; ?>&nbsp;</td>
        <?php
-        $price=$sInfo->products_price;
-        $new_price=$sInfo->specials_new_products_price;
+        $price=$sInfo->product_price;
+        $new_price=$sInfo->specials_new_product_price;
         if (IN_PRICE_IS_BRUTTO==1){
             $price_netto=xtc_round($price,PRICE_PRECISION);
             $new_price_netto=xtc_round($new_price,PRICE_PRECISION);
-            $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $sInfo->products_tax_class_id . "' ");
+            $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $sInfo->product_tax_class_id . "' ");
       $q = new xenQuery();
       if(!$q->run()) return;
             $tax = $q->output();
@@ -169,10 +169,10 @@ define ('PRICE_PRECISION','2');
         $price=xtc_round($price,PRICE_PRECISION);
         $new_price=xtc_round($new_price,PRICE_PRECISION);
 
-       <input type="hidden" name="products_up_id" value="#$sInfo->products_id#">
+       <input type="hidden" name="product_up_id" value="#$sInfo->product_id#">
        ?>
-          <td class="main"><?php echo ($sInfo->products_name) ? $sInfo->products_name . ' <small>(' . $currencies->format($price) . ' - ' . TXT_NETTO . $currencies->format($price_netto) . ')</small>' : xtc_draw_products_pull_down('products_id', 'style="font-size:10px"', $specials_array);
-<input type="hidden" name="products_price" value="#$sInfo->products_price#">
+          <td class="main"><?php echo ($sInfo->product_name) ? $sInfo->product_name . ' <small>(' . $currencies->format($price) . ' - ' . TXT_NETTO . $currencies->format($price_netto) . ')</small>' : xtc_draw_product_pull_down('product_id', 'style="font-size:10px"', $specials_array);
+<input type="hidden" name="product_price" value="#$sInfo->product_price#">
           ; ?></td>
       </tr>
           <tr>
@@ -202,12 +202,12 @@ define ('PRICE_PRECISION','2');
             <td valign="top"><table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr class="dataTableHeadingRow">
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_PRODUCTS_PRICE; ?></td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_product_PRICE; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_STATUS; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
               </tr>
 <?php
-    $specials_query_raw = "select p.products_id, pd.products_name, p.products_price, s.specials_id, s.specials_new_products_price, s.specials_date_added, s.specials_last_modified, s.expires_date, s.date_status_change, s.status from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_id = s.products_id order by pd.products_name";
+    $specials_query_raw = "select p.product_id, pd.product_name, p.product_price, s.specials_id, s.specials_new_product_price, s.specials_date_added, s.specials_last_modified, s.expires_date, s.date_status_change, s.status from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s, " . TABLE_product_DESCRIPTION . " pd where p.product_id = pd.product_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.product_id = s.product_id order by pd.product_name";
     $specials_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $specials_query_raw, $specials_query_numrows);
     $specials_query = new xenQuery($specials_query_raw);
       $q = new xenQuery();
@@ -215,7 +215,7 @@ define ('PRICE_PRECISION','2');
     while ($specials = $q->output()) {
       if ( ((!$_GET['sID']) || ($_GET['sID'] == $specials['specials_id'])) && (!$sInfo) ) {
 
-        $products_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . $specials['products_id'] . "'");
+        $product_query = new xenQuery("select product_image from " . TABLE_PRODUCTS . " where product_id = '" . $specials['product_id'] . "'");
         $products = $q->output();
         $sInfo_array = xtc_array_merge($specials, $products);
         $sInfo = new objectInfo($sInfo_array);
@@ -227,8 +227,8 @@ define ('PRICE_PRECISION','2');
         echo '                  <tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" onclick="document.location.href=\'' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $specials['specials_id']) . '\'">' . "\n";
       }
 ?>
-                <td  class="dataTableContent"><?php echo $specials['products_name']; ?></td>
-                <td  class="dataTableContent" align="right"><span class="oldPrice"><?php echo $currencies->format($specials['products_price']); ?></span> <span class="specialPrice"><?php echo $currencies->format($specials['specials_new_products_price']); ?></span></td>
+                <td  class="dataTableContent"><?php echo $specials['product_name']; ?></td>
+                <td  class="dataTableContent" align="right"><span class="oldPrice"><?php echo $currencies->format($specials['product_price']); ?></span> <span class="specialPrice"><?php echo $currencies->format($specials['specials_new_product_price']); ?></span></td>
                 <td  class="dataTableContent" align="right">
 <?php
       if ($specials['status'] == '1') {
@@ -269,21 +269,21 @@ define ('PRICE_PRECISION','2');
 
       $contents = array('form' => xtc_draw_form('specials', FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id . '&action=deleteconfirm'));
       $contents[] = array('text' => TEXT_INFO_DELETE_INTRO);
-      $contents[] = array('text' => '<br><b>' . $sInfo->products_name . '</b>');
+      $contents[] = array('text' => '<br><b>' . $sInfo->product_name . '</b>');
       $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . '&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
 
     default:
       if (is_object($sInfo)) {
-        $heading[] = array('text' => '<b>' . $sInfo->products_name . '</b>');
+        $heading[] = array('text' => '<b>' . $sInfo->product_name . '</b>');
 
         $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id . '&action=edit') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id . '&action=delete') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a>');
         $contents[] = array('text' => '<br>' . TEXT_INFO_DATE_ADDED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$sInfo->specials_date_added)));
         $contents[] = array('text' => '' . TEXT_INFO_LAST_MODIFIED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$sInfo->specials_last_modified)));
-        $contents[] = array('align' => 'center', 'text' => '<br>' . xtc_info_image($sInfo->products_image, $sInfo->products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT));
-        $contents[] = array('text' => '<br>' . TEXT_INFO_ORIGINAL_PRICE . ' ' . $currencies->format($sInfo->products_price));
-        $contents[] = array('text' => '' . TEXT_INFO_NEW_PRICE . ' ' . $currencies->format($sInfo->specials_new_products_price));
-        $contents[] = array('text' => '' . TEXT_INFO_PERCENTAGE . ' ' . number_format(100 - (($sInfo->specials_new_products_price / $sInfo->products_price) * 100)) . '%');
+        $contents[] = array('align' => 'center', 'text' => '<br>' . xtc_info_image($sInfo->product_image, $sInfo->product_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT));
+        $contents[] = array('text' => '<br>' . TEXT_INFO_ORIGINAL_PRICE . ' ' . $currencies->format($sInfo->product_price));
+        $contents[] = array('text' => '' . TEXT_INFO_NEW_PRICE . ' ' . $currencies->format($sInfo->specials_new_product_price));
+        $contents[] = array('text' => '' . TEXT_INFO_PERCENTAGE . ' ' . number_format(100 - (($sInfo->specials_new_product_price / $sInfo->product_price) * 100)) . '%');
 
         $contents[] = array('text' => '<br>' . TEXT_INFO_EXPIRES_DATE . ' <b>' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$sInfo->expires_date))
  . '</b>');

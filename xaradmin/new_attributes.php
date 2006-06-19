@@ -41,13 +41,13 @@ function products_admin_new_attributes()
     switch($action) {
         case 'edit':
             if ($copy_product_id != 0) {
-                $q = new xenQuery('SELECT',$xartables['products_product_attributes']);
-                $q->addfields('products_id', 'options_id', 'options_values_id', 'options_values_price', 'price_prefix', 'attributes_model', 'attributes_stock', 'options_values_weight', 'weight_prefix');
+                $q = new xenQuery('SELECT',$xartables['product_product_attributes']);
+                $q->addfields('product_id', 'options_id', 'options_values_id', 'options_values_price', 'price_prefix', 'attributes_model', 'attributes_stock', 'options_values_weight', 'weight_prefix');
                 $q->eq('copy_product_id', $copy_product_id);
                 if(!$q->run()) return;
                 foreach ($q->output() as $attrib_res) {
-                    $q = new xenQuery('INSERT',$xartables['products_product_attributes']);
-                    $q->addfield('products_id', $pID);
+                    $q = new xenQuery('INSERT',$xartables['product_product_attributes']);
+                    $q->addfield('product_id', $pID);
                     $q->addfield('options_id', $attrib_res['options_id']);
                     $q->addfield('options_values_id', $attrib_res['options_values_id']);
                     $q->addfield('options_values_price', $attrib_res['options_values_price']);

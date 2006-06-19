@@ -54,9 +54,9 @@ function commerce_admin_configuration()
               </tr>
 <?php
   if ($_GET['page'] > 1) $rows = $_GET['page'] * MAX_DISPLAY_SEARCH_RESULTS - MAX_DISPLAY_SEARCH_RESULTS;
-  $products_query_raw = "select p.products_id, pd.products_name, pd.products_viewed, l.name from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_LANGUAGES . " l where p.products_id = pd.products_id and l.languages_id = pd.language_id order by pd.products_viewed DESC";
-  $products_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $products_query_raw, $products_query_numrows);
-  $products_query = new xenQuery($products_query_raw);
+  $product_query_raw = "select p.product_id, pd.product_name, pd.product_viewed, l.name from " . TABLE_PRODUCTS . " p, " . TABLE_product_DESCRIPTION . " pd, " . TABLE_LANGUAGES . " l where p.product_id = pd.product_id and l.languages_id = pd.language_id order by pd.product_viewed DESC";
+  $product_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $product_query_raw, $product_query_numrows);
+  $product_query = new xenQuery($product_query_raw);
       $q = new xenQuery();
       if(!$q->run()) return;
   while ($products = $q->output()) {
@@ -66,10 +66,10 @@ function commerce_admin_configuration()
       $rows = '0' . $rows;
     }
 ?>
-              <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['products_id'] . '&origin=' . FILENAME_STATS_PRODUCTS_VIEWED . '?page=' . $_GET['page'], 'NONSSL'); ?>'">
+              <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_VIEWED . '?page=' . $_GET['page'], 'NONSSL'); ?>'">
                 <td class="dataTableContent"><?php echo $rows; ?>.</td>
-                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['products_id'] . '&origin=' . FILENAME_STATS_PRODUCTS_VIEWED . '?page=' . $_GET['page'], 'NONSSL') . '">' . $products['products_name'] . '</a> (' . $products['name'] . ')'; ?></td>
-                <td class="dataTableContent" align="center"><?php echo $products['products_viewed']; ?>&nbsp;</td>
+                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_VIEWED . '?page=' . $_GET['page'], 'NONSSL') . '">' . $products['product_name'] . '</a> (' . $products['name'] . ')'; ?></td>
+                <td class="dataTableContent" align="center"><?php echo $products['product_viewed']; ?>&nbsp;</td>
               </tr>
 <?php
   }
@@ -79,8 +79,8 @@ function commerce_admin_configuration()
           <tr>
             <td colspan="3"><table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr>
-                <td class="smallText" valign="top"><?php echo $products_split->display_count($products_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, $_GET['page'], TEXT_DISPLAY_NUMBER_OF_PRODUCTS); ?></td>
-                <td class="smallText" align="right"><?php echo $products_split->display_links($products_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, MAX_DISPLAY_PAGE_LINKS, $_GET['page']); ?></td>
+                <td class="smallText" valign="top"><?php echo $product_split->display_count($product_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, $_GET['page'], TEXT_DISPLAY_NUMBER_OF_PRODUCTS); ?></td>
+                <td class="smallText" align="right"><?php echo $product_split->display_links($product_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, MAX_DISPLAY_PAGE_LINKS, $_GET['page']); ?></td>
               </tr>
             </table></td>
           </tr>

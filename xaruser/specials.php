@@ -20,7 +20,7 @@
 
  require(DIR_WS_INCLUDES . 'header.php');
 
-  $specials_query_raw = "select p.products_id, pd.products_name, p.products_price, p.products_tax_class_id, p.products_image, s.specials_new_products_price from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_SPECIALS . " s where p.products_status = '1' and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and s.status = '1' order by s.specials_date_added DESC";
+  $specials_query_raw = "select p.product_id, pd.product_name, p.product_price, p.product_tax_class_id, p.product_image, s.specials_new_product_price from " . TABLE_PRODUCTS . " p, " . TABLE_product_DESCRIPTION . " pd, " . TABLE_SPECIALS . " s where p.product_status = '1' and s.product_id = p.product_id and p.product_id = pd.product_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and s.status = '1' order by s.specials_date_added DESC";
   $specials_split = new splitPageResults($specials_query_raw, $_GET['page'], MAX_DISPLAY_SPECIAL_PRODUCTS);
 
 
@@ -32,18 +32,18 @@ $module_content='';
       if(!$q->run()) return;
     while ($specials = $q->output()) {
       $row++;
-      $products_price = xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$specials['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
+      $product_price = xarModAPIFunc('commerce','user','get_product_price',array('product_id' =>$specials['product_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
       $image='';
-      if ($specials['products_image']!='') {
-      $image= xarTplGetImage('product_images/thumbnail_images/' . $specials['products_image']);
+      if ($specials['product_image']!='') {
+      $image= xarTplGetImage('product_images/thumbnail_images/' . $specials['product_image']);
       }
       $module_content[]=array(
-                            'PRODUCTS_ID' => $specials['products_id'],
-                            'PRODUCTS_NAME' => $specials['products_name'],
-                            'PRODUCTS_PRICE' => $products_price,
-                            'PRODUCTS_LINK' => xarModURL('commerce','user','product_info', 'products_id=' . $specials['products_id']),
-                            'PRODUCTS_IMAGE'=> $image,
-                            'PRODUCTS_SHORT_DESCRIPTION' => xtc_get_short_description($new_products['products_id']));
+                            'product_ID' => $specials['product_id'],
+                            'product_NAME' => $specials['product_name'],
+                            'product_PRICE' => $product_price,
+                            'product_LINK' => xarModURL('commerce','user','product_info', 'product_id=' . $specials['product_id']),
+                            'product_IMAGE'=> $image,
+                            'product_SHORT_DESCRIPTION' => xtc_get_short_description($new_products['product_id']));
 
     }
 

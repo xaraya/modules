@@ -27,7 +27,7 @@ function commerce_admin_content_manager()
 
  if ($_GET['special']=='delete_product') {
 
- new xenQuery("DELETE FROM ".TABLE_PRODUCTS_CONTENT." where content_id='".$_GET['coID']."'");
+ new xenQuery("DELETE FROM ".TABLE_product_CONTENT." where content_id='".$_GET['coID']."'");
  xarRedirectResponse(xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'pID='.$_GET['pID']));
 } // if get special
 
@@ -155,7 +155,7 @@ if ($select_file=='default') {
 
            // update data in table
 
-                                $q->addfield('products_id',$product);
+                                $q->addfield('product_id',$product);
                                 $q->addfield('content_name',$content_title);
                                 $q->addfield('content_file',$content_file_name);
                                 $q->addfield('content_link',$content_link);
@@ -163,10 +163,10 @@ if ($select_file=='default') {
                                 $q->addfield('languages_id',$content_language);
 
          if ($_GET['id']=='update_product') {
-         xtc_db_perform(TABLE_PRODUCTS_CONTENT, $sql_data_array, 'update', "content_id = '" . $coID . "'");
+         xtc_db_perform(TABLE_product_CONTENT, $sql_data_array, 'update', "content_id = '" . $coID . "'");
          $content_id = xtc_db_insert_id();
         } else {
-         xtc_db_perform(TABLE_PRODUCTS_CONTENT, $sql_data_array);
+         xtc_db_perform(TABLE_product_CONTENT, $sql_data_array);
          $content_id = xtc_db_insert_id();
         } // if get id
 
@@ -574,13 +574,13 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
 <?php
  break;
 
- case 'edit_products_content':
- case 'new_products_content':
+ case 'edit_product_content':
+ case 'new_product_content':
 
-  if ($_GET['action']=='edit_products_content') {
+  if ($_GET['action']=='edit_product_content') {
         $content_query=new xenQuery("SELECT
                                         content_id,
-                                        products_id,
+                                        product_id,
                                         content_name,
                                         content_file,
                                         content_link,
@@ -588,7 +588,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
                                         file_comment,
                                         content_read
 
-                                        FROM ".TABLE_PRODUCTS_CONTENT."
+                                        FROM ".TABLE_product_CONTENT."
                                         WHERE content_id='".$_GET['coID']."'");
 
       $q = new xenQuery();
@@ -597,20 +597,20 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
 }
 
  // get products names.
- $products_query=new xenQuery("SELECT
-                                products_id,
-                                products_name
-                                FROM ".TABLE_PRODUCTS_DESCRIPTION."
+ $product_query=new xenQuery("SELECT
+                                product_id,
+                                product_name
+                                FROM ".TABLE_product_DESCRIPTION."
                                 WHERE language_id='".$_SESSION['languages_id']."'");
- $products_array='';
+ $product_array='';
 
       $q = new xenQuery();
       if(!$q->run()) return;
- while ($products_data=$q->output()) {
+ while ($product_data=$q->output()) {
 
- $products_array[]=array(
-                        'id' => $products_data['products_id'],
-                        'text' => $products_data['products_name']);
+ $product_array[]=array(
+                        'id' => $product_data['product_id'],
+                        'text' => $product_data['product_name']);
 }
 
  // get languages
@@ -633,7 +633,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
   $content_files_query=new xenQuery("SELECT DISTINCT
                                 content_name,
                                 content_file
-                                FROM ".TABLE_PRODUCTS_CONTENT."
+                                FROM ".TABLE_product_CONTENT."
                                 WHERE content_file!=''");
  $content_files='';
 
@@ -652,14 +652,14 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
  $content_files=array_merge($default_array,$content_files);
  // mask for product content
 
- if ($_GET['action']!='new_products_content') {
+ if ($_GET['action']!='new_product_content') {
  ?>
- <?php echo xtc_draw_form('edit_content',FILENAME_CONTENT_MANAGER,'action=edit_products_content&id=update_product&coID='.$_GET['coID'],'post','enctype="multipart/form-data"').
+ <?php echo xtc_draw_form('edit_content',FILENAME_CONTENT_MANAGER,'action=edit_product_content&id=update_product&coID='.$_GET['coID'],'post','enctype="multipart/form-data"').
    <input type="hidden" name="coID" value="#$_GET['coID']#">
 <?php
 } else {
 ?>
-<?php echo xtc_draw_form('edit_content',FILENAME_CONTENT_MANAGER,'action=edit_products_content&id=insert_product','post','enctype="multipart/form-data"');   ?>
+<?php echo xtc_draw_form('edit_content',FILENAME_CONTENT_MANAGER,'action=edit_product_content&id=insert_product','post','enctype="multipart/form-data"');   ?>
 <?php
 }
 ?>
@@ -667,7 +667,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
  <table class="main" width="100%" border="0">
    <tr>
       <td width="10%"><?php echo TEXT_PRODUCT; ?></td>
-      <td width="90%"><?php echo commerce_userapi_draw_pull_down_menu('product',$products_array,$content['products_id']); ?></td>
+      <td width="90%"><?php echo commerce_userapi_draw_pull_down_menu('product',$product_array,$content['product_id']); ?></td>
    </tr>
       <tr>
       <td width="10%"><?php echo TEXT_LANGUAGE; ?></td>
@@ -744,45 +744,45 @@ if (!$_GET['action']) {
  <?php
  if (!$_GET['action']) {
  // products content
- // load products_ids into array
+ // load product_ids into array
 
- $products_id_query=new xenQuery("SELECT DISTINCT
-                                pc.products_id,
-                                pd.products_name
-                                FROM ".TABLE_PRODUCTS_CONTENT." pc, ".TABLE_PRODUCTS_DESCRIPTION." pd
-                                WHERE pd.products_id=pc.products_id and pd.language_id='".$_SESSION['languages_id']."'");
+ $product_id_query=new xenQuery("SELECT DISTINCT
+                                pc.product_id,
+                                pd.product_name
+                                FROM ".TABLE_product_CONTENT." pc, ".TABLE_product_DESCRIPTION." pd
+                                WHERE pd.product_id=pc.product_id and pd.language_id='".$_SESSION['languages_id']."'");
 
- $products_ids='';
+ $product_ids='';
       $q = new xenQuery();
       if(!$q->run()) return;
- while ($products_id_data=$q->output()) {
+ while ($product_id_data=$q->output()) {
 
-        $products_ids[]=array(
-                        'id'=>$products_id_data['products_id'],
-                        'name'=>$products_id_data['products_name']);
+        $product_ids[]=array(
+                        'id'=>$product_id_data['product_id'],
+                        'name'=>$product_id_data['product_name']);
 
         } // while
 
 
  ?>
- <div class="pageHeading"><br><?php echo HEADING_PRODUCTS_CONTENT; ?><br></div>
+ <div class="pageHeading"><br><?php echo HEADING_product_CONTENT; ?><br></div>
   <?php
  xtc_spaceUsed(DIR_FS_CATALOG.'media/products/');
 echo '<div class="main">'.USED_SPACE.xtc_format_filesize($total).'</div></br>';
 ?>
  <table border="0" width="100%" cellspacing="0" cellpadding="2">
     <tr class="dataTableHeadingRow">
-     <td class="dataTableHeadingContent" nowrap width="5%" ><?php echo TABLE_HEADING_PRODUCTS_ID; ?></td>
+     <td class="dataTableHeadingContent" nowrap width="5%" ><?php echo TABLE_HEADING_product_ID; ?></td>
      <td class="dataTableHeadingContent" width="95%" align="left"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
 </tr>
 <?php
 
-for ($i=0,$n=sizeof($products_ids); $i<$n; $i++) {
+for ($i=0,$n=sizeof($product_ids); $i<$n; $i++) {
  echo '<tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\'" onmouseout="this.className=\'dataTableRow\'">' . "\n";
 
  ?>
- <td class="dataTableContent_products" align="left"><?php echo $products_ids[$i]['id']; ?></td>
- <td class="dataTableContent_products" align="left"><b><?php echo xtc_image(xarTplGetImage(DIR_WS_CATALOG.'images/icons/arrow.gif'); ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'pID='.$products_ids[$i]['id']);?>"><?php echo $products_ids[$i]['name']; ?></a></b></td>
+ <td class="dataTableContent_products" align="left"><?php echo $product_ids[$i]['id']; ?></td>
+ <td class="dataTableContent_products" align="left"><b><?php echo xtc_image(xarTplGetImage(DIR_WS_CATALOG.'images/icons/arrow.gif'); ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'pID='.$product_ids[$i]['id']);?>"><?php echo $product_ids[$i]['name']; ?></a></b></td>
  </tr>
 <?php
 if ($_GET['pID']) {
@@ -795,8 +795,8 @@ if ($_GET['pID']) {
                                         languages_id,
                                         file_comment,
                                         content_read
-                                        FROM ".TABLE_PRODUCTS_CONTENT."
-                                        WHERE products_id='".$_GET['pID']."' order by content_name");
+                                        FROM ".TABLE_product_CONTENT."
+                                        WHERE product_id='".$_GET['pID']."' order by content_name");
         $content_array='';
       $q = new xenQuery();
       if(!$q->run()) return;
@@ -813,7 +813,7 @@ if ($_GET['pID']) {
 
                 } // while content data
 
-if ($_GET['pID']==$products_ids[$i]['id']){
+if ($_GET['pID']==$product_ids[$i]['id']){
 ?>
 
 <tr>
@@ -822,7 +822,7 @@ if ($_GET['pID']==$products_ids[$i]['id']){
 
  <table border="0" width="100%" cellspacing="0" cellpadding="2">
     <tr class="dataTableHeadingRow">
-    <td class="dataTableHeadingContent" nowrap width="2%" ><?php echo TABLE_HEADING_PRODUCTS_CONTENT_ID; ?></td>
+    <td class="dataTableHeadingContent" nowrap width="2%" ><?php echo TABLE_HEADING_product_CONTENT_ID; ?></td>
     <td class="dataTableHeadingContent" nowrap width="2%" >&nbsp;</td>
     <td class="dataTableHeadingContent" nowrap width="5%" ><?php echo TABLE_HEADING_LANGUAGE; ?></td>
     <td class="dataTableHeadingContent" nowrap width="15%" ><?php echo TABLE_HEADING_CONTENT_NAME; ?></td>
@@ -874,13 +874,13 @@ for ($xx=0,$zz=sizeof($languages); $xx<$zz;$xx++){
  <td class="dataTableContent" align="left"><?php echo $content_array[$ii]['read']; ?></td>
  <td class="dataTableContent" align="left">
 
-  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete_product&coID='.$content_array[$ii]['id']).'&pID='.$products_ids[$i]['id']; ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete_product&coID='.$content_array[$ii]['id']).'&pID='.$product_ids[$i]['id']; ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
  <?php
 
  echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&nbsp;&nbsp;';
 
 ?>
- <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit_products_content&coID='.$content_array[$ii]['id']); ?>">
+ <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit_product_content&coID='.$content_array[$ii]['id']); ?>">
 <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
 
 <?php
@@ -925,7 +925,7 @@ echo '</table></td></tr>';
 
 
  </table>
- <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=new_products_content'); ?>">
+ <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=new_product_content'); ?>">
          xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_content.gif'));
 </a>
  <?php

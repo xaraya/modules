@@ -18,13 +18,13 @@ function commerce_userapi_set_product_status($args) {
     extract($args);
     if (!isset($status)) $status = 0;
     $q = new xenQuery('UPDATE',$xartables['commerce_products']);
-    $q->addfield('products_last_modified',mktime());
-    $q->eq('products_id',$pID);
+    $q->addfield('product_last_modified',mktime());
+    $q->eq('product_id',$pID);
     if ($status == 1) {
-        $q->addfield('products_status',1);
+        $q->addfield('product_status',1);
         if(!$q->run()) return;
     } elseif ($status == 0) {
-        $q->addfield('products_status',0);
+        $q->addfield('product_status',0);
         if(!$q->run()) return;
     } else {
       return -1;

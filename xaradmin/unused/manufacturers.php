@@ -90,7 +90,7 @@ function commerce_admin_manufacturers()
                     $q->eq('manufacturers_id',$cID);
                     if(!$q->run()) return;
                     foreach ($q->output() as $product) {
-                      xarModAPIFunc('commerce','admin','remove_product',array('id' =>$products['products_id']));
+                      xarModAPIFunc('commerce','admin','remove_product',array('id' =>$products['product_id']));
                     }
                 }
                 else {
@@ -132,7 +132,7 @@ function commerce_admin_manufacturers()
     for ($i=0;$i<$limit;$i++) {
         if ((!isset($cID) || $cID == $items[$i]['manufacturers_id']) && !isset($cInfo) && (substr($action, 0, 3) != 'new')) {
             $q = new xenQuery('SELECT',$xartables['commerce_products']);
-            $q->addfields('count(*) as products_count');
+            $q->addfields('count(*) as product_count');
             $q->eq('manufacturers_id',$items[$i]['manufacturers_id']);
             if(!$q->run()) return;
             $manufacturer_products = $q->row();

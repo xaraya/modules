@@ -6,8 +6,8 @@
   <tr>
     <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}">
-          <td class="main"><a href="{$module_data.PRODUCTS_LINK}">{$module_data.PRODUCTS_NAME}</a></td>
-          <td class="main"><div align="right">{$module_data.PRODUCTS_DATE}</div></td>
+          <td class="main"><a href="{$module_data.product_LINK}">{$module_data.product_NAME}</a></td>
+          <td class="main"><div align="right">{$module_data.product_DATE}</div></td>
         </tr>
       </table></td>
   </tr>

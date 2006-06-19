@@ -39,8 +39,8 @@ function products_init()
       group_ids TEXT,
       listing_template varchar(64),
       sort_order int(3),
-      products_sorting varchar(32),
-      products_sorting2 varchar(32),
+      product_sorting varchar(32),
+      product_sorting2 varchar(32),
       date_added int(10) UNSIGNED,
       last_modified int(10) UNSIGNED,
       PRIMARY KEY (categories_id),
@@ -64,9 +64,9 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_configuration";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_product_configuration";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_configuration (
+    $query = "CREATE TABLE " . $prefix . "_product_configuration (
       configuration_id int NOT NULL auto_increment,
       configuration_key varchar(64) NOT NULL,
       configuration_value varchar(255) NOT NULL,
@@ -94,39 +94,40 @@ function products_init()
     if (!$q->run($query)) return;
 
     
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products (
-      products_id int NOT NULL auto_increment,
-      products_quantity int(4) NOT NULL,
-      products_shippingtime int(4) NOT NULL,
-      products_model varchar(12),
+    $query = "CREATE TABLE " . $prefix . "_products_product (
+      product_id int NOT NULL auto_increment,
+      product_quantity int(4) NOT NULL,
+      product_shippingtime int(4) NOT NULL,
+      product_model varchar(12),
       group_ids TEXT,
-      products_sort int(4),
-      products_price decimal(15,4) NOT NULL,
-      products_discount_allowed decimal(3,2) DEFAULT '0' NOT NULL,
-      products_date_added int(10) UNSIGNED NOT NULL,
-      products_last_modified int(10) UNSIGNED,
-      products_date_available int(10) UNSIGNED,
-      products_weight decimal(5,2) NOT NULL,
-      products_status tinyint(1) NOT NULL,
-      products_tax_class_id int NOT NULL,
+      product_sort int(4),
+      product_price decimal(15,4) NOT NULL,
+      product_discount_allowed decimal(3,2) DEFAULT '0' NOT NULL,
+      product_date_added int(10) UNSIGNED NOT NULL,
+      product_last_modified int(10) UNSIGNED,
+      product_date_available int(10) UNSIGNED,
+      product_weight decimal(5,2) NOT NULL,
+      product_status tinyint(1) NOT NULL,
+      product_tax_class_id int NOT NULL,
       manufacturers_id int NULL,
-      products_ordered int NOT NULL default '0',
-      products_fsk18 int(1) NOT NULL DEFAULT '0',
+      product_ordered int NOT NULL default '0',
+      product_fsk18 int(1) NOT NULL DEFAULT '0',
+      product_image varchar(255),
       xar_modid int(11) NOT NULL,
       xar_itemid int(11) NOT NULL,
       xar_itemtype int(11) NULL,
-      PRIMARY KEY (products_id),
-      KEY idx_products_date_added (products_date_added)
+      PRIMARY KEY (product_id),
+      KEY idx_product_date_added (product_date_added)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_attributes";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_attributes";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_attributes (
-      products_attributes_id int NOT NULL auto_increment,
-      products_id int NOT NULL,
+    $query = "CREATE TABLE " . $prefix . "_products_product_attributes (
+      product_attributes_id int NOT NULL auto_increment,
+      product_id int NOT NULL,
       options_id int NOT NULL,
       options_values_id int NOT NULL,
       options_values_price decimal(15,4) NOT NULL,
@@ -135,95 +136,95 @@ function products_init()
       attributes_stock int(4) NULL,
       options_values_weight decimal(15,4) NOT NULL,
       weight_prefix char(1) NOT NULL,
-      PRIMARY KEY (products_attributes_id)
+      PRIMARY KEY (product_attributes_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_attributes_download";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_attributes_download";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_attributes_download (
-      products_attributes_id int NOT NULL,
-      products_attributes_filename varchar(255) NOT NULL default '',
-      products_attributes_maxdays int(2) default '0',
-      products_attributes_maxcount int(2) default '0',
-      PRIMARY KEY  (products_attributes_id)
+    $query = "CREATE TABLE " . $prefix . "_products_product_attributes_download (
+      product_attributes_id int NOT NULL,
+      product_attributes_filename varchar(255) NOT NULL default '',
+      product_attributes_maxdays int(2) default '0',
+      product_attributes_maxcount int(2) default '0',
+      PRIMARY KEY  (product_attributes_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_description";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_description";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_description (
-      products_id int NOT NULL auto_increment,
+    $query = "CREATE TABLE " . $prefix . "_products_product_description (
+      product_id int NOT NULL auto_increment,
       language_id int NOT NULL default '1',
-      products_name varchar(64) NOT NULL default '',
-      products_description text,
-      products_short_description text,
-      products_meta_title text NOT NULL,
-      products_meta_description text NOT NULL,
-      products_meta_keywords text NOT NULL,
-      products_url varchar(255) default NULL,
-      products_viewed int(5) default '0',
-      PRIMARY KEY  (products_id,language_id),
-      KEY products_name (products_name)
+      product_name varchar(64) NOT NULL default '',
+      product_description text,
+      product_short_description text,
+      product_meta_title text NOT NULL,
+      product_meta_description text NOT NULL,
+      product_meta_keywords text NOT NULL,
+      product_url varchar(255) default NULL,
+      product_viewed int(5) default '0',
+      PRIMARY KEY  (product_id,language_id),
+      KEY product_name (product_name)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_notifications";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_notifications";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_notifications (
-      products_id int NOT NULL,
+    $query = "CREATE TABLE " . $prefix . "_products_product_notifications (
+      product_id int NOT NULL,
       customers_id int NOT NULL,
       date_added int(10) UNSIGNED NOT NULL,
-      PRIMARY KEY (products_id, customers_id)
+      PRIMARY KEY (product_id, customers_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_options";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_options";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_options (
-      products_options_id int NOT NULL default '0',
+    $query = "CREATE TABLE " . $prefix . "_products_product_options (
+      product_options_id int NOT NULL default '0',
       language_id int NOT NULL default '1',
-      products_options_name varchar(32) NOT NULL default '',
-      PRIMARY KEY  (products_options_id,language_id)
+      product_options_name varchar(32) NOT NULL default '',
+      PRIMARY KEY  (product_options_id,language_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_options_values";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_options_values";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_options_values (
-      products_options_values_id int NOT NULL default '0',
+    $query = "CREATE TABLE " . $prefix . "_products_product_options_values (
+      product_options_values_id int NOT NULL default '0',
       language_id int NOT NULL default '1',
-      products_options_values_name varchar(64) NOT NULL default '',
-      PRIMARY KEY  (products_options_values_id,language_id)
+      product_options_values_name varchar(64) NOT NULL default '',
+      PRIMARY KEY  (product_options_values_id,language_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_options_values_to_products_options";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_options_values_to_product_options";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_options_values_to_products_options (
-      products_options_values_to_products_options_id int NOT NULL auto_increment,
-      products_options_id int NOT NULL,
-      products_options_values_id int NOT NULL,
-      PRIMARY KEY (products_options_values_to_products_options_id)
+    $query = "CREATE TABLE " . $prefix . "_products_product_options_values_to_product_options (
+      product_options_values_to_product_options_id int NOT NULL auto_increment,
+      product_options_id int NOT NULL,
+      product_options_values_id int NOT NULL,
+      PRIMARY KEY (product_options_values_to_product_options_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_graduated_prices";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_graduated_prices";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_graduated_prices (
-      products_id int(11) NOT NULL default '0',
+    $query = "CREATE TABLE " . $prefix . "_products_product_graduated_prices (
+      product_id int(11) NOT NULL default '0',
       quantity int(11) NOT NULL default '0',
       unitprice decimal(15,4) NOT NULL default '0.0000',
-      KEY products_id (products_id)
+      KEY product_id (product_id)
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_products_to_categories";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product_to_categories";
     if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_products_products_to_categories (
-      products_id int NOT NULL,
+    $query = "CREATE TABLE " . $prefix . "_products_product_to_categories (
+      product_id int NOT NULL,
       categories_id int NOT NULL,
-      PRIMARY KEY (products_id,categories_id)
+      PRIMARY KEY (product_id,categories_id)
     )";
     if (!$q->run($query)) return;
 
@@ -231,8 +232,8 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_specials (
       specials_id int NOT NULL auto_increment,
-      products_id int NOT NULL,
-      specials_new_products_price decimal(15,4) NOT NULL,
+      product_id int NOT NULL,
+      specials_new_product_price decimal(15,4) NOT NULL,
       specials_date_added int(10) UNSIGNED,
       specials_last_modified int(10) UNSIGNED,
       expires_date int(10) UNSIGNED,
@@ -271,17 +272,17 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (4,0,0,1,'Contact','Contact','Put here your Contact information.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (5,0,0,1,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge�dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (5,0,0,1,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge?dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (6,0,0,2,'Liefer- und Versandkosten','Liefer- und Versandkosten','Fgen Sie hier Ihre Informationen ber Liefer- und Versandkosten ein.',1,'',1,1,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (7,0,0,2,'Privatsph�e und Datenschutz','Privatsph�e und Datenschutz','Fgen Sie hier Ihre Informationen ber Privatsph�e und Datenschutz ein.',1,'',1,2,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (7,0,0,2,'Privatsph?e und Datenschutz','Privatsph?e und Datenschutz','Fgen Sie hier Ihre Informationen ber Privatsph?e und Datenschutz ein.',1,'',1,2,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (8,0,0,2,'Unsere AGB\'s','Allgemeine Gesch�tsbedingungen','<strong>Allgemeine Gesch&auml;ftsbedingungen<br></strong><br>F&uuml;gen Sie hier Ihre allgemeinen Gesch&auml;ftsbedingungen ein.<br>1. Geltung<br>2. Angebote<br>3. Preis<br>4. Versand und Gefahr&uuml;bergang<br>5. Lieferung<br>6. Zahlungsbedingungen<br>7. Eigentumsvorbehalt <br>8. M&auml;ngelr&uuml;gen, Gew&auml;hrleistung und Schadenersatz<br>9. Kulanzr&uuml;cknahme / Annahmeverweigerung<br>10. Erf&uuml;llungsort und Gerichtsstand<br>11. Schlussbestimmungen',1,'',1,3,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (8,0,0,2,'Unsere AGB\'s','Allgemeine Gesch?tsbedingungen','<strong>Allgemeine Gesch&auml;ftsbedingungen<br></strong><br>F&uuml;gen Sie hier Ihre allgemeinen Gesch&auml;ftsbedingungen ein.<br>1. Geltung<br>2. Angebote<br>3. Preis<br>4. Versand und Gefahr&uuml;bergang<br>5. Lieferung<br>6. Zahlungsbedingungen<br>7. Eigentumsvorbehalt <br>8. M&auml;ngelr&uuml;gen, Gew&auml;hrleistung und Schadenersatz<br>9. Kulanzr&uuml;cknahme / Annahmeverweigerung<br>10. Erf&uuml;llungsort und Gerichtsstand<br>11. Schlussbestimmungen',1,'',1,3,0)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (9,0,0,2,'Kontakt','Kontakt','Fgen Sie hier Ihre Informationen ber Kontakt ein.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (10,0,0,2,'Index','Willkommen','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge�dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (10,0,0,2,'Index','Willkommen','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge?dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (11,0,0,3,'Shipping & Returns','Shipping & Returns','Put here your Shipping & Returns information.',1,'',1,1,0)";
     if (!$q->run($query)) return;
@@ -291,7 +292,7 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (14,0,0,3,'Contact','Contact','Put here your Contact information.',1,'',1,4,0)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge�dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
+    $query = "INSERT INTO " . $prefix . "_products_content_manager VALUES (15,0,0,3,'Index','Welcome','{\$greeting}<br><br> Dies ist die Standardinstallation des osCommerce Forking Projektes - XT-Commerce. Alle dargestellten Produkte dienen zur Demonstration der Funktionsweise. Wenn Sie Produkte bestellen, so werden diese weder ausgeliefert, noch in Rechnung gestellt. Alle Informationen zu den verschiedenen Produkten sind erfunden und daher kann kein Anspruch daraus abgeleitet werden.<br><br>Sollten Sie daran interessiert sein das Programm, welches die Grundlage fr diesen Shop bildet, einzusetzen, so besuchen Sie bitte die Supportseite von XT-Commerce. Dieser Shop basiert auf der XT-Commerce Version Beta2.<br><br>Der hier dargestellte Text kann in der folgenden Datei einer jeden Sprache ge?dert werden: [Pfad zu catalog]/lang/catalog/[language]/index.php.<br><br>Das kann manuell geschehen, oder ber das Administration Tool mit Sprache->[language]->Sprache definieren, oder durch Verwendung des Hilfsprogrammes->Datei Manager.',1,'',0,5,0)";
     if (!$q->run($query)) return;
 
     # configuration_group_id 1
@@ -307,9 +308,9 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'STORE_ZONE', '', 1, 7, NULL, '', 'products_userapi_get_zone_name', 'products_adminapi_pull_down_zone_list(')";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'EXPECTED_PRODUCTS_SORT', 'desc',  1, 8, NULL, '', NULL, 'products_adminapi_select_option(array(\'asc\', \'desc\'),')";
+    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'EXPECTED_product_SORT', 'desc',  1, 8, NULL, '', NULL, 'products_adminapi_select_option(array(\'asc\', \'desc\'),')";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'EXPECTED_PRODUCTS_FIELD', 'date_expected',  1, 9, NULL, '', NULL, 'products_adminapi_select_option(array(\'products_name\', \'date_expected\'),')";
+    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'EXPECTED_product_FIELD', 'date_expected',  1, 9, NULL, '', NULL, 'products_adminapi_select_option(array(\'product_name\', \'date_expected\'),')";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'USE_DEFAULT_LANGUAGE_CURRENCY', 'false', 1, 10, NULL, '', NULL, 'products_adminapi_select_option(array(\'true\', \'false\'),')";
     if (!$q->run($query)) return;
@@ -407,13 +408,13 @@ function products_init()
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_CATEGORIES_PER_ROW', '3',  3, 13, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_PRODUCTS_NEW', '10',  3, 14, NULL, '', NULL, NULL)";
+    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_product_NEW', '10',  3, 14, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_BESTSELLERS', '10',  3, 15, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_ALSO_PURCHASED', '6',  3, 16, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
-    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_PRODUCTS_IN_ORDER_HISTORY_BOX', '6',  3, 17, NULL, '', NULL, NULL)";
+    $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_product_IN_ORDER_HISTORY_BOX', '6',  3, 17, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
     $query = "INSERT INTO " . $prefix . "_products_configuration (configuration_id,  configuration_key, configuration_value, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES   ('', 'MAX_DISPLAY_ORDER_HISTORY', '10',  3, 18, NULL, '', NULL, NULL)";
     if (!$q->run($query)) return;
@@ -818,7 +819,7 @@ function products_init()
 
 # --------------------------------------------------------
 #
-# Configure Hook
+# Configure Hooks
 #
 
     // when a new module item is being specified
@@ -862,12 +863,30 @@ function products_init()
                            'products', 'admin', 'removehook')) {
         return false;
     }
-    
+
     // when a whole module is displayed, e.g. via the modules admin screen
     // (set object ID to the module name !)
     if (!xarModRegisterHook('item', 'display', 'GUI',
                            'products', 'user', 'displayhook')) {
         return false;
+    }
+
+# --------------------------------------------------------
+#
+# Delete block types for this module
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'products')
+    );
+
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
     }
 
 # --------------------------------------------------------
@@ -912,14 +931,14 @@ function products_init()
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'products', 'type'=>'search'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'productssearch',
+                                                                  'name' => 'productsearch',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
 // Put a categories block in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'products', 'type'=>'categories'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'productscategories',
+                                                                  'name' => 'productcategories',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
 
@@ -959,7 +978,7 @@ function products_upgrade($oldversion)
  */
 function products_delete()
 {
-    $tablenameprefix = xarDBGetSiteTablePrefix() . '_products_';
+    $tablenameprefix = xarDBGetSiteTablePrefix() . '_product_';
     $tables = xarDBGetTables();
     $q = new xenQuery();
         foreach ($tables as $table) {
@@ -969,11 +988,45 @@ function products_delete()
         }
     }
 
+# --------------------------------------------------------
+#
+# Remove modvars, masks and privilege instances
+#
     xarModDelAllVars('products');
     xarRemoveMasks('products');
+    xarRemoveInstances('products');
 
-    // The modules module will take care of all the blocks
+# --------------------------------------------------------
+#
+# Delete block types for this module
+#
+    $blocktypes = xarModAPIfunc(
+        'blocks', 'user', 'getallblocktypes',
+        array('module' => 'products')
+    );
 
+    // Delete block types.
+    if (is_array($blocktypes) && !empty($blocktypes)) {
+        foreach($blocktypes as $blocktype) {
+            $result = xarModAPIfunc(
+                'blocks', 'admin', 'delete_type', $blocktype
+            );
+        }
+    }
+
+# --------------------------------------------------------
+#
+# Remove blocks instances
+#
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'productsearch'));
+    if ($blockinfo) {
+        if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
+    }
+
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'productcategories'));
+    if ($blockinfo) {
+        if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
+    }
     // Remove from the list of commerce modules
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['products']);

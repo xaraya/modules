@@ -23,15 +23,15 @@
    require_once(DIR_FS_INC .'xtc_get_tax_class_id.inc.php');
    require_once(DIR_FS_INC .'xtc_format_price.inc.php');
   // I found the easiest way to do this is just delete the current attributes & start over =)
-  new xenQuery("DELETE FROM products_attributes WHERE products_id = '" . $_POST['current_product_id'] . "'" );
+  new xenQuery("DELETE FROM product_attributes WHERE product_id = '" . $_POST['current_product_id'] . "'" );
 
   // Simple, yet effective.. loop through the selected Option Values.. find the proper price & prefix.. insert.. yadda yadda yadda.
   for ($i = 0; $i < sizeof($_POST['optionValues']); $i++) {
-    $query = "SELECT * FROM products_options_values_to_products_options where products_options_values_id = '" . $_POST['optionValues'][$i] . "'";
+    $query = "SELECT * FROM product_options_values_to_product_options where product_options_values_id = '" . $_POST['optionValues'][$i] . "'";
     $result = mysql_query($query) or die(mysql_error());
     $matches = mysql_num_rows($result);
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-      $optionsID = $line['products_options_id'];
+      $optionsID = $line['product_options_id'];
     }
 
     $cv_id = $_POST['optionValues'][$i];
@@ -56,15 +56,15 @@
       $value_order = $_POST[$cv_id . '_order'];
       $value_linked = $_POST[$cv_id . '_linked'];
 
-      new xenQuery("INSERT INTO products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_type_id, options_values_qty, attribute_order, collegamento) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_model . "', '" . $value_stock . "', '" . $value_prefix . "', '" . $value_type . "', '" . $value_qty . "', '" . $value_order . "', '" . $value_linked . "')") or die(mysql_error());
+      new xenQuery("INSERT INTO product_attributes (product_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_type_id, options_values_qty, attribute_order, collegamento) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_model . "', '" . $value_stock . "', '" . $value_prefix . "', '" . $value_type . "', '" . $value_qty . "', '" . $value_order . "', '" . $value_linked . "')") or die(mysql_error());
     } elseif ($optionSortCopyInstalled == '1') {
       $value_sort = $_POST[$cv_id . '_sort'];
       $value_weight = $_POST[$cv_id . '_weight'];
       $value_weight_prefix = $_POST[$cv_id . '_weight_prefix'];
 
-      new xenQuery("INSERT INTO products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix, products_options_sort_order, products_attributes_weight, products_attributes_weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_prefix . "', '" . $value_sort . "', '" . $value_weight . "', '" . $value_weight_prefix . "')") or die(mysql_error());
+      new xenQuery("INSERT INTO product_attributes (product_id, options_id, options_values_id, options_values_price, price_prefix, product_options_sort_order, product_attributes_weight, product_attributes_weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_prefix . "', '" . $value_sort . "', '" . $value_weight . "', '" . $value_weight_prefix . "')") or die(mysql_error());
     } else {
-      new xenQuery("INSERT INTO products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix ,attributes_model, attributes_stock, options_values_weight, weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_prefix . "', '" . $value_model . "', '" . $value_stock . "', '" . $value_weight . "', '" . $value_weight_prefix . "')") or die(mysql_error());
+      new xenQuery("INSERT INTO product_attributes (product_id, options_id, options_values_id, options_values_price, price_prefix ,attributes_model, attributes_stock, options_values_weight, weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $optionsID . "', '" . $_POST['optionValues'][$i] . "', '" . $value_price . "', '" . $value_prefix . "', '" . $value_model . "', '" . $value_stock . "', '" . $value_weight . "', '" . $value_weight_prefix . "')") or die(mysql_error());
     }
   }
 
@@ -75,7 +75,7 @@
       $value_prefix = $_POST[$cv_id . '_prefix'];
       $value_product_id = $_POST[$cv_id . '_options_id'];
 
-      new xenQuery("INSERT INTO products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $value_product_id . "', '" . $optionTypeTextInstalledID . "', '" . $value_price . "', '" . $value_prefix . "')") or die(mysql_error());
+      new xenQuery("INSERT INTO product_attributes (product_id, options_id, options_values_id, options_values_price, price_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $value_product_id . "', '" . $optionTypeTextInstalledID . "', '" . $value_price . "', '" . $value_prefix . "')") or die(mysql_error());
     }
   }
 ?>

@@ -25,7 +25,7 @@
     xarRedirectResponse(xarModURL('commerce','user','login', '', 'SSL'));
   }
 */
-  $product_query = new xenQuery("select pd.products_name, p.products_image from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$_GET['products_id'] . "' and pd.products_id = p.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.products_status = '1'");
+  $product_query = new xenQuery("select pd.product_name, p.product_image from " . TABLE_PRODUCTS . " p, " . TABLE_product_DESCRIPTION . " pd where p.product_id = '" . (int)$_GET['product_id'] . "' and pd.product_id = p.product_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.product_status = '1'");
   $valid_product = ($product_query->getrows() > 0);
 
   if (isset($_GET['action']) && $_GET['action'] == 'process') {
@@ -36,7 +36,7 @@
       $customer_values = $q->output();
       $date_now = date('Ymd');
       if ($customer_values['customers_lastname']=='') $customer_values['customers_lastname']=TEXT_GUEST ;
-      new xenQuery("insert into " . TABLE_REVIEWS . " (products_id, customers_id, customers_name, reviews_rating, date_added) values ('" . $_GET['products_id'] . "', '" . $_SESSION['customer_id'] . "', '" . addslashes($customer_values['customers_firstname']) . ' ' . addslashes($customer_values['customers_lastname']) . "', '" . $_POST['rating'] . "', now())");
+      new xenQuery("insert into " . TABLE_REVIEWS . " (product_id, customers_id, customers_name, reviews_rating, date_added) values ('" . $_GET['product_id'] . "', '" . $_SESSION['customer_id'] . "', '" . addslashes($customer_values['customers_firstname']) . ' ' . addslashes($customer_values['customers_lastname']) . "', '" . $_POST['rating'] . "', now())");
       $insert_id = xtc_db_insert_id();
       new xenQuery("insert into " . TABLE_REVIEWS_DESCRIPTION . " (reviews_id, languages_id, reviews_text) values ('" . $insert_id . "', '" . $_SESSION['languages_id'] . "', '" . $_POST['review'] . "')");
     }
@@ -73,7 +73,7 @@
     $product_info = $q->output()($product_query);
     $name = $customer_info['customers_firstname'] . ' ' . $customer_info['customers_lastname'];
     if ($name==' ') $customer_info['customers_lastname'] = TEXT_GUEST;
-    $data['PRODUCTS_NAME'] = $product_info['products_name'];
+    $data['product_NAME'] = $product_info['product_name'];
     $data['AUTHOR'] = $customer_info['customers_firstname'] . ' ' . $customer_info['customers_lastname'];
     $data['INPUT_TEXT'] = xtc_draw_textarea_field('review', 'soft', 60, 15;
     $data['INPUT_RATING'] = xtc_draw_radio_field('rating', '1') . ' ' . xtc_draw_radio_field('rating', '2') . ' ' . xtc_draw_radio_field('rating', '3') . ' ' . xtc_draw_radio_field('rating', '4') . ' ' . xtc_draw_radio_field('rating', '5');

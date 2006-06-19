@@ -1,5 +1,5 @@
 <xar:template file="application_top" type="module"/>
- {$PRODUCTS_NAME}</strong></font><br>
+ {$product_NAME}</strong></font><br>
 <br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

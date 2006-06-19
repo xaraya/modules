@@ -39,14 +39,14 @@
   $tempTextID = '1999043';
 
   // Lets get all of the possible options
-  $query = "SELECT * FROM products_options where products_options_id LIKE '%' AND language_id = '" . $_SESSION['languages_id'] . "'";
+  $query = "SELECT * FROM product_options where product_options_id LIKE '%' AND language_id = '" . $_SESSION['languages_id'] . "'";
   $result = mysql_query($query) or die(mysql_error());
   $matches = mysql_num_rows($result);
 
   if ($matches) {
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-      $current_product_option_name = $line['products_options_name'];
-      $current_product_option_id = $line['products_options_id'];
+      $current_product_option_name = $line['product_options_name'];
+      $current_product_option_id = $line['product_options_id'];
       // Print the Option Name
       echo "<TR class=\"dataTableHeadingRow\">";
       echo "<TD class=\"dataTableHeadingContent\"><B>" . $current_product_option_name . "</B></TD>";
@@ -73,7 +73,7 @@
       echo "</TR>";
 
       // Find all of the Current Option's Available Values
-      $query2 = "SELECT * FROM products_options_values_to_products_options WHERE products_options_id = '" . $current_product_option_id . "' ORDER BY products_options_values_id DESC";
+      $query2 = "SELECT * FROM product_options_values_to_product_options WHERE product_options_id = '" . $current_product_option_id . "' ORDER BY product_options_values_id DESC";
       $result2 = mysql_query($query2) or die(mysql_error());
       $matches2 = mysql_num_rows($result2);
 
@@ -82,7 +82,7 @@
         while ($line = mysql_fetch_array($result2, MYSQL_ASSOC)) {
           $i++;
           $rowClass = rowClass($i);
-          $current_value_id = $line['products_options_values_id'];
+          $current_value_id = $line['product_options_values_id'];
           $isSelected = checkAttribute($current_value_id, $_POST['current_product_id'], $current_product_option_id);
           if ($isSelected) {
             $CHECKED = ' CHECKED';
@@ -90,10 +90,10 @@
             $CHECKED = '';
           }
 
-          $query3 = "SELECT * FROM products_options_values WHERE products_options_values_id = '" . $current_value_id . "' AND language_id = '" . $_SESSION['languages_id'] . "'";
+          $query3 = "SELECT * FROM product_options_values WHERE product_options_values_id = '" . $current_value_id . "' AND language_id = '" . $_SESSION['languages_id'] . "'";
           $result3 = mysql_query($query3) or die(mysql_error());
           while($line = mysql_fetch_array($result3, MYSQL_ASSOC)) {
-            $current_value_name = $line['products_options_values_name'];
+            $current_value_name = $line['product_options_values_name'];
             // Print the Current Value Name
             echo "<TR class=\"" . $rowClass . "\">";
             echo "<TD class=\"main\">";

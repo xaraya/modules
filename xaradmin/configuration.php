@@ -26,7 +26,7 @@ function products_admin_configuration()
         switch ($action) {
           case 'save':
             if(!xarVarFetch('cID', 'int',  $cID, NULL,  XARVAR_DONT_SET)) {return;}
-            $q = new xenQuery('UPDATE', $table['products_configuration']);
+            $q = new xenQuery('UPDATE', $table['product_configuration']);
             $tablefields = array(
                 array('name' => 'configuration_value','value' => $configuration_value),
                 array('name' => 'last_modified','value' => mktime()),
@@ -38,14 +38,14 @@ function products_admin_configuration()
     }
 
     $q = new xenQuery('SELECT',
-                      $table['products_configuration_group'],
+                      $table['product_configuration_group'],
                       'configuration_group_title');
     $q->eq('configuration_group_id',$gID);
     $cfg_group = $q->run();
     if (!$cfg_group) return;
     $data['cfg_group'] = $q->row();
 
-    $q = new xenQuery('SELECT', $table['products_configuration']);
+    $q = new xenQuery('SELECT', $table['product_configuration']);
     $tablefields = array(
         'configuration_key',
         'configuration_value',
@@ -117,7 +117,7 @@ function products_admin_configuration()
         }
 
         if (($cID == $configuration['configuration_id']) && (!isset($cInfo)) && (substr($action, 0, 3) != 'new')) {
-            $q = new xenQuery('SELECT', $table['products_configuration']);
+            $q = new xenQuery('SELECT', $table['product_configuration']);
             $tablefields = array(
                 'configuration_key',
                 'date_added',

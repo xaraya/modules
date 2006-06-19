@@ -1,13 +1,10 @@
 <?php
 /**
- * Admin interface for the commerce module
+ * Admin interface for the products module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @link http://www.xaraya.com
- *
- * @subpackage Commerce Module
- * @author Marc Lutolf
+ * @package Commerce
+ * @subpackage Products Module
+ * @author Marc Lutolf (mfl@netspan.ch)
  *  -----------------------------------------------------------------------------------------
  *  based on:
  *  (c) 2003 XT-Commerce
@@ -17,12 +14,11 @@
 */
 
 /**
- * the main administration function
+ * the main user function
  */
-function commerce_user_main()
+function products_user_main()
 {
-   // Security Check
-//    if(!xarSecurityCheck('EditCommerce')) return;
+    if(!xarSecurityCheck('EditProducts')) return;
 
     xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main User Menu',
                     'commerce'));
@@ -35,7 +31,7 @@ function commerce_user_main()
     else {
         switch(strtolower($branch)) {
             case 'start':
-                xarResponseRedirect(xarModURL('commerce', 'user', 'start'));
+                xarResponseRedirect(xarModURL('products', 'user', 'start'));
                 break;
         }
    }
