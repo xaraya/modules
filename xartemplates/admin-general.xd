@@ -23,11 +23,11 @@
     <legend>
         <xar:mlstring>General Module Options</xar:mlstring>
     </legend>
-        <xar:set name="options">array(
-                            array('id' => '0', 'name' => xarML('No')),
-                            array('id' => '1', 'name' => xarML('Yes')),
-                            )
-                            </xar:set>
+    <xar:set name="options">array(
+                        array('id' => '0', 'name' => xarML('No')),
+                        array('id' => '1', 'name' => xarML('Yes')),
+                        )
+                        </xar:set>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Allow only local pages</xar:mlstring>
