@@ -272,18 +272,20 @@ function sitecontact_upgrade($oldversion)
                   ";
             $result = $datadict->changeTable($sitecontactTable, $fields);
             if (!$result) {return;}
-            
+
             /* Create a default form */
             $scdefaultemail=  xarModGetVar('sitecontact', 'scdefaultemail');
+            $scdefaultname=xarModGetVar('sitecontact', 'scdefaultname');
+            if (!isset($scdefaultname) || trim($scdefaultname) == '') {
+                $scdefaultname = xarML('Admin');
+            }
             $usehtmlemail = xarModGetVar('sitecontact', 'usehtmlemail');
             $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
-            $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
             $customtitle = xarModGetVar('sitecontact', 'customtitle');
             $customtext = xarModGetVar('sitecontact', 'customtext');
             $optiontext = xarModGetVar('sitecontact', 'optiontext');
             $webconfirmtext = xarModGetVar('sitecontact', 'webconfirmtext');
             $notetouser = xarModGetVar('sitecontact', 'notetouser');
-            $scdefaultname=xarModGetVar('sitecontact', 'scdefaultname');
             $sitecontactTable = $xarTables['sitecontact'];
             $query ="INSERT INTO $sitecontactTable
                   (xar_scid,
