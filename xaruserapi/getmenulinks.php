@@ -19,12 +19,16 @@
  */
 function window_userapi_getmenulinks()
 {
-    if (xarSecurityCheck('ReadWindow',0)) {
+    $urls = xarModAPIFunc('window','user','getall',array('status' => 1));
+    foreach($urls as $url) {
+		$url_parts = parse_url($url['name']);
         $menulinks[] = array('url'   => xarModURL('window',
                                                   'user',
-                                                  'display'),
-                              'title' => xarML('Show a display in the window'),
-                              'label' => xarML('Display a window'));
+                                                  'display',array('url' => $url['name'])),
+                              'title' => $url['description'],
+                              'label' => $url['label']);
+    }
+    if (xarSecurityCheck('ReadWindow',0)) {
     }
 
     if (empty($menulinks)){

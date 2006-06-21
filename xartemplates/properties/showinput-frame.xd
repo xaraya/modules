@@ -3,11 +3,17 @@
     </script> 
 </xar:if> 
 <div style="width: #$hsize#; height: #$vsize#px;">
+    <xar:if condition="$open_direct eq 1">
+        <xar:if condition="$use_fixed_title eq 1">
+            <br />
+        </xar:if>
+        [ <a href="#$url#" target="_blank"><xarmlstring>Open application</xarmlstring></a> ]
+    </xar:if>
     <xar:if condition="$use_iframe eq 1">
-        <iframe id="iframewindow" src="#$page#" width="#$hsize#" height="#$vsize#" style="frameborder: 0; marginheight: 0; marginwidth: 0;"> 
+        <iframe id="iframewindow" src="#$url#" width="#$hsize#" height="#$vsize#" style="frameborder: 0; marginheight: 0; marginwidth: 0;"> 
     </xar:if>
         <xar:if condition="$use_object">
-            <object id="objectwindow" data="#$page#" type="text/html" width="#$hsize#" height="#$vsize#">
+            <object id="objectwindow" data="#$url#" type="text/html" width="#$hsize#" height="#$vsize#">
             </object>
         </xar:if>
     <xar:if condition="$use_iframe">
@@ -17,3 +23,4 @@
         <xar:mlstring>Display unavailable. Please define a display tag in the module's configuration.</xar:mlstring>
     </xar:if>
 </div>
+

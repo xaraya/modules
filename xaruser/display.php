@@ -20,12 +20,13 @@
  * @return  data on success or void on falure
  * @throws  XAR_SYSTEM_EXCEPTION, 'NOT_ALLOWED'
 */
-function window_user_display($args)
+function window_user_display()
 {
-    $data = array();
+	if (!xarVarFetch('url', 'str', $url, '', XARVAR_NOT_REQUIRED)) return;
+	$data['url'] = isset($url) ? $url : '';
     if (isset($id)) {
         $data['hooks'] = xarModCallHooks('item', 'display', $id, array('itemtype'  => $id,
-                                                                       'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
+                                                                       'returnurl' => xarModURL('window', 'user', 'main', array('page' => $url, 'id' => $id))),
                                                                 'window');
     }
     $data['title'] = "Xaraya Window";

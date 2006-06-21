@@ -77,6 +77,8 @@ function window_adminapi_update($args)
     $query = "UPDATE $windowtable
               SET xar_name            = ?,
                   xar_alias           = ?,
+                  xar_label           = ?,
+                  xar_description     = ?,
                   xar_reg_user_only   = ?,
                   xar_open_direct     = ?,
                   xar_use_fixed_title = ?,
@@ -85,7 +87,7 @@ function window_adminapi_update($args)
                   xar_hsize           = ?,
                   xar_status          = ?
               WHERE xar_id = ?";
-    $bindvars = array($name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status, $itemid);
+    $bindvars = array($name, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status, $itemid);
 
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;

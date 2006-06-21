@@ -24,6 +24,21 @@ function window_userapi_getall($args)
 {
     extract($args);
 
+    $bindvars = array();
+	$wherelist = array();
+	$fieldlist = array('name','alias','status');
+	foreach ($fieldlist as $field) {
+		if (isset($$field)) {
+			$wherelist[] = "xar_$field = ?";
+			$bindvars[] = $$field;
+		}
+	}
+	if (count($wherelist) > 0) {
+		$where = " WHERE " . join(' AND ',$wherelist) . " ";
+	} else {
+		$where = '';
+	}
+
     if (!isset($startnum) || !is_numeric($startnum)) {
         $startnum = 1;
     }
@@ -43,24 +58,29 @@ function window_userapi_getall($args)
     $query = "SELECT xar_id,
                      xar_name,
                      xar_alias,
+                     xar_label,
+                     xar_description,
                      xar_reg_user_only,
                      xar_open_direct,
                      xar_use_fixed_title,
                      xar_auto_resize,
                      xar_vsize,
                      xar_hsize
-              FROM $windowtable
+              FROM $windowtable $where
               ORDER BY xar_name";
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array());
+//    echo $query;exit;
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+        list($itemid, $name, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
         if (xarSecurityCheck('ViewWindow', 0, 'Item', "$name:All:$itemid")) {
             $items[] = array('itemid'          => $itemid,
                              'name'            => $name,
                              'alias'           => $alias,
+                             'label'           => $label,
+                             'description'     => $description,
                              'reg_user_only'   => $reg_user_only,
                              'open_direct'     => $open_direct,
                              'use_fixed_title' => $use_fixed_title,
@@ -71,7 +91,7 @@ function window_userapi_getall($args)
     }
 
     $result->Close();
- 
+
     return $items;
 }
 ?>
