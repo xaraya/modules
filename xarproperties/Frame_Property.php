@@ -19,7 +19,7 @@ class Frame_Property extends Dynamic_Property
 {
     public $hsize;
     public $vsize;
-    public $url = "index.php?module=window";
+    public $page = "index.php?module=window";
     public $title = "Xaraya Window";
     public $auto_resize;
     public $allow_local_only;
@@ -131,7 +131,7 @@ class Frame_Property extends Dynamic_Property
         // TODO: the way the template is organized now, this only works when an id is set.
         $hsize  = isset($hsize) ? $hsize : $this->hsize;
         $vsize  = isset($vsize) ? $vsize : $this->vsize;
-		$url           = isset($url) ? $url : $this->url;
+		$page           = isset($page) ? $page : $this->page;
 		$auto_resize    = isset($auto_resize) ? $auto_resize : $this->auto_resize;
 		$open_direct    = isset($open_direct) ? $open_direct : $this->open_direct;
 		$use_iframe     = isset($use_iframe) ? $use_iframe : $this->use_iframe;
@@ -141,10 +141,10 @@ class Frame_Property extends Dynamic_Property
 		if ($this->security) {
 			if (!xarSecurityCheck('ReadWindow')) return;
 
-			$pageinfo = xarModAPIFunc('window','user','get',array('name' => $url));
+			$pageinfo = xarModAPIFunc('window','user','get',array('name' => $page));
 
 			if ($pageinfo) {
-				$url = $pageinfo['name'];
+				$page = $pageinfo['name'];
 				$reg_user_only = $pageinfo['reg_user_only'];
 				$open_direct = $pageinfo['open_direct'];
 				$use_fixed_title = $pageinfo['use_fixed_title'];
@@ -168,9 +168,8 @@ class Frame_Property extends Dynamic_Property
 					while(list($id, $name, $alias, $label, $description, $reg_user_only1, $open_direct1, $use_fixed_title1, $auto_resize1, $vsize1, $hsize1) = $result->fields) {
 
 						// Check if URL is in DB
-						if (($alias == $url) || ($name == $url) || ($name == "http://".$url)) {
+						if (($alias == $page) || ($name == $page) || ($name == "http://".$page)) {
 							$db_checked = 1;
-							$url = $url;
 							// Override global settings
 							$reg_user_only = $reg_user_only1;
 							$open_direct = $open_direct1;
@@ -188,11 +187,11 @@ class Frame_Property extends Dynamic_Property
 		}
 
 		// Store URL parts in array
-		$url_parts = parse_url($url);
+		$url_parts = parse_url($page);
 
 
 		// Check that a url was specified
-		if(!isset($url) || ($url == '')) {
+		if(!isset($page) || ($page == '')) {
 			$msg = xarML('No page to display was specified.',
 				'window');
 			xarErrorSet(XAR_USER_EXCEPTION,
@@ -264,11 +263,11 @@ class Frame_Property extends Dynamic_Property
 
 		if (isset($id)) {
 			$data['hooks'] = xarModCallHooks('item', 'display', $id, array('itemtype'  => $id,
-																		   'returnurl' => xarModURL('window', 'user', 'main', array('page' => $url, 'id' => $id))),
+																		   'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
 																	'window');
 		}
 
-		$data['url'] = $url;
+		$data['page'] = $page;
 		$data['title'] = $title;
 		$data['hsize'] = $hsize;
 		$data['vsize'] = $vsize;

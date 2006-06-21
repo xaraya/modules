@@ -24,7 +24,7 @@ function window_userapi_getmenulinks()
 		$url_parts = parse_url($url['name']);
         $menulinks[] = array('url'   => xarModURL('window',
                                                   'user',
-                                                  'display',array('url' => $url['name'])),
+                                                  'display',array('page' => $url['name'])),
                               'title' => $url['description'],
                               'label' => $url['label']);
     }

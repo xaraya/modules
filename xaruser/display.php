@@ -22,11 +22,11 @@
 */
 function window_user_display()
 {
-	if (!xarVarFetch('url', 'str', $url, '', XARVAR_NOT_REQUIRED)) return;
-	$data['url'] = isset($url) ? $url : '';
+	if (!xarVarFetch('page', 'str', $page, '', XARVAR_NOT_REQUIRED)) return;
+	$data['page'] = isset($page) ? $page : '';
     if (isset($id)) {
         $data['hooks'] = xarModCallHooks('item', 'display', $id, array('itemtype'  => $id,
-                                                                       'returnurl' => xarModURL('window', 'user', 'main', array('page' => $url, 'id' => $id))),
+                                                                       'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
                                                                 'window');
     }
     $data['title'] = "Xaraya Window";
