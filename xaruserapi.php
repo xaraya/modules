@@ -70,10 +70,11 @@ function bbcode_transform($text)
 
     include_once 'modules/bbcode/xarclass/stringparser_bbcode.class.php';
     $bbcode = new StringParser_BBCode();
-
+    // Bug 5777 make bbcode case insensitive
+    $bbcode->setGlobalCaseSensitive(false);
     $bbcode->addCode ('p', 'callback_replace', 'do_bbcode_para', array (),
-                      'inline', array ('listitem', 'block', 'inline', 'link'), array());
-    $bbcode->addCode ('b', 'callback_replace', 'do_bbcode_bold', array (),
+                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
+     $bbcode->addCode ('b', 'callback_replace', 'do_bbcode_bold', array (), 
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
     $bbcode->addCode ('i', 'callback_replace', 'do_bbcode_italics', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());

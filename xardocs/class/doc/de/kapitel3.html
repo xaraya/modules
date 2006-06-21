@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index.html">Projektseite</a></li>
   <li><a href="kapitel1.html">Dokumentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC-Dokumentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download.html">Download</a></li>
   <li><a href="../en/chapter3.html">This page in english</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="kapitel4.html#behandlungsarten">4.1 Behandlungsarten, die Callback-Funktionen benötigen</a></li>
       <li><a href="kapitel4.html#aufbau">4.2 Aufbau der Callback-Funktionen</a></li>
       <li><a href="kapitel4.html#beispiel">4.3 Beispiel einer Callback-Funktion zum Ersetzen von Links</a></li>
+      <li><a href="kapitel4.html#revalidierung">4.4 Revalidierung beim Auftreten von schließenden Tags</a></li>
     </ul></li>
   <li><a href="kapitel5.html">5. Filter</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="kapitel6.html#allgemeines">6.1 Allgemeines</a></li>
       <li><a href="kapitel6.html#flags">6.2 Liste aller Flags</a></li>
+      <li><a href="kapitel6.html#globale">6.3 Globale flags</a></li>
     </ul></li>
   <li><a href="kapitel7.html">7. Maximales Auftreten von Elementen</a>
     <ul>
@@ -64,16 +67,18 @@
       <li><a href="kapitel8.html#aktivieren">8.2 Absatzbehandlung aktivieren</a></li>
       <li><a href="kapitel8.html#weitere">8.3 Weitere Möglichkeiten</a></li>
     </ul></li>
-  <li><a href="kapitel9.html">9. Vollständiges Beispiel</a>
+  <li><a href="kapitel9.html">9. Beispiele</a>
     <ul>
-      <li><a href="kapitel9.html#beispiel">9.1 Beispiel</a></li>
+      <li><a href="kapitel9.html#beispiel">9.1 Einfaches Beispiel</a></li>
+<!--      <li><a href="kapitel9.html#kompliziert">9.1 Komplizierteres Beispiel</a></li> -->
     </ul></li>
   <li><a href="kapitel10.html">10. Sonstiges</a>
     <ul>
-      <li><a href="kapitel10.html#interna">10.1 Nützliche Interna</a></li>
+      <li><a href="kapitel10.html#faq">10.1 Häufig gestellte Fragen</a></li>
+      <li><a href="kapitel10.html#interna">10.2 Nützliche Interna</a></li>
     </ul></li>
 </ul>
-<div id="content">       <h2>3. Parserfunktionen</h2>
+<div id="content"><h2>3. Parserfunktionen</h2>
 <h3 id="aufgabe"><a name="aufgabe">3.1 Aufgabe von Parserfunktionen</a></h3>
 <p>BBCode wird verwendet, damit HTML nicht zugelassen werden muss. Wenn jetzt allerdings nur der BBCode ersetzt wird, wird der möglicherweise eingegebene HTML-Code direkt wieder ausgegeben. Beispiel: Es wäre sinnlos, bei einem Text von <code>[b]Hallo&lt;script type="text/javascript"&gt;/* tu was ganz böses mit javascript */&lt;/script&gt;[/b]</code> nur die BBCodes zu ersetzen und das <code>&lt;script&gt;</code>-Element dennoch direkt wieder auszugeben. Das <code>&lt;script&gt;</code>-Element sollte möglichst so maskiert werden, dass es keinen Schaden anrichten kann. Dies kann man mit der Funktion <code>htmlspecialchars</code> erreichen. Man könnte jetzt <code>htmlspecialchars</code> vor dem Parsen durch die Klasse auf den kompletten Inhalt anwenden. Dann würden allerdings Anführungszeichen auch durch <code>&amp;quot;</code> ersetzt werden und falls Anführungszeichen dann in Attributen (wie z.B. <code>[img alt="Alternativer Text"]</code>) verwendet würden, dann würde die Parserklasse das nicht mehr akzeptieren. Daher bietet die Klasse eine Möglichkeit, Funktionen nur für <em>relevante</em> Textteile aufzurufen. Funktionen, die der Klasse für diesen Zweck bekannt gemacht wurden, heißen <em>Parserfunktionen</em>.</p>
 <p>Der Einsatzgebiet von Parserfunktionen beschränkt sich nicht nur auf das Maskieren von HTML-Code, man kann auch andere Dinge erledigen, wie zum Beispiel das Ersetzen von Smilys.</p>
@@ -106,7 +111,7 @@
   <li>Zurück: <a href="kapitel2.html">2. Definieren von eigenem BBCode</a></li>
 </ul>
 </div>
-<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.2.4-beta2</em><br>Autor: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.3.1</em><br>Autor: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index.html">Projektseite</a></li>
   <li><a href="kapitel1.html">Dokumentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC-Dokumentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download.html">Download</a></li>
   <li><a href="../en/chapter4.html">This page in english</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="kapitel4.html#behandlungsarten">4.1 Behandlungsarten, die Callback-Funktionen benötigen</a></li>
       <li><a href="kapitel4.html#aufbau">4.2 Aufbau der Callback-Funktionen</a></li>
       <li><a href="kapitel4.html#beispiel">4.3 Beispiel einer Callback-Funktion zum Ersetzen von Links</a></li>
+      <li><a href="kapitel4.html#revalidierung">4.4 Revalidierung beim Auftreten von schließenden Tags</a></li>
     </ul></li>
   <li><a href="kapitel5.html">5. Filter</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="kapitel6.html#allgemeines">6.1 Allgemeines</a></li>
       <li><a href="kapitel6.html#flags">6.2 Liste aller Flags</a></li>
+      <li><a href="kapitel6.html#globale">6.3 Globale flags</a></li>
     </ul></li>
   <li><a href="kapitel7.html">7. Maximales Auftreten von Elementen</a>
     <ul>
@@ -64,16 +67,18 @@
       <li><a href="kapitel8.html#aktivieren">8.2 Absatzbehandlung aktivieren</a></li>
       <li><a href="kapitel8.html#weitere">8.3 Weitere Möglichkeiten</a></li>
     </ul></li>
-  <li><a href="kapitel9.html">9. Vollständiges Beispiel</a>
+  <li><a href="kapitel9.html">9. Beispiele</a>
     <ul>
-      <li><a href="kapitel9.html#beispiel">9.1 Beispiel</a></li>
+      <li><a href="kapitel9.html#beispiel">9.1 Einfaches Beispiel</a></li>
+<!--      <li><a href="kapitel9.html#kompliziert">9.1 Komplizierteres Beispiel</a></li> -->
     </ul></li>
   <li><a href="kapitel10.html">10. Sonstiges</a>
     <ul>
-      <li><a href="kapitel10.html#interna">10.1 Nützliche Interna</a></li>
+      <li><a href="kapitel10.html#faq">10.1 Häufig gestellte Fragen</a></li>
+      <li><a href="kapitel10.html#interna">10.2 Nützliche Interna</a></li>
     </ul></li>
 </ul>
-<div id="content">       <h2>4. Callback-Funktionen</h2>
+<div id="content"><h2>4. Callback-Funktionen</h2>
 <h3 id="behandlungsarten"><a name="behandlungsarten">4.1 Behandlungsarten, die Callback-Funktionen benötigen</a></h3>
 <p>Wie bei der <a href="kapitel2.html#erster">Erläuterung zur Einbindung von <abbr>BBCode</abbr></a> bereits beschrieben ist, gibt es diverse Behandlungsarten, die Callback-Funktionen benötigen, um den <abbr>BBCode</abbr> zu verarbeiten. Diese sind:</p>
 <ul>
@@ -81,6 +86,7 @@
   <li><code>callback_replace_single</code></li>
   <li><code>usecontent</code></li>
   <li><code>usecontent?</code></li>
+  <li><code>callback_replace?</code></li>
 </ul>
 <p>Bei all diesen Behandlungsarten muss man der Methode <code>addCode</code> als dritten Parameter den Namen einer Funktion mitgeben, die diesen Code behandeln soll.
 <h3 id="aufbau"><a name="aufbau">4.2 Aufbau der Callback-Funktionen</a></h3>
@@ -93,6 +99,7 @@
   <li>Die Callback-Funktion für diesen BBCode wird mit dem Wert <code>'validate'</code> für <code>$action</code> aufgerufen.</li>
   <li>Falls die Callback-Funktion <code>false</code> zurückgegeben hat, wird der BBCode ignoriert. Falls die Callback-Funktion <code>true</code> zurückgegeben hat, wird der BBCode in die Baumstruktur aufgenommen.</li>
   <li>Der Text wird weiterverarbeitet.</p>
+  <li><em>Falls</em> Revalidierung aktiviert ist wird bei auftreten des schließenden BBCode-Tags die Callback-Funktion mit dem Wert <code>'validate_again'</code> für <code>$action</code> aufgerufen. Falls die Callback-Funktion <code>false</code> zurückgibt, gilt der Code als ungültig und alles ab dem öffnenden BBCode-Tag wird noch einmal verarbeitet.</li>
   <li>Nachdem der komplette Text verarbeitet wurde, wird die Baumstruktur in eine Zeichenkette zurückverwandelt.</li>
   <li>Im Verlauf dieses Prozesses wird die Callback-Funktion mit dem Wert <code>'output'</code> für <code>$action</code> aufgerufen.</li>
   <li>Die Callback-Funktion muss nun eine Zeichenkette zurückgeben, die dann als Ersetzung für das komplette Element (inklusive Inhalt!) genutzt wird. Falls die Funktion in diesem Fall etwas anderes, als eine Zeichenkette zurückgibt, <strong>bricht der Parservorgang komplett ab</strong>, der BBCode konnte dann überhaupt nicht korrekt verarbeitet werden.</li>
@@ -100,7 +107,7 @@
 <p>Die Parameter, die die Funktion erwarten muss, sind folgende:</p>
 <dl>
   <dt><code>$action</code></dt>
-  <dd>Entweder <code>'validate'</code> oder <code>'output'</code>. <code>'validate'</code> wird immer dann gesetzt, wenn der Code validiert werden soll, <code>'output'</code> immer dann, wenn die Ausgabe erfolgen soll.</dd>
+  <dd>Entweder <code>'validate'</code>, <code>'validate_again'</code> oder <code>'output'</code>. <code>'validate'</code> wird immer dann gesetzt, wenn der Code validiert werden soll, <code>'output'</code> immer dann, wenn die Ausgabe erfolgen soll.</dd>
   <dt><code>$attributes</code></dt>
   <dd>Die Attribute, die in dem Start-Tag enthalten waren als assoziatives Array. <code>$attributes['quelle']</code> enthält also den Inhalt des Attributes <code>quelle</code>.</dd>
   <dt><code>$content</code></dt>
@@ -140,13 +147,17 @@ $bbcode->addCode ('url', 'usecontent?', <span class="funcn">'do_bbcode_url'</spa
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'link', array ('block', 'inline'), array ('link'));</code></p>
 <p>Das obige Beispiel setzt voraus, dass es eine Funktion <code>is_valid_url</code> gibt, die übeprüft, ob ein URL gültig ist, oder nicht, und dann entsprechend <code>true</code> oder <code>false</code> zurückgibt. Man könnte die Überprüfung auch bleiben lassen und <code>$action == 'validate'</code> immer mit <code>return true;</code> quittieren, allerdings ist dies nicht zu empfehlen, da sonst ja auch <code>[url]dies://ist alles andere / als ein gültiger url[/url]</code> ersetzt würde, was dann in alle Browsern zu Fehlermeldungen führt, wenn man diesem Link dann folgt.</p>
 <p>Desweiteren wird im obigen Beispiel <code>[url]</code> als <code>usecontent?</code> definiert, damit man innerhalb des BBCodes noch normalen Text (als Link-Titel) haben kann, wenn der Code in der Form <code>[url=http://.../]</code> angegeben wurde, oder dass der Text innerhalb des BBCodes die URL darstellt (<code>[url]http://.../[/url]</code>). Je nachdem, ob das Attribut <code>default</code> gesetzt ist, unterscheidet die Funktion, ob es sich um die eine oder andere Form handelt.</p>
+<h3 id="revalidierung"><a name="revalidierung">4.4 Revalidierung beim Auftreten von schließenden Tags</a></h3>
+<p>Im Normalfall wird nur beim Auftreten des öffnenden Tags die Callback-Funktion mit <code>$action == 'validate'</code> aufgerufen. Man kann der Klasse jedoch mitteilen, dass sie beim Auftreten des schließenden Tags die Callback-Funktion noch einmal aufrufen soll - diesmal mit <code>$action == 'validate_again'</code>. Dazu ruft man die Methode <code>setValidateAgain</code> auf:</p>
+<p><code>$bbcode->setValidateAgain(true);</code></p>
+<p>Da bei <code>usecontent</code> (und im Falle, dass <code>usecontent?</code> oder <code>callback_replace?</code> sich wie <code>usecontent</code> verhalten sollen) die Callback-Funktion sowieso erst beim Auftreten des schließenden Tags aufgerufen wird, gilt dies in diesem Fall nicht.</p>
 <hr>
 <ul>
   <li>Weiter: <a href="kapitel5.html">5. Filter</a></li>
   <li>Zurück: <a href="kapitel3.html">3. Parserfunktionen</a></li>
 </ul>
 </div>
-<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.2.4-beta2</em><br>Autor: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.3.1</em><br>Autor: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

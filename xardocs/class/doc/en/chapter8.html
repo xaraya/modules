@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index_en.html">Project homepage</a></li>
   <li><a href="chapter1.html">Documentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC Documentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download_en.html">Download</a></li>
   <li><a href="../de/kapitel8.html">Diese Seite auf Deutsch</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="chapter4.html#processing_types">4.1 Processing types that need callback functions</a></li>
       <li><a href="chapter4.html#prototype">4.2 Prototype of a callback function</a></li>
       <li><a href="chapter4.html#example">4.3 Example for a callback function that replaces links</a></li>
+      <li><a href="chapter4.html#revalidation">4.4 Revalidation on close tag occurrence</a></li>
     </ul></li>
   <li><a href="chapter5.html">5. Filters</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="chapter6.html#general">6.1 General</a></li>
       <li><a href="chapter6.html#flags">6.2 List of all flags</a></li>
+      <li><a href="chapter6.html#global">6.2 Global flags</a></li>
     </ul></li>
   <li><a href="chapter7.html">7. Limiting the amount of occurrences</a>
     <ul>
@@ -64,13 +67,15 @@
       <li><a href="chapter8.html#activating">8.2 Activating paragraph handling</a></li>
       <li><a href="chapter8.html#further">8.3 Further possibilities</a></li>
     </ul></li>
-  <li><a href="chapter9.html">9. Complete example</a>
+  <li><a href="chapter9.html">9. Examples</a>
     <ul>
-      <li><a href="chapter9.html#example">9.1 Example</a></li>
+      <li><a href="chapter9.html#example">9.1 Simple example</a></li>
+<!--      <li><a href="chapter9.html#complex">9.2 More complex example</a></li> -->
     </ul></li>
   <li><a href="chapter10.html">10. Miscellaneous</a>
     <ul>
-      <li><a href="chapter10.html#internals">10.1 Useful internals</a></li>
+      <li><a href="chapter10.html#faq">10.1 Frequently asked questions</a></li>
+      <li><a href="chapter10.html#internals">10.2 Useful internals</a></li>
     </ul></li>
 </ul>
 <div id="content"><h2>8. Paragraph handling</h2>
@@ -135,15 +140,15 @@ This is the second paragraph&lt;/a&gt; of a long text!&lt;/p&gt;</code></p>
 <p class="html"><code>&lt;p&gt;This is the first paragraph &lt;/p&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;List item
 &lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</code></p>
-<p><strong>Hint:</strong> Set the flag <code>'opentag.newline.before'</code> and <code>'closetag.newline.after'</code> of a code which has <code>BBCODE_PARAGRAPH_BLOCK_ELEMENT</code> set to <code>BBCODE_NEWLINE_IGNORE</code> or <code>BBCODE_NEWLINE_DROP</code>. Else empty paragraphs like <code>&lt;p&gt;&lt;/p&gt;</code> are created.</p>
+<p><strong>Hint:</strong> Set the flag <code>'opentag.before.newline'</code> and <code>'closetag.after.newline'</code> of a code which has <code>BBCODE_PARAGRAPH_BLOCK_ELEMENT</code> set to <code>BBCODE_NEWLINE_IGNORE</code> or <code>BBCODE_NEWLINE_DROP</code>. Else empty paragraphs like <code>&lt;p&gt;&lt;/p&gt;</code> are created.</p>
 <hr>
 <ul>
   <li>Next: <a href="chapter9.html">9. Complete example</a></li>
   <li>Previous: <a href="chapter7.html">7. Limiting the amount of occurrences</a></li>
 </ul>
 </div>
-<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.2.4-beta1</em><br>
-Author: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.3.1</em><br>
+Author: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

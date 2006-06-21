@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index.html">Projektseite</a></li>
   <li><a href="kapitel1.html">Dokumentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC-Dokumentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download.html">Download</a></li>
   <li><a href="../en/chapter6.html">This page in english</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="kapitel4.html#behandlungsarten">4.1 Behandlungsarten, die Callback-Funktionen benötigen</a></li>
       <li><a href="kapitel4.html#aufbau">4.2 Aufbau der Callback-Funktionen</a></li>
       <li><a href="kapitel4.html#beispiel">4.3 Beispiel einer Callback-Funktion zum Ersetzen von Links</a></li>
+      <li><a href="kapitel4.html#revalidierung">4.4 Revalidierung beim Auftreten von schließenden Tags</a></li>
     </ul></li>
   <li><a href="kapitel5.html">5. Filter</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="kapitel6.html#allgemeines">6.1 Allgemeines</a></li>
       <li><a href="kapitel6.html#flags">6.2 Liste aller Flags</a></li>
+      <li><a href="kapitel6.html#globale">6.3 Globale flags</a></li>
     </ul></li>
   <li><a href="kapitel7.html">7. Maximales Auftreten von Elementen</a>
     <ul>
@@ -64,16 +67,18 @@
       <li><a href="kapitel8.html#aktivieren">8.2 Absatzbehandlung aktivieren</a></li>
       <li><a href="kapitel8.html#weitere">8.3 Weitere Möglichkeiten</a></li>
     </ul></li>
-  <li><a href="kapitel9.html">9. Vollständiges Beispiel</a>
+  <li><a href="kapitel9.html">9. Beispiele</a>
     <ul>
-      <li><a href="kapitel9.html#beispiel">9.1 Beispiel</a></li>
+      <li><a href="kapitel9.html#beispiel">9.1 Einfaches Beispiel</a></li>
+<!--      <li><a href="kapitel9.html#kompliziert">9.1 Komplizierteres Beispiel</a></li> -->
     </ul></li>
   <li><a href="kapitel10.html">10. Sonstiges</a>
     <ul>
-      <li><a href="kapitel10.html#interna">10.1 Nützliche Interna</a></li>
+      <li><a href="kapitel10.html#faq">10.1 Häufig gestellte Fragen</a></li>
+      <li><a href="kapitel10.html#interna">10.2 Nützliche Interna</a></li>
     </ul></li>
 </ul>
-<div id="content">       <h2>6. Flags zum Steuern des Verhaltens der Klasse</h2>
+<div id="content"><h2>6. Flags zum Steuern des Verhaltens der Klasse</h2>
 <h3 id="allgemeines"><a name="allgemeines">6.1 Allgemeines</a></h3>
 <p>Man kann bei jedem definierten Code auch Flags setzen. Ein Flag sagt der Klasse, dass bei diesem Code bestimmte Besonderheiten auftreten, die zu Berücksichtigen sind. Um für einen Code ein Flag zu setzen, muss die Methode <code>setCodeFlag</code> aufgerufen werden:</p>
 <p class="php"><code>$bbcode->setCodeFlag ('b', 'mein_flag', 'mein_wert');</code></p>
@@ -106,7 +111,7 @@
     <tr>
       <th><code>'case_sensitive'</code></th>
       <td><code>true</code> / <code>false</code></td>
-      <td>Gibt an, ob Klein- und Gro&szlig;schreibung bei diesem Code beachtet werden sollen. Standard ist <code>true</code>, d.h. es wird zwischen Klein- und Gro&szlig;schreibung unterschieden (bspw. waere <code>[b]</code> nicht gleich <code>[B]</code>).</td>
+      <td>Gibt an, ob Klein- und Gro&szlig;schreibung bei diesem Code beachtet werden sollen. Standard ist <code>true</code>, d.h. es wird zwischen Klein- und Gro&szlig;schreibung unterschieden (bspw. w&auml;re <code>[b]</code> nicht gleich <code>[B]</code>). Bitte sehen Sie sich auch den globalen Flag <code>caseSensitive</code> an.</td>
     </tr>
     <tr>
       <th rowspan="6"><code>'closetag'</code></th>
@@ -174,13 +179,27 @@
     </tr>
   </tbody>
 </table>
+<h3 id="globale"><a name="globale">6.3 Globale Flags</a></h3>
+<p>Es gibt auch einige globale Flags. Dies sind Flags, die nicht nur f&uuml;r einen einzelnen Code gelten, sondern f&uuml;r die gesamte Klasse.</p>
+<dl>
+  <dt><code>caseSensitive</code></dt>
+  <dd>
+    <p>Dieser Flag steuert, ob die gesamte Klasse zwischen Gro&szlig;- und Kleinschreibung unterscheidet. Der Wert des Flags kann mit der Methode <code>setGlobalCaseSensitive</code> ge&auml;ndert werden. Der aktuelle Wert kann mittels <code>globalCaseSensitive</code> abgefragt werden. Bei <code>true</code> (Standardeinstellung) unterscheidet die Klasse bei allen Codes zwischen Gro&szlig;- und Kleinschreibung - <strong>au&szlig;er</strong> bei denen, die das <code>'case_sensitive'</code>-Flag auf <code>false</code> gesetzt haben. Bei <code>false</code> unterscheidet die Klasse <strong>nie</strong> zwischen Gro&szlig;- und Kleinschreibung - unabh&auml;ngig davon, welchen Wert das <code>'case_sensitive'</code>-Attribut des Codes hat. Beispiel:<p>
+    <p><code>$bbcode->setGlobalCaseSensitive (false);</code></p>
+  </dd>
+  <dt><code>mixedAttributeTypes</code></dt>
+  <dd>
+    <p>Wenn das Flag aktiviert ist,  wird <code>[code=foo attr=bar]</code> so verarbeitet, dass zwei Attribute erkannt werden (<code>default</code> = <code>'foo'</code>, <code>attr</code> = <code>'bar'</code>), wenn das Flag deaktiviert ist, wird nur ein Attribut erkannt (<code>default</code> = <code>foo attr=bar</code>). Standardmäßig ist das Flag deaktiviert. Der aktuelle Wert kann mittels <code>mixedAttributeTypes</code> abgefragt werden. Beispiel:<p>
+    <p><code>$bbcode->setMixedAttributeTypes (true);</code></p>
+  </dd>
+</dl>
 <hr>
 <ul>
   <li>Weiter: <a href="kapitel7.html">7. Maximales Auftreten von Elementen</a></li>
   <li>Zurück: <a href="kapitel5.html">5. Filter</a></li>
 </ul>
 </div>
-<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.2.4-beta2</em><br>Autor: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.3.1</em><br>Autor: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

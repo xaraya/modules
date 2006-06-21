@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index_en.html">Project homepage</a></li>
   <li><a href="chapter1.html">Documentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC Documentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download_en.html">Download</a></li>
   <li><a href="../de/kapitel2.html">Diese Seite auf Deutsch</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="chapter4.html#processing_types">4.1 Processing types that need callback functions</a></li>
       <li><a href="chapter4.html#prototype">4.2 Prototype of a callback function</a></li>
       <li><a href="chapter4.html#example">4.3 Example for a callback function that replaces links</a></li>
+      <li><a href="chapter4.html#revalidation">4.4 Revalidation on close tag occurrence</a></li>
     </ul></li>
   <li><a href="chapter5.html">5. Filters</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="chapter6.html#general">6.1 General</a></li>
       <li><a href="chapter6.html#flags">6.2 List of all flags</a></li>
+      <li><a href="chapter6.html#global">6.2 Global flags</a></li>
     </ul></li>
   <li><a href="chapter7.html">7. Limiting the amount of occurrences</a>
     <ul>
@@ -64,13 +67,15 @@
       <li><a href="chapter8.html#activating">8.2 Activating paragraph handling</a></li>
       <li><a href="chapter8.html#further">8.3 Further possibilities</a></li>
     </ul></li>
-  <li><a href="chapter9.html">9. Complete example</a>
+  <li><a href="chapter9.html">9. Examples</a>
     <ul>
-      <li><a href="chapter9.html#example">9.1 Example</a></li>
+      <li><a href="chapter9.html#example">9.1 Simple example</a></li>
+<!--      <li><a href="chapter9.html#complex">9.2 More complex example</a></li> -->
     </ul></li>
   <li><a href="chapter10.html">10. Miscellaneous</a>
     <ul>
-      <li><a href="chapter10.html#internals">10.1 Useful internals</a></li>
+      <li><a href="chapter10.html#faq">10.1 Frequently asked questions</a></li>
+      <li><a href="chapter10.html#internals">10.2 Useful internals</a></li>
     </ul></li>
 </ul>
 <div id="content"><h2>2. Defining own <abbr>BBCode</abbr></h2>
@@ -143,6 +148,8 @@ $bbcode = new StringParser_BBCode ();<br>
   <dt><code>'usecontent?'</code></dt>
   <dd><p>This processing type can either behave like <code>'usecontent'</code> or like <code>'callback_replace'</code>. First of all, there is a check if a certain attribute is set. If this is the case, the processing type behaves like <code>'callback_replace'</code>. In the other case the processing type behaves like <code>'usecontent'</code>. The name of the attribute that is to be looked for has to be specified in <code>$params['usecontent_param']</code>. An example for the use of this processing type is the often used BB-Code <code>[url]</code>: This code can be used in two different manners: <code>[url]http://www.example.com/[/url]</code> und <code>[url=http://www.example.com/]title of the link, also containing [b]bold[/b] text[/url]</code>. In the first case <code>'usecontent'</code> would be the processing type of choice because the link destination is specified between start and end tag of this element and it would be nonsense to replace further BB-Codes inside <code>http://www.example.org/</code>. On the other hand <code>'callback_replace'</code> would be the processing type of choice in the second example because the link destination is specified as an attribute and the link text itself may still contain further <bbr>BBCodes</abbr>.</p>
   <p>Notice: Further, it is possible to supply several parameters for <code>usecontent_param</code>: just hand over an array instead of a string. Example: <code>$bbcode->addCode (..., array('usecontent_param' => array ('parameter1', 'parameter2')), ...);</code>.</p></dd></dd>
+  <dt><code>'callback_replace?'</code>
+  <dd>This processing type is the opposite of <code>'usecontent?'</code>: if an attribute specified with <code>usecontent_param</code> exists the code will be treated as if it were <code>'usecontent'</code>, else as if it were <code>'callback_replace'</code>.</dd>
 </dl>
 <h3 id="parsing"><a name="parsing">2.4 Parsing text</a></h3>
 <p>To convert a text one must call the <code>parse</code> method of the class:</p>
@@ -156,8 +163,8 @@ $bbcode = new StringParser_BBCode ();<br>
   <li>Previous: <a href="chapter1.html">1. Introduction</a></li>
 </ul>
 </div>
-<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.2.4-beta1</em><br>
-Author: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.3.1</em><br>
+Author: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

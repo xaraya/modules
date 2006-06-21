@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index_en.html">Project homepage</a></li>
   <li><a href="chapter1.html">Documentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC Documentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download_en.html">Download</a></li>
   <li><a href="../de/kapitel10.html">Diese Seite auf Deutsch</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="chapter4.html#processing_types">4.1 Processing types that need callback functions</a></li>
       <li><a href="chapter4.html#prototype">4.2 Prototype of a callback function</a></li>
       <li><a href="chapter4.html#example">4.3 Example for a callback function that replaces links</a></li>
+      <li><a href="chapter4.html#revalidation">4.4 Revalidation on close tag occurrence</a></li>
     </ul></li>
   <li><a href="chapter5.html">5. Filters</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="chapter6.html#general">6.1 General</a></li>
       <li><a href="chapter6.html#flags">6.2 List of all flags</a></li>
+      <li><a href="chapter6.html#global">6.2 Global flags</a></li>
     </ul></li>
   <li><a href="chapter7.html">7. Limiting the amount of occurrences</a>
     <ul>
@@ -64,16 +67,39 @@
       <li><a href="chapter8.html#activating">8.2 Activating paragraph handling</a></li>
       <li><a href="chapter8.html#further">8.3 Further possibilities</a></li>
     </ul></li>
-  <li><a href="chapter9.html">9. Complete example</a>
+  <li><a href="chapter9.html">9. Examples</a>
     <ul>
-      <li><a href="chapter9.html#example">9.1 Example</a></li>
+      <li><a href="chapter9.html#example">9.1 Simple example</a></li>
+<!--      <li><a href="chapter9.html#complex">9.2 More complex example</a></li> -->
     </ul></li>
   <li><a href="chapter10.html">10. Miscellaneous</a>
     <ul>
-      <li><a href="chapter10.html#internals">10.1 Useful internals</a></li>
+      <li><a href="chapter10.html#faq">10.1 Frequently asked questions</a></li>
+      <li><a href="chapter10.html#internals">10.2 Useful internals</a></li>
     </ul></li>
 </ul>
 <div id="content"><h2>10. Miscellaneous</h2>
+<h3 id="faq"><a name="faq">10.1 Frequently asked questions</a></h3>
+<dl>
+  <dt>How can I get the class to be case insensitive?</dt>
+  <dd>
+    <p>The <a href="chapter6.html#global">global flag</a> <code>caseSensitive</code> dictates the behaviour of the whole class. If you set it to <code>false</code> the case will be ignored for all codes:</p>
+    <p><code>$bbcode->setGlobalCaseSensitive (false);</code></p>
+    <p>If you just want to make a single code case insensitive, you can set the <a href="chapter6.html#flags">code flag</a> <code>'case_sensitive'</code> to <code>false</code>. Example for the code <code>[b]</code>:</p>
+    <p><code>$bbcode->setCodeFlag ('b', 'case_sensitive', false);</code></p>
+  </dd>
+  <dt>In a callback function, how can I determine if an element is direct descendant of the root element?</dt>
+  <dd>
+    <p>The best possibility is to use this condition:</p>
+    <p><code>if ($node_object->_parent->type() == STRINGPARSER_NODE_ROOT) {<br>
+&nbsp;&nbsp;// direkt descendant of the root element<br>
+} else {<br>
+&nbsp;&nbsp;// indirekt descendant of the root element<br>
+}</code></p>
+  </dd>
+  <dt>What meaning does the <code>_id</code> attribute of a node have?</dt>
+  <dd>The attribute is only used to check if a node is identical with another node. Every node object posesses the function<code>equals</code>. <code>$node1->equals ($node2);</code> is <code>true</code> only if both nodes are identical. <strong>In no case</strong> you may draw any other conclusions from this attribute, especially does the root element <strong>not</strong> always have the <code>_id</code> <code>0</code>.</dd>
+</dl>
 <h3 id="internals"><a name="internals">10.1 Useful internals</a></h3>
 <p>In this chapter useful things about internals of the class are to be documented. At the moment it is still a very large construction site.</p>
 <p>One can cause the class to not reconvert the tree structure but instead return a reference to the root element. To achieve this set the <code>_noOutput</code> variable of the class:</p>
@@ -83,8 +109,8 @@
   <li>Previuos: <a href="chapter9.html">9. Complete example</a></li>
 </ul>
 </div>
-<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.2.4-beta1</em><br>
-Author: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">This is the documentation for the <code>StringParser_BBCode</code> class version <em>0.3.1</em><br>
+Author: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

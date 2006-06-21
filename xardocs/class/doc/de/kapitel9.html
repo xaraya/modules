@@ -14,6 +14,7 @@
  <ul id="mainmenu">
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/index.html">Projektseite</a></li>
   <li><a href="kapitel1.html">Dokumentation</a></li>
+  <li><a href="../phpdoc/index.php">PHPDOC-Dokumentation</a></li>
   <li><a href="http://www.christian-seiler.de/projekte/php/bbcode/download.html">Download</a></li>
   <li><a href="../en/chapter9.html">This page in english</a></li>
  </ul>
@@ -42,6 +43,7 @@
       <li><a href="kapitel4.html#behandlungsarten">4.1 Behandlungsarten, die Callback-Funktionen benötigen</a></li>
       <li><a href="kapitel4.html#aufbau">4.2 Aufbau der Callback-Funktionen</a></li>
       <li><a href="kapitel4.html#beispiel">4.3 Beispiel einer Callback-Funktion zum Ersetzen von Links</a></li>
+      <li><a href="kapitel4.html#revalidierung">4.4 Revalidierung beim Auftreten von schließenden Tags</a></li>
     </ul></li>
   <li><a href="kapitel5.html">5. Filter</a>
     <ul>
@@ -52,6 +54,7 @@
     <ul>
       <li><a href="kapitel6.html#allgemeines">6.1 Allgemeines</a></li>
       <li><a href="kapitel6.html#flags">6.2 Liste aller Flags</a></li>
+      <li><a href="kapitel6.html#globale">6.3 Globale flags</a></li>
     </ul></li>
   <li><a href="kapitel7.html">7. Maximales Auftreten von Elementen</a>
     <ul>
@@ -64,16 +67,18 @@
       <li><a href="kapitel8.html#aktivieren">8.2 Absatzbehandlung aktivieren</a></li>
       <li><a href="kapitel8.html#weitere">8.3 Weitere Möglichkeiten</a></li>
     </ul></li>
-  <li><a href="kapitel9.html">9. Vollständiges Beispiel</a>
+  <li><a href="kapitel9.html">9. Beispiele</a>
     <ul>
-      <li><a href="kapitel9.html#beispiel">9.1 Beispiel</a></li>
+      <li><a href="kapitel9.html#beispiel">9.1 Einfaches Beispiel</a></li>
+<!--      <li><a href="kapitel9.html#kompliziert">9.1 Komplizierteres Beispiel</a></li> -->
     </ul></li>
   <li><a href="kapitel10.html">10. Sonstiges</a>
     <ul>
-      <li><a href="kapitel10.html#interna">10.1 Nützliche Interna</a></li>
+      <li><a href="kapitel10.html#faq">10.1 Häufig gestellte Fragen</a></li>
+      <li><a href="kapitel10.html#interna">10.2 Nützliche Interna</a></li>
     </ul></li>
 </ul>
-<div id="content">       <h2>9. Vollständiges Beispiel</h2>
+<div id="content"><h2>9. Beispiele</h2>
 <h3 id="beispiel"><a name="beispiel">9.1 Beispiel</a></h3>
 <p class="php"><code>// Zeilenumbrüche verschiedener Betriebsysteme vereinheitlichen<br>
 function convertlinebreaks ($text) {<br>
@@ -144,7 +149,7 @@ echo $bbcode->parse ($text);</code></p>
   <li>Zurück: <a href="kapitel8.html">8. Absatzbehandlung</a></li>
 </ul>
 </div>
-<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.2.4-beta2</em><br>Autor: Christian Seiler, <a href="mailto: webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
+<p id="footer">Dies ist die Dokumentation zur <code>StringParser_BBCode</code>-Klasse Version <em>0.3.1</em><br>Autor: Christian Seiler, <a href="mailto:webmaster@christian-seiler.de">webmaster@christian-seiler.de</a></p>
 </div>
 </body>
 </html>

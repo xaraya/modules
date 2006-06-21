@@ -1,9 +1,16 @@
-This work is based on bb_anywhere from Hinrich Donner <hd@tiro.de>.
+Current BBcode module
+
+Current bbcode is based on the work by bbcode parser by 
+Christian Seiler at http://christian-seiler.de
+
+=========================
+Prior bbcode module was based on bb_anywhere from Hinrich Donner <hd@tiro.de>.
 The idea was initially taken from BB coding.
 
 Authors
     Hinrich Donner <hd@tiro.de>
     larsneo <larsneo@postnuke.com>
+=========================
 
 The port to Xaraya:
     John Cox <http://www.dinerminor.com>
