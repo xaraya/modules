@@ -38,6 +38,11 @@ function window_admin_updateconfig()
  			$updated = xarModAPIFunc('modules','admin','updateproperties',
 									  array('regid' => 3002,
 									  		'usercapable'  => $showusermenu));
+			if (!xarVarFetch('use_iframe', 'checkbox', $use_iframe, xarModGetVar('window', 'use_iframe'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('use_object', 'checkbox', $use_object, xarModGetVar('window', 'use_object'), XARVAR_NOT_REQUIRED)) return;
+			xarModSetVar('window', 'use_iframe', $use_iframe);
+			xarModSetVar('window', 'use_object', $use_object);
+//			echo $use_object;exit;
 			break;
 		case 'tab3':
 			break;

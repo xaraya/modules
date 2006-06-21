@@ -70,8 +70,12 @@ function window_init()
     xarModSetVar('window', 'vsize', "600");           // set to height of screen size for loaded window 600*
     xarModSetVar('window', 'hsize', "100%");          // set to width of screen size for loaded window 100%*
 
-    //Set security checkinkg for URL
-    xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
+    // Set security checkinkg for URL
+    xarModSetVar('window', 'security', 1);          // 0 = NO check with DB, 1 = check with DB) 1*
+
+    // Tag(s) to use for display
+    xarModSetVar('window', 'use_iframe', 1);
+    xarModSetVar('window', 'use_object', 1);
 
 # --------------------------------------------------------
 #

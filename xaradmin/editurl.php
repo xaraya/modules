@@ -7,7 +7,7 @@ function window_admin_editurl($args)
 
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'newurl');
+    $data['action'] = xarModURL('window', 'admin', 'addurl');
     $data['window_status'] = "edit";
 
     $data['urls'] = xarModAPIFunc('window','admin','geturls');

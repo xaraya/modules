@@ -93,6 +93,6 @@ function window_adminapi_addurl($args)
         }
 
     }
-        xarResponseRedirect(xarModURL('window', 'admin', 'addurl'));
+        xarResponseRedirect(xarModURL('window', 'admin', 'newurl'));
 }
 ?>

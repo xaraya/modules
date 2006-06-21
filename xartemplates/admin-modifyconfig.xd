@@ -170,6 +170,20 @@
                     </label>
                     <xar:data-input type="checkbox" name="showusermenu" checked="$showusermenu" />
                  </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Use iframe tag</xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('window', 'use_iframe')</xar:set>
+                    <xar:data-input type="checkbox" name="use_iframe" checked="$value" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label">
+                        <xar:mlstring>Use object tag</xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('window', 'use_object')</xar:set>
+                    <xar:data-input type="checkbox" name="use_object" checked="$value" />
+                 </div>
                 </fieldset>
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
