@@ -31,7 +31,7 @@ function window_admin_editurl($args)
     $result = $dbconn->Execute($query);
     if(!$result) return;
 
-    list($id, $host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+    list($id, $host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status) = $result->fields;
 
     $data['host'] = $host;
     $data['alias'] = $alias;
@@ -44,7 +44,8 @@ function window_admin_editurl($args)
     $data['auto_resize'] = $auto_resize;
     $data['vsize'] = $vsize;
     $data['hsize'] = $hsize;
+    $data['status'] = $status;
 
-    return xarTplModule('window','admin','url',$data);
+    return xarTplModule('window','admin','newurl',$data);
 }
 ?>

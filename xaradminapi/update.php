@@ -67,6 +67,7 @@ function window_adminapi_update($args)
     if (!isset($auto_resize)) $auto_resize = xarModGetVar('window', 'auto_resize');
     if (!isset($vsize)) $vsize = xarModGetVar('window', 'vsize');
     if (!isset($hsize)) $hsize = xarModGetVar('window', 'hsize');
+    if (!isset($status)) $status = 0;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -81,9 +82,10 @@ function window_adminapi_update($args)
                   xar_use_fixed_title = ?,
                   xar_auto_resize     = ?,
                   xar_vsize           = ?,
-                  xar_hsize           = ?
+                  xar_hsize           = ?,
+                  xar_status          = ?
               WHERE xar_id = ?";
-    $bindvars = array($name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $itemid);
+    $bindvars = array($name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status, $itemid);
 
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;

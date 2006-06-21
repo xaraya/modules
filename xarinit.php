@@ -50,7 +50,10 @@ function window_init()
                 'default' => '0'),
             'xar_hsize' => array('type' => 'varchar',
                 'size' => 255,
-                'null' => false)));
+                'null' => false),
+            'xar_status' => array('type' => 'integer',
+                'null' => false,
+                'default' => '1')));
 
     if (!$dbconn->Execute($query)) return;
 

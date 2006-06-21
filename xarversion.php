@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'window';
 $modversion['id'] = '3002';
-$modversion['version'] = '1.0.4';
+$modversion['version'] = '1.1.4';
 $modversion['displayname']    = xarML('Window');
 $modversion['description'] = 'Incorporate external sites or standalone apps';
 $modversion['credits'] = 'docs/credits.txt';
