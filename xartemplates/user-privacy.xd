@@ -1,4 +1,4 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+﻿<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="mina">xarModGetVar('registration','minage')</xar:set>
 <xar:set name="a0"><xar:mlstring>zero</xar:mlstring></xar:set>
 <xar:set name="a1"><xar:mlstring>one</xar:mlstring></xar:set>
@@ -179,6 +179,6 @@
         </p>
 
     <xar:else />
-        <p><xar:mlstring>Privay Policy Not Active</xar:mlstring></p>
+        <p><xar:mlstring>Privacy Policy Not Active</xar:mlstring></p>
     </xar:if>
 </div>
