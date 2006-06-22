@@ -55,7 +55,7 @@ function window_adminapi_create($args)
     if (!isset($auto_resize)) $auto_resize = xarModGetVar('window', 'auto_resize');
     if (!isset($vsize)) $vsize = xarModGetVar('window', 'vsize');
     if (!isset($hsize)) $hsize = xarModGetVar('window', 'hsize');
-
+    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -64,7 +64,7 @@ function window_adminapi_create($args)
     $nextId = $dbconn->GenId($windowtable);
 
     $query = "INSERT INTO $windowtable
-                    (xar_id, xar_name, xar_alias, xar_label, xar_description, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize, xar_status)
+                    (xar_id, xar_name, xar_alias, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize)
                     VALUES (?,
                             ?,
                             ?,
@@ -73,11 +73,8 @@ function window_adminapi_create($args)
                             ?,
                             ?,
                             ?,
-                            ?,
-                            ?,
-                            ?,
                             ?)";
-    $bindvars = array($nextId, $name, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status);
+    $bindvars = array($nextId, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize);
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

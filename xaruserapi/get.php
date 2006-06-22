@@ -31,7 +31,7 @@ function window_userapi_get($args)
         $bindvars[] = $itemid;
     } else {
         $wherelist = array();
-        $fieldlist = array('name','alias','status');
+        $fieldlist = array('name','alias');
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
                 $wherelist[] = "xar_$field = ?";
@@ -52,8 +52,6 @@ function window_userapi_get($args)
     $query = "SELECT xar_id,
                      xar_name,
                      xar_alias,
-                     xar_label,
-                     xar_description,
                      xar_reg_user_only,
                      xar_open_direct,
                      xar_use_fixed_title,
@@ -66,9 +64,15 @@ function window_userapi_get($args)
 
     if (!$result) return;
 
-    if ($result->EOF) return false;
+    if ($result->EOF) {
+        $result->Close();
+        $msg = xarML('This item does not exist');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
+    }
 
-    list($itemid, $name, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+    list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
 
     $result->Close();
 
@@ -79,8 +83,6 @@ function window_userapi_get($args)
     $item = array('itemid'          => $itemid,
                   'name'            => $name,
                   'alias'           => $alias,
-                  'label'           => $label,
-                  'description'     => $description,
                   'reg_user_only'   => $reg_user_only,
                   'open_direct'     => $open_direct,
                   'use_fixed_title' => $use_fixed_title,

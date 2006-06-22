@@ -12,9 +12,6 @@ function window_adminapi_addurl($args)
     if (!xarVarFetch('hsize', 'str', $hsize, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('host', 'str', $host, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alias', 'str', $alias, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('label', 'str', $label, "Xaraya Window", XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('description', 'str', $description, "Xaraya Window Display", XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('status', 'int', $data['status'], 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lang_action', 'str', $lang_action, 'Add', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('window_status', 'str', $window_status, 'add', XARVAR_NOT_REQUIRED)) return;
@@ -79,8 +76,6 @@ function window_adminapi_addurl($args)
         */
         $fargs['name']            = $host;
         $fargs['alias']           = $alias;
-        $fargs['label']           = $label;
-        $fargs['description']     = $description;
         $fargs['reg_user_only']   = $reg_user_only;
         $fargs['open_direct']     = $open_direct;
         $fargs['use_fixed_title'] = $use_fixed_title;

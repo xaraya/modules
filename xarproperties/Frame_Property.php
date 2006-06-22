@@ -19,7 +19,7 @@ class Frame_Property extends Dynamic_Property
 {
     public $hsize;
     public $vsize;
-    public $url = "index.php?module=window";
+    public $page = "index.php?module=window";
     public $title = "Xaraya Window";
     public $auto_resize;
     public $allow_local_only;
@@ -82,68 +82,51 @@ class Frame_Property extends Dynamic_Property
         // TODO: the way the template is organized now, this only works when an id is set.
         $hsize  = isset($hsize) ? $hsize : $this->hsize;
         $vsize  = isset($vsize) ? $vsize : $this->vsize;
-		$url           = isset($url) ? $url : $this->url;
+		$page           = isset($page) ? $page : $this->page;
 		$auto_resize    = isset($auto_resize) ? $auto_resize : $this->auto_resize;
 		$open_direct    = isset($open_direct) ? $open_direct : $this->open_direct;
 		$use_iframe     = isset($use_iframe) ? $use_iframe : $this->use_iframe;
 		$use_object     = isset($use_object) ? $use_object : $this->use_object;
-		$use_fixed_title     = isset($use_fixed_title) ? $use_fixed_title : $this->use_fixed_title;
 
 		if ($this->security) {
 			if (!xarSecurityCheck('ReadWindow')) return;
 
-			$pageinfo = xarModAPIFunc('window','user','get',array('name' => $url));
+			$dbconn =& xarDBGetConn();
+			$xartable =& xarDBGetTables();
+			$urltable = $xartable['window'];
 
-			if ($pageinfo) {
-				$url = $pageinfo['name'];
-				$reg_user_only = $pageinfo['reg_user_only'];
-				$open_direct = $pageinfo['open_direct'];
-				$use_fixed_title = $pageinfo['use_fixed_title'];
-				$auto_resize = $pageinfo['auto_resize'];
-				$vsize = $pageinfo['vsize'];
-				$hsize = $pageinfo['hsize'];
-				$title = $pageinfo['label'];
+			$result = $dbconn->Execute("SELECT * FROM $urltable");
+			if(!$result) return;
 
-			} else {
-				// Look harder
-				$dbconn =& xarDBGetConn();
-				$xartable =& xarDBGetTables();
-				$urltable = $xartable['window'];
+			$db_checked = 0;
 
-				$result = $dbconn->Execute("SELECT * FROM $urltable");
-				if(!$result) return;
+			if(!$result->EOF) {
+				while(list($id, $name, $alias, $reg_user_only1, $open_direct1, $use_fixed_title1, $auto_resize1, $vsize1, $hsize1) = $result->fields) {
 
-				$db_checked = 0;
-
-				if(!$result->EOF) {
-					while(list($id, $name, $alias, $label, $description, $reg_user_only1, $open_direct1, $use_fixed_title1, $auto_resize1, $vsize1, $hsize1) = $result->fields) {
-
-						// Check if URL is in DB
-						if (($alias == $url) || ($name == $url) || ($name == "http://".$url)) {
-							$db_checked = 1;
-							$url = $url;
-							// Override global settings
-							$reg_user_only = $reg_user_only1;
-							$open_direct = $open_direct1;
-							$use_fixed_title = $use_fixed_title1;
-							$auto_resize = $auto_resize1;
-							$vsize = $vsize1;
-							$hsize = $hsize1;
-							$title = $label;
-							break;
-						}
-						$result->MoveNext();
+					// Check if URL is in DB
+					if (($alias == $page) || ($name == $page) || ($name == "http://".$page)) {
+						$db_checked = 1;
+						$this->page = $name;
+						// Override global settings
+						$this->reg_user_only = $reg_user_only1;
+						$this->open_direct = $open_direct1;
+						$this->use_fixed_title = $this->use_fixed_title1;
+						$this->auto_resize = $auto_resize1;
+						$this->vsize = $vsize1;
+						$this->hsize = $hsize1;
+						break;
 					}
+					$result->MoveNext();
 				}
 			}
 		}
 
 		// Store URL parts in array
-		$url_parts = parse_url($url);
+		$url_parts = parse_url($page);
 
 
-		// Check that a url was specified
-		if(!isset($url) || ($url == '')) {
+		// Check that a page was specified
+		if(!isset($page) || ($page == '')) {
 			$msg = xarML('No page to display was specified.',
 				'window');
 			xarErrorSet(XAR_USER_EXCEPTION,
@@ -165,7 +148,8 @@ class Frame_Property extends Dynamic_Property
 		// Check for not local page if set
 		if($this->allow_local_only &&
 			(isset($url_parts['host'])) &&
-			($url_parts['host'] != xarServerGetHost())) {
+			($url_parts['host'] != $_SERVER['SERVER_NAME']) &&
+			($url_parts['host'] != $_SERVER['HTTP_HOST'])) {
 			$msg = xarML('Only pages off your local server can be displayed.', 'window');
 			xarErrorSet(XAR_USER_EXCEPTION, 'NOT_ALLOWED', new DefaultUserException($msg));
 			return;
@@ -197,6 +181,16 @@ class Frame_Property extends Dynamic_Property
 			$end_title = '';
 		}
 
+		// Add the Open Direct link if set
+		if ($this->open_direct) {
+			if($this->use_fixed_title) {
+				$title .= "<br />[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
+			}
+			else {
+				$title .= "[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
+			}
+		}
+
 		// Check if height, width or resize were passed in URL
 		if (isset($height)) {
 			$vsize = $height;
@@ -215,11 +209,11 @@ class Frame_Property extends Dynamic_Property
 
 		if (isset($id)) {
 			$data['hooks'] = xarModCallHooks('item', 'display', $id, array('itemtype'  => $id,
-																		   'returnurl' => xarModURL('window', 'user', 'main', array('page' => $url, 'id' => $id))),
+																		   'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
 																	'window');
 		}
 
-		$data['url'] = $url;
+		$data['page'] = $page;
 		$data['title'] = $title;
 		$data['hsize'] = $hsize;
 		$data['vsize'] = $vsize;

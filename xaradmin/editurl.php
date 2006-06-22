@@ -31,12 +31,10 @@ function window_admin_editurl($args)
     $result = $dbconn->Execute($query);
     if(!$result) return;
 
-    list($id, $host, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status) = $result->fields;
+    list($id, $host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status) = $result->fields;
 
     $data['host'] = $host;
     $data['alias'] = $alias;
-    $data['label'] = $label;
-    $data['description'] = $description;
     $data['id'] = $id;
     $data['lang_action'] = xarML("Save");
 
