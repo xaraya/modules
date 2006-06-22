@@ -26,7 +26,6 @@ function window_admin_newurl()
 	if (!xarVarFetch('open_direct', 'int', $data['open_direct'], xarModGetVar('window', 'open_direct'), XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('use_fixed_title', 'int', $data['use_fixed_title'], xarModGetVar('window', 'use_fixed_title'), XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('auto_resize', 'int', $data['auto_resize'], xarModGetVar('window', 'auto_resize'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('status', 'int', $data['status'], 1, XARVAR_NOT_REQUIRED)) return;
 
     $data['authid'] = xarSecGenAuthKey();
     $data['action'] = xarModURL('window', 'admin', 'addurl');

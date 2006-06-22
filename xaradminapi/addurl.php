@@ -15,7 +15,6 @@ function window_adminapi_addurl($args)
     if (!xarVarFetch('id', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lang_action', 'str', $lang_action, 'Add', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('window_status', 'str', $window_status, 'add', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'int', $status, 1, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
 
@@ -82,7 +81,6 @@ function window_adminapi_addurl($args)
         $fargs['auto_resize']     = $auto_resize;
         $fargs['vsize']           = $vsize;
         $fargs['hsize']           = $hsize;
-        $fargs['status']          = $status;
 
         if ($window_status == 'add') {
             $itemid = xarModAPIFunc('window', 'admin', 'create', $fargs);
