@@ -12,21 +12,18 @@
  * @author Marc Lutolf
  * @author Yassen Yotov (CyberOto)
  */
-
+ 
 /**
  * Add URL Form
  *
  * @return array $data template array values
- */
+ */ 
 function window_admin_addurl()
 {
     if (!xarSecurityCheck('AdminWindow')) return;
 
-	if (!xarVarFetch('reg_user_only', 'int', $data['reg_user_only'], xarModGetVar('window', 'reg_user_only'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('open_direct', 'int', $data['open_direct'], xarModGetVar('window', 'open_direct'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('use_fixed_title', 'int', $data['use_fixed_title'], xarModGetVar('window', 'use_fixed_title'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('auto_resize', 'int', $data['auto_resize'], xarModGetVar('window', 'auto_resize'), XARVAR_NOT_REQUIRED)) return;
-
+    $data = array();
+    
     $data['authid'] = xarSecGenAuthKey();
     $data['action'] = xarModURL('window', 'admin', 'newurl');
     $data['window_status'] = 'add';
@@ -34,6 +31,10 @@ function window_admin_addurl()
     $data['id'] = '';
     $data['host'] = 'http://';
     $data['alias'] = '';
+    $data['reg_user_only'] = xarModGetVar('window', 'reg_user_only');
+    $data['open_direct'] = xarModGetVar('window', 'open_direct');
+    $data['use_fixed_title'] = xarModGetVar('window', 'use_fixed_title');
+    $data['auto_resize'] = xarModGetVar('window', 'auto_resize');
     $data['vsize'] = xarModGetVar('window', 'vsize');
     $data['hsize'] = xarModGetVar('window', 'hsize');
     $data['lang_action'] = xarML('Add');
