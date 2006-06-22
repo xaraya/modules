@@ -72,6 +72,7 @@ function window_init()
 
     //Set security checkinkg for URL
     xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
+	xarModSetVar('window', 'showusermenu', 1);
 
 # --------------------------------------------------------
 #
