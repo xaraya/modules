@@ -1,183 +1,102 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
-<xar:template type="module" module="window" file="admin-menu" />
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('window','useModuleAlias')">
-            #xarModGetVar('window','aliasname')#
-        <xar:else />
-            <xar:mlstring>Window Administration</xar:mlstring>
-        </xar:if>
-    </span>
-</div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Window Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Configuration 
-        </xar:mlstring>
-    </h2>
-    <div>
-        <dl class="xar-tabs">
-            <dt class="help">
-                <xar:mlstring>
-                    Actions: 
-                </xar:mlstring>
-            </dt>
-            <xar:if condition="$tab eq 'general'">
-                <dd class="active">
-                    <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=general">
-                        <xar:mlstring>
-                            General Settings
-                        </xar:mlstring>
-                    </a>
-                </dd>
-                <xar:else />
-                <dd>
-                    <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=general">
-                        <xar:mlstring>
-                            General Settings
-                        </xar:mlstring>
-                    </a>
-                </dd>
-            </xar:if>
-            <xar:if condition="$tab eq 'display'">
-                <dd class="active">
-                    <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=display">
-                        <xar:mlstring>
-                            Display 
-                        </xar:mlstring>
-                    </a>
-                </dd>
-                <xar:else />
-                <dd>
-                    <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=display">
-                        <xar:mlstring>
-                            Display 
-                        </xar:mlstring>
-                    </a>
-                </dd>
-            </xar:if>
-        </dl>
+<xar:template type="module" module="window" file="admin-menu" />
+<h2><xar:mlstring>General Settings</xar:mlstring></h2>
+
+<xar:comment> Prior Menuing
+<table border="0" width="50%">
+    <tr align="center" valign="middle">
+        <td align="center" valign="middle">
+            <xar:mlstring>General Settings</xar:mlstring>
+        </td>
+        <td align="center" valign="middle">
+            <a href="#xarModURL('window','admin','addurl')#">
+            <xar:mlstring>URL Specific Settings</xar:mlstring></a>
+        </td>
+    </tr>
+</table>
+</xar:comment>
+
+
+<form action="&xar-modurl-window-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+<fieldset>
+    <legend>
+        <xar:mlstring>General Module Options</xar:mlstring>
+    </legend>
+    <xar:set name="options">array(
+                        array('id' => '0', 'name' => xarML('No')),
+                        array('id' => '1', 'name' => xarML('Yes')),
+                        )
+                        </xar:set>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Allow only local pages</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="allow_local_only" options="$options" value="$allow_local_only" />
     </div>
-    <xar:comment> Begin General Options
-    </xar:comment>
-    <xar:if condition="$tab eq 'general'">
-        <form action="&xar-modurl-window-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-            <fieldset>
-                <legend>
-                    <xar:mlstring>General Module Settings</xar:mlstring>
-                </legend>
-                <xar:set name="options">array(
-                                    array('id' => '0', 'name' => xarML('No')),
-                                    array('id' => '1', 'name' => xarML('Yes')),
-                                    )
-                                    </xar:set>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Allow only local pages</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'allow_local_only')</xar:set>
-                    <xar:data-input type="radio" name="allow_local_only" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Buffer output before sending?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'use_buffering')</xar:set>
-                    <xar:data-input type="radio" name="use_buffering" options="$options" value="$value" />
-                </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Buffer output before sending?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="use_buffering" options="$options" value="$use_buffering" />
+    </div>
 
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Allow input from browser address bar?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'no_user_entry')</xar:set>
-                    <xar:data-input type="radio" name="no_user_entry" options="$options" value="$value" />
-                </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Allow input from browser address bar?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="no_user_entry" options="$options" value="$no_user_entry" />
+    </div>
 
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Compare URL against URL Secu?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'security')</xar:set>
-                    <xar:data-input type="radio" name="security" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Only for registered users?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'reg_user_only')</xar:set>
-                    <xar:data-input type="radio" name="reg_user_only" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Add link for Open in new window?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'open_direct')</xar:set>
-                    <xar:data-input type="radio" name="open_direct" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Use fixed title?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'use_fixed_title')</xar:set>
-                    <xar:data-input type="radio" name="use_fixed_title" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Auto resize window?</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'auto_resize')</xar:set>
-                    <xar:data-input type="radio" name="auto_resize" options="$options" value="$value" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Height of viewing window</xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'vsize')</xar:set>
-                    <input type="text" name="vsize" id="vsize" value="#$value#" size="4" maxlength="4" tabindex="19" /> <xar:mlstring>in pixels.</xar:mlstring>
-                    <p class="xar-form-input-wrapper-after">
-                        (<xar:mlstring>Only if Auto resize window = No, in which case this is the height of the content window.</xar:mlstring>)
-                    </p>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Width of viewing window </xar:mlstring>
-                    </label>
-                    <xar:set name="value">xarModGetVar('window', 'hsize')</xar:set>
-                    <input type="text" name="hsize" id="hsize" value="#$value#" size="4" maxlength="4" tabindex="20" />
-                    <xar:mlstring>in pixels or percent</xar:mlstring> (<xar:mlstring>If percent use %</xar:mlstring>)
-                 </div>
-                </fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="Save Changes"  tabindex="21" />
-                </div>
-            </fieldset>
-        </form>
-    <xar:elseif condition="$tab eq 'display'" />
-        <form action="&xar-modurl-window-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-            <fieldset>
-                <legend>
-                    <xar:mlstring>Display Settings</xar:mlstring>
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label">
-                        <xar:mlstring>Display User Menu</xar:mlstring>
-                    </label>
-                    <xar:data-input type="checkbox" name="showusermenu" checked="$showusermenu" />
-                 </div>
-                </fieldset>
-                <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="Save Changes"  tabindex="21" />
-                </div>
-            </fieldset>
-        </form>
-    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Compare URL against URL Secu?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="security" options="$options" value="$security" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Only for registered users?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="reg_user_only" options="$options" value="$reg_user_only" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Add link for Open in new window?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="open_direct" options="$options" value="$open_direct" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Use fixed title?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="use_fixed_title" options="$options" value="$use_fixed_title" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Auto resize window?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="auto_resize" options="$options" value="$auto_resize" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Height of viewing window</xar:mlstring>
+        </label>
+        <input type="text" name="vsize" id="vsize" value="#$vsize#" size="4" maxlength="4" tabindex="19" /> <xar:mlstring>in pixels.</xar:mlstring>
+        <p class="xar-form-input-wrapper-after">
+            (<xar:mlstring>Only if Auto resize window = No, in which case this is the height of the content window.</xar:mlstring>)
+        </p>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Width of viewing window </xar:mlstring>
+        </label>
+        <input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" />
+        <xar:mlstring>in pixels or percent</xar:mlstring> (<xar:mlstring>If percent use %</xar:mlstring>)
+     </div>
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" value="Save Changes"  tabindex="21" />
+    </div>
+</form>
 </div>
-

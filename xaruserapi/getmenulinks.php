@@ -24,7 +24,7 @@ function window_userapi_getmenulinks()
                                                   'user',
                                                   'display'),
                               'title' => xarML('Show a display in the window'),
-                              'label' => xarML('Display a window'));
+                              'label' => xarML('Dispay a window'));
     }
 
     if (empty($menulinks)){
