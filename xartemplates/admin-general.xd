@@ -18,7 +18,7 @@
 </xar:comment>
 
 
-<form action="&xar-modurl-window-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+<form action="&xar-modurl-window-admin-updatelinks;" method="post" enctype="application/x-www-form-urlencoded">
 <fieldset>
     <legend>
         <xar:mlstring>General Module Options</xar:mlstring>

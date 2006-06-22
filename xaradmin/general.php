@@ -1,5 +1,5 @@
 <?php
-function window_admin_modifyconfig()
+function window_admin_general()
 {
     if (!xarSecurityCheck('AdminWindow')) return;
 
