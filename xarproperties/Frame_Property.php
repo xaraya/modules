@@ -32,40 +32,10 @@ class Frame_Property extends Dynamic_Property
     public $use_iframe;
     public $use_object;
 
-    function Frame_Property($args)
-    {
-        $this->tplmodule = 'window';
-        $this->template = 'frame';
-		$this->filepath   = 'modules/window/xarproperties';
-
-        $this->hsize = xarModGetVar('window', 'hsize');
-        $this->vsize = xarModGetVar('window', 'vsize');
-        $this->auto_resize = xarModGetVar('window', 'auto_resize');
-        $this->allow_local_only = xarModGetVar('window', 'allow_local_only');
-        $this->use_buffering = xarModGetVar('window', 'use_buffering');
-        $this->reg_user_only = xarModGetVar('window', 'reg_user_only');
-        $this->no_user_entry = xarModGetVar('window', 'no_user_entry');
-        $this->open_direct = xarModGetVar('window', 'open_direct');
-        $this->use_fixed_title = xarModGetVar('window', 'use_fixed_title');
-        $this->security = xarModGetVar('window', 'security');
-        $this->use_iframe = xarModGetVar('window', 'use_iframe');
-        $this->use_object = xarModGetVar('window', 'use_object');
-
-        if(isset($args['hsize'])) $this->hsize = $args['hsize'];
-        if(isset($args['vsize'])) $this->vsize = $args['vsize'];
-        if(isset($args['auto_resize'])) $this->auto_resize = $args['auto_resize'];
-
-        // check validation for allowed rows/cols (or values)
-        if (!empty($this->validation)) {
-            $this->parseValidation($this->validation);
-        }
-    }
-
-/*
-	// 2x stuff
-	function __construct($args)
+    function __construct($args)
     {
         parent::__construct($args);
+
         $this->tplmodule = 'window';
         $this->template = 'frame';
 		$this->filepath   = 'modules/window/xarproperties';
@@ -92,35 +62,16 @@ class Frame_Property extends Dynamic_Property
             $this->parseValidation($this->validation);
         }
     }
-*/
+
     static function getRegistrationInfo()
     {
         $info = new PropertyRegistration();
         $info->reqmodules = array('window');
-        $info->id         = 30037;
-        $info->name       = 'frame';
-        $info->desc       = 'Window Frame';
+        $info->id      = 30037;
+        $info->name    = 'frame';
+        $info->desc    = 'Window Frame';
         return $info;
     }
-
-     function getBasePropertyInfo()
-     {
-         $args = array();
-         $baseInfo = array(
-						  'id'             => 30037,
-						  'name'           => 'frame',
-						  'label'          => 'Window Frame',
-						  'format'         => '30037',
-						  'validation'     => '',
-						  'source'         => '',
-						  'dependancies'   => '',
-						  'requiresmodule' => '',
-						  'aliases'        => '',
-						  'args'           => serialize($args),
-						// ...
-                           );
-        return $baseInfo;
-     }
 
     function showInput($data = array())
     {
@@ -277,11 +228,8 @@ class Frame_Property extends Dynamic_Property
 		$data['use_iframe'] = $use_iframe;
 		$data['use_object'] = $use_object;
 
-/*		2x stuff
-		// Let parent deal with the rest;
+        // Let parent deal with the rest
         return parent::showInput($data);
-*/
-        return xarTplProperty('window', 'frame', 'showinput', $data);
     }
 
     // check validation for allowed rows/cols (or values)
