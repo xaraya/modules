@@ -78,14 +78,14 @@
         </xar:set>
         <xar:set name="$options">
             array(
-                array('id' =>'ice_countries', 'name' => 'Countries', 'checked' => 'checked'),
-                array('id' =>'ice_taxclasses', 'name' => 'Tax Classes', 'checked' => true),
-                array('id' =>'ice_taxrates', 'name' => 'Tax Rates', 'checked' => true),
-                array('id' =>'ice_languages', 'name' => 'Languages', 'checked' => true),
-                array('id' =>'ice_zones', 'name' => 'Zones', 'checked' => true),
-                array('id' =>'ice_taxzones', 'name' => 'Tax Zones', 'checked' => true),
-                array('id' =>'ice_taxzonemapping', 'name' => 'Tax Zone Mappings', 'checked' => true),
-                array('id' =>'ice_addressformats', 'name' => 'Address Formats', 'checked' => true),
+                array('id' =>'ice_countries', 'name' => 'Countries'),
+                array('id' =>'ice_taxclasses', 'name' => 'Tax Classes'),
+                array('id' =>'ice_taxrates', 'name' => 'Tax Rates'),
+                array('id' =>'ice_languages', 'name' => 'Languages'),
+                array('id' =>'ice_zones', 'name' => 'Zones'),
+                array('id' =>'ice_taxzones', 'name' => 'Tax Zones'),
+                array('id' =>'ice_taxzonemapping', 'name' => 'Tax Zone Mappings'),
+                array('id' =>'ice_addressformats', 'name' => 'Address Formats'),
             )
         </xar:set>
         <xar:data-input type="checkboxlist" name="defaultdata" id="defaultdata" options="$options" value="$value" />
