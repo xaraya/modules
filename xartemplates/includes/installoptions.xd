@@ -1,0 +1,93 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div>
+        <xar:mlstring>The following settings can be changed at a later time either in the Commerce modifyconfig page or the modifyconfig pages of the modules indicated below</xar:mlstring>
+    </div>
+<fieldset>
+    <legend>
+        <xar:mlstring>
+            Default Roles and Privileges 
+        </xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create a default group for Commerce users')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default group for Commerce users 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultgroup" id="createdefaultgroup" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultgroupname" id="defaultgroupname" value="CommerceGroup" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create a default Commerce user')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default Commerce user 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultuser" id="createdefaultuser" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultusername" id="defaultusername" value="CommerceUser" />
+        &nbsp;
+        <xar:mlstring>
+            Password:
+        </xar:mlstring>
+        <input type="text" name="defaultuserpass" id="defaultuserpass" value="password" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create default privileges for the Commerce users')#" class="xar-form-label">
+            <xar:mlstring>
+                Create default privileges 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultprivileges" id="createdefaultprivileges" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            The ViewCommerce privilege will be assigned to the default group, allowing its users to see the Commerce menu
+        </xar:mlstring>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>
+        <xar:mlstring>
+            Default Data 
+        </xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create some default data for Commerce functionality')#" class="xar-form-label">
+            <xar:mlstring>
+                Load default data 
+            </xar:mlstring>
+        </label>
+        <xar:set name="$value">
+            array(
+                'ice_countries',
+                'ice_taxclasses',
+                'ice_taxrates',
+                'ice_languages',
+                'ice_zones',
+                'ice_taxzones',
+                'ice_taxzonemapping',
+                'ice_addressformats',
+            )
+        </xar:set>
+        <xar:set name="$options">
+            array(
+                array('id' =>'ice_countries', 'name' => 'Countries', 'checked' => 'checked'),
+                array('id' =>'ice_taxclasses', 'name' => 'Tax Classes', 'checked' => true),
+                array('id' =>'ice_taxrates', 'name' => 'Tax Rates', 'checked' => true),
+                array('id' =>'ice_languages', 'name' => 'Languages', 'checked' => true),
+                array('id' =>'ice_zones', 'name' => 'Zones', 'checked' => true),
+                array('id' =>'ice_taxzones', 'name' => 'Tax Zones', 'checked' => true),
+                array('id' =>'ice_taxzonemapping', 'name' => 'Tax Zone Mappings', 'checked' => true),
+                array('id' =>'ice_addressformats', 'name' => 'Address Formats', 'checked' => true),
+            )
+        </xar:set>
+        <xar:data-input type="checkboxlist" name="defaultdata" id="defaultdata" options="$options" value="$value" />
+    </div>
+</fieldset>

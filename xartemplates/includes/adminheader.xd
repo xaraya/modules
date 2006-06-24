@@ -6,7 +6,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
         <td valign="bottom" align="right">
-            <img src="#xarTplGetImage('logo.gif','commerce')#" width="185" height="95" style="align: right" alt="Welcome to ICE" />
+            <img src="#xarTplGetImage('logo.gif','commerce')#" style="align: right" alt="Welcome to ICE" />
         </td>
         <td valign="bottom" align="right" background="#xarTplGetImage('bg_top.jpg','commerce')#">
 

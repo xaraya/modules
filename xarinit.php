@@ -25,6 +25,17 @@ xarDBLoadTableMaintenanceAPI();
  */
 function commerce_init()
 {
+    if (!xarVarFetch('createdefaultgroup', 'checkbox', $createdefaultgroup, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('createdefaultuser', 'checkbox', $createdefaultuser, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroupname', 'str:1:', $defaultgroupname, 'WindowGroup', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultusername', 'str:1:', $defaultusername, 'Windowuser', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultuserpass', 'str:1:', $defaultuserpass, 'password', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('createdefaultprivileges', 'checkbox', $createdefaultprivileges, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultdata', 'array', $defaultdata, array(), XARVAR_NOT_REQUIRED)) return;
+
+    $defaultdata[] = 'ice_configuration';
+    $defaultdata[] = 'ice_config_groups';
+
     $q = new xenQuery();
     $prefix = xarDBGetSiteTablePrefix();
 
@@ -165,7 +176,7 @@ function commerce_init()
     */
     $ice_objects = array(
     					 'ice_countries',
-    					 'ice_currencies',
+//    					 'ice_currencies',
 						 'ice_taxclasses',
                          'ice_taxrates', 'ice_languages', 'ice_zones',
                          'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
@@ -200,7 +211,7 @@ function commerce_init()
         if (!$objectid) return;
         else $objects[$ice_object] = $objectid;
         // Let data import be allowed to be empty
-        if(file_exists($dat_file)) {
+        if(file_exists($dat_file) && in_array($ice_object, $defaultdata)) {
             // And allow it to fail for now
             xarModAPIFunc('dynamicdata','util','import', array('file' => $dat_file,'keepitemid' => true));
         }
@@ -877,17 +888,44 @@ function commerce_init()
 
 # --------------------------------------------------------
 #
-# Set a parent group for commerce
+# Set a parent group with privileges and a user for commerce
 #
 
-	$role = xarFindRole('CommerceRoles');
-	if (empty($role)) {
-		$everybody = xarFindRole('Everybody');
-		$new = array('name' => 'CommerceRoles',
-					 'itemtype' => ROLES_GROUPTYPE,
-					 'parentid' => $everybody->getID(),
-					);
-		$uid = xarModAPIFunc('roles','admin','create',$new);
+	if ($createdefaultgroup) {
+		$role = xarFindRole('CommerceRoles');
+		if (empty($role)) {
+			$everybody = xarFindRole('Everybody');
+			$new = array('name' => $defaultgroupname,
+						 'itemtype' => ROLES_GROUPTYPE,
+						 'parentid' => $everybody->getID(),
+						);
+			$uid = xarModAPIFunc('roles','admin','create',$new);
+		}
+		if ($createdefaultuser) {
+			$new = array('name' => $defaultusername,
+						 'uname' => strtolower($defaultusername),
+						 'email' => 'none@none.com',
+						 'pass' => $defaultuserpass,
+						 'state' => ROLES_STATE_ACTIVE,
+						 'itemtype' => ROLES_USERTYPE,
+						 'parentid' => $uid,
+						);
+			$uid = xarModAPIFunc('roles','admin','create',$new);
+		}
+	}
+
+# --------------------------------------------------------
+#
+# Register masks
+#
+	if ($createdefaultprivileges) {
+		xarRegisterPrivilege('ViewCommerce','All','commerce','All','All','ACCESS_OVERVIEW');
+		xarRegisterPrivilege('ReadCommerce','All','commerce','All','All','ACCESS_READ');
+		xarRegisterPrivilege('EditCommerce','All','commerce','All','All','ACCESS_EDIT');
+		xarRegisterPrivilege('AddCommerce','All','commerce','All','All','ACCESS_ADD');
+		xarRegisterPrivilege('DeleteCommerce','All','commerce','All','All','ACCESS_DELETE');
+		xarRegisterPrivilege('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
+		xarAssignPrivilege('ViewWindow',$defaultgroupname);
 	}
 
 # --------------------------------------------------------
@@ -952,11 +990,13 @@ function commerce_delete()
 #
 # Purge all the roles created by this module
 #
-	$role = xarFindRole('commerceroles');
-	$descendants = $role->getDescendants();
-	foreach ($descendants as $item)
-		if (!$item->purge()) return;
-	if (!$role->purge()) return;
+	$role = xarFindRole('CommerceGroup');
+	if (!empty($role)) {
+		$descendants = $role->getDescendants();
+		foreach ($descendants as $item)
+			if (!$item->purge()) return;
+		if (!$role->purge()) return;
+	}
 
 # --------------------------------------------------------
 #

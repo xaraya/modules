@@ -1,0 +1,25 @@
+<xar:style scope="module" module="commerce" file="tabs" />
+<br />
+<div id="tabnav">
+    <div>
+        <xar:if condition="$tab eq 'commerce_general'">
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'commerce_general'))#" class="active">
+        <xar:else/>    
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'commerce_general'))#">
+        </xar:if>
+        <xar:mlstring>General Settings</xar:mlstring></a>
+    </div>    
+    <xar:set name="tabs">$hooks['tabs']</xar:set>
+    <xar:foreach in="$tabs" value="$thistab">
+        <div>
+            <xar:set name="configtab">$thistab['module'] . "_" . $thistab['configarea']</xar:set>
+            <xar:if condition="$tab eq $configtab">
+                <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => $configtab))#" class="active">
+            <xar:else/>    
+                <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => $configtab))#">
+            </xar:if>
+                #$thistab['configtitle']#
+            </a>
+        </div>
+    </xar:foreach>
+</div>
