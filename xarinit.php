@@ -7,35 +7,25 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Dynamic Data Example Module
+ * @subpackage dyn_example
  * @link http://xaraya.com/index.php/release/66.html
  * @author mikespub <mikespub@xaraya.com>
  */
 
 /**
- * initialise the dyn_example module
+ * Initialise the module
+ *
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
 function dyn_example_init()
 {
-    // this module can't work without the dynamicdata module
-    $testmod = xarModIsAvailable('dynamicdata');
-    if (!isset($testmod)) return; // some other exception got in our way [locale for instance :)]
-
-    if (!$testmod) {
-        $msg = xarML('Please activate the Dynamic Data module first...');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
-                        new DefaultUserException($msg));
-        return;
-    }
-
     /**
      * import the object definition and properties from some XML file (exported from DD)
      */
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/dyn_example.xml'));
+                              array('file' => 'modules/dyn_example/xardata/dyn_example-def.xml'));
     if (empty($objectid)) return;
     // save the object id for later
     xarModSetVar('dyn_example','objectid',$objectid);
@@ -129,7 +119,7 @@ function dyn_example_init()
      */
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/dyn_example.data.xml'));
+                              array('file' => 'modules/dyn_example/xardata/dyn_example-data.xml'));
     if (empty($objectid)) return;
 
     /**
@@ -167,12 +157,12 @@ function dyn_example_init()
      */
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/modulesettings.xml'));
+                              array('file' => 'modules/dyn_example/xardata/modulesettings.xml'));
     if (empty($objectid)) return;
     xarModSetVar('dyn_example','modulesettings',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/usersettings.xml'));
+                              array('file' => 'modules/dyn_example/xardata/usersettings.xml'));
     if (empty($objectid)) return;
     xarModSetVar('dyn_example','usersettings',$objectid);
 
@@ -230,7 +220,8 @@ function dyn_example_init()
 }
 
 /**
- * upgrade the example module from an old version
+ * Upgrade the module from an old version
+ *
  * This function can be called multiple times
  */
 function dyn_example_upgrade($oldversion)
@@ -294,7 +285,8 @@ function dyn_example_upgrade($oldversion)
 }
 
 /**
- * delete the dyn_example module
+ * Delete the module
+ *
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
@@ -307,19 +299,16 @@ function dyn_example_delete()
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('dyn_example','objectid');
 
     $objectid = xarModGetVar('dyn_example','modulesettings');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('dyn_example','modulesettings');
 
     $objectid = xarModGetVar('dyn_example','usersettings');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('dyn_example','usersettings');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
@@ -328,6 +317,7 @@ function dyn_example_delete()
                        array('modName' => 'dyn_example',
                              'blockType' => 'first'))) return;
 
+    xarModDelAllVars('dyn_example');
     // Remove Masks and Instances
     xarRemoveMasks('dyn_example');
     xarRemoveInstances('dyn_example');
