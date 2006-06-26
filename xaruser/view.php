@@ -18,6 +18,8 @@ function xproject_user_view($args)
 
     $data = xarModAPIFunc('xproject','user','menu');
 
+    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
+
     $xprojects = array();
 
     if (!xarSecurityCheck('ViewXProject')) {
@@ -36,7 +38,7 @@ function xproject_user_view($args)
         $project = $xprojects[$i];
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['link'] = xarModURL('xproject',
-                                               'user',
+                                               'admin',
                                                'display',
                                                array('projectid' => $project['projectid']));
         }

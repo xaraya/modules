@@ -25,6 +25,8 @@ function xproject_user_display($args)
     $data['projectid'] = $projectid;
     $data['status'] = '';
 
+    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
+
     $project = xarModAPIFunc('xproject',
                           'user',
                           'get',

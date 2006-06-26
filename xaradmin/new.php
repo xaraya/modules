@@ -5,6 +5,8 @@ function xproject_admin_new()
 //    xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','admin','menu');
 
+    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
+
     if (!xarSecurityCheck('AddXProject')) {
         return;
     }

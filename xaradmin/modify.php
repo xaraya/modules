@@ -21,6 +21,9 @@ function xproject_admin_modify($args)
     }
     
 	$data = array();
+
+    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
+    
 	$data['projectid'] = $item['projectid'];
 	
     $data['authid'] = xarSecGenAuthKey();

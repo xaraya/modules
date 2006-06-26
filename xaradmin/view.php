@@ -4,6 +4,8 @@ function xproject_admin_view()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     $data = xarModAPIFunc('xproject', 'admin', 'menu');
+
+    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
     $items = xarModAPIFunc('xproject', 'user', 'getall',
                             array('startnum' => $startnum,

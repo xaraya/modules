@@ -18,7 +18,6 @@
  */
 function xproject_init()
 {
-
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
 

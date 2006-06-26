@@ -1,13 +1,16 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Table information for example module
-// ----------------------------------------------------------------------
+/**
+ * Site Manager Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Site Manager Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author St.Ego <webmaster@ivory-tower.net>
+ */
 
 /**
  * This function is called internally by the core whenever the module is
