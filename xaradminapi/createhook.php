@@ -61,6 +61,14 @@ function pubsub_adminapi_createhook($args)
         $itemtype = 0;
     }
 
+    if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
+        if ($createwithstatus == 1) { 
+            if (isset($extrainfo['status']) & $extrainfo['status'] < 2 ) {
+                return $extrainfo;
+            }
+        }        
+    }
+    
     $templateid = xarModGetVar('pubsub',"$modname.$itemtype.create");
     if (!isset($templateid)) {
         $templateid = xarModGetVar('pubsub',"$modname.create");

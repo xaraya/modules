@@ -28,7 +28,6 @@ function pubsub_adminapi_updatehook($args)
 {
     // Get arguments from argument array
     extract($args);
-
     // This has to be an argument
     if (empty($objectid)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
@@ -61,9 +60,16 @@ function pubsub_adminapi_updatehook($args)
         $itemtype = 0;
     }
 
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.update");
+    $typeoftemplate = 'update';
+    if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
+        if ($createwithstatus == 1 & $extrainfo['status'] >= 2 & $extrainfo['oldstatus']< 2) {
+            $typeoftemplate = 'create';
+        } 
+    }
+           
+    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.$typeoftemplate");
     if (!isset($templateid)) {
-        $templateid = xarModGetVar('pubsub',"$modname.update");
+        $templateid = xarModGetVar('pubsub',"$modname.$typeoftemplate");
     }
     // if there's no 'update' template defined for this module(+itemtype), we're done here
     if (empty($templateid)) {

@@ -39,6 +39,10 @@ function pubsub_admin_modifyconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 foreach ($value as $itemtype => $val) {
+                    $createwithstatus = xarModGetVar('pubsub', "$modname.$itemtype.createwithstatus");
+                    if (empty($createwithstatus)) {
+                        $createwithstatus = 0;
+                    }
                     $create = xarModGetVar('pubsub', "$modname.$itemtype.create");
                     if (empty($create)) {
                         $create = 0;
@@ -59,11 +63,16 @@ function pubsub_admin_modifyconfig()
                         $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                                                                    'createwithstatus' => $createwithstatus,
                                                                     'create' => $create,
                                                                     'update' => $update,
                                                                     'delete' => $delete);
                 }
             } else {
+                $createwithstatus = xarModGetVar('pubsub', "$modname.createwithstatus");
+                                if (empty($createwithstatus)) {
+                                    $createwithstatus = 0;
+                }
                 $create = xarModGetVar('pubsub', "$modname.create");
                 if (empty($create)) {
                     $create = 0;
@@ -78,11 +87,16 @@ function pubsub_admin_modifyconfig()
                 }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
+                                                    'createwithstatus' => $createwithstatus,
                                                     'create' => $create,
                                                     'update' => $update,
                                                     'delete' => $delete);
                 if (!empty($mytypes) && count($mytypes) > 0) {
                     foreach ($mytypes as $itemtype => $mytype) {
+                        $createwithstatus = xarModGetVar('pubsub', "$modname.$itemtype.createwithstatus");
+                        if (empty($createwithstatus)) {
+                            $createwithstatus = 0;
+                        }                        
                         $create = xarModGetVar('pubsub', "$modname.$itemtype.create");
                         if (empty($create)) {
                             $create = 0;
@@ -98,6 +112,7 @@ function pubsub_admin_modifyconfig()
                         $type = $mytypes[$itemtype]['label'];
                         $link = $mytypes[$itemtype]['url'];
                         $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                                                                        'createwithstatus' => $createwithstatus,
                                                                         'create' => $create,
                                                                         'update' => $update,
                                                                         'delete' => $delete);
@@ -113,8 +128,8 @@ function pubsub_admin_modifyconfig()
     }
     $data['subjecttitle'] = xarModGetVar('pubsub','subjecttitle');
     $data['includechildren'] = xarModGetVar('pubsub','includechildren');
-    
-    
+    $data['allindigest'] = xarModGetVar('pubsub','allindigest');
+    $data['wrapper'] = xarModGetVar('pubsub','wrapper');
 
     if (xarModIsAvailable('scheduler')) {
         $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
