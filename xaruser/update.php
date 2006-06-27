@@ -34,6 +34,7 @@ function itsp_user_update()
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+
    // if (!xarVarFetch('authid',   'str::', $authid,  '',  XARVAR_NOT_REQUIRED)) return;
     if (!empty($objectid)) {
         $pitemid = $objectid;
@@ -106,6 +107,7 @@ function itsp_user_update()
                 if (!xarVarFetch('icourseresult',  'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icoursedate',   'str::',    $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('displaytitle',  'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
 
                 if (!xarModFunc('itsp',
@@ -123,6 +125,7 @@ function itsp_user_update()
                                    'icourseresult'=> $icourseresult,
                                    'icoursedate'=> $icoursedate,
                                    'dateappr'=> $dateappr,
+                                   'displaytitle' => $displaytitle,
                                    'authid' => xarSecGenAuthKey('itsp')
                                          )
                                 )) {

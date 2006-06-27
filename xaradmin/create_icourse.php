@@ -101,7 +101,7 @@ function itsp_admin_create_icourse($args)
      * suceeded then an appropriate message is posted.
      */
     if (!isset($icourseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    xarSessionSetVar('statusmsg', xarML('The external course was successfully created!'));
+    xarSessionSetVar('statusmsg', xarML('The #(1) was successfully created!',$displaytitle));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
