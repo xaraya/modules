@@ -40,7 +40,7 @@ function itsp_admin_update_pitem($args)
     if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('rule_cat',   'int::', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rule_cat',   'str::', $rule_cat,    $rule_cat,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',  'int::', $rule_type,    $rule_type,   XARVAR_NOT_REQUIRED)) return; // The coursetype
     if (!xarVarFetch('rule_source','str::', $rule_source,    $rule_source,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_level', 'int::', $rule_level,   $rule_level,   XARVAR_NOT_REQUIRED)) return;

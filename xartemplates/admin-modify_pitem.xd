@@ -76,10 +76,10 @@
                  </select>
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="rule_cat" class="xar-form-label" title="#xarML('What Category should the courses come from? State an catid')#">
-                        <xar:mlstring>Category Rule</xar:mlstring>
+                 <label for="rule_cat" class="xar-form-label" title="#xarML('What Category should the courses come from? State a category ID or multiple with a '+'')#">
+                        <xar:mlstring>Category Number</xar:mlstring>
                  </label>
-                 <input type="text" name="rule_cat" id="rule_cat" value="#$rule_cat#" maxlength="5" class="xar-form-textshort" />
+                 <input type="text" name="rule_cat" id="rule_cat" value="#$rule_cat#" maxlength="100" class="xar-form-textshort" />
                  <xar:if condition="!empty($invalid['rule_cat'])">
                      <div class="xar-error">
                             <xar:mlstring>ERROR! This is not a valid category</xar:mlstring>

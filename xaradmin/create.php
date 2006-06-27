@@ -39,6 +39,8 @@ function itsp_admin_create($args)
     if (!xarVarFetch('dateclose',  'str',    $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
+if ( {
+}
 
     /* Argument check
 
