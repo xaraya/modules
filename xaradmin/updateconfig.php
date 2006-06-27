@@ -11,10 +11,9 @@ function pubsub_admin_updateconfig()
     xarVarFetch('numitems','isset',$numitems,20, XARVAR_DONT_SET);
     xarVarFetch('subjecttitle','isset',$subjecttitle,'', XARVAR_DONT_SET);
     xarVarFetch('includechildren','isset',$includechildren,'', XARVAR_DONT_SET);
+    xarVarFetch('allindigest','isset',$allindigest,'', XARVAR_DONT_SET);
+    xarVarFetch('wrapper','isset',$wrapper,'', XARVAR_DONT_SET);
 
-
-    // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return; 
     // Security Check
     if (!xarSecurityCheck('AdminPubSub')) return; 
 
@@ -23,6 +22,11 @@ function pubsub_admin_updateconfig()
             xarModSetVar('pubsub', $name, $value);
         } 
     } 
+    if (isset($wrapper)) {
+        xarModSetVar('pubsub','wrapper',$wrapper);
+    } else {
+        xarModSetVar('pubsub','wrapper',0);
+    }
     if (empty($isalias)) {
         xarModSetVar('pubsub','SupportShortURLs',0);
     } else {
@@ -42,6 +46,11 @@ function pubsub_admin_updateconfig()
         xarModSetVar('pubsub','includechildren',0);
     } else {
         xarModSetVar('pubsub','includechildren',1);
+    }
+    if (empty($allindigest)) {
+        xarModSetVar('pubsub','allindigest',0);
+    } else {
+        xarModSetVar('pubsub','allindigest',1);
     }
 
 

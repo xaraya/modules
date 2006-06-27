@@ -21,39 +21,24 @@
  * @raise DATABASE_ERROR
  */
 function pubsub_adminapi_processq($args)
-{
-    // Get arguments from argument array
-    extract($args);
-
-    // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $pubsubprocesstable = $xartable['pubsub_process'];
-
-    // Get all jobs in pending state
-    $query = "SELECT xar_handlingid,
-                     xar_pubsubid,
-                     xar_objectid,
-                     xar_templateid
-              FROM $pubsubprocesstable
-              WHERE xar_status = 'pending'";
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
-
-    // set count to 1 so that the scheduler knows we're doing OK :)
-    $count = 1;
-
-    while (!$result->EOF) {
-        list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
-        // run the job passing it the handling, pubsub and object ids.
-        xarModAPIFunc('pubsub','admin','runjob',
-                      array('handlingid' => $handlingid,
-                            'pubsubid' => $pubsubid,
-                            'objectid' => $objectid,
-                            'templateid' => $templateid));
-        $count++;
-        $result->MoveNext();
-    }
+{    
+    if (!($allindigest = xarModGetVar('pubsub','allindigest'))) {
+        $allindigest = 0;
+    } 
+    
+    if ($allindigest == 0) {
+        if (!($count = xarModAPIFunc('pubsub','admin','processqnodigest',$args) ) ) {
+            return;
+        } else {
+            return $count;
+        }
+    } else {
+        if (!($count = xarModAPIFunc('pubsub','admin','processqdigest',$args) ) ) {
+            return;
+        } else {
+            return $count;
+        }
+    }    
     return $count;
 
 } // END processq
