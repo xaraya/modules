@@ -93,6 +93,10 @@ function articles_adminapi_update($args)
     }
 
     if (isset($status) && is_numeric($status)) {
+        $oldversion= xarModAPIFunc('articles','user','get',
+                                    array('aid'=>$aid,
+                                          'fields'=>array('status')));
+        $args['oldstatus'] = $oldversion['status'];
         $query .= ", xar_status = ?";
         $bindvars[] = (int) $status;
     }
