@@ -27,8 +27,8 @@ function commerce_init()
 {
     if (!xarVarFetch('createdefaultgroup', 'checkbox', $createdefaultgroup, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('createdefaultuser', 'checkbox', $createdefaultuser, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('defaultgroupname', 'str:1:', $defaultgroupname, 'WindowGroup', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('defaultusername', 'str:1:', $defaultusername, 'Windowuser', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroupname', 'str:1:', $defaultgroupname, 'CommerceGroup', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultusername', 'str:1:', $defaultusername, 'CommerceUser', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultuserpass', 'str:1:', $defaultuserpass, 'password', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('createdefaultprivileges', 'checkbox', $createdefaultprivileges, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultdata', 'array', $defaultdata, array(), XARVAR_NOT_REQUIRED)) return;
@@ -61,7 +61,8 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_memo";
+/* Move to customers module
+	$query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_memo";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_customers_memo (
       memo_id int(11) NOT NULL auto_increment,
@@ -73,7 +74,8 @@ function commerce_init()
       PRIMARY KEY  (memo_id)
     )";
     if (!$q->run($query)) return;
-
+*/
+/*	Move to products module
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_xsell";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_products_xsell (
@@ -84,7 +86,7 @@ function commerce_init()
     PRIMARY KEY  (ID)
     )";
     if (!$q->run($query)) return;
-
+*/
     # only for bugfix with non installed banktransfer
     # if calling orders.php at the admin-tool
     # ---------- should be deleted asap
@@ -221,7 +223,8 @@ function commerce_init()
 
     /** END ICE MODEL **/
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_ip";
+/* Move to customers module
+$query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_ip";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_customers_ip (
       customers_ip_id int(11) NOT NULL auto_increment,
@@ -248,8 +251,8 @@ function commerce_init()
       PRIMARY KEY  (customers_status_history_id)
     )";
     if (!$q->run($query)) return;
-
-
+*/
+/*
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_newsletters";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_newsletters (
@@ -274,7 +277,8 @@ function commerce_init()
       PRIMARY KEY  (news_hist_id)
     )";
     if (!$q->run($query)) return;
-
+    */
+/*
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_orders";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_orders (
@@ -429,8 +433,9 @@ function commerce_init()
       KEY idx_orders_total_orders_id (orders_id)
     )";
     if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_customers_status_0";
+*/
+/*  Move to customers module
+$query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_customers_status_0";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_personal_offers_by_customers_status_0 (
       price_id int NOT NULL auto_increment,
@@ -462,7 +467,7 @@ function commerce_init()
       PRIMARY KEY (price_id)
     )";
     if (!$q->run($query)) return;
-
+*/
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_reviews";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_reviews (
@@ -488,7 +493,7 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_sessions";
+/*    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_sessions";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_sessions (
       sesskey varchar(32) NOT NULL,
@@ -497,22 +502,6 @@ function commerce_init()
       PRIMARY KEY (sesskey)
     )";
     if (!$q->run($query)) return;
-
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_specials";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_commerce_specials (
-      specials_id int NOT NULL auto_increment,
-      products_id int NOT NULL,
-      specials_new_products_price decimal(15,4) NOT NULL,
-      specials_date_added datetime,
-      specials_last_modified datetime,
-      expires_date datetime,
-      date_status_change datetime,
-      status int(1) NOT NULL DEFAULT '1',
-      PRIMARY KEY (specials_id)
-    )";
-    if (!$q->run($query)) return;
-
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_whos_online";
     if (!$q->run($query)) return;
@@ -526,6 +515,7 @@ function commerce_init()
       last_page_url varchar(64) NOT NULL
     )";
     if (!$q->run($query)) return;
+*/
 
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_content_manager";
@@ -892,7 +882,7 @@ function commerce_init()
 #
 
 	if ($createdefaultgroup) {
-		$role = xarFindRole('CommerceRoles');
+		$role = xarFindRole($defaultgroupname);
 		if (empty($role)) {
 			$everybody = xarFindRole('Everybody');
 			$new = array('name' => $defaultgroupname,
@@ -925,7 +915,10 @@ function commerce_init()
 		xarRegisterPrivilege('AddCommerce','All','commerce','All','All','ACCESS_ADD');
 		xarRegisterPrivilege('DeleteCommerce','All','commerce','All','All','ACCESS_DELETE');
 		xarRegisterPrivilege('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
-		xarAssignPrivilege('ViewWindow',$defaultgroupname);
+		$role = xarFindRole($defaultgroupname);
+		if (!empty($role)) {
+			xarAssignPrivilege('ViewCommerce',$defaultgroupname);
+		}
 	}
 
 # --------------------------------------------------------
