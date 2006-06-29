@@ -18,7 +18,7 @@
         <strong>#$status#</strong>
     <xar:else />
     <fieldset>
-       <legend><xar:mlstring>Resonse</xar:mlstring> #$scrid#</legend>
+       <legend><xar:mlstring>Response</xar:mlstring> #$scrid#</legend>
            <p class="xar-form-input-wrapper">
                <span class="xar-form-label">   
                    <xar:mlstring>User name:</xar:mlstring>
