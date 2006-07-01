@@ -1,11 +1,11 @@
 /**
- * $Id: editor_plugin_src.js 5 2006-06-05 19:51:22Z spocke $
+ * $Id: editor_plugin_src.js 23 2006-06-30 17:14:08Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
-tinyMCE.importPluginLanguagePack('spellchecker', 'en,sv,nn,nb');
+tinyMCE.importPluginLanguagePack('spellchecker', 'en,fr,sv,nn,nb');
 
 // Plucin static class
 var TinyMCE_SpellCheckerPlugin = {
@@ -88,8 +88,8 @@ var TinyMCE_SpellCheckerPlugin = {
         inst.spellCheckerLang = 'en';
 		self._buildSettingsMenu(inst, null);
 
-		e = self._getBlockBoxLayer(inst).create('span', 'mceBlockBox', document.getElementById(inst.editorId + '_parent'));
-		self._getMsgBoxLayer(inst).create('span', 'mceMsgBox', document.getElementById(inst.editorId + '_parent'));
+		e = self._getBlockBoxLayer(inst).create('div', 'mceBlockBox', document.getElementById(inst.editorId + '_parent'));
+		self._getMsgBoxLayer(inst).create('div', 'mceMsgBox', document.getElementById(inst.editorId + '_parent'));
 	},
 
 	_getMsgBoxLayer : function(inst) {
@@ -249,7 +249,7 @@ var TinyMCE_SpellCheckerPlugin = {
 
 					// Setup arguments
 					args += 'id=' + inst.editorId + "|" + (++self._counter);
-					args += '&cmd=spell&check=' + escape(self._getWordList(inst.getBody())).replace(/%20/g, '+');
+					args += '&cmd=spell&check=' + encodeURIComponent(self._getWordList(inst.getBody())).replace( /\'/g, '%27' );
 					args += '&lang=' + escape(inst.spellCheckerLang);
 
 					co = document.getElementById(inst.editorId + '_parent').firstChild;
@@ -387,7 +387,7 @@ var TinyMCE_SpellCheckerPlugin = {
 		switch (cmd) {
 			case "spell":
 				if (xml.documentElement.firstChild) {
-					self._markWords(inst.getDoc(), inst.getBody(), el.firstChild.nodeValue.split(' '));
+					self._markWords(inst.getDoc(), inst.getBody(), decodeURIComponent(el.firstChild.nodeValue).split('+'));
 					inst.selection.moveToBookmark(inst.spellCheckerBookmark);
 				} else
 					alert(tinyMCE.getLang('lang_spellchecker_no_mpell', '', true));
@@ -397,7 +397,7 @@ var TinyMCE_SpellCheckerPlugin = {
 				break;
 
 			case "suggest":
-				self._buildMenu(el.firstChild ? el.firstChild.nodeValue.split(' ') : null, 10);
+				self._buildMenu(el.firstChild ? decodeURIComponent(el.firstChild.nodeValue).split('+') : null, 10);
 				self._contextMenu.show();
 				break;
 		}

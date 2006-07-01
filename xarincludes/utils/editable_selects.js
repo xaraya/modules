@@ -1,5 +1,5 @@
 /**
- * $Id: editable_selects.js 5 2006-06-05 19:51:22Z spocke $
+ * $Id: editable_selects.js 18 2006-06-29 14:11:23Z spocke $
  *
  * Makes select boxes editable.
  *

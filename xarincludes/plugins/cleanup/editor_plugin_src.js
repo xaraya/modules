@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 5 2006-06-05 19:51:22Z spocke $
+ * $Id: editor_plugin_src.js 18 2006-06-29 14:11:23Z spocke $
  *
  * Experimental plugin for new Cleanup routine, this logic will be moved into the core ones it's stable enougth.
  *

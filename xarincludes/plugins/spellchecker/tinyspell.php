@@ -1,10 +1,15 @@
 <?php
 /**
- * $Id: tinyspell.php 5 2006-06-05 19:51:22Z spocke $
+ * $RCSfile: tinyspell.php,v $
+ * $Revision: 1.1 $
+ * $Date: 2006/03/14 17:33:47 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
+
+	// Ignore the Notice errors for now.
+	error_reporting(E_ALL ^ E_NOTICE);
 
 	require_once("config.php");
 
@@ -28,14 +33,14 @@
 
 	// Get input parameters.
 
-	$check = $_POST['check'];
-	$cmd = sanitize($_POST['cmd']);
-	$lang = sanitize($_POST['lang'], "strict");
-	$mode = sanitize($_POST['mode'], "strict");
-	$spelling = sanitize($_POST['spelling'], "strict");
-	$jargon = sanitize($_POST['jargon'], "strict");
-	$encoding = sanitize($_POST['encoding'], "strict");
-	$sg = sanitize($_POST['sg'], "bool");
+	$check = urldecode($_REQUEST['check']);
+	$cmd = sanitize($_REQUEST['cmd']);
+	$lang = sanitize($_REQUEST['lang'], "strict");
+	$mode = sanitize($_REQUEST['mode'], "strict");
+	$spelling = sanitize($_REQUEST['spelling'], "strict");
+	$jargon = sanitize($_REQUEST['jargon'], "strict");
+	$encoding = sanitize($_REQUEST['encoding'], "strict");
+	$sg = sanitize($_REQUEST['sg'], "bool");
 	$words = array();
 
 	$validRequest = true;
@@ -107,19 +112,22 @@
 	switch($outputType) {
 		case "xml":
 			header('Content-type: text/xml; charset=utf-8');
-			echo '<?xml version="1.0" encoding="utf-8" ?>';
-			echo "\n";
+			$body  = '<?xml version="1.0" encoding="utf-8" ?>';
+			$body .= "\n";
+			
 			if (count($result) == 0)
-				echo '<res id="' . $id . '" cmd="'. $cmd .'" />';
+				$body .= '<res id="' . $id . '" cmd="'. $cmd .'" />';
 			else
-				echo '<res id="' . $id . '" cmd="'. $cmd .'">'. utf8_encode(implode(" ", $result)) .'</res>';
+				$body .= '<res id="' . $id . '" cmd="'. $cmd .'">'. urlencode(implode(" ", $result)) .'</res>';
 
+			echo $body;
 		break;
 		case "xmlerror";
 			header('Content-type: text/xml; charset=utf-8');
-			echo '<?xml version="1.0" encoding="utf-8" ?>';
-			echo "\n";
-			echo '<res id="' . $id . '" cmd="'. $cmd .'" error="true" msg="'. implode(" ", $tinyspell->errorMsg) .'" />';
+			$body  = '<?xml version="1.0" encoding="utf-8" ?>';
+			$body .= "\n";
+			$body .= '<res id="' . $id . '" cmd="'. $cmd .'" error="true" msg="'. implode(" ", $tinyspell->errorMsg) .'" />';
+			echo $body;
 		break;
 		case "html":
 			var_dump($result);
@@ -128,4 +136,5 @@
 			echo "Error";
 		break;
 	}
-?> 
+
+?>
