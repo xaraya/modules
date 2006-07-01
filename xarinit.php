@@ -136,8 +136,9 @@ function tinymce_upgrade($oldversion)
     case '1.0.4':
     xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
 
-       break;
     case '1.1.0': //current version
+
+    case '1.1.1': //current version
        break;
     }
     return true;
