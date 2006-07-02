@@ -24,10 +24,7 @@ function legis_adminapi_getmenulinks()
     /* Show an overview menu option here if you like */
 
     if (xarSecurityCheck('AdminLegis', 0)) {
-        $menulinks[] = Array('url' => xarModURL('legis','admin','overview'),
-            'title' => xarML('Legis Overview'),
-            'label' => xarML('Overview'));
-         $menulinks[] = Array('url' => xarModURL('legis','admin','masters'),
+           $menulinks[] = Array('url' => xarModURL('legis','admin','masters'),
             'title' => xarML('Manage Master Documents.'),
             'label' => xarML('Manage Master Docs'));
        $menulinks[] = Array('url' => xarModURL('legis','admin','doclets'),

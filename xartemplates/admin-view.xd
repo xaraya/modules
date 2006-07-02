@@ -8,14 +8,9 @@
     </xar:ml>
     </span>
 </div>
-<pre>
-<xar:set name="dummy">1;
 
-</xar:set>
-</pre>
 <div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-    <h2>
+<h2>
     <xar:ml>
         <xar:mlstring>#(1) Administration for #(2)</xar:mlstring>
     <xar:mlvar>#$mastername#</xar:mlvar>
@@ -25,6 +20,9 @@
     
     </xar:ml>
     </h2>
+  <xar:template type="module" file="admin-general" />
+  <xar:template type="module" file="admin-menu" />
+
    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>

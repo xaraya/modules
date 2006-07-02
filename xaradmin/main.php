@@ -21,17 +21,10 @@ function legis_admin_main()
 { 
     if (!xarSecurityCheck('EditLegis')) return;
 
-    if (xarModGetVar('adminpanels', 'overview') == 0) {
+    $data = xarModAPIFunc('legis', 'admin', 'menu');
+    
+    xarResponseRedirect(xarModURL('legis', 'admin', 'view'));
 
-        $data = xarModAPIFunc('legis', 'admin', 'menu');
-
-        return $data;
-    } else {
-        /* If the Overview documentation is turned off, then we just return the view page,
-         * or whatever function seems to be the most fitting.
-         */
-        xarResponseRedirect(xarModURL('legis', 'admin', 'view'));
-    }
     /* success so return true */
     return true;
 }

@@ -8,7 +8,7 @@
   <img src="modules/legis/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  
+  <xar:template type="module" file="admin-general" />
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>Legislation is a module for handling submission and administration of legislation documents.</xar:mlstring></em>

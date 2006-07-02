@@ -11,11 +11,7 @@
 
 <div class="xar-mod-body">
   <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
-<pre>
-<xar:set name="dummy">1;
-
-</xar:set>
-</pre>
+ <xar:template type="module" file="admin-general" />
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>

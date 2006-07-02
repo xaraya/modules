@@ -10,7 +10,8 @@
 </div>
 
 <div class="xar-mod-body">
-     <!-- Common user menu -->
+
+    <xar:template type="module" file="admin-general" />
     <xar:if condition="!isset($defaulthall) or empty($defaulthall)">
       <xar:template type="module" file="admin-menu-set" />
     <xar:else />

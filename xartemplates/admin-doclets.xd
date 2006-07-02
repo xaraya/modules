@@ -7,8 +7,10 @@
     <xar:mlvar>#$mastername#</xar:mlvar>
     </xar:ml>
     </span>
-</div><div class="xar-mod-body"><h2><xar:mlstring>Doclets</xar:mlstring></h2>
-
+</div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Doclets</xar:mlstring></h2>
+  <xar:template type="module" file="admin-general" />
 <xar:if condition="isset($action) and $action eq 'new'">
     <h3 style="text-align: left;"><xar:mlstring>New Doclet</xar:mlstring></h3>
     <form method="post" action="#$link#">

@@ -15,11 +15,8 @@
     <xar:mlvar>#$mastername#</xar:mlvar>
     </xar:ml>
 </h2>
-<pre>
-<xar:set name="dummy">1;
+<xar:template type="module" file="admin-general" />
 
-</xar:set>
-</pre>
 <xar:if condition="isset($action) and $action eq 'new'">
     <h3 style="text-align: left;">
     <xar:ml>

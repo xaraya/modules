@@ -10,12 +10,7 @@
 </div>
 <div class="xar-mod-body">
   <h2><xar:mlstring>Manage Executive Users</xar:mlstring></h2>
-<pre>
-<xar:set name="dummy">1;
-
-</xar:set>
-</pre>
-
+  <xar:template type="module" file="admin-general" />
   <form method="post" id="post" action="&xar-modurl-legis-admin-manageusers;" enctype="application/x-www-form-urlencoded">
   <fieldset>
       <legend>
