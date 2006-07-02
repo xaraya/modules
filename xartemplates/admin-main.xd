@@ -50,10 +50,10 @@
         <xar:mlstring>Included Hooks</xar:mlstring>
     </h3>
     <p>
-       <xar:mlstring>Julian offers a hook that will enable you to hook any content type to the calendar</xar:mlstring><br/>
+       <xar:mlstring>Julian offers a hook that will enable you to hook any content type to the calendar.</xar:mlstring><br/>
        <xar:mlstring>The hook shows an input form with all the information needed. You can attach this hook to your own publication type for instance.</xar:mlstring><br/>
-       <xar:mlstring>In your pubtype, you can then add the data needed by Julian to show the even in the calendar</xar:mlstring><br/>
-       <xar:mlstring>The hook has been tested with various modules like articles and example. It will work with any module that provides a clear userapi-getitemlinks function</xar:mlstring>
+       <xar:mlstring>In your pubtype, you can then add the data needed by Julian to show the event in the calendar.</xar:mlstring><br/>
+       <xar:mlstring>The hook has been tested with various modules like articles and example. It will work with any module that provides a clear userapi-getitemlinks function.</xar:mlstring>
     </p>
     <h3><xar:mlstring>Known Bugs</xar:mlstring></h3>
     <ul>
@@ -71,6 +71,6 @@
         </li>
     </ul>
     <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Julian Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.4&nbsp; 2006-02-12
+        <strong>&nbsp;<xar:mlstring>Julian Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.5&nbsp; 2006-07-02
     </p>
 </div>
