@@ -73,7 +73,7 @@
                           #$v['label2']#
                      </xar:if>
                 </label>
-                  <xar:set name="clausedata">xarModAPIFunc('html','user','transformoutput',array('extrainfo' =>'transform','text' => $v['data'][$i]))</xar:set>
+                  <xar:set name="clausedata">$v['data'][$i]</xar:set>
 
                  #xarVarPrepHTMLDisplay($clausedata)#
                  </div>
