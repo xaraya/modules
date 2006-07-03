@@ -132,7 +132,7 @@ function sitecontact_init()
     xarModSetVar('sitecontact', 'useModuleAlias',0);
     xarModSetVar('sitecontact', 'aliasname','');
     xarModSetVar('sitecontact', 'usehtmlemail', 0);
-    xarModSetVar('sitecontact', 'allowcopy', 1);
+    xarModSetVar('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
     xarModSetVar('sitecontact', 'scdefaultemail',xarModGetVar('mail', 'adminmail'));
     xarModSetVar('sitecontact', 'customtitle','Contact and Feedback');
     xarModSetVar('sitecontact', 'customtext',

@@ -44,6 +44,51 @@ function sitecontact_user_contactus($args)
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
     }
+    /* Move this xarSec section to the top so we don't have bug reports on it 
+       being 'missing' when it is indeed here */
+    /* Confirm authorisation code. */
+    if (!xarSecConfirmAuthKey()) return;
+    $formdata=array();
+    $formdata2=array();
+    $data['submit'] = xarML('Submit');
+    //See if we have a form name that exists and is active
+    if (isset($sctypename) && trim($sctypename) <> '') {
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
+    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
+       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+    } else {
+     //hmm something would be wrong
+    }
+
+   //now what have we got ..
+    if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
+        $formdata=$formdata2[0];
+    } else {
+        $formdata=$formdata[0];
+    }
+
+    if ($formdata['scactive']<>1) { //formdata exists but perhaps not active?
+       $formdata2=xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+       $formdata=$formdata2[0];
+    }
+
+    //now check for the bbccrecipient and ccrecipient switch Bug 5799
+     if (isset($formdata['soptions'])) {
+           $soptions=unserialize($formdata['soptions']);
+           if (is_array($soptions)) {
+               foreach ($soptions as $k=>$v) {
+                   $soptions[$k]=$v;
+              }
+           }
+    }
+    if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
+       $bccrecipients='';
+    }
+    if (!isset($soptions['allowccs']) || $soptions['allowccs']!=1) {
+       $ccrecipients='';
+    }
+    //end check for bug 5799
+
     //Put all set data in an array for later processing
      $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
                 'sctypename'      => array(xarML('Form'),$sctypename),
@@ -98,32 +143,8 @@ function sitecontact_user_contactus($args)
     }
     $bccrecipients=$bccrec;
 
-    /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
-    $formdata=array();
-    $formdata2=array();
-    $data['submit'] = xarML('Submit');
-    //See if we have a form name that exists and is active
-    if (isset($sctypename) && trim($sctypename) <> '') {
-       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
-    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
-       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-    } else {
-     //hmm something would be wrong
-    }
 
-   //now what have we got ..
-    if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
-        $formdata=$formdata2[0];
-    } else {
-        $formdata=$formdata[0];
-    }
 
-    if ($formdata['scactive']<>1) { //formdata exists but perhaps not active?
-       $formdata2=xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-       $formdata=$formdata2[0];
-    }
-    
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
     $withupload = isset($withupload)? $withupload :(int) false;
