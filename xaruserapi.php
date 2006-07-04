@@ -114,13 +114,15 @@ function bbcode_transform($text)
                       'inline', array ('listitem', 'block', 'inline', 'link'), array());
 
     $bbcode->addCode ('code', 'usecontent?', 'do_bbcode_code', array ('usecontent_param' => 'default'), 'link', array ('block', 'inline'), array ('link'));
-
-    $bbcode->addCode ('quote', 'usecontent?', 'do_bbcode_quote', array ('usecontent_param' => 'default'), 'link', array ('block', 'inline'), array ('link'));
+    //bug 5217
+    //$bbcode->addCode ('quote', 'usecontent?', 'do_bbcode_quote', array ('usecontent_param' => 'default'), 'link', array ('block', 'inline'), array ('link'));
+    $bbcode->addCode ('quote', 'callback_replace', 'do_bbcode_quote', array ('usecontent_param' => 'default'), 'block', array ('block', 'inline','link'), array ());
 
     $bbcode->addCode ('color', 'usecontent?', 'do_bbcode_color', array ('usecontent_param' => 'default'),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array ('link'));
-    $bbcode->addCode ('img', 'usecontent', 'do_bbcode_img', array (),
-                      'image', array ('listitem', 'block', 'inline', 'link'), array ());
+    //$bbcode->addCode ('img', 'usecontent', 'do_bbcode_img', array (),
+    $bbcode->addCode ('img', 'usecontent?', 'do_bbcode_img', array ('usecontent_param' => 'default'),
+                       'image', array ('listitem', 'block', 'inline', 'link'), array ());
     $bbcode->addCode ('bild', 'usecontent', 'do_bbcode_img', array (),
                       'image', array ('listitem', 'block', 'inline', 'link'), array ());
     $bbcode->addCode ('size', 'usecontent', 'do_bbcode_size', array (),
@@ -144,6 +146,8 @@ function bbcode_transform($text)
     $bbcode->setCodeFlag ('list', 'paragraph_type', BBCODE_PARAGRAPH_BLOCK_ELEMENT);
     $bbcode->setCodeFlag ('list', 'opentag.before.newline', BBCODE_NEWLINE_DROP);
     $bbcode->setCodeFlag ('list', 'closetag.before.newline', BBCODE_NEWLINE_DROP);
+    // Add img line for bug 5217
+    $bbcode->setCodeFlag ('img', 'closetag', BBCODE_CLOSETAG_OPTIONAL);
     $bbcode->addFilter(STRINGPARSER_FILTER_PRE, 'convertlinebreaks');
     //$bbcode->addParser(array ('block', 'inline', 'link', 'listitem'), 'htmlspecialchars');
     $bbcode->addParser ('list', 'bbcode_stripcontents');
@@ -175,7 +179,12 @@ function do_bbcode_img ($action, $attributes, $content, $params, $node_object)
     if ($action == 'validate') {
         return true;
     }
-    return '<img src="'.htmlspecialchars($content).'" alt="">';
+    //return '<img src="'.htmlspecialchars($content).'" alt="">';  bug 5217
+    if (!isset ($attributes['default'])) {
+    		return '<img src="'.htmlspecialchars($content).'" alt="">';
+    } else {
+    		return '<img src="'.htmlspecialchars($attributes['default']).'" alt="">';
+    }
 }
 // Bug 4826
 function do_bbcode_para ($action, $attributes, $content, $params, &$node_object)
