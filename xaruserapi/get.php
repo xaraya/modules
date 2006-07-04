@@ -70,6 +70,7 @@ function courses_userapi_get($args)
     if (!xarSecurityCheck('ViewCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
+    /* TODO: this causes an error at the account function of roles. Why does that call this function?
     //Check if user can see this course
     if ($hidecourse == 1) {
         if(!xarSecurityCheck('AdminCourses', 0, 'Course', "$courseid:All:All")) {
@@ -79,6 +80,7 @@ function courses_userapi_get($args)
             return;
         }
     }
+    */
     $item = array('courseid'    => $courseid,
                 'name'          => $name,
                 'number'        => $number,
