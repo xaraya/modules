@@ -33,7 +33,7 @@ function courses_user_display($args)
         $courseid = $objectid;
     }
     // Initialise the $data variable
-    $data = array();// xarModAPIFunc('courses', 'user', 'menu');
+    $data = array();
     // Prepare the variable that will hold some status message if necessary
     // Replace this by statusmsg
     $data['status'] = '';

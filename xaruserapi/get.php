@@ -30,12 +30,6 @@ function courses_userapi_get($args)
             new SystemException($msg));
         return;
     }
-    // Check if user can see this course
-    if (xarSecurityCheck('AdminCourses', 0)) {
-    $where = "0, 1";
-    } else {
-    $where = "0";
-    }
 
     /* Get database setup */
     $dbconn =& xarDBGetConn();
@@ -54,7 +48,7 @@ function courses_userapi_get($args)
                    xar_hidecourse,
                    xar_last_modified
             FROM $coursestable
-            WHERE xar_courseid = ? AND xar_hidecourse in ($where)";
+            WHERE xar_courseid = ?";// AND xar_hidecourse in ($where)";
     $result = &$dbconn->Execute($query, array((int)$courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
@@ -71,10 +65,20 @@ function courses_userapi_get($args)
     $result->Close();
 
     // Security checks
+
     // For this function, the user must *at least* have READ access to this item
     if (!xarSecurityCheck('ViewCourses', 1, 'Course', "$courseid:All:All")) {
         return;
         }
+    //Check if user can see this course
+    if ($hidecourse == 1) {
+        if(!xarSecurityCheck('AdminCourses', 0, 'Course', "$courseid:All:All")) {
+            $msg = xarModGetVar('courses','hidecoursemsg');
+            xarErrorSet(XAR_USER_EXCEPTION, 'CANNOT_CONTINUE',
+                new DefaultUserException($msg));
+            return;
+        }
+    }
     $item = array('courseid'    => $courseid,
                 'name'          => $name,
                 'number'        => $number,

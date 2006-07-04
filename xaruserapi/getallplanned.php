@@ -51,7 +51,7 @@ function courses_userapi_getallplanned($args)
     // TODO: how to select by cat ids (automatically) when needed ???
 
     // Set to be able to see all courses or only non-hidden ones
-    if (xarSecurityCheck('EditCourses', 0)) {
+    if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
