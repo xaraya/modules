@@ -28,7 +28,7 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('requesttext', 'str:1:', $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('company', 'str:1:', $company, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('usermessage', 'str:1:', $usermessage, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useripaddress', 'str:1:', $useripaddress, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useripaddress', 'str:1:', $dummy, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -88,6 +88,10 @@ function sitecontact_user_contactus($args)
        $ccrecipients='';
     }
     //end check for bug 5799
+
+    //Feature request for more accurate IP
+    //leave the ip capture in the forms - hehehe :)
+    $useripaddress=xarModAPIFunc('sitecontact','admin','getcurrentip');
 
     //Put all set data in an array for later processing
      $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
