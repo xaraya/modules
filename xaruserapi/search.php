@@ -65,20 +65,24 @@ function courses_userapi_search($args)
     // Get item
     $sql = "SELECT DISTINCT $coursestable.xar_courseid,
                    $coursestable.xar_name,
-                   $coursestable.xar_number
+                   $coursestable.xar_number,
+                   $coursestable.xar_hidecourse,
+                   $planningtable.xar_hideplanning
             FROM $coursestable $join
             WHERE $clause";
 
     $result =& $dbconn->Execute($sql);
         if (!$result) return;
 
-    // Put polls into result array
+    // Put courses into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($courseid, $name, $number) = $result->fields;
-        if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
-            $courses[] = array('courseid' => $courseid,
-                               'name'     => $name,
-                               'number'   => $number);
+        list($courseid, $name, $number,$hidecourse,$hideplanning) = $result->fields;
+        if ($hideplanning == 0 && $hidecourse == 0) {
+            if (xarSecurityCheck('ViewCourses', 0, 'Course', "$courseid:All:All")) {
+                $courses[] = array('courseid' => $courseid,
+                                   'name'     => $name,
+                                   'number'   => $number);
+            }
         }
     }
     $result->Close();

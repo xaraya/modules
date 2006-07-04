@@ -14,11 +14,14 @@
 /**
  * display the user menu hook
  *
- * This is a standard function to provide a link in the "Your Account Page"
+ * This is a standard function to provide a link in the "Your Account Page".
+ * It shows the courses the current role in enrolled in, teaches in or is a coordinator for.
  *
  * @param string $phase is the which part of the loop you are on
  * @param int startnum
  * @return array with data for template
+ * @todo MichelV <1> Course coordination from here.
+         MichelV <2> Annoying bug that the function calls all courses somehow and generates a priv problem with hidden courses.
  */
 function courses_user_usermenu($args)
 {
@@ -27,7 +30,7 @@ function courses_user_usermenu($args)
     extract($args);
 
     if (!xarVarFetch('phase',    'str:1:100', $phase,    'menu', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int:1:',    $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',    $startnum, 1, XARVAR_NOT_REQUIRED)) return;
 
     // Now we need to get the course information that the user is enrolled in so we can
     // pass the information to the template
@@ -49,15 +52,14 @@ function courses_user_usermenu($args)
             $uname = xarUserGetVar('name');
             $uid = xarUserGetVar('uid');
             $data1 = array();
-        //    $data['items'] = array();
+            $data['items'] = array();
         //    $data['pager'] = '';
             $items = array();
             $items = xarModAPIFunc('courses',
                  'user',
                  'getall_enrolled',
                  array('startnum' => $startnum,
-                    'numitems' => xarModGetUserVar('courses',
-                    'itemsperpage', $uid)));
+                    'numitems' => xarModGetUserVar('courses','itemsperpage', $uid)));
              //      if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
             // Count teaching activities: TODO Where is the error?
@@ -88,7 +90,7 @@ function courses_user_usermenu($args)
 
                     // Add this item to the list of items to be displayed
                     $data1['items'][] = $item;
-                }
+                 }
              }
              $titems = array();
             // Get all teaching activities

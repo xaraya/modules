@@ -52,7 +52,6 @@ function courses_userapi_getall_enrolled($args)
             ON ($planningtable.xar_planningid = $studentstable.xar_planningid)
             WHERE ($studentstable.xar_userid = $uid
             AND $coursestable.xar_courseid = $planningtable.xar_courseid)";
-            //AND $planningtable.xar_planningid = $studentstable.xar_planningid
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
