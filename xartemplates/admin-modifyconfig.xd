@@ -152,7 +152,7 @@
         </div>
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+            muliple emailings (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
         </p>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="$savedata">
@@ -212,7 +212,10 @@
             </label>
 
        </div>
-
+       <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">
                 <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" checked="checked" />

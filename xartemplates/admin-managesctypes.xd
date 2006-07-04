@@ -112,7 +112,7 @@
         </div>
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+            muliple emailings (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
         </p>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.savedata">
@@ -170,6 +170,10 @@
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
        </div>
+       <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
 
         <div class="xar-form-input-wrapper">
             <label for="usehtmlemail" class="xar-form-label" title="#xarML('Allow HTML in feedback emails')#">
@@ -328,7 +332,7 @@
         </div>
                 <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            muliple emailings if you have open access on your website to this module or specific form.</xar:mlstring>
+            muliple emailings (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
         </p>
          <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.savedata">
@@ -388,6 +392,10 @@
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
        </div>
+       <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
+            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+        </p>
 
         <div class="xar-form-input-wrapper">
             <label for="usehtmlemail" class="xar-form-label" title="#xarML('Allow HTML in feedback emails')#">
