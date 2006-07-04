@@ -66,7 +66,7 @@
             <textarea name="icoursedesc" id="icoursedesc" class="xar-form-textareasmall" value="">#$icoursedesc#</textarea>
             <xar:if condition="!empty($invalid['icoursedesc'])">
                 <div class="xar-error">
-                    <xar:mlstring>ERROR! This is not a valid organisor or location</xar:mlstring>
+                    <xar:mlstring>ERROR! This is not a valid URL and description</xar:mlstring>
                 </div>
             </xar:if>
         </div>
