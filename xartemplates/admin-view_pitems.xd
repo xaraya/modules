@@ -18,6 +18,7 @@
     </xar:if>
    <!-- the specific template for the current admin function comes here -->
 
+   <a href="#xarModUrl('itsp','admin','new_pitem')#"><xar:mlstring>Add new item</xar:mlstring></a><br />
     <table class="xar-fullwidth">
         <tr>
             <th>
