@@ -1,0 +1,49 @@
+﻿<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="scid">xarVarGetCached('sitecontact.data','scid')</xar:set>
+
+<div>
+<dl class="xar-tabs">
+    <dt class="help" title="Form actions">
+      <xar:mlstring>Contact Form</xar:mlstring>
+    </dt>
+    <xar:sec mask="EditSiteContact" catch="false">
+        <xar:if condition="$activetab eq 'managesctypes' and $action eq 'modify'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=modify" >
+                <xar:mlstring>Edit Contact Form</xar:mlstring>
+            </a>
+
+        <xar:if condition="$activetab eq 'managesctypes' and $action eq 'preview'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=preview" >
+              <xar:mlstring>Preview Contact Form</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>    
+
+    <xar:sec mask="DeleteSiteContact" catch="false">
+        <xar:if condition="$activetab eq 'managesctypes' and $action eq 'delete'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=delete" >
+                <xar:mlstring>Delete Contact Form</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>    
+
+</dl>
+</div>
