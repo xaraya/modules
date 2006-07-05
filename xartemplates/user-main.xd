@@ -136,8 +136,7 @@
                     </xar:foreach>
                 </xar:if>
             </xar:if>
-
-            <xar:if condition="$allowcopy">
+            <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
             <div class="xar-form-input-wrapper-after">
                  <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
@@ -145,7 +144,6 @@
                             Copy email to you
                         </xar:mlstring>
                 </label>
-
             </div>
             </xar:if>
             <xar:if condition="$savedata and $permissioncheck">

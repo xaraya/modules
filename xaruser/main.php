@@ -66,16 +66,17 @@ function sitecontact_user_main($args)
        $formdata=$formdata2[0];
     }
     if (isset($formdata['soptions'])) {
-           $soptions=unserialize($formdata['soptions']);
-           if (is_array($soptions)) {
-               foreach ($soptions as $k=>$v) {
-                   $data[$k]=$v;
-              }
-           }
+        $soptions=unserialize($formdata['soptions']);
+        if (is_array($soptions)) {
+            foreach ($soptions as $k=>$v) {
+                $data[$k]=$v;
+            }
+        }
     }
     
     if (!isset($data['allowbccs']))$data['allowbccs']=0;
     if (!isset($data['allowccs']))$data['allowccs']=0;
+    if (!isset($data['allowanoncopy']))$data['allowanoncopy']=0;    
     if (!isset($data['savedata']))$data['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
     if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
     if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
@@ -101,7 +102,9 @@ function sitecontact_user_main($args)
       $optionitems[]=explode(';',$optionitem);
     }
     $data['optionitems']=$optionitems;
-
+    /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function 
+                This could be removed at some time along with the hidden field in the form 
+          */
     $HTTP_REMOTE_ADDR = xarServerGetVar('REMOTE_ADDR');
     if (empty($HTTP_REMOTE_ADDR)) {
         $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
@@ -112,6 +115,9 @@ function sitecontact_user_main($args)
         $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
     }
     $data['userreferer']=$HTTP_REFERER;
+    if (isset($data['userreferer']) && !empty($data['userreferer'])) {
+        $data['userreferer']=xarVarPrepForDisplay($data['userreferer']);
+    }
     $setmail='';
     if (isset($customtitle)){
         xarTplSetPageTitle(xarVarPrepForDisplay(xarML($customtitle)));

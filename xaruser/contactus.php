@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/890.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-
 /**
  * @ Function: contactus
  * @ Author Jo Dalle Nogare <jojodee@xaraya.com>
@@ -86,9 +85,13 @@ function sitecontact_user_contactus($args)
     }
     if (!isset($soptions['allowccs']) || $soptions['allowccs']!=1) {
        $ccrecipients='';
-    }
+    }   
     //end check for bug 5799
-
+    if (!isset($soptions['allowanoncopy']) || $soptions['allowanoncopy']!=1) {
+       $allowanoncopy=false;
+    } else {
+       $allowanoncopy=true;
+    }
     //Feature request for more accurate IP
     //leave the ip capture in the forms - hehehe :)
     $useripaddress=xarModAPIFunc('sitecontact','admin','getcurrentip');
@@ -343,7 +346,7 @@ function sitecontact_user_contactus($args)
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
 
 
-       /* jojodee: html_entity_decode only available in php >=4.3
+    /* jojodee: html_entity_decode only available in php >=4.3
         * $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
         * $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
         *  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
@@ -394,29 +397,44 @@ function sitecontact_user_contactus($args)
 			xarErrorHandled();
 			$usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
 		}
-
-   if (($allowcopy) and ($sendcopy)) {
-      /* let's send a copy of the feedback form to the sender
-      * if it is permitted by admin, and the user wants it */
-      $args = array('info'         => $useremail,
-                    'name'         => $username,
-                    'subject'      => $subject,
-                    'message'      => $usertextmessage,
-                    'htmlmessage'  => $userhtmlmessage,
-                    'from'         => $setmail,
-                    'fromname'     => $sendname,
-                    'attachName'   => $attachname,
-                    'attachPath'   => $attachpath,
-                    'usetemplates' => false);
-
-        /* send mail to user , if html email let's do that  else just send text*/
-        if ($usehtmlemail != 1) {
-            if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
-
-        } else {/*it's html email */
-            if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
+    if (($allowcopy ) and ($sendcopy)) { //the user wants to copy to self and it is allowed by admin
+        /* check the logged in user's email address  and if anon is allowed*/
+        $docopy = false;
+        if (xarUserIsLoggedIn()) {
+            $userofficialemail = trim(strtolower(xarUserGetVar('email')));
+            $comparemail = trim(strtolower($useremail));
+            if ($userofficialemail == $comparemail) {
+                $docopy = true;
+            } 
+            
+        } elseif ($allowanoncopy) {
+            $docopy = true;
+        } else {
+            $docopy = false;
         }
-    }
+        if ($docopy) { //either they are anon and allowed, or logged in and their email is correct
+            /* let's send a copy of the feedback form to the sender
+                              * if it is permitted by admin, and the user wants it */
+            $args = array('info'         => $useremail,
+                          'name'         => $username,
+                          'subject'      => $subject,
+                          'message'      => $usertextmessage,
+                          'htmlmessage'  => $userhtmlmessage,
+                          'from'         => $setmail,
+                          'fromname'     => $sendname,
+                          'attachName'   => $attachname,
+                          'attachPath'   => $attachpath,
+                          'usetemplates' => false);
+
+            /* send mail to user , if html email let's do that  else just send text*/
+            if ($usehtmlemail != 1) {
+                if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
+            } else {/*it's html email */
+                if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
+            }
+        } //end do copy
+    } //end user copy to self check
+    
     /* now let's do the html message to admin */
     
     $adminhtmlarray=array('notetouser' => $htmlnotetouser,
