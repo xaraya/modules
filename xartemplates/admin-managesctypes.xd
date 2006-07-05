@@ -1,4 +1,4 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+﻿<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
 </script>
@@ -158,22 +158,32 @@
             <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
            <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
             <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
-       </div>
+        </div>
 
-        <div class="xar-form-input-wrapper">
-            <label for="allowcopy" class="xar-form-label" title="#xarML('Allow sending of copy to feedback sender')#">
-                 <xar:mlstring>Allow copy to sender?</xar:mlstring>
-            </label>
+        <div class="xar-form-input-wrapper-after">
             <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
-       </div>
-       <p class="xar-form-input-wrapper-after">
+            <label for="allowcopy"title="#xarML('Allow sending of copy to feedback sender')#">
+                 <xar:mlstring>Allow copy to sender (registered user)?</xar:mlstring>
+            </label>            
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowanoncopy">
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" />
+            </xar:if>
+            <label for="allowanoncopy" title="#xarML('Allow sending of copy to anonymous user')#">
+                 <xar:mlstring>Allow anonymous users to also request a copy?</xar:mlstring>
+            </label>
+        </div>              
+        <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
-        </p>
+            copy to sender option (spammer use) if you have open access on your website to this specific form.</xar:mlstring>
+         </p>
 
         <div class="xar-form-input-wrapper">
             <label for="usehtmlemail" class="xar-form-label" title="#xarML('Allow HTML in feedback emails')#">
@@ -226,7 +236,7 @@
 
 <xar:comment> ****** MODIFY SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'modify'" />
-
+    <xar:template type="module" file="admin-submenu" />
     <h3><xar:mlstring>Edit Definition</xar:mlstring></h3>
      <form id="post" method="post" action="#$link#">
 
@@ -332,7 +342,7 @@
         </div>
                 <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            muliple emailings (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+            muliple emailings (spammer use) if you have open access on your website to this form.</xar:mlstring>
         </p>
          <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.savedata">
@@ -382,19 +392,29 @@
             <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
        </div>
 
-        <div class="xar-form-input-wrapper">
-            <label for="allowcopy" class="xar-form-label" title="#xarML('Allow sending of copy to feedback sender')#">
-                 <xar:mlstring>Allow copy to sender?</xar:mlstring>
-            </label>
+        <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.allowcopy eq 1">
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
+            <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
+                 <xar:mlstring>Allow copy to sender?</xar:mlstring>
+            </label>            
        </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.allowanoncopy eq 1">
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" />
+            </xar:if>
+            <label for="allowanoncopy" title="#xarML('Allow sending of copy to anonymous user')#">
+                 <xar:mlstring>Allow anonymous users to also request a copy?</xar:mlstring>
+            </label>
+        </div>                     
        <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+            copy to sender option (spammer use) if you have open access on your website to this specific form.</xar:mlstring>
         </p>
 
         <div class="xar-form-input-wrapper">
@@ -451,7 +471,7 @@
 
  <xar:comment> ****** DELETE SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'delete'" />
-
+    <xar:template type="module" file="admin-submenu" />
     <h3><xar:mlstring>Delete Definition</xar:mlstring></h3>
     <form id="post"  method="post" action="#$link#">
      <fieldset>
@@ -499,6 +519,7 @@
 
 <xar:comment> ***** PREVIEW THE FORM ***** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'preview'" />
+    <xar:template type="module" file="admin-submenu" />
     <h3>
     <xar:ml>
     <xar:mlstring>Form #(1): #(2)</xar:mlstring>
@@ -624,13 +645,16 @@
                 </xar:if>
             </xar:if>
 
-            <xar:if condition="$item.allowcopy eq 1">
+            <xar:if condition="($item.allowcopy eq 1 and xarUserIsLoggedIn()) or ($item.allowcopy eq 1 and $item.allowanoncopy eq 1)">
             <div class="xar-form-input-wrapper-after">
                 <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+                <xar:if condition="$item.allowanoncopy ne 1">
+                    <xar:set name="copystring"><xar:mlstring>Copy email to you (<span class="xar-error">Anonymous will not see this option</span>)</xar:mlstring></xar:set>
+                <xar:else />
+                    <xar:set name="copystring"><xar:mlstring>Copy email to you</xar:mlstring></xar:set>
+                </xar:if>
                 <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
-                        <xar:mlstring>
-                            Copy email to you
-                        </xar:mlstring>
+                     #$copystring#
                 </label>
 
             </div>

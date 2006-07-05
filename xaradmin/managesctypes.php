@@ -25,19 +25,21 @@ function sitecontact_admin_managesctypes()
 	if(!xarVarFetch('optiontext',    'str:1:',   $optiontext,     '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('webconfirmtext','str:1:',   $webconfirmtext, '', XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('notetouser',    'str:1:',   $notetouser,     '', XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('allowcopy',     'checkbox', $allowcopy,      1,  XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('usehtmlemail',  'checkbox', $usehtmlemail,   0,  XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('allowcopy',     'checkbox', $allowcopy,      true,  XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVarFetch('usehtmlemail',  'checkbox', $usehtmlemail,   false,  XARVAR_NOT_REQUIRED)) {return;}
  	if(!xarVarFetch('scdefaultemail','str:1:',   $scdefaultemail, '', XARVAR_NOT_REQUIRED)) {return;}
 	if(!xarVarFetch('scdefaultname', 'str:1:',   $scdefaultname,  '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('action',       'isset',    $action,         NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('scactive',     'checkbox', $scactive,       1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('scactive',     'checkbox', $scactive,       true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('savedata',     'checkbox', $savedata, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('allowccs',      'checkbox', $allowccs, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('allowbccs',     'checkbox', $allowbccs, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowccs',      'checkbox', $allowccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowbccs',     'checkbox', $allowbccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
+    
     if (!xarSecurityCheck('EditSiteContact')) return;
-
+    xarVarSetCached('sitecontact.data','scid',$scid);
     // Initialise the template variables
     $data = array();
     $sctypes=array();
@@ -56,7 +58,8 @@ function sitecontact_admin_managesctypes()
     }
     $data['managetype']=xarML('List Forms');
     $formisactive = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
-    $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs);
+    $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too    
+    $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs, 'allowanoncopy' => $allowanoncopy);
     $soptions=serialize($soptions);
 
     //Setup array with captured vars
@@ -69,16 +72,17 @@ function sitecontact_admin_managesctypes()
                 'webconfirmtext' => $webconfirmtext,
                 'notetouser'     => $notetouser,
                 'allowcopy'      => (int)$allowcopy,
-                'usehtmlemail'  => (int)$usehtmlemail,
+                'usehtmlemail'   => (int)$usehtmlemail,
                 'scdefaultemail' => $scdefaultemail,
                 'scdefaultname'  => $scdefaultname,
                 'scactive'       => (int)$scactive,
                 'savedata'       => $savedata,
-                'permissioncheck' => $permissioncheck,
-                'termslink'       => $termslink,
-                'allowccs'         => $allowccs,
-                'allowbccs'        => $allowbccs,
-                'soptions'        => $soptions,
+                'permissioncheck'=> $permissioncheck,
+                'termslink'      => $termslink,
+                'allowccs'       => $allowccs,
+                'allowbccs'      => $allowbccs,
+                'allowanoncopy'  => $allowanoncopy,                
+                'soptions'       => $soptions,
                 'formisactive'   => $formisactive // add this in addition to normal field value
                 );
 
@@ -203,6 +207,7 @@ function sitecontact_admin_managesctypes()
         }
         if (!isset($allowbccs)) $allowbccs=false;
         if (!isset($allowccs)) $allowccs=false;
+        if (!isset($allowanoncopy)) $allowanoncopy=false;        
         $item=array('sctypename'     => xarML('Unique name for new form'),
                         'sctypedesc'     => xarML('Another contact form'),
                         'customtext'     => xarModGetVar('sitecontact','customtext'),
@@ -219,6 +224,7 @@ function sitecontact_admin_managesctypes()
                         'termslink'       => xarModGetVar('sitecontact','termslink'),
                         'allowbccs'        =>$allowbccs,
                         'allowccs'         =>$allowccs,
+                        'allowanoncopy'         =>$allowanoncopy,                        
                         'formisactive'   => (xarModGetVar('sitecontact', 'scactive') ? 'checked' : '')
                 );
         $data['item']=$item;
@@ -239,6 +245,7 @@ function sitecontact_admin_managesctypes()
 
        if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
        if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+       if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;       
        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
         if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
@@ -276,26 +283,27 @@ function sitecontact_admin_managesctypes()
                                  array('action' => 'confirm'));
 
     } elseif ($action == 'preview') {
-       xarSessionSetVar('statusmsg','');
-       $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-       $data['item']=$item[0];
-         if (isset($data['item']['soptions'])) {
-           $soptions=unserialize($data['item']['soptions']);
-           if (is_array($soptions)) {
-               foreach ($soptions as $k=>$v) {
+        xarSessionSetVar('statusmsg','');
+        $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+        $data['item']=$item[0];
+        if (isset($data['item']['soptions'])) {
+            $soptions=unserialize($data['item']['soptions']);
+            if (is_array($soptions)) {
+                foreach ($soptions as $k=>$v) {
                    $data['item'][$k]=$v;
-              }
-           }
+               }
+            }
         }
 
-       if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
-       if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
-       if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata');
+        if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
+        if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+        if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;        
+        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata');
         if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
-       if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
+        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
 
-       $optionset=explode(',',$item[0]['optiontext']);
-       $data['optionset']=$optionset;
+        $optionset=explode(',',$item[0]['optiontext']);
+        $data['optionset']=$optionset;
         $optionitems=array();
         foreach ($optionset as $optionitem) {
            $optionitems[]=explode(';',$optionitem);

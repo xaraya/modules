@@ -146,13 +146,13 @@
             <xar:else />
                 <input type="checkbox" name="allowbcc" id="allowbcc" value="1" />
             </xar:if>
-             <label for="allowcc" title="#xarML('Allow a bcc recipient list?')#">
+             <label for="allowbcc" title="#xarML('Allow a bcc recipient list?')#">
                <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
             </label>
         </div>
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            muliple emailings (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+            muliple emailings (spammer use) if you have open access on your website to this form.</xar:mlstring>
         </p>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="$savedata">
@@ -208,13 +208,23 @@
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
             <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
-                 <xar:mlstring>Allow copy to sender?</xar:mlstring>
+                 <xar:mlstring>Allow copy to sender (registered users)?</xar:mlstring>
+            </label>
+       </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$allowanoncopy">
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="allowanoncopy" id="allowanoncopy" value="1" />
+            </xar:if>
+            <label for="allowanoncopy" title="#xarML('Allow sending of copy to anonymous user')#">
+                 <xar:mlstring>Allow anonymous users to also request a copy?</xar:mlstring>
             </label>
 
-       </div>
+       </div>       
        <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
-            this copy to sender option (spammer use) if you have open access on your website to this module or specific form.</xar:mlstring>
+            copy to sender option (spammer use) if you have open access on your website to this specific form.</xar:mlstring>
         </p>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">

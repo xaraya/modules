@@ -29,7 +29,7 @@ function sitecontact_admin_modifyconfig()
         $data['allowcopy']   = (int)xarModGetVar('sitecontact', 'allowcopy');
         $data['webconfirmtext'] = xarModGetVar('sitecontact', 'webconfirmtext');
         $data['savedata']   = xarModGetVar('sitecontact', 'savedata');
-        $data['termslink']   = xarModGetVar('sitecontact', 'termslink');
+        $data['termslink']   = xarModGetVar('sitecontact', 'termslink'); 
         $soptions   = xarModGetVar('sitecontact', 'soptions');
         $data['permissioncheck']   = xarModGetVar('sitecontact', 'permissioncheck');
         if (!isset($soptions)) $soptions=array();
@@ -42,6 +42,7 @@ function sitecontact_admin_modifyconfig()
         }
         if (!isset($data['allowbcc']))$data['allowbcc']=false;
         if (!isset($data['allowcc']))$data['allowcc']=false;
+        if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;        
         $notetouser = xarModGetVar('sitecontact', 'notetouser');
         if (!isset($notetouser) || (trim($notetouser)=='')) {
             $notetouser=xarModGetVar('sitecontact','defaultnote');
