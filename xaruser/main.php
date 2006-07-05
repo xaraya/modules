@@ -208,13 +208,13 @@ function xarbb_user_main__getforuminfo($args)
         $forum = $forums[$i];
         //bug #4070 - all posts, topics deleted by last poster still there
         if ($forum['ftopics'] > 0) {
-            if (!empty($forum['fposter'])) {
-                // Get the name of the poster.
+            // Get the name of the poster.
+            if (!empty($forum['fposter']) && ($username = @xarUserGetVar('name', $forum['fposter']))) {
                 // TODO: Does it make sense to move this to the API, since it is called so often?
-                $username = @xarUserGetVar('name', $forum['fposter']);
+                $forums[$i]['name'] = $username;
+            } else {
+                $forums[$i]['name'] = '-';
             }
-
-            $forums[$i]['name'] = (!empty($username) ? $username : '-');
         }
 
         // TODO: this is already unserialized in the API; no need to do it again.
