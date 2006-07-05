@@ -80,7 +80,7 @@ function sitecontact_init()
                         'Information request,\nGeneral assistance,\nWebsite issue,\nSpam report,\nComplaint,\nThank you!',
                         'Your message has been sent. Thank you for contacting us.',
                         'Dear %%username%%\n\nThis message confirms your email has been sent.\n\nThank you for your feedback.\n\nAdministrator\n%%sitename%%\n-------------------------------------------------------------',
-                        '1',
+                        '0',
                         '0',
                         ?,
                         'Site Admin',
@@ -368,7 +368,7 @@ function sitecontact_upgrade($oldversion)
         /* Get a data dictionary object with all the item create methods in it */
         $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-        $fields= "xar_scrid           I      AUTO       PRIMARY,
+        $fields= "xar_scrid          I      AUTO       PRIMARY,
                  xar_scid            I      NotNull    DEFAULT 0,
                  xar_username        C(100) NotNull    DEFAULT '',
                  xar_useremail       C(254) NotNull    DEFAULT '',
@@ -386,22 +386,24 @@ function sitecontact_upgrade($oldversion)
             $result = $datadict->changeTable($sitecontactResponseTable, $fields);
             if (!$result) {return;}
 
-       //register a new mask for submitting and *saving* a site contact form
-       xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
+        //register a new mask for submitting and *saving* a site contact form
+        xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
 
-       /* Define instances for sitecontact forms  */
+        /* Define instances for sitecontact forms  */
 
-       $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
-       $instances = array(
+        $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
+        $instances = array(
                         array('header' => 'Form ID:',
                                 'query' => $query1,
                                 'limit' => 20
                             )
                     );
-       xarDefineInstance('sitecontact', 'ContactForm', $instances);
-            return sitecontact_upgrade('0.6.0');
-       case '0.6.0': //current version
-
+        xarDefineInstance('sitecontact', 'ContactForm', $instances);
+           return sitecontact_upgrade('0.6.0');
+        case '0.6.0':
+            xarModSetVar('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
+           return sitecontact_upgrade('0.6.1');
+       case '0.6.1': //current version
              break;
     }
     // Update successful

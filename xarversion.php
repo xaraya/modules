@@ -14,7 +14,7 @@
 $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
-$modversion['version']        = '0.6.0';
+$modversion['version']        = '0.6.1';
 $modversion['displayname']    = xarML('SiteContact');
 $modversion['description']    = xarML('Contact site admin by email');
 $modversion['credits']        = 'xardocs/credits.txt';

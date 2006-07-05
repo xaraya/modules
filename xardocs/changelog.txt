@@ -1,3 +1,12 @@
+Version 0.6.1 5 July 2006
+- Updated admin interface for custom forms admin with sub menus to assist navigation
+- Enhanced IP check on sender with proxy awareness
+- Allow copy for registered users only
+- Admin toggle to allow 'copy to' for anonymous users 
+- Check for CC and BC var allowed config prior to email send in addition to existing form checks
+- Updated documentation Overview with details on permissions and updated features
+- Some other miscellaneous bug fixes
+
 Version 0.6.0 19 June 2006
 - Manually merged the 'save forms' scenario that allows form responses to be saved to the database
 - Add form instances for privs
