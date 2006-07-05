@@ -251,7 +251,7 @@
                     </xar:if>
                 </td>
                 <td class="xar-alt">
-                    <xar:if condition="xarUserIsLoggedIn()">
+                    <xar:sec mask="ReadRole" catch="false">
                         <xar:comment>
                             FIXME: jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
                         </xar:comment>
@@ -291,7 +291,7 @@
                                 <img src="#xarTplGetImage('new/icon_aim.gif')#" alt="#xarML('AOL Instant Messenger')#" />
                             </a>
                         </xar:if>
-                    </xar:if>
+                    </xar:sec>
                 </td>
             </tr>
         </xar:if>
@@ -436,7 +436,7 @@
                 </td>
 
                 <td class="xar-alt">
-                    <xar:if condition="xarUserIsLoggedIn()">
+                    <xar:sec mask="ReadRole" catch="false">
                         <xar:comment>
                             FIXME: jojodee: This is not strictly correct as anon users may have permission to send PMs etc Each of these should really have their own xar:sec .... 
                         </xar:comment>
@@ -478,7 +478,7 @@
                                 </a>
                             </xar:if>
                         </xar:if>
-                    </xar:if>
+                    </xar:sec>
                 </td>
             </tr>
         </xar:foreach>
