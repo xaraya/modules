@@ -214,7 +214,7 @@ function xarbb_user_main__getforuminfo($args)
                 $username = @xarUserGetVar('name', $forum['fposter']);
             }
 
-            $forums[$i]['name'] = (!empty($getname['name']) ? $getname['name'] : '-');
+            $forums[$i]['name'] = (!empty($username) ? $username : '-');
         }
 
         // TODO: this is already unserialized in the API; no need to do it again.

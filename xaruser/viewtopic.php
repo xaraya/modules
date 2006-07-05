@@ -46,7 +46,7 @@ function xarbb_user_viewtopic($args)
     }
 
     $topic = xarModAPIFunc('xarbb', 'user', 'gettopic', array('tid' => $tid));
-    // TODO: redirect to a nicer error page within xarBB if the topic does not exist.
+    // Redirect to a nicer error page within xarBB if the topic does not exist.
     if (empty($topic)) return xarModFunc('xarbb', 'user', 'showerror', array('errortype' => 'NOTOPIC', 'tid' => $tid));
 
     $fid = $topic['fid'];
@@ -175,7 +175,8 @@ function xarbb_user_viewtopic($args)
 
     $totalcomments = count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
-        $comment = $comments[$i];
+        // Pointer, just to make references easier.
+        $comment =& $comments[$i];
 
         if ($allowhtml == true){
             $comment['xar_text'] = xarVarPrepHTMLDisplay($comment['xar_text']);
@@ -186,7 +187,7 @@ function xarbb_user_viewtopic($args)
         }
 
         // This has to come after the html call.
-        list($comments[$i]['xar_text'], $comments[$i]['xar_title']) = xarModCallHooks(
+        list($comment['xar_text'], $comment['xar_title']) = xarModCallHooks(
             'item', 'transform', $tid,
             array($comment['xar_text'], $comment['xar_title']),
             'xarbb', $data['fid']
@@ -194,19 +195,19 @@ function xarbb_user_viewtopic($args)
 
         // Bug 4836 again
         // FIXME: fix this at source, not a hack here.
-        $comments[$i]['xar_title'] = str_replace("<p>", "", $comments[$i]['xar_title']);
-        $comments[$i]['xar_title'] = str_replace("</p>", "", $comments[$i]['xar_title']);
+        $comment['xar_title'] = str_replace("<p>", "", $comment['xar_title']);
+        $comment['xar_title'] = str_replace("</p>", "", $comment['xar_title']);
 
         // TODO: retrieve all post counts at once?
         // The user API function is called
-        $comments[$i]['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
+        $comment['usertopics'] = xarModAPIFunc('xarbb', 'user', 'countposts', array('uid' => $comment['xar_uid']));
 
         $isposter[$comment['xar_uid']] = 1;
 
         //format the post reply date consistently with topic post date
         //$comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
         //Add datestamp so users can format in template, existing templates are still OK
-        $comments[$i]['xar_datestamp']=$comments[$i]['xar_datetime'];
+        $comment['xar_datestamp'] = $comment['xar_datetime'];
     }
 
     $data['posterlist'] = array_keys($isposter);

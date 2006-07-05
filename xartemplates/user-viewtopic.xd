@@ -113,7 +113,9 @@
         </tr>
 
         <xar:comment>
-            Display the Topic Post itself - unless it is not the first pager page 
+            Display the Topic Post itself - unless it is not the first pager page
+            i.e. the first post in a thread will be the topic, and subsequent posts
+            will be the replies (comments)
         </xar:comment>
 
         <xar:if condition="$startnum eq 1">
@@ -294,6 +296,7 @@
             </tr>
         </xar:if>
 
+
         <xar:comment>
             start the post replies and add alternating row colors 
         </xar:comment>
@@ -334,7 +337,7 @@
                             </xar:if>
                             <xar:ml>
                                 <xar:mlstring>Joined #(1)<br/>Posts: #(2)</xar:mlstring>
-                                <xar:mlvar>#xarLocaleGetFormattedDate('medium',$item['commenterdatestamp'])#</xar:mlvar>
+                                <xar:mlvar>#xarLocaleGetFormattedDate('medium', $item['commenterdatestamp'])#</xar:mlvar>
                                 <xar:mlvar>#$item['usertopics']#</xar:mlvar>
                             </xar:ml>
                             <br />
