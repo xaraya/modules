@@ -14,7 +14,7 @@
 /**
  * Get status information
  *
- * @author MichelV <michelv@xarayahosting.nl
+ * @author MichelV <michelv@xarayahosting.nl>
  * @return array with status info data
  */
 function itsp_userapi_getstatusinfo()
