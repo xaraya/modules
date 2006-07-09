@@ -11,9 +11,10 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * modify configuration
+ * @param string phase
+ * @return array
  */
 function hitcount_admin_modifyconfig()
 {
@@ -24,8 +25,8 @@ function hitcount_admin_modifyconfig()
 
     switch (strtolower($phase)) {
         case 'modify':
-        default: 
-            
+        default:
+
             // Quick Data Array
             $data['authid'] = xarSecGenAuthKey();
             $data['numitems'] = xarModGetVar('hitcount','numitems');
@@ -48,20 +49,20 @@ function hitcount_admin_modifyconfig()
             if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             // Update module variables
             xarModSetVar('hitcount', 'countadmin', $countadmin);
             xarModSetVar('hitcount', 'numitems', $numitems);
             xarModSetVar('hitcount', 'numstats', $numstats);
             xarModSetVar('hitcount', 'showtitle', $showtitle);
-            xarResponseRedirect(xarModURL('hitcount', 'admin', 'modifyconfig')); 
+            xarResponseRedirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
             // Return
             return true;
 
             break;
-    } 
+    }
 
     return $data;
-} 
+}
 
 ?>

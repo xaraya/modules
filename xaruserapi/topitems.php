@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * get the list of items with top N hits for a module
  *
@@ -19,8 +19,7 @@
  * @param $args['itemtype'] item type of the items (only 1 type supported per call)
  * @param $args['numitems'] number of items to return
  * @param $args['startnum'] start at this number (1-based)
- * @returns array
- * @return array of array('itemid' => $itemid, 'hits' => $hits)
+ * @return array Array('itemid' => $itemid, 'hits' => $hits)
  */
 function hitcount_userapi_topitems($args)
 {

@@ -11,16 +11,14 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * utility function pass individual menu items to the admin panels
- * 
- * @author the Example module development team 
- * @returns array
- * @return array containing the menulinks for the main menu items.
+ *
+ * @author the Hitcount module development team
+ * @return array Array containing the menulinks for the main menu items.
  */
 function hitcount_adminapi_getmenulinks()
-{ 
+{
     $menulinks = array();
 
     // Security Check
@@ -35,8 +33,8 @@ function hitcount_adminapi_getmenulinks()
                                                 'modifyconfig'),
                              'title' => xarML('Modify the configuration for the Hitcount module'),
                              'label' => xarML('Modify Config'));
-    } 
+    }
 
     return $menulinks;
-} 
+}
 ?>

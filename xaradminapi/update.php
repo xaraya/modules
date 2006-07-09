@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * update a hitcount item - used by display hook hitcount_user_display
  *
@@ -20,8 +19,7 @@
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] may contain itemtype
  * @param $args['hits'] (optional) hit count for the item
- * @returns int
- * @return the new hitcount for this item, or void on failure
+ * @return int The new hitcount for this item, or void on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function hitcount_adminapi_update($args)

@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * add a hit for a specific item, and display the hitcount (= display hook)
  *
@@ -25,7 +25,6 @@
  */
 function hitcount_user_display($args)
 {
-
     extract($args);
 
     // Load API
@@ -51,7 +50,7 @@ function hitcount_user_display($args)
     }
 
     if (xarVarIsCached('Hooks.hitcount','nocount') ||
-        (xarSecurityCheck('AdminPanel', 0) && xarModGetVar('hitcount', 'countadmin') == FALSE) ) {
+        (xarSecurityCheck('AdminHitcount', 0) && xarModGetVar('hitcount', 'countadmin') == FALSE) ) {
         $hitcount = xarModAPIFunc('hitcount', 'user', 'get', $args);
     } else {
         $hitcount = xarModAPIFunc('hitcount', 'admin', 'update', $args);

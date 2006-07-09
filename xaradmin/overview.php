@@ -23,7 +23,7 @@
  */
 function hitcount_admin_overview()
 {
-   /* Security Check */
+    /* Security Check */
     if(!xarSecurityCheck('AdminHitcount',0)) return;
 
     $data=array();

@@ -11,14 +11,13 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * get a hitcount for a specific item
  * @param $args['modname'] name of the module this hitcount is for
  * @param $args['itemtype'] item type of the item this hitcount is for
  * @param $args['objectid'] ID of the item this hitcount is for
- * @returns int
- * @return hits the corresponding hit count, or void if no hit exists
+ * @return int The corresponding hit count, or void if no hit exists
  */
 function hitcount_userapi_get($args)
 {

@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * View statistics about hitcount
+ * @return array
  */
 function hitcount_admin_view()
 {

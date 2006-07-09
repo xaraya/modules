@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * return the field names and correct values for joining on hitcount table
  * example : SELECT ..., $moduleid, $itemid, $hits,...
@@ -26,14 +26,14 @@
  * @param $args['modid'] ID of the module you want items from
  * @param $args['itemtype'] item type (optional) or array of itemtypes
  * @param $args['itemids'] optional array of itemids that we are selecting on
- * @returns array
- * @return array('table' => 'nuke_hitcount',
- *               'field' => 'nuke_hitcount.xar_itemid',
- *               'where' => 'nuke_hitcount.xar_itemid IN (...)
- *                           AND nuke_hitcount.xar_moduleid = 123',
- *               'moduleid'  => 'nuke_hitcount.xar_moduleid',
+ * @return array('table' => '_hitcount',
+ *               'field' => '_hitcount.xar_itemid',
+ *               'where' => '_hitcount.xar_itemid IN (...)
+ *                           AND _hitcount.xar_moduleid = 123',
+ *               'moduleid'  => '_hitcount.xar_moduleid',
  *               ...
- *               'hits'  => 'nuke_hitcount.xar_hits')
+ *               'hits'  => '_hitcount.xar_hits')
+ * @todo MichelV Remove hardcoded table prefix xar_
  */
 function hitcount_userapi_leftjoin($args)
 {

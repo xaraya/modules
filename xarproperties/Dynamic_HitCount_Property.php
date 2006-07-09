@@ -11,11 +11,11 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * Handle the hitcount property
  * @author mikespub <mikespub@xaraya.com>
- * 
+ *
  */
 include_once "modules/dynamicdata/class/properties.php";
 
@@ -24,8 +24,8 @@ class Dynamic_HitCount_Property extends Dynamic_Property
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     *
+     * @return array Base information for this property
      **/
      function getBasePropertyInfo()
      {

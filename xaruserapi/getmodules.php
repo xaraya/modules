@@ -11,16 +11,14 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * get the list of modules for which we're counting items
  *
- * @returns array
- * @return $array[$modid][$itemtype] = array('items' => $numitems,'hits' => $numhits);
+ * @return array $array[$modid][$itemtype] = array('items' => $numitems,'hits' => $numhits);
  */
 function hitcount_userapi_getmodules($args)
 {
-// Security Check
+    // Security Check
     if(!xarSecurityCheck('ViewHitcountItems')) return;
 
     // Database information

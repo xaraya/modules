@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * create a new hitcount item - hook for ('item','create','API')
  *
@@ -20,9 +20,8 @@
  * @param $args['modname'] name of the calling module (not used in hook calls)
  * @param $args['itemtype'] optional item type for the item (not used in hook calls)
  * @param $args['hits'] optional hit count for the item (not used in hook calls)
- * @returns int
- * @return hitcount item ID on success, void on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return int hitcount item ID on success, void on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function hitcount_adminapi_create($args)
 {

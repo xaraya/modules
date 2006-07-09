@@ -11,15 +11,13 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
 /**
  * delete all hitcount items for a module - hook for ('module','remove','API')
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function hitcount_adminapi_deleteall($args)
 {
@@ -59,7 +57,6 @@ function hitcount_adminapi_deleteall($args)
     if (!$result) return;
 
     // hmmm, I think we'll skip calling more hooks here... :-)
-    //xarModCallHooks('item', 'delete', '', '');
 
     // Return the extra info
     if (!isset($extrainfo)) {

@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * get a hitcount for a list of items
  * @param $args['modname'] name of the module you want items from, or
@@ -21,8 +21,7 @@
  * @param $args['sort'] string sort by itemid (default) or numhits
  * @param $args['numitems'] number of items to return
  * @param $args['startnum'] start at this number (1-based)
- * @returns array
- * @return $array[$itemid] = $hits;
+ * @return array $array[$itemid] = $hits;
  */
 function hitcount_userapi_getitems($args)
 {

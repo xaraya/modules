@@ -11,19 +11,24 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * Delete hit counts of module items
+ * @param int modid
+ * @param int itemtype
+ * @param int itemid
+ * @param str confirm When empty the confirmation page is shown
+ * @return bool True on success of deletion
  */
 function hitcount_admin_delete()
-{ 
+{
     // Security Check
     if(!xarSecurityCheck('AdminHitcount')) return;
 
     if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if(!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -50,10 +55,10 @@ function hitcount_admin_delete()
             }
         }
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey(); 
+        $data['authid'] = xarSecGenAuthKey();
         // Return the template variables defined in this function
         return $data;
-    } 
+    }
 
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('hitcount','admin','delete',
