@@ -399,7 +399,7 @@ function registration_user_register()
                 $userdata['itemid'] = $uid;
                 xarModCallHooks('item', 'create', $uid, $userdata);
 
-                // Send an e-mail to the admin if notification is required, 
+                // Send an e-mail to the admin if notification is required,
                 // same updated to the getvalidation users in Roles module - need to review that
 
                 if (xarModGetVar('registration', 'sendnotice')) {
@@ -424,7 +424,7 @@ function registration_user_register()
                     }
                 }
 
-                //Insert the user into the default users group
+                // Insert the user into the default users group
                 $userRole = xarModGetVar('roles', 'defaultgroup');
 
                  // Get the group id
@@ -435,10 +435,11 @@ function registration_user_register()
                 if(!xarMakeRoleMemberByID($uid, $defaultRole['uid'])) return;
                 xarModSetVar('roles', 'lastuser', $uid);
 
-                if ($pending == 1) $data = xarTplModule('roles','user', 'getvalidation', $tplvars); 
-                //Note this template is for validation, and validation and pending, now also used for pending alone
+                if ($pending == 1) $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
+                // Note this template is for validation, and validation and pending, now also used for pending alone
                 else {
-                     //send welcome email (option)
+                     // send welcome email (option)
+                     // MichelV Should this be moved to registration, or stay in roles?
                     if (xarModGetVar('registration', 'sendwelcomeemail')) {
                         if (!xarModAPIFunc('roles',  'admin', 'senduseremail',
                                              array('uid' => array($uid => '1'),
@@ -471,7 +472,9 @@ function registration_user_register()
                 // Check for user creation failure
                 if ($uid == 0) return;
 
-                /* Call hooks in here for the moment */
+                /* Call hooks in here for the moment
+                 * Note that there are also hooks called in roles_adminapi_create
+                 */
                 $userdata['module'] = 'registration';
                 $userdata['itemid'] = $uid;
                 xarModCallHooks('item', 'create', $uid, $userdata);
