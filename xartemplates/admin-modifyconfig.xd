@@ -1,70 +1,61 @@
-<!-- admin menu configuration template -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthSSO Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthSSO Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-<h2>#$configadmin#</h2>
+    <xar:template type="module" file="admin-menu" />
+    <h2>#$configadmin#</h2>
 
-<!-- BL style form for authsso configuration options -->
-<div style="marigin: auto;">
-    <form method="post" action="&xar-modurl-authsso-admin-updateconfig;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span class="help" title="#$adduserhelp#"><label for="adduservalue">#$adduser#:</label></span>
-            </span>
-            <span>
+    <form method="post" id="post" action="&xar-modurl-authsso-admin-updateconfig;">
+    <fieldset>
+        <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$adduservalue eq 'checked' ">
                     <input type="checkbox" name="adduser" value="1" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="adduser" value="1" />
                 </xar:if>
-            </span>
-        </div>
+                <label for="adduservalue" title="#$adduserhelp#">
+                    #$adduser#:
+                </label>
+            </div>
         <xar:if condition="xarModIsAvailable('xarldap') eq 'true'">
-            <div style="clear: both; padding: 5px;">
-                <span>
-                    <span class="help" title="#$useldaphelp#"><label for="useldapvalue">#$useldap#:</label></span>
-                </span>
-                <span>
-                    <xar:if condition="$useldapvalue eq 'checked' ">
-                        <input type="checkbox" name="useldap" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="useldap" value="1" />
-                    </xar:if>
-                </span>
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$useldapvalue eq 'checked' ">
+                    <input type="checkbox" name="useldap" id="useldap" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="useldap" id="useldap" value="1" />
+                </xar:if>
+                <label for="useldap" title="#$useldaphelp#">
+                    #$useldap#:
+                </label>
             </div>
         </xar:if>
         <xar:if condition="$useldapvalue eq 'checked' and xarModIsAvailable('xarldap') eq 'true' ">
-            <div style="clear: both; padding: 5px;">
-                <span>
-                    #$ldapnameattr#:
-                </span>
-                <span>
-                    <input type="text" name="ldapnamevalue" value="#$ldapnamevalue#" />
-                </span>
+            <div class="xar-form-input-wrapper">
+                <label for="ldapnamevalue" class="xar-form-label" title="#xarML('Default group for new users.')#">
+                       #$ldapnameattr#:
+                </label>
+                <input type="text" name="ldapnamevalue" id="ldapnamevalue" value="#$ldapnamevalue#" />
             </div>
-            <div style="clear: both; padding: 5px;">
-                <span>
+            <div class="xar-form-input-wrapper">
+                <label for="ldapmailvalue" class="xar-form-label" title="#xarML('Default group for new users.')#">
                     #$ldapmailattr#:
-                </span>
-                <span>
-                    <input type="text" name="ldapmailvalue" value="#$ldapmailvalue#" />
-                </span>
+                </label>
+                <input type="text" name="ldapmailvalue"  id="ldapmailvalue" value="#$ldapmailvalue#" />
             </div>
         <xar:else />
-            <div style="clear: both; padding: 5px;">
-                <span>
+            <div class="xar-form-input-wrapper">
+                <label for="maildomain" class="xar-form-label" title="#xarML('Default group for new users.')#">
                     #$maildomain#:
-                </span>
-                <span>
-                    <input type="text" name="maildomain" value="#$mailvalue#" />
-                </span>
+                </label>
+                <input type="text" name="maildomain" id="maildomain" value="#$mailvalue#" />
             </div>
         </xar:if>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                #$defaultgrouplabel#:
-            </span>
-            <span>
+            <div class="xar-form-input-wrapper">
+                <label for="defaultgroup" class="xar-form-label" title="#xarML('Default group for new users.')#">
+                     #$defaultgrouplabel#:
+                </label>
                 <select name="defaultgroup" id="defaultgroup">
                 <xar:loop name="$groups">
                     <xar:if condition="$loop:item['name'] eq $defaultgroup">
@@ -74,25 +65,22 @@
                     </xar:if>
                 </xar:loop>
                 </select>
-            </span>
         </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <label for="activate"><xar:mlstring>Activate authentication module</xar:mlstring>:</label>
-            </span>
-            <span>
+            <div class="xar-form-input-wrapper">
+                <label for="activate" class="xar-form-label" title="#xarML('Default group for new users.')#">
+                     <xar:mlstring>Activate authentication module</xar:mlstring>:
+                </label>
                 <xar:if condition="in_array('authsso',xarConfigGetVar('Site.User.AuthenticationModules'))">
                     <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="activate" id="activate" value="1" />
                 </xar:if>
-            </span>
         </div>
-        <br />
-        <!-- submit button -->
-        <span style="padding: 20px; ">
+    </fieldset>
+    <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#$submitbutton#" />
-        </span>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    </div>
 </form>
 </div>
-</div>
+
