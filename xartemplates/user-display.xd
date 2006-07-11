@@ -23,8 +23,8 @@
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="name" class="xar-form-label">
-                            <span class="help" title="#xarML('The name of this course.')#">
-                            <xar:mlstring>Name</xar:mlstring>
+                            <span class="help" title="#xarML('The full title of this course.')#">
+                            <xar:mlstring>Course title</xar:mlstring>
                             </span>
                         </label>
                         #$item['name']#
@@ -32,7 +32,7 @@
                     <div class="xar-form-input-wrapper">
                         <label for="number" class="xar-form-label">
                             <span class="help" title="#xarML('The code/number of this course.')#">
-                            <xar:mlstring>Number</xar:mlstring>
+                            <xar:mlstring>Course Code</xar:mlstring>
                             </span>
                         </label>
                         #$item['number']#
@@ -83,9 +83,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><xar:mlstring>Start date</xar:mlstring></th>
-                            <th><xar:mlstring>Course location</xar:mlstring></th>
-                            <th><xar:mlstring>Course Credits</xar:mlstring></th>
+                            <th><xar:mlstring>Starts</xar:mlstring></th>
+                            <th><xar:mlstring>Location</xar:mlstring></th>
+                            <th><xar:mlstring>Credits</xar:mlstring></th>
                             <th><xar:mlstring>Options</xar:mlstring></th>
                         </tr>
                     </thead>

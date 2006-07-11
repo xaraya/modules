@@ -17,14 +17,14 @@
         <thead>
             <tr>
                 <xar:if condition="$snumberlink != ''">
-                    <th><a href="#$snumberlink#"><xar:mlstring>Number</xar:mlstring></a></th>
+                    <th><a href="#$snumberlink#"><xar:mlstring>Code</xar:mlstring></a></th>
                 <xar:else />
-                    <th><xar:mlstring>Number</xar:mlstring></th>
+                    <th><xar:mlstring>Code</xar:mlstring></th>
                 </xar:if>
                 <xar:if condition="$snamelink != ''">
-                    <th><a href="#$snamelink#"><xar:mlstring>Course Name</xar:mlstring></a></th>
+                    <th><a href="#$snamelink#"><xar:mlstring>Course Title</xar:mlstring></a></th>
                 <xar:else />
-                    <th><xar:mlstring>Course Name</xar:mlstring></th>
+                    <th><xar:mlstring>Course Title</xar:mlstring></th>
                 </xar:if>
                 <th><xar:mlstring>Type ID</xar:mlstring></th>
                 <th><xar:mlstring>Next</xar:mlstring></th>
