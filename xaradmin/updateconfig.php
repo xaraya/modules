@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthURL Administrative Display Functions
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authurl
+ * @subpackage AuthURL
+ * @link http://xaraya.com/index.php/release/42241.html
  * @author Court Shrock <shrockc@inhs.org>
-*/
+ */
 
 /**
  * Update the configuration parameters of the
@@ -20,16 +19,12 @@
 function authurl_admin_updateconfig()
 {
     # Get parameters
+    if (!xarVarFetch('adduser',      'checkbox', $adduser,      false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activate',     'checkbox', $activate,     false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('authurl',      'str:1:',   $authurl,      '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('debuglevel',   'str:1:',   $debuglevel,   'None',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroup', 'str:1:',   $defaultgroup, '',    XARVAR_NOT_REQUIRED)) return;
 
-    list($adduser,
-         $activate,
-         $authurl,
-         $debuglevel,
-         $defaultgroup ) = xarVarCleanFromInput('adduser',
-                                                'activate',
-                                                'authurl',
-                                                'debuglevel',
-                                                'defaultgroup');
 
     # Confirm authorization code
     if (!xarSecConfirmAuthKey()) return;

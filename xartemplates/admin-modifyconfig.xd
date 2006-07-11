@@ -1,91 +1,82 @@
 <!-- admin menu configuration template -->
 <!-- Formatting table to center the menu -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthURL Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthURL Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-<h2>#$configadmin#</h2>
+    <xar:template type="module" file="admin-menu" />
+    <h2>#$configadmin#</h2>
 
-<!-- BL style form for authurl configuration options -->
-<form method="post" action="#xarModURL('authurl', 'admin', 'updateconfig')#">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<table border="0" width="100%">
-    <tr>
-        <td>
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td colspan="2"><xar:mlstring>If a user successfully authenticates but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below, the user will be automatically added to the Xaraya database and allowed to login.</xar:mlstring></td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        #$adduser#
-                    </td>
-                    <td>
-                        <input type="checkbox" name="adduser" value="1" #$adduservalue# />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
+    <!-- BL style form for authurl configuration options -->
+    <form id="postform" name="postform" method="post" action="&xar-modurl-authurl-admin-updateconfig;">
+    <fieldset>
+        <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
+            
+            <div class="xar-form-input-wrapper-before">
+                <xar:mlstring>If a user successfully authenticates but does not have a login account to Xaraya, 
+                    the user will not be able to login.  By selecting the option below, the user will be automatically 
+                    added to the Xaraya database and allowed to login.
+                </xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="checkbox" id="adduser" name="adduser" value="1" #$adduservalue# />
+                <label for="adduser" title="#xarML('Add user to database on login?')#">
+                    #$adduser#
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="defaultgroup" class="xar-form-label" title="#xarML('Default group for new users.')#">
                         #$defaultgrouplabel#
-                    </td>
-                    <td>
-                        <select name="defaultgroup" id="defaultgroup">
-                        <xar:loop name="$groups">
-                            <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        #$authurl#
-                    </td>
-                    <td>
-                        <input type="text" name="authurl" value="#$authurlvalue#" size="50"/>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        #$debuglevellabel#
-                    </td>
-                    <td>
-                        <select name="debuglevel" id="defaultgroup">
-                        <xar:loop name="$levels">
-                            <xar:if condition="$loop:item['level'] eq $debuglevelvalue">
-                                <option value="#$loop:item['level']#" selected="selected">#$loop:item['name']#</option>
-                            <xar:else />
-                                <option value="#$loop:item['level']#">#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Activate authentication module</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="in_array('authurl',xarConfigGetVar('Site.User.AuthenticationModules'))">
-                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
-                        <xar:else/>
-                            <input type="checkbox" name="activate" id="activate" value="1" />
+                </label>
+                <select name="defaultgroup" id="defaultgroup">
+                    <xar:loop name="$groups">
+                        <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
                         </xar:if>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        #$submitlabel#
-                    </td>
-                    <td>
-                        <!-- submit button -->
-                        <input type="submit" value="#$submitbutton#" align="middle" />
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-</form>
+                    </xar:loop>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="authurl" class="xar-form-label" title="#xarML('Authentication URL to use.')#">
+                    #$authurl#
+                </label>
+                <input type="text" id="authurl" name="authurl" value="#$authurlvalue#" size="50"/>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="debuglevel" class="xar-form-label" title="#xarML('Debug or log level')#">
+                        #$debuglevellabel#
+                </label>
+                <select name="debuglevel" id="defaultgroup">
+                    <xar:loop name="$levels">
+                        <xar:if condition="$loop:item['level'] eq $debuglevelvalue">
+                            <option value="#$loop:item['level']#" selected="selected">#$loop:item['name']#</option>
+                        <xar:else />
+                            <option value="#$loop:item['level']#">#$loop:item['name']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="in_array('authurl',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                    <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="activate" id="activate" value="1" />
+                </xar:if>
+                <label for="activate" title="#xarML('Activate AuthURL?')#">
+                     <xar:mlstring>Activate authentication module</xar:mlstring>
+                </label>
+            </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper">
+            <label for="submit" class="xar-form-label" title="#xarML('Click submit to change the configuration')#">
+                #$submitlabel#
+            </label>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <!-- submit button -->
+            <input type="submit" id="submit" value="#$submitbutton#" align="middle" />
+        </div>
+    </form>
 </div>

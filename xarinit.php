@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthURL Module Init/Remove Functions
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authurl
+ * @subpackage AuthURL
+ * @link http://xaraya.com/index.php/release/42241.html
  * @author Court Shrock <shrockc@inhs.org>
-*/
+ */
 
 /**
  * Initialization function

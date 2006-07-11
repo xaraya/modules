@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthURL UserAPI Authentication Function
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authurl
+ * @subpackage AuthURL
+ * @link http://xaraya.com/index.php/release/42241.html
  * @author Court Shrock <shrockc@inhs.org>
-*/
+ */
 
 /**
  * authenticate a user
@@ -76,10 +75,7 @@ function authurl_userapi_authenticate_user($args)
     $xartable =& xarDBGetTables();
 
     # Get user information from roles
-    $userRole = xarModAPIFunc('roles',
-                              'user',
-                              'get',
-                              array('uname' => $uname));
+    $userRole = xarModAPIFunc('roles', 'user', 'get', array('uname' => $uname));
 
     if (!$userRole) {
         # add a user that does NOT exist in the database
@@ -89,9 +85,7 @@ function authurl_userapi_authenticate_user($args)
 
             # call role module to create new user role
             $now = time();
-            $rid = xarModAPIFunc('roles',
-                                 'admin',
-                                 'create',
+            $rid = xarModAPIFunc('roles', 'admin', 'create',
                                  array('uname' => $uname,
                                        'realname' => $realname,
                                        'email' => $email,
@@ -102,7 +96,7 @@ function authurl_userapi_authenticate_user($args)
                                        'authmodule'  => 'authurl'));
 
             if (!$rid) {
-                                if ($config['debug_level'] >= 1) xarLogMessage("authURL: user creation failed for `$uname`");
+                if ($config['debug_level'] >= 1) xarLogMessage("authURL: user creation failed for `$uname`");
                 return XARUSER_AUTH_FAILED;
             }// if
 
@@ -110,7 +104,7 @@ function authurl_userapi_authenticate_user($args)
 
             # Get the list of groups
             if (!$groupRoles = xarGetGroups()) {
-                                if ($config['debug_level'] >= 1) xarLogMessage('authURL: could not get user group list');
+                if ($config['debug_level'] >= 1) xarLogMessage('authURL: could not get user group list');
                 return XARUSER_AUTH_FAILED;
             }// if
 
@@ -123,21 +117,21 @@ function authurl_userapi_authenticate_user($args)
             }// while
 
             if ($groupId == 0) {
-                                if ($config['debug_level'] >= 1) xarLogMessage("authURL: default group ($usergroup) doesn't exist");
+                if ($config['debug_level'] >= 1) xarLogMessage("authURL: default group ($usergroup) doesn't exist");
                 return XARUSER_AUTH_FAILED;
             }// if
 
             # Insert the user into the default users group
             if( !xarMakeRoleMemberByID($rid, $groupId)) {
-                                if ($config['debug_level'] >= 1) xarLogMessage('authURL: failed to add user to default group');
-               return XARUSER_AUTH_FAILED;
+                if ($config['debug_level'] >= 1) xarLogMessage('authURL: failed to add user to default group');
+                return XARUSER_AUTH_FAILED;
             }// if
 
-                        if ($config['debug_level'] >= 2) xarLogMessage("authURL: added user `$uname`");
+            if ($config['debug_level'] >= 2) xarLogMessage("authURL: added user `$uname`");
 
         } else {
             $rid = XARUSER_AUTH_FAILED;
-                        if ($config['debug_level'] >= 1) xarLogMessage("authURL: user ($uname) doesn't exist and can't add users");
+            if ($config['debug_level'] >= 1) xarLogMessage("authURL: user ($uname) doesn't exist and can't add users");
         }// if
     } else {
         $rid = $userRole['uid'];

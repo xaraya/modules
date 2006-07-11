@@ -1,8 +1,21 @@
 <?php
-$modversion['name'] = 'AuthURL';
+/**
+ * Xaraya external URL authentication module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage AuthURL
+ * @link http://xaraya.com/index.php/release/42241.html
+ * @author Court Shrock <shrockc@inhs.org>
+ */
+
+$modversion['name'] = 'authurl';
+$modversion['displayname'] = xarML('AuthURL');
 $modversion['id'] = '42241';
 $modversion['version'] = '1.0.0';
-$modversion['displayname'] = xarML('AuthURL');
 $modversion['description'] = 'Xaraya external URL authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

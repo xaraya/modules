@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthURL Administrative Display Functions
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authurl
+ * @subpackage AuthURL
+ * @link http://xaraya.com/index.php/release/42241.html
  * @author Court Shrock <shrockc@inhs.org>
-*/
+ */
 
 /**
  * This is a standard function to modify the configuration parameters of the
@@ -63,7 +62,7 @@ function authurl_admin_modifyconfig()
     $data['groups'] = $groups;
 
     # Submit button
-    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click "Submit" to change configuration:'));
+    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click [Update Config] to change this configuration:'));
     $data['submitbutton'] = xarVarPrepForDisplay(xarML('Update Config'));
 
     # Everything else happens in Template for now
