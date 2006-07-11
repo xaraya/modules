@@ -5,8 +5,10 @@
     </span>
 </div>
 <div class="xar-mod-body">
-<form name="post" id="post" action="&xar-modurl-authldap-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-               <fieldset>
+    <xar:template file="admin-menu" type="module" />
+    <h2><xar:mlstring>Modify AuthLDAP Configuration</xar:mlstring></h2>
+    <form name="post" id="post" action="&xar-modurl-authldap-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
             <legend>
                     <xar:mlstring>LDAP Server Configuration</xar:mlstring>
             </legend>

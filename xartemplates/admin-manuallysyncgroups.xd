@@ -1,11 +1,20 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-standard-box-padding ">
-<xar:if condition="$success">
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>AuthLDAP Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module" />
+    <h2><xar:mlstring>Manuall Sync Groups</xar:mlstring></h2>    
+    <div class="xar-standard-box-padding ">
+    <xar:if condition="$success">
         <xar:ml>
             <xar:mlstring>Groups successfully synchronized. [<a href="#(1)">See the groups</a>]</xar:mlstring>
             <xar:mlvar>#xarModURL('roles', 'admin', 'showusers')#</xar:mlvar>
         </xar:ml>
-<xar:else />
+    <xar:else />
         <xar:mlstring>Error during group synchronization.</xar:mlstring>
-</xar:if>
+    </xar:if>
+    </div>
 </div>

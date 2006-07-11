@@ -5,8 +5,10 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module" />
     <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2><xar:mlstring>Overview</xar:mlstring></h2> <h3>
+    <h2><xar:mlstring>Overview</xar:mlstring></h2> 
+    <h3>
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
         <p>
