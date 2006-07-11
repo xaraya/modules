@@ -1,15 +1,16 @@
 <?php
 /**
- * 
  * AuthLDAP User API
  * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage authldap
- * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>
+ * @link http://xaraya.com/index.php/release/50.html
+ * @author Chris Dudley <miko@xaraya.com>
+ * @author Richard Cave <rcave@xaraya.com>
 */
 
 
@@ -99,10 +100,7 @@ function authldap_userapi_authenticate_user($args)
     // now we still have to fetch the $uid for return
 
     // Get user information from roles
-    $userRole = xarModAPIFunc('roles',
-                              'user',
-                              'get',
-                              array('uname' => $uname));
+    $userRole = xarModAPIFunc('roles', 'user', 'get', array('uname' => $uname));
 
     if (!$userRole) {
         // add a user that does NOT exist in the database
@@ -129,9 +127,7 @@ function authldap_userapi_authenticate_user($args)
 
             // call role module to create new user role
             $now = time();
-            $rid = xarModAPIFunc('roles',
-                                 'admin',
-                                 'create',
+            $rid = xarModAPIFunc('roles', 'admin', 'create',
                                  array('uname' => $uname, 
                                        'realname' => $realname, 
                                        'email' => $email, 
@@ -170,9 +166,7 @@ function authldap_userapi_authenticate_user($args)
 
             if (!$md5password) {
                 // Update Xaraya database with new password
-                $res = xarModAPIFunc('roles',
-                                     'admin',
-                                     'update',
+                $res = xarModAPIFunc('roles', 'admin', 'update',
                                      array('uid' => $userRole['uid'],  
                                            'name' => $userRole['name'], 
                                            'uname' => $userRole['uname'], 
@@ -208,9 +202,7 @@ function authldap_authentication_failover($uname, $pass)
     
     if ($failover == 'true') {
         // Authenticate with Xaraya authsystem
-        $uid = xarModAPIFunc('authsystem',
-                             'user',
-                             'authenticate_user',
+        $uid = xarModAPIFunc('authsystem', 'user', 'authenticate_user',
                              array('uname' => $uname,
                                    'pass' => $pass));
         return $uid;

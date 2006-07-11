@@ -8,13 +8,14 @@
  * @link http://www.xaraya.com
  *
  * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/50.html
  * @author Chris Dudley <miko@xaraya.com>
  * @author Richard Cave <rcave@xaraya.com>
 */
 
 $modversion['name'] = 'AuthLDAP';
 $modversion['id'] = '50';
-$modversion['version'] = '1.1.0';
+$modversion['version'] = '1.1.1';
 $modversion['displayname'] = xarML('AuthLDAP');
 $modversion['description'] = 'Xaraya LDAP authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';

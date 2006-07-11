@@ -1,14 +1,14 @@
 <?php
 /**
- *
  * AuthLDAP Administrative Display Functions
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/50.html
  * @author Sylvain Beucler <beuc@beuc.net>
 */
 
@@ -107,7 +107,6 @@ function authldap_adminapi_syncgroups ()
     }
   }
   
-
   // Group clean-up: if a previously-existing group is now orphan, it
   // won't be updated anymore. No need to let outdated information
   // floating around. We do not remove the group, though, so that
