@@ -31,6 +31,12 @@ function example_user_view()
      * not hold in future versions of Xaraya
      */
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    /* If you want to add the category browser, then you will need to get the catid here as well
+     * Note that the catid is a string here, so it can also will take multiple categories, which
+     * you can join with a + or a -
+     * if (!xarVarFetch('catid', 'str:1:', $catid, '', XARVAR_NOT_REQUIRED)) return;
+     */
+
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
      * helps if all of the module pages have a standard menu at the top to
@@ -53,6 +59,7 @@ function example_user_view()
      * as their own arguments array.
      * Security check 1 - the getall() function only returns items for which the
      * the user has at least OVERVIEW access.
+     * The catid is not passed here, but you will need to if you want the category selector to work
      */
     $items = xarModAPIFunc('example',
         'user',
