@@ -1,128 +1,106 @@
-<!-- admin menu configuration template -->
-<!-- Formatting table to center the menu -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Authinvision Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Authinvision Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
 <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
 <!-- BL style form for authinvision configuration options -->
-<form method="post" action="#xarModURL('authinvision','admin','updateconfig')#">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<table border="0" width="100%">
-    <tr>
-        <td>
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Server</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="server" value="#$server#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Database</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="database" value="#$database#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>username</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="username" value="#$username#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>password</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="password" name="password" value="#$password#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Invision table prefix</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="prefix" value="#$prefix#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td colspan="2">
-                       <xar:mlstring>Please note that your invision table prefix does <strong>not</strong> include the underscore in the table name.  if your invision members table is ibf_members, the prefix is "ibf"</xar:mlstring>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Invision version</xar:mlstring>
-                    </td>
-                    <td>
-                        <select name="version">
-                        <xar:if condition="empty($version) or $version eq '1'">
-                            <option value="1" selected="selected">1.x</option>
-                        <xar:else/>
-                            <option value="1">1.x</option>
+<form method="post" id="post" action="#xarModURL('authinvision','admin','updateconfig')#">
+   <fieldset>
+        <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
+ 
+            <div class="xar-form-input-wrapper">
+                <label for="server" class="xar-form-label" title="#xarML('Server')#">
+                    <xar:mlstring>Server</xar:mlstring>
+                </label>
+                <input type="text" name="server" id="server" value="#$server#" />
+            </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="database" class="xar-form-label" title="#xarML('Database')#">
+                    <xar:mlstring>Database</xar:mlstring>
+                </label>
+                <input type="text" name="database" id="database" value="#$database#" />
+             </div>
+             <div class="xar-form-input-wrapper">
+                <label for="username" class="xar-form-label" title="#xarML('Username')#">
+                    <xar:mlstring>username</xar:mlstring>
+                </label>
+                <input type="text" name="username" id="username" value="#$username#" />
+             </div>
+             <div class="xar-form-input-wrapper">
+                <label for="password" class="xar-form-label" title="#xarML('Password')#">
+                    <xar:mlstring>password</xar:mlstring>
+                </label>
+                <input type="password" name="password" id="password" value="#$password#" />
+             </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="prefix" class="xar-form-label" title="#xarML('Invision table prefix')#">
+                    <xar:mlstring>Invision table prefix</xar:mlstring>
+                </label>
+                <input type="text" name="prefix" id="prefix" value="#$prefix#" />
+             </div>
+
+             <div class="xar-form-input-wrapper-before">
+                 <xar:mlstring>Please note that your invision table prefix does <strong>not</strong> include the underscore in the table name.  if your invision members table is ibf_members, the prefix is "ibf"</xar:mlstring>
+             </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="version" class="xar-form-label" title="#xarML('Invision version')#">
+                    <xar:mlstring>Invision version</xar:mlstring>
+                </label>
+                <select name="version">
+                    <xar:if condition="empty($version) or $version eq '1'">
+                        <option value="1" selected="selected">1.x</option>
+                    <xar:else/>
+                        <option value="1">1.x</option>
+                    </xar:if>
+                    <xar:if condition="!empty($version) and $version eq '2'">
+                        <option value="2" selected="selected">2.x</option>
+                    <xar:else/>
+                        <option value="2">2.x</option>
+                    </xar:if>
+                </select>
+             </div>
+             <div class="xar-form-input-wrapper">
+                <label for="forumroot" class="xar-form-label" title="#xarML('Invision Forum Root')#">
+                    <xar:mlstring>Invision Forum Root</xar:mlstring>
+                </label>
+                <input type="text" name="forumroot" id="forumroot" value="#$forumroot#" />
+             </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for="defaultgroup" class="xar-form-label" title="#xarML('Default Xaraya Group')#">
+                    <xar:mlstring>Default Xaraya Group</xar:mlstring>
+                </label>
+                <select name="defaultgroup" id="defaultgroup">
+                    <xar:loop name="$groups">
+                        <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
                         </xar:if>
-                        <xar:if condition="!empty($version) and $version eq '2'">
-                            <option value="2" selected="selected">2.x</option>
-                        <xar:else/>
-                            <option value="2">2.x</option>
-                        </xar:if>
-                        </select>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Invision Forum Root</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="text" name="forumroot" value="#$forumroot#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Default Xaraya Group</xar:mlstring>
-                    </td>
-                    <td>
-                        <select name="defaultgroup" id="defaultgroup">
-                        <xar:loop name="$groups">
-                            <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Activate authentication module</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="in_array('authinvision',xarConfigGetVar('Site.User.AuthenticationModules'))">
-                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
-                        <xar:else/>
-                            <input type="checkbox" name="activate" id="activate" value="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Submit Changes</xar:mlstring>
-                    </td>
-                    <td>
-                        <!-- submit button -->
-                        <input type="submit" value="#$submitbutton#"  />
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+                    </xar:loop>
+                </select>
+             </div>
+             <div class="xar-form-input-wrapper-after">
+                 <xar:if condition="in_array('authinvision',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                     <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                 <xar:else/>
+                     <input type="checkbox" name="activate" id="activate" value="1" />
+                 </xar:if>
+                 <label for="activate" title="#xarML('Activate this module?')#">
+                    <xar:mlstring>Activate authentication module?</xar:mlstring>
+                 </label>
+             </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+             <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" name="submit" id="submit" value="#$submitbutton#"  />
+        </div>
+
 </form>
 </div>

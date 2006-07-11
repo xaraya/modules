@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Authinvision Administration </xar:mlstring>
@@ -5,22 +6,23 @@
 </div>
 
 <div class="xar-mod-body">
-  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <xar:template type="module" file="admin-menu" />
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-
-            <p><xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module checks the username and password from the login screen against the Invision database and returns true for a match.</xar:mlstring></p>
-            <p><xar:mlstring>Authinvision <strong>does not</strong> log users into both systems at once, nor does it allow users who register on xaraya to have their user information duplicated in the Invision database.  <strong>It is highly suggested that you turn off xaraya registration and use your Invision board's registration/password retrieval process.</strong></xar:mlstring></p>
-   <h3><xar:mlstring>How to use it?</xar:mlstring></h3
-            <p><xar:mlstring>Authentication by Authinvision is automatically available once the the Authinvision module has been initialized. You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring></p>
-            <p><xar:mlstring>
-            From the menu, you have one choice.  "Modify Config".
-            </xar:mlstring>
-            <p>
-            <ul>
-                <li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
-            </ul>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+        <p><xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module checks the username and password from the login screen against the Invision database and returns true for a match.</xar:mlstring></p>
+        <p><xar:mlstring>Authinvision <strong>does not</strong> log users into both systems at once, nor does it allow users who register on xaraya to have their user information duplicated in the Invision database.  <strong>It is highly suggested that you turn off xaraya registration and use your Invision board's registration/password retrieval process.</strong></xar:mlstring></p>
+   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>Authentication by Authinvision is automatically available once the the Authinvision module has been initialized. You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>From the menu, you have one choice.  "Modify Config".</xar:mlstring>
+        <p>
+        <ul>
+            <li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+        </ul>
    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
        <p><xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring></p>
        <p><xar:mlstring>whos_online.php: a who's online block that replaces the one in the roles module.</xar:mlstring></p>
