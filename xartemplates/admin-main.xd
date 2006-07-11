@@ -1,0 +1,63 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Authemail Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>Authemail allows users to authenticate using their email address and password, rather than using username and password.</xar:mlstring></em>
+  </p>
+
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>To use the Authemail module you need to:</xar:mlstring>
+  </p>
+  <xar:set name="defaultauthmodule">xarModGetNameFromID(xarModGetVar('roles','defaultauthmodule'))</xar:set>
+  <xar:set name="configlink">xarModURL('roles','admin','modifyconfig',array('tab'=>'general'))</xar:set>
+ <ul>
+    <li><xar:mlstring>Install and activate the Authemail module</xar:mlstring></li>
+    <li>
+        <xar:ml>
+        <xar:mlstring>Check and ensure the Authemail module is the 'default' authentication module set in the
+        Roles module. The current default authentication module is <strong>#(1)</strong>. To change this go to <a href="#(2)">Roles Configuration</a></xar:mlstring>
+        <xar:mlvar>#$defaultauthmodule#</xar:mlvar>
+        <xar:mlvar>#$configlink#</xar:mlvar>
+        </xar:ml>
+    </li>
+  </ul>
+
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>No hooks provided</xar:mlstring>
+
+  </p>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>No blocks provided</xar:mlstring>
+
+  </p>
+
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Authemail module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Authemail Extension page at</xar:mlstring> <a title="#xarML('Authemail Module - Xaraya Extension 10513')#" href="http://www.xaraya.com/index.php/release/10513.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Authemail found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/Authemail/" title="#xarML('Related documentation on Authemail')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Authemail Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-07-10
+  </p>
+</div>
+
