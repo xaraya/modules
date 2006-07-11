@@ -1,11 +1,16 @@
 <?php
 /**
- * File: $Id$
+ * Update Configuration
  *
- * AuthphpBB2 Administrative Display Functions
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
  *
- */
-
+ * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/77102.html
+ * @author Alexander GQ Gerasiov <gq@gq.pp.ru>
+*/
 /**
  * Update the configuration parameters of the
  * module given the information passed back by the modification form
@@ -13,30 +18,16 @@
 function authphpbb2_admin_updateconfig()
 {
     // Get parameters
-
-    list(
-         $adduser,
-         $defaultgroup,
-         $server,
-         $dbtype,
-         $database,
-         $username,
-         $password,
-         $prefix,
-         $forumurl,
-         $activate
-        ) = xarVarCleanFromInput(
-                                 'adduser',
-                                 'defaultgroup',
-                                 'server',
-                                 'dbtype',
-                                 'database', 
-                                 'username', 
-                                 'password', 
-                                 'prefix',
-                                 'forumurl',
-                                 'activate'
-                                );
+    if (!xarVarFetch('adduser',       'checkbox', $adduser,       false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroup',  'str:1:',   $defaultgroup,  '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activate',      'checkbox', $activate,      false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('server',        'str:1:',   $server,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dbtype',        'str:1:',   $dbtype,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('database',      'str:1:',   $database,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('username',      'str:1:',   $username,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('password',      'str:1:',   $password,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('prefix',        'str:1:',   $prefix,        '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumurl',      'str:1:',   $forumurl,      '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
