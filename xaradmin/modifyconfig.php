@@ -1,11 +1,15 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.2 2003/12/17 04:00:51 roger Exp $
- *
  * AuthSQL Administrative Display Functions
- * 
- * @copyright (C) 2003 ninthave
- * @author James Cooper jbt_cooper@bigpond.com
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage AuthSQL Module
+ * @link http://xaraya.com/index.php/release/10512.html
+ * @author Roger Keays and James Cooper
 */
 
 /**

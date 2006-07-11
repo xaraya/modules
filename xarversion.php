@@ -1,7 +1,19 @@
 <?php
-$modversion['name'] = 'AuthSQL';
+/**
+ * Xaraya SQL authentication module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ * 
+ * @subpackage AuthSQL Module
+ * @link http://xaraya.com/index.php/release/10512.html
+ * @author Roger Keays and James Cooper
+*/
+$modversion['name'] = 'authsql';
 $modversion['id'] = '10512';
-$modversion['version'] = '1.1.0';
+$modversion['version'] = '1.1.1';
 $modversion['displayname'] = xarML('AuthSQL');
 $modversion['description'] = 'Xaraya SQL authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';

@@ -7,9 +7,10 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authsql
+ * @subpackage AuthSQL Module
  * @link http://xaraya.com/index.php/release/10512.html
- */
+ * @author Roger Keays and James Cooper
+*/
 
 /**
  * Overview displays standard Overview page
