@@ -13,7 +13,7 @@
  */
 $modversion['name'] = 'authinvision';
 $modversion['id'] = '950';
-$modversion['version'] = '1.0.2';
+$modversion['version'] = '1.0.3';
 $modversion['displayname'] = xarML('Authinvision');
 $modversion['description'] = 'Xaraya/Invision Board authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
