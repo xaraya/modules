@@ -3,6 +3,17 @@
  * Authenticate a user against the Xaraya database, using their email address
  * and password.
  *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Authemail Module
+ * @link http://xaraya.com/index.php/release/10513.html
+ * @author Roger Keays <r.keays@ninthave.net>
+ */
+
+ /*
  * @public
  * @author Marco Canini modified by Roger Keays for authemail
  * @param args['uname'] email address of user
