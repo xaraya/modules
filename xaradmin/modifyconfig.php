@@ -1,15 +1,14 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthSSO Administrative Display Functions
  *
- * @package authentication
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authsso
+ * @subpackage AuthSSO
+ * @link http://xaraya.com/index.php/release/51.html
  * @author Jonn Beames <jsb@xaraya.com> | Richard Cave <rcave@xaraya.com>
 */
 

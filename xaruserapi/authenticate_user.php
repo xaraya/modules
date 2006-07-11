@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthSSO User API
  *
- * @package authentication
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage authsso
- * @author Jonn Beames <jsb@xaraya.com> | Richard Cave <rcave@xaraya.com>
-*/
+ * @subpackage AuthSSO
+ * @link http://xaraya.com/index.php/release/51.html
+ * @author Jonn Beames and Richard Cave
+ */
 
 /**
  * Login an externally authenticated user
@@ -63,10 +62,7 @@ function authsso_userapi_authenticate_user($args)
     $xartable =& xarDBGetTables();
 
     // Get user information from roles
-    $userRole = xarModAPIFunc('roles',
-                              'user',
-                              'get',
-                              array('uname' => $uname));
+    $userRole = xarModAPIFunc('roles', 'user', 'get', array('uname' => $uname));
 
     if (!$userRole) {
         // add a user that does NOT exist in the database
@@ -113,9 +109,8 @@ function authsso_userapi_authenticate_user($args)
             // call role module to create new user role
             $now = time();
             $pass = xarModAPIFunc('roles', 'user', 'makepass');
-            $rid = xarModAPIFunc('roles',
-                                 'admin',
-                                 'create',
+
+            $rid = xarModAPIFunc('roles', 'admin', 'create',
                                  array('uname' => $uname,
                                        'realname' => $realname,
                                        'email' => $email,
