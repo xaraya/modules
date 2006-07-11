@@ -1,23 +1,38 @@
-<form action="&xar-modurl-roles-user-login;" method="post" enctype="application/x-www-form-urlencoded">
-<div>
-    <div style="text-align: left; margin: 3px;"><label for="uname#$blockid#"><xar:mlstring>Username</xar:mlstring>:</label></div>
-    <div style="text-align: right; margin: 3px;"><input type="text" name="uname" id="uname#$blockid#" maxlength="64" size="10" /></div>
-</div>
-<div>
-    <div style="text-align: left; margin: 3px;"><label for="pass#$blockid#"><xar:mlstring>Password</xar:mlstring>:</label></div>
-    <div style="text-align: right; margin: 3px;"><input type="password" name="pass" id="pass#$blockid#" maxlength="64" size="10" /></div>
-</div>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<form action="&xar-modurl-authsystem-user-login;" method="post" class="xar-margin-none">
 
-<xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
-    <div style="text-align: center; margin: 3px;"><input type="checkbox" name="rememberme" id="rememberme#$blockid#" value="1" />
-    <label for="rememberme#$blockid#"><xar:mlstring>Remember me</xar:mlstring></label></div>
-</xar:if>
+    <p>
+        <input type="hidden" name="redirecturl" id="returnurl#$blockid#" value="#$return_url#" />
+        <label for="uname#$blockid#" title="#xarML('Enter your user name')#">
+            <xar:mlstring>Username:</xar:mlstring>
+        </label>
+        <input class="xar-fullwidth" type="text" name="uname" id="uname#$blockid#" maxlength="64" />
+    </p>
+    <p>
+        <label for="pass#$blockid#" title="#xarML('Enter your password')#">
+            <xar:mlstring>Password:</xar:mlstring>
+        </label>
+        <input class="xar-fullwidth" type="password" name="pass" id="pass#$blockid#" maxlength="64" />
+    </p>
 
-<input type="hidden" name="redirecturl" id="returnurl#$blockid#" value="#$return_url#" />
-<div style="text-align: center; margin: 3px;"><input type="submit" value="#$signinlabel#" /></div>
+    <p>
+        <xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
+            <label class="xar-displayblock" for="rememberme#$blockid#">
+                <input type="checkbox" name="rememberme" id="rememberme#$blockid#" value="1" />
+                <xar:mlstring>Don't ask for password</xar:mlstring>
+            </label>
+        </xar:if>
+    </p>
+    
+    <p>
+        <input type="hidden" name="redirecturl" id="returnurl#$blockid#" value="#$return_url#" />
+        <input type="submit" value="#$signinlabel#" />
+    </p>
+    <xar:if condition="$showregister eq 1">
+    <p>
+        <xar:mlstring>Need an account?</xar:mlstring>
+        <a href="#$registerurl#"><xar:mlstring>Register here</xar:mlstring></a>.
+    </p>
+    </xar:if>
 
-<xar:if condition="$showregister eq 1">
-    <div style="text-align: center; margin: 3px;"><xar:mlstring>Need an account?</xar:mlstring><br />
-    <a href="#$registerurl#"><xar:mlstring>Register here</xar:mlstring></a>.</div>
-</xar:if>
 </form>
