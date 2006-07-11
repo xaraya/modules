@@ -1,11 +1,15 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.2 2003/12/17 04:00:51 roger Exp $
- *
  * AuthSQL Administrative Display Functions
- * 
- * @copyright (C) 2003 ninthave
- * @author James Cooper jbt_cooper@bigpond.com
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage AuthSQL Module
+ * @link http://xaraya.com/index.php/release/10512.html
+ * @author Roger Keays and James Cooper
 */
 
 /**
@@ -15,35 +19,22 @@
 function authsql_admin_updateconfig()
 {
     // Get parameters
-    list($sqldbhost,
-         $sqldbport,
-         $sqldbtype,
-         $sqldbname,
-         $sqldbuser,
-         $sqldbpass,
-         $sqldbpasswordtablename,
-         $sqldbusernamefield,
-         $sqldbpasswordfield,
-         $sqldbpasswordencryptionmethod,
-         $sqlwhere,
-         $activate,
-         $adduser,
-         $storepassword,
-         $defaultgroup ) = xarVarCleanFromInput('sqldbhost',
-                                                'sqldbport',
-                                                'sqldbtype',
-                                                'sqldbname',
-                                                'sqldbuser',
-                                                'sqldbpass',
-                                                'sqldbpasswordtablename',
-                                                'sqldbusernamefield',
-                                                'sqldbpasswordfield',
-                                                'sqldbpasswordencryptionmethod',
-                                                'sqlwhere',
-                                                'activate', 
-                                                'adduser', 
-                                                'storepassword', 
-                                                'defaultgroup');
+    if (!xarVarFetch('sqldbhost', 'str:1:', $sqldbhost, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbport', 'str:1:', $sqldbport, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbtype', 'str:1:', $sqldbtype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbname', 'str:1:', $sqldbname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbuser', 'str:1:', $sqldbuser, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbpass', 'str:1:', $sqldbpass, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbpasswordtablename', 'str:1:', $sqldbpasswordtablename, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbusernamefield',     'str:1:', $sqldbusernamefield,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbpasswordfield',     'str:1:', $sqldbpasswordfield,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqldbpasswordencryptionmethod', 'str:1:', $sqldbpasswordencryptionmethod, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sqlwhere',      'str:1:',   $sqlwhere,      '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroup',  'str:1:',   $defaultgroup,  '',    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activate',      'checkbox', $activate,      false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adduser',       'checkbox', $adduser,       false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('storepassword', 'checkbox', $storepassword, false, XARVAR_NOT_REQUIRED)) return;
+
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
