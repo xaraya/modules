@@ -20,7 +20,6 @@
  */
 function registration_user_main()
 {
-
     $allowregistration = xarModGetVar('registration', 'allowregistration');
 
     if (xarUserIsLoggedIn()) {

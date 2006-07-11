@@ -345,14 +345,13 @@ function registration_user_register()
 
             //Set some general vars that we need in various options
             $pending = xarModGetVar('registration', 'explicitapproval');
-            $authmoduleid=(int)xarModGetVar('roles','defaultauthmodule');
-            if (isset($authmoduleid)) {
-               $authmodule=xarModGetNameFromID($authmoduleid);
-            }else {
-                //fallback to? Use our known auth module for now
-               $authmodule='authsystem';
-            }
-            $loginlink =xarModURL($authmodule,'user','main');
+            
+            //Get the default auth module data
+            $defaultauthdata=xarModAPIFunc('roles','user','getdefaultauthdata');
+            $defaultloginmodname=$defaultauthdata['defaultloginmodname'];
+            $authmodule=$defaultauthdata['defaultauthmodname'];
+            
+            $loginlink =xarModURL($defaultloginmodname,'user','main');
 
             $tplvars=array();
             $tplvars['loginlink']=$loginlink;
