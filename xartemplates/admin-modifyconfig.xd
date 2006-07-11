@@ -1,55 +1,82 @@
-<!-- admin menu configuration template -->
-<!-- Formatting table to center the menu -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthSQL Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthSQL Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-    <form method="post" action="&xar-modurl-authsql-admin-updateconfig;">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>SQL Server Configuration</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <table>
-                <tr>
-                    <td colspan="2"><b>SQL configuration</b>
-                 <tr>
-                    <td>Database host
-                    <td><input type="text" name="sqldbhost" value="#$sqldbhostvalue#" />
-                 <tr>
-                    <td>Database port
-                    <td><input type="text" name="sqldbport" value="#$sqldbportvalue#" />
-                 <tr>
-                    <td>Database type (postgres or mysql)
-                    <td><input type="text" name="sqldbtype" value="#$sqldbtypevalue#" />
-                 <tr>
-                    <td>Database name
-                    <td><input type="text" name="sqldbname" value="#$sqldbnamevalue#" />
-                 <tr>
-                    <td>Database user
-                    <td><input type="text" name="sqldbuser" value="#$sqldbuservalue#" />
-                 <tr>
-                    <td>Database password
-                    <td><input type="password" name="sqldbpass" value="#$sqldbpassvalue#" /><tr>
-                 <tr>
-                    <td>Database password table name
-                    <td><input type="text" name="sqldbpasswordtablename" value="#$sqldbpasswordtablenamevalue#" /><tr>
-                 <tr>
-                    <td>Database username field
-                    <td><input type="text" name="sqldbusernamefield" value="#$sqldbusernamefieldvalue#" /><tr>
-                 <tr>
-                    <td>Database password field 
-                    <td><input type="text" name="sqldbpasswordfield" value="#$sqldbpasswordfieldvalue#" /><tr>
-                 <tr>
-                    <td>Additional WHERE clause
-                    <td><input type="text" name="sqlwhere"
-                        value="#$sqlwherevalue#" />
-                 <tr align="left" valign="top">
-                    <td>Database password encryption method
-                    <td>
-                        <select 
-                            name="sqldbpasswordencryptionmethod" 
-                            id="sqldbpasswordencryptionmethod">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Modify Configuration</xar:mlstring>
+   </h2>
+   <form method="post" action="&xar-modurl-authsql-admin-updateconfig;">
+
+       <fieldset>
+           <legend><xar:mlstring>SQL Server Configuration </xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbhost" class="xar-form-label" title="#xarML('Database host')#">
+                        <xar:mlstring>Database host</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbhost" id="sqldbhost" value="#$sqldbhostvalue#" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbport" class="xar-form-label" title="#xarML('Database port')#">
+                        <xar:mlstring>Database port</xar:mlstring>
+                    </label>
+                        <input type="text" name="sqldbport" id="sqldbport" value="#$sqldbportvalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbtype" class="xar-form-label" title="#xarML('Database type (postgres or mysql)')#">
+                        <xar:mlstring>Database type (postgres or mysql)</xar:mlstring>
+                    </label>
+                        <input type="text" name="sqldbtype" id="sqldbtype" value="#$sqldbtypevalue#" />
+                 </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbname" class="xar-form-label" title="#xarML('Database name')#">
+                        <xar:mlstring>Database name</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbname" id="sqldbname" value="#$sqldbnamevalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbuser" class="xar-form-label" title="#xarML('Database user')#">
+                        <xar:mlstring>Database user</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbuser" id="sqldbuser" value="#$sqldbuservalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbpass" class="xar-form-label" title="#xarML('Database password')#">
+                        <xar:mlstring>Database password</xar:mlstring>
+                    </label>
+                    <input type="password" name="sqldbpass" id="sqldbpass" value="#$sqldbpassvalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbpasswordtablename" class="xar-form-label" title="#xarML('Database password table name')#">
+                        <xar:mlstring>Database password table name</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbpasswordtablename" id="sqldbpasswordtablename" value="#$sqldbpasswordtablenamevalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbusernamefield" class="xar-form-label" title="#xarML('Database username field')#">
+                        <xar:mlstring>Database username field</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbusernamefield" id="sqldbusernamefield" value="#$sqldbusernamefieldvalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbpasswordfield" class="xar-form-label" title="#xarML('Database password field')#">
+                        <xar:mlstring>Database password field</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqldbpasswordfield" id="sqldbpasswordfield" value="#$sqldbpasswordfieldvalue#" />
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqlwhere" class="xar-form-label" title="#xarML('Additional WHERE clause')#">
+                        <xar:mlstring>Additional WHERE clause</xar:mlstring>
+                    </label>
+                    <input type="text" name="sqlwhere" id="sqlwhere" value="#$sqlwherevalue#" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sqldbpasswordencryptionmethod" class="xar-form-label" title="#xarML('Database password encryption method')#">
+                        <xar:mlstring>Database password encryption method</xar:mlstring>
+                    </label>
+                    <select name="sqldbpasswordencryptionmethod" id="sqldbpasswordencryptionmethod">
                         <xar:loop name="$sqldbpasswordencryptionmethods">
                             <xar:if condition="$loop:item['name'] eq $sqldbpasswordencryptionmethodvalue">
                                 <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
@@ -57,37 +84,27 @@
                                 <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
                             </xar:if>
                         </xar:loop>
-                        </select>
-            </table>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>Authentication Configuration</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Activate authentication module</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="in_array('authsql',xarConfigGetVar('Site.User.AuthenticationModules'))">
-                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
-                        <xar:else/>
-                            <input type="checkbox" name="activate" id="activate" value="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <xar:mlstring>User Configuration</xar:mlstring>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td colspan="2">
+                    </select>
+                </div>
+        </fieldset>
+        <fieldset>
+           <legend><xar:mlstring>Authentication Configuration</xar:mlstring></legend>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="in_array('authsql',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                    <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="activate" id="activate" value="1" />
+                </xar:if>
+                <label for="activate" title="#xarML('Activate this authentication module?')#">
+                    <xar:mlstring>Activate authentication module?</xar:mlstring>
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+           <legend><xar:mlstring>User Configuration</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper-before">
                         <xar:mlstring>If a user exists in SQL but does not have
                         a login account to Xaraya, the user will not be able to
                         login.  By selecting the option below and entering the
@@ -96,53 +113,44 @@
                         and allowed to login. If this option is left unchecked,
                         the Xaraya Anonymous role is used if authentication is
                         successful (not sure how this is useful?).</xar:mlstring>
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Add SQL User to Xaraya Database on Login</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="adduser" value="1" #$adduservalue# />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <input type="checkbox" id="adduser" name="adduser" value="1" #$adduservalue# />
+                <label for="adduser" title="#xarML('Add SQL User to the xaraya roles database?')#">
+                    <xar:mlstring>Add SQL User to Xaraya Database on Login</xar:mlstring>
+                </label>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <input type="checkbox" id="storepassword" name="storepassword" value="1" #$storepasswordvalue# />
+                <label for="storepassword" title="#xarML('Store user password in Xaraya Database')#">
                         <xar:mlstring>Store User's SQL Password in the Xaraya Database?</xar:mlstring>
-                        <br />
-                
-                    </td>
-                    <td>
-                        <input type="checkbox" name="storepassword" value="1" #$storepasswordvalue# />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Default Group</xar:mlstring>
-                    </td>
-                    <td>
-                        <select name="defaultgroup" id="defaultgroup">
-                        <xar:loop name="$groups">
-                            <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                <tr align="left" valign="top">
-                    <td>
-                        <br />
-                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
-                    </td>
-                    <td>
-                        <br />
-                        <input type="submit" value="#$submitbutton#" align="middle" />
-                    </td>
-                </tr>
-            </table>
-        </div>
+                </label>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="defaultgroup" class="xar-form-label" title="#xarML('Select the default group')#">
+                    <xar:mlstring>Default Group</xar:mlstring>
+                </label>
+                <select name="defaultgroup" id="defaultgroup">
+                    <xar:loop name="$groups">
+                        <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                        <xar:else />
+                            <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper">
+            <label for="submit" class="xar-form-label" title="#xarML('Click submit to change the configuration')#">
+                <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
+            </label>
+            <input type="submit" id="submit" name="submit" value="#$submitbutton#" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+       </div>
     </form>
-    </div>
 </div>
