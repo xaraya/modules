@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id$
- * 
  * authinvision User API
  * 
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
- * @subpackage authinvision
- * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>
-*/
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Authinvision
+ * @link http://xaraya.com/index.php/release/950.html
+ * @author ladyofdragons
+ */
 
 //$GLOBALS['xarDB_systemArgs']['databaseName']
 
@@ -85,9 +85,7 @@ function authinvision_userapi_authenticate_user($args)
     $xartable =& xarDBGetTables();
 
     // Get user information from roles
-    $userRole = xarModAPIFunc('roles',
-                              'user',
-                              'get',
+    $userRole = xarModAPIFunc('roles', 'user', 'get',
                               array('uname' => $uname)); 
 
     if (!$userRole) {
@@ -101,9 +99,7 @@ function authinvision_userapi_authenticate_user($args)
 
             // call role module to create new user role
             $now = time();
-            $rid = xarModAPIFunc('roles',
-                                 'admin',
-                                 'create',
+            $rid = xarModAPIFunc('roles', 'admin', 'create',
                                  array('uname' => $uname, 
                                        'realname' => $realname, 
                                        'email' => $email, 
@@ -458,17 +454,19 @@ function authinvision__get_invision_userdata($connect,$username,$pass)
         // connect to the invision database and get the user data
         //$inv_db = mysql_select_db($database, $connect);
         if (empty($version) || $version == '1') {
-            $sql = "SELECT * FROM $database.$table WHERE name='$username' AND password='$password'";
-            $result = mysql_query($sql,$connect);
+            $sql = "SELECT * FROM $database.$table WHERE username=? AND user_password=?";
+            $bindvars = array($username, $password);
+            $result = mysql_query($sql,$connect,$bindvars);
         } elseif ($version == '2') {
             // cfr. converge_authenticate_member() method in ips_kernel/class_converge.php
             $sql = "SELECT *
                     FROM $database.$table
                     LEFT JOIN $database.$table2
                            ON email = converge_email
-                    WHERE name='$username'
-                      AND converge_pass_hash = MD5(CONCAT(MD5(converge_pass_salt),'$password'))";
-            $result = mysql_query($sql,$connect);
+                    WHERE name= ?
+                      AND converge_pass_hash = MD5(CONCAT(MD5(converge_pass_salt),?))";
+            $bindvars = array($username, $password);
+            $result = mysql_query($sql,$connect,$bindvars);
         }
     
         if (!$result) {

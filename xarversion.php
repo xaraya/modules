@@ -3,7 +3,7 @@
  * AuthInvision module - authenticate against Invision PB forum
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/950.html
  * @author ladyofdragons
  */
-$modversion['name'] = 'AuthInvision';
+$modversion['name'] = 'authinvision';
 $modversion['id'] = '950';
-$modversion['version'] = '1.0.1';
+$modversion['version'] = '1.0.2';
 $modversion['displayname'] = xarML('Authinvision');
 $modversion['description'] = 'Xaraya/Invision Board authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';

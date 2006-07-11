@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id: s.online.php 1.25 03/06/10 20:10:43+02:00 marc@marclaptop. $
+ * AuthInvision module - who's online block
  *
- * Online Block
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage roles module
- * @author Jim McDonald, Greg Allan, John Cox
-*/
+ * @subpackage Authinvision
+ * @link http://xaraya.com/index.php/release/950.html
+ * @author ladyofdragons
+ */
 
 /**
  * initialise block
@@ -53,10 +53,11 @@ function authinvision_whos_onlineblock_display($blockinfo)
     $activetime = time() - (xarConfigGetVar('Site.Session.Duration') * 60);
     $sql = "SELECT COUNT(1)
             FROM $sessioninfotable
-            WHERE xar_lastused > $activetime AND xar_uid > 2
+            WHERE xar_lastused > ? AND xar_uid > 2
             GROUP BY xar_uid
             ";
-    $result = $dbconn->Execute($sql);
+    $bindvars=array($activetime);
+    $result = $dbconn->Execute($sql,$bindvars);
 
     if ($dbconn->ErrorNo() != 0) {
         return false;
@@ -66,10 +67,11 @@ function authinvision_whos_onlineblock_display($blockinfo)
 
    $query2 = "SELECT count( 1 )
              FROM $sessioninfotable
-              WHERE xar_lastused > $activetime AND xar_uid = '2'
+              WHERE xar_lastused > ? AND xar_uid = '2'
               GROUP BY xar_ipaddr
              ";
-   $result2 = $dbconn->Execute($query2);
+   $bindvars=array($activetime);
+   $result2 = $dbconn->Execute($query2,$bindvars);
    $args['numguests'] = $result2->RecordCount();
    $result2->Close();
 
@@ -96,9 +98,7 @@ function authinvision_whos_onlineblock_display($blockinfo)
 
     // Make sure we have a lastuser
     if (!empty($lastuser)) {
-        $status = xarModAPIFunc('authinvision',
-                                'user',
-                                'getlast',
+        $status = xarModAPIFunc('authinvision', 'user', 'getlast',
                                 array('lastuser' => $lastuser));
    $args['lastuser'] = $status['name'];
 //    var_dump($status);

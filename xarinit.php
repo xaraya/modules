@@ -1,17 +1,16 @@
 <?php
 /**
- * File: $Id$
+ * AuthInvision module - authenticate against Invision PB forum
  *
- * authinvision Initialisation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @package authentication
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
- *
- * @subpackage authinvision
- * @author Chris Dudley <miko@xaraya.com> | Richard Cave <rcave@xaraya.com>
-*/
+ * @subpackage Authinvision
+ * @link http://xaraya.com/index.php/release/950.html
+ * @author ladyofdragons
+ */
 
 /**
  * Initialisation function
@@ -29,15 +28,11 @@ function authinvision_init()
     xarModSetVar('authinvision','version','1');
   
     // Register blocks
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                        array('modName'  => 'authinvision',
                              'blockType'=> 'usercp'))) return;
-                             
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
+
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                        array('modName'  => 'authinvision',
                              'blockType'=> 'whos_online'))) return;                             
                              
