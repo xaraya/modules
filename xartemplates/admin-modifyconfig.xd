@@ -1,79 +1,72 @@
-<!-- admin menu configuration template -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthphpBB2 Administration</xar:mlstring></span></div>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>AuthphpBB2 Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-<h2>#$configadmin#</h2>
+    <xar:template file="admin-menu" type="module" />
+    <h2>#$configadmin#</h2>
 
-<!-- BL style form for authphpbb2 configuration options -->
-<div style="marigin: auto;">
     <form method="post" action="&xar-modurl-authphpbb2-admin-updateconfig;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <fieldset>
+        <legend>
+            <xar:mlstring>AuthphpBB2 Configuration</xar:mlstring>
+        </legend>
 
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span><xar:mlstring>Server</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="server" value="#$server#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span><xar:mlstring>DB type (ADOdb "driver": 'mysql', 'postgres' etc)</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="dbtype" value="#$dbtype#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span><xar:mlstring>Database</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="database" value="#$database#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span> <xar:mlstring>Username</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="username" value="#$username#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span> <xar:mlstring>Password</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="password" name="password" value="#$password#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span><xar:mlstring>phpBB2 table prefix</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="prefix" value="#$prefix#" />
-            </span>
-        </div>
+            <div class="xar-form-input-wrapper">
+                <label for="server" class="xar-form-label" title="#xarML('Server')#">
+                    <xar:mlstring>Server</xar:mlstring>:
+                </label>
+                <input type="text" name="server" id="server" value="#$server#" />
+            </div>
 
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span class="help" title="#$adduserhelp#"><label for="adduservalue">#$adduser#:</label></span>
-            </span>
-            <span>
+
+            <div class="xar-form-input-wrapper">
+                <label for="dbtype" class="xar-form-label" title="#xarML('DB type')#">
+                    <xar:mlstring>DB type </xar:mlstring>:
+               </label>
+                    <input type="text" name="dbtype" id="dbtype" value="#$dbtype#" />
+                    <xar:mlstring>(ADOdb driver: 'mysql', 'postgres' etc)</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="database" class="xar-form-label" title="#xarML('Database')#">
+                    <xar:mlstring>Database</xar:mlstring>:
+                </label>
+                <input type="text" name="database" id="database" value="#$database#" />
+            </div>
+    
+            <div class="xar-form-input-wrapper">
+                <label for="username" class="xar-form-label" title="#xarML('Username')#">
+                    <xar:mlstring>Username</xar:mlstring>:
+                </label>
+                <input type="text" name="username" id="username" value="#$username#" />
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="password" class="xar-form-label" title="#xarML('Password')#">
+                    <xar:mlstring>Password</xar:mlstring>:
+                </label>
+                <input type="password" name="password" id="password" value="#$password#" />
+            </div>
+    
+            <div class="xar-form-input-wrapper">
+                <label for="prefix" class="xar-form-label" title="#xarML('phpBB2 table prefix')#">
+                    <xar:mlstring>phpBB2 table prefix</xar:mlstring>:
+                </label>
+                <input type="text" name="prefix" id="prefix" value="#$prefix#" />
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$adduservalue eq 'checked' ">
                     <input type="checkbox" name="adduser" value="1" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="adduser" value="1" />
                 </xar:if>
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                #$defaultgrouplabel#:
-            </span>
-            <span>
+                <label for="adduservalue" title="#$adduserhelp#">#$adduser#?</label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="defaultgroup" class="xar-form-label" title="#$defaultgrouplabel#">
+                    #$defaultgrouplabel#:
+                </label>
                 <select name="defaultgroup" id="defaultgroup">
                 <xar:loop name="$groups">
                     <xar:if condition="$loop:item['name'] eq $defaultgroup">
@@ -83,33 +76,30 @@
                     </xar:if>
                 </xar:loop>
                 </select>
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <span><xar:mlstring>phpBB2 URL (without ending slash)</xar:mlstring>: </span>
-            </span>
-            <span>
-                    <input type="text" name="forumurl" value="#$forumurl#" />
-            </span>
-        </div>
-        <div style="clear: both; padding: 5px;">
-            <span>
-                <label for="activate"><xar:mlstring>Activate authentication module</xar:mlstring>:</label>
-            </span>
-            <span>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="forumurl" class="xar-form-label" title="#xarML('phpBB2 URL')#">
+                    <xar:mlstring>phpBB2 URL</xar:mlstring>:
+                </label>
+                <input type="text" name="forumurl" id="forumurl" value="#$forumurl#" />
+                <xar:mlstring>(without ending slash)</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+
                 <xar:if condition="in_array('authphpbb2',xarConfigGetVar('Site.User.AuthenticationModules'))">
                     <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="activate" id="activate" value="1" />
                 </xar:if>
-            </span>
-        </div>
-        <br />
-        <!-- submit button -->
-        <span style="padding: 20px; ">
+                <label for="activate" title="#xarML('Activate authentication module')#">
+                    <xar:mlstring>Activate authentication module?</xar:mlstring>
+                </label>
+            </div>
+     </fieldset>
+     <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#$submitbutton#" />
-        </span>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+     </div>
 </form>
 </div>
-</div>
+

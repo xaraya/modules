@@ -1,7 +1,19 @@
 <?php
-$modversion['name'] = 'AuthphpBB2';
+/**
+ * AuthphpBB2
+ * 
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/77102.html
+ * @author Alexander GQ Gerasiov <gq@gq.pp.ru>
+*/
+$modversion['name'] = 'authphpbb2';
 $modversion['id'] = '77102';
-$modversion['version'] = '0.0.2';
+$modversion['version'] = '0.0.3';
 $modversion['displayname'] = xarML('AuthphpBB2');
 $modversion['description'] = 'Authorization in Xaraya engine using phpBB2.0.x users table';
 $modversion['credits'] = 'xardocs/credits.txt';

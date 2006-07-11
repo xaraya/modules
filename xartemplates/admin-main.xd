@@ -1,7 +1,9 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>AuthphpBB2 Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
+    <xar:template file="admin-menu" type="module" />
   <img src="#xarTplGetImage('images.jpg','authphpbb2')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 

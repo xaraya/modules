@@ -1,10 +1,14 @@
 <?php
 /**
- * File: $Id$
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
  *
- * AuthphpBB2 User API
- *
- */
+ * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/77102.html
+ * @author Alexander GQ Gerasiov <gq@gq.pp.ru>
+*/
 
 /**
  * Login an externally authenticated user
@@ -47,10 +51,7 @@ function authphpbb2_userapi_authenticate_user($args)
     $xartable = xarDBGetTables();
 
     // Get user information from roles
-    $userRole = xarModAPIFunc('roles',
-                              'user',
-                              'get',
-                              array('uname' => $uname)); 
+    $userRole = xarModAPIFunc('roles', 'user', 'get', array('uname' => $uname));
 
 
     if (!$userRole) {
@@ -65,9 +66,7 @@ function authphpbb2_userapi_authenticate_user($args)
 
         // call role module to create new user role
         $now = time();
-        $rid = xarModAPIFunc('roles',
-                             'admin',
-                             'create',
+        $rid = xarModAPIFunc('roles', 'admin', 'create',
                              array('uname' => $uname, 
                                    'realname' => $realname, 
                                    'email' => $email, 
@@ -208,6 +207,5 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         }
     }
 }
-
 
 ?>

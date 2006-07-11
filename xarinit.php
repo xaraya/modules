@@ -1,11 +1,16 @@
 <?php
 /**
- * File: $Id$
- *
  * AuthphpBB2 Initialisation
  *
- */
-
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage authldap
+ * @link http://xaraya.com/index.php/release/77102.html
+ * @author Alexander GQ Gerasiov <gq@gq.pp.ru>
+*/
 /**
  * Initialisation function
 */
@@ -51,7 +56,7 @@ function authphpbb2_init()
 /**
  * Upgrade the users module from an old version
  */
-function roles_upgrade($oldVersion)
+function authphpbb2_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
     switch ($oldVersion) {
@@ -61,6 +66,11 @@ function roles_upgrade($oldVersion)
             xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'authphpbb2', 'blockType' => 'phpbb2login'));
             xarModSetVar('authphpbb2', 'forumurl', 'http://my.domain/forum');
         
+            break;
+        case '0.0.2':
+            break;
+        case '0.0.3': //current version
+            //version upgrade to signify changed code but no db changes
             break;
         case 2.0:
             // Code to upgrade from version 2.0 goes here
