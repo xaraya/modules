@@ -1,6 +1,6 @@
 <?php
 /**
- * Add a URL
+ * New URL Form
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -14,14 +14,17 @@
  */
 
 /**
- * Add a URL
+ * New URL Form
  *
  * @return array $data template array
  */
 function window_admin_addurl($args)
 {
     extract($args);
-    if (!xarModAPIFunc('window', 'admin', 'addurl')) return;
+    if (!xarModAPIFunc('window',
+            'admin',
+            'addurl')) return;
+
     return true;
 }
 ?>

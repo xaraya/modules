@@ -28,7 +28,7 @@ function window_admin_newurl()
 	if (!xarVarFetch('auto_resize', 'int', $data['auto_resize'], xarModGetVar('window', 'auto_resize'), XARVAR_NOT_REQUIRED)) return;
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'addurl');
+    $data['action'] = xarModURL('window', 'admin', 'newurl');
     $data['window_status'] = 'add';
     $data['urls'] = xarModAPIFunc('window','admin','geturls');
     $data['id'] = '';
