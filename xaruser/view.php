@@ -1,9 +1,9 @@
 <?php
 /**
- * View a list of items
+ * View a list of personnel
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,15 +14,15 @@
  * View a list of personnel
  * This is a standard function to provide an overview of all of the items
  * available from the module. The display of links depends on the privilege of the viewer
- * @param int $catid
- * @author MichelV
+ * @param string $catid
+ * @author MichelV <michelv@xarayahosting.nl>
  * @return array
  * @todo everything
  */
 function sigmapersonnel_user_view()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'int:1:', $catid,    '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'str:1:', $catid,    '',  XARVAR_NOT_REQUIRED)) return;
     $data = xarModAPIFunc('sigmapersonnel', 'user', 'menu');
     // Prepare the variable that will hold some status message if necessary
     $data['status'] = '';
@@ -48,17 +48,6 @@ function sigmapersonnel_user_view()
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
     foreach ($items as $item) {
-        // Let any transformation hooks know that we want to transform some text
-        // You'll need to specify the item id, and an array containing all the
-        // pieces of text that you want to transform (e.g. for autolinks, wiki,
-        // smilies, bbcode, ...).
-        // Note : for your module, you might not want to call transformation
-        // hooks in this overview list, but only in the display of the details
-        // in the display() function.
-        // list($item['name']) = xarModCallHooks('item',
-        // 'transform',
-        // $item['exid'],
-        // array($item['name']));
         // Security check 2 - if the user has read access to the item, show a
         // link to display the details of the item
         if (xarSecurityCheck('ReadSIGMAPersonnel', 0, 'PersonnelItem', "$item[personid]:All:$item[persstatus]")) {
