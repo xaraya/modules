@@ -23,7 +23,7 @@
 function courses_userapi_countitems($args)
 {
     extract ($args);
-    if (!xarVarFetch('catid', 'int:1:', $catid, '', XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('catid', 'str:1:', $catid, '', XARVAR_DONT_SET)) return;
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -61,8 +61,6 @@ function courses_userapi_countitems($args)
      }
 
     $result = &$dbconn->Execute($query);
-    // Check for an error with the database code, adodb has already raised
-    // the exception so we just return
     if (!$result) return;
     // Obtain the number of items
     list($numitems) = $result->fields;
