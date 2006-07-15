@@ -840,6 +840,9 @@ function products_init()
         return false;
     }
 
+	xarModRegisterHook('module', 'getconfig', 'API','products', 'admin', 'getconfighook');
+    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'products'));
+
 # --------------------------------------------------------
 #
 # Delete block types for this module
