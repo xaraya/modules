@@ -92,8 +92,8 @@ class Supplier_Property extends Dynamic_Select_Property
     static function getRegistrationInfo()
     {
         $info = new PropertyRegistration();
-        $info->reqmodules = array('suppliers');
-        $info->id   = 30011;
+        $info->reqmodules = array('vendors');
+        $info->id   = 30024;
         $info->name = 'supplier';
         $info->desc = 'Supplier';
         return $info;
