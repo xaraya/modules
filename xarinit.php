@@ -81,6 +81,19 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_products_configuration_group";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_products_configuration_group (
+      configuration_group_id int NOT NULL auto_increment,
+      configuration_group_title varchar(64) NOT NULL,
+      configuration_group_description varchar(255) NOT NULL,
+      sort_order int(5) NULL,
+      visible int(1) DEFAULT '1' NULL,
+      PRIMARY KEY (configuration_group_id)
+    )";
+    if (!$q->run($query)) return;
+
+    
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_product (
@@ -542,7 +555,6 @@ function products_delete()
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }
-
     // Remove from the list of commerce modules
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['products']);

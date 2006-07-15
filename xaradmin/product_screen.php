@@ -88,14 +88,14 @@ function products_admin_product_screen()
                         $q->addfield('product_image', $product_image);
                     }
 
-                    $q->addtable($xartables['product_products']);
+                    $q->addtable($xartables['products_products']);
                     if ($action == 'insert_product') {
                         $q->settype('INSERT');
                         $q->addfield('product_date_added', mktime());
                         if(!$q->run()) return;
 
-                        $q = new xenQuery('INSERT', $xartables['product_product_to_categories']);
-                        $lastid = $q->lastid($xartables['product_products'], 'product_id');
+                        $q = new xenQuery('INSERT', $xartables['products_products_to_categories']);
+                        $lastid = $q->lastid($xartables['products_products'], 'products_id');
                         $q->addfield('product_id', $lastid);
                         $q->addfield('categories_id', $data['cPath']);
                         if(!$q->run()) return;
@@ -108,7 +108,7 @@ function products_admin_product_screen()
                     }
                     // Here we go, lets write Group prices into db
                     // start
-                    $q = new xenQuery('SELECT',$xartables['product_customers_status'], 'customers_status_id');
+                    $q = new xenQuery('SELECT',$xartables['products_customers_status'], 'customers_status_id');
                     $q->eq('language_id', $currentlang['id']);
                     $q->ne('customers_status_id', 0);
                     if(!$q->run()) return;
@@ -128,7 +128,7 @@ function products_admin_product_screen()
                                 }
                                 $personal_price=xtc_round($personal_price,PRICE_PRECISION);
                             }
-                                    $q = new xenQuery('UPDATE',$xartables['product_personal_offers_by_customers_status_' . $group_data[$col]['STATUS_ID']]);
+                                    $q = new xenQuery('UPDATE',$xartables['products_personal_offers_by_customers_status_' . $group_data[$col]['STATUS_ID']]);
                                     $q->addfield('personal_offer', $personal_price);
                                     $q->eq('product_id', $product_id);
                                     $q->eq('quantity', 1);
@@ -138,7 +138,7 @@ function products_admin_product_screen()
                     */
                 // end
                 // ok, lets check write new staffelpreis into db (if there is one)
-                $q = new xenQuery('SELECT',$xartables['product_customers_status'], 'customers_status_id');
+                $q = new xenQuery('SELECT',$xartables['products_customers_status'], 'customers_status_id');
                 $q->eq('language_id', $currentlang['id']);
                 $q->ne('customers_status_id', 0);
                 if(!$q->run()) return;
@@ -156,7 +156,7 @@ function products_admin_product_screen()
                         }
                         $staffelpreis=xtc_round($staffelpreis,PRICE_PRECISION);
                         if ($staffelpreis!='' && $quantity!='') {
-                            $q = new xenQuery('INSERT',$xartables['product_personal_offers_by_customers_status_'] . $group_data[$col]['STATUS_ID']);
+                            $q = new xenQuery('INSERT',$xartables['products_personal_offers_by_customers_status_'] . $group_data[$col]['STATUS_ID']);
                             $q->addfield('price_id', '');
                             $q->addfield('product_id', $product_id);
                             $q->addfield('quantity', $quantity);
@@ -167,7 +167,7 @@ function products_admin_product_screen()
                 }
 */
                 $q = new xenQuery();
-                $q->addtable($xartables['product_product_description']);
+                $q->addtable($xartables['products_products_description']);
                 if(!xarVarFetch('product_name',              'array',  $product_name,   '', XARVAR_NOT_REQUIRED)) {return;}
                 if(!xarVarFetch('product_url',               'array',  $product_url,   '', XARVAR_NOT_REQUIRED)) {return;}
                 if(!xarVarFetch('product_description',       'array',  $product_description,   '', XARVAR_NOT_REQUIRED)) {return;}
@@ -209,8 +209,8 @@ function products_admin_product_screen()
 
     if (isset($data['pID'])) {
         $q = new xenQuery('SELECT');
-        $q->addtable($xartables['product_product_description'],'pd');
-        $q->addtable($xartables['product_products'],'p');
+        $q->addtable($xartables['products_products_description'],'pd');
+        $q->addtable($xartables['products_products'],'p');
         $q->addfields(array('p.product_fsk18',
                             'p.product_template',
                             'p.options_template',
