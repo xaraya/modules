@@ -113,6 +113,7 @@ function vendors_init()
 	xarModSetVar('commerce','ice_objects',serialize($objects));
 
 	$parent = xarFindRole('CommerceRoles');
+	if (empty($parent)) $parent = xarFindRole('Everybody');
 	$role = xarFindRole('Suppliers');
 	if (empty($role)) {
 		$new = array('name' => 'Suppliers',
