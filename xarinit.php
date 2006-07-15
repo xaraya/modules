@@ -342,9 +342,6 @@ function products_init()
 #
     xarModSetVar('products', 'itemsperpage', 20);
 
-
-
-
 # --------------------------------------------------------
 #
 # Configure Hooks

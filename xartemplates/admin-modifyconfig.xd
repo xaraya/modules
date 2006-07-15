@@ -1,0 +1,17 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Products Administration</xar:mlstring>
+    </span>
+</div>
+<div class="tabswrapper">
+    <form action="#xarModURL('products', 'admin', 'updateconfig', array('tab' => $tab))#" method="post" enctype="application/x-www-form-urlencoded" >
+        <xar:set name="configarea">explode('_',$tab)</xar:set>
+        <xar:module main="false" module="$configarea[0]" type="admin" func="modifyconfig_$configarea[1]" />
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" name="update" value="#xarML('Update Configuration')#" align="middle" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            </div>
+        </fieldset>       
+    </form>
+</div>
