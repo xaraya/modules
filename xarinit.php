@@ -176,6 +176,7 @@ function customers_init()
 	$role = xarFindRole('Customers');
 	if (empty($role)) {
 		$parent = xarFindRole('CommerceRoles');
+		if (empty($parent)) $parent = xarFindRole('Everybody');
 		$new = array('name' => 'Customers',
 					 'itemtype' => ROLES_GROUPTYPE,
 					 'parentid' => $parent->getID(),
