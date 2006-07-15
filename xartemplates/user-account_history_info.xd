@@ -1,0 +1,66 @@
+<xar:template file="application_top" type="module"/>
+  </strong></font><br>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="50%"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{#text_oid#}{$ORDER_NUMBER}
+      ({$ORDER_STATUS})<br>
+      </font></strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+      <font size="1">{#text_date#} {$ORDER_DATE} </font></font></td>
+    <td class="main"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#title_print#}</strong></font><br>
+      {#text_print#} <br>
+      {$BUTTON_PRINT} </td>
+  </tr>
+</table>
+<br>
+  <strong>{#title_payment_info#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"width="240" class="main"><strong>{#text_shipping_address#}</strong><br>
+      {$DELIVERY_LABEL}</td>
+    <td style="border-top: 1px solid; border-color: #cccccc;" class="main"><strong>{#text_payment_address#}</strong><br>
+      {$BILLING_LABEL}</td>
+  </tr>
+</table>
+<br>
+<strong>{#text_shipping_method#} </strong>{$SHIPPING_METHOD} <strong><br>
+{#text_payment_method#}</strong> {$PAYMENT_METHOD} <br>
+<br>
+{if $ORDER_COMMENTS!=''} <strong>{#text_comments#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border: 1px solid; border-color: #cccccc;" class="main">{$ORDER_COMMENTS}</td>
+  </tr>
+</table>
+{/if}
+{if $PAYMENT_INFORMATION!=''}
+<strong>{#text_payment_info#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border: 1px solid; border-color: #cccccc;" class="main">{$PAYMENT_INFORMATION}</td>
+  </tr>
+</table>
+{/if}
+<strong>{#title_history#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border: 1px solid; border-color: #cccccc;" class="main">{$HISTORY_BLOCK}</td>
+  </tr>
+</table>
+<strong>{#text_products#}</strong> <br>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border: 1px solid; border-color: #cccccc;" class="main">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main">{$PRODUCTS_BLOCK}</td>
+        </tr>
+        <tr>
+          <td class="main" style="border-top: 1px solid; border-color: #cccccc;" ><div align="right">{$TOTAL_BLOCK}</div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<div align="right"><br>
+  {$BUTTON_BACK}<br>
+</div>

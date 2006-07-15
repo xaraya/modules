@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div>
+    <xar:mlstring>The following settings can be changed at a later time either in the Customers modifyconfig page or the modifyconfig pages of the modules indicated below</xar:mlstring>
+</div>
+<fieldset>
+    <legend>
+        <xar:mlstring>
+            Default Data 
+        </xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create a default customer')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default customer 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultcustomer" id="createdefaultcustomer" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultcustomername" id="defaultcustomername" value="DefaultCustomer" />
+    </div>
+</fieldset>
