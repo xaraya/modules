@@ -1,0 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div>
+    <xar:mlstring>The following settings can be changed at a later time either in the Vendors modifyconfig page or the modifyconfig pages of the modules indicated below</xar:mlstring>
+</div>
+<fieldset>
+    <legend>
+        <xar:mlstring>
+            Default Data 
+        </xar:mlstring>
+    </legend>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create a default supplier')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default supplier 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultsupplier" id="createdefaultsupplier" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultsuppliername" id="defaultsuppliername" value="DefaultSupplier" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="shorturls" title="#xarML('Create a default manufacturer')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default manufacturer 
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultmanufacturer" id="createdefaultmanufacturer" checked="1" />
+        &nbsp;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultmanufacturername" id="defaultmanufacturername" value="DefaultManufacturer" />
+    </div>
+</fieldset>
