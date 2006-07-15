@@ -93,7 +93,7 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
-
+    
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_product (
@@ -996,7 +996,6 @@ function products_delete()
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }
-
     // Remove from the list of commerce modules
     $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
     unset($modules['products']);
