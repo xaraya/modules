@@ -12,7 +12,7 @@
  * @return array of suppliers, or empty array on failure
  */
 
-function suppliers_userapi_getallsuppliers($args)
+function vendors_userapi_getallsuppliers($args)
 {
     extract($args);
 
@@ -23,9 +23,9 @@ function suppliers_userapi_getallsuppliers($args)
     } else {
 		$q = new xenQuery('SELECT',$xartable['roles'],'r');
 	}
-	$q->addfield('xar_uid');
-	$q->addfield('xar_name');
-	$q->setorder('name');
+	$q->addfield('r.xar_uid');
+	$q->addfield('r.xar_name');
+	$q->setorder('r.xar_name');
 	$q->addtable($xartable['rolemembers'],'rm');
 	$q->join('r.xar_uid','rm.xar_uid');
 	$parent = xarFindRole('Suppliers');
