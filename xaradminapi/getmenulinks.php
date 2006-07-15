@@ -46,14 +46,14 @@ function products_adminapi_getmenulinks()
                               'title' => xarML('Add options to products'),
                               'label' => xarML('Product Options'));
     }
-    if (xarSecurityCheck('EditProducts',0)) {
+/*    if (xarSecurityCheck('EditProducts',0)) {
         $menulinks[] = Array('url'   => xarModURL('products',
                                                   'admin',
                                                   'manufacturers'),
                               'title' => xarML('Manage manufacturers'),
                               'label' => xarML('Manufacturers'));
     }
-    if (xarSecurityCheck('EditProducts',0)) {
+*/    if (xarSecurityCheck('EditProducts',0)) {
         $menulinks[] = Array('url'   => xarModURL('products',
                                                   'admin',
                                                   'reviews'),
