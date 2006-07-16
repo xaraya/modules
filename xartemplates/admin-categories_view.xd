@@ -2,7 +2,6 @@
 
 <xar:style scope="module" module="commerce" file="adminstylesheet" />
 <script type="text/javascript" src="modules/products/xartemplates/general.js"></script>
-<xar:template file="adminheader" type="module" module="commerce" />
 
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
     <tr>
@@ -16,7 +15,7 @@
                     <td align="right">
                         <table border="0" width="100%" cellspacing="0" cellpadding="0">
                             <tr>
-                                <form name="search" action"#xarModURL('products','admin','categories')#" method="POST">
+                                <form name="search" action"#xarModURL('products','admin','categories')#" method="post">
                                     <td class="smallText" align="right">
                                         <xar:mlstring>Search</xar:mlstring>:
                                         <input type="text" value="#$search#">
