@@ -20,9 +20,11 @@
  */
 function commerce_adminapi_getmenulinks()
 {
+    /*
     $menuLinks[] = array('url'   => xarModURL('commerce','admin','configgroups'),
                          'title' => xarML('Manage configuration groupings'),
                          'label' => xarML('Config groups'));
+    */
     $menuLinks[] = array('url'   => xarModURL('commerce','admin','modifyconfig'),
                          'title' => xarML('Manage configuration of the commerce system.'),
                          'label' => xarML('Modify config'));
