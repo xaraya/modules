@@ -1,6 +1,6 @@
 <xar:style scope="module" module="commerce" file="tabs" />
 <br />
-<div id="tabnav">
+<div class="tabnav">
     <div>
         <xar:if condition="$tab eq 'commerce_general'">
             <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'commerce_general'))#" class="active">
