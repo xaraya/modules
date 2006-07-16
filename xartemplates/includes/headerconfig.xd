@@ -22,4 +22,20 @@
             </a>
         </div>
     </xar:foreach>
+    <div>
+        <xar:if condition="$tab eq 'commerce_support'">
+            <a href="http://commerce.xaraya.com" class="active">
+        <xar:else/>    
+            <a href="http://commerce.xaraya.com">
+        </xar:if>
+        <xar:mlstring>Support Site</xar:mlstring></a>
+    </div>    
+    <div>
+        <xar:if condition="$tab eq 'commerce_shop'">
+            <a href="#xarModURL('commerce', 'user', 'main')#" class="active">
+        <xar:else/>    
+            <a href="#xarModURL('commerce', 'user', 'main')#">
+        </xar:if>
+        <xar:mlstring>Shop</xar:mlstring></a>
+    </div>    
 </div>
