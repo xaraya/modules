@@ -14,7 +14,7 @@
       <type>itemid</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>1</order>
       <validation>int (11)</validation>
     </property>
@@ -24,7 +24,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>2</order>
       <validation>0:32</validation>
     </property>
@@ -34,7 +34,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>3</order>
       <validation>0:255</validation>
     </property>
@@ -44,7 +44,7 @@
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>4</order>
       <validation>datetime</validation>
     </property>
@@ -54,7 +54,7 @@
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>5</order>
       <validation>datetime</validation>
     </property>
@@ -64,7 +64,7 @@
       <type>subform</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>2</status>
+      <status>34</status>
       <order>6</order>
       <validation>a:4:{s:8:&quot;objectid&quot;;s:2:&quot;79&quot;;s:5:&quot;style&quot;;s:9:&quot;childlist&quot;;s:5:&quot;title&quot;;s:1:&quot;1&quot;;s:4:&quot;link&quot;;s:4:&quot;id_1&quot;;}</validation>
     </property>

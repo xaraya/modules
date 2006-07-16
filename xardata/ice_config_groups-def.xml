@@ -14,7 +14,7 @@
       <type>itemid</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>2</status>
+      <status>34</status>
       <order>1</order>
       <validation>int (11)</validation>
     </property>
@@ -24,7 +24,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>2</order>
       <validation>0:64</validation>
     </property>
@@ -34,7 +34,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>3</order>
       <validation>0:255</validation>
     </property>
@@ -44,7 +44,7 @@
       <type>integerbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>2</status>
+      <status>34</status>
       <order>4</order>
       <validation>int (5)</validation>
     </property>
@@ -54,7 +54,7 @@
       <type>checkbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>2</status>
+      <status>34</status>
       <order>5</order>
       <validation>int (1)</validation>
     </property>

@@ -14,7 +14,7 @@
       <type>itemid</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>1</order>
       <validation>int (11)</validation>
     </property>
@@ -24,7 +24,7 @@
       <type>integerbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>2</order>
       <validation>int (11)</validation>
     </property>
@@ -34,7 +34,7 @@
       <type>integerbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>3</order>
       <validation>int (11)</validation>
     </property>
@@ -44,7 +44,7 @@
       <type>integerbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>4</order>
       <validation>int (11)</validation>
     </property>
@@ -54,7 +54,7 @@
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>5</order>
       <validation>datetime</validation>
     </property>
@@ -64,7 +64,7 @@
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>33</status>
       <order>6</order>
       <validation>datetime</validation>
     </property>

@@ -14,7 +14,7 @@
       <type>itemid</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>2</status>
+      <status>34</status>
       <order>1</order>
       <validation>int (11)</validation>
     </property>
@@ -24,7 +24,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>8</status>
+      <status>33</status>
       <order>2</order>
       <validation>1:38</validation>
     </property>
@@ -34,7 +34,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>8</status>
+      <status>33</status>
       <order>3</order>
       <validation>0:2</validation>
     </property>
@@ -44,7 +44,7 @@
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>4</status>
+      <status>34</status>
       <order>4</order>
       <validation>0:3</validation>
     </property>
@@ -54,7 +54,7 @@
       <type>objectref</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>8</status>
+      <status>33</status>
       <order>5</order>
       <validation>ice_addressformats:name:format_id</validation>
     </property>

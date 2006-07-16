@@ -14,7 +14,7 @@
       <type>itemid</type>
       <default></default>
       <source>xar_commerce_configuration.configuration_id</source>
-      <status>4</status>
+      <status>34</status>
       <order>1</order>
       <validation>int (11)</validation>
     </property>
@@ -24,7 +24,7 @@
       <type>textbox</type>
       <default></default>
       <source>xar_commerce_configuration.configuration_key</source>
-      <status>8</status>
+      <status>33</status>
       <order>2</order>
       <validation>0:64</validation>
     </property>
@@ -34,7 +34,7 @@
       <type>textbox</type>
       <default></default>
       <source>xar_commerce_configuration.configuration_value</source>
-      <status>8</status>
+      <status>33</status>
       <order>3</order>
       <validation>0:255</validation>
     </property>
@@ -44,7 +44,7 @@
       <type>objectref</type>
       <default></default>
       <source>xar_commerce_configuration.configuration_group_id</source>
-      <status>4</status>
+      <status>34</status>
       <order>4</order>
       <validation>ice_config_groups:group_title:group_id</validation>
     </property>
@@ -54,7 +54,7 @@
       <type>integerbox</type>
       <default></default>
       <source>xar_commerce_configuration.sort_order</source>
-      <status>4</status>
+      <status>34</status>
       <order>5</order>
       <validation>int (5)</validation>
     </property>
@@ -64,7 +64,7 @@
       <type>calendar</type>
       <default></default>
       <source>xar_commerce_configuration.last_modified</source>
-      <status>4</status>
+      <status>34</status>
       <order>6</order>
       <validation>datetime</validation>
     </property>
@@ -74,7 +74,7 @@
       <type>calendar</type>
       <default></default>
       <source>xar_commerce_configuration.date_added</source>
-      <status>4</status>
+      <status>34</status>
       <order>7</order>
       <validation>datetime</validation>
     </property>
@@ -85,7 +85,7 @@
       <default></default>
       <source>xar_commerce_configuration.use_function</source>
       <status>4</status>
-      <order>8</order>
+      <order>33</order>
       <validation>0:255</validation>
     </property>
     <property name="function_1">
@@ -94,7 +94,7 @@
       <type>textbox</type>
       <default></default>
       <source>xar_commerce_configuration.set_function</source>
-      <status>4</status>
+      <status>34</status>
       <order>9</order>
       <validation>0:255</validation>
     </property>
