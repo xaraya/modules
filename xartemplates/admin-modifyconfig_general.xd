@@ -1,1 +1,24 @@
-Placeholder
+<xar:style scope="module" module="commerce" file="tabs" />
+<div class="tabnav">
+    <div>
+        <xar:if condition="$subtab eq 'configuration'">
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'products_general','subtab' => 'configuration'))#" class="active">
+        <xar:else/>    
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'products_general','subtab' => 'configuration'))#">
+        </xar:if>
+        <xar:mlstring>Configuration Settings</xar:mlstring></a>
+    </div>    
+    <div>
+        <xar:if condition="$subtab eq 'manage'">
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'products_general','subtab' => 'manage'))#" class="active">
+        <xar:else/>    
+            <a href="#xarModURL('commerce', 'admin', 'modifyconfig', array('tab' => 'products_general','subtab' => 'manage'))#">
+        </xar:if>
+        <xar:mlstring>Manage Products/Categories</xar:mlstring></a>
+    </div>    
+</div>
+<xar:if condition="$subtab eq 'configuration'">
+    <xar:module main="false" module="commerce" type="admin" func="commoninfo_object" args="$config_args"/>
+<xar:elseif condition="$subtab eq 'manage'" />
+    <xar:module main="false" module="products" type="admin" func="categories" />
+</xar:if>

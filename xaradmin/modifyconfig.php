@@ -8,7 +8,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage commerce
+ * @subpackage products
  * @link  link to information for the subpackage
  * @author author name Marc Lutolf <mfl@netspan.ch>
  */
