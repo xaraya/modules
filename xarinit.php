@@ -981,7 +981,7 @@ function commerce_delete()
 #
 	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
 	foreach ($ice_objects as $key => $value)
-	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $key));
+	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
 
 # --------------------------------------------------------
 #
