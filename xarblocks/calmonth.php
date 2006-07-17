@@ -96,7 +96,7 @@ function julian_calmonthblock_display($blockinfo)
     $year=date("Y");
     // Set the start date to the first day of the selected month
     $startdate = $year."-".$month."-01";
-    // Ddetermine the number of days in the selected month
+    // Determine the number of days in the selected month
     $numdays=date('t',strtotime("today"));
     // Set the end date to the last day of the selected month
     $enddate = $year."-".$month."-".$numdays;

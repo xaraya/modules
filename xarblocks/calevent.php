@@ -3,7 +3,7 @@
  * Show a block with a listing of events
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -127,7 +127,7 @@ function julian_caleventblock_display($blockinfo)
     }
     $args['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
     $blockinfo['content'] = xarTplBlock('julian', $template, $args);
-
+    // return the array with info
     return $blockinfo;
 }
 ?>
