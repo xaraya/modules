@@ -329,16 +329,20 @@ function products_admin_product_screen()
     $customers_statuses_array=array_merge(array(array('id'=>'all','text'=> xarML('All'))),$customers_statuses_array);
     $data['customers_statuses_array'] = $customers_statuses_array;
 */
-    xarModLoad('customers');
-    $xartables = xarDBGetTables();
-    $q = new xenQuery('SELECT',$xartables['customers_customers_status']);
-    $q->addfields(array('customers_status_image AS status_image',
-                                   'customers_status_id AS status_id',
-                                   'customers_status_name AS status_name'));
-    $q->eq('language_id',$currentlang['id']);
-    $q->ne('customers_status_id',0);
-    if(!$q->run()) return;
-    $data['group_data'] = $q->output();
+    if (xarModIsAvailable('customers')) {
+		xarModLoad('customers');
+		$xartables = xarDBGetTables();
+		$q = new xenQuery('SELECT',$xartables['customers_customers_status']);
+		$q->addfields(array('customers_status_image AS status_image',
+									   'customers_status_id AS status_id',
+									   'customers_status_name AS status_name'));
+		$q->eq('language_id',$currentlang['id']);
+		$q->ne('customers_status_id',0);
+		if(!$q->run()) return;
+		$data['group_data'] = $q->output();
+    } else {
+		$data['group_data'] = array();
+    }
 
 // calculate brutto price for display
 
