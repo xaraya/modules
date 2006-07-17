@@ -99,7 +99,9 @@
                                         <xar:mlstring>FSK18</xar:mlstring>
                                     </td>
                                     <td class="main">
+                                            <!--
                                         #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'fsk18', 'values' => array(array('id' => 0, 'text' => xarML('No')),array('id' => 1, 'text' => xarML('Yes'))), 'default' =>$pInfo.product_fsk18))#
+                                            -->
                                     </td>
                                 </tr>
                                 <xar:if condition="$configuration['activate_shipping_status'] eq true">
@@ -108,7 +110,9 @@
                                             <xar:mlstring>Shipping Status</xar:mlstring>
                                         </td>
                                         <td class="main">
+                                        <!--
                                             #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'shipping_status', 'values' => xarModAPIFunc('commerce','user','get_shipping_status'), 'default' =>$pInfo.product_shippingtime))#
+                                            -->
                                         </td>
                                     </tr>
                                 </xar:if>
@@ -117,7 +121,9 @@
                                         <xar:mlstring>Product Detail Template</xar:mlstring>
                                     </td>
                                     <td class="main">
+                                        <!--
                                         #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'info_template', 'values' => $producttemplatefiles, 'default' => $pInfo.product_template))#
+                                    -->
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +131,9 @@
                                         <xar:mlstring>Product Options Template</xar:mlstring>
                                     </td>
                                     <td class="main">
+                                        <!--
                                         #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'options_template', 'values' => $optionstemplatefiles, 'default' => $pInfo.options_template))#                                           
+                                    -->
                                     </td>
                                 </tr>
                             </table>
@@ -317,7 +325,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <xar:template file="group_prices" type="module"/>
+                                    <!--
+                                        <xar:template file="group_prices" />
+                                    -->
                                     </td>
                                 </tr>
                                 <tr>
