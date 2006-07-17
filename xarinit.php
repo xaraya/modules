@@ -36,6 +36,10 @@ function commerce_init()
     $defaultdata[] = 'ice_configuration';
     $defaultdata[] = 'ice_config_groups';
 
+# --------------------------------------------------------
+#
+# Create database tables
+#
     $q = new xenQuery();
     $prefix = xarDBGetSiteTablePrefix();
 
@@ -781,6 +785,10 @@ $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_custo
             array('modName' => 'commerce',
                 'blockType' => 'admin'))) return;
 
+# --------------------------------------------------------
+#
+# Create modvars we will need
+#
     xarModSetVar('commerce', 'itemsperpage', 20);
 
 # --------------------------------------------------------
