@@ -6,7 +6,6 @@
 
 <style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
 <script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
-<xar:template file="adminheader" type="module" module="commerce" />
 
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
     <tr>
@@ -20,7 +19,7 @@
                     <xar:else />
                         <xar:mlstring>Update Product in</xar:mlstring>
                     </xar:if>
-                    #xarModAPIFunc('commerce','user','output_generated_category_path', array('id' => $cPath))#
+                    #xarModAPIFunc('products','user','output_generated_category_path', array('id' => $cPath))#
                 </span>
                 <br /><br />
                 <table width="100%"  border="0">
@@ -82,14 +81,19 @@
                                         </xar:if>   
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="main">
-                                        <xar:mlstring>Product Manufacturer</xar:mlstring>
-                                    </td>
-                                    <td class="main">
-                                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'manufacturers_id', 'values' => xarModAPIFunc('commerce','user','get_manufacturers',array('manufacturers_array' => array(array('id' => '', 'text' => xarML('-- none --'))))), 'default' =>$pInfo.manufacturers_id))#
-                                    </td>
-                                </tr>
+                                <xar:if condition="xarModIsAvailable('vendors')">
+                                    <tr>
+                                        <td class="main">
+                                            <xar:mlstring>Product Manufacturer</xar:mlstring>
+                                        </td>
+                                        <td class="main">
+                                            <xar:data-input type="vendor" name="manufacturers_id" />
+                                            <!--
+                                            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'manufacturers_id', 'values' => xarModAPIFunc('commerce','user','get_manufacturers',array('manufacturers_array' => array(array('id' => '', 'text' => xarML('- none -'))))), 'default' =>$pInfo.manufacturers_id))#
+                                            -->
+                                        </td>
+                                    </tr>
+                                </xar:if>
                                 <tr>
                                     <td class="main">
                                         <xar:mlstring>FSK18</xar:mlstring>
@@ -130,19 +134,19 @@
                 </table>
                 <br /><br />
                 <div id="tabnav">
-                    <xar:loop name="$languages">
+                    <xar:foreach in="$languages" value="$language">
                         <div>
                             <xar:if condition="$loop:item['id'] eq $langid">
                                 <a href="#xarModURL('commerce', 'admin', 'product_screen', array('langid' => $loop:item['id']))#" class="active">#$loop:item['name']#
-                                    <img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+                                    <img src="#xarTplGetImage($language['directory'] .'/admin/' . $language['image'])#" border="0" alt="#xarML($language['name'])#">
                                 </a>
                             <xar:else />
                                 <a href="#xarModURL('commerce', 'admin', 'product_screen', array('langid' => $loop:item['id']))#">#$loop:item['name']#
-                                    <img src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
+                                    <img src="#xarTplGetImage($language['directory'] .'/admin/' . $language['image'])#" border="0" alt="#xarML($language['name'])#">
                                 </a>
                             </xar:if>
                         </div>  
-                    </xar:loop>
+                    </xar:foreach>
                 </div>
                 <div style="border: 1px solid #ccc; border-top : none; padding-left: 5px; width: 100%">
                     <br />

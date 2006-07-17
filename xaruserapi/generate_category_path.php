@@ -10,7 +10,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_generate_category_path($args)
+function products_userapi_generate_category_path($args)
 {
     //FIXME: create an API function for this stuff
     include_once 'modules/xen/xarclasses/xenquery.php';
@@ -38,7 +38,7 @@ function commerce_userapi_generate_category_path($args)
                } else {
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['categories'],'xc');
-                    $q->addtable($xartables['commerce_categories_description'],'cd');
+                    $q->addtable($xartables['products_categories_description'],'cd');
                     $q->addfields(array('xc.xar_parent AS parent',
                                         'cd.categories_name AS name'));
                     $q->join('xc.xar_cid','cd.categories_id');
@@ -48,7 +48,7 @@ function commerce_userapi_generate_category_path($args)
                     $category = $q->row();
                     $categories_array[$index][] = array('id' => $categories['categories_id'], 'text' => $category['name']);
                     if (isset($category['parent_id']) && ($category['parent_id'] != '0'))
-                    $categories_array = xarModAPIFunc('commerce','user','generate_category_path', array(
+                    $categories_array = xarModAPIFunc('products','user','generate_category_path', array(
                             'id' =>$category['parent'],
                             'from' => 'category',
                             'categories_array' => $categories_array,
@@ -61,7 +61,7 @@ function commerce_userapi_generate_category_path($args)
     } elseif ($from == 'category') {
         $q = new xenQuery('SELECT');
         $q->addtable($xartables['categories'],'xc');
-        $q->addtable($xartables['commerce_categories_description'],'cd');
+        $q->addtable($xartables['products_categories_description'],'cd');
         $q->addfields(array('xc.xar_parent AS parent',
                             'cd.categories_name AS name'));
         $q->eq('xc.xar_cid',$id);

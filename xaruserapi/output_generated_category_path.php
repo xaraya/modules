@@ -10,13 +10,13 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_output_generated_category_path($args)
+function products_userapi_output_generated_category_path($args)
 {
     extract($args);
     if(!isset($from)) $from = 'category';
 
     $calculated_category_path_string = '';
-    $calculated_category_path = xarModAPIFunc('commerce','user','generate_category_path', array(
+    $calculated_category_path = xarModAPIFunc('products','user','generate_category_path', array(
                                     'id' => $id,
                                     'from' => $from));
     for ($i = 0, $n = sizeof($calculated_category_path); $i < $n; $i++) {

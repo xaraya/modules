@@ -347,7 +347,7 @@ function products_admin_product_screen()
 // calculate brutto price for display
 
 if ($configuration['price_is_brutto']){
-    $tax = xarModAPIFunc('commerce','user','get_tax_rate', array('class_id' => $product_tax_class_id));
+    $tax = xarModAPIFunc('tax','user','get_rate', array('class_id' => $product_tax_class_id));
     $product_price = round($product_price * ((100 + $tax)/100),$configuration['price_precision']);
 //    echo "ss".var_dump($pInfo['product_tax_class_id']);exit;
 }
@@ -364,13 +364,13 @@ $data['product_price'] = $product_price;
                                      'text' => $manufacturers['manufacturers_name']);
     }
 */
-    $tax_class_array = array(array('id' => '0', 'text' => xarML('--none--')));
+/*    $tax_class_array = array(array('id' => '0', 'text' => xarML('--none--')));
     $q = new xenQuery('SELECT',$xartables['commerce_tax_class']);
     $q->addfields(array('tax_class_id AS id', 'tax_class_title AS text'));
     $q->setorder('tax_class_title');
     if(!$q->run()) return;
     $data['tax_class_array'] = array_merge($tax_class_array,$q->output());
-//    echo var_dump($tax_class_array);exit;
+*/
 
 /*    $shipping_statuses = array();
     $shipping_statuses=xtc_get_shipping_status();
