@@ -67,24 +67,14 @@
         <xar:set name="$value">
             array(
                 'ice_countries',
-                'ice_taxclasses',
-                'ice_taxrates',
                 'ice_languages',
-                'ice_zones',
-                'ice_taxzones',
-                'ice_taxzonemapping',
                 'ice_addressformats',
             )
         </xar:set>
         <xar:set name="$options">
             array(
                 array('id' =>'ice_countries', 'name' => 'Countries'),
-                array('id' =>'ice_taxclasses', 'name' => 'Tax Classes'),
-                array('id' =>'ice_taxrates', 'name' => 'Tax Rates'),
                 array('id' =>'ice_languages', 'name' => 'Languages'),
-                array('id' =>'ice_zones', 'name' => 'Zones'),
-                array('id' =>'ice_taxzones', 'name' => 'Tax Zones'),
-                array('id' =>'ice_taxzonemapping', 'name' => 'Tax Zone Mappings'),
                 array('id' =>'ice_addressformats', 'name' => 'Address Formats'),
             )
         </xar:set>

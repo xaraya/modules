@@ -179,9 +179,13 @@ function commerce_init()
     $ice_objects = array(
     					 'ice_countries',
 //    					 'ice_currencies',
-						 'ice_taxclasses',
-                         'ice_taxrates', 'ice_languages', 'ice_zones',
-                         'ice_taxzones', 'ice_taxzonemapping', 'ice_addressformats',
+//						 'ice_taxclasses',
+//                         'ice_taxrates',
+//                         'ice_zones',
+//                         'ice_taxzones',
+//                         'ice_taxzonemapping',
+                         'ice_languages',
+                         'ice_addressformats',
                          'ice_configuration', 'ice_config_groups',
                          'ice_roles'
                          );
