@@ -18,7 +18,7 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
  * handle the personlist property
  * This is a list type of property, it allows you to select a person from this module
  *
- * @author MichelV
+ * @author MichelV <michelv@xarayahosting.nl>
  *
  */
 class Dynamic_PersonList_Property extends Dynamic_Select_Property
