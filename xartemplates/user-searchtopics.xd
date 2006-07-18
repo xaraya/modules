@@ -1,5 +1,4 @@
 
-<xar:set name="returnurl">xarModURL('xarbb','user','main')</xar:set>
 
 <h3>#$message#</h3>
 
@@ -28,7 +27,7 @@
         <table>
             <tr>
                 <th scope="col">&nbsp;</th>
-                <th><xar:mlstring>Forum</xar:mlstring></th>
+                <th scope="col"><xar:mlstring>Forum</xar:mlstring></th>
                 <th scope="col"><xar:mlstring>Topic</xar:mlstring></th>
                 <th scope="col"><xar:mlstring>Author</xar:mlstring></th>
                 <th scope="col" style="text-align: center;"><xar:mlstring>Replies</xar:mlstring></th>
@@ -59,6 +58,7 @@
                         #$loop:item.fname#
                     </xar:if>
                     </td>
+
                     <td class="xar-norm">
                         <xar:if condition="$loop:item.fstatus ne 1">
                             <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('fid' => $loop:item.fid, 'tid' => $loop:item.tid))#">
@@ -68,17 +68,21 @@
                             #$loop:item.ttitle#
                         </xar:if>
                     </td>
+
                     <td class="xar-accent authorname">
                         <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item.tposter))#">
                             #$loop:item.name#
                         </a>
                     </td>
+
                     <td class="xar-accent stats" style="text-align: center;">
                          #$loop:item.treplies#
                     </td>
+
                     <td class="xar-accent stats" style="text-align: center;">
                          #$loop:item.hitcount#
                     </td>
+
                     <td class="xar-accent lastpost">
                         #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item.ttime)#<br />
                         <xar:mlstring>By: </xar:mlstring>
@@ -86,28 +90,15 @@
                     </td>
                 </tr>
             </xar:loop>
-            <tr style="border: 1px solid #000;">
-                <td  class="xar-accent" colspan="7" height="28" valign="middle">&nbsp;</td>
-            </tr>
         </table>
     </div>
 
-    <div class="xarbb-noteswrapper">
-        <table>
-            <tr>
-                <td align="right" valign="bottom" nowrap="nowrap">
-                    <xar:if condition="!empty($pager)">
-                        <span class="xar-sub">#$pager#</span>
-                    </xar:if>
-                    <span class="xar-sub">
-                        <xar:mlstring>All times are GMT</xar:mlstring>
-                    </span>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <xar:if condition="!empty($pager)">
+        <div class="xarbb-noteswrapper">#$pager#</div>
+    </xar:if>
 <xar:else />
     <xar:mlstring>No matching topics found!</xar:mlstring>
 </xar:if>
 
-<h4 style="text-align: right;"><a href="#$returnurl#"><xar:mlstring>Return to Forum Index</xar:mlstring></a></h4>
+<p style="text-align: right;"><a href="#xarModURL('xarbb','user','main')#"><xar:mlstring>Return to forum index</xar:mlstring></a></p>
+

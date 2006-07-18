@@ -11,10 +11,9 @@ div#xarbb-topics {
 }
 div.xarbb-tablewrapper {
     zoom: 100%;
-    /*float: left;*/
     width: auto;
     margin: 0;
-	padding: 0;
+    padding: 0;
 }
 div.xarbb-noteswrapper {
     float: none;
@@ -24,8 +23,6 @@ div.xarbb-noteswrapper {
 
 div.xarbb-topiccontrols,
 div.xarbb-messagecontrols {
-    /*float: left;
-    width: 99%;*/
     margin: .5em 0;
 }
 
@@ -66,8 +63,7 @@ div.xarbb-messagecontrols .rightnote {
 
 /* forum table - perfectly styleable with css - see http://www.w3.org/TR/REC-CSS2/tables.html */
 div#xarbb-tablewrapper {
-    /*float: left;*/
-    width: 100%;
+    width: auto;
     text-align: center;
 }
 
@@ -76,29 +72,28 @@ div.xarbb-tablewrapper table {
     margin: 1em auto;
     width: 100%;
     border-collapse: separate;
-    border: 3px solid #ccc;
+    border: 1px solid #999;
     border-spacing: 1px;
     empty-cells: show;
 }
 
 div.xarbb-tablewrapper table td,
 div.xarbb-tablewrapper table th {
-    margin: 1px;
-    padding: 0 .5em;
-    border-bottom: 1px solid #000;
+    /*margin: 1px;*/
+    padding: 0.5em;
+    /*border-bottom: 1px solid #000;*/
 }
 
 div.xarbb-tablewrapper table th,
 div.xarbb-tablewrapper table td.forumgroup {
-    padding: 0 .5em;
+    /*padding: 0 .5em;*/
     line-height: 2em;
     text-align: left;
 }
 
 div.xarbb-tablewrapper table td.icon {
-    height: 4em;
+    /*height: 4em;*/
     width: 20px;
-    margin: 0;
     padding: 0;
     vertical-align: middle;
     text-align: center;
@@ -106,7 +101,7 @@ div.xarbb-tablewrapper table td.icon {
 
 div.xarbb-tablewrapper table td.forumname {
     vertical-align: middle;
-    height: 4em;
+    /*height: 4em;*/
 }
 
 div.xarbb-tablewrapper table td.author {
@@ -116,11 +111,11 @@ div.xarbb-tablewrapper table td.author {
 }
 
 div.xarbb-tablewrapper table td.authorname {
-	width: 10em;
+    width: 10em;
 }
 
 div.xarbb-tablewrapper table td.lastpost {
-    width: 10em;
+    /*width: 10em;*/
     white-space: nowrap;
 }
 
@@ -139,7 +134,7 @@ div.xarbb-tablewrapper table td.newtopicbottom {
     vertical-align: top;
 }
 
-div.xarbb-tablewrapper table td.newtopictitle { width: 9em; }
+div.xarbb-tablewrapper table td.newtopictitle { /*width: 9em;*/ }
 div.xarbb-tablewrapper table td input#ttitle,
 div.xarbb-tablewrapper table td input#packagetitle { width: 100%; }
 
@@ -161,7 +156,7 @@ div.xarbb-noteswrapper .leftnote {
 div.xarbb-noteswrapper .rightnote {
     float: right;
     width: 48%;
-    text-align: left;
+    text-align: right;
 }
 
 /* login form */
@@ -183,7 +178,7 @@ div.xarbb-legendwrapper {
     text-align: center;
 }
 div.xarbb-legendwrapper span {
-	padding: 0 .2em 0 1em;
+    padding: 0 .2em 0 1em;
 }
 div.xarbb-legendwrapper span.spacedout {
     width: 15em;
@@ -198,38 +193,38 @@ div.xarbb-topiccontrols span img {
 
 
 /*
-	New legend styles (with semantics).
-	Here you can control what gets displayed, put the legend
-	into a box etc.
+    New legend styles (with semantics).
+    Here you can control what gets displayed, put the legend
+    into a box etc.
 */
 div.xarbb-legendwrapper2 {
-	margin: 1em 0;
-	clear: both;
+    margin: 1em 0;
+    clear: both;
 }
 div.xarbb-legendwrapper2 dl {
-	text-align: left;
+    text-align: left;
     width: auto;
     float: none;
-	padding: 0;
-	margin: 0;
-	line-height: 100%;
+    padding: 0;
+    margin: 0;
+    line-height: 100%;
 }
 div.xarbb-legendwrapper2 h2 {
-	text-align: center;
+    text-align: center;
 }
 div.xarbb-legendwrapper2 dl dt {
 	/* We are going to hide the definition terms for now,
 	   but display them if you want as titles on each
 	   group of legend icons. */
-	display: none;
+    display: none;
 }
 div.xarbb-legendwrapper2 dl dd {
-	display: inline;
-	width: 15em;
-	white-space: pre;
-	float: left;
-	padding: 0.5em 0;
-	margin: 0;
+    display: inline;
+    width: 15em;
+    white-space: pre;
+    float: left;
+    padding: 0.5em 0;
+    margin: 0;
 }
 div.xarbb-legendwrapper2 dl dd img {
     vertical-align: middle;
@@ -239,7 +234,7 @@ div.xarbb-legendwrapper2 dl dd img {
 
 
 div.xarbb-topiccontrols span a {
-	padding: 0 .2em;
+    padding: 0 .2em;
 }
 
 /* Note from andyv - make button more cross-theme robust */
@@ -259,9 +254,9 @@ div.xarbb-topiccontrols a.cssbutton {
 div.xarbb-topiccontrols a.cssbutton span.newtopicicon,
 div.xarbb-topiccontrols a.cssbutton span.postreplyicon,
 div.xarbb-topiccontrols a.cssbutton span.closedtopicicon {
-    float:left;
+    float: left;
     height: 28px;
-    width:28px;
+    width: 28px;
     background-image: url(../xarimages/classic_set/composite_mls_button.gif);
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -272,6 +267,6 @@ div.xarbb-topiccontrols a.cssbutton span.closedtopicicon { background-position: 
 
 /* Make the standard pager bolder */
 div.xarbb-noteswrapper div.xar-pager * {
-	text-weight: bold;
+    text-weight: bold;
 }
 
