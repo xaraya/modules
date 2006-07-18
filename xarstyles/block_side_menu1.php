@@ -102,7 +102,7 @@ function sniffer()
     $version_parts = preg_split('/[.]/', $version);
 
     $platform = 'Other';
-    $platforms = array('Win', 'Max', 'Linux');
+    $platforms = array('Win', 'Mac', 'Linux');
     foreach($platforms as $check) {
         if (strstr($http_agent, $check)) {
             $platform = $check;

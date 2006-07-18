@@ -15,14 +15,14 @@ function xarpages_userapi_getaliases($args)
 
     if (empty($mincount) || !is_numeric($mincount)) $mincount = 1;
 
-    $query = 'SELECT xar_name, COUNT(xar_name) AS name_count'
+    $query = 'SELECT xar_name, COUNT(xar_name)'
         . ' FROM ' . $xartable['xarpages_pages']
         . ' GROUP BY xar_name';
 
     $bind = array();
 
     if ($mincount > 1) {
-        $query .= ' HAVING name_count >= ?';
+        $query .= ' HAVING COUNT(xar_name) >= ?';
         $bind[] = (int)$mincount;
     }
 
