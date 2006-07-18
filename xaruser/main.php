@@ -32,8 +32,8 @@ function xarbb_user_main()
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
-    // Security Check
-    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
+    // No need for security check, as we catch lack of forums in the template.
+    //if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
 
     $now = time();
 

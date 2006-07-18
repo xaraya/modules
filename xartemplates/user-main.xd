@@ -71,7 +71,10 @@
 
 <div class="xarbb-tablewrapper">
     <xar:if condition="empty($items)">
-        <p><xar:mlstring>There are no forums or categories under this category to which you have access.</xar:mlstring></p>
+         <p>
+            <xar:mlstring>You do not have access to any forums here.</xar:mlstring>
+            <xar:if condition="!xarUserIsLoggedIn()"> <xar:mlstring>Please log in and try again.</xar:mlstring></xar:if>
+        </p>
     <xar:else />
         <table>
             <tr>
@@ -154,12 +157,15 @@
                             </span>
                             <span class="xar-norm">#$forum.fdesc#</span>
                         </td>
+
                         <td class="xar-accent stats" style="text-align: center;">
                             #$forum.ftopics# 
                         </td>
+
                         <td class="xar-accent stats" style="text-align: center;">
                             #$forum.fposts# 
                         </td>
+
                         <td class="xar-norm lastpost">
                             <span class="xar-sub">
                                 <xar:if condition="$forum.ftopics gt '0'">
@@ -186,30 +192,23 @@
                 </xar:foreach>
             </xar:loop>
         </table>
+
+        <div class="xarbb-noteswrapper">
+            <span class="xar-sub leftnote">
+                <a href="#xarServerGetCurrentURL(array('read'=&gt;1))#">
+                    <xar:mlstring>Mark all forums as read</xar:mlstring>
+                </a>
+            </span>
+        </div>
+
+        <xar:comment>
+        <div id="xarbb-loginwrapper">
+            <xar:block module="roles" type="login" showlogout="1" />
+        </div>
+        </xar:comment>
+
+        <xar:template file="overview-legend" type="module" />
+
+        <xar:if condition="!empty($pager)">#$pager#</xar:if>
     </xar:if>
 </div>
-
-<div class="xarbb-noteswrapper">
-    <xar:if condition="xarUserIsLoggedIn()">
-        <span class="xar-sub leftnote">
-            <a href="#xarServerGetCurrentURL(array('read'=&gt;1))#">
-                <xar:mlstring>Mark all forums as read</xar:mlstring>
-            </a>
-        </span>
-    </xar:if>
-    <span class="xar-sub rightnote">
-        <xar:mlstring>All times are GMT</xar:mlstring>
-    </span>
-</div>
-
-<xar:comment>
-<div id="xarbb-loginwrapper">
-    <xar:block module="roles" type="login" showlogout="1" />
-</div>
-</xar:comment>
-
-<xar:template file="overview-legend" type="module" />
-
-<xar:if condition="!empty($pager)">
-    #$pager#
-</xar:if>

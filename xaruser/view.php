@@ -10,14 +10,10 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-function xarbb_user_view()
+function xarbb_user_view($args)
 {
-    // Security Check
-    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum')) return;
-    
-    xarResponseRedirect(xarModURL('xarbb', 'user', 'main'));
-
-    return true;
+    // No security check or redirect needed - just call up the main function.
+    return xarModFunc('xarbb', 'user', 'main', $args);
 }
 
 ?>
