@@ -12,7 +12,8 @@
  * @author Categories module development team
  */
 /**
- * udpate item from categories_admin_modify
+ * Modify the category base
+ * @return array $data
  */
 function categories_admin_modifycatbase()
 {

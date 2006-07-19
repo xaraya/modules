@@ -12,7 +12,9 @@
  * @author Categories module development team
  */
 /**
- * modify configuration
+ * modify and update configuration
+ * @param string phase
+ * @return mixed true on success of update, or array with template to show
  */
 function categories_admin_modifyconfig()
 {

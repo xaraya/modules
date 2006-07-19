@@ -23,8 +23,7 @@
  * @param $args['return_itself'] alias of 'self'
  * @param $args['order'] 'root' or 'self' first; default 'root' (i.e. oldest ancestor first)
  * @param $args['descendants'] array to determine how descendants will be returned: 'tree', 'lists', 'list', ['none']
- * @returns array
- * @return array of category info arrays, false on failure
+ * @return array Array of category info arrays, false on failure
  */
 function categories_userapi_getancestors($args)
 {

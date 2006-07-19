@@ -13,6 +13,7 @@
  */
 /**
  * Manage definition of instances for privileges (unfinished)
+ * @return array
  */
 function categories_admin_privileges($args)
 {

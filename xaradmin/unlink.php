@@ -13,6 +13,11 @@
  */
 /**
  * Delete category links of module items
+ * @param modid
+ * @param itemtype
+ * @param itemid
+ * @param string confirm
+ * @return bool True on success of redirect
  */
 function categories_admin_unlink()
 {

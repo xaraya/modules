@@ -12,7 +12,12 @@
  * @author Categories module development team
  */
 /**
- * udpate item from categories_admin_modify
+ * Modify an existing category. If the category doesn't exist, a new one is created.
+ *
+ * @param bool creating Unknown. Not used in function
+ * @param int cid OPTIONAL
+ * @param int repeat OPTIONAL
+ * @return mixed
  */
 function categories_admin_modifycat()
 {
