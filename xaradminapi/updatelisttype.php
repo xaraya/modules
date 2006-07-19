@@ -3,7 +3,7 @@
  * Update an autolink
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,7 @@
  * @author Jason Judge
  */
 /**
- * update an autolink
+ * update a list type
  * @param $args['x'] TODO
  */
 function lists_adminapi_updatelisttype($args)
@@ -40,7 +40,7 @@ function lists_adminapi_updatelisttype($args)
             $bind[] = $args[$parameter];
         }
     }
-    
+
     // Argument check
     if (!isset($tid) || empty($set)) {
         $msg = xarML(
@@ -93,7 +93,7 @@ function lists_adminapi_updatelisttype($args)
         'module', 'updateconfig', 'lists',
         array('module' => 'lists', 'itemtype' => $tid)
     );
-    
+
     // Let the calling process know that we have finished successfully
     return true;
 }

@@ -3,7 +3,7 @@
  * Delete a list item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,8 +14,7 @@
 /**
  * Delete a list item
  * @param $args['lid'] ID of the link
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function lists_adminapi_deletelistitem($args)
 {
@@ -69,7 +68,7 @@ function lists_adminapi_deletelistitem($args)
 
     // Let any hooks know that we have deleted a list item
     xarModCallHooks(
-        'item', 'delete', $iid, 
+        'item', 'delete', $iid,
         array('itemtype' => $item[0]['tid'], 'module' => 'lists')
     );
 

@@ -3,7 +3,7 @@
  * Retreive item types
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,8 +18,7 @@
  * Itemtypes in Lists Module are based on each list type available
  * List types can be configured in the admin interface
  *
- * @returns array
- * @return array containing the item types and their description
+ * @return array The item types and their description
  */
 function lists_userapi_getitemtypes($args)
 {

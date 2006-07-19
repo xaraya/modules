@@ -3,7 +3,7 @@
  * Create a list type
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
- 
+
 /**
  * Create a list type
  * @param $args['lid'] the ID of the link
@@ -51,7 +51,7 @@ function lists_adminapi_createlisttype($args)
     // Flag as a 'type' type.
     $set[] = "xar_type";
     $bind[] = 'T';
-    
+
     // TODO: Argument check
 /*
     if (!isset($tid) || empty($set)) {
@@ -124,7 +124,7 @@ function lists_adminapi_createlisttype($args)
 
     // Call hooks to update DD etc.
     // No hooks required.
-    
+
     // Let the calling process know that we have finished successfully
     return $tid;
 }

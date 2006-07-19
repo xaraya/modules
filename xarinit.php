@@ -3,18 +3,19 @@
  * Lists initialization functions
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage lists
+ * @subpackage Lists Module
+ * @link http://xaraya.com/index.php/release/46.html
+ * @author Jason Judge
  */
-
 /**
  * Initialise the lists module
  *
  * Original Author: Jason Judge
- * @author Lists module development team 
+ * @author Lists module development team
  */
 function lists_init()
 {
@@ -25,7 +26,7 @@ function lists_init()
 
     $table_types = $xartable['lists_types'];
     $table_items = $xartable['lists_items'];
-    
+
     $fields = array(
         'xar_tid'               =>array('null'=>false, 'type'=>'integer','unsigned'=>true,  'increment' => true, 'primary_key' => true),
         'xar_list_type_id'      =>array('null'=>true, 'type'=>'integer'),
@@ -72,7 +73,7 @@ function lists_init()
     $query = xarDBCreateIndex($table_items,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
 
     // Create a unique index on the lid and code columns.
     $index = array(
@@ -166,7 +167,7 @@ function lists_delete()
     $query = xarDBDropTable($xartable['lists_types']);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $query = xarDBDropTable($xartable['lists_items']);
     $result =& $dbconn->Execute($query);
     if (!$result) return;

@@ -1,27 +1,28 @@
 <?php
 /**
  * Lists table definitions function
- * 
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage lists
+ * @subpackage Lists Module
+ * @link http://xaraya.com/index.php/release/46.html
+ * @author Jason Judge
  */
-
 /**
  * Return lists table names to xaraya
- * 
+ *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
- * 
+ *
  * @author Lists module development team
- * @access private 
- * @return array 
+ * @access private
+ * @return array
  */
 function lists_xartables()
-{ 
+{
     // Initialise table array
     $xarTables = array();
     $basename = 'lists';
@@ -33,6 +34,6 @@ function lists_xartables()
 
     // Return the table information
     return $xarTables;
-} 
+}
 
 ?>

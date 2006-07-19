@@ -3,7 +3,7 @@
  * Modify module's configuration
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/46.html
  * @author Jason Judge
  */
-
 /**
  * Modify module's configuration
  *
@@ -23,12 +22,12 @@
  * @todo MichelV: What is needed here?
  */
 function lists_admin_modifyconfig()
-{ 
+{
     $data = array();
 
     /* common menu configuration if it exists*/
     //$data = xarModAPIFunc('lists', 'admin', 'menu');
-    
+
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
@@ -52,7 +51,7 @@ function lists_admin_modifyconfig()
         $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for Lists module'));
     } else {
         $data['hooks'] = $hooks;
-    
+
          /* You can use the output from individual hooks in your template too, e.g. with
          * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */

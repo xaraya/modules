@@ -3,7 +3,7 @@
  * Update a list item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,7 @@
  * @author Jason Judge
  */
 /**
- * update an autolink
+ * update a list item
  * @param $args['lid'] the ID of the link
  * @param $args['keyword'] the new keyword of the link (optional)
  * @param $args['title'] the new title of the link (optional)
@@ -21,6 +21,7 @@
  * @param $args['sample'] sample link string (optional)
  * @param $args['name'] name of the link (optional)
  * @param $args['tid'] link type ID (optional)
+ * @return bool true on success
  */
 function lists_adminapi_updatelistitem($args)
 {
@@ -52,7 +53,7 @@ function lists_adminapi_updatelistitem($args)
             $bind[] = $$parameter;
         }
     }
-    
+
     // TODO: Argument check
 /*
     if (!isset($tid) || empty($set)) {

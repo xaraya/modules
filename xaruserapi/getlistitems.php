@@ -3,7 +3,7 @@
  * Get list items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -220,7 +220,7 @@ function lists_userapi_getlistitems($args)
         return $lists;
     }
 }
-/*
+/**
  * This function will sort an array by any columns, named in a CSV list, with +/-
  * indicating whether sorting should be ascending or descending.
  */
