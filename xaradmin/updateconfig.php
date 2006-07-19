@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Update configuration
  *
  * @package modules
@@ -12,9 +12,11 @@
  */
 /**
  * Update the configuration parameters of the module based on data from the modification form
+ *
+ * @return bool true on success of update
  */
 function xarcachemanager_admin_updateconfig()
-{ 
+{
     // Get parameters
     if (!xarVarFetch('cacheenabled',     'isset',       $cacheenabled,      0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetheme',       'str::24',     $cachetheme,        '',   XARVAR_NOT_REQUIRED)) { return; }
@@ -38,7 +40,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('blocksizelimit',   'float:0.25:', $blocksizelimit,    0.25, XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecConfirmAuthKey()) return;
     // Security Check
     if (!xarSecurityCheck('AdminXarCache')) return;
 
@@ -74,7 +76,7 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
-    // turn block level output caching on or off 
+    // turn block level output caching on or off
     if ($cacheblocks) {
         if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
             touch($outputCacheDir . '/cache.blocklevel');
@@ -95,7 +97,7 @@ function xarcachemanager_admin_updateconfig()
     $cachesizelimit = (intval($cachesizelimit * 1048576));
     $pagesizelimit = (intval($pagesizelimit * 1048576));
     $blocksizelimit = (intval($blocksizelimit * 1048576));
-    
+
     //turn hh:mm:ss back into seconds
     $pageexpiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                  array('starttime' => $pageexpiretime,
@@ -106,7 +108,7 @@ function xarcachemanager_admin_updateconfig()
 
     // updated the config.caching settings
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
-    
+
     $configSettings = array();
     $configSettings['Output.DefaultTheme'] = $cachetheme;
     $configSettings['Output.SizeLimit'] = $cachesizelimit;
@@ -124,7 +126,7 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Block.LogFile'] = $blocklogfile;
     $configSettings['Block.SizeLimit'] = $blocksizelimit;
 
-    xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+    xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig',
                   array('configSettings' => $configSettings,
                         'cachingConfigFile' => $cachingConfigFile));
 
@@ -151,7 +153,7 @@ function xarcachemanager_admin_updateconfig()
     } else {
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
     }
-    
+
     // set option for auto regeneration of session-less url list cache on event invalidation
     if ($autoregenerate) {
         xarModSetVar('xarcachemanager','AutoRegenSessionless', 1);

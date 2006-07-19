@@ -1,15 +1,19 @@
 <?php
 /**
- * File: $Id$
- *
  * Pre-fetch pages for caching (executed by the scheduler module)
  *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarCacheManager module
+ * @link http://xaraya.com/index.php/release/1652.html
+ */
+/**
  * This is a poor-man's alternative for using wget in a cron job :
  * wget -r -l 1 -w 2 -nd --delete-after -o /tmp/wget.log http://www.mysite.com/
  *
- * @copyright (C) 2004 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.com
  * @author mikespub
  * @access private
  */

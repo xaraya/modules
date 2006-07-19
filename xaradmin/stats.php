@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Statistics
  *
  * @package modules
@@ -11,10 +11,16 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 /**
- * cache statistics
+ * Show cache statistics
+ * @param tab
+ * @param sort
+ * @param reset
+ * @param int startnum
+ * @param int withlog
+ * @return array
  */
 function xarcachemanager_admin_stats($args)
-{ 
+{
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     extract($args);
@@ -26,7 +32,7 @@ function xarcachemanager_admin_stats($args)
 
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     $outputCacheDir = $varCacheDir . '/output';
-    
+
     //Make sure xarCache is included so you can view stats even if caching is disabled
     if (!defined('XARCACHE_IS_ENABLED')) {
         include_once('includes/xarCache.php');

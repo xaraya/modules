@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Modify hook
  *
  * @package modules
@@ -15,14 +15,13 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns string
- * @return hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return string hook output in HTML
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function xarcachemanager_admin_modifyhook($args)
 {
     extract($args);
-    
+
     if (!xarSecurityCheck('AdminXarCache', 0)) { return ''; }
 
     // If we are disabled, nothing to do here
@@ -54,7 +53,7 @@ function xarcachemanager_admin_modifyhook($args)
     } else {
         $modname = $extrainfo['module'];
     }
-    
+
     // we are only interested in the config of block output caching for now
     if ($modname !== 'blocks') {
         return '';

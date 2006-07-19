@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Queries
  *
  * @package modules
@@ -12,9 +12,10 @@
  */
 /**
  * configure query caching (TODO)
+ * @return array
  */
 function xarcachemanager_admin_queries($args)
-{ 
+{
     extract($args);
 
     if (!xarSecurityCheck('AdminXarCache')) return;

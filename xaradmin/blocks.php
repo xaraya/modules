@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Config block caching
  *
  * @package modules
@@ -14,7 +14,7 @@
  * configure block caching
  */
 function xarcachemanager_admin_blocks($args)
-{ 
+{
     extract($args);
 
     if (!xarSecurityCheck('AdminXarCache')) { return; }
@@ -65,7 +65,7 @@ function xarcachemanager_admin_blocks($args)
                 $expire = 0;
             } else {
                 $expire = NULL;
-            } 
+            }
             $newblocks[$bid]['cacheexpire'] = $expire;
         }
         $systemPrefix = xarDBGetSystemTablePrefix();

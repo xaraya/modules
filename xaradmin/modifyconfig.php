@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Modify config
  *
  * @package modules
@@ -12,23 +12,23 @@
  */
 /**
  * Prep the configuration parameters of the module for the modification form
- * 
+ *
  * @author jsb | mikespub
- * @access public 
+ * @access public
  * @param no $ parameters
  * @return $data (array of values for admin modify template) on success or false on failure
  * @throws MODULE_FILE_NOT_EXIST
  * @todo nothing
  */
 function xarcachemanager_admin_modifyconfig()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminXarCache')) return;
 
     $data = array();
 
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-    
+
     // is output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.touch')) {
         $data['CachingEnabled'] = 1;
@@ -42,14 +42,14 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['pageCachingEnabled'] = 0;
     }
-    
+
     // is block level output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.blocklevel')) {
         $data['blockCachingEnabled'] = 1;
     } else {
         $data['blockCachingEnabled'] = 0;
     }
-    
+
     // get the caching config settings from the config file
     $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                          array('from' => 'file', 'tpl_prep' => TRUE));

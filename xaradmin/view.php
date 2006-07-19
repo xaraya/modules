@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * View module items
  *
  * @package modules
@@ -14,7 +14,7 @@
  * show the links for module items
  */
 function xarcachemanager_admin_view($args)
-{ 
+{
     extract($args);
 
     if (!xarVarFetch('modid',    'isset', $modid,    NULL, XARVAR_NOT_REQUIRED)) {return;}

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Configure page caching
  *
  * @package modules
@@ -14,7 +14,7 @@
  * configure page caching (TODO)
  */
 function xarcachemanager_admin_pages($args)
-{ 
+{
     extract($args);
 
     if (!xarSecurityCheck('AdminXarCache')) return;
@@ -74,7 +74,7 @@ function xarcachemanager_admin_pages($args)
                 $sessionlesslist[] = $url;
             }
         }
-        
+
         // set option for auto regeneration of session-less url list cache on event invalidation
         xarVarFetch('autoregenerate', 'isset', $autoregenerate, '', XARVAR_NOT_REQUIRED);
         if ($autoregenerate) {
@@ -132,8 +132,8 @@ function xarcachemanager_admin_pages($args)
         $configSettings['AutoCache.Include']   = $includelist;
         $configSettings['AutoCache.Exclude']   = $excludelist;
         $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
-        
-        xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+
+        xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig',
                       array('configSettings' => $configSettings));
 
         // set the cache dir

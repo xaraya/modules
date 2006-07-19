@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Flush output cache
  *
  * @package modules
@@ -12,15 +12,10 @@
  */
 /**
  * Flush cache files for a given cacheKey
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 Xaraya
- * @link http://www.xaraya.com
- *
- * @subpackage xarCacheManager module
+ * @param flushkey
+ * @param string confirm
  * @author jsb
-*/
-
+ */
 function xarcachemanager_admin_flushcache($args)
 {
     // Security Check
@@ -75,7 +70,7 @@ function xarcachemanager_admin_flushcache($args)
             }
             $data['notice'] = xarML("Cached files have been successfully flushed.");
         }
-        
+
         $data['returnlink'] = Array('url'   => xarModURL('xarcachemanager',
                                                          'admin',
                                                          'flushcache'),
@@ -84,7 +79,7 @@ function xarcachemanager_admin_flushcache($args)
 
         $data['message'] = true;
     }
-    
+
     $data['cachesize'] = array();
     foreach (array_keys($cachetypes) as $type) {
         $cachesize = xarModAPIFunc('xarcachemanager', 'admin', 'getcachesize', $type);
