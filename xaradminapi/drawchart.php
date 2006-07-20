@@ -1,24 +1,19 @@
 <?php
 /**
- * File: $Id$
+ * Sniffer System
  *
- * Sniffer Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Sniffer Module
- * @author Frank Besler
- *
- * Using phpSniffer by Roger Raymond
- * Purpose of file: find out the browser and OS of the visitor
-*/
-
+ * @link http://xaraya.com/index.php/release/775.html
+ * @author Frank Besler using phpSniffer by Roger Raymond
+ */
 /**
  * Utility function to show a pie chart
- *  
+ *
  * Based on work by:
  * 2D Pie Chart Version 1.0
  * Programer: Xiao Bin Zhao
@@ -28,7 +23,7 @@
  *
  * @public
  * @author Richard Cave
- * @param nada 
+ * @param nada
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -58,7 +53,7 @@ function sniffer_adminapi_drawchart($args)
     if (!extension_loaded('gd')) {
         return;
     }
-        
+
     $dataTotal = xarModAPIFunc('sniffer',
                                'user',
                                'countitems');
@@ -144,7 +139,7 @@ function sniffer_adminapi_drawchart($args)
         $ppie[$x] = round($pie[$x]*100/$total, 2);
     }
 
-    // Check whether one segment is 100%, if so fill the 
+    // Check whether one segment is 100%, if so fill the
     // circle completely with one color and skip the rest of the script.
     if(in_array(100, $ppie)) {
         $x = array_search(100, $ppie);
@@ -154,7 +149,7 @@ function sniffer_adminapi_drawchart($args)
         // Fill image
         imagefilltoborder($pic, 150, 150, $black, $color[$x]);
     } else {
-    
+
         // Determine the angle of each segment
         // and the angle in relation to the others.
         for ($x = 1; $x < $number; $x++) {
@@ -214,7 +209,7 @@ function sniffer_adminapi_drawchart($args)
 
     // setup for the menu and print title
     $centerX = $size / 2;
-    $centerY = $size1 / 2; 
+    $centerY = $size1 / 2;
     $titleX = $centerX + $size / 2 + 10;
     $titleY = $centerY - $size / 4;
     $labelX = $titleX + $size / 2 + 10;
@@ -242,7 +237,7 @@ function sniffer_adminapi_drawchart($args)
     imagestring( $pic1, 3, $titleX, $labelY, "Total:", $black );
     imagestring( $pic1, 3, $titleX + $labelWidth + 60, $labelY, $dataTotal, $black );
 
-    // Display the chart. 
+    // Display the chart.
     Header( "Content-type: image/jpeg" ); //output image
     imagejpeg( $pic1 );
     imagedestroy( $pic1 ); //remove image from memory

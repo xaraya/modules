@@ -1,30 +1,23 @@
 <?php
 /**
- * File: $Id$
+ * Sniffer System
  *
- * Sniffer Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Sniffer Module
- * @author Frank Besler
- *
- * Using phpSniffer by Roger Raymond
- * Purpose of file: find out the browser and OS of the visitor
-*/
-
-
+ * @link http://xaraya.com/index.php/release/775.html
+ * @author Frank Besler using phpSniffer by Roger Raymond
+ */
 /**
  * Delete a sniff
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['id'] ID of the sniff
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @raise BAD_PARAM, MISSING_DATA
  */
 function sniffer_adminapi_delete($args)
@@ -49,7 +42,7 @@ function sniffer_adminapi_delete($args)
     if ($sniff == false) {
         $msg = xarML('No Such Sniff Present', 'sniffer');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
@@ -67,7 +60,7 @@ function sniffer_adminapi_delete($args)
     $result =& $dbconn->Execute($query, array((int) $id));
     if (!$result) return;
 
-    // Let any hooks know that we have deleted a sniff 
+    // Let any hooks know that we have deleted a sniff
     xarModCallHooks('item', 'delete', $id, '');
 
     // Let the calling process know that we have finished successfully

@@ -1,31 +1,27 @@
 <?php
 /**
- * File: $Id$
+ * Sniffer System
  *
- * Sniffer Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Sniffer Module
- * @author Frank Besler
- *
- * Using phpSniffer by Roger Raymond
- * Purpose of file: find out the browser and OS of the visitor
-*/
+ * @link http://xaraya.com/index.php/release/775.html
+ * @author Frank Besler using phpSniffer by Roger Raymond
+ */
 
-/*
- * Delete a sniff 
+/**
+ * Delete a sniff
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param 'id' id of the sniff to delete
- * @parama 'confirm' confirmation of delete
+ * @param 'confirm' confirmation of delete
  * @param 'startnum' starting number to display
  * @param 'sortby' sort by agent, os, etc.
- * @returns array, or false on failure
+ * @return array, or false on failure
  * @raise BAD_PARAM
  */
 function sniffer_admin_delete()
@@ -39,7 +35,7 @@ function sniffer_admin_delete()
     if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
     if (!xarVarFetch('sortby', 'str:1:', $sortby, 'id')) return;
 
-    // Get the current sniff 
+    // Get the current sniff
     $sniff = xarModAPIFunc('sniffer',
                            'user',
                            'getsniff',
@@ -58,7 +54,7 @@ function sniffer_admin_delete()
         // Data to display in the template
         $data['agent'] = xarVarPrepForDisplay($sniff['agent']);
         $data['submitlabel'] = xarML('Confirm');
-        
+
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 
@@ -86,7 +82,7 @@ function sniffer_admin_delete()
         return;
     }
 
-    // Remove the sniff 
+    // Remove the sniff
     if (!xarModAPIFunc('sniffer',
                        'admin',
                        'delete',
@@ -97,8 +93,8 @@ function sniffer_admin_delete()
     xarSessionSetVar('statusmsg', xarML('Sniff Deleted'));
 
     // Redirect
-    xarResponseRedirect(xarModURL('sniffer', 
-                                  'admin', 
+    xarResponseRedirect(xarModURL('sniffer',
+                                  'admin',
                                   'view',
                                   array('startnum' => $startnum,
                                         'sortby' => $sortby)));

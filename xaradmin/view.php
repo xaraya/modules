@@ -1,27 +1,22 @@
 <?php
 /**
- * File: $Id$
+ * Sniffer System
  *
- * Sniffer Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Sniffer Module
- * @author Frank Besler
- *
- * Using phpSniffer by Roger Raymond
- * Purpose of file: find out the browser and OS of the visitor
-*/
-
+ * @link http://xaraya.com/index.php/release/775.html
+ * @author Frank Besler using phpSniffer by Roger Raymond
+ */
 /**
  * View a list of sniffer items
- *  
+ *
  * @author Richard Cave
  * @param 'startnum' starting number to display
- * @param 'sortby' sort by agent, os, etc. 
+ * @param 'sortby' sort by agent, os, etc.
  * @returns array
  * @return $data
  */
@@ -56,7 +51,7 @@ function sniffer_admin_view()
 
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-    
+
         $items[$i]['deletetitle'] = xarML('Delete');
         if ($allowdelete) {
                 $items[$i]['deleteurl'] = xarModURL('sniffer',

@@ -1,21 +1,16 @@
 <?php
 /**
- * File: $Id$
+ * Sniffer System
  *
- * Sniffer Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Sniffer Module
- * @author Frank Besler
- *
- * Using phpSniffer by Roger Raymond
- * Purpose of file: find out the browser and OS of the visitor
-*/
-
+ * @link http://xaraya.com/index.php/release/775.html
+ * @author Frank Besler using phpSniffer by Roger Raymond
+ */
 /**
  * This function is called directly during installation
  * and is used in the event handler function below
@@ -60,10 +55,10 @@ function sniffer_userapi_sniffbasic($args)
                   VALUES (?, ?, ?, ?, ?, ?, '', '')";
 //      last 2 are reserved for caps and quirks, supported by the sniffers cvs-version
         $result =& $dbconn->Execute($query, $insarr);
-        if (!$result) return;        
+        if (!$result) return;
         $uaid = $dbconn->PO_Insert_ID($sniffertable, 'xar_ua_id');
     }
-    
+
     return array('uaid' => $uaid, 'client' => $client);
 }
 

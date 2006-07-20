@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- * 
  * Sniffer System
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ *
  * @subpackage Sniffer Module
+ * @link http://xaraya.com/index.php/release/775.html
  * @author Frank Besler using phpSniffer by Roger Raymond
  */
-
 /**
  * Function to determine the client (browser, bot, ...)
  *
