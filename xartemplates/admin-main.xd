@@ -46,8 +46,8 @@
   </h3>
   <p>
     <xar:mlstring>
-      The scheduler module relies on other modules to actually execute 
-      whatever jobs are scheduled, so first you need to find out 
+      The scheduler module relies on other modules to actually execute
+      whatever jobs are scheduled, so first you need to find out
       which <b>module functions</b> can be scheduled.
     </xar:mlstring>
   </p>
@@ -56,14 +56,14 @@
       <xar:mlstring>Search for scheduler API functions</xar:mlstring>
     </a>
   </p>
-  
+
   <p>
     <xar:mlstring>
-      Then you need some kind of <b>trigger</b> to wake up the scheduler - 
-      this can be done e.g. by requesting a specific webpage automatically 
+      Then you need some kind of <b>trigger</b> to wake up the scheduler -
+      this can be done e.g. by requesting a specific webpage automatically
       from your own system via a Unix cron entry or Windows AT command,
       or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>,
-      or (if you really have no other choice) by relying on web hits from your 
+      or (if you really have no other choice) by relying on web hits from your
       visitors if your site is relatively busy.
     </xar:mlstring>
   </p>
@@ -75,7 +75,9 @@
   </h3>
   <p>
     <ul>
-      <li><xar:mlstring>trigger block</xar:mlstring></li>
+      <li><xar:mlstring>Trigger block. This block will trigger the scheduler process.
+      You can hide it from view, or let administrator see the progress. The block will
+      then show the time the last trigger was run.</xar:mlstring></li>
     </ul>
   </p>
   <br />
@@ -94,14 +96,14 @@
     <xar:mlstring>Further information on the Scheduler module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Scheduler Module - Xaraya Extension 189')#" href="http://www.xaraya.com/index.php/release/189.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>Scheduler Extension page at</xar:mlstring> <a title="#xarML('Scheduler Module - Xaraya Extension 189')#" href="http://www.xaraya.com/index.php/release/189.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
     <li><xar:mlstring>Related tutorials and documentation on Scheduler found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/scheduler/" title="#xarML('Related documentation on Scheduler')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Scheduler Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-09
+    <strong>&nbsp;<xar:mlstring>Scheduler Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-07-20
   </p>
 </div>
 
