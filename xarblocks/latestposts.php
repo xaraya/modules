@@ -117,17 +117,19 @@ function xarbb_latestpostsblock_display($blockinfo)
 
             if (($vars['addtopics']=='on') ||($vars['latestpost'] == 'on')) {
                 if (!isset($usernames[$topic['tposter']])) {
-                    $posterdata=xarModAPIFunc('roles', 'user', 'get', array('uid' => $topic['tposter']));
-                    if (empty($posterdata)) {
+                    $postername = xarUserGetVar('name', $topic['tposter']);
+                    if (empty($postername)) {
                         $usernames[$topic['tposter']] = '-';
                     } else {
-                        $usernames[$topic['tposter']] = $posterdata['name'];
+                        $usernames[$topic['tposter']] = $postername;
                     }
                 }
+
                 $username = $usernames[$topic['tposter']];
-                if ($topic['tstatus'] == 5){
+                if ($topic['tstatus'] == 5) {
                     $topic['tid'] = $topic['tpost'];
                 }
+
                 //Put each topic in consistent format for post comparison
                 $postlist[] = array(
                     'tid'       => $topic['tid'],
@@ -142,6 +144,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                     'link'      => xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $topic['tid'])),
                     'flink'     => xarModURL('xarbb', 'user', 'viewforum', array('fid' => $topic['fid']))
                 );
+
                 if (($topic['treplies'] == 0) && ($vars['latestpost'] == 'on') && ($vars['addtopics'] == 'on')){
                     $topiclist[]=array(
                         'tid'       => $topic['tid'],
@@ -173,7 +176,7 @@ function xarbb_latestpostsblock_display($blockinfo)
 
         foreach ($alltopics as $topics) {
             foreach ($topics as $topic) {
-                //Get all the most recent replies for each topic
+                // Get all the most recent replies for each topic
                 $posts = xarModAPIFunc(
                     'xarbb', 'user', 'get_allposts',
                     array('objectid' => $topic['tid'], 'itemtype' => $topic['fid'], 'numitems' => $getnumber)

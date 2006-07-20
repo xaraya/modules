@@ -33,20 +33,36 @@
     </xar:if>
 </xar:if>
 <xar:if condition="$type eq 'announce'">
-    <xar:if condition="!empty($new)">
-        <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+    <xar:if condition="!empty($lock)">
+        <xar:if condition="!empty($new)">
+            <img src="#xarTplGetImage('new/folder_announce_new_lock.gif')#" alt="#xarML('New announcement')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder_announce_lock.gif')#" alt="#xarML('Announcement')#" />
+        </xar:if>
     <xar:else />
-        <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+        <xar:if condition="!empty($new)">
+            <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+        </xar:if>
     </xar:if>
 </xar:if>
 <xar:if condition="$type eq 'sticky'">
-    <xar:if condition="!empty($new)">
-        <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+    <xar:if condition="!empty($lock)">
+        <xar:if condition="!empty($new)">
+            <img src="#xarTplGetImage('new/folder_sticky_new_lock.gif')#" alt="#xarML('New sticky topic')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder_sticky_lock.gif')#" alt="#xarML('Sticky topic')#" />
+        </xar:if>
     <xar:else />
-        <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+        <xar:if condition="!empty($new)">
+            <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+        <xar:else />
+            <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+        </xar:if>
     </xar:if>
 </xar:if>
 <xar:comment>The type 'locked' is deprecated, but we still check the 'lock' flag.</xar:comment>
-<xar:if condition="$type eq 'locked' or !empty($lock)">
+<xar:if condition="$type eq 'locked'">
     <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
 </xar:if>
