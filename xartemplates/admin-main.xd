@@ -4,7 +4,7 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
   <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
   <xar:template type="module" module="example" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
@@ -27,6 +27,10 @@
     <li><xar:mlstring>examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
     <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
     <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
+    <li>
+      <xar:mlstring>A simple demonstration on how to use xmlhttp requests (aka 'ajax'). The tabs in the admin part are xmlhttp enabled.</xar:mlstring>
+      <xar:mlstring>For mor detailed info, look in the template xartemplates/includes/admin-menu.xd in this module</xar:mlstring>
+    </li>
   </ul>
 
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>

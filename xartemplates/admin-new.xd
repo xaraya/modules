@@ -24,7 +24,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>New</xar:mlstring></h2>
 
