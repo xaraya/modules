@@ -264,6 +264,7 @@ function example_init()
  * of the module that are necessary to upgrade to a new version. It is very important to keep the
  * initialisation and the upgrade compatible with eachother.
  *
+ * @author Example Module Development Team
  * @param string oldversion. This function takes the old version that is currently stored in the module db
  * @return bool true on succes of upgrade
  * @throws mixed This function can throw all sorts of errors, depending on the functions present
@@ -276,7 +277,7 @@ function example_upgrade($oldversion)
         case '0.5':
             /* Version 0.5 didn't have a 'number' field, it was added
              * in version 1.0
-             * Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
+             * Get database setup - note that both xarDBGetConn() and xarDBGetTables()
              * return arrays but we handle them differently. For xarDBGetConn()
              * we currently just want the first item, which is the official
              * database handle. For xarDBGetTables() we want to keep the entire
@@ -286,8 +287,8 @@ function example_upgrade($oldversion)
              */
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
-            /*It's good practice to name the table and column definitions you
-             * are getting - $table and $column don't cut it in more complex
+            /* It's good practice to name the table and column definitions you
+             * are getting - $table and $column don't cut it out from more complex
              * modules
              * This code could be moved outside of the switch statement if
              * multiple upgrades need it
@@ -302,7 +303,7 @@ function example_upgrade($oldversion)
              * recurse the upgrade to handle any other upgrades that need
              * to be done. In normal cases this is not necessary, as the switch
              * will continue with the next step untill it hits a break
-             * return example_upgrade('1.0');
+             * return example_upgrade('1.0.0');
              */
         case '1.0':
              /* Previously one was allowed to use two digit version numbers
@@ -334,6 +335,7 @@ function example_upgrade($oldversion)
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @author Example Module Development Team
  * @param none
  * @return bool true on succes of deletion
  */
@@ -354,9 +356,10 @@ function example_delete()
     /* Drop the example tables */
     $result = $datadict->dropTable($exampletable);
 
-     /* Remove any module aliases before deleting module vars */
-    /* Assumes one module alias in this case */
-    $aliasname =xarModGetVar('example','aliasname');
+    /* Remove any module aliases before deleting module vars
+     * This Assumes one module alias in this case
+     */
+    $aliasname = xarModGetVar('example','aliasname');
     $isalias = xarModGetAlias($aliasname);
     if (isset($isalias) && ($isalias =='example')){
         xarModDelAlias($aliasname,'example');

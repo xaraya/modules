@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Example Block - Modify block settings
  *

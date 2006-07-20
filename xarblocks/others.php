@@ -16,19 +16,20 @@
  * initialise block
  *
  * @author Example Module development team
+ * @return array
  */
 function example_othersblock_init()
 {
     return array(
         'numitems' => 5
     );
-} 
+}
 
 /**
  * get information on block
  */
 function example_othersblock_info()
-{ 
+{
     /* Values */
     return array(
         'text_type' => 'Others',
@@ -39,25 +40,26 @@ function example_othersblock_info()
         'form_refresh' => false,
         'show_preview' => true
     );
-} 
+}
 
 /**
  * display block
+ * @return array
  */
 function example_othersblock_display($blockinfo)
-{ 
+{
     /* See if we are currently displaying an example item
      * (this variable is set in the user display function)
      */
     if (!xarVarIsCached('Blocks.example', 'exid')) {
         // if not, we don't show this
         return;
-    } 
+    }
 
     $current_exid = xarVarGetCached('Blocks.example', 'exid');
     if (empty($current_exid) || !is_numeric($current_exid)) {
         return;
-    } 
+    }
 
     /* Security check */
     if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['title'])) {return;}
