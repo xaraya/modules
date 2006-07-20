@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * run scheduler jobs
- * 
- * @returns string
+ *
+ * @return string The log of the jobs
  */
 function scheduler_userapi_runjobs($args = array())
 {
@@ -154,7 +165,7 @@ function scheduler_userapi_runjobs($args = array())
     } else {
         $newjobs = array();
     }
-    
+
     // set the job information
     foreach ($hasrun as $id) {
         if (!isset($newjobs[$id])) continue;
@@ -176,7 +187,7 @@ function scheduler_userapi_runjobs($args = array())
     xarModSetVar('scheduler','jobs',$serialjobs);
     xarModDelVar('scheduler','running');
 
-    return $log; 
+    return $log;
 }
 
 ?>

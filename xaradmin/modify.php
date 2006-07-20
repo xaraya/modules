@@ -1,10 +1,22 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * Modify extra information for scheduler jobs
+ * @param id itemid
  */
 function scheduler_admin_modify()
-{ 
+{
     if (!xarVarFetch('itemid','id', $itemid)) {return;}
 
     if (!xarSecurityCheck('AdminScheduler')) return;
@@ -78,5 +90,5 @@ function scheduler_admin_modify()
 
     // Return the template variables defined in this function
     return $data;
-} 
+}
 ?>

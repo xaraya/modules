@@ -1,29 +1,31 @@
 <?php
 /**
- * File: $Id$
- * 
- * Scheduler Trigger block (using an external trigger is better)
- * 
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage scheduler
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
-
 /**
  * initialise block
+ * @return bool true on success
  */
 function scheduler_triggerblock_init()
 {
     return true;
-} 
+}
 
 /**
  * get information on block
+ * @return array
  */
 function scheduler_triggerblock_info()
-{ 
+{
     // Values
     return array('text_type' => 'trigger',
         'module' => 'scheduler',
@@ -32,7 +34,7 @@ function scheduler_triggerblock_info()
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => false);
-} 
+}
 
 /**
  * display block
@@ -106,13 +108,13 @@ function scheduler_triggerblock_display($blockinfo)
         $blockinfo['content'] = xarML('Running Jobs');
         return $blockinfo;
     }
-} 
+}
 
 /**
  * modify block settings
  */
 function scheduler_triggerblock_modify($blockinfo)
-{ 
+{
     // Get current content
     $vars = @unserialize($blockinfo['content']);
 
@@ -124,7 +126,7 @@ function scheduler_triggerblock_modify($blockinfo)
 
     // Return output
     return xarTplBlock('scheduler','triggerAdmin',$vars);
-} 
+}
 
 /**
  * update block settings
@@ -139,7 +141,7 @@ function scheduler_triggerblock_update($blockinfo)
 
     $blockinfo['content'] = serialize($vars);
     return $blockinfo;
-} 
+}
 
 /**
  * run scheduler jobs when the script is finished

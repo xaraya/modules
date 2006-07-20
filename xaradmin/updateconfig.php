@@ -1,8 +1,20 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
+ * @param string trigger
  */
 function scheduler_admin_updateconfig()
 {

@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
  */
 function scheduler_admin_modifyconfig()
-{ 
+{
     if (!xarSecurityCheck('AdminScheduler')) return;
 
     $data = array();
@@ -72,7 +83,7 @@ function scheduler_admin_modifyconfig()
                             );
     $data['lastrun'] = xarModGetVar('scheduler','lastrun');
 
-    $modules = xarModAPIFunc('modules', 'admin', 'getlist', 
+    $modules = xarModAPIFunc('modules', 'admin', 'getlist',
                              array('filter' => array('AdminCapable' => 1)));
     $data['modules'] = array();
     foreach ($modules as $module) {
@@ -93,8 +104,8 @@ function scheduler_admin_modifyconfig()
         $data['hooks'] = join('', $hooks);
     } else {
         $data['hooks'] = $hooks;
-    } 
+    }
     // Return the template variables defined in this function
     return $data;
-} 
+}
 ?>

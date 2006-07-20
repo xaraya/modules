@@ -1,13 +1,14 @@
 <?php
 /**
- * File: $Id$
+ * Scheduler module
  *
- * Scheduler initialization functions
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage scheduler
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
 $modversion['name']           = 'Scheduler';
@@ -24,7 +25,6 @@ $modversion['author']         = 'mikespub';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array();
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 ?>

@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * calculate the next run time for a cron-like interval
- * 
+ *
  * @param  $args array specifying the custom interval
- * @returns timestamp
+ * @return int timestamp
  */
 function scheduler_userapi_nextrun($args = array())
 {

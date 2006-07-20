@@ -1,8 +1,19 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * create a new scheduler job
- * 
+ *
  * @author mikespub
  * @param  $args ['module'] module
  * @param  $args ['type'] type
@@ -11,33 +22,32 @@
  * @param  $args ['config'] extra configuration like params, startdate, enddate, crontab, ... (optional)
  * @param  $args ['lastrun'] lastrun (optional)
  * @param  $args ['result'] result (optional)
- * @returns int
- * @return job id on success, void on failure
+ * @return int job id on success, void on failure
  */
 function scheduler_adminapi_create($args)
 {
-    extract($args); 
+    extract($args);
 
     $invalid = array();
     if (empty($module) || !is_string($module)) {
         $invalid[] = 'module';
-    } 
+    }
     if (empty($type) || !is_string($type)) {
         $invalid[] = 'type';
-    } 
+    }
     if (empty($func) || !is_string($func)) {
         $invalid[] = 'func';
-    } 
+    }
     if (empty($interval) || !is_string($interval)) {
         $invalid[] = 'interval';
-    } 
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'create', 'scheduler');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 

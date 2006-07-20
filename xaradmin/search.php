@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
+ * @author mikespub
+ */
 /**
  * search for scheduler API functions in modules/<module>/xarschedulerapi directories
  */
 function scheduler_admin_search()
-{ 
+{
     if (!xarSecurityCheck('AdminScheduler')) return;
 
     $data = array();

@@ -1,32 +1,32 @@
 <?php
 /**
- * File: $Id$
- * 
- * Scheduler table definitions function
- * 
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage scheduler
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
-
 /**
- * Return scheduler table names to xaraya
- * 
+ * Return scheduler table names to Xaraya (none at the moment)
+ *
  * This function is called internally by the core whenever the module is
  * loaded.  It is loaded by xarMod__loadDbInfo().
- * 
- * @access private 
- * @return array 
+ *
+ * @access private
+ * @return array
  */
 function scheduler_xartables()
-{ 
+{
     // Initialise table array
-    $xarTables = array(); 
+    $xarTables = array();
 
     // Return the table information
     return $xarTables;
-} 
+}
 
 ?>

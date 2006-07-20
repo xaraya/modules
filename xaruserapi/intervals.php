@@ -1,10 +1,20 @@
 <?php
-
 /**
- * get the list of available scheduler intervals
- * 
+ * Scheduler module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Scheduler Module
+ * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
- * @returns array
+ */
+/**
+ * Define the list of available scheduler intervals
+ *
+ * @author mikespub
  * @return array of intervals
  */
 function scheduler_userapi_intervals()
