@@ -7,10 +7,14 @@
 
 <xar:comment>
   Set a variable that matches the template name. It does not consider template type.
-  If you wanted to look at type of template you would need to check $_bl_module_type
+  If you wanted to look at type of template you would need to check #$request.1#
  (eg to see if it's admin or user)
+    xarRequestInfo() returns the modulename, type and function in an array for
+    the function we want the third element (i.e. at index 2)
 </xar:comment>
-<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set> 
+<xar:set name="activetab">#$request.2#</xar:set>
+
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose an action to perform')#">
@@ -42,11 +46,11 @@
     </xar:sec>
     
     <xar:comment>
-      The overview function uses the admin-main template so we test
-      to see if $activetab is equal to main and set the tab active if it matches.
+      The overview function may use the admin-main template so we test
+      to see if $activetab is equal to 'main' too and set the tab active if it matches.
     </xar:comment>
     <xar:sec mask="EditExample" catch="false">
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-example-admin-overview;">
         <xar:mlstring>Overview</xar:mlstring>
