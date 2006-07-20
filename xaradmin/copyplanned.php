@@ -48,34 +48,43 @@ function courses_admin_copyplanned($args)
     // Security check
     if (!xarSecurityCheck('AddCourses', 1,'Course', "$courseid:All:All")) return;
 
+    $startdate = 0;
+    $enddate = 0;
+    $closedate = 0;
+    // Standard hide this planning
+    $hideplanning = 1;
     // Create planning and get planningid
     $newplanningid = xarModAPIFunc('courses',
                           'admin',
                           'createplanning',
-                          array('courseid' => $courseid,
-                                'year' => $planning['courseyear'],
-                                'credits' => $planning['credits'],
-                                'creditsmin' => $planning['creditsmin'],
-                                'creditsmax' => $planning['creditsmax'],
-                                'startdate' => 0,
-                                'enddate' => 0,
+                          array('courseid'      => $courseid,
+                                'year'          => $planning['courseyear'],
+                                'credits'       => $planning['credits'],
+                                'creditsmin'    => $planning['creditsmin'],
+                                'creditsmax'    => $planning['creditsmax'],
+                                'startdate'     => $startdate,
+                                'enddate'       => $enddate,
                                 'prerequisites' => $planning['prerequisites'],
-                                'aim' => $planning['aim'],
-                                'method' => $planning['method'],
-                                'longdesc' => $planning['longdesc'],
-                                'costs' => $planning['costs'],
-                                'committee' => $planning['committee'],
-                                'coordinators' => $planning['coordinators'],
-                                'lecturers' => $planning['lecturers'],
-                                'location' => $planning['location'],
-                                'material' => $planning['material'],
-                                'info' => $planning['info'],
-                                'program' => $planning['program'],
-                                'hideplanning' => 1,
-                                'minparticipants'=> $planning['minparticipants'],
-                                'maxparticipants'=> $planning['maxparticipants'],
-                                'closedate'=> $planning['closedate']));
-    //Check returnvalue
+                                'aim'           => $planning['aim'],
+                                'method'        => $planning['method'],
+                                'language'      => $planning['language'],
+                                'longdesc'      => $planning['longdesc'],
+                                'costs'         => $planning['costs'],
+                                'committee'     => $planning['committee'],
+                                'coordinators'  => $planning['coordinators'],
+                                'lecturers'     => $planning['lecturers'],
+                                'location'      => $planning['location'],
+                                'material'      => $planning['material'],
+                                'info'          => $planning['info'],
+                                'program'       => $planning['program'],
+                                'regurl'        => $planning['regurl'],
+                                'extreg'        => $planning['extreg'],
+                                'hideplanning'  => $hideplanning,
+                                'minparticipants' => $planning['minparticipants'],
+                                'maxparticipants' => $planning['maxparticipants'],
+                                'closedate'     => $closedate)
+                          );
+    // Check for result
     if (!isset($newplanningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
