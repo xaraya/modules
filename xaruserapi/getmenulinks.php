@@ -3,14 +3,18 @@
  * Standard function to get main menu links
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Wizards Module
+ * @subpackage wizards
+ * @link http://xaraya.com/index.php/release/3007.html
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-
+/**
+ * Get menu links for the user
+ * @return array
+ */
 function wizards_userapi_getmenulinks()
 {
 

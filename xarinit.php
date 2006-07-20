@@ -1,17 +1,16 @@
 <?php
 /**
- *
  * Wizards initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage installer
- * @author Marc Lutolf
+ *
+ * @subpackage wizards
+ * @link http://xaraya.com/index.php/release/3007.html
+ * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
-
-
 /**
  * Initialise the Wizards module
  *
