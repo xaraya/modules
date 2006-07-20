@@ -16,11 +16,10 @@
  * Get all example items
  *
  * @author the Example module development team
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @returns array
- * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @param int $args['numitems'] the number of items to retrieve (default -1 = all)
+ * @param int $args['startnum'] start with this item number (default 1)
+ * @return mixed array of items, or false on failure
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function example_userapi_getall($args)
 {

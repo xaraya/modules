@@ -18,7 +18,6 @@
  * available from the module.
  *
  * @author the Example module development team
- * @param none
  * @return array $data array with all information for the template
  */
 function example_user_view()

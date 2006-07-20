@@ -16,7 +16,6 @@
  * Standard function to view items
  *
  * @author Example module development team
- * @param int startnum
  * @return array
  */
 function example_admin_view()

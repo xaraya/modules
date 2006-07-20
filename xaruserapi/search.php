@@ -18,8 +18,8 @@
    for items that match any of the parameters in $args.
  *
  * @author jojodee
- * @param string name
- * @param int number
+ * @param string $args['name']
+ * @param int    $args['number']
  * @access private
  * @return array mixed description of return
  */

@@ -21,7 +21,6 @@
  * function (often this is the view() function)
  *
  * @author the Example module development team
- * @param none
  * @return array $data An array with the data for the template
  */
 function example_user_main()

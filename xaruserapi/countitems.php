@@ -16,9 +16,8 @@
  * Utility function to count the number of items held by this module
  *
  * @author the Example module development team
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @return integer number of items held by this module
+ * @throws DATABASE_ERROR
  */
 function example_userapi_countitems()
 {

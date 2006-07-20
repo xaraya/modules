@@ -18,11 +18,10 @@
  * This is a standard adminapi function to create a module item
  *
  * @author the Example module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
- * @returns int
- * @return example item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param  string $args['name'] name of the item
+ * @param  int    $args['number'] number of the item
+ * @return int example item ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function example_adminapi_create($args)
 {

@@ -25,8 +25,8 @@
  * developer
  *
  * @author Example Module Development Team
- * @param  $ 'exid' the id of the item to be deleted
- * @param  $ 'confirm' confirm that this item can be deleted
+ * @param  int    $args['exid']    the id of the item to be deleted
+ * @param  string $args['confirm'] confirm that this item can be deleted
  */
 function example_admin_delete($args)
 {

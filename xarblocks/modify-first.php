@@ -17,8 +17,7 @@
  *
  * @author Example Module development team
  * @param array $blockinfo The array with information for this block
- * @return array with int numitems
-                      id blockid
+ * @return array with (int numitems, id blockid)
  */
 function example_firstblock_modify($blockinfo)
 {

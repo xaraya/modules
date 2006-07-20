@@ -18,9 +18,9 @@
  * available from the module.
  *
  * @author the Example module development team
- * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['exid'] the item id used for this example module
+ * @param  array $args an array of arguments (if called by other modules)
+ * @param  int $args['objectid'] a generic object id (if called by other modules)
+ * @param  int $args['exid'] the item id used for this example module
  * @return array $data The array that contains all data for the template
  */
 function example_user_display($args)

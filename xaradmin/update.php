@@ -18,9 +18,9 @@
  * form supplied by xarModFunc('example','admin','modify') to update a current item
  *
  * @author Example module development team
- * @param  $ 'exid' the id of the item to be updated
- * @param  $ 'name' the name of the item to be updated
- * @param  $ 'number' the number of the item to be updated
+ * @param  int    $args['exid']  the id of the item to be updated
+ * @param  string $args['name']  the name of the item to be updated
+ * @param  int    $args['number'] the number of the item to be updated
  */
 function example_admin_update($args)
 {
