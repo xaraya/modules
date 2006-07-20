@@ -18,13 +18,13 @@
  * wishes to modify a current module item
  *
  * @author Example Module Development Team
- * @param array $args An array containing all the arguments to this function.
- * @param int exid The id of the item to be modified
- * @param int objectid The id of the unified object, for use with other modules
- * @param array invalid This array is initialised in the beginning of the function
-                        to hold all the errors caught in admin-update
- * @param int number A number for the item, used as an example
- * @param string name A name for the item, used as an example
+ * @param array  $args An array containing all the arguments to this function.
+ * @param int    $exid The id of the item to be modified
+ * @param int    $objectid The id of the unified object, for use with other modules
+ * @param array  $invalid This array is initialised in the beginning of the function
+                          to hold all the errors caught in admin-update
+ * @param int    $number A number for the item, used as an example
+ * @param string $name A name for the item, used as an example
  * @return array $item containing all elements and variables for the template
  */
 function example_admin_modify($args)

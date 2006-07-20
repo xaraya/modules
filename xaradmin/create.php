@@ -20,8 +20,8 @@
  * form supplied by xarModFunc('example','admin','new') to create a new item
  *
  * @author Example module development team
- * @param  $ 'name' the name of the item to be created
- * @param  $ 'number' the number of the item to be created
+ * @param  string $args['name']   the name of the item to be created
+ * @param  int    $args['number'] the number of the item to be created
  */
 function example_admin_create($args)
 {

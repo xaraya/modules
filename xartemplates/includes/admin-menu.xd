@@ -3,14 +3,41 @@
 
 <xar:if condition="xarModGetVar('themes','adminpagemenu')">
 
+<xar:comment>
+  Simple demonstration of using xml http requests (aka 'ajax'). The xml http
+  request is enabled on the links of the tabs in the admin part, meaning that
+  if you click them, only the chunk of html which is relevant for that tab is
+  retrieved. If you want to see the difference in behaviour, set the condition
+  in the next xar:if statement to false. You will then get the behaviour as if:
+  * normal links were present or
+  * the browser has javascript disabled or
+  * do not support javascript or
+  * do not support xmlhttp requests
+  
+  Things to notice for the different behaviour:
+  * speed difference
+  * the url in the address area of your browser
+</xar:comment>
+
+<xar:if condition="true">
+  <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
+
 <xar:style scope="module" module="base" file="navtabs" />
 
 <xar:comment>
   Set a variable that matches the template name. It does not consider template type.
-  If you wanted to look at type of template you would need to check $_bl_module_type
+  If you wanted to look at type of template you would need to check #$request.1#
  (eg to see if it's admin or user)
+    xarRequestInfo() returns the modulename, type and function in an array for
+    the function we want the third element (i.e. at index 2)
 </xar:comment>
-<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set> 
+<xar:set name="activetab">#$request.2#</xar:set>
+
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose an action to perform')#">
@@ -19,7 +46,7 @@
     <xar:sec mask="AddExample" catch="false">
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-example-admin-new;">
+          <a href="&xar-modurl-example-admin-new;" onclick="#$onclick#">
             <xar:mlstring>Add Item</xar:mlstring>
           </a>
         </dd>
@@ -27,7 +54,7 @@
     <xar:sec mask="DeleteExample" catch="false">
         <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-example-admin-view;" >
+            <a href="&xar-modurl-example-admin-view;" onclick="#$onclick#" >
                 <xar:mlstring>View Items</xar:mlstring>
             </a>
         </dd>
@@ -35,20 +62,20 @@
     <xar:sec mask="AdminExample" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-example-admin-modifyconfig;">
+          <a href="&xar-modurl-example-admin-modifyconfig;" onclick="#$onclick#">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
     </xar:sec>
     
     <xar:comment>
-      The overview function uses the admin-main template so we test
-      to see if $activetab is equal to main and set the tab active if it matches.
+      The overview function may use the admin-main template so we test
+      to see if $activetab is equal to 'main' too and set the tab active if it matches.
     </xar:comment>
     <xar:sec mask="EditExample" catch="false">
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
     <dd class="#$tabclass#">
-      <a href="&xar-modurl-example-admin-overview;">
+      <a href="&xar-modurl-example-admin-overview;" onclick="#$onclick#">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>

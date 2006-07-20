@@ -17,7 +17,6 @@
  * @author the Example module development team
  * @param  $args ['itemtype'] item type (optional)
  * @param  $args ['itemids'] array of item ids to get
- * @returns array
  * @return array containing the itemlink(s) for the item(s).
  */
 function example_userapi_getitemlinks($args)

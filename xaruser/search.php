@@ -17,10 +17,6 @@
  * This function is called via the search hook
  *
  * @author Jo Dalle Nogare
- * @param string q REQUIRED
- * @param bool   bool REQUIRED
- * @param string sort REQUIRED
- * @param int startnum OPTIONAL
  * @return array with the items found, or a string explaining that nothing was found
  */
 function example_user_search()

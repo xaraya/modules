@@ -149,12 +149,6 @@ function example_init()
      * Use the standard module var name for short url support.
      */
     xarModSetVar('example', 'SupportShortURLs', 0);
-    /* If you provide short URL encoding functions you might want to also
-     * provide module aliases and have them set in the module's administration.
-     * Use the standard module var names for useModuleAlias and aliasname.
-     */
-    xarModSetVar('example', 'useModuleAlias',false);
-    xarModSetVar('example','aliasname','');
 
     /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
@@ -175,10 +169,7 @@ function example_init()
             'example', 'user', 'usermenu')) {
         return false;
     }
-    /* Register search hook */
-    if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
-        return false;
-    }
+
     /*
      * Define instances for this module
      * Format is
@@ -253,8 +244,8 @@ function example_init()
     xarRegisterMask('DeleteExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminExample',  'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
-    /* Initialisation successful so return true */
-    return true;
+    /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
+    return example_upgrade('1.0');
 }
 
 /**
@@ -316,8 +307,9 @@ function example_upgrade($oldversion)
             if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
                return false;
             }
-            /*Provide some way for admin to switch on and off Module aliases
-             * in the admin config area. You must also provide short urls
+            /* If you provide short URL encoding functions you might want to also
+             * provide module aliases and have them set in the module's administration.
+             * Use the standard module var names for useModuleAlias and aliasname.
              */
             xarModSetVar('example', 'useModuleAlias',false);
             xarModSetVar('example','aliasname','');

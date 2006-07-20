@@ -17,7 +17,7 @@
  * This is a standard function to provide a link in the "Your Account Page"
  *
  * @author the Example module development team
- * @param  $phase is the which part of the loop you are on
+ * @param  string $args['phase'] is the which part of the loop you are on
  */
 function example_user_usermenu($args)
 {
