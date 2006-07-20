@@ -3,12 +3,13 @@
  * Modify site configuration
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage wizards
- * @author Marc Lutolf
+ * @link http://xaraya.com/index.php/release/3007.html
+ * @author Marc Lutolf <marcinmilan@xaraya.com>
  */
 /**
  * Modify site configuration
