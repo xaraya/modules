@@ -3,7 +3,7 @@
  * Dynamic Data Example Module - documented module template
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/66.html
  * @author mikespub <mikespub@xaraya.com>
  */
-
 /**
  * Initialise the module
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool True on succes of init
  */
 function dyn_example_init()
 {
@@ -289,6 +289,7 @@ function dyn_example_upgrade($oldversion)
  *
  * This function is only ever called once during the lifetime of a particular
  * module instance
+ * @return bool true on success of deletion
  */
 function dyn_example_delete()
 {

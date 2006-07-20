@@ -3,7 +3,7 @@
  * Dynamic Data Example Block
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,19 +14,21 @@
 
 /**
  * initialise block
+ * @return array
  */
 function dyn_example_firstblock_init()
 {
     return array(
         'numitems' => 5
     );
-} 
+}
 
 /**
  * get information on block
+ * @return array
  */
 function dyn_example_firstblock_info()
-{ 
+{
     // Values
     return array('text_type' => 'First',
         'module' => 'dyn_example',
@@ -35,13 +37,14 @@ function dyn_example_firstblock_info()
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => true);
-} 
+}
 
 /**
  * display block
+ * @return array blockinfo
  */
 function dyn_example_firstblock_display($blockinfo)
-{ 
+{
 // TODO: Security check
 //    if (!xarSecurityCheck('ReadExampleBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
@@ -57,7 +60,7 @@ function dyn_example_firstblock_display($blockinfo)
     // Defaults
     if (empty($data['numitems'])) {
         $data['numitems'] = 5;
-    } 
+    }
     $data['blockid'] = $blockinfo['bid'];
 
     // we'll retrieve the items directly in the template here
@@ -66,6 +69,6 @@ function dyn_example_firstblock_display($blockinfo)
     $blockinfo['content'] = $data;
 
     return $blockinfo;
-} 
+}
 
 ?>
