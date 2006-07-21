@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 function images_admin_modifyconfig()
 {
 
@@ -12,7 +23,8 @@ function images_admin_modifyconfig()
     // get the current module variables for display
     // *********************************************
     // Global
-    $data['libtype']['graphics-library']    = xarModGetVar('images', 'type.graphics-library');
+    $data['gdextension'] = extension_loaded ('gd'); // True or false
+    $data['libtype']['graphics-library']    = xarModGetVar('images', 'type.graphics-library'); // return gd
     $data['path']['derivative-store']       = xarModGetVar('images', 'path.derivative-store');
     $data['file']['cache-expire']           = xarModGetVar('images', 'file.cache-expire');
     if (!isset($data['file']['cache-expire'])) {

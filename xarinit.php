@@ -3,7 +3,7 @@
  * Initialization
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,12 +21,19 @@
 
 /**
  * initialise the images module
+ * @return bool true on success
  */
 function images_init()
 {
     // Load any predefined constants
     xarModAPILoad('images', 'user');
-    
+
+    // Check for the required extensions
+    // GD is only needed if the user wants to use resize.
+    // True or False
+    /*$data['gdextension']              = extension_loaded ('gd');*/
+
+
     // Set up module variables
     xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
     xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
@@ -54,7 +61,7 @@ function images_init()
                              new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
     xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
-     
+
     // Initialisation successful
     return true;
 }
@@ -92,7 +99,7 @@ function images_upgrade($oldversion)
             // Code to upgrade from version 2.0.0 goes here
             break;
     }
-    
+
     return true;
 }
 
@@ -111,7 +118,7 @@ function images_delete()
     xarTplUnregisterTag('image-resize');
     xarUnregisterMask('AdminImages');
     xarModUnregisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook');
-    
+
     // Deletion successful
     return true;
 }

@@ -1,5 +1,20 @@
 <?php
-
+/**
+ * Images module - update config
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
+/**
+ * Update configuration
+ * @return bool true on success of update
+ */
 function images_admin_updateconfig()
 {
     // Get parameters
@@ -29,10 +44,10 @@ function images_admin_updateconfig()
     }
     if (isset($file) && is_array($file)) {
         foreach ($file as $varname => $value) {
-            // check to make sure that the value passed in is 
+            // check to make sure that the value passed in is
             // a real images module variable
             if (NULL !== xarModGetVar('images', 'file.'.$varname)) {
-                xarModSetVar('images', 'file.' . $varname, $value);    
+                xarModSetVar('images', 'file.' . $varname, $value);
             }
         }
     }
@@ -58,7 +73,7 @@ function images_admin_updateconfig()
     }
     if (isset($view) && is_array($view)) {
         foreach ($view as $varname => $value) {
-            // check to make sure that the value passed in is 
+            // check to make sure that the value passed in is
             // a real images module variable
 // TODO: add other view.* variables later ?
             if ($varname != 'itemsperpage') continue;

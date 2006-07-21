@@ -35,27 +35,38 @@
                             Graphics Library:
                         </xar:mlstring>
                     </label>
-                <xar:if condition="$libtype['graphics-library'] eq $library['GD']">
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
-<xar:comment>
-                <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" /> NetPBM
-                <xar:else />
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
-                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
-</xar:comment>
-                </xar:if>
+                    <xar:if condition="$gdextension">
+
+                        <xar:if condition="$libtype['graphics-library'] eq $library['GD']">
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
+        <xar:comment>
+                        <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" /> NetPBM
+                        <xar:else />
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
+                            <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
+        </xar:comment>
+                        </xar:if>
+                    <xar:else />
+                        <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" disabled="true" /> GD
+                        <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
+                        <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
+                    </xar:if>
                     <p class="xar-form-input-wrapper-after">
-                    <xar:mlstring>
-                    <em>
-                        <strong>Note:</strong> Currently only GD &gt;= 2.0.1 is supported
-                    </em>
-                    </xar:mlstring>
+                    <xar:if condition="$gdextension">
+                        <xar:mlstring>
+                        <em>
+                            <strong>Note:</strong> Currently only GD &gt;= 2.0.1 is supported
+                        </em>
+                        </xar:mlstring>
+                    <xar:else />
+                        <xar:mlstring> You do not have any graphics library available, you will not be able to use the resize functions</xar:mlstring>
+                    </xar:if>
                     </p>
                 </div>
                 <div class="xar-form-input-wrapper">
