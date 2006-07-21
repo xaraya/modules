@@ -1,6 +1,17 @@
 <xar:template file="admin-menu" type="module"/>
 
 <h3><xar:mlstring>Modify configuration</xar:mlstring></h3>
+<p>
+<xar:if condition="$PHPVersion5 AND $xslextension" >
+
+    <xar:mlstring>You have PHP 5 or higher and the XSL extension installed.</xar:mlstring>
+<xar:elseif condition="$xsltextension" />
+    <xar:mlstring>You have the XSLT extension installed.</xar:mlstring>
+<xar:else />
+    <xar:mlstring>WARNING: You do not have the XSLT or XSL extension installed. You will not be able to use this module.</xar:mlstring>
+</xar:if>
+</p>
+
 <table>
     <form action="&xar-modurl-reports-admin-update_config;" method="post">
         <tr>

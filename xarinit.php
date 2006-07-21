@@ -1,33 +1,36 @@
 <?php
 /**
- * File: $Id$
- *
  * Initialization of reports
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage reports
+ * @link http://xaraya.com/index.php/release/4704.html
  * @author Marcel van der Boom <marcel@hsdev.com>
-*/
-
-
-function reports_init() 
+ */
+/**
+ * Init function
+ * @return bool true on success
+ * @todo MichelV Should this module install when the required extension is not present?
+ */
+function reports_init()
 {
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-    
+
     // Create tables for the reports module one by one
     $varcharlen=255;
-  
+
     // Table reports
     $tabname ='reports';
     $tab=$xartable[$tabname];
     $cols = &$xartable[$tabname.'_column'];
-    
+
     $fields = array($cols['id']         =>array('type'=>'integer','null'=>false,'increment' =>true, 'primary_key'=>true),
                     $cols['conn_id']    =>array('type'=>'integer','null'=>false,'default'   =>'0'),
                     $cols['name']       =>array('type'=>'varchar','null'=>false,'default'   =>'<untitled report>',    'size'=>$varcharlen),
@@ -50,14 +53,14 @@ function reports_init()
     $tabname = 'report_connections';
     $tab = $xartable[$tabname];
     $cols = &$xartable[$tabname.'_column'];
-    
+
     $defhost = xarDBGetHost();
     $defdb   = xarDBGetName();
     $deftype = xarDBGetType();
     $fields = array($cols['id']         =>array('type'=>'integer','null'=>false,'increment' =>true, 'primary_key'=>true),
                     $cols['name']       =>array('type'=>'varchar','null'=>false,'default'   =>'<untitled report>',   'size'=>$varcharlen),
                     $cols['description']=>array('type'=>'varchar','null'=>false,'default'   =>'no description given','size'=>$varcharlen),
-                    $cols['server']     =>array('type'=>'varchar','null'=>false,'default'   =>$defhost,              'size'=>$varcharlen), 
+                    $cols['server']     =>array('type'=>'varchar','null'=>false,'default'   =>$defhost,              'size'=>$varcharlen),
                     $cols['type']       =>array('type'=>'varchar','null'=>false,'default'   =>$deftype,              'size'=>$varcharlen),
                     $cols['database']   =>array('type'=>'varchar','null'=>false,'default'   =>$defdb,                'size'=>$varcharlen),
                     $cols['user']       =>array('type'=>'varchar','null'=>false,'default'   =>'username',            'size'=>$varcharlen),
@@ -78,13 +81,13 @@ function reports_init()
 
     // Create a default connection to this database itself
     $conn_id = $dbconn->GenId($tab);
-    $conn_name = 'default'; 
+    $conn_name = 'default';
     $conn_type =strtolower($deftype);
     $conn_desc = 'Xaraya connection itself';
-        
+
     $sql = "INSERT INTO $tab ($cols[id],$cols[name],$cols[type],$cols[description]) VALUES (?,?,?,?)";
-    $bindvars = array($conn_id, $conn_name, $conn_type, $conn_desc);    
-    
+    $bindvars = array($conn_id, $conn_name, $conn_type, $conn_desc);
+
     $res =& $dbconn->Execute($sql,$bindvars);
     if(!$res) return;
 
@@ -99,8 +102,10 @@ function reports_init()
     // The initialize installs version 0.0.1, do the upgrades next
     return reports_upgrade('0.0.1');
 }
-
-function reports_upgrade($oldversion) 
+/**
+ * Upgrade the reports module
+ */
+function reports_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
@@ -117,32 +122,32 @@ function reports_upgrade($oldversion)
     }
     return true;
 }
-
-function reports_delete() 
+/**
+ * Remove the module
+ */
+function reports_delete()
 {
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     // Delete tables
     // This delete stuff is too easy, even for admins, no warning at all!!!!
     // Consider confirm action method from API
-    
+
     $sql = "DROP TABLE IF EXISTS $xartable[reports], $xartable[report_connections]";
     $res =& $dbconn->Execute($sql);
     if(!$res) return;
 
-    
+
     // Delete module variables
     // Template: xarModDelVar('reports', 'varname');
-    xarModDelVar('reports','images_location');
-    xarModDelVar('reports','reports_location');
-    xarModDelVar('reports','pdf_backend');
+    xarModDelAllVars('reports');
 
     // Delete the custom tags
     xarTplUnregisterTag('reports-dataset');
     xarTplUnregisterTag('reports-dataitem');
-    
+
     // Deletion successful
     return true;
 }

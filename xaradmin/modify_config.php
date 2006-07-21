@@ -1,4 +1,20 @@
 <?php
+/**
+ * Reports module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage reports
+ * @link http://xaraya.com/index.php/release/4704.html
+ * @author Marcel van der Boom <marcel@hsdev.com>
+ */
+/**
+ * Modify config
+ * @todo MichelV Check for required php extensions
+ */
 function reports_admin_modify_config()
 {
     // Check whether we can cache reports data
@@ -45,7 +61,13 @@ function reports_admin_modify_config()
     if(empty($fop_location)) {
         xarModSetVar('reports','fop_location','c:/apps/fop/');
     }
-
+    // Get the PHP version
+    if (function_exists('version_compare')) {
+        if (version_compare(PHP_VERSION,'5','>=')) $PHPVersion5 = true;
+    }
+    // This is called xsl in PHP5.x Should check for that when php version is 5 or higher
+    $xsltextension  = extension_loaded ('xslt');
+    $xslextension  = extension_loaded ('xsl');
     $data = array('authid' => xarSecGenAuthKey(),
                   'rep_location' => xarModGetVar('reports','reports_location'),
                   'img_location' => xarModGetVar('reports','images_location'),
@@ -53,7 +75,10 @@ function reports_admin_modify_config()
                   'backends' => $backends,
                   'selectedbackend' => xarModGetVar('reports','pdf_backend'),
                   'format' => $format,
-                  'itemsperpage' => xarModGetVar('reports','itemsperpage')
+                  'itemsperpage' => xarModGetVar('reports','itemsperpage'),
+                  'xsltextension'  => $xsltextension,
+                  'xslextension'  => $xslextension,
+                  'PHPVersion5' => $PHPVersion5
                   );
 
     return $data;
