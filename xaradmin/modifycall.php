@@ -14,7 +14,8 @@
 /**
  * modify a call
  *
- * @param  $ 'callid' the id of the item to be modified
+ * @param int callid The id of the item to be modified
+ * @return array
  */
 function maxercalls_admin_modifycall($args)
 {
@@ -55,8 +56,7 @@ function maxercalls_admin_modifycall($args)
                  'callid'       => $callid,
                  'invalid'      => $invalid,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update call')),
-                 'hookoutput'    => $hookoutput,
+                 'hookoutput'   => $hookoutput,
                  'item'         => $item);
 }
-
 ?>

@@ -26,7 +26,7 @@
  * @param int function
  * @param int maxerstatus The status of the maxer
  * @param string program What is this maxer used for?
- * @raise
+ * @throws
  * @return bool true or raise error
  */
 function maxercalls_admin_createmaxer($args)
