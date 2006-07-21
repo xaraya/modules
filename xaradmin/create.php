@@ -107,9 +107,24 @@ function example_admin_create($args)
      */
     if (!isset($exid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     /* This function generated no output, and so now it is complete we redirect
-     * the user to an appropriate page for them to carry on their work
+     * the user to an appropriate page for them to carry on their work.
+     * 
+     * For that, we determine the itemposition and make sure we start at the position of
+     * that item. This is obviously a lot more complicated usually than in this simple
+     * situation where sorting (by name here) /filtering/where clauses are more complex.
+     * In real modules, this needs to be *a lot smarter* than the example given here.
+     *
+     * A slightly better way would be to set view order on the exid, and use the recordcount
+     * as starting position, or order descending on exid and use 1 as starting number.
+     * The actual functionality of your module will determin what is best.
      */
-    xarResponseRedirect(xarModURL('example', 'admin', 'view'));
+    $allItems = xarModApiFunc('example','user','getall');
+    $newItemPosition = 0;
+    foreach($allItems as $pos => $info) { 
+        if($info['exid']==$exid) {  $newItemPosition = $pos; break; }
+    }
+    xarResponseRedirect(xarModURL('example', 'admin', 'view',array('startnum' => $newItemPosition)));
+    
     /* Return true, in this case */
     return true;
 }

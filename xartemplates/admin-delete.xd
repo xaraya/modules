@@ -4,13 +4,14 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body" id="notsogoodbutok">
+<div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Delete</xar:mlstring></h2>
 
     <!-- the specific template for the current admin function comes here -->
 
-    <form method="post" action="&xar-modurl-example-admin-delete;">
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <form id="example_edit_or_add" method="post" action="&xar-modurl-example-admin-delete;">
         <!--
             // This layout is crude. Adapt it for your module's data
          -->
@@ -47,7 +48,7 @@
 
             </div>
             <!--
-             * Let's set a return URL here for cancelling the delete.
+             * Optionally set a return URL here for cancelling the delete.
              * In this case it's easy as we know where the user
              * has come from - there is only the admin view form that leads to delete
              * so let's set that here
@@ -58,11 +59,13 @@
              * make it less likely of a mistaken click on cancel
              *
             -->
-            <div class="xar-form-input-wrapper-before">
+            <!---
+             <div class="xar-form-input-wrapper-before">
              <a href="&xar-modurl-example-admin-view;">
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>
+            -->
         </fieldset>
     </form>
 </div>

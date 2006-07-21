@@ -9,8 +9,6 @@
   <xar:template type="module" module="example" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
-
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>Example is the documented Xaraya Example Module.</xar:mlstring></em>
@@ -28,8 +26,10 @@
     <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
     <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
     <li>
-      <xar:mlstring>A simple demonstration on how to use xmlhttp requests (aka 'ajax'). The tabs in the admin part are xmlhttp enabled.</xar:mlstring>
-      <xar:mlstring>For mor detailed info, look in the template xartemplates/includes/admin-menu.xd in this module</xar:mlstring>
+      <xar:mlstring>A simple demonstration on how to use xmlhttp requests (aka 'ajax'). The <strong>admin</strong> interface uses xml http requests to build up the
+        editting and deletion interface.
+      </xar:mlstring>
+      <xar:mlstring>For mor detailed info, look in the templates (e.g. xartemplates/includes/admin-menu.xd) in this module</xar:mlstring>
     </li>
   </ul>
 

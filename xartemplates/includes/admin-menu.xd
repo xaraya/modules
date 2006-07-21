@@ -9,14 +9,14 @@
   if you click them, only the chunk of html which is relevant for that tab is
   retrieved. If you want to see the difference in behaviour, set the condition
   in the next xar:if statement to false. You will then get the behaviour as if:
-  * normal links were present or
-  * the browser has javascript disabled or
-  * do not support javascript or
-  * do not support xmlhttp requests
+    * normal links were present or
+    * the browser has javascript disabled or
+    * do not support javascript or
+    * do not support xmlhttp requests
   
   Things to notice for the different behaviour:
-  * speed difference
-  * the url in the address area of your browser
+    * speed difference
+    * the url in the address area of your browser
 </xar:comment>
 
 <xar:if condition="true">
@@ -31,9 +31,9 @@
 <xar:comment>
   Set a variable that matches the template name. It does not consider template type.
   If you wanted to look at type of template you would need to check #$request.1#
- (eg to see if it's admin or user)
-    xarRequestInfo() returns the modulename, type and function in an array for
-    the function we want the third element (i.e. at index 2)
+  (eg to see if it's admin or user)
+  xarRequestInfo() returns the modulename, type and function in an array for
+  the function we want the third element (i.e. at index 2)
 </xar:comment>
 <xar:set name="request">xarRequestGetInfo()</xar:set> 
 <xar:set name="activetab">#$request.2#</xar:set>
@@ -43,23 +43,13 @@
     <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:sec mask="AddExample" catch="false">
-        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-example-admin-new;" onclick="#$onclick#">
-            <xar:mlstring>Add Item</xar:mlstring>
-          </a>
-        </dd>
-    </xar:sec>
-    <xar:sec mask="DeleteExample" catch="false">
-        <xar:if condition="$activetab=='view' or $activetab=='modify' or $activetab=='delete'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
-        </xar:if>
+
+    <!-- The minimal privilege needed for the manage items screen is viewing items -->
+    <xar:sec mask="ViewExample" catch="false">
+        <xar:set name="tabclass">($activetab=='view' or $activetab=='new')?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-example-admin-view;" onclick="#$onclick#" >
-                <xar:mlstring>View Items</xar:mlstring>
+                <xar:mlstring>Manage Items</xar:mlstring>
             </a>
         </dd>
     </xar:sec>

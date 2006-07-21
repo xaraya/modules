@@ -264,6 +264,9 @@ function example_init()
 function example_upgrade($oldversion)
 {
     /* Upgrade dependent on old version number */
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
         case '0.5':
             /* Version 0.5 didn't have a 'number' field, it was added
@@ -274,10 +277,11 @@ function example_upgrade($oldversion)
              * database handle. For xarDBGetTables() we want to keep the entire
              * tables array together for easy reference later on
              * This code could be moved outside of the switch statement if
-             * multiple upgrades need it
+             * multiple upgrades need it (as it is in this case)
              */
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            //$dbconn =& xarDBGetConn();
+            //$xartable =& xarDBGetTables();
+
             /* It's good practice to name the table and column definitions you
              * are getting - $table and $column don't cut it out from more complex
              * modules

@@ -15,7 +15,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body" id="notsogoodbutok">
+<div id="notsogoodbutok" class="xar-mod-body">
   <!-- common admin menu for this module-->
    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Modify</xar:mlstring></h2>
@@ -31,7 +31,7 @@
         // this form. All URLs should be generated through the entity  equivalent of xarModURL to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form id="example_edit_or_add" method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend>
                 <xar:mlstring>Item to Modify</xar:mlstring>
@@ -74,24 +74,24 @@
         </fieldset>
 
         <xar:if condition="!empty($hooks)">
-        <fieldset>
-            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                <xar:foreach in="$hooks" key="$hookmodule">
-                <!--
-                You can display individual hooks if you want using xar:if statements
+          <fieldset>
+              <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                  <xar:foreach in="$hooks" key="$hookmodule">
+                  <!--
+                  You can display individual hooks if you want using xar:if statements
 
-                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                    #$hooks['categories']#
-                </xar:if>
+                  <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                      #$hooks['categories']#
+                  </xar:if>
 
-                or display them all with one command as follows
-                -->
-                #$hooks[$hookmodule]#
+                  or display them all with one command as follows
+                  -->
+                  #$hooks[$hookmodule]#
 
 
-               </xar:foreach>
-        </fieldset>
-         </xar:if>
+                 </xar:foreach>
+          </fieldset>
+        </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
         <!--
@@ -104,7 +104,7 @@
                <input type="submit" value="#xarML('Update Example')#" />
             </div>
             <!--
-             * Let's set a return URL here for cancelling the delete.
+             * Optionally set a return URL here for cancelling the delete.
              * In this case it's easy as we know where the user
              * has come from - there is only the admin view form that leads to delete
              * so let's set that here
@@ -115,11 +115,13 @@
              * make it less likely of a mistaken click on cancel
              *
             -->
+            <!--
             <div class="xar-form-input-wrapper-before">
              <a href="&xar-modurl-example-admin-view;">
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>
+            -->
         </fieldset>
     </form>
 </div>

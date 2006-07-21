@@ -106,8 +106,7 @@ function example_admin_modify($args)
                  'name'         => $name,
                  'number'       => $number,
                  'invalid'      => $invalid,
-                 'hookoutput'   => $hooks,
-                 'hooks'        => '',
+                 'hooks'        => $hooks,
                  'item'         => $item);
 }
 ?>

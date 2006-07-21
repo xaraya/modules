@@ -6,58 +6,67 @@
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>View Example Items</xar:mlstring></h2>
 
-    <!--
-        // display a status message to the user if an action has been 
-        // taken on an item
-    -->
-    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
-    </xar:if>
-   <!-- the specific template for the current admin function comes here -->
+    <fieldset>
+        <legend><xar:mlstring>View Example Items</xar:mlstring></legend>
 
-    <table class="xar-fullwidth">
-        <tr>
-            <th>
-                <xar:mlstring>Example Name</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Example Number</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Example Options</xar:mlstring>
-            </th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-                #$item.name#
-            </td>
-            <td>
-                #$item.number#
-            </td>
-            <td class="xar-align-center">
-               <xar:if condition="empty($item['editurl'])">
-                   <xar:mlstring>Edit</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
-               </xar:if>
-               |
-               <xar:if condition="empty($item['deleteurl'])">
-                   <xar:mlstring>Delete</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
-               </xar:if>
-            </td>
-        </tr>
-        </xar:foreach>
-    </table>
+      <!--
+          // display a status message to the user if an action has been 
+          // taken on an item
+      -->
+      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+          <p>#xarSessionGetVar('statusmsg')#</p>
+      </xar:if>
+     <!-- the specific template for the current admin function comes here -->
 
-    <div class="xar-align-center xar-padding-thick">
-        <!-- add the pager here -->
-        #$pager#
-    </div>
+      <table class="xar-fullwidth">
+          <tr>
+              <th>
+                  <xar:mlstring>Example Name</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Example Number</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Example Options</xar:mlstring>
+              </th>
+          </tr>
+          <xar:foreach in="$items" value="$item">
+          <tr>
+              <td>
+                  #$item.name#
+              </td>
+              <td>
+                  #$item.number#
+              </td>
+              <td class="xar-align-center">
+                 <xar:if condition="empty($item['editurl'])">
+                     <xar:mlstring>Edit</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.editurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Edit</xar:mlstring></a>
+                 </xar:if>
+                 |
+                 <xar:if condition="empty($item['deleteurl'])">
+                     <xar:mlstring>Delete</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
+                 </xar:if>
+              </td>
+          </tr>
+          </xar:foreach>
+      </table>
+      <!-- We could add a xar:sec here on AddExample to hide this link -->
+      <a href="&xar-modurl-example-admin-new;" onclick="return loadContent(this.href,'example_edit_or_add');">
+        <xar:mlstring>Add new item</xar:mlstring>
+      </a>
+      <div class="xar-align-center xar-padding-thick">
+          <!-- add the pager here -->
+          #$pager#
+      </div>
+    </fieldset>
+      
+    <!-- Editting area will get filled by xmlhttp requests -->
+    <div id="example_edit_or_add"></div>
 </div>
 <!-- 
     // clear the status message

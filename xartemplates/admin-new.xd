@@ -26,7 +26,6 @@
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>New</xar:mlstring></h2>
 
     <!-- the specific template for the current admin function comes here -->
 
@@ -35,7 +34,7 @@
         // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form id="example_edit_or_add" method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 

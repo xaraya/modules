@@ -67,8 +67,8 @@ function example_adminapi_getmenulinks()
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
-            'title' => xarML('View all example items that have been added.'),
-            'label' => xarML('View Items'));
+            'title' => xarML('View example item, with options to modify and delete them.'),
+            'label' => xarML('Manage Items'));
     }
     /* Security Check */
     if (xarSecurityCheck('AdminExample', 0)) {

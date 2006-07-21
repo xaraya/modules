@@ -7,7 +7,6 @@
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
-  <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
   <!--
       display a status message to the user if an action has been
       taken on an item
