@@ -15,7 +15,9 @@
 
 /**
  * Initialisation function
-*/
+ * @return bool true on success of init
+ * @throws XAR_SYSTEM_EXCEPTION
+ */
 function authldap_init()
 {
     // Make sure the LDAP PHP extension is available
@@ -56,7 +58,7 @@ function authldap_init()
 */
 
     authldap_createdb();
-    
+
     // Initialization successful
     return true;
 }
@@ -64,7 +66,7 @@ function authldap_init()
 /**
  * Module upgrade function
  *
- *
+ * @return bool true on success of upgrade
  */
 function authldap_upgrade($oldVersion)
 {
@@ -85,15 +87,15 @@ function authldap_delete()
   // Get database information
   $dbconn =& xarDBGetConn();
   $tables =& xarDBGetTables();
-  
+
   //Load Table Maintainance API
   xarDBLoadTableMaintenanceAPI();
-  
+
   // Generate the SQL to drop the table using the API
   $query = xarDBDropTable($tables['authldap_usercache']);
   if (empty($query)) return;
   if (!$dbconn->Execute($query)) return;
-  
+
   // Remove module variables
   // Done automatically
   //     xarModDelVar('authldap','add_user');
@@ -101,28 +103,28 @@ function authldap_delete()
   //     xarModDelVar('authldap','add_user_email');
   //     xarModDelVar('authldap','store_user_password');
   //     xarModDelVar('authldap','failover');
-  
+
   // Remove authldap to Site.User.AuthenticationModules in xar_config_vars
   $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
   $authModulesUpdate = array();
-  
+
   // Loop through current auth modules and remove 'authldap'
   foreach ($authModules as $authType) {
     if ($authType != 'authldap')
       $authModulesUpdate[] = $authType;
   }
   xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
-  
+
   // Deletion successful
   return true;
 }
 
-function authldap_createdb() 
+function authldap_createdb()
   {
   // Get database setup
   $dbconn =& xarDBGetConn();
   $tables =& xarDBGetTables();
-  
+
   //Load Table Maintainance API
   xarDBLoadTableMaintenanceAPI();
 
@@ -151,7 +153,7 @@ function authldap_createdb()
 
 }
 
-function authldap_initgroupsvars() 
+function authldap_initgroupsvars()
   {
   include_once('modules/authldap/xarincludes/default_variables.php');
   foreach($default_groups_variables as $variable => $default_value)
