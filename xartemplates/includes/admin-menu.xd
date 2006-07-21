@@ -52,7 +52,11 @@
         </dd>
     </xar:sec>
     <xar:sec mask="DeleteExample" catch="false">
-        <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
+        <xar:if condition="$activetab=='view' or $activetab=='modify' or $activetab=='delete'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">''</xar:set>
+        </xar:if>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-example-admin-view;" onclick="#$onclick#" >
                 <xar:mlstring>View Items</xar:mlstring>
