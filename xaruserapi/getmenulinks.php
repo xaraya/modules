@@ -15,13 +15,10 @@
  * utility function pass individual menu items to the main menu
  *
  * @author MichelV
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function maxercalls_userapi_getmenulinks()
 {
-    // First we need to do a security check to ensure that we only return menu items
-    // that we are suppose to see.
     if (xarSecurityCheck('ViewMaxercalls', 0)) {
         $menulinks[] = Array('url' => xarModURL('maxercalls',
                 'user',
@@ -44,7 +41,7 @@ function maxercalls_userapi_getmenulinks()
     // If we return nothing, then we need to tell PHP this, in order to avoid an ugly
     // E_ALL error.
     if (empty($menulinks)) {
-        $menulinks = '';
+        $menulinks = array();
     }
     // The final thing that we need to do in this function is return the values back
     // to the main menu for display.

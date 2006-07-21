@@ -18,7 +18,7 @@
  * @param  $args ['callid'] ID of the item
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_deletecall($args)
 {

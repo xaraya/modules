@@ -17,7 +17,7 @@
  * @author the Maxercalls module development team
  * @returns integer
  * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  * @TODO Deprecate?
  */
 function maxercalls_adminapi_countitems()

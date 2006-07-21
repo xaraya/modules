@@ -17,13 +17,11 @@
  * @param  $args ['calldate'] date of the call
  * @param  $args ['calltime'] time of the call
  * @param  $args ['owner'] owner indicated
- * @returns int
- * @return maxercalls item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return int maxercalls item ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_create($args)
 {
-
     extract($args);
     // Argument check
     $invalid = array();

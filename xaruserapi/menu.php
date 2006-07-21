@@ -15,10 +15,10 @@
  * generate the common menu configuration
  *
  * @author MichelV <michelv@xarayahosting.nl>
+ * @return array
  */
 function maxercalls_userapi_menu()
 {
-    // Initialise the array that will hold the menu configuration
     $menu = array();
     // Specify the menu title to be used in your blocklayout template
     $menu['menutitle'] = xarML('View calls');

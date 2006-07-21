@@ -17,7 +17,7 @@
  * @author MichelV <michelv@xarayahosting.nl>
  * @param  $args ['callid'] ID of the item
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @deprecated feb 2006
  */
 function maxercalls_adminapi_delete($args)

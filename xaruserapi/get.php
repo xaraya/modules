@@ -16,16 +16,13 @@
  *
  * @author the Maxercalls module development team
  * @param  $args ['callid'] id of maxercalls item to get
- * @returns array
- * @return item array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @return array item array, or false on failure
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION, ID_NOT_EXIST
  */
 function maxercalls_userapi_get($args)
 {
     extract($args);
-    // Argument check - make sure that all required arguments are present and
-    // in the right format, if not then set an appropriate error message
-    // and return
+    // Argument check
     if (!isset($callid) || !is_numeric($callid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'get', 'Maxercalls');

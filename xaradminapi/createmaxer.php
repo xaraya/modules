@@ -22,7 +22,7 @@
  * @param int $args ['status']
  * @param string $args['remark'] Additional info on maxer
  * @return int maxercalls item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_createmaxer($args)
 {

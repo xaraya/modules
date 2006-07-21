@@ -20,7 +20,7 @@
  * @param  $args ['maxerid'] id of maxercalls item to get
  * @returns array
  * @return item array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function maxercalls_userapi_getmaxer($args)
 {

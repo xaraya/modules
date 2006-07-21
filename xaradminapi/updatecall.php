@@ -18,7 +18,7 @@
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_updatecall($args)
 {
@@ -41,10 +41,7 @@ function maxercalls_adminapi_updatecall($args)
             new SystemException($msg));
         return;
     }
-    // The user API function is called.  This takes the item ID which
-    // we obtained from the input and gets us the information on the
-    // appropriate item.  If the item does not exist we post an appropriate
-    // message and return
+    // Get the call
     $item = xarModAPIFunc('maxercalls',
         'user',
         'get',

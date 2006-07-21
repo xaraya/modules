@@ -18,7 +18,7 @@
  *
  * @author Brian McGilligan
  * @param $args['itemtype'] - Item type
- * @returns list of items of the item type
+ * @return list of items of the item type
  */
 function maxercalls_userapi_gets($args)
 {

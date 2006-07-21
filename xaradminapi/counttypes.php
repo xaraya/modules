@@ -15,26 +15,18 @@
  * utility function to count the number of items held by this module
  *
  * @author the Maxercalls module development team
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @return int number of items held by this module
+ * @throws DATABASE_ERROR
  */
 function maxercalls_adminapi_counttypes()
 {
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn() we
-    // currently just want the first item, which is the official database
-    // handle.  For xarDBGetTables() we want to keep the entire tables array
-    // together for easy reference later on
-    $dbconn = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $maxercallstypestable = $xartable['maxercalls_types'];
-    // Get item - the formatting here is not mandatory, but it does make the
-    // SQL statement relatively easy to read.  Also, separating out the sql
-    // statement from the Execute() command allows for simpler debug operation
-    // if it is ever needed
+    // Count the number of types
     $query = "SELECT COUNT(1)
             FROM $maxercallstypestable";
     // If there are no variables you can pass in an empty array for bind variables
