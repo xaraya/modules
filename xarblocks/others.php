@@ -62,7 +62,7 @@ function example_othersblock_display($blockinfo)
     }
 
     /* Security check */
-    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['name'])) {return;}
 
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be

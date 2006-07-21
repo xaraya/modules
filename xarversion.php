@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'example'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '36';
-$modversion['version']        = '1.5.0'; /* three point version number */
+$modversion['version']        = '1.5.1'; /* three point version number */
 $modversion['displayname']    = xarML('Example');
 $modversion['description']    = 'Documented example and template for new modules';
 $modversion['credits']        = 'xardocs/credits.txt';

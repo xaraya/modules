@@ -219,9 +219,9 @@ function example_init()
      */
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
-    $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
+    $query = "SELECT DISTINCT i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
     $instances = array(
-        array('header' => 'Example Block Title:',
+        array('header' => 'Example Block Name:',
             'query' => $query,
             'limit' => 20
             )
@@ -313,7 +313,21 @@ function example_upgrade($oldversion)
              */
             xarModSetVar('example', 'useModuleAlias',false);
             xarModSetVar('example','aliasname','');
-        case '1.5.0': /* current version */
+        case '1.5.0':
+          /* Redefine the block_instances on Name rather than Title. 
+             Title is a displayable text in the user gui and can also be translated */
+          $instancestable = $xartable['block_instances'];
+          $typestable = $xartable['block_types'];
+          $query = "SELECT DISTINCT i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
+          $instances = array(
+             array('header' => 'Example Block Name:',
+             'query' => $query,
+             'limit' => 20
+               )
+        );
+        xarDefineInstance('example', 'Block', $instances);
+
+        case '1.5.1': /* current version */
             /* Code to upgrade from version 1.5.0 goes here */
             /* We break out now, being at the end of the upgrade process */
             break;
