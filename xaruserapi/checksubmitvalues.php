@@ -13,7 +13,9 @@
  */
 
 /**
- * checksubmitvalues
+ * Check submitted values and throw an addressbook exception
+ *
+ * @return bool True on correct result, false on error
  */
 function addressbook_userapi_checksubmitvalues($args)
 {
