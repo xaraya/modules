@@ -1,0 +1,18 @@
+#!/bin/sh
+
+head=`svn info | grep Revision | sed -e 's/Revision: //'`
+
+# Specific build settings for Xaraya
+# - specific xarbuild.xml file, basically a stripped down build.xml
+# - no docs, src
+# - based on svn version
+# - specific release dir for module
+# - profile specific (copy of original browserio.profile.js
+ant -f xarbuild.xml \
+    -Ddocless=true \
+    -Dnosrc=true \
+    -Dnosrc=true \
+    -Dnoflash=true \
+    -Dversion=0.3.1svn-$head \
+    -Drelease_dir='../../../xarincludes/dojo' \
+    -Dprofile=xaraya release intern-strings

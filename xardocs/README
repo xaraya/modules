@@ -1,0 +1,37 @@
+This module has a very simple job: activate the dojo javascript framework
+in your Xaraya installation.
+
+The module as is needs no configuration. Just install it and the included,precompiled version of dojo (http://www/dojotoolkit.org) will be active in your Xaraya installation.
+
+IMPORTANT notes for the use of dojo within Xaraya:
+
+dojo supports a packaging system which allows to precompile and include some or all of its modules into an easily included 'dojo.js' file, where modules which are not compiled in are loaded on demand (under developer control)
+The module includes the additional files which were added to the dojo build environment to precompile it with a so called 'profile'
+
+These files are:
+1. lib/dojo/buildscripts/profiles/xaraya.profile.js
+2. lib/dojo/buildscripts/xarbuild
+3. lib/dojo/buildscripts/xarbuild.xml
+
+The xaraya.profile.js profile is verbatim copy of the browserio standard profile of dojo.
+
+If you want to change this profile there is some work involved. 
+
+For the impatient:
+
+1. cd modules/dojo/lib
+2. svn co http://svn.dojotoolkit.org/dojo/trunk dojo
+...[svn gets all source files for dojo...]  
+3. cd dojo/buildscripts
+4. vi profiles/xaraya.profile.js
+5. ./xarbuild
+
+This will generate a new xarincludes/dojo directory with the precompiled dojo.js and the minimal required files to run that profile *WITHOUT* the 'load' on demand sources copied.
+
+If you want this load on demand, you will have to adapt xarbuild.xml to your
+likings.
+
+The above should get you started, all other info is to be found at the excellent www.dojotoolkit.org site.
+
+enjoy!
+marcel
