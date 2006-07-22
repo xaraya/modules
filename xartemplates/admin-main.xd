@@ -19,17 +19,17 @@
     <li><xar:mlstring>Providing documentation in the functions and template files for those that wish to learn about standard Xaraya Module development.</xar:mlstring></li>
 
   </ol>
-  <p><xar:mlstring>The example module demonstrates:</xar:mlstring>
+  <p><xar:mlstring>The Example module demonstrates:</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
-    <li><xar:mlstring>templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
-    <li><xar:mlstring>examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
+    <li><xar:mlstring>Examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
+    <li><xar:mlstring>Templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
+    <li><xar:mlstring>Examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
     <li>
       <xar:mlstring>A simple demonstration on how to use xmlhttp requests (aka 'ajax'). The <strong>admin</strong> interface uses xml http requests to build up the
-        editting and deletion interface.
+        editing and deletion interface.
       </xar:mlstring>
-      <xar:mlstring>For mor detailed info, look in the templates (e.g. xartemplates/includes/admin-menu.xd) in this module</xar:mlstring>
+      <xar:mlstring>For more detailed info, look in the templates (e.g. xartemplates/includes/admin-menu.xd) in this module.</xar:mlstring>
     </li>
   </ul>
 

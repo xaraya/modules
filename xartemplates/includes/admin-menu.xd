@@ -13,7 +13,7 @@
     * the browser has javascript disabled or
     * do not support javascript or
     * do not support xmlhttp requests
-  
+
   Things to notice for the different behaviour:
     * speed difference
     * the url in the address area of your browser
@@ -35,7 +35,7 @@
   xarRequestInfo() returns the modulename, type and function in an array for
   the function we want the third element (i.e. at index 2)
 </xar:comment>
-<xar:set name="request">xarRequestGetInfo()</xar:set> 
+<xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 
 <div>
@@ -61,7 +61,7 @@
           </a>
         </dd>
     </xar:sec>
-    
+
     <xar:comment>
       The overview function may use the admin-main template so we test
       to see if $activetab is equal to 'main' too and set the tab active if it matches.
