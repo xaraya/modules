@@ -1,0 +1,7 @@
+<xar:comment>
+  This templates is called once during a request. It reacts on the first 
+  module load event. It just adds dojo to the included js in the head of
+  the active page. I's probably smart to be very careful about what output
+  this template generates, either directly or indirectly.
+</xar:comment>
+<xar:base-include-javascript filename="dojo/dojo.js" module="dojo" position="head"/>

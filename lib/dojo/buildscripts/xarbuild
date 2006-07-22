@@ -14,5 +14,5 @@ ant -f xarbuild.xml \
     -Dnosrc=true \
     -Dnoflash=true \
     -Dversion=0.3.1svn-$head \
-    -Drelease_dir='../../../xarincludes/dojo' \
+    -Drelease_dir='../../../xartemplates/includes/dojo' \
     -Dprofile=xaraya release intern-strings
