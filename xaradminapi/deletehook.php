@@ -21,7 +21,7 @@
  * @param $args['extrainfo'] extra information
  * @returns array
  * @return $extrainfo, like any hook function should :)
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_deletehook($args)
 {

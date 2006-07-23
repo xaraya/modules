@@ -16,8 +16,7 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Pubsub module development team
  * @return array containing the menulinks for the main menu items.
  */
 function pubsub_adminapi_getmenulinks()
@@ -49,6 +48,5 @@ function pubsub_adminapi_getmenulinks()
 
     return $menulinks;
 
-} // END getmenulinks
-
+}
 ?>

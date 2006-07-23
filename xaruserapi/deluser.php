@@ -18,7 +18,7 @@
  * @param $args['pubsubid'] ID of the subscription to delete
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_deluser($args)
 {

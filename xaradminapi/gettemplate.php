@@ -18,7 +18,7 @@
  * @param $args['templateid'] the ID of the item
  * @returns array
  * @return array of template information
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_gettemplate($args)
 {

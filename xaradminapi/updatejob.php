@@ -22,7 +22,7 @@
  * @param $args['status']   the new status for this job
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_updatejob($args)
 {

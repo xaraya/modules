@@ -10,68 +10,70 @@
         <input type="hidden" name="action" value="process" />
         <input type="submit" value="#xarML('Process Queue')#" />
     </form>
-    
-    <table width="100%" border="0" cellspacing="0" cellpadding="2">
-    <tr>
-        <th>
-            <xar:mlstring>Module Name</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Item Type</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Category</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Object ID</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Subscriber</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Status</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Action</xar:mlstring>
-        </th>
-    </tr>
-    <xar:if condition="count($items) gt 0">
-    <xar:foreach in="$items" value="$item">
-    <tr>
-        <td>
-            #$item['modname']#
-        </td>
-        <td>
-            #$item['itemtype']#
-        </td>
-        <td>
-            #$item['catname']#
-        </td>
-        <td>
-            #$item['objectid']#
-        </td>
-        <td>
-            #$item['username']#
-        </td>
-        <td>
-            #$item['status']#
-        </td>
-        <td>
-            <a href="#xarModURL('pubsub','admin','viewq',array('handlingid'=>$item['handlingid'],'action' => 'delete','authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
-        </td>
-     </tr>
-     </xar:foreach>
-    <xar:else />
-    <tr>
-      <td colspan="5" align="left">
-      <br />
-      <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
-      </td>
-    </tr>
-    </xar:if>
-</table>
-    </div>
 
+    <table>
+    <thead>
+        <tr>
+            <th>
+                <xar:mlstring>Module Name</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Item Type</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Category</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Object ID</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Subscriber</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Status</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Action</xar:mlstring>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <xar:if condition="count($items) gt 0">
+        <xar:foreach in="$items" value="$item">
+            <tr>
+                <td>
+                    #$item['modname']#
+                </td>
+                <td>
+                    #$item['itemtype']#
+                </td>
+                <td>
+                    #$item['catname']#
+                </td>
+                <td>
+                    #$item['objectid']#
+                </td>
+                <td>
+                    #$item['username']#
+                </td>
+                <td>
+                    #$item['status']#
+                </td>
+                <td>
+                    <a href="#xarModURL('pubsub','admin','viewq',array('handlingid'=>$item['handlingid'],'action' => 'delete','authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
+                </td>
+             </tr>
+         </xar:foreach>
+    <xar:else />
+        <tr>
+          <td colspan="5" align="left">
+          <br />
+          <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
+          </td>
+        </tr>
+    </xar:if>
+    </tbody>
+</table>
 </div>
 <!-- add the pager here -->
 #$pager#

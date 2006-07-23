@@ -17,9 +17,8 @@
  * Get the subscribers for a particular event
  *
  * @param $args['eventid'] the event id we're looking for
- * @returns array
  * @return array of events
-*/
+ */
 function pubsub_adminapi_getsubscribers($args)
 {
     $subscribers = array();

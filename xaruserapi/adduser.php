@@ -20,7 +20,7 @@
  * @param $args['userid'] UID of User to subscribe OR
  * @param $args['email'] EMail address of anonymous user to subscribe
  * @return bool pubsub ID on success, false if not
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_adduser($args)
 {

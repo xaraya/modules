@@ -17,7 +17,7 @@
  * Process the queue and run all pending jobs (executed by the scheduler module)
  * @returns bool
  * @return number of jobs run on success, false if not
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function pubsub_adminapi_processq($args)
 {

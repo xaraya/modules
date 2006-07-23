@@ -23,7 +23,7 @@
  * @param $args['templateid'] the template id for the jobs
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_processevent($args)
 {

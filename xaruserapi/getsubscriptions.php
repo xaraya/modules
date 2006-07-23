@@ -17,7 +17,7 @@
  * return a pubsub user's subscriptions
  * @param $args['userid'] ID of the user whose subscriptions to return
  * @returns array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_getsubscriptions($args)
 {

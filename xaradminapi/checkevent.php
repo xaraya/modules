@@ -23,7 +23,7 @@
  * @param $args['groupdescr'] the group description for the event (currently unused)
  * @returns int
  * @return event ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_checkevent($args)
 {

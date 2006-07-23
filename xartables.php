@@ -19,7 +19,7 @@
  * @access public
  * @param none
  * @returns bool
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
 */
 function pubsub_xartables()
 {

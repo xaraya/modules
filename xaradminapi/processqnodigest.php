@@ -18,7 +18,7 @@
  * nodigest - that is one email per event
  * @returns bool
  * @return number of jobs run on success, false if not
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function pubsub_adminapi_processqnodigest($args)
 {

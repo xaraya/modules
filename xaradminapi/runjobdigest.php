@@ -21,7 +21,7 @@
  * @param $args['templateid'] the template id for this job
  * @returns bool
  * @return true on success, false on failure
- * @raise BAD_PARAM, DATABASE_ERROR
+ * @throws BAD_PARAM, DATABASE_ERROR
  */
 function pubsub_adminapi_runjobdigest($args)
 {

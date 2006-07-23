@@ -15,9 +15,8 @@
  */
 /**
  * Get the queue of pending events
- * @returns array
- * @return list of events waiting to be processed
- * @raise DATABASE_ERROR
+ * @return array list of events waiting to be processed
+ * @throws DATABASE_ERROR
  */
 function pubsub_adminapi_getq($args)
 {

@@ -19,7 +19,7 @@
  * @access public
  * @param none
  * @returns bool
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function pubsub_init()
 {
@@ -197,7 +197,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
  * @access public
  * @param oldversion float "Previous version upgrading from"
  * @returns bool
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function pubsub_upgrade($oldversion)
 {
@@ -400,7 +400,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
  * @access public
  * @param none
  * @returns bool
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
  */
 function pubsub_delete()
 {
