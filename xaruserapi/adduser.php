@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub user addUser
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
-*/
-
+ */
 /**
  * Add a user's subscription to an event
  * @param $args['eventid'] Event to subscribe to
@@ -52,7 +51,7 @@ function pubsub_userapi_adduser($args)
     if ( (!isset($userid) || !is_numeric($userid)) && (isset($email) || !empty($email)) )
     {
         $userid = -1;
-        
+
         //TODO: EMail validation, is this a valid email address
     }
 

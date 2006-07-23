@@ -1,16 +1,29 @@
 <?php
-
+/**
+ * Pubsub module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
+ * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
+ */
 /**
  * Modify the pubsub templates
- * 
+ *
  * @author mikespub
- * @access public 
+ * @access public
  * @param no $ parameters
  * @return true on success or void on failure
  * @throws no exceptions
  */
 function pubsub_admin_modifytemplates()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminPubSub')) return;
 
@@ -72,7 +85,7 @@ function pubsub_admin_modifytemplates()
             break;
 
         case 'create':
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             if (!xarVarFetch('name','str:1:',$name)) return;
             if (!xarVarFetch('template','str:1:',$template)) return;
             if (!xarModAPIFunc('pubsub','admin','addtemplate',
@@ -90,7 +103,7 @@ function pubsub_admin_modifytemplates()
             break;
 
         case 'update':
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             if (!xarVarFetch('name','str:1:',$name)) return;
             if (!xarVarFetch('template','str:1:',$template)) return;
             if (!xarModAPIFunc('pubsub','admin','updatetemplate',
@@ -109,7 +122,7 @@ function pubsub_admin_modifytemplates()
             break;
 
         case 'confirm':
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             if (!xarModAPIFunc('pubsub','admin','deltemplate',
                                array('templateid' => $templateid))) {
                 return;
@@ -119,7 +132,7 @@ function pubsub_admin_modifytemplates()
             break;
 
         case 'recompile':
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             foreach ($templates as $id => $templatename) {
                 $info = xarModAPIFunc('pubsub','admin','gettemplate',
                                       array('templateid' => $id));

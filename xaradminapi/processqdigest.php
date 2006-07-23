@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub Admin API
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * Process the queue and run all pending jobs (executed by the scheduler module)
  * @returns bool
@@ -66,12 +65,12 @@ function pubsub_adminapi_processqdigest($args)
                             'pubsubid' => $pubsubid,
                             'objectid' => $objectid,
                             'templateid' => $templateid));
-        if (!isset($digest[$message['email']])) {  
+        if (!isset($digest[$message['email']])) {
             $digest[$message['email']] = $message['content'] ;
         } else {
             $digest[$message['email']] .= "\n\n".$message['content'];
         }
-        if (!isset($name[$message['email']])) {  
+        if (!isset($name[$message['email']])) {
             $name[$message['email']] = $message['name'];
         }
 //      $handle[$message['email']][] = $handlingid;
@@ -90,7 +89,7 @@ function pubsub_adminapi_processqdigest($args)
     $subject = xarML('New articles from').' '.$sitename;
 
     foreach ($digest as $email => $content) {
-     
+
     $tplData = array();
     $tplData['contents'] = $content;
 
@@ -106,7 +105,7 @@ function pubsub_adminapi_processqdigest($args)
                                  'from'     => $fmail,
                                  'fromname' => $fname))) return;
         /*
-        foreach($handle[$email] as $key=>$value) { 
+        foreach($handle[$email] as $key=>$value) {
             if (!isset($handleverify[$handlingid])) {
                 $handleverify[$value] = 1;
             } else {
@@ -119,7 +118,7 @@ function pubsub_adminapi_processqdigest($args)
 //      if ($value = $handleverify[$handlingid]) {
            xarModAPIFunc('pubsub','admin','deljob',
                          array('handlingid' => $handlingid));
-//        } 
+//        }
     }
     return $count;
 

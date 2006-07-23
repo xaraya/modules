@@ -7,59 +7,55 @@
         <legend>
             <xar:mlstring>Add Subscribers</xar:mlstring>
         </legend>
-    <div class="xar-align-center;">
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="2">
-    <tr>
-        <th>
-            <xar:mlstring>Module Name</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Item Type</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Category</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Subscribers</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Action</xar:mlstring>
-        </th>
-    </tr>
-    <xar:if condition="count($items) gt 0">
-    <xar:foreach in="$items" value="$item">
-    <tr>
-        <td>
-            #$item['modname']#
-        </td>
-        <td>
-            #$item['itemtype']#
-        </td>
-        <td>
-            #$item['catname']#
-        </td>
-        <td>
-            #$item['numsubscribers']#
-        </td>
-        <td>
-            <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#"><xar:mlstring>Subscribers</xar:mlstring></a>
-        </td>
-     </tr>
-     </xar:foreach>
-    <xar:else />
-    <tr>
-      <td colspan="5" align="left">
-      <br />
-      <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
-      </td>
-    </tr>
-    </xar:if>
-</table>
-</fieldset>
-    </div>
-
-
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <th>
+                    <xar:mlstring>Module Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Item Type</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Category</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Subscribers</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Action</xar:mlstring>
+                </th>
+            </tr>
+            <xar:if condition="count($items) gt 0">
+                <xar:foreach in="$items" value="$item">
+                    <tr>
+                        <td>
+                            #$item['modname']#
+                        </td>
+                        <td>
+                            #$item['itemtype']#
+                        </td>
+                        <td>
+                            #$item['catname']#
+                        </td>
+                        <td>
+                            #$item['numsubscribers']#
+                        </td>
+                        <td>
+                            <a href="&xar-modurl-pubsub-admin-viewsubscribers;&amp;eventid=#$item['eventid']#"><xar:mlstring>Subscribers</xar:mlstring></a>
+                        </td>
+                    </tr>
+                </xar:foreach>
+            <xar:else />
+                <tr>
+                  <td colspan="5" align="left">
+                  <br />
+                  <strong><xar:mlstring>No subscriptions found</xar:mlstring></strong>
+                  </td>
+                </tr>
+            </xar:if>
+        </table>
+    </fieldset>
 
     <form action="&xar-modurl-pubsub-admin-addsubscriber;" method="post">
     <fieldset>

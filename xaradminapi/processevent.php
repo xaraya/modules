@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub Admin API
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * process a pubsub event, by adding a job for each subscriber to the process queue
  * @param $args['modid'] the module id for the event
@@ -90,10 +89,10 @@ function pubsub_adminapi_processevent($args)
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
-        for (; !$result->EOF; $result->MoveNext()) 
+        for (; !$result->EOF; $result->MoveNext())
         {
             list($pubsubid, $xar_cid) = $result->fields;
-            
+
             if( $xar_cid == $cid || in_array($xar_cid, $ancestors))
             {
                 $markSubscriptions[] = $pubsubid;
@@ -116,10 +115,10 @@ function pubsub_adminapi_processevent($args)
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
-        for (; !$result->EOF; $result->MoveNext()) 
+        for (; !$result->EOF; $result->MoveNext())
         {
             list($pubsubid) = $result->fields;
-            
+
             $markSubscriptions[] = $pubsubid;
         }
     }

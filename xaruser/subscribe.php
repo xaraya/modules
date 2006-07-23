@@ -1,46 +1,39 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub User Interface
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * subscribe user to a pubsub element
  * @param $args['modid'] module ID of event
  * @param $args['cid'] cid of event
  * @param $args['itemtype'] itemtype of event
- * @returns output
- * @return output with pubsub information
+ * @return bool true output with pubsub information
  */
 function pubsub_user_subscribe()
 {
-    // do nothing if user not logged in otherwise subscribe 
+    // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
     if (xarUserIsLoggedIn()) {
         $userid = xarUserGetVar('uid');
     } else {
         return;
     }
+    if (!xarVarFetch('modid',      'isset', $modid,     false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cid',        'isset', $cid,       false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype',   'isset', $itemtype,  false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl',  'isset', $returnurl, false,XARVAR_NOT_REQUIRED)) return;
 
-    list($modid
-        ,$cid
-        ,$itemtype
-        ,$returnurl
-        ) = xarVarCleanFromInput('modid'
-                                ,'cid'
-                                ,'itemtype'
-                                ,'returnurl'
-                                );
     $returnurl = rawurldecode($returnurl);
 
     // Argument check

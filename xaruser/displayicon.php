@@ -1,25 +1,24 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub User Interface
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * display pubsub element next to a registered event
  *  - A subscribe icon is if the user is registered
  *  - Nothing is displayed for an unregisted user
  *  - An unsubscribe option is displayed to users currently subscribed
- * 
+ *
  * @param $args['extrainfo'] category, module, itemtype and URL to return
  * @param $args['layout'] layout to use (icon or text) - not when using hooks
  * @returns output
@@ -29,7 +28,7 @@ function pubsub_user_displayicon($args)
 {
     extract($args);
 
-    // do nothing if user not logged in otherwise subscribe 
+    // do nothing if user not logged in otherwise subscribe
     // the currently logged in user
     if (xarUserIsLoggedIn()) {
         $userid = xarUserGetVar('uid');
@@ -47,9 +46,9 @@ function pubsub_user_displayicon($args)
     if(!isset($extrainfo) || !is_array($extrainfo)) {
         $invalid[] = 'extrainfo';
     } elseif(isset($extrainfo['cid'])) {
-        
+
         $cid = $extrainfo['cid'];
-        
+
         if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
             $cid = $extrainfo['cid'];
         }
@@ -72,10 +71,10 @@ function pubsub_user_displayicon($args)
             $extra = $extrainfo['extra'];
         }
     } else {
-        // May only subscribe to categories, no category, pubsub does nothing.        
+        // May only subscribe to categories, no category, pubsub does nothing.
         return array('donotdisplay'=>TRUE);
     }
-    
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'user', 'displayicon','pubsub');
@@ -134,7 +133,7 @@ function pubsub_user_displayicon($args)
          * If we get a hit on pubsub_reg, that mean we are already subscribed
          */
         $data['subscribe'] = 1;
-    } else { 
+    } else {
         $data['subscribe'] = 0;
     }
 
@@ -147,11 +146,11 @@ function pubsub_user_displayicon($args)
                              ,'subaction' => $data['subscribe']
                              );
 
-    $data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);                             
-    $data['subTEXT'] = xarML ('Subscribe');                             
+    $data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
+    $data['subTEXT'] = xarML ('Subscribe');
 
-    $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);                             
-    $data['unsubTEXT'] = xarML ('Unsubscribe');                             
+    $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
+    $data['unsubTEXT'] = xarML ('Unsubscribe');
 
     if (!empty($layout)) {
         $data['layout'] = $layout;

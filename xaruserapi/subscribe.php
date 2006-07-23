@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub User Interface
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * subscribe user to a pubsub element
  * @param $args['modid'] module ID of event
@@ -31,7 +30,7 @@
 function pubsub_userapi_subscribe($args)
 {
     extract($args);
-    
+
     // Argument check
     $invalid = array();
     if (!isset($modid))      { $invalid[] = 'modid'; }
@@ -45,7 +44,7 @@ function pubsub_userapi_subscribe($args)
                        new SystemException($msg));
         return;
     }
-    
+
     if( !isset($userid) && isset($email) && !empty($email) )
     {
         $userid = -1;

@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub Initialise Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * initialise the pubsub module
  *
@@ -208,7 +207,7 @@ function pubsub_upgrade($oldversion)
         case '1.0':
             $dbconn =& xarDBGetConn();
             $prefix = xarDBGetSiteTablePrefix();
-            
+
             $xarTables =& xarDBGetTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
             $pubsubtemplatetable = $prefix.'_pubsub_template';
@@ -216,7 +215,7 @@ function pubsub_upgrade($oldversion)
             // Drop the template table
             $query = xarDBDropTable($pubsubtemplatetable);
             $result =& $dbconn->Execute($query);
-            
+
             // Add a column to the register table
             $query = xarDBAlterTable($pubsubregtable,
                                      array('command' => 'add',
@@ -373,10 +372,10 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
         case '1.4.0':
             $dbconn =& xarDBGetConn();
             $prefix = xarDBGetSiteTablePrefix();
-            
+
             $xarTables =& xarDBGetTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
-            
+
             // Add a column to the register table
             $query = xarDBAlterTable($pubsubregtable,
                                      array('command' => 'add',
@@ -385,7 +384,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                                            'size' => 255,
                                            'null' => TRUE,
                                            'default' => ''));
-                                           
+
             $result = &$dbconn->Execute($query);
             if (!$result) return;
         default:

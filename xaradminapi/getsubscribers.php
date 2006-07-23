@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub User API
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
- * @author Garrett Hunter <garrett@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * Get the subscribers for a particular event
  *
@@ -55,7 +54,7 @@ function pubsub_adminapi_getsubscribers($args)
                     ,$pubsubregtable.xar_pubsubid AS pubsubid
                     ,$pubsubregtable.xar_email AS email
                     ,$pubsubregtable.xar_userid AS userid
-                FROM 
+                FROM
                     $modulestable
                     ,$pubsubeventstable
                     ,$pubsubregtable LEFT JOIN $rolestable ON ($pubsubregtable.xar_userid     = $rolestable.xar_uid)
@@ -77,7 +76,7 @@ function pubsub_adminapi_getsubscribers($args)
             ,$email
             ,$userid
            ) = $result->fields;
-        if (xarSecurityCheck('AdminPubSub', 0)) 
+        if (xarSecurityCheck('AdminPubSub', 0))
         {
             if( $userid == -1 )
             {
@@ -92,7 +91,7 @@ function pubsub_adminapi_getsubscribers($args)
             } else {
                 $displayname = '';
             }
-        
+
             $subscribers[] = array('username'  => $username
                                   ,'displayname' => $displayname
                                   ,'modname'   => $modname

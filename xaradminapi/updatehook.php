@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub Admin API
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * handle a pubsub 'update' event
  * update event for an item - hook for ('item','update','API')
@@ -64,9 +63,9 @@ function pubsub_adminapi_updatehook($args)
     if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
         if ($createwithstatus == 1 & $extrainfo['status'] >= 2 & $extrainfo['oldstatus']< 2) {
             $typeoftemplate = 'create';
-        } 
+        }
     }
-           
+
     $templateid = xarModGetVar('pubsub',"$modname.$itemtype.$typeoftemplate");
     if (!isset($templateid)) {
         $templateid = xarModGetVar('pubsub',"$modname.$typeoftemplate");

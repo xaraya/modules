@@ -1,3 +1,4 @@
+<xar:comment>license GPL http://www.gnu.org/licenses/gpl.html</xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" module="pubsub" file="admin-menu" />
@@ -42,10 +43,10 @@
         <xar:else />
       <input type="checkbox" name="allindigest" id="allindigest" value="1"  />
     </xar:if>
-        <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring> 
-        <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>  
-        </label>   
- </div> 
+        <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring>
+        <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>
+        </label>
+ </div>
     </fieldset>
 
     <fieldset>
@@ -64,14 +65,14 @@
             <strong>#$config['label']#</strong>
         </h4>
         <xar:if condition="substr($modname,0,8) eq 'articles'">
-          <div class="xar-form-input-wrapper-before">        
+          <div class="xar-form-input-wrapper-before">
             <input type="hidden" name="settings[#$modname#.createwithstatus]" value="0"  />
             <xar:if condition="!empty($config['createwithstatus'])">
               <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1" checked="checked" />
             <xar:else />
               <input type="checkbox" name="settings[#$modname#.createwithstatus]" id="settings_#$modname#_createwithstatus" value="1"  />
             </xar:if>
-            <label for="settings_#$modname#_createwithstatus" >            
+            <label for="settings_#$modname#_createwithstatus" >
               <xar:mlstring>Use create hook only when status is approved or frontpage (applicable only if the pubtype has a status field)</xar:mlstring>
             </label>
           </div>

@@ -1,10 +1,23 @@
 <?php
-
+/**
+ * Pubsub module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
+ * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
+ */
 /**
  * Update configuration
  */
 function pubsub_admin_updateconfig()
-{ 
+{
     // Get parameters
     xarVarFetch('settings','isset',$settings,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
@@ -15,13 +28,13 @@ function pubsub_admin_updateconfig()
     xarVarFetch('wrapper','isset',$wrapper,'', XARVAR_DONT_SET);
 
     // Security Check
-    if (!xarSecurityCheck('AdminPubSub')) return; 
+    if (!xarSecurityCheck('AdminPubSub')) return;
 
     if (isset($settings) && is_array($settings)) {
         foreach ($settings as $name => $value) {
             xarModSetVar('pubsub', $name, $value);
-        } 
-    } 
+        }
+    }
     if (isset($wrapper)) {
         xarModSetVar('pubsub','wrapper',$wrapper);
     } else {

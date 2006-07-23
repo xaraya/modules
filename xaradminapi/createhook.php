@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub Admin API
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * handle a pubsub 'create' event
  * create event for an item - hook for ('item','create','API')
@@ -62,13 +61,13 @@ function pubsub_adminapi_createhook($args)
     }
 
     if ($createwithstatus = xarModGetVar('pubsub',"$modname.$itemtype.createwithstatus") ) {
-        if ($createwithstatus == 1) { 
+        if ($createwithstatus == 1) {
             if (isset($extrainfo['status']) & $extrainfo['status'] < 2 ) {
                 return $extrainfo;
             }
-        }        
+        }
     }
-    
+
     $templateid = xarModGetVar('pubsub',"$modname.$itemtype.create");
     if (!isset($templateid)) {
         $templateid = xarModGetVar('pubsub',"$modname.create");
@@ -79,11 +78,11 @@ function pubsub_adminapi_createhook($args)
     }
 
     //FIXME: <garrett> During an article->create $extrainfo['cid'] does not exist. Instead
-    // the array $extrainfo['cids'] exists. Is this because an article can have 
+    // the array $extrainfo['cids'] exists. Is this because an article can have
     // multiple categories? - yes
     // Q: What is hcid? it's in the extrainfo... - hitcount id
-    // Q: If cid is an array, why are we returning a singleton? I think we should be 
-    // subscribing the user to all cats assoc'd with the article, thus creating 
+    // Q: If cid is an array, why are we returning a singleton? I think we should be
+    // subscribing the user to all cats assoc'd with the article, thus creating
     // multiple events - not create events, but process them instead :-)
     $cid = '';
     if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {

@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub admin viewSubscribers
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * Displays a list of subscribers to a given category. Provides an option
  * to manually remove a subscriber.
@@ -43,7 +42,7 @@ function pubsub_admin_viewsubscribers()
                            new SystemException($msg));
             return;
         }
-    } 
+    }
 
     $info = xarModAPIFunc('pubsub','admin','getevent',
                           array('eventid' => $eventid));

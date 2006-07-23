@@ -1,19 +1,18 @@
 <?php
 /**
- * File: $Id$
+ * Pubsub module
  *
- * Pubsub User Interface
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage Pubsub Module
+ * @link http://xaraya.com/index.php/release/181.html
+ * @author Pubsub Module Development Team
  * @author Chris Dudley <miko@xaraya.com>
  * @author Garrett Hunter <garrett@blacktower.com>
  */
-
 /**
  * subscribe user to a pubsub element
  * @param $modid module ID of event
@@ -53,7 +52,7 @@ function pubsub_user_modifysubscription()
                                ,'extra'   =>$extra
                                ,'userid'  =>$userid
                                ));
-            break; 
+            break;
         case 1:
             xarModAPIFunc('pubsub','user','subscribe',
                           array('modid'   =>$modid
@@ -63,11 +62,11 @@ function pubsub_user_modifysubscription()
                                ,'groupdescr'=>$groupdescr
                                ,'userid'  =>$userid
                                ));
-            break; 
+            break;
         default:
             // do nothing
             break;
-    } // end switch 
+    } // end switch
 
     xarResponseRedirect($returnurl);
     return true;
