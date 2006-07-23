@@ -522,6 +522,7 @@ removeRequires(dojo.getProperty("release_dir") + "/source.__package__.js")
             <fileset dir="${release_dir}" includes="dojo.js"/>
         </replaceregexp>
 
+      
         <!-- add copyright notice -->
         <replaceregexp match="^" byline="false" replace="${copyright}">
             <fileset dir="${release_dir}">
@@ -539,7 +540,12 @@ removeRequires(dojo.getProperty("release_dir") + "/source.__package__.js")
         stand-alone build that isn't being kicked off via release -->
         <copy file="../iframe_history.html" todir="${release_dir}/" />
         
-        
+        <replaceregexp match="\t" flags="g" replace="    ">
+            <fileset dir="${release_dir}">
+                <include name="dojo.js"/>
+                <include name="dojo.js.uncompressed.js"/>
+            </fileset>
+        </replaceregexp>
     </target>
     <!-- end compress task -->
 
@@ -624,6 +630,12 @@ internTemplateStrings(dojo.getProperty("dojoLoader"), dojo.getProperty("release_
         <copy overwrite="true" file="../iframe_history.html" todir="${release_dir}/"  preservelastmodified="true" />
 
         <copy file="${root}/LICENSE" todir="${release_dir}/"  preservelastmodified="true" />
+        <replaceregexp match="\t" flags="g" replace="    ">
+            <fileset dir="${release_dir}">
+                <include name="LICENSE"/>
+                <include name="iframe_history.html"/>
+            </fileset>
+        </replaceregexp>
     </target>
     <!-- end release task -->
     

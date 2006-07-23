@@ -87,7 +87,7 @@ if(!dj_undef("document", dojo._currentContext)){
 //TODOC:  HOW TO DOC THIS?
 dojo.version = {
     // summary: version number of this instance of dojo.
-    major: 0, minor: 3, patch: 1, flag: "svn-4855",
+    major: 0, minor: 3, patch: 1, flag: "svn-4880",
     revision: Number("$Rev: 4525 $".match(/[0-9]+/)[0]),
     toString: function(){
         with(dojo.version){

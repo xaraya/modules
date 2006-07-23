@@ -35,7 +35,7 @@ dojo._currentContext=this;
 if(!dj_undef("document",dojo._currentContext)){
 dojo._currentDocument=this.document;
 }
-dojo.version={major:0,minor:3,patch:1,flag:"svn-4855",revision:Number("$Rev: 4525 $".match(/[0-9]+/)[0]),toString:function(){
+dojo.version={major:0,minor:3,patch:1,flag:"svn-4880",revision:Number("$Rev: 4525 $".match(/[0-9]+/)[0]),toString:function(){
 with(dojo.version){
 return major+"."+minor+"."+patch+flag+" ("+revision+")";
 }
