@@ -3,5 +3,17 @@
   module load event. It just adds dojo to the included js in the head of
   the active page. I's probably smart to be very careful about what output
   this template generates, either directly or indirectly.
+  The first loads a js file for configuration of the framework, the second
+  activates dojo with that configuration.
 </xar:comment>
+<xar:comment> Configure the framework </xar:comment>
+<xar:base-include-javascript filename="dojo-config.js" module="dojo" position="head"/>
+
+<xar:comment> Load it </xar:comment>
 <xar:base-include-javascript filename="dojo/dojo.js" module="dojo" position="head"/>
+
+<xar:comment> 
+    Anything else goes probably here, in this case an implementation of the 
+    loadContent(href,tagtogo) function also in base/xartemplates/includes/xmlhttprequest.js
+</xar:comment>
+<xar:base-include-javascript filename="loadcontent-compat.js" module="dojo" position="head"/>

@@ -5,6 +5,23 @@
 <div class="xar-mod-body">
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
+      <xar:mlstring>This module activates the </xar:mlstring><a href="http://www.dojotoolkit.org">dojo javascript framework</a>
+      <xar:mlstring>When this module is active, the framework is automatically included for you.</xar:mlstring>
+      <xar:mlstring>No further configuration is needed.</xar:mlstring>
+  </p>
+  <h3><xar:mlstring>Configuration</xar:mlstring></h3>
+  <p>
+      Dojo has a package system where you can either load its modules on demand
+      or compile modules into the main javascript file. Included with this module
+      is a precompiled version of dojo.js, similar to the standard 'browserio' 
+      configuration, shipped with dojo. For all the details see the dojo website and the
+      file README in this module's xardocs directory. That file contains some
+      information on how you can change the configuration of dojo to make it
+      support more features than just the 'io' package.
+  </p>
+  <h3><xar:mlstring>What is supported by default?</xar:mlstring></h3>
+  <p>
+    
   </p>
 </div>
 
