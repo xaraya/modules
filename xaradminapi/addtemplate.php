@@ -17,8 +17,7 @@
  * create a new pubsub template
  * @param $args['name'] name of the template you want to create
  * @param $args['template'] the template text
- * @returns int
- * @return template ID on success, false on failure
+ * @return mixed template ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_addtemplate($args)

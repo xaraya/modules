@@ -134,7 +134,7 @@ function pubsub_admin_modifyconfig()
             }
         }
     }
-    $data['isalias'] = xarModGetVar('pubsub','SupportShortURLs');
+    // Bug 4777 $data['SupportShortURLs'] = xarModGetVar('pubsub','SupportShortURLs');
     $data['numitems'] = xarModGetVar('pubsub','itemsperpage');
     if (empty($data['numitems'])) {
         $data['numitems'] = 20;

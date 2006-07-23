@@ -19,13 +19,13 @@
 function pubsub_admin_updateconfig()
 {
     // Get parameters
-    xarVarFetch('settings','isset',$settings,'', XARVAR_DONT_SET);
-    xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
-    xarVarFetch('numitems','isset',$numitems,20, XARVAR_DONT_SET);
-    xarVarFetch('subjecttitle','isset',$subjecttitle,'', XARVAR_DONT_SET);
-    xarVarFetch('includechildren','isset',$includechildren,'', XARVAR_DONT_SET);
-    xarVarFetch('allindigest','isset',$allindigest,'', XARVAR_DONT_SET);
-    xarVarFetch('wrapper','isset',$wrapper,'', XARVAR_DONT_SET);
+    xarVarFetch('settings',     'isset',    $settings,      '', XARVAR_DONT_SET);
+  //  xarVarFetch('SupportShortURLs',      'isset',    $SupportShortURLs,       '', XARVAR_DONT_SET);
+    xarVarFetch('numitems',     'isset',    $numitems,      20, XARVAR_DONT_SET);
+    xarVarFetch('subjecttitle', 'isset',    $subjecttitle,  '', XARVAR_DONT_SET);
+    xarVarFetch('includechildren','isset',  $includechildren,'', XARVAR_DONT_SET);
+    xarVarFetch('allindigest',  'isset',    $allindigest,   '', XARVAR_DONT_SET);
+    xarVarFetch('wrapper',      'isset',    $wrapper,       '', XARVAR_DONT_SET);
 
     // Security Check
     if (!xarSecurityCheck('AdminPubSub')) return;
@@ -39,12 +39,12 @@ function pubsub_admin_updateconfig()
         xarModSetVar('pubsub','wrapper',$wrapper);
     } else {
         xarModSetVar('pubsub','wrapper',0);
-    }
-    if (empty($isalias)) {
+    }/* Bug 4777
+    if (empty($SupportShortURLs)) {
         xarModSetVar('pubsub','SupportShortURLs',0);
     } else {
         xarModSetVar('pubsub','SupportShortURLs',1);
-    }
+    }*/
     if (empty($numitems) || !is_numeric($numitems)) {
         xarModSetVar('pubsub','itemsperpage',20);
     } else {

@@ -15,6 +15,11 @@
  */
 /**
  * Add Subscriber
+ * @param sub_module
+ * @param sub_itemtype
+ * @param sub_category
+ * @param sub_email
+ * @return bool true
  */
 function pubsub_admin_addsubscriber()
 {
@@ -23,7 +28,6 @@ function pubsub_admin_addsubscriber()
     xarVarFetch('sub_itemtype','isset',$sub_itemtype,'', XARVAR_DONT_SET);
     xarVarFetch('sub_category','isset',$sub_category,'', XARVAR_DONT_SET);
     xarVarFetch('sub_email','isset',$sub_email,'', XARVAR_DONT_SET);
-
 
     // Confirm authorisation code
 //    if (!xarSecConfirmAuthKey()) return;

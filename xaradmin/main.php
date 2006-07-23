@@ -15,6 +15,7 @@
  */
 /**
  * the main administration function
+ * @return array
  */
 function pubsub_admin_main()
 {

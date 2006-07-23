@@ -17,7 +17,6 @@
  * get information about a pubsub event
  *
  * @param $args['eventid'] the event id for the event
- * @returns array
  * @return array event information on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
