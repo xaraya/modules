@@ -21,7 +21,19 @@
   </p>
   <h3><xar:mlstring>What is supported by default?</xar:mlstring></h3>
   <p>
-    
+    <xar:mlstring>
+      The included dojo.js (and dojo.js.uncompressed.js) are compiled with minimal 
+      settings. Rougly the following packages of dojo are available:</xar:mlstring>
+      <ul>
+          <li>dojo              - <xar:mlstring>dojo core</xar:mlstring></li>
+          <li>dojo.io           - <xar:mlstring>base for IO requests</xar:mlstring></li>
+          <li>dojo.io.BrowserIO - <xar:mlstring>for things like iframeIO/xmlhttpIO etc.</xar:mlstring></li>
+      </ul>
   </p>
+  <p>
+      <xar:mlstring>
+        The associated dependencies are also compiled in automatically by dojo. These may change
+        however and the above is really the only thing to count on reliably
+      </xar:mlstring>
 </div>
 
