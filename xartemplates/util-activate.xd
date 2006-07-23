@@ -10,10 +10,10 @@
 <xar:base-include-javascript filename="dojo-config.js" module="dojo" position="head"/>
 
 <xar:comment> Load it </xar:comment>
-<xar:base-include-javascript filename="dojo/dojo.js" module="dojo" position="head"/>
+<xar:base-include-javascript filename="dojo/dojo.js" module="dojo" position="body"/>
 
 <xar:comment> 
     Anything else goes probably here, in this case an implementation of the 
     loadContent(href,tagtogo) function also in base/xartemplates/includes/xmlhttprequest.js
 </xar:comment>
-<xar:base-include-javascript filename="loadcontent-compat.js" module="dojo" position="head"/>
+<xar:base-include-javascript filename="loadcontent-compat.js" module="dojo" position="body"/>
