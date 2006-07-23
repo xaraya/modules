@@ -28,8 +28,7 @@ function pubsub_user_main()
 /**
  * remove user from a pubsub element
  * @param $args['eventid'] event ID
- * @returns output
- * @return output with pubsub information
+ * @return bool output with pubsub information
  */
 function pubsub_user_remove($args)
 {
@@ -56,15 +55,12 @@ function pubsub_user_remove($args)
     return true;
 }
 
-
-
 /**
  * handle fact a user may already be subscribed and give them option to unsubscribe
  * @param $args['eventid'] event already subscribed to
- * @returns output
- * @return output with pubsub information
+ * @return array output with pubsub information
+ * @todo: <garrett> don't think we need to use this anymore
  */
-//FIXME: <garrett> don't think we need to use this anymore
 function pubsub_user_subscribed($args)
 {
     extract($args);
