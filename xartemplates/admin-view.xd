@@ -65,8 +65,9 @@
       </div>
     </fieldset>
       
-    <!-- Editting area will get filled by xmlhttp requests -->
-    <div id="example_edit_or_add"></div>
+    <div id="example_edit_or_add">
+      <!-- Editting area will get filled by xmlhttp requests -->
+    </div>
 </div>
 <!-- 
     // clear the status message

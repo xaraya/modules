@@ -20,7 +20,10 @@
 </xar:comment>
 
 <xar:if condition="true">
-  <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  <!-- If the dojo module is active, why not take advantage of it? -->
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
   <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
 <xar:else/>
   <xar:set name="onclick">"return true;"</xar:set>

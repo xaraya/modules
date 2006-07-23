@@ -8,17 +8,6 @@
 </xar:comment>
 <xar:style scope="module" />
 
-<!-- This Javascript will check for required fields before the form is submitted. -->
-<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("name", "number");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Name", "Number");
-// -->
-</script>
-
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
@@ -34,7 +23,18 @@
         // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form id="example_edit_or_add" method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <div id="example_edit_or_add">
+            <!-- This Javascript will check for required fields before the form is submitted. -->
+            <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+            <script type="text/javascript">
+            <!--
+                // Enter name of mandatory fields
+                var fieldRequired = Array("name", "number");
+                // Enter field description to appear in the dialog box
+                var fieldDescription = Array("Name", "Number");
+            // -->
+            </script>
+    <form  method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 
@@ -104,4 +104,5 @@
             </div>
         </fieldset>
     </form>
+</div>
 </div>

@@ -31,7 +31,8 @@
         // this form. All URLs should be generated through the entity  equivalent of xarModURL to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form id="example_edit_or_add" method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <div id = "example_edit_or_add">
+    <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend>
                 <xar:mlstring>Item to Modify</xar:mlstring>
@@ -124,6 +125,7 @@
             -->
         </fieldset>
     </form>
+    </div>
 </div>
 <!--
     // clear the status message
