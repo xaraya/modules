@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'dojo';
 $modversion['displayname'] = xarML('Dojo Activator');
-$modversion['id'] = '99999';
+$modversion['id'] = '755';
 $modversion['version'] = '0.3.1'; // follows dojo version
 $modversion['description'] = 'Module which activates the dojo ajax framework in your site';
 $modversion['displaydescription'] = xarML('Module which activates the dojo ajax framework in Xaraya');
