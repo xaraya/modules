@@ -25,12 +25,13 @@ function dojo_eventapi_OnModLoad($args)
   static $firstRun = true;
   
   if($firstRun) {
+      // Make sure this is done early, the xarTplModule below for example issues a ModLoad event :-)
+      $firstRun = false;
       // Activate dojo
-      xarLogMessage('EVT: activating dojo javascript framework');
+      xarLogMessage('EVT: BL: activating dojo javascript framework');
       // Let a template handle what we need to do, so we expose this 'client'
       // stuff as soon as posible to the templates and it can be customized
       xarTplModule('dojo','util','activate');
-      $firstRun = false;
   }  
   return true;
 }
