@@ -30,4 +30,12 @@ woot
 he thrusts his fists against the posts and still insists he sees the ghosts
 he thrusts his fists against the posts and still insists he sees the ghosts
 
-
+    list($modid
+        ,$cid
+        ,$itemtype
+        ,$returnurl
+        ) = xarVarCleanFromInput('modid'
+                                ,'cid'
+                                ,'itemtype'
+                                ,'returnurl'
+                                );
