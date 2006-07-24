@@ -1,2 +1,2 @@
 // construct the djConfig variable for dojo initialization.
-djConfig = { isDebug: true, debugAtAllCosts: true, preventBackButtonFix: true };
+djConfig = { isDebug: false, debugAtAllCosts: false, preventBackButtonFix: false };

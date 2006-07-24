@@ -6,19 +6,61 @@
  * @subpackage dojo
  * @author Marcel van der Boom <mrb@hsdev.com>
  **/
-var debug = true;
-
-// Register the initial state in the history stack when the page actually loads
-dojo.addOnLoad(function(){
-    dojo.undo.browser.setInitialState();//new historyEntry(document.location.href,'rubbishidjustforthefunofit'));
-});
-
 
 /**
- * Class to keep track of the request
+ * Register the initial state in the history stack when the page actually loads
+ * and dojo is finished loading.
  *
- * @package default
- * @author Marcel van der Boom <mrb@hsdev.com>
+ **/
+dojo.addOnLoad(
+    function()
+    {
+        dojo.debug("Creating initial history entry");
+        dojo.undo.browser.setInitialState(new historyEntry(document.location.href,''));
+    }
+);
+
+/**
+ * Class which stores enough information for a request to be able 
+ * to reissue it.
+ *
+ * @param string url   the url which was requested
+ * @param string tagid the id where to put the content retrieved
+ * @todo  this class has no notion of context, so if something goes wrong it 
+ *        will fallback to a normal http request. This happens for example if
+ *        within one page using xmlhttp there are 2 id's which are enabled.
+ *        Retrieving the content for one id doesnt mean the other id will be 
+ *        present anymore
+ *        The back/forward functionality *will* retrieve the right url, but 
+ *        the page will be refreshed, loosing other asynchronously retrieved chunks 
+ **/
+function historyEntry(url,tagid)
+{
+    // Save what we need to reconstruct
+    this.url = url; this.tagid  = tagid; 
+    // Needs to be since it wont work with anything but path/like/urls without parameters.
+    this.changeUrl = false;
+}
+
+historyEntry.prototype.back = 
+historyEntry.prototype.forward = function()
+{
+    //alert('back/forward for:'+this.tagid+' '+this.url);
+    // Load up the saved content, but do not add a new historyEntry
+    loadContent(this.url, this.tagid, false);
+}
+
+/**
+ * Class to model a Xaraya specific xmlhttp request.
+ *
+ * We do a couple of special things besides doing just
+ * a request (like massaging the url to use the righ page template)
+ * Thus, we use the prototype dojo.io.Request and override what we need
+ *
+ * @param string url   the url which was requested
+ * @param string tagid the id where to put the content retrieved
+ * @todo the pageName trick works, but is not very elegant, all the fiddling with id's and stuff comes from it
+ *       at some point we will need to train xaraya itself to return chunks of content natively (id from template?)
  **/
 function xarRequest(url,tagid) 
 {
@@ -38,7 +80,13 @@ function xarRequest(url,tagid)
 // Use the dojo request as its prototype
 dojo.inherits(xarRequest,dojo.io.Request);
 
-// Make specifics for the the load method
+/**
+ * Load method is the handler which gets called after the data has been retrieved
+ *
+ * @param string type 
+ * @param mixed  data  object Depending on the request data contains the object returned by the request (e.g. XMLDocument)
+ * @param mixed  evt   native evt returned by the request (e.g. XMLHTTPRequest on FF)
+ **/
 xarRequest.prototype.load = function(type,data,evt)
 {
     // Do whatever we need with the data returned data is delivered as XMLDocument object.
@@ -76,34 +124,30 @@ xarRequest.prototype.load = function(type,data,evt)
         srcTag.parentNode.replaceChild(copyofnew,srcTag);
     }
 }
-//xarRequest.prototype.back = function() 
-//{
-//    // Load content of what we put on the stack during instantiation
-//    dojo.debug('back for:'+this.tagid+' '+this.url)
-//}
-//xarRequest.prototype.forward = function() 
-//{
-//    // Load content of what we put on the stack during instantiation
-//    dojo.debug('back for:'+this.tagid+' '+this.url)
-//}
-
 
 
 /**
  * Load a piece of content into a block identified by tagid
  *
- * @return void
- * @author Marcel van der Boom
+ * @return bool false when loading succeeded, true when it failed, 
+ *              returning true means that the default will not get cancelled,
+ *              in the case of a link this means that the original link goes through.
  **/
-function loadContent(url, tagid, addtoHistory)
+function loadContent(url, tagid, addToHistory)
 {
+    if(addToHistory == null) addToHistory = true;
     document.body.style.cursor='wait';
     
-    // Create the xar xml http request.
+    // Create the xar xml http request
     var req = new xarRequest(url,tagid);
 
     // Bind the request (i.e. do it)
     var result = dojo.io.bind(req);
+    
+    // Add to history
+    if(addToHistory) {
+        dojo.undo.browser.addToHistory(new historyEntry(url,tagid));
+    }
     
     // When result successful, cancel the original
     document.body.style.cursor='default';

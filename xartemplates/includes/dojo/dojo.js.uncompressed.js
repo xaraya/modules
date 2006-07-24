@@ -10,7 +10,7 @@ if(typeof dojo == "undefined"){
 * TODOC: should the copyright be changed to Dojo Foundation?
 * @license Licensed under the Academic Free License 2.1 http://www.opensource.org/licenses/afl-2.1.php
 *
-* $Id: bootstrap1.js 4525 2006-06-27 02:00:18Z bill $
+* $Id: bootstrap1.js 4883 2006-07-24 01:56:32Z peller $
 */
 
 // TODOC: HOW TO DOC THE BELOW?
@@ -26,6 +26,8 @@ if(typeof dojo == "undefined"){
 //            - libraryScriptUri: ""
 //            - iePreventClobber: false
 //            - ieClobberMinimal: true
+//            - locale: undefined
+//            - extraLocale: undefined
 //            - preventBackButtonFix: true
 //            - searchIds: []
 //            - parseWidgets: true
@@ -84,11 +86,14 @@ if(!dj_undef("document", dojo._currentContext)){
     dojo._currentDocument = this.document;
 }
 
+// Override locale setting, if specified
+dojo.locale  = djConfig.locale;
+
 //TODOC:  HOW TO DOC THIS?
 dojo.version = {
     // summary: version number of this instance of dojo.
-    major: 0, minor: 3, patch: 1, flag: "svn-4880",
-    revision: Number("$Rev: 4525 $".match(/[0-9]+/)[0]),
+    major: 0, minor: 3, patch: 1, flag: "svn-4896",
+    revision: Number("$Rev: 4883 $".match(/[0-9]+/)[0]),
     toString: function(){
         with(dojo.version){
             return major + "." + minor + "." + patch + flag + " (" + revision + ")";    // String
@@ -945,7 +950,7 @@ if(typeof window == 'undefined'){
     drh.ie70 = drh.ie && dav.indexOf("MSIE 7.0")>=0;
 
     // TODO: is the HTML LANG attribute relevant?
-    dojo.locale = (drh.ie ? navigator.userLanguage : navigator.language).toLowerCase();
+    dojo.locale = dojo.locale || (drh.ie ? navigator.userLanguage : navigator.language).toLowerCase();
 
     dr.vml.capable=drh.ie;
     drs.capable = f;
@@ -1388,6 +1393,24 @@ dojo.requireLocalization = function(modulename, bundlename, locale /*optional*/)
         }
     }
 };
+
+(function(){
+    var extra = djConfig.extraLocale;
+    if (extra) {
+        var req = dojo.requireLocalization;
+        dojo.requireLocalization = function(m, b, locale){
+            req(m,b,locale);
+            if (locale) return;
+            if (djConfig.extraLocale instanceof Array){
+                for (var i=0; i<extra.length; i++){
+                    req(m,b,extra[i]);
+                }
+            }else{
+                req(m,b,extra);
+            }
+        }
+    }
+})();
 
 dojo.provide("dojo.string.common");
 
@@ -1914,8 +1937,8 @@ dojo.lang.extend(dojo.io.Request, {
         var isFunction = dojo.lang.isFunction;
         for(var x=0; x<dojo.io.hdlrFuncNames.length; x++){
             var fn = dojo.io.hdlrFuncNames[x];
-            if(isFunction(kwArgs[fn])){ continue; }
-            if(isFunction(kwArgs["handle"])){
+            if(kwArgs[fn] && isFunction(kwArgs[fn])){ continue; }
+            if(kwArgs["handle"] && isFunction(kwArgs["handle"])){
                 kwArgs[fn] = kwArgs.handle;
             }
             // handler is aliased above, shouldn't need this check
