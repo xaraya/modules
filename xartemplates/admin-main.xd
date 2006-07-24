@@ -1,22 +1,22 @@
 <xar:template file="admin-menu" type="module"/>
-
+<div id="notsogoodbutok" class="xar-mod-body">
 <h3><xar:mlstring>Report generator module</xar:mlstring></h3>
 <p>
     <xar:mlstring>
         This module generates reports based on data accessible to the module over
-        a certain connection to a database. By using a report definition in XSL-FO, 
+        a certain connection to a database. By using a report definition in XSL-FO,
         the module generates reports in HTML or PDF format.
     </xar:mlstring>
 </p>
 <p>
-    <xar:mlstring>    
+    <xar:mlstring>
         The XSL-FO format is a generic XML dialect for describing (paginated) documents.
         Using blocklayout and a little help from the module we add dynamism to the
         documents, which is the definition of a <em>report</em> in this module.
     </xar:mlstring>
 </p>
 <p>
-    <xar:mlstring>    
+    <xar:mlstring>
         The PDF output is generated using Apache's FOP program and the HTML output is
         generated using a XSL transformation stylesheet. This leads to the following
         requirements for this module:
@@ -24,7 +24,7 @@
     <ol>
         <li><xar:mlstring>It can only be run on a server where FOP is installed, hence java must be available</xar:mlstring></li>
         <li><xar:mlstring>The server configuration must allow a system call to fop by the webserver process</xar:mlstring></li>
-        <li><xar:mlstring>The xslt extension of PHP must be installed</xar:mlstring></li> 
+        <li><xar:mlstring>The xslt extension of PHP (Optional)</xar:mlstring></li>
     </ol>
 </p>
 
@@ -34,21 +34,21 @@
     <li><xar:mlstring>Make it easy to upload report definitions (using the uploads module for example)</xar:mlstring></li>
     <li>
         <xar:mlstring>
-            Implement a cache-ing mechanism for generated reports (or rather, re-use 
+            Implement a cache-ing mechanism for generated reports (or rather, re-use
             the output cache functionality xarcachemanager provides)
         </xar:mlstring>
     </li>
     <li>
         <xar:mlstring>
-            XSL FO and the output agnostic wish we have for xar templates coincide 
-            nicely here, we can add generic xar tags in this module first 
+            XSL FO and the output agnostic wish we have for xar templates coincide
+            nicely here, we can add generic xar tags in this module first
             and optionally promote them into blocklayout ( &gt; version 2.x ) when we
             are happy with their behaviour
         </xar:mlstring>
     </li>
     <li>
         <xar:mlstring>
-            Replace the report specific data(-set) tags with the DD tag equivalents, 
+            Replace the report specific data(-set) tags with the DD tag equivalents,
             because they really do exactly the same. (only the ones in this module are uglier)
         </xar:mlstring>
     </li>
@@ -56,7 +56,7 @@
     <li><xar:mlstring>Include a reference report demonstrating the possibilities and limitations</xar:mlstring></li>
     <li>
         <xar:mlstring>
-            Think of something clever to include search capability in 
+            Think of something clever to include search capability in
             a better way without losing the option of easy report definition distribution.
         </xar:mlstring>
     </li>
@@ -67,7 +67,7 @@
     <xar:mlstring>
         The purpose of this module is to generate very precisely formatted documents which
         are structured, i.e. can be automatically generated over and over again, based
-        on a set of data which already exists. Typical report-types would be: invoices, sales reports, 
+        on a set of data which already exists. Typical report-types would be: invoices, sales reports,
         data analysis results, stock lists, BOM lists etc.
     </xar:mlstring>
 </p>
@@ -77,7 +77,24 @@
     <xar:mlstring>
         This module is not for the occasional XML user. If you do need to google for
         XSL-FO first to see what it is, dont bother using this module at this time.
-        Come back a little later when we have encapsulated the compexities behind a nice
+        Come back a little later when we have encapsulated the complexities behind a nice
         GUI. ;-)
     </xar:mlstring>
 </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Reports Extension page at</xar:mlstring> <a title="#xarML('Reports Module - Xaraya Extension 4704')#" href="http://www.xaraya.com/index.php/release/4704.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/reports/" title="#xarML('Related documentation on Reports')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Reports Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006
+  </p>
+  </div>
