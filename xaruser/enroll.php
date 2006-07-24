@@ -3,7 +3,7 @@
  * Enroll student in course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses Development team
  */
-
 /**
  * Enroll a user into a course and update database
  * @Author XarayaGeek/Michel V.
@@ -19,11 +18,12 @@
  * @param  $args an array of arguments (if called by other modules)
  * @param  $args ['objectid'] a generic object id (if called by other modules)
  * @param  $args ['planningid'] the planned course ID that the user will enroll to
+ * @param confirm OPTIONAL OR
+ * @param noconfirm OPTIONAL
  * @param bool
  * @access PUBLIC
  * @return mixed
  * @todo MichelV <1> Create admin configurable standard student status
- *
  */
 function courses_user_enroll($args)
 {
@@ -38,7 +38,7 @@ function courses_user_enroll($args)
     if (!xarVarFetch('objectid',   'id',     $objectid,   '',    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('message',    'str:1:', $message,    '',    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm',    'isset',  $confirm,    false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('noconfirm',  'isset',  $npconfirm,  false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('noconfirm',  'isset',  $noconfirm,  false, XARVAR_NOT_REQUIRED)) return;
     //check for override by objectid
     if (!empty($objectid)) {
         $planningid = $objectid;
@@ -68,6 +68,10 @@ function courses_user_enroll($args)
     // See if we have an external registration
     $use_extreg = $planitem['extreg'] ? true : false;
     $sendalways = xarModGetVar('courses', 'SendConfirmsForExtreg') ? true : false;
+    // User does not want to register
+    if ($noconfirm) {
+        xarResponseRedirect(xarModURL('courses', 'user', 'displayplanned', array('planningid' => $planningid)));
+    }
     if (!$confirm) {
         // No confirmation yet, present form
         $data=array();
