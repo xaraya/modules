@@ -1,0 +1,44 @@
+<?php
+/**
+ * AddressBook user functions
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage AddressBook Module
+ * @author Garrett Hunter <garrett@blacktower.com>
+ * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
+ */
+
+function AddressBook_user_select($args)
+{
+    extract($args);
+
+    if (!xarVarFetch('fieldname', 'str:1:', $fieldname)) return;
+    if (!xarVarFetch('value', 'int', $value, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('company', 'str::', $company, '', XARVAR_NOT_REQUIRED)) return;
+
+    $data = array();
+    
+    $items = array();
+    
+    $addresslist = xarModAPIFunc('addressbook','user','getall',array('company'=>$company));
+
+    if (!isset($addresslist)) return;
+    
+//echo "<pre>";
+//print_r($items);
+//echo "</pre><br><br><br>";
+//die("test");
+    
+    $data['value'] = $value ? $value : "";
+    $data['options'] = $addresslist;
+    $data['company'] = $company;
+    $data['fieldname'] = $fieldname;
+//return("value: ".$value.", options: ".serialize($addresslist));
+    return $data;
+} // END main
+
+?>

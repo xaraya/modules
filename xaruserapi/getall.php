@@ -11,16 +11,18 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
+include_once('modules/addressbook/xarglobal.php');
 /**
  * Retrieves the list of address
  *
  * @return mixed
  */
-function addressbook_userapi_getAddressList($args)
+function addressbook_userapi_getall($args)
 {
-
     extract($args);
+    
+    $output['company'] = $args['company'];
+    $addresslist = array();
 
     // Get the menu values
     $menuValues = xarModAPIFunc('addressbook','user','getmenuvalues');
@@ -80,6 +82,11 @@ function addressbook_userapi_getAddressList($args)
     // Filter Categories
     if ($output['catview']) {
         $output['sql'] .= " AND (cat_id = ".$output['catview'].")";
+    }
+
+    // Filter Companies
+    if ($output['company']) {
+        $output['sql'] .= " AND (company = \"".$output['company']."\")";
     }
 
     // A-Z
@@ -152,12 +159,9 @@ function addressbook_userapi_getAddressList($args)
     }
 
     // Sort
-    if ($output['sortview'] != 1) {
-        $sortCols = explode(",",xarModGetVar('addressbook', 'sortorder_1'));
-    }
-    else {
-        $sortCols = explode(",",xarModGetVar('addressbook', 'sortorder_2'));
-    }
+    $sortCols = array("sortname");
+
+//die("sortCols: ".serialize($sortCols));
     $output['sql'] .= " ORDER BY ";
     foreach ($sortCols as $sortCol) {
         $output['sql'] .= $sortCol.",";
@@ -172,12 +176,12 @@ function addressbook_userapi_getAddressList($args)
         $numRec->Close();
     }
 
-    if (!$output['total']) {
+    if (!is_int($output['total'])) {
         xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(xarML('There are no records to show in this view'))); //gehDEBUG
     }
 
     $items = xarModGetVar('addressbook', 'itemsperpage');
-    $result =& $dbconn->PageExecute($output['sql'],$items,$output['page']);
+    $result =& $dbconn->PageExecute($output['sql'],1000,$output['page']);
 
     if ($dbconn->ErrorNo() != 0) {
         xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("sql = ".$output['sql']));
@@ -185,43 +189,9 @@ function addressbook_userapi_getAddressList($args)
 
     //Show Result
 
-    // A-Z Navigation
-    /**
-     * These vars are not displayed / do not need to go in $output
-     */
-    $selChar = ((isset($output['char'])) ? $output['char'] : '');
-    $numPages = (($output['total']/$items)+1);
-
-    $output['azLinks'] = array();
-    if ($output['all']==0) {
-        $numPages = (($output['total']/$items)+1);
-        for($i=65;$i<=90;$i++) {
-            $azLink = '';
-            $char = chr($i);
-            $params = array('authid'=>xarSecGenAuthKey(),
-                            'sortview'=>$output['sortview'],
-                            'catview'=>$output['catview'],
-                            'menuprivate'=>$output['menuprivate'],
-                            'all'=>$output['all'],
-                            'char'=>$char);
-
-            $pageURL = xarModURL('addressbook','user','main',$params);
-            if ($i != 65) {
-                $azLink .= ' | ';
-            }
-            if ($char == $selChar) {
-                $azLink .= '<b><u>'.$char.'</u></b>';
-            } else {
-                $azLink .= "<a href=\"".$pageURL."\">".$char."</a>";
-            }
-            $output['azLinks'][]['azLink'] = $azLink;
-        }
-    }
-    // END A-Z Navigation
-
     // No Records found!
     if ($output['total'] < 1) {
-        return $output;
+        return $addresslist;
     }
 
     /**
@@ -296,19 +266,6 @@ function addressbook_userapi_getAddressList($args)
         extract ($abData);
 
         $displayRow = array();
-        $output['searchResults'][] = $abData;
-
-        /* not sure what this does gehDEBUG
-//        $cus_fields = xarModAPIFunc('addressbook','user','customfieldinformation',array('id'=>$id));
-        $i=1;
-        foreach($cus_fields as $cus) {
-            if ($cus['type']=='date default NULL') {
-                $cus['value'] = xarModAPIFunc('addressbook','user','stamp2date',array('idate'=>$cus['value']));
-            }
-            $the_name = 'custom_'.$i;
-            $$the_name = $cus['value'];
-            $i++;
-        } */
 
         /*
          * Step 1
@@ -325,35 +282,27 @@ function addressbook_userapi_getAddressList($args)
          */
 
         $displayName = '';
-        if ($sortCols[0] == 'sortname') {
-            if ((!empty($fname) && !empty($lname)) ||
-                (!empty($fname) || !empty($lname))) {
-                if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
-                    if (!empty($prefixes) && $prefix > 0) {
-                        $displayName .= $prefixes[$prefix-1]['name'].' ';
-                    }
-                    $displayName .= xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
-                } else {
-                    if (!empty($lname)) {
-                        $displayName .= xarVarPrepHTMLDisplay($lname).', ';
-                    }
-                    if (!empty($prefixes) && $prefix > 0) {
-                        $displayName .= $prefixes[$prefix-1]['name'].' ';
-                    }
-                    $displayName .= xarVarPrepHTMLDisplay($fname);
+        
+        if ((!empty($fname) && !empty($lname)) ||
+            (!empty($fname) || !empty($lname))) {
+            if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
+                if (!empty($prefixes) && $prefix > 0) {
+                    $displayName .= $prefixes[$prefix-1]['name'].' ';
                 }
-            }
-            else {
-                if (!empty($company)) {
-                    $displayName .= xarVarPrepHTMLDisplay($company);
+                $displayName .= xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
+            } else {
+                if (!empty($lname)) {
+                    $displayName .= xarVarPrepHTMLDisplay($lname).', ';
                 }
+                if (!empty($prefixes) && $prefix > 0) {
+                    $displayName .= $prefixes[$prefix-1]['name'].' ';
+                }
+                $displayName .= xarVarPrepHTMLDisplay($fname);
             }
         }
         else {
-            if ($sortCols[0] == 'sortcompany') {
+            if (!empty($company)) {
                 $displayName .= xarVarPrepHTMLDisplay($company);
-            } else {
-                $displayName .= xarVarPrepHTMLDisplay($$sortCols[0]);
             }
         }
 
@@ -518,61 +467,21 @@ function addressbook_userapi_getAddressList($args)
                 break;
 
         } // END switch
-
-        $detailargs=array('id'=>$id,
-                        'formcall'=>'edit',
-                        'authid'=>xarSecGenAuthKey(),
-                        'catview'=>$output['catview'],
-                        'sortview'=>$output['sortview'],
-                        'formSearch'=>urlencode($output['formSearch']),
-                        'all'=>$output['all'],
-                        'menuprivate'=>$output['menuprivate'],
-                        'total'=>$output['total'],
-                        'page'=>$output['page'],
-                        'char'=>$selChar);
-
-        //FIXME:<garrett> sloppy way of of setting up data. Redundant vars (accessLevel, *TEXT..)
-        $output['displayRows'][] = array ('displayRow' => $displayRow
-                                         ,'user'    => $user
-                                       ,'detailURL' => xarModURL('addressbook','user','viewdetail',$detailargs)
-                                       ,'detailTXT' => xarML('Details')
-                                       ,'deleteURL' => xarModURL('addressbook','user','confirmdelete',$detailargs)
-                                       ,'deleteTXT' => xarML('Delete')
-                                       ,'editURL'   => xarModURL('addressbook','user','insertedit',$detailargs)
-                                       ,'editTXT'   => xarML('Edit')
-                                       ,'accessLevel'=> array('option'=>'edit')
-                                        );
+        
+        $iteminfo = $abData;
+        $iteminfo['id'] = $abData['id'];
+        $iteminfo['displayName'] = $displayName;
+        $iteminfo['displaydetails'] = $displayRow;
+//        $addresslist[$iteminfo['id']] = trim($displayName,",");
+        $addresslist[$iteminfo['id']] = $iteminfo;
+//echo "for ID: ".$abData['id'];
+//echo "<pre>";
+//print_r($iteminfo);
+//echo "</pre><br><br><br>";
     } // END for $results
-
-    $numPages = (($output['total']/$items)+1);
-    for($i=1;$i<$numPages;$i++) {
-        if ($output['all']==0) {
-            $params = array('authid'=>xarSecGenAuthKey(),
-                            'sortview'=>$output['sortview'],
-                            'catview'=>$output['catview'],
-                            'menuprivate'=>$output['menuprivate'],
-                            'all'=>$output['all'],
-                            'formSearch'=>$output['formSearch'],
-                            'total'=>$output['total'],
-                            'page'=>$i,
-                            'char'=>$selChar);
-        }
-        else {
-            $params = array('authid'=>xarSecGenAuthKey(),
-                'sortview'=>$output['sortview'],
-                'catview'=>$output['catview'],
-                'menuprivate'=>$output['menuprivate'],
-                'all'=>$output['all'],
-                'formSearch'=>$output['formSearch'], //gehDEBUG - good place to test exception handling
-                'total'=>$output['total'],
-                'page'=>$i);
-        }
-        $output['pageNav'][]  = array ('pageURL' => xarModURL('addressbook','user','viewall',$params)
-                                    ,'pageNum' => $i
-                                    ,'absolutePage' => $result->AbsolutePage());
-    } // END for
-
-    return $output;
+//die("test");
+    
+    return $addresslist;
 
 } // END getAddressList
 

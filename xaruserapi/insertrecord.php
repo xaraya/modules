@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -253,16 +253,6 @@ function addressbook_userapi_insertrecord($args)
 
     $result->Close();
 
-    /* Get the ID of the item that we inserted. It is possible, depending
-     * on your database, that this is different from $nextId as obtained
-     * above, so it is better to be safe than sorry in this situation
-     */
-    $itemid = $dbconn->PO_Insert_ID($address_table, 'nr');
-    // Call hooks
-    $item = $args;
-    $item['module'] = 'addressbook';
-    $item['itemid'] = $itemid;
-    xarModCallHooks('item', 'create', $itemid, $item);
     return true;
 } // END insertrecord
 

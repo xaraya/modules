@@ -13,7 +13,6 @@
 /*
  * @author Roger Keays <roger.keays@ninthave.net>
  */
-include_once "modules/base/xarproperties/Dynamic_TextBox_Property.php";
 
 /**
  * The extended date property converts the value provided by the javascript
@@ -24,13 +23,8 @@ include_once "modules/base/xarproperties/Dynamic_TextBox_Property.php";
  * everything into a UNIX timestamp, and for most C librarys this does not
  * include dates before 1970. (see Xaraya bugs 2013 and 1428)
  */
-class Dynamic_Phone_Property extends Dynamic_TextBox_Property
+class Dynamic_Phone_Property extends Dynamic_Property
 {
-
-    function Dynamic_Phone_Property($args)
-    {
-        $this->Dynamic_TextBox_Property($args);
-    }
     /**
      * We allow two validations: date, and datetime (corresponding to the
      * database's date and datetime data types.
@@ -81,7 +75,7 @@ class Dynamic_Phone_Property extends Dynamic_TextBox_Property
         } else {
             $this->invalid = xarML('phone');
             $this->value = null;
-            return true;
+            return false;
         }
     } /* validateValue */
 
@@ -178,14 +172,14 @@ class Dynamic_Phone_Property extends Dynamic_TextBox_Property
      {
          $args = array();
          $baseInfo = array(
-                              'id'         => 422,
+                              'id'         => 420,
                               'name'       => 'phone',
                               'label'      => 'Phone Number',
-                              'format'     => '422',
+                              'format'     => '420',
                               'validation' => '',
                               'source'         => '',
                               'dependancies'   => '',
-                              'requiresmodule' => '',
+                              'requiresmodule' => 'addressbook',
                               'aliases'        => '',
                               'args'           => serialize($args),
                             // ...

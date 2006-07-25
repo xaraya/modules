@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+#$value#<select name="#$fieldname#" >
+<xar:if condition="count($options) gt 0">
+    <xar:foreach in="$options" value="$option" >
+        <xar:if condition="empty($option['id']) or $option['id'] ne $option['displayName']">
+            <xar:if condition="$option['id'] eq $value" >
+                <option value="#$option['id']#" selected="selected">#$option['displayName']#</option>
+            <xar:else />
+                <option value="#$option['id']#">#$option['displayName']#</option>
+            </xar:if>
+        <xar:elseif condition="$option['id'] eq $value" />
+            <option selected="selected">#$option['displayName']#</option>
+        <xar:else />
+            <option>#$option['name']#</option>
+        </xar:if>
+    </xar:foreach>
+<xar:else />
+    <option value="">No Contacts Found</option>
+</xar:if>
+</select>
+
+<xar:if condition="!empty($invalid)">
+    <span class="xar-error">#$invalid#</span>
+</xar:if>
