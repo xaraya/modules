@@ -1,0 +1,9 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<div align="center"><b> <xar:mlstring>Welcome to the Access Methods Administration</xar:mlstring> </b></div>
+

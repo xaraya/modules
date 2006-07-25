@@ -1,0 +1,82 @@
+<xar:set name="accessmethods_objectid">xarModGetVar('accessmethods','accessmethods_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="$accessmethods_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Create A New Access Method</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-accessmethods-admin-create;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['site_name']" /></td>
+        <td><xar:data-input property="$properties['site_name']" name="site_name" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['accesstype']" /></td>
+        <td><xar:data-input property="$properties['accesstype']" name="accesstype" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['clientid']" /></td>
+        <td>
+            <xar:set name="companylist">xarModAPIFunc('addressbook','user','getaddresslist')</xar:set>
+            <xar:set name="companies">array('0' => "Select a Client Company")</xar:set>
+            <xar:foreach in="$companylist.searchResults" value="$companyinfo">
+                <xar:set name="companyid">$companyinfo['id']</xar:set>
+                    <xar:set name="companies[$companyid]">$companyinfo['company']</xar:set>
+            </xar:foreach>
+            <xar:data-input type="dropdown" validation="$companies" name="clientid" />
+        </td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['webmasterid']" /></td>
+        <td>
+            <xar:set name="webmasterlist">xarModAPIFunc('roles','user','getall',array('group' => "Administrators"))</xar:set>
+            <xar:set name="webmasters">array('0' => "Select a Webmaster")</xar:set>
+            <xar:foreach in="$webmasterlist" value="$webmasterinfo">
+                <xar:set name="webmasterid">$webmasterinfo['uid']</xar:set>
+                <xar:set name="webmasters[$webmasterid]">$webmasterinfo['uname']</xar:set>
+            </xar:foreach>
+            <xar:data-input type="dropdown" validation="$webmasters" name="webmasterid" />
+        </td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['url']" /></td>
+        <td><xar:data-input property="$properties['url']" name="url" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['sla']" /></td>
+        <td><xar:data-input property="$properties['sla']" name="sla" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['accesslogin']" /></td>
+        <td><xar:data-input property="$properties['accesslogin']" name="accesslogin" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['accesspwd']" /></td>
+        <td><xar:data-input property="$properties['accesspwd']" name="accesspwd" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['description']" /></td>
+        <td><xar:data-input property="$properties['description']" name="description" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['related_sites']" /></td>
+        <td><xar:data-input property="$properties['related_sites']" name="related_sites" /></td>
+    </tr>
+    <tr>
+        <xar:set name="updatebtn"><xar:mlstring>Add Access Method</xar:mlstring></xar:set>
+        <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+    </tr>
+</table>
+
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('accessmethods')#" />
+
+</form>
+</div>
+</div>
+<div class="xar-mod-foot">#$hooks#</div>

@@ -1,0 +1,74 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+
+    <tr>
+
+        <th align="center">#$menutitle#</th>
+
+    </tr>
+
+</table>
+
+<br />
+
+
+
+<h2><xar:mlstring>Modify Default Configuration</xar:mlstring></h2>
+
+
+
+<form method="post" action="#xarModURL('accessmethods','admin','updateconfig')#">
+
+<input type="hidden" name="authid" value="#xarSecGenAuthKey('accessmethods')#" />
+
+<input type="hidden" name="modid" value="#xarModGetIDFromName('modules')#" />
+
+<input type="hidden" name="itemtype" value="#xarModGetIDFromName('accessmethods')#" />
+
+<input type="hidden" name="itemid" value="1" />
+
+<input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
+
+
+
+<table border="0" cellspacing="0" cellpadding="4">
+
+
+
+<xar:data-form module="modules" itemtype="66" itemid="1" />
+
+
+
+<tr><td colspan="2">
+
+#$hooks#
+
+</td></tr>
+
+</table>
+
+
+
+<br />
+
+<input type="submit" value="#$submitlabel#" />
+
+</form>
+
+
+
+<br />
+
+
+
+<h2><xar:mlstring>Dynamic Data Configuration</xar:mlstring></h2>
+
+
+
+<h3><xar:mlstring>Dynamic Example</xar:mlstring></h3>
+
+<xar:set name="extrainfo">array('module' => 'accessmethods', 'itemtype' => 0)</xar:set>
+
+<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
+
+
+

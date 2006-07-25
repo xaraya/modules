@@ -1,0 +1,16 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment> let's retrieve the first $numitems dynamic example items, sorted by name </xar:comment>
+
+<xar:data-getitems name="$properties" value="$items" module="accessmethods" itemtype="0" numitems="$numitems" sort="name" />
+
+<p>
+    <xar:if condition="count($items) ge 1">
+        <xar:foreach in="$items" key="$id" value="$item">
+            <xar:set name="link">xarModURL('accessmethods','user','display',array('itemid' => $id))</xar:set>
+            <a href="#$link#">#xarVarPrepForDisplay($item['name'])#</a><br />
+        </xar:foreach>
+    <xar:else/>
+        <xar:mlstring>No items to display</xar:mlstring>
+    </xar:if>
+</p>

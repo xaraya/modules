@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Access Methods Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Delete Access Method</xar:mlstring></h2>
+<div align="center">
+
+<h3><xar:mlstring>Confirm deleting this Access Method?</xar:mlstring></h3>
+
+<form method="post" action="&xar-modurl-accessmethods-admin-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="siteid" value="#$siteid#" />
+
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td align="right" width="50%">
+                <xar:mlstring>Access Method ID</xar:mlstring>
+            </td>
+            <td width="50%">
+                #$siteid#
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="50%">
+                <xar:mlstring>Access Method Name</xar:mlstring>
+            </td>
+            <td width="50%">
+                #$site_name#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>
+

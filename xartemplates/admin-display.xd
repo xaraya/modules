@@ -1,0 +1,68 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="accessmethods_objectid">xarModGetVar('accessmethods','accessmethods_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="$accessmethods_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-body">
+    <h2 style="text-align: center;">#$site_name#</h2>
+    <div align="center">
+        <xar:if condition="!empty($status)">
+
+            <h3>#$status#</h3>
+        <xar:else />
+            <xar:blockgroup name="toxarav" id="toxarav" />
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['site_name']" /></td>
+                    <td class="xar-norm" style="width: 30%;"><xar:data-output property="$properties['site_name']" value="$item['site_name']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['clientid']" /></td>
+                    <td><xar:data-output property="$properties['clientid']" value="$item['clientid']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['webmasterid']" /></td>
+                    <td><xar:data-output property="$properties['webmasterid']" value="$item['webmasterid']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['url']" /></td>
+                    <td><xar:data-output property="$properties['url']" value="$item['url']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['accesstype']" /></td>
+                    <td><xar:data-output property="$properties['accesstype']" value="$item['accesstype']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['sla']" /></td>
+                    <td><xar:data-output property="$properties['sla']" value="$item['sla']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['accesslogin']" /></td>
+                    <td><xar:data-output property="$properties['accesslogin']" value="$item['accesslogin']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['accesspwd']" /></td>
+                    <td><xar:data-output property="$properties['accesspwd']" value="$item['accesspwd']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['description']" /></td>
+                    <td><xar:data-output property="$properties['description']" value="$item['description']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['related_sites']" /></td>
+                    <td><xar:data-output property="$properties['related_sites']" value="$item['related_sites']" /></td>
+                </tr>
+                <xar:if condition="!empty($hookoutput)">
+                    <tr>
+                        <td colspan="2" class="xar-norm">
+                            #$hookoutput#
+                        </td>
+                    </tr>
+                </xar:if>
+            </table>
+        </xar:if>
+    </div>
+</div>
+
