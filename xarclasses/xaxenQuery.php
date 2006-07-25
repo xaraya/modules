@@ -110,7 +110,7 @@ class xarQueryExt
         $this->result =& $result;
 
         if (($result->fields) === false) $this->rowfields = 0;
-        else $this->rowfields = $result->_numOfFields;
+        else $this->rowfields = $result->FieldCount();
         $this->output = array();
         if ($display == 1) {
             if ($statement == '') {
