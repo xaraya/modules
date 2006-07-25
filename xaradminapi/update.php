@@ -23,6 +23,8 @@
 function xproject_adminapi_update($args)
 {
     extract($args);
+    
+    if(is_array($associated_sites)) $associated_sites = serialize($associated_sites);
 
     $invalid = array();
     if (!isset($projectid) || !is_numeric($projectid)) {
@@ -33,7 +35,7 @@ function xproject_adminapi_update($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'update', 'Example');
+            join(', ', $invalid), 'admin', 'update', 'xproject');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -60,6 +62,7 @@ function xproject_adminapi_update($args)
 
     $query = "UPDATE $xprojecttable
             SET project_name =?, 
+                  reference =?, 
                   private = ?, 
                   description = ?,
                   clientid = ?,
@@ -67,6 +70,7 @@ function xproject_adminapi_update($args)
                   status = ?,
                   priority = ?,
                   importance = ?,
+                  projecttype = ?,
                   date_approved = ?,
                   planned_start_date = ?,
                   planned_end_date = ?,
@@ -80,6 +84,7 @@ function xproject_adminapi_update($args)
 
     $bindvars = array(
               $project_name,
+              $reference,
               $private,
               $description,
               $clientid,
@@ -87,6 +92,7 @@ function xproject_adminapi_update($args)
               $status,
               $priority,
               $importance,
+              $projecttype,
               $date_approved,
               $planned_start_date,
               $planned_end_date,
@@ -101,6 +107,35 @@ function xproject_adminapi_update($args)
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
+
+    $userid = xarUserGetVar('uid');
+    $logdetails = "Project modified.";
+    if($project_name != $item['project_name'])
+        $logdetails .= "<br>Project name changed from ".$item['project_name']." to ".$project_name;
+    if($importance != $item['importance'])
+        $logdetails .= "<br>Project importance changed from ".$item['importance']." to ".$importance;
+    if($status != $item['status'])
+        $logdetails .= "<br>Project status changed from ".$item['status']." to ".$status;
+    if($priority != $item['priority'])
+        $logdetails .= "<br>Project priority changed from ".$item['priority']." to ".$priority;
+    if($hours_planned != $item['hours_planned']
+        || $hours_spent != $item['hours_spent']
+        || $hours_remaining != $item['hours_remaining'])
+        $logdetails .= "<br>Project hours modified.";
+    if($planned_start_date != $item['planned_start_date']
+        || $planned_end_date != $item['planned_end_date'])
+        $logdetails .= "<br>Planned Project timeframe modified.";
+    if($actual_start_date != $item['actual_start_date']
+        || $actual_end_date != $item['actual_end_date'])
+        $logdetails .= "<br>Actual Project timeframe modified.";
+        
+    $logid = xarModAPIFunc('xproject',
+                        'log',
+                        'create',
+                        array('projectid'   => $projectid,
+                            'userid'        => $ownerid,
+                            'details'	    => $logdetails,
+                            'changetype'	=> "MODIFIED"));
 
     $item['module'] = 'xproject';
     $item['itemid'] = $projectid;

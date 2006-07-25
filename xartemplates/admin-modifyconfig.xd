@@ -1,46 +1,44 @@
 <xar:template type="module" file="admin-menu" />
     
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Configuration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-<div align="center">
-
-<table border="0" cellspacing="0" cellpadding="2">
-
-<form method="post" action="&xar-modurl-xproject-admin-updateconfig;">
-
-<tr><td><label for="itemsperpage"><xar:mlstring>Projects per page</xar:mlstring></label></td>
-<td><select name="itemsperpage" id="itemsperpage">
-    <xar:for start="$i = 1" test="$i <= 9" iter="$i++">
-        <xar:if condition="$i eq $itemsperpage">
-        <option value="#$i#" selected="selected">#$i#</option>
-        <xar:else/>
-        <option value="#$i#">#$i#</option>
-        </xar:if>
-    </xar:for>
-    </select>
-</td></tr>
-<tr><td colspan="2" align="center"><br />
+    <div class="xar-mod-body">
+    
+    <form method="post" action="&xar-modurl-xproject-admin-updateconfig;">
+    
+    <fieldset><legend><xar:mlstring>Projects per page</xar:mlstring></legend>
+        <select name="itemsperpage" id="itemsperpage">
+        <xar:for start="$i = 5" test="$i <= 50" iter="$i+=5">
+            <xar:if condition="$i eq $itemsperpage">
+            <option value="#$i#" selected="selected">#$i#</option>
+            <xar:else/>
+            <option value="#$i#">#$i#</option>
+            </xar:if>
+        </xar:for>
+        </select>
+    </fieldset>
+    
     <input type="hidden" name="authid" value="#$authid#" />
-    <input type="submit" value="#$updatebutton#"></td></tr>
-</form>
+    <input type="submit" value="#$updatebutton#">
+    
+    </form>
+    
+    </div>
 
-</table>
-</div>
-</div>
     <fieldset>
       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
       <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
           <!--
               You can display individual hooks if you want using xar:if statements
-
+    
               <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
                 #$hooks['categories']#
               </xar:if>
-
+    
               or display them all with one command as follows
               -->
           #$hooks[$hookmodule]#
         </xar:foreach>
       </xar:if>
     </fieldset>
+</div>

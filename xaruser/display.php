@@ -21,6 +21,8 @@ function xproject_user_display($args)
         $projectid = $objectid;
     }
 
+    if (!xarModAPILoad('xproject', 'features')) return;
+
     $data = xarModAPIFunc('xproject','user','menu');
     $data['projectid'] = $projectid;
     $data['status'] = '';
@@ -46,7 +48,22 @@ function xproject_user_display($args)
                                          array($project['project_name']));
 
     $data['project_name'] = $project['project_name'];
+    $data['project_link'] = xarModURL('xproject',
+                                    'admin',
+                                    'display',
+                                    array('projectid' => $project['projectid']));
+                                    
     $data['description'] = $project['description'];
+    $data['item'] = $project;
+
+    $features = xarModAPIFunc('xproject',
+                          'features',
+                          'getall',
+                          array('projectid' => $projectid));
+
+    if (!isset($features)) return;
+    
+    $data['features'] = $features;
 
     $hooks = xarModCallHooks('item',
                              'display',

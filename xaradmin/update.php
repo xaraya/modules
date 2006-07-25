@@ -2,41 +2,26 @@
 
 function xproject_admin_update($args)
 {
-    list($projectid,
-        $project_name,
-        $private,
-        $description,
-        $clientid,
-        $ownerid,
-        $status,
-        $priority,
-        $importance,
-        $date_approved,
-        $planned_start_date,
-        $planned_end_date,
-        $actual_start_date,
-        $actual_end_date,
-        $hours_planned,
-        $hours_spent,
-        $hours_remaining,
-        $associated_sites) =	xarVarCleanFromInput('projectid',
-                                            'project_name',
-                                            'private',
-                                            'description',
-                                            'clientid',
-                                            'ownerid',
-                                            'status',
-                                            'priority',
-                                            'importance',
-                                            'date_approved',
-                                            'planned_start_date',
-                                            'planned_end_date',
-                                            'actual_start_date',
-                                            'actual_end_date',
-                                            'hours_planned',
-                                            'hours_spent',
-                                            'hours_remaining',
-                                            'associated_sites');
+    if (!xarVarFetch('projectid', 'id', $projectid)) return;
+    if (!xarVarFetch('reference', 'str::', $reference, $reference, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str:1:', $status, $status, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_approved', 'str::', $date_approved, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_start_date', 'str::', $planned_start_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('actual_start_date', 'str::', $actual_start_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('actual_end_date', 'str::', $actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
@@ -45,6 +30,7 @@ function xproject_admin_update($args)
 					'update',
 					array('projectid'	    => $projectid,
 						'project_name' 	    => $project_name,
+						'reference' 	    => $reference,
                         'private'	        => $private,
                         'description'	    => $description,
                         'clientid'	        => $clientid,
@@ -52,6 +38,7 @@ function xproject_admin_update($args)
                         'status'	        => $status,
                         'priority'		    => $priority,
                         'importance'		=> $importance,
+                        'projecttype'       => $projecttype,
                         'date_approved'	    => $date_approved,
                         'planned_start_date'=> $planned_start_date,
                         'planned_end_date'	=> $planned_end_date,

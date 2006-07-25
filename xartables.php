@@ -25,6 +25,8 @@ function xproject_xartables()
     $xartable['xProject_features'] = $xProject_features;
     $xProject_pages = xarDBGetSiteTablePrefix() . '_xProject_pages';
     $xartable['xProject_pages'] = $xProject_pages;
+    $xProject_log = xarDBGetSiteTablePrefix() . '_xProject_log';
+    $xartable['xProject_log'] = $xProject_log;
     return $xartable;
 }
 ?>

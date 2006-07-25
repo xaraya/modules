@@ -29,13 +29,13 @@ function xproject_admin_delete($args)
                          'get',
                          array('projectid' => $projectid));
 
-    if (!isset($project) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+    if (!isset($project) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
 
     if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$project[project_name]:All:$projectid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xproject', xarVarPrepForDisplay($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }

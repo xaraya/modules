@@ -13,12 +13,7 @@
  */
 function xproject_user_main()
 {
-    if (!xarSecurityCheck('ViewXProject')){
-        return;
-    }
-
-    $data = xarModAPIFunc('xproject','admin','menu');
-    $data['welcome'] = xarML('Welcome to the xproject module...');
-    return $data;
+    xarResponseRedirect(xarModURL('xproject','user','view'));
+	return;
 }
 ?>

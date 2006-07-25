@@ -21,6 +21,18 @@
         <td><xar:data-input property="$properties['project_name']" name="project_name" /></td>
     </tr>
     <tr>
+        <td><xar:data-label property="$properties['reference']" /></td>
+        <td><xar:data-input property="$properties['reference']" name="reference" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['clientid']" /></td>
+        <td><xar:data-input property="$properties['clientid']" name="clientid" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['ownerid']" /></td>
+        <td><xar:data-input property="$properties['ownerid']" name="ownerid" /></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['private']" /></td>
         <td><xar:data-input property="$properties['private']" name="private" /></td>
     </tr>
@@ -39,6 +51,10 @@
     <tr>
         <td><xar:data-label property="$properties['importance']" /></td>
         <td><xar:data-input property="$properties['importance']" name="importance" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['projecttype']" /></td>
+        <td><xar:data-input property="$properties['projecttype']" name="projecttype" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_approved']" /></td>

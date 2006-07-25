@@ -12,6 +12,8 @@
 function xproject_adminapi_create($args)
 {
     extract($args);
+    
+    if(is_array($associated_sites)) $associated_sites = serialize($associated_sites);
 
     $invalid = array();
     if (!isset($project_name) || !is_string($project_name)) {
@@ -41,6 +43,7 @@ function xproject_adminapi_create($args)
     $query = "INSERT INTO $xprojecttable (
                   projectid,
                   project_name,
+                  reference,
                   private,
                   description,
                   clientid,
@@ -48,6 +51,7 @@ function xproject_adminapi_create($args)
                   status,
                   priority,
                   importance,
+                  projecttype,
                   date_approved,
                   planned_start_date,
                   planned_end_date,
@@ -57,18 +61,20 @@ function xproject_adminapi_create($args)
                   hours_spent,
                   hours_remaining,
                   associated_sites)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
               $project_name,
-              $private ? $private : "N",
+              $reference,
+              $private ? $private : "",
               $description,
               $clientid,
               $ownerid,
               $status,
               $priority,
               $importance,
+              $projecttype,
               $date_approved,
               $planned_start_date,
               $planned_end_date,
@@ -82,10 +88,16 @@ function xproject_adminapi_create($args)
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-// PRIVATE INITIALLY SET BASED ON USER PREFERENCE
-
-
     $projectid = $dbconn->PO_Insert_ID($xprojecttable, 'xar_projectid');
+
+    $logdetails = "Project created.";
+    $logid = xarModAPIFunc('xproject',
+                        'log',
+                        'create',
+                        array('projectid'   => $projectid,
+                            'userid'        => xarUserGetVar('uid'),
+                            'details'	    => $logdetails,
+                            'changetype'	=> "CREATED"));
 
     $item = $args;
     $item['module'] = 'xproject';

@@ -18,6 +18,18 @@
         <td><xar:data-input property="$properties['project_name']" name="project_name" value="$item['project_name']" /></td>
     </tr>
     <tr>
+        <td><xar:data-label property="$properties['reference']" /></td>
+        <td><xar:data-input property="$properties['reference']" name="reference" value="$item['reference']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['clientid']" /></td>
+        <td><xar:data-input property="$properties['clientid']" name="clientid" value="$item['clientid']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['ownerid']" /></td>
+        <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$item['ownerid']" /></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['private']" /></td>
         <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
     </tr>
@@ -38,6 +50,10 @@
         <td><xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
     </tr>
     <tr>
+        <td><xar:data-label property="$properties['projecttype']" /></td>
+        <td><xar:data-input property="$properties['projecttype']" name="projecttype" value="$item['projecttype']" /></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['date_approved']" /></td>
         <td><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
     </tr>
@@ -47,7 +63,7 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['planned_end_date']" /></td>
-        <td><xar:data-input property="$properties['planned_start_date']" name="planned_start_date" value="$item['planned_start_date']" /></td>
+        <td><xar:data-input property="$properties['planned_end_date']" name="planned_end_date" value="$item['planned_end_date']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['actual_start_date']" /></td>
@@ -71,7 +87,7 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['associated_sites']" /></td>
-        <td><xar:data-input property="$properties['associated_sites']" name="associated_sites " value="$item['associated_sites']" /></td>
+        <td><xar:data-input property="$properties['associated_sites']" name="associated_sites" value="$item['associated_sites']" /></td>
     </tr>
     <tr>
         <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>

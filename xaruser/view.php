@@ -14,11 +14,8 @@
 function xproject_user_view($args)
 {
     extract($args);
-    if (!xarVarFetch('startnum',   'int:1:', $startnum,   1, XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('xproject','user','menu');
-
-    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 
     $xprojects = array();
 
@@ -29,16 +26,16 @@ function xproject_user_view($args)
     $xprojects = xarModAPIFunc('xproject',
                           'user',
                           'getall',
-                          array('startnum' => $startnum,
-                                'numitems' => 10));//TODO: numitems
+                          array('private' => "public",
+                                'numitems' => xarModGetVar('xproject', 'itemsperpage')));//TODO: numitems
 
-    if (!isset($xprojects) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+    if (!isset($xprojects) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     for ($i = 0; $i < count($xprojects); $i++) {
         $project = $xprojects[$i];
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['link'] = xarModURL('xproject',
-                                               'admin',
+                                               'user',
                                                'display',
                                                array('projectid' => $project['projectid']));
         }
@@ -60,6 +57,8 @@ function xproject_user_view($args)
         }
     }
 
+    $displaytitle = xarModGetVar('xproject', 'displaytitle');
+    $data['displaytitle'] = $displaytitle ? $displaytitle : xarML("xProject - Active Public Projects");
     $data['projects'] = $xprojects;
     $data['pager'] = '';
     return $data;

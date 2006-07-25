@@ -20,6 +20,7 @@
  */
 function xproject_adminapi_getmenulinks()
 {
+    $menulinks = array();
 
     if (xarSecurityCheck('AddXProject', 0)) {
 
@@ -51,10 +52,6 @@ function xproject_adminapi_getmenulinks()
                                                    'modifyconfig'),
                               'title' => xarML('Modify the configuration for XProject'),
                               'label' => xarML('Modify Config'));
-    }
-
-    if (empty($menulinks)){
-        $menulinks = '';
     }
 
     return $menulinks;

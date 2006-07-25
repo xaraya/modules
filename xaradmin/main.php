@@ -14,7 +14,7 @@
  
 function xproject_admin_main()
 {
-    xarResponseRedirect(xarModURL('xproject','admin','modifyconfig'));
+    xarResponseRedirect(xarModURL('xproject','admin','view'));
 	return;
 }
 

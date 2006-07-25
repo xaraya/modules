@@ -18,6 +18,7 @@ function xproject_userapi_get($args)
     $xprojecttable = $xartable['xProjects'];
 
     $query = "SELECT projectid,
+                  reference,
                   project_name,
                   private,
                   description,
@@ -26,6 +27,7 @@ function xproject_userapi_get($args)
                   status,
                   priority,
                   importance,
+                  projecttype,
                   date_approved,
                   planned_start_date,
                   planned_end_date,
@@ -50,6 +52,7 @@ function xproject_userapi_get($args)
     }
 
     list($projectid,
+          $reference,
           $project_name,
           $private,
           $description,
@@ -58,6 +61,7 @@ function xproject_userapi_get($args)
           $status,
           $priority,
           $importance,
+          $projecttype,
           $date_approved,
           $planned_start_date,
           $planned_end_date,
@@ -78,6 +82,7 @@ function xproject_userapi_get($args)
     }
 
     $item = array('projectid'           => $projectid,
+                  'reference'           => $reference,
                   'project_name'        => $project_name,
                   'private'             => $private,
                   'description'         => $description,
@@ -86,6 +91,7 @@ function xproject_userapi_get($args)
                   'status'              => $status,
                   'priority'            => $priority,
                   'importance'          => $importance,
+                  'projecttype'         => $projecttype,
                   'date_approved'       => $date_approved == "0000-00-00" ? NULL : $date_approved,
                   'planned_start_date'  => $planned_start_date == "0000-00-00" ? NULL : $planned_start_date,
                   'planned_end_date'    => $planned_end_date == "0000-00-00" ? NULL : $planned_end_date,

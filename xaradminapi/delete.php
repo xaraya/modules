@@ -18,7 +18,7 @@ function xproject_adminapi_delete($args)
     if (!isset($projectid) || !is_numeric($projectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item ID', 'admin', 'delete', 'xproject');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -29,12 +29,12 @@ function xproject_adminapi_delete($args)
                             'get',
                             array('projectid' => $projectid));
 
-    if (!isset($project) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+    if (!isset($project) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$project[project_name]:All:$projectid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xproject', xarVarPrepForStore($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
@@ -51,7 +51,34 @@ function xproject_adminapi_delete($args)
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $pagestable = $xartable['xProject_pages'];
+
+    // does it have children ?
+    $sql = "DELETE FROM $pagestable
+            WHERE projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $featurestable = $xartable['xProject_features'];
+    
+    $sql = "DELETE FROM $featurestable
+            WHERE projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

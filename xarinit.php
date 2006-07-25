@@ -33,8 +33,9 @@ function xproject_init()
                                 'importance'        =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'priority'          =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'private'           =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
+                                'websiteproject'    =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
                                 'date_approved'     =>  array('type'=>'time','null'=>TRUE,'default'=>''),
-                                'planned_start_date'=>  array('type'=>'date','null'=>TRUE,'default'=>'ULL'),
+                                'planned_start_date'=>  array('type'=>'date','null'=>TRUE,'default'=>''),
                                 'planned_end_date'  =>  array('type'=>'date','null'=>TRUE,'default'=>''),
                                 'actual_start_date' =>  array('type'=>'date','null'=>TRUE,'default'=>''),
                                 'actual_end_date'   =>  array('type'=>'date','null'=>TRUE,'default'=>''),
@@ -46,6 +47,20 @@ function xproject_init()
     if (empty($query)) return;
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_ownerid',
+                   'fields'    => array('ownerid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xProjects_table,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_clientid',
+                   'fields'    => array('clientid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xProjects_table,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
     
     $features_table = $xarTables['xProject_features'];
     $features_fields = array('featureid'            =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -53,10 +68,18 @@ function xproject_init()
                                 'feature_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                                 'details'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'tech_notes'        =>  array('type'=>'text','null'=>FALSE,'default'=>''),
+                                'importance'        =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'date_approved'     =>  array('type'=>'date','null'=>TRUE,'default'=>''),
                                 'date_available'    =>  array('type'=>'date','null'=>TRUE) );
     $query = xarDBCreateTable($features_table,$features_fields);
     if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
+                   'fields'    => array('projectid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($features_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
@@ -65,10 +88,37 @@ function xproject_init()
                         'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
                         'page_name'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                         'status'        =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
+                        'sequence'      =>  array('type'=>'float', 'size' =>'decimal', 'width'=>4, 'decimals'=>1),
                         'description'   =>  array('type'=>'text','null'=>FALSE,'default'=>''),
-                        'relative_url'  =>  array('type'=>'varchar','size'=>255,'null'=>TRUE) );
+                        'relativeurl'   =>  array('type'=>'varchar','size'=>255,'null'=>TRUE) );
     $query = xarDBCreateTable($pages_table,$pages_fields);
     if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
+                   'fields'    => array('projectid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($pages_table,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $log_table = $xarTables['xProject_log'];
+    $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                        'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                        'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                        'createdate'    =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                        'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
+    $query = xarDBCreateTable($log_table,$log_fields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
+                   'fields'    => array('projectid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($log_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
@@ -84,22 +134,48 @@ function xproject_init()
 
     $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/projects.xml'));
-    if (empty($projects_objectid)) return;
+    if (empty($projects_objectid))   {
+        $msg = xarML('Failed to import projects.xml...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
     // save the object id for later
     xarModSetVar('xproject','projects_objectid',$projects_objectid);
 
     $features_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/features.xml'));
-    if (empty($features_objectid)) return;
+    if (empty($features_objectid))   {
+        $msg = xarML('Failed to import features.xml...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
     // save the object id for later
     xarModSetVar('xproject','features_objectid',$features_objectid);
 
 
     $pages_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/pages.xml'));
-    if (empty($pages_objectid)) return;
+    if (empty($pages_objectid)) {
+        $msg = xarML('Failed to import pages.xml...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
     // save the object id for later
     xarModSetVar('xproject','pages_objectid',$pages_objectid);
+
+    $log_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/log.xml'));
+    if (empty($log_objectid))  {
+        $msg = xarML('Failed to import log.xml...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
+    // save the object id for later
+    xarModSetVar('xproject','log_objectid',$log_objectid);
 
     
 //    $xartable =& xarDBGetTables();
@@ -114,6 +190,30 @@ function xproject_init()
 
 //    xarBlockTypeRegister('xproject', 'first');
 //    xarBlockTypeRegister('xproject', 'others');
+    
+    /**
+     * Define instances for this module
+     * Format is
+     * setInstance(Module, Type, ModuleTable, IDField, NameField,
+     *             ApplicationVar, LevelTable, ChildIDField, ParentIDField)
+     *
+     */
+
+    $query1 = "SELECT DISTINCT projectid FROM $xarTables[xProjects]";
+
+    $query2 = "SELECT DISTINCT project_name FROM $xarTables[xProjects]";
+    
+    $instances = array(
+                        array('header' => 'Project ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Project Name:',
+                                'query' => $query2,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance('xproject','All',$instances);
 
     /**
      * Register the module components that are privileges objects
@@ -140,9 +240,133 @@ function xproject_init()
 
 function xproject_upgrade($oldversion)
 {
-    switch($oldversion) {
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
 
+    xarDBLoadTableMaintenanceAPI();
+            
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
+    switch($oldversion) {
+        case '0.2.0':
         case '1.0':
+            $xproject_table = $xarTables['xProjects'];
+            $features_table = $xarTables['xProject_features'];
+            $pages_table = $xarTables['xProject_pages'];
+            
+            // ADD WEBSITEPROJECT FIELD TO PROJECTS
+            $result = $datadict->ChangeTable($xproject_table, 'websiteproject C(1) NotNull');
+            if (!$result) return;
+
+            // ADD IMPORTANCE FIELD TO FEATURES
+            $result = $datadict->ChangeTable($features_table, 'importance C(64) NotNull DEFAULT ""');
+            if (!$result) return;
+
+            // ADD SEQUENCE FIELD TO PAGES
+            $result = $datadict->ChangeTable($pages_table, 'sequence F NotNull Default 0');
+            if (!$result) return;
+            
+            // ADD RELATIVEURL CHECKBOX FIELD TO PROJECTS
+            $result = $datadict->ChangeTable($pages_table, 'relativeurl C(1) NotNull');
+            if (!$result) return;
+            
+            // REPLACE PROJECTS SCHEMA
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+            
+            // REPLACE FEATURES SCHEMA
+            $features_objectid = xarModGetVar('xproject','features_objectid');
+            if (!empty($features_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $features_objectid));
+            }
+            $features_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/features.xml'));
+            if (empty($features_objectid)) return;
+            xarModSetVar('xproject','features_objectid',$features_objectid);
+        
+            // REPLACE PAGES SCHEMA
+            $pages_objectid = xarModGetVar('xproject','pages_objectid');
+            if (!empty($pages_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $pages_objectid));
+            }
+            $pages_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/pages.xml'));
+            if (empty($pages_objectid)) return;
+            xarModSetVar('xproject','pages_objectid',$pages_objectid);
+            
+        case '1.1':
+    
+            $log_table = $xarTables['xProject_log'];
+            $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                                'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                                'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'createdate'    =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
+            $query = xarDBCreateTable($log_table,$log_fields);
+            if (empty($query)) return;
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+        
+            $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
+                           'fields'    => array('projectid'),
+                           'unique'    => FALSE);
+            $query = xarDBCreateIndex($log_table,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            $log_objectid = xarModGetVar('xproject','log_objectid');
+            if (!empty($log_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $log_objectid));
+            }
+            $log_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/log.xml'));
+            if (empty($log_objectid)) return;
+            // save the object id for later
+            xarModSetVar('xproject','log_objectid',$log_objectid);
+            
+            // CHANGE WEBSITEPROJECT CHECKBOX TO A TYPE SELECTION
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->dropColumn($projects_table, 'websiteproject');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'projecttype C(64) NotNull');
+            if (!$result) return;
+            
+            // REPLACE PROJECTS SCHEMA
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+        
+        
+        case '1.2':
+            // ADD REFERENCE FIELD TO PROJECTS TABLE
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->addColumn($projects_table, 'reference C(250) NotNull');
+            if (!$result) return;
+            
+        case '1.3':            
+            // REPLACE PROJECTS SCHEMA
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+            
+        case '1.4':
             break;
 
     }

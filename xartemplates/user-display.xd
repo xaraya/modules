@@ -1,102 +1,78 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<script type="text/javascript" src="modules/xtasks/xartemplates/includes/spinner.js"></script>
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
-<script language="javascript">
-function xprojectToggleView(id){
-    var el = document.getElementById(id);
-    if(el.style.display != 'none'){
-        el.style.display = 'none';
-    }
-    else{
-        el.style.display = 'table';
-    }
-}
-</script>
-
-<xar:template type="module" file="user-menu" />
-
 <div class="xar-mod-body">
     <h2 style="text-align: center;">#$project_name#</h2>
-    <div align="center">
-        <xar:if condition="!empty($status)">
 
+    <div style="text-align: center;">
+    <xar:if condition="!empty($project_link)">
+        [ <a href="#$project_link#"><xar:mlstring>manage project</xar:mlstring></a> ]
+    </xar:if>
+    </div>
+    
+    <div>
+        <xar:if condition="!empty($status)">
             <h3>#$status#</h3>
         <xar:else />
-            <xar:blockgroup name="toxarav" id="toxarav" />
-            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['project_name']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['status']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['status']" value="$item['status']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['importance']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['priority']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['priority']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['private']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['private']" value="$item['private']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['date_approved']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['date_approved']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['planned_start_date']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['planned_start_date']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['planned_end_date']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['planned_end_date']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['actual_start_date']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['actual_start_date']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['actual_end_date']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['actual_end_date']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['hours_planned']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_planned']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['hours_spent']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_spent']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['hours_remaining']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['hours_remaining']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['description']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['description']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm"><xar:data-label property="$properties['associated_sites']" /></td>
-                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['associated_sites']" value="$item['priority']" /></td>
-                </tr>
-                <xar:if condition="!empty($hookoutput)">
-                    <tr>
-                        <td colspan="2" class="xar-norm">
-                            #$hookoutput#
-                        </td>
-                    </tr>
+            <div class="xar-norm">
+                <xar:data-output property="$properties['description']" value="$item['description']" />
+            </div>
+            <div class="xar-sub">
+                <xar:set name="planned_start_date">$item['planned_start_date']</xar:set>
+                <xar:set name="planned_end_date">$item['planned_end_date']</xar:set>
+                
+                <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
+                    <br><em><xar:mlstring>Planned Timeframe:</xar:mlstring></em>
+                    <xar:if condition="!empty($planned_start_date)">
+                        <xar:mlstring> from </xar:mlstring><strong><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></strong>
+                    </xar:if>
+                    <xar:if condition="!empty($planned_end_date)">
+                        <xar:mlstring> thru </xar:mlstring><strong><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></strong>
+                    </xar:if>
                 </xar:if>
-            </table>
+                
+                <xar:set name="hours_planned">$item['hours_planned']</xar:set>
+                <xar:set name="hours_spent">$item['hours_spent']</xar:set>
+                <xar:set name="hours_remaining">$item['hours_remaining']</xar:set>
+                
+                <xar:set name="ttlhours">$hours_planned + $hours_remaining</xar:set>
+                <xar:if condition="$ttlhours gt 0">
+                    <xar:set name="pct_complete">sprintf("%.2f", 100 * $hours_spent / $ttlhours)</xar:set>
+                <xar:else />
+                    <xar:set name="pct_complete">"0"</xar:set>
+                </xar:if>
+                <xar:if condition="$hours_planned gt 0">
+                    <xar:set name="pct_variance">sprintf("%.2f", 100 * ($hours_remaining + $hours_spent) / $hours_planned)</xar:set>
+                <xar:else />
+                    <xar:set name="pct_variance">"0"</xar:set>
+                </xar:if>
+                <br>#$pct_complete#% Complete of #$ttlhours# Hours (#$pct_variance#% variance)
+                
+                <xar:if condition="$pct_variance lt 100">
+                    <xar:set name="progress_color">"#000099"</xar:set>
+                <xar:else />
+                    <xar:set name="progress_color">"#990000"</xar:set>
+                </xar:if>
+                
+                <xar:if condition="$pct_complete lt 100">
+                    <xar:set name="int_pct_complete">sprintf("%.0f", $pct_complete)</xar:set>
+                    <div style="border: 1px solid black; width: 100%; height: 5px; padding: 2px;">
+                        <div style="background-color: #$progress_color#; width: #$int_pct_complete#%; height: 5px;"></div>
+                    </div>
+                <xar:else />
+                    <xar:set name="pct_of_complete">sprintf("$.0f", $pct_complete * $ttlhours)</xar:set>
+                    <div style="border: 1px solid black; width: #$pct_of_complete#%; height: 5px;">
+                        <div style="background-color: #$progress_color#; width: 100%; height: 5px;"></div>
+                    </div>
+                </xar:if>
+            </div>
+            
+            <div id="project_features">
+                <xar:template type="module" file="features-overview" />
+            </div>
         </xar:if>
-        <xar:template type="module" file="features-new" />
-        <xar:template type="module" file="features-view" />
     </div>
 </div>
 
