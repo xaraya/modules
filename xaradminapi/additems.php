@@ -4,21 +4,22 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
+
 /**
  * Inserts a record into a table that follows the convention:
- * @param column: nr = code
- * @param column: name = decode
+ * - column: nr = code
+ * - column: name = decode
  *
  * @param args['tablename'] string
  * @param args['name'] string
- * @return bool true on success, false on failure
+ * @return bool
  */
 function addressbook_adminapi_addItems($args)
 {
@@ -43,7 +44,7 @@ function addressbook_adminapi_addItems($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'adminapi', 'addItems', 'addressbook');
+                     join(', ', $invalid), 'admin', 'updateitems', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

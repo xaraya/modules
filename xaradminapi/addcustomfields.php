@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -15,9 +15,7 @@
 /**
  * Inserts a record into the customfields table
  *
- * @param array inserts array of strings
-          with sql
-               bindvars
+ * @param args['inserts'] array of strings
  * @return bool
  */
 function addressbook_adminapi_addCustomfields($args)
@@ -40,7 +38,7 @@ function addressbook_adminapi_addCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'adminapi', 'addCustomfields', 'addressbook');
+                     join(', ', $invalid), 'admin', 'updateitems', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

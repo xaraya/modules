@@ -4,23 +4,25 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
+
 /**
  * Move custom field position down one level
  *
  * @param passed in from updatecustomfields api
- * @throws BAD_PARAM
  * @return bool
  */
 function addressbook_adminapi_decCustomfields($args)
 {
+
     $returnCode = TRUE;
+
     /**
      * Security check
      */
@@ -37,7 +39,7 @@ function addressbook_adminapi_decCustomfields($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     join(', ', $invalid), 'adminapi', 'decCustomfields', 'addressbook');
+                     join(', ', $invalid), 'admin', 'updateItems', 'addressbook');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
         $returnCode = FALSE;

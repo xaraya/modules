@@ -4,16 +4,14 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-/**
- * Global define function
- */
+
 // Gives a common control across the module in the strange event our external mod name needs to change
 define('__ADDRESSBOOK__', 'addressbook');
 
@@ -106,17 +104,17 @@ define('_AB_CUST_TEST_STRING',      'varchar');
 define('_AB_DEVQA_NAME',    'addressbook'."QualityControl");
 define('_AB_DEVQA_EMAIL',    'addressbook'."@blacktower.com");
 
-/**
- * Class definitions
- */
+////////////////
+//
+// Class definitions
+//
+////////////////
 
 class abUserException extends DefaultUserException
 {
 
     var $errCollection = array();
-    /**
-     * Class definitions
-     */
+
     function abUserException ($exc)
     {
 
@@ -131,9 +129,7 @@ class abUserException extends DefaultUserException
             $this->msg = $exc;
         }
     }
-    /**
-     * Class definitions
-     */
+
     function abExceptionRender ($format = '')
     {
         $text = '';

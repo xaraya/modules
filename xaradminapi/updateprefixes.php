@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -16,7 +16,7 @@
  *
  * @param passed in from modifylabels api
  * @return bool
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function addressbook_adminapi_updateprefixes($args)
 {

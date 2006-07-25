@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -16,10 +16,11 @@
  * Handle the data submission
  *
  * @param GET / POST passed from modifyconfig form
- * @return array xarTemplate data
+ * @return xarTemplate data
  */
 function addressbook_admin_modifyconfig()
 {
+
     $output = array(); // template contents go here
 
     /**
@@ -31,6 +32,7 @@ function addressbook_admin_modifyconfig()
          */
         xarVarFetch('formSubmit', 'str::', $formSubmit,FALSE);
         if ($formSubmit) {
+
             /**
              * Data integrity / Security check
              */

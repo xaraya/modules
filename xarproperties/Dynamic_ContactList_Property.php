@@ -10,6 +10,7 @@
  * @subpackage Base module
  */
 include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
+include_once "modules/addressbook/xarglobal.php";
 
 /*
  * @author mikespub <mikespub@xaraya.com>
@@ -105,10 +106,32 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data=array();
         $data['value'] = $this->value;
         // get the option corresponding to this value
-        $result = $this->value;
+        $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
+        $displayName = '';
+        $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
+
+        if ((!empty($item['fname']) && !empty($item['lname'])) ||
+            (!empty($item['fname']) || !empty($item['lname']))) {
+            if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
+                if (!empty($prefixes) && $item['prefix'] > 0) {
+                    $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                }
+                $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
+            } else {
+                if (!empty($item['lname'])) {
+                    $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                }
+                if (!empty($prefixes) && $item['prefix'] > 0) {
+                    $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                }
+                $displayName .= xarVarPrepHTMLDisplay($item['fname']);
+            }
+        }
+
+        $result = $displayName;
         // only apply xarVarPrepForDisplay on strings, not arrays et al.
         if (!empty($result) && is_string($result)) {
-            $result = xarVarPrepForDisplay($result);
+            $result = xarVarPrepHTMLDisplay($result);
         }
         $data['option'] = array('id' => $this->value,
                                 'name' => $result);
