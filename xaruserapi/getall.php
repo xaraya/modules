@@ -20,15 +20,20 @@ include_once('modules/addressbook/xarglobal.php');
 function addressbook_userapi_getall($args)
 {
     extract($args);
-    
-    $output['company'] = $args['company'];
-    $addresslist = array();
 
     // Get the menu values
     $menuValues = xarModAPIFunc('addressbook','user','getmenuvalues');
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
+    
+    if (!isset($company)) {
+        $output['company'] = "";
+    } else {
+        $output['company'] = $company;
+    }
+    
+    $addresslist = array();
 
     // SQL Query
     $dbconn =& xarDBGetConn();
@@ -179,7 +184,7 @@ function addressbook_userapi_getall($args)
     if (!is_int($output['total'])) {
         xarErrorSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(xarML('There are no records to show in this view'))); //gehDEBUG
     }
-
+//die("test: ".$output['sql']);
     $items = xarModGetVar('addressbook', 'itemsperpage');
     $result =& $dbconn->PageExecute($output['sql'],1000,$output['page']);
 
@@ -472,14 +477,8 @@ function addressbook_userapi_getall($args)
         $iteminfo['id'] = $abData['id'];
         $iteminfo['displayName'] = $displayName;
         $iteminfo['displaydetails'] = $displayRow;
-//        $addresslist[$iteminfo['id']] = trim($displayName,",");
         $addresslist[$iteminfo['id']] = $iteminfo;
-//echo "for ID: ".$abData['id'];
-//echo "<pre>";
-//print_r($iteminfo);
-//echo "</pre><br><br><br>";
     } // END for $results
-//die("test");
     
     return $addresslist;
 

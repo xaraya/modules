@@ -18,26 +18,25 @@ function AddressBook_user_select($args)
 
     if (!xarVarFetch('fieldname', 'str:1:', $fieldname)) return;
     if (!xarVarFetch('value', 'int', $value, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('company', 'str::', $company, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('company', 'str', $company, $company, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
     
     $items = array();
     
-    $addresslist = xarModAPIFunc('addressbook','user','getall',array('company'=>$company));
-
-    if (!isset($addresslist)) return;
+    if(!empty($company)) {
+        $addresslist = xarModAPIFunc('addressbook','user','getall',array('company'=>$company));
     
-//echo "<pre>";
-//print_r($items);
-//echo "</pre><br><br><br>";
-//die("test");
+        if (!isset($addresslist)) return;
+    } else {
+        $addresslist = array();
+    }
     
     $data['value'] = $value ? $value : "";
     $data['options'] = $addresslist;
     $data['company'] = $company;
     $data['fieldname'] = $fieldname;
-//return("value: ".$value.", options: ".serialize($addresslist));
+    
     return $data;
 } // END main
 

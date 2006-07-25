@@ -55,8 +55,14 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         } else {
             $data['value'] = $value;
         }
+
+        if (!isset($company)) {
+            $data['company'] = "";
+        } else {
+            $data['company'] = $company;
+        }
         if (!isset($options) || count($options) == 0) {
-            $data['options'] = xarModAPIFunc('addressbook', 'user', 'getcompanies');
+            $data['options'] = xarModAPIFunc('addressbook', 'user', 'getcompanies', array('company' => $data['company']));
             array_shift($data['options']);
             $instructions = array('id'=>'0','name'=>xarML('Select a company...'));
             array_unshift($data['options'], $instructions);
@@ -89,12 +95,10 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
 
         $data['tabindex'] =!empty($tabindex) ? $tabindex : 0;
         $data['invalid']  =!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
-        xarModLoad('addressbook', 'user');
-        xarModAPILoad('addressbook', 'user');
+
         $data['contactselect'] = xarModFunc('addressbook', 'user', 'select', array('company' => $data['value'], 'fieldname' => $data['name'], 'fieldid' => $data['id']));
-//return("company: ".$data['value'].", fieldname: ".$data['name'].", test: ".$data['contactselect']);
+
         return xarTplProperty('addressbook', 'contactlist', 'showinput', $data);
-        //return $out;
     }
 
     function showOutput($args = array())
