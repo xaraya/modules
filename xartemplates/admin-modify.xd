@@ -1,0 +1,78 @@
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Task</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-xtasks-admin-update;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="taskid" value="#$item.taskid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['task_name']" /></td>
+        <td><xar:data-input property="$properties['task_name']" name="task_name" value="$item['task_name']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['private']" /></td>
+        <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['description']" /></td>
+        <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['status']" /></td>
+        <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['priority']" /></td>
+        <td><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['importance']" /></td>
+        <td><xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_approved']" /></td>
+        <td><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_start_planned']" /></td>
+        <td><xar:data-input property="$properties['date_start_planned']" name="planned_start_date" value="$item['date_start_planned']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_end_planned']" /></td>
+        <td><xar:data-input property="$properties['date_end_planned']" name="planned_start_date" value="$item['date_end_planned']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_start_actual']" /></td>
+        <td><xar:data-input property="$properties['date_start_actual']" name="actual_start_date" value="$item['date_start_actual']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_end_actual']" /></td>
+        <td><xar:data-input property="$properties['date_end_actual']" name="actual_end_date" value="$item['date_end_actual']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_planned']" /></td>
+        <td><xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_spent']" /></td>
+        <td><xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['hours_remaining']" /></td>
+        <td><xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" /></td>
+    </tr>
+    <tr>
+        <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+    </tr>
+</table>
+
+</form>
+</div>
+</div>
+<div class="xar-mod-foot">#$hooks#</div>

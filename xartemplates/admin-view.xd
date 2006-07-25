@@ -1,0 +1,72 @@
+<xar:template type="module" file="admin-menu" />
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Task List</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+
+        <th><xar:mlstring>Task Name</xar:mlstring></th>
+        <th><xar:mlstring>Importance</xar:mlstring></th>
+        <th><xar:mlstring>Priority</xar:mlstring></th>
+        <th><xar:mlstring>Status</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+    <xar:loop name="$items">
+    <tr><td class="xar-norm">
+            <xar:if condition="empty($loop:item['link'])">#$loop:item['task_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['task_name']#</a></xar:if>
+    </td>
+    
+    <xar:set name="importance">$loop->item['importance']</xar:set>
+    <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
+
+    <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
+
+    <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
+
+    <td class="xar-norm" style="text-align: center;">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+
+  </tr>
+
+        <xar:set name="date_start_planned">$loop->item['date_start_planned']</xar:set>
+        <xar:set name="date_start_actual">$loop->item['date_start_actual']</xar:set>
+        <xar:set name="date_end_planned">$loop->item['date_end_planned']</xar:set>
+        <xar:set name="date_end_actual">$loop->item['date_end_actual']</xar:set>
+        
+    <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$loop:item['description']#
+    <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
+        <br><xar:mlstring>Planned Timeframe:</xar:mlstring>
+        <xar:if condition="!empty($planned_start_date)">
+            <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></em>
+        </xar:if>
+        <xar:if condition="!empty($planned_end_date)">
+            <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></em>
+        </xar:if>
+    </xar:if>
+    <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
+        <br><xar:mlstring>Actual Timeframe:</xar:mlstring>
+        <xar:if condition="!empty($actual_start_date)">
+            <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></em>
+        </xar:if>
+        <xar:if condition="!empty($planned_end_date)">
+            <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></em>
+        </xar:if>
+    </xar:if>
+    </td></tr>
+
+    </xar:loop>
+
+
+
+</table>
+
+<br />
+
+</div>
+</div>
+<div class="xar-mod-foot" style="text-align: center;">
+#$pager#
+</div>
+<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>

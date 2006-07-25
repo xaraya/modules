@@ -1,0 +1,54 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Delete Task</xar:mlstring></h2>
+<div align="center">
+
+<table border="0" cellpadding="2" cellspacing="0" width="100%" >
+
+    <!-- the variables used in this menu come from example_user_menu() -->
+	<tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <td><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
+        <td><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
+
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<h3><xar:mlstring>Confirm deleting this Task?</xar:mlstring></h3>
+
+<form method="post" action="&xar-modurl-xproject-tasks-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="taskid" value="#$taskid#" />
+
+    <table border="0" width="300" cellpadding="2" cellspacing="1">
+        <tr>
+            <td>
+                <xar:mlstring>Task ID</xar:mlstring>
+            </td>
+            <td>
+                #$taskid#
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <xar:mlstring>Task Name</xar:mlstring>
+            </td>
+            <td>
+                #$taskname#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>

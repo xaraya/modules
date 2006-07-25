@@ -1,0 +1,337 @@
+<?php
+/**
+ * XTask Module - A simple project management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage XTask Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
+/**
+ * initialise the xtasks module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
+ */
+function xtasks_init()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    xarDBLoadTableMaintenanceAPI();
+
+    $xtasks_table = $xartable['xtasks'];
+
+    $xtasks_fields = array(
+        'taskid'			=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'parentid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'projectid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'modid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'itemtype'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'objectid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'task_name'			=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
+        'status'			=>array('type'=>'varchar','size'=>32, 'null'=>FALSE),
+        'priority'			=>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
+        'importance'		=>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
+        'description'		=>array('type'=>'text'),
+        'private'			=>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
+        'creator'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'owner'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'assigner'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'groupid'			=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'date_created'		=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_approved'		=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_changed'		=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_start_planned'=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_start_actual'	=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_end_planned'	=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'date_end_actual'	=>array('type'=>'date','null'=>TRUE, 'default'=>''),
+        'hours_planned'		=>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'hours_spent'		=>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'hours_remaining'	=>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2));
+
+    $sql = xarDBCreateTable($xtasks_table,$xtasks_fields);
+    if (empty($sql)) return; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($sql);
+
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_parentid',
+                   'fields'    => array('parentid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
+                   'fields'    => array('projectid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_modid',
+                   'fields'    => array('modid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_itemtype',
+                   'fields'    => array('itemtype'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_objectid',
+                   'fields'    => array('objectid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_creator',
+                   'fields'    => array('creator'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_owner',
+                   'fields'    => array('owner'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_assigner',
+                   'fields'    => array('assigner'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_groupid',
+                   'fields'    => array('groupid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xartable['xtasks'],$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $ddata_is_available = xarModIsAvailable('dynamicdata');
+    if (!isset($ddata_is_available)) return;
+
+    if (!$ddata_is_available) {
+        $msg = xarML('Please activate the Dynamic Data module first...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
+
+    $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/tasks.xml'));
+    if (empty($xtasks_objectid)) return;
+    // save the object id for later
+    xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
+
+    xarModSetVar('xtasks', 'dateformat', '');
+    xarModSetVar('xtasks', 'autorefresh', 600);
+    xarModSetVar('xtasks', 'displaytitle', 'Task Manager Administration');
+    xarModSetVar('xtasks', 'leadtime', 3);
+    xarModSetVar('xtasks', 'itemsperpage', 20);
+    xarModSetVar('xtasks', 'prioritymax', 10);
+
+    xarModSetVar('xtasks', 'SupportShortURLs', 0);
+    /* If you provide short URL encoding functions you might want to also
+     * provide module aliases and have them set in the module's administration.
+     * Use the standard module var names for useModuleAlias and aliasname.
+     */
+    xarModSetVar('xtasks', 'useModuleAlias',false);
+    xarModSetVar('xtasks', 'aliasname','');
+
+//    xarBlockTypeRegister('xtasks', 'first');
+//    xarBlockTypeRegister('xtasks', 'others');
+
+    if (!xarModRegisterHook('item', 'display', 'GUI', 'xtasks', 'admin', 'workspace')) {
+        return false;
+    }
+    
+    if (!xarModRegisterHook('item', 'delete', 'API', 'xtasks', 'admin', 'delete')) {
+        return false;
+    }
+    
+    if (!xarModRegisterHook('module', 'remove', 'API', 'xtasks', 'admin', 'deleteall')) {
+        return false;
+    }
+
+    $query1 = "SELECT DISTINCT $xartable[xtasks].modid
+                          FROM $xartable[xtasks]
+                     LEFT JOIN $xartable[modules]
+                            ON $xartable[xtasks].modid = $xartable[modules].xar_regid";
+
+    $query2 = "SELECT DISTINCT objectid FROM $xartable[xtasks]";
+
+    $query3 = "SELECT DISTINCT taskid FROM $xartable[xtasks]";
+    
+    $instances = array(
+                        array('header' => 'Module ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Module Page ID:',
+                                'query' => $query2,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Task ID:',
+                                'query' => $query3,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance('xtasks','All',$instances);
+
+    /**
+     * Register the module components that are privileges objects
+     * Format is
+     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+     */
+
+   // Tasks and projects: pid, tid, owner?
+    xarRegisterMask('ViewXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+   // Groups: gid
+    xarRegisterMask('ViewXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('EditXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_ADMIN');
+    return true;
+}
+
+function xtasks_upgrade($oldversion)
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    
+    switch($oldversion) {
+
+        case '1.0':
+            // ADD HOOKS TO DELETE TASKS WHEN PARENT OBJECT IS DELETED
+            if (!xarModRegisterHook('item', 'delete', 'API', 'xtasks', 'admin', 'delete')) {
+                return false;
+            }
+            
+            // ADD HOOKS TO DELETE TASKS WHEN PARENT OBJECT MODULE IS DELETED
+            if (!xarModRegisterHook('module', 'remove', 'API', 'xtasks', 'admin', 'deleteall')) {
+                return false;
+            }
+            
+            // RESET INSTANCES TO FIX MODID RETRIEVAL    
+            xarRemoveInstances('xtasks');
+
+            $query1 = "SELECT DISTINCT $xartable[xtasks].modid
+                                  FROM $xartable[xtasks]
+                             LEFT JOIN $xartable[modules]
+                                    ON $xartable[xtasks].modid = $xartable[modules].xar_regid";
+        
+            $query2 = "SELECT DISTINCT objectid FROM $xartable[xtasks]";
+        
+            $query3 = "SELECT DISTINCT taskid FROM $xartable[xtasks]";
+            
+            $instances = array(
+                                array('header' => 'Module ID:',
+                                        'query' => $query1,
+                                        'limit' => 20
+                                    ),
+                                array('header' => 'Module Page ID:',
+                                        'query' => $query2,
+                                        'limit' => 20
+                                    ),
+                                array('header' => 'Task ID:',
+                                        'query' => $query3,
+                                        'limit' => 20
+                                    )
+                            );
+            xarDefineInstance('xtasks','All',$instances);
+        
+        case '1.1':
+            break;
+
+    }
+
+    return true;
+}
+
+function xtasks_delete()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    xarDBLoadTableMaintenanceAPI();
+    $sql = xarDBDropTable($xartable['xtasks']);
+    if (empty($sql)) return; // throw back
+
+    // Drop the table
+    $dbconn->Execute($sql);
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+    if (!empty($xtasks_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+    }
+    xarModDelVar('xtasks','xtasks_objectid');
+    
+     /* Remove any module aliases before deleting module vars */
+    /* Assumes one module alias in this case */
+    $aliasname =xarModGetVar('xtasks','aliasname');
+    $isalias = xarModGetAlias($aliasname);
+    if (isset($isalias) && ($isalias =='xtasks')){
+        xarModDelAlias($aliasname,'xtasks');
+    }
+    
+    /* Delete any module variables */
+    xarModDelAllVars('xtasks');
+ 
+    if (!xarModUnregisterHook('item', 'display', 'GUI',
+                            'xtasks', 'user', 'workspace')) {
+        return false;
+    }
+
+    //xarBlockTypeUnregister('xtasks', 'first');
+    //xarBlockTypeUnregister('xtasks', 'others');
+
+    /* Remove Masks and Instances
+     * these functions remove all the registered masks and instances of a module
+     * from the database. This is not strictly necessary, but it's good housekeeping.
+     */
+    xarRemoveMasks('xtasks');
+    xarRemoveInstances('xtasks');
+
+    return true;
+}
+
+?>

@@ -1,0 +1,38 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Task</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<h3><xar:mlstring>Confirm deleting this Task?</xar:mlstring></h3>
+
+<form method="post" action="&xar-modurl-xtasks-admin-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="taskid" value="#$taskid#" />
+
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td align="right" width="50%">
+                <xar:mlstring>Task ID</xar:mlstring>
+            </td>
+            <td width="50%">
+                #$taskid#
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="50%">
+                <xar:mlstring>Task</xar:mlstring>
+            </td>
+            <td width="50%">
+                #$name#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>

@@ -1,0 +1,49 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Projects</xar:mlstring></h2>
+<div align="center">
+<xar:if condition="!empty($status)">
+    <div>#$status#</div>
+</xar:if>
+       <table border="0" width="100%" cellspacing="0" cellpadding="2">
+		<tr align="center" valign="middle">
+        <td width="25%"><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Projects</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></td>
+        </tr>
+		</table><br />
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Tasks</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:loop name="$xprojects">
+    <tr><td class="xar-norm">
+
+        <xar:if condition="empty($loop:item['link'])">
+            #$loop:item['name']#
+        <xar:else />
+            <a href="#$loop:item['link']#">#$loop:item['name']#</a>
+        </xar:if>
+
+    </td>
+    <td class="xar-norm">#$loop:item['description']#
+    </td>
+    <td class="xar-norm" align="center">
+    <!--- #$loop:item['project_numtasks']#--->
+    </td>
+        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+  </tr>
+    </xar:loop>
+
+</table>
+<br />
+</div>
+</div>
+<div class="xar-mod-foot">
+#$pager#
+</div>
