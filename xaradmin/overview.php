@@ -17,10 +17,10 @@
  */
 function sniffer_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminExample',0)) return;
-
     $data=array();
+
+   /* Security Check */
+    if (!xarSecurityCheck('AdminSniffer',0)) return $data;
 
     /* if there is a separate overview function return data to it
      * else just call the main function that displays the overview
