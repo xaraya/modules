@@ -3,8 +3,8 @@
  * AddressBook utility functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -12,6 +12,9 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
+/**
+ * Global define function
+ */
 // Gives a common control across the module in the strange event our external mod name needs to change
 define('__ADDRESSBOOK__', 'addressbook');
 
@@ -115,6 +118,9 @@ class abUserException extends DefaultUserException
 
     var $errCollection = array();
 
+    /**
+     * Class definitions
+     */
     function abUserException ($exc)
     {
 
@@ -130,6 +136,9 @@ class abUserException extends DefaultUserException
         }
     }
 
+    /**
+     * Class definitions
+     */
     function abExceptionRender ($format = '')
     {
         $text = '';

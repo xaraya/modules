@@ -3,7 +3,7 @@
  * AddressBook user checkSubmitValues
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,9 @@
  */
 
 /**
- * checksubmitvalues
+ * Check submitted values and throw an addressbook exception
+ *
+ * @return bool True on correct result, false on error
  */
 function addressbook_userapi_checksubmitvalues($args)
 {
