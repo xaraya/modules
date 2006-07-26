@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -26,13 +26,13 @@ function addressbook_userapi_getall($args)
     foreach ($menuValues as $key=>$value) {
         $output[$key] = $value;
     }
-    
+
     if (!isset($company)) {
         $output['company'] = "";
     } else {
         $output['company'] = $company;
     }
-    
+
     $addresslist = array();
 
     // SQL Query
@@ -287,7 +287,7 @@ function addressbook_userapi_getall($args)
          */
 
         $displayName = '';
-        
+
         if ((!empty($fname) && !empty($lname)) ||
             (!empty($fname) || !empty($lname))) {
             if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -472,14 +472,14 @@ function addressbook_userapi_getall($args)
                 break;
 
         } // END switch
-        
+
         $iteminfo = $abData;
         $iteminfo['id'] = $abData['id'];
         $iteminfo['displayName'] = $displayName;
         $iteminfo['displaydetails'] = $displayRow;
         $addresslist[$iteminfo['id']] = $iteminfo;
     } // END for $results
-    
+
     return $addresslist;
 
 } // END getAddressList

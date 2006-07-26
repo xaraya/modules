@@ -4,7 +4,7 @@
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage AddressBook Module
@@ -21,22 +21,22 @@ function AddressBook_user_select($args)
     if (!xarVarFetch('company', 'str', $company, $company, XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
-    
+
     $items = array();
-    
+
     if(!empty($company)) {
         $addresslist = xarModAPIFunc('addressbook','user','getall',array('company'=>$company));
-    
+
         if (!isset($addresslist)) return;
     } else {
         $addresslist = array();
     }
-    
+
     $data['value'] = $value ? $value : "";
     $data['options'] = $addresslist;
     $data['company'] = $company;
     $data['fieldname'] = $fieldname;
-    
+
     return $data;
 } // END main
 
