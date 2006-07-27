@@ -1,0 +1,92 @@
+<object name="xProject_Features">
+  <objectid>4</objectid>
+  <label>Project Features</label>
+  <moduleid>665</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="featureid">
+      <id>15</id>
+      <label>featureid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="projectid">
+      <id>16</id>
+      <label>projectid</label>
+      <type>hidden</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="feature_name">
+      <id>17</id>
+      <label>Feature Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="importance">
+      <id>18</id>
+      <label>Importance</label>
+      <type>dropdown</type>
+      <default>4</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>1,Essential;3,Rather;5,Somewhat;7,Not Very;9,None</validation>
+    </property>
+    <property name="details">
+      <id>19</id>
+      <label>Details</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="tech_notes">
+      <id>20</id>
+      <label>Tech Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="date_approved">
+      <id>21</id>
+      <label>Date Approved</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="date_available">
+      <id>22</id>
+      <label>Date Available</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

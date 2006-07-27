@@ -1,0 +1,81 @@
+<object name="xProject_Pages">
+  <objectid>5</objectid>
+  <label>Individual Site Pages</label>
+  <moduleid>665</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="pageid">
+      <id>1</id>
+      <label>pageid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="projectid">
+      <id>2</id>
+      <label>projectid</label>
+      <type>hidden</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="page_name">
+      <id>3</id>
+      <label>Page Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>4</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>Pending;WIP;Active;Archived</validation>
+    </property>
+    <property name="sequence">
+      <id>4</id>
+      <label>Sequence</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>5</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="relativeurl">
+      <id>6</id>
+      <label>Relative URL</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+</object>
