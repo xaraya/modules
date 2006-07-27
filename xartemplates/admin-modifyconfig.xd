@@ -1,0 +1,168 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Gmaps Administration 
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration 
+        </xar:mlstring>
+    </h2>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Actions: 
+                </xar:mlstring>
+            </dt>
+            <xar:if condition="$tab eq 'general'">
+                <dd class="active">
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=general">
+                        <xar:mlstring>
+                            General 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+                <xar:else />
+                <dd>
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=general">
+                        <xar:mlstring>
+                            General 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+            <xar:if condition="$tab eq 'tab2'">
+                <dd class="active">
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=tab2">
+                        <xar:mlstring>
+                            Tab2 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+                <xar:else />
+                <dd>
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=tab2">
+                        <xar:mlstring>
+                            Tab2 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+            <xar:if condition="$tab eq 'tab3'">
+                <dd class="active">
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=tab3">
+                        <xar:mlstring>
+                            Tab3 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+                <xar:else />
+                <dd>
+                    <a href="&xar-modurl-gmaps-admin-modifyconfig;&amp;tab=tab3">
+                        <xar:mlstring>
+                            Tab3 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+        </dl>
+    </div>
+    <xar:comment>
+         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
+    </xar:comment>
+    <xar:if condition="$tab eq 'general'">
+        <form method="post" action="&xar-modurl-gmaps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <h3>
+                <xar:mlstring>
+                    General Options 
+                </xar:mlstring>
+            </h3>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Key 
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Site key to use google maps')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Googlemaps Key: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="gmapskey" id="gmapskey" value="#xarModGetVar('gmaps', 'gmapskey')#" class="xar-form-textshort" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Map Layout 
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Width of the map in pixels')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Map Width: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="mapwidth" id="mapwidth" value="#xarModGetVar('gmaps', 'mapwidth')#" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Height of the map in pixels')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Map Height: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="mapheight" id="mapheight" value="#xarModGetVar('gmaps', 'mapheight')#" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Initial latitude of center of the map')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Latitude: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="latitude" id="latitude" value="#xarModGetVar('gmaps', 'latitude')#" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Initial longitude of center of the map')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Longitude: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="longitude" id="longitude" value="#xarModGetVar('gmaps', 'longitude')#" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Initial zoom level of the map')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Zoom Level: 
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="zoomlevel" id="zoomlevel" value="#xarModGetVar('gmaps', 'zoomlevel')#" class="xar-form-textshort" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="submit" value="#xarML('Update Gmaps Configuration')#" />
+                </div>
+            </fieldset>
+        </form>
+        <xar:comment>
+            - - - - - - - - - - - - - - - - - Begin Tab2 Options - - - - - - - - - - - - - - - - - - - 
+        </xar:comment>
+        <xar:elseif condition="$tab eq 'tab2'" />
+        <xar:comment>
+            - - - - - - - - - - - - - - - - - Begin Tab3 Options - - - - - - - - - - - - - - - - - - - 
+        </xar:comment>
+        <xar:elseif condition="$tab eq 'tab3'" />
+    </xar:if>
+</div>

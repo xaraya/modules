@@ -1,0 +1,33 @@
+<?php
+/**
+ *
+ * Function getlocation
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2006 by to be added
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link to be added
+ * @subpackage Gmaps Module
+ * @author Marc Lutolf <mfl@netspan.ch>
+ *
+ * Purpose of file:  Retrieves the data of a location
+ *
+ * @param to be added
+ * @return mixed DD object item
+ *
+ */
+
+include_once 'modules/xen/xarclasses/xenddquery.php';
+
+function gmaps_userapi_getlanguage($args)
+{
+    extract($args);
+
+    $q = new xenDDQuery('gmaps_locations');
+    if (isset($id)) $q->eq('id',$id);
+    if (isset($name)) $q->eq('name',$name);
+    if (!$q->run()) return;
+    return $q->row();
+}
+
+?>

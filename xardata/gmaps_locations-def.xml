@@ -1,0 +1,73 @@
+<object name="gmaps_locations">
+  <objectid>104</objectid>
+  <label>Locations</label>
+  <moduleid>182</moduleid>
+  <itemtype>25</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>0</parent>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>750</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>751</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>752</id>
+      <label>Description</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="longitude">
+      <id>753</id>
+      <label>Longitude</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="latitude">
+      <id>754</id>
+      <label>Latitude</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="postal_code">
+      <id>755</id>
+      <label>Postal Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
