@@ -59,6 +59,26 @@
       <order>5</order>
       <validation></validation>
     </property>
+    <property name="longitude2">
+      <id>753</id>
+      <label>Longitude2</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="latitude2">
+      <id>754</id>
+      <label>Latitude2</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
     <property name="postal_code">
       <id>755</id>
       <label>Postal Code</label>
@@ -66,7 +86,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>34</status>
-      <order>6</order>
+      <order>8</order>
       <validation></validation>
     </property>
   </properties>
