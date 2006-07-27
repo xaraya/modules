@@ -76,7 +76,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>7</order>
-      <validation>Prospecting;Qualification;Needs Analysis;Value Proposition;ID Decision Makers;Perception Analysis;Proposal/Price Quote;Negotiation/Review;Closed Won;Closed Lost</validation>
+      <validation>;Draft;R & D;WIP;Hold;Archive</validation>
     </property>
     <property name="priority">
       <id>8</id>

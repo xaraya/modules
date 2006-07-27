@@ -13,9 +13,9 @@ function xproject_admin_update($args)
     if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('date_approved', 'str::', $date_approved, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planned_start_date', 'str::', $planned_start_date, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_approved', 'str::', $date_approved, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_start_date', 'str::', $planned_start_date, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('actual_start_date', 'str::', $actual_start_date, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('actual_end_date', 'str::', $actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;

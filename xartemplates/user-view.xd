@@ -10,17 +10,19 @@
     </xar:if>
     
     <xar:loop name="$projects">
+        <xar:set name="clientid">$loop->item['clientid']</xar:set>
+        <xar:set name="planned_start_date">$loop->item['planned_start_date']</xar:set>
+        <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
         <div class="xar-title">
             <xar:if condition="empty($loop:item['link'])">
                 #$loop:item['project_name']#
             <xar:else />
                 <a href="#$loop:item['link']#">#$loop:item['project_name']#</a>
             </xar:if>
+            <div><strong><xar:data-output property="$properties['clientid']" value="$clientid" /></strong></div>
         </div>
         <div class="xar-norm" style="padding-left: 25px;">#$loop:item['description']#
             <div class="xar-sub">
-                <xar:set name="planned_start_date">$loop->item['planned_start_date']</xar:set>
-                <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
                 
                 <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
                     <xar:mlstring>Planned Timeframe:</xar:mlstring>

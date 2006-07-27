@@ -26,6 +26,7 @@ function xproject_init()
     $xProjects_table = $xarTables['xProjects'];
     $xProjects_fields = array('projectid'           =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                                 'project_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'reference'         =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                                 'description'       =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'ownerid'           =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'clientid'          =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -33,12 +34,12 @@ function xproject_init()
                                 'importance'        =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'priority'          =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'private'           =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
-                                'websiteproject'    =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
-                                'date_approved'     =>  array('type'=>'time','null'=>TRUE,'default'=>''),
-                                'planned_start_date'=>  array('type'=>'date','null'=>TRUE,'default'=>''),
-                                'planned_end_date'  =>  array('type'=>'date','null'=>TRUE,'default'=>''),
-                                'actual_start_date' =>  array('type'=>'date','null'=>TRUE,'default'=>''),
-                                'actual_end_date'   =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'projecttype'       =>  array('type'=>'char','size'=>64,'null'=>FALSE,'default'=>''),
+                                'date_approved'     =>  array('type'=>'date','null'=>TRUE),
+                                'planned_start_date'=>  array('type'=>'date','null'=>TRUE),
+                                'planned_end_date'  =>  array('type'=>'date','null'=>TRUE),
+                                'actual_start_date' =>  array('type'=>'date','null'=>TRUE),
+                                'actual_end_date'   =>  array('type'=>'date','null'=>TRUE),
                                 'hours_planned'     =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                                 'hours_spent'       =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                                 'hours_remaining'   =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
@@ -64,7 +65,7 @@ function xproject_init()
     
     $features_table = $xarTables['xProject_features'];
     $features_fields = array('featureid'            =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-                                'projectid'         =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                                'projectid'         =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'feature_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                                 'details'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'tech_notes'        =>  array('type'=>'text','null'=>FALSE,'default'=>''),
@@ -85,7 +86,7 @@ function xproject_init()
     
     $pages_table = $xarTables['xProject_pages'];
     $pages_fields = array('pageid'      =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'page_name'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                         'status'        =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
                         'sequence'      =>  array('type'=>'float', 'size' =>'decimal', 'width'=>4, 'decimals'=>1),
@@ -105,8 +106,8 @@ function xproject_init()
     
     $log_table = $xarTables['xProject_log'];
     $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
-                        'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
+                        'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                        'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                         'createdate'    =>  array('type'=>'date','null'=>TRUE,'default'=>''),
                         'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
@@ -367,6 +368,15 @@ function xproject_upgrade($oldversion)
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
             
         case '1.4':
+            
+            // CHANGE WEBSITEPROJECT CHECKBOX TO A TYPE SELECTION
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->dropColumn($projects_table, 'date_approved');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'date_approved D');
+            if (!$result) return;
+
+        case '1.5':
             break;
 
     }
@@ -390,6 +400,9 @@ function xproject_delete()
     $query = xarDBDropTable($xartable['xProject_pages']);
     $result =& $dbconn->Execute($query);
 
+    $query = xarDBDropTable($xartable['xProject_log']);
+    $result =& $dbconn->Execute($query);
+
     $projects_objectid = xarModGetVar('xproject','projects_objectid');
     if (!empty($projects_objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
@@ -407,6 +420,12 @@ function xproject_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $pages_objectid));
     }
     xarModDelVar('xproject','pages_objectid');
+
+    $log_objectid = xarModGetVar('xproject','log_objectid');
+    if (!empty($pages_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $log_objectid));
+    }
+    xarModDelVar('xproject','log_objectid');
     
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */

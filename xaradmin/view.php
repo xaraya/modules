@@ -1,14 +1,29 @@
 <?php
 
-function xproject_admin_view()
+function xproject_admin_view($args)
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    $data = xarModAPIFunc('xproject', 'admin', 'menu');
+    extract($args);
 
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('clientid', 'int', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
+    
+    $data = xarModAPIFunc('xproject', 'admin', 'menu', array('showsearch' => true));
+    
+    $data['showsearch'] = 1;
+    
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
     $items = xarModAPIFunc('xproject', 'user', 'getall',
                             array('startnum' => $startnum,
+                                  'status' => $status,
+                                  'sortby' => $sortby,
+                                  'clientid' => $clientid,
+                                  'max_priority' => $data['max_priority'],
+                                  'max_importance' => $data['max_importance'],
+                                  'q' => $q,
                                   'numitems' => xarModGetVar('xproject','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     

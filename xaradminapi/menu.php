@@ -18,8 +18,17 @@
  *
  * @author the Example module development team
  */
-function xproject_adminapi_menu()
+function xproject_adminapi_menu($args)
 { 
+    extract($args);
+
+    if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_priority', 'int', $max_priority, 9, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_importance', 'int', $max_importance, 9, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showsearch', 'str', $showsearch, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
+    
     /*Initialise the array that will hold the menu configuration */
     $menu = array();
     /* Specify the menu title to be used in your blocklayout template */
@@ -27,7 +36,12 @@ function xproject_adminapi_menu()
     /* Specify the menu labels to be used in your blocklayout template
      * Preset some status variable
      */
-    $menu['status'] = '';
+    $menu['status'] = $status;
+    $menu['q'] = $q;
+    $menu['sortby'] = $sortby;
+    $menu['max_priority'] = $max_priority;
+    $menu['max_importance'] = $max_importance;
+    $menu['showsearch'] = $showsearch;
     /* Note : you could also specify the menu links here, and pass them
      * on to the template as variables
      * $menu['menulink_view'] = xarModURL('example','admin','view');

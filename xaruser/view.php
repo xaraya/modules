@@ -27,6 +27,8 @@ function xproject_user_view($args)
                           'user',
                           'getall',
                           array('private' => "public",
+                                'status' => "WIP",
+                                'sortby' => "planned_end_date",
                                 'numitems' => xarModGetVar('xproject', 'itemsperpage')));//TODO: numitems
 
     if (!isset($xprojects) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
@@ -35,7 +37,7 @@ function xproject_user_view($args)
         $project = $xprojects[$i];
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project[project_name]:All:$project[projectid]")) {//TODO: security
             $xprojects[$i]['link'] = xarModURL('xproject',
-                                               'user',
+                                               'admin',
                                                'display',
                                                array('projectid' => $project['projectid']));
         }

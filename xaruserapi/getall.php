@@ -19,6 +19,21 @@ function xproject_userapi_getall($args)
     if (!isset($private)) {
         $private = "";
     }
+    if (!isset($q)) {
+        $q = "";
+    }
+    if (!isset($sortby)) {
+        $sortby = "";
+    }
+    if (!isset($clientid) || !is_numeric($clientid)) {
+        $clientid = 0;
+    }
+    if (!isset($max_priority) || !is_numeric($max_priority)) {
+        $max_priority = 0;
+    }
+    if (!isset($max_importance) || !is_numeric($max_importance)) {
+        $max_importance = 0;
+    }
     if (!isset($startnum) || !is_numeric($startnum)) {
         $startnum = 1;
     }
@@ -59,13 +74,38 @@ function xproject_userapi_getall($args)
                   hours_spent,
                   hours_remaining,
                   associated_sites
-            FROM $xprojecttable";
+            FROM $xprojecttable
+            WHERE projectid > 0 ";
 
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
-	if($private == "public") $sql .= " WHERE private != '1'";
-    $sql .= " ORDER BY project_name";
-
+	if($private == "public") $sql .= " AND private != '1'";
+	if(!empty($status)) $sql .= " AND status = '".$status."'";
+	if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
+	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
+	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
+    if(!empty($q)) {
+        $sql .= " AND (project_name LIKE '%".$q."%'
+                    OR description LIKE '%".$q."%')";
+    }    
+    switch($sortby) {
+        case "importance":
+            $sql .= " ORDER BY importance";
+            break;
+        case "priority":
+            $sql .= " ORDER BY priority";
+            break;
+        case "status":
+            $sql .= " ORDER BY status";
+            break;
+        case "planned_end_date":
+            $sql .= " ORDER BY planned_end_date DESC";
+            break;
+        case "project_name":
+        default:
+            $sql .= " ORDER BY project_name";
+    }
+//die($sql);
 /*
     if ($selected_project != "all") {
         $sql .= " AND $xproject_todos_column[project_id]=".$selected_project;
