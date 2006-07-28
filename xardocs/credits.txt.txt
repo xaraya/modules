@@ -1,0 +1,3 @@
+- zip code db is from CFDynamics (http://www.cfdynamics.com)
+- marker images are from the Drupal Google Maps module (http://drupal.org/node/26494)
+

@@ -44,10 +44,10 @@ function gmaps_admin_modifyconfig()
             if (!xarSecConfirmAuthKey()) return;
             switch ($data['tab']) {
                 case 'general':
-                    if (!xarVarFetch('itemsperpage', 'str:1:4:', $itemsperpage, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
 
-                    xarModSetVar('gmaps', 'itemsperpage', $itemsperpage);
+                    xarModSetVar('gmaps', 'gmapskey', $gmapskey);
                     xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
                     break;
                 case 'tab2':

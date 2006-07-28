@@ -17,15 +17,50 @@
  *
  */
 
+include_once 'modules/xen/xarclasses/xenobject.class.php';
+
 function gmaps_init()
 {
 # --------------------------------------------------------
 #
 # Create database tables
 #
+
+    $q = new xenQuery();
+	$prefix = xarDBGetSiteTablePrefix();
+	$query = "DROP TABLE IF EXISTS " . $prefix . "_gmaps_directory";
+	if (!$q->run($query)) return;
+
+	$query = "CREATE TABLE " . $prefix . "_gmaps_directory (
+	  id int(11) NOT NULL auto_increment,
+	  postal_code varchar(255) NOT NULL default '',
+	  latitude varchar(255) NOT NULL default '',
+	  longitude varchar(255) NOT NULL default '',
+	  city varchar(255) NOT NULL default '',
+	  state varchar(255) NOT NULL default '',
+	  county varchar(255) NOT NULL default '',
+	  pc_class varchar(255) NOT NULL default '',
+	PRIMARY KEY  (id)
+	) TYPE=MyISAM";
+	if (!$q->run($query)) return;
+
+// Load the data as a csv import using phpmyadmin for mysql. It's a lot faster
+/*	include "modules/gmaps/xardata/gmaps_directory-dat.php";
+	$rows = gmaps_dat1();
+	foreach ($rows as $row) {
+		if (!$q->run($row)) return;
+	}
+	$rows = gmaps_dat2();
+	foreach ($rows as $row) {
+		if (!$q->run($row)) return;
+	}
+*/
+# --------------------------------------------------------
+#
+# Create DD objects
+#
     $gmaps_objects = array(
     					 'gmaps_locations',
-//    					 'gmaps_emails',
                          );
 
     // Treat destructive right now
