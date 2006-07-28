@@ -1,5 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('commerce', 'tabs')">
-</xar:if>
+<xar:style scope="module" module="commerce" file="tabs" />
 <div id="tabnav">
     <div class="help" title="Choose a set of configuration options">
         <span style="width:120px">

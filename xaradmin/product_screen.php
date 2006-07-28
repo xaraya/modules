@@ -21,10 +21,8 @@ function products_admin_product_screen()
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $xartables = xarDBGetTables();
 
-    $languages = xarModAPIFunc('commerce','user','get_languages');
-    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+    $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
+    $languages = xarModAPIFunc('math','user','getlanguages');
     $data['languages'] = $languages;
     $data['currentlang'] = $currentlang;
     if(!xarVarFetch('langid',    'int',  $data['langid'], $currentlang['id'], XARVAR_DONT_SET)) {return;}
