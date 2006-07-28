@@ -17,6 +17,6 @@
 #$terms#
 
 
-<xar:mlstring>You can access the this user account when logged it at </xar:mlstring>#$rolelink#
+<xar:mlstring>When logged in, you can access this user account at </xar:mlstring>#$rolelink#
 
 -------------------------------------------------------------
