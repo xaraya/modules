@@ -20,6 +20,9 @@
 /**
  * Show products categories screen
  */
+
+include_once 'modules/xen/xarclasses/xenquery.php';
+
 function products_admin_categories_screen()
 {
     include_once 'modules/commerce/xarclasses/object_info.php';
@@ -37,8 +40,10 @@ function products_admin_categories_screen()
     $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
     $data['languages'] = $languages;
     $data['currentlang'] = $currentlang;
-    if(!xarVarFetch('langid',    'int',  $data['langid'], $currentlang['id'], XARVAR_NOT_REQUIRED)) {return;}
 */
+    $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
+    if(!xarVarFetch('langid',    'int',  $data['langid'], $currentlang['id'], XARVAR_NOT_REQUIRED)) {return;}
+
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 
