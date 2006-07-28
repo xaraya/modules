@@ -22,9 +22,7 @@ function products_userapi_generate_category_path($args)
     if(!isset($categories_array)) $categories_array = '';
     if(!isset($index)) $index = 0;
 
-    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+    $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
 
     if (!is_array($categories_array)) $categories_array = array();
 
