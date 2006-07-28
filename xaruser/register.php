@@ -34,9 +34,7 @@ function registration_user_register()
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-        xarResponseRedirect(xarModURL('registration',
-                                      'user',
-                                      'terms'));
+        xarResponseRedirect(xarModURL('registration', 'user', 'terms'));
        return true;
     }
     $allowregistration = xarModGetVar('registration', 'allowregistration');
@@ -229,10 +227,8 @@ function registration_user_register()
             if (empty($email)){
                 $invalid['email'] = xarML('You must provide a valid email address to continue.');
             } else {
-
-                $emailcheck = xarModAPIFunc('registration',
-                                            'user',
-                                            'validatevar',
+                //user the roles validatevar function - no need to duplicate
+                $emailcheck = xarModAPIFunc('roles', 'user', 'validatevar',
                                             array('var' => $email,
                                                   'type' => 'email'));
 
@@ -248,7 +244,6 @@ function registration_user_register()
                         unset($user);
                         $invalid['email'] = xarML('That email address is already registered.');
                     }
-
                 }
 
                 // check for disallowed email addresses
@@ -259,7 +254,6 @@ function registration_user_register()
                     if (in_array ($email, $disallowedemails)) {
                         $invalid['email'] = xarML('That email address is either reserved or not allowed on this website');
                     }
-
                 }
             }
 
@@ -315,25 +309,27 @@ function registration_user_register()
             // check if any of the fields (or dynamic properties) were invalid
             if (count($invalid) > 0 || !$isvalid) {
                 // if so, return to the previous template
-                return xarTplModule('registration','user', 'registerform', array('authid'      => $authid,
-                                                                                 'values'      => $values,
-                                                                                 'invalid'     => $invalid,
-                                                                                 'properties'  => $properties,
-                                                                                 'hookoutput'  => $hookoutput,
-                                                                                 'createlabel' => xarML('Create Account'),
-                                                                                 'userlabel'   => xarML('New User')));
+                return xarTplModule('registration','user', 'registerform', 
+                                 array('authid'      => $authid,
+                                       'values'      => $values,
+                                       'invalid'     => $invalid,
+                                       'properties'  => $properties,
+                                       'hookoutput'  => $hookoutput,
+                                       'createlabel' => xarML('Create Account'),
+                                       'userlabel'   => xarML('New User')));
             }
 
             // everything seems OK -> go on to the next step
-            $data = xarTplModule('registration','user', 'confirmregistration', array('username'    => $username,
-                                                                                     'email'       => $email,
-                                                                                     'realname'    => $realname,
-                                                                                     'pass'        => $pass,
-                                                                                     'ip'          => $ip,
-                                                                                     'authid'      => $authid,
-                                                                                     'properties'  => $properties,
-                                                                                     'hookoutput'  => $hookoutput,
-                                                                                     'createlabel' => xarML('Create Account')));
+            $data = xarTplModule('registration','user', 'confirmregistration', 
+                                 array('username'    => $username,
+                                       'email'       => $email,
+                                       'realname'    => $realname,
+                                       'pass'        => $pass,
+                                       'ip'          => $ip,
+                                       'authid'      => $authid,
+                                       'properties'  => $properties,
+                                       'hookoutput'  => $hookoutput,
+                                       'createlabel' => xarML('Create Account')));
 
             break;
         case 'createuser':
@@ -360,14 +356,10 @@ function registration_user_register()
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
             if (empty($pass)){
-                $pass = xarModAPIFunc('roles',
-                                      'user',
-                                      'makepass');
+                $pass = xarModAPIFunc('roles', 'user', 'makepass');
             }
             // Create confirmation code and time registered
-            $confcode = xarModAPIFunc('roles',
-                                      'user',
-                                      'makepass');
+            $confcode = xarModAPIFunc('roles', 'user', 'makepass');
             $now = time();
 
             $requireValidation = xarModGetVar('registration', 'requirevalidation');
@@ -455,9 +447,7 @@ function registration_user_register()
                     xarResponseRedirect($redirect);
                 }
             } else {
-                //jojodee - how to discriminate between new user requiring validation and existing one with changed email?
-                // We do not want to add another state as this has widespread impact through many functions
-
+                //Set the user account not validated and add conf code
                 $userdata = array('uname'    => $username,
                                     'realname' => $realname,
                                     'email'    => $email,
