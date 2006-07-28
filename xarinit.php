@@ -93,7 +93,7 @@ function products_init()
     )";
     if (!$q->run($query)) return;
 
-    
+
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_product";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_product (
@@ -398,6 +398,7 @@ function products_init()
 
 	xarModRegisterHook('module', 'getconfig', 'API','products', 'admin', 'getconfighook');
     xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'products'));
+    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'math', 'hookModName' => 'products'));
 
 # --------------------------------------------------------
 #

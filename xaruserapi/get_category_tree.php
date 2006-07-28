@@ -24,9 +24,7 @@ function products_userapi_get_category_tree($args)
     if(!isset($category_tree_array)) $category_tree_array = '';
     if(!isset($include_itself)) $include_itself = false;
 
-    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+    $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
 
     if (!is_array($category_tree_array)) $category_tree_array = array();
     if ( (sizeof($category_tree_array) < 1) && ($exclude != '0') ) $category_tree_array[] = array('id' => '0', 'text' => 'Top');

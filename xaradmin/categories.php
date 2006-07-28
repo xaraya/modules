@@ -425,10 +425,7 @@ if (isset($action)) {
     $categories_count = 0;
     $rows = 0;
 
-    $languages = xarModAPIFunc('commerce','user','get_languages');
-    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+    $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
 
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['products_categories_description'],'cd');

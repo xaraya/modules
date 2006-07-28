@@ -198,19 +198,20 @@
                                             &nbsp;#$product_count#
                                         </td>
                                         <td align="center" class="smallText" nowrap>
+                                            <xar:set name="language">xarModAPIFunc('math','user','getcurrentlanguage')</xar:set>
                                             <xar:if condition="$cPath ne ''">
                                                 <a href="#xarModURL('products','admin','categories', array('cPath' =>$cPath_back, 'cID' => $current_category_id))#">
-                                                    <img src="#xarTplGetImage($language .'/admin/buttons/button_back.gif','commerce')#" alt="#xarML('Back')#">
+                                                    <img src="#xarTplGetImage($language['code_3'] .'/admin/buttons/button_back.gif')#" alt="#xarML('Back')#">
                                                 </a>
                                                 &nbsp;
                                             </xar:if>
                                             <xar:if condition="$search eq ''">
                                                 <a href="#xarModURL('products','admin','categories', array('cPath' => $cPath, 'cID' => $current_category_id, 'action' => 'new_category')) #">
-                                                    <img src="#xarTplGetImage($language .'/admin/buttons/button_new_category.gif','commerce')#" alt="#xarML('New Category')#">
+                                                    <img src="#xarTplGetImage($language['code_3'] .'/admin/buttons/button_new_category.gif')#" alt="#xarML('New Category')#">
                                                 </a>
                                                 &nbsp;
                                                 <a href="#xarModURL('products','admin','categories', array('cPath' => $cPath, 'action' => 'new_product')) #">
-                                                    <img src="#xarTplGetImage($language .'/admin/buttons/button_new_product.gif','commerce')#" alt="#xarML('New Product')#">
+                                                    <img src="#xarTplGetImage($language['code_3'] .'/admin/buttons/button_new_product.gif')#" alt="#xarML('New Product')#">
                                                 </a>
                                             &nbsp;  
                                             </xar:if>

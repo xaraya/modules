@@ -29,7 +29,8 @@ function products_admin_categories_screen()
     if(!xarVarFetch('cPath',  'int',  $data['cPath'], 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('current_category_id',  'int',  $data['current_category_id'], '', XARVAR_NOT_REQUIRED)) {return;}
 
-    $configuration = xarModAPIFunc('commerce','admin','load_configuration');
+/*
+	$configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
@@ -37,6 +38,7 @@ function products_admin_categories_screen()
     $data['languages'] = $languages;
     $data['currentlang'] = $currentlang;
     if(!xarVarFetch('langid',    'int',  $data['langid'], $currentlang['id'], XARVAR_NOT_REQUIRED)) {return;}
+*/
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 
