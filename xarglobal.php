@@ -13,24 +13,6 @@
  */
 
 /**
- * Global define function
- */
-// Gives a common control across the module in the strange event our external mod name needs to change
-define('__ADDRESSBOOK__', 'addressbook');
-
-// FIXME: <garrett> Waiting for xarLocale* funcs to be completed
-// borrowed from PostNuke NS-Languages/api.php / Timezone Function by Fred B (fredb86)
-define('_DAY_OF_WEEK_LONG','Sunday Monday Tuesday Wednesday Thursday Friday Saturday');
-define('_DAY_OF_WEEK_SHORT','Sun Mon Tue Wed Thu Fri Sat');
-define('_MONTH_LONG','January February March April May June July August September October November December');
-define('_MONTH_SHORT','Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec');
-define('_DATETIMEBRIEF','%b %d, %Y - %I:%M %p');
-define('_DATETIMELONG','%A, %B %d, %Y - %I:%M %p');
-define('_TIMEZONES','IDLW NT HST YST PST MST CST EST AST GMT-3:30 GMT-3 AT WAT GMT CET EET BT GMT+3:30 GMT+4 GMT+4:30 GMT+5 GMT+5:30 GMT+6 WAST CCT JST ACS GST GMT+11 NZST');
-define('_TZOFFSETS','0 1 2 3 4 5 6 7 8 8.5 9 10 11 12 13 14 15 15.5 16 16.5 17 17.5 18 19 20 21 21.5 22 23 24');
-// END FIXME
-
-/**
  * Custom Field Defines
  */
 define('_AB_HTML_LINEBREAK',         '<br />');

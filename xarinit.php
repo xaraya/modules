@@ -269,6 +269,8 @@ function addressbook_init()
 /**
  * upgrade the module from an old version
  * This function can be called multiple times
+ * @param string $oldversion The old version to upgrade from
+ * @return bool true when success of upgrade
  */
 function addressbook_upgrade($oldversion)
 {

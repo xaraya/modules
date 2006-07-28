@@ -27,7 +27,4 @@ function addressbook_admin_main()
     xarResponseRedirect(xarModURL('addressbook','admin','modifyconfig'));
     return true;
 }
-
-} // END main
-
 ?>
