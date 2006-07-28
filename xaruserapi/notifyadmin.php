@@ -47,7 +47,9 @@ function registration_userapi_notifyadmin ($args)
     }
     $rolelink = xarModURL('roles','admin','modifyrole',array('uid'=>$uid),false);
     
-    /* comments in emails is a problem - set it manually for this module
+    /* 
+       TODO: can we do this more centrally instead of every function with email
+       comments in emails is a problem - set it manually for this module
        let's make it contingent on the mail module var - as that is what
        seems intuitively the correct thing
     */
@@ -97,7 +99,7 @@ function registration_userapi_notifyadmin ($args)
                                  'message'      => $textmessage,
                                  'from'         => $siteadminemail,
                                  'fromname'     => $siteadminname,
-                                 'usetemplates' => false))) {
+                                 'usetemplates' => 0))) {//use templates is set true by default if passed in var is not set
 
         /* Set the theme comments back */
         xarModSetVar('themes','ShowTemplates',$themecomments);
