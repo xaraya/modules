@@ -188,7 +188,7 @@ function commerce_init()
 //                         'ice_zones',
 //                         'ice_taxzones',
 //                         'ice_taxzonemapping',
-                         'ice_languages',
+//                         'ice_languages',
                          'ice_addressformats',
                          'ice_configuration', 'ice_config_groups',
                          'ice_roles'
