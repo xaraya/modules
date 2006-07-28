@@ -1,8 +1,7 @@
 <xar:data-output type="languageimage" value="deu" />
 <xar:template file="application_top" type="module" module="commerce" />
 
-<xar:if condition="xarTplAddStyleLink('commerce', 'tabs')">
-</xar:if>
+<xar:style scope="module" module="commerce" file="tabs" />
 
 <style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
 <script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
