@@ -92,7 +92,8 @@ president@whitehouse.gov';
                 'blockType' => 'rlogin'));
     if (!$tid) return;
 
-    return true;
+    /* This init function brings our module to version 1.2.0, run the upgrades for the rest of the initialisation */
+    return registration_upgrade('1.2.0');
 }
 
 function registration_activate()
@@ -116,13 +117,13 @@ function registration_upgrade($oldVersion)
         xarModSetVar('registration', 'notifyemail', xarModGetVar('mail', 'adminmail'));
 
         //delete old vars
-	    xarModDelVar('registration', 'lockouttime'); // to authsystem
-	    xarModDelVar('registration', 'lockouttries'); // to authsystem
+        xarModDelVar('registration', 'lockouttime'); // to authsystem
+        xarModDelVar('registration', 'lockouttries'); // to authsystem
         xarModDelVar('registration', 'uselockout'); // to authsystem
 
             break;
         case '1.2.0':
-            // Code to upgrade from version 2.0 goes here
+            // Code to upgrade from version 1.2.0 goes here
             break;
     }
     // Update successful
@@ -138,30 +139,20 @@ function registration_upgrade($oldVersion)
  */
 function registration_delete()
 {
-/** --------------------------------------------------------
- * Delete block details for this module (for now)
- *
-    $blocktypes = xarModAPIfunc(
-        'blocks', 'user', 'getallblocktypes',
-        array('module' => 'registration')
-    );
-
-    // Delete block types.
-    if (is_array($blocktypes) && !empty($blocktypes)) {
-        foreach($blocktypes as $blocktype) {
-            $result = xarModAPIfunc(
-                'blocks', 'admin', 'delete_type', $blocktype
-            );
-        }
-    }
+   // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'registration',
+                             'blockType'=> 'rlogin'))) return;
 
     /**
-     * Remove modvars, instances and masks
+     * Remove modvars, instances, masks and privs
      */
     xarModDelAllVars('registration');
     xarRemoveMasks('registration');
     xarRemoveInstances('registration');
-
+    xarRemovePrivileges('registration');
     // Deletion successful
     return true;
 }
