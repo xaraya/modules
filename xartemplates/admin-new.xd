@@ -1,0 +1,25 @@
+<script src="http://maps.google.com/maps?file=api&v=2&amp;key=#$gmapskey#" type="text/javascript"></script>
+<xar:base-include-javascript position="head" module="example" filename="map_init.js" />
+
+<script type="text/javascript">
+    //<![CDATA[
+	if (window.attachEvent) {
+		window.attachEvent("onload", function() {
+			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#);	// Internet Explorer
+		});
+	} else {
+		window.addEventListener("load", function() {
+			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+		}, false);
+	}
+    //]]>
+</script>
+
+<xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
+Location:<br/>
+<textarea id="gmaps_address"></textarea><input type="submit" value="Map Location" onClick="getGeoCode('gmaps_address','gmaps_map')">
+<div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+<input type="hidden" name="gmaps_latitude" id="lat" value="" />
+<input type="hidden" name="gmaps_longitude" id="lng" value="" />
+<input type="hidden" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
+<input type="hidden" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
