@@ -60,7 +60,7 @@
       <validation></validation>
     </property>
     <property name="longitude2">
-      <id>753</id>
+      <id>755</id>
       <label>Longitude2</label>
       <type>integerbox</type>
       <default></default>
@@ -70,7 +70,7 @@
       <validation></validation>
     </property>
     <property name="latitude2">
-      <id>754</id>
+      <id>756</id>
       <label>Latitude2</label>
       <type>integerbox</type>
       <default></default>
@@ -80,7 +80,7 @@
       <validation></validation>
     </property>
     <property name="postal_code">
-      <id>755</id>
+      <id>757</id>
       <label>Postal Code</label>
       <type>textbox</type>
       <default></default>
