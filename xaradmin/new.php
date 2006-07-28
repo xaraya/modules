@@ -1,5 +1,5 @@
 <?
-function example_admin_new(){
+function gmaps_admin_new(){
 
     $data = array();
 /*
