@@ -1,13 +1,14 @@
 <?php
     // ================================================
-    // PHP image browser - iBrowser 
+    // PHP Image and  File Browser Configurations
     // ================================================
-    // iBrowser - configuration
+    // Configuration for ibrowser, imanager and filebrowser
     // ================================================
     // Developed: net4visions.com
     // Copyright: net4visions.com
     // License: GPL - see license.txt
     // (c)2005 All rights reserved.
+    // Consolidated for all files and adjusted for Xaraya xartinymce
     // ================================================
     // Revision: 1.3                   Date: 08/12/2005
     // ================================================
@@ -17,7 +18,7 @@
     * @link http://www.xaraya.com
     * @subpackage xarTinyMCE
     * @author Jo Dalle Nogare <jojodee@xaraya.com>
-    * Updated for Ibrowser, IManager and tinyfck on 2005/03/20 and xartinymce on 2006/02/12
+    * Last update 2006/7/1
     */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
@@ -121,7 +122,7 @@
         ),
 
         array (
-            'value'     => '/var/images/',
+            'value'     => '/var/images/Image',
             'text'      => 'Image Library',
         ),
     );
@@ -129,32 +130,32 @@
     //IMANAGER and IBROWSER settings
     // if you want to use DYNAMIC IMAGE LIBRARIES  - if $cfg['ilibs_inc'] is set, static image libraries above are ignored
     // image directories to be scanned
-    $cfg['ilibs_dir']      = array('/var/uploads/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
+    $cfg['ilibs_dir']      = array('/var/uploads/Image/'); // image library path with slashes; absolute to xar root directory - please make sure that the directories have write permissions
     $cfg['ilibs_dir_show'] = true;                  // show main library (true) or only sub-dirs (false)
      //You must uncomment the following to get dynamic library creation and scanning
     $cfg['ilibs_inc']      = 'scripts/rdirs.php';   // uncomment to allow dynamic file library
 
     //-------------------------------------------------------------------------
     //FILEBROWSER only settings - you MUST set this correctly
-    $cfg['filebrowser_dir']= 'var/images/'; //Filebrowser will look for images here and create allowed types directories
+    $cfg['filebrowser_dir']= '/var/uploads/'; //Filebrowser will look for images here and create allowed types directories
 
     $cfg['Enabled'] = 1 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
 
     // Configurations below can be left at default
     //Types of media users can 'browse' - remove type to prevent browsing of that type. Do not change names unless you know what you are doing. You can remo
-    $Config['AllowedResources']['Types']	= array('File','Images','Flash','Media') ;
+    $Config['AllowedResources']['Types']    = array('File','Images','Flash','Media') ;
 
-    $Config['AllowedExtensions']['File']	= array() ;
-    $Config['DeniedExtensions']['File']		= array('php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
+    $Config['AllowedExtensions']['File']    = array() ;
+    $Config['DeniedExtensions']['File']     = array('php','php3','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi') ;
 
-    $Config['AllowedExtensions']['Image']	= array('jpg','gif','jpeg','png') ;
-    $Config['DeniedExtensions']['Image']	= array() ;
+    $Config['AllowedExtensions']['Image']   = array('jpg','gif','jpeg','png') ;
+    $Config['DeniedExtensions']['Image']    = array() ;
 
-    $Config['AllowedExtensions']['Flash']	= array('swf','fla') ;
-    $Config['DeniedExtensions']['Flash']	= array() ;
+    $Config['AllowedExtensions']['Flash']   = array('swf','fla') ;
+    $Config['DeniedExtensions']['Flash']    = array() ;
 
-    $Config['AllowedExtensions']['Media']	= array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
-    $Config['DeniedExtensions']['Media']	= array() ;
+    $Config['AllowedExtensions']['Media']   = array('swf','fla','jpg','gif','jpeg','png','avi','mpg','mpeg') ;
+    $Config['DeniedExtensions']['Media']    = array() ;
 
     /* -------------------------------------------------------------------------
      * NOTE: You should usually  ****NOT*** need to make changes to variables beyond this line!
