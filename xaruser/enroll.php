@@ -75,6 +75,14 @@ function courses_user_enroll($args)
     if (!$confirm) {
         // No confirmation yet, present form
         $data=array();
+        // How many student are enrolled already?
+        $s_count = xarModApiFunc('courses','user','countparticipants', array('planningid',$planningid));
+        // Set the correct status
+        if (($planitem['maxparticipants'] > 0) && ($s_count >= $planitem['maxparticipants'])) {
+            $data['WaitingList'] = true;
+        } else {
+            $data['WaitingList'] = false;
+        }
         $data['planitem'] = $planitem;
         $data['confirm'] = $confirm;
         $data['planningid'] = $planningid;
@@ -89,13 +97,13 @@ function courses_user_enroll($args)
 
         // How many student are enrolled already?
         $s_count = xarModApiFunc('courses','user','countparticipants', array('planningid',$planningid));
-
+        // Set the correct status
         if (($planitem['maxparticipants'] > 0) && ($s_count >= $planitem['maxparticipants'])) {
             $studstatus = xarModGetVar('courses','WaitingListID');
         } else {
             $studstatus = xarModGetVar('courses','StandardEnrollID');
         }
-
+        // Create the actual enrollment
         $enrollid = xarModAPIFunc('courses',
                                   'user',
                                   'create_enroll',
@@ -113,7 +121,7 @@ function courses_user_enroll($args)
                                       'sendconfirms',
                                       array('userid'     => xarUserGetVar('uid'),
                                             'planningid' => $planningid,
-                                            'studstatus' => $studstatus,
+                                            'studstatus' => $studstatus, // This will also pass the WaitingList status
                                             'regdate'    => $regdate,
                                             'enrollid'   => $enrollid
                                             ));

@@ -17,10 +17,10 @@
  * Send an e-mail to the coordinator to notify about the enrollment
  * @param Takes parameters passed by user_sendtofriend to generate info used by email mod
  * @author jojodee/MichelV.
- * @param studstatus
- * @param userid
- * @param planningid
- * @param enrollid
+ * @param int studstatus
+ * @param int userid
+ * @param int planningid
+ * @param int enrollid
  * @return bool true on success
  */
 function courses_user_sendconfirms($args)
@@ -43,8 +43,17 @@ function courses_user_sendconfirms($args)
                             'get',
                             array('courseid' => $planitem['courseid']));
     if (!isset($course) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    // Check for Waiting List status, as that changes the texts
+
+    $waitingid = xarModGetVar('courses','WaitingListID');
+    if ($waitingid == $studstatus) {
+        $waitinglist = true;
+    } else {
+        $waitinglist = false;
+    }
 
     $coursename = $course['name'];
+
     // Check to see if coordinator exists
     if (!empty ($course['contactuid'])) {
         $coordinator = $course['contactuid'];
@@ -59,6 +68,7 @@ function courses_user_sendconfirms($args)
     } elseif (is_numeric($coordinator)) {
         $recipients = array(xarUserGetVar('email', $coordinator), xarModGetVar('courses', 'AlwaysNotify'));
     } else {
+        // TODO: Evaluate this, do we want an error to be thrown?
         $msg = xarML('Wrong arguments to courses_enroll', join(', ', $invalid), 'user', 'enroll', 'Courses');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -69,7 +79,11 @@ function courses_user_sendconfirms($args)
         $username = xarUserGetVar('name', $userid);
         $fromname = "Webmaster"; // Get the webmaster name
         $femail =  xarUserGetVar('email', $userid);
-        $subject = $username.' '.xarVarPrepForDisplay(xarML('enrolled in your course:')).' '.$coursename;
+        if ($waitinglist) {
+            $subject = $username.' '.xarVarPrepForDisplay(xarML('is on the waitinglist for:')).' '.$coursename;
+        } else {
+            $subject = $username.' '.xarVarPrepForDisplay(xarML('enrolled in your course:')).' '.$coursename;
+        }
         $viewcourse = xarModUrl('courses', 'user', 'displayplanned', array('planningid' => $planningid));
         $viewaccount = xarModUrl('roles', 'user', 'account', array('moduleload' => 'courses'));
 
@@ -87,6 +101,7 @@ function courses_user_sendconfirms($args)
                                               'regdate'    => $regdate,
                                               'recipients' => $recipients,
                                               'course'     => $course,
+                                              'waitinglist'=> $waitinglist,
                                               'planitem'   => $planitem),
                                          'text');
 
@@ -103,6 +118,7 @@ function courses_user_sendconfirms($args)
                                              'regdate'     => $regdate,
                                              'recipients'  => $recipients,
                                              'course'      => $course,
+                                             'waitinglist'=> $waitinglist,
                                              'planitem'    => $planitem),
                                         'html');
         //let's send the email now
@@ -144,9 +160,11 @@ function courses_user_sendconfirms($args)
             $fromname = xarML('Webmaster');
             $fromemail = xarUserGetVar('mail', 'adminmail');
         }
-
-        $subject = $studentname.', '.xarVarPrepForDisplay(xarML('you have been enrolled in:')).' '.$coursename;
-        $messagebody = xarVarPrepForDisplay(xarML('Please go to your course page to see the full list of your courses'));
+        if ($waitinglist) {
+            $subject = $studentname.', '.xarVarPrepForDisplay(xarML('you are on the waitinglist for:')).' '.$coursename;
+        } else {
+            $subject = $studentname.', '.xarVarPrepForDisplay(xarML('you have been enrolled in:')).' '.$coursename;
+        }
         // send email to user with details and link
 
         // startnew
@@ -162,6 +180,7 @@ function courses_user_sendconfirms($args)
                                               'regdate' => $regdate,
                                               'recipients' => $recipients,
                                               'course' => $course,
+                                              'waitinglist'=> $waitinglist,
                                               'planitem' => $planitem),
                                         'text');
 
@@ -177,6 +196,7 @@ function courses_user_sendconfirms($args)
                                               'regdate' => $regdate,
                                               'recipients' => $recipients,
                                               'course' => $course,
+                                              'waitinglist'=> $waitinglist,
                                               'planitem' => $planitem),
                                         'html');
 

@@ -39,17 +39,26 @@
 
             <xar:if condition="$use_extreg">
                 <xar:ml>
-                <xar:mlstring>You will be redirected to #(1) when you choose to enroll</xar:mlstring>
+                <xar:mlstring>You will be redirected to #(1) when you choose to enroll.</xar:mlstring>
                 <xar:mlvar>#$planitem['regurl']#</xar:mlvar>
                 </xar:ml>
+            </xar:if>
+            <xar:if condition="$WaitingList">
+                <xar:mlstring>This course is fully booked. You can enroll, but you will be added to the waiting list for this course when you enroll.</xar:mlstring>
             </xar:if>
             <div class="xar-form-input-wrapper-after">
             <form method="post" action="&xar-modurl-courses-user-enroll;">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-                <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+
+
+                <xar:if condition="$WaitingList">
+                    <input type="submit" name="confirm" value=" #xarML('Put me on the waitinglist')# " />
+                <xar:else />
+                    <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+                </xar:if>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
+                    <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
             </form>
             </div>
         </fieldset>

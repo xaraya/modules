@@ -37,8 +37,6 @@
             <td>
                 <a href="#xarModURL('courses','admin','display',array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Display</xar:mlstring></a> |
                 <a href="#xarModURL('courses','admin','modify', array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Modify</xar:mlstring></a>
-
-
                 <xar:if condition="$itemtype ne 1004">
                     |
                     <a href="#xarModURL('courses','admin','delete', array('itemid' => $itemid, 'itemtype' => $itemtype))#"><xar:mlstring>Delete</xar:mlstring></a>

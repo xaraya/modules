@@ -7,6 +7,15 @@
 </xar:ml>
 </p>
 <p>
+<xar:if condition="$waitinglist">
+<xar:ml>
+    <xar:mlstring>
+        You have been placed on the waitinglist of the course: #(1) which starts on #(2).
+    </xar:mlstring>
+    <xar:mlvar>#$name#</xar:mlvar>
+    <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
+</xar:ml>
+<xar:else />
 <xar:ml>
     <xar:mlstring>
         You have been enrolled in the course: #(1) which starts on #(2).
@@ -14,6 +23,7 @@
     <xar:mlvar>#$name#</xar:mlvar>
     <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
 </xar:ml>
+</xar:if>
 </p>
 <p>
 <xar:mlstring>Name of the course:</xar:mlstring> #$name#<br />
