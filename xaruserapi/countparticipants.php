@@ -1,6 +1,6 @@
 <?php
 /**
- * Utility function counts number of items held by this module
+ * Courses - Count participants
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation

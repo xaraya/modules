@@ -4,7 +4,7 @@
  * Standard function to delete a DD item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,8 +16,8 @@
 /**
  * Delete a DD course parameter
  *
- * @param 'itemid' the id of the item to be deleted
- * @param 'confirm' confirm that this item can be deleted
+ * @param int 'itemid' the id of the item to be deleted
+ * @param string 'confirm' confirm that this item can be deleted
  * @return true of success
  *         false on failure
  */
@@ -73,7 +73,6 @@ function courses_admin_delete($args)
     if (!xarSecurityCheck('AdminCourses')) return;
 
     $data['menu']      = xarModFunc('courses','admin','menu');
-    $data['menutitle'] = xarML('Delete this item?');
 
     // Check for confirmation.
     if (empty($confirm)) {

@@ -1,26 +1,20 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2>#$menutitle#</h2>
-
+    <h2><xar:mlstring>Delete Item</xar:mlstring></h2>
     <xar:if condition="!empty($menu)">
     #$menu#
     </xar:if>
-    
-    <h2><xar:mlstring>Delete Item</xar:mlstring></h2>
-    
-        <h3><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+        <h3><xar:mlstring>Do you confirm deleting this item?</xar:mlstring></h3>
+        <strong><xar:mlstring>Deleting this parameter might seriously affect the functioning of the courses module</xar:mlstring></strong>
         <fieldset>
             <legend>
                 <xar:mlstring>Item marked for deletion</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('This is the item')#">
-                         <xar:mlstring>Item:</xar:mlstring>
-                 </label>
                  <xar:data-display object="$object" />
             </div>
             <div class="xar-form-input-wrapper-after">
@@ -28,10 +22,10 @@
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                 <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-            
-                <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+
+                <input type="submit" name="confirm" value="#xarML('Yes')#" />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
+                <input type="submit" name="noconfirm" value="#xarML('No')#" />
             </form>
             </div>
         </fieldset>
