@@ -18,7 +18,7 @@
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
  * @param sortby $ the parameter to sort by (default name) enum 'name','shortdesc','number'
- * @param id catid category id
+ * @param string catid category id or ids when using glue like a + or a -
  * @param id level courselevelid
  * @param id type coursetypeid
  * @return array of items, or false on failure
@@ -61,7 +61,7 @@ function courses_userapi_getall($args)
     } else {
     $where = "0";
     }
-    $query = "SELECT xar_courseid,
+    $query = "SELECT DISTINCT xar_courseid,
                    $coursestable.xar_name,
                    xar_number,
                    xar_type,
