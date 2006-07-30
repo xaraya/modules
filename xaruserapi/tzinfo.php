@@ -5,8 +5,7 @@
  *
  * @param $args['timezone'] string the timezone we're looking for
  * @param $args['timestamp'] integer the time period we're interested in
- * @return array
- * @returns array(tz offset, dst start, dst end, dst adjust, std code, dst code)
+ * @returns array array(tz offset, dst start, dst end, dst adjust, std code, dst code)
  */
 function timezone_userapi_tzinfo($args=array())
 {
@@ -17,7 +16,7 @@ function timezone_userapi_tzinfo($args=array())
     if(!isset($timestamp) || empty($timestamp)) {
         $timestamp = time();
     }
-    
+
     $zone = xarModAPIFunc('timezone','user','findzone',
                            array('timezone'  => $timezone,
                                  'timestamp' => $timestamp));

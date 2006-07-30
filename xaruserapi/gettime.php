@@ -5,8 +5,7 @@
  *
  * @param $args['timezone'] string the timezone we're looking for
  * @param $args['timestamp'] integer the timestamp we want to adjust
- * @return integer
- * @returns adjusted timestamp
+ * @return int adjusted timestamp
  */
 function timezone_userapi_gettime($args=array())
 {

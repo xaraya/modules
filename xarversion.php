@@ -1,5 +1,4 @@
 <?php
-//$Id:$
 
 $modversion['name']           = 'timezone';
 $modversion['id']             = '5';
@@ -18,6 +17,4 @@ $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 $modversion['dependency']     = array();
-$modversion['securityschema'] = array();
-
 ?>

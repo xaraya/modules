@@ -7,8 +7,7 @@
  * @param $args['offset'] integer the timezone offset that applies, or
  * @param $args['timezone'] string the timezone we're looking for
  * @param $args['timestamp'] integer the time period we're interested in
- * @return array
- * @returns array(dst start time, dst end time, dst offset, std code, dst code, dst start rule, dst end rule)
+ * @return array Array of (dst start time, dst end time, dst offset, std code, dst code, dst start rule, dst end rule)
  */
 function timezone_userapi_findrules($args=array())
 {
@@ -32,20 +31,20 @@ function timezone_userapi_findrules($args=array())
 
     // $sSecs contains the gmt offset for standard time
     // for the zone we're perfoming this lookup on
-    
+
     $useRule = NULL;
-    
+
     // determine the current year for this zone's standard time
     $year = gmdate('Y',$timestamp);
-    
+
     // some simple things to hopefully figure out when DST starts and ends for this zone
     $dst_start = null;
     $dst_start_offset = null;
     $dst_start_rule = null;
-    
+
     $dst_end   = null;
     $dst_end_rule = null;
-    
+
     foreach($rules as $r)
     {
         if($r->hiyear == 'only') {
@@ -56,9 +55,9 @@ function timezone_userapi_findrules($args=array())
         } else {
             $hiyear = $r->hiyear;
         }
-        
+
         // ok, let's check the rules for possible candidates
-        
+
         if($r->loyear <= $year && $hiyear >= $year) {
             // this rule is a possible candidate
             // what we need to determineis if the zone this rule
@@ -75,9 +74,9 @@ function timezone_userapi_findrules($args=array())
                     // we need to check the next rule
                     continue;
                 }
-            
+
                 // since we're in the DST ruleset, let's see if the zone's date fits
-                
+
                 $dst_start = gmmktime(0,0,0,$r->month,timezone_findrules_getOnDay($r,$year),$year);
                 $dst_start += $r->tod;
                 if ($r->todcode == 'w' || $r->todcode == 's') {
@@ -120,10 +119,10 @@ function timezone_findrules_getOnDay(&$rule,$y)
     // last[Mon,Tue,Wed,Thu,Fri,Sat,Sun]
     // [Mon,Tue,Wed,Thu,Fri,Sat,Sun]>=#
     // [Mon,Tue,Wed,Thu,Fri,Sat,Sun]<=#
-    
+
     // if we have an integer, just return it
     if(is_numeric($rule->onday)) { return $rule->onday; }
-    
+
     // check to see if we're looking for the last day and find it
     if(substr($rule->onday,0,4) == 'last') {
         $dow = timezone_findrules_dayValue(substr($rule->onday,-3));
@@ -145,20 +144,20 @@ function timezone_findrules_getOnDay(&$rule,$y)
         // return the day
         return $day;
     }
-    
+
     if(strstr($rule->onday,'>=')) {
         $type = 'gte';
-        $parts = explode('>=',$rule->onday);        
+        $parts = explode('>=',$rule->onday);
     } elseif(strstr($rule->onday,'<=')) {
         $type = 'lte';
         $parts = explode('<=',$rule->onday);
     }
-    
+
     // ok, we're looking for a day On, Before or After a certain day of the month
     $lf = timezone_findrules_dayValue($parts[0]); // looking for [0-6, Sun-Sat]
     $on = $parts[1]; // on|before|after this date
     $ondow = gmdate('w',gmmktime(0,0,0,$rule->month,$on,$y));
-    // if the day of week we're looking for matches 
+    // if the day of week we're looking for matches
     // the day of the week for the on,before,after day
     // return the $on day
     if($ondow == $lf) {
@@ -170,7 +169,7 @@ function timezone_findrules_getOnDay(&$rule,$y)
             if($lf > $ondow) {
                 return $on + ($lf - $ondow);
             } elseif( $lf < $ondow) {
-                return $on + (7-$ondow+$lf);   
+                return $on + (7-$ondow+$lf);
             }
             break;
         case 'lte':

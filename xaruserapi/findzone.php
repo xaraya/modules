@@ -5,8 +5,7 @@
  *
  * @param $args['timezone'] string the timezone we're looking for
  * @param $args['timestamp'] integer the time period we're interested in
- * @return object
- * @returns zone object that applies
+ * @return object zone object that applies
  */
 function &timezone_userapi_findzone($args=array())
 {
