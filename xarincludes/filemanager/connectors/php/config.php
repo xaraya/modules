@@ -41,7 +41,7 @@ $Config['UserFilesPath'] = $cfg['filebrowser_dir'];//'./var/images/' ;
 // Attention: The 'UserFilesPath' must point to the same directory.
 
 
-$Config['UserFilesAbsolutePath']        = $cfg['root_dir'].$Config['UserFilesPath'][0];
+$Config['UserFilesAbsolutePath']        = $cfg['root_dir'].$Config['UserFilesPath'];
 
 $Config['AllowedResources']['Types']    = array('File','Image','Flash','Media');
 
