@@ -3,7 +3,7 @@
  * Get a specific course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -49,7 +49,7 @@ function courses_userapi_get($args)
                    xar_last_modified
             FROM $coursestable
             WHERE xar_courseid = ?";// AND xar_hidecourse in ($where)";
-    $result = &$dbconn->Execute($query, array((int)$courseid));
+    $result = &$dbconn->Execute($query, array($courseid));
     if (!$result) return;
     // Check for no rows found, and if so, close the result set and return an exception
     // TODO: allow for empty result when the user is not allowed to get this course ($where)

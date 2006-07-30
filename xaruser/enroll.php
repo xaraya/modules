@@ -86,9 +86,15 @@ function courses_user_enroll($args)
 
     } elseif ($confirm) {
         // If user is not enrolled already go ahead and create the enrollment
-        // Get status of student; for the moment standard status is 1
-        // TODO: make admin configurable primary student status
-        $studstatus = 1;
+
+        // How many student are enrolled already?
+        $s_count = xarModApiFunc('courses','user','countparticipants', array('planningid',$planningid));
+
+        if (($planitem['maxparticipants'] > 0) && ($s_count >= $planitem['maxparticipants'])) {
+            $studstatus = xarModGetVar('courses','WaitingListID');
+        } else {
+            $studstatus = xarModGetVar('courses','StandardEnrollID');
+        }
 
         $enrollid = xarModAPIFunc('courses',
                                   'user',

@@ -224,6 +224,7 @@ function courses_init()
     xarModSetVar('courses', 'coord_group', 5);
     // Set var for external confirms
     xarModSetVar('courses', 'SendConfirmsForExtreg', false);
+
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
             'admin',
@@ -316,7 +317,11 @@ function courses_init()
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',array('file'  => $path . '/courses_years_data.xml'));
     if (empty($objectid)) return;
-
+    // After import we can set the vars
+    $statusid = 5;
+    xarModSetVar('courses','WaitingListID', $statusid);
+    $enrollid = 1;
+    xarModSetVar('courses','StandardEnrollID', $enrollid);
     /**
      * Define instances for this module
      * Format is
@@ -769,7 +774,36 @@ function courses_upgrade($oldversion)
             // Set var for external confirms
             xarModSetVar('courses', 'SendConfirmsForExtreg', false);
         case '0.7.0':
+            // Add the studstatus 5 WaitingList
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $statustable = $xartable['courses_studstatus'];
+            // See if we have 5 already programmed in
+            $query = "SELECT xar_studstatus
+            FROM $statustable
+            WHERE xar_statusid = 5";
+            $result = &$dbconn->Execute($query);
 
+            $studstatus = xarML('WaitingList');
+            $nextId = $dbconn->GenId($statustable);
+            // Add item
+            $query = "INSERT INTO $statustable (
+                      xar_statusid,
+                      xar_studstatus)
+                    VALUES (?,?)";
+            $bindvars = array($nextId, $studstatus);
+            $result = &$dbconn->Execute($query, $bindvars);
+            // Check for an error with the database code, adodb has already raised
+            // the exception so we just return
+            if (!$result) return;
+            // Get the ID of the item that we inserted.
+            $statusid = $dbconn->PO_Insert_ID($statustable, 'xar_statusid');
+            xarModSetVar('courses','WaitingListID', $statusid);
+
+            // Set the standard enroll
+            $enrollid = 1;
+            xarModSetVar('courses','StandardEnrollID', $enrollid);
+        case '0.7.1':
             break;
     }
     // Update successful

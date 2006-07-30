@@ -15,4 +15,8 @@
     <statusid>4</statusid>
     <studstatus>Failed</studstatus>
   </studentstatus>
+  <studentstatus itemid="5">
+    <statusid>5</statusid>
+    <studstatus>WaitingList</studstatus>
+  </studentstatus>
 </items>
