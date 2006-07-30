@@ -3,7 +3,7 @@
  * Modify DD item for courses
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -61,7 +61,6 @@ function courses_admin_modify($args)
     if (!isset($newid) || $newid != $itemid) return;
 
     $data['menu']      = xarModFunc('courses','admin','menu');
-    $data['menutitle'] = xarML('Modify Parameter');
 
     // Get data ready for the template
     $data['itemid']   = $itemid;

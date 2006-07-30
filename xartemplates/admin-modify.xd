@@ -4,7 +4,7 @@
     <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2>#$menutitle#</h2>
+    <h2><xar:mlstring>Modify Course Parameter</xar:mlstring></h2>
 
     <xar:if condition="!empty($menu)">
     #$menu#
@@ -13,20 +13,18 @@
     <strong><xar:mlstring>Preview</xar:mlstring></strong>
             <xar:data-display object="$object" tplmodule="courses"/>
     </xar:if>
+
+
+        <form method="POST" action="&xar-modurl-courses-admin-update;">
     <fieldset>
         <legend>
             <xar:mlstring>Parameter to modify</xar:mlstring>
         </legend>
         <div class="xar-form-input-wrapper">
-             <label for="itemid"  class="xar-form-label" title="#xarML('This is the item')#">
-                     <xar:mlstring>Item:</xar:mlstring>
-             </label>
             <xar:data-form object="$object" tplmodule="courses"/>
         </div>
     </fieldset>
-
     <div class="xar-form-input-wrapper-after">
-        <form method="POST" action="&xar-modurl-courses-admin-update;">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
             <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
