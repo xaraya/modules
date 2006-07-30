@@ -1,16 +1,22 @@
 <?php
 /**
  * Handle form hooks
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
- * @param $itemtype - pass itemtype for multiple itemtype transformation
+ * @link http://www.xaraya.com
+ *
  * @subpackage  xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
+ * @author John Cox
+ * @author Jo Dalle Nogare
+ */
+/**
+ * @param $itemtype - pass itemtype for multiple itemtype transformation
  * @author John Cox, jojodee
-*/
- 
+ * @return mixed The hooks that are called
+ */
 function xarbb_userapi_formhooks($args)
 {
     extract($args);

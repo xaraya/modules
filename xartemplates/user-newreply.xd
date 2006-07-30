@@ -2,7 +2,7 @@
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:comment>
-    minimum use of tables for layout - a css-driven template 
+    minimum use of tables for layout - a css-driven template
 </xar:comment>
 
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
@@ -31,7 +31,7 @@
         </xar:if>
             #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
         <xar:mlstring>
-            Forum Index 
+            Forum Index
         </xar:mlstring>
         </a>
         <span style="font-size: larger;">&#187;</span>
@@ -64,11 +64,11 @@
                             #$package.name#
                         </a>
                         <xar:if condition="$receipt.action ne 'modify' and xarUserIsLoggedIn()">
-                            [ 
+                            [
                             <a class="xar-norm" href="&xar-modurl-roles-user-logout;">
                                 <xar:mlstring>Logout</xar:mlstring>
                             </a>
-                            ] 
+                            ]
                         </xar:if>
                         <xar:if condition="xarModGetVar('comments','AllowPostAsAnon') eq '1'">
                             <xar:if condition="isset($package.postanon) and $package.postanon eq '1'">
@@ -172,7 +172,7 @@
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="header[modid]" id="header_modid" value="#$header.modid#" />
             <input type="hidden" name="header[objectid]" id="header_objectid" value="#$header.objectid#" />
-            <input type="hidden" name="header[itemtype]" id="header_itemtype" value="#$header.itemtype#" /> 
+            <input type="hidden" name="header[itemtype]" id="header_itemtype" value="#$header.itemtype#" />
             <xar:if condition="!isset($header.pid) or empty($header.pid)">
                 <input type="hidden" name="header[pid]" id="header_pid" value="0" />
             <xar:else />
@@ -194,7 +194,10 @@
 
 <div class="xarbb-noteswrapper">
     <span class="xar-sub rightnote">
-        <xar:mlstring>All times are GMT</xar:mlstring>
+        <xar:ml>
+            <xar:mlstring>All times are GMT #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%z')#</xar:mlvar>
+        </xar:ml>
     </span>
     <div style="clear: both;"></div>
 </div>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Add a new topic reply
  *
@@ -8,16 +7,19 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage  xarbb Module
+ * @subpackage xarbb Module
  * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
  * @author Jo Dalle Nogare
-*/
-
+ */
 /**
+ *
+ * @param int tid Topic ID
+ * @param int cid Category ID
+ * @param string phase Either 'quote' or 'edit'
+ * @return array
  * @TODO Finish this function.
  */
-
 function xarbb_user_newreply()
 {
     if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;

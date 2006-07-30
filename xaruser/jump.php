@@ -1,20 +1,21 @@
 <?php
 /**
- * Add a standard screen upon entry to the module
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * xarBB - Jump to another forum
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
  * @subpackage  xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
-*/
-
+ */
 /**
- * Add a standard screen upon entry to the module.
- * @returns output
- * @return output with xarbb Menu information
+ * Jump to a forum
+ *
+ * @param int f ForumID
+ * @return bool true if correctly jumped to forum
  */
 function xarbb_user_jump()
 {

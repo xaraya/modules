@@ -1,30 +1,28 @@
 <?php
-
 /**
  * Main user function to display list of all existing forums
  * And existing categories
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * @link http://www.xaraya.com
  *
- * @subpackage  xarbb Module
+ * @subpackage xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
  * @author John Cox
-*/
-
+ */
 /**
  * Configure forums and categories for display
  * @author John Cox
  * @author Roger Raymond
  * @author Carl Corliss (help)
- * @author Jo dalle Nogare 
+ * @author Jo dalle Nogare
  * @access  public
  * @param   startnum used for the pager
  * @param   catid when not on top level forum
  * @return  array
-*/
-
+ */
 function xarbb_user_main()
 {
     // Get parameters from whatever input we need
@@ -85,7 +83,7 @@ function xarbb_user_main()
                     $items[$i]['cbchild'][] = $cat;
                 }
             }
-            
+
             $forums = xarModAPIFunc('xarbb', 'user', 'getallforums', array('catid' => $item['cid']));
 
             // Security check: remove forums the user should not see
@@ -106,7 +104,7 @@ function xarbb_user_main()
                         // Also set the topic tracking flags, so there are no topics within
                         // the forum marked as unread.
 
-                        // We can simply clear all entries in the topic tracking array, since we 
+                        // We can simply clear all entries in the topic tracking array, since we
                         // have set the last visited time on the forum itself.
                         $topic_tracking = array();
                         xarModAPIfunc(

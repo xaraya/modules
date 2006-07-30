@@ -1,5 +1,4 @@
 <?php
-
 /**
  * View a list of topics in a forum
  *
@@ -12,7 +11,12 @@
  * @author John Cox
  * @author Jo dalle Nogare
 */
-
+/**
+ * View list of topics in one forum
+ * @param int startnum
+ * @param int fid Forum ID
+ * @param bool read
+ */
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
@@ -261,7 +265,7 @@ function xarbb_user_viewforum__cmp($a, $b)
 
 /**
  *  Function to help sort the topics array by order of importance
- *  @params $topics array topics to be sorted passed in by reference
+ *  @param array $topics Topics to be sorted passed in by reference
  *  @return null
  */
 function xarbb_user_viewforum__sort_topics(&$topics)
