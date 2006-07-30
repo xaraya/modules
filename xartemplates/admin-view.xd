@@ -59,3 +59,4 @@
         </tr>
     </table>
 </div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
