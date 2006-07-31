@@ -25,13 +25,13 @@ function courses_admin_createplanning($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('courseid',        'id', $courseid, $courseid)) return;
+    if (!xarVarFetch('courseid',        'id',     $courseid, $courseid)) return;
     if (!xarVarFetch('year',            'int:1:', $year)) return;
     if (!xarVarFetch('credits',         'float:1:', $credits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmin',      'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creditsmax',      'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate',       'str::',  $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate',         'str::',  $enddate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('prerequisites',   'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aim',             'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('method',          'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
@@ -49,8 +49,8 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int:1:', $maxparticipants, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('closedate',       'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('expected',        'str::', $expected, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate',       'str::',  $closedate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('expected',        'str::',  $expected, '', XARVAR_NOT_REQUIRED)) return;
 
     /*
     $item = array();
@@ -76,14 +76,14 @@ function courses_admin_createplanning($args)
       $invalid['minparticipants'] = $minparticipants;
       }
     if (!isset($enddate) || !is_string($enddate)) {
-        $invalid[] = 'enddate';
+        $invalid['enddate'] = $enddate;
     }
     if (!isset($startdate) || !is_string($startdate)) {
-        $invalid[] = 'startdate';
+        $invalid['startdate'] = $startdate;
     }
     if (!empty($startdate) && (!empty($enddate))) {
         if (strtotime($enddate) < strtotime($startdate)) {
-            $invalid[] = 'enddate';
+            $invalid['enddate'] = $enddate;
         }
     }
 

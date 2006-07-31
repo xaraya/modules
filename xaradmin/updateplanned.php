@@ -50,6 +50,7 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('expected',        'str::', $expected, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $progra, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('extreg',          'checkbox', $extreg, false, XARVAR_NOT_REQUIRED)) return;
@@ -137,6 +138,7 @@ function courses_admin_updateplanned($args)
                                 'creditsmin' => $creditsmin,
                                 'creditsmax' => $creditsmax,
                                 'startdate' => $startdate,
+                                'expected'      => $expected,
                                 'enddate' => $enddate,
                                 'prerequisites' => $prerequisites,
                                 'aim' => $aim,
@@ -173,6 +175,7 @@ function courses_admin_updateplanned($args)
                                 'creditsmax'        => $creditsmax,
                                 'startdate'         => $startdate,
                                 'enddate'           => $enddate,
+                                'expected'          => $expected,
                                 'prerequisites'     => $prerequisites,
                                 'aim'               => $aim,
                                 'method'            => $method,

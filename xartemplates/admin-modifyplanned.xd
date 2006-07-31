@@ -71,6 +71,9 @@
                             </span>
                         </label>
                         <xar:data-input name="startdate" type="calendar" validation="date" value="$planneddata['startdate']" />
+                        <xar:if condition="!empty($invalid['startdate'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid startdate for this course.</xar:mlstring></span>
+                        </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="enddate" class="required xar-form-label">
@@ -79,6 +82,9 @@
                             </span>
                         </label>
                         <xar:data-input name="enddate" type="calendar" validation="date" value="$planneddata['enddate']" />
+                        <xar:if condition="!empty($invalid['enddate'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid ending date for this course.</xar:mlstring></span>
+                        </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="closedate" class="required xar-form-label">
@@ -88,7 +94,17 @@
                         </label>
                         <xar:data-input name="closedate" type="calendar" validation="date" value="$planneddata['closedate']" />
                     </div>
-
+                    <div class="xar-form-input-wrapper">
+                        <label for="expected" class="xar-form-label">
+                            <span class="help" title="#xarML('If there is text in this field, the course will be shown as expected.')#">
+                            <xar:mlstring>Expected: (Optional)</xar:mlstring>
+                            </span>
+                        </label>
+                        <input type="text" name="expected" id="expected" value="#$planneddata.expected#" maxlength="50" class="xar-form-textlong" />
+                        <xar:if condition="!empty($invalid['expected'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid expected description</xar:mlstring></span>
+                        </xar:if>
+                    </div>
                </fieldset>
                <fieldset>
                     <legend>

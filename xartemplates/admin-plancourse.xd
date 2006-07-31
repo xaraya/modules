@@ -12,7 +12,6 @@
     var fieldDescription = Array("Date the course starts", "Date the course ends");
 //-->
 </script>
-
 <div class="xar-courses-head">
     <span class="xar-mod-title">#$menutitle#</span>
 </div>
@@ -58,7 +57,11 @@
                     </label>
                         <select name="year">
                         <xar:loop name="$year">
-                            <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                            <xar:if condition="$yearid eq $loop:item['yearid']">
+                                <option value="#$loop:item['yearid']#" selected="selected">#$loop:item['year']#</option>
+                            <xar:else />
+                                <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
+                            </xar:if>
                         </xar:loop>
                         </select>
                 </div>
@@ -69,6 +72,9 @@
                         </span>
                     </label>
                     <xar:data-input name="startdate" type="8" validation="date" value="$startdate" />
+                    <xar:if condition="isset($invalid['startdate'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid startdate for this course.</xar:mlstring></span>
+                    </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="enddate" class="required xar-form-label">
@@ -77,6 +83,9 @@
                         </span>
                     </label>
                     <xar:data-input name="enddate" type="8" validation="date" value="$enddate" />
+                    <xar:if condition="isset($invalid['enddate'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid ending date for this course.</xar:mlstring></span>
+                    </xar:if>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="closedate" class="required xar-form-label">
