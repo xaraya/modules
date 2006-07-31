@@ -83,7 +83,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><xar:mlstring>Starts</xar:mlstring></th>
+                            <th><xar:mlstring>Period</xar:mlstring></th>
                             <th><xar:mlstring>Location</xar:mlstring></th>
                             <th><xar:mlstring>Credits</xar:mlstring></th>
                             <th><xar:mlstring>Options</xar:mlstring></th>
@@ -91,7 +91,15 @@
                     </thead>
                     <xar:foreach in="$items" value="$item">
                     <tr>
-                        <td>#xarlocalegetformatteddate('medium',$item.startdate)#</td>
+                        <td>
+                        <xar:if condition="!empty($item.expected)">
+                            <xar:ml>
+                                <xar:mlstring>Expected #(1)</xar:mlstring>
+                                <xar:mlvar>#$item.expected#</xar:mlvar>
+                            </xar:ml>
+                        <xar:else />
+                            #xarlocalegetformatteddate('medium',$item.startdate)# - #xarlocalegetformatteddate('medium',$item.enddate)#</td>
+                        </xar:if>
                         <td>#$item.location#</td>
                         <td>#$item.credits#</td>
                         <td>

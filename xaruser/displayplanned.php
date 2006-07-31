@@ -33,9 +33,8 @@ function courses_user_displayplanned($args)
         $planningid = $objectid;
     }
     // Initialise the $data variable
-    $data = array(); //xarModAPIFunc('courses', 'user', 'menu');
-    // Prepare the variable that will hold some status message if necessary
-    $data['status'] = '';
+    $data = array();
+
     // Get the planned course details
     $item = xarModAPIFunc('courses',
         'user',
@@ -180,6 +179,10 @@ function courses_user_displayplanned($args)
             $items[$i]['statusurl'] = '';
         }
         $items[$i]['statustitle'] = xarML('Status');
+        // The expected date is set?
+        if(!empty($planitem['expected']) && is_string($planitem['expected'])); {
+            $items[$i]['expected'] = $planitem['expected'];
+        }
     }
 
     // Add the array of items to the template variables

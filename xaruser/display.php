@@ -34,9 +34,7 @@ function courses_user_display($args)
     }
     // Initialise the $data variable
     $data = array();
-    // Prepare the variable that will hold some status message if necessary
-    // Replace this by statusmsg
-    $data['status'] = '';
+
     // The API function is called to get the course.
     $item = xarModAPIFunc('courses','user','get',
                           array('courseid' => $courseid));
@@ -52,7 +50,7 @@ function courses_user_display($args)
     $data['courseid'] = $courseid;
     $data['item'] = $item;
     $data['HideEmptyFields'] = xarModGetVar('courses', 'HideEmptyFields');
-
+    // TODO: Evaluate the use of this?
     $data['catid'] = xarModAPIFunc('categories','user','getitemcats',
                                    array('itemid' => $courseid,
                                          'modid' => xarModGetIDFromName('courses'),
@@ -141,6 +139,11 @@ function courses_user_display($args)
             $items[$i]['detailsurl'] = '';
         }
         $items[$i]['detailstitle'] = xarML('Details');
+
+        // The expected date is set?
+        if(!empty($planitem['expected']) && is_string($planitem['expected'])); {
+            $items[$i]['expected'] = $planitem['expected'];
+        }
 
     }
 
