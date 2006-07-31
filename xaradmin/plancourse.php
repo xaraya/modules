@@ -44,6 +44,7 @@ function courses_admin_plancourse($args)
     if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startdate',       'str::', $startdate, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('enddate',         'str::', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('expected',        'str::', $expected, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('info',            'str:1:', $info, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $progra, '', XARVAR_NOT_REQUIRED)) return;
@@ -200,6 +201,11 @@ function courses_admin_plancourse($args)
         $data['enddate'] = '';
     } else {
         $data['enddate'] = $startdate;
+    }
+    if (empty($expected)) {
+        $data['expected'] = '';
+    } else {
+        $data['expected'] = $expected;
     }
     if (empty($location)) {
         $data['location'] = '';

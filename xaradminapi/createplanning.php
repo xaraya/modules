@@ -60,6 +60,7 @@ function courses_adminapi_createplanning($args)
                            xar_creditsmax,
                            xar_startdate,
                            xar_enddate,
+                           xar_expected,
                            xar_prerequisites,
                            xar_aim,
                            xar_method,
@@ -79,7 +80,7 @@ function courses_adminapi_createplanning($args)
                            xar_closedate,
                            xar_hideplanning,
                            xar_last_modified)
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array($nextId,
                       $courseid,
@@ -89,6 +90,7 @@ function courses_adminapi_createplanning($args)
                       $creditsmax,
                       $startdate,
                       $enddate,
+                      $expected,
                       $prerequisites,
                       $aim,
                       $method,

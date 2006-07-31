@@ -66,6 +66,7 @@ function courses_userapi_getallplanned($args)
                    xar_courseyear,
                    xar_startdate,
                    xar_enddate,
+                   xar_expected,
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
@@ -120,7 +121,7 @@ function courses_userapi_getallplanned($args)
     if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
+        list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,$expected,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $regurl, $extreg, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")){
@@ -134,6 +135,7 @@ function courses_userapi_getallplanned($args)
             'courseyear' => $courseyear,
             'startdate'  => $startdate,
             'enddate'    => $enddate,
+            'expected'   => $expected,
             'prerequisites' => $prerequisites,
             'aim'        => $aim,
             'method'     => $method,

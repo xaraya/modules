@@ -3,7 +3,7 @@
  * Create a new planning item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,13 +11,14 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 /**
  * This is a standard function that is called with the results of the
  * form supplied by xarModFunc('courses','admin','plancourse') to create a new planning
  *
  * @param  $name the name of the item to be created
  * @param  $number the number of the item to be created
+ * @return bool true on success of creation
+ * @todo MichelV Create a function to validate this creation
  */
 function courses_admin_createplanning($args)
 {
@@ -46,11 +47,11 @@ function courses_admin_createplanning($args)
     if (!xarVarFetch('regurl',          'str:1:255', $regurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('program',         'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('maxparticipants', 'int:1:', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('minparticipants', 'int:1:', $minparticipants, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxparticipants', 'int:1:', $maxparticipants, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('closedate',       'str::', $closedate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('expected',        'str::', $expected, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Argument check
     /*
     $item = array();
     $item = xarModAPIFunc('courses',
@@ -59,12 +60,7 @@ function courses_admin_createplanning($args)
                           array('name' => $name,
                                 'number' => $number));
 
-    if (!isset($name) || !is_string($name)) {
-        $invalid[] = 'name';
-    }
-    if (!isset($number) || !is_string($number)) {
-        $invalid[] = 'number';
-    }
+
     if (!empty($name) && strcmp($item['name'], $name)) {
         $invalid[] = 'duplicatename';
     }
@@ -75,44 +71,53 @@ function courses_admin_createplanning($args)
 
     // Argument check
     $invalid = array();
-
-    if (isset($minparticipants) || isset($maxparticipants)) {
-        if ($minparticipants > $maxparticipants) {
-          $invalid['minparticipants'] = $minparticipants;
-          }
+    // Number of participants
+    if ($minparticipants > $maxparticipants) {
+      $invalid['minparticipants'] = $minparticipants;
+      }
+    if (!isset($enddate) || !is_string($enddate)) {
+        $invalid[] = 'enddate';
+    }
+    if (!isset($startdate) || !is_string($startdate)) {
+        $invalid[] = 'startdate';
+    }
+    if (!empty($startdate) && (!empty($enddate))) {
+        if (strtotime($enddate) < strtotime($startdate)) {
+            $invalid[] = 'enddate';
+        }
     }
 
     // check if we have any errors
     if (count($invalid) > 0) {
         // call the admin_newcourse function and return the template vars
-        // (move from admin-new.xd to admin-create.xd here)
         return xarModFunc('courses', 'admin', 'plancourse',
-                          array('courseid' => $courseid,
-                                'year' => $year,
-                                'credits' => $credits,
-                                'creditsmin' => $creditsmin,
-                                'creditsmax' => $creditsmax,
-                                'startdate' => $startdate,
-                                'enddate' => $enddate,
+                          array('courseid'      => $courseid,
+                                'year'          => $year,
+                                'credits'       => $credits,
+                                'creditsmin'    => $creditsmin,
+                                'creditsmax'    => $creditsmax,
+                                'startdate'     => $startdate,
+                                'enddate'       => $enddate,
                                 'prerequisites' => $prerequisites,
-                                'aim' => $aim,
-                                'method' => $method,
-                                'longdesc' => $longdesc,
-                                'costs' => $costs,
-                                'committee' => $committee,
-                                'coordinators' => $coordinators,
-                                'lecturers' => $lecturers,
-                                'location' => $location,
-                                'material' => $material,
-                                'info' => $info,
-                                'program' => $program,
+                                'aim'           => $aim,
+                                'method'        => $method,
+                                'longdesc'      => $longdesc,
+                                'costs'         => $costs,
+                                'committee'     => $committee,
+                                'coordinators'  => $coordinators,
+                                'lecturers'     => $lecturers,
+                                'location'      => $location,
+                                'material'      => $material,
+                                'info'          => $info,
+                                'program'       => $program,
                                 'extreg'        => $extreg,
                                 'regurl'        => $regurl,
-                                'hideplanning' => $hideplanning,
+                                'hideplanning'  => $hideplanning,
                                 'minparticipants'=> $minparticipants,
                                 'maxparticipants'=> $maxparticipants,
-                                'closedate'=> $closedate,
-                                'invalid' => $invalid));
+                                'closedate'     => $closedate,
+                                'expected'      => $expected,
+                                'invalid'       => $invalid));
     }
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
@@ -121,13 +126,14 @@ function courses_admin_createplanning($args)
     $planningid = xarModAPIFunc('courses',
                           'admin',
                           'createplanning',
-                          array('courseid'  => $courseid,
-                                'year'          => $year,
-                                'credits'       => $credits,
+                          array('courseid'          => $courseid,
+                                'year'              => $year,
+                                'credits'           => $credits,
                                 'creditsmin'        => $creditsmin,
                                 'creditsmax'        => $creditsmax,
                                 'startdate'         => $startdate,
                                 'enddate'           => $enddate,
+                                'expected'          => $expected,
                                 'prerequisites'     => $prerequisites,
                                 'aim'               => $aim,
                                 'method'            => $method,
@@ -135,17 +141,17 @@ function courses_admin_createplanning($args)
                                 'costs'             => $costs,
                                 'committee'         => $committee,
                                 'coordinators'      => $coordinators,
-                                'lecturers' => $lecturers,
-                                'location' => $location,
-                                'material' => $material,
-                                'info' => $info,
-                                'program'       => $program,
-                                'extreg'        => $extreg,
+                                'lecturers'         => $lecturers,
+                                'location'          => $location,
+                                'material'          => $material,
+                                'info'              => $info,
+                                'program'           => $program,
+                                'extreg'            => $extreg,
                                 'regurl'            => $regurl,
                                 'hideplanning'      => $hideplanning,
-                                'minparticipants'=> $minparticipants,
-                                'maxparticipants'=> $maxparticipants,
-                                'closedate'=> $closedate));
+                                'minparticipants'   => $minparticipants,
+                                'maxparticipants'   => $maxparticipants,
+                                'closedate'         => $closedate));
     //Check returnvalue
     if (!isset($planningid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     // This function generated no output, and so now it is complete we redirect

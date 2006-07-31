@@ -47,9 +47,10 @@ function courses_admin_copyplanned($args)
     $courseid = $planning['courseid'];
     // Security check
     if (!xarSecurityCheck('AddCourses', 1,'Course', "$courseid:All:All")) return;
-
+    // Initialise variables
     $startdate = 0;
     $enddate = 0;
+    $expected = '';
     $closedate = 0;
     // Standard hide this planning
     $hideplanning = 1;
@@ -64,6 +65,7 @@ function courses_admin_copyplanned($args)
                                 'creditsmax'    => $planning['creditsmax'],
                                 'startdate'     => $startdate,
                                 'enddate'       => $enddate,
+                                'expected'      => $expected,
                                 'prerequisites' => $planning['prerequisites'],
                                 'aim'           => $planning['aim'],
                                 'method'        => $planning['method'],

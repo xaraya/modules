@@ -11,10 +11,9 @@
  * @link http://xaraya.com/index.php/release/179.html
  * @author Courses module development team
  */
-
 $modversion['name']           = 'courses';
 $modversion['id']             = '179';
-$modversion['version']        = '0.7.1';
+$modversion['version']        = '0.8.0';
 $modversion['displayname']    = xarML('Courses');
 $modversion['description']    = 'Course Offerings and Registration';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -22,7 +21,7 @@ $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 1;
-$modversion['author']         = 'Scot Garder, Michel Vorenhout';
+$modversion['author']         = 'Michel Vorenhout, based on work of Scot Garder';
 $modversion['contact']        = 'michelv@xarayahosting.nl';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;

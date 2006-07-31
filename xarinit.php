@@ -61,6 +61,7 @@ function courses_init()
         'xar_courseyear'    => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_startdate'     => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0'),
         'xar_enddate'       => array('type'=>'integer','size' => 11,'null'=>FALSE, 'default' => '0'),
+        'xar_expected'      => array('null'=>FALSE, 'type'=>'varchar','size'=>50, 'default'=>''),
         'xar_prerequisites' => array('null'=>FALSE, 'type'=>'text'),
         'xar_aim'           => array('null'=>TRUE, 'type'=>'text'),
         'xar_method'        => array('null'=>TRUE, 'type'=>'text'),
@@ -804,6 +805,16 @@ function courses_upgrade($oldversion)
             $enrollid = 1;
             xarModSetVar('courses','StandardEnrollID', $enrollid);
         case '0.7.1':
+            // Add a column on the expected date
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+            $planningtable = $xartable['courses_planning'];
+            // Apply changes
+            xarDBLoadTableMaintenanceAPI();
+            $result = $datadict->addColumn($planningtable, 'xar_expected C(50) null default "" ');
+            if (!$result) return;
+        case '0.8.0':
             break;
     }
     // Update successful
@@ -823,9 +834,6 @@ function courses_delete()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
    // xarDBLoadTableMaintenanceAPI();
-    // Generate the SQL to drop the table using the API
-  //  $query = xarDBDropTable($xartable['courses']);
-  //  if (empty($query)) return; // throw back
 
     /* Get a data dictionary object with item create and delete methods */
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');

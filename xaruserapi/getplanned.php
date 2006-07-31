@@ -50,6 +50,7 @@ function courses_userapi_getplanned($args)
                    xar_courseyear,
                    xar_startdate,
                    xar_enddate,
+                   xar_expected,
                    xar_prerequisites,
                    xar_aim,
                    xar_method,
@@ -77,7 +78,7 @@ function courses_userapi_getplanned($args)
     // the exception so we just return
     if (!$result) return;
     // Put items into result array.
-        list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,
+        list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,$expected,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
           $location, $material, $info, $program, $regurl, $extreg, $hideplanning, $minparticipants, $maxparticipants, $closedate, $last_modified) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")) {
@@ -90,6 +91,7 @@ function courses_userapi_getplanned($args)
                         'courseyear'    => $courseyear,
                         'startdate'     => $startdate,
                         'enddate'       => $enddate,
+                        'expected'      => $expected,
                         'prerequisites' => $prerequisites,
                         'aim'           => $aim,
                         'method'        => $method,

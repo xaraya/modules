@@ -86,7 +86,17 @@
                     </label>
                     <xar:data-input name="closedate" type="8" validation="date" value="$closedate" />
                 </div>
-
+                <div class="xar-form-input-wrapper">
+                    <label for="expected" class="xar-form-label">
+                        <span class="help" title="#xarML('If there is text in this field, the course will be shown as expected.')#">
+                        <xar:mlstring>Expected: (Optional)</xar:mlstring>
+                        </span>
+                    </label>
+                    <input type="text" name="expected" id="expected" value="#$expected#" maxlength="50" class="xar-form-textlong" />
+                    <xar:if condition="!empty($invalid['expected'])">
+                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid expected description</xar:mlstring></span>
+                    </xar:if>
+                </div>
            </fieldset>
            <fieldset class="formelements xar-norm">
                 <legend>
