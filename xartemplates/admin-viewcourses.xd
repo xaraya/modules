@@ -44,7 +44,9 @@
 
             <td>#$item['coursetype']#</td>
             <xar:if condition="$item['hidecourse'] eq 1">
-                <td class="coursehidden">
+                <td class="coursehidden">H:
+            <xar:elseif condition="!empty($item.expected)" />
+                <td class="dateexpected">E:
             <xar:else />
                 <td>
             </xar:if>

@@ -17,10 +17,10 @@
  * This view shows all details of all courses, including hidden ones.
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param ['catid'] ID of category , defaults to NULL
+ * @param string catid ID of category or a string with catids glued, defaults to NULL
  * @param int startnum Number to start with in view
  * @param string sortby Default: name
- * @param string sortorder Defaults to DESC
+ * @param string sortorder Defaults to ASC
  * @return array Data for template
  */
 function courses_admin_viewcourses()
@@ -90,6 +90,9 @@ function courses_admin_viewcourses()
             $allplanned = xarModApiFunc('courses','user','getplandates',array('courseid'=> $courseid,'startafter'=>time()));
             if (!empty($allplanned)) {
                 $items[$i]['next'] = $allplanned[0]['startdate'];
+                if (!empty($allplanned[0]['expected'])) {
+                    $items[$i]['expected'] = $allplanned[0]['expected'];
+                }
             } else {
                 $items[$i]['next'] = '';
             }

@@ -19,7 +19,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int startnum
- * @param int catid
+ * @param string catid
  * @param str sortby
  * @param str sortorder
  * @return array with all planned courses
@@ -130,10 +130,7 @@ function courses_admin_viewallplanned()
             $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
             $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
             $items[$i]['number'] = xarVarPrepForDisplay($course['number']);
-            $items[$i]['startdate'] = $items[$i]['startdate'];
-            $items[$i]['enddate'] = $items[$i]['enddate'];
-        // End for()
-        }
+        }// End for()
 
         // Add the array of items to the template variables
         $data['items'] = $items;

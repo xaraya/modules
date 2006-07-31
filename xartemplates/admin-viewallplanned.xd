@@ -46,13 +46,23 @@
                </xar:if>
             </td>
             <xar:if condition="$item['hideplanning'] eq 1">
-                <td class="coursehidden">
+                <td class="coursehidden">H:
+            <xar:elseif condition="!empty($item.expected)" />
+                <td class="dateexpected">E:
             <xar:else />
                 <td>
             </xar:if>
                 #xarlocalegetformatteddate('short',$item['startdate'])#
                 </td>
-            <td>#xarlocalegetformatteddate('short',$item['enddate'])#</td>
+            <xar:if condition="$item['hideplanning'] eq 1">
+                <td class="coursehidden">
+            <xar:elseif condition="!empty($item.expected)" />
+                <td class="dateexpected">
+            <xar:else />
+                <td>
+            </xar:if>
+                #xarlocalegetformatteddate('short',$item['enddate'])#
+                </td>
             <td>#$item['minparticipants']#&#32;&#47;&#32;#$item['maxparticipants']#</td>
             <td>
                <xar:set name="$minpart">#$item['minparticipants']#</xar:set>

@@ -5,3 +5,7 @@ form fieldset label.required span:before {
 td.coursehidden {
     background-color:red;
 }
+td.dateexpected {
+    background-color:yellow;
+    font-style: italic;
+}
