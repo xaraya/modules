@@ -1,6 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
@@ -22,12 +20,22 @@
         </ul>
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
-    <xar:mlstring> First define at least one coursetype. Most of the time you will only need one type: your own. However, you can define other ones, like external courses that you want to display as well. In the future, you can save settings for these types, at the moment the coursetype serves as a holder for attached hooks. So categories are taking the pubtype settings as the main setting.</xar:mlstring><br />
+    <xar:mlstring> First define at least one coursetype. Most of the time you will only need one type: your own. However, you can define other ones, like external courses that you want to display as well. Hooks are added to these coursetypes, eg categories are taking the coursetype settings as the main setting.</xar:mlstring><br />
             <xar:mlstring>To set up the course offerings you will need to understand the way courses are setup.</xar:mlstring><br />
             <xar:mlstring>Courses are single entities that are present in the system. The information regarding a course is rather fixed. Courses are offered to users in Xaraya, this means they are planned. Another word for this planning can be a delivered course.</xar:mlstring><br />
             <xar:mlstring>Once the course is planned, you can attach more information to the planned course like a start date, maximum number of participants, location etc.</xar:mlstring>
   </p>
-
+  <p><xar:mlstring>A good working order would be:</xar:mlstring><br />
+  <ol>
+    <li><xar:mlstring>Create a coursetype and save it.</xar:mlstring></li>
+    <li><xar:mlstring>Set the correct parameters for the coursetype by going to the modify option for the coursetype.</xar:mlstring></li>
+    <li><xar:mlstring>Create a course when you have selected the appropriate coursetype it holds.</xar:mlstring></li>
+    <li><xar:mlstring>Once the course it created and saved you can plan the course (create a delivered course). Set the start and enddate. Set the number of participants. When a maximum number is not 0, the coursesubcription will automatically use this maximum number of participants and use a waiting list if the course becomes overbooked.</xar:mlstring></li>
+    <li><xar:mlstring>Turn on short urls and access your course via [yourdomain]/courses/course/[coursecode].</xar:mlstring></li>
+    <li><xar:mlstring>Watch the number of studends grow via the planning page.</xar:mlstring></li>
+    <li><xar:mlstring>Add the upcoming courses block to your site and advertise the courses that are not fully booked.</xar:mlstring></li>
+  </ol>
+  </p>
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
             <ul>
                 <li><xar:mlstring>Upcoming courses. This is a block which shows the courses in the near future</xar:mlstring></li>
@@ -51,8 +59,16 @@
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Courselisting -- Provides a dropdown of courses</xar:mlstring></li>
-    <li><xar:mlstring>This listing can be used in other modules or in your own template</xar:mlstring></li>
   </ul>
+    <p>
+        <xar:mlstring>This listing can be used in other modules or in your own template. It will show a listing of courses found when you set the validation.</xar:mlstring><br />
+        <strong><xar:mlstring>The validation rules are:</xar:mlstring></strong>
+        <ol>
+        <li><strong>coursetype: </strong><xar:mlstring>The coursetype as a number. These are the coursetypes defined in the coursetypes.</xar:mlstring></li>
+        <li><strong>level: </strong><xar:mlstring>The courselevel as a number.</xar:mlstring></li>
+        <li><strong>category: </strong><xar:mlstring>you can add extra categories by adding catids and use a + or - to glue them.</xar:mlstring></li>
+        </ol>
+    </p>
 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
@@ -62,7 +78,7 @@
   </p>
   <ul>
     <li><xar:mlstring>Courses Extension page at</xar:mlstring> <a title="#xarML('Courses Module - Xaraya Extension 179')#" href="http://www.xaraya.com/index.php/release/179.html">Xaraya Extension and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
     <li><xar:mlstring>Related tutorials and documentation on Courses found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/courses/" title="#xarML('Related documentation on Courses')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>

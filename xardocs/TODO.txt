@@ -7,26 +7,27 @@
     -Enroll [done]
     -Check enrolled [done]
     -Historic view [Done via usermenu]
-    -Search function in course descriptions (Done for some fields, needs improvements)
+    -Search function in course descriptions [Done for some fields, needs improvements]
 5. Think about payment options (We at SENSE don't need them)
 6. Finish course planning interface (Partly done)
 7. Link to calendar
 8. Deadlines for enrolling [done]
 9. Block for upcoming courses and their deadlines [in progress]
-10. Minimum/max participants (Partly done, need check for enroll)
+10. Minimum/max participants [done]
 11. Improve the admin functions [added copy function]
 12. Link teachers to the planned courses, besides showing their addresses
 13. Link course coordinators to courses [done]
 14. Check all security functions [done mostly]
 15. Short URLs. [in progress]
-16. Integration with categories [done, needs checking]
+16. Integration with categories [done, works for full coureses]
 17. Redefine itemtypes for coursetypes. [done, planned courses left to see]
 
 ad 17. Courses that are itemtypes are not the solution
     the level needs to be higher. Therefore we need to add real course types. Those can have different behaviours [in progress].
 
-18 Enable digits in credits (eg 1.5) [done version 0.4.0]
-19 Add check on teacher status in usermenu
-20 Enable Myself role for teachers and coordinators
-21 Call for courses in usermenu when user is coordinator
-22 Add students to a student via admin interface
+18. Enable digits in credits (eg 1.5) [done version 0.4.0]
+19. Add check on teacher status in usermenu
+20. Enable Myself role for teachers and coordinators
+21. Call for courses in usermenu when user is coordinator
+22. Add students to a course via admin interface
+23. Waiting list [in progress]
