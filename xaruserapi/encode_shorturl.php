@@ -28,8 +28,8 @@ function sitecontact_userapi_encode_shorturl($args)
     /* Check if we have something to work with */
     if (!isset($func)) {
         return;
-    } 
-    
+    }
+
     $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
     $aliasname = xarModGetVar('sitecontact','aliasname');
     if (($aliasisset) && isset($aliasname)) {
@@ -88,25 +88,46 @@ function sitecontact_userapi_encode_shorturl($args)
               }
           }
     }
-  
+
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
+        $pathExtras = array();
+
         if (isset($startnum)) {
-            $path .= $join . 'startnum=' . $startnum;
-            $join = '&';
+            $pathExtras[] = 'startnum=' . $startnum;
         }
+
         if (!empty($catid)) {
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
+            $pathExtras[] = 'catid=' . $catid;
         } elseif (!empty($cids) && count($cids) > 0) {
             if (!empty($andcids)) {
                 $catid = join('+', $cids);
             } else {
                 $catid = join('-', $cids);
             }
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
+            $pathExtras[] = 'catid=' . $catid;
         }
+
+        if (!empty($company)) {
+            $pathExtras[] = 'company=' . urlencode($company);
+        }
+
+        if (!empty($usermessage)) {
+            $pathExtras[] = 'usermessage=' . urlencode($usermessage);
+        }
+
+        if (!empty($requesttext)) {
+            $pathExtras[] = 'requesttext=' . urlencode($requesttext);
+        }
+
+        if (!empty($antibotinvalid)) {
+            $pathExtras[] = 'antibotInavlid=' . urlencode($antibotinvalid);
+        }
+
+        if (!empty($pathExtras)) {
+            $path .= '?' . implode('&', $pathExtras);
+        }
+
     }
 
     return $path;

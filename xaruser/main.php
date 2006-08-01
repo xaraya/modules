@@ -24,13 +24,22 @@ function sitecontact_user_main($args)
     extract($args);
     $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
 
+    if(!xarVarFetch('company',    'str:1:', $company,    NULL, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
-	if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('scform',     'str:0:', $scform,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('antibotinvalid','int:0:1',  $antibotinvalid, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('requesttext','isset',  $requesttext,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('usermessage','isset',  $usermessage,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('scform',     'str:0:', $scform,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
     }
+    // Set up defaults..
+    $data['company'] = $company;
+    $data['usermessage'] = $usermessage;
+    $data['antibotinvalid'] =$antibotinvalid;
 
     /* Security Check */
     if(!xarSecurityCheck('ViewSiteContact')) return;
@@ -53,7 +62,7 @@ function sitecontact_user_main($args)
      //hmm something would be wrong
      $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     }
-   
+
     //now what have we got ..
     if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
         $formdata=$formdata2[0];
@@ -69,14 +78,15 @@ function sitecontact_user_main($args)
         $soptions=unserialize($formdata['soptions']);
         if (is_array($soptions)) {
             foreach ($soptions as $k=>$v) {
-                $data[$k]=$v;
+                $data[trim($k)]=trim($v);
             }
         }
     }
-    
+
     if (!isset($data['allowbccs']))$data['allowbccs']=0;
     if (!isset($data['allowccs']))$data['allowccs']=0;
-    if (!isset($data['allowanoncopy']))$data['allowanoncopy']=0;    
+    if (!isset($data['allowanoncopy']))$data['allowanoncopy']=0;
+    if (!isset($data['useantibot']))$data['useantibot']=false;
     if (!isset($data['savedata']))$data['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
     if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
     if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
@@ -102,8 +112,8 @@ function sitecontact_user_main($args)
       $optionitems[]=explode(';',$optionitem);
     }
     $data['optionitems']=$optionitems;
-    /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function 
-                This could be removed at some time along with the hidden field in the form 
+    /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function
+                This could be removed at some time along with the hidden field in the form
           */
     $HTTP_REMOTE_ADDR = xarServerGetVar('REMOTE_ADDR');
     if (empty($HTTP_REMOTE_ADDR)) {
@@ -152,7 +162,7 @@ function sitecontact_user_main($args)
     $data['withupload']=$withupload;
     //$webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
     $webconfirmtext = trim($formdata['webconfirmtext']);
-    if ((empty($webconfirmtext)) || (!isset($webconfirmtext))) {
+    if (empty($webconfirmtext) || !isset($webconfirmtext)) {
 
         $webconfirmtext = xarML('Your message has been sent.');
         $webconfirmtext  .='<br />';
@@ -160,7 +170,7 @@ function sitecontact_user_main($args)
         xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
     }
     $data['webconfirmtext']=$webconfirmtext;
-    if ($message == 1) {
+    if ($message == 1 && $antibotinvalid != TRUE) {
         $data['messagetxt']= $data['webconfirmtext'];
          $data['message']=$message;
     } else {
@@ -180,13 +190,17 @@ function sitecontact_user_main($args)
         $template =  'main';
     }
     $data['scform']=$data['sctypename'];
-    
-	$templatedata = xarTplModule('sitecontact', 'user', $template, $data);
 
-	if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+    if (xarModIsAvailable('formantibot')) {
+        $data['AntiBot_Available'] = TRUE;
+    }
+
+    $templatedata = xarTplModule('sitecontact', 'user', $template, $data);
+
+    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
         $templatedata = xarTplModule('sitecontact', 'user', 'main', $data);
-	}
+    }
 
    return $templatedata;
 }
