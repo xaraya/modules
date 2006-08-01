@@ -166,6 +166,13 @@
     <li><xar:mlstring>Edit Level Access - for All forms, allows editing and modification of form configuration.</xar:mlstring></li> 
     <li><xar:mlstring>Admin Level Access - for All forms, allows all administration functions for your forms.</xar:mlstring></li> 
     </ul>
+
+    <h3>
+        <xar:mlstring>Extra Security Features</xar:mlstring>
+    </h3>
+    <p><xar:mlstring>Starting with Sitecontact version 1.0.0 there is the ability to add anti-bot 
+        security to your form by installing the FormAntiBot module. This provides what is also commonly 
+        known as CAPTCHA as a configured option for each form.</xar:mlstring></p>
     <h2>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h2>
@@ -186,7 +193,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.1&nbsp; 2006-07-05
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.2&nbsp; 2006-08-01
          </p>
       </div>
 

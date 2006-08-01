@@ -1,3 +1,7 @@
+Version 1.0.0 1 Aug 2006
+- Added Anti-bot captcha as optional extra to each form. 
+  This is available by installing and activating the FormAntiBot module.
+
 Version 0.6.1 5 July 2006
 - Updated admin interface for custom forms admin with sub menus to assist navigation
 - Enhanced IP check on sender with proxy awareness
