@@ -202,7 +202,7 @@
                     <div class="xar-form-container-after">
                         <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
                             <span class="xar-error">
-                                <xar:mlstring>Anti-bot code was incorrect - please try again...</xar:mlstring>
+                                <xar:mlstring>Anti-bot code entry was incorrect - please try again...</xar:mlstring>
                             </span>
                         </xar:if>
                         <image id="antibotimage" name="antibotimage"
@@ -211,7 +211,7 @@
                         />
                         <br />
                         <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
-                        <xar:mlstring>Please enter the Anti-BotCode</xar:mlstring>
+                        <xar:mlstring>Please enter the Anti-Bot Code</xar:mlstring>
                         <p class="xar-form-input-after">
                             <xar:mlstring>Can't read it? Click the image to generate a new code.</xar:mlstring>
                         </p>

@@ -173,6 +173,9 @@
     <p><xar:mlstring>Starting with Sitecontact version 1.0.0 there is the ability to add anti-bot 
         security to your form by installing the FormAntiBot module. This provides what is also commonly 
         known as CAPTCHA as a configured option for each form.</xar:mlstring></p>
+    <p><xar:mlstring>Some drawbacks of using CAPTCHA with the current Sitecontact module are loss of accessibility for sight impared,
+    and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated, 
+    but currently any extra dynamic data data is lost on resubmission and needs to be reentered.</xar:mlstring></p>
     <h2>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h2>
