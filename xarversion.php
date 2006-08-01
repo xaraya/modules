@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage comments
- * @link http://xaraya.com/index.php/release/761.html  
+ * @link http://xaraya.com/index.php/release/761.html
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
  * @access private
  */
@@ -16,7 +16,7 @@
 $modversion['name'] = 'Xaraya Secure Forms';
 $modversion['id'] = '761';
 $modversion['version'] = '0.1.0';
-$modversion['displayname']    = xarML('formantibot');
+$modversion['displayname']    = xarML('Formantibot');
 $modversion['description'] = 'Secures forms from abuse by bot\'s by requiring translation and input of image based text.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = '';

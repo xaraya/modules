@@ -11,12 +11,13 @@
     <h3>
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
-        <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+        <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em> 
+            <xar:mlstring>The module secures forms from abuse by bot's by requiring translation and input of image based text, sometimes known as CAPTCHA.
+            The module can only be used in conjunction with other Xaraya modules that support it. </xar:mlstring></p>
+            <p><xar:mlstring>The following modules currently support FormAnti-Bot:</xar:mlstring></p>
             <ul>
-                <li><xar:mlstring>Allows for restricting use of components based on domain information</xar:mlstring></li>
+                <li><xar:mlstring>Sitecontact module - a contact form module allowing multiple, custom contact forms, and optional saving of data.</xar:mlstring></li>
             </ul>
-        </p>
         <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
        </h3>
