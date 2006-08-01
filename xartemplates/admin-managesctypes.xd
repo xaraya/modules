@@ -704,10 +704,14 @@
                 </xar:if>
             </xar:if>
             <xar:if condition="$item.useantibot AND xarModIsAvailable('formantibot')">
+            <div class="xar-form-input-wrapper-after">
                 <p class="xar-error"><xar:mlstring>Anti-Bot CAPTCHA will be inserted here in your form</xar:mlstring></p>
+            </div>
             <xar:elseif condition="$item.useantibot" />
+            <div class="xar-form-input-wrapper-after">
               <p class="xar-error"><xar:mlstring>You must install the formantibot module to use Anti-Bot CAPTCHA</xar:mlstring></p>
-            </xar:set>
+            </div>
+            </xar:if>
            </fieldset>
 
            <fieldset>

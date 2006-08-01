@@ -30,9 +30,9 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('useripaddress', 'str:1:', $dummy, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if (!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
-	if (!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
     if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
     if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
@@ -40,11 +40,11 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permission',   'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
+
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
     }
-    /* Move this xarSec section to the top so we don't have bug reports on it 
-       being 'missing' when it is indeed here */
+
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
     $formdata=array();
@@ -71,7 +71,7 @@ function sitecontact_user_contactus($args)
        $formdata=$formdata2[0];
     }
 
-    //now check for the bbccrecipient and ccrecipient switch Bug 5799
+    //now check for the options, and including antibot and - bbccrecipient and ccrecipient switch Bug 5799
      if (isset($formdata['soptions'])) {
            $soptions=unserialize($formdata['soptions']);
            if (is_array($soptions)) {
@@ -80,12 +80,28 @@ function sitecontact_user_contactus($args)
               }
            }
     }
+    $useantibot=$soptions['useantibot'];
+
+    if (xarModIsAvailable('formantibot') && $useantibot) {
+        if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
+            !xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode))) {
+                $args['company'] = $company;
+                $args['scid']   = $scid;
+                $args['scform'] = $scform;
+                $args['usermessage'] = $usermessage;
+                $args['sctypename'] = $sctypename;
+                $args['requesttext'] = $requesttext;
+                $args['antibotinvalid'] = TRUE;
+                return xarModFunc('sitecontact', 'user', 'main', $args);
+        }
+    }
+
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
        $bccrecipients='';
     }
     if (!isset($soptions['allowccs']) || $soptions['allowccs']!=1) {
        $ccrecipients='';
-    }   
+    }
     //end check for bug 5799
     if (!isset($soptions['allowanoncopy']) || $soptions['allowanoncopy']!=1) {
        $allowanoncopy=false;
@@ -371,10 +387,10 @@ function sitecontact_user_contactus($args)
                               'todaydate'  => $todaydate);
 
         $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray,$htmltemplate);
-		if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-			xarErrorHandled();
-			$userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
-		}
+        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+            xarErrorHandled();
+            $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
+        }
         /* prepare the text message to user */
         $textsubject = strtr($requesttext,$trans);
         $textcompany = strtr($company,$trans);
@@ -393,10 +409,10 @@ function sitecontact_user_contactus($args)
                               'todaydate'  => $todaydate);
 
          $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
-		if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-			xarErrorHandled();
-			$usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
-		}
+        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+            xarErrorHandled();
+            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
+        }
     if (($allowcopy ) and ($sendcopy)) { //the user wants to copy to self and it is allowed by admin
         /* check the logged in user's email address  and if anon is allowed*/
         $docopy = false;
@@ -405,8 +421,8 @@ function sitecontact_user_contactus($args)
             $comparemail = trim(strtolower($useremail));
             if ($userofficialemail == $comparemail) {
                 $docopy = true;
-            } 
-            
+            }
+
         } elseif ($allowanoncopy) {
             $docopy = true;
         } else {
@@ -434,9 +450,9 @@ function sitecontact_user_contactus($args)
             }
         } //end do copy
     } //end user copy to self check
-    
+
     /* now let's do the html message to admin */
-    
+
     $adminhtmlarray=array('notetouser' => $htmlnotetouser,
                           'username'   => $username,
                           'useremail'  => $useremail,
@@ -452,8 +468,8 @@ function sitecontact_user_contactus($args)
 
     $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-		xarErrorHandled();
-	    $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
+        xarErrorHandled();
+        $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
     }
     $admintextarray =  array('notetouser' => $textnotetouser,
                              'username'   => $username,
@@ -471,9 +487,9 @@ function sitecontact_user_contactus($args)
     /* Let's do admin text message */
     $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-		xarErrorHandled();
-	    $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
-	}
+        xarErrorHandled();
+        $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
+    }
 
     /* send email to admin */
     $args = array('info'         => $setmail,

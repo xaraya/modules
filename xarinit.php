@@ -211,7 +211,9 @@ Administrator
     xarRegisterMask('DeleteSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_DELETE');//Do we need these?!
     xarRegisterMask('AdminSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
-    return true;
+
+    //This initialization takes us to version 0.6.1 - continue in upgrade
+    return sitecontact_upgrade('0.6.1');
 }
 
 /**
@@ -403,7 +405,9 @@ function sitecontact_upgrade($oldversion)
         case '0.6.0':
             xarModSetVar('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
            return sitecontact_upgrade('0.6.1');
-       case '0.6.1': //current version
+       case '0.6.1':
+            xarModSetVar('sitecontact','useantibot',true);
+       case '1.0.0': //current version
              break;
     }
     // Update successful
