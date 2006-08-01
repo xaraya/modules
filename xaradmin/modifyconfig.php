@@ -72,7 +72,8 @@ function sitecontact_admin_modifyconfig()
     $data['useModuleAlias']=xarModGetVar('sitecontact', 'useModuleAlias');
     $data['aliasname']=xarModGetVar('sitecontact', 'aliasname');
     $data['defaultsort'] = xarModGetVar('sitecontact', 'defaultsort');
-
+    $data['useantibot'] = xarModGetVar('sitecontact', 'useantibot');
+    
     /* Get all the sitecontact forms now so we can choose a default */
     $scformdata=xarModAPIFunc('sitecontact','user','getcontacttypes');
     foreach ($scformdata as $k=>$scform) {

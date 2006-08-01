@@ -104,6 +104,20 @@
             </label>
 
         </div>
+       <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$useantibot">
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" />
+            </xar:if>
+          <label for="useantibot" title="#xarML('Use form anti-bot captcha by default?')#">
+               <xar:mlstring>Use form anti-bot captcha by default?</xar:mlstring>
+            </label>
+            <xar:if condition="!xarModIsAvailable('formantibot')">
+            <p class="xar-error"><xar:mlstring>You must install the FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
+            </xar:if>
+
+        </div>
     </fieldset>
 
     <fieldset>

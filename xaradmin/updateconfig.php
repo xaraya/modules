@@ -24,6 +24,7 @@ function sitecontact_admin_updateconfig()
 
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scactive', 'checkbox', $scactive, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useantibot', 'checkbox', $useantibot, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customtext', 'str:1:', $customtext, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customtitle', 'str:1:', $customtitle, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('optiontext', 'str:1:', $optiontext, '', XARVAR_NOT_REQUIRED)) return;
@@ -64,7 +65,7 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'savedata', $savedata);
     xarModSetVar('sitecontact', 'permissioncheck', $permissioncheck);
     xarModSetVar('sitecontact', 'termslink', trim($termslink));
-
+    xarModSetVar('sitecontact', 'useantibot', $useantibot);
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
     } else{
