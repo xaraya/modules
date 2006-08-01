@@ -26,25 +26,25 @@ function courses_admin_updateplanned($args)
     extract($args);
 
     // Get parameters from whatever input we need.
-    if (!xarVarFetch('planningid', 'id', $planningid)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, '', XARVAR_NOT_REQUIRED )) return;
-    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coursetype', 'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('level', 'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('year', 'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits', 'float::', $credits, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmin', 'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creditsmax', 'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('longdesc', 'str:1:', $longdesc, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('prerequisites', 'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('program', 'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('committee', 'str:1:', $committee, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('coordinators', 'str:1:', $coordinators, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('lecturers', 'str:1:', $lecturers, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('aim', 'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('method', 'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('language', 'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planningid',      'id', $planningid)) return;
+    if (!xarVarFetch('objectid',        'id', $objectid, '', XARVAR_NOT_REQUIRED )) return;
+    if (!xarVarFetch('name',            'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('number',          'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',      'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('level',           'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('year',            'int:1:', $year, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',         'float::', $credits, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmin',      'float::', $creditsmin, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creditsmax',      'float::', $creditsmax, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('longdesc',        'str:1:', $longdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('prerequisites',   'str:1:', $prerequisites, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('program',         'str:1:', $program, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('committee',       'str:1:', $committee, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coordinators',    'str:1:', $coordinators, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('lecturers',       'str:1:', $lecturers, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('aim',             'str:1:', $aim, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('method',          'str:1:', $method, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('language',        'str:1:', $language, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('location',        'str:1:', $location, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('costs',           'str:1:', $costs, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('material',        'str:1:', $material, '', XARVAR_NOT_REQUIRED)) return;
@@ -58,9 +58,9 @@ function courses_admin_updateplanned($args)
     if (!xarVarFetch('invalid',         'array::', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('minparticipants', 'int::', $minparticipants, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxparticipants', 'int::', $maxparticipants, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('closedate', 'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hideplanning', 'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('last_modified', 'int', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('closedate',       'str::', $closedate, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hideplanning',    'checkbox', $hideplanning, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('last_modified',   'int::', $last_modified, time(), XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
@@ -167,8 +167,6 @@ function courses_admin_updateplanned($args)
                        'admin',
                        'updateplanned',
                        array(   'planningid'        => $planningid,
-                                'name'              => $name,
-                                'number'            => $number,
                                 'year'              => $year,
                                 'credits'           => $credits,
                                 'creditsmin'        => $creditsmin,
@@ -190,10 +188,10 @@ function courses_admin_updateplanned($args)
                                 'program'           => $program,
                                 'extreg'            => $extreg,
                                 'regurl'            => $regurl,
-                                'minparticipants' => $minparticipants,
-                                'maxparticipants' => $maxparticipants,
-                                'closedate' => $closedate,
-                                'hideplanning' => $hideplanning))) {
+                                'minparticipants'   => $minparticipants,
+                                'maxparticipants'   => $maxparticipants,
+                                'closedate'         => $closedate,
+                                'hideplanning'      => $hideplanning))) {
         return; // throw back
     }
     xarSessionSetVar('statusmsg', xarML('Planned Course Was Successfully Updated!'));
