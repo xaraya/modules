@@ -5,21 +5,24 @@
     //<![CDATA[
 	if (window.attachEvent) {
 		window.attachEvent("onload", function() {
-			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#);	// Internet Explorer
+			mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#);	// Internet Explorer
 		});
 	} else {
 		window.addEventListener("load", function() {
-			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+			mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
 		}, false);
 	}
     //]]>
 </script>
 
+<form method="post" action="#xarModURL('gmaps','admin','create')#">
 <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
 Location:<br/>
-<textarea id="gmaps_address"></textarea><input type="submit" value="Map Location" onClick="getGeoCode('gmaps_address','gmaps_map')">
+<textarea id="gmaps_address"></textarea><input type="button" value="Map Location" onClick="getGeoCode(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude');return false;">
 <div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
-<input type="hidden" name="gmaps_latitude" id="lat" value="" />
-<input type="hidden" name="gmaps_longitude" id="lng" value="" />
-<input type="hidden" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
-<input type="hidden" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
+<input type="text" name="gmaps_latitude" id="gmaps_latitude" value="" />
+<input type="text" name="gmaps_longitude" id="gmaps_longitude" value="" />
+<input type="text" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
+<input type="text" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
+<input type="submit" value="Save" />
+</form>
