@@ -1,8 +1,10 @@
 <xar:mlstring>Dear</xar:mlstring> #$coordname#,
-<xar:if condition="$waitinglist">
+<xar:if condition="$waitinglist AND empty($planitem['expected'])">
 #$username# <xar:mlstring>has been placed on the waitinglist for your course:</xar:mlstring> #$name# <xar:mlstring>which starts on</xar:mlstring> #xarLocaleGetFormattedDate('long',$startdate)#.
-<xar:else />
+<xar:elseif condition="empty($planitem['expected'])" />
 #$username# <xar:mlstring>has enrolled in your course:</xar:mlstring> #$name# <xar:mlstring>which starts on</xar:mlstring> #xarLocaleGetFormattedDate('long',$startdate)#.
+<xar:else />
+#$username# <xar:mlstring>has enrolled in your course:</xar:mlstring> #$name# <xar:mlstring>which is expected</xar:mlstring> #$planitem['expected']#.
 </xar:if>
 
 <xar:mlstring>Name of the course:</xar:mlstring> #$name#
@@ -11,8 +13,11 @@
 
 <xar:mlstring>Link to the course:</xar:mlstring> #$viewcourse#
 
+<xar:if condition="empty($planitem['expected'])">
 <xar:mlstring>This course starts on:</xar:mlstring> #xarLocaleGetFormattedDate('long',$planitem['startdate'])#
-
+<xar:else />
+<xar:mlstring>This course is expected:</xar:mlstring> #$planitem['expected']#
+</xar:if>
 
 <xar:mlstring>Link to all your courses:</xar:mlstring> #$viewaccount#
 

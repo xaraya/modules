@@ -167,37 +167,38 @@ function courses_user_sendconfirms($args)
         }
         // send email to user with details and link
 
-        // startnew
+        // start new message to the student
+        // TODO: Why pass the complete planitem, security?
         $textmessage= xarTplModule('courses',
                                        'user',
                                        'sendconfirmstudent',
-                                        array('studentname'   => $studentname,
-                                              'femail'  => $fromemail,
-                                              'name' => $coursename,
-                                              'username' => $username,
-                                              'viewcourse' => $viewcourse,
-                                              'viewaccount'   => $viewaccount,
-                                              'regdate' => $regdate,
-                                              'recipients' => $recipients,
-                                              'course' => $course,
-                                              'waitinglist'=> $waitinglist,
-                                              'planitem' => $planitem),
+                                        array('studentname' => $studentname,
+                                              'femail'      => $fromemail,
+                                              'name'        => $coursename,
+                                              'username'    => $username,
+                                              'viewcourse'  => $viewcourse,
+                                              'viewaccount' => $viewaccount,
+                                              'regdate'     => $regdate,
+                                              'recipients'  => $recipients,
+                                              'course'      => $course,
+                                              'waitinglist' => $waitinglist,
+                                              'planitem'    => $planitem),
                                         'text');
 
          $htmlmessage= xarTplModule('courses',
                                        'user',
                                        'sendconfirmstudent',
-                                        array('studentname'   => $studentname,
-                                              'femail'  => $femail,
-                                              'name' => $coursename,
-                                              'username' => $username,
-                                              'viewcourse' => $viewcourse,
-                                              'viewaccount'   => $viewaccount,
-                                              'regdate' => $regdate,
-                                              'recipients' => $recipients,
-                                              'course' => $course,
-                                              'waitinglist'=> $waitinglist,
-                                              'planitem' => $planitem),
+                                        array('studentname' => $studentname,
+                                              'femail'      => $femail,
+                                              'name'        => $coursename,
+                                              'username'    => $username,
+                                              'viewcourse'  => $viewcourse,
+                                              'viewaccount' => $viewaccount,
+                                              'regdate'     => $regdate,
+                                              'recipients'  => $recipients,
+                                              'course'      => $course,
+                                              'waitinglist' => $waitinglist,
+                                              'planitem'    => $planitem),
                                         'html');
 
         //let's send the email now

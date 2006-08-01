@@ -7,22 +7,30 @@
 </xar:ml>
 </p>
 <p>
-<xar:if condition="$waitinglist">
-<xar:ml>
-    <xar:mlstring>
-        You have been placed on the waitinglist of the course: #(1) which starts on #(2).
-    </xar:mlstring>
-    <xar:mlvar>#$name#</xar:mlvar>
-    <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
-</xar:ml>
+<xar:if condition="$waitinglist AND empty($planitem['expected'])">
+    <xar:ml>
+        <xar:mlstring>
+            You have been placed on the waitinglist of the course: #(1) which starts on #(2).
+        </xar:mlstring>
+        <xar:mlvar>#$name#</xar:mlvar>
+        <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
+    </xar:ml>
+<xar:elseif condition="empty($planitem['expected'])" />
+    <xar:ml>
+        <xar:mlstring>
+            You have been enrolled in the course: #(1) which starts on #(2).
+        </xar:mlstring>
+        <xar:mlvar>#$name#</xar:mlvar>
+        <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
+    </xar:ml>
 <xar:else />
-<xar:ml>
-    <xar:mlstring>
-        You have been enrolled in the course: #(1) which starts on #(2).
-    </xar:mlstring>
-    <xar:mlvar>#$name#</xar:mlvar>
-    <xar:mlvar>#xarLocaleGetFormattedDate('long',$planitem['startdate'])#</xar:mlvar>
-</xar:ml>
+    <xar:ml>
+        <xar:mlstring>
+            You have been enrolled in the course: #(1) which is expected #(2).
+        </xar:mlstring>
+        <xar:mlvar>#$name#</xar:mlvar>
+        <xar:mlvar>#$planitem['expected']#</xar:mlvar>
+    </xar:ml>
 </xar:if>
 </p>
 <p>
@@ -32,6 +40,10 @@
 </p>
 
 <p>
-<xar:mlstring>This course will start on:</xar:mlstring> #xarLocaleGetFormattedDate('long',$planitem['startdate'])#<br />
+<xar:if condition="empty($planitem.expected)">
+    <xar:mlstring>This course will start on:</xar:mlstring> #xarLocaleGetFormattedDate('long',$planitem['startdate'])#<br />
+<xar:else />
+    <xar:mlstring>This course is expected:</xar:mlstring> #$planitem['expected']#<br />
+</xar:if>
 <xar:mlstring>Link to all your courses:</xar:mlstring> <a href="#$viewaccount#">#$viewaccount#</a>
 </p>
