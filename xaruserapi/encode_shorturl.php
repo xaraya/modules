@@ -8,7 +8,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage FormAntiBot
- * @link http://xaraya.com/index.php/release/147.html
+ * @link http://xaraya.com/index.php/release/761.html
  * @author Carl P. Corliss
  */
 /**
