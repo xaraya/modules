@@ -31,7 +31,9 @@ function sitecontact_user_main($args)
     if(!xarVarFetch('usermessage','isset',  $usermessage,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scform',     'str:0:', $scform,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('botreset',   'bool',   $botreset,     false, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
 
     if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
       $sctypename=$scform;
@@ -120,13 +122,17 @@ function sitecontact_user_main($args)
         $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
     }
     $data['useripaddress'] = $HTTP_REMOTE_ADDR;
-    $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
-    if (empty($HTTP_REFERER)) {
-        $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-    }
-    $data['userreferer']=$HTTP_REFERER;
-    if (isset($data['userreferer']) && !empty($data['userreferer'])) {
-        $data['userreferer']=xarVarPrepForDisplay($data['userreferer']);
+    if ($botreset== false) { //we don't want to set referer to our own form on an anti-bot return, keep the original referer
+        $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
+        if (empty($HTTP_REFERER)) {
+            $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        }
+        $data['userreferer']=$HTTP_REFERER;
+        if (isset($data['userreferer']) && !empty($data['userreferer'])) {
+            $data['userreferer']=xarVarPrepForDisplay($data['userreferer']);
+        }
+    } else {
+        $data['userreferer']=$userreferer;
     }
     $setmail='';
     if (isset($customtitle)){

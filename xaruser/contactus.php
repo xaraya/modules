@@ -92,8 +92,12 @@ function sitecontact_user_contactus($args)
                 $args['sctypename'] = $sctypename;
                 $args['requesttext'] = $requesttext;
                 $args['antibotinvalid'] = TRUE;
+                $args['botreset']=true;
+                $args['userreferer']= $userreferer; //don't loose our original referer
                 return xarModFunc('sitecontact', 'user', 'main', $args);
         }
+    } else {
+       $args['botreset']=false; // switch used for referer mainly in main function
     }
 
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
