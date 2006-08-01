@@ -1,8 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>BlackList Administration</xar:mlstring></span>
-        </div>
+    <span class="xar-mod-title"><xar:mlstring>Format Anti-Bot Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
+  <xar:template type="module" module="formantibot" file="admin-menu" />
    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
@@ -10,7 +11,7 @@
     <h3>
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
-        <p><em><xar:mlstring>BlackList is a Xaraya Utility Module.</xar:mlstring></em>
+        <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Allows for restricting use of components based on domain information</xar:mlstring></li>
@@ -37,9 +38,21 @@
         <p>
             <xar:mlstring>None</xar:mlstring>
         </p> 
-        </div>
-        <div class="xar-mod-foot xar-align-center xar-padding-thick">
-    <p>
-        <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-    </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the FormAnti-Bot module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>FormAnti-Bot Extension page at</xar:mlstring> <a title="#xarML('FormAnti-Bot Module - Xaraya Extension 761')#" href="http://www.xaraya.com/index.php/release/761.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on FormAnti-Bot found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/formantibot/" title="#xarML('Related documentation on FormAnti-Bot')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-08-01
+  </p>
 </div>
+

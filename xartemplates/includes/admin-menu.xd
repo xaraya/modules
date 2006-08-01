@@ -1,0 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+<xar:style scope="module" module="base" file="navtabs" />
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <xar:sec mask="FormAntiBot-Admin" catch="false">
+        <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-formantibot-admin-overview;">
+                <xar:mlstring>Overview</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>
+</xar:if>
