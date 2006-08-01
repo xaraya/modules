@@ -18,22 +18,21 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int startnum Starting number when there are many items to show
- * @param int catid The category id
- * @param string sortby Sortby parameter (standard on name)
+ * @param string catid The category id or a string with multiple category ids glued together.
+ * @param string sortby Sortby parameter (standard on number)
+ * @param string sortorder The Sortorder. Defaults to ASC
  * @return array Information for the template
  */
 function courses_user_view()
 {
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid',    'str::',     $catid,    NULL,     XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sortby',   'str:1:', $sortby,   'number', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder','enum:DESC:ASC', $sortorder,   'ASC', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:',        $startnum,  1,        XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid',    'str::',         $catid,     NULL,     XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sortby',   'str:1:',        $sortby,    'number', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder','enum:DESC:ASC', $sortorder, 'ASC',    XARVAR_NOT_REQUIRED)) return;
     // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
 
-    $data = array();//xarModAPIFunc('courses', 'user', 'menu');
-    // Prepare the variable that will hold some status message if necessary
-    $data['status'] = '';
+    $data = array();
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();
 
@@ -71,7 +70,12 @@ function courses_user_view()
                                    array('courseid' => $courseid, 'startafter' => time())
                                    );
         if (!empty($plandates)) {
-            $item['upcomingdate'] = $plandates[0]['startdate'];
+            if (empty($plandates[0]['expected'])) {
+                $item['upcomingdate'] = $plandates[0]['startdate'];
+                $item['expected'] ='';
+            } elseif (!empty($plandates[0]['expected'])) {
+                $item['expected'] = $plandates[0]['expected'];
+            }
         } else {
             $item['upcomingdate'] = '';
         }

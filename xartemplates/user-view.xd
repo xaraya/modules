@@ -52,11 +52,18 @@
              <xar:if condition="$ShowShortDescchecked">
              <td>#$item.shortdesc#</td>
              </xar:if>
+             <td>
              <xar:if condition="!empty($item.upcomingdate)" >
-                <td>#xarlocalegetformatteddate('medium',$item['upcomingdate'])#</td>
+                #xarlocalegetformatteddate('medium',$item['upcomingdate'])#
+             <xar:elseif condition="!empty($item.expected)" />
+                <xar:ml>
+                    <xar:mlstring>Expected: #(1)</xar:mlstring>
+                    <xar:mlvar>#$item.expected#</xar:mlvar>
+                </xar:ml>
              <xar:else />
-                <td><xar:mlstring>To be announced</xar:mlstring></td>
+                <xar:mlstring>To be announced</xar:mlstring>
              </xar:if>
+             </td>
            </tr>
         </xar:foreach>
         </table>
