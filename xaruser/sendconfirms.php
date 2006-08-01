@@ -17,10 +17,10 @@
  * Send an e-mail to the coordinator to notify about the enrollment
  * @param Takes parameters passed by user_sendtofriend to generate info used by email mod
  * @author jojodee/MichelV.
- * @param int studstatus
- * @param int userid
- * @param int planningid
- * @param int enrollid
+ * @param int studstatus The ID of the status of the student
+ * @param int userid The userid of the student
+ * @param int planningid The ID of the planned course
+ * @param int enrollid  The created ID for this enrollment the function sends emails for.
  * @return bool true on success
  */
 function courses_user_sendconfirms($args)
@@ -29,8 +29,8 @@ function courses_user_sendconfirms($args)
     extract ($args);
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus)) return;
     if (!xarVarFetch('userid',     'str::',  $userid))     return;
-    if (!xarVarFetch('planningid', 'id', $planningid)) return;
-    if (!xarVarFetch('enrollid',   'id', $enrollid))   return;
+    if (!xarVarFetch('planningid', 'id',     $planningid)) return;
+    if (!xarVarFetch('enrollid',   'id',     $enrollid))   return;
     // Get planned course
     $planitem = xarModAPIFunc('courses',
                           'user',
@@ -77,7 +77,7 @@ function courses_user_sendconfirms($args)
     if(isset($recipients)) {
         //$uid = xarUserGetVar('uid');
         $username = xarUserGetVar('name', $userid);
-        $fromname = "Webmaster"; // Get the webmaster name
+        $fromname = xarModGetVar('mail', 'adminname');
         $femail =  xarUserGetVar('email', $userid);
         if ($waitinglist) {
             $subject = $username.' '.xarVarPrepForDisplay(xarML('is on the waitinglist for:')).' '.$coursename;
@@ -87,7 +87,7 @@ function courses_user_sendconfirms($args)
         $viewcourse = xarModUrl('courses', 'user', 'displayplanned', array('planningid' => $planningid));
         $viewaccount = xarModUrl('roles', 'user', 'account', array('moduleload' => 'courses'));
 
-        // startnew
+        // start new message
         $textmessage= xarTplModule('courses',
                                        'user',
                                        'sendconfirmcoordinator',

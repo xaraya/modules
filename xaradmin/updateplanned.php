@@ -127,8 +127,7 @@ function courses_admin_updateplanned($args)
 
     // check if we have any errors
     if (count($invalid) > 0) {
-        // call the admin_modifycourse function and return the template vars
-        // (you need to copy admin-new.xd to admin-create.xd here)
+        // call the admin_modifyplanned function and return the template vars
         return xarModFunc('courses', 'admin', 'modifyplanned',
                           array('planningid' => $planningid,
                                 'name' => $name,
