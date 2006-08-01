@@ -54,17 +54,29 @@
             </label>
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$item.scdefaultname#" />
         </div>
-        <div class="xar-form-input-wrapper">
-            <label for="scactive" class="xar-form-label" title="#xarML('Sitecontact form is active and available?')#">
-                 <xar:mlstring>Form is active?</xar:mlstring>
-            </label>
+        <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.formisactive">
                 <input type="checkbox" name="scactive" id="scactive" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="scactive" id="scactive" value="1" />
             </xar:if>
+            <label for="scactive" title="#xarML('Sitecontact form is active and available?')#">
+                 <xar:mlstring>Form is active?</xar:mlstring>
+            </label>
        </div>
-
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.useantibot">
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" />
+            </xar:if>
+            <label for="useantibot" title="#xarML('Use form Anti-Bot captcha?')#">
+                 <xar:mlstring>Use Anti-bot CAPTCHA?</xar:mlstring>
+            </label>
+            <xar:if condition="!xarModIsAvailable('formantibot')">
+            <p class="xar-error"><xar:mlstring>You must install the FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
+            </xar:if>
+       </div>
     </fieldset>
 
     <fieldset>
@@ -282,10 +294,7 @@
             </label>
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$item.scdefaultname#" />
         </div>
-        <div class="xar-form-input-wrapper">
-            <label for="scactive" class="xar-form-label" title="#xarML('Sitecontact form is active and available?')#">
-                 <xar:mlstring>Form is active?</xar:mlstring>
-            </label>
+        <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.scactive">
                 <input type="checkbox" name="scactive" id="scactive" value="1" checked="checked" />
             <xar:else />
@@ -293,6 +302,23 @@
             </xar:if>
             <xar:if condition="xarModGetVar('sitecontact','defaultform') eq $item.scid">
                 <xar:mlstring>Must be checked (active) for Default Form</xar:mlstring>
+            </xar:if>
+            <label for="scactive" title="#xarML('Sitecontact form is active and available?')#">
+                 <xar:mlstring>Form is active?</xar:mlstring>
+            </label>
+
+       </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$item.useantibot">
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="useantibot" id="useantibot" value="1" />
+            </xar:if>
+            <label for="useantibot" title="#xarML('Use form Anti-Bot captcha?')#">
+                 <xar:mlstring>Use Anti-bot CAPTCHA?</xar:mlstring>
+            </label>
+            <xar:if condition="!xarModIsAvailable('formantibot')">
+            <p class="xar-error"><xar:mlstring>You must install the FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
             </xar:if>
        </div>
     </fieldset>
@@ -649,7 +675,7 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 <xar:if condition="$item.allowanoncopy ne 1">
-                    <xar:set name="copystring"><xar:mlstring>Copy email to you (<span class="xar-error">Anonymous will not see this option</span>)</xar:mlstring></xar:set>
+                    <xar:set name="copystring"><xar:mlstring>Copy email to you (<span class="xar-error">Configured so Anonymous will not see this option</span>)</xar:mlstring></xar:set>
                 <xar:else />
                     <xar:set name="copystring"><xar:mlstring>Copy email to you</xar:mlstring></xar:set>
                 </xar:if>
@@ -677,6 +703,11 @@
                     </div>
                 </xar:if>
             </xar:if>
+            <xar:if condition="$item.useantibot AND xarModIsAvailable('formantibot')">
+                <p class="xar-error"><xar:mlstring>Anti-Bot CAPTCHA will be inserted here in your form</xar:mlstring></p>
+            <xar:elseif condition="$item.useantibot" />
+              <p class="xar-error"><xar:mlstring>You must install the formantibot module to use Anti-Bot CAPTCHA</xar:mlstring></p>
+            </xar:set>
            </fieldset>
 
            <fieldset>
