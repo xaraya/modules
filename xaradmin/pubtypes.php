@@ -23,7 +23,7 @@ function articles_admin_pubtypes()
     if (!xarVarFetch('descr',  'isset', $descr,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('label',  'isset', $label,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('format', 'isset', $format, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('input',  'isset', $input,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('input',  'isset', $input,  array(), XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('validation',  'isset', $validation,  NULL, XARVAR_DONT_SET)) {return;}
 
 

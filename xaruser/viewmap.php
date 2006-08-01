@@ -226,6 +226,7 @@ function articles_user_viewmap($args)
                                          'getpubcatcount',
                                          // frontpage or approved
                                          array('status' => array(3,2),
+                                               'ptid' => $ptid,
                                                'groupcids' => 2,
                                                'reverse' => 1));
 
