@@ -1,6 +1,6 @@
 <?php
 //Add a Url
-function window_adminapi_addurl($args)
+function window_adminapi_addurl($args) 
 {
     if (!xarSecurityCheck('AdminWindow')) return;
 
@@ -56,7 +56,7 @@ function window_adminapi_addurl($args)
 
         // Check If this URL or Alias allready exists in DB
         // caveman says:
-        // This check should happen regardless of either an edit or
+        // This check should happen regardless of either an edit or 
         // an add was we don't won't duplicate values in the database.
         $query = "SELECT xar_id FROM $urltable
                   WHERE xar_name = ?
@@ -93,7 +93,7 @@ function window_adminapi_addurl($args)
                 return false;
             }
         }
-
+        
     }
         xarResponseRedirect(xarModURL('window', 'admin', 'addurl'));
 }

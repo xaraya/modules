@@ -117,12 +117,6 @@
         </label>
         <xar:data-input type="radio" name="auto_resize" options="$options" value="$auto_resize" />
     </div>
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label">
-            <xar:mlstring>Display in menu?</xar:mlstring>
-        </label>
-        <xar:data-input type="radio" name="status" options="$options" value="$status" />
-    </div>
 
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
