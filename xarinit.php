@@ -54,8 +54,10 @@ function window_init()
 
     if (!$dbconn->Execute($query)) return;
 
-    // Define the module variables
-
+# --------------------------------------------------------
+#
+# Define the modvars we need
+#
     xarModSetVar('window', 'allow_local_only', "0");  // 1 = display off-site pages, 0 = NO display off-site pages 0*
     xarModSetVar('window', 'use_buffering', "1");     // 0 = NO buffering output before sending, 1 = buffering output before sending 0*
     xarModSetVar('window', 'reg_user_only', "0");     // 0 = works for everyone, 1 = works for logged in users only 0*
@@ -71,6 +73,10 @@ function window_init()
     //Set security checkinkg for URL
     xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
 
+# --------------------------------------------------------
+#
+# Register masks
+#
     xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');

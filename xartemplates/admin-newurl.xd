@@ -88,74 +88,34 @@
         <xar:mlstring>The values below apply to the <strong>URL you are editing above</strong>, and override the module general settings.</xar:mlstring>
 
     </p>
+    <xar:set name="options">array(
+                        array('id' => '0', 'name' => xarML('No')),
+                        array('id' => '1', 'name' => xarML('Yes')),
+                        )
+                        </xar:set>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Only for registered users?</xar:mlstring>
         </label>
-        <xar:if condition =" $reg_user_only eq 1">
-            <input type="radio" name="reg_user_only" id="reg_user_only" value="0" tabindex="11" />
-
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="reg_user_only" id="reg_user_only" checked="checked" value="1" tabindex="12" />
-            <xar:mlstring>Yes</xar:mlstring>
-        <xar:else />
-            <input type="radio" name="reg_user_only" id="reg_user_only" checked="checked" value="0"  tabindex="11" />
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="reg_user_only" id="reg_user_only" value="1" tabindex="12" />
-
-            <xar:mlstring>Yes</xar:mlstring>
-        </xar:if>
+        <xar:data-input type="radio" name="reg_user_only" options="$options" value="$reg_user_only" />
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Add link for Open in new window?</xar:mlstring>
         </label>
-        <xar:if condition =" $open_direct eq 1">
-            <input type="radio" name="open_direct" id="open_direct" value="0"  tabindex="13" />
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="open_direct" id="open_direct" value="1" checked="checked" tabindex="14" />
-            <xar:mlstring>Yes</xar:mlstring>
-        <xar:else />
-            <input type="radio" name="open_direct" id="open_direct" value="0" checked="checked" tabindex="13" />
-            <xar:mlstring>No</xar:mlstring>
-
-            <input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
-            <xar:mlstring>Yes</xar:mlstring>
-        </xar:if>
+        <xar:data-input type="radio" name="open_direct" options="$options" value="$open_direct" />
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Use fixed title?</xar:mlstring>
        </label>
-        <xar:if condition =" $use_fixed_title eq 1">
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0"  tabindex="15" />
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked="checked" tabindex="16" />
-            <xar:mlstring>Yes</xar:mlstring>
-        <xar:else />
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked="checked" tabindex="15" />
-
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" tabindex="16" />
-            <xar:mlstring>Yes</xar:mlstring>
-        </xar:if>
+        <xar:data-input type="radio" name="use_fixed_title" options="$options" value="$use_fixed_title" />
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Auto resize window?</xar:mlstring>
         </label>
-        <xar:if condition =" $auto_resize eq 1">
-            <input type="radio" name="auto_resize" id="auto_resize" value="0"  tabindex="17" />
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="auto_resize" id="auto_resize" value="1" checked="checked" tabindex="18" />
-            <xar:mlstring>Yes</xar:mlstring>
-        <xar:else />
-
-            <input type="radio" name="auto_resize" id="auto_resize" value="0" checked="checked" tabindex="17" />
-            <xar:mlstring>No</xar:mlstring>
-            <input type="radio" name="auto_resize" id="auto_resize" value="1" tabindex="18" />
-            <xar:mlstring>Yes</xar:mlstring>
-        </xar:if>
+        <xar:data-input type="radio" name="auto_resize" options="$options" value="$auto_resize" />
     </div>
 
     <div class="xar-form-input-wrapper">

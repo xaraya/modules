@@ -1,0 +1,73 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Window Appication Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="window" file="admin-menu" />
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><xar:mlstring>The Window module is a port of the popular PostWrap module (for PostNuke) to Xaraya. It lets you display standalone external web pages from within your Xaraya site.</xar:mlstring>:
+            <ul>
+            <li><xar:mlstring>Window uses the center block to display the external page(s).</xar:mlstring></li>
+            <li><xar:mlstring>Pages correspond to URLs. You can display pages off your local server, or from the Internet.</xar:mlstring></li>
+            <li><xar:mlstring>You can define a number of different options for your external page(s), among them the height and width of the display, whether only registered users may see them, and so on.</xar:mlstring></li>
+            <li><xar:mlstring>You can display as many pages as you like, each with its own settings.</xar:mlstring></li>
+            </ul>
+            </p>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+            <p><xar:mlstring>There are two administration pages, one for general and one for URL specific settings.</xar:mlstring></p>
+            <p><xar:mlstring>General settings are valid for all URLs.</xar:mlstring> </p>
+            <p>
+              <xar:mlstring>The general settings available are:</xar:mlstring>:
+              <ul>
+                <li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
+                <li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
+                <li><xar:mlstring>Allow direct input from the browser address bar.</xar:mlstring></li>
+                <li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
+                <li><xar:mlstring>Let only registered users, or all users, see the pages.</xar:mlstring></li>
+                <li><xar:mlstring>Display the page directly, or display a link that lets you open the page in a separate window.</xar:mlstring></li>
+                <li><xar:mlstring>Use a standard title for the page(s) or use a different title for each page.</xar:mlstring></li>
+                <li><xar:mlstring>Allow only pages from a list of URLs you define.</xar:mlstring></li>
+                <li><xar:mlstring>Automatically adjust the size of the display to fill your available space, or not.</xar:mlstring></li>
+                <li><xar:mlstring>Define the height and width of the display.</xar:mlstring></li>
+              </ul>
+            </p>
+            <p><xar:mlstring>You can also define specific settings for different pages.</xar:mlstring> <xar:mlstring>URL specific settings, such as the dimensions of the display, will override the general settings.</xar:mlstring> </p>
+
+            <p><xar:mlstring>To display an external page, create an entry for it in the user menu. (See the Blocks module for information on how to do this.)
+            In the URL field of the menu entry write the following:</xar:mlstring></p>
+            <pre>
+            index.php?module=window&amp;page=&lt;your page&gt;
+            </pre>
+            <xar:mlstring>&lt;your page&gt; can be an actual URL, such as <b>http://www.xaraya.com</b>, or an alias you define via your URL specific settings.</xar:mlstring>
+            <xar:mlstring>You can also add other parameters, as in the following example. See the docs/install.txt for more details.</xar:mlstring>
+            <pre>
+            index.php?module=window&amp;page=http://www.xaraya.com/&amp;height=1000
+            &amp;width=90%&amp;resize=1&amp;title=foobar
+            </pre>
+
+        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p><xar:mlstring>None.</xar:mlstring></p>
+        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p><xar:mlstring>None.</xar:mlstring></p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Window module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>WindowExtension page at</xar:mlstring> <a title="#xarML('Window Module - Xaraya Extension 3002')#" href="http://www.xaraya.com/index.php/release/3002.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Window found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/window/" title="#xarML('Related documentation on Window')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Window Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+  </p>
+</div>
