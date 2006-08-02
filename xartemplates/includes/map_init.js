@@ -1,30 +1,41 @@
 var maps = new Array();
-var gmaps__marker;
+var markers = new Array();
+var polylines = new Array();
+var gmaps__markernumber;
 var gmaps__mapnumber;
 
 function mapInit(mapdiv,centerLat,centerLong,zoom){
 	var mapnumber = maps.length
 
-	if(GBrowserIsCompatible()){
-		if(!mapdiv.id){
-			mapdiv = document.getElementById(mapdiv);
-		}
-	maps[mapnumber] = new GMap2(mapdiv);
-	maps[mapnumber].addControl(new GLargeMapControl());
-	var point = new GLatLng(centerLat,centerLong);
-		maps[mapnumber].setCenter(point, zoom);
-
-		offset = Math.pow(2,(4 - maps[mapnumber].getZoom()))
+	if(!GBrowserIsCompatible()){
+		alert("Your Browser is not compatable with Google Maps");
+		return false;
 	}
+	
+	if(!mapdiv.id){
+		mapdiv = document.getElementById(mapdiv);
+	}
+	
+	map = new GMap2(mapdiv);
+	map.addControl(new GLargeMapControl());
+	var point = new GLatLng(centerLat,centerLong);
+	map.setCenter(point, zoom);
+	map.mapnumber = mapnumber;	
+	
+	maps[mapnumber] = map;	
 
 	return mapnumber;
 }
 
-function createMarker(point){
+function createMarker(mapnumber,point){
+	var markernumber = markers.length;
 
 	var marker = new GMarker(point,{icon:G_DEFAULT_ICON,draggable:true});
-
 	marker.disableDragging();
+	marker.markernumber = markernumber;
+	marker.mapnumber = mapnumber;
+
+	markers[markernumber] = marker;
 
 	return marker;
 }
@@ -32,8 +43,9 @@ function createMarker(point){
 function makeMarkerDraggable(marker){
 
 	GEvent.addListener(marker, "dragend", function(point){
-	document.getElementById(marker.latbox).value=marker.getPoint().lat();
-	document.getElementById(marker.longbox).value=marker.getPoint().lng();
+//	document.getElementById(marker.latbox).value=marker.getPoint().lat();
+//	document.getElementById(marker.longbox).value=marker.getPoint().lng();
+	updateDataEntry(marker.mapnumber);
 	});
 	
 	marker.enableDragging();
@@ -58,17 +70,21 @@ function getGeoCode(mapnumber, addressbox, latbox, longbox){
 	}
 
 	//Create global marker to be manipulated by callback, "addAddressToMap"
-	gmaps__marker = createMarker(maps[mapnumber].getCenter());
-	gmaps__marker.latbox = latbox.id;
-	gmaps__marker.longbox = longbox.id;
-	makeMarkerDraggable(gmaps__marker);
-	maps[mapnumber].addOverlay(gmaps__marker);
+	var marker = createMarker(mapnumber,maps[mapnumber].getCenter());
+	marker.latbox = latbox.id;
+	marker.longbox = longbox.id;
+	makeMarkerDraggable(marker);
+	maps[mapnumber].addOverlay(marker);
+
+	//Set up variables for callback to know which objects to manipulate	
 	gmaps__mapnumber = mapnumber;
+	gmaps__markernumber = marker.markernumber;
+
 	geocoder = new GClientGeocoder();
-	geocoder.getLocations(addressbox.value, addAddressToMap);
+	geocoder.getLocations(addressbox.value, getGeoCodeCallback__moveMarkerToAddress);
 }
 
-function addAddressToMap(response) {
+function getGeoCodeCallback__moveMarkerToAddress(response) {
 //Adds new markers based on geocoder response.
 
       if (!response || response.Status.code != 200) {
@@ -77,11 +93,91 @@ function addAddressToMap(response) {
         place = response.Placemark[0];
         point = new GLatLng(place.Point.coordinates[1],
                             place.Point.coordinates[0]);
-	gmaps__marker.setPoint(point);
-	if(gmaps__marker.latbox){
-		document.getElementById(gmaps__marker.latbox).value = gmaps__marker.getPoint().lat();
-		document.getElementById(gmaps__marker.longbox).value = gmaps__marker.getPoint().lng();
+	markers[gmaps__markernumber].setPoint(point);
+	if(markers[gmaps__markernumber].latbox){
+		document.getElementById(markers[gmaps__markernumber].latbox).value = markers[gmaps__markernumber].getPoint().lat();
+		document.getElementById(markers[gmaps__markernumber].longbox).value = markers[gmaps__markernumber].getPoint().lng();
         }
         maps[gmaps__mapnumber].setCenter(point,place.AddressDetails.Accuracy + 6);
     }
 }
+
+function makeMapDataEntryMap(mapnumber,address,latbox,longbox,latbox2,longbox2){
+	//Create a GBounds object around the markers on the map
+	//Create a polyline object which can be changed
+	//Tie entry boxes to the map which are set everytime a marker is added, removed, or moved
+	//Set up listeners
+	if(!latbox.id){
+		latbox = document.getElementById(latbox);
+	}
+	if(!longbox.id){
+		longbox = document.getElementById(longbox);
+	}
+	if(!latbox2.id){
+		latbox2 = document.getElementById(latbox2);
+	}
+	if(!longbox2.id){
+		longbox2 = document.getElementById(longbox2);
+	}
+
+	maps[mapnumber].latbox = latbox.id;
+	maps[mapnumber].longbox = longbox.id;
+	maps[mapnumber].latbox2 = latbox2.id;
+	maps[mapnumber].longbox2 = longbox2.id;
+
+	GEvent.addListener(map, "click", function(overlay,point){
+	if(!overlay){
+		var marker = createMarker(this.mapnumber,point);
+		this.addOverlay(marker);
+	}
+	});
+
+	//A New Marker Regenerates the Bounding box
+	GEvent.addListener(maps[mapnumber], "addoverlay", function(overlay){
+		//
+		if(overlay.getPoint()){
+			updateDataEntry(this.mapnumber);
+		}
+	});
+
+}
+
+function updateDataEntry(mapnumber){
+	//Call this everytime there's a change.
+		var points = new Array();
+		for(i=0;i<markers.length;i++){
+			points[i] = markers[i].getPoint(); 
+		}
+		var bounds = new GBounds(points);
+
+		document.getElementById(map.latbox).value = bounds.maxY;
+		document.getElementById(map.longbox).value = bounds.maxX;
+		document.getElementById(map.latbox2).value = bounds.minY;
+		document.getElementById(map.longbox2).value = bounds.minX;	
+
+		var box1 = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
+		map.addOverlay(box1);
+	var corners = [];
+	//corners.push(new GPoint(boundary.maxX,boundary.maxY));
+	//corners.push(new GPoint(boundary.maxX,boundary.minY));
+	//corners.push(new GPoint(boundary.minX,boundary.minY));
+	//corners.push(new GPoint(boundary.minX,boundary.maxY));
+	//corners[4] = corners[0];
+        
+        var southWest = bounds.getSouthWest();
+        var northEast = bounds.getNorthEast();
+        var lngSpan = northEast.lng() - southWest.lng();
+        var latSpan = northEast.lat() - southWest.lat();
+
+        // Add a polyline with five random points. Sort the points by
+        // longitude so that the line does not intersect itself.
+        var points = [];
+        for (var i = 0; i < 5; i++) {
+          points.push(new GLatLng(southWest.lat() + latSpan * Math.random(),
+                                  southWest.lng() + lngSpan * Math.random()));
+          points.push(new GLatLng(southWest.lat() + latSpan * Math.random(),
+                                  southWest.lng() + lngSpan * Math.random()));
+
+        }
+        map.addOverlay(new GPolyline(points));
+  }

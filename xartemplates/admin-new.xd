@@ -1,15 +1,17 @@
 <script src="http://maps.google.com/maps?file=api&v=2&amp;key=#$gmapskey#" type="text/javascript"></script>
-<xar:base-include-javascript position="head" module="gmaps" filename="map_init.js" />
+<xar:base-include-javascript position="head" module="example" filename="map_init.js" />
 
 <script type="text/javascript">
     //<![CDATA[
 	if (window.attachEvent) {
 		window.attachEvent("onload", function() {
 			mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#);	// Internet Explorer
+			makeMapDataEntryMap(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude','gmaps_latitude2','gmaps_longitude2');
 		});
 	} else {
 		window.addEventListener("load", function() {
 			mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+			makeMapDataEntryMap(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude','gmaps_latitude2','gmaps_longitude2');
 		}, false);
 	}
     //]]>
