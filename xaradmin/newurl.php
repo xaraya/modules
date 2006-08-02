@@ -31,7 +31,7 @@ function window_admin_newurl()
 	if (!xarVarFetch('status', 'int', $data['status'], 1, XARVAR_NOT_REQUIRED)) return;
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'addurl');
+    $data['action'] = xarModURL('window', 'admin', 'newurl');
     $data['window_status'] = 'add';
     $data['urls'] = xarModAPIFunc('window','admin','geturls');
     $data['id'] = '';
