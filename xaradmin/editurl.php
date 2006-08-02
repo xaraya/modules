@@ -7,7 +7,7 @@ function window_admin_editurl($args)
 
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'newurl');
+    $data['action'] = xarModURL('window', 'admin', 'addurl');
     $data['window_status'] = "edit";
 
     $data['urls'] = xarModAPIFunc('window','admin','geturls');
@@ -31,10 +31,12 @@ function window_admin_editurl($args)
     $result = $dbconn->Execute($query);
     if(!$result) return;
 
-    list($id, $host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+    list($id, $host, $alias, $label, $description, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $status) = $result->fields;
 
     $data['host'] = $host;
     $data['alias'] = $alias;
+    $data['label'] = $label;
+    $data['description'] = $description;
     $data['id'] = $id;
     $data['lang_action'] = xarML("Save");
 
@@ -44,7 +46,8 @@ function window_admin_editurl($args)
     $data['auto_resize'] = $auto_resize;
     $data['vsize'] = $vsize;
     $data['hsize'] = $hsize;
+    $data['status'] = $status;
 
-    return xarTplModule('window','admin','url',$data);
+    return xarTplModule('window','admin','newurl',$data);
 }
 ?>

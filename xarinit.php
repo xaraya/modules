@@ -33,6 +33,14 @@ function window_init()
                 'size' => 255,
                 'null' => false,
                 'default' => ''),
+            'xar_label' => array('type' => 'varchar',
+                'size' => 255,
+                'null' => false,
+                'default' => ''),
+            'xar_description' => array('type' => 'varchar',
+                'size' => 255,
+                'null' => false,
+                'default' => ''),
             'xar_reg_user_only' => array('type' => 'integer',
                 'null' => false,
                 'default' => '0'),
@@ -50,12 +58,17 @@ function window_init()
                 'default' => '0'),
             'xar_hsize' => array('type' => 'varchar',
                 'size' => 255,
-                'null' => false)));
+                'null' => false),
+            'xar_status' => array('type' => 'integer',
+                'null' => false,
+                'default' => '1')));
 
     if (!$dbconn->Execute($query)) return;
 
-    // Define the module variables
-
+# --------------------------------------------------------
+#
+# Define the modvars we need
+#
     xarModSetVar('window', 'allow_local_only', "0");  // 1 = display off-site pages, 0 = NO display off-site pages 0*
     xarModSetVar('window', 'use_buffering', "1");     // 0 = NO buffering output before sending, 1 = buffering output before sending 0*
     xarModSetVar('window', 'reg_user_only', "0");     // 0 = works for everyone, 1 = works for logged in users only 0*
@@ -68,9 +81,17 @@ function window_init()
     xarModSetVar('window', 'vsize', "600");           // set to height of screen size for loaded window 600*
     xarModSetVar('window', 'hsize', "100%");          // set to width of screen size for loaded window 100%*
 
-    //Set security checkinkg for URL
-    xarModSetVar('window', 'security', "1");          // 0 = NO check with DB, 1 = check with DB) 1*
+    // Set security checkinkg for URL
+    xarModSetVar('window', 'security', 1);          // 0 = NO check with DB, 1 = check with DB) 1*
 
+    // Tag(s) to use for display
+    xarModSetVar('window', 'use_iframe', 1);
+    xarModSetVar('window', 'use_object', 1);
+
+# --------------------------------------------------------
+#
+# Register masks
+#
     xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
@@ -95,6 +116,9 @@ function window_upgrade($oldversion)
             xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
             xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
             xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
+            break;
+        case '1.0.4':
+        // need to add db fields here
             break;
     }
     return true;

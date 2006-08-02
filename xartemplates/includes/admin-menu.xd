@@ -17,7 +17,7 @@
         </dd>
         <xar:set name="tabclass">$activetab=='url'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-window-admin-addurl;">
+          <a href="&xar-modurl-window-admin-newurl;">
             <xar:mlstring>Specific Settings</xar:mlstring>
           </a>
         </dd>
