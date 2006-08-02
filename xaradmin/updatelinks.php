@@ -1,5 +1,5 @@
 <?php
-function window_admin_updateconfig($var)
+function window_admin_updatelinks($var) 
 {
     if (!xarSecurityCheck('AdminWindow')) return;
     if (!xarVarFetch('default_size',     'int', $default_size, 0, XARVAR_NOT_REQUIRED)) return;
@@ -27,7 +27,7 @@ function window_admin_updateconfig($var)
     xarModSetVar('window', 'vsize', $vsize);
     xarModSetVar('window', 'hsize', $hsize);
     //Set Status
-    xarResponseRedirect(xarModURL('window', 'admin', 'modifyconfig'));
+    xarResponseRedirect(xarModURL('window', 'admin', 'general'));
     return true;
 }
 ?>
