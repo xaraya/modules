@@ -33,14 +33,6 @@ function window_init()
                 'size' => 255,
                 'null' => false,
                 'default' => ''),
-            'xar_label' => array('type' => 'varchar',
-                'size' => 255,
-                'null' => false,
-                'default' => ''),
-            'xar_description' => array('type' => 'varchar',
-                'size' => 255,
-                'null' => false,
-                'default' => ''),
             'xar_reg_user_only' => array('type' => 'integer',
                 'null' => false,
                 'default' => '0'),
@@ -112,9 +104,6 @@ function window_upgrade($oldversion)
             xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
             xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
             xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
-            break;
-        case '1.0.4':
-        // need to add db fields here
             break;
     }
     return true;
