@@ -9,6 +9,8 @@ function xproject_admin_update($args)
     if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('memberid', 'id', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectrole', 'str:1:', $projectrole, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str:1:', $status, $status, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
@@ -21,10 +23,17 @@ function xproject_admin_update($args)
     if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
+    
+    if(!xarModLoad('addressbook', 'user')) return;
+
+    if(empty($returnurl)) $returnurl = xarModURL('xproject', 'admin', 'view');
+    
     if (!xarSecConfirmAuthKey()) return;
+    
     if(!xarModAPIFunc('xproject',
 					'admin',
 					'update',
@@ -51,10 +60,21 @@ function xproject_admin_update($args)
 		return;
 	}
 
-
 	xarSessionSetVar('statusmsg', xarML('Project Updated'));
-
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
+    
+    if(is_numeric($memberid) && $memberid > 0) {
+        if(!xarModAPIFunc('xproject',
+                        'team',
+                        'create',
+                        array('projectid' => $projectid,
+                            'memberid' => $memberid,
+                            'projectrole' => $projectrole))) {
+            // team member added               
+        	xarSessionSetVar('statusmsg', xarML('Team Member added to Project'));             
+        }
+    }
+                            
+    xarResponseRedirect($returnurl);
 
     return true;
 }

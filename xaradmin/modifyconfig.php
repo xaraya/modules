@@ -22,7 +22,10 @@ function xproject_admin_modifyconfig()
 
     $data['authid'] = xarSecGenAuthKey();
 
+    $data['categories'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
     $data['itemsperpage'] = xarModGetVar('xproject', 'itemsperpage');
+    $data['staffcategory'] = xarModGetVar('xproject', 'staffcategory');
+    $data['clientcategory'] = xarModGetVar('xproject', 'clientcategory');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'xproject',
@@ -36,7 +39,8 @@ function xproject_admin_modifyconfig()
          * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
-    }
+    }    
+    
     return $data;
 }
 

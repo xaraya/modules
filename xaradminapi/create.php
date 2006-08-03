@@ -16,7 +16,7 @@ function xproject_adminapi_create($args)
     if(is_array($associated_sites)) $associated_sites = serialize($associated_sites);
 
     $invalid = array();
-    if (!isset($project_name) || !is_string($project_name)) {
+    if (!isset($project_name) || !is_string($project_name) || empty($project_name)) {
         $invalid[] = 'project_name';
     }
     if (count($invalid) > 0) {
@@ -75,11 +75,11 @@ function xproject_adminapi_create($args)
               $priority,
               $importance,
               $projecttype,
-              $date_approved,
-              $planned_start_date,
-              $planned_end_date,
-              $actual_start_date,
-              $actual_end_date,
+              $date_approved ? $date_approved : NULL,
+              $planned_start_date ? $planned_start_date : NULL,
+              $planned_end_date ? $planned_end_date : NULL,
+              $actual_start_date ? $actual_start_date : NULL,
+              $actual_end_date ? $actual_end_date : NULL,
               $hours_planned,
               $hours_spent,
               $hours_remaining,

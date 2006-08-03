@@ -17,6 +17,30 @@
         </select>
     </fieldset>
     
+    <fieldset><legend><xar:mlstring>Staff Contact Category</xar:mlstring></legend>
+        <select name="staffcategory" id="staffcategory">
+        <xar:foreach in="$categories" value="$category">
+            <xar:if condition="$category.id eq $staffcategory">
+            <option value="#$category.id#" selected="selected">#$category.name#</option>
+            <xar:else/>
+            <option value="#$category.id#">#$category.name#</option>
+            </xar:if>
+        </xar:foreach>
+        </select>
+    </fieldset>
+    
+    <fieldset><legend><xar:mlstring>Client Contact Category</xar:mlstring></legend>
+        <select name="clientcategory" id="clientcategory">
+        <xar:foreach in="$categories" value="$category">
+            <xar:if condition="$category.id eq $clientcategory">
+            <option value="#$category.id#" selected="selected">#$category.name#</option>
+            <xar:else/>
+            <option value="#$category.id#">#$category.name#</option>
+            </xar:if>
+        </xar:foreach>
+        </select>
+    </fieldset>
+    
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="submit" value="#$updatebutton#">
     

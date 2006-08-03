@@ -5,26 +5,35 @@ function xproject_admin_modify($args)
 	extract($args);
     
     if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
+    
+    if(!xarModLoad('addressbook', 'user')) return;
 	
     if (!empty($objectid)) {
         $projectid = $objectid;
     }
-	$item = xarModAPIFunc('xproject',
+	$projectinfo = xarModAPIFunc('xproject',
                          'user',
                          'get',
                          array('projectid' => $projectid));
 	
-	if (!isset($project) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+	if (!isset($projectinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$projectid")) {
+    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$projectinfo[project_name]:All:$projectid")) {
         return;
     }
+    
+    $teamlist = xarModAPIFunc('xproject',
+                            'team',
+                            'getall',
+                            array('projectid' => $projectid));
     
 	$data = array();
 
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
     
-	$data['projectid'] = $item['projectid'];
+	$data['projectid'] = $projectinfo['projectid'];
+    
+	$data['teamlist'] = $teamlist;
 	
     $data['authid'] = xarSecGenAuthKey();
 	
@@ -34,9 +43,11 @@ function xproject_admin_modify($args)
     
     $data['statuslist'] = array('Draft','Proposed','Approved','WIP','QA','Archived');
 
-	$data['item'] = $item;
+	$data['item'] = $projectinfo;
 
-    $hooks = xarModCallHooks('item','modify',$projectid,$item);
+	$data['returnurl'] = xarServerGetVar('HTTP_REFERER');
+
+    $hooks = xarModCallHooks('item','modify',$projectid,$projectinfo);
 
     if (empty($hooks)) {
         $data['hooks'] = '';

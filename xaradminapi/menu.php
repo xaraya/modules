@@ -21,6 +21,8 @@
 function xproject_adminapi_menu($args)
 { 
     extract($args);
+    
+    if(!xarModLoad('addressbook', 'user')) return;
 
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
@@ -42,6 +44,10 @@ function xproject_adminapi_menu($args)
     $menu['max_priority'] = $max_priority;
     $menu['max_importance'] = $max_importance;
     $menu['showsearch'] = $showsearch;
+    
+    $teammembers = xarModAPIFunc('xproject', 'team', 'getmembers');
+    
+    $menu['teammembers'] = $teammembers;
     /* Note : you could also specify the menu links here, and pass them
      * on to the template as variables
      * $menu['menulink_view'] = xarModURL('example','admin','view');

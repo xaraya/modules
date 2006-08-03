@@ -1,0 +1,22 @@
+<object name="xProject_Team">
+  <objectid>130</objectid>
+  <label>Project Team Members</label>
+  <moduleid>665</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="projectrole">
+      <id>1</id>
+      <label>Project Role</label>
+      <type>combo</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>Account Executive;Client;Designer;Developer;Vendor</validation>
+    </property>
+  </properties>
+</object>

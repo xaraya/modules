@@ -126,7 +126,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>12</order>
-      <validation></validation>
+      <validation>date</validation>
     </property>
     <property name="planned_start_date">
       <id>13</id>
@@ -136,7 +136,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>13</order>
-      <validation></validation>
+      <validation>date</validation>
     </property>
     <property name="planned_end_date">
       <id>14</id>
@@ -146,7 +146,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>14</order>
-      <validation></validation>
+      <validation>date</validation>
     </property>
     <property name="actual_start_date">
       <id>15</id>
@@ -156,7 +156,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>15</order>
-      <validation></validation>
+      <validation>date</validation>
     </property>
     <property name="actual_end_date">
       <id>16</id>
@@ -166,7 +166,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>16</order>
-      <validation></validation>
+      <validation>date</validation>
     </property>
     <property name="hours_planned">
       <id>17</id>
