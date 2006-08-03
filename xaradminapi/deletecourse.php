@@ -3,7 +3,7 @@
  * Delete a course
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,12 +12,11 @@
  * @author Courses module development team
  */
 /**
- * delete a course
+ * Delete a course
  *
  * @author MichelV <michelv@xaraya.com>
  * @param  $args ['courseid'] ID of the course
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success of deletion
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function courses_adminapi_deletecourse($args)

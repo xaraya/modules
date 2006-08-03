@@ -55,7 +55,7 @@ function courses_userapi_get($args)
     // TODO: allow for empty result when the user is not allowed to get this course ($where)
     if ($result->EOF) {
         $result->Close();
-        $msg = xarML('This course does not exists');
+        $msg = xarML('This course does not exist');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;

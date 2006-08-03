@@ -100,7 +100,7 @@ function courses_admin_viewcourses()
             $items[$i]['displayurl'] = '';
         }
 
-        if (xarSecurityCheck('DeleteCourses', 0, 'Course', "$courseid:All:All")) {
+        if ((xarSecurityCheck('DeleteCourses', 0, 'Course', "$courseid:All:All")) && empty($allplanned)){
             $items[$i]['deleteurl'] = xarModURL('courses',
                 'admin',
                 'deletecourse',
