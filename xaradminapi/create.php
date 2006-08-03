@@ -43,6 +43,9 @@ function xtasks_adminapi_create($args)
 
     $query = "INSERT INTO $xtaskstable (
                   taskid,
+                  objectid,
+                  modid,
+                  itemtype,
                   parentid,
                   projectid,
                   task_name,
@@ -65,10 +68,13 @@ function xtasks_adminapi_create($args)
                   hours_planned,
                   hours_spent,
                   hours_remaining)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),NULL,NOW(),?,?,?,?,?,?,?)";
             
     $bindvars = array(
                     $nextId,
+                    $objectid ? $objectid : 0,
+                    $modid ? $modid : 0,
+                    $itemtype ? $itemtype : 0,
                     $parentid ? $parentid : 0,
                     $projectid ? $projectid : 0,
                     $task_name,
@@ -81,13 +87,10 @@ function xtasks_adminapi_create($args)
                     $owner ? $projectid : 0,
                     $assigner ? $projectid : 0,
                     $groupid ? $projectid : 0,
-                    $date_created,
-                    $date_approved,
-                    $date_changed,
-                    $date_start_planned,
-                    $date_start_actual,
-                    $date_end_planned,
-                    $date_end_actual,
+                    $date_start_planned ? $date_start_planned : NULL,
+                    $date_start_actual ? $date_start_actual : NULL,
+                    $date_end_planned ? $date_end_planned : NULL,
+                    $date_end_actual ? $date_end_actual : NULL,
                     $hours_planned,
                     $hours_spent,
                     $hours_remaining);

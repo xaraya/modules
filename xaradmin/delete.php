@@ -15,15 +15,20 @@ function xtasks_admin_delete($args)
 {
     list($taskid,
          $objectid,
+         $returnurl,
          $confirm) = xarVarCleanFromInput('taskid',
                                           'objectid',
+                                          'returnurl',
                                           'confirm');
 
     extract($args);
 
-     if (!empty($objectid)) {
-         $taskid = $objectid;
-     }
+    if (!empty($objectid)) {
+        $taskid = $objectid;
+    }
+    if (!isset($returnurl)) {
+        $returnurl = $_SERVER['HTTP_REFERER'];
+    }
     $task = xarModAPIFunc('xtasks',
                          'user',
                          'get',
@@ -38,6 +43,7 @@ function xtasks_admin_delete($args)
         $data = xarModAPIFunc('xtasks','user','menu');
 
         $data['taskid'] = $taskid;
+        $data['returnurl'] = $returnurl;
 
         $data['name'] = xarVarPrepForDisplay($task['task_name']);
         $data['confirmbutton'] = xarML('Confirm');
@@ -55,7 +61,7 @@ function xtasks_admin_delete($args)
     }
     xarSessionSetVar('statusmsg', xarML('Task Deleted'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'view'));
+    xarResponseRedirect($returnurl);
 
     return true;
 }

@@ -9,6 +9,7 @@
 
 <input type="hidden" name="authid" value="#$authid#" />
 <input type="hidden" name="taskid" value="#$item.taskid#" />
+<input type="hidden" name="returnurl" value="#$returnurl#" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
@@ -41,19 +42,19 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_start_planned']" /></td>
-        <td><xar:data-input property="$properties['date_start_planned']" name="planned_start_date" value="$item['date_start_planned']" /></td>
+        <td><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" value="$item['date_start_planned']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_end_planned']" /></td>
-        <td><xar:data-input property="$properties['date_end_planned']" name="planned_start_date" value="$item['date_end_planned']" /></td>
+        <td><xar:data-input property="$properties['date_end_planned']" name="date_end_planned" value="$item['date_end_planned']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_start_actual']" /></td>
-        <td><xar:data-input property="$properties['date_start_actual']" name="actual_start_date" value="$item['date_start_actual']" /></td>
+        <td><xar:data-input property="$properties['date_start_actual']" name="date_start_actual" value="$item['date_start_actual']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_end_actual']" /></td>
-        <td><xar:data-input property="$properties['date_end_actual']" name="actual_end_date" value="$item['date_end_actual']" /></td>
+        <td><xar:data-input property="$properties['date_end_actual']" name="date_end_actual" value="$item['date_end_actual']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['hours_planned']" /></td>

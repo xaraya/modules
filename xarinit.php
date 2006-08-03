@@ -142,7 +142,7 @@ function xtasks_init()
     }
 
     $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/xtasks/tasks.xml'));
+                              array('file' => 'modules/xtasks/xardata/tasks.xml'));
     if (empty($xtasks_objectid)) return;
     // save the object id for later
     xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);

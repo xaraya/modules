@@ -62,6 +62,9 @@ function xtasks_userapi_getall($args)
     $xtaskstable = $xartable['xtasks'];
 
     $sql = "SELECT taskid,
+                   objectid,
+                   modid,
+                   itemtype,
                    parentid,
                    projectid,
                    task_name,
@@ -98,13 +101,16 @@ function xtasks_userapi_getall($args)
         if (!empty($objectid)) {
             $sql .= " AND objectid=".$objectid;
         }
+        if (!empty($itemtype)) {
+            $sql .= " AND itemtype=".$itemtype;
+        }
     }
 
         
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
 //	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
-    $sql .= " ORDER BY task_name";
+    $sql .= " ORDER BY task_name ";
 
 /*
     if ($selected_project != "all") {
@@ -143,6 +149,9 @@ function xtasks_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($taskid,
+             $objectid,
+             $modid,
+             $itemtype,
              $parentid,
              $projectid,
              $task_name,
@@ -168,6 +177,9 @@ function xtasks_userapi_getall($args)
         if (xarSecurityCheck('ReadXTask', 0, 'Item', "$task_name:All:$taskid")) {
             $numtasks = xarModAPIFunc('xtasks', 'user', 'countitems', array('projectid' => $projectid));
             $tasks[] = array('taskid' => $taskid,
+                            'objectid' => $objectid,
+                            'modid' => $modid,
+                            'itemtype' => $itemtype,
                             'parentid' => $parentid,
                             'projectid' => $projectid,
                             'task_name' => $task_name,

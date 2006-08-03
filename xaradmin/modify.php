@@ -5,9 +5,13 @@ function xtasks_admin_modify($args)
 	extract($args);
     
     if (!xarVarFetch('taskid',     'id',     $taskid,     $taskid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl',     'str::',     $returnurl,     '',     XARVAR_NOT_REQUIRED)) return;
 	
     if (!empty($objectid)) {
         $taskid = $objectid;
+    }
+    if (empty($returnurl)) {
+        $returnurl = $_SERVER['HTTP_REFERER'];
     }
 	$item = xarModAPIFunc('xtasks',
                          'user',
@@ -25,6 +29,8 @@ function xtasks_admin_modify($args)
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
     
 	$data['taskid'] = $item['taskid'];
+    
+	$data['returnurl'] = $returnurl;
 	
     $data['authid'] = xarSecGenAuthKey();
 	

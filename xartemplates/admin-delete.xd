@@ -9,6 +9,7 @@
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="confirm" value="true" />
     <input type="hidden" name="taskid" value="#$taskid#" />
+    <input type="hidden" name="returnurl" value="#$returnurl#" />
 
     <table border="0" cellpadding="2" cellspacing="0">
         <tr>

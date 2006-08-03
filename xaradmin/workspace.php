@@ -5,7 +5,6 @@ function xtasks_admin_workspace($args)
     extract($args);
     
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'int::', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     
     $data = array();
 
@@ -66,8 +65,7 @@ function xtasks_admin_workspace($args)
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
 //    xarModAPILoad('xtaskss', 'user');
     $items = xarModAPIFunc('xtasks', 'user', 'getall',
-                            array('projectid' => $projectid,
-                                  'modid'    => $modid,
+                            array('modid'    => $modid,
                                   'itemtype' => $itemtype,
                                   'objectid' => $objectid,
                                   'startnum' => $startnum,

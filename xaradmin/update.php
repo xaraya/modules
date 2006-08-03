@@ -24,7 +24,8 @@ function xtasks_admin_update($args)
           $date_end_actual,
           $hours_planned,
           $hours_spent,
-          $hours_remaining) =	xarVarCleanFromInput('taskid',
+          $hours_remaining,
+          $returnurl) =	xarVarCleanFromInput('taskid',
                                             'parentid',
                                             'projectid',
                                             'task_name',
@@ -46,7 +47,8 @@ function xtasks_admin_update($args)
                                             'date_end_actual',
                                             'hours_planned',
                                             'hours_spent',
-                                            'hours_remaining');
+                                            'hours_remaining',
+                                            'returnurl');
 
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
@@ -82,6 +84,11 @@ function xtasks_admin_update($args)
 
 	xarSessionSetVar('statusmsg', xarML('Task Updated'));
 
+    if(!empty($returnurl)) {
+        xarResponseRedirect($returnurl);
+        return true;
+    }
+    
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'view'));
 
     return true;
