@@ -1,18 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
-
-<script type="text/javascript">
-    function loadcontacts(basefieldname,basefieldid) {
-        selectfield = document.getElementById('companyselect');
-        selecturl = "&xar-modurl-addressbook-user-select;";
-        company = selectfield.options[selectfield.selectedIndex].value;
-        return loadContent(selecturl + '&amp;company=' + company + '&amp;fieldname=#$name#&amp;fieldid=#$id#', 'contactselect');
-    }
-</script>
+<xar:base-include-javascript position="body" module="addressbook" filename="loadcontacts.js" />
 
 <xar:if condition="count($options) gt 1">
-    <select name="companyselect" id="companyselect" tabindex="0" onChange="loadcontacts('#$name#,#$id#')" >
+    <select name="companyselect_#$name#" id="companyselect_#$id#" tabindex="0" onChange="loadcontacts('#$name#','#$id#')" >
         <xar:foreach in="$options" value="$option" >
             <xar:if condition="empty($option['id']) or $option['id'] ne $option['name']">
                 <xar:if condition="$option['id'] eq $value" >
@@ -28,7 +20,7 @@
         </xar:foreach>
     </select>
 
-    <div id="contactselect">
+    <div id="contactselect_#$id#">
     #$contactselect#
     </div>
 
