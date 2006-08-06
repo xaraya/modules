@@ -382,6 +382,8 @@ function registration_user_register()
 
                 if ($uid == 0) return;
 
+                //Make sure the user email setting is off unless the user sets it
+                xarModSetUserVar('roles','usersendemails', false, $uid);
                 /* Call hooks in here
                  * This might be double as the roles hook will also call the create,
                  * but the new hook wasn't called there, so no data is passed
@@ -460,6 +462,8 @@ function registration_user_register()
 
                 // Check for user creation failure
                 if ($uid == 0) return;
+                //Make sure the user email setting is off unless the user sets it
+                xarModSetUserVar('roles','usersendemails', false, $uid);
 
                 /* Call hooks in here for the moment
                  * Note that there are also hooks called in roles_adminapi_create
