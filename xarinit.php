@@ -62,7 +62,10 @@ function registration_init()
     xarModSetVar('registration', 'showdynamic', false);
     xarModSetVar('registration', 'sendwelcomeemail', false);
     xarModSetVar('registration', 'minpasslength', 5);
-
+    $defaultregmodule= xarModGetVar('roles','defaultregmodule');
+    if (!isset($defaultregmodule)) {
+        xarModSetVar('roles','defaultregmodule',xarModGetIDFromName('registration'));
+    }
 
 /** ---------------------------------------------------------------
  * Set disallowed names
@@ -120,7 +123,10 @@ function registration_upgrade($oldVersion)
         xarModDelVar('registration', 'lockouttime'); // to authsystem
         xarModDelVar('registration', 'lockouttries'); // to authsystem
         xarModDelVar('registration', 'uselockout'); // to authsystem
-
+        $defaultregmodule= xarModGetVar('roles','defaultregmodule');
+        if (!isset($defaultregmodule)) {
+            xarModSetVar('roles','defaultregmodule',xarModGetIDFromName('registration'));
+        }
             break;
         case '1.2.0':
             // Code to upgrade from version 1.2.0 goes here
@@ -145,6 +151,14 @@ function registration_delete()
                        'unregister_block_type',
                        array('modName'  => 'registration',
                              'blockType'=> 'rlogin'))) return;
+
+    //check if the roles default registration module is set
+    //If so - we have to remove the registration value if it's registration module
+    $regid=xarModGetIDFromName('registration');
+    $defaultregvalue =  xarModGetVar('roles','defaultregmodule');
+    if (isset($defaultregmodule) && $defaultregmodule==$regid) {
+        xarModSetVar('roles','defaultregmodule',NULL);
+    }
 
     /**
      * Remove modvars, instances, masks and privs
