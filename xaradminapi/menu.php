@@ -16,7 +16,7 @@
  * 
  * Standard function to generate a common admin menu configuration for the module
  *
- * @author the Example module development team
+ * @author St.Ego
  */
 function xproject_adminapi_menu($args)
 { 
@@ -24,65 +24,44 @@ function xproject_adminapi_menu($args)
     
     if(!xarModLoad('addressbook', 'user')) return;
 
+    if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
+    if($q) xarSessionSetVar('q', $q);
+    else xarSessionDelVar('q');
     if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if($status) xarSessionSetVar('status', $status);
+    else xarSessionDelVar('status');
     if (!xarVarFetch('max_priority', 'int', $max_priority, 9, XARVAR_NOT_REQUIRED)) return;
+    if($max_priority) xarSessionSetVar('max_priority', $max_priority);
     if (!xarVarFetch('max_importance', 'int', $max_importance, 9, XARVAR_NOT_REQUIRED)) return;
+    if($max_importance) xarSessionSetVar('max_importance', $max_importance);
     if (!xarVarFetch('showsearch', 'str', $showsearch, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
+    if($memberid) xarSessionSetVar('memberid', $memberid);
+    else xarSessionDelVar('memberid');
+    if (!xarVarFetch('inline',     'int',     $inline,     0,     XARVAR_NOT_REQUIRED)) return;
     
-    /*Initialise the array that will hold the menu configuration */
+    $teammembers = xarModAPIFunc('xproject', 'team', 'getmembers');
+    
     $menu = array();
-    /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('xProject Administration');
-    /* Specify the menu labels to be used in your blocklayout template
-     * Preset some status variable
-     */
+    $menu['memberid'] = $memberid;
+    $menu['inline'] = $inline;
+    $menu['verbose'] = $verbose;
+    $uid = xarSessionGetVar('uid');
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+    $menu['mymemberid'] = $mymemberid ? $mymemberid : "0";
     $menu['status'] = $status;
+    $menu['statusmsg'] = xarSessionGetVar('statusmsg');
+    xarSessionDelVar('statusmsg');
     $menu['q'] = $q;
     $menu['sortby'] = $sortby;
     $menu['max_priority'] = $max_priority;
     $menu['max_importance'] = $max_importance;
     $menu['showsearch'] = $showsearch;
-    
-    $teammembers = xarModAPIFunc('xproject', 'team', 'getmembers');
-    
     $menu['teammembers'] = $teammembers;
-    /* Note : you could also specify the menu links here, and pass them
-     * on to the template as variables
-     * $menu['menulink_view'] = xarModURL('example','admin','view');
-     * Note : you could also put all menu items in a $menu['menuitems'] array
-
-     * Initialise the array that will hold the different menu items
-     * $menu['menuitems'] = array();
-
-     * Define a menu item
-     * $item = array();
-     * $item['menulabel'] = _EXAMPLEVIEW;
-     * $item['menulink'] = xarModURL('example','user','view');
-
-     * Add it to the array of menu items
-     * $menu['menuitems'][] = $item;
-
-     * Add more menu items to the array
-     * ...
-     */
-    
-    /* Then you can let the blocklayout template create the different
-     * menu items *dynamically*, e.g. by using something like :
-
-     * <xar:loop name="menuitems">
-     * <td><a href="&xar-var-menulink;">&xar-var-menulabel;</a></td>
-     * </xar:loop>
-
-     * in the templates of your module. Or you could even pass an argument
-     * to the admin_menu() function to turn links on/off automatically
-     * depending on which function is currently called...
-
-     * But most people will prefer to specify all this manually in each
-     * blocklayout template anyway :-)
-     */
-     /* Return the array containing the menu configuration */
+     
     return $menu;
 } 
 ?>

@@ -13,17 +13,16 @@
  */
 function xproject_admin_delete($args)
 {
-    list($projectid,
-         $objectid,
-         $confirm) = xarVarCleanFromInput('projectid',
-                                          'objectid',
-                                          'confirm');
-
     extract($args);
+    
+    if (!xarVarFetch('projectid', 'id', $projectid)) return;
+    if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-     if (!empty($objectid)) {
-         $projectid = $objectid;
-     }
+    if (!empty($objectid)) {
+        $projectid = $objectid;
+    }
+    
     $project = xarModAPIFunc('xproject',
                          'user',
                          'get',
@@ -62,7 +61,7 @@ function xproject_admin_delete($args)
     }
     xarSessionSetVar('statusmsg', xarML('Project Deleted'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('xproject', 'admin'));
 
     return true;
 }

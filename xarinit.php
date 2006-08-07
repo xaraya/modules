@@ -125,21 +125,6 @@ function xproject_init()
     
     $team_table = $xarTables['xProject_team'];
     $team_fields = array('projectid'    =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
-                        'memberid'      =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0') );
-    $query = xarDBCreateTable($log_table,$log_fields);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_teamid',
-                   'fields'    => array('projectid', 'memberid'),
-                   'unique'    => TRUE);
-    $query = xarDBCreateIndex($team_table,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-    
-    $team_table = $xarTables['xProject_team'];
-    $team_fields = array('projectid'    =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'projectrole'   =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'roleid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'memberid'      =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -211,6 +196,10 @@ function xproject_init()
     // save the object id for later
     xarModSetVar('xproject','log_objectid',$log_objectid);
 
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/xardata/usersettings.xml'));
+    if (empty($objectid)) return;
+    xarModSetVar('xproject','usersettings',$objectid);
     
 //    $xartable =& xarDBGetTables();
 
@@ -221,6 +210,7 @@ function xproject_init()
      */
     xarModSetVar('xproject', 'useModuleAlias', false);
     xarModSetVar('xproject', 'aliasname', '');
+    xarModSetVar('xproject', 'mymemberid', false);
 
 //    xarBlockTypeRegister('xproject', 'first');
 //    xarBlockTypeRegister('xproject', 'others');
@@ -280,6 +270,9 @@ function xproject_upgrade($oldversion)
     xarDBLoadTableMaintenanceAPI();
             
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
+    $ddata_is_available = xarModIsAvailable('dynamicdata');
+    if (!isset($ddata_is_available)) return;
     
     switch($oldversion) {
         case '0.2.0':
@@ -508,7 +501,18 @@ function xproject_upgrade($oldversion)
             $result = $datadict->alterColumn($team_table, 'projectrole C(32)');
             if (!$result) return;
         
-        case '2.4':
+        case '2.4':  
+        case '2.5':
+        case '2.6':
+        case '2.7':
+        case '2.8':
+            xarModDelVar('xproject','usersettings');
+            $objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/usersettings.xml'));
+            if (empty($objectid)) return;
+            xarModSetVar('xproject','usersettings',$objectid);    
+            
+        case '2.9':
             break;
 
     }
@@ -567,6 +571,12 @@ function xproject_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $team_objectid));
     }
     xarModDelVar('xproject','team_objectid');
+
+    $objectid = xarModGetVar('xproject','usersettings');
+    if (!empty($objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+    }
+    xarModDelVar('xproject','usersettings');
     
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */

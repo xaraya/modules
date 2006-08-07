@@ -3,17 +3,20 @@
 function xproject_admin_view($args)
 {
     extract($args);
-
+    
+    if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('clientid', 'int', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
     
-    $data = xarModAPIFunc('xproject', 'admin', 'menu', array('showsearch' => true));
+    $data = array();
     
-    $data['showsearch'] = 1;
+    $data['verbose'] = $verbose;
     
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
@@ -24,8 +27,8 @@ function xproject_admin_view($args)
                                       'status' => $status,
                                       'sortby' => $sortby,
                                       'clientid' => $clientid,
-                                      'max_priority' => $data['max_priority'],
-                                      'max_importance' => $data['max_importance'],
+                                      'max_priority' => $max_priority,
+                                      'max_importance' => $max_importance,
                                       'q' => $q,
                                       'numitems' => xarModGetVar('xproject','itemsperpage')));
     } else {
@@ -35,8 +38,8 @@ function xproject_admin_view($args)
                                       'status' => $status,
                                       'sortby' => $sortby,
                                       'clientid' => $clientid,
-                                      'max_priority' => $data['max_priority'],
-                                      'max_importance' => $data['max_importance'],
+                                      'max_priority' => $max_priority,
+                                      'max_importance' => $max_importance,
                                       'q' => $q,
                                       'numitems' => xarModGetVar('xproject','itemsperpage')));
     }
@@ -71,16 +74,30 @@ function xproject_admin_view($args)
     
     $uid = xarUserGetVar('uid');
     
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('xproject', 'user', 'countitems',
-                    array('status' => $status,
-                          'sortby' => $sortby,
-                          'clientid' => $clientid,
-                          'max_priority' => $data['max_priority'],
-                          'max_importance' => $data['max_importance'],
-                          'q' => $q)),
-        xarModURL('xproject', 'admin', 'view', array('startnum' => '%%')),
-        xarModGetUserVar('xproject', 'itemsperpage', $uid));
+    if(!$memberid) {
+        $data['pager'] = xarTplGetPager($startnum,
+            xarModAPIFunc('xproject', 'user', 'countitems',
+                        array('status' => $status,
+                              'sortby' => $sortby,
+                              'clientid' => $clientid,
+                              'max_priority' => $max_priority,
+                              'max_importance' => $max_importance,
+                              'q' => $q)),
+            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%')),
+            xarModGetUserVar('xproject', 'itemsperpage', $uid));
+    } else {
+        $data['pager'] = xarTplGetPager($startnum,
+            xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                        array('status' => $status,
+                              'sortby' => $sortby,
+                              'clientid' => $clientid,
+                              'memberid' => $memberid,
+                              'max_priority' => $max_priority,
+                              'max_importance' => $max_importance,
+                              'q' => $q)),
+            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%')),
+            xarModGetUserVar('xproject', 'itemsperpage', $uid));
+    }
         
 	return $data;
 }

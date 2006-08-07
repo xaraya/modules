@@ -10,8 +10,8 @@ function xproject_admin_update($args)
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('memberid', 'id', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectrole', 'str:1:', $projectrole, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str:1:', $status, $status, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectrole', 'str::', $projectrole, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;

@@ -1,21 +1,24 @@
 <?php
-/**
- * XProject Module main admin function
- *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
- 
-function xproject_admin_main()
+
+function xproject_admin_main($args)
 {
-    xarResponseRedirect(xarModURL('xproject','admin','view'));
-	return;
+    extract($args);
+    
+    if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('clientid', 'int', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
+    
+    $data = xarModAPIFunc('xproject', 'admin', 'menu', array('showsearch' => true));
+    
+    $data['showsearch'] = 1;
+        
+	return $data;
 }
 
 ?>

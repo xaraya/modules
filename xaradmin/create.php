@@ -13,45 +13,31 @@
  */
 function xproject_admin_create($args)
 {
-    list($project_name,
-        $reference,
-        $private,
-        $description,
-        $clientid,
-        $ownerid,
-        $status,
-        $priority,
-        $importance,
-        $projecttype,
-        $date_approved,
-        $planned_start_date,
-        $planned_end_date,
-        $actual_start_date,
-        $actual_end_date,
-        $hours_planned,
-        $hours_spent,
-        $hours_remaining,
-        $associated_sites) =	xarVarCleanFromInput('project_name',
-                                            'reference',
-                                            'private',
-                                            'description',
-                                            'clientid',
-                                            'ownerid',
-                                            'status',
-                                            'priority',
-                                            'importance',
-                                            'projecttype',
-                                            'date_approved',
-                                            'planned_start_date',
-                                            'planned_end_date',
-                                            'actual_start_date',
-                                            'actual_end_date',
-                                            'hours_planned',
-                                            'hours_spent',
-                                            'hours_remaining',
-                                            'associated_sites');
-
     extract($args);
+    
+    if (!xarVarFetch('reference', 'str::', $reference, $reference, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private', 'checkbox', $private, $private, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('memberid', 'id', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectrole', 'str::', $projectrole, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_approved', 'str::', $date_approved, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_start_date', 'str::', $planned_start_date, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('actual_start_date', 'str::', $actual_start_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('actual_end_date', 'str::', $actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecConfirmAuthKey()) return;
 
     $projectid = xarModAPIFunc('xproject',
@@ -82,7 +68,7 @@ function xproject_admin_create($args)
 
     xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('xproject', 'admin'));
 
     return true;
 }

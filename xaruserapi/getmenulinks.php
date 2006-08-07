@@ -33,6 +33,15 @@ function xproject_userapi_getmenulinks()
                                                    'search'),
                               'title' => xarML('Query project entries'),
                               'label' => xarML('Search Projects'));
+        if (xarUserIsLoggedIn()) {
+            $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                      'user',
+                                                      'settings'),
+                                 // In order to display the tool tips and label in any language,
+                                 // we must encapsulate the calls in the xarML in the API.
+                                 'title' => xarML('Change your preferences for this module'),
+                                 'label' => xarML('Settings'));
+        }
     }
 
     if (empty($menulinks)){
