@@ -33,7 +33,7 @@ function pubsub_user_subscribe()
     if (!xarVarFetch('cid',        'isset', $cid,       false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype',   'isset', $itemtype,  false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl',  'isset', $returnurl, false,XARVAR_NOT_REQUIRED)) return;
-    
+
     $returnurl = rawurldecode($returnurl);
 
     // Argument check
