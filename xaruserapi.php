@@ -126,7 +126,7 @@ function highlight_userapi__transform($text)
     $trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
 
     // retrieve transform utility class
-    xarInclude('modules/highlight/xarclasses/geshi.php', true);
+    include_once('modules/highlight/xarclasses/geshi.php');
 
     // initialize highlighting utility
     $geshi = new GeSHi('', 'php');

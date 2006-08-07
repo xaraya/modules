@@ -26,7 +26,7 @@ function highlight_userapi_getlanguages($args)
     extract($args);
 
     // retrieve and initialize highlighter utility
-    xarInclude('modules/highlight/xarclasses/geshi.php', true);
+    include_once('modules/highlight/xarclasses/geshi.php');
     $geshi = new GeSHi('', 'php');
 
     // get directory where language files are stored
