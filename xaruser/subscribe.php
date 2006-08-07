@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Pubsub User Interface
  *
  * @package Xaraya eXtensible Management System
@@ -31,16 +29,12 @@ function pubsub_user_subscribe()
     } else {
         return;
     }
+    
+    if (!xarVarFetch('modid', 'id', $modid, $modid, XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('cid', 'id', $cid, $cid, XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('itemtype', 'id', $itemtype, $itemtype, XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('returnurl', 'str', $returnurl, $returnurl, XARVAR_NOT_REQUIRED)) return;    
 
-    list($modid
-        ,$cid
-        ,$itemtype
-        ,$returnurl
-        ) = xarVarCleanFromInput('modid'
-                                ,'cid'
-                                ,'itemtype'
-                                ,'returnurl'
-                                );
     $returnurl = rawurldecode($returnurl);
 
     // Argument check
