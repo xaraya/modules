@@ -141,23 +141,21 @@ function comments_latestcommentsblock_modify($blockinfo)
  */
 function comments_latestcommentsblock_update($blockinfo)
 {
+    $vars = array();
+    if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modid', 'isset', $vars['modid'],  array(), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addauthor', 'isset', $vars['addauthor'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addmodule', 'isset', $vars['addmodule'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addcomment', 'isset', $vars['addcomment'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addobject', 'isset', $vars['addobject'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('addprevious', 'checkbox', $vars['addprevious'], 0, XARVAR_NOT_REQUIRED)) return;
 
-    $vars['howmany'] = xarVarCleanFromInput('howmany');
-    $vars['modid']   = xarVarCleanFromInput('modid');
-    $vars['pubtypeid']   = xarVarCleanFromInput('pubtypeid');
-    $vars['addauthor'] = xarVarCleanFromInput('addauthor');
-    $vars['addmodule'] = xarVarCleanFromInput('addmodule');
-    $vars['addcomment'] = xarVarCleanFromInput('addcomment');
-    $vars['addobject'] = xarVarCleanFromInput('addobject');
-    $vars['adddate'] = xarVarCleanFromInput('adddate');
-    $vars['adddaysep'] = xarVarCleanFromInput('adddaysep');
-    $vars['truncate'] = xarVarCleanFromInput('truncate');    
-    $vars['addprevious'] = xarVarCleanFromInput('addprevious');
-    
     $blockinfo['content'] = serialize($vars);
     
-
     return $blockinfo;
 }
-
 ?>

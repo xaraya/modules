@@ -13,11 +13,10 @@
  */
 function comments_userapi_getoptions() 
 {
-
-    $depth      = xarVarCleanFromInput('depth');
-    $render     = xarVarCleanFromInput('render');
-    $order      = xarVarCleanFromInput('order');
-    $sortby     = xarVarCleanFromInput('sortby');
+    if (!xarVarFetch('depth', 'int', $depth, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('render', 'str', $render, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'int', $order, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'int', $sortby, 0, XARVAR_NOT_REQUIRED)) return;
 
     // if one of the settings configured, the all should be.
     // Order of precedence for determining which
