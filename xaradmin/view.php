@@ -3,7 +3,7 @@
  * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,16 +13,12 @@
  */
 function messages_admin_view($args)
 {
-
-    list( $itemtype ) = xarVarCleanFromInput('itemtype' );
+    if (!xarVarFetch('itemtype', 'int', $itemtype, 0,XARVAR_NOT_REQUIRED)) return;
 
     switch( $itemtype ) {
 
         case 1:
-            return xarModAPIFunc(
-                'messages'
-                ,'admin'
-                ,'view' );
+            return xarModAPIFunc('messages', 'admin', 'view' );
 
 
         default:

@@ -3,7 +3,7 @@
  * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,19 +14,13 @@
 function messages_adminapi_new( $args )
 {
     if (!xarSecurityCheck( 'AddMessages')) return;
-
-    list ( $authid, $itemtype ) = xarVarCleanFromInput( 'authid', 'itemtype' );
     extract( $args );
+    if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Retrieve the object via the dynamicdata module api.
-    $object = xarModAPIFunc(
-        'dynamicdata'
-        ,'user'
-        ,'getobject'
-        ,array(
-            'module'     => 'messages'
-            ,'itemtype'  => 1
-        ));
+    $object = xarModAPIFunc('dynamicdata', 'user', 'getobject', 
+              array('module'     => 'messages', 'itemtype'  => 1));
+
     if ( empty($object) ) return;
 
     /*
@@ -48,18 +42,12 @@ function messages_adminapi_new( $args )
          * function.
          */
         if ( !xarModLoad( 'messages', 'user' ) ) return;
-        $preview = xarModFunc(
-            'messages'
-            ,'user'
-            ,'display'
-            ,array(
-                'itemtype'  =>  '1'
-                ,'object'   => $object ));
+        $preview = xarModFunc('messages', 'user', 'display', 
+                 array('itemtype'  =>  '1', 'object'   => $object ));
+
         if ( !isset( $preview ) ) return;
         $data['preview'] = $preview;
-
     }
-
 
     /*
      * call the hook 'module:modifyconfig:GUI'
@@ -68,24 +56,14 @@ function messages_adminapi_new( $args )
         'module'        =>  'messages'
         ,'itemid'       =>  NULL
         ,'itemtype'     =>  '1' );
-    $data['hooks'] = xarModCallHooks(
-        'item'
-        ,'new'
-        ,NULL
-        ,$args
-        ,'messages' );
-
+    $data['hooks'] = xarModCallHooks('item', 'new', NULL, $args, 'messages' );
 
     /*
      * Compose the data for the template
      */
     $data['object'] = $object;
-    $data['action'] = xarModURL(
-        'messages'
-        ,'admin'
-        ,'new'
-        ,array(
-            'itemtype'  => 1 ));
+    $data['action'] = xarModURL('messages', 'admin', 'new', 
+                    array('itemtype'  => 1 ));
     $data['authid'] = xarSecGenAuthKey();
     $data['_bl_template'] = 'messages';
 

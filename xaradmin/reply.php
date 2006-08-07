@@ -3,7 +3,7 @@
  * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,10 +13,13 @@
  */
 function messages_admin_reply( $args )
 {
-
-    list( $itemtype, $itemid, $cancel, $authid, $subject, $from_id, $preview ) =
-        xarVarCleanFromInput('itemtype', 'itemid', 'cancel', 'authid', 'subject', 'from_id', 'preview' );
     extract( $args );
+    if (!xarVarFetch('itemid',   'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'int',    $itemtype, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cancel',   'str:1:', $cancel, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'str:1:', $preview, null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('subject',  'str:1:', $subject, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('from_id',  'isset', $from_id, null, XARVAR_NOT_REQUIRED)) return;
 
     /*
      * Return to the itemtype's view page if
@@ -24,18 +27,12 @@ function messages_admin_reply( $args )
      *  -> There is no itemid to modify
      *  -> There is no itemtype ( will go to main view )
      */
-    if ( !empty( $cancel ) or empty( $itemid ) or empty( $itemtype ) ) {
+    if ( !empty($cancel) or empty($itemid) or empty($itemtype) ) {
 
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
         xarResponseRedirect(
-            xarModURL(
-                'messages'
-                ,'admin'
-                ,'view'
-                ,array(
-                    'itemtype' => $itemtype )));
-
+            xarModURL('messages', 'admin', 'view', array('itemtype' => $itemtype )));
     }
 
     // check if authid is set.
@@ -48,21 +45,13 @@ function messages_admin_reply( $args )
         if ( !isset( $preview ) ) {
 
             switch( $itemtype ) {
-
                 case 1:
-                    return xarModAPIFunc(
-                        'messages'
-                        ,'admin'
-                        ,'update'
-                        ,$args );
+                    return xarModAPIFunc('messages', 'admin', 'update', $args );
 
                 default:
                     // TODO // Add statusmessage
                     xarResponseRedirect(
-                        xarModURL(
-                            'messages'
-                            ,'admin'
-                            ,'view' ));
+                        xarModURL('messages', 'admin', 'view' ));
             }
         }
     }
@@ -70,19 +59,12 @@ function messages_admin_reply( $args )
     switch( $itemtype ) {
 
         case 1:
-            return xarModAPIFunc(
-                'messages'
-                ,'admin'
-                ,'modify'
-                ,$args );
+            return xarModAPIFunc('messages', 'admin', 'modify', $args );
 
         default:
             // TODO // Add statusmessage
             xarResponseRedirect(
-                xarModURL(
-                    'messages'
-                    ,'admin'
-                    ,'view' ));
+                xarModURL('messages', 'admin', 'view' ));
     }
 
 }

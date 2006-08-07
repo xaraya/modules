@@ -3,7 +3,7 @@
  * Messages Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,31 +13,22 @@
  */
 function messages_adminapi_config( $args )
 {
-
-    $data = messages_admin_common( 'messages Configuration' );
-
-    list( $itemtype, $authid ) = xarVarCleanFromInput( 'itemtype', 'authid' );
     extract( $args );
 
-    if ( isset( $authid ) ) {
+//    $data = messages_admin_common('messages Configuration');
+    if (!xarVarFetch('itemtype', 'int',    $itemtype, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemsperpage', 'int',  $itemsperpage, 10,XARVAR_NOT_REQUIRED)) return;
+    if (isset($authid)) {
 
-        /*
-         * The user confirmed the form. So save the results.
-         */
+        /* The user confirmed the form. So save the results. */
 
         if (!xarSecConfirmAuthKey()) return;
-
-        $itemsperpage = xarVarCleanFromInput( 'itemsperpage' );
 
         if ( empty( $itemsperpage ) or !is_numeric( $itemsperpage ) ) {
             $itemsperpage = 10;
         }
 
-        xarModSetVar(
-            'messages'
-            ,'itemsperpage.' . $itemtype
-            ,$itemsperpage );
-
+        xarModSetVar('messages', 'itemsperpage.' . $itemtype, $itemsperpage );
 
         /*
          * call the hook 'module:updateconfig:GUI'
@@ -45,23 +36,13 @@ function messages_adminapi_config( $args )
         $args = array(
             'module'        =>  'messages'
             ,'itemtype'     =>  $itemtype );
-        $data['hooks'] = xarModCallHooks(
-            'module'
-            ,'updateconfig'
-            ,'messages'
-            ,$args
-            ,'messages' );
+        $data['hooks'] = xarModCallHooks('module', 'updateconfig', 'messages', $args, 'messages' );
 
         /*
          * Finished. Back to the sender!
          */
         xarResponseRedirect(
-            xarModURL(
-                'messages'
-                ,'admin'
-                ,'config'
-                ,array(
-                    'itemtype' => $itemtype )));
+            xarModURL('messages', 'admin', 'config', array('itemtype' => $itemtype )));
 
     } // Save the changes
 
@@ -69,25 +50,13 @@ function messages_adminapi_config( $args )
     /*
      * call the hook 'module:modifyconfig:GUI'
      */
-    $args = array(
-        'module'        =>  'messages'
-        ,'itemtype'     =>  $itemtype );
-    $data['hooks'] = xarModCallHooks(
-        'module'
-        ,'modifyconfig'
-        ,'messages'
-        ,$args
-        ,'messages' );
+    $args = array('module' => 'messages', 'itemtype' => $itemtype );
 
-
+    $data['hooks'] = xarModCallHooks('module', 'modifyconfig', 'messages', $args, 'messages' );
 
     $data['itemtype']       = $itemtype;
     $data['itemtype_label'] = $itemtype;
-    $data['itemsperpage']   = xarModGetVar(
-        'messages'
-        ,'itemsperpage.' . $itemtype );
-
-
+    $data['itemsperpage']   = xarModGetVar('messages', 'itemsperpage.' . $itemtype );
     /*
      * Populate the rest of the template
      */
