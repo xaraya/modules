@@ -17,6 +17,7 @@ function AddressBook_user_select($args)
     extract($args);
 
     if (!xarVarFetch('fieldname', 'str:1:', $fieldname)) return;
+    if (!xarVarFetch('fieldid', 'int', $fieldid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('value', 'int', $value, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('company', 'str', $company, $company, XARVAR_NOT_REQUIRED)) return;
 
@@ -36,6 +37,7 @@ function AddressBook_user_select($args)
     $data['options'] = $addresslist;
     $data['company'] = $company;
     $data['fieldname'] = $fieldname;
+    $data['fieldid'] = $fieldid;
     
     return $data;
 } // END main
