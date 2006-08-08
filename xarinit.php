@@ -570,6 +570,19 @@ function xarbb_upgrade($oldversion)
 
             // Fall through to next upgrade version.
         
+        case '1.2.1':
+            // In this version (1.2.2) we introduce a new way to handle
+            // last visit time. Some module variables need to be created
+            // for each forum.
+            // For each forum that already exists, create a set of module
+            // variables for user tracking.
+            $all_forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
+            foreach($all_forums as $forum) {
+                $fid = $forum['fid'];
+                // Last visited time.
+                xarModSetVar('xarbb', 'fr_' . $fid, '0');
+            }
+
         default:
             break;
     }

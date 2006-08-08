@@ -99,6 +99,8 @@ function xarbb_adminapi_create($args)
     //
     // Last visited time.
     xarModSetVar('xarbb', 'f_' . $fid, '0');
+    // Last read time.
+    xarModSetVar('xarbb', 'fr_' . $fid, '0');
     // Topic tracking array.
     $topic_tracking = array();
     xarModSetVar('xarbb', 'topics_' . $fid, serialize($topic_tracking));

@@ -177,13 +177,8 @@ function xarbb_user_main()
     $data['items'] = $items;
 
     // Check the cookie for the date to display
-    $lastvisitsession = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
-
-    if (!empty($lastvisitsession)){
-        $data['lastvisitdate'] = $lastvisitsession;
-    } else {
-        $data['lastvisitdate'] = $now;
-    }
+    $lastvisitdate = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
+    $data['lastvisitdate'] = (!empty($lastvisitdate) ? $lastvisitdate : $now);
 
     xarTplSetPageTitle(xarML('Forum Index'));
 

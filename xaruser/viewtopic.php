@@ -78,11 +78,21 @@ function xarbb_user_viewtopic($args)
     }
 
     // Store the last visited times.
-    // TODO: put the forums into one array, so we don't need to create module
-    // variables for each new forum.
-    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
-    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $now));
+    $lastvisitthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $fid));
+    $lastreadthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'fr_' . $fid));
 
+    if (empty($lastvisitthisforum) || empty($lastreadthisforum) || ($lastreadthisforum - $lastvisitthisforum) > 20*60) {
+        // Set the last visit only if this is deemed a new visit, i.e. we have not read this forum for at least 20 minutes.
+        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $lastreadthisforum));
+        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $lastreadthisforum));
+    }
+
+    // Set the last read time to now
+    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'fr_' . $fid, 'value' => $now));
+
+    //xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
+    //xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $now));
+    
     $forum = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
     $settings = $forum['settings'];
     $allowhtml = $settings['allowhtml'];

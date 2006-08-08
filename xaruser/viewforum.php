@@ -44,10 +44,21 @@ function xarbb_user_viewforum()
 
     xarTplSetPageTitle($data['fname']);
 
-    // Grab the last visit timestamps.
+    // Grab the last visit and last read timestamps.
     $lastvisitthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'f_' . $fid));
+    $lastreadthisforum = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'fr_' . $fid));
 
-    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
+    if (empty($lastreadthisforum)) $lastreadthisforum = $now;
+
+    // TODO: make the period configurable.
+    if (empty($lastvisitthisforum) || empty($lastreadthisforum) || ($lastreadthisforum - $lastvisitthisforum) > 20*60) {
+        // Set the last visit only if this is deemed a new visit, i.e. we have not read this forum for at least 20 minutes.
+        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $lastreadthisforum));
+        xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $lastreadthisforum));
+    }
+
+    // Set the last read time to now
+    xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'fr_' . $fid, 'value' => $now));
 
     // Settings and display
     $data['items'] = array();
@@ -133,8 +144,9 @@ function xarbb_user_viewforum()
         // Update the topic tracking array, if required.
         if (!isset($topic_tracking[$tid])) {
             // Not in the array - add this topic if it contains posts
-            // later than our last forum visit time.
-            if ($lastvisitthisforum < $topic['ttime']) {
+            // later than our last forum read time. Note that topics can be
+            // marked as read even if posted after the last visit time.
+            if ($lastreadthisforum < $topic['ttime']) {
                 $topic_tracking[$tid] = 0;
             }
         } else {
@@ -160,13 +172,6 @@ function xarbb_user_viewforum()
             array($topic['ttitle'], $topic['tpost']),
             'xarbb', $fid
         );
-
-        // CHECKME: what does this bit do? Why the 24 hours thing?
-        if (isset($lastvisitsession)) {
-            $data['lastvisitdate'] = $lastvisitcompared;
-        } else {
-            $data['lastvisitdate'] = time() - 60*60*24;
-        }
 
         $topics[$i]['tpost'] = $topic['tpost'];
         $topics[$i]['comments'] = $topic['treplies'];
