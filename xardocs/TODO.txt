@@ -30,4 +30,5 @@ ad 17. Courses that are itemtypes are not the solution
 20. Enable Myself role for teachers and coordinators
 21. Call for courses in usermenu when user is coordinator
 22. Add students to a course via admin interface
-23. Waiting list [in progress]
+23. Waiting list when courses is full [done]
+24. Shift students from wating list to other planned course
