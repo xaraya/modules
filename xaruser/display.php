@@ -24,14 +24,12 @@ function gmaps_user_display($args)
 
     $data = array();
 
-    $data['mapwidth']   = xarModGetVar('gmaps', 'mapwidth');
-    $data['mapheight']  = xarModGetVar('gmaps', 'mapheight');
-    $data['zoomlevel']  = xarModGetVar('gmaps', 'zoomlevel');
-    $data['latitude']   = xarModGetVar('gmaps', 'latitude');
-    $data['longitude']  = xarModGetVar('gmaps', 'longitude');
-    $data['gmapskey']   = xarModGetVar('gmaps', 'gmapskey');
-
-//TODO: Pull overriding values
+    $data['mapwidth']   = isset($args['mapwidth']) ? $args['mapwidth'] : xarModGetVar('gmaps', 'mapwidth');
+    $data['mapheight']  = isset($args['mapheight']) ? $args['mapheight'] : xarModGetVar('gmaps', 'mapheight');
+    $data['zoomlevel']  = isset($args['zoomlevel']) ? $args['zoomlevel'] : xarModGetVar('gmaps', 'zoomlevel');
+    $data['latitude']   = isset($args['latitude']) ? $args['latitude'] : xarModGetVar('gmaps', 'latitude');
+    $data['longitude']  = isset($args['longitude']) ? $args['longitude'] : xarModGetVar('gmaps', 'longitude');
+    $data['gmapskey']   = isset($args['gmapskey']) ? $args['gmapskey'] : xarModGetVar('gmaps', 'gmapskey');
 
     return $data;
 }

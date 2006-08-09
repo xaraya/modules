@@ -3,17 +3,25 @@
 
 <script type="text/javascript">
     //<![CDATA[
-	if (window.attachEvent) {
-		window.attachEvent("onload", function() {
-			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#);	// Internet Explorer
-		});
-	} else {
-		window.addEventListener("load", function() {
-			mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
-		}, false);
-	}
+    if (window.attachEvent) {
+        window.attachEvent("onload", function() {
+            mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+        });
+    } else {
+        window.addEventListener("load", function() {
+            mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+        }, false);
+    }
     //]]>
 </script>
 
 <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
 <div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+
+<xar:data-input type="gmap" name="" 
+                             mapwidth="$mapwidth" 
+                             mapheight="$mapheight" 
+                             latitude="$latitude" 
+                             longitude="$longitude" 
+                             zoomlevel="$zoomlevel" 
+                             />
