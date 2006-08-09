@@ -14,7 +14,7 @@
 
 include_once "modules/base/xarproperties/Dynamic_HTMLPage_Property.php";
 
-class Gmap_Property extends Dynamic_HTMLPage_Property
+class GoogleMap_Property extends Dynamic_HTMLPage_Property
 {
     function __construct($args)
     {
