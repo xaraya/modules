@@ -16,7 +16,7 @@
           </a>
         </dd>
     </xar:sec>
-    <xar:sec mask="DeleteExample" catch="false">
+    <xar:sec mask="AdminUserpoints" catch="false">
         <xar:if condition="$activetab eq 'viewrank' or $activetab eq 'modifyrank' or $activetab eq 'deleterank'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
@@ -28,7 +28,7 @@
             </a>
         </dd>
     </xar:sec>
-    <xar:sec mask="AdminExample" catch="false">
+    <xar:sec mask="AdminUserpoints" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="&xar-modurl-userpoints-admin-modifyconfig;">
@@ -37,7 +37,7 @@
         </dd>
     </xar:sec>
 
-    <xar:sec mask="EditExample" catch="false">
+    <xar:sec mask="AdminUserpoints" catch="false">
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-userpoints-admin-overview;">
