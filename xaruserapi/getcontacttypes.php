@@ -19,7 +19,12 @@
 function sitecontact_userapi_getcontacttypes($args)
 {
     extract($args);
-
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
     if (isset($args['sort'])) {
         $sort = $args['sort'];
     } else {
@@ -52,7 +57,7 @@ function sitecontact_userapi_getcontacttypes($args)
 
     // Get item
     $query = "SELECT xar_scid,
-	          xar_sctypename,
+              xar_sctypename,
               xar_sctypedesc,
               xar_customtext,
               xar_customtitle,
@@ -61,7 +66,7 @@ function sitecontact_userapi_getcontacttypes($args)
               xar_notetouser,
               xar_allowcopy,
               xar_usehtmlemail,
-   	          xar_scdefaultemail,
+              xar_scdefaultemail,
               xar_scdefaultname,
               xar_scactive,
               xar_savedata,
@@ -72,6 +77,7 @@ function sitecontact_userapi_getcontacttypes($args)
     if (!empty($where)) {
         $query .= " $where";
     }
+
     switch ($sort) {
         case 'name':
             $query .= " ORDER BY xar_sctypename ASC";
@@ -84,7 +90,8 @@ function sitecontact_userapi_getcontacttypes($args)
             $query .= " ORDER BY xar_scid ASC";
             break;
     }
-    $result =& $dbconn->Execute($query,$bindvars);
+    
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
 
     if (!$result) return;
     $sctypes=array();

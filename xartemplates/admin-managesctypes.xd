@@ -738,7 +738,7 @@
             <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
         <xar:foreach in="$sctypes" key="$k" value="$sctype">
-        <tr> 
+        <tr>
             <td class="xar-norm">#$sctype['scid']#</td>
             <td class="xar-norm">#$sctype['sctypename']#</td>
             <td class="xar-norm">#$sctype['sctypedesc']#</td>
@@ -767,6 +767,7 @@
     </tr>
     </xar:foreach>
 </table>
+#$pager#
 </xar:if>
 
 </div>

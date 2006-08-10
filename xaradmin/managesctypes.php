@@ -38,7 +38,8 @@ function sitecontact_admin_managesctypes()
     if (!xarVarFetch('allowbccs',     'checkbox', $allowbccs, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useantibot',    'checkbox', $useantibot,    true, XARVAR_NOT_REQUIRED)) return;
-  
+    if (!xarVarFetch('startnum',      'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecurityCheck('EditSiteContact')) return;
     xarVarSetCached('sitecontact.data','scid',$scid);
     // Initialise the template variables
@@ -46,7 +47,10 @@ function sitecontact_admin_managesctypes()
     $sctypes=array();
 
     // Get current item types
-    $sctypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
+    $sctypes = xarModAPIFunc('sitecontact','user', 'getcontacttypes',
+                            array('startnum' => $startnum,
+                                  'numitems' => xarModGetVar('sitecontact','itemsperpage')));
+
     $defaultform= xarModGetVar('sitecontact','defaultform');
     $data['defaultform']=$defaultform;
     // Verify the action
@@ -57,9 +61,17 @@ function sitecontact_admin_managesctypes()
     if (!isset($scid) && $action =='view') {
          xarSessionSetVar('statusmsg','');
     }
+    
+    // Add a pager for forms
+    $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('sitecontact','user','countitems'),
+        xarModURL('sitecontact', 'admin', 'managesctypes', array('action'=>$action, 'startnum' => '%%')),
+        xarModGetVar('sitecontact', 'itemsperpage'));
+
+
     $data['managetype']=xarML('List Forms');
     $formisactive = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
-    $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too    
+    $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
     $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs, 'allowanoncopy' => $allowanoncopy, 'useantibot'=>$useantibot);
     $soptions=serialize($soptions);
 
@@ -271,7 +283,7 @@ function sitecontact_admin_managesctypes()
         }
     } elseif ($action == 'delete') {
         xarSessionSetVar('statusmsg','');
-        $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
+        $item = xarModAPIFunc('sitecontact','user','getcontacttypes');
         $data['item']=$item[0];
         if ($scid == $defaultform) {
             $msg = xarML('You cannot delete the default form. Please change the default form first');
@@ -282,8 +294,7 @@ function sitecontact_admin_managesctypes()
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Delete');
         $data['managetype']=xarML('Delete Form Definition');
-        $data['numitems'] = xarModAPIFunc('sitecontact','user','countitems',
-                                          array('scid' => $scid));
+        $data['numitems'] = xarModAPIFunc('sitecontact','user','countitems');
         $data['link'] = xarModURL('sitecontact','admin','managesctypes',
                                  array('action' => 'confirm'));
 
