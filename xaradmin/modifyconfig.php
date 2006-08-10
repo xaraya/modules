@@ -46,8 +46,14 @@ function gmaps_admin_modifyconfig()
                 case 'general':
                     if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('longitude', 'str:1', $longitude, xarModGetVar('gmaps', 'longitude'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('latitude', 'str:1', $latitude, xarModGetVar('gmaps', 'latitude'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModGetVar('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
 
                     xarModSetVar('gmaps', 'gmapskey', $gmapskey);
+                    xarModSetVar('gmaps', 'zoomlevel', $zoomlevel);
+                    xarModSetVar('gmaps', 'longitude', $longitude);
+                    xarModSetVar('gmaps', 'latitude', $latitude);
                     xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
                     break;
                 case 'tab2':
