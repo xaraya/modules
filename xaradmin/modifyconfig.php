@@ -44,17 +44,21 @@ function gmaps_admin_modifyconfig()
             if (!xarSecConfirmAuthKey()) return;
             switch ($data['tab']) {
                 case 'general':
-                    if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('longitude', 'str:1', $longitude, xarModGetVar('gmaps', 'longitude'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('latitude', 'str:1', $latitude, xarModGetVar('gmaps', 'latitude'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModGetVar('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('mapwidth', 'str:1', $mapwidth, xarModGetVar('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModGetVar('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
 
+                    xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
                     xarModSetVar('gmaps', 'gmapskey', $gmapskey);
                     xarModSetVar('gmaps', 'zoomlevel', $zoomlevel);
                     xarModSetVar('gmaps', 'longitude', $longitude);
                     xarModSetVar('gmaps', 'latitude', $latitude);
-                    xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
+                    xarModSetVar('gmaps', 'mapwidth', $mapwidth);
+                    xarModSetVar('gmaps', 'mapheight', $mapheight);
                     break;
                 case 'tab2':
                     break;

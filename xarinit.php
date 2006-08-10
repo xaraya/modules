@@ -85,7 +85,7 @@ function gmaps_init()
 # Set up modvars
 #
     xarModSetVar('gmaps', 'mapwidth', 800);
-    xarModSetVar('gmaps', 'mapheight', 400);
+    xarModSetVar('gmaps', 'mapheight', 600);
     xarModSetVar('gmaps', 'zoomlevel', 6);
     xarModSetVar('gmaps', 'latitude', 48.51);
     xarModSetVar('gmaps', 'longitude', 2.17);
