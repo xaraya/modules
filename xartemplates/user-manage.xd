@@ -1,0 +1,18 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('gmaps','useModuleAlias')">
+            #xarModGetVar('gmaps','aliasname')#
+        <xar:else />
+            <xar:mlstring>Google Maps Display</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:data-input type="gmap" name="" 
+                                 mapwidth="$mapwidth" 
+                                 mapheight="$mapheight" 
+                                 latitude="$latitude" 
+                                 longitude="$longitude" 
+                                 zoomlevel="$zoomlevel" 
+                                 />
+</div>
