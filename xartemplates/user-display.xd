@@ -8,11 +8,5 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <xar:data-output type="gmap" name="" 
-                                 mapwidth="$mapwidth" 
-                                 mapheight="$mapheight" 
-                                 latitude="$latitude" 
-                                 longitude="$longitude" 
-                                 zoomlevel="$zoomlevel" 
-                                 />
+    <xar:data-output type="gmap" />
 </div>
