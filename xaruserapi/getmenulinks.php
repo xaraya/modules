@@ -34,6 +34,13 @@ function gmaps_userapi_getmenulinks()
                               'title' => xarML('Show a map'),
                               'label' => xarML('Display'));
     }
+    if (xarSecurityCheck('DeleteGmaps',0)) {
+        $menulinks[] = Array('url'   => xarModURL('gmaps',
+                                                  'user',
+                                                  'manage'),
+                              'title' => xarML('Manage a map'),
+                              'label' => xarML('Manage'));
+    }
 
     if (empty($menulinks)){
         $menulinks = '';

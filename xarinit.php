@@ -71,13 +71,24 @@ function gmaps_init()
 #
     xarRegisterMask('ViewGmaps','All','gmaps','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadGmaps','All','gmaps','All','All','ACCESS_READ');
+    xarRegisterMask('CommentGmaps','All','gmaps','All','All','ACCESS_COMMENT');
+    xarRegisterMask('ModerateGmaps','All','gmaps','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditGmaps','All','gmaps','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddGmaps','All','gmaps','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteGmaps','All','gmaps','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminGmaps','All','gmaps','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
+    xarRegisterPrivilege('ViewGmaps','All','gmaps','All','All','ACCESS_OVERVIEW');
     xarRegisterPrivilege('ReadGmaps','All','gmaps','All','All','ACCESS_READ');
+    xarRegisterPrivilege('CommentGmaps','All','gmaps','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateGmaps','All','gmaps','All','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditGmaps','All','gmaps','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddGmaps','All','gmaps','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('DeleteGmaps','All','gmaps','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminGmaps','All','gmaps','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
