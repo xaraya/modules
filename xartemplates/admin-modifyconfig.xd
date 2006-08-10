@@ -97,9 +97,7 @@
                             Googlemaps Key: 
                         </xar:mlstring>
                     </label>
-                    <textarea name="gmapskey" id="gmapskey">
-#xarModGetVar('gmaps', 'gmapskey')#
-                    </textarea>
+                    <textarea name="gmapskey" id="gmapskey">#xarModGetVar('gmaps', 'gmapskey')#</textarea>
                 </div>
             </fieldset>
             <fieldset>

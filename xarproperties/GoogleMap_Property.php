@@ -12,9 +12,10 @@
  *
  */
 
-include_once "modules/base/xarproperties/Dynamic_HTMLPage_Property.php";
+//include_once "modules/base/xarproperties/Dynamic_HTMLPage_Property.php";
+//include_once "modules/base/xarproperties/Dynamic_HTMLPage_Property.php";
 
-class GoogleMap_Property extends Dynamic_HTMLPage_Property
+class GoogleMap_Property extends Dynamic_Property
 {
     function __construct($args)
     {
