@@ -87,8 +87,8 @@ function gmaps_init()
     xarModSetVar('gmaps', 'mapwidth', 800);
     xarModSetVar('gmaps', 'mapheight', 600);
     xarModSetVar('gmaps', 'zoomlevel', 6);
-    xarModSetVar('gmaps', 'latitude', 48.51);
-    xarModSetVar('gmaps', 'longitude', 2.17);
+    xarModSetVar('gmaps', 'centerlatitude', 48.5132);
+    xarModSetVar('gmaps', 'centerlongitude', 2.1745);
     xarModSetVar('gmaps', 'gmapskey', 'xxxxxxxxxx');
 
 # --------------------------------------------------------
