@@ -16,5 +16,3 @@
                                  zoomlevel="$zoomlevel" 
                                  />
 </div>
-    <xar:data-input type="maplocation" /> 
-
