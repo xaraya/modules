@@ -91,11 +91,13 @@ function window_upgrade($oldversion)
         case '1.0.1':
             $modversion['user'] = 0;
 
-        case '1.0.3'; //current version
+        case '1.0.3';
             xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
             xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
             xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
             xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
+ 
+        case '1.0.4'; //current version
 
         case '1.1.5'; 
             break;

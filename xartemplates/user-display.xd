@@ -1,6 +1,8 @@
-<xar:if condition="$auto_resize eq 1">     
-  <script type="text/javascript" src="modules/window/xartemplates/appwindow.js">     
-  </script> 
+<xar:if condition="$auto_resize eq 1">
+ <!-- <script type="text/javascript" src="modules/window/xartemplates/appwindow.js">
+  </script>
+ -->
+<xar:base-include-javascript position="head" module="window" filename="modules/window/xartemplates/appwindow.js" />
 </xar:if> 
 <div class="xar-mod-head">     
   <span class="xar-mod-title">#$title#</span> 
