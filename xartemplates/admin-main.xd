@@ -19,10 +19,10 @@
             </p>
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-            <p><xar:mlstring>There are two administration pages, one for general and one for URL specific settings.</xar:mlstring></p>
-            <p><xar:mlstring>General settings are valid for all URLs.</xar:mlstring> </p>
+            <p><xar:mlstring>There are two options that allow you to configure urls. The general modify configuration option, and one for managing URL specific settings.</xar:mlstring></p>
+            <p><xar:mlstring>General configuration settings are valid for all URLs.</xar:mlstring> </p>
             <p>
-              <xar:mlstring>The general settings available are:</xar:mlstring>:
+              <xar:mlstring>The general configuration settings available are:</xar:mlstring>:
               <ul>
                 <li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
                 <li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
