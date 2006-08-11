@@ -18,7 +18,7 @@
 
 function window_admin_updateconfig($var)
 {
-   
+
     if (!xarVarFetch('tab', 'str:1:100', $tab, 'general', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
@@ -51,10 +51,10 @@ function window_admin_updateconfig($var)
             xarModSetVar('window', 'hsize', $hsize);
             break;
         case 'display':
-
+            $windowid=xarModGetIDFromName('window');
             if (!xarVarFetch('showusermenu', 'checkbox', $showusermenu, true, XARVAR_NOT_REQUIRED)) return;
             $updated = xarModAPIFunc('modules','admin','updateproperties',
-                                      array('regid' => 3002,
+                                      array('regid' => $windowid,
                                             'usercapable'  => $showusermenu));
             if (!xarVarFetch('use_iframe', 'checkbox', $use_iframe, true, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('use_object', 'checkbox', $use_object, true, XARVAR_NOT_REQUIRED)) return;

@@ -26,7 +26,8 @@ function window_admin_modifyconfig()
             break;
         case 'display':
             // this is sort of stupid, but I don't think there is a better way at present
-            $info = xarModGetInfo(3002);
+            $windowid=xarModGetIDFromName('window');
+            $info = xarModGetInfo($windowid);
             if (!xarVarFetch('showusermenu','int', $data['showusermenu'],$info['usercapable'],XARVAR_NOT_REQUIRED)) return;
             
             $data['showusermenu'] =$info['usercapable'];
