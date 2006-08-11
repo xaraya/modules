@@ -1,13 +1,23 @@
 <?php
-// Edit a Url
+/**
+ * Window Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Window Module
+ * @link http://xaraya.com/index.php/release/3002.html
+ * @author Window Module Development Team
+ */
 function window_admin_editurl($args)
 {
     if (!xarSecurityCheck('AdminWindow')) return;
-    if (!xarSecConfirmAuthKey()) return;
 
     $data = array();
-    $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'newurl');
+    $data['authid'] = xarSecGenAuthKey('window');
+    $data['action'] = xarModURL('window', 'admin', 'addurl');
     $data['window_status'] = "edit";
 
     $data['urls'] = xarModAPIFunc('window','admin','geturls');
@@ -19,32 +29,22 @@ function window_admin_editurl($args)
     if (!xarVarFetch('bluff', 'str', $bluff, '', XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
+    //Get the data for this url from the database
 
-    // extract info from db
-    $urltable = $xartable['window'];
-    $query = "SELECT
-            *
-            FROM
-            $urltable
-            WHERE xar_id=$id";
+    $urlitem = xarModAPIFunc('window','user','get',array('itemid'=>$id));
 
-    $result = $dbconn->Execute($query);
-    if(!$result) return;
-
-    list($id, $host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
-
-    $data['host'] = $host;
-    $data['alias'] = $alias;
-    $data['id'] = $id;
+    $data['host'] = $urlitem['name'];
+    $data['alias'] = $urlitem['alias'];
+    $data['id'] = $urlitem['itemid'];
     $data['lang_action'] = xarML("Save");
 
-    $data['reg_user_only'] = $reg_user_only;
-    $data['open_direct'] = $open_direct;
-    $data['use_fixed_title'] = $use_fixed_title;
-    $data['auto_resize'] = $auto_resize;
-    $data['vsize'] = $vsize;
-    $data['hsize'] = $hsize;
+    $data['reg_user_only'] = $urlitem['reg_user_only'];
+    $data['open_direct'] = $urlitem['open_direct'];
+    $data['use_fixed_title'] = $urlitem['use_fixed_title'];
+    $data['auto_resize'] = $urlitem['auto_resize'];
+    $data['vsize'] = $urlitem['vsize'];
+    $data['hsize'] = $urlitem['hsize'];
 
-    return xarTplModule('window','admin','url',$data);
+    return xarTplModule('window','admin','newurl',$data);
 }
 ?>
