@@ -95,12 +95,18 @@ function gmaps_init()
 #
 # Set up modvars
 #
-    xarModSetVar('gmaps', 'mapwidth', 800);
-    xarModSetVar('gmaps', 'mapheight', 600);
-    xarModSetVar('gmaps', 'zoomlevel', 6);
-    xarModSetVar('gmaps', 'centerlatitude', 48.5132);
-    xarModSetVar('gmaps', 'centerlongitude', 2.1745);
-    xarModSetVar('gmaps', 'gmapskey', 'Paste your google maps key here');
+    xarModVars::set('gmaps', 'mapwidth', 800);
+    xarModVars::set('gmaps', 'mapheight', 600);
+    xarModVars::set('gmaps', 'zoomlevel', 6);
+    xarModVars::set('gmaps', 'centerlatitude', 48.5132);
+    xarModVars::set('gmaps', 'centerlongitude', 2.1745);
+    xarModVars::set('gmaps', 'gmapskey', 'Paste your google maps key here');
+    xarModVars::set('gmaps', 'glargemapcontrol', 0);
+    xarModVars::set('gmaps', 'gsmallmapcontrol', 0);
+    xarModVars::set('gmaps', 'gsmallzoomcontrol', 0);
+    xarModVars::set('gmaps', 'gscalecontrol', 0);
+    xarModVars::set('gmaps', 'gmaptypecontrol', 0);
+    xarModVars::set('gmaps', 'goverviewmapcontrol', 0);
 
 # --------------------------------------------------------
 #
@@ -111,7 +117,7 @@ function gmaps_init()
                                'description' => 'Gmaps Base Category',
                                'parent_id' => 0));
     // save the id for later
-    xarModSetVar('gmaps', 'basecategory', $cid);
+    xarModVars::set('gmaps', 'basecategory', $cid);
 
 # --------------------------------------------------------
 #
