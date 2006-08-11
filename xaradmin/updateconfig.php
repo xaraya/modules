@@ -53,9 +53,10 @@ function window_admin_updateconfig($var)
         case 'display':
             $windowid=xarModGetIDFromName('window');
             if (!xarVarFetch('showusermenu', 'checkbox', $showusermenu, true, XARVAR_NOT_REQUIRED)) return;
+            $usermenu = $showusermenu ? 1:0;
             $updated = xarModAPIFunc('modules','admin','updateproperties',
                                       array('regid' => $windowid,
-                                            'usercapable'  => $showusermenu));
+                                            'usercapable'  => $usermenu));
             if (!xarVarFetch('use_iframe', 'checkbox', $use_iframe, true, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('use_object', 'checkbox', $use_object, true, XARVAR_NOT_REQUIRED)) return;
 
