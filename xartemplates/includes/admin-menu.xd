@@ -9,12 +9,13 @@
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="AdminWindow" catch="false">
-        <xar:set name="tabclass">$activetab=='url'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='newurl'?'active':''</xar:set>
         <dd class="#$tabclass#">
-        <a href="&xar-modurl-window-admin-addurl;">
-            <xar:mlstring>Specific Settings</xar:mlstring>
+        <a href="&xar-modurl-window-admin-newurl;">
+            <xar:mlstring>Manage Specific URLS</xar:mlstring>
         </a>
         </dd>
+
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
          <a href="&xar-modurl-window-admin-modifyconfig;">

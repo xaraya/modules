@@ -22,9 +22,9 @@ function window_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminWindow',0)) {
         $menulinks[] = array('url'   => xarModURL('window',
                                                   'admin',
-                                                  'addurl'),
-                              'title' => xarML('Specific Settings'),
-                              'label' => xarML('Specific Settings'));
+                                                  'newurl'),
+                              'title' => xarML('Manage Specific URLS'),
+                              'label' => xarML('Manage Specific URLs'));
     }
     if (xarSecurityCheck('AddWindow',0)) {
         $menulinks[] = array('url'   => xarModURL('window',

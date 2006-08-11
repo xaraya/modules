@@ -1,6 +1,6 @@
 <?php
 /**
- * Add URL Form
+ * New URL Form
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
@@ -12,33 +12,17 @@
  * @author Marc Lutolf
  * @author Yassen Yotov (CyberOto)
  */
- 
+
 /**
- * Add URL Form
+ * New URL Form
  *
- * @return array $data template array values
- */ 
-function window_admin_addurl()
+ * @return array $data template array
+ */
+function window_admin_addurl($args)
 {
-    if (!xarSecurityCheck('AdminWindow')) return;
+    extract($args);
+    if (!xarModAPIFunc('window', 'admin','addurl')) return;
 
-    $data = array();
-    
-    $data['authid'] = xarSecGenAuthKey();
-    $data['action'] = xarModURL('window', 'admin', 'newurl');
-    $data['window_status'] = 'add';
-    $data['urls'] = xarModAPIFunc('window','admin','geturls');
-    $data['id'] = '';
-    $data['host'] = 'http://';
-    $data['alias'] = '';
-    $data['reg_user_only'] = xarModGetVar('window', 'reg_user_only');
-    $data['open_direct'] = xarModGetVar('window', 'open_direct');
-    $data['use_fixed_title'] = xarModGetVar('window', 'use_fixed_title');
-    $data['auto_resize'] = xarModGetVar('window', 'auto_resize');
-    $data['vsize'] = xarModGetVar('window', 'vsize');
-    $data['hsize'] = xarModGetVar('window', 'hsize');
-    $data['lang_action'] = xarML('Add');
-
-    return xarTplModule('window','admin','url',$data);
+    return true;
 }
 ?>
