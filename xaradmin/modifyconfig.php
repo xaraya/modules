@@ -21,17 +21,27 @@ function gmaps_admin_modifyconfig()
 {
     // Security Check
     if (!xarSecurityCheck('AdminGmaps')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',     'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('tab',       'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule,   'rsvp', XARVAR_NOT_REQUIRED)) return;
+
+    $hooks = xarModCallHooks('module', 'getconfig', 'gmaps');
+	if (!empty($hooks) && isset($hooks['tabs'])) {
+		foreach ($hooks['tabs'] as $key => $row) {
+			$configarea[$key]  = $row['configarea'];
+			$configtitle[$key] = $row['configtitle'];
+			$configcontent[$key] = $row['configcontent'];
+		}
+		array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+	} else {
+		$hooks['tabs'] = array();
+	}
+
     switch (strtolower($phase)) {
         case 'modify':
         default:
             switch ($data['tab']) {
                 case 'general':
-                    break;
-                case 'tab2':
-                    break;
-                case 'tab3':
                     break;
                 default:
                     break;
@@ -42,8 +52,6 @@ function gmaps_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
-            switch ($data['tab']) {
-                case 'general':
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModGetVar('gmaps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
@@ -52,28 +60,30 @@ function gmaps_admin_modifyconfig()
                     if (!xarVarFetch('mapwidth', 'str:1', $mapwidth, xarModGetVar('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModGetVar('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
 
-                    xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
-                    xarModSetVar('gmaps', 'gmapskey', $gmapskey);
-                    xarModSetVar('gmaps', 'zoomlevel', $zoomlevel);
-                    xarModSetVar('gmaps', 'centerlongitude', $centerlongitude);
-                    xarModSetVar('gmaps', 'centerlatitude', $centerlatitude);
-                    xarModSetVar('gmaps', 'mapwidth', $mapwidth);
-                    xarModSetVar('gmaps', 'mapheight', $mapheight);
-                    break;
-                case 'tab2':
-                    break;
-                case 'tab3':
-                    break;
-                default:
-                    break;
-            }
+			if ($data['tab'] == 'gmaps_general') {
+				xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
+				xarModSetVar('gmaps', 'gmapskey', $gmapskey);
+				xarModSetVar('gmaps', 'zoomlevel', $zoomlevel);
+				xarModSetVar('gmaps', 'centerlongitude', $centerlongitude);
+				xarModSetVar('gmaps', 'centerlatitude', $centerlatitude);
+				xarModSetVar('gmaps', 'mapwidth', $mapwidth);
+				xarModSetVar('gmaps', 'mapheight', $mapheight);
+			}
+			$regid = xarModGetIDFromName($tabmodule);
+			xarModSetUserVar('gmaps', 'zoomlevel', $zoomlevel, $regid);
+			xarModSetUserVar('gmaps', 'centerlongitude', $centerlongitude, $regid);
+			xarModSetUserVar('gmaps', 'centerlatitude', $centerlatitude, $regid);
+			xarModSetUserVar('gmaps', 'mapwidth', $mapwidth, $regid);
+			xarModSetUserVar('gmaps', 'mapheight', $mapheight, $regid);
 
-            xarResponseRedirect(xarModURL('gmaps', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+            xarResponseRedirect(xarModURL('gmaps', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;
 
     }
+	$data['hooks'] = $hooks;
+	$data['tabmodule'] = $tabmodule;
 	$data['authid'] = xarSecGenAuthKey();
     return $data;
 }
