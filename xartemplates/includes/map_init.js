@@ -144,44 +144,34 @@ function makeMapDataEntryMap(mapnumber,address,latbox,longbox,latbox2,longbox2){
 
 function updateDataEntry(mapnumber){
 	//Call this everytime there's a change.
-		var points = new Array();
-		for(i=0;i<markers.length;i++){
-			points[i] = markers[i].getPoint(); 
-		}
-		var bounds = new GBounds(points);
+		
+	//Get the location of each marker on the map
+	var points = new Array();
+	for(i=0;i<markers.length;i++){
+		points[i] = markers[i].getPoint(); 
+	}
+	
+	//Define the bounds of the area
+	var bounds = new GBounds(points);
 
-		document.getElementById(map.latbox).value = bounds.maxY;
-		document.getElementById(map.longbox).value = bounds.maxX;
+	//Set the form elements
+	document.getElementById(map.latbox).value = bounds.maxY;
+	document.getElementById(map.longbox).value = bounds.maxX;
+	if(markers.length == 1){
+		//If there's only one marker fill these with 0, else we get static
+		document.getElementById(map.latbox2).value = 0;
+		document.getElementById(map.longbox2).value = 0;
+	} else {
 		document.getElementById(map.latbox2).value = bounds.minY;
-		document.getElementById(map.longbox2).value = bounds.minX;	
+		document.getElementById(map.longbox2).value = bounds.minX;
+	}
 
-		if(map.polyline){
-		  map.removeOverlay(map.polyline);
-		}
+	//Remove the old Polyline	
+	if(map.polyline){
+		map.removeOverlay(map.polyline);
+	}
 
-		map.polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
-		map.addOverlay(map.polyline);
-	var corners = [];
-	//corners.push(new GPoint(boundary.maxX,boundary.maxY));
-	//corners.push(new GPoint(boundary.maxX,boundary.minY));
-	//corners.push(new GPoint(boundary.minX,boundary.minY));
-	//corners.push(new GPoint(boundary.minX,boundary.maxY));
-	//corners[4] = corners[0];
-        
-        var southWest = bounds.getSouthWest();
-        var northEast = bounds.getNorthEast();
-        var lngSpan = northEast.lng() - southWest.lng();
-        var latSpan = northEast.lat() - southWest.lat();
-
-        // Add a polyline with five random points. Sort the points by
-        // longitude so that the line does not intersect itself.
-        var points = [];
-        for (var i = 0; i < 5; i++) {
-          points.push(new GLatLng(southWest.lat() + latSpan * Math.random(),
-                                  southWest.lng() + lngSpan * Math.random()));
-          points.push(new GLatLng(southWest.lat() + latSpan * Math.random(),
-                                  southWest.lng() + lngSpan * Math.random()));
-
-        }
-        map.addOverlay(new GPolyline(points));
+	//Draw the new Polyline
+	map.polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
+	map.addOverlay(map.polyline);
   }
