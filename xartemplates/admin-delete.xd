@@ -1,0 +1,41 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Window Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete</xar:mlstring></h2>
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <form id="windowdelete" method="post" action="&xar-modurl-window-admin-delete;">
+        <fieldset>
+            <legend>
+                <xar:mlstring>Confirm deletion</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                 <label for="itemid" class="xar-form-label" title="#xarML('URL ID')#">
+                <xar:mlstring>Item ID:</xar:mlstring>
+                 </label>
+                  #$itemid#
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="itemname"  class="xar-form-label"  title="#xarML('Delete this URL?')#">
+                    <xar:mlstring>URL Name:</xar:mlstring>
+                </label>
+                 #$itemname#
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+

@@ -22,17 +22,33 @@
 function window_admin_delete($args)
 {
     if (!xarSecurityCheck('AdminWindow')) return;
-    if (!xarSecConfirmAuthKey()) return;
 
     if (!xarVarFetch('itemid', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('bluff', 'str', $bluff, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+
     extract($args);
 
- 
+    //check the item
+    $item = xarModAPIFunc('window', 'user', 'get', array('itemid' => $itemid));
+
+    /* Check for exceptions */
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+    
+    /* Check for confirmation. */
+    if (empty($confirm)) {
+         $data['authid'] = xarSecGenAuthKey();
+         $data['itemid']=$itemid;
+         $data['itemname']=$item['name'];
+         return $data;
+    }
+    
+    if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('window', 'admin', 'delete',
                  array('itemid' => $itemid))) {
         return;
     }
-    xarResponseRedirect(xarModURL('window', 'admin', 'addurl'));
+
+    xarResponseRedirect(xarModURL('window', 'admin', 'newurl'));
 }
 ?>
