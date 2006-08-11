@@ -29,7 +29,7 @@ function window_adminapi_getmenulinks()
     if (xarSecurityCheck('AddWindow',0)) {
         $menulinks[] = array('url'   => xarModURL('window',
                                                   'admin',
-                                                  'general'),
+                                                  'modifyconfig'),
                               'title' => xarML('Modify the configuration for the module'),
                               'label' => xarML('Modify Config'));
     }

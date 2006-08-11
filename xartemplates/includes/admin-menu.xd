@@ -9,24 +9,25 @@
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="AdminWindow" catch="false">
-        <xar:set name="tabclass">$activetab=='general'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-window-admin-general;">
-            <xar:mlstring>General Settings</xar:mlstring>
-          </a>
-        </dd>
         <xar:set name="tabclass">$activetab=='url'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-window-admin-addurl;">
+        <a href="&xar-modurl-window-admin-addurl;">
             <xar:mlstring>Specific Settings</xar:mlstring>
+        </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+         <a href="&xar-modurl-window-admin-modifyconfig;">
+            <xar:mlstring>Modify General Config</xar:mlstring>
           </a>
         </dd>
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-    <dd class="#$tabclass#">
-      <a href="&xar-modurl-window-admin-overview;">
-        <xar:mlstring>Overview</xar:mlstring>
-      </a>
-    </dd>
+
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-window-admin-overview;">
+               <xar:mlstring>Overview</xar:mlstring>
+            </a>
+        </dd>
     </xar:sec>
   </dl>
 </div>
