@@ -19,7 +19,7 @@
 
 function gmaps_adminapi_getmenulinks()
 {
-    return xarModAPIFunc('base','admin','menuarray');
+    return xarModAPIFunc('base','admin','menuarray',array('module' => 'gmaps'));
 }
 
 ?>

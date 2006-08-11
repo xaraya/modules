@@ -24,8 +24,22 @@ function gmaps_userapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('gmaps',
                                                   'user',
                                                   'main'),
-                              'title' => xarML(''),
-                              'label' => xarML(''));
+                              'title' => xarML('Short description of this module'),
+                              'label' => xarML('Overview'));
+    }
+    if (xarSecurityCheck('ReadGmaps',0)) {
+        $menulinks[] = Array('url'   => xarModURL('gmaps',
+                                                  'user',
+                                                  'display'),
+                              'title' => xarML('Show a map'),
+                              'label' => xarML('Display'));
+    }
+    if (xarSecurityCheck('DeleteGmaps',0)) {
+        $menulinks[] = Array('url'   => xarModURL('gmaps',
+                                                  'user',
+                                                  'manage'),
+                              'title' => xarML('Manage a map'),
+                              'label' => xarML('Manage'));
     }
 
     if (empty($menulinks)){

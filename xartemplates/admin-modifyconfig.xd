@@ -97,9 +97,7 @@
                             Googlemaps Key: 
                         </xar:mlstring>
                     </label>
-                    <textarea name="gmapskey" id="gmapskey">
-#xarModGetVar('gmaps', 'gmapskey')#
-                    </textarea>
+                    <textarea name="gmapskey" id="gmapskey">#xarModGetVar('gmaps', 'gmapskey')#</textarea>
                 </div>
             </fieldset>
             <fieldset>
@@ -130,7 +128,7 @@
                             Latitude: 
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="latitude" id="latitude" value="#xarModGetVar('gmaps', 'latitude')#" class="xar-form-textshort" />
+                    <input type="text" name="latitude" id="latitude" value="#xarModGetVar('gmaps', 'centerlatitude')#" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="latitude" title="#xarML('Initial longitude of center of the map')#" class="xar-form-label">
@@ -138,7 +136,7 @@
                             Longitude: 
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="longitude" id="longitude" value="#xarModGetVar('gmaps', 'longitude')#" class="xar-form-textshort" />
+                    <input type="text" name="longitude" id="longitude" value="#xarModGetVar('gmaps', 'centerlongitude')#" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="latitude" title="#xarML('Initial zoom level of the map')#" class="xar-form-label">
@@ -147,6 +145,67 @@
                         </xar:mlstring>
                     </label>
                     <input type="text" name="zoomlevel" id="zoomlevel" value="#xarModGetVar('gmaps', 'zoomlevel')#" class="xar-form-textshort" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Controls 
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="glargemapcontrol" title="#xarML('A large pan/zoom control used on Google Maps. Appears in the top left corner of the map.')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Large Pan/Zoom: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'glargemapcontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="glargemapcontrol" id="glargemapcontrol" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="gsmallmapcontrol" title="#xarML('A smaller pan/zoom control used on Google Maps. Appears in the top left corner of the map.')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Large Pan/Zoom: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'gsmallmapcontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="gsmallmapcontrol" id="gsmallmapcontrol" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="gsmallzoomcontrol" title="#xarML('A small zoom control (no panning controls) used in the small map blowup windows used to display driving directions steps on Google Maps.')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Small Zoom: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'gsmallzoomcontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="gsmallzoomcontrol" id="gsmallzoomcontrol" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="gscalecontrol" title="#xarML('A map scale')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Map Scale: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'gscalecontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="gscalecontrol" id="gscalecontrol" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="gmaptypecontrol" title="#xarML('Buttons that let the user toggle between map types (such as Map and Satellite)')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Map Type Toggles: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'gmaptypecontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="gmaptypecontrol" id="gmaptypecontrol" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="goverviewmapcontrol" title="#xarML('A collapsible overview map in the corner of the screen')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Overview Map: 
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModGetVar('gmaps', 'goverviewmapcontrol')</xar:set>
+                    <xar:data-input type="checkbox" name="goverviewmapcontrol" id="goverviewmapcontrol" value="$value" />
                 </div>
             </fieldset>
             <fieldset>

@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Function display
+ * Function manage
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2006 by to be added
@@ -11,14 +11,14 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  * @author Brian Bain <xaraya@tefen.net>
  *
- * Purpose of file:  Display a Google Map
+ * Purpose of file:  Manage and display a Google Map
  *
  * @param to be added
  * @return to be added
  *
  */
 
-function gmaps_user_display($args)
+function gmaps_user_manage($args)
 {
     extract($args);
 
