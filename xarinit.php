@@ -78,7 +78,8 @@ function window_init()
     xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminWindow',  'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
-    return true;
+  /* This init function brings our module to version 1.0.3, run the upgrades for the rest of the initialisation */
+    return window_upgrade('1.0.3');
 }
 
 function window_upgrade($oldversion)
@@ -86,15 +87,17 @@ function window_upgrade($oldversion)
     switch($oldversion){
         case '1.0.0':
             $modversion['user'] = 1;
-            break;
+
         case '1.0.1':
             $modversion['user'] = 0;
-            break;
-        case '1.0.3';
+
+        case '1.0.3'; //current version
             xarRegisterMask('ViewWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
             xarRegisterMask('EditWindow',   'All', 'window', 'Item', 'All:All:All', 'ACCESS_EDIT');
             xarRegisterMask('AddWindow',    'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADD');
             xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
+
+        case '1.1.5'; 
             break;
     }
     return true;
