@@ -79,7 +79,7 @@ function window_init()
     xarRegisterMask('AdminWindow',  'All', 'window', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
   /* This init function brings our module to version 1.0.3, run the upgrades for the rest of the initialisation */
-    return window_upgrade('1.0.3');
+    return window_upgrade('1.0.4');
 }
 
 function window_upgrade($oldversion)
@@ -98,8 +98,45 @@ function window_upgrade($oldversion)
             xarRegisterMask('DeleteWindow', 'All', 'window', 'Item', 'All:All:All', 'ACCESS_DELETE');
  
         case '1.0.4'; //current version
+            xarModSetVar('window', 'use_iframe', 1);
+            xarModSetVar('window', 'use_object', 1);
 
-        case '1.1.5'; 
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $windowtable = $xartable['window'];
+
+             xarDBLoadTableMaintenanceAPI();
+
+            $query = xarDBAlterTable($windowtable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_description',
+                                    'type'    => 'varchar',
+                                    'size'    => '255',
+                                    'null'    => false,
+                                    'default' => ''));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            $result->close();
+            $query2 = xarDBAlterTable($windowtable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_label',
+                                    'type'    => 'varchar',
+                                    'size'    => '255',
+                                    'null'    => false,
+                                    'default' => ''));
+            $result2 = &$dbconn->Execute($query2);
+            if (!$result) return;
+            $result2->close();
+            $query3 = xarDBAlterTable($windowtable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_status',
+                                    'type'    => 'integer',
+                                    'null'    => false,
+                                    'default' => '1'));
+            $result3 = &$dbconn->Execute($query3);
+            if (!$result) return;
+            $result3->close();
+        case '1.1.4'; // current version
             break;
     }
     return true;

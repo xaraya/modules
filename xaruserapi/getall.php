@@ -30,6 +30,20 @@ function window_userapi_getall($args)
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = -1;
     }
+    $bindvars = array();
+    $wherelist = array();
+    $fieldlist = array('name','alias','status');
+    foreach ($fieldlist as $field) {
+        if (isset($$field)) {
+            $wherelist[] = "xar_$field = ?";
+            $bindvars[] = $$field;
+        }
+    }
+    if (count($wherelist) > 0) {
+        $where = " WHERE " . join(' AND ',$wherelist) . " ";
+    } else {
+        $where = '';
+    }
 
     $items = array();
 
@@ -48,15 +62,21 @@ function window_userapi_getall($args)
                      xar_use_fixed_title,
                      xar_auto_resize,
                      xar_vsize,
-                     xar_hsize
-              FROM $windowtable
+                     xar_hsize,
+                     xar_status,
+                     xar_label,
+                     xar_description
+              FROM $windowtable $where
               ORDER BY xar_name";
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array());
+    //$result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array());
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+        list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, 
+             $auto_resize, $vsize, $hsize, $status, $label, $description) = $result->fields;
+
         if (xarSecurityCheck('ViewWindow', 0, 'Item', "$name:All:$itemid")) {
             $items[] = array('itemid'          => $itemid,
                              'name'            => $name,
@@ -66,12 +86,15 @@ function window_userapi_getall($args)
                              'use_fixed_title' => $use_fixed_title,
                              'auto_resize'     => $auto_resize,
                              'vsize'           => $vsize,
-                             'hsize'           => $hsize);
+                             'hsize'           => $hsize,
+                             'status'          => $status,
+                             'label'           => $label,
+                             'description'     => $description);
         }
     }
 
     $result->Close();
- 
+
     return $items;
 }
 ?>

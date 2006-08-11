@@ -21,6 +21,7 @@
 function window_admin_addurl($args)
 {
     extract($args);
+
     if (!xarModAPIFunc('window', 'admin','addurl')) return;
 
     return true;

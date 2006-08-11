@@ -64,7 +64,18 @@ function window_adminapi_create($args)
     $nextId = $dbconn->GenId($windowtable);
 
     $query = "INSERT INTO $windowtable
-                    (xar_id, xar_name, xar_alias, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize)
+                    (xar_id, 
+                     xar_name, 
+                     xar_alias, 
+                     xar_reg_user_only, 
+                     xar_open_direct, 
+                     xar_use_fixed_title, 
+                     xar_auto_resize, 
+                     xar_vsize, 
+                     xar_status,
+                     xar_hsize,
+                     xar_label,
+                     xar_description)
                     VALUES (?,
                             ?,
                             ?,
@@ -73,8 +84,12 @@ function window_adminapi_create($args)
                             ?,
                             ?,
                             ?,
+                            ?,
+                            ?,
+                            ?,
                             ?)";
-    $bindvars = array($nextId, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize);
+    $bindvars = array($nextId, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title,
+                      $auto_resize, $vsize, $hsize, $status, $label, $description);
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

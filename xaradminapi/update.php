@@ -24,6 +24,8 @@
  * @param int    $args[auto_resize]
  * @param string $args[vsize]
  * @param string $args[hsize]
+ * @param string $args[label]
+ * @param string $args[description]
  * @return int item ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -67,6 +69,7 @@ function window_adminapi_update($args)
     if (!isset($auto_resize)) $auto_resize = xarModGetVar('window', 'auto_resize');
     if (!isset($vsize)) $vsize = xarModGetVar('window', 'vsize');
     if (!isset($hsize)) $hsize = xarModGetVar('window', 'hsize');
+    if (!isset($status)) $status = 0;
     
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -81,9 +84,13 @@ function window_adminapi_update($args)
                   xar_use_fixed_title = ?,
                   xar_auto_resize     = ?,
                   xar_vsize           = ?,
-                  xar_hsize           = ?
+                  xar_hsize           = ?,
+                  xar_status          = ?,
+                  xar_label           = ?,
+                  xar_description     = ?
               WHERE xar_id = ?";
-    $bindvars = array($name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $itemid);
+    $bindvars = array($name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize,
+                      $vsize, $hsize, $status, $label, $description, $itemid);
 
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;

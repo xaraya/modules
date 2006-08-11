@@ -22,7 +22,7 @@
 */
 function window_user_display($args)
 {
-    extract($args);
+  extract($args);
 
     $allow_local_only = xarModGetVar('window', 'allow_local_only');
     $use_buffering = xarModGetVar('window', 'use_buffering');
@@ -59,7 +59,7 @@ function window_user_display($args)
                     $auto_resize = $item['auto_resize'];
                     $vsize = $item['vsize'];
                     $hsize = $item['hsize'];
-                    $id = $item['itemid'];                    
+                    $id = $item['itemid'];
                 }
             }
         }
@@ -175,5 +175,6 @@ function window_user_display($args)
     $data['open_direct'] = $open_direct;
 
     return $data;
+
 }
 ?>

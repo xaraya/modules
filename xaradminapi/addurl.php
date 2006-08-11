@@ -23,10 +23,13 @@ function window_adminapi_addurl($args)
     if (!xarVarFetch('hsize', 'str', $hsize, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('host', 'str', $host, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('alias', 'str', $alias, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('label', 'str', $label, "Xaraya Window", XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str', $description, "Xaraya Window Display", XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'int', $data['status'], 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('id', 'id', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lang_action', 'str', $lang_action, 'Add', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('window_status', 'str', $window_status, 'add', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('status', 'int', $status, 1, XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     if (!xarSecConfirmAuthKey()) return;
@@ -59,8 +62,10 @@ function window_adminapi_addurl($args)
             $data['message'] = xarML('Bad URL');
             return false;
         }
+       
+       // $urlitem = xarModAPIFunc('window','user','getall',array('name'=>$host,'alias' => $alias));
 
-        $dbconn =& xarDBGetConn();
+       $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
         $urltable = $xartable['window'];
 
@@ -75,7 +80,15 @@ function window_adminapi_addurl($args)
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return false;
 
-        /*
+/*
+
+        if (isset($urlitem) && $window_status == 'add' && count($urlitem)==1) { //we don't want this to find anything
+            return false; //do appropriate error here
+        } elseif (isset($urlitem) && count($urlitem) != 1) { //we are editing and need to have one that exists and only one
+            return false; //do appropriate error here
+        }
+*/
+      /*
         // Check for $hsize
         if(strstr($hsize, "%")) {
             $hzise1 = (int) $hsize;
@@ -92,6 +105,9 @@ function window_adminapi_addurl($args)
         $fargs['auto_resize']     = $auto_resize;
         $fargs['vsize']           = $vsize;
         $fargs['hsize']           = $hsize;
+        $fargs['status']          = $status;
+        $fargs['label']           = $label;
+        $fargs['description']     = $description;
 
         if ($window_status == 'add') {
             $itemid = xarModAPIFunc('window', 'admin', 'create', $fargs);

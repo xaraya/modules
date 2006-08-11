@@ -61,7 +61,7 @@
 
 <tr class="xar-align-left xar-valign-middle">
     <td>
-        <input type="text" name="host" id="host" value="#$host#" size="30" maxlength="255" tabindex="1" />
+        <input type="text" name="host" id="host" value="#$host#" size="50" maxlength="255" tabindex="1" />
     </td>
     <td>
         <input type="text" name="alias" id="alias" value="#$alias#" size="30" maxlength="50" tabindex="2" />
@@ -111,6 +111,19 @@
                         </xar:set>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
+            <xar:mlstring>Label (for menus)</xar:mlstring>
+        </label>
+        <input type="text" name="label" id="label" value="#$label#" size="60" maxlength="50" tabindex="3" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Description</xar:mlstring>
+        </label>
+        <input type="text" name="description" id="description" value="#$description#" size="60" maxlength="150" tabindex="4" />
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
             <xar:mlstring>Only for registered users?</xar:mlstring>
         </label>
         <xar:data-input type="radio" name="reg_user_only" options="$options" value="$reg_user_only" />
@@ -133,7 +146,12 @@
         </label>
         <xar:data-input type="radio" name="auto_resize" options="$options" value="$auto_resize" />
     </div>
-
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label">
+            <xar:mlstring>Display in menu?</xar:mlstring>
+        </label>
+        <xar:data-input type="radio" name="status" options="$options" value="$status" />
+    </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Height of viewing window:</xar:mlstring>

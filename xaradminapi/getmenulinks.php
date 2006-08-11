@@ -19,21 +19,17 @@
  */
 function window_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminWindow',0)) {
-        $menulinks[] = array('url'   => xarModURL('window',
-                                                  'admin',
-                                                  'newurl'),
-                              'title' => xarML('Manage Specific URLS'),
-                              'label' => xarML('Manage Specific URLs'));
+
+    $urls = xarModAPIFunc('window','user','getall',array('status' => 1));
+    foreach($urls as $url) {
+        $url_parts = parse_url($url['name']);
+        $menulinks[] = array('url'   => xarModURL('window', 'user', 'display', array('url' => $url['name'])),
+                             'title' => $url['description'],
+                             'label' => $url['label']);
     }
-    if (xarSecurityCheck('AddWindow',0)) {
-        $menulinks[] = array('url'   => xarModURL('window',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the module'),
-                              'label' => xarML('Modify Config'));
+    if (xarSecurityCheck('ReadWindow',0)) {
     }
-    
+
     if (empty($menulinks)){
         $menulinks = '';
     }

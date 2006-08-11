@@ -33,18 +33,24 @@ function window_admin_editurl($args)
 
     $urlitem = xarModAPIFunc('window','user','get',array('itemid'=>$id));
 
-    $data['host'] = $urlitem['name'];
-    $data['alias'] = $urlitem['alias'];
-    $data['id'] = $urlitem['itemid'];
-    $data['lang_action'] = xarML("Save");
-
-    $data['reg_user_only'] = $urlitem['reg_user_only'];
-    $data['open_direct'] = $urlitem['open_direct'];
+    $data['host']            = $urlitem['name'];
+    $data['alias']           = $urlitem['alias'];
+    $data['id']              = $urlitem['itemid'];
+    $data['lang_action']     = xarML("Save");
+    $data['label']           = $urlitem['label'];
+    $data['description']     = $urlitem['description'];
+    
+    $data['reg_user_only']   = $urlitem['reg_user_only'];
+    $data['open_direct']     = $urlitem['open_direct'];
     $data['use_fixed_title'] = $urlitem['use_fixed_title'];
-    $data['auto_resize'] = $urlitem['auto_resize'];
-    $data['vsize'] = $urlitem['vsize'];
-    $data['hsize'] = $urlitem['hsize'];
+    $data['auto_resize']     = $urlitem['auto_resize'];
+    $data['vsize']           = $urlitem['vsize'];
+    $data['hsize']           = $urlitem['hsize'];
+    $data['status']          = $urlitem['status'];
+    $data['label']           = $urlitem['label'];
+    $data['description']     = $urlitem['description'];
 
+    
     return xarTplModule('window','admin','newurl',$data);
 }
 ?>

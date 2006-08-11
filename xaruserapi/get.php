@@ -57,13 +57,17 @@ function window_userapi_get($args)
                      xar_use_fixed_title,
                      xar_auto_resize,
                      xar_vsize,
-                     xar_hsize
+                     xar_hsize,
+                     xar_status,
+                     xar_label,
+                     xar_description
               FROM $windowtable
               $where";
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
-
+    if ($result->EOF) return false;
+    /*
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This item does not exist');
@@ -71,8 +75,9 @@ function window_userapi_get($args)
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
-
-    list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize) = $result->fields;
+*/
+    list($itemid, $name, $alias, $reg_user_only, $open_direct, $use_fixed_title,
+         $auto_resize, $vsize, $hsize, $status, $label, $description) = $result->fields;
 
     $result->Close();
 
@@ -88,7 +93,11 @@ function window_userapi_get($args)
                   'use_fixed_title' => $use_fixed_title,
                   'auto_resize'     => $auto_resize,
                   'vsize'           => $vsize,
-                  'hsize'           => $hsize);
+                  'hsize'           => $hsize,
+                  'status'          => $status,
+                  'label'           => $label,
+                  'description'     => $description
+                  );
 
     return $item;
 }
