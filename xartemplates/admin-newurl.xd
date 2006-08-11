@@ -73,7 +73,7 @@
         <input type="submit" value="#$lang_action#"  tabindex="3" />
 
     <xar:if condition =" $window_status eq 'edit'">
-        &nbsp;&nbsp;<a href="&xar-modurl-window-admin-addurl;">Cancel</a>
+        &nbsp;&nbsp;<a href="&xar-modurl-window-admin-newurl;">Cancel</a>
     </xar:if>
     </td>
 </tr>
