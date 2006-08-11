@@ -1,7 +1,17 @@
+<xar:if condition="$auto_resize eq 1">     
+  <script type="text/javascript" src="modules/window/xartemplates/appwindow.js">     
+  </script> 
+</xar:if> 
 <div class="xar-mod-head">     
   <span class="xar-mod-title">#$title#</span> 
 </div> 
-<xar:data-input type="frame" url="$url" />
+<div style="width: #$hsize#; height: #$vsize#px;"> 
+  <iframe id="appwindow" src="#$page#" style="width: 100%; height: 100%; frameborder: 0; marginheight: 0; marginwidth: 0;"> 
+    <!--
+      -     ."  <br />"._SORRYBROWSER."<a class=\"pn-pagetitle\" href="#$page#" target="_blank">"._LINKYOU."</a>"._SORRYBROWSER1."<br /><br />\n"     -
+    -->     
+  </iframe>
+</div>
 <xar:if condition="!empty($hooks)"> 
     <br />     
     <xar:foreach in="$hooks" key="$hookmodule">     

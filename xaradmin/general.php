@@ -3,20 +3,18 @@ function window_admin_general()
 {
     if (!xarSecurityCheck('AdminWindow')) return;
 
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    $data = array();
+    $data['allow_local_only'] = xarModGetVar('window', 'allow_local_only');
+    $data['use_buffering'] = xarModGetVar('window', 'use_buffering');
+    $data['no_user_entry'] = xarModGetVar('window', 'no_user_entry');
+    $data['security'] = xarModGetVar('window', 'security');
+    $data['reg_user_only'] = xarModGetVar('window', 'reg_user_only');
+    $data['open_direct'] = xarModGetVar('window', 'open_direct');
+    $data['use_fixed_title'] = xarModGetVar('window', 'use_fixed_title');
+    $data['auto_resize'] = xarModGetVar('window', 'auto_resize');
+    $data['vsize'] = xarModGetVar('window', 'vsize');
+    $data['hsize'] = xarModGetVar('window', 'hsize');
 
-	switch ($data['tab']) {
-		case 'general':
-			break;
-		case 'display':
-			// this is sort of stupid, but I don't think there is a better way at present
-		    $info = xarModGetInfo(3002);
-		    if (!xarVarFetch('showusermenu','int', $data['showusermenu'],$info['usercapable'],XARVAR_NOT_REQUIRED)) return;
-			break;
-		default:
-			break;
-	}
-	$data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 ?>

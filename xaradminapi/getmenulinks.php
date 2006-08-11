@@ -22,9 +22,9 @@ function window_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminWindow',0)) {
         $menulinks[] = array('url'   => xarModURL('window',
                                                   'admin',
-                                                  'newurl'),
-                              'title' => xarML('Specify settings for different window displays'),
-                              'label' => xarML('Manage Displays'));
+                                                  'addurl'),
+                              'title' => xarML('Specific Settings'),
+                              'label' => xarML('Specific Settings'));
     }
     if (xarSecurityCheck('AddWindow',0)) {
         $menulinks[] = array('url'   => xarModURL('window',
@@ -33,7 +33,7 @@ function window_adminapi_getmenulinks()
                               'title' => xarML('Modify the configuration for the module'),
                               'label' => xarML('Modify Config'));
     }
-
+    
     if (empty($menulinks)){
         $menulinks = '';
     }
