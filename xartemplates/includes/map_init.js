@@ -43,8 +43,6 @@ function createMarker(mapnumber,point){
 function makeMarkerDraggable(marker){
 
 	GEvent.addListener(marker, "dragend", function(point){
-//	document.getElementById(marker.latbox).value=marker.getPoint().lat();
-//	document.getElementById(marker.longbox).value=marker.getPoint().lng();
 	updateDataEntry(marker.mapnumber);
 	});
 	
@@ -92,11 +90,10 @@ function getGeoCodeCallback__moveMarkerToAddress(response) {
         point = new GLatLng(place.Point.coordinates[1],
                             place.Point.coordinates[0]);
 	markers[gmaps__markernumber].setPoint(point);
-	if(markers[gmaps__markernumber].latbox){
-		document.getElementById(markers[gmaps__markernumber].latbox).value = markers[gmaps__markernumber].getPoint().lat();
-		document.getElementById(markers[gmaps__markernumber].longbox).value = markers[gmaps__markernumber].getPoint().lng();
-        }
         maps[gmaps__mapnumber].setCenter(point,place.AddressDetails.Accuracy + 6);
+
+	//Update the form boxes
+        updateDataEntry(markers[gmaps__markernumber].mapnumber);
     }
 }
 
@@ -147,7 +144,9 @@ function updateDataEntry(mapnumber){
 	//Get the location of each marker on the map
 	var points = new Array();
 	for(i=0;i<markers.length;i++){
-		points[i] = markers[i].getPoint(); 
+		if(markers[i].mapnumber == mapnumber){
+			points[i] = markers[i].getPoint(); 
+		}
 	}
 	
 	//Define the bounds of the area

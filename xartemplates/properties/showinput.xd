@@ -19,10 +19,10 @@
 
 <form method="post" action="#xarModURL('gmaps','admin','create')#">
     <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
-        <input type="hidden" name="gmaps_latitude" id="gmaps_latitude" value="" />
-        <input type="hidden" name="gmaps_longitude" id="gmaps_longitude" value="" />
-        <input type="hidden" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
-        <input type="hidden" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
+        <input type="text" name="gmaps_latitude" id="gmaps_latitude" value="" />
+        <input type="text" name="gmaps_longitude" id="gmaps_longitude" value="" />
+        <input type="text" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
+        <input type="text" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
     <fieldset>
         <legend>
             <xar:mlstring>
