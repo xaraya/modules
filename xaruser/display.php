@@ -43,14 +43,6 @@ function window_user_display($args)
 
     if ($security) {
         if (!xarSecurityCheck('ReadWindow')) return;
-        /*
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
-        $urltable = $xartable['window'];
-
-        $result = $dbconn->Execute("SELECT * FROM $urltable");
-        if(!$result) return;
-        */
 
         $result=xarModAPIFunc('window','user','getall');
 
