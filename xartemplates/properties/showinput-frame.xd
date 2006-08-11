@@ -1,0 +1,25 @@
+<xar:if condition="$auto_resize eq 1">     
+    <script type="text/javascript" src="modules/window/xartemplates/appwindow.js">     
+    </script> 
+</xar:if> 
+<div style="width: #$hsize#; height: #$vsize#px;">
+    <xar:if condition="$open_direct eq 1">
+        <xar:if condition="$use_fixed_title eq 1">
+            <br />
+        </xar:if>
+        [ <a href="#$page#" target="_blank"><xarmlstring>Open application</xarmlstring></a> ]
+    </xar:if>
+    <xar:if condition="$use_iframe eq 1">
+        <iframe id="iframewindow" src="#$page#" width="#$hsize#" height="#$vsize#" style="frameborder: 0; marginheight: 0; marginwidth: 0;"> 
+    </xar:if>
+        <xar:if condition="$use_object">
+            <object id="objectwindow" data="#$page#" type="text/html" width="#$hsize#" height="#$vsize#">
+            </object>
+        </xar:if>
+    <xar:if condition="$use_iframe">
+        </iframe>
+    </xar:if>
+    <xar:if condition="($use_iframe eq 0) AND ($use_object eq 0)">
+        <xar:mlstring>Display unavailable. Please define a display tag in the module's configuration.</xar:mlstring>
+    </xar:if>
+</div>
