@@ -22,7 +22,7 @@ function gmaps_admin_modifyconfig()
     // Security Check
     if (!xarSecurityCheck('AdminGmaps')) return;
     if (!xarVarFetch('phase',     'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab',       'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab',       'str:1:100', $data['tab'], 'gmaps_general', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule,   'gmaps', XARVAR_NOT_REQUIRED)) return;
 
     $hooks = xarModCallHooks('module', 'getconfig', 'gmaps');

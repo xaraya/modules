@@ -9,7 +9,28 @@
         <xar:mlstring>Overview</xar:mlstring>
     </h2>
 
-        <p>
-            <xar:mlstring>Dummy gmaps text</xar:mlstring>
-        </p>
+    <p>
+        <xar:mlstring>The Gmaps module lets you display and manage google maps through a Xaraya interface.</xar:mlstring>
+    </p>
+    <h2>
+        <xar:mlstring>How to use it</xar:mlstring>
+    </h2>
+
+    <p>
+        <ol>
+            <li>
+                <xar:mlstring>Install the module in the usual way. If you're reading this you've probably already done that.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Get a Google Maps key here:</xar:mlstring><a href="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</a>. 
+                <xar:mlstring>The page will give you instructions on obtaining a key, its use and limitations.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Once you have the key copy it and go to this page:</xar:mlstring><a href="#xarModURL('gmaps','admin','modifyconfig')#">#xarModURL('gmaps','admin','modifyconfig')#</a>. 
+                <xar:mlstring>Paste the key into GoogleMaps Key field.</xar:mlstring> 
+                <xar:mlstring>Click the button at the buttom of the page to save your key.</xar:mlstring> 
+                <xar:mlstring>(It's a good idea to keep a backup copy of your key somewhere else.)</xar:mlstring>
+            </li>
+        </ol>
+    </p>
 </div>

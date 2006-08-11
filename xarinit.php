@@ -100,7 +100,7 @@ function gmaps_init()
     xarModSetVar('gmaps', 'zoomlevel', 6);
     xarModSetVar('gmaps', 'centerlatitude', 48.5132);
     xarModSetVar('gmaps', 'centerlongitude', 2.1745);
-    xarModSetVar('gmaps', 'gmapskey', 'xxxxxxxxxx');
+    xarModSetVar('gmaps', 'gmapskey', 'Paste your google maps key here');
 
 # --------------------------------------------------------
 #
