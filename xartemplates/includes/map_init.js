@@ -71,8 +71,6 @@ function getGeoCode(mapnumber, addressbox, latbox, longbox){
 
 	//Create global marker to be manipulated by callback, "addAddressToMap"
 	var marker = createMarker(mapnumber,maps[mapnumber].getCenter());
-	marker.latbox = latbox.id;
-	marker.longbox = longbox.id;
 	makeMarkerDraggable(marker);
 	maps[mapnumber].addOverlay(marker);
 
@@ -128,6 +126,7 @@ function makeMapDataEntryMap(mapnumber,address,latbox,longbox,latbox2,longbox2){
 	GEvent.addListener(map, "click", function(overlay,point){
 	if(!overlay){
 		var marker = createMarker(this.mapnumber,point);
+		makeMarkerDraggable(marker);
 		this.addOverlay(marker);
 	}
 	});
