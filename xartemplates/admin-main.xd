@@ -10,7 +10,7 @@
     </h2>
 
     <p>
-        <xar:mlstring>The Gmaps module lets you display and manage google maps through a Xaraya interface.</xar:mlstring>
+        <xar:mlstring>The Gmaps module lets you display and manage Google Maps through a Xaraya interface.</xar:mlstring>
     </p>
     <h2>
         <xar:mlstring>How to use it</xar:mlstring>
@@ -26,11 +26,34 @@
                 <xar:mlstring>The page will give you instructions on obtaining a key, its use and limitations.</xar:mlstring>
             </li>
             <li>
-                <xar:mlstring>Once you have the key copy it and go to this page:</xar:mlstring><a href="#xarModURL('gmaps','admin','modifyconfig')#">#xarModURL('gmaps','admin','modifyconfig')#</a>. 
-                <xar:mlstring>Paste the key into GoogleMaps Key field.</xar:mlstring> 
+                <xar:mlstring>Once you have the key copy it and leave the page on Google's site open (for checking in case something goes wrong)</xar:mlstring> 
+                <xar:mlstring>Open this page in a new window:</xar:mlstring> <a href="#xarModURL('gmaps','admin','modifyconfig')#">#xarModURL('gmaps','admin','modifyconfig')#</a>. 
+                <xar:mlstring>Paste the key into Google Maps Key field.</xar:mlstring> 
                 <xar:mlstring>Click the button at the buttom of the page to save your key.</xar:mlstring> 
                 <xar:mlstring>(It's a good idea to keep a backup copy of your key somewhere else.)</xar:mlstring>
             </li>
+            <li>
+                <xar:mlstring>Test your site by going to this page:</xar:mlstring> <a href="#xarModURL('gmaps','user','display')#">#xarModURL('gmaps','user','display')#</a>. 
+                <xar:mlstring>You should see a map display. If the map appears you are good to go and can close the Google page. Did you make a copy of the key?</xar:mlstring>
+            </li>
         </ol>
+    </p>
+    <h2>
+        <xar:mlstring>Troubleshooting</xar:mlstring>
+    </h2>
+
+    <p>
+        <xar:mlstring>If the display page reports a key error:</xar:mlstring>
+        <ul>
+            <li>
+                <xar:mlstring>Go back and check the key field again to make sure the field contains exactly the characters of your key.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Check that the key you pasted in is actually the one for your site. Google allows only one key for exactly one site.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Check on the Google page (you did leave it open didn't you?) that the site url you entered when registering for your key was entered correctly.</xar:mlstring>
+            </li>
+        </ul>
     </p>
 </div>

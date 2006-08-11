@@ -19,64 +19,49 @@
 
 <form method="post" action="#xarModURL('gmaps','admin','create')#">
     <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
+    <input type="hidden" name="longitude2" id="gmaps_longitude2" value="" />
+    <input type="hidden" name="latitude2" id="gmaps_latitude2" value="" />
+    <input type="hidden" name="longitude" id="gmaps_longitude" value="" />
+    <input type="hidden" name="latitude" id="gmaps_latitude" value="" />
     <fieldset>
         <legend>
             <xar:mlstring>
-                Range 
+                Add a Location to the Map
             </xar:mlstring>
         </legend>
         <div class="xar-form-input-wrapper">
-            <label for="gmaps_latitude" title="#xarML('Latitude 1')#" class="xar-form-label">
+            <label for="gmaps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
                 <xar:mlstring>
-                    Latitude 1: 
+                    Location Name: 
                 </xar:mlstring>
             </label>
-            <input type="text" name="latitude" id="gmaps_latitude" value="" />
+            <input type="text" name="name" id="gmaps_name" value="" />
         </div>
-        <div class="xar-form-input-wrapper">
-            <label for="longitude" title="#xarML('Longitude 1')#" class="xar-form-label">
-                <xar:mlstring>
-                    Longitude 1: 
-                </xar:mlstring>
-            </label>
-            <input type="text" name="longitude" id="gmaps_longitude" value="" />
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="gmaps_latitude2" title="#xarML('Latitude 2')#" class="xar-form-label">
-                <xar:mlstring>
-                    Latitude 2: 
-                </xar:mlstring>
-            </label>
-            <input type="text" name="latitude2" id="gmaps_latitude2" value="" />
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="gmaps_longitude2" title="#xarML('Longitude 2')#" class="xar-form-label">
-                <xar:mlstring>
-                    Longitude 2: 
-                </xar:mlstring>
-            </label>
-            <input type="text" name="longitude2" id="gmaps_longitude2" value="" />
-        </div>
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="Save" />
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>
-            <xar:mlstring>
-                Location 
-            </xar:mlstring>
-        </legend>
         <div class="xar-form-input-wrapper">
             <label for="gmaps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
                 <xar:mlstring>
                     Coordinates: 
                 </xar:mlstring>
             </label>
-            <textarea name="gmaps_address" id="gmaps_address"></textarea>
+            <textarea name="gmaps_address" id="gmaps_address"></textarea>&nbsp;<input type="button" value="Place on Map" onClick="getGeoCode(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude');return false;">
         </div>
         <div class="xar-form-input-wrapper-after">
-            <input type="button" value="Map Location" onClick="getGeoCode(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude');return false;">
+            <input type="submit" value="Save this Location" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <xar:mlstring>
+                Available Locations
+            </xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="gmaps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
+                <xar:mlstring>
+                    Saved in the database: 
+                </xar:mlstring>
+            </label>
+            <xar:data-input type="maplocation" name="locations" id="gmaps_locations" />
         </div>
     </fieldset>
     <div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>

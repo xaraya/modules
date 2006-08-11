@@ -35,9 +35,9 @@
                     </xar:mlstring>
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="latitude" title="#xarML('Site key to use google maps')#" class="xar-form-label">
+                    <label for="latitude" title="#xarML('Site key to use Google Maps')#" class="xar-form-label">
                         <xar:mlstring>
-                            Googlemaps Key: 
+                            Google Maps Key: 
                         </xar:mlstring>
                     </label>
                     <textarea name="gmapskey" id="gmapskey">#xarModGetVar('gmaps', 'gmapskey')#</textarea>
