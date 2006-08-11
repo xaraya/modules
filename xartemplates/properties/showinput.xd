@@ -31,10 +31,10 @@
                     Latitude 1: 
                 </xar:mlstring>
             </label>
-            <input type="text" name="gmaps_latitude" id="gmaps_latitude" value="" />
+            <input type="text" name="latitude" id="gmaps_latitude" value="" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="gmaps_longitude" title="#xarML('Longitude 1')#" class="xar-form-label">
+            <label for="longitude" title="#xarML('Longitude 1')#" class="xar-form-label">
                 <xar:mlstring>
                     Longitude 1: 
                 </xar:mlstring>
@@ -42,7 +42,7 @@
             <input type="text" name="gmaps_longitude" id="gmaps_longitude" value="" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="gmaps_latitude2" title="#xarML('Latitude 2')#" class="xar-form-label">
+            <label for="latitude2" title="#xarML('Latitude 2')#" class="xar-form-label">
                 <xar:mlstring>
                     Latitude 2: 
                 </xar:mlstring>
@@ -50,7 +50,7 @@
             <input type="text" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="gmaps_longitude2" title="#xarML('Longitude 2')#" class="xar-form-label">
+            <label for="longitude2" title="#xarML('Longitude 2')#" class="xar-form-label">
                 <xar:mlstring>
                     Longitude 2: 
                 </xar:mlstring>
