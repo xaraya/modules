@@ -21,8 +21,8 @@
     <xar:comment>
          - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
     </xar:comment>
+    <form method="post" action="&xar-modurl-gmaps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
     <xar:if condition="$tab eq 'gmaps_general'">
-        <form method="post" action="&xar-modurl-gmaps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <h3>
                 <xar:mlstring>
                     General Options 
