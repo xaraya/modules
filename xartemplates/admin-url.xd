@@ -88,6 +88,21 @@
         <xar:mlstring>The values below apply to the <strong>URL you are editing above</strong>, and override the module general settings.</xar:mlstring>
 
     </p>
+    <xar:if condition="isset($host)">
+        <xar:set name="urlname">str_replace('http://','',$host)</xar:set>
+    </xar:if>
+    <xar:if condition="isset($urlname) and !empty($urlname)">
+    <p class="xar-form-input-wrapper-before xar-padding-thick">
+        <xar:ml>
+            <xar:mlstring>Currently editing: <span class="xar-error">#(1)</span></xar:mlstring>
+            <xar:mlvar>#$host#</xar:mlvar>
+        </xar:ml>
+    </p>
+    <xar:else />
+    <p class="xar-form-input-wrapper-before xar-padding-thick">
+            <xar:mlstring>No URL currently selected  for editing.</xar:mlstring>
+    </p>
+    </xar:if>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">
             <xar:mlstring>Only for registered users?</xar:mlstring>
