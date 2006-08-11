@@ -11,7 +11,7 @@ function gmaps_admin_create()
     $myobject = & Dynamic_Object_Master::getObject(array('moduleid' => $objinfo['moduleid'],
                                          				 'itemtype' => $objinfo['itemtype'],
                                          				 'itemid' => $itemid,
-                                         				 'fieldlist' => array('longitude','latitude','longitude2','latitude2')));
+                                         				 'fieldlist' => array('longitude','latitude','longitude2','latitude2','name')));
     $isvalid = $myobject->checkInput();
 
     $itemid = $myobject->createItem();
