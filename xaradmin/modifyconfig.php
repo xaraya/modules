@@ -23,7 +23,7 @@ function gmaps_admin_modifyconfig()
     if (!xarSecurityCheck('AdminGmaps')) return;
     if (!xarVarFetch('phase',     'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('tab',       'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule,   'rsvp', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule,   'gmaps', XARVAR_NOT_REQUIRED)) return;
 
     $hooks = xarModCallHooks('module', 'getconfig', 'gmaps');
 	if (!empty($hooks) && isset($hooks['tabs'])) {
@@ -52,13 +52,19 @@ function gmaps_admin_modifyconfig()
         case 'update':
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
-                    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                    if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModGetVar('gmaps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModGetVar('gmaps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModGetVar('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('mapwidth', 'str:1', $mapwidth, xarModGetVar('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModGetVar('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+			if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModGetVar('gmaps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModGetVar('gmaps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModGetVar('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapwidth', 'int:1', $mapwidth, xarModGetVar('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModGetVar('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('glargemapcontrol', 'checkbox', $glargemapcontrol, xarModGetVar('gmaps', 'glargemapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gsmallmapcontrol', 'checkbox', $gsmallmapcontrol, xarModGetVar('gmaps', 'gsmallmapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gsmallzoomcontrol', 'checkbox', $gsmallzoomcontrol, xarModGetVar('gmaps', 'gsmallzoomcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gscalecontrol', 'checkbox', $gscalecontrol, xarModGetVar('gmaps', 'gscalecontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gmaptypecontrol', 'checkbox', $gmaptypecontrol, xarModGetVar('gmaps', 'gmaptypecontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModGetVar('gmaps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
 
 			if ($data['tab'] == 'gmaps_general') {
 				xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
@@ -67,7 +73,12 @@ function gmaps_admin_modifyconfig()
 				xarModSetVar('gmaps', 'centerlongitude', $centerlongitude);
 				xarModSetVar('gmaps', 'centerlatitude', $centerlatitude);
 				xarModSetVar('gmaps', 'mapwidth', $mapwidth);
-				xarModSetVar('gmaps', 'mapheight', $mapheight);
+				xarModSetVar('gmaps', 'glargemapcontrol', $glargemapcontrol);
+				xarModSetVar('gmaps', 'gsmallmapcontrol', $gsmallmapcontrol);
+				xarModSetVar('gmaps', 'gsmallzoomcontrol', $gsmallzoomcontrol);
+				xarModSetVar('gmaps', 'gscalecontrol', $gscalecontrol);
+				xarModSetVar('gmaps', 'gmaptypecontrol', $gmaptypecontrol);
+				xarModSetVar('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol);
 			}
 			$regid = xarModGetIDFromName($tabmodule);
 			xarModSetUserVar('gmaps', 'zoomlevel', $zoomlevel, $regid);
@@ -75,6 +86,12 @@ function gmaps_admin_modifyconfig()
 			xarModSetUserVar('gmaps', 'centerlatitude', $centerlatitude, $regid);
 			xarModSetUserVar('gmaps', 'mapwidth', $mapwidth, $regid);
 			xarModSetUserVar('gmaps', 'mapheight', $mapheight, $regid);
+			xarModSetUserVar('gmaps', 'glargemapcontrol', $glargemapcontrol, $regid);
+			xarModSetUserVar('gmaps', 'gsmallmapcontrol', $gsmallmapcontrol, $regid);
+			xarModSetUserVar('gmaps', 'gsmallzoomcontrol', $gsmallzoomcontrol, $regid);
+			xarModSetUserVar('gmaps', 'gscalecontrol', $gscalecontrol, $regid);
+			xarModSetUserVar('gmaps', 'gmaptypecontrol', $gmaptypecontrol, $regid);
+			xarModSetUserVar('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol, $regid);
 
             xarResponseRedirect(xarModURL('gmaps', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
