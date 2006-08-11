@@ -124,7 +124,7 @@ function makeMapDataEntryMap(mapnumber,address,latbox,longbox,latbox2,longbox2){
 	maps[mapnumber].longbox = longbox.id;
 	maps[mapnumber].latbox2 = latbox2.id;
 	maps[mapnumber].longbox2 = longbox2.id;
-
+	maps[mapnumber].polyline = false;
 	GEvent.addListener(map, "click", function(overlay,point){
 	if(!overlay){
 		var marker = createMarker(this.mapnumber,point);
@@ -155,8 +155,12 @@ function updateDataEntry(mapnumber){
 		document.getElementById(map.latbox2).value = bounds.minY;
 		document.getElementById(map.longbox2).value = bounds.minX;	
 
-		var box1 = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
-		map.addOverlay(box1);
+		if(map.polyline){
+		  map.removeOverlay(map.polyline);
+		}
+
+		map.polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
+		map.addOverlay(map.polyline);
 	var corners = [];
 	//corners.push(new GPoint(boundary.maxX,boundary.maxY));
 	//corners.push(new GPoint(boundary.maxX,boundary.minY));
