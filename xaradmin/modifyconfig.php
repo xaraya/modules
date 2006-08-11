@@ -67,18 +67,18 @@ function gmaps_admin_modifyconfig()
 			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModGetVar('gmaps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
 
 			if ($data['tab'] == 'gmaps_general') {
-				xarModSetVar('gmaps', 'SupportShortURLs', $shorturls);
-				xarModSetVar('gmaps', 'gmapskey', $gmapskey);
-				xarModSetVar('gmaps', 'zoomlevel', $zoomlevel);
-				xarModSetVar('gmaps', 'centerlongitude', $centerlongitude);
-				xarModSetVar('gmaps', 'centerlatitude', $centerlatitude);
-				xarModSetVar('gmaps', 'mapwidth', $mapwidth);
-				xarModSetVar('gmaps', 'glargemapcontrol', $glargemapcontrol);
-				xarModSetVar('gmaps', 'gsmallmapcontrol', $gsmallmapcontrol);
-				xarModSetVar('gmaps', 'gsmallzoomcontrol', $gsmallzoomcontrol);
-				xarModSetVar('gmaps', 'gscalecontrol', $gscalecontrol);
-				xarModSetVar('gmaps', 'gmaptypecontrol', $gmaptypecontrol);
-				xarModSetVar('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol);
+				xarModVars::set('gmaps', 'SupportShortURLs', $shorturls);
+				xarModVars::set('gmaps', 'gmapskey', $gmapskey);
+				xarModVars::set('gmaps', 'zoomlevel', $zoomlevel);
+				xarModVars::set('gmaps', 'centerlongitude', $centerlongitude);
+				xarModVars::set('gmaps', 'centerlatitude', $centerlatitude);
+				xarModVars::set('gmaps', 'mapwidth', $mapwidth);
+				xarModVars::set('gmaps', 'glargemapcontrol', $glargemapcontrol);
+				xarModVars::set('gmaps', 'gsmallmapcontrol', $gsmallmapcontrol);
+				xarModVars::set('gmaps', 'gsmallzoomcontrol', $gsmallzoomcontrol);
+				xarModVars::set('gmaps', 'gscalecontrol', $gscalecontrol);
+				xarModVars::set('gmaps', 'gmaptypecontrol', $gmaptypecontrol);
+				xarModVars::set('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol);
 			}
 			$regid = xarModGetIDFromName($tabmodule);
 			xarModSetUserVar('gmaps', 'zoomlevel', $zoomlevel, $regid);
