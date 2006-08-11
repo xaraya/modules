@@ -72,8 +72,8 @@ function window_adminapi_create($args)
                      xar_use_fixed_title, 
                      xar_auto_resize, 
                      xar_vsize, 
-                     xar_status,
                      xar_hsize,
+                     xar_status,
                      xar_label,
                      xar_description)
                     VALUES (?,
