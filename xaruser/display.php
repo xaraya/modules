@@ -59,6 +59,7 @@ function window_user_display($args)
                     $auto_resize = $item['auto_resize'];
                     $vsize = $item['vsize'];
                     $hsize = $item['hsize'];
+                    $id = $item['itemid'];                    
                 }
             }
         }
