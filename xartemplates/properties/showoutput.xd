@@ -6,12 +6,10 @@
     if (window.attachEvent) {
         window.attachEvent("onload", function() {
             mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
-            makeMapDataEntryMap(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude','gmaps_latitude2','gmaps_longitude2');
         });
     } else {
         window.addEventListener("load", function() {
             mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
-            makeMapDataEntryMap(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude','gmaps_latitude2','gmaps_longitude2');
         }, false);
     }
     //]]>
