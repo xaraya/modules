@@ -33,23 +33,27 @@ class GoogleMap_Property extends Dynamic_Property
 
     function showInput($data = array())
     {
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModVars::get('gmaps', 'mapwidth');
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModVars::get('gmaps', 'mapheight');
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModVars::get('gmaps', 'zoomlevel');
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModVars::get('gmaps', 'centerlatitude');
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModVars::get('gmaps', 'centerlongitude');
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModVars::get('gmaps', 'gmapskey');
+        $info = xarRequestGetInfo();
+        $regid = xarModGetIDFromName($info[0]);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $regid);
+		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $regid);
 
         return parent::showInput($data);
     }
     function showOutput($data = array())
     {
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModVars::get('gmaps', 'mapwidth');
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModVars::get('gmaps', 'mapheight');
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModVars::get('gmaps', 'zoomlevel');
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModVars::get('gmaps', 'centerlatitude');
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModVars::get('gmaps', 'centerlongitude');
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModVars::get('gmaps', 'gmapskey');
+        $info = xarRequestGetInfo();
+        $regid = xarModGetIDFromName($info[0]);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $regid);
+		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $regid);
 
         return parent::showOutput($data);
     }
