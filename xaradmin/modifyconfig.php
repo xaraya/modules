@@ -53,18 +53,18 @@ function gmaps_admin_modifyconfig()
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 			if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModGetVar('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-			if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModGetVar('gmaps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModGetVar('gmaps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModGetVar('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('mapwidth', 'int:1', $mapwidth, xarModGetVar('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModGetVar('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('glargemapcontrol', 'checkbox', $glargemapcontrol, xarModGetVar('gmaps', 'glargemapcontrol'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('gsmallmapcontrol', 'checkbox', $gsmallmapcontrol, xarModGetVar('gmaps', 'gsmallmapcontrol'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('gsmallzoomcontrol', 'checkbox', $gsmallzoomcontrol, xarModGetVar('gmaps', 'gsmallzoomcontrol'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('gscalecontrol', 'checkbox', $gscalecontrol, xarModGetVar('gmaps', 'gscalecontrol'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('gmaptypecontrol', 'checkbox', $gmaptypecontrol, xarModGetVar('gmaps', 'gmaptypecontrol'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModGetVar('gmaps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModVars::get('gmaps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+			if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModVars::get('gmaps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModVars::get('gmaps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModVars::get('gmaps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapwidth', 'int:1', $mapwidth, xarModVars::get('gmaps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModVars::get('gmaps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('glargemapcontrol', 'checkbox', $glargemapcontrol, xarModVars::get('gmaps', 'glargemapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gsmallmapcontrol', 'checkbox', $gsmallmapcontrol, xarModVars::get('gmaps', 'gsmallmapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gsmallzoomcontrol', 'checkbox', $gsmallzoomcontrol, xarModVars::get('gmaps', 'gsmallzoomcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gscalecontrol', 'checkbox', $gscalecontrol, xarModVars::get('gmaps', 'gscalecontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('gmaptypecontrol', 'checkbox', $gmaptypecontrol, xarModVars::get('gmaps', 'gmaptypecontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModVars::get('gmaps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
 
 			if ($data['tab'] == 'gmaps_general') {
 				xarModVars::set('gmaps', 'SupportShortURLs', $shorturls);

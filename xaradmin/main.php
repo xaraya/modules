@@ -21,7 +21,7 @@ function gmaps_admin_main()
 {
     if(!xarSecurityCheck('AdminGmaps')) return;
 
-    if (xarModGetVar('modules', 'disableoverview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
         xarResponseRedirect(xarModURL('gmaps', 'admin', 'modifyconfig'));

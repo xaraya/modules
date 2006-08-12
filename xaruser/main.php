@@ -23,7 +23,7 @@ function gmaps_user_main()
    // Security Check
     if(!xarSecurityCheck('ReadGmaps')) return;
 
-    if (xarModGetVar('modules', 'disableoverview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
         xarResponseRedirect(xarModURL('gmaps', 'user', 'display'));

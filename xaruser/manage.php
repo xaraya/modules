@@ -24,12 +24,12 @@ function gmaps_user_manage($args)
 
     $data = array();
 
-    $data['mapwidth']   = isset($args['mapwidth']) ? $args['mapwidth'] : xarModGetVar('gmaps', 'mapwidth');
-    $data['mapheight']  = isset($args['mapheight']) ? $args['mapheight'] : xarModGetVar('gmaps', 'mapheight');
-    $data['zoomlevel']  = isset($args['zoomlevel']) ? $args['zoomlevel'] : xarModGetVar('gmaps', 'zoomlevel');
-    $data['latitude']   = isset($args['latitude']) ? $args['latitude'] : xarModGetVar('gmaps', 'latitude');
-    $data['longitude']  = isset($args['longitude']) ? $args['longitude'] : xarModGetVar('gmaps', 'longitude');
-    $data['gmapskey']   = isset($args['gmapskey']) ? $args['gmapskey'] : xarModGetVar('gmaps', 'gmapskey');
+    $data['mapwidth']   = isset($args['mapwidth']) ? $args['mapwidth'] : xarModVars::get('gmaps', 'mapwidth');
+    $data['mapheight']  = isset($args['mapheight']) ? $args['mapheight'] : xarModVars::get('gmaps', 'mapheight');
+    $data['zoomlevel']  = isset($args['zoomlevel']) ? $args['zoomlevel'] : xarModVars::get('gmaps', 'zoomlevel');
+    $data['latitude']   = isset($args['latitude']) ? $args['latitude'] : xarModVars::get('gmaps', 'latitude');
+    $data['longitude']  = isset($args['longitude']) ? $args['longitude'] : xarModVars::get('gmaps', 'longitude');
+    $data['gmapskey']   = isset($args['gmapskey']) ? $args['gmapskey'] : xarModVars::get('gmaps', 'gmapskey');
 
     return $data;
 }
