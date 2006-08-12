@@ -57,7 +57,6 @@
         </legend>
         <div class="xar-form-input-wrapper">
             <label for="gmaps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
-            <label for="gmaps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
                 <xar:mlstring>
                     Saved in the database: 
                 </xar:mlstring>
