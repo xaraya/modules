@@ -19,7 +19,7 @@
 
 include_once 'modules/xen/xarclasses/xenddquery.php';
 
-function gmaps_userapi_getlanguage($args)
+function gmaps_userapi_getlocation($args)
 {
     extract($args);
 
