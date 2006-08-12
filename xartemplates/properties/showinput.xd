@@ -31,14 +31,11 @@
         </legend>
         <div class="xar-form-input-wrapper">
             <label for="gmaps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
-        <input type="text" name="gmaps_latitude" id="gmaps_latitude" value="" />
-        <input type="text" name="gmaps_longitude" id="gmaps_longitude" value="" />
                 <xar:mlstring>
                     Location Name: 
                 </xar:mlstring>
             </label>
             <input type="text" name="name" id="gmaps_name" value="" />
-        <input type="text" name="gmaps_latitude2" id="gmaps_latitude2" value="" />
         </div>
         <div class="xar-form-input-wrapper">
             <label for="gmaps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
@@ -47,7 +44,6 @@
                 </xar:mlstring>
             </label>
             <textarea name="gmaps_address" id="gmaps_address"></textarea>&nbsp;<input type="button" value="Place on Map" onClick="getGeoCode(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude');return false;">
-        <input type="text" name="gmaps_longitude2" id="gmaps_longitude2" value="" />
         </div>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="Save this Location" />
@@ -57,7 +53,6 @@
         <legend>
             <xar:mlstring>
                 Available Locations
-                Location
             </xar:mlstring>
         </legend>
         <div class="xar-form-input-wrapper">
@@ -65,14 +60,9 @@
             <label for="gmaps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
                 <xar:mlstring>
                     Saved in the database: 
-                    Coordinates:
                 </xar:mlstring>
             </label>
             <xar:data-input type="maplocation" name="locations" id="gmaps_locations" />
-            <textarea name="gmaps_address" id="gmaps_address"></textarea>
-        </div>
-        <div class="xar-form-input-wrapper-after">
-            <input type="button" value="Map Location" onClick="getGeoCode(mapnumber,'gmaps_address','gmaps_latitude','gmaps_longitude');return false;">
         </div>
     </fieldset>
     <div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
