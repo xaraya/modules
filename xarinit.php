@@ -79,7 +79,8 @@ function tinymce_init()
     xarRegisterMask('DeleteTinyMCE ','All','tinymce','All','All:All','ACCESS_DELETE');
     xarRegisterMask('AdminTinyMCE','All','tinymce','All','All:All','ACCESS_ADMIN');
 
-    return true;
+    /* This init function brings our module to version 1.1.1, run the upgrades for the rest of the initialisation */
+    return tinymce_upgrade('1.1.1');
 }
 
 /**
