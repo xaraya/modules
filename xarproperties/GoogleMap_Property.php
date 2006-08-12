@@ -33,8 +33,12 @@ class GoogleMap_Property extends Dynamic_Property
 
     function showInput($data = array())
     {
-        $info = xarRequestGetInfo();
-        $regid = xarModGetIDFromName($info[0]);
+        if (isset($data['module'])) {
+			$regid = xarModGetIDFromName($data['module']);
+        } else {
+			$info = xarRequestGetInfo();
+			$regid = xarModGetIDFromName($info[0]);
+        }
 		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
 		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
 		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
@@ -46,8 +50,12 @@ class GoogleMap_Property extends Dynamic_Property
     }
     function showOutput($data = array())
     {
-        $info = xarRequestGetInfo();
-        $regid = xarModGetIDFromName($info[0]);
+        if (isset($data['module'])) {
+			$regid = xarModGetIDFromName($data['module']);
+        } else {
+			$info = xarRequestGetInfo();
+			$regid = xarModGetIDFromName($info[0]);
+        }
 		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
 		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
 		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
