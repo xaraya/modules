@@ -66,11 +66,11 @@ function sitecontact_user_main($args)
         return;
     }
 
-    // Set up defaults..
+    // Set up defaults returned from any invalid captcha input
+    // TODO - set this up for DD fields as well
     $data['company'] = $company;
     $data['usermessage'] = $usermessage;
     $data['antibotinvalid'] =$antibotinvalid;
-
     /* Security Check */
     if(!xarSecurityCheck('ViewSiteContact')) return;
 

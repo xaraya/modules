@@ -30,6 +30,7 @@
             #$customtitle#
     </span>
 </div>
+
 <div class="xar-mod-body">
     <xar:if id="title_condition" condition="!empty($message)">
         <p style="text-align: center; padding:20px;">
@@ -192,7 +193,7 @@
                     </div>
                 </xar:if>
             </xar:if>
-            <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available eq TRUE AND $useantibot">
+            <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available eq TRUE AND $useantibot eq '1'">
                 <div class="xar-form-input-wrapper">
                     <label for="useremail" class="xar-form-label" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
                             <xar:mlstring>
