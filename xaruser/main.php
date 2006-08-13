@@ -22,6 +22,7 @@
 function sitecontact_user_main($args)
 {
     extract($args);
+
     $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
 
     if(!xarVarFetch('company',    'str:1:', $company,    NULL, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -35,9 +36,36 @@ function sitecontact_user_main($args)
     if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (isset($scform) && !isset($sctypename)) { //provide alternate entry name
-      $sctypename=$scform;
+    $formdata=array();
+    if (isset($sctypename) && trim($sctypename) !=''){
+        $sctypename=trim($sctypename);
     }
+    if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
+      $sctypename=trim($scform);
+    }
+
+    //Have we got a form that is available and active?
+    if (isset($sctypename) && trim($sctypename) !='') {
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
+    }elseif (isset($scid) && is_int($scid)) {
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+    } else {
+        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+    }
+
+    //Have we got an active form
+    if (!is_array($formdata)) { //exists but not active
+      //fallback to default form again
+      $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+    }
+    $formdata=$formdata[0];
+
+    if ($formdata['scactive'] !=1) { //form but not active
+        $msg = xarML('The form requested is not available');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
     // Set up defaults..
     $data['company'] = $company;
     $data['usermessage'] = $usermessage;
@@ -52,30 +80,9 @@ function sitecontact_user_main($args)
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
     }
-    $formdata=array();
-    $formdata2=array();
+
     $data['submit'] = xarML('Submit');
-    //See if we have a form name that exists and is active
-    if (isset($sctypename) && trim($sctypename) <> '') {
-       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=>$sctypename));
-    } elseif (isset($scid) && $scid>0) { //should fall back to default form if not specified
-       $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-    } else {
-     //hmm something would be wrong
-     $formdata2 = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-    }
 
-    //now what have we got ..
-    if (!isset($formdata) || empty($formdata)) { //it doesn't exist anymore or is not active
-        $formdata=$formdata2[0];
-    } else {
-        $formdata=$formdata[0];
-    }
-
-    if ($formdata['scactive']<>1) { //formdata exists but perhaps not active?
-       $formdata2=xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-       $formdata=$formdata2[0];
-    }
     if (isset($formdata['soptions'])) {
         $soptions=unserialize($formdata['soptions']);
         if (is_array($soptions)) {

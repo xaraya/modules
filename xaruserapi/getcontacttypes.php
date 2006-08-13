@@ -19,13 +19,14 @@
 function sitecontact_userapi_getcontacttypes($args)
 {
     extract($args);
+
     if (!isset($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    if (isset($args['sort'])) {
+   if (isset($args['sort'])) {
         $sort = $args['sort'];
     } else {
         $sort = xarModGetVar('sitecontact','defaultsort');
@@ -33,23 +34,25 @@ function sitecontact_userapi_getcontacttypes($args)
     if (empty($sort)) {
         $sort = 'scid';
     }
-    $where ='';
+  $where ='';
     $bindvars=array();
-    if (isset($scid)) {
-      $where = 'WHERE xar_scid = ?';
-      $bindvars[]=$scid;
-    }
-   if (isset($sctypename)) {
-       if (isset($scid)) {
-         $where .= ' AND xar_sctypename = ?';
-       } else {
-          $where = 'WHERE xar_sctypename = ?';
-       }
+     if (isset($sctypename) && !empty($sctypename)) {
+       $where = ' xar_sctypename = ?';
        $bindvars[]=$sctypename;
     }
+    if (isset($scid) && !empty($scid)) {
+       if (isset($sctypename)) {
+        $where .= ' AND xar_scid = ? ';
+       } else {
+       $where = ' xar_scid = ?';
+       }
+       $bindvars[]=$scid;
+    }
+
     if (!isset($scid) && !isset($sctypename)) {
      $where ='';
     }
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -75,9 +78,8 @@ function sitecontact_userapi_getcontacttypes($args)
               xar_soptions
             FROM $sitecontactTable ";
     if (!empty($where)) {
-        $query .= " $where";
+        $query .= "WHERE $where ";
     }
-
     switch ($sort) {
         case 'name':
             $query .= " ORDER BY xar_sctypename ASC";
@@ -90,12 +92,12 @@ function sitecontact_userapi_getcontacttypes($args)
             $query .= " ORDER BY xar_scid ASC";
             break;
     }
-    
+
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
 
     if (!$result) return;
     $sctypes=array();
-    
+
     while (!$result->EOF) {
         list($scid, $sctypename, $sctypedesc, $customtext, $customtitle, $optiontext,
              $webconfirmtext, $notetouser, $allowcopy, $usehtmlemail, $scdefaultemail, $scdefaultname, $scactive,
@@ -119,7 +121,7 @@ function sitecontact_userapi_getcontacttypes($args)
                                    'soptions'       => $soptions);
         $result->MoveNext();
     }
-  
+
     return $sctypes;
 }
 ?>
