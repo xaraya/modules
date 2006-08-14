@@ -20,7 +20,7 @@
         <ul>
             <li><xar:mlstring>Overview -- Allows you to view this screen.</xar:mlstring></li>
             <li><xar:mlstring>View Items -- Allows you to manage any helpdesk item.</xar:mlstring></li>
-            <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
+            <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines.</xar:mlstring></li>
         </ul>
     </p>
     <h3>Important Setup Instructions!</h3>
