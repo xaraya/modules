@@ -21,8 +21,8 @@
  * @return $user_rank string, or empty string on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function userpoints_userapi_getrankbyuid($args) {
-
+function userpoints_userapi_getrankbyuid($args) 
+{
     extract($args);
 
    // Argument check
@@ -36,9 +36,10 @@ function userpoints_userapi_getrankbyuid($args) {
 
     if(isset($uid) && $uid!='') {
         $user_score = xarModAPIFunc('userpoints','user','get', array('uid' => $uid));
+        $user_score = $user_score * 100;
     }
 
-	$aRanks = xarModAPIFunc('userpoints','user','getallranks',array($args));
+    $aRanks = xarModAPIFunc('userpoints','user','getallranks',array($args));
     $user_rank = '';
     $user_rid=0;
     $old_score = 0; //needed because we are doing a search
@@ -62,5 +63,4 @@ function userpoints_userapi_getrankbyuid($args) {
     return($user_rank);
       
 }
-
 ?>
