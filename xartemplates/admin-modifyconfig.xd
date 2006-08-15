@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="forms" module="comments" />
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -47,7 +47,7 @@
                 </label>
                 <xar:set name="$depth">#xarModGetVar('comments','depth')#</xar:set>
                 <xar:set name="$max_depth">_COM_MAX_DEPTH - 1</xar:set>
-                
+
                 <select name="xar_depth" id="xar_depth">
                     <xar:for start="$i = 1" test="$i le $max_depth" iter="$i++">
                         <xar:if condition="$i eq $depth">
@@ -198,7 +198,7 @@
                    <option value="0"><xar:mlstring>None</xar:mlstring></option>
                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
                    <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
-                </xar:if> 
+                </xar:if>
                 </select>
             </div>
             <div class="xar-form-input-wrapper-after">
