@@ -1,6 +1,17 @@
 <?php
-
-/** 
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  *  Recurse through an array and reassign the celko based
  *  left and right values for each node
  *
@@ -10,7 +21,7 @@
  *  @returns array  the modified array is passed back, or zero if it is empty
  */
 
-function comments_adminapi_celko_assign_slots( $data ) 
+function comments_adminapi_celko_assign_slots( $data )
 {
 
     static $total = 0;
@@ -38,5 +49,5 @@ function comments_adminapi_celko_assign_slots( $data )
 
     return $tree;
 }
-    
+
 ?>

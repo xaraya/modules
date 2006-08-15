@@ -1,16 +1,26 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  *  Reconstruct a corrupted celko based table
- *  using the parent id's 
+ *  using the parent id's
  *
  *  @author Carl P. Corliss
  *  @access public
- *  @param  void 
+ *  @param  void
  *  @returns boolean  FALSE on error, TRUE on success
  */
-
-function comments_adminapi_celko_reconstruct() 
+function comments_adminapi_celko_reconstruct()
 {
 
     $dbconn =& xarDBGetConn();
@@ -29,7 +39,7 @@ function comments_adminapi_celko_reconstruct()
                     $ctable[right] AS xar_right
               FROM  $xartable[comments]
           ORDER BY  xar_pid DESC";
-      
+
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
 
@@ -38,7 +48,7 @@ function comments_adminapi_celko_reconstruct()
     if ($result->EOF) {
         return TRUE;
     }
-    
+
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
@@ -46,18 +56,18 @@ function comments_adminapi_celko_reconstruct()
         $result->MoveNext();
     }
     $result->Close();
-  
+
     krsort($tree);
 
     foreach ($tree as $pid => $node) {
         $newNode = $tree[$node['xar_cid']];
-        
+
         $tree[$node['xar_pid']]['children'][$node['xar_cid']] = $newNode;
         if ($pid) {
             unset($tree[$node['xar_cid']]);
         }
-    } 
-    
+    }
+
     krsort($tree);
 
     // reassign the each node a celko left/right value

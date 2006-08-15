@@ -1,23 +1,34 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Creates a root node for the specified objectid/modid
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   private
  * @param    integer     modid      The module that comment is attached to
- * @param    integer     objectid   The particular object within that module 
+ * @param    integer     objectid   The particular object within that module
  * @param    integer     itemtype   The itemtype of that object
  * @returns  integer     the id of the node that was created so it can be used as a parent id
  * @todo get rid of this notion of root node ?
  */
-function comments_userapi_add_rootnode( $args ) 
+function comments_userapi_add_rootnode( $args )
 {
 
     extract ($args);
 
     $exception = false;
-    
+
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -33,7 +44,7 @@ function comments_userapi_add_rootnode( $args )
     if ($exception) {
         return;
     }
-    
+
     if (empty($itemtype)) {
         $itemtype = 0;
     }
@@ -57,7 +68,7 @@ function comments_userapi_add_rootnode( $args )
     // the correct value.
     $nextId = $dbconn->GenId($commenttable);
 
-    $sql = "INSERT INTO $xartable[comments] 
+    $sql = "INSERT INTO $xartable[comments]
               (xar_cid, xar_pid, xar_text,
                xar_title, xar_author, xar_left,
                xar_right, xar_status, xar_objectid,
@@ -76,7 +87,7 @@ function comments_userapi_add_rootnode( $args )
                        $modid,
                        $itemtype,
                        '',
-                       $cdate 
+                       $cdate
                        );
 
     $result =& $dbconn->Execute($sql,$bindvars);

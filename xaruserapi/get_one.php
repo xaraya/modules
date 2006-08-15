@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Get a single comment.
  *
@@ -9,7 +20,7 @@
  * @returns  array   an array containing the sole comment that was requested
                      or an empty array if no comment found
  */
-function comments_userapi_get_one( $args ) 
+function comments_userapi_get_one( $args )
 {
 
     extract($args);
@@ -17,7 +28,7 @@ function comments_userapi_get_one( $args )
     if(!isset($cid) || empty($cid)) {
         $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'cid','userapi','get_one','comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', 
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }

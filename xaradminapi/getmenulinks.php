@@ -1,16 +1,16 @@
 <?php
 /**
- * Admin Menu links
+ * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage comments
+ * @subpackage Comments Module
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
-*/
+ */
 /**
  * utility function pass individual menu items to the main menu
  *

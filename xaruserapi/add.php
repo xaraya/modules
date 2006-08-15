@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Adds a comment to the database based on the objectid/modid pair
  *
@@ -18,7 +29,7 @@
  * @param    integer     $args['cid']        comment id (for API access - import only)
  * @returns  integer     the id of the new comment
  */
-function comments_userapi_add($args) 
+function comments_userapi_add($args)
 {
     extract($args);
 
@@ -77,7 +88,7 @@ function comments_userapi_add($args)
 
     // Lets check the blacklist first before we process.
     // If the comment does not pass, we will return an exception
-    // Perhaps in the future we can store the comment for later 
+    // Perhaps in the future we can store the comment for later
     // review, but screw it for now...
     if (xarModGetVar('comments', 'useblacklist') == true){
         $items = xarModAPIFunc('comments', 'user', 'get_blacklist');
@@ -100,8 +111,8 @@ function comments_userapi_add($args)
     // as a top level comment
     if ($pid == 0) {
         $root_lnr = xarModAPIFunc('comments','user','get_node_root',
-                                   array('modid' => $modid, 
-                                         'objectid' => $objectid, 
+                                   array('modid' => $modid,
+                                         'objectid' => $objectid,
                                          'itemtype' => $itemtype));
 
         // ok, if the there was no root left and right values then
@@ -109,7 +120,7 @@ function comments_userapi_add($args)
         // modid/objectid combo -- so we need to create a dummy (root)
         // comment from which every other comment will branch from
         if (!count($root_lnr)) {
-            $pid = xarModAPIFunc('comments','user','add_rootnode', 
+            $pid = xarModAPIFunc('comments','user','add_rootnode',
                                   array('modid'    => $modid,
                                         'objectid' => $objectid,
                                         'itemtype' => $itemtype));
@@ -126,7 +137,7 @@ function comments_userapi_add($args)
                                 'user',
                                 'get_node_lrvalues',
                                  array('cid' => $pid));
-    
+
     // there should be -at-least- one affected row -- if not
     // then raise an exception. btw, at the very least,
     // the 'right' value of the parent node would have been affected.
@@ -137,7 +148,7 @@ function comments_userapi_add($args)
                               'modid'      => $modid,
                               'objectid'   => $objectid,
                               'itemtype'   => $itemtype))) {
-            
+
             $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
             $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
@@ -154,7 +165,7 @@ function comments_userapi_add($args)
     }
 
     $sql = "INSERT INTO $xartable[comments]
-                (xar_cid, 
+                (xar_cid,
                  xar_modid,
                  xar_itemtype,
                  xar_objectid,

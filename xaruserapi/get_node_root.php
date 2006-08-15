@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Grab the id, left and right values for the
  * root node of a particular comment.
@@ -7,18 +18,18 @@
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
  * @param    integer     modid      The module that comment is attached to
- * @param    integer     objectid   The particular object within that module 
+ * @param    integer     objectid   The particular object within that module
  * @param    integer     itemtype   The itemtype of that object
  * @returns  array an array containing the left and right values or an
  *                 empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_root( $args ) 
+function comments_userapi_get_node_root( $args )
 {
-    
+
     extract ($args);
-    
+
     $exception = false;
-    
+
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -34,7 +45,7 @@ function comments_userapi_get_node_root( $args )
     if ($exception) {
         return;
     }
-    
+
     if (empty($itemtype)) {
         $itemtype = 0;
     }

@@ -1,5 +1,17 @@
 <?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  * Delete all comments attached to the specified module id
  *
  * @author Carl P. Corliss (aka rabbitt)
@@ -8,7 +20,7 @@
  * @param   integer     $itemtype   the item type that the comments are associated with
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_module_nodes( $args ) 
+function comments_adminapi_delete_module_nodes( $args )
 {
     extract($args);
 
@@ -23,8 +35,8 @@ function comments_adminapi_delete_module_nodes( $args )
 
     $return_value = TRUE;
 
-    $pages = xarModAPIFunc('comments','user','get_object_list', 
-                            array('modid' => $modid, 
+    $pages = xarModAPIFunc('comments','user','get_object_list',
+                            array('modid' => $modid,
                                   'itemtype' => $itemtype ));
 
     if (count($pages) <= 0 || empty($pages)) {

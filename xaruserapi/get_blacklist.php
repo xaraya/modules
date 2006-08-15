@@ -1,27 +1,27 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
- * 
- * Xaraya Blcaklist
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
- * @subpackage Referer Module
- * @author John Cox et al. 
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 function comments_userapi_get_blacklist($args)
-{ 
-    extract($args); 
+{
+    extract($args);
     // Optional arguments.
     if (empty($startnum)) {
         $startnum = 1;
-    } 
+    }
     if (!isset($numitems)) {
         $numitems = 5000;
-    } 
-    $items = array(); 
+    }
+    $items = array();
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -30,14 +30,14 @@ function comments_userapi_get_blacklist($args)
                      xar_domain
               FROM $btable";
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
-    if (!$result) return; 
+    if (!$result) return;
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($id, $domain) = $result->fields;
             $items[] = array('id'       => $id,
                              'domain'   => $domain);
-    } 
-    $result->Close(); 
+    }
+    $result->Close();
     return $items;
 }
 ?>

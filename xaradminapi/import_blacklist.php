@@ -1,13 +1,25 @@
 <?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  *  Imports Current Blacklist
- *  left/right values 
+ *  left/right values
  *
  *  @author John Cox
  *  @access public
  *  @returns true on success
  */
-function comments_adminapi_import_blacklist( $args ) 
+function comments_adminapi_import_blacklist( $args )
 {
     extract($args);
     xarDBLoadTableMaintenanceAPI();
@@ -69,14 +81,14 @@ function comments_adminapi_import_blacklist( $args )
             if ($ps == 0) {
                 $domain = '\\' + $domain;
             } else if (substr($domain, $ps-1, 1) != '\\') {
-                $domain = substr_replace($domain, '\/', $ps, 1); 
+                $domain = substr_replace($domain, '\/', $ps, 1);
             }
             $ps = strpos($domain, '/', $ps+2);
         }
         $domain = trim($domain);
         if ($domain != ""){
             $nextId = $dbconn->GenId($btable);
-            $query = "INSERT INTO $btable(xar_id, 
+            $query = "INSERT INTO $btable(xar_id,
                                           xar_domain)
                       VALUES (?,?)";
             $bindvars = array($nextId, $domain);

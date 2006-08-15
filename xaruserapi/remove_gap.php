@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Remove a gap in the celko tree
  *
@@ -13,11 +24,11 @@
  * @param    string     $objectid      the item id
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_remove_gap( $args ) 
+function comments_userapi_remove_gap( $args )
 {
 
     extract($args);
-    
+
     if (!isset($startpoint)) {
         $msg = xarML('Missing or Invalid parameter \'startpoint\'!!');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -28,11 +39,11 @@ function comments_userapi_remove_gap( $args )
     if (!isset($gapsize) || $gapsize < 1) {
         $gapsize = 2;
     }
-     
+
     if (!isset($endpoint) || !is_numeric($endpoint)) {
         $endpoint = NULL;
     }
-       
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 

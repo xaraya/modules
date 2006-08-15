@@ -1,15 +1,19 @@
-<?php 
-// File: $Id: s.latestcomments.php 1.7 03/01/11 09:46:40-05:00 John.Cox@mcnabb. $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Andrea Moro
-// Purpose of file: Show latest posted comments
-// ----------------------------------------------------------------------
-
+<?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
+ * Original Author of file: Andrea Moro
+ * Purpose of file: Show latest posted comments
  * initialise block
  */
 function comments_latestcommentsblock_init()
@@ -46,7 +50,7 @@ function comments_latestcommentsblock_info()
 
 /**
  * display block
- */      
+ */
 function comments_latestcommentsblock_display($blockinfo)
 {
     // Security check
@@ -117,7 +121,7 @@ function comments_latestcommentsblock_modify($blockinfo)
     }
 
     // Send content to template
-    $output = xarTplBlock('comments','latestcommentsblockadmin', 
+    $output = xarTplBlock('comments','latestcommentsblockadmin',
                           array(
                                 'howmany' => $vars['howmany'],
                                 'modid' => $vars['modid'],
@@ -151,11 +155,11 @@ function comments_latestcommentsblock_update($blockinfo)
     if (!xarVarFetch('addobject', 'isset', $vars['addobject'], '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) return;    
+    if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('addprevious', 'checkbox', $vars['addprevious'], 0, XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = serialize($vars);
-    
+
     return $blockinfo;
 }
 ?>

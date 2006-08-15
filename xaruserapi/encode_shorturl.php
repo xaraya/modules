@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * return the path for a short URL to xarModURL for this module
  *
- * @author the Example module development team
+ * @author the Comments module development team
  * @param $args the function and arguments passed to xarModURL
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed

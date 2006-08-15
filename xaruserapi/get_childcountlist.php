@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Get the number of children comments for a list of comment ids
  *
@@ -11,7 +22,7 @@
  * @returns array  the number of child comments for each comment id,
  *                   or raise an exception and return false.
  */
-function comments_userapi_get_childcountlist($args) 
+function comments_userapi_get_childcountlist($args)
 {
 
     extract($args);

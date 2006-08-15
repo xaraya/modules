@@ -1,24 +1,23 @@
 <?php
 /**
- * File: $Id$
+ * Comments module - Allows users to post comments on items
  *
- * Dynamic Number of Comments Property
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dynamicdata properties
- * @author mikespub <mikespub@xaraya.com>
-*/
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * handle static text property
  *
  * @package dynamicdata
  *
  */
-include_once "modules/dynamicdata/class/properties.php"; 
+include_once "modules/dynamicdata/class/properties.php";
 class Dynamic_CommentsNumberOf_Property extends Dynamic_Property
 {
     /**

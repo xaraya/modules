@@ -1,6 +1,6 @@
 <?php
 /**
- * Comments Module
+ * Comments module - Allows users to post comments on items
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation

@@ -1,5 +1,17 @@
 <?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  * Delete a node from the tree and reassign it's children to it's parent
  *
  * @author Carl P. Corliss (aka rabbitt)
@@ -8,7 +20,7 @@
  * @param   integer     $pid    the deletion node's parent id (used to reassign the children)
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_node( $args ) 
+function comments_adminapi_delete_node( $args )
 {
 
     extract($args);
@@ -39,7 +51,7 @@ function comments_adminapi_delete_node( $args )
     $args['itemtype'] = $itemtype;
     $args['itemid'] = $node;
     xarModCallHooks('item', 'delete', $node, $args);
-    
+
     //Now delete the item ....
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -68,7 +80,7 @@ function comments_adminapi_delete_node( $args )
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
     if ($right > $left + 1) {
-        xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $left, 
+        xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $left,
                                                            'endpoint'   => $right,
                                                            'modid'      => $modid,
                                                            'objectid'   => $objectid,

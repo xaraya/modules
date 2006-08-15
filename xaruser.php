@@ -1,18 +1,16 @@
 <?php
-
 /**
- * File: $Id$
- *
- * Implement comments API backend
+ * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage comments
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
-*/
-
+ */
 // FIXME: simplify all this header, package, receipt stuff
 
 /**
@@ -38,7 +36,7 @@ include_once('modules/comments/xarincludes/defines.php');
  * @access private
  * @returns mixed description of return
  *
-function comments_userapi_collapse( ) 
+function comments_userapi_collapse( )
 {
 
     $headers = xarRequestGetVar('headers');
@@ -93,7 +91,7 @@ function comments_userapi_collapse( )
  * @access private
  * @returns mixed description of return
  *
-function comments_userapi_expand( ) 
+function comments_userapi_expand( )
 {
 
     $headers = xarRequestGetVar('headers');

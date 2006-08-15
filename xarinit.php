@@ -1,17 +1,16 @@
 <?php
 /**
- * init file for installing/upgrading Comments module
+ * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage comments
+ * @subpackage Comments Module
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
-*/
-
+ */
 /**
  * Comments API
  * @package Xaraya
@@ -26,7 +25,7 @@ include_once('modules/comments/xarincludes/defines.php');
  * @author Carl P. Corliss (aka Rabbitt)
  *
  */
-function comments_init() 
+function comments_init()
 {
 
     //Load Table Maintenance API
@@ -160,7 +159,7 @@ function comments_init()
     xarModSetVar('comments','AllowCollapsableThreads',1);
     xarModSetVar('comments','CollapsedBranches',serialize(array()));
     xarModSetVar('comments','editstamp',1);
-    xarModSetVar('comments','usersetrendering',false);    
+    xarModSetVar('comments','usersetrendering',false);
     // TODO: add delete hook
 
     // display hook
@@ -272,7 +271,7 @@ function comments_delete()
 
     // Delete module variables
     xarModDelAllVars('comments');
- 
+
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                             'comments', 'user', 'display')) {
         return false;
@@ -304,7 +303,7 @@ function comments_upgrade($oldversion)
             // Register blocks
         if (!xarModAPIFunc('blocks', 'admin', 'block_type_exists',
                                array('modName'  => 'comments',
-                                     'blockType'=> 'latestcomments'))) { 
+                                     'blockType'=> 'latestcomments'))) {
                  if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'  => 'comments',
                                      'blockType'=> 'latestcomments'))) return;

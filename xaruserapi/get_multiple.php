@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Get a single comment or a list of comments. Depending on the parameters passed
  * you can retrieve either a single comment, a complete list of comments, a complete
@@ -21,7 +32,7 @@
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
  */
-function comments_userapi_get_multiple($args) 
+function comments_userapi_get_multiple($args)
 {
 
     extract($args);
@@ -54,11 +65,11 @@ function comments_userapi_get_multiple($args)
                                  array('cid' => $cid));
     }
 
-    // Optional argument for Pager - 
+    // Optional argument for Pager -
     // for those modules that use comments and require this
      if (!isset($startnum)) {
         $startnum = 1;
-    } 
+    }
     if (!isset($numitems)) {
         $numitems = -1;
     }

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Grab the highest 'right' value for the whole comments table
  *
@@ -10,7 +21,7 @@
  * @access   private
  * @returns   integer   the highest 'right' value for the table or zero if it couldn't find one
  */
-function comments_userapi_get_table_maxright(/* VOID */) 
+function comments_userapi_get_table_maxright(/* VOID */)
 {
 
     $dbconn =& xarDBGetConn();

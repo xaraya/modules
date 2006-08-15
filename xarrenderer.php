@@ -1,18 +1,16 @@
 <?php
-
 /**
- * File: $Id$
- *
- * contains rendering and internal array functions for Comments API
+ * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage comments
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
-*/
-
+ */
 /**
  * Comments API
  * @package Xaraya
@@ -81,7 +79,7 @@ define('_COM_CUTOFF_CONNECTOR', 8);
  *
  */
 
-function comments_renderer_array_markdepths_bychildren(&$comments_list) 
+function comments_renderer_array_markdepths_bychildren(&$comments_list)
 {
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
@@ -89,7 +87,7 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
 
     // figure out how man total nodes are in this array,
     $total_nodes = count($comments_list);
-    
+
     // check to see if this array has the depth field in it already,
     // if not, it's the first time this array has been parsed through
     // this function so initialize each node to have a depth of zero:
@@ -98,7 +96,7 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
             $comments_list[$node]['depth'] = 0;
         }
     }
-    
+
     for ($node = 0; $node < $total_nodes; $node++) {
         // if the current node has zero (or less) children,
         // skip to the next one
@@ -146,7 +144,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     $parents = array();
     $new_list = array();
     $prep_list = array();
-    
+
     // Initialize parents array and make the first key in it equal
     // to the first node in the array's parentid
     $parents['PID_' . $comments_list[0]['xar_pid']] = $depth;
@@ -155,9 +153,9 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
     // easily reference them further down
     foreach($comments_list as $node) {
         $new_list[$node['xar_cid']] = $node;
-    } 
+    }
     $comments_list = $new_list;
-    
+
     // re-initialize the new_list array
     $new_list = array();
 
@@ -176,7 +174,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
                 $comments_list[$node['xar_pid']]['xar_pid'] = 0;
                 $comments_list[$node['xar_pid']]['xar_cid'] = 0;
                 $comments_list[$node['xar_pid']]['remove'] = 'remove';
-                $parents["PID_".$node['xar_pid']] = -1;                
+                $parents["PID_".$node['xar_pid']] = -1;
             }
             $ppidkey = "PID_".$comments_list[$node['xar_pid']]['xar_pid'];
 
@@ -211,16 +209,16 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
         }
         $new_list[] = $node;
     }
-    
+
     $comments_list = '';
-   
+
     // remove any items that aren't really a part of the array
     // and are just excess baggage from previous code
     foreach ($new_list as $node) {
         if (!array_key_exists('remove', $node)) {
             $comments_list[] = $node;
         }
-    } 
+    }
 
     return true;
 }
@@ -230,8 +228,8 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
  * Remove any comments from the list with a depth greater than
  * the cutoff point. If the depth of any particular node is equal
  * to (cutoff + 1), then just the cid and the depth for that particular
- * node are included in the array. Reason: it allows us to show that 
- * there are more comments in that direction. This is used by 
+ * node are included in the array. Reason: it allows us to show that
+ * there are more comments in that direction. This is used by
  * comments_userapi_get() to limit the comments pulled by depth.
  *
  * @access private
@@ -240,7 +238,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
  * @param integer    $args['cutoff']        depth cutoff point
  * @returns void if no array is passed or the array has no nodes return void
  */
-function comments_renderer_array_prune_excessdepth($args) 
+function comments_renderer_array_prune_excessdepth($args)
 {
     extract($args);
     if (!is_array($array_list) || !count($array_list)) return;
@@ -321,19 +319,19 @@ function comments_renderer_array_prune_excessdepth($args)
  * @returns bool true if the specified depth is set, false otherwise
  */
 
-function comments_renderer_array_depthbuoy($action, $depth, $value=true) 
+function comments_renderer_array_depthbuoy($action, $depth, $value=true)
 {
     static $matrix = array();
-    
+
     if (empty($matrix)) {
         $matrix = array_pad(array(0=>0), _COM_MAX_DEPTH, _COM_NO_CONNECTOR);
     }
-    
+
     if (strtolower($action) == 'set') {
         $matrix[($depth)] = (bool) $value;
     }
-    
-    if ($depth < 0) { 
+
+    if ($depth < 0) {
         return 0;
     } else {
         return $matrix[($depth)];
@@ -352,7 +350,7 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true)
  *                  that's contains the visual representation for that particular node
  */
 
-function comments_renderer_array_maptree(&$CommentList, $modName = NULL) 
+function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 {
 
     // if $CommentList isn't an array or it is empty,
@@ -376,7 +374,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 
     $listsize = (count($CommentList) - 1);
     $total = count($CommentList);
-    
+
     // create the matrix starting from the end and working our way towards
     // the beginning.
     for ($counter = $listsize; $counter >= 0; $counter = $counter - 1) {
@@ -457,15 +455,15 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 
         // ok -- once that's all done, take this segment of the whole matrix map (ie.,
         // this comment's matrix) create the array of images that will represent this
-        // comments place on the "threaded map." 
-        
+        // comments place on the "threaded map."
+
         // if modName == NULL or empty then we default to using the comments api's
         //  thread images otherwise, we use images from the calling module
         if (empty($modName) || $nodName == NULL) {
             $CommentList[$counter]['xar_map'] = comments_renderer_array_image_substitution($matrix, 'comments');
         } else {
             $CommentList[$counter]['xar_map'] = comments_renderer_array_image_substitution($matrix);
-        }            
+        }
     }
 
     return $CommentList;
@@ -483,10 +481,10 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
  * @returns array   an list of the images needed for displaying this particular node in the tree
  */
 
-function comments_renderer_array_image_substitution($matrix, $modName = NULL) 
+function comments_renderer_array_image_substitution($matrix, $modName = NULL)
 {
     $map = array();
-    
+
     foreach ($matrix as $value) {
         switch ($value) {
             case _COM_O_CONNECTOR:
@@ -500,7 +498,7 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL)
                 break;
             case _COM_L_CONNECTOR:
                 $map[] = xarTplGetImage('n_sub_branch_l.gif', $modName);
-                break; 
+                break;
             case _COM_I_CONNECTOR:
                 $map[] = xarTplGetImage('n_sub_line.gif', $modName);
                 break;
@@ -534,11 +532,11 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL)
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function comments_renderer_array_fieldrelation_compare ($a, $b) 
+function comments_renderer_array_fieldrelation_compare ($a, $b)
 {
     // get the sort value
     $sort = comments_renderer_array_sortvalue();
-    
+
     // first we start off by putting the array key into
     // array format with each id that makes up
     // the lineage having it's own array index.
@@ -546,10 +544,10 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
     // are for each Lineage.
     $Family_A = explode(':', $a);
     $Family_A_count = count($Family_A);
-    
+
     $Family_B = explode(':', $b);
     $Family_B_count = count($Family_B);
-    
+
     // We need the lineage with the least amount of id's in
     // it for use in our for loop.
     if ($Family_A_count == $Family_B_count) {
@@ -587,7 +585,7 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
                 return strcasecmp($Family_A[0], $Family_B[0]);
             }
         }
-    }        
+    }
     // now we do an id to id comparison but only up to the number of
     // elements (comment ids) of the smallest lineage.
     for ($i = 1; $i < $members_count; $i++) {
@@ -618,10 +616,10 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
  * @returns  string  The current sort value
  *
  */
-function comments_renderer_array_sortvalue($value=NULL) 
+function comments_renderer_array_sortvalue($value=NULL)
 {
     static $sort;
-    
+
     if ($value != NULL) {
         switch (strtolower($value)) {
         case _COM_SORT_DESC:
@@ -646,7 +644,7 @@ function comments_renderer_array_sortvalue($value=NULL)
  * @returns   void    nothing
  */
 
-function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) 
+function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
 {
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
@@ -654,12 +652,12 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }
-    
-    $index      = array(); 
-    $new_list   = array();    
-    
+
+    $index      = array();
+    $new_list   = array();
+
     comments_renderer_array_sortvalue($direction);
-    
+
     if ($sortby == _COM_SORTBY_THREAD) {
         foreach ($comment_list as $node) {
 
@@ -673,10 +671,10 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
             $new_list[$key] = $node;
         }
     } else {
-        // Initial presort for non threaded sort - We do a presort to 
-        // get all the comments in order by the key that we're sorting 
-        // by -- otherwise, when we assign parents and children 
-        // (further below) there will  be a chance that some will be 
+        // Initial presort for non threaded sort - We do a presort to
+        // get all the comments in order by the key that we're sorting
+        // by -- otherwise, when we assign parents and children
+        // (further below) there will  be a chance that some will be
         // out of order and mess up the rendering
         foreach ($comment_list as $node) {
             switch($sortby) {
@@ -700,7 +698,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
 
         uksort($comment_list, 'comments_renderer_array_fieldrelation_compare');
         // End of PreSORT
-        
+
         foreach ($comment_list as $node) {
             switch($sortby) {
                 case _COM_SORTBY_TOPIC:
@@ -730,9 +728,9 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
                 $new_list[$key.":0"]['children'] += 1;
             }
         }
-    }    
+    }
     $comment_list = $new_list;
-    
+
     uksort($comment_list, 'comments_renderer_array_fieldrelation_compare');
 
     // reset the indexes on the comments_list
@@ -740,7 +738,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
     foreach ($comment_list as $comment) {
         $comments[] = $comment;
     }
-    
+
     $comment_list = $comments;
     unset($comments);
 
@@ -757,13 +755,13 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
  * @returns   string the word-wrapped string
  */
 
-function comments_renderer_wrap_words(&$str, $chars) 
+function comments_renderer_wrap_words(&$str, $chars)
 {
     if (xarModGetVar('comments','wrap')){
         // Added for bug 4210 wrapping on multibyte words
         $before_lt="[\\x21-\\x3B]"; //"space" is x20 and "<" is x3C
         $equal="[\\x3D]";           //"=" is x3D
-        $after_gt="[\\x3F-\\x7F]";  //">" is x3E 
+        $after_gt="[\\x3F-\\x7F]";  //">" is x3E
         $single = $before_lt."|".$equal."|".$after_gt;
         $pattern = "/(".$single."){".$chars.",".$chars."}/";
         $str = preg_replace($pattern, '\0 ',$str);

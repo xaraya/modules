@@ -1,5 +1,17 @@
 <?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  * Delete a branch from the tree
  *
  * @author Carl P. Corliss (aka rabbitt)
@@ -7,7 +19,7 @@
  * @param   integer     $node   the id of the node to delete
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_branch( $args ) 
+function comments_adminapi_delete_branch( $args )
 {
 
     extract($args);
@@ -52,7 +64,7 @@ function comments_adminapi_delete_branch( $args )
 
 
     // Go through and fix all the l/r values for the comments
-    if (xarModAPIFunc('comments','user','remove_gap', array('startpoint' => $left, 
+    if (xarModAPIFunc('comments','user','remove_gap', array('startpoint' => $left,
                                                             'modid'      => $modid,
                                                             'objectid'   => $objectid,
                                                             'itemtype'   => $itemtype,

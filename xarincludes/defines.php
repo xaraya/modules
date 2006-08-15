@@ -1,37 +1,25 @@
 <?php
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya Content Management System
-// Copyright (C) 2001 by the Xaraya Development Team.
-// http://www.xaraya.com/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file:  Rabbitt (aka Carl P. Corliss)
-// Purpose of file:  Defines for the comments API
-// ----------------------------------------------------------------------
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 if (defined('_COM_SORT_ASC')) return;
 
 // the following two defines specify the sorting direction which
 // can be either ascending or descending
 define('_COM_SORT_ASC', 1);
 define('_COM_SORT_DESC', 2);
-    
+
 // the following four defines specify the sort order which can be any of
-// the following: author, date, topic, lineage 
+// the following: author, date, topic, lineage
 // TODO: Add Rank sorting
 define ('_COM_SORTBY_AUTHOR', 1);
 define ('_COM_SORTBY_DATE', 2);

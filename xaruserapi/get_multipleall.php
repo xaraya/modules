@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Get a list of comments from one or several modules + item types
  *
@@ -13,12 +24,12 @@
  *                   found for the particular modules, or raise an
  *                   exception and return false.
  */
-function comments_userapi_get_multipleall($args) 
+function comments_userapi_get_multipleall($args)
 {
     extract($args);
     // $modid
     if (!isset($modarray) || empty($modarray) || !is_array($modarray)) {
-        $modarray=array('all');    
+        $modarray=array('all');
     }
     if (empty($order) || $order != 'ASC') {
         $order = 'DESC';
@@ -28,13 +39,13 @@ function comments_userapi_get_multipleall($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
+
     $ctable = &$xartable['comments_column'];
     $commentlist = array();
 
     $query = "SELECT  $ctable[title] AS xar_subject,
                       $ctable[comment] AS xar_text,
-                      $ctable[cdate] AS xar_datetime,                        
+                      $ctable[cdate] AS xar_datetime,
                       $ctable[author] AS xar_author,
                       $ctable[cid] AS xar_cid,
                       $ctable[status] AS xar_status,
@@ -44,9 +55,9 @@ function comments_userapi_get_multipleall($args)
                       $ctable[objectid] AS xar_objectid
                 FROM  $xartable[comments]
                WHERE  $ctable[status]="._COM_STATUS_ON." ";
-    
+
     if (count($modarray) > 0 && $modarray[0] != 'all' ) {
-        $where = array();     
+        $where = array();
         foreach ($modarray as $modname) {
             if (strstr($modname,'.')) {
                 list($module,$itemtype) = explode('.',$modname);

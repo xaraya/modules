@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Grabs the list of viewing options in the following order of precedence:
  * 1. POST/GET
@@ -11,7 +22,7 @@
  * @access public
  * @returns array list of viewing options (depth, render style, order, and sortby)
  */
-function comments_userapi_getoptions() 
+function comments_userapi_getoptions()
 {
     if (!xarVarFetch('depth', 'int', $depth, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('render', 'str', $render, '', XARVAR_NOT_REQUIRED)) return;

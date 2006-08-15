@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Modify a comment
  *
@@ -7,7 +18,7 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_userapi_modify($args) 
+function comments_userapi_modify($args)
 {
 
     extract($args);
@@ -75,7 +86,7 @@ function comments_userapi_modify($args)
     }
 
     $sql =  "UPDATE $xartable[comments]
-                SET xar_title    = ?, 
+                SET xar_title    = ?,
                     xar_text     = ?,
                     xar_anonpost = ?
               WHERE xar_cid      = ?";
