@@ -14,7 +14,7 @@
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <form method="post" action="#xarModUrl('comments', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded">
+    <form method="post" action="&xar-modurl-comments-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 <strong>

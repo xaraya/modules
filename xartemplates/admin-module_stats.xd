@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -18,8 +19,6 @@
         <xar:mlstring>Module</xar:mlstring> [<strong>#$modname#</strong>]
     </h3>
 
-
-
     <div class="xar-align-center">
         <table border="0" width="100%" cellpadding="2" cellspacing="1">
             <tr>
@@ -36,8 +35,6 @@
                     <xar:mlstring><strong>Action</strong></xar:mlstring>
                 </th>
             </tr>
-
-
 
             <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
                 <tr>

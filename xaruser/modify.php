@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Modify a comment, dependant on the following criteria:
  * 1. user is the owner of the comment, or
@@ -10,7 +21,7 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_modify() 
+function comments_user_modify()
 {
     $header                       = xarRequestGetVar('header');
     $package                      = xarRequestGetVar('package');
@@ -82,8 +93,8 @@ function comments_user_modify()
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
-            $package = xarModCallHooks('item', 'transform-input', 0, $package, 
-                                       'comments', 0); 
+            $package = xarModCallHooks('item', 'transform-input', 0, $package,
+                                       'comments', 0);
             xarModAPIFunc('comments','user','modify',
                                         array('cid'      => $header['cid'],
                                               'text'     => $package['text'],

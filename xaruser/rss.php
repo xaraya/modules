@@ -1,12 +1,24 @@
 <?php
 /**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
+/**
  * Configures a comments RSS output
  *
  * @author John Cox
  * @access public
  * @returns array
  */
-function comments_user_rss($args) 
+function comments_user_rss($args)
 {
     extract($args);
     if (!xarSecurityCheck('Comments-Read',0))
@@ -16,7 +28,7 @@ function comments_user_rss($args)
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'comments'));
 
-    // initialize list of module and pubtype names  
+    // initialize list of module and pubtype names
     $items   = array();
     $modlist = array();
     $modname = array();
@@ -89,7 +101,7 @@ function comments_user_rss($args)
 
         $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['xar_text']);
         $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['xar_text']));
-    } 
+    }
 
     //$output = var_export($items, 1); return "<pre>$output</pre>";
     $data['items'] = $items;

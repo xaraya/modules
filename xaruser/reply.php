@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * processes comment replies and then redirects back to the
  * appropriate module/objectid (aka page)
@@ -9,7 +20,7 @@
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
-function comments_user_reply() 
+function comments_user_reply()
 {
     if (!xarSecurityCheck('Comments-Post'))
         return;
@@ -48,9 +59,9 @@ function comments_user_reply()
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
-            $package = xarModCallHooks('item', 'transform-input', 0, $package, 
-                                       'comments', 0); 
-                                                           
+            $package = xarModCallHooks('item', 'transform-input', 0, $package,
+                                       'comments', 0);
+
             xarModAPIFunc('comments','user','add',
                            array('modid'    => $header['modid'],
                                  'itemtype' => $header['itemtype'],

@@ -1,10 +1,21 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Display comments from one or more modules and item types
  *
  */
-function comments_user_displayall($args) 
+function comments_user_displayall($args)
 {
     if (!xarVarFetch('modid','array',$args['modid'],array('all'),XARVAR_NOT_REQUIRED)) {return;};
     if (!xarVarFetch('itemtype','int',$args['itemtype'],null,XARVAR_NOT_REQUIRED)) {return;};
@@ -14,7 +25,7 @@ function comments_user_displayall($args)
 
     if (empty($args['block_is_calling'])) {
         $args['block_is_calling']=0;
-    } 
+    }
     if (empty($args['truncate'])) {
         $args['truncate']='';
     }
@@ -46,7 +57,7 @@ function comments_user_displayall($args)
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'comments'));
 
-    // initialize list of module and pubtype names    
+    // initialize list of module and pubtype names
     $modlist = array();
     $modname = array();
     $modview = array();
@@ -106,7 +117,7 @@ function comments_user_displayall($args)
     $settings = xarModAPIFunc('comments','user','getoptions');
 
     if (!empty($args['order'])) {
-        $settings['order']=$args['order'];        
+        $settings['order']=$args['order'];
     }
 
     // get title and link for all module items (where possible)
@@ -140,23 +151,23 @@ function comments_user_displayall($args)
     }
 
     // generate comments array of arrays; each date has an array of comments
-    // posted on that date 
+    // posted on that date
     $commentsarray = array();
-    $timenow = time();   
+    $timenow = time();
     $hoursnow = xarLocaleFormatDate("%H",$timenow);
-    $dateprev = '';  
+    $dateprev = '';
     $numcomments = count($comments);
-    for ($i=0;$i<$numcomments;$i++) {   
+    for ($i=0;$i<$numcomments;$i++) {
 
         if ($args['adddaysep']=='on') {
-        // find out whether to change day separator        
+        // find out whether to change day separator
             $msgunixtime=$comments[$i]['xar_datetime'];
             $msgdate=xarLocaleFormatDate("%b %d, %Y",$msgunixtime);
-            $msgday=xarLocaleFormatDate("%A",$msgunixtime);          
+            $msgday=xarLocaleFormatDate("%A",$msgunixtime);
 
             $daylabel=0;
 
-            $hoursdiff=($timenow - $msgunixtime)/3600;        
+            $hoursdiff=($timenow - $msgunixtime)/3600;
             if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
                 $daylabel=xarML('Today');
             }
@@ -211,7 +222,7 @@ function comments_user_displayall($args)
                                                                    $comments[$i]['xar_subject']),
                                                                    'comments');
         $commentsarray[$daylabel][] = $comments[$i];
-    }                       
+    }
 
     // prepare for output
     $templateargs['order']          =$args['order'];
@@ -220,7 +231,7 @@ function comments_user_displayall($args)
     $templateargs['adddate']        =$args['adddate'];
     $templateargs['adddaysep']      =$args['adddaysep'];
     $templateargs['addauthor']      =$args['addauthor'];
-    $templateargs['addmodule']      =$args['addmodule'];    
+    $templateargs['addmodule']      =$args['addmodule'];
     $templateargs['addcomment']     =$args['addcomment'];
     $templateargs['addobject']      =$args['addobject'];
     $templateargs['addprevious']    =$args['addprevious'];
@@ -236,20 +247,20 @@ function comments_user_displayall($args)
                                                             );
     $templateargs['commentlist']    =$commentsarray;
     $templateargs['order']          =$settings['order'];
-    
-    if ($args['block_is_calling']==0 )   {         
-        $output=xarTplModule('comments', 'user','displayall', $templateargs);    
-    } else {            
-        $templateargs['olderurl']=xarModURL('comments','user','displayall', 
+
+    if ($args['block_is_calling']==0 )   {
+        $output=xarTplModule('comments', 'user','displayall', $templateargs);
+    } else {
+        $templateargs['olderurl']=xarModURL('comments','user','displayall',
                                             array(
                                                 'first'=>   $args['first']+$args['howmany'],
                                                 'howmany'=> $args['howmany'],
-                                                'modid'=>$modarray 
+                                                'modid'=>$modarray
                                                 )
                                             );
-        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );    
+        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );
     }
-    
+
     return $output;
 }
 ?>

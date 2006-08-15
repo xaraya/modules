@@ -1,25 +1,26 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment> lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] </xar:comment>
 <xar:style scope="module" module="comments" file="comments" />
 <xar:comment>
-    [andyv] i see that we have at least 3 possible situations here, 
+    [andyv] i see that we have at least 3 possible situations here,
     so we should deal with them in a context-sensitive manner as follows:
-    
+
     1. no real comments posted
         - display 'No Comments' note
         - hide sorting options box
         - display 'Post New Comment' box
-    
+
     2. at least 1 comment exists and needs to be displayed
         - display sorting options box (for now.. perhaps needs be simpler for a single comment?)
         - display 'Post New Comment' box
-    
+
     3. comments exist - user has selected 'No Comments' in 'Style' options
         - display 'Comments Disabled' + count of total comments
         - hide sorting options box
         - hide 'Post New Comment' box
         TODO: shouldn't this option be 'sticky' from user POV?
         If yes, a user needs a way back to display comments again.
-        
+
 </xar:comment>
 
 <xar:sec mask="Comments-Read" catch="false">
@@ -40,9 +41,9 @@
                 </p>
             <xar:if condition="!isset($header['selected_cid'])">
                 <xar:template file="input-box" type="module" />
-            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/> 
+            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                 <p>
-                    <xar:mlstring>Return to</xar:mlstring> 
+                    <xar:mlstring>Return to</xar:mlstring>
                     <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                 </p>
             </xar:if>
@@ -59,9 +60,9 @@
             </xar:if>
             <xar:if condition="!isset($header['selected_cid'])">
                 <xar:template file="input-box" type="module" />
-            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/> 
+            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                 <p>
-                    <xar:mlstring>Return to</xar:mlstring> 
+                    <xar:mlstring>Return to</xar:mlstring>
                     <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
                 </p>
             </xar:if>

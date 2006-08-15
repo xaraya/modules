@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Comments module - Allows users to post comments on items
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Comments Module
+ * @link http://xaraya.com/index.php/release/14.html
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+ */
 /**
  * Displays a comment or set of comments
  *
@@ -11,9 +22,9 @@
  * @param    string     $args['returnurl']          the url to return to
  * @param    integer    [$args['selected_cid']]     optional: the cid of the comment to view (only for displaying single comments)
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
- * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
+ * @return  array      returns whatever needs to be parsed by the BlockLayout engine
  */
-function comments_user_display($args) 
+function comments_user_display($args)
 {
     if (!xarSecurityCheck('Comments-Read', 0)) return;
 
@@ -139,7 +150,7 @@ function comments_user_display($args)
             'cutoff'        => $package['settings']['depth'],
             'modid'         => $header['modid'],
             'itemtype'      => $header['itemtype'],
-            'objectid'	    => $header['objectid'],
+            'objectid'      => $header['objectid'],
         )
     );
 
@@ -217,7 +228,7 @@ function comments_user_display($args)
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
 
-    $hooks = xarModAPIFunc('comments','user','formhooks'); 
+    $hooks = xarModAPIFunc('comments','user','formhooks');
 
     $output['hooks']   = $hooks;
     $output['header']  = $header;
@@ -225,7 +236,5 @@ function comments_user_display($args)
     $output['receipt'] = $receipt;
 
     return $output;
-
 }
-
 ?>

@@ -30,7 +30,6 @@
                 </th>
             </tr>
 
-
             <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
                 <tr>
                     <td colspan="5" align="center">

@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <h2>
     <xar:mlstring>
         Search in Comments
@@ -24,7 +25,7 @@
 <xar:mlstring>
     Search on
 </xar:mlstring>
-: 
+:
 <br />
 <xar:if condition="$header['title'] eq '1'">
     <input type="checkbox" name="header[title]" value="1" checked="checked" />
