@@ -131,7 +131,7 @@ function sitecontact_admin_view($args)
 
     // Add pager
     $data['pager'] = xarTplGetPager($startnum,
-                            xarModAPIFunc('sitecontact', 'user', 'countitems',
+                            xarModAPIFunc('sitecontact', 'user', 'countresponses',
                                           array('scid' => $scid,
                                                 'responsetime' => $responsetime,
                                                 )),
