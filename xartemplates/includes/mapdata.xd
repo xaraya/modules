@@ -1,0 +1,21 @@
+<xar:if condition="$tabmodule ne 'gmaps'">
+    <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+<xar:else />
+    <xar:set name="regid">0</xar:set>
+</xar:if>
+<div class="xar-form-input-wrapper">
+    <label for="latitude" title="#xarML('What data sources to use for the locations to be displayed')#" class="xar-form-label">
+        <xar:mlstring>
+            Use Locations: 
+        </xar:mlstring>
+    </label>
+    <xar:set name="options">array(
+                            array('id' => 'module', 'name' => xarML('Locations from #(1) module',$tabmodule)),
+                            array('id' => 'dynamic', 'name' => 'Dynamic locations'),
+                            )
+    </xar:set>
+    <xar:set name="value">
+        unserialize(xarModVars::get('gmaps', 'uselocations',$regid))
+    </xar:set>
+    <xar:data-input type="checkboxlist" name="uselocations" id="uselocations" value="$value" options="$options" />
+</div>
