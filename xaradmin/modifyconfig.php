@@ -65,6 +65,7 @@ function gmaps_admin_modifyconfig()
 			if (!xarVarFetch('gscalecontrol', 'checkbox', $gscalecontrol, xarModVars::get('gmaps', 'gscalecontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('gmaptypecontrol', 'checkbox', $gmaptypecontrol, xarModVars::get('gmaps', 'gmaptypecontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModVars::get('gmaps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('uselocations', 'array', $uselocations, array(), XARVAR_NOT_REQUIRED)) return;
 
 			if ($data['tab'] == 'gmaps_general') {
 				xarModVars::set('gmaps', 'SupportShortURLs', $shorturls);
@@ -79,6 +80,7 @@ function gmaps_admin_modifyconfig()
 				xarModVars::set('gmaps', 'gscalecontrol', $gscalecontrol);
 				xarModVars::set('gmaps', 'gmaptypecontrol', $gmaptypecontrol);
 				xarModVars::set('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol);
+				xarModVars::set('gmaps', 'uselocations', serialize($uselocations));
 			}
 			$regid = xarModGetIDFromName($tabmodule);
 			xarModSetUserVar('gmaps', 'zoomlevel', $zoomlevel, $regid);
@@ -92,6 +94,7 @@ function gmaps_admin_modifyconfig()
 			xarModSetUserVar('gmaps', 'gscalecontrol', $gscalecontrol, $regid);
 			xarModSetUserVar('gmaps', 'gmaptypecontrol', $gmaptypecontrol, $regid);
 			xarModSetUserVar('gmaps', 'goverviewmapcontrol', $goverviewmapcontrol, $regid);
+			xarModVars::set('gmaps', 'uselocations', serialize($uselocations), $regid);
 
             xarResponseRedirect(xarModURL('gmaps', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return

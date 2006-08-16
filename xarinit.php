@@ -107,6 +107,7 @@ function gmaps_init()
     xarModVars::set('gmaps', 'gscalecontrol', 0);
     xarModVars::set('gmaps', 'gmaptypecontrol', 0);
     xarModVars::set('gmaps', 'goverviewmapcontrol', 0);
+    xarModVars::set('gmaps', 'uselocations', serialize(array('dynamic')));
 
 # --------------------------------------------------------
 #

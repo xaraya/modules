@@ -14,6 +14,7 @@
 
 class GoogleMap_Property extends Dynamic_Property
 {
+    private $regid = 30038;
     function __construct($args)
     {
         parent::__construct($args);
@@ -34,36 +35,49 @@ class GoogleMap_Property extends Dynamic_Property
     function showInput($data = array())
     {
         if (isset($data['module'])) {
-			$regid = xarModGetIDFromName($data['module']);
+			$this->regid = xarModGetIDFromName($data['module']);
         } else {
 			$info = xarRequestGetInfo();
-			$regid = xarModGetIDFromName($info[0]);
+			$this->regid = xarModGetIDFromName($info[0]);
         }
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $regid);
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $regid);
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $regid);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $this->regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $this->regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $this->regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $this->regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $this->regid);
+		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $this->regid);
+		$data['locations'] = $this->getlocations($data);
 
         return parent::showInput($data);
     }
     function showOutput($data = array())
     {
         if (isset($data['module'])) {
-			$regid = xarModGetIDFromName($data['module']);
+			$this->regid = xarModGetIDFromName($data['module']);
         } else {
 			$info = xarRequestGetInfo();
-			$regid = xarModGetIDFromName($info[0]);
+			$this->regid = xarModGetIDFromName($info[0]);
         }
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $regid);
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $regid);
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $regid);
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $regid);
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $regid);
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $regid);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $this->regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $this->regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $this->regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $this->regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $this->regid);
+		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $this->regid);
+		$data['locations'] = $this->getlocations($data);
 
         return parent::showOutput($data);
+    }
+
+    function getlocations($data = array())
+    {
+		if (isset($data['locations'])) {
+			return $data['locations'];
+		} else {
+			$uselocations =  unserialize(xarModUserVars::get('gmaps', 'uselocations', $this->regid));
+			$locations = array();
+			return $locations;
+		}
     }
 }
 ?>

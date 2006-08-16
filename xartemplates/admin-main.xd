@@ -39,6 +39,24 @@
         </ol>
     </p>
     <h2>
+        <xar:mlstring>Using Gmaps in other modules</xar:mlstring>
+    </h2>
+
+    <p>
+        <xar:mlstring>This module is a utility that can be used in conjunction with other modules. To use Gmaps in another module:</xar:mlstring>
+        <ul>
+            <li>
+                <xar:mlstring>Hook the module you want to use Gmaps with into the Gmaps module. Note this is a bit counterintuive, because hooks in general are <b>from</b> the module <b>adding</b> functionality <b>to</b> the module <b>receiving</b> the new functionality. In this case however, Gmaps needs to receive configuration information from the other module. With the hook in place a tab specific to the other module will appear in the modifyconfig area of Gmaps. You can now configure Gmaps settings for your module.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Once your module is hooked in, you can add maps that use its settings anywhere in the module's templates, by adding the gmaps dd property:</xar:mlstring>
+                <code>
+                    &lt;xar:data-output type="gmap" name="mymap" /&gt;
+                </code>
+            </li>
+        </ul>
+    </p>
+    <h2>
         <xar:mlstring>Troubleshooting</xar:mlstring>
     </h2>
 

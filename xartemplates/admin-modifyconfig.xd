@@ -62,6 +62,16 @@
             </legend>
             <xar:template file="layout" />
         </fieldset>
+        <xar:if condition="$tabmodule ne 'gmaps'">
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Map Data  
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="mapdata" />
+            </fieldset>
+        </xar:if>
         <fieldset>
             <legend>
                 <xar:mlstring>

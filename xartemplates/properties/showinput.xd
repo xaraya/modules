@@ -17,6 +17,13 @@
     //]]>
 </script>
 
+<script type="text/javascript">
+    <xar:foreach in="$locations" value="$location">
+        point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+        createMarker(mapnumber,point);
+    </xar:foreach>
+</script>
+
 <form method="post" action="#xarModURL('gmaps','admin','create')#">
     <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
     <input type="hidden" name="longitude2" id="gmaps_longitude2" value="" />
