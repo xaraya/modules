@@ -14,7 +14,7 @@
 8. Deadlines for enrolling [done]
 9. Block for upcoming courses and their deadlines [in progress]
 10. Minimum/max participants [done]
-11. Improve the admin functions [added copy function]
+11. Improve the admin functions [added copy function, working on planning interface]
 12. Link teachers to the planned courses, besides showing their addresses
 13. Link course coordinators to courses [done]
 14. Check all security functions [done mostly]
