@@ -45,7 +45,7 @@ class GoogleMap_Property extends Dynamic_Property
 		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('maps', 'zoomlevel', $this->regid);
 		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('maps', 'centerlatitude', $this->regid);
 		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('maps', 'centerlongitude', $this->regid);
-		$data['mapskey']   = isset($data['mapskey']) ? $data['mapskey'] : xarModUserVars::get('maps', 'mapskey', $this->regid);
+		$data['mapskey']   = isset($data['mapskey']) ? $data['mapskey'] : xarModUserVars::get('maps', 'gmapskey', $this->regid);
 		$data['locations'] = $this->getlocations($data);
 
         return parent::showInput($data);
