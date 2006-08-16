@@ -22,10 +22,10 @@
   function fillmap(){
     <xar:foreach in="$locations" value="$location">
         point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-        marker = createMarker(mapnumber,point);
+        marker = createMarker(mapnumber,point,"#$location['name']#");
         maps[mapnumber].addOverlay(marker);
     </xar:foreach>
   }
 </script>
-
+	<xar:set name="$trash">print_r($locations);</xar:set>
 <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
