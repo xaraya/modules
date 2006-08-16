@@ -1,16 +1,16 @@
 <object name="gmaps_locations">
-  <objectid>104</objectid>
+  <objectid>32</objectid>
   <label>Locations</label>
   <moduleid>182</moduleid>
-  <itemtype>25</itemtype>
+  <itemtype>14</itemtype>
   <urlparam>itemid</urlparam>
   <parent>0</parent>
-  <maxid>0</maxid>
+  <maxid>1</maxid>
   <config></config>
   <isalias>0</isalias>
   <properties>
     <property name="id">
-      <id>750</id>
+      <id>235</id>
       <label>ID</label>
       <type>itemid</type>
       <default></default>
@@ -20,7 +20,7 @@
       <validation></validation>
     </property>
     <property name="name">
-      <id>751</id>
+      <id>236</id>
       <label>Name</label>
       <type>textbox</type>
       <default></default>
@@ -30,7 +30,7 @@
       <validation></validation>
     </property>
     <property name="description">
-      <id>752</id>
+      <id>237</id>
       <label>Description</label>
       <type>textbox</type>
       <default></default>
@@ -40,9 +40,9 @@
       <validation></validation>
     </property>
     <property name="longitude">
-      <id>753</id>
+      <id>238</id>
       <label>Longitude</label>
-      <type>integerbox</type>
+      <type>floatbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>33</status>
@@ -50,9 +50,9 @@
       <validation></validation>
     </property>
     <property name="latitude">
-      <id>754</id>
+      <id>239</id>
       <label>Latitude</label>
-      <type>integerbox</type>
+      <type>floatbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>33</status>
@@ -60,9 +60,9 @@
       <validation></validation>
     </property>
     <property name="longitude2">
-      <id>755</id>
+      <id>240</id>
       <label>Longitude2</label>
-      <type>integerbox</type>
+      <type>floatbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>33</status>
@@ -70,9 +70,9 @@
       <validation></validation>
     </property>
     <property name="latitude2">
-      <id>756</id>
+      <id>241</id>
       <label>Latitude2</label>
-      <type>integerbox</type>
+      <type>floatbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>33</status>
@@ -80,7 +80,7 @@
       <validation></validation>
     </property>
     <property name="postal_code">
-      <id>757</id>
+      <id>242</id>
       <label>Postal Code</label>
       <type>textbox</type>
       <default></default>
