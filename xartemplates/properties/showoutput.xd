@@ -3,23 +3,29 @@
 
 <script type="text/javascript">
     //<![CDATA[
+    var mapnumber
     if (window.attachEvent) {
         window.attachEvent("onload", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+            fillmap();
         });
     } else {
         window.addEventListener("load", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+            fillmap();
         }, false);
     }
     //]]>
 </script>
 
 <script type="text/javascript">
+  function fillmap(){
     <xar:foreach in="$locations" value="$location">
         point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-        createMarker(mapnumber,point);
+        marker = createMarker(mapnumber,point);
+        maps[mapnumber].addOverlay(marker);
     </xar:foreach>
+  }
 </script>
 
 <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
