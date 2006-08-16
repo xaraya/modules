@@ -1,0 +1,93 @@
+<object name="maps_directory">
+  <objectid>111</objectid>
+  <label>Directory</label>
+  <moduleid>182</moduleid>
+  <itemtype>26</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>0</parent>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>795</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="postal_code">
+      <id>796</id>
+      <label>Postal Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="longitude">
+      <id>797</id>
+      <label>Longitude</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="latitude">
+      <id>798</id>
+      <label>Latitude</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="city">
+      <id>799</id>
+      <label>City</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="state">
+      <id>800</id>
+      <label>State</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="county">
+      <id>801</id>
+      <label>County</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="pc_class">
+      <id>802</id>
+      <label>PC Class</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>514</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

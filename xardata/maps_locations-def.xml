@@ -1,0 +1,93 @@
+<object name="maps_locations">
+  <objectid>32</objectid>
+  <label>Locations</label>
+  <moduleid>182</moduleid>
+  <itemtype>14</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>0</parent>
+  <maxid>1</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>235</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>236</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>237</id>
+      <label>Description</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="longitude">
+      <id>238</id>
+      <label>Longitude</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="latitude">
+      <id>239</id>
+      <label>Latitude</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="longitude2">
+      <id>240</id>
+      <label>Longitude2</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="latitude2">
+      <id>241</id>
+      <label>Latitude2</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="postal_code">
+      <id>242</id>
+      <label>Postal Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
