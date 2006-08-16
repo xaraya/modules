@@ -53,7 +53,8 @@ function maps_admin_modifyconfig()
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 			if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('mapskey', 'str:1', $mapskey, xarModVars::get('maps', 'mapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+			if (!xarVarFetch('gmapskey', 'str:1', $gmapskey, xarModVars::get('maps', 'gmapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+			if (!xarVarFetch('ymapskey', 'str:1', $ymapskey, xarModVars::get('maps', 'ymapskey'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 			if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModVars::get('maps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModVars::get('maps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModVars::get('maps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
@@ -69,7 +70,8 @@ function maps_admin_modifyconfig()
 
 			if ($data['tab'] == 'maps_general') {
 				xarModVars::set('maps', 'SupportShortURLs', $shorturls);
-				xarModVars::set('maps', 'mapskey', $mapskey);
+				xarModVars::set('maps', 'gmapskey', $gmapskey);
+				xarModVars::set('maps', 'ymapskey', $ymapskey);
 				xarModVars::set('maps', 'zoomlevel', $zoomlevel);
 				xarModVars::set('maps', 'centerlongitude', $centerlongitude);
 				xarModVars::set('maps', 'centerlatitude', $centerlatitude);

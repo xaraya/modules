@@ -100,7 +100,8 @@ function maps_init()
     xarModVars::set('maps', 'zoomlevel', 6);
     xarModVars::set('maps', 'centerlatitude', 48.5132);
     xarModVars::set('maps', 'centerlongitude', 2.1745);
-    xarModVars::set('maps', 'mapskey', 'Paste your google maps key here');
+    xarModVars::set('maps', 'gmapskey', 'Paste your google maps key here');
+    xarModVars::set('maps', 'ymapskey', 'Paste your yahoo maps key here');
     xarModVars::set('maps', 'glargemapcontrol', 0);
     xarModVars::set('maps', 'gsmallmapcontrol', 0);
     xarModVars::set('maps', 'gsmallzoomcontrol', 0);

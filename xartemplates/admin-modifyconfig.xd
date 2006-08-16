@@ -31,7 +31,7 @@
             <fieldset>
                 <legend>
                     <xar:mlstring>
-                        Key 
+                        Keys 
                     </xar:mlstring>
                 </legend>
                 <div class="xar-form-input-wrapper">
@@ -40,7 +40,15 @@
                             Google Maps Key: 
                         </xar:mlstring>
                     </label>
-                    <textarea name="mapskey" id="mapskey">#xarModGetVar('maps', 'mapskey')#</textarea>
+                    <textarea name="gmapskey" id="gmapskey">#xarModGetVar('maps', 'gmapskey')#</textarea>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="latitude" title="#xarML('Site key to use Yahoo Maps')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Yahoo Maps Key: 
+                        </xar:mlstring>
+                    </label>
+                    <textarea name="ymapskey" id="ymapskey">#xarModGetVar('maps', 'ymapskey')#</textarea>
                 </div>
             </fieldset>
         <xar:else />
