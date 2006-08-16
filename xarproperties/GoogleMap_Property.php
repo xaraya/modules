@@ -76,6 +76,18 @@ class GoogleMap_Property extends Dynamic_Property
 		} else {
 			$uselocations =  unserialize(xarModUserVars::get('gmaps', 'uselocations', $this->regid));
 			$locations = array();
+			if (in_array('dynamic',$uselocations)) {
+				try {
+					$locations = array_merge($locations,xarModAPIFunc('gmaps','user','getlocations'));
+				} catch(Exception $e) {
+				}
+			}
+			if (in_array('module',$uselocations)) {
+				try {
+					$locations = array_merge($locations,xarModAPIFunc(xarModGetNameFromID($this->regid),'user','getlocations'));
+				} catch(Exception $e) {
+				}
+			}
 			return $locations;
 		}
     }

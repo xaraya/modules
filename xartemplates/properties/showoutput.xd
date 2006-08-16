@@ -14,4 +14,12 @@
     }
     //]]>
 </script>
+
+<script type="text/javascript">
+    <xar:foreach in="$locations" value="$location">
+        point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+        createMarker(mapnumber,point);
+    </xar:foreach>
+</script>
+
 <div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
