@@ -29,7 +29,7 @@ function maps_user_display($args)
     $data['zoomlevel']  = isset($args['zoomlevel']) ? $args['zoomlevel'] : xarModVars::get('maps', 'zoomlevel');
     $data['latitude']   = isset($args['latitude']) ? $args['latitude'] : xarModVars::get('maps', 'latitude');
     $data['longitude']  = isset($args['longitude']) ? $args['longitude'] : xarModVars::get('maps', 'longitude');
-    $data['mapskey']   = isset($args['mapskey']) ? $args['mapskey'] : xarModVars::get('maps', 'mapskey');
+    $data['mapskey']   = isset($args['mapskey']) ? $args['mapskey'] : xarModVars::get('maps', 'gmapskey');
 
     return $data;
 }
