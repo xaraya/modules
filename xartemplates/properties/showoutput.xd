@@ -1,15 +1,15 @@
-<script src="http://maps.google.com/maps?file=api&v=2&amp;key=#$gmapskey#" type="text/javascript"></script>
-<xar:base-include-javascript position="head" module="gmaps" filename="map_init.js" />
+<script src="http://maps.google.com/maps?file=api&v=2&amp;key=#$mapskey#" type="text/javascript"></script>
+<xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
 
 <script type="text/javascript">
     //<![CDATA[
     if (window.attachEvent) {
         window.attachEvent("onload", function() {
-            mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
         });
     } else {
         window.addEventListener("load", function() {
-            mapnumber = mapInit('gmaps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
         }, false);
     }
     //]]>
@@ -22,4 +22,4 @@
     </xar:foreach>
 </script>
 
-<div id="gmaps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+<div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>

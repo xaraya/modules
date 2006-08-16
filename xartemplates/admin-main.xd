@@ -1,16 +1,16 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Gmaps Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Maps Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <img src="#xarTplGetImage('admin.gif', 'gmaps')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+    <img src="#xarTplGetImage('admin.gif', 'maps')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
 
     <h2>
         <xar:mlstring>Overview</xar:mlstring>
     </h2>
 
     <p>
-        <xar:mlstring>The Gmaps module lets you display and manage Google Maps through a Xaraya interface.</xar:mlstring>
+        <xar:mlstring>The Maps module lets you display and manage Google Maps through a Xaraya interface.</xar:mlstring>
     </p>
     <h2>
         <xar:mlstring>How to use it</xar:mlstring>
@@ -27,29 +27,29 @@
             </li>
             <li>
                 <xar:mlstring>Once you have the key copy it and leave the page on Google's site open (for checking in case something goes wrong)</xar:mlstring> 
-                <xar:mlstring>Open this page in a new window:</xar:mlstring> <a href="#xarModURL('gmaps','admin','modifyconfig')#">#xarModURL('gmaps','admin','modifyconfig')#</a>. 
+                <xar:mlstring>Open this page in a new window:</xar:mlstring> <a href="#xarModURL('maps','admin','modifyconfig')#">#xarModURL('maps','admin','modifyconfig')#</a>. 
                 <xar:mlstring>Paste the key into Google Maps Key field.</xar:mlstring> 
                 <xar:mlstring>Click the button at the buttom of the page to save your key.</xar:mlstring> 
                 <xar:mlstring>(It's a good idea to keep a backup copy of your key somewhere else.)</xar:mlstring>
             </li>
             <li>
-                <xar:mlstring>Test your site by going to this page:</xar:mlstring> <a href="#xarModURL('gmaps','user','display')#">#xarModURL('gmaps','user','display')#</a>. 
+                <xar:mlstring>Test your site by going to this page:</xar:mlstring> <a href="#xarModURL('maps','user','display')#">#xarModURL('maps','user','display')#</a>. 
                 <xar:mlstring>You should see a map display. If the map appears you are good to go and can close the Google page. Did you make a copy of the key?</xar:mlstring>
             </li>
         </ol>
     </p>
     <h2>
-        <xar:mlstring>Using Gmaps in other modules</xar:mlstring>
+        <xar:mlstring>Using Maps in other modules</xar:mlstring>
     </h2>
 
     <p>
-        <xar:mlstring>This module is a utility that can be used in conjunction with other modules. To use Gmaps in another module:</xar:mlstring>
+        <xar:mlstring>This module is a utility that can be used in conjunction with other modules. To use Maps in another module:</xar:mlstring>
         <ul>
             <li>
-                <xar:mlstring>Hook the module you want to use Gmaps with into the Gmaps module. Note this is a bit counterintuive, because hooks in general are <b>from</b> the module <b>adding</b> functionality <b>to</b> the module <b>receiving</b> the new functionality. In this case however, Gmaps needs to receive configuration information from the other module. With the hook in place a tab specific to the other module will appear in the modifyconfig area of Gmaps. You can now configure Gmaps settings for your module.</xar:mlstring>
+                <xar:mlstring>Hook the module you want to use Maps with into the Maps module. Note this is a bit counterintuive, because hooks in general are <b>from</b> the module <b>adding</b> functionality <b>to</b> the module <b>receiving</b> the new functionality. In this case however, Maps needs to receive configuration information from the other module. With the hook in place a tab specific to the other module will appear in the modifyconfig area of Maps. You can now configure Maps settings for your module.</xar:mlstring>
             </li>
             <li>
-                <xar:mlstring>Once your module is hooked in, you can add maps that use its settings anywhere in the module's templates, by adding the gmaps dd property:</xar:mlstring>
+                <xar:mlstring>Once your module is hooked in, you can add maps that use its settings anywhere in the module's templates, by adding the maps dd property:</xar:mlstring>
                 <code>
                     &lt;xar:data-output type="gmap" name="mymap" /&gt;
                 </code>

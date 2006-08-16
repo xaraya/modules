@@ -25,7 +25,7 @@
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
-function gmaps_userapi_decode_shorturl($params)
+function maps_userapi_decode_shorturl($params)
 {
     // Initialise the argument list we will return
     $args = array();

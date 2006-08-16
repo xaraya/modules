@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  * Purpose of file:  to be added
@@ -17,7 +17,7 @@
  *
  */
 
-function gmaps_user_usermenu($args)
+function maps_user_usermenu($args)
 {
 
     // Security check
@@ -30,8 +30,8 @@ function gmaps_user_usermenu($args)
         case 'menu':
             $iconbasic = 'modules/roles/xarimages/home.gif';
             $iconenhanced = 'modules/roles/xarimages/home.gif';
-            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'gmaps'));
-            $data = xarTplModule('gmaps','user', 'user_menu_icon', array('iconbasic'    => $iconbasic,
+            $current = xarModURL('roles', 'user', 'account', array('moduleload' => 'maps'));
+            $data = xarTplModule('maps','user', 'user_menu_icon', array('iconbasic'    => $iconbasic,
                                                                          'iconenhanced' => $iconenhanced,
                                                                          'current'      => $current));
             break;
@@ -57,7 +57,7 @@ function gmaps_user_usermenu($args)
 						unset($hooks['dynamicdata']);
 					}
 
-					$data = xarTplModule('gmaps','user', 'user_menu_tab1',
+					$data = xarTplModule('maps','user', 'user_menu_tab1',
 										  array('authid'       => $authid,
 										  'withupload'   => $withupload,
 										  'name'         => $name,
@@ -70,7 +70,7 @@ function gmaps_user_usermenu($args)
 					break;
 
 				case 'tab2':
-					$data = xarTplModule('gmaps','user', 'user_menu_tab2');
+					$data = xarTplModule('maps','user', 'user_menu_tab2');
 					break;
 			}
 			break;

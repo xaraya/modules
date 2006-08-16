@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  * Purpose of file:  Version information on this module
@@ -17,11 +17,11 @@
  *
  */
 
-$modversion['name']           = 'gmaps';
+$modversion['name']           = 'maps';
 $modversion['id']             = '30038';
 $modversion['version']        = '1.0.0';
-$modversion['displayname']    = xarML('Gmaps');
-$modversion['description']    = 'Google maps module';
+$modversion['displayname']    = xarML('Maps');
+$modversion['description']    = 'Maps module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
 $modversion['changelog']      = 'changelog.txt';

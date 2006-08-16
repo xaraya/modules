@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  * Purpose of file:  Retrieves the data of a location
@@ -19,11 +19,11 @@
 
 include_once 'modules/xen/xarclasses/xenddquery.php';
 
-function gmaps_userapi_getlocation($args)
+function maps_userapi_getlocation($args)
 {
     extract($args);
 
-    $q = new xenDDQuery('gmaps_locations');
+    $q = new xenDDQuery('maps_locations');
     if (isset($id)) $q->eq('id',$id);
     if (isset($name)) $q->eq('name',$name);
     if (!$q->run()) return;

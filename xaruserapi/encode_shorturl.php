@@ -22,7 +22,7 @@
  * @returns string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
-function gmaps_userapi_encode_shorturl($args)
+function maps_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -37,7 +37,7 @@ function gmaps_userapi_encode_shorturl($args)
     $path = array();
 
     // we can't rely on xarModGetName() here -> you must specify the modname.
-    $module = 'gmaps';
+    $module = 'maps';
 
     switch($func) {
         case 'main':

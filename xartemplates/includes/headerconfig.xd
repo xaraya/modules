@@ -6,13 +6,13 @@
             Actions: 
         </xar:mlstring>
     </dt>
-    <xar:if condition="$tab eq 'gmaps_general'">
+    <xar:if condition="$tab eq 'maps_general'">
         <xar:set name="class">"active"</xar:set>
     <xar:else/>    
         <xar:set name="class">""</xar:set>
     </xar:if>
     <dd class="#$class#">
-        <a href="#xarModURL('gmaps', 'admin', 'modifyconfig', array('tabmodule' => 'gmaps', 'tab' => 'gmaps_general'))#">
+        <a href="#xarModURL('maps', 'admin', 'modifyconfig', array('tabmodule' => 'maps', 'tab' => 'maps_general'))#">
         <xar:mlstring>General</xar:mlstring></a>
     </dd>
     <xar:set name="tabs">$hooks['tabs']</xar:set>
@@ -24,7 +24,7 @@
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
-            <a href="#xarModURL('gmaps', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
+            <a href="#xarModURL('maps', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
                 #$thistab['configtitle']#
             </a>
         </dd>

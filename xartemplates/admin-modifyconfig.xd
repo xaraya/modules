@@ -5,7 +5,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Gmaps Administration 
+            Maps Administration 
         </xar:mlstring>
     </span>
 </div>
@@ -21,8 +21,8 @@
     <xar:comment>
          - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
     </xar:comment>
-    <form method="post" action="&xar-modurl-gmaps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-    <xar:if condition="$tab eq 'gmaps_general'">
+    <form method="post" action="&xar-modurl-maps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+    <xar:if condition="$tab eq 'maps_general'">
             <h3>
                 <xar:mlstring>
                     General Options 
@@ -40,7 +40,7 @@
                             Google Maps Key: 
                         </xar:mlstring>
                     </label>
-                    <textarea name="gmapskey" id="gmapskey">#xarModGetVar('gmaps', 'gmapskey')#</textarea>
+                    <textarea name="mapskey" id="mapskey">#xarModGetVar('maps', 'mapskey')#</textarea>
                 </div>
             </fieldset>
         <xar:else />
@@ -62,7 +62,7 @@
             </legend>
             <xar:template file="layout" />
         </fieldset>
-        <xar:if condition="$tabmodule ne 'gmaps'">
+        <xar:if condition="$tabmodule ne 'maps'">
             <fieldset>
                 <legend>
                     <xar:mlstring>
@@ -86,7 +86,7 @@
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="tab" id="tab" value="#$tab#" />
                 <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
-                <input type="submit" value="#xarML('Update Gmaps Configuration')#" />
+                <input type="submit" value="#xarML('Update Maps Configuration')#" />
             </div>
         </fieldset>
     </form>

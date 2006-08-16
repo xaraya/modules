@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  * Purpose of file:  Initialization routine for this module
@@ -19,7 +19,7 @@
 
 include_once 'modules/xen/xarclasses/xenobject.class.php';
 
-function gmaps_init()
+function maps_init()
 {
 # --------------------------------------------------------
 #
@@ -28,10 +28,10 @@ function gmaps_init()
 
     $q = new xenQuery();
 	$prefix = xarDBGetSiteTablePrefix();
-	$query = "DROP TABLE IF EXISTS " . $prefix . "_gmaps_directory";
+	$query = "DROP TABLE IF EXISTS " . $prefix . "_maps_directory";
 	if (!$q->run($query)) return;
 
-	$query = "CREATE TABLE " . $prefix . "_gmaps_directory (
+	$query = "CREATE TABLE " . $prefix . "_maps_directory (
 	  id int(11) NOT NULL auto_increment,
 	  postal_code varchar(255) NOT NULL default '',
 	  latitude varchar(255) NOT NULL default '',
@@ -45,12 +45,12 @@ function gmaps_init()
 	if (!$q->run($query)) return;
 
 // Load the data as a csv import using phpmyadmin for mysql. It's a lot faster
-/*	include "modules/gmaps/xardata/gmaps_directory-dat.php";
-	$rows = gmaps_dat1();
+/*	include "modules/maps/xardata/maps_directory-dat.php";
+	$rows = maps_dat1();
 	foreach ($rows as $row) {
 		if (!$q->run($row)) return;
 	}
-	$rows = gmaps_dat2();
+	$rows = maps_dat2();
 	foreach ($rows as $row) {
 		if (!$q->run($row)) return;
 	}
@@ -59,9 +59,9 @@ function gmaps_init()
 #
 # Create DD objects
 #
-    $module = 'gmaps';
+    $module = 'maps';
     $objects = array(
-					 'gmaps_locations',
+					 'maps_locations',
 					 );
     if(!xarModAPIFunc('xen','admin','install',array('module' => $module, 'objects' => $objects))) return;
 
@@ -69,56 +69,56 @@ function gmaps_init()
 #
 # Set up masks
 #
-    xarRegisterMask('ViewGmaps','All','gmaps','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadGmaps','All','gmaps','All','All','ACCESS_READ');
-    xarRegisterMask('CommentGmaps','All','gmaps','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateGmaps','All','gmaps','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditGmaps','All','gmaps','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddGmaps','All','gmaps','All','All','ACCESS_ADD');
-    xarRegisterMask('DeleteGmaps','All','gmaps','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminGmaps','All','gmaps','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ViewMaps','All','maps','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadMaps','All','maps','All','All','ACCESS_READ');
+    xarRegisterMask('CommentMaps','All','maps','All','All','ACCESS_COMMENT');
+    xarRegisterMask('ModerateMaps','All','maps','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditMaps','All','maps','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddMaps','All','maps','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteMaps','All','maps','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminMaps','All','maps','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('ViewGmaps','All','gmaps','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadGmaps','All','gmaps','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentGmaps','All','gmaps','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateGmaps','All','gmaps','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditGmaps','All','gmaps','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddGmaps','All','gmaps','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('DeleteGmaps','All','gmaps','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminGmaps','All','gmaps','All','All','ACCESS_ADMIN');
+    xarRegisterPrivilege('ViewMaps','All','maps','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadMaps','All','maps','All','All','ACCESS_READ');
+    xarRegisterPrivilege('CommentMaps','All','maps','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateMaps','All','maps','All','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditMaps','All','maps','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddMaps','All','maps','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('DeleteMaps','All','maps','All','All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminMaps','All','maps','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up modvars
 #
-    xarModVars::set('gmaps', 'mapwidth', 800);
-    xarModVars::set('gmaps', 'mapheight', 600);
-    xarModVars::set('gmaps', 'zoomlevel', 6);
-    xarModVars::set('gmaps', 'centerlatitude', 48.5132);
-    xarModVars::set('gmaps', 'centerlongitude', 2.1745);
-    xarModVars::set('gmaps', 'gmapskey', 'Paste your google maps key here');
-    xarModVars::set('gmaps', 'glargemapcontrol', 0);
-    xarModVars::set('gmaps', 'gsmallmapcontrol', 0);
-    xarModVars::set('gmaps', 'gsmallzoomcontrol', 0);
-    xarModVars::set('gmaps', 'gscalecontrol', 0);
-    xarModVars::set('gmaps', 'gmaptypecontrol', 0);
-    xarModVars::set('gmaps', 'goverviewmapcontrol', 0);
-    xarModVars::set('gmaps', 'uselocations', serialize(array('dynamic')));
+    xarModVars::set('maps', 'mapwidth', 800);
+    xarModVars::set('maps', 'mapheight', 600);
+    xarModVars::set('maps', 'zoomlevel', 6);
+    xarModVars::set('maps', 'centerlatitude', 48.5132);
+    xarModVars::set('maps', 'centerlongitude', 2.1745);
+    xarModVars::set('maps', 'mapskey', 'Paste your google maps key here');
+    xarModVars::set('maps', 'glargemapcontrol', 0);
+    xarModVars::set('maps', 'gsmallmapcontrol', 0);
+    xarModVars::set('maps', 'gsmallzoomcontrol', 0);
+    xarModVars::set('maps', 'gscalecontrol', 0);
+    xarModVars::set('maps', 'gmaptypecontrol', 0);
+    xarModVars::set('maps', 'goverviewmapcontrol', 0);
+    xarModVars::set('maps', 'uselocations', serialize(array('dynamic')));
 
 # --------------------------------------------------------
 #
-# Create a parent category for gmaps
+# Create a parent category for maps
 #
     $cid = xarModAPIFunc('categories', 'admin', 'create',
-                         array('name' => 'Gmaps Category',
-                               'description' => 'Gmaps Base Category',
+                         array('name' => 'Maps Category',
+                               'description' => 'Maps Base Category',
                                'parent_id' => 0));
     // save the id for later
-    xarModVars::set('gmaps', 'basecategory', $cid);
+    xarModVars::set('maps', 'basecategory', $cid);
 
 # --------------------------------------------------------
 #
@@ -126,24 +126,24 @@ function gmaps_init()
 #
     // This is a GUI hook for the roles module that enhances the roles profile page
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'gmaps', 'user', 'usermenu')) {
+            'maps', 'user', 'usermenu')) {
         return false;
     }
 
     xarModAPIFunc('modules', 'admin', 'enablehooks',
-        array('callerModName' => 'gmaps', 'hookModName' => 'gmaps'));
+        array('callerModName' => 'maps', 'hookModName' => 'maps'));
 
     return true;
 }
 
-function gmaps_upgrade()
+function maps_upgrade()
 {
     return true;
 }
 
-function gmaps_delete()
+function maps_delete()
 {
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'gmaps'));
+    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'maps'));
 }
 
 ?>

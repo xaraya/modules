@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  * Purpose of file:  Table information on this module
@@ -21,15 +21,15 @@
  * This function is called internally by the core whenever the module is
  * loaded.  It adds in the information
  */
-function gmaps_xartables()
+function maps_xartables()
 {
     // Initialise table array
     $xartable = array();
 
-//    $gmaps = xarDBGetSiteTablePrefix() . '_gmaps';
+//    $maps = xarDBGetSiteTablePrefix() . '_maps';
 
     // Set the table name
-//    $xartable['gmaps'] = $gmaps;
+//    $xartable['maps'] = $maps;
 
     // Return the table information
     return $xartable;

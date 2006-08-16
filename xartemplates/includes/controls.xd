@@ -1,4 +1,4 @@
-<xar:if condition="$tabmodule ne 'gmaps'">
+<xar:if condition="$tabmodule ne 'maps'">
     <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
 <xar:else />
     <xar:set name="regid">0</xar:set>
@@ -9,7 +9,7 @@
             Large Pan/Zoom: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'glargemapcontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'glargemapcontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="glargemapcontrol" id="glargemapcontrol" checked="$value" />
 </div>
 <div class="xar-form-input-wrapper">
@@ -18,7 +18,7 @@
             Small Pan/Zoom: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'gsmallmapcontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'gsmallmapcontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="gsmallmapcontrol" id="gsmallmapcontrol" checked="$value" />
 </div>
 <div class="xar-form-input-wrapper">
@@ -27,7 +27,7 @@
             Small Zoom: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'gsmallzoomcontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'gsmallzoomcontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="gsmallzoomcontrol" id="gsmallzoomcontrol" checked="$value" />
 </div>
 <div class="xar-form-input-wrapper">
@@ -36,7 +36,7 @@
             Map Scale: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'gscalecontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'gscalecontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="gscalecontrol" id="gscalecontrol" checked="$value" />
 </div>
 <div class="xar-form-input-wrapper">
@@ -45,7 +45,7 @@
             Map Type Toggles: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'gmaptypecontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'gmaptypecontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="gmaptypecontrol" id="gmaptypecontrol" checked="$value" />
 </div>
 <div class="xar-form-input-wrapper">
@@ -54,6 +54,6 @@
             Overview Map: 
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('gmaps', 'goverviewmapcontrol', $regid)</xar:set>
+    <xar:set name="value">xarModGetUserVar('maps', 'goverviewmapcontrol', $regid)</xar:set>
     <xar:data-input type="checkbox" name="goverviewmapcontrol" id="goverviewmapcontrol" checked="$value" />
 </div>

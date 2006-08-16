@@ -1,9 +1,9 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('gmaps','useModuleAlias')">
-            #xarModGetVar('gmaps','aliasname')#
+        <xar:if condition="xarModGetVar('maps','useModuleAlias')">
+            #xarModGetVar('maps','aliasname')#
         <xar:else />
-            <xar:mlstring>Google Maps Display</xar:mlstring>
+            <xar:mlstring>Maps Display</xar:mlstring>
         </xar:if>
     </span>
 </div>

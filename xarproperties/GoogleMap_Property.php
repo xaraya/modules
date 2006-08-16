@@ -7,7 +7,7 @@
  * @copyright (C) 2006 by to be added
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link to be added
- * @subpackage Gmaps Module
+ * @subpackage Maps Module
  * @author Marc Lutolf <mfl@netspan.ch>
  *
  */
@@ -18,14 +18,14 @@ class GoogleMap_Property extends Dynamic_Property
     function __construct($args)
     {
         parent::__construct($args);
-        $this->tplmodule = 'gmaps';
-		$this->filepath   = 'modules/gmaps/xarproperties';
+        $this->tplmodule = 'maps';
+		$this->filepath   = 'modules/maps/xarproperties';
     }
 
     static function getRegistrationInfo()
     {
         $info = new PropertyRegistration();
-        $info->reqmodules = array('gmaps');
+        $info->reqmodules = array('maps');
         $info->id   = 30040;
         $info->name = 'gmap';
         $info->desc = 'Google Map';
@@ -40,12 +40,12 @@ class GoogleMap_Property extends Dynamic_Property
 			$info = xarRequestGetInfo();
 			$this->regid = xarModGetIDFromName($info[0]);
         }
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $this->regid);
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $this->regid);
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $this->regid);
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $this->regid);
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $this->regid);
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $this->regid);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('maps', 'mapwidth', $this->regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('maps', 'mapheight', $this->regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('maps', 'zoomlevel', $this->regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('maps', 'centerlatitude', $this->regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('maps', 'centerlongitude', $this->regid);
+		$data['mapskey']   = isset($data['mapskey']) ? $data['mapskey'] : xarModUserVars::get('maps', 'mapskey', $this->regid);
 		$data['locations'] = $this->getlocations($data);
 
         return parent::showInput($data);
@@ -58,12 +58,12 @@ class GoogleMap_Property extends Dynamic_Property
 			$info = xarRequestGetInfo();
 			$this->regid = xarModGetIDFromName($info[0]);
         }
-		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('gmaps', 'mapwidth', $this->regid);
-		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('gmaps', 'mapheight', $this->regid);
-		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('gmaps', 'zoomlevel', $this->regid);
-		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('gmaps', 'centerlatitude', $this->regid);
-		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('gmaps', 'centerlongitude', $this->regid);
-		$data['gmapskey']   = isset($data['gmapskey']) ? $data['gmapskey'] : xarModUserVars::get('gmaps', 'gmapskey', $this->regid);
+		$data['mapwidth']   = isset($data['mapwidth']) ? $data['mapwidth'] : xarModUserVars::get('maps', 'mapwidth', $this->regid);
+		$data['mapheight']  = isset($data['mapheight']) ? $data['mapheight'] : xarModUserVars::get('maps', 'mapheight', $this->regid);
+		$data['zoomlevel']  = isset($data['zoomlevel']) ? $data['zoomlevel'] : xarModUserVars::get('maps', 'zoomlevel', $this->regid);
+		$data['latitude']   = isset($data['latitude']) ? $data['latitude'] : xarModUserVars::get('maps', 'centerlatitude', $this->regid);
+		$data['longitude']  = isset($data['longitude']) ? $data['longitude'] : xarModUserVars::get('maps', 'centerlongitude', $this->regid);
+		$data['mapskey']   = isset($data['mapskey']) ? $data['mapskey'] : xarModUserVars::get('maps', 'mapskey', $this->regid);
 		$data['locations'] = $this->getlocations($data);
 
         return parent::showOutput($data);
@@ -74,11 +74,11 @@ class GoogleMap_Property extends Dynamic_Property
 		if (isset($data['locations'])) {
 			return $data['locations'];
 		} else {
-			$uselocations =  unserialize(xarModUserVars::get('gmaps', 'uselocations', $this->regid));
+			$uselocations =  unserialize(xarModUserVars::get('maps', 'uselocations', $this->regid));
 			$locations = array();
 			if (in_array('dynamic',$uselocations)) {
 				try {
-					$locations = array_merge($locations,xarModAPIFunc('gmaps','user','getlocations'));
+					$locations = array_merge($locations,xarModAPIFunc('maps','user','getlocations'));
 				} catch(Exception $e) {
 				}
 			}
