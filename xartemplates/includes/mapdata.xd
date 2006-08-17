@@ -6,12 +6,13 @@
 <div class="xar-form-input-wrapper">
     <label for="latitude" title="#xarML('What data sources to use for the locations to be displayed')#" class="xar-form-label">
         <xar:mlstring>
-            Use Locations: 
+            Get Data from: 
         </xar:mlstring>
     </label>
     <xar:set name="options">array(
-                            array('id' => 'module', 'name' => xarML('Locations from #(1) module',$tabmodule)),
-                            array('id' => 'dynamic', 'name' => 'Dynamic locations'),
+                            array('id' => 'dynamic', 'name' => xarML('Maps Module Locations')),
+                            array('id' => 'module', 'name' => xarML('#(1) Module Locations',UCFirst($tabmodule))),
+                            array('id' => 'hooked', 'name' => xarML('#(1) Hooked Locations',UCFirst($tabmodule))),
                             )
     </xar:set>
     <xar:set name="value">
