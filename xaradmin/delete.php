@@ -35,16 +35,44 @@ function sitecontact_admin_delete($args)
     if (!xarSecurityCheck('DeleteSiteContact', 1, 'ContactForm', "$item[scid]:All:All")) {
         return;
     }
+    $lastview = xarSessionGetVar('Sitecontact.LastView');
+    if (!empty($lastview)) {
+        $lastview= unserialize($lastview);
+    }
+    $scformtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
+
     /* Check for confirmation. */
     if (empty($confirm)) {
         $data['scrid'] = $scrid;
         $data['scid'] = $item['scid'];
         $data['itemid'] = xarML('Response ID');
         $data['username'] = xarVarPrepForDisplay($item['username']);
-
+    // Create filters based on publication type
+    $formfilters = array();
+    foreach ($scformtypes as $id => $formtype) {
+        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]:All:All")) {
+            continue;
+        }
+        $responseitem = array();
+        if ($formtype['scid'] != $item['scid']) {
+            $responseitem['flink'] = xarModURL('sitecontact','admin','view',
+                                         array('scid' => $formtype['scid']));
+            $responseitem['current']=false;
+        }else{
+            $responseitem['flink'] = xarModURL('sitecontact','admin','view',
+                                         array('scid' => $lastview['scid'],
+                                               'startnum'=> $lastview['startnum']));
+            $responseitem['current']=true;
+        }
+        $responseitem['ftitle'] = $formtype['sctypename'];
+        $formfilters[] = $responseitem;
+    }
+        $data['formfilters'] = $formfilters;
         /* Generate a one-time authorisation code for this operation */
         $data['authid'] = xarSecGenAuthKey();
-
+        $data['returnurl']=xarModURL('sitecontact','admin','view',
+                                         array('scid' => $lastview['scid'],
+                                               'startnum'=> $lastview['startnum']));
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
@@ -53,7 +81,8 @@ function sitecontact_admin_delete($args)
         return; // throw back
     }
     if (!isset($scid)) $scid=xarModGetVar('sitecontact','defaultform');
-    
+
+
     xarResponseRedirect(xarModURL('sitecontact', 'admin', 'view',array('scid'=>$scid)));
 
     /* Return */

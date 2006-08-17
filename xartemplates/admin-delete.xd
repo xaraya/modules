@@ -5,11 +5,11 @@
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Delete</xar:mlstring></h2>
-    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this item?</xar:mlstring></h3>
+    <xar:template file="navviewtabs" type="module" />
     <form method="post" action="&xar-modurl-sitecontact-admin-delete;">
         <fieldset>
             <legend>
-                <xar:mlstring>Item marked for deletion</xar:mlstring>
+                <xar:mlstring>Confirm Deletion?</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
              <label for="itemid" class="xar-form-label" title="#xarML('This is the item id')#">
@@ -36,7 +36,7 @@
 
             </div>
             <div class="xar-form-input-wrapper-before">
-             <a href="&xar-modurl-sitecontact-admin-view;">
+             <a href="#$returnurl#">
                  <xar:mlstring>Cancel and Return</xar:mlstring>
              </a>
              </div>
