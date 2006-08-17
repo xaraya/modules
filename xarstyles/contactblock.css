@@ -1,0 +1,19 @@
+.contactblock, .contactblock input, .contactblock textarea, .contactblock select {
+    font-size:11px;
+}
+
+.xar-blockform-label-short {
+    width: 3.75em;
+    display: block;
+    float: left;
+}
+.xar-blockform-input-wrapper-after {
+    width: auto;
+    padding-left: 1em;
+    margin-bottom: 4px;
+    clear: both;
+}
+.xar-blockform-input-wrapper {
+    margin-bottom: 4px;
+    overflow:auto;
+}

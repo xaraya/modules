@@ -525,8 +525,10 @@ function sitecontact_user_contactus($args)
     /* Set the theme comments back */
     xarModSetVar('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
+    xarSessionSetVar('sitecontact.sent',1);
+
     if (isset($return_url)) {
-        xarResponseRedirect(xarModURL($return_url));
+        xarResponseRedirect($return_url);
     } else {
         xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1', 'scid'=>$data['scid'])));
     }

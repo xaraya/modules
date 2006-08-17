@@ -1,0 +1,35 @@
+<div class="xar-form-input-wrapper">
+        <label class="xar-form-label help" title="#xarML('Choose the sitecontact form to display.')#" for="scid#$blockid#">
+            <xar:mlstring>
+                Form Name
+            </xar:mlstring>
+        </label>
+        <select name="formchoice" id="scid#$blockid#">
+            <xar:foreach in="$formtypes" key="$scid" value="$formtype">
+                <xar:if condition="!empty($formchoice) and ($formchoice eq $formtype['scid'])">
+                    <option value="#$formtype['scid']#" selected="selected">#$formtype['sctypename']#</option>
+                <xar:else />
+                    <option value="#$formtype['scid']#">#$formtype['sctypename']#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+</div>
+
+<xar:if condition="xarModIsHooked('dynamicdata','sitecontact')">
+    <div class="xar-form-input-wrapper-after">
+    <xar:if condition="$showdd">
+        <input type="checkbox" name="showdd" id="showdd#$blockid#" value="1"  checked="checked" />
+        <xar:else />
+        <input type="checkbox" name="showdd" id="showdd#$blockid#" value="1" />
+    </xar:if>
+    <label class="help" title="#xarML('Check this if you want the block to display dynamic data content as well')#" for="showdd#$blockid#">
+        <xar:mlstring>
+            Display Dynamic Data?
+        </xar:mlstring>
+    </label>
+    </div>
+<xar:else />
+    <div class="xar-form-input-wrapper-after">
+        <xar:mlstring>Hook Dynamic Data to sitecontact or itemtypes for Dynamic Data option</xar:mlstring>
+    </div>
+</xar:if>

@@ -169,21 +169,7 @@ Administrator
     }
 
 
-/*
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                 array('modName' => 'sitecontact',
-                       'blockType' => 'sitecontactblock'))) return;
-*/
-    // Register our hooks that we are providing to other modules.  The example
-    // module shows an example hook in the form of the user menu.
- /*   if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                            'sitecontact', 'user', 'usermenu')) {
-        return false;
-    }
- */
- 
+
 /* Define instances for sitecontact forms  */
 
     $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
@@ -195,6 +181,13 @@ Administrator
                     );
     xarDefineInstance('sitecontact', 'ContactForm', $instances); 
  
+    // Register our hooks that we are providing to other modules.  The example
+    // module shows an example hook in the form of the user menu.
+ /*   if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+                            'sitecontact', 'user', 'usermenu')) {
+        return false;
+    }
+ */
 
     /**
      * Register the module components that are privileges objects
@@ -407,6 +400,12 @@ function sitecontact_upgrade($oldversion)
            return sitecontact_upgrade('0.6.1');
        case '0.6.1':
             xarModSetVar('sitecontact','useantibot',true);
+       case '0.6.2':
+
+           if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                        array('modName' => 'sitecontact',
+                              'blockType' => 'sitecontact'))) return;
+
        case '1.0.0': //current version
              break;
     }
@@ -462,12 +461,10 @@ function sitecontact_delete()
     // Delete any module variables
      xarModDelAllVars('sitecontact');
     // UnRegister blocks
-/*    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                  array('modName' => 'sitecontact',
-                       'blockType' => 'sitecontactblock'))) return;
-
+                       'blockType' => 'sitecontact'))) return;
+/*
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'sitecontact', 'user', 'usermenu')) {
