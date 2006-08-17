@@ -29,16 +29,33 @@ function xproject_userapi_getmenulinks()
                               'label' => xarML('View Projects'));
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
-                                                   'user',
-                                                   'search'),
+                                                   'admin',
+                                                   'main'),
                               'title' => xarML('Query project entries'),
                               'label' => xarML('Search Projects'));
         if (xarUserIsLoggedIn()) {
+        
+            $uid = xarSessionGetVar('uid');
+            $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+            if(is_numeric($mymemberid) && $mymemberid > 0) {
+                $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                          'admin',
+                                                          'main',
+                                                          array('status' => "Draft",
+                                                                'mymemberid' => $mymemberid)),
+                                     'title' => xarML('Work on your draft projects before submitting'),
+                                     'label' => xarML('My Drafts'));
+                $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                          'admin',
+                                                          'main',
+                                                          array('status' => "WIP",
+                                                                'mymemberid' => $mymemberid)),
+                                     'title' => xarML('View active projects you are part of the team for'),
+                                     'label' => xarML('My Active'));
+            }
             $menulinks[] = Array('url'   => xarModURL('xproject',
                                                       'user',
                                                       'settings'),
-                                 // In order to display the tool tips and label in any language,
-                                 // we must encapsulate the calls in the xarML in the API.
                                  'title' => xarML('Change your preferences for this module'),
                                  'label' => xarML('Settings'));
         }

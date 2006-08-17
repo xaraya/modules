@@ -22,6 +22,34 @@ function xproject_adminapi_getmenulinks()
 {
     $menulinks = array();
 
+    if (xarSecurityCheck('ReadXProject', 0)) {
+        
+        $uid = xarSessionGetVar('uid');
+        $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+        if(is_numeric($mymemberid) && $mymemberid > 0) {
+            $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                      'admin',
+                                                      'main',
+                                                      array('status' => "Draft",
+                                                            'mymemberid' => $mymemberid)),
+                                 'title' => xarML('Work on your draft projects before submitting'),
+                                 'label' => xarML('My Drafts'));
+            $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                      'admin',
+                                                      'main',
+                                                      array('status' => "WIP",
+                                                            'mymemberid' => $mymemberid)),
+                                 'title' => xarML('View active projects you are part of the team for'),
+                                 'label' => xarML('My Active'));
+        }
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'admin',
+                                                   'main'),
+                              'title' => xarML('Query project entries'),
+                              'label' => xarML('Search Projects'));
+    }
+
     if (xarSecurityCheck('AddXProject', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
@@ -29,20 +57,6 @@ function xproject_adminapi_getmenulinks()
                                                    'new'),
                               'title' => xarML('Create a new project'),
                               'label' => xarML('New Project'));
-    }
-
-    if (xarSecurityCheck('ReadXProject', 0)) {
-        $menulinks[] = Array('url'   => xarModURL('xproject',
-                                                   'admin',
-                                                   'view'),
-                              'title' => xarML('List of current projects'),
-                              'label' => xarML('View Projects'));
-
-        $menulinks[] = Array('url'   => xarModURL('xproject',
-                                                   'user',
-                                                   'search'),
-                              'title' => xarML('Query project entries'),
-                              'label' => xarML('Search Projects'));
     }
 
     if (xarSecurityCheck('AdminXProject', 0)) {

@@ -4,9 +4,9 @@ function xproject_admin_view($args)
 {
     extract($args);
     
-    if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
+    if (!xarVarFetch('verbose', 'checkbox', $verbose, 0, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str', $status, $status, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('clientid', 'int', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
@@ -16,9 +16,9 @@ function xproject_admin_view($args)
     
     $data = array();
     
-    $data['verbose'] = $verbose;
+    if(isset($verbose)) $data['verbose'] = $verbose;
     
-    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
+//    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
     
     if(!$memberid) {
@@ -45,7 +45,7 @@ function xproject_admin_view($args)
     }
     
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-    
+
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $items[$i]['link'] = xarModURL('xproject',
@@ -83,7 +83,8 @@ function xproject_admin_view($args)
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
                               'q' => $q)),
-            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%')),
+            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%'))
+            ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
             xarModGetUserVar('xproject', 'itemsperpage', $uid));
     } else {
         $data['pager'] = xarTplGetPager($startnum,
@@ -95,7 +96,8 @@ function xproject_admin_view($args)
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
                               'q' => $q)),
-            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%')),
+            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%'))
+            ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
             xarModGetUserVar('xproject', 'itemsperpage', $uid));
     }
         
