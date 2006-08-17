@@ -31,7 +31,7 @@ function maps_user_display($args)
     $data['longitude']  = isset($args['longitude']) ? $args['longitude'] : xarModVars::get('maps', 'longitude');
     $data['mapskey']   = isset($args['mapskey']) ? $args['mapskey'] : xarModVars::get('maps', 'gmapskey');
 
-    if(!empty(id)){
+    if(!empty($id)){
         $data['location'] = xarModAPIFunc('maps','user','getlocation');
     }
 
