@@ -3,15 +3,18 @@
 
 <script type="text/javascript">
     //<![CDATA[
+    var mapnumber
     if (window.attachEvent) {
         window.attachEvent("onload", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
             makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+            fillmap();
         });
     } else {
         window.addEventListener("load", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
             makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+            fillmap();
         }, false);
     }
     //]]>
