@@ -1,5 +1,11 @@
+Version 1.0.1 18 Aug 2006
+- New sitecontact block
+- Updated menuing in form response management
+- Finalized paging in forms and responses (still using one itemsperpage var)
+- Some minor bug fixes
+
 Version 1.0.0 1 Aug 2006
-- Added Anti-bot captcha as optional extra to each form. 
+- Added Anti-bot captcha as optional extra to each form.
   This is available by installing and activating the FormAntiBot module.
 
 Version 0.6.1 5 July 2006

@@ -179,9 +179,11 @@
     <h2>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h2>
-    <p>
-       <xar:mlstring>None at this stage</xar:mlstring>
-    </p>
+    <ul>
+       <li><xar:mlstring><strong>Sitecontact Block</strong>: allows choice of one of the active forms for display in a block on your site.
+       The block requires at least Read level (ReadSiteContactBlock) privileges for viewing, and is privilege aware using Block privileges.
+       This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring></li>
+    </ul>
     <h2>
         <xar:mlstring>Further Information</xar:mlstring>
     </h2>
@@ -196,7 +198,7 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.2&nbsp; 2006-08-01
+             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.3&nbsp; 2006-08-18
          </p>
       </div>
 
