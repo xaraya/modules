@@ -16,7 +16,7 @@
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=modify" >
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#&amp;action=modify" >
                 <xar:mlstring>Edit Contact Form</xar:mlstring>
             </a>
 
@@ -26,7 +26,7 @@
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=preview" >
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#&amp;action=preview" >
               <xar:mlstring>Preview Contact Form</xar:mlstring>
             </a>
         </dd>
@@ -39,7 +39,7 @@
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#;&amp;action=delete" >
+            <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#&amp;action=delete" >
                 <xar:mlstring>Delete Contact Form</xar:mlstring>
             </a>
         </dd>

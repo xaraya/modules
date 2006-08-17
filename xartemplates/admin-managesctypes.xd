@@ -524,6 +524,9 @@
             </label>
             <input type="text" name="sctypedesc" id="sctypedesc" value="#$item.sctypedesc#" size="32" maxlength="100" />
         </div>
+        <p class="xar-form-input-wrapper-after">
+            <xar:mlstring>Note: any responses saved for this form will also be deleted.</xar:mlstring>
+        </p>
    </fieldset>
     <fieldset>
         <div class="xar-form-input-wrapper-after">

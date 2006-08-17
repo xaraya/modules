@@ -283,8 +283,16 @@ function sitecontact_admin_managesctypes()
         }
     } elseif ($action == 'delete') {
         xarSessionSetVar('statusmsg','');
-        $item = xarModAPIFunc('sitecontact','user','getcontacttypes');
-        $data['item']=$item[0];
+        $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));
+        if (is_array($item) && count($item) == 1) {
+          $data['item']=$item[0];
+        } else {
+          //there is something wrong - the item doesn't exist
+            $msg = xarML('There has been an error. Please contact the system administrator and inform them of this error message.');
+             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+            return false;
+        }
         if ($scid == $defaultform) {
             $msg = xarML('You cannot delete the default form. Please change the default form first');
              xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
