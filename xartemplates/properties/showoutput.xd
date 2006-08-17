@@ -27,5 +27,4 @@
     </xar:foreach>
   }
 </script>
-	<xar:set name="$trash">print_r($locations);</xar:set>
 <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
