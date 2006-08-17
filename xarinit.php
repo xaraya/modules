@@ -400,13 +400,12 @@ function sitecontact_upgrade($oldversion)
            return sitecontact_upgrade('0.6.1');
        case '0.6.1':
             xarModSetVar('sitecontact','useantibot',true);
-       case '0.6.2':
-
+       case '1.0.0':
            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                         array('modName' => 'sitecontact',
                               'blockType' => 'sitecontact'))) return;
+       case '1.0.1': //current version
 
-       case '1.0.0': //current version
              break;
     }
     // Update successful
