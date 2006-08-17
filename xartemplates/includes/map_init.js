@@ -27,14 +27,20 @@ function mapInit(mapdiv,centerLat,centerLong,zoom){
     return mapnumber;
 }
 
-function createMarker(mapnumber,point){
+function createMarker(mapnumber,point,message){
     var markernumber = markers.length;
 
     var marker = new GMarker(point,{icon:G_DEFAULT_ICON,draggable:true});
     marker.disableDragging();
     marker.markernumber = markernumber;
     marker.mapnumber = mapnumber;
-
+    
+    if(message){
+      marker.message = message;
+      GEvent.addListener(marker, "click", function(){
+      	marker.openInfoWindow(marker.message);
+      });
+    }
     markers[markernumber] = marker;
 
     return marker;

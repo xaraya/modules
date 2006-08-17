@@ -3,23 +3,37 @@
 
 <script type="text/javascript">
     //<![CDATA[
+    var mapnumber
     if (window.attachEvent) {
         window.attachEvent("onload", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+            fillmap();
         });
     } else {
         window.addEventListener("load", function() {
             mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+            fillmap();
         }, false);
     }
     //]]>
 </script>
 
 <script type="text/javascript">
+  function fillmap(){
     <xar:foreach in="$locations" value="$location">
-        point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-        createMarker(mapnumber,point);
+		<xar:if condition="empty($location['latitude2'])">
+    	    point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+    	    marker = createMarker(mapnumber,point,"#$location['name']#");
+    	    maps[mapnumber].addOverlay(marker);
+		<xar:else />
+			var points = new Array();
+     		points[1] = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+			points[2] = new GLatLng(#$location['latitude2']#,#$location['longitude2']#);
+			var bounds = new GBounds(points);
+			polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
+			maps[mapnumber].addOverlay(polyline);
+		</xar:if>
     </xar:foreach>
+  }
 </script>
-
 <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
