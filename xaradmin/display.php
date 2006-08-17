@@ -32,7 +32,10 @@ function sitecontact_admin_display($args)
     if (!empty($objectid)) {
         $scrid = $objectid;
     }
-
+    $lastview = xarSessionGetVar('Sitecontact.LastView');
+    if (!empty($lastview)) {
+        $lastview= unserialize($lastview);
+    }
     //$data = xarModAPIFunc('sitecontact', 'admin', 'menu');
     
     $data['status'] = '';
@@ -66,9 +69,30 @@ function sitecontact_admin_display($args)
     $data['scid'] = $item['scid'];
     $data['formname']=$thisform['sctypename'];
     $data['permissioncheck']=$thisform['permissioncheck'];
-    
-    xarVarSetCached('Blocks.sitecontact', 'scrid', $scrid);
 
+    $scformtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
+   // Create filters based on publication type
+    $formfilters = array();
+    foreach ($scformtypes as $id => $formtype) {
+        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]:All:All")) {
+            continue;
+        }
+        $responseitem = array();
+       if ($formtype['scid'] != $scid) {
+            $responseitem['flink'] = xarModURL('sitecontact','admin','view',
+                                         array('scid' => $formtype['scid']));
+            $responseitem['current']=false;
+       }else{
+            $responseitem['flink'] = xarModURL('sitecontact','admin','view',
+                                         array('scid' => $lastview['scid'],
+                                               'startnum'=> $lastview['startnum']));
+            $responseitem['current']=true;
+       }
+        $responseitem['ftitle'] = $formtype['sctypename'];
+        $formfilters[] = $responseitem;
+    }
+    $data['formfilters'] = $formfilters;
+    $data['menuscid']=    xarVarGetCached('Blocks.sitecontact','itemtype');
     $item['returnurl'] = xarModURL('sitecontact','admin','display',array('scrid' => $scrid));
     $item['module'] = 'sitecontact';
     $item['itemid'] = $scrid;

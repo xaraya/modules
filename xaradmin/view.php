@@ -150,9 +150,11 @@ function sitecontact_admin_view($args)
         $responseitem = array();
         if ($formtype['scid'] == $scid) {
             $responseitem['flink'] = '';
+            $responseitem['current']=false;
         } else {
             $responseitem['flink'] = xarModURL('sitecontact','admin','view',
                                          array('scid' => $formtype['scid']));
+            $responseitem['current']=false;
         }
         $responseitem['ftitle'] = $formtype['sctypename'];
         $formfilters[] = $responseitem;

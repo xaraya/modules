@@ -11,6 +11,7 @@
         <xar:mlvar>#$formname#</xar:mlvar>
       </xar:ml>
     </h2>
+    <xar:template file="navviewtabs" type="module" />
     <xar:if condition="$permissioncheck">
         <xar:mlstring>A permission check was requested in this form.</xar:mlstring>
     </xar:if>

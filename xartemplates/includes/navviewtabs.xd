@@ -1,5 +1,5 @@
 <xar:style module="base" scope="module" file="navtabs" />
-
+<xar:set name="activetab">$_bl_module_func</xar:set>
 <dl class="xar-tabs">
     <dt class="help">
         <xar:mlstring>
@@ -8,13 +8,20 @@
         : 
     </dt>
     <xar:foreach in="$formfilters" value="$formfilter">
-        <xar:if condition="empty($formfilter['flink'])">
+        <xar:if condition="empty($formfilter['flink']) and $formfilter['current'] eq false">
             <dd class="active">
                 <a href="#xarServerGetCurrentURL()#" title="#$formfilter['ftitle']#">
-                    #$formfilter['ftitle']# 
+                    #$formfilter['ftitle']#
                 </a>
             </dd>
-            <xar:else />
+         <xar:elseif condition="$formfilter['current'] eq true" />
+            <dd class="active">
+                <a href="#$formfilter['flink']#" title="#$formfilter['ftitle']#">
+                    #$formfilter['ftitle']#
+                </a>
+            </dd>
+
+             <xar:else />
             <dd>
                 <a href="#$formfilter['flink']#" title="#$formfilter['ftitle']#">
                     #$formfilter['ftitle']# 
