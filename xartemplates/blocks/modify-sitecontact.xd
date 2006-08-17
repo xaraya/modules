@@ -1,3 +1,4 @@
+
 <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Choose the sitecontact form to display.')#" for="scid#$blockid#">
             <xar:mlstring>
@@ -13,6 +14,9 @@
                 </xar:if>
             </xar:foreach>
         </select>
+        <xar:if condition="xarModIsAvailable('formantibot')">
+            <p class="xar-form-input-wrapper-after"><xar:mlstring>Please do not use a form with captcha turned on. FormAntiBot (catpcha) has not been setup to work with block forms at this time.</xar:mlstring></p>
+        </xar:if>
 </div>
 
 <xar:if condition="xarModIsHooked('dynamicdata','sitecontact')">
