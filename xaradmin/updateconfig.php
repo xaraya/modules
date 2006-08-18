@@ -52,7 +52,7 @@ function images_admin_updateconfig()
         }
     }
     if (isset($path) && is_array($path)) {
-        foreach ($path as $varname => $value) {
+             foreach ($path as $varname => $value) {
             // check to make sure that the value passed in is
             // a real images module variable
             $value = trim(ereg_replace('\/$', '', $value));

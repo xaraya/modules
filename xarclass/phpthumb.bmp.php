@@ -18,12 +18,16 @@
 /////////////////////////////////////////////////////////////////
 
 
-class phpthumb_bmp {
+class phpthumb_bmp 
+{
 
-    function phpthumb_bmp() {
+    function phpthumb_bmp() 
+    {
+        return true;
     }
 
-    function phpthumb_bmp2gd(&$BMPdata, $truecolor=true) {
+    function phpthumb_bmp2gd(&$BMPdata, $truecolor=true) 
+    {
         $ThisFileInfo = array();
         if ($this->getid3_bmp($BMPdata, $ThisFileInfo, true, true)) {
             $gd = $this->PlotPixelsGD($ThisFileInfo['bmp'], $truecolor);
@@ -32,7 +36,8 @@ class phpthumb_bmp {
         return false;
     }
 
-    function phpthumb_bmpfile2gd($filename, $truecolor=true) {
+    function phpthumb_bmpfile2gd($filename, $truecolor=true) 
+    {
         if ($fp = @fopen($filename, 'rb')) {
             $BMPdata = fread($fp, filesize($filename));
             fclose($fp);
@@ -41,7 +46,50 @@ class phpthumb_bmp {
         return false;
     }
 
-    function getid3_bmp(&$BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false) {
+    function GD2BMPstring(&$gd_image) 
+    {
+        $imageX = ImageSX($gd_image);
+        $imageY = ImageSY($gd_image);
+
+        $BMP = '';
+        for ($y = ($imageY - 1); $y >= 0; $y--) {
+            $thisline = '';
+            for ($x = 0; $x < $imageX; $x++) {
+                $argb = phpthumb_functions::GetPixelColor($gd_image, $x, $y);
+                $thisline .= chr($argb['blue']).chr($argb['green']).chr($argb['red']);
+            }
+            while (strlen($thisline) % 4) {
+                $thisline .= "\x00";
+            }
+            $BMP .= $thisline;
+        }
+
+        $bmpSize = strlen($BMP) + 14 + 40;
+        // BITMAPFILEHEADER [14 bytes] - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_62uq.asp
+        $BITMAPFILEHEADER  = 'BM';                                                           // WORD    bfType;
+        $BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String($bmpSize, 4); // DWORD   bfSize;
+        $BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(       0, 2); // WORD    bfReserved1;
+        $BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(       0, 2); // WORD    bfReserved2;
+        $BITMAPFILEHEADER .= phpthumb_functions::LittleEndian2String(      54, 4); // DWORD   bfOffBits;
+
+        // BITMAPINFOHEADER - [40 bytes] http://msdn.microsoft.com/library/en-us/gdi/bitmaps_1rw2.asp
+        $BITMAPINFOHEADER  = phpthumb_functions::LittleEndian2String(      40, 4); // DWORD  biSize;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String( $imageX, 4); // LONG   biWidth;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String( $imageY, 4); // LONG   biHeight;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       1, 2); // WORD   biPlanes;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(      24, 2); // WORD   biBitCount;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biCompression;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biSizeImage;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(    2835, 4); // LONG   biXPelsPerMeter;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(    2835, 4); // LONG   biYPelsPerMeter;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biClrUsed;
+        $BITMAPINFOHEADER .= phpthumb_functions::LittleEndian2String(       0, 4); // DWORD  biClrImportant;
+
+        return $BITMAPFILEHEADER.$BITMAPINFOHEADER.$BMP;
+    }
+
+    function getid3_bmp(&$BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false) 
+    {
 
         // shortcuts
         $ThisFileInfo['bmp']['header']['raw'] = array();
@@ -66,7 +114,7 @@ class phpthumb_bmp {
         $offset += 2;
 
         if ($thisfile_bmp_header_raw['identifier'] != 'BM') {
-            $ThisFileInfo['error'][] = 'Expecting "BM" at offset '.$ThisFileInfo['avdataoffset'].', found "'.$thisfile_bmp_header_raw['identifier'].'"';
+            $ThisFileInfo['error'][] = 'Expecting "BM" at offset '.intval(@$ThisFileInfo['avdataoffset']).', found "'.$thisfile_bmp_header_raw['identifier'].'"';
             unset($ThisFileInfo['fileformat']);
             unset($ThisFileInfo['bmp']);
             return false;
@@ -560,7 +608,7 @@ class phpthumb_bmp {
                                                 $pixeldataoffset++;
                                             }
 
-                                            foreach ($paletteindexes as $paletteindex) {
+                                            foreach ($paletteindexes as $dummy => $paletteindex) {
                                                 $col = $pixelcounter % $thisfile_bmp_header_raw['width'];
                                                 $row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
                                                 $thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -651,14 +699,16 @@ class phpthumb_bmp {
         return true;
     }
 
-    function IntColor2RGB($color) {
+    function IntColor2RGB($color) 
+    {
         $red   = ($color & 0x00FF0000) >> 16;
         $green = ($color & 0x0000FF00) >> 8;
         $blue  = ($color & 0x000000FF);
         return array($red, $green, $blue);
     }
 
-    function PlotPixelsGD(&$BMPdata, $truecolor=true) {
+    function PlotPixelsGD(&$BMPdata, $truecolor=true) 
+    {
         $imagewidth  = $BMPdata['header']['raw']['width'];
         $imageheight = $BMPdata['header']['raw']['height'];
 
@@ -671,7 +721,7 @@ class phpthumb_bmp {
             $gd = @ImageCreate($imagewidth, $imageheight);
             if (!empty($BMPdata['palette'])) {
                 // create GD palette from BMP palette
-                foreach ($BMPdata['palette'] as $color) {
+                foreach ($BMPdata['palette'] as $dummy => $color) {
                     list($r, $g, $b) = $this->IntColor2RGB($color);
                     ImageColorAllocate($gd, $r, $g, $b);
                 }
@@ -706,7 +756,8 @@ class phpthumb_bmp {
         return $gd;
     }
 
-    function PlotBMP(&$BMPinfo) {
+    function PlotBMP(&$BMPinfo) 
+    {
         $starttime = time();
         if (!isset($BMPinfo['bmp']['data']) || !is_array($BMPinfo['bmp']['data'])) {
             echo 'ERROR: no pixel data<BR>';
@@ -727,7 +778,8 @@ class phpthumb_bmp {
         return false;
     }
 
-    function BMPcompressionWindowsLookup($compressionid) {
+    function BMPcompressionWindowsLookup($compressionid) 
+    {
         static $BMPcompressionWindowsLookup = array(
             0 => 'BI_RGB',
             1 => 'BI_RLE8',
@@ -739,7 +791,8 @@ class phpthumb_bmp {
         return (isset($BMPcompressionWindowsLookup[$compressionid]) ? $BMPcompressionWindowsLookup[$compressionid] : 'invalid');
     }
 
-    function BMPcompressionOS2Lookup($compressionid) {
+    function BMPcompressionOS2Lookup($compressionid) 
+    {
         static $BMPcompressionOS2Lookup = array(
             0 => 'BI_RGB',
             1 => 'BI_RLE8',
@@ -753,7 +806,8 @@ class phpthumb_bmp {
 
     // from getid3.lib.php
 
-    function trunc($floatnumber) {
+    function trunc($floatnumber) 
+    {
         // truncates a floating-point number at the decimal point
         // returns int (if possible, otherwise float)
         if ($floatnumber >= 1) {
@@ -769,7 +823,8 @@ class phpthumb_bmp {
         return $truncatednumber;
     }
 
-    function LittleEndian2Int($byteword) {
+    function LittleEndian2Int($byteword) 
+    {
         $intvalue = 0;
         $byteword = strrev($byteword);
         $bytewordlen = strlen($byteword);
@@ -779,11 +834,13 @@ class phpthumb_bmp {
         return $intvalue;
     }
 
-    function BigEndian2Int($byteword) {
+    function BigEndian2Int($byteword) 
+    {
         return $this->LittleEndian2Int(strrev($byteword));
     }
 
-    function BigEndian2Bin($byteword) {
+    function BigEndian2Bin($byteword) 
+    {
         $binvalue = '';
         $bytewordlen = strlen($byteword);
         for ($i = 0; $i < $bytewordlen; $i++) {
@@ -792,12 +849,14 @@ class phpthumb_bmp {
         return $binvalue;
     }
 
-    function FixedPoint2_30($rawdata) {
+    function FixedPoint2_30($rawdata) 
+    {
         $binarystring = $this->BigEndian2Bin($rawdata);
         return $this->Bin2Dec(substr($binarystring, 0, 2)) + (float) ($this->Bin2Dec(substr($binarystring, 2, 30)) / 1073741824);
     }
 
-    function Bin2Dec($binstring, $signed=false) {
+    function Bin2Dec($binstring, $signed=false) 
+    {
         $signmult = 1;
         if ($signed) {
             if ($binstring{0} == '1') {
@@ -812,7 +871,8 @@ class phpthumb_bmp {
         return $this->CastAsInt($decvalue * $signmult);
     }
 
-    function CastAsInt($floatnum) {
+    function CastAsInt($floatnum) 
+    {
         // convert to float if not already
         $floatnum = (float) $floatnum;
 
