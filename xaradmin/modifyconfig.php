@@ -44,6 +44,7 @@ function maps_admin_modifyconfig()
                 case 'general':
                     break;
                 default:
+                $data['catoptions'] = xarModAPIFunc('maps','user','getcategories',array('asoptions' => true));
                     break;
             }
 
@@ -67,6 +68,23 @@ function maps_admin_modifyconfig()
 			if (!xarVarFetch('gmaptypecontrol', 'checkbox', $gmaptypecontrol, xarModVars::get('maps', 'gmaptypecontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('goverviewmapcontrol', 'checkbox', $goverviewmapcontrol, xarModVars::get('maps', 'goverviewmapcontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('uselocations', 'array', $uselocations, array(), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('categoryimplodedlist', 'str:1', $categorylist, "", XARVAR_NOT_REQUIRED)) return;
+
+			var_dump($categorylist);exit;
+			// Create an array of the selected categories
+			$categories = array();
+			$cats = explode(',',$categorylist);
+			$module = array();
+			foreach ($cats as $cat) {
+				if (empty($cat)) continue;
+				if ($cat == -1) {
+					$module[$cat] = 'All';
+				} else {
+					$modinfo = xarModGetInfo($cat);
+					$module[$regid] = $modinfo['name'];
+				}
+			}
+			$categories = $module;
 
 			if ($data['tab'] == 'maps_general') {
 				xarModVars::set('maps', 'SupportShortURLs', $shorturls);

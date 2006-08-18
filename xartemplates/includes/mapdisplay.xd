@@ -1,0 +1,22 @@
+<xar:base-include-javascript filename="joomla.javascript.js" module="simpleadmin" position="head"/>
+<div class="xar-form-input-wrapper">
+    <xar:set name="categoryoptions">array()</xar:set>
+    <xar:foreach in="$categoryoptions" value="$option">
+        <xar:set name="categoryoptionkeys">$categoryoptionkeys . "," . $option['id']</xar:set>
+    </xar:foreach>
+    <label for="categorytargetlist" title="Categories" class="xar-form-label">
+        Categories:
+    </label>
+    <div style="float: left">
+        <xar:data-input type="multiselect" name="categorysourcelist" id="categorysourcelist" size="5" options="$catoptions" />
+    </div>
+    <div style="float: left; width: 45px; text-align: center;">
+        <input class="button" type="button" value="&gt;&gt;" onclick="addSelectedToList('categorysourcelist','categorytargetlist');implodeListKeys('categorytargetlist','categoryimplodedlist',',');" title="#xarML('Add')#" />
+        <input class="button" type="button" value="&lt;&lt;" onclick="delSelectedFromList('categorytargetlist'); implodeListKeys('categorytargetlist','categoryimplodedlist',',');" title="#xarML('Remove')#" />
+    </div>
+    <div style="float: left">
+        <xar:data-input type="multiselect" name="categorytargetlist" id="categorytargetlist" size="5" />
+    </div>
+    <xar:set name="categoryoptionkeys">""</xar:set>
+    <input type="hidden" name="categoryimplodedlist" id="categoryimplodedlist" value="#$categoryoptionkeys#" />
+</div>

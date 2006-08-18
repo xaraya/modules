@@ -79,6 +79,14 @@
                 </legend>
                 <xar:template file="mapdata" />
             </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Map Display  
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="mapdisplay" />
+            </fieldset>
         </xar:if>
         <fieldset>
             <legend>
