@@ -17,8 +17,8 @@ function xtasks_user_main()
         return;
     }
 
-    $data = xarModAPIFunc('xtasks','user','menu');
-    $data['welcome'] = xarML('Welcome to the xtasks module...');
+    $data = xarModAPIFunc('xtasks','admin','menu');
+    $data['welcome'] = xarML('Welcome to the xTasks module. ');
     return $data;
 }
 ?>

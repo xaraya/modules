@@ -16,6 +16,7 @@ function xtasks_admin_display($args)
     extract($args);
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mode', 'str', $mode, '', XARVAR_NOT_REQUIRED)) return;
 
     $data['xtasks_objectid'] = xarModGetVar('xtask', 'xtasks_objectid');
 
@@ -25,9 +26,10 @@ function xtasks_admin_display($args)
         $taskid = $objectid;
     }
 
-    $data = xarModAPIFunc('xtasks','user','menu');
+    $data = xarModAPIFunc('xtasks','admin','menu');
     $data['taskid'] = $taskid;
     $data['status'] = '';
+    $data['mode'] = $mode;
 
     $item = xarModAPIFunc('xtasks',
                           'user',
@@ -42,6 +44,23 @@ function xtasks_admin_display($args)
         return $msg;
     }
     
+    if (xarSecurityCheck('EditXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
+        $item['editurl'] = xarModURL('xtasks',
+            'admin',
+            'modify',
+            array('taskid' => $item['taskid']));
+    } else {
+        $item['editurl'] = '';
+    }
+    if (xarSecurityCheck('DeleteXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
+        $item['deleteurl'] = xarModURL('xtasks',
+            'admin',
+            'delete',
+            array('taskid' => $item['taskid']));
+    } else {
+        $item['deleteurl'] = '';
+    }
+    
     list($item['task_name']) = xarModCallHooks('item',
                                          'transform',
                                          $item['taskid'],
@@ -52,17 +71,48 @@ function xtasks_admin_display($args)
     $data['task_name'] = $item['task_name'];
     $data['description'] = $item['description'];
 
+    $data['parentid'] = "";
+    $data['parentname'] = "";
+    $data['parenturl'] = "";
+    if($item['parentid'] > 0) {
+        $parentinfo = xarModAPIFunc('xtasks',
+                              'user',
+                              'get',
+                              array('taskid' => $item['parentid']));
+    
+        if (!isset($parentinfo)) {
+            $msg = xarML('Not authorized to access #(1) item parent',
+                        'xtasks');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                           new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+            return $msg;
+        }
+    
+        $data['parentid'] = $parentinfo['taskid'];
+        $data['parentname'] = $parentinfo['task_name'];
+        $data['parenturl'] = xarModURL('xtasks', 'admin', 'display', array('taskid' => $data['parentid']));
+    }
+        
+    $modid = xarModGetIDFromName(xarModGetName());
+    $data['modid'] = $modid;
+    $data['itemtype'] = 1;
+    $data['objectid'] = $taskid;
+
     $hooks = xarModCallHooks('item',
                              'display',
                              $taskid,
-                             xarModURL('xtasks',
-                                       'admin',
-                                       'display',
-                                       array('taskid' => $taskid)));
+                             array('module'    => 'xtasks',
+                                   'returnurl' => xarModURL('xtasks',
+                                                           'admin',
+                                                           'display',
+                                                           array('taskid' => $taskid))
+                                  ),
+                            'xtasks');
+                            
     if (empty($hooks)) {
-        $data['hookoutput'] = array();
+        $data['hooks'] = array();
     } else {
-        $data['hookoutput'] = $hooks;
+        $data['hooks'] = $hooks;
     }
 
     return $data;

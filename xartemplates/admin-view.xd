@@ -2,11 +2,9 @@
 <xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Task List</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<div align="center">
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-
         <th><xar:mlstring>Task Name</xar:mlstring></th>
         <th><xar:mlstring>Importance</xar:mlstring></th>
         <th><xar:mlstring>Priority</xar:mlstring></th>
@@ -17,18 +15,18 @@
     <xar:loop name="$items">
     <tr><td class="xar-norm">
             <xar:if condition="empty($loop:item['link'])">#$loop:item['task_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['task_name']#</a></xar:if>
-    </td>
+        </td>
+        
+        <xar:set name="importance">$loop->item['importance']</xar:set>
+        <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
     
-    <xar:set name="importance">$loop->item['importance']</xar:set>
-    <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
-
-    <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
-
-    <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
-
-    <td class="xar-norm" style="text-align: center;">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
-
-  </tr>
+        <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
+    
+        <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
+    
+        <td class="xar-norm" style="text-align: center;">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+    
+    </tr>
 
         <xar:set name="date_start_planned">$loop->item['date_start_planned']</xar:set>
         <xar:set name="date_start_actual">$loop->item['date_start_actual']</xar:set>
@@ -65,7 +63,7 @@
 <br />
 
 </div>
-</div>
+
 <div class="xar-mod-foot" style="text-align: center;">
 #$pager#
 </div>

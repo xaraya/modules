@@ -25,6 +25,8 @@ function xtasks_admin_workspace($args)
     } else {
         $data['returnurl'] = $extrainfo;
     }
+    
+    $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
 
     if (isset($args['modid'])) {
         $modid = $args['modid'];
@@ -54,6 +56,10 @@ function xtasks_admin_workspace($args)
     } else {
         xarVarFetch('objectid','isset',$objectid,NULL,XARVAR_NOT_REQUIRED);
     }
+    
+    $data['startnum'] = $startnum;
+    $data['depth'] = 0;
+    $data['maxdepth'] = xarModGetVar('xtasks', 'maxdepth');
 
     $data['authid'] = xarSecGenAuthKey();
     $data['modid'] = $modid;
@@ -97,6 +103,14 @@ function xtasks_admin_workspace($args)
     }
     
     $data['items'] = $items;
+    
+    $data['show_importance'] = xarModGetUserVar('xtasks', 'show_importance');
+    $data['show_priority'] = xarModGetUserVar('xtasks', 'show_priority');
+    $data['show_age'] = xarModGetUserVar('xtasks', 'show_age');
+    $data['show_pctcomplete'] = xarModGetUserVar('xtasks', 'show_pctcomplete');
+    $data['show_planned_dates'] = xarModGetUserVar('xtasks', 'show_planned_dates');
+    $data['show_actual_dates'] = xarModGetUserVar('xtasks', 'show_actual_dates');
+    $data['show_hours'] = xarModGetUserVar('xtasks', 'show_hours');
         
 	return $data;
 }

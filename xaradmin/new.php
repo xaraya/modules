@@ -11,32 +11,41 @@ function xtasks_admin_new($args)
     if (!xarVarFetch('returnurl', 'str', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     
     xarModLoad('xtasks','user');
-    $data = xarModAPIFunc('xtasks','user','menu');
+    $data = xarModAPIFunc('xtasks','admin','menu');
 
     if (!xarSecurityCheck('AddXTask')) {
         return;
     }
     
-//    echo "xarServerGetCurrentURL: ".xarServerGetCurrentURL();
-//    echo "xarRequestGetInfo: ";
-//    print_r(xarRequestGetInfo());
-//    echo "<span style='text-align: left;'>";
-//echo "<pre>";
-//print_r($_SERVER);
-//die("</pre>");
     if(!empty($returnurl)) {
         $data['returnurl'] = $returnurl;
-    } elseif (isset($_SERVER['HTTP_REFERER'])) {
-        $data['returnurl'] = $_SERVER['HTTP_REFERER'];
+    } elseif (empty($data['returnurl'])) {
+        $data['returnurl'] = xarServerGetCurrentURL();
     } else {
         $data['returnurl'] = xarModURL('xtasks','admin','view');
     }
+    $data['returnurl'] = $data['returnurl']."&amp;mode=tasks#tasklist";
 
     $data['authid'] = xarSecGenAuthKey();
     $data['inline'] = $inline;
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;
+    
+    $data['parentid'] = "";
+    $data['priority'] = xarModGetVar('xtasks', 'defaultpriority');
+    $data['status'] = "";
+    $data['private'] = "";
+    $data['importance'] = xarModGetVar('xtasks', 'defaultimportance');
+
+    if($data['modid'] == xarModGetIDFromName('xtasks') && $data['itemtype'] == 1) {
+        $data['parentid'] = $objectid;
+        $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $objectid));
+        $data['priority'] = $parentinfo['priority'];
+        $data['status'] = $parentinfo['status'];
+        $data['private'] = $parentinfo['private'];
+        $data['importance'] = $parentinfo['importance'];
+    }
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 

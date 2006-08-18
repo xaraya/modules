@@ -13,62 +13,38 @@
  */
 function xtasks_admin_create($args)
 {
-    list($objectid,
-         $modid,
-         $itemtype,
-         $parentid,
-         $projectid,
-         $task_name,
-         $status,
-         $priority,
-         $importance,
-         $description,
-         $private,
-         $creator,
-         $owner,
-         $assigner,
-         $groupid,
-         $date_created,
-         $date_approved,
-         $date_changed,
-         $date_start_planned,
-         $date_start_actual,
-         $date_end_planned,
-         $date_end_actual,
-         $hours_planned,
-         $hours_spent,
-         $hours_remaining,
-         $returnurl) =	xarVarCleanFromInput('objectid',
-                                            'modid',
-                                            'itemtype',
-                                            'parentid',
-                                            'projectid',
-                                            'task_name',
-                                            'status',
-                                            'priority',
-                                            'importance',
-                                            'description',
-                                            'private',
-                                            'creator',
-                                            'owner',
-                                            'assigner',
-                                            'groupid',
-                                            'date_created',
-                                            'date_approved',
-                                            'date_changed',
-                                            'date_start_planned',
-                                            'date_start_actual',
-                                            'date_end_planned',
-                                            'date_end_actual',
-                                            'hours_planned',
-                                            'hours_spent',
-                                            'hours_remaining',
-                                            'returnurl');
+    if (!xarVarFetch('modid',   'isset', $modid,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemtype',  'isset', $itemtype,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('objectid',  'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('parentid', 'id', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('creator', 'id', $creator, $creator, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('owner', 'id', $owner, $owner, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('assigner', 'id', $assigner, $assigner, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('groupid', 'id', $groupid, $groupid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_created', 'str::', $date_created, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_approved', 'str::', $date_approved, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_changed', 'str::', $date_changed, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_start_planned', 'str::', $date_start_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_start_actual', 'str::', $date_start_actual, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_end_planned', 'str::', $date_end_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('date_end_actual', 'str::', $date_end_actual, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
     
-    if(!$returnurl) $returnurl = $_SERVER['HTTP_REFERER'];
+//    if(!$returnurl) $returnurl = $_SERVER['HTTP_REFERER'];
+    if(!$returnurl) $returnurl = xarServerGetVar('HTTP_REFERER');
     if(!$returnurl) $returnurl = xarModURL('xtasks', 'admin', 'view');
 
     $taskid = xarModAPIFunc('xtasks',

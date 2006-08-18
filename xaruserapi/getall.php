@@ -26,7 +26,11 @@ function xtasks_userapi_getall($args)
         $parentid = '0';
     }
 
-    if ($startnum == "") {
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+
+    if (empty($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
@@ -61,56 +65,67 @@ function xtasks_userapi_getall($args)
 
     $xtaskstable = $xartable['xtasks'];
 
-    $sql = "SELECT taskid,
-                   objectid,
-                   modid,
-                   itemtype,
-                   parentid,
-                   projectid,
-                   task_name,
-                   status,
-                   priority,
-                   importance,
-                   description,
-                   private,
-                   creator,
-                   owner,
-                   assigner,
-                   groupid,
-                   date_created,
-                   date_approved,
-                   date_changed,
-                   date_start_planned,
-                   date_start_actual,
-                   date_end_planned,
-                   date_end_actual,
-                   hours_planned,
-                   hours_spent,
-                   hours_remaining
-            FROM $xtaskstable
+    $sql = "SELECT a.taskid,
+                   a.objectid,
+                   a.modid,
+                   a.itemtype,
+                   a.parentid,
+                   a.projectid,
+                   a.task_name,
+                   a.status,
+                   a.priority,
+                   a.importance,
+                   a.description,
+                   a.private,
+                   a.creator,
+                   a.owner,
+                   a.assigner,
+                   a.groupid,
+                   a.date_created,
+                   a.date_approved,
+                   a.date_changed,
+                   a.date_start_planned,
+                   a.date_start_actual,
+                   a.date_end_planned,
+                   a.date_end_actual,
+                   a.hours_planned,
+                   a.hours_spent,
+                   a.hours_remaining,
+                   COUNT(b.parentid)
+            FROM $xtaskstable a
+            LEFT JOIN $xtaskstable b
+            ON b.parentid = a.taskid
             WHERE 1";
 
-    if (!empty($parentid)) {
-        $sql .= " AND parentid=".$parentid;
+    if (!empty($modid) 
+        && !empty($objectid)
+        && $modid == xarModGetIDFromName('xtasks')) {
+        
+        $parentid = $objectid;
     }
-
+            
+    if (!empty($parentid)) {
+        $sql .= " AND a.parentid=".$parentid;
+    }
+    
     if (!empty($projectid)) {
-        $sql .= " AND projectid=".$projectid;
+        $sql .= " AND a.projectid=".$projectid;
     } elseif (!empty($modid)) {
-        $sql .= " AND modid=".$modid;
+        $sql .= " OR ( a.modid=".$modid;
         if (!empty($objectid)) {
-            $sql .= " AND objectid=".$objectid;
+            $sql .= " AND a.objectid=".$objectid;
         }
         if (!empty($itemtype)) {
-            $sql .= " AND itemtype=".$itemtype;
+            $sql .= " AND a.itemtype=".$itemtype;
         }
+        $sql .= " )";
     }
-
         
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
 //	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
-    $sql .= " ORDER BY task_name ";
+    $sql .= " GROUP BY b.parentid ";
+    $sql .= " ORDER BY a.task_name ";
 
 /*
     if ($selected_project != "all") {
@@ -173,9 +188,20 @@ function xtasks_userapi_getall($args)
              $date_end_actual,
              $hours_planned,
              $hours_spent,
-             $hours_remaining) = $result->fields;
+             $hours_remaining,
+             $numchildren) = $result->fields;
         if (xarSecurityCheck('ReadXTask', 0, 'Item', "$task_name:All:$taskid")) {
             $numtasks = xarModAPIFunc('xtasks', 'user', 'countitems', array('projectid' => $projectid));
+            if(!empty($date_created) && $date_created != "0000-00-00") {
+                $days_old = sprintf(".01%", (time() - strtotime($date_created) ) / (24 * 60 * 60));
+            } else {
+                $days_old = 0;
+            }
+            if(!empty($date_changed) && $date_changed != "0000-00-00") {
+                $days_untouched = sprintf(".01%", (time() - strtotime($date_changed) ) / (24 * 60 * 60));
+            } else {
+                $days_untouched = 0;
+            }
             $tasks[] = array('taskid' => $taskid,
                             'objectid' => $objectid,
                             'modid' => $modid,
@@ -192,16 +218,19 @@ function xtasks_userapi_getall($args)
                             'owner' => $owner,
                             'assigner' => $assigner,
                             'groupid' => $groupid,
-                            'date_created' => $date_created,
-                            'date_approved' => $date_approved,
-                            'date_changed' => $date_changed,
-                            'date_start_planned' => $date_start_planned,
-                            'date_start_actual' => $date_start_actual,
-                            'date_end_planned' => $date_end_planned,
-                            'date_end_actual' => $date_end_actual,
+                            'date_created' => $date_created == "0000-00-00" ? "" : $date_created,
+                            'date_approved' => $date_approved == "0000-00-00" ? "" : $date_approved,
+                            'date_changed' => $date_changed == "0000-00-00" ? "" : $date_changed,
+                            'date_start_planned' => $date_start_planned == "0000-00-00" ? "" : $date_start_planned,
+                            'date_start_actual' => $date_start_actual == "0000-00-00" ? "" : $date_start_actual,
+                            'date_end_planned' => $date_end_planned == "0000-00-00" ? "" : $date_end_planned,
+                            'date_end_actual' => $date_end_actual == "0000-00-00" ? "" : $date_end_actual,
+                            'days_old' => $days_old,
+                            'days_untouched' => $days_untouched,
                             'hours_planned' => $hours_planned,
                             'hours_spent' => $hours_spent,
-                            'hours_remaining' => $hours_remaining);
+                            'hours_remaining' => $hours_remaining,
+                            'numchildren' => $numchildren);
         }
     }
 

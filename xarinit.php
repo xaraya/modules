@@ -130,6 +130,30 @@ function xtasks_init()
     $query = xarDBCreateIndex($xartable['xtasks'],$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    $reminders_table = $xartable['xtasks_reminders'];
+
+    $reminders_fields = array(
+        'reminderid'			=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'eventdate'	            =>array('type'=>'date','null'=>TRUE),
+        'warning'	            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'));
+
+    $sql = xarDBCreateTable($reminders_table,$reminders_fields);
+    if (empty($sql)) return; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table
+    $dbconn->Execute($sql);
+
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
     
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
@@ -146,6 +170,16 @@ function xtasks_init()
     if (empty($xtasks_objectid)) return;
     // save the object id for later
     xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
+
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/usersettings.xml'));
+    if (empty($objectid)) return;
+    xarModSetVar('xtasks','usersettings',$objectid);
+
+    $objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
+    if (empty($objectid)) return;
+    xarModSetVar('xtasks','modulesettings',$objectid);
 
     xarModSetVar('xtasks', 'dateformat', '');
     xarModSetVar('xtasks', 'autorefresh', 600);
@@ -208,20 +242,20 @@ function xtasks_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-   // Tasks and projects: pid, tid, owner?
-    xarRegisterMask('ViewXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminXTask', 'All', 'xtasks', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-   // Groups: gid
-    xarRegisterMask('ViewXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminXTask', 'All', 'xtasks', 'Group', 'All:All:All', 'ACCESS_ADMIN');
+    xarRegisterMask('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterMask('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+
+    xarRegisterPrivilege('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+    xarRegisterPrivilege('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterPrivilege('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+    
     return true;
 }
 
@@ -229,6 +263,18 @@ function xtasks_upgrade($oldversion)
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+
+    xarDBLoadTableMaintenanceAPI();
+    
+    $ddata_is_available = xarModIsAvailable('dynamicdata');
+    if (!isset($ddata_is_available)) return;
+
+    if (!$ddata_is_available) {
+        $msg = xarML('Please activate the Dynamic Data module first...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
     
     switch($oldversion) {
 
@@ -272,6 +318,65 @@ function xtasks_upgrade($oldversion)
             xarDefineInstance('xtasks','All',$instances);
         
         case '1.1':
+
+            $reminders_table = $xartable['xtasks_reminders'];
+        
+            $reminders_fields = array(
+                'reminderid'			=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+                'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+                'eventdate'	            =>array('type'=>'date','null'=>TRUE),
+                'warning'	            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'));
+        
+            $sql = xarDBCreateTable($reminders_table,$reminders_fields);
+            if (empty($sql)) return; // throw back
+        
+            // Pass the Table Create DDL to adodb to create the table
+            $dbconn->Execute($sql);
+        
+            // Check for an error with the database code, and if so raise the
+            // appropriate exception
+            if ($dbconn->ErrorNo() != 0) {
+                $msg = xarML('DATABASE_ERROR', $sql);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                return;
+            }
+
+            $objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/usersettings.xml'));
+            if (empty($objectid)) return;
+            xarModSetVar('xtasks','usersettings',$objectid);
+            
+        case '1.2':
+
+            $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+            if (!empty($xtasks_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+            }
+            $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/tasks.xml'));
+            if (empty($xtasks_objectid)) return;
+            // save the object id for later
+            xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
+
+            $objectid = xarModGetVar('xtasks','modulesettings');
+            if (!empty($xtasks_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+            }
+            $objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
+            if (empty($objectid)) return;
+            xarModSetVar('xtasks','modulesettings',$objectid);
+
+            xarRegisterPrivilege('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterPrivilege('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+            xarRegisterPrivilege('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+            xarRegisterPrivilege('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+            xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+            xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+
+        case '1.3':
             break;
 
     }
@@ -286,6 +391,19 @@ function xtasks_delete()
 
     xarDBLoadTableMaintenanceAPI();
     $sql = xarDBDropTable($xartable['xtasks']);
+    if (empty($sql)) return; // throw back
+
+    // Drop the table
+    $dbconn->Execute($sql);
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    $sql = xarDBDropTable($xartable['xtasks_reminders']);
     if (empty($sql)) return; // throw back
 
     // Drop the table

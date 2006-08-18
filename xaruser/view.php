@@ -16,7 +16,7 @@ function xtasks_user_view($args)
     extract($args);
     if (!xarVarFetch('startnum',   'int:1:', $startnum,   1, XARVAR_NOT_REQUIRED)) return;
 
-    $data = xarModAPIFunc('xtasks','user','menu');
+    $data = xarModAPIFunc('xtasks','admin','menu');
 
     $data['items'] = array();
 
@@ -24,43 +24,41 @@ function xtasks_user_view($args)
         return;
     }
 
-    $xtaskss = xarModAPIFunc('xtasks',
+    $xtasks = xarModAPIFunc('xtasks',
                           'user',
                           'getall',
                           array('startnum' => $startnum,
                                 'numitems' => 10));//TODO: numitems
 
-    if (!isset($xtaskss) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (!isset($xtasks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    for ($i = 0; $i < count($xtaskss); $i++) {
-        $project = $xtaskss[$i];
-//		if (xarSecAuthAction(0, 'xtasks::Tasks', "$project[name]::$project[projectid]", ACCESS_READ)) {
-        if (xarSecurityCheck('ReadXTask', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
-            $xtaskss[$i]['link'] = xarModURL('xtasks',
-                                               'user',
+    for ($i = 0; $i < count($xtasks); $i++) {
+        $taskinfo = $xtasks[$i];
+        if (xarSecurityCheck('ReadXTask', 0, 'Item', "$taskinfo[task_name]:All:$taskinfo[taskid]")) {
+            $xtasks[$i]['link'] = xarModURL('xtasks',
+                                               'admin',
                                                'display',
-                                               array('projectid' => $project['projectid']));
+                                               array('taskid' => $taskinfo['taskid']));
         }
-        //if (xarSecAuthAction(0, 'xtasks::Tasks', "$project[name]::$project[projectid]", ACCESS_EDIT)) {
-        if (xarSecurityCheck('EditXTask', 0, 'Item', "$project[name]:All:$project[projectid]")) {//TODO: security
-            $xtaskss[$i]['editurl'] = xarModURL('xtasks',
+        if (xarSecurityCheck('EditXTask', 0, 'Item', "$taskinfo[task_name]:All:$taskinfo[taskid]")) {
+            $xtasks[$i]['editurl'] = xarModURL('xtasks',
                                                'admin',
                                                'modify',
-                                               array('projectid' => $project['projectid']));
+                                               array('taskid' => $taskinfo['taskid']));
         } else {
-            $xtaskss[$i]['editurl'] = '';
+            $xtasks[$i]['editurl'] = '';
         }
-        if (xarSecurityCheck('DeleteXTask', 0, 'Item', "$project[name]:All:$project[projectid]")) {
-            $xtaskss[$i]['deleteurl'] = xarModURL('xtasks',
+        if (xarSecurityCheck('DeleteXTask', 0, 'Item', "$taskinfo[task_name]:All:$taskinfo[taskid]")) {
+            $xtasks[$i]['deleteurl'] = xarModURL('xtasks',
                                                'admin',
                                                'delete',
-                                               array('projectid' => $project['projectid']));
+                                               array('taskid' => $taskinfo['taskid']));
         } else {
-            $xtaskss[$i]['deleteurl'] = '';
+            $xtasks[$i]['deleteurl'] = '';
         }
     }
 
-    $data['xtaskss'] = $xtaskss;
+    $data['xtasks'] = $xtasks;
     $data['pager'] = '';
     return $data;
 }

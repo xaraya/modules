@@ -1,0 +1,93 @@
+<object name="modulesettings_xtasks">
+  <objectid>11</objectid>
+  <label>Module Settings for xTasks</label>
+  <moduleid>704</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="maxdepth">
+      <id>172</id>
+      <label>Max level of subtasks displayed</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>1</order>
+      <validation>0;1;2;3;4;5;6;7;8</validation>
+    </property>
+    <property name="show_importance">
+      <id>173</id>
+      <label>Display importance in task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="show_priority">
+      <id>174</id>
+      <label>Display priority in task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>Draft;Pending Approval;Active;Closed</validation>
+    </property>
+    <property name="show_privacy">
+      <id>175</id>
+      <label>Display public/private in task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="default_priority">
+      <id>176</id>
+      <label>Default priority for new tasks</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>1;2;3;4;5;6;7;8;9</validation>
+    </property>
+    <property name="default_importance">
+      <id>177</id>
+      <label>Default importance for new tasks</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>1,Essential;3,Rather;5,Somewhat;7,Not Very;9,None</validation>
+    </property>
+    <property name="default_status">
+      <id>178</id>
+      <label>Default status for new tasks</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>Draft;Pending Approval;Active;Closed</validation>
+    </property>
+    <property name="default_privacy">
+      <id>179</id>
+      <label>New tasks private by default</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+

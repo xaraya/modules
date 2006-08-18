@@ -89,6 +89,8 @@ function xtasks_admin_updateconfig()
     xarModCallHooks('module','updateconfig','xtasks',
                    array('module' => 'xtasks'));
 
+    if (!xarModFunc('dynamicdata','admin','update')) return;
+
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'main'));
 
     return true;

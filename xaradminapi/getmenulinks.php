@@ -21,9 +21,22 @@
 function xtasks_adminapi_getmenulinks()
 {
     $menulinks = array();
+    
+    $menulinks[] = Array('url'   => xarModURL('xtasks',
+                                               'user',
+                                               'settings'),
+                          'title' => xarML('Change your task display preferences'),
+                          'label' => xarML('Settings'));
+
+    if (!xarSecurityCheck('ViewXTask', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('xtasks',
+                                                   'user',
+                                                   'main'),
+                              'title' => xarML('The overview of this module and its functions'),
+                              'label' => xarML('Overview'));
+    }
 
     if (xarSecurityCheck('AddXTask', 0)) {
-
         $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                    'admin',
                                                    'new'),
@@ -35,10 +48,20 @@ function xtasks_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                    'admin',
                                                    'view'),
-                              'title' => xarML('List of current projects'),
-                              'label' => xarML('View Tasks'));
+                              'title' => xarML('Open tasks assigned to you'),
+                              'label' => xarML('My Tasks'));
+        $menulinks[] = Array('url'    => xarModURL('xtasks',
+                                                   'admin',
+                                                   'view'),
+                              'title' => xarML('Tasks you have assigned to other'),
+                              'label' => xarML('Open Tasks'));
+        $menulinks[] = Array('url'    => xarModURL('xtasks',
+                                                   'admin',
+                                                   'view'),
+                              'title' => xarML('Recently closed tasks'),
+                              'label' => xarML('Archive'));
 
-        $menulinks[] = Array('url'   => xarModURL('xtasks',
+        $menulinks[] = Array('url'    => xarModURL('xtasks',
                                                    'user',
                                                    'search'),
                               'title' => xarML('Query project entries'),
@@ -46,11 +69,10 @@ function xtasks_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AdminXTask', 0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('xtasks',
+        $menulinks[] = Array('url'    => xarModURL('xtasks',
                                                    'admin',
                                                    'modifyconfig'),
-                              'title' => xarML('Modify the configuration for XTask'),
+                              'title' => xarML('Modify the module configuration'),
                               'label' => xarML('Modify Config'));
     }
 

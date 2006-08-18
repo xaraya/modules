@@ -18,6 +18,8 @@ function xtasks_xartables()
     $xartable = array();
     $xtasks = xarDBGetSiteTablePrefix() . '_xtasks';
     $xartable['xtasks'] = $xtasks;
+    $reminders = xarDBGetSiteTablePrefix() . '_xtasks_reminders';
+    $xartable['xtasks_reminders'] = $reminders;
     return $xartable;
 }
 ?>

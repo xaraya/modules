@@ -25,8 +25,8 @@
 <xar:if condition="isset($modid)">
     <input type="hidden" name="modid" value="#$modid#" />
 </xar:if>
-<xar:if condition="isset($itemid)">
-    <input type="hidden" name="itemid" value="#$itemid#" />
+<xar:if condition="isset($parentid)">
+    <input type="hidden" name="parentid" value="#$parentid#" />
 </xar:if>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
@@ -40,15 +40,15 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['status']" /></td>
-        <td><xar:data-input property="$properties['status']" name="status" />
-            <xar:data-input property="$properties['private']" name="private" />
+        <td><xar:data-input property="$properties['status']" name="status" value="$status" />
+            <xar:data-input property="$properties['private']" name="private" value="$private" />
             <xar:data-label property="$properties['private']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['priority']" /></td>
-        <td><xar:data-input property="$properties['priority']" name="priority" />
+        <td><xar:data-input property="$properties['priority']" name="priority" value="$priority" />
             <xar:data-label property="$properties['importance']" />
-            <xar:data-input property="$properties['importance']" name="importance" /></td>
+            <xar:data-input property="$properties['importance']" name="importance" value="$importance" /></td>
     </tr>
     <tr>
         <td><xar:mlstring>Planned Timeframe</xar:mlstring></td>
@@ -93,5 +93,6 @@
 </form>
 </div>
 </div>
+
 <div class="xar-mod-foot">#$hooks#</div>
 

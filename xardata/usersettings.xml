@@ -1,0 +1,82 @@
+<object name="usersettings_xtasks">
+  <objectid>12</objectid>
+  <label>User Settings For xTasks</label>
+  <moduleid>704</moduleid>
+  <itemtype>8</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="show_importance">
+      <id>174</id>
+      <label>Display importance in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="show_priority">
+      <id>175</id>
+      <label>Display priority in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="show_age">
+      <id>176</id>
+      <label>Display age in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="show_hours">
+      <id>177</id>
+      <label>Display hours of work in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="show_pctcomplete">
+      <id>178</id>
+      <label>Display percentage complete in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="show_planned_dates">
+      <id>179</id>
+      <label>Display planned start and end date in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="show_actual_dates">
+      <id>180</id>
+      <label>Display actual start and end date in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+</object>
+
