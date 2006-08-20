@@ -80,7 +80,7 @@ div.xarbb-tablewrapper table {
 div.xarbb-tablewrapper table td,
 div.xarbb-tablewrapper table th {
     /*margin: 1px;*/
-    padding: 0.5em;
+    padding: 0 .5em;
     /*border-bottom: 1px solid #000;*/
 }
 
@@ -166,7 +166,7 @@ div#xarbb-loginwrapper {
 }
 
 div#xarbb-loginwrapper label {
-	padding: 0 .2em 0 1em;
+    padding: 0 .2em 0 1em;
 }
 
 
@@ -213,9 +213,9 @@ div.xarbb-legendwrapper2 h2 {
     text-align: center;
 }
 div.xarbb-legendwrapper2 dl dt {
-	/* We are going to hide the definition terms for now,
-	   but display them if you want as titles on each
-	   group of legend icons. */
+    /* We are going to hide the definition terms for now,
+       but display them if you want as titles on each
+       group of legend icons. */
     display: none;
 }
 div.xarbb-legendwrapper2 dl dd {
