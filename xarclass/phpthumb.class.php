@@ -83,7 +83,7 @@ class phpthumb
     var $config_error_bgcolor                        = 'CCCCFF';
     var $config_error_textcolor                      = 'FF0000';
     var $config_error_fontsize                       = 1;
-    var $config_error_die_on_error                   = false;
+    var $config_error_die_on_error                   = true;
     var $config_error_silent_die_on_error            = false;
     var $config_error_die_on_source_failure          = true;
 
@@ -106,9 +106,9 @@ class phpthumb
     // * TrueType Fonts
     var $config_ttf_directory                        = '.';
 
-    var $config_max_source_pixels                    = null;
-    var $config_use_exif_thumbnail_for_speed         = false;
-    var $allow_local_http_src                        = false;
+    var $config_max_source_pixels                    = 0;
+    var $config_use_exif_thumbnail_for_speed         = true;
+    var $config_output_allow_enlarging               = false;
 
     var $config_imagemagick_path                     = null;
     var $config_prefer_imagemagick                   = true;
@@ -133,7 +133,7 @@ class phpthumb
     var $config_high_security_enabled                = false;
     var $config_high_security_password               = null;
     var $config_disable_debug                        = false;
-    var $config_allow_src_above_docroot              = false;
+    var $config_allow_src_above_docroot              = true;
     var $config_allow_src_above_phpthumb             = true;
     var $config_allow_parameter_file                 = false;
     var $config_allow_parameter_goto                 = false;
@@ -938,6 +938,7 @@ class phpthumb
             $AbsoluteFilename = eregi_replace('^'.preg_quote(realpath($this->config_document_root)), realpath($this->config_document_root), $AbsoluteFilename);
             $AbsoluteFilename = str_replace(DIRECTORY_SEPARATOR, '/', $AbsoluteFilename);
         }
+
         if (!$this->config_allow_src_above_docroot && !ereg('^'.preg_quote(str_replace(DIRECTORY_SEPARATOR, '/', realpath($this->config_document_root))), $AbsoluteFilename)) {
             $this->DebugMessage('!$this->config_allow_src_above_docroot therefore setting "'.$AbsoluteFilename.'" (outside "'.realpath($this->config_document_root).'") to null', __FILE__, __LINE__);
             return false;
@@ -3255,7 +3256,7 @@ class phpthumb
         return $this->ErrorImage(implode("\n", $DebugOutput), 700, 500, true);
     }
 
-    function ErrorImage($text, $width=0, $height=0, $forcedisplay=false) 
+    function ErrorImage($text, $width=0, $height=0, $forcedisplay=false)
     {
         $width  = ($width  ? $width  : $this->config_error_image_width);
         $height = ($height ? $height : $this->config_error_image_height);
