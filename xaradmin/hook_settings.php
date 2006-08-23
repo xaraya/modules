@@ -66,7 +66,6 @@ function security_admin_hook_settings($args)
             $settings->default_item_levels[$key] = new SecurityLevel($role_level);
         }
         if( !isset($settings->default_item_levels['user']) ){ $settings->default_item_levels['user'] = new SecurityLevel(); }
-var_dump($settings->default_item_levels);
 
         $settings->default_module_levels = null;
         foreach( $default_module_levels as $key => $role_level )
