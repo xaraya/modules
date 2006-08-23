@@ -26,7 +26,7 @@ function stats_eventapi_OnServerRequest($arg)
     $excludelist = explode("\n", trim(xarModGetVar('stats', 'excludelist')));
     $excluded = in_array($_SERVER["REMOTE_ADDR"], $excludelist);
     /* Uncomment the following to fix bug 178 */
-    if (((xarSecurityCheck('AdminPanel', 0)) AND (xarModGetVar('stats', 'countadmin') == FALSE)) || $excluded) {
+    if (((xarSecurityCheck('AdminStats', 0)) AND (xarModGetVar('stats', 'countadmin') == FALSE)) || $excluded) {
         return true;
     }
 
