@@ -33,7 +33,7 @@ function opentracker_eventapi_OnServerRequest()
 
   // don't count admin hits
   $countadmin = xarModGetVar('opentracker','countadmin');
-  if (empty($countadmin) && xarSecurityCheck('AdminPanel', 0)) {
+  if (empty($countadmin) && xarSecurityCheck('AdminOpentracker', 0)) {
     return true;
   }
   xarOpenTracker::log(
