@@ -17,8 +17,8 @@ function xorba_cliapi_server($args = array())
     {
         case 'start'  :
             chdir('modules/xorba/xarclass/phpbeans');
-            //error_reporting(0); // Thank you PEAR :-(
-            include 'server/server.php';
+            error_reporting(0); // Thank you PEAR :-(
+            include 'daemon.php';
         case 'stop'   :
         case 'restart':
             fwrite(STDOUT,"$op server here\n");
