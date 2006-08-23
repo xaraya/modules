@@ -8,6 +8,7 @@
  * @param   integer   $modid        the id of the module that these nodes belong to
  * @param   integer   $itemtype     the item type that these nodes belong to
  * @param   array     $objectids    the list of ids of the items that these nodes belong to
+ * @param   integer   $startdate    (optional) comments posted at startdate or later
  * @returns array     the number of comments for the particular modid/objectids pairs,
  *                    or raise an exception and return false.
  */
@@ -53,6 +54,10 @@ function comments_userapi_get_countlist($args)
         $sql .= " AND $ctable[itemtype]=$itemtype";
     }
 
+    if (!empty($startdate) && is_numeric($startdate)) {
+        $sql .= " AND $ctable[cdate]>=$startdate";
+    }
+ 
     $sql .= " GROUP BY  $ctable[objectid]";
 
     $result =& $dbconn->Execute($sql);
