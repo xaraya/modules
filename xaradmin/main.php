@@ -18,7 +18,7 @@
 function security_admin_main($args)
 {
     extract($args);
-    if( !xarSecurityCheck('AdminSecurity') ){ return false; }
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
     if( xarModGetVar('adminpanels', 'overview') == 0 )
     {

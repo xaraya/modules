@@ -9,6 +9,7 @@
         </xar:foreach>
     </tr>
     <xar:set name="count">0</xar:set>
+    <xar:if condition="$levels ne null">
     <xar:foreach in="$levels" key="$role_id" value="$user_sec">
         <xar:if condition="$count % 2 eq 0">
             <xar:set name="class">'xar-norm'</xar:set>
@@ -25,32 +26,33 @@
             </xar:if>
             <xar:foreach in="$user_sec" key="$key" value="$level">
                 <td>
-                    <xar:if condition="$level eq 0">
-                        <input type="checkbox" name="#$key#[#$role_id#]" value="1" />
-                    <xar:else />
-                        <input type="checkbox" name="#$key#[#$role_id#]" value="1" checked="checked" />
-                    </xar:if>
+                <xar:if condition="$level eq 0">
+                    <input type="checkbox" name="#$name#[#$role_id#][#$key#]" value="1" />
+                <xar:else />
+                    <input type="checkbox" name="#$name#[#$role_id#][#$key#]" value="1" checked="checked" />
+                </xar:if>
                 </td>
             </xar:foreach>
         </tr>
         <xar:set name="count">$count+1</xar:set>
     </xar:foreach>
+    </xar:if>
     <xar:if condition="!empty($all_groups)">
     <tr>
         <td>
-            <select name="group" onchange="return xar_security_changeInputName(this.form, this.value)">
+            <select name="#$name#_group" onchange="return xar_security_changeInputName('#$name#', this.form, this.value)">
                 <option value="-1">Add group to security table.</option>
                 <xar:foreach in="$all_groups" key="$key" value="$group">
                     <option value="#$key#"><xar:var name="group.name" /></option>
                 </xar:foreach>
             </select>
         </td>
-        <td><input type="checkbox" id="xoverview" name="xoverview" value="1" /></td>
-        <td><input type="checkbox" id="xread" name="xread" value="1" /></td>
-        <td><input type="checkbox" id="xcomment" name="xcomment" value="1" /></td>
-        <td><input type="checkbox" id="xwrite" name="xmanage" value="1" /></td>
-        <td><input type="checkbox" id="xmanage" name="xmanage" value="1" /></td>
-        <td><input type="checkbox" id="xadmin" name="xadmin" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xoverview" name="#$name#_xoverview" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xread" name="#$name#_xread" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xcomment" name="#$name#_xcomment" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xwrite" name="#$name#_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xmanage" name="#$name#_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="#$name#_xadmin" name="#$name#_xadmin" value="1" /></td>
     </tr>
     </xar:if>
 </table>

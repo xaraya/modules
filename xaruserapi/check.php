@@ -13,6 +13,8 @@
 /**
     Check to see if user has access to a xaraya item
 
+    @deprecated DEPRECATED
+
     @param int $args['modid']
     @param int $args['itemtype']
     @param int $args['itemid']

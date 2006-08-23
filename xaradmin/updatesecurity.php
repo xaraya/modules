@@ -19,63 +19,26 @@
 */
 function security_admin_updatesecurity($args)
 {
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
+
     if( !xarVarFetch('modid',    'id', $modid,     0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemtype', 'id', $itemtype,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemid',   'id', $itemid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('returnurl','str',$returnUrl, '', XARVAR_NOT_REQUIRED) ){ return false; }
-
-    if( !xarVarFetch('overview', 'array', $overview,array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('read',     'array', $read,    array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('comment',  'array', $comment, array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('write',    'array', $write,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('levels','array',$levels, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
     extract($args);
 
-    if( !xarModAPILoad('security', 'user') ){ return false; }
-
-    /*
-        If user has SECURITY_ADMIN level or is a site admin let them
-        modify security otherwise don't
-    */
-    $has_admin_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype,
-            'itemid'   => $itemid,
-            'level'    => SECURITY_ADMIN,
-            'hide_exception' => true
-        )
-    );
-    if( !$has_admin_security ){ return ''; }
-
-    $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
-    $levels = array();
-
-    // Read checks from form and setup the levels for storage
-    foreach( $secLevels as $secLevel )
+    $security = new SecurityLevels($modid, $itemtype, $itemid);
+    foreach( $levels as $role_id => $level )
     {
-        foreach( $$secLevel['name'] as $role_id => $value )
-        {
-            if( $role_id > -1 )
-            {
-                $levels[$role_id][$secLevel['name']] = $value;
-            }
-        }
+        $security->add(new SecurityLevel($level), $role_id);
     }
 
-    $settings['levels'] = $levels;
-    $sargs = array(
-        'modid'    => $modid,
-        'itemtype' => $itemtype,
-        'itemid'   => $itemid,
-        'settings' => $settings
-    );
-    xarModAPIFunc('security', 'admin', 'update', $sargs);
+    $result = Security::update($security, $modid, $itemtype, $itemid);
+    if( !$result ){ return false; }
 
     xarResponseRedirect($returnUrl);
-
     return false;
 }
 ?>

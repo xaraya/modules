@@ -8,7 +8,8 @@
         <div class="xar-align-center  xar-floatleft" style="width: 44%;">
         <form name="" action="#xarModURL('security', 'admin', 'updatesecurity')#" method="POST">
 
-            <xar:template file="security-form" />
+            <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_module_levels', 'security' => $security)</xar:set>
+            <xar:template file="security-form" subdata="$subdata" />
 
             <div class="xar-align-center">
                 <input type="hidden" name="modid" value="#$modid#" />

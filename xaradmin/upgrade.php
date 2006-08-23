@@ -17,7 +17,7 @@
  */
 function security_admin_upgrade($args)
 {
-    if( !xarSecurityCheck('AdminSecurity') ) return false;
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
     xarModAPILoad('security');
 

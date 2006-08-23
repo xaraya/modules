@@ -75,7 +75,7 @@ function security_userapi_getall($args)
         if( $result->EOF ){ return array(); }
 
         $module = xarModGetInfo($modid);
-        $itemtypes = xarModAPIFunc($module['name'], 'user', 'getitemtypes');
+        $itemtypes = xarModAPIFunc($module['name'], 'user', 'getitemtypes', array(), false);
         while( (list($itemtype) = $result->fields) != null )
         {
             $return[$itemtype] = $itemtypes[$itemtype];
@@ -125,7 +125,7 @@ function security_userapi_getall($args)
         $result->MoveFirst();
         while( (list($itemid, $count) = $result->fields) != null )
         {
-            $return[$itemid] = $items[$itemid];
+            $return[$itemid] = isset($items[$itemid]) ? $items[$itemid] : xarML('Unknown');
             $return[$itemid]['num_items'] = $count;
 
             $result->MoveNext();

@@ -38,37 +38,25 @@ function security_admin_changesecurity($args)
     else
         $returnUrl = xarServerGetCurrentURL();
 
-    $data = array();
-
-    $has_security = xarModAPIFunc('security', 'user', 'securityexists',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype,
-            'itemid'   => $itemid
-        )
-    );
-    $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype
-        )
-    );
-
     /*
         If user has SECURITY_ADMIN level or is a site admin let them
         modify security otherwise don't
     */
-    xarModAPILoad('security');
-    $has_admin_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype,
-            'itemid'   => $itemid,
-            'level'    => SECURITY_ADMIN,
-            'hide_exception' => true
-        )
-    );
+    $has_admin_security = Security::check(SECURITY_ADMIN, $modid, $itemtype, $itemid, false);
     if( !$has_admin_security ){ return ''; }
+
+    $data = array();
+
+//    $has_security = xarModAPIFunc('security', 'user', 'securityexists',
+//        array(
+//            'modid'    => $modid,
+//            'itemtype' => $itemtype,
+//            'itemid'   => $itemid
+//        )
+//    );
+
+    xarModAPILoad('security');
+    $settings = SecuritySettings::factory($modid, $itemtype);
 
     /*
         Get all the current security and owner info
@@ -76,22 +64,21 @@ function security_admin_changesecurity($args)
     // Make sure their are levels if not quit
     $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
     $security = xarModAPIFunc('security', 'user', 'get', $args);
-    //if( !$security ) return '';
 
     // Make user this has an owner otherwise quit
-    if( is_null($settings['owner']) )
+    if( empty($settings->owner_table) )
     {
         $owner = xarModAPIFunc('owner', 'user', 'get', $args);
-        if( !$owner ) return '';
+        //if( !$owner ) return '';
     }
     else
     {
         // Use owner table field settings to extract the owner from the database
         $dbconn   =& xarDBGetConn();
         $sql = "
-            SELECT {$settings['owner']['column']}
-            FROM {$settings['owner']['table']}
-            WHERE {$settings['owner']['primary_key']} = ?
+            SELECT {$settings->owner_column}
+            FROM {$settings->owner_table}
+            WHERE {$settings->owner_primary_key} = ?
         ";
         $result = $dbconn->Execute($sql, array($itemid));
         if( !$result ){ return false; }
@@ -103,16 +90,16 @@ function security_admin_changesecurity($args)
         This allows the admin to assign privs how ever they want even if the
         user can not do it.
     */
-    if( xarSecurityCheck('AdminPanel', 0) ){ $uid = xarUserGetVar('uid'); }
-    else{ $uid = $owner['uid']; }
+//    if( xarSecurityCheck('AdminPanel', 0) ){ $uid = xarUserGetVar('uid'); }
+//    else{ $uid = $owner['uid']; }
 
     /*
         These groups are used in the Add groups menu thing to create new group privs
     */
-    if( xarSecurityCheck('AdminPanel', 0) )
-        $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
-    else
-        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
+    //if( xarSecurityCheck('AdminPanel', 0) )
+    $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
+//    else
+//        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
 
     $tmp = array();
     foreach( $groups as $key => $group ){ $tmp[$group['uid']] = $group; }
@@ -128,10 +115,11 @@ function security_admin_changesecurity($args)
     {
         $data['standalone'] = false;
     }
+    $data['settings'] = $settings;
     $data['owner']    = $owner['uid'];
-    $data['secLevels']= $secLevels; // different security levels
+    $data['sec_levels']= $secLevels; // different security levels
     $data['security']   = $security; // Sec levels for each group
-    $data['user_groups']   = $groups; // Groups user is in
+    $data['all_groups']   = $groups; // Groups user is in
     $data['modid']    = $modid;
     $data['itemtype'] = $itemtype;
     $data['itemid']   = $itemid;

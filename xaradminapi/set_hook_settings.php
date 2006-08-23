@@ -12,6 +12,8 @@
  */
 /**
  * Wrapper for setting module hook settings.
+ *
+ * @deprecated  use Security::save instead
  */
 function security_adminapi_set_hook_settings($args)
 {

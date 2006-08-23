@@ -17,7 +17,7 @@
  */
 function security_admin_display($args)
 {
-    if( !xarSecurityCheck('AdminSecurity') ){ return false; }
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
     if( !xarVarFetch('modid',    'id',  $modid,    0,         XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemtype', 'id',  $itemtype, 0,         XARVAR_NOT_REQUIRED) ){ return false; }
@@ -33,7 +33,7 @@ function security_admin_display($args)
             'itemids'  => array($itemid)
         )
     );
-    $data['item'] = $items[$itemid];
+    $data['item'] = isset($items[$itemid]) ? $items[$itemid] : array('label' => xarML('Unknown'), 'url' => '');
     $data['security'] = xarModAPIFunc('security', 'user', 'get',
         array(
             'modid'    => $modid,

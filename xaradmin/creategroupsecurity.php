@@ -27,6 +27,8 @@ function security_admin_creategroupsecurity($args)
 
     if( !xarModAPILoad('security', 'user') ){ return false; }
 
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
+
     xarModAPIFunc('security', 'admin', 'create_group_level',
         array(
             'modid'    => $modid,

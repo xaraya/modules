@@ -17,7 +17,7 @@
  */
 function security_admin_view($args)
 {
-    if( !xarSecurityCheck('AdminSecurity') ){ return false; }
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
     if( !xarVarFetch('modid',    'id',  $modid,    0,         XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemtype', 'id',  $itemtype, 0,         XARVAR_NOT_REQUIRED) ){ return false; }
@@ -33,8 +33,6 @@ function security_admin_view($args)
             'mode'     => $mode
         )
     );
-
-//    var_dump($data['items']);
 
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;

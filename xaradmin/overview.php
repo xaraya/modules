@@ -12,7 +12,8 @@
  */
 function security_admin_overview($args)
 {
-    if( !xarSecurityCheck('AdminSecurity') ){ return false; }
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
+
     extract($args);
 
     $data = array();

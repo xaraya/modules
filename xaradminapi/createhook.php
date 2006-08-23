@@ -48,12 +48,9 @@ function security_adminapi_createhook($args)
     /*
         Get the default settings for this module / itemtype pair
     */
-    $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-        array(
-            'modid'    => isset($modid) ? $modid : null,
-            'itemtype' => isset($itemtype) ? $itemtype : null
-        )
-    );
+    $settings = SecuritySettings::factory($modid, $itemtype);
+    $security = new SecurityLevels($modid, $itemtype, $itemid);
+    $security->levels = $settings->default_item_levels;
 
     // Find owner so that we can sub user with user id
     $owner_id = xarModAPIFunc('security', 'user', 'get_owner_id',
@@ -63,8 +60,8 @@ function security_adminapi_createhook($args)
             'itemid'   => isset($itemid) ? $itemid : null
         )
     );
-    $settings['levels'][$owner_id] = $settings['levels']['user'];
-    unset($settings['levels']['user']);
+    $security->levels[$owner_id] = $settings->default_item_levels['user'];
+    unset($security->levels['user']);
 
     /*
         Check if there are any extra security group
@@ -80,12 +77,13 @@ function security_adminapi_createhook($args)
         foreach( $select_groups as $group )
         {
             if(
-                empty($settings['exclude_groups'][$group]) &&
-                empty($settings['levels'][$group]) &&
-                $group > 2
+                empty($settings->exclude_groups[$group]) &&
+                empty($security->levels[$group]) &&
+                $group > 2 &&
+                !isset($settings->exclude_groups[0])
             )
             {
-                $settings['levels'][$group] = $settings['levels'][$owner_id];
+                $security->levels[$group] = $settings->default_item_levels[$owner_id];
             }
         }
     }
@@ -97,22 +95,18 @@ function security_adminapi_createhook($args)
         foreach( $parents as $parent )
         {
             if(
-                empty($settings['exclude_groups'][$parent->uid]) &&
-                empty($settings['levels'][$parent->uid]) &&
-                $parent->uid > 2
+                empty($settings->exclude_groups[$parent->uid]) &&
+                empty($security->levels[$parent->uid]) &&
+                $parent->uid > 2 &&
+                !isset($settings->exclude_groups[0])
             )
             {
-                $settings['levels'][$parent->uid] = $settings['default_group_level'];
+                $security->levels[$parent->uid] = $settings->default_group_level;
             }
         }
     }
-    $sargs = array(
-        'modid'    => $modid,
-        'itemtype' => $itemtype,
-        'itemid'   => $itemid,
-        'settings' => $settings
-    );
-    $result = xarModAPIFunc('security', 'admin', 'create', $sargs);
+
+    $result = Security::create($security,$modid, $itemtype, $itemid);
 	if( !$result ){ return false; }
 
     return $extrainfo;

@@ -10,6 +10,10 @@
  * @subpackage Security Module
  * @author Brian McGilligan <brian@mcgilligan.us>
  */
+
+include_once("modules/security/xarclass/settings.php");
+include_once("modules/security/xarclass/security.php");
+
 /**
     Initialize the module
 */
@@ -65,12 +69,17 @@ function security_init()
         return false;
     }
 
+    // Set default security.
+    $default_admin_id = xarModGetVar('roles', 'admin');
+    $levels[$default_admin_id] = new SecurityLevel(1, 1, 1, 1, 1, 1);
+    Security::update($levels, xarModGetIDFromName('security'));
+
     /*
       Register the module components that are privileges objects Format is
       xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     */
-    xarRegisterMask('UseSecurity', 'All', 'security', 'All', 'All', 'ACCESS_READ');
-    xarRegisterMask('AdminSecurity', 'All', 'security', 'All', 'All', 'ACCESS_ADMIN');
+    //xarRegisterMask('UseSecurity', 'All', 'security', 'All', 'All', 'ACCESS_READ');
+    //xarRegisterMask('AdminSecurity', 'All', 'security', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -125,6 +134,11 @@ function security_upgrade($oldversion)
 
         case '0.8.3':
         case '0.9.0':
+            $default_admin_id = xarModGetVar('roles', 'admin');
+            $levels[$default_admin_id] = new SecurityLevel(1, 1, 1, 1, 1, 1);
+            Security::update($levels, xarModGetIDFromName('security'));
+
+        case '0.9.1':
             break;
 
         default:

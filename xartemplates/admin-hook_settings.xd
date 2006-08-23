@@ -44,7 +44,7 @@
             <label class="xar-form-label"><xar:mlstring>Exclude Groups</xar:mlstring></label>
             <select name="exclude_gids[]" multiple="multiple" class="xar-form-textlong">
                 <xar:foreach in="$all_groups" key="$key" value="$group">
-                    <xar:if condition="!empty($settings['exclude_groups'][$key])">
+                    <xar:if condition="isset($settings:exclude_groups[$key])">
                         <option value="#$key#" selected="selected"><xar:var name="group.name" /></option>
                     <xar:else />
                         <option value="#$key#"><xar:var name="group.name" /></option>
@@ -54,7 +54,28 @@
         </div>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Default Group Level</xar:mlstring></label>
-            <input type="text" name="default_group_level" value="#$settings['default_group_level']#" class="xar-form-textshort">
+            <xar:set name="width">100/(count($sec_levels)+1)</xar:set>
+            <table class="xar-norm-outline xar-clearboth">
+                <tr>
+                    <xar:foreach in="$sec_levels" key="$key" value="$level">
+                        <th width="#$width#%">#$level.label#</th>
+                    </xar:foreach>
+                </tr>
+                <tr>
+                    <xar:if condition="$settings:default_group_level ne null">
+                    <xar:foreach in="$settings:default_group_level" key="$key" value="$level">
+                        <td>
+                            <xar:if condition="$level eq 0">
+                                <input type="checkbox" name="default_group_level[#$key#]" value="1" />
+                            <xar:else />
+                                <input type="checkbox" name="default_group_level[#$key#]" value="1" checked="checked" />
+                            </xar:if>
+                        </td>
+                    </xar:foreach>
+                    </xar:if>
+                </tr>
+            </table>
+
         </div>
     </fieldset>
 
@@ -67,7 +88,7 @@
                 onchange="javascript: submit();">
                 <option value="">Use Owner Module</option>
                 <xar:foreach in="$tables" key="$key" value="$table">
-                    <xar:if condition="$table eq $owner_table">
+                    <xar:if condition="$table eq $settings:owner_table">
                         <option value="#$table#" selected="selected"><xar:var name="table" /></option>
                     <xar:else />
                         <option value="#$table#"><xar:var name="table" /></option>
@@ -82,7 +103,7 @@
                 <select name="primary_key" class="xar-form-textlong">
                     <option value="">Select Primary Key</option>
                     <xar:foreach in="$columns" key="$key" value="$column">
-                        <xar:if condition="$column:name eq $owner_primary_key">
+                        <xar:if condition="$column:name eq $settings:owner_primary_key">
                             <option value="#$column:name#" selected="selected"><xar:var name="column:name" /></option>
                         <xar:else />
                             <option value="#$column:name#"><xar:var name="column:name" /></option>
@@ -98,7 +119,7 @@
                 <select name="owner_column" class="xar-form-textlong">
                     <option value="">Select Owner Column</option>
                     <xar:foreach in="$columns" key="$key" value="$column">
-                        <xar:if condition="$column:name eq $owner_column">
+                        <xar:if condition="$column:name eq $settings:owner_column">
                             <option value="#$column:name#" selected="selected"><xar:var name="column:name" /></option>
                         <xar:else />
                             <option value="#$column:name#"><xar:var name="column:name" /></option>
@@ -113,20 +134,13 @@
     <fieldset>
         <legend><xar:mlstring>Security</xar:mlstring></legend>
 
-        <xar:comment>
-        <xar:if condition="!empty($all_groups)">
-        <div class="xar-floatright" style="width: 40%;">
-        <select name="group">
-            <xar:foreach in="$all_groups" value="$group">
-                <option value="#$group.uid#"><xar:var name="group.name" /></option>
-            </xar:foreach>
-        </select>
-            <input type="submit" name="submit_button" value="#xarML('Add Group')#" />
-        </div>
-        </xar:if>
-        </xar:comment>
+        <h4><xar:mlstring>Default Item Security</xar:mlstring></h4>
+        <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_item_levels', 'levels' => $settings->default_item_levels)</xar:set>
+        <xar:template file="security-table" subdata="$subdata" />
 
-        <xar:template file="security-table" />
+        <h4><xar:mlstring>Module Security</xar:mlstring></h4>
+        <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_module_levels', 'levels' => $settings->default_module_levels)</xar:set>
+        <xar:template file="security-table" subdata="$subdata" />
 
     </fieldset>
 

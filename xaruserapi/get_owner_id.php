@@ -5,15 +5,10 @@ function security_userapi_get_owner_id($args)
 {
     extract($args);
 
-    $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype
-        )
-    );
+    $settings = SecuritySettings::factory($modid, $itemtype);
 
     // Make user this has an owner otherwise quit
-    if( is_null($settings['owner']) )
+    if( is_null($settings->owner_table) )
     {
         $owner = xarModAPIFunc('owner', 'user', 'get', $args);
         if( !$owner ) return false;
@@ -23,9 +18,9 @@ function security_userapi_get_owner_id($args)
         // Use owner table field settings to extract the owner from the database
         $dbconn   =& xarDBGetConn();
         $sql = "
-            SELECT {$settings['owner']['column']}
-            FROM {$settings['owner']['table']}
-            WHERE {$settings['owner']['primary_key']} = ?
+            SELECT {$settings->owner_column}
+            FROM {$settings->owner_table}
+            WHERE {$settings->owner_primary_key} = ?
         ";
         $result = $dbconn->Execute($sql, array($itemid));
         if( !$result ){ return false; }

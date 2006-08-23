@@ -18,4 +18,7 @@ define('SECURITY_WRITE', 4);      // Change / Modify / Delete
 define('SECURITY_MANAGE', 2);     // Not really sure how this helps yet
 define('SECURITY_ADMIN',1);       // Change who can access an object (future)
 
+include_once("modules/security/xarclass/settings.php");
+include_once("modules/security/xarclass/security.php");
+
 ?>

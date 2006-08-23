@@ -23,7 +23,11 @@
                 <xar:set name="class">'xar-alt'</xar:set>
             </xar:if>
             <tr class="#$class#">
+            <xar:if condition="$modid gt 0">
                 <td>#xarModGetNameFromId($modid)#</td>
+            <xar:else />
+                <td><xar:mlstring>System</xar:mlstring></td>
+            </xar:if>
                 <td>
                     <a href="#xarModURL('security', 'admin', 'view', array('mode' => 'itemtypes', 'modid' => $modid))#"><xar:mlstring>View Details</xar:mlstring></a>
                 </td>

@@ -19,9 +19,8 @@
 */
 function security_admin_enablemodulesecurity($args)
 {
-    if( !xarSecurityCheck('AdminSecurity') ) return false;
+    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
-    xarModAPILoad('security');
     $default_user_level  = SECURITY_OVERVIEW+SECURITY_READ+SECURITY_COMMENT+SECURITY_WRITE+SECURITY_ADMIN;
     $default_group_level  = SECURITY_OVERVIEW+SECURITY_READ;
     $default_world_level  = SECURITY_OVERVIEW+SECURITY_READ;

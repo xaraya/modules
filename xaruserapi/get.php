@@ -94,42 +94,26 @@ function security_userapi_get($args)
     if( $result->EOF ){ return array(); }
 
     $level = array();
-    $security = array();
+    $security = new SecurityLevels();
     while( (list($uid, $overview, $read,
     	$comment, $write, $manage, $admin, $username) = $result->fields) != null )
     {
-        $security[$uid] = array(
-            'username' => $username,
-            'levels' => array(
-            	'overview' => $overview,
-            	'read' 	   => $read,
-            	'comment'  => $comment,
-            	'write'    => $write,
-            	'manage'   => $manage,
-            	'admin'    => $admin
+        $security->add(
+            new SecurityLevel(
+                array(
+                	'overview' => $overview,
+                	'read' 	   => $read,
+                	'comment'  => $comment,
+                	'write'    => $write,
+                	'manage'   => $manage,
+                	'admin'    => $admin
+                )
             )
+            , $uid
+            , $username
         );
 
-//        $level[$uid] = array(
-//            'username' => $username,
-//        );
         $result->MoveNext();
-    }
-
-    if( !isset($security[0]) )
-    {
-        $security[0] = array(
-            'username' => xarML('Everybody'),
-            'levels' => array(
-            	'overview' => 0,
-            	'read' 	   => 0,
-            	'comment'  => 0,
-            	'write'    => 0,
-            	'manage'   => 0,
-            	'admin'    => 0
-            )
-        );
-        ksort($security);
     }
 
     return $security;

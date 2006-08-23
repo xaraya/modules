@@ -1,53 +1,58 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="width">100/(count($secLevels)+1)</xar:set>
+
+<xar:set name="width">100/(count($sec_levels)+1)</xar:set>
 <table width="100%" class="xar-norm-outline">
-<tr>
-    <th>User</th>
-    <xar:foreach in="$secLevels" key="$key" value="$level">
-        <th width="#$width#%">#$level.label#</th>
-    </xar:foreach>
-</tr>
-<xar:set name="count">0</xar:set>
-<xar:foreach in="$security" key="$role_id" value="$user_sec">
-    <xar:if condition="$count % 2 eq 0">
-        <xar:set name="class">'xar-norm'</xar:set>
-    <xar:else />
-        <xar:set name="class">'xar-alt'</xar:set>
-    </xar:if>
-    <tr class="#$class#">
-        <xar:if condition="$role_id eq 0">
-            <td><xar:mlstring>Everybody</xar:mlstring></td>
-        <xar:else />
-            <td>#$user_sec.username#</td>
-        </xar:if>
-        <xar:foreach in="$user_sec.levels" key="$key" value="$level">
-            <td>
-                <xar:if condition="$level eq 0">
-                    <input type="checkbox" name="#$key#[#$role_id#]" value="1" />
-                <xar:else />
-                    <input type="checkbox" name="#$key#[#$role_id#]" value="1" checked="checked" />
-                </xar:if>
-            </td>
+    <tr>
+        <th>User</th>
+        <xar:foreach in="$sec_levels" key="$key" value="$level">
+            <th width="#$width#%">#$level.label#</th>
         </xar:foreach>
     </tr>
-    <xar:set name="count">$count+1</xar:set>
-</xar:foreach>
-<xar:if condition="!empty($user_groups)">
-<tr>
-    <td>
-        <select name="group" onchange="return xar_security_changeInputName(this.form, this.value)">
-            <option value="-1">Add group to security table.</option>
-            <xar:foreach in="$user_groups" value="$group">
-                <option value="#$group.uid#"><xar:var name="group.name" /></option>
+    <xar:set name="count">0</xar:set>
+    <xar:if condition="$security:levels ne null">
+    <xar:foreach in="$security:levels" key="$role_id" value="$user_sec">
+        <xar:if condition="$count % 2 eq 0">
+            <xar:set name="class">'xar-norm'</xar:set>
+        <xar:else />
+            <xar:set name="class">'xar-alt'</xar:set>
+        </xar:if>
+        <tr class="#$class#">
+            <xar:if condition="$role_id eq '0'">
+                <td><xar:mlstring>Everybody</xar:mlstring></td>
+            <xar:elseif condition="intval($role_id) eq 0" />
+                <td><xar:mlstring>User</xar:mlstring></td>
+            <xar:else />
+                <td>#$security->user_names[$role_id]#</td>
+            </xar:if>
+            <xar:foreach in="$user_sec" key="$key" value="$level">
+                <td>
+                <xar:if condition="$level eq 0">
+                    <input type="checkbox" name="levels[#$role_id#][#$key#]" value="1" />
+                <xar:else />
+                    <input type="checkbox" name="levels[#$role_id#][#$key#]" value="1" checked="checked" />
+                </xar:if>
+                </td>
             </xar:foreach>
-        </select>
-    </td>
-    <td><input type="checkbox" id="xoverview" name="xoverview" value="1" /></td>
-    <td><input type="checkbox" id="xread" name="xread" value="1" /></td>
-    <td><input type="checkbox" id="xcomment" name="xcomment" value="1" /></td>
-    <td><input type="checkbox" id="xwrite" name="xmanage" value="1" /></td>
-    <td><input type="checkbox" id="xmanage" name="xmanage" value="1" /></td>
-    <td><input type="checkbox" id="xadmin" name="xadmin" value="1" /></td>
-</tr>
-</xar:if>
+        </tr>
+        <xar:set name="count">$count+1</xar:set>
+    </xar:foreach>
+    </xar:if>
+    <xar:if condition="!empty($all_groups)">
+    <tr>
+        <td>
+            <select name="group" onchange="return xar_security_changeInputName('', this.form, this.value)">
+                <option value="-1">Add group to security table.</option>
+                <xar:foreach in="$all_groups" key="$key" value="$group">
+                    <option value="#$key#"><xar:var name="group.name" /></option>
+                </xar:foreach>
+            </select>
+        </td>
+        <td><input type="checkbox" id="levels_xoverview" name="levels_xoverview" value="1" /></td>
+        <td><input type="checkbox" id="levels_xread" name="levels_xread" value="1" /></td>
+        <td><input type="checkbox" id="levels_xcomment" name="levels_xcomment" value="1" /></td>
+        <td><input type="checkbox" id="levels_xwrite" name="levels_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="levels_xmanage" name="levels_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="levels_xadmin" name="levels_xadmin" value="1" /></td>
+    </tr>
+    </xar:if>
 </table>
