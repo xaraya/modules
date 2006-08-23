@@ -1,0 +1,32 @@
+<h3><xar:mlstring>Requirements</xar:mlstring></h3>
+<xar:template file="contents"/>
+<p>
+    For all XORBA components to work you will need at least the following:
+</p>
+<h4>General requirements</h4>
+<ul>
+  <li>A Xaraya version 2.x core version later than mtn revision 
+        <a href="http://mt.xaraya.com/com.xaraya.core/revision.psp?id=efa1f0f6eaaa191fa91e8c6ffe9413c710c8699d">
+            efa1f0f6eaaa191fa91e8c6ffe9413c710c8699d</a>
+    </li>
+</ul>
+
+<h4>Client requirements</h4>
+<ul>
+    <li>PHP 5.x</li>
+    <li>
+      The client class inside this module. (the client can be any php program, not just xaraya)<br/>
+      <code>file: xarclass/phpbeans/client/beanclient.php</code>
+      </li>
+</ul>
+
+<h4>Server requirements</h4>
+<ul>
+  <li>A non windows machine (pcntl extension is not available for windows)</li>
+    <li>PHP 5.1 (5.0 might work) CLI edition (it runs as a daemon)</li>
+    <li>
+      have the 
+      <code><a href="http://php.net/manual/en/ref.pcntl.php">pcntl</a></code> and 
+      <code><a href="http://php.net/manual/en/ref.sockets.php">sockets</a></code> extensions available in your PHP installation</li>
+    <li>The PEAR Net_Server classes. These are the base classes the daemon is based on </li>
+</ul>

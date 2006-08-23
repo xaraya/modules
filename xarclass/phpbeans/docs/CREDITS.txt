@@ -1,0 +1,43 @@
+A very large portion of the code was taken from http://www.phpbeans.com. During
+porting to PHP5 i changed so much of the original code and renamed so many things
+it's arguably another (not necessarily better) product. The ideas from John Luxford
+however, notably the local reconstruction of objects are still very much there 
+though. 
+
+Marcel van der Boom, <marcel@hsdev.com>, Aug. 2006
+
+
+Contents of original CREDITS.txt file:
+
+CREDITS
+
+Official Web Sites:
+
+    http://www.phpbeans.com/
+
+Original Developer:
+
+    John Luxford <lux@simian.ca>
+    Simian Systems Inc.
+    http://www.simian.ca/
+
+Additional Contributors:
+
+This project implements the phpBeans protocol and server API standards, for
+which the specifications are available here:
+
+    http://www.phpbeans.com/
+
+This project includes code developed by the following 3rd party organizations:
+
+    The PHP Group
+    http://www.php.net/
+
+    The PEAR Project
+    http://pear.php.net/
+
+    The SQLite Project
+    http://www.sqlite.org/
+
+    The Sitellite Application Framework
+    http://www.simian.ca/index/developers

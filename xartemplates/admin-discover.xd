@@ -1,0 +1,90 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Server Object Discovery (aka "sod that!")</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <p>
+        Using the client library you can discover objects and methods available
+        to you from a (remote) server. We connect to any running XORBA server 
+        and (assuming permission to do so) query the info on the objects and 
+        methods we would be able to run.
+        Obviously for this to do something useful, you will need access details 
+        to a running XORBA server somewhere.
+    </p>
+    <form method="post" action="&xar-modurl-xorba-admin-discover;">
+        <fieldset>
+            <legend>Server connection</legend>
+            <label class="xar-form-label">Connect to:</label>
+            <input type="text" name="xorba_server" value="localhost"/>
+            <input type="text" name="xorba_port" value="3843" size="5"/>
+            <br/>
+            <label class="xar-form-label">User:</label>
+            <input type="text" name="xorba_user" value="#$xorba_user#"/>
+            <input type="password" name="xorba_pass" value="#$xorba_pass#" size="15"/>
+            <input type="submit" value="connect" name="connect"/>(leave empty to connect anonymously)
+        </fieldset>
+    
+        <xar:if condition="!isset($exception)">
+          <xar:if condition="!empty($objects)">
+                  <fieldset>
+                      <legend>Available objects &amp; methods</legend>
+                      <label class="xar-form-label">Objects</label>
+                      <xar:data-input type="dropdown" options="$objects" name="xorba_object" value="$xorba_object" onchange="submit();"/>
+                      <xar:data-input type="dropdown" options="$methods" name="xorba_method" value="$xorba_method"/>
+                      <input type="submit" value="info" name="info"/>
+                  </fieldset>
+          </xar:if>
+        
+          <xar:if condition="!empty($xorba_methodinfo)">
+              <fieldset>
+                  <legend>Method info for #$xorba_object#/#$xorba_method#</legend>
+                  <dl>
+                      <dt>Description</dt>
+                      <dd>#$xorba_methodinfo.description#</dd>
+                      <dt>Parameters</dt>
+                      <dd>
+                              <ol>
+                                  <xar:foreach in="$xorba_methodinfo.parameters" key="$name" value="$type">
+                                      <li><span style="font-weight: bold;">#$type#</span>&nbsp;<span>$#$name#</span></li>
+                                  </xar:foreach>
+                              </ol>
+                      </dd>
+                      <dt>Return value</dt>
+                      <dd>#$xorba_methodinfo.return#</dd>
+                  </dl>
+              </fieldset>
+              <xar:set name="paramstring">''</xar:set>
+              <xar:if condition="count($xorba_methodinfo['parameters']) gt 0 ">
+                  <xar:set name="paramstring">'$'.join(', $',array_keys($xorba_methodinfo['parameters']))</xar:set>
+              </xar:if>
+              <fieldset>
+                  <legend>Running the method</legend>
+                  <p>
+                      Using the included PHP client library you can run this method as:
+                  </p>
+                  <pre>
+  $#$xorba_object#Obj = $client-&gt;getObject('#$xorba_object#');
+  $#$xorba_object#Res = $#$xorba_object#-&gt;#$xorba_method#(#$paramstring#);
+                  </pre>
+                  <p>
+                    If you are using a generic client (or writing one), the verbatim
+                    call for this method to <code>#$xorba_server#</code> on port <code>#$xorba_port#</code>  would be:
+                  </p>
+                  <xar:if condition="count($xorba_methodinfo['parameters']) gt 0 ">
+                      <xar:set name="paramstring">'?'.join('=paramvalue&amp;',array_keys($xorba_methodinfo['parameters'])).'=paramvalue'</xar:set>
+                  </xar:if>
+                  <pre>
+  #$xorba_object#/#$xorba_method##$paramstring#
+              </fieldset>
+          </xar:if>
+        <xar:else/>
+          <fieldset>
+            <legend>Oops!</legend>
+            <p>
+              While running the commands to (or on) the server and exception occurred.
+            </p>
+            <pre>#$exception#</p>
+          </fieldset>
+      </xar:if>
+    </form>
+</div>

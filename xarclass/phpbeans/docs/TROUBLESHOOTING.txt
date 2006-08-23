@@ -1,0 +1,13 @@
+TROUBLESHOOTING
+
+Platform-Agnostic Issues:
+- If your PEAR installation fails or misses packages, you can install them
+  individually by downloading them from http://pear.php.net/ and running:
+  cd /path/to/phpbeans/php; ./bin/pear install /path/to/package.tgz
+
+Platform-Specific Issues:
+
+Mac OS X
+- Requires libtool14 and dlcompat-shlibs packages which are available through
+  the Fink package management system (http://fink.sourceforge.net/)
+

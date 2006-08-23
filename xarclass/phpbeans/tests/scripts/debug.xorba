@@ -1,0 +1,9 @@
+#
+# Example script to show what would be a mid-term goal
+# i.e have a 'xorba' client utility which is able to
+# execute these scripts.
+connect localhost 3843;
+use auth;
+identify admin root;
+use server;
+listObjects;

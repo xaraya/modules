@@ -1,0 +1,34 @@
+Ongoing todolist (unsorted):
+
+Open:
+
+- consolidate use of exceptions everywhere and document where we can throw and where we must return the object (so the client can throw it)
+- related to that, the Exception object will contains lines/files from the server, not from the client. As we can not 'undress' the exception object to forget that stuff, what should we do? (whilst keeping the inheritance with the Exception object obviously)
+- prove that we're not PHP specific by writing a client in (java/perl/c#/c)
+- create a testsuite.
+- devise something more flexible for the bean location (/usr/share/xorba like)
+- write a white-paper on how the same concept could be use to expose other protocols (can it?)
+- implement the admin interface as a client to a running server
+- create a project for the xorba parts separately. (in trac probably)
+- create init.d scripts for the server
+- create deb packages.
+- make a DEBUG stream to write to (set to /dev/null when not debugging)
+- create strict interface declarations, especially for PHP_Bean
+- provide a more consistent internal interface for Beans to use server
+  internals. This applies to a limited but probably growing set of objects
+  to which the server has private access (objectstore, config, accessrules atm)
+  Now, we are forced to either declare the property public or define getters
+  for those objects. A more generic mechanism to get internal server info 
+- provide a way for Beans to interoperate in some way (server-side)
+
+Xaraya specific:
+- management client interface to manage multiple servers (mostly rule mgmt.)
+- security
+- cli api so the daemon has full xaraya API access
+- ObjectStore tied to xarDB
+- AccessRules tied to xarDB
+
+Resolved:
+
+- [DONE] create an ObjectStore Factory, so the server instantiating part can choose how and where to store objects.
+- [WONT]create an Authenticator Factory, so the server instantiating part can choose what to authenticate against. NOTE: used an AccessRules factory instead

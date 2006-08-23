@@ -1,0 +1,44 @@
+<h3><xar:mlstring>Client programming</xar:mlstring></h3>
+<xar:template file="contents"/>
+
+<p>
+    The usage of the XORBA server in client programs is very simple. Below is 
+    a hello world like example.
+    <pre> 
+&lt;?php
+    include 'beanclient.php'; // The client library.
+
+    // connect to the server
+    try {
+        // connect to host 'xorba' at port 3843 with a timeout of 5 seconds.
+        $client = new PHP_Bean_Client('xorba', 3843, 5);
+        $client-&gt;connect();
+        
+        // authenticate against the server
+        $auth =&amp; $client-&gt;getObject('auth');
+        $auth-&gt;identify('john', 'doe');
+
+        // call the method 'uptime' from the 'server' object using the literal query syntax
+        $res = $client-&gt;call ('server/uptime');
+        echo 'Server up since: ' . $res;
+
+        // or use a local object to alias a server-side one
+        $server =&amp; $client-&gt;getObject('server');
+        echo 'Server up since: ' . $server-&gt;uptime();
+
+        // and finally, disconnect
+        $client-&gt;disconnect ();
+    } catch (Exception $e) {
+        // If anything went wrong along the way, die with the error message
+        die($e-&gt;getMessage());
+    }
+?&gt;
+</pre>
+</p>
+<p>
+  The only special thing is making the connection to the XORBA server. The query
+  syntax ('server/uptime') is a generic syntax which can be used by any type
+  client. If you are using PHP as a programming language, the local object
+  syntax is the preferred way.
+</p>
+

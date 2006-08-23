@@ -1,0 +1,16 @@
+<h3><xar:mlstring>Possible applications</xar:mlstring></h3>
+<xar:template file="contents"/>
+
+<p>
+  If you thought: "what do i use this stuff for?" Here are some ideas:
+  <ul>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+    <li>idea</li>
+  </ul> 
+</p>

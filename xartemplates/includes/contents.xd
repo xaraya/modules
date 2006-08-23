@@ -1,0 +1,28 @@
+<div class="xar-norm-outline" style="float:right; padding: 5pt;">
+  <div class="xar-block-head">
+         <div class="xar-block-title">Contents</div>
+  </div>
+  <div class="xar-block-body">
+    <ul>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;">What is it?</a>
+      </li>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;&amp;section=require">Requirements</a>
+      </li>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;&amp;section=specs">API Specifications</a>
+      </li>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;&amp;section=how">Client programming</a>
+      </li>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;&amp;section=server">Server programming</a>
+      </li>
+      <li>
+        <a href="&xar-modurl-xorba-admin-main;&amp;section=apps">Applications</a>
+      </li>
+
+    </ul>
+  </div>
+</div>

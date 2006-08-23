@@ -1,0 +1,13 @@
+TO DO (original from phpbeans.com)
+
+1.0
+- Press release and promotion of the standard
+
+1.2
+- Additional clients (Java, Perl, Python, C#, etc.)
+
+2.0 Possibilities
+- Multi-threaded server
+- Performance profiling tools
+- Better integration with other standards (RMI, Corba, etc.)
+

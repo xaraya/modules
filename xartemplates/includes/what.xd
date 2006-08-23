@@ -1,0 +1,32 @@
+<h3><xar:mlstring>What is it?</xar:mlstring></h3>
+<xar:template file="contents"/>
+<p>
+  XORBA is <em><a href="http://en.wikipedia.org/wiki/YAFLA">yafla</a></em> for Xaraya Object Request Broker Architecture. It takes the ideas
+  and some of the code from <a href="http://phpbeans.com">phpbeans.com</a> and
+  applies them to Xaraya. The module includes the following parts:
+  <ol>
+    <li>an implementation of a protocol server, i.e. letting a Xaraya instance run as a daemon supporting on or more 
+          protocols (currently only the protocol described at phpbeans.com is implemented)</li>
+    <li>a management interface in the module to manage a running XORBA server (be it the same xaraya install or a remote one)</li>
+    <li>a command line phpBeans client (to access a XORBA server from the commandline)</li>
+  </ol>
+  This may sound complicating, and it can be, so here's a picture:
+  <div id="xorba_overview">
+      <img src="#xarTplGetImage('overview.png')#" alt="XORBA overview"/>
+  </div>
+</p>
+<p>
+  The elements in the picture can be all inside one Xaraya install or be spread out over many installations. The crux of the idea is
+  that it allows (authenticated) clients to use php Objects available to them from a remote location and use them as if they were local
+    (syntax-wise) but the object methods will run at the remote location.
+</p>
+  The XORBA objects are persistent; the server stores them in an object store. They are then available for retrieval at any 
+  later time, not directly limited by session or page request. Obviously the user requesting them should have the proper permissions 
+    to access the object.
+</p>
+<p>
+    For Xaraya specifically, assuming an instance of Xaraya runs as the XORBA server, this allows client programs to use Xaraya
+    objects from a remote location. This example gets more interesting when the client is also a Xaraya installation, the usage of objects can
+    be almost transparent in that situation, meaning that it is not directly apparent where the code would run, just by looking at the code. 
+    For more details see the <a href="&xar-modurl-xorba-admin-main;&amp;section=how">Client usage</a> section.
+</p>

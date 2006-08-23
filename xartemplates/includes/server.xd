@@ -1,0 +1,57 @@
+<h3><xar:mlstring>Server programming</xar:mlstring></h3>
+<xar:template file="contents"/>
+<p>
+  The XORBA server exposes a select set of objects available for remote usage.
+  These objects require a specific piece of code, so the server recognizes them
+  as such. Here's a 'Hello, world' example, where the specific rules to follow
+  are marked and explained below.
+  <pre>
+     &lt;?php
+     /**
+      * Hello world xorba object.
+     **/
+ [1] class Bean_Hello extends PHP_Bean 
+     {
+ [2]    public $namespace = 'hello';
+     
+        /**
+ [3]     * The obligatory hello world in xorba clothing
+         *
+ [4]     * @access public
+ [5]     * @param  string
+ [6]     * @return string
+        **/
+        function world($extra = 'nothing')
+        {
+            return "Hello, world";
+        }
+     }
+     ?&gt;
+  </pre>
+  <ul>
+    <li>
+        [1] each XORBA object should inherit from the class PHP_Bean and have the 'Bean_' prefix
+        in its own name.
+    </li>
+    <li>
+        [2] the $namespace property determines how the object will be 'named' from the clients point of view.
+        This also determines the first part of the 'literal query syntax'. This example would be accesible by
+        <code>/hello/world</code> or <code>$hello =&amp; $server->getObject('hello');</code>
+    </li>
+    <li>
+        [3] the XORBA server determines the description of the object methods from its doc-comment section. This
+        description is exposed by the <code>methodInfo</code> method of the <code>server</code> object.
+    </li>
+    <li>
+        [4] the <code>@access public</code> identifier signals the server to expose this method. While php5 has scope
+        identifiers these are not enough at the moment to control into detail what methods will be made available.
+        Methods having a <code>protected</code> or <code>private</code> scope will never be made available, regardless 
+        of their doccomment contents. Methods which are <code>public</code> and not a constructor will be made available
+        only if the doccomment content contains <code>@access public</code> (unless a parent already exposes the method)
+    </li>
+    <li>
+        [5],[6] similar to [3] the parameter and return value specification for the <code>methodInfo</code> method will be
+        taken from these lines in the doccomment. While optional, each XORBA object should specify them, so clients can 
+        'autodiscover' what the signatures of the exposed methods are.
+    </li>
+</p>
