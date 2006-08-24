@@ -11,103 +11,115 @@
             <input type="submit" name="connect" value="Connect"/>
         </form>
         
+        <xar:if condition="isset($exception)">
+          <div class="xar-error">
+            #$exception#
+          </div>
+        </xar:if>
+        <!--
         <label>Identity filter:</label>
         <xar:data-input type="dropdown" name="filter_identities" options="$filter_identities"/>
         <label>Host filter:</label>
         <xar:data-input type="dropdown" name="filter_hosts"  options="$filter_hosts"/>
         <label>Object filter:</label>
         <xar:data-input type="dropdown" name="filter_objects"  options="$filter_objects"/>
-        
-        <fieldset>
-                <legend>Identity rules</legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <th style="width: 3em;"/>
-                        <th style="width: 15em;">Identity (sort?)</th>
-                        <th>Password (sort?)</th>
-                    </tr>
-                    <xar:foreach in="$identities" key="$index" value="$info">
-                        <tr>
-                            <td><img src="#xarTplGetImage('trash.gif')#"/></td>
-                            <td>#$info.name#</td>
-                            <td>[not shown]</td>
-                        </tr>
-                    </xar:foreach>
-                    <tr>
-                        <td>
-                            <input type="submit" name="newidentity" value="Add"/>
-                        </td>
-                        <td>
-                            <input type="text"  name="newidentity_identity" value=''/></td>
-                        <td>
-                            <input type="password" name="newidentity_password" value=''/>
-                            (double up filter action here?)
-                        </td>
-                    </tr>
-                </table>
+      -->
+        <xar:if condition="isset($identities)">
+          <fieldset>
+                  <legend>Identity rules</legend>
+                  <table class="xar-fullwidth">
+                      <tr>
+                          <th style="width: 3em;"/>
+                          <th style="width: 15em;">Identity (sort?)</th>
+                          <th>Password (sort?)</th>
+                      </tr>
+                      <xar:foreach in="$identities" key="$index" value="$info">
+                          <tr>
+                              <td><img src="#xarTplGetImage('trash.gif')#"/></td>
+                              <td>#$info.name#</td>
+                              <td>[not shown]</td>
+                          </tr>
+                      </xar:foreach>
+                      <tr>
+                          <td>
+                              <input type="submit" name="newidentity" value="Add"/>
+                          </td>
+                          <td>
+                              <input type="text"  name="newidentity_identity" value=''/></td>
+                          <td>
+                              <input type="password" name="newidentity_password" value=''/>
+                              (double up filter action here?)
+                          </td>
+                      </tr>
+                  </table>
                 
-        </fieldset>
+          </fieldset>
+        </xar:if>
         
-        <fieldset>
-                <legend>Host rules</legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <th style="width: 3em;"/>
-                        <th style="width: 15em;">Identity (sort?)</th>
-                        <th>Host (sort?)</th>
-                    </tr>
-                    <xar:foreach in="$hostrules" key="$index" value="$rule">
-                        <tr>
-                            <td><img src="#xarTplGetImage('trash.gif')#"/></td>
-                            <td>#$rule.identity# </td>
-                            <td>#$rule.host#</td>
-                        </tr>
-                    </xar:foreach>
-                    <tr>
-                        <td>
-                            <input type="submit" name="newhost" value="Add"/>
-                        </td>
-                        <td>
-                            <xar:data-input type="dropdown" name="newhost_identity" options="$identities"/>
-                        </td>
-                        <td>
-                            <input type="text" name="newhost_host" value=''/>
-                            (double up filter action here?)
+        <xar:if condition="isset($hostrules)">
+          <fieldset>
+                  <legend>Host rules</legend>
+                  <table class="xar-fullwidth">
+                      <tr>
+                          <th style="width: 3em;"/>
+                          <th style="width: 15em;">Identity (sort?)</th>
+                          <th>Host (sort?)</th>
+                      </tr>
+                      <xar:foreach in="$hostrules" key="$index" value="$rule">
+                          <tr>
+                              <td><img src="#xarTplGetImage('trash.gif')#"/></td>
+                              <td>#$rule.identity# </td>
+                              <td>#$rule.host#</td>
+                          </tr>
+                      </xar:foreach>
+                      <tr>
+                          <td>
+                              <input type="submit" name="newhost" value="Add"/>
+                          </td>
+                          <td>
+                              <xar:data-input type="dropdown" name="newhost_identity" options="$identities"/>
+                          </td>
+                          <td>
+                              <input type="text" name="newhost_host" value=''/>
+                              (double up filter action here?)
                             
-                        </td>
-                    </tr>
-                </table>
-        </fieldset>
+                          </td>
+                      </tr>
+                  </table>
+          </fieldset>
+        </xar:if>
         
-        <fieldset>
-                <legend>Object rules</legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <th style="width: 3em;"/>
-                        <th style="width: 15em;">Identity (sort?)</th>
-                        <th>Objects (sort?)</th>
-                    </tr>
-                    <xar:foreach in="$objectrules" key="$index" value="$rule">
-                        <tr>
-                            <td><img src="#xarTplGetImage('trash.gif')#"/></td>
-                            <td>#$rule.identity#</td>
-                            <td>#$rule.object#</td>
-                        </tr>
-                    </xar:foreach>
-                    <tr>
-                        <td>
-                            <input type="submit" name="newobject" value="Add"/>
-                        </td>
-                        <td>
-                            <xar:data-input type="dropdown" name="newidentity_identity" options="$identities"/>
-                        </td>
-                        <td>
-                            <xar:data-input type="dropdown" name="newidentity_identity" options="$objects"/>
-                            (double up filter action here?)
+        <xar:if condition="isset($objectrules)">
+          <fieldset>
+                  <legend>Object rules</legend>
+                  <table class="xar-fullwidth">
+                      <tr>
+                          <th style="width: 3em;"/>
+                          <th style="width: 15em;">Identity (sort?)</th>
+                          <th>Objects (sort?)</th>
+                      </tr>
+                      <xar:foreach in="$objectrules" key="$index" value="$rule">
+                          <tr>
+                              <td><img src="#xarTplGetImage('trash.gif')#"/></td>
+                              <td>#$rule.identity#</td>
+                              <td>#$rule.object#</td>
+                          </tr>
+                      </xar:foreach>
+                      <tr>
+                          <td>
+                              <input type="submit" name="newobject" value="Add"/>
+                          </td>
+                          <td>
+                              <xar:data-input type="dropdown" name="newidentity_identity" options="$identities"/>
+                          </td>
+                          <td>
+                              <xar:data-input type="dropdown" name="newidentity_identity" options="$objects"/>
+                              (double up filter action here?)
                             
-                        </td>
-                    </tr>
-                </table>
+                          </td>
+                      </tr>
+                  </table>
                 
-        </fieldset>
+          </fieldset>
+        </xar:if>
 </div>
