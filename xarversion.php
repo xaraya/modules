@@ -15,7 +15,7 @@
 $modversion['name']           = 'xorba';
 $modversion['id']             = '780';
 $modversion['displayname']    = xarML('xorba');
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.1.0';
 $modversion['description']    = 'Object Request Broker';
 $modversion['displaydescription']    = xarML('Object Request Broker');
 $modversion['official']       = 0;

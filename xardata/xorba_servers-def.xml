@@ -1,0 +1,53 @@
+<object name="xorba_servers">
+  <objectid>10</objectid>
+  <label>Xorba Servers</label>
+  <moduleid>182</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>0</parent>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>65</id>
+      <label>id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>66</id>
+      <label>name</label>
+      <type>textbox</type>
+      <default>localhost</default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation>1:50</validation>
+    </property>
+    <property name="user">
+      <id>67</id>
+      <label>user</label>
+      <type>textbox</type>
+      <default>anonymous</default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>3</order>
+      <validation>1:50</validation>
+    </property>
+    <property name="pass">
+      <id>68</id>
+      <label>pass</label>
+      <type>password</type>
+      <default>anonymous</default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>4</order>
+      <validation>1:50</validation>
+    </property>
+  </properties>
+</object>
