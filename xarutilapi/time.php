@@ -1,5 +1,5 @@
 <?php
-function maps_utilsapi_time($args)
+function maps_utilapi_time($args)
 {
 	extract($args);
 	if (!isset($timestamp)) return time();

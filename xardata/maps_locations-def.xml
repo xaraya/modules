@@ -123,7 +123,7 @@
       <id>308</id>
       <label>DateTime</label>
       <type>calendar</type>
-      <default>xarModAPIFunc('maps','utils','time')</default>
+      <default>xarModAPIFunc('maps','util','time')</default>
       <source>dynamic_data</source>
       <status>34</status>
       <order>12</order>
@@ -133,7 +133,7 @@
       <id>309</id>
       <label>Created</label>
       <type>calendar</type>
-      <default>xarModAPIFunc('maps','utils','time')</default>
+      <default>xarModAPIFunc('maps','util','time')</default>
       <source>dynamic_data</source>
       <status>66</status>
       <order>13</order>
