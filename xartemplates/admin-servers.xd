@@ -1,0 +1,6 @@
+<div>
+  <fieldset>
+    <legend>Registered Xorba servers</legend>
+      <xar:data-list module="$objectinfo['moduleid']" itemtype="$objectinfo['itemtype']" numitems="20" />
+  </fieldset>
+</div>
