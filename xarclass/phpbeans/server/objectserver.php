@@ -17,6 +17,14 @@ interface IObjectServer
 
 class BeanIterator extends DirectoryIterator
 {
+    private $conf = array();
+    
+    public function __construct(&$conf)
+    {
+        $this->conf = $conf['beans'];
+        parent::__construct($this->conf['location']);
+    }
+    
     public function getSuffix()
     {
         $filename = $this->GetFilename();
@@ -25,7 +33,16 @@ class BeanIterator extends DirectoryIterator
             return strtolower(substr($filename, $extension, strlen($filename) - $extension));
         else
             return "";
-    }    
+    }
+    
+    public function isBeanFile()
+    {
+        return(
+                !$this->isDir() and 
+                !$this->isDot() and 
+                true //$this->getSuffix() == $this->conf['suffix']
+        );
+    }
 }
 
 /**
@@ -51,12 +68,8 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
     // Access rules object
     public $access     = null;
     
-    // @todo, dont hardcode this location.
-    static $beanloc = 'beans';
     // @todo dont hardcode the prefix.
     static $prefix  = 'Bean_';
-    // @todo dont hardcode the suffix (i'd like to use something.bean for example)
-    static $suffix  = '.php';
     
     function __construct(ObjectStore &$store, &$conf, AccessRules $access)
     {
@@ -99,8 +112,11 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
     {
         $this->uptime = date('Y-m-d H:i:s');
 
+        // Read config to see what beans we can expect
+        $beanPrefix = $this->conf['beans']['prefix'];
+        $beanBase   = 'PHP_Bean';
         // in conf beanlocation is probably absolute
-        $beans = new BeanIterator($this->conf['server']['beanlocation']);
+        $beans = new BeanIterator($this->conf);
         
         fwrite(STDOUT,"Registering beans: ");
         foreach($beans as $bean)
@@ -108,14 +124,15 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
             $file   = $bean->getFileName();
             $suffix = $bean->getSuffix();
             
-            if($bean->isDir() or $bean->isDot() or  $suffix != self::$suffix)
+            if(!$bean->isBeanFile())
                 continue;
-            
+                    
             // Import the bean into the server
-            include_once($this->conf['server']['beanlocation'] . '/' .$file);
+            include_once($bean->getPathName());
             
-            $class = self::$prefix . basename($file,$suffix);
-            if(!is_subclass_of($class,'PHP_Bean'))
+            // @todo make this less or not dependent on the file details
+            $class = $beanPrefix . basename($file,$suffix);
+            if(!is_subclass_of($class,$beanBase) or !class_exists($class))
                 continue;
                 
             // Create the server side Bean 
