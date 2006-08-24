@@ -1,6 +1,6 @@
 <?php
 // PEAR dependency here
-php::import('Net.Server');
+@php::import('Net.Server');
 php::import('Net.Server.Handler');
 
 php::import('server.objectstore');
@@ -13,6 +13,19 @@ interface IObjectServer
     function             onClose($clientId = 0);
     function          onShutdown();
     function onConnectionRefused($clientId = 0); // only for sequential?
+}
+
+class BeanIterator extends DirectoryIterator
+{
+    public function getSuffix()
+    {
+        $filename = $this->GetFilename();
+        $extension = strrpos($filename, ".", 1);
+        if ($extension != false)
+            return strtolower(substr($filename, $extension, strlen($filename) - $extension));
+        else
+            return "";
+    }    
 }
 
 /**
@@ -57,7 +70,7 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
              $conf['server']['bindaddress'] = 'localhost';
         if(!isset($conf['server']['type']))
             $conf['server']['type'] = 'sequential';
-        $this->transport =& Net_Server::create(
+        @$this->transport =& Net_Server::create(
             $conf['server']['type'], 
             $conf['server']['bindaddress'], 
             $conf['server']['port']
@@ -86,29 +99,32 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
     {
         $this->uptime = date('Y-m-d H:i:s');
 
-        $d = opendir(self::$beanloc);
-        // @todo use an iterator here.
-        while(($file = readdir($d)) !== false) 
+        // in conf beanlocation is probably absolute
+        $beans = new BeanIterator($this->conf['server']['beanlocation']);
+        
+        fwrite(STDOUT,"Registering beans: ");
+        foreach($beans as $bean)
         {
-            if(
-                strpos($file, '.') === 0 || 
-                strpos($file, self::$suffix) === false || 
-                @is_dir(self::$beanloc.'/'.$file)
-            )    continue;
+            $file   = $bean->getFileName();
+            $suffix = $bean->getSuffix();
             
-            // Import every bean into the server.
-            php::import(self::$beanloc.'.'.basename($file,self::$suffix));
-            
-            $class = self::$prefix . str_replace(self::$suffix,'', $file);
-            if(!is_subclass_of($class,'PHP_Bean'))
+            if($bean->isDir() or $bean->isDot() or  $suffix != self::$suffix)
                 continue;
             
+            // Import the bean into the server
+            include_once($this->conf['server']['beanlocation'] . '/' .$file);
+            
+            $class = self::$prefix . basename($file,$suffix);
+            if(!is_subclass_of($class,'PHP_Bean'))
+                continue;
+                
             // Create the server side Bean 
             $tmp = new $class($this);
             $this->register[$tmp->namespace] =& $tmp;
+            fwrite(STDOUT,$tmp->namespace . ' ');
             unset($tmp);
         }
-        closedir($d);
+        fwrite(STDOUT,"\n");
     }
 
     /**

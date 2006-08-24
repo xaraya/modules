@@ -199,10 +199,11 @@ class PHP_Bean implements IPHP_Bean, IObjectState
                     $type = 'array';
 
                 // Otherwise we'll use the fuzzy info
-                if(
-                    !isset($type) and 
-                    isset($info['param'][$i])
-                ) $type = $info['param'][$i];
+                if(!isset($type)) 
+                    if(isset($info['param'][$i]))
+                        $type = $info['param'][$i];
+                    else
+                        $type = 'unknown';
                 $params[$paramInfo->getName()] = $type;
             }
             $methods[$methodInfo->getName()] = array(

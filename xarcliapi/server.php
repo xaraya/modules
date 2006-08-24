@@ -16,8 +16,8 @@ function xorba_cliapi_server($args = array())
     switch ($op)
     {
         case 'start'  :
-            chdir('modules/xorba/xarclass/phpbeans');
-            error_reporting(0); // Thank you PEAR :-(
+            // Bring the phpbeans package in scope
+            ini_set('include_path',ini_get('include_path').':modules/xorba/xarclass/phpbeans');
             include 'daemon.php';
         case 'stop'   :
         case 'restart':
