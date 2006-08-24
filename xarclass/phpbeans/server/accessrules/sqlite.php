@@ -71,6 +71,7 @@ class SqliteAccessRules implements IAccess
     function query($sql)
     {
         $res = @$this->db->query($sql, SQLITE_ASSOC, $err);
+        //echo "$sql\n";
         if($err)
         {
             throw new Exception($err);
@@ -81,6 +82,7 @@ class SqliteAccessRules implements IAccess
     function exec($sql)
     {
         $res = @$this->db->queryExec($sql, $err);
+        //echo "$sql\n";
         if($err) {
             throw new Exception($err);
         }
@@ -147,7 +149,9 @@ class SQLiteHostRule extends SQLiteRule
     
     function get()
     {
-        $sql = "SELECT identity, item as host FROM access_rules WHERE type='host'";
+        $sql = 
+            'SELECT identity, item as host FROM access_rules ' .
+            "WHERE  type='host' AND identity=".$this->quote($this->user);
         $res = $this->connector->query($sql);
         return $res->fetchAll();
     }
@@ -183,7 +187,9 @@ class SQLiteObjectRule extends SQLiteRule
     
     function get()
     {
-        $sql = "SELECT identity, item as object FROM access_rules WHERE type='object'";
+        $sql = 
+            "SELECT identity, item as object FROM access_rules " .
+            "WHERE type='object' AND identity=".$this->quote($this->user);
         $res = $this->connector->query($sql);
         return $res->fetchAll();
     }

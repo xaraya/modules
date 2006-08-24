@@ -180,7 +180,7 @@ class PHP_Bean_Client implements IPHP_Bean_Client
         $class = 'PHP_Bean_' . $name;
         if(!class_exists($class))
         {
-            $code  = "?><?php\n\nclass $class ";
+            $code  = "<?php\n\nclass $class ";
             $code .= "{\n";
             $code .= '    private $client = null;'."\n\n";
             $code .= '    function __construct(&$client) ';
@@ -201,15 +201,31 @@ class PHP_Bean_Client implements IPHP_Bean_Client
                 // NOTE: this is the PHP specific part where we make the client
                 //       capable of PHP notation locally, while this bit translates
                 //       it into real protocol calls.
+                // @todo make sure that *if* the Bean method declares a default
+                // we can get to it here to set in the parameters.
                 $code .= "    function $method(";
                 if(is_array($info['parameters']) and !empty($info['parameters'])) 
-                    $code .= '$'.join(',$',array_keys($info['parameters']));
+                {
+                    $i=1;
+                    foreach($info['parameters'] as $param => $paramInfo)
+                    {
+                        $code .= '$'.$param;
+                        if(isset($paramInfo['default']))
+                        {
+                            $code .= '='.$paramInfo['default'];
+                        }
+                        if($i != count($info['parameters'])) 
+                            $code .= ",";
+                        $i++;
+                    }
+                }
+                    
                 $code .= ") {\n";
                 $code .= "        \$res = \$this->client->call('$name/$method";
                 if(is_array($info['parameters'])) 
                 {
                     $sep = '?';
-                    foreach($info['parameters'] as $param => $type) 
+                    foreach($info['parameters'] as $param => $paramInfo) 
                     {
                         $code .= "$sep'.\$this->client->makeStr('$param',\$$param).'";
                         $sep = '&';
@@ -228,11 +244,13 @@ class PHP_Bean_Client implements IPHP_Bean_Client
 
             // @todo dont do eval here like we do for template compiling, use the same logic.
             ob_start();
-            if(eval($code) === false) 
+            if(eval('?>'.$code) === false) 
             {
                 $this->error = ob_get_contents();
+                echo $this->error;
                 ob_end_clean();
-                return false;
+                $false = false;
+                return $false;
             }
             ob_end_clean();
         }
@@ -307,7 +325,7 @@ class PHP_Bean_Client implements IPHP_Bean_Client
      * @param    string
      * @return    string
     **/
-    public function makeStr($name, $value) 
+    public function makeStr($name, $value='') 
     {
         if(is_object($value)) 
             $value = (array) $value;

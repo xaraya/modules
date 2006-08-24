@@ -204,7 +204,14 @@ class PHP_Bean implements IPHP_Bean, IObjectState
                         $type = $info['param'][$i];
                     else
                         $type = 'unknown';
-                $params[$paramInfo->getName()] = $type;
+                
+                // Determine if the parameter has a default value
+                $default = null;
+                if($paramInfo->isDefaultValueAvailable())
+                {
+                    $default = "'". str_replace("'","\'",$paramInfo->getDefaultValue()) . "'";
+                }
+                $params[$paramInfo->getName()] = array('type' => $type, 'default' => $default);
             }
             $methods[$methodInfo->getName()] = array(
                 'description' => $description, 

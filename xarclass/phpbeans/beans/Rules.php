@@ -62,7 +62,7 @@ class Bean_Rules extends PHP_Bean
      * @param   string
      * @return  array
     **/
-    function show($type, $user = '') 
+    function get($type, $user = '') 
     {
         try 
         {

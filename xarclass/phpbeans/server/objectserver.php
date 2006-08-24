@@ -337,12 +337,21 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
     **/
     private function parseRequest($data) 
     {
+        // Treat it like an url like:
+        // 1. operation
+        // 2. object/method
+        // 3. object/method?param1=value1&param2=value2 etc.
         $request = parse_url(trim($data));
-        list($request['object'], $request['method']) = explode('/', $request['path']);
-        if(isset($request['query'])) 
-            parse_str($request['query'], $request['parameters']);
-        if(!isset($request['parameters']) || !is_array($request['parameters'])) {
+        $parts = explode('/',$request['path']);
+        if(!isset($parts[1]))
+            $request['object'] = $parts[0];
+        else
+        {
+            list($request['object'], $request['method']) = $parts;
             $request['parameters'] = array();
+            if(isset($request['query'])) 
+                parse_str($request['query'], $request['parameters']);
+            assert('is_array($request[parameters]);');
         }
         return $request;
     }
