@@ -91,7 +91,6 @@ function security_userapi_get($args)
 
     $result = $dbconn->Execute($query, $bindvars);
     if( !$result ){ return false; }
-    if( $result->EOF ){ return array(); }
 
     $level = array();
     $security = new SecurityLevels();

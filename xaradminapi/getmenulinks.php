@@ -21,7 +21,7 @@ function security_adminapi_getmenulinks()
     $menulinks = array();
 
     // Security Check
-	if (xarSecurityCheck('AdminSecurity',0))
+    if( Security::check(SECURITY_READ, 'security', 0, 0, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('security', 'admin', 'overview'),
@@ -41,11 +41,6 @@ function security_adminapi_getmenulinks()
             'label' => xarML('Modify Hook Settings')
         );
 
-        $menulinks[] = Array(
-            'url'   => xarModURL('security', 'admin', 'enablemodulesecurity'),
-            'title' => xarML('Enable Module Security'),
-            'label' => xarML('Enable Module Security')
-        );
     }
 
     return $menulinks;

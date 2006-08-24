@@ -35,7 +35,7 @@ class SecuritySettings
      *
      * @return SecuritySettings
      */
-    function SecuritySettings($modid, $itemtype)
+    function SecuritySettings($modid=0, $itemtype=0)
     {
         $this->modid    = $modid;
         $this->itemtype = $itemtype;
@@ -66,6 +66,8 @@ class SecuritySettings
             // Array of params old style. Convert to object.
             $settings->array_to_object($params);
         }
+        $settings->modid = $modid;
+        $settings->itemtype = $itemtype;
 
         return $settings;
     }

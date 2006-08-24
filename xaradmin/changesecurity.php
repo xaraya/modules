@@ -47,14 +47,6 @@ function security_admin_changesecurity($args)
 
     $data = array();
 
-//    $has_security = xarModAPIFunc('security', 'user', 'securityexists',
-//        array(
-//            'modid'    => $modid,
-//            'itemtype' => $itemtype,
-//            'itemid'   => $itemid
-//        )
-//    );
-
     xarModAPILoad('security');
     $settings = SecuritySettings::factory($modid, $itemtype);
 

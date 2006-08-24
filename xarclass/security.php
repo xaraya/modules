@@ -29,6 +29,8 @@ class Security
      */
     function check($needed_level, $modid=0, $itemtype=0, $itemid=0, $throw_exception=true)
     {
+        if( $modid != 'security' and Security::check(SECURITY_ADMIN, 'security', 0, 0, false) ){ return true; }
+
         if( is_string($modid) ){ $modid = xarModGetIdFromName($modid); }
 
         // TODO ADD caching mechanism here

@@ -23,7 +23,7 @@
             <input type="hidden" name="reload" value="" />
 
             <select name="mod_itemtype" class="xar-form-textlong" onchange="javascript: document.hook_settings.reload.value='reload'; submit();">
-                <option value="-">Default Options</option>
+                <option value="0-0">Default Options</option>
                 <xar:foreach in="$hook_list" key="$module" value="$itemtypes">
                     <xar:foreach in="$itemtypes" key="$itemtype" value="$value">
                         <xar:if condition="isset($mod_itemtype) and $mod_itemtype eq $module.'-'.$itemtype">

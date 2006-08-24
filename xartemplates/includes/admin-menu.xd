@@ -26,13 +26,6 @@
                 </a>
             </dd>
 
-            <xar:set name="tabclass">$activetab=='enablemodulesecurity'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-security-admin-enablemodulesecurity;">
-                    <xar:mlstring>Enable Module Security</xar:mlstring>
-                </a>
-            </dd>
-
             <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-security-admin-overview;">
