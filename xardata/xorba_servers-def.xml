@@ -1,16 +1,16 @@
 <object name="xorba_servers">
-  <objectid>10</objectid>
+  <objectid>11</objectid>
   <label>Xorba Servers</label>
   <moduleid>182</moduleid>
   <itemtype>3</itemtype>
   <urlparam>itemid</urlparam>
   <parent>0</parent>
-  <maxid>0</maxid>
+  <maxid>2</maxid>
   <config></config>
   <isalias>0</isalias>
   <properties>
     <property name="id">
-      <id>65</id>
+      <id>69</id>
       <label>id</label>
       <type>itemid</type>
       <default></default>
@@ -20,8 +20,8 @@
       <validation></validation>
     </property>
     <property name="name">
-      <id>66</id>
-      <label>name</label>
+      <id>70</id>
+      <label>Hostname or IP-address</label>
       <type>textbox</type>
       <default>localhost</default>
       <source>dynamic_data</source>
@@ -30,8 +30,8 @@
       <validation>1:50</validation>
     </property>
     <property name="user">
-      <id>67</id>
-      <label>user</label>
+      <id>71</id>
+      <label>Login name</label>
       <type>textbox</type>
       <default>anonymous</default>
       <source>dynamic_data</source>
@@ -39,13 +39,23 @@
       <order>3</order>
       <validation>1:50</validation>
     </property>
+    <property name="port">
+      <id>73</id>
+      <label>Port</label>
+      <type>integerbox</type>
+      <default>3843</default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>3</order>
+      <validation>1:99999</validation>
+    </property>
     <property name="pass">
-      <id>68</id>
-      <label>pass</label>
+      <id>72</id>
+      <label>Password</label>
       <type>password</type>
       <default>anonymous</default>
       <source>dynamic_data</source>
-      <status>33</status>
+      <status>34</status>
       <order>4</order>
       <validation>1:50</validation>
     </property>
