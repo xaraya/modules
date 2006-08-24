@@ -23,8 +23,6 @@
 */
 function security_eventapi_OnServerRequest($args)
 {
-    if( xarSecurityCheck('AdminPanel', 0) ) return;
-
     $module = xarRequestGetVar('module');
     $itemtype = xarRequestGetVar('itemtype');
     $itemid = xarRequestGetVar('itemid');
@@ -43,16 +41,8 @@ function security_eventapi_OnServerRequest($args)
 
     if( !empty($itemid) && xarModIsHooked('security', $module) )
     {
-        if( empty($itemtype) ){ $itemtype = null; }
-
-        // If no security exists then we don't care about it
-        $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
-        $securityExists = xarModAPIFunc('security', 'user', 'securityexists', $args);
-        if( !$securityExists ){ return true; }
-
-        $args['level'] = SECURITY_READ;
-        $check = xarModAPIFunc('security', 'user', 'check', $args);
-        if( !$check )
+        if( !isset($itemtype) ){ $itemtype = 0; }
+        if( !Security::check(SECURITY_READ, $modid, $itemtype, $itemid) )
         {
             if( !xarUserIsLoggedIn() && function_exists("errorhandler_eventapi_log_user_in") )
             {

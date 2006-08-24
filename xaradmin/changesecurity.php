@@ -85,21 +85,7 @@ function security_admin_changesecurity($args)
         $owner['uid'] = $result->fields[0];
     }
 
-    /*
-        If an admin allow admin to change privs as if they were the owner.
-        This allows the admin to assign privs how ever they want even if the
-        user can not do it.
-    */
-//    if( xarSecurityCheck('AdminPanel', 0) ){ $uid = xarUserGetVar('uid'); }
-//    else{ $uid = $owner['uid']; }
-
-    /*
-        These groups are used in the Add groups menu thing to create new group privs
-    */
-    //if( xarSecurityCheck('AdminPanel', 0) )
     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
-//    else
-//        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $uid));
 
     $tmp = array();
     foreach( $groups as $key => $group ){ $tmp[$group['uid']] = $group; }

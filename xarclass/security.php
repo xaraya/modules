@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * Security - Provides unix style privileges to xaraya items.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Security Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
+ */
 /**
  * Main class for interfacing with the security module.
  *
@@ -187,6 +197,129 @@ class Security
     }
 
     /**
+     * Generates leftjoin SQL to apply security on groups of items in a database table.
+     * Items with out the proper security level with not be retreived from the database.
+     *
+     * @param integer $level
+     * @param integer $modid
+     * @param integer $itemtype
+     * @param integer $itemid
+     * @param integer $user_field
+     * @param integer $limit_gids
+     * @param array   $exceptions
+     * @return array of SQL for a left join
+     */
+    function leftjoin($level=SECURITY_OVERVIEW, $modid=0, $itemtype=0, $itemid=0, $user_field=null, $limit_gids=null, $exceptions=null)
+    {
+        $info = array();
+
+        // Get current user and groups
+        $currentUserId = xarUserGetVar('uid');
+        $groups = array();
+
+        $xartable =& xarDBGetTables();
+
+        $info['iid'] = "{$xartable['security']}.itemid";
+
+        $secRolesTable = $xartable['security_roles'];
+
+        $where = array();
+        $join = array();
+        $where[] = "$secRolesTable.modid = $modid ";
+        $where[] = "$secRolesTable.itemtype = $itemtype ";
+        if( is_array($itemid) )
+        {
+            $where[] = "$secRolesTable.itemid IN ( " . join(', ', $iids) . " )";
+        }
+        else
+        {
+            $where[] = "$secRolesTable.itemid = $itemid";
+        }
+
+        //Check Groups
+        if( isset($limit_gids) and count($limit_gids) > 0 )
+        {
+            $uids = $limit_gids;
+        }
+        else
+        {
+            $roles = new xarRoles();
+            $user = $roles->getRole($currentUserId);
+            $tmp = $user->getParents();
+            $uids = array(0, $currentUserId);
+            foreach( $tmp as $u )
+            {
+                $uids[] = $u->uid;
+            }
+        }
+        $where[] = "$secRolesTable.uid IN (". join(', ', $uids) .")  ";
+
+        switch( $level )
+        {
+            case SECURITY_ADMIN:
+                $level = "$secRolesTable.xadmin = 1";
+                break;
+            case SECURITY_MANAGE:
+                $level = "$secRolesTable.xmanage = 1";
+                break;
+            case SECURITY_WRITE:
+                $level = "$secRolesTable.xwrite = 1";
+                break;
+            case SECURITY_COMMENT:
+                $level = "$secRolesTable.xcomment = 1";
+                break;
+            case SECURITY_READ:
+                $level = "$secRolesTable.xread = 1";
+                break;
+            case SECURITY_OVERVIEW:
+                $level = "$secRolesTable.xoverview = 1";
+                break;
+            default:
+                $level = "$secRolesTable.xread = 1";
+        }
+
+        /*
+            Admin's always have access to everything (A security level bypass)
+            NOTE: But this also allows admins to use other limits or
+                  exclude params like the $limit_gids var
+        */
+        if( Security::check(SECURITY_ADMIN, 'security', 0, 0, false) )
+        {
+            $skip_exceptions = true;
+            // Still needed if limit_gids is set
+            $exceptions[] = " 'TRUE' = 'TRUE' ";
+        }
+
+        if( !empty($exceptions) )
+        {
+            if( isset($limit_gids) and count($limit_gids) > 0 )
+            {
+                $where[] = " ( $level OR " . join(' OR ', $exceptions) . ") ";
+            }
+            else
+            {
+                 // Admin user and no limit are needed so we do not need to do anything
+                 if( isset($skip_exceptions) ){ $where = array(); }
+                 else{ $where[] = " $level OR " . join(' OR ', $exceptions) . " "; }
+            }
+        }
+        else
+        {
+            $where[] = " $level ";
+        }
+
+
+        if( count($where) > 0 )
+        {
+            $info['where'] = "( SELECT count(*) > 0 FROM {$secRolesTable} "
+                . "WHERE "  . join(' AND ', $where) . " )";
+        }
+
+        return $info;
+    }
+
+
+    /**
      * Sets the security levels in the database.
      *
      * @param SecurityLevels $levels
@@ -213,17 +346,6 @@ class SecurityLevel
     var $write    = 0;
     var $manage   = 0;
     var $admin    = 0;
-
-//    function SecurityLevel($array_level=array())
-//    {
-//        if( is_array($array_level) )
-//        {
-//            foreach( $array_level as $key => $value )
-//            {
-//                $this->$key = $value;
-//            }
-//        }
-//    }
 
     function SecurityLevel($overview=0, $read=0, $comment=0, $write=0, $manage=0, $admin=0)
     {

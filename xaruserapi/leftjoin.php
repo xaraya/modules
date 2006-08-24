@@ -13,6 +13,8 @@
 /**
     Provide SQL info to do a join on the security table
 
+    @deprecated use Security::leftjoin instead
+
     @param $args['module']
     @param $args['modid']
     @param $args['itemtype']
@@ -104,7 +106,7 @@ function security_userapi_leftjoin($args)
         NOTE: But this also allows admins to use other limits or
               exclude params like the $limit_gids var
     */
-    if( xarSecurityCheck('AdminPanel', 0) )
+    if( Security::check(SECURITY_ADMIN, 'security', 0, 0, false) )
     {
         $skip_exceptions = true;
         // Still needed if limit_gids is set

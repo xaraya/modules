@@ -26,8 +26,6 @@ function security_userapi_check($args)
 {
     extract($args);
 
-    if( xarSecurityCheck('AdminPanel', 0) ){ return true; }
-
     // Get Module Settings
     $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
         array(
