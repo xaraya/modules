@@ -15,6 +15,7 @@ interface IObjectServer
     function onConnectionRefused($clientId = 0); // only for sequential?
 }
 
+// @todo probably split this off to a separate file
 class BeanIterator extends DirectoryIterator
 {
     private $conf = array();
@@ -71,7 +72,7 @@ class ObjectServer extends Net_Server_Handler implements IObjectServer, IObjectS
     // @todo dont hardcode the prefix.
     static $prefix  = 'Bean_';
     
-    function __construct(ObjectStore &$store, &$conf, AccessRules $access)
+    function __construct(&$conf, ObjectStore &$store, AccessRules $access)
     {
         // Set the object store
         $this->store =& $store;

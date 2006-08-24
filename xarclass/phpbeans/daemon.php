@@ -10,18 +10,20 @@
 include_once "server/php/import.php";
 
 /* The server needs a minimum pcntl, sockets and PHP5 */
-if (!extension_loaded('pcntl'))   die("Error: pcntl extension not available!\n");
-if (!extension_loaded('sockets')) die("Error: sockets extension not available!\n");
+if (!extension_loaded('pcntl'))   
+    die("Error: pcntl extension not available!\n");
+if (!extension_loaded('sockets')) 
+    die("Error: sockets extension not available!\n");
 
 /* Load the libraries we will need */
-fwrite(STDOUT,"Importing libs...\n");
-php::import('server.bean');
+fwrite(STDOUT,"Importing librariess...\n");
 php::import('server.exceptions');
-php::import('server.objectserver');
+php::import('server.bean');
 php::import('server.objectstore');
 php::import('server.accessrules');
+php::import('server.objectserver');
 
-// Read in configuration
+// Read in configuration with sections
 $conf  = parse_ini_file('conf/server.conf',true);
 
 // Configure and start the server
@@ -37,8 +39,8 @@ try
     
     // Create the object server 
     $server = new ObjectServer(
-        new ObjectStore($database), // interface to the object store
         $conf,
+        new ObjectStore($database), // interface to the object store
         new AccessRules($database)  // interface to the access rules
     );
     
