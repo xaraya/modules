@@ -5,7 +5,7 @@ php::import('server.accessrules');
 /**
  * Provides access rule management facilities
 **/
-class Bean_Rule extends PHP_Bean 
+class Bean_Rules extends PHP_Bean 
 {
     public $namespace = 'rules';
 

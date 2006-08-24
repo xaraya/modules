@@ -20,11 +20,9 @@ php::import('server.exceptions');
 php::import('server.objectserver');
 php::import('server.objectstore');
 php::import('server.accessrules');
-php::import('server.Ini');
 
 // Read in configuration
-$ini = new Ini;
-$conf  = $ini->parse ('conf/server.conf');
+$conf  = parse_ini_file('conf/server.conf',true);
 
 // Configure and start the server
 fwrite(STDOUT,"Starting objectserver...\n");

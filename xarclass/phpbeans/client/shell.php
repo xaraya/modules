@@ -7,7 +7,7 @@ $obj    = '';
 
 while(true) 
 {
-    echo 'phpbeans> ';
+    prompt('phpbeans');
     $input = explode(' ', trim(fgets(STDIN)));
     //fwrite(STDOUT,"Input: '" .  $input[0] . "' on object '$obj'\n");
     if(empty($input[0]))
@@ -15,9 +15,11 @@ while(true)
     switch($input[0]) 
     {
         case 'quit':
+        case 'exit':
+        case 'disconnect':
             if($client->connected) 
                 $client->disconnect();
-            echo "Goodbye.\n";
+            m("Goodbye");
             break 2;
         case 'connect':
             if($client->connected) 
@@ -32,16 +34,16 @@ while(true)
                 $client = new PHP_Bean_Client($input[1], $input[2]);
                 $client->logging = true;
                 $client->connect();
-                echo "Connected.\n";
+                m("Connected");
             } catch(Exception $e) 
             {
-                echo 'Error: '.$e->getMessage()."\n";
+                e($e->getMessage());
             }
             break;
         case 'use':
             if(!$client->connected)
             {
-                echo "You need to connect first\n";
+                e("You need to connect first");
                 break;
             }
             $obj = $input[1];
@@ -51,22 +53,22 @@ while(true)
                 $methods = $client->call($obj . '/objectInfo');
                 if(!is_array($methods)) 
                 {
-                    echo 'Error: ' . $client->error . "\n";
+                    e($client->error);
                     break;
                 }
-                echo "Using object $input[1].\n";
+                m("Using object $input[1]");
             } catch(Exception $e) 
             {
-                echo 'Error: '.$e->getMessage() . "\n";
+                e($e->getMessage());
             }
             break;
         case 'log':
-            print_r($client->log);
+            m(print_r($client->log,true));
             break;
         default:
             if(!$client->connected) 
             {
-                echo "Unknown command.  Try 'help' for command list.\n";
+                e("Unknown command");
                 break;
             }
 
@@ -100,23 +102,41 @@ while(true)
                 }
             }
 
-            fwrite(STDOUT, "CALL: $call\n");
+            m("CALL: $call");
             try 
             {
                 $res = $client->call($call);
             } catch(Exception $e) 
             {
-                echo 'Error: ' . $e->getMessage() . "\n";
+                e($e->getMessage());
                 break;
             }
             if($res === null) 
-                echo "null\n";
+                m("null");
             elseif(is_bool($res)) 
-                echo ($res ? "true\n" : "false\n"); 
+                m(($res ? "true" : "false")); 
             elseif(is_numeric($res) || is_string($res)) 
-                echo $res . "\n";
+                m($res);
             else 
-                print_r($res);
+                m(print_r($res,true));
     } // switch
 } // while true
+
+// info msg
+function m($msg)
+{
+    fwrite(STDOUT,"$msg\n");
+}
+
+// error msg
+function e($msg)
+{
+    fwrite(STDERR,"ERROR: $msg\n");
+}
+
+// set the prompt 
+function prompt($msg)
+{
+    fwrite(STDOUT,$msg . '> ');
+}
 ?>
