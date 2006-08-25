@@ -12,10 +12,10 @@
  * @author mikespub
  */
 /**
- * extract function and arguments from short URLs for this module, and pass
+ * Extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
+ *
  * @param $params array containing the elements of PATH_INFO
- * @returns array
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
@@ -132,7 +132,7 @@ function articles_userapi_decode_shorturl($params)
         if ($foundalias) {
             array_unshift($params, $module);
         }
-
+        // Get all publication types present
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
@@ -180,8 +180,7 @@ function articles_userapi_decode_shorturl($params)
                         $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
                         // Decode using title
-                        if( $decodeUsingTitle )
-                        {
+                        if( $decodeUsingTitle ) {
                             $args['aid'] = articles_decodeAIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
                             return array('display', $args);
                         }
@@ -195,8 +194,7 @@ function articles_userapi_decode_shorturl($params)
         }
 
         // Decode using title
-        if( $decodeUsingTitle )
-        {
+        if( $decodeUsingTitle ) {
             $args['aid'] = articles_decodeAIDUsingTitle( $params, '', $decodeUsingTitle );
             return array('display', $args);
         }
@@ -205,7 +203,12 @@ function articles_userapi_decode_shorturl($params)
     // default : return nothing -> no short URL
     // (e.g. for multiple category selections)
 }
-
+/**
+ * Find the article ID by its title.
+ * @access private
+ * @return int aid The article ID
+ * @todo bug 5878 Why does a title need higher privileges than the usual aid in a short title?
+ */
 function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
 {
     switch ($decodeUsingTitle)
@@ -226,13 +229,13 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     }
 
     // The $params passed in does not match on all legal URL characters and
-    // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
+    // so some urls get cut off -- my test cases included parents and commands "this(here)" and "that,+there"
     // So lets parse the path info manually here.
     //
     // DONE: fix xarServer.php, line 421 to properly deal with this
     // xarServer.php[421] :: preg_match_all('|/([a-z0-9_ .+-]+)|i', $path, $matches);
     //
-    // I've movded the following code into xarServer to fix this problem.
+    // I've moved the following code into xarServer to fix this problem.
     //
     //     $pathInfo = xarServerGetVar('PATH_INFO');
     //     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
@@ -262,7 +265,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
         }
     }
     $paramidx++;
-
+    // TODO: MichelV: this combo of field and type is not used at all in getall...
     $decodedTitle = str_replace("\\'","'", $decodedTitle);
     $searchArgs['search'] = $decodedTitle;
     $searchArgs['searchfields'] = array('title');
