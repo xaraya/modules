@@ -1,0 +1,39 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="features_objectid">xarModGetVar('xproject','features_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="2" itemid="$features_objectid" />
+
+<div class="xar-mod-body">
+    <h2 style="text-align: center;">#$feature_name#</h2>
+    <div align="center">
+        <xar:if condition="!empty($status)">
+
+            <h3>#$status#</h3>
+        <xar:else />
+            <xar:blockgroup name="toxarav" id="toxarav" />
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['importance']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['details']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['details']" value="$item['details']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['tech_notes']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['tech_notes']" value="$item['tech_notes']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['date_approved']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['date_approved']" value="$item['date_approved']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$properties['date_available']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$properties['date_available']" value="$item['date_available']" /></td>
+                </tr>
+            </table>
+        </xar:if>
+    </div>
+</div>
+

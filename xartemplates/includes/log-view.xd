@@ -1,0 +1,25 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="log_objectid">xarModGetVar('xproject','log_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="4" itemid="$log_objectid" />
+
+<div class="xar-mod-body">
+    <div align="center">
+    
+        <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+        
+            <xar:loop name="$logs">
+                <xar:set name="changetype">$loop->item['changetype']</xar:set>
+                <xar:set name="createdate">$loop->item['createdate']</xar:set>
+                <xar:set name="userid">$loop->item['userid']</xar:set>
+                <xar:set name="details">$loop->item['details']</xar:set>
+                <tr><td class="xar-norm"><strong><xar:data-output property="$properties['changetype']" value="$changetype" />
+                        &nbsp;by <xar:data-output property="$properties['userid']" value="$userid" />
+                        on <xar:data-output property="$properties['createdate']" value="$createdate" /></strong>
+                        <br><em><xar:data-output property="$properties['details']" value="$details" /></em></td>
+                </tr>
+            </xar:loop>
+        </table>
+        <br />
+    </div>
+</div>

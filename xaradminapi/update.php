@@ -133,7 +133,7 @@ function xproject_adminapi_update($args)
                         'log',
                         'create',
                         array('projectid'   => $projectid,
-                            'userid'        => $ownerid,
+                            'userid'        => $userid,
                             'details'	    => $logdetails,
                             'changetype'	=> "MODIFIED"));
 

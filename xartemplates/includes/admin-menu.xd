@@ -1,0 +1,85 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
+<xar:if condition="$inline ne 1">
+    <table border="0" width="100%">
+    
+        <tr><th align="center" colspan="2">#$menutitle#</th></tr>
+        <tr>
+            <td width="65" rowspan="2"><img src="modules/xproject/xarimages/admin.jpg"></td>
+            <td>
+            <table border="0" width="100%"><tr align="center" valign="middle">
+            
+                <td width="25%"><a href="&xar-modurl-xproject-user-main;"><xar:mlstring>Published Projects</xar:mlstring></a></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-main;"><xar:mlstring>Search Projects</xar:mlstring></a></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a></td>
+                <td width="25%"><a href="&xar-modurl-xproject-user-settings;"><xar:mlstring>My Settings</xar:mlstring></a></td>
+            
+            </tr></table>
+        </td></tr>
+        <tr><td>
+            <table border="0" width="100%"><tr align="center" valign="middle">
+    
+                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Draft&amp;memberid=#$mymemberid#"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if></td>
+                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Active&amp;memberid=#$mymemberid#"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-main;&amp;status=Archive"><xar:mlstring>Archive</xar:mlstring></a></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Configuration</xar:mlstring></a></td>
+            
+            </tr></table>
+        </td></tr>
+    
+        <xar:if condition="!isset($q)">
+            <xar:set name="q">""</xar:set>
+        </xar:if>
+        
+        <style>
+            .xar-sub select, .xar-sub input {
+                font-size: 100%;
+                }
+        </style>
+    
+        <xar:if condition="!empty($showsearch)">
+            <tr><td colspan="3" align="center" class="xar-sub">
+                <xar:if condition="!isset($showajax)">
+                    <form method="post" action="javascript:loadContent('&xar-modurl-xproject-admin-view;','projectlist','POST','searchprojects');" name="searchprojects" id="searchprojects">
+                <xar:else />
+                    <form method="post" action="&xar-modurl-xproject-admin-view;" name="searchprojects" id="searchprojects">
+                </xar:if>
+                <input type="hidden" name="sortby" value="#$sortby#">
+                <div style="margin: 2px;">
+                <xar:mlstring>Search: </xar:mlstring><input type="text" name="q" value="#$q#" size="10">
+                <xar:mlstring>Min Importance: </xar:mlstring><xar:data-input property="$properties['importance']" name="max_importance" value="$max_importance" />
+                <xar:mlstring>Min Priority: </xar:mlstring><xar:data-input property="$properties['priority']" name="max_priority" value="$max_priority" />
+                </div>
+                <div style="margin: 2px;">
+                <xar:mlstring>Status: </xar:mlstring><xar:data-input property="$properties['status']" name="status" value="$status" />
+                <xar:if condition="count($teammembers) gt 0">
+                    <select name="memberid">
+                        <option value="">Filter by Project Member</option>
+                        <xar:loop name="$teammembers">
+                            <xar:set name="member_id">$loop->item['memberid']</xar:set>
+                            <xar:if condition="$member_id eq $memberid">
+                                <xar:set name="selected">" selected"</xar:set>
+                            <xar:else />
+                                <xar:set name="selected">""</xar:set>
+                            </xar:if>
+                            <option value="#$loop:item['memberid']#" #$selected#>#$loop:item['membername']#</option>
+                        </xar:loop>
+                    </select>
+                </xar:if>
+                <input type="submit" value="Go">
+                <xar:data-input type="checkbox" name="verbose" value="$verbose" />#$verbose#<xar:mlstring> Verbose?</xar:mlstring>
+                </div>
+                </form>
+            </td></tr>
+        </xar:if>    
+    
+        <xar:if condition="!empty($statusmsg)">
+            <tr><td colspan="3" align="center"><strong>#$statusmsg#</strong></td></tr>
+        </xar:if>
+    
+    </table>
+    <br />
+</xar:if>

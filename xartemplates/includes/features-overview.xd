@@ -1,0 +1,11 @@
+<fieldset><legend><xar:mlstring>Features</xar:mlstring></legend>
+    <xar:loop name="$features">
+        <div class="xar-norm">
+            <strong>#$loop:item['feature_name']#</strong>
+            <xar:if condition="!empty($loop:item['details'])">
+                <div style="padding: 5px;">#$loop:item['details']#</div>
+            </xar:if>
+        </div>
+    </xar:loop>
+</fieldset>
+

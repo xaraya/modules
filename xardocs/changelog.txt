@@ -1,0 +1,16 @@
+CHANGELOG
+
+
+V 1.2
+* Added "reference" field to Projects table to record reference values from previous data (account number, contract code, et al)
+
+V 1.1
+* Added Logs component to track changes to projects
+* Replaced "relativeurl" field with "projecttype" field in Projects table. Type "Website" now designates use with relativeurl's in Pages
+* Replaced previous project status list. Moved old status list to contracts/proposals module.
+
+V 1.0
+* Added "Website Project" to Projects table to work with Pages component items flagged "relativeurl"
+* Added "importance" field to Features for executive prioritization
+* Added "sequence" field to Pages for showing page-flow
+* Added "relativeurl" field to Pages to work with multiple sites (accessmethods) assigned to the project

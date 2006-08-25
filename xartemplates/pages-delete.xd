@@ -1,0 +1,65 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$project_properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-body">
+    <xar:if condition="$inline ne 1">
+        <h2 style="text-align: center;"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo.projectid#">#$projectinfo.project_name#</a></h2>
+        <div align="center">
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$project_properties['hours_planned']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$project_properties['hours_planned']" value="$projectinfo['hours_planned']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$project_properties['hours_spent']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$project_properties['hours_spent']" value="$projectinfo['hours_spent']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$project_properties['hours_remaining']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$project_properties['hours_remaining']" value="$projectinfo['hours_remaining']" /></td>
+                </tr>
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$project_properties['description']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$project_properties['description']" value="$projectinfo['description']" /></td>
+                </tr>
+            </table>
+        </div>
+    </xar:if>
+    <h2><xar:mlstring>Delete Page</xar:mlstring></h2>
+    <div align="center">
+    
+        <h3><xar:mlstring>Confirm deleting this Page?</xar:mlstring></h3>
+        
+        <form method="post" action="&xar-modurl-xproject-pages-delete;">
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" value="true" />
+            <input type="hidden" name="pageid" value="#$pageid#" />
+        
+            <table border="0" cellpadding="2" cellspacing="0">
+                <tr>
+                    <td align="right" width="50%">
+                        <xar:mlstring>Page ID</xar:mlstring>
+                    </td>
+                    <td width="50%">
+                        #$pageid#
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" width="50%">
+                        <xar:mlstring>Page</xar:mlstring>
+                    </td>
+                    <td width="50%">
+                        #$page_name#
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br />
+                            <input type="submit" value="#$confirmbutton#"  />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

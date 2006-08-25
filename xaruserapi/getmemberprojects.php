@@ -11,7 +11,7 @@
  * @subpackage xproject module
  * @author Chad Kraeft <stego@xaraya.com>
 */
-function xproject_userapi_getall($args)
+function xproject_userapi_getmemberprojects($args)
 {
     extract($args);
 
@@ -41,6 +41,18 @@ function xproject_userapi_getall($args)
         $numitems = -1;
     }
 
+    $invalid = array();
+    if (!isset($memberid) || !is_numeric($memberid)) {
+        $invalid[] = 'memberid';
+    }
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'feature ID', 'team', 'delete', 'xproject');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
     if (!xarSecurityCheck('ViewXProject', 0, 'Item', "All:All:All")) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'xproject');
@@ -53,29 +65,31 @@ function xproject_userapi_getall($args)
     $xartable = xarDBGetTables();
 
     $xprojecttable = $xartable['xProjects'];
+    $teamtable = $xartable['xProject_team'];
 
-    $sql = "SELECT projectid,
-                  reference,
-                  project_name,
-                  private,
-                  description,
-                  clientid,
-                  ownerid,
-                  status,
-                  priority,
-                  importance,
-                  projecttype,
-                  date_approved,
-                  planned_start_date,
-                  planned_end_date,
-                  actual_start_date,
-                  actual_end_date,
-                  hours_planned,
-                  hours_spent,
-                  hours_remaining,
-                  associated_sites
-            FROM $xprojecttable
-            WHERE projectid > 0 ";
+    $sql = "SELECT a.projectid,
+                  a.reference,
+                  a.project_name,
+                  a.private,
+                  a.description,
+                  a.clientid,
+                  a.ownerid,
+                  a.status,
+                  a.priority,
+                  a.importance,
+                  a.projecttype,
+                  a.date_approved,
+                  a.planned_start_date,
+                  a.planned_end_date,
+                  a.actual_start_date,
+                  a.actual_end_date,
+                  a.hours_planned,
+                  a.hours_spent,
+                  a.hours_remaining,
+                  a.associated_sites
+            FROM $xprojecttable a, $teamtable b
+            WHERE b.projectid = a.projectid
+            AND b.memberid = $memberid";
 
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
@@ -105,33 +119,9 @@ function xproject_userapi_getall($args)
         default:
             $sql .= " ORDER BY project_name";
     }
-//die($sql);
-/*
-    if ($selected_project != "all") {
-        $sql .= " AND $xproject_todos_column[project_id]=".$selected_project;
-
-    if (xarSessionGetVar('xproject_my_tasks') == 1 ) {
-        // show only tasks where I'm responsible for
-        $query .= "
-            AND $xproject_responsible_persons_column[user_id] = ".xarUserGetVar('uid')."
-            AND $xproject_todos_column[todo_id] = $xproject_responsible_persons_column[todo_id]";
-    }
-
-    // WHERE CLAUSE TO NOT PULL IF TASK IS PRIVATE AND USER IS NOT OWNER, CREATOR, ASSIGNER, OR ADMIN
-    // CLAUSE TO FILTER BY STATUS, MIN PRIORITY, OR DATES
-    // CLAUSE WHERE USER IS OWNER
-    // CLAUSE WHERE USER IS CREATOR
-    // CLAUSE WHERE USER IS ASSIGNER
-    // CLAUSE FOR ACTIVE ONLY (ie. started but not yet completed)
-    // CLAUSE BY TEAM/GROUPID (always on?)
-    //
-    // CLAUSE TO PULL PARENT TASK SETS
-    // or
-    // USERAPI_GET FOR EACH PARENT LEVEL
-*/
 
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-    
+
     if ($dbconn->ErrorNo() != 0) return;
 
     $projects = array();

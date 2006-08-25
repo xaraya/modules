@@ -1,0 +1,3 @@
+<xar:template type="module" file="admin-menu" />
+
+<div id="projectlist">#$projectlist#</div>

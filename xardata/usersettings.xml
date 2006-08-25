@@ -1,0 +1,22 @@
+<object name="usersettings_xproject">
+  <objectid>12</objectid>
+  <label>User Settings For xProject</label>
+  <moduleid>27</moduleid>
+  <itemtype>665</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="mymemberid">
+      <id>174</id>
+      <label>My Default Contact Record</label>
+      <type>contactlist</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+</object>
+

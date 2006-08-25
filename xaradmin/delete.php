@@ -16,7 +16,10 @@ function xproject_admin_delete($args)
     extract($args);
     
     if (!xarVarFetch('projectid', 'id', $projectid)) return;
+    if (!xarVarFetch('action', 'str', $action, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('actual_end_date', 'str', $actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
@@ -44,6 +47,7 @@ function xproject_admin_delete($args)
         $data = xarModAPIFunc('xproject','user','menu');
 
         $data['projectid'] = $projectid;
+        $data['actual_end_date'] = $project['actual_end_date'];
 
         $data['project_name'] = xarVarPrepForDisplay($project['project_name']);
         $data['confirmbutton'] = xarML('Confirm');
@@ -53,13 +57,25 @@ function xproject_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
-    if (!xarModAPIFunc('xproject',
-                     'admin',
-                     'delete',
-                     array('projectid' => $projectid))) {
-        return;
+    
+    if($action == "delete") {
+        if (!xarModAPIFunc('xproject',
+                         'admin',
+                         'delete',
+                         array('projectid' => $projectid))) {
+            return;
+        }
+        xarSessionSetVar('statusmsg', xarML('Project Deleted'));
+    } else {
+        if (!xarModAPIFunc('xproject',
+                         'admin',
+                         'archive',
+                         array('projectid' => $projectid,
+                            'actual_end_date' => $actual_end_date))) {
+            return;
+        }
+        xarSessionSetVar('statusmsg', xarML('Project Archived'));
     }
-    xarSessionSetVar('statusmsg', xarML('Project Deleted'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin'));
 

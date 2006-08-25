@@ -27,7 +27,7 @@ function xproject_user_view($args)
                           'user',
                           'getall',
                           array('private' => "public",
-                                'status' => "WIP",
+                                'status' => "Active",
                                 'sortby' => "planned_end_date",
                                 'numitems' => xarModGetVar('xproject', 'itemsperpage')));//TODO: numitems
 

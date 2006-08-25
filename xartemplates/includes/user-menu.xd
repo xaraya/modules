@@ -1,0 +1,21 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <tr><th align="center">#$menutitle#</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <td width="25%"><a href="&xar-modurl-xproject-user-view;"><xar:mlstring>Project List</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xproject-user-search;"><xar:mlstring>Search Projects</xar:mlstring></a></td>
+        
+        </tr></table>
+    </td></tr>
+</table>
+
+<xar:if condition="!empty($status)">
+    <div>#$status#</div>
+</xar:if>
+
+<br />

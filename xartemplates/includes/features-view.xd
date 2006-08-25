@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="features_objectid">xarModGetVar('xproject','features_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="2" itemid="$features_objectid" />
+
+<div class="xar-mod-body">
+<div align="center">
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+
+        <th style="white-space: nowrap;"><xar:mlstring>Feature Name / Details</xar:mlstring></th>
+        <th style="width: 150px;"><xar:mlstring>Importance</xar:mlstring></th>
+        <th style="width: 100px;"><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+    <xar:loop name="$features">
+    <tr><td class="xar-norm">
+            <xar:if condition="empty($loop:item['link'])">#$loop:item['feature_name']#<xar:else /><a href="#$loop:item['link']#" onClick="return loadContent(this.href,'new_feature');">#$loop:item['feature_name']#</a></xar:if>
+            
+        </td>
+
+        <xar:set name="importance">$loop->item['importance']</xar:set>
+        <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
+    
+        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"#$features_onclick#><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"#$features_onclick#><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+    
+      </tr>
+      
+      <tr><td class="xar-norm" style="padding-left: 10px;" colspan="3">
+      
+          <xar:if condition="!empty($loop:item['details'])">
+            <div class="xar-norm">#$loop:item['details']#</div>
+          </xar:if>
+          
+          <xar:if condition="!empty($loop:item['tech_notes'])">
+            <div class="xar-norm"><em>#$loop:item['tech_notes']#</div>
+          </xar:if>
+      
+            <xar:set name="date_approved">$loop->item['date_approved']</xar:set>
+            <xar:set name="date_available">$loop->item['date_available']</xar:set>
+                            
+            <xar:if condition="!empty($date_approved)">
+                <div class="xar-sub">Approved on <xar:data-output property="$properties['date_approved']" value="$date_approved" /></div>
+            </xar:if>
+            <xar:if condition="!empty($date_available)">
+                <div class="xar-sub">Available <xar:data-output property="$properties['date_available']" value="$date_available" /></div>
+            </xar:if>
+          </td>
+        </tr>
+
+    </xar:loop>
+
+
+
+</table>
+
+<br />
+
+</div>
+</div>
