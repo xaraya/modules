@@ -3,7 +3,7 @@
  * Top Items Block
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -85,7 +85,7 @@ function articles_topitemsblock_display($blockinfo)
     } else {
         $curaid = -1;
     }
-    
+
     if (!empty($vars['dynamictitle'])) {
         if ($vars['toptype'] == 'rating') {
             $blockinfo['title'] = xarML('Top Rated');
@@ -102,7 +102,7 @@ function articles_topitemsblock_display($blockinfo)
         $cidsarray = array();
     } else {
         if (!empty($vars['catfilter'])) {
-            // use admin defined category 
+            // use admin defined category
             $cidsarray = array($vars['catfilter']);
             $cid = $vars['catfilter'];
         } else {
@@ -160,7 +160,7 @@ function articles_topitemsblock_display($blockinfo)
             $blockinfo['title'] .= ' ' . xarML('Content');
         }
     } else {
-        // MikeC: Check to see if admin has specified that only a specific 
+        // MikeC: Check to see if admin has specified that only a specific
         // Publication Type should be displayed.  If not, then default to original TopItems configuration.
         if ($vars['pubtypeid'] == 0)
         {
@@ -175,7 +175,7 @@ function articles_topitemsblock_display($blockinfo)
             // MikeC: Admin Specified a publication type, use it.
             $ptid = $vars['pubtypeid'];
         }
-        
+
         if (!empty($vars['dynamictitle'])) {
             if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
                 $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
