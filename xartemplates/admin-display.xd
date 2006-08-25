@@ -26,72 +26,78 @@ function xtaskToggleView(id){
             <xar:blockgroup name="toxarav" id="toxarav" />
             <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xtasks_info">
                 <tr valign="top">
-                    <td class="xar-norm xar-align-right" style="width: 200px;"><xar:data-label property="$properties['task_name']" /></td>
-                    <td class="xar-title xar-align-left"><span style="float:left;"><xar:data-output property="$properties['task_name']" value="$item['task_name']" /></span>
+                    <td class="xar-title xar-align-right" style="width: 200px;"><xar:data-label property="$properties['task_name']" /></td>
+                    <td class="xar-norm xar-align-left"><span style="float:left;"><xar:data-output property="$properties['task_name']" value="$item['task_name']" /></span>
                         <span style="float:right;">[&nbsp;<xar:if condition="empty($item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
                         </span></td>
                 </tr>
                 <xar:if condition="!empty($parentname)">
                     <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:mlstring>Parent Task</xar:mlstring></td>
-                        <td class="xar-title xar-align-left"><xar:if condition="empty($parenturl)">#$parentname#<xar:else /><a href="#$parenturl#">#$parentname#</a></xar:if></td>
+                        <td class="xar-title xar-align-right"><xar:mlstring>Parent Task</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left"><xar:if condition="empty($parenturl)">#$parentname#<xar:else /><a href="#$parenturl#">#$parentname#</a></xar:if></td>
                     </tr>
                 </xar:if>
                 <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:data-label property="$properties['status']" /></td>
-                    <td class="xar-title xar-align-left"><xar:data-output property="$properties['status']" value="$item['status']" /></td>
+                    <td class="xar-title xar-align-right"><xar:data-label property="$properties['status']" /></td>
+                    <td class="xar-norm xar-align-left"><xar:data-output property="$properties['status']" value="$item['status']" />
+                        <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['private']" /></span>
+                        <xar:data-output property="$properties['private']" value="$item['private']" /></td>
                 </tr>
                 <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:data-label property="$properties['importance']" /></td>
-                    <td class="xar-title xar-align-left"><xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:data-label property="$properties['priority']" /></td>
-                    <td class="xar-title xar-align-left"><xar:data-output property="$properties['priority']" value="$item['priority']" /></td>
-                </tr>
-                <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:data-label property="$properties['private']" /></td>
-                    <td class="xar-title xar-align-left"><xar:data-output property="$properties['private']" value="$item['private']" /></td>
+                    <td class="xar-title xar-align-right"><xar:data-label property="$properties['priority']" /></td>
+                    <td class="xar-norm xar-align-left"><xar:data-output property="$properties['priority']" value="$item['priority']" />
+                        <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['importance']" /></span>
+                        <xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
                 </tr>
                 <xar:if condition="$item['date_approved'] gt 0">
                     <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:data-label property="$properties['date_approved']" /></td>
-                        <td class="xar-title xar-align-left"><xar:data-output property="$properties['date_approved']" value="$item['date_approved']" /></td>
+                        <td class="xar-title xar-align-right"><xar:data-label property="$properties['date_approved']" /></td>
+                        <td class="xar-norm xar-align-left"><xar:data-output property="$properties['date_approved']" value="$item['date_approved']" /></td>
                     </tr>
                 </xar:if>
-                <xar:if condition="$item['date_start_planned'] gt 0">
+                <xar:if condition="$item['date_start_planned'] gt 0 OR $item['date_end_planned'] gt 0">
                     <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:data-label property="$properties['date_start_planned']" /></td>
-                        <td class="xar-title xar-align-left"><xar:data-output property="$properties['date_start_planned']" value="$item['date_start_planned']" /></td>
+                        <td class="xar-title xar-align-right"><xar:mlstring>Planned Timeframe</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left">
+                            <xar:if condition="$item['date_start_planned'] gt 0">
+                                <xar:data-output property="$properties['date_start_planned']" value="$item['date_start_planned']" />
+                            </xar:if>
+                            <xar:if condition="$item['date_end_planned'] gt 0">
+                                <span class="xar-title"><xar:mlstring> through </xar:mlstring></span>
+                                <xar:data-output property="$properties['date_end_planned']" value="$item['date_end_planned']" />
+                            </xar:if>
+                        </td>
                     </tr>
                 </xar:if>
-                <xar:if condition="$item['date_end_planned'] gt 0">
+                <xar:if condition="$item['date_start_actual'] gt 0 OR $item['date_end_actual'] gt 0">
                     <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:data-label property="$properties['date_end_planned']" /></td>
-                        <td class="xar-title xar-align-left"><xar:data-output property="$properties['date_end_planned']" value="$item['date_end_planned']" /></td>
-                    </tr>
-                </xar:if>
-                <xar:if condition="$item['date_start_actual'] gt 0">
-                    <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:data-label property="$properties['date_start_actual']" /></td>
-                        <td class="xar-title xar-align-left"><xar:data-output property="$properties['date_start_actual']" value="$item['date_start_actual']" /></td>
-                    </tr>
-                </xar:if>
-                <xar:if condition="$item['date_end_actual'] gt 0">
-                    <tr valign="top">
-                        <td class="xar-norm xar-align-right"><xar:data-label property="$properties['date_end_actual']" /></td>
-                        <td class="xar-title xar-align-left"><xar:data-output property="$properties['date_end_actual']" value="$item['date_end_actual']" /></td>
+                        <td class="xar-title xar-align-right"><xar:mlstring>Actual Dates</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left">
+                        <xar:if condition="$item['date_start_actual'] gt 0">
+                            <xar:data-output property="$properties['date_start_actual']" value="$item['date_start_actual']" />
+                        </xar:if>
+                            <xar:if condition="$item['date_end_actual'] gt 0">
+                                <span class="xar-title"><xar:mlstring> through </xar:mlstring></span>
+                                <xar:data-output property="$properties['date_end_actual']" value="$item['date_end_actual']" />
+                            </xar:if>
+                        </td>
                     </tr>
                 </xar:if>
                 <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:mlstring>Hours</xar:mlstring></td>
-                    <td class="xar-title xar-align-left">
-                        <xar:mlstring>Planned: </xar:mlstring><xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" />
-                        <xar:mlstring>, Spent: </xar:mlstring><xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" />
-                        <xar:mlstring>, Remaining: </xar:mlstring><xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" /></td>
+                    <td class="xar-title xar-align-right"><xar:mlstring>Hours</xar:mlstring></td>
+                    <td class="xar-norm xar-align-left">
+                        <xar:if condition="(float)$item['hours_planned'] gt 0">
+                            <span><xar:mlstring>Planned: </xar:mlstring><xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" /></span>
+                        </xar:if>
+                        <xar:if condition="(float)$item['hours_spent'] gt 0">
+                            <span style="padding-left: 20px;"><xar:mlstring>Spent: </xar:mlstring><xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" /></span>
+                        </xar:if>
+                        <xar:if condition="(float)$item['hours_remaining'] gt 0">
+                            <span style="padding-left: 20px;"><xar:mlstring>Remaining: </xar:mlstring><xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" /></span></td>
+                        </xar:if>
                 </tr>
                 <tr valign="top">
-                    <td class="xar-norm xar-align-right"><xar:data-label property="$properties['description']" /></td>
+                    <td class="xar-title xar-align-right"><xar:data-label property="$properties['description']" /></td>
                     <td class="xar-norm xar-align-left"><xar:data-output property="$properties['description']" value="$item['description']" /></td>
                 </tr>
                 <tr>

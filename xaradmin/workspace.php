@@ -5,6 +5,7 @@ function xtasks_admin_workspace($args)
     extract($args);
     
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('orderby', 'str', $orderby, '', XARVAR_NOT_REQUIRED)) return;
     
     $data = array();
 
@@ -58,6 +59,7 @@ function xtasks_admin_workspace($args)
     }
     
     $data['startnum'] = $startnum;
+    $data['orderby'] = $orderby;
     $data['depth'] = 0;
     $data['maxdepth'] = xarModGetVar('xtasks', 'maxdepth');
 
@@ -75,6 +77,7 @@ function xtasks_admin_workspace($args)
                                   'itemtype' => $itemtype,
                                   'objectid' => $objectid,
                                   'startnum' => $startnum,
+                                  'orderby' => $orderby,
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     

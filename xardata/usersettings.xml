@@ -1,16 +1,16 @@
 <object name="usersettings_xtasks">
   <objectid>12</objectid>
   <label>User Settings For xTasks</label>
-  <moduleid>704</moduleid>
-  <itemtype>8</itemtype>
+  <moduleid>27</moduleid>
+  <itemtype>704</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>0</isalias>
   <properties>
-    <property name="show_importance">
-      <id>174</id>
-      <label>Display importance in the task list</label>
+    <property name="show_owner">
+      <id>71</id>
+      <label>Show who the task is assigned to</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -18,9 +18,9 @@
       <order>1</order>
       <validation></validation>
     </property>
-    <property name="show_priority">
-      <id>175</id>
-      <label>Display priority in the task list</label>
+    <property name="show_project">
+      <id>72</id>
+      <label>Display project names if associated</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -28,9 +28,9 @@
       <order>2</order>
       <validation></validation>
     </property>
-    <property name="show_age">
-      <id>176</id>
-      <label>Display age in the task list</label>
+    <property name="show_client">
+      <id>73</id>
+      <label>Display client names for associated projects</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -38,9 +38,9 @@
       <order>3</order>
       <validation></validation>
     </property>
-    <property name="show_hours">
-      <id>177</id>
-      <label>Display hours of work in the task list</label>
+    <property name="show_importance">
+      <id>74</id>
+      <label>Display importance in the task list</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -48,9 +48,9 @@
       <order>4</order>
       <validation></validation>
     </property>
-    <property name="show_pctcomplete">
-      <id>178</id>
-      <label>Display percentage complete in the task list</label>
+    <property name="show_priority">
+      <id>75</id>
+      <label>Display priority in the task list</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -58,9 +58,9 @@
       <order>5</order>
       <validation></validation>
     </property>
-    <property name="show_planned_dates">
-      <id>179</id>
-      <label>Display planned start and end date in the task list</label>
+    <property name="show_age">
+      <id>76</id>
+      <label>Display age in the task list</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
@@ -68,14 +68,44 @@
       <order>6</order>
       <validation></validation>
     </property>
-    <property name="show_actual_dates">
-      <id>180</id>
-      <label>Display actual start and end date in the task list</label>
+    <property name="show_hours">
+      <id>77</id>
+      <label>Display hours of work in the task list</label>
       <type>checkbox</type>
       <default></default>
       <source>user settings</source>
       <status>1</status>
       <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="show_pctcomplete">
+      <id>78</id>
+      <label>Display percentage complete in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="show_planned_dates">
+      <id>79</id>
+      <label>Display planned start and end date in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="show_actual_dates">
+      <id>80</id>
+      <label>Display actual start and end date in the task list</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>10</order>
       <validation></validation>
     </property>
 </object>

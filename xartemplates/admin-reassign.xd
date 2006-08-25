@@ -1,0 +1,30 @@
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Re-Assign Task</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-xtasks-admin-updateassign;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="taskid" value="#$item.taskid#" />
+<input type="hidden" name="returnurl" value="#$returnurl#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['task_name']" /></td>
+        <td><xar:data-output property="$properties['task_name']" name="task_name" value="$item['task_name']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['owner']" /></td>
+        <td><xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" /></td>
+    </tr>
+    <tr>
+        <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+    </tr>
+</table>
+
+</form>
+</div>
+</div>

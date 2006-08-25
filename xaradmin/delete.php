@@ -13,13 +13,12 @@
  */
 function xtasks_admin_delete($args)
 {
-    list($taskid,
-         $objectid,
-         $returnurl,
-         $confirm) = xarVarCleanFromInput('taskid',
-                                          'objectid',
-                                          'returnurl',
-                                          'confirm');
+    
+    if (!xarVarFetch('taskid', 'id', $taskid)) return;
+    if (!xarVarFetch('action', 'str', $action, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
 
@@ -40,9 +39,10 @@ function xtasks_admin_delete($args)
 
     if (empty($confirm)) {
         xarModLoad('xtasks','user');
-        $data = xarModAPIFunc('xtasks','user','menu');
+        $data = xarModAPIFunc('xtasks','admin','menu');
 
         $data['taskid'] = $taskid;
+        $data['status'] = $task['status'];
         $data['returnurl'] = $returnurl;
 
         $data['name'] = xarVarPrepForDisplay($task['task_name']);
@@ -53,13 +53,25 @@ function xtasks_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
-    if (!xarModAPIFunc('xtasks',
-                     'admin',
-                     'delete',
-                     array('taskid' => $taskid))) {
-        return;
+    
+    if($action == "delete") {
+        if (!xarModAPIFunc('xtasks',
+                         'admin',
+                         'delete',
+                         array('taskid' => $taskid))) {
+            return;
+        }
+        xarSessionSetVar('statusmsg', xarML('Task Deleted'));
+    } else {
+        if (!xarModAPIFunc('xtasks',
+                         'admin',
+                         'close',
+                         array('taskid' => $taskid,
+                               'actual_end_date' => $actual_end_date))) {
+            return;
+        }
+        xarSessionSetVar('statusmsg', xarML('Task Closed'));
     }
-    xarSessionSetVar('statusmsg', xarML('Task Deleted'));
 
     xarResponseRedirect($returnurl);
 

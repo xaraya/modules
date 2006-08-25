@@ -12,16 +12,16 @@
 </xar:if>
 
 
-<table border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-        <th style="width: 99%;"><xar:mlstring>Name</xar:mlstring></th>
+        <th style="width: 300px;"><xar:mlstring>Name</xar:mlstring></th>
         <th><xar:mlstring>Assigned&nbsp;To</xar:mlstring></th>
         <th><xar:mlstring>Date&nbsp;Due</xar:mlstring></th>
         <th><xar:mlstring>Status</xar:mlstring></th>
         <th><xar:mlstring>Importance</xar:mlstring></th>
         <th><xar:mlstring>Priority</xar:mlstring></th>
         <th><xar:mlstring>Sub-Tasks</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <th style="width: 80px;"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
 
     <xar:foreach in="$xtasks" value="$xtaskinfo">
@@ -66,12 +66,10 @@
             </td>
     
             <td class="xar-norm" align="center">
-                <xar:if condition="isset($properties['project_numtasks'])">
-                    <xar:data-output property="$properties['project_numtasks']" value="$xtaskinfo['project_numtasks']" />
-                </xar:if>
+                #$xtaskinfo['numchildren']#
             </td>
     
-            <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($xtaskinfo['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$xtaskinfo['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($xtaskinfo['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$xtaskinfo['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
         </tr>
 
         <xar:if condition="!empty($xtaskinfo['description'])" >

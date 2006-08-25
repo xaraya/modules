@@ -14,7 +14,7 @@
 
 $modversion['name'] = 'xtasks';
 $modversion['id'] = '704';
-$modversion['version'] = '1.3';
+$modversion['version'] = '1.5.16';
 $modversion['displayname']    = xarML('xTasks');
 $modversion['description'] = 'Basic Task Manager';
 $modversion['credits'] = 'docs/credits.txt';

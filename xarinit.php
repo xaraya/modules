@@ -171,15 +171,15 @@ function xtasks_init()
     // save the object id for later
     xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
 
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
+    $usersettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/usersettings.xml'));
     if (empty($objectid)) return;
-    xarModSetVar('xtasks','usersettings',$objectid);
+    xarModSetVar('xtasks','usersettings',$usersettings);
 
-    $objectid = xarModAPIFunc('dynamicdata','util','import',
+    $modulesettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
     if (empty($objectid)) return;
-    xarModSetVar('xtasks','modulesettings',$objectid);
+    xarModSetVar('xtasks','modulesettings',$modulesettings);
 
     xarModSetVar('xtasks', 'dateformat', '');
     xarModSetVar('xtasks', 'autorefresh', 600);
@@ -329,13 +329,8 @@ function xtasks_upgrade($oldversion)
                 'warning'	            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'));
         
             $sql = xarDBCreateTable($reminders_table,$reminders_fields);
-            if (empty($sql)) return; // throw back
-        
-            // Pass the Table Create DDL to adodb to create the table
+            if (empty($sql)) return;
             $dbconn->Execute($sql);
-        
-            // Check for an error with the database code, and if so raise the
-            // appropriate exception
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
@@ -357,7 +352,6 @@ function xtasks_upgrade($oldversion)
             $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/xtasks/xardata/tasks.xml'));
             if (empty($xtasks_objectid)) return;
-            // save the object id for later
             xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
 
             $objectid = xarModGetVar('xtasks','modulesettings');
@@ -377,6 +371,86 @@ function xtasks_upgrade($oldversion)
             xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
 
         case '1.3':
+            // modify creator/owner/assigner fields
+            $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+            if (!empty($xtasks_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+            }
+            $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/tasks.xml'));
+            if (empty($xtasks_objectid)) return;
+            xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
+
+        case '1.4':
+        case '1.5':            
+        case '1.5.1':
+        case '1.5.2':
+        case '1.5.3':
+        case '1.5.4':
+        case '1.5.5':
+        case '1.5.6':
+        case '1.5.7':
+        case '1.5.8':
+        case '1.5.9':
+        case '1.5.10':
+        case '1.5.11':
+        case '1.5.12':
+        case '1.5.13':
+        case '1.5.14':
+        case '1.5.15':
+        
+            // RELOAD TASK OBJECT
+            $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+            if (!empty($xtasks_objectid)) {
+//                $test1 = xarModAPIFunc('dynamicdata','user','getobject',array('objectid' => $xtasks_objectid));
+                if(xarModAPIFunc('dynamicdata',
+                                'admin',
+                                'deleteobject',
+                                array('objectid' => $xtasks_objectid,
+                                    'module' => "xproject",
+                                    'itemtype' => 1))) {
+                    xarModSetVar('xtasks','xtasks_objectid', '');
+                }
+            }
+            $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/tasks.xml'));
+            if (empty($xtasks_objectid)) {
+                return;
+            }
+            xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
+        
+            // RELOAD USER SETTINGS
+            $usersettings = xarModGetVar('xtasks','usersettings');
+            if (!empty($usersettings)) {
+//                $test2 = xarModAPIFunc('dynamicdata','user','getobject',array('objectid' => $usersettings));
+                if(xarModAPIFunc('dynamicdata',
+                                'admin',
+                                'deleteobject',
+                                array('objectid' => $usersettings,
+                                    'module' => "Roles",
+                                    'itemtype' => 704))) {
+                    xarModSetVar('xtasks','usersettings', '');
+                }
+            }
+            $usersettings = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/usersettings.xml'));
+            if (empty($usersettings)) return;
+            xarModSetVar('xtasks','usersettings',$usersettings);
+            
+            // RELOAD MODULE SETTINGS
+            $modulesettings = xarModGetVar('xtasks','modulesettings');
+            if (!empty($modulesettings)) {
+//                $test3 = xarModAPIFunc('dynamicdata','user','getobject',array('objectid' => $modulesettings));
+                if(xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $modulesettings))) {
+                    xarModSetVar('xtasks','modulesettings', '');
+                }
+            }
+            $modulesettings = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
+            if (empty($modulesettings)) return;
+            xarModSetVar('xtasks','modulesettings',$modulesettings);
+
+        case '1.5.16':
             break;
 
     }
@@ -418,6 +492,18 @@ function xtasks_delete()
     }
 
     $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+    if (!empty($xtasks_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+    }
+    xarModDelVar('xtasks','xtasks_objectid');
+
+    $usersettings = xarModGetVar('xtasks','usersettings');
+    if (!empty($xtasks_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+    }
+    xarModDelVar('xtasks','xtasks_objectid');
+
+    $modulesettings = xarModGetVar('xtasks','modulesettings');
     if (!empty($xtasks_objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
     }

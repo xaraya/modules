@@ -1,15 +1,15 @@
 <object name="xTasks">
-  <objectid>5</objectid>
+  <objectid>15</objectid>
   <label>xTasks</label>
   <moduleid>704</moduleid>
   <itemtype>1</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
-  <isalias>1</isalias>
+  <isalias>0</isalias>
   <properties>
     <property name="taskid">
-      <id>1</id>
+      <id>51</id>
       <label>taskid</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation></validation>
     </property>
     <property name="task_name">
-      <id>2</id>
+      <id>52</id>
       <label>Task Name</label>
       <type>textbox</type>
       <default></default>
@@ -29,7 +29,7 @@
       <validation></validation>
     </property>
     <property name="projectid">
-      <id>3</id>
+      <id>53</id>
       <label>projectid</label>
       <type>hidden</type>
       <default></default>
@@ -39,7 +39,7 @@
       <validation></validation>
     </property>
     <property name="status">
-      <id>4</id>
+      <id>54</id>
       <label>Status</label>
       <type>dropdown</type>
       <default></default>
@@ -49,7 +49,7 @@
       <validation>Draft;Pending Approval;Active;Closed</validation>
     </property>
     <property name="priority">
-      <id>5</id>
+      <id>55</id>
       <label>Priority</label>
       <type>dropdown</type>
       <default></default>
@@ -59,7 +59,7 @@
       <validation>1;2;3;4;5;6;7;8;9</validation>
     </property>
     <property name="importance">
-      <id>6</id>
+      <id>56</id>
       <label>Importance</label>
       <type>dropdown</type>
       <default></default>
@@ -69,7 +69,7 @@
       <validation>1,Essential;3,Rather;5,Somewhat;7,Not Very;9,None</validation>
     </property>
     <property name="description">
-      <id>7</id>
+      <id>57</id>
       <label>Description</label>
       <type>textarea_medium</type>
       <default></default>
@@ -79,7 +79,7 @@
       <validation></validation>
     </property>
     <property name="private">
-      <id>8</id>
+      <id>58</id>
       <label>Private</label>
       <type>checkbox</type>
       <default></default>
@@ -88,9 +88,9 @@
       <order>8</order>
       <validation></validation>
     </property>
-    <property name="creatorid">
-      <id>9</id>
-      <label>creatorid</label>
+    <property name="creator">
+      <id>59</id>
+      <label>Task Creator</label>
       <type>hidden</type>
       <default></default>
       <source>dynamic_data</source>
@@ -98,9 +98,9 @@
       <order>9</order>
       <validation></validation>
     </property>
-    <property name="ownerid">
-      <id>10</id>
-      <label>ownerid</label>
+    <property name="owner">
+      <id>60</id>
+      <label>Assigned To</label>
       <type>hidden</type>
       <default></default>
       <source>dynamic_data</source>
@@ -108,18 +108,18 @@
       <order>10</order>
       <validation></validation>
     </property>
-    <property name="assignerid">
-      <id>11</id>
-      <label>assignerid</label>
+    <property name="assigner">
+      <id>61</id>
+      <label>Assigned By</label>
       <type>hidden</type>
       <default></default>
       <source>dynamic_data</source>
-      <status>1</status>
+      <status>2</status>
       <order>11</order>
       <validation></validation>
     </property>
     <property name="groupid">
-      <id>12</id>
+      <id>62</id>
       <label>groupid</label>
       <type>hidden</type>
       <default></default>
@@ -129,7 +129,7 @@
       <validation></validation>
     </property>
     <property name="date_created">
-      <id>13</id>
+      <id>63</id>
       <label>Date Created</label>
       <type>calendar</type>
       <default></default>
@@ -139,7 +139,7 @@
       <validation></validation>
     </property>
     <property name="date_approved">
-      <id>14</id>
+      <id>64</id>
       <label>Date Approved</label>
       <type>calendar</type>
       <default></default>
@@ -149,7 +149,7 @@
       <validation></validation>
     </property>
     <property name="date_changed">
-      <id>15</id>
+      <id>65</id>
       <label>Date Changed</label>
       <type>calendar</type>
       <default></default>
@@ -159,7 +159,7 @@
       <validation></validation>
     </property>
     <property name="date_start_planned">
-      <id>16</id>
+      <id>66</id>
       <label>Planned Start Date</label>
       <type>calendar</type>
       <default></default>
@@ -169,7 +169,7 @@
       <validation></validation>
     </property>
     <property name="date_start_actual">
-      <id>17</id>
+      <id>67</id>
       <label>Actual Start Date</label>
       <type>calendar</type>
       <default></default>
@@ -179,7 +179,7 @@
       <validation></validation>
     </property>
     <property name="date_end_planned">
-      <id>18</id>
+      <id>68</id>
       <label>Planned End Date</label>
       <type>calendar</type>
       <default></default>
@@ -189,7 +189,7 @@
       <validation></validation>
     </property>
     <property name="date_end_actual">
-      <id>19</id>
+      <id>69</id>
       <label>Actual End Date</label>
       <type>calendar</type>
       <default></default>
@@ -199,7 +199,7 @@
       <validation></validation>
     </property>
     <property name="hours_planned">
-      <id>20</id>
+      <id>70</id>
       <label>Hours Planned</label>
       <type>textbox</type>
       <default></default>
@@ -209,7 +209,7 @@
       <validation>0:6</validation>
     </property>
     <property name="hours_spent">
-      <id>21</id>
+      <id>71</id>
       <label>Hours Spent</label>
       <type>textbox</type>
       <default></default>
@@ -219,7 +219,7 @@
       <validation>0:6</validation>
     </property>
     <property name="hours_remaining">
-      <id>22</id>
+      <id>72</id>
       <label>Hours Remaining</label>
       <type>textbox</type>
       <default></default>

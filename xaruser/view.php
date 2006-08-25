@@ -14,8 +14,12 @@
 function xtasks_user_view($args)
 {
     extract($args);
+    
     if (!xarVarFetch('startnum',   'int:1:', $startnum,   1, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('mymemberid',   'int', $mymemberid,   0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('memberid',   'int', $memberid,   0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('statusfilter',   'str', $statusfilter,   '', XARVAR_NOT_REQUIRED)) return;
+    
     $data = xarModAPIFunc('xtasks','admin','menu');
 
     $data['items'] = array();
@@ -27,7 +31,10 @@ function xtasks_user_view($args)
     $xtasks = xarModAPIFunc('xtasks',
                           'user',
                           'getall',
-                          array('startnum' => $startnum,
+                          array('mymemberid' => $mymemberid,
+                                'memberid' => $memberid,
+                                'statusfilter' => $statusfilter,
+                                'startnum' => $startnum,
                                 'numitems' => 10));//TODO: numitems
 
     if (!isset($xtasks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;

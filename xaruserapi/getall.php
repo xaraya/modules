@@ -15,7 +15,7 @@
 function xtasks_userapi_getall($args)
 {
     extract($args);
-
+    
     if(!empty($modname)) {
         $modid = xarModGetIDFromName($modname);
     }
@@ -24,6 +24,10 @@ function xtasks_userapi_getall($args)
         && !isset($projectid)
         && (!isset($modid) || !isset($objectid))) {
         $parentid = '0';
+    }
+
+    if (!isset($orderby)) {
+        $orderby = "";
     }
 
     if (!isset($startnum)) {
@@ -46,7 +50,7 @@ function xtasks_userapi_getall($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'getall', 'Example');
+                    join(', ',$invalid), 'user', 'getall', 'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
@@ -91,42 +95,83 @@ function xtasks_userapi_getall($args)
                    a.hours_planned,
                    a.hours_spent,
                    a.hours_remaining,
-                   COUNT(b.parentid)
+                   COUNT(b.taskid)
             FROM $xtaskstable a
             LEFT JOIN $xtaskstable b
-            ON b.parentid = a.taskid
-            WHERE 1";
-
+            ON b.parentid = a.taskid";
+            
+    $whereclause = array();
+            
+    if(isset($mymemberid)) {
+        $whereclause[] = "a.owner=".$mymemberid;
+    }        
+    if(isset($memberid) && $memberid > 0) {
+        $whereclause[] = "(a.creator=".$memberid." OR a.assigner=".$memberid.")";
+    }        
+            
     if (!empty($modid) 
         && !empty($objectid)
         && $modid == xarModGetIDFromName('xtasks')) {
-        
         $parentid = $objectid;
-    }
-            
-    if (!empty($parentid)) {
-        $sql .= " AND a.parentid=".$parentid;
+//        $modid = 0;
+//        $objectid = 0;
     }
     
     if (!empty($projectid)) {
-        $sql .= " AND a.projectid=".$projectid;
+        $whereclause[] = "a.projectid=".$projectid;
     } elseif (!empty($modid)) {
-        $sql .= " OR ( a.modid=".$modid;
+        $hookedsql = "( a.modid=".$modid;
         if (!empty($objectid)) {
-            $sql .= " AND a.objectid=".$objectid;
+            $hookedsql .= " AND a.objectid=".$objectid;
         }
         if (!empty($itemtype)) {
-            $sql .= " AND a.itemtype=".$itemtype;
+            $hookedsql .= " AND a.itemtype=".$itemtype;
         }
-        $sql .= " )";
+        $hookedsql .= " )";
+            
+        if (!empty($parentid)) {
+            $hookedsql .= " OR a.parentid=".$parentid;
+        }
+        $whereclause[] = $hookedsql;
+    } elseif (!empty($parentid)) {
+        $whereclause[] = "a.parentid=".$parentid;
     }
+            
+    if (!empty($statusfilter)) {
+        $whereclause[] = "a.status='".$statusfilter."'";
+    } else {
+        $statusfilter = "";
+    }
+    
+    if(count($whereclause) > 0) $sql .= " WHERE ".implode(" AND ", $whereclause);
         
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
 //	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
-    $sql .= " GROUP BY b.parentid ";
-    $sql .= " ORDER BY a.task_name ";
+    $sql .= " GROUP BY a.taskid ";
 
+    switch($orderby) {
+        case "task_name":
+            $sql .= " ORDER BY a.task_name";
+            break;
+        case "importance":
+            $sql .= " ORDER BY a.importance";
+            break;
+        case "priority":
+            $sql .= " ORDER BY a.priority";
+            break;
+        case "status":
+            $sql .= " ORDER BY a.status";
+            break;
+        default:
+            if(isset($mymemberid)) {
+                $sql .= " ORDER BY a.priority, a.task_name ";
+            } elseif(isset($memberid)) {
+                $sql .= " ORDER BY a.importance, a.task_name ";
+            } else {//if($statusfilter == "Closed") {
+                $sql .= " ORDER BY a.status, a.date_end_actual DESC, a.task_name ";
+            }
+    }
 /*
     if ($selected_project != "all") {
         $sql .= " AND $xtasks_todos_column[project_id]=".$selected_project;
@@ -193,12 +238,12 @@ function xtasks_userapi_getall($args)
         if (xarSecurityCheck('ReadXTask', 0, 'Item', "$task_name:All:$taskid")) {
             $numtasks = xarModAPIFunc('xtasks', 'user', 'countitems', array('projectid' => $projectid));
             if(!empty($date_created) && $date_created != "0000-00-00") {
-                $days_old = sprintf(".01%", (time() - strtotime($date_created) ) / (24 * 60 * 60));
+                $days_old = sprintf("%01.1f", (time() - strtotime($date_created) ) / (24 * 60 * 60));
             } else {
                 $days_old = 0;
             }
             if(!empty($date_changed) && $date_changed != "0000-00-00") {
-                $days_untouched = sprintf(".01%", (time() - strtotime($date_changed) ) / (24 * 60 * 60));
+                $days_untouched = sprintf("%01.1f", (time() - strtotime($date_changed) ) / (24 * 60 * 60));
             } else {
                 $days_untouched = 0;
             }

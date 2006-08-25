@@ -8,7 +8,6 @@ function xtasks_admin_update($args)
     if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('creator', 'id', $creator, $creator, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('owner', 'id', $owner, $owner, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('assigner', 'id', $assigner, $assigner, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('groupid', 'id', $groupid, $groupid, XARVAR_NOT_REQUIRED)) return;
@@ -41,7 +40,6 @@ function xtasks_admin_update($args)
                         'importance'            => $importance,
                         'description'           => $description,
                         'private'               => $private,
-                        'creator'               => $creator,
                         'owner'                 => $owner,
                         'assigner'              => $assigner,
                         'groupid'               => $groupid,

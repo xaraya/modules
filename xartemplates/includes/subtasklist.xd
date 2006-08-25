@@ -1,4 +1,8 @@
 
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="ttlcolumns">3</xar:set>
 
 <table border="0" cellpadding="0" cellspacing="0" class="xar-accent" style="width: 100%;">
 
@@ -12,25 +16,61 @@
             </td>
         
             <xar:if condition="$show_age">
+                <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
                 <td class="xar-norm" style="text-align: center; width: 50px;">#$taskinfo['days_old']#</td>
             </xar:if>
         
             <xar:if condition="$show_hours">
+                <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
                 <td class="xar-norm" style="text-align: center; width: 50px;">#$taskinfo['hours_spent']#</td>
             </xar:if>
             
             <xar:if condition="$show_importance">
+                <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
                 <xar:set name="importance">$taskinfo['importance']</xar:set>
-                <td class="xar-norm" style="text-align: center; center; width: 80px;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
+                <td class="xar-norm" style="text-align: center; center; width: 80px;">
+                    <div style="float: left; width: 65px;">
+                        <xar:data-output property="$properties['importance']" value="$importance" />
+                    </div>
+                    <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                        <div style="height: 10px; vertical-align: top;">
+                            <xar:if condition="$taskinfo.importance gt 1">
+                                <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                        <div style="height: 8px; vertical-align: top;">
+                            <xar:if condition="$taskinfo.importance lt 9">
+                                <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                    </div>
+                    <div style="clear; both;"></div>
+                </td>
             </xar:if>
         
             <xar:if condition="$show_priority">
-                <td class="xar-norm" style="text-align: center; center; width: 80px;">#$taskinfo['priority']#</td>
+                <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                <td class="xar-norm" style="text-align: center; center; width: 80px;">
+                    <div style="float: left; width: 65px;">#$taskinfo['priority']#</div>
+                    <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                        <div style="height: 10px; vertical-align: top;">
+                            <xar:if condition="$taskinfo.priority gt 1">
+                                <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                        <div style="height: 8px; vertical-align: top;">
+                            <xar:if condition="$taskinfo.priority lt 9">
+                                <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                    </div>
+                    <div style="clear; both;"></div>
+                </td>
             </xar:if>
         
             <td class="xar-norm" style="text-align: center; width: 80px;">#$taskinfo['status']#</td>
         
-            <td class="xar-norm" style="text-align: center; vertical-align: bottom; width: 50px;"><nobr><xar:if condition="!empty($taskinfo['editurl'])"><a href="#$taskinfo['editurl']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a></xar:if>&nbsp;<xar:if condition="!empty($taskinfo['deleteurl'])"><a href="#$taskinfo['deleteurl']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></xar:if></td>
+            <td class="xar-norm" style="text-align: center; vertical-align: bottom; width: 50px;"><nobr><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></td>
         
         </tr>
     
@@ -40,7 +80,7 @@
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
             
         <tr>
-            <td class="xar-norm" colspan="4" style="padding-left: 25px;">#$taskinfo['description']#
+            <td class="xar-norm" colspan="#$ttlcolumns#" style="padding-left: 25px;">#$taskinfo['description']#
                 <xar:if condition="$show_planned_dates">
                     <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
                         <br><xar:mlstring>Planned Timeframe:</xar:mlstring>
@@ -69,21 +109,25 @@
         
         <xar:if condition="$taskinfo['numchildren'] gt 0">
             <tr>
-                <td colspan="5" style="margin: 0px; padding: 0px;">
-                    <xar:set name="subtasklist">xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['taskid']))</xar:set>
+                <td colspan="#$ttlcolumns#" style="margin: 0px; padding: 0px;">
                     <xar:set name="deeper">$depth + 1</xar:set>
-                    <xar:template type="module" file="subtasklist" subdata="array('depth'=&gt;$deeper,
-                                                                                'startnum'=&gt;$startnum,
-                                                                                'show_age'=&gt;$show_age,
-                                                                                'show_hours'=&gt;$show_hours,
-                                                                                'show_importance'=&gt;$show_importance,
-                                                                                'show_priority'=&gt;$show_priority,
-                                                                                'show_planned_dates'=&gt;$show_planned_dates,
-                                                                                'show_actual_dates'=&gt;$show_actual_dates,
-                                                                                'subtasklist'=&gt;$subtasklist)" />
-
-                
-                
+                    <xar:if condition="$depth lt 7">
+                        <xar:set name="subtasklist">xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['taskid'], 'orderby' => $orderby))</xar:set>
+                        <xar:if condition="is_array($subtasklist)">
+                            <xar:template type="module" file="subtasklist" subdata="array('depth'=&gt;$deeper,
+                                                                                        'authid'=&gt;$authid,
+                                                                                        'orderby'=&gt;$orderby,
+                                                                                        'startnum'=&gt;$startnum,
+                                                                                        'show_age'=&gt;$show_age,
+                                                                                        'show_hours'=&gt;$show_hours,
+                                                                                        'show_importance'=&gt;$show_importance,
+                                                                                        'show_priority'=&gt;$show_priority,
+                                                                                        'show_planned_dates'=&gt;$show_planned_dates,
+                                                                                        'show_actual_dates'=&gt;$show_actual_dates,
+                                                                                        'subtasklist'=&gt;$subtasklist,
+                                                                                        'encoded_returnurl'=&gt;$encoded_returnurl)" />
+                        </xar:if>
+                    </xar:if>
                 </td>
             </tr>        
         </xar:if>

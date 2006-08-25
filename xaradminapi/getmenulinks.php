@@ -20,6 +20,8 @@
  */
 function xtasks_adminapi_getmenulinks()
 {
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+
     $menulinks = array();
     
     $menulinks[] = Array('url'   => xarModURL('xtasks',
@@ -45,9 +47,11 @@ function xtasks_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('ReadXTask', 0)) {
+    
         $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                    'admin',
-                                                   'view'),
+                                                   'view',
+                                                   array('memberid' => $mymemberid)),
                               'title' => xarML('Open tasks assigned to you'),
                               'label' => xarML('My Tasks'));
         $menulinks[] = Array('url'    => xarModURL('xtasks',
@@ -57,7 +61,8 @@ function xtasks_adminapi_getmenulinks()
                               'label' => xarML('Open Tasks'));
         $menulinks[] = Array('url'    => xarModURL('xtasks',
                                                    'admin',
-                                                   'view'),
+                                                   'view',
+                                                   array('status' => "Closed")),
                               'title' => xarML('Recently closed tasks'),
                               'label' => xarML('Archive'));
 
