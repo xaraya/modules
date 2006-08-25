@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -833,7 +833,7 @@ function articles_user_view($args)
         $maxcols = $number > $numcols ? $numcols : $number;
         $data['colwidth'] = round(100 / $maxcols);
     }
-    
+
     // TODO: verify for other URLs as well
     if ($ishome) {
         if (!empty($numcols) && $numcols > 1) {
