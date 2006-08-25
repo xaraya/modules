@@ -1,25 +1,27 @@
 <?php
 /**
- * File: $Id:
- * 
- * Update configuration parameters of the module with information passed back by the modification form
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * Search System - Present searches via hooks
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Search
- * @author Jo Dalle Nogare
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
+ *
+ * @author Jo Dalle Nogare
+ * @return bool true on successfull update of configuration
  */
 function search_admin_updateconfig()
 {
     if (!xarVarFetch('showsearches', 'checkbox', $showsearches, false, XARVAR_NOT_REQUIRED)) return;
-    
+
     //The following - todo - later
     //if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     //if (!xarVarFetch('searchestoshow', 'int', $searchestoshow, 10, XARVAR_NOT_REQUIRED)) return;
@@ -29,7 +31,7 @@ function search_admin_updateconfig()
     // proceed no further as it is possible that this is an attempt at sending
     // in false data to the system
     if (!xarSecConfirmAuthKey()) return;
-    // Update module variables.  Note that the default values are set in 
+    // Update module variables.  Note that the default values are set in
     // xarVarFetch when recieving the incoming values, so no extra processing
     // is needed when setting the variables here.
     xarModSetVar('search', 'showsearches', $showsearches);

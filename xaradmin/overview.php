@@ -1,16 +1,18 @@
 <?php
 /**
- * Search main administration function
+ * Search System - Present searches via hooks
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005-2006 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Search
- * @author Jo Dalle Nogare
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 /**
+ * @author Jo Dalle Nogare
  * the Search Overview function
  */
 function search_admin_overview()

@@ -1,16 +1,27 @@
 <?php
-
+/**
+ * Search System - Present searches via hooks
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
+ */
 /**
  * The standard search hook.
- * 
+ *
  * @param  $args ['q'] is the search question
  * @param  $args ['author'] is the search for an author of an article
- * @returns array
+ * @return array
  */
 function search_user_main()
 {
     if (!xarVarFetch('q', 'str:1:', $q, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('author', 'str:1:', $author, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('author', 'str:1:', $author, '', XARVAR_NOT_REQUIRED)) return;
     // Security Check
     if (!xarSecurityCheck('ReadSearch')) return;
 
@@ -23,7 +34,7 @@ function search_user_main()
         $insert['date'] = date('Y-m-d G:i:s');
         $insert['uid']  = xarUserGetVar('name');
         //We are simply throwing something into the modvar so we don't get ugly errors.
-        // This is really only run once.  TODO, throw this in the init and upgrade for 
+        // This is really only run once.  TODO, throw this in the init and upgrade for
         // The search to remove this processing.
         $firstsearch = $insert['term'] . '|' . $insert['date'] . '|' . $insert['uid'];
         $firstsearch = serialize($firstsearch);
@@ -62,7 +73,7 @@ function search_user_main()
         $newsearch = serialize($newsearch);
         xarModSetVar('search', 'lastsearch', $newsearch);
     }
-    
+
     // In order to have the list up to date, we need to call the var again.
     // Otherwise the search term is one off of the searches.
     $search = xarModGetVar('search', 'lastsearch');
@@ -89,12 +100,12 @@ function search_user_main()
         $data['query'] = xarVarPrepForDisplay($q);
     } else {
         $data['query'] = '';
-    } 
+    }
     if (!empty($author)) {
         $data['name'] = xarVarPrepForDisplay($author);
     } else {
         $data['name'] = '';
-    } 
+    }
     // Hooks
     $data['output'] = xarModCallHooks('item', 'search', '', array());
 
@@ -102,11 +113,11 @@ function search_user_main()
         $data['message'] = xarML('There are no search options configured.');
     } elseif (is_array($data['output'])) {
         $data['output'] = join('', $data['output']);
-    } 
+    }
 
     if (empty($data['message'])) {
         $data['message'] = '';
-    } 
+    }
 
     if (!empty($q)){
         xarTplSetPageTitle(xarVarPrepForDisplay($q));
@@ -115,6 +126,6 @@ function search_user_main()
     }
 
     return $data;
-} 
+}
 
 ?>

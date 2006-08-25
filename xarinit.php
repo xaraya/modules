@@ -1,14 +1,15 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * Search System - Present searches via hooks
  *
- * Search System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage search module
- * @author Johnny Robeson
+ *
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 /**
  * Initialise the search module
@@ -57,7 +58,7 @@ function search_upgrade($oldversion)
     case '0.1':
         // Register search hook
         xarModRegisterHook('item','search','GUI','search','user','searchform');
-    
+
     //fall through to next version upgrade
     case '0.2.0':
         //register AdminSearch mask

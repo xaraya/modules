@@ -1,26 +1,25 @@
 <?php
 /**
- * File: $Id:
- * 
  * Standard function to modify configuration parameters
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Search
- * @author Jo Dalle Nogare
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
+ * @author Jo Dalle Nogare
+ * @return array
  */
 function search_admin_modifyconfig()
-{ 
-    //$data = xarModAPIFunc('search', 'admin', 'menu');
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
+{
+    // Security check
     if (!xarSecurityCheck('AdminSearch')) return;
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
@@ -37,7 +36,6 @@ function search_admin_modifyconfig()
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
     //$data['shorturlslabel'] = xarML('Enable short URLs?');
     //$data['shorturlschecked'] = xarModGetVar('search', 'SupportShortURLs') ? true : false;
-
 
     // Return the template variables defined in this function
     return $data;

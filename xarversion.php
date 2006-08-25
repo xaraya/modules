@@ -1,14 +1,15 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * Search System - Present searches via hooks
  *
- * Search System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage mail module
- * @author mikespub
+ *
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 $modversion['name']           = 'Search';
 $modversion['id']             = '32';
@@ -24,7 +25,6 @@ $modversion['author']         = '';
 $modversion['contact']        = '';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array('Search::' => '::');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Global';
 ?>

@@ -3,12 +3,13 @@
  * Search main administration function
  *
  * @package modules
- * @copyright (C) 2005-2006 by the Xaraya Development Team.
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Search
- * @author Jo Dalle Nogare
+ * @subpackage Search Module
+ * @link http://xaraya.com/index.php/release/32.html
+ * @author Search Module Development Team
  */
 /**
  * The main administration function
