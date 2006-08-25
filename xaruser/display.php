@@ -21,6 +21,7 @@
  */
 function articles_user_display($args)
 {
+    extract ($args);
     // Get parameters from user
     if(!xarVarFetch('aid',  'id',    $aid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}

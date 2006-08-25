@@ -241,8 +241,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     //     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
     //     $params = $matches[1];
 
-    if( isset($ptid) && !empty($ptid) )
-    {
+    if( isset($ptid) && !empty($ptid) ) {
         $searchArgs['ptid'] = $ptid;
         $paramidx = 2;
     } else {
@@ -265,7 +264,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
         }
     }
     $paramidx++;
-    // TODO: MichelV: this combo of field and type is not used at all in getall...
+
     $decodedTitle = str_replace("\\'","'", $decodedTitle);
     $searchArgs['search'] = $decodedTitle;
     $searchArgs['searchfields'] = array('title');
@@ -273,16 +272,14 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
-    if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) )
-    {
+    if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) ) {
         $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
         $searchArgs['searchfields'] = array('title');
         $searchArgs['searchtype'] = 'equal whole string';
         $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     }
 
-    if( count($articles) == 1 )
-    {
+    if( count($articles) == 1 ) {
         $theArticle = $articles[0];
     } else {
         // NOTE: We could probably just loop through the various dupe detection methods rather then
