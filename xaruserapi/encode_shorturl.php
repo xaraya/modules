@@ -1,6 +1,5 @@
 <?php
 /**
- * File: $Id$
  *
  * Return the path for a short URL to xarModURL
  *

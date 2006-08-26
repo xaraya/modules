@@ -1,4 +1,22 @@
 <?php
+/**
+ *
+ * Function purpose to be added
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2006 by to be added
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link to be added
+ * @subpackage Foo Module
+ * @author Marc Lutolf <mfl@netspan.ch>
+ *
+ * Purpose of file:  to be added
+ *
+ * @param to be added
+ * @return to be added
+ *
+ */
+
 function foo_admin_modifyconfig()
 {
     // Security Check
@@ -29,8 +47,8 @@ function foo_admin_modifyconfig()
                     if (!xarVarFetch('itemsperpage', 'str:1:4:', $itemsperpage, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
 
-                    xarModSetVar('foo', 'itemsperpage', $itemsperpage);
-                    xarModSetVar('foo', 'SupportShortURLs', $shorturls);
+                    xarModVars::set('foo', 'itemsperpage', $itemsperpage);
+                    xarModVars::set('foo', 'SupportShortURLs', $shorturls);
                     break;
                 case 'tab2':
                     break;

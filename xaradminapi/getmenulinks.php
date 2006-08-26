@@ -1,19 +1,25 @@
 <?php
+/**
+ *
+ * Function purpose to be added
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2006 by to be added
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link to be added
+ * @subpackage Foo Module
+ * @author Marc Lutolf <mfl@netspan.ch>
+ *
+ * Purpose of file:  to be added
+ *
+ * @param to be added
+ * @return to be added
+ *
+ */
 
 function foo_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminFoo',0)) {
-        $menulinks[] = Array('url'   => xarModURL('foo',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the configuration settings'),
-                              'label' => xarML('Modify Config'));
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
-
-    return $menulinks;
+    return xarModAPIFunc('base','admin','menuarray',array('module' => 'foo'));
 }
 
 ?>

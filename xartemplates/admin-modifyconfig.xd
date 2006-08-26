@@ -76,7 +76,7 @@
         </dl>
     </div>
     <xar:comment>
-        ------------------- Begin General Options --------------------- 
+         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-foo-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
@@ -122,11 +122,11 @@
             </fieldset>
         </form>
         <xar:comment>
-            ----------------- Begin Tab2 Options ------------------- 
+             - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - - 
         </xar:comment>
         <xar:elseif condition="$tab eq 'tab2'" />
         <xar:comment>
-            ----------------- Begin Tab3 Options ------------------- 
+             - - - - - - - - - - - - - - - - - - - Begin Tab3 Options  - - - - - - - - - - - - - - - - - - -
         </xar:comment>
         <xar:elseif condition="$tab eq 'tab3'" />
     </xar:if>
