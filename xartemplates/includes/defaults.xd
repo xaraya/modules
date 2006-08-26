@@ -1,0 +1,14 @@
+<xar:if condition="$tabmodule ne 'foo'">
+    <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+<xar:else />
+    <xar:set name="regid">0</xar:set>
+</xar:if>
+<div class="xar-form-input-wrapper">
+    <label for="bar" title="#xarML('An example of a module-specific configuartion variable')#" class="xar-form-label">
+        <xar:mlstring>
+            Bar: 
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('foo', 'bar', $regid)</xar:set>
+    <input type="text" name="bar" id="bar" value="#$value#" />
+</div>
