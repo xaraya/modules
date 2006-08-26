@@ -20,15 +20,21 @@
     <h2>#$loop:item['chantitle']#</h2>
         <p>#$loop:item['chandesc']#</p>
     </xar:if>
-    <p class="xar-sub">[ 
+    <p class="xar-sub">[
     <xar:if condition="!empty($loop:item['viewlink'])">
-        <a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a>
+        <xar:if condition="$showimport ne '1'">
+            <xar:set name="headlink"><xar:mlstring>Browse Latest Headlines</xar:mlstring></xar:set>
+        <xar:else />
+            <xar:set name="headlink"><xar:mlstring>Review Headlines for Import</xar:mlstring></xar:set>
+        </xar:if>
+        <a href="#$loop:item['viewlink']#">#$headlink#</a>
     </xar:if>
+
     <xar:if condition="!empty($loop:item['comments'])"> 
         | #$loop:item['comments']#
     </xar:if>
     <xar:if condition="!empty($showimport) and !empty($loop:item['importlink'])">
-        | <a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a>
+        | <a href="#$loop:item['importlink']#"><xar:mlstring>Import All Headlines to Queue</xar:mlstring></a>
     </xar:if>
     ]</p>
 </xar:loop>
