@@ -1,4 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')"></xar:if>
+<xar:style scope="module" module="xarbb" file="xarbb-layout" />
 
 <h2><xar:mlstring>Search in xarBB</xar:mlstring></h2>
 

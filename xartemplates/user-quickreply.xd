@@ -4,8 +4,7 @@
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
 </xar:comment>
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:style scope="module" module="xarbb" file="xarbb-layout" />
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
 <!--

@@ -5,9 +5,7 @@
 <xar:comment>
     using css-driven template, avoiding excess tables for layout, especially nested ones 
 </xar:comment>
-
-<xar:if condition="xarTplAddStyleLink('xarbb', 'xarbb-layout')">
-</xar:if>
+<xar:style scope="module" module="xarbb" file="xarbb-layout" />
 <div id="top">
     <strong>
         #$ttitle#
