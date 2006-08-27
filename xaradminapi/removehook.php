@@ -57,7 +57,7 @@ function changelog_adminapi_removehook($args)
     $changelog = $xartable['changelog'];
 
     // Delete the entries
-    $queryl = "DELETE
+    $query = "DELETE
                  FROM $changelog
                 WHERE xar_moduleid = ?";
 
