@@ -33,7 +33,7 @@ function articles_admin_updatestatus()
         return;
     }
     $states = xarModAPIFunc('articles','user','getstates');
-    if (!isset($status) || !is_numeric($status) || $status < -1 || !isset($states[$status])) {
+    if (!isset($status) || !is_numeric($status) || $status < -1 || ($status != -1 && !isset($states[$status]))) {
         $msg = xarML('Invalid status');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA',
                        new DefaultUserException($msg));
