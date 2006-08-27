@@ -3,7 +3,7 @@
  * Keywords initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation.
+ * @copyright (C) 2002-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
  */
-
 /**
  * initialise the keywords module
  * This function is only ever called once during the lifetime of a particular
@@ -182,6 +181,7 @@ function keywords_init()
     xarDefineInstance('keywords', 'Item', $instances);
 
 // TODO: tweak this - allow viewing keywords of "your own items" someday ?
+// MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
     xarRegisterMask('ReadKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 

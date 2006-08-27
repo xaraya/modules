@@ -3,23 +3,21 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
  * Optional $extrainfo['keywords'] from arguments, or 'keywords' from input
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns array
- * @return extrainfo array
+ * @return array Extrainfo array
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_adminapi_createhook($args)

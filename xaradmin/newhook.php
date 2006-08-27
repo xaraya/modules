@@ -3,7 +3,7 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
 */
-
 /**
- * modify an entry for a module item - hook for ('item','new','GUI')
+ * Create an entry for a module item - hook for ('item','new','GUI')
  *
  * @param int $args['objectid'] ID of the object
  * @param array $args['extrainfo'] extra information
@@ -39,8 +38,6 @@ function keywords_admin_newhook($args)
                        new SystemException($msg));
         return $msg;
     }
-
-
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module

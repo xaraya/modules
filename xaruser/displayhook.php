@@ -3,24 +3,21 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
-
+ */
 /**
  * display keywords entry for a module item - hook for ('item','display','GUI')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return mixed Array with information for the template that is called.
+ * @throws BAD_PARAM, NO_PERMISSION
  */
 function keywords_user_displayhook($args)
 {

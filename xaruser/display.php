@@ -3,21 +3,19 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
  * display keywords entry
  *
  * @param $args['itemid'] item id of the keywords entry
- * @returns bool
- * @return true on success, false on failure
+ * @return array Item
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function keywords_user_display($args)
