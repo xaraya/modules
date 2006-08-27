@@ -1,4 +1,4 @@
-<xar:set name="dummy">xarTplAddStyleLink('xarpages', 'xarpages')</xar:set>
+<xar:style scope="module" module="xarpages" file="xarpages" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 

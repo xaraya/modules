@@ -1,6 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-<xar:set name="dummy">xarTplAddStyleLink('xarpages', 'xarpages')</xar:set>
+<xar:style scope="module" module="xarpages" file="xarpages" />
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 
 <script type="text/javascript">

@@ -1,5 +1,4 @@
-
-<xar:set name="dummy">#xarTplAddStyleLink('xarpages','func_page_tabs')#</xar:set>
+<xar:style scope="module" module="xarpages" file="func_page_tabs" />
 
 <div class="xar-xarpages-tabs">
   <ul>
