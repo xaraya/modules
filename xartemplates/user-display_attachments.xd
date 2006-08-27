@@ -1,4 +1,4 @@
-<xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+<xar:style scope="module" module="uploads" file="uploads" />
 <xar:base-include-javascript filename="openDialog.js" /> 
 <div class="xar-uploads-attachment-wrapper xar-accent-outline">
     <h2>

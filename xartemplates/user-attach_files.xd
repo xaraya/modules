@@ -1,5 +1,5 @@
 <xar:base-include-javascript filename="switchImport.js" />
-<xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+<xar:style scope="module" module="uploads" file="uploads" />
 <div class="xar-form-container-after">
     <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
     <xar:if condition="!empty($invalid)">

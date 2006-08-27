@@ -1,4 +1,4 @@
-<xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
+<xar:style scope="module" module="uploads" file="uploads" />
 
 <xar:if condition="isset($fileList) AND is_array($fileList) AND count($fileList)">
     <xar:loop name="$Attachments">
