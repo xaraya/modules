@@ -101,10 +101,6 @@ function categories_admin_viewcats()
         return xarTplModule('categories','admin','viewcats-render',$data);
 
     } else {
-        //$code = '<script src="modules/categories/xarincludes/HTML_TreeMenu-1.1.5/treemenu.js" language="JavaScript" type="text/javascript"></script>';
-        //xarTplAddJavaScriptCode('head', 'categories', $code);
-
-//        if (!xarModLoad('categories','/xarincludes/HTML_TreeMenu-1.1.5/treemenu.php')) die('problems loading tree');
         include ('modules/categories/xarincludes/HTML_TreeMenu-1.1.5/treemenu.php');
 
         // Create the presentation class

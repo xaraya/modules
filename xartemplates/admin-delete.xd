@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('categories', 'forms')"></xar:if>
+<xar:style scope="module" module="categories" file="forms" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
