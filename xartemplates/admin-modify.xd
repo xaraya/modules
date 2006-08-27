@@ -8,7 +8,7 @@
     var fieldDescription = Array("Name");
 //-->
 </script>
-<xar:if condition="xarTplAddStyleLink('bbcode', 'forms')"></xar:if>
+<xar:style scope="module" module="bbcode" file="forms" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>

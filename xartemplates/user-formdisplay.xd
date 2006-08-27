@@ -1,4 +1,3 @@
-<!-- New xaraya style link tag <xar:set name="$stylesheet">xarTplAddStyleLink('bbcode', 'bbcode')</xar:set> -->
 <xar:style module="bbcode" file="bbcode" scope="module" />
 
 <xar:base-include-javascript filename="bbcode.js" module="bbcode" position="head" />
