@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="xarTplAddStyleLink('dailydelicious', 'forms')"></xar:if>
+<xar:style scope="module" module="dailydelicious" file="forms" />
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <script type="text/javascript">
 <!--
