@@ -84,4 +84,4 @@
 </xar:if>
 
 <xar:template file="navtabs-user" type="module" />
-<xar:if condition="xarTplAddStyleLink('articles', 'gallery')"></xar:if>
+<xar:style scope="module" module="articles" file="gallery" />

@@ -1,5 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('base', 'navtabs') and !empty($statusfilters)">
-</xar:if>
+<xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on a tab to display articles from that publication type')#">
         <xar:mlstring>

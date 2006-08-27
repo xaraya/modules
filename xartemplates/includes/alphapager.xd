@@ -1,7 +1,6 @@
 <xar:if condition="isset($sort) and ($sort eq 'title')">
     <xar:comment>Added to automatically display an alpha pager when articles are sorted by title.</xar:comment>
-
-    <xar:if condition="xarTplAddStyleLink('articles', 'alphapager')"></xar:if>
+    <xar:style scope="module" module="articles" file="alphapager" />
 
     <div class="alphapager-wrapper">
         <a href="#xarServerGetCurrentURL(array('letter' =&gt; null, 'startnum' =&gt; null, 'q' =&gt; null))#"><xar:mlstring>All</xar:mlstring></a>
