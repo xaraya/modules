@@ -52,7 +52,7 @@
     </tr>
     <tr>
         <td><xar:mlstring>Planned Timeframe</xar:mlstring></td>
-        <td><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" size="10" />
+        <td><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" value="$date_start_planned" size="10" />
             <xar:mlstring> through </xar:mlstring>
             <xar:data-input property="$properties['date_end_planned']" name="date_end_planned" size="10" /></td>
     </tr>

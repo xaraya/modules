@@ -26,6 +26,18 @@ function xtasks_adminapi_create($args)
         return;
     }
 
+    if (!isset($creator) || !is_string($creator)) {
+        $creator = xarSessionGetVar('uid');
+    }
+
+    if (!isset($owner) || !is_string($owner)) {
+        $owner = xarModGetUserVar('xproject', 'mymemberid');
+    }
+
+    if (!isset($assigner) || !is_string($assigner)) {
+        $assigner = xarSessionGetVar('uid');
+    }
+    
     if (!xarSecurityCheck('AddXProject', 1, 'Item', "$task_name:All:All")) {
         $msg = xarML('Not authorized to add #(1) items',
                     'xtasks');

@@ -11,8 +11,8 @@
         <table border="0" width="100%"><tr align="center" valign="middle">
 
             <td width="25%"><a href="&xar-modurl-xtasks-user-main;"><xar:mlstring>xTasks Overview</xar:mlstring></a></td>
-            <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xtasks-user-view;&amp;mymemberid=#$mymemberid#"><xar:mlstring>My Tasks</xar:mlstring></a></xar:if></td>
-            <td width="25%"><a href="&xar-modurl-xtasks-user-view;&amp;statusfilter=Active&amp;memberid=0"><xar:mlstring>Open Tasks</xar:mlstring></a></td>
+            <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xtasks-user-mytasks;"><xar:mlstring>My Tasks</xar:mlstring></a></xar:if></td>
+            <td width="25%"><a href="&xar-modurl-xtasks-user-availabletasks;"><xar:mlstring>Open Tasks</xar:mlstring></a></td>
             <td width="25%"><a href="&xar-modurl-xtasks-user-settings;"><xar:mlstring>Settings</xar:mlstring></a></td>
         
         </tr></table>
@@ -21,7 +21,7 @@
         <table border="0" width="100%"><tr align="center" valign="middle">
 
         <td width="25%"><a href="&xar-modurl-xtasks-admin-new;"><xar:mlstring>New Task</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xtasks-admin-view;&amp;statusfilter=Closed"><xar:mlstring>Task Archive</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xtasks-user-taskarchive;"><xar:mlstring>Task Archive</xar:mlstring></a></td>
         <td width="25%"><a href="&xar-modurl-xtasks-admin-search;&amp;status=Archive"><xar:mlstring>Search Tasks</xar:mlstring></a></td>
         <td width="25%"><a href="&xar-modurl-xtasks-admin-modifyconfig;"><xar:mlstring>Module Config</xar:mlstring></a></td>
         

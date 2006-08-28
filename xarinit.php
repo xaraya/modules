@@ -138,16 +138,31 @@ function xtasks_init()
         'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'eventdate'	            =>array('type'=>'date','null'=>TRUE),
-        'warning'	            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'));
+        'reminder'	            =>array('type'=>'text'),
 
     $sql = xarDBCreateTable($reminders_table,$reminders_fields);
-    if (empty($sql)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    
+    $worklog_table = $xartable['xtasks_worklog'];
 
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
+    $worklog_fields = array(
+        'worklogid'			    =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'eventdate'	            =>array('type'=>'date','null'=>TRUE),
+        'hours'				    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'notes'	                =>array('type'=>'text'));
+
+    $sql = xarDBCreateTable($worklog_table,$worklog_fields);
+    if (empty($sql)) return;
+    $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',

@@ -23,13 +23,20 @@
                 <xar:set name="ttlcolumns">3</xar:set>
         
                 <th><xar:if condition="$orderby ne 'task_name'"><a href="#$returnurl#&amp;orderby=task_name"><xar:mlstring>Task Name</xar:mlstring></a><xar:else /><xar:mlstring>Task Name</xar:mlstring></xar:if></th>
+                <xar:if condition="$show_owner">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 100px;"><xar:mlstring>Assigned To</xar:mlstring></th>
+                </xar:if>
                 <xar:if condition="$show_age">
                     <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
-                    <th style="width: 50px;"><xar:mlstring>Age</xar:mlstring></th>
+                    <th style="width: 40px;"><xar:mlstring>Age</xar:mlstring></th>
                 </xar:if>
                 <xar:if condition="$show_hours">
                     <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
-                    <th style="width: 50px;"><xar:mlstring>Hours</xar:mlstring></th>
+                    <th style="width: 40px;"><xar:mlstring>Hours</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$show_pctcomplete">
+                    <th style="width: 40px;"><xar:mlstring>Pct.</xar:mlstring></th>
                 </xar:if>
                 <xar:if condition="$show_importance">
                     <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
@@ -40,10 +47,16 @@
                     <th style="width: 80px;"><xar:if condition="$orderby ne 'priority'"><a href="#$returnurl#&amp;orderby=priority"><xar:mlstring>Priority</xar:mlstring></a><xar:else /><xar:mlstring>Priority</xar:mlstring></xar:if></th>
                 </xar:if>
                 <th style="width: 80px;"><xar:if condition="$orderby ne 'status'"><a href="#$returnurl#&amp;orderby=status"><xar:mlstring>Status</xar:mlstring></a><xar:else /><xar:mlstring>Status</xar:mlstring></xar:if></th>
-                <th style="width: 50px;"><xar:mlstring>Options</xar:mlstring></th>
+                <th style="width: 50px;"><a href="&xar-modurl-xtasks-user-settings;"><xar:mlstring>Options</xar:mlstring></a></th>
             </tr>
         
             <xar:foreach in="$items" value="$taskinfo">
+            
+                <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
+                <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
+                <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+                <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
+                
                 <tr>
                     <td class="xar-norm">
                         <xar:set name="taskcheckname">"taskcheck[".$taskinfo['taskid']."]"</xar:set>
@@ -51,12 +64,26 @@
                         <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
                     </td>
                 
+                    <xar:if condition="$show_owner">
+                        <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['owner']" value="$taskinfo['owner']" /></td>
+                    </xar:if>
+                
                     <xar:if condition="$show_age">
                         <td class="xar-norm" style="text-align: center;">#$taskinfo['days_old']#</td>
                     </xar:if>
                 
                     <xar:if condition="$show_hours">
                         <td class="xar-norm" style="text-align: center;">#$taskinfo['hours_spent']#</td>
+                    </xar:if>
+                    
+                    <xar:if condition="$show_pctcomplete">
+                        <xar:set name="pctcomplete">0</xar:set>
+                        <xar:set name="ttlhours">$taskinfo['hours_spent'] + $taskinfo['hours_remaining']</xar:set>
+                        <xar:if condition="$ttlhours gt 0">
+                            <xar:set name="pctcomplete">$taskinfo['hours_spent'] / ($taskinfo['hours_spent'] + $taskinfo['hours_remaining'])</xar:set>
+                        </xar:if>
+                        <xar:set name="pctcomplete">sprintf("%0.0f", 100 * $pctcomplete)."%"</xar:set>
+                        <td style="text-align: right;">#$pctcomplete#</td>
                     </xar:if>
                     
                     <xar:if condition="$show_importance">
@@ -102,37 +129,33 @@
                 
                     <td class="xar-norm" style="text-align: center;">#$taskinfo['status']#</td>
                 
-                    <td class="xar-norm" style="text-align: center; vertical-align: bottom;"><nobr><xar:if condition="!empty($taskinfo['editurl'])"><a href="#$taskinfo['editurl']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a></xar:if>&nbsp;<xar:if condition="!empty($taskinfo['deleteurl'])"><a href="#$taskinfo['deleteurl']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></xar:if></td>
+                    <td class="xar-norm" style="text-align: center; vertical-align: bottom;"><nobr><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></td>
                 
                 </tr>
-            
-                <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
-                <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
-                <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
-                <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
                     
                 <tr>
-                    <td class="xar-norm" colspan="#$ttlcolumns#" style="padding-left: 25px;">#$taskinfo['description']#
+                    <td class="xar-norm" colspan="#$ttlcolumns#" style="padding-left: 25px;">
+                        <xar:if condition="!empty($taskinfo['description'])">#$taskinfo['description']#<br></xar:if>
                         <xar:if condition="$show_planned_dates">
-                            <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
-                                <br><xar:mlstring>Planned Timeframe:</xar:mlstring>
-                                <xar:if condition="!empty($planned_start_date)">
-                                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></em>
+                            <xar:if condition="!empty($date_start_planned) or !empty($date_end_planned)">
+                                <xar:mlstring>Planned Timeframe:</xar:mlstring>
+                                <xar:if condition="!empty($date_start_planned)">
+                                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['date_start_planned']" value="$date_start_planned" dateformat="%a, %d %B %Y" /></em>
                                 </xar:if>
-                                <xar:if condition="!empty($planned_end_date)">
-                                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></em>
+                                <xar:if condition="!empty($date_end_planned)">
+                                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['date_end_planned']" value="$date_end_planned" dateformat="%a, %d %B %Y" /></em>
                                 </xar:if>
                             </xar:if>
                         </xar:if>
 
                         <xar:if condition="$show_actual_dates">
-                            <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
+                            <xar:if condition="!empty($date_start_actual) or !empty($date_end_actual)">
                                 <br><xar:mlstring>Actual Timeframe:</xar:mlstring>
-                                <xar:if condition="!empty($actual_start_date)">
-                                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></em>
+                                <xar:if condition="!empty($date_start_actual)">
+                                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['date_start_actual']" value="$date_start_actual" dateformat="%a, %d %B %Y" /></em>
                                 </xar:if>
-                                <xar:if condition="!empty($planned_end_date)">
-                                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></em>
+                                <xar:if condition="!empty($date_end_actual)">
+                                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['date_end_actual']" value="$date_end_actual" dateformat="%a, %d %B %Y" /></em>
                                 </xar:if>
                             </xar:if>
                         </xar:if>

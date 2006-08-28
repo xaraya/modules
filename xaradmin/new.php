@@ -32,11 +32,13 @@ function xtasks_admin_new($args)
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;
     
-    $data['parentid'] = "";
-    $data['priority'] = xarModGetVar('xtasks', 'defaultpriority');
-    $data['status'] = "";
-    $data['private'] = "";
-    $data['importance'] = xarModGetVar('xtasks', 'defaultimportance');
+    $data['parentid'] = 0;
+    $data['priority'] = 5;
+    $data['status'] = "Draft";
+    $data['private'] = 1;
+    $data['importance'] = 5;
+    
+    $data['date_start_planned'] = date("Y-m-d");
 
     if($data['modid'] == xarModGetIDFromName('xtasks') && $data['itemtype'] == 1) {
         $data['parentid'] = $objectid;
@@ -45,6 +47,7 @@ function xtasks_admin_new($args)
         $data['status'] = $parentinfo['status'];
         $data['private'] = $parentinfo['private'];
         $data['importance'] = $parentinfo['importance'];
+        $data['date_end_planned'] = $parentinfo['date_end_planned'];
     }
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));

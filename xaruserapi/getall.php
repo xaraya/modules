@@ -102,12 +102,12 @@ function xtasks_userapi_getall($args)
             
     $whereclause = array();
             
-    if(isset($mymemberid)) {
+    if(isset($mymemberid) && $mymemberid > 0) {
         $whereclause[] = "a.owner=".$mymemberid;
     }        
     if(isset($memberid) && $memberid > 0) {
         $whereclause[] = "(a.creator=".$memberid." OR a.assigner=".$memberid.")";
-    }        
+    }
             
     if (!empty($modid) 
         && !empty($objectid)

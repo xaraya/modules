@@ -2,11 +2,12 @@
 
 function xtasks_admin_chngimportance($args)
 {
+    extract($args);
+    
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
     if (!xarVarFetch('mode', 'str:1:', $mode, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
-    extract($args);
     if (!xarSecConfirmAuthKey()) return;
     if(!xarModAPIFunc('xtasks',
 					'admin',

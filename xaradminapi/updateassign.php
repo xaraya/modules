@@ -51,12 +51,16 @@ function xtasks_adminapi_updateassign($args)
     $query = "UPDATE $xtasktable
             SET owner = ?,
                 assigner = ?,
+                date_end_planned = ?,
+                description = ?,
                 date_changed = NOW()
             WHERE taskid = ?";
 
     $bindvars = array(
                     $owner ? $owner : 0,
                     $assigner ? $assigner : 0,
+                    $date_end_planned ? $date_end_planned : NULL,
+                    $description,
                     $taskid);
               
     $result = &$dbconn->Execute($query,$bindvars);

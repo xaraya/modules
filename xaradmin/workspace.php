@@ -63,7 +63,7 @@ function xtasks_admin_workspace($args)
     $data['depth'] = 0;
     $data['maxdepth'] = xarModGetVar('xtasks', 'maxdepth');
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey('xtasks');
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;
@@ -77,6 +77,8 @@ function xtasks_admin_workspace($args)
                                   'itemtype' => $itemtype,
                                   'objectid' => $objectid,
                                   'startnum' => $startnum,
+                                  'memberid' => isset($memberid) ? $memberid : false,
+                                  'mymemberid' => isset($mymemberid) ? $mymemberid : false,
                                   'orderby' => $orderby,
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
@@ -114,6 +116,9 @@ function xtasks_admin_workspace($args)
     $data['show_planned_dates'] = xarModGetUserVar('xtasks', 'show_planned_dates');
     $data['show_actual_dates'] = xarModGetUserVar('xtasks', 'show_actual_dates');
     $data['show_hours'] = xarModGetUserVar('xtasks', 'show_hours');
+    $data['show_owner'] = xarModGetUserVar('xtasks', 'show_owner');
+    $data['show_project'] = xarModGetUserVar('xtasks', 'show_project');
+    $data['show_client'] = xarModGetUserVar('xtasks', 'show_client');
         
 	return $data;
 }

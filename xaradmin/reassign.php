@@ -27,6 +27,8 @@ function xtasks_admin_reassign($args)
     
 	$data['taskid'] = $item['taskid'];
     
+    $data['mymemberid'] = xarModGetUserVar('xtasks', 'mymemberid');
+    
 	$data['returnurl'] = $returnurl;
 	
     $data['authid'] = xarSecGenAuthKey();

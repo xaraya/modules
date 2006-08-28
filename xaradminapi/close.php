@@ -46,11 +46,13 @@ function xtasks_adminapi_close($args)
 
     $query = "UPDATE $xtasktable
             SET status = ?,
-                date_changed = NOW()
+                date_changed = NOW(),
+                date_end_actual = ?
             WHERE taskid = ?";
 
     $bindvars = array(
                     "Closed",
+                    isset($date_end_actual) ? $date_end_actual : NULL,
                     $taskid);
               
     $result = &$dbconn->Execute($query,$bindvars);
