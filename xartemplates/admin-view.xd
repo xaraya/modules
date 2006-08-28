@@ -1,66 +1,64 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
   <h2><xar:mlstring>View HTML Tags</xar:mlstring></h2>
-<div class="xar-fullwidth" align="center">
-<table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
-    <tr>
-        <th>
-             <xar:mlstring>HTML Tag</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Not Allowed</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Allowed</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Allowed With Parameters</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Options</xar:mlstring>
-        </th>
-    </tr>
-    <xar:loop name="$items">
-        <xar:if condition="(($loop:index + 1) % 2)">
-            <xar:set name="rowclass">'xar-norm'</xar:set>
-        <xar:else/>
-            <xar:set name="rowclass">'xar-accent'</xar:set>
-        </xar:if>
+    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
         <tr>
-            <td class="#$rowclass#">
-                #$loop:item['htmltag']#
-            </td>
-            <td class="#$rowclass#">
-               <xar:if condition="$allowed eq 1">
-                   <xar:mlstring>Yes</xar:mlstring>
-               </xar:if>
-            </td>
-            <td class="#$rowclass#">
-               <xar:if condition="$allowed eq 2">
-                   <xar:mlstring>Yes</xar:mlstring>
-               </xar:if>
-            </td>
-            <td class="#$rowclass#">
-               <xar:if condition="$allowed eq 3">
-                   <xar:mlstring>Yes</xar:mlstring>
-               </xar:if>
-            </td>
-            <td align="center" class="#$rowclass#"> 
-               <xar:if condition="empty($deleteurl)">
-                   <xar:mlstring>Delete</xar:mlstring>
-                <xar:else />
-                       <a href="#$deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
-               </xar:if>
-            </td>
+            <th>
+                 <xar:mlstring>HTML Tag</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Not Allowed</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Allowed</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Allowed With Parameters</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
         </tr>
-    </xar:loop>
-</table>
-<br />
-</div>
+        <xar:loop name="$items">
+            <xar:if condition="(($loop:index + 1) % 2)">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:else/>
+                <xar:set name="rowclass">'xar-accent'</xar:set>
+            </xar:if>
+            <tr>
+                <td class="#$rowclass#">
+                    #$loop:item['htmltag']#
+                </td>
+                <td class="#$rowclass#">
+                   <xar:if condition="$allowed eq 1">
+                       <xar:mlstring>Yes</xar:mlstring>
+                   </xar:if>
+                </td>
+                <td class="#$rowclass#">
+                   <xar:if condition="$allowed eq 2">
+                       <xar:mlstring>Yes</xar:mlstring>
+                   </xar:if>
+                </td>
+                <td class="#$rowclass#">
+                   <xar:if condition="$allowed eq 3">
+                       <xar:mlstring>Yes</xar:mlstring>
+                   </xar:if>
+                </td>
+                <td align="center" class="#$rowclass#">
+                   <xar:if condition="empty($deleteurl)">
+                       <xar:mlstring>Delete</xar:mlstring>
+                    <xar:else />
+                           <a href="#$deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+                   </xar:if>
+                </td>
+            </tr>
+        </xar:loop>
+    </table>
 </div>
 <div class="xar-mod-foot">
-<!-- add the pager here -->
-#$pager#
+    <!-- add the pager here -->
+    #$pager#
 </div>

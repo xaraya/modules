@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
@@ -27,7 +28,7 @@
             <label for="type" class="xar-form-label" title="#xarML('Tag type')#">
                 <xar:mlstring>Choose Type</xar:mlstring>:
             </label>
-            <select name="tagtype" tabindxex="2">
+            <select name="tagtype" tabindex="2">
                 <xar:loop name="$types">
                     <option name="#$loop:item['type']#" value="#$loop:item['type']#">#$loop:item['type']#</option>
                 </xar:loop>

@@ -1,42 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
   <h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
-  <div  class="xar-fullwidth" align="center">
-    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
-    <tr>
-        <th>
-             <xar:mlstring>Type</xar:mlstring>
-        </th>
-        <th>
-            <xar:mlstring>Options</xar:mlstring>
-        </th>
-    </tr>
-    <xar:loop name="$items">
-        <xar:if condition="(($loop:index + 1) % 2)">
-            <xar:set name="rowclass">'xar-norm'</xar:set>
-        <xar:else/>
-            <xar:set name="rowclass">'xar-accent'</xar:set>
-        </xar:if>
+    <table>
         <tr>
-            <td class="#$rowclass#" align="center">
-                #$loop:item['type']#
-            </td>
-            <td align="center" class="#$rowclass#"> 
-                <xar:if condition="empty($loop:item['editurl'])">
-                    <xar:mlstring>Edit</xar:mlstring>
-                    <xar:else />
-                        <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
-                </xar:if>
-                &nbsp;|&nbsp;
-                <xar:if condition="empty($loop:item['deleteurl'])">
-                    <xar:mlstring>Delete</xar:mlstring>
-                    <xar:else />
-                        <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
-                </xar:if>
-            </td>
+            <th>
+                 <xar:mlstring>Type</xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
         </tr>
-    </xar:loop>
-</table>
+        <xar:loop name="$items">
+            <xar:if condition="(($loop:index + 1) % 2)">
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:else/>
+                <xar:set name="rowclass">'xar-accent'</xar:set>
+            </xar:if>
+            <tr>
+                <td class="#$rowclass#" align="center">
+                    #$loop:item['type']#
+                </td>
+                <td align="center" class="#$rowclass#">
+                    <xar:if condition="empty($loop:item['editurl'])">
+                        <xar:mlstring>Edit</xar:mlstring>
+                        <xar:else />
+                            <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+                    </xar:if>
+                    &nbsp;|&nbsp;
+                    <xar:if condition="empty($loop:item['deleteurl'])">
+                        <xar:mlstring>Delete</xar:mlstring>
+                        <xar:else />
+                            <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                    </xar:if>
+                </td>
+            </tr>
+        </xar:loop>
+    </table>
 </div>
-</div>
+
