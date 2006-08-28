@@ -1,17 +1,28 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * Update the configuration parameters of the module based on data from the modification form
- * 
- * @author Jim McDonald 
- * @access public 
+ *
+ * @author Jim McDonald
+ * @access public
  * @param no $ parameters
  * @return true on success or void on failure
  * @throws no exceptions
  * @todo nothing
  */
 function ratings_admin_modifyconfig()
-{ 
+{
     // Security Check
     if (!xarSecurityCheck('AdminRatings')) return;
 
@@ -58,11 +69,11 @@ function ratings_admin_modifyconfig()
                 $style = xarModGetVar('ratings', 'style.' . $modname);
                 if (empty($style)) {
                     $style = $defaultstyle;
-                } 
+                }
                 $seclevel = xarModGetVar('ratings', 'seclevel.' . $modname);
                 if (empty($seclevel)) {
                     $seclevel = $defaultseclevel;
-                } 
+                }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'style' => $style,
@@ -88,6 +99,6 @@ function ratings_admin_modifyconfig()
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
-} 
+}
 
 ?>

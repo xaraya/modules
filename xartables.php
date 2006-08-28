@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- * 
- * Ratings System
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage ratings module
- * @author Jim McDonald 
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
  */
-
 /**
  * specifies module tables namees
  *
@@ -22,15 +22,15 @@
  * @todo    nothing
 */
 function ratings_xartables()
-{ 
+{
     // Initialise table array
-    $xartable = array(); 
+    $xartable = array();
     // Name for ratings database entities
-    $ratings = xarDBGetSiteTablePrefix() . '_ratings'; 
+    $ratings = xarDBGetSiteTablePrefix() . '_ratings';
     // Table name
-    $xartable['ratings'] = $ratings; 
+    $xartable['ratings'] = $ratings;
     // Return table information
     return $xartable;
-} 
+}
 
 ?>

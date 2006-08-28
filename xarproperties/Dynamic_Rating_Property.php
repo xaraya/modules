@@ -1,31 +1,29 @@
 <?php
 /**
- * File: $Id$
+ * Ratings Module
  *
- * Dynamic Rating Property
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage dynamicdata properties
- * @author mikespub <mikespub@xaraya.com>
-*/
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
- * handle static text property
+ * handle ratings property
  *
  * @package dynamicdata
  *
  */
-include_once "modules/dynamicdata/class/properties.php"; 
+include_once "modules/dynamicdata/class/properties.php";
 class Dynamic_Rating_Property extends Dynamic_Property
 {
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array base information for this property
      **/
      function getBasePropertyInfo()
      {

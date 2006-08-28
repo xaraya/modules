@@ -1,13 +1,14 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * Ratings Module
  *
- * Ratings System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage ratings module
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
  * @author Jim McDonald
  */
 $modversion['name']           = 'Ratings';
@@ -25,7 +26,6 @@ $modversion['author']         = 'Jim McDonald';
 $modversion['contact']        = 'http://www.mcdee.net/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array('Ratings::' => 'Module ID:Item Type:Item ID');
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 ?>

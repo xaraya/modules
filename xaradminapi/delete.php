@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * delete a ratings item - hook for ('item','delete','API')
  *
@@ -9,8 +20,7 @@
  * @param $args['modid'] int module id
  * @param $args['itemtype'] int itemtype
  * @param $args['itemid'] int item id
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function ratings_adminapi_delete($args)
 {

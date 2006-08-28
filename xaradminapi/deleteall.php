@@ -1,13 +1,23 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * delete all ratings items for a module - hook for ('module','remove','API')
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ratings_adminapi_deleteall($args)
 {

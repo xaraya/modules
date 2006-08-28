@@ -1,12 +1,22 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * display rating for a specific item, and request rating
  * @param $args['objectid'] ID of the item this rating is for
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
  * @param $args['itemtype'] item type
- * @returns output
  * @return output with rating information
  */
 function ratings_user_display($args)
@@ -142,7 +152,7 @@ function ratings_user_display($args)
     } // No check for low
 
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
-    
+
     // set an authid, but only if the current user can rate the item
     if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$objectid")) {
         $data['authid'] = xarSecGenAuthKey('ratings');

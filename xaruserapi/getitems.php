@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * get a rating for a list of items
  *
@@ -8,8 +19,7 @@
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item IDs
  * @param $args['sort'] string sort by itemid (default), rating or numratings
- * @returns array
- * @return $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
+ * @return array $array[$itemid] = array('numratings' => $numratings, 'rating' => $rating)
  */
 function ratings_userapi_getitems($args)
 {
@@ -34,7 +44,7 @@ function ratings_userapi_getitems($args)
                        new SystemException($msg));
         return;
     }
-
+    // Bug 5856: is this needed?
     if (!isset($itemtype)) {
         $itemtype = 0;
     }

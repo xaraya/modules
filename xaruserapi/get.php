@@ -1,12 +1,22 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * get a rating for a specific item
  * @param $args['modname'] name of the module this rating is for
  * @param $args['itemtype'] item type (optional)
  * @param $args['objectid'] ID of the item this rating is for
- * @returns int
- * @return rating the corresponding rating, or boid if no rating exists
+ * @return int rating the corresponding rating, or void if no rating exists
  */
 function ratings_userapi_get($args)
 {

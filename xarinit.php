@@ -1,16 +1,16 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * Ratings Module
  *
- * Ratings System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage ratings module
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
  * @author Jim McDonald
  */
-
 /**
  * initialise the ratings module
  */
@@ -139,22 +139,20 @@ function ratings_init()
 
 /**
  * upgrade the ratings module from an old version
+ * @param string oldversion
+ * @return bool true on success of upgrade
  */
 function ratings_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
-            break;
-        case 1.1:
+        case '1.1':
             // Code to upgrade from version 1.1 goes here
             // delete/initialize the whole thing again
             ratings_delete();
             ratings_init();
-
-            break;
-
         case '1.2.0':
             // clean up double hook registrations
             xarModUnregisterHook('module', 'remove', 'API', 'ratings', 'admin', 'deleteall');
@@ -173,12 +171,12 @@ function ratings_upgrade($oldversion)
             }
 
     }
-
     return true;
 }
 
 /**
  * delete the ratings module
+ * @return bool true on successfull deletion
  */
 function ratings_delete()
 {
@@ -194,10 +192,6 @@ function ratings_delete()
                              'ratings', 'admin', 'deleteall')) {
         return;
     }
-
-    // Remove Masks and Instances
-    xarRemoveMasks('ratings');
-    xarRemoveInstances('ratings');
 
     // Delete module variables
     xarModDelVar('ratings', 'defaultstyle');

@@ -1,13 +1,24 @@
 <?php
-
+/**
+ * Ratings Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Ratings Module
+ * @link http://xaraya.com/index.php/release/41.html
+ * @author Jim McDonald
+ */
 /**
  * rate an item
+ *
  * @param $args['modname'] module name of the item to rate
  * @param $args['itemtype'] item type (optional)
  * @param $args['objectid'] ID of the item to rate
  * @param $args['rating'] actual rating
- * @returns int
- * @return the new rating for this item
+ * @return int the new rating for this item
  */
 function ratings_userapi_rate($args)
 {
@@ -158,7 +169,7 @@ function ratings_userapi_rate($args)
         // this may not be agressive enough flushing for all sites
         // we could flush "$modinfo[name]-" to remove all output cache associated with a module
         xarOutputFlushCached("$modinfo[name]-user-display-");
-    }    
+    }
     return $newrating;
 }
 ?>
