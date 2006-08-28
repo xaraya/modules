@@ -12,23 +12,19 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP
+ * Get a specific planitem of an plan
  *
- * Standard function of a module to retrieve a specific item
+ * A planitem is a part of a plan
  *
  * @author the ITSP module development team
- * @param  $args ['pitemid'] id of itsp item to get
- * @returns array
- * @return item array, or false on failure
+ * @param  int pitemid Th id of the plan item to get
+ * @return array Item array, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_get_planitem($args)
 {
     extract($args);
-    /* Argument check - make sure that all required arguments are present and
-     * in the right format, if not then set an appropriate error message
-     * and return
-     */
+    /* Argument check */
     if (!isset($pitemid) || !is_numeric($pitemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'get_planitem', 'ITSP');

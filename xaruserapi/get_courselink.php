@@ -1,9 +1,9 @@
 <?php
 /**
- * Get a specific ITSP id
+ * Get a linked course
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,22 +12,26 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP (id) by userid
+ * Get a specific linked course
  *
- * This takes the uid and returns the itsp
+ * A linked course is a course from the module courses.
  *
  * @author the ITSP module development team
- * @param  $args ['userid'] id of the user to get the itsp for
- * @return array with the itsp for this useriditem array, or false on failure
+ * @param  int courselinkid id of linked course to get
+ * @return array with item, or false on failure
+ * @since 28 Aug 2006
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function itsp_userapi_get_itspid($args)
+function itsp_userapi_get_courselink($args)
 {
     extract($args);
-    /* Argument check */
-    if ((!isset($userid) || !is_numeric($userid))) {
+    /* Argument check - make sure that all required arguments are present and
+     * in the right format, if not then set an appropriate error message
+     * and return
+     */
+    if (!isset($courselinkid) || !is_numeric($courselinkid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'get_itspid', 'ITSP');
+            'item ID', 'user', 'get_courselink', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
@@ -38,23 +42,16 @@ function itsp_userapi_get_itspid($args)
     /* It's good practice to name the table and column definitions you are
      * getting - $table and $column don't cut it in more complex modules
      */
-    $itsptable = $xartable['itsp_itsp'];
-    /* Get item by userid or itspid */
-    // TODO: improve or split?
+    $courselinkstable = $xartable['itsp_itsp_courselinks'];
     $query = "SELECT xar_itspid,
-               xar_userid,
-               xar_planid,
-               xar_itspstatus,
-               xar_datesubm,
-               xar_dateappr,
-               xar_datecertreq,
-               xar_datecertaward,
-               xar_datemodi,
-               xar_modiby
-              FROM $itsptable
-              WHERE xar_userid = $userid";
-
-    $result = &$dbconn->Execute($query);
+                   xar_lcourseid,
+                   xar_pitemid,
+                   xar_dateappr,
+                   xar_datemodi,
+                   xar_modiby
+              FROM $courselinkstable
+              WHERE xar_courselinkid = ?";
+    $result = &$dbconn->Execute($query,array($courselinkid));
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */
@@ -62,27 +59,26 @@ function itsp_userapi_get_itspid($args)
     /* Check for no rows found, and if so, close the result set and return an exception */
     if ($result->EOF) {
         $result->Close();
-        return false;
+        $msg = xarML('This linked course item does not exist');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        return;
     }
     /* Obtain the item information from the result set */
-    list($itspid, $userid, $planid, $itspstatus, $datesubm, $dateappr, $datecertreq, $datecertaward, $datemodi, $modiby) = $result->fields;
+    list($itspid, $lcourseid, $pitemid, $dateappr, $datemodi, $modiby) = $result->fields;
     /* All successful database queries produce a result set, and that result
      * set should be closed when it has been finished with
      */
     $result->Close();
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:All:All")) {
         return;
     }
     /* Create the item array */
     $item = array('itspid'        => $itspid,
-                  'userid'        => $userid,
-                  'planid'        => $planid,
-                  'itspstatus'    => $itspstatus,
-                  'datesubm'      => $datesubm,
+                  'lcourseid'     => $lcourseid,
+                  'pitemid'        => $pitemid,
                   'dateappr'      => $dateappr,
-                  'datecertreq'   => $datecertreq,
-                  'datecertaward' => $datecertaward,
                   'datemodi'      => $datemodi,
                   'modiby'        => $modiby);
     /* Return the item array */

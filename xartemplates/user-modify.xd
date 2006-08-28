@@ -44,7 +44,7 @@
                  #$pitem.mincredit#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('The amount of credits you have entered into your ITSP')#">
+                 <label for="creditsnow" class="xar-form-label" title="#xarML('The amount of credits you have entered into your ITSP')#">
                       <xar:mlstring>Credits entered:</xar:mlstring>
                  </label>
                  <xar:if condition="($creditsnow lt $pitem.mincredit) AND $pitem.mincredit gt 0">
@@ -61,7 +61,8 @@
         </fieldset>
 
         <xar:comment>Include the template here that will add all fields
-        The template name begins with modify- and has a suffix of the source for the courses</xar:comment>
+        The template name begins with modify- and has a suffix of the source for the courses.
+        These included templates are located at /xartemplates/includes/</xar:comment>
         <xar:template type="module" file="modify-$rule_source" />
 
         <xar:if condition="!empty($hooks)">

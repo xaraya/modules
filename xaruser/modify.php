@@ -102,8 +102,9 @@ function itsp_user_modify($args)
                     $course = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
                     /* Clean up the item text before display */
                     $lcourse['name'] = xarVarPrepForDisplay($course['name']);
-                    $lcourse['intendedcredits'] = $course['intendedcredits'];
-
+                    $lcourse['intendedcredits'] = xarVarPrepForDisplay($course['intendedcredits']);
+                    // Add a delete link
+                    $lcourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('courselinkid' => $lcourse['courselinkid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
                     $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                     if (!empty($enrollstatus)) {
                         $lcourse['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',

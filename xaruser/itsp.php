@@ -29,6 +29,7 @@ function itsp_user_itsp($args)
     extract($args);
 
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
 
     /* At this stage we check to see if we have been passed $objectid, the
@@ -52,7 +53,7 @@ function itsp_user_itsp($args)
         // The user API function is called to get the ITSP
         $item = xarModAPIFunc('itsp',
                               'user',
-                              'get_itspid',
+                              'get',
                               array('itspid' => $itspid));
     }
 
