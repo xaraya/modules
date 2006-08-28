@@ -1,0 +1,81 @@
+<xar:template type="module" file="admin-menu" />
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recent Task Archive</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+        <th><xar:mlstring>Task Name</xar:mlstring></th>
+        <th><xar:mlstring>Assigned To</xar:mlstring></th>
+        <th><xar:mlstring>Date Completed</xar:mlstring></th>
+        <th><xar:mlstring>Hours</xar:mlstring></th>
+        <th><xar:mlstring>Status</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$items" value="$taskinfo">
+    
+        <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
+        <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
+        <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+        <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
+    
+        <tr><td class="xar-norm">
+                <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
+            </td>
+            
+            <xar:set name="owner">$taskinfo['owner']</xar:set>
+            <td class="xar-norm"><xar:data-output property="$properties['owner']" value="$owner" /></td>
+            <xar:set name="dayslate">0</xar:set>
+            <xar:if condition="$date_end_planned gt 0">
+                <xar:set name="dayslate">(int)((strtotime($date_end_planned) - time() ) / (3600 * 24))</xar:set>
+            </xar:if>
+            <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
+            <td class="xar-norm"><xar:data-output property="$properties['date_end_actual']" value="$date_end_actual" dateformat="%a, %d %B %Y" />
+                <xar:if condition="$dayslate gt 0"> (#$dayslate# days)
+                <xar:elseif condition="$dayslate lt 0" /> <strong>(#$dayslate# days late)</strong>
+                    <xar:set name="dayslate">-$dayslate</xar:set>
+                </xar:if>
+            </td>
+        
+            <td class="xar-norm" style="text-align: center;">#$taskinfo['hours_spent']#</td>
+        
+            <td class="xar-norm" style="text-align: center;">#$taskinfo['status']#</td>
+        
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+        
+        </tr>
+            
+        <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$taskinfo['description']#
+            <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
+                <br><xar:mlstring>Planned Timeframe:</xar:mlstring>
+                <xar:if condition="!empty($planned_start_date)">
+                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></em>
+                </xar:if>
+                <xar:if condition="!empty($planned_end_date)">
+                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></em>
+                </xar:if>
+            </xar:if>
+            <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
+                <br><xar:mlstring>Actual Timeframe:</xar:mlstring>
+                <xar:if condition="!empty($actual_start_date)">
+                    <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></em>
+                </xar:if>
+                <xar:if condition="!empty($planned_end_date)">
+                    <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></em>
+                </xar:if>
+            </xar:if>
+        </td></tr>
+
+    </xar:foreach>
+    
+</table>
+
+<br />
+
+</div>
+
+<div class="xar-mod-foot" style="text-align: center;">
+#$pager#
+</div>
+<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>

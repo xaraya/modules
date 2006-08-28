@@ -1,0 +1,108 @@
+<xar:template type="module" file="admin-menu" />
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+
+<xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Available Tasks</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+        <th><xar:mlstring>Task Name</xar:mlstring></th>
+        <th><xar:mlstring>Created By</xar:mlstring></th>
+        <th><xar:mlstring>Importance</xar:mlstring></th>
+        <th><xar:mlstring>Priority</xar:mlstring></th>
+        <th><xar:mlstring>Date Due</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$items" value="$taskinfo">
+
+        <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
+        <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
+        <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+        <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
+        
+        <tr><td class="xar-norm">
+                <a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
+            </td>
+            
+            <td class="xar-norm">
+                <xar:data-output property="$properties['creator']" value="$taskinfo['creator']" />
+            </td>
+            
+            <xar:set name="importance">$taskinfo['importance']</xar:set>
+            <td class="xar-norm" style="text-align: center;">
+                <div style="float: left; width: 65px;">
+                    <xar:data-output property="$properties['importance']" value="$importance" />
+                </div>
+                <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                    <div style="height: 10px; vertical-align: top;">
+                        <xar:if condition="$taskinfo.importance gt 1">
+                            <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                        </xar:if>
+                    </div>
+                    <div style="height: 8px; vertical-align: top;">
+                        <xar:if condition="$taskinfo.importance lt 9">
+                            <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                        </xar:if>
+                    </div>
+                </div>
+                <div style="clear; both;"></div>
+            </td>
+        
+            <td class="xar-norm" style="text-align: center;">
+                <div style="float: left; width: 65px;">#$taskinfo['priority']#</div>
+                <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                    <div style="height: 10px; vertical-align: top;">
+                        <xar:if condition="$taskinfo.priority gt 1">
+                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                        </xar:if>
+                    </div>
+                    <div style="height: 8px; vertical-align: top;">
+                        <xar:if condition="$taskinfo.priority lt 9">
+                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                        </xar:if>
+                    </div>
+                </div>
+                <div style="clear; both;"></div>
+            </td>
+        
+            <td class="xar-norm">
+                <xar:if condition="!empty($date_end_planned)">
+                <xar:set name="dayslate">0</xar:set>
+                <xar:if condition="$date_end_planned gt 0">
+                    <xar:set name="dayslate">(int)((strtotime($date_end_planned) - time() ) / (3600 * 24))</xar:set>
+                </xar:if>
+                    <em><xar:data-output property="$properties['date_end_planned']" value="$date_end_planned" dateformat="%A, %d %B %Y" /></em>
+                    <xar:if condition="$dayslate gt 0"> (#$dayslate# days)
+                    <xar:elseif condition="$dayslate lt 0" /> <strong>(#$dayslate# days late)</strong>
+                        <xar:set name="dayslate">-$dayslate</xar:set>
+                    </xar:if>
+                </xar:if>
+            </td>
+        
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;ownerid=#$mymemberid#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+        
+        </tr>
+        
+        <xar:if condition="!empty($taskinfo['description'])">
+            <tr><td class="xar-norm" colspan="5" style="padding-left: 25px;">#$taskinfo['description']#</td></tr>
+        </xar:if>
+
+    </xar:foreach>
+
+
+
+</table>
+
+<br />
+
+</div>
+
+<div class="xar-mod-foot" style="text-align: center;">
+#$pager#
+</div>
+<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>
