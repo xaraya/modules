@@ -14,7 +14,7 @@
 /**
  * Modify an ITSP
  *
- * This function will helpt a user with an itsp to update that itsp. It takes the itspid and the plan itemid
+ * This function will help a user with an itsp to update that itsp. It takes the itspid and the plan itemid
    and serves the relevant modify page. The source that is defined in the planitem will determine the include template.
  *
  * @author ITSP Module Development Team
@@ -46,7 +46,6 @@ function itsp_user_modify($args)
                           'get',
                           array('userid' => xarUserGetVar('uid')));
     } else {
-
         // The user API function is called to get the ITSP
         $itsp = xarModAPIFunc('itsp',
                               'user',
@@ -115,11 +114,11 @@ function itsp_user_modify($args)
             // The source here is the template name that will be used.
             case 'external':
             default:
-                // get all linked courses that already have been added to the ITSP for this pitemid
+                // get all linked courses that already have been added to the ITSP for this plan item
                 $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-                /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
+                /*
                  * Loop through each item and display it.
                  */
                 foreach ($courselinks as $icourse) {

@@ -47,10 +47,15 @@
                  <label for="name" class="xar-form-label" title="#xarML('The amount of credits you have entered into your ITSP')#">
                       <xar:mlstring>Credits entered:</xar:mlstring>
                  </label>
-                 <xar:if condition="$creditsnow lt $pitem.mincredit">
-                 <span style="color:red">#$creditsnow#&nbsp;<xar:mlstring>= Less than required!</xar:mlstring></span>
+                 <xar:if condition="($creditsnow lt $pitem.mincredit) AND $pitem.mincredit gt 0">
+                    <span style="color:red">
+                        <xar:ml>
+                            <xar:mlstring>#(1) = Less than required!</xar:mlstring>
+                            <xar:mlvar>#$creditsnow#</xar:mlvar>
+                        </xar:ml>
+                    </span>
                  <xar:else />
-                 #$creditsnow#
+                    #$creditsnow#
                  </xar:if>
             </div>
         </fieldset>

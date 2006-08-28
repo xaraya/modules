@@ -12,13 +12,13 @@
  * @author ITSP Module Development Team
  */
 /**
- * Utility function to count the number of items held by this module
+ * Utility function to count the number of credits that are added for a plan item within one itsp
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int pitemid The plan item ID
  * @param int itspid The ITSP ID OPTIONAL
  * @return integer number of credits for this plan item
- * @throws BAD_PARAM DATABASE_ERROR
+ * @throws BAD_PARAM, DATABASE_ERROR
  */
 function itsp_userapi_countcredits($args)
 {
@@ -30,7 +30,6 @@ function itsp_userapi_countcredits($args)
             new SystemException($msg));
         return;
     }
-    $credits = 0;
     // See where we will get the credits from
     $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
     if (strcmp($rules['rule_source'],'courses')==0) {
@@ -45,8 +44,7 @@ function itsp_userapi_countcredits($args)
         }
 
     } else {
-        /* Get database setup
-         */
+        /* Get database setup */
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
         // we can only count directly in our own courses table
@@ -68,7 +66,11 @@ function itsp_userapi_countcredits($args)
          */
         $result->Close();
     }
-    /* Return the number of items */
+    // We do not want to return an empty value
+    if (empty($credits)) {
+        $credits = 0;
+    }
+    /* Return the number of credits */
     return $credits;
 }
 ?>

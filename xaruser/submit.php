@@ -38,7 +38,7 @@ function itsp_user_submit($args)
  //   if (!xarVarFetch('useraction',  'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('newstatus',   'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
 
-    $data = array();
+    // Sanity checks
 
     if (($itspid < 1) || (empty($newstatus))) {
         return $data;
@@ -46,9 +46,10 @@ function itsp_user_submit($args)
     if (!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
         return;
     }
-
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
+    // Initialise data array
+    $data = array();
 
     $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
     $data['itsp'] = $itsp;

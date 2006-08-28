@@ -1,6 +1,6 @@
 <?php
 /**
- * View a list of items
+ * View a list of plans
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation
@@ -14,11 +14,12 @@
 /**
  * View a list of items: plans
  *
- * This is a standard function to provide an overview of all of the items
+ * This is a standard function to provide an overview of all of the plans
  * available from the module.
  *
  * @param int startnum
  * @author the ITSP module development team
+ * @return array $data with data for the template
  */
 function itsp_user_view()
 {
@@ -31,9 +32,7 @@ function itsp_user_view()
     $data['items'] = array();
     /* Specify some other variables for use in the function template */
     $data['pager'] = '';
-    /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing
-     */
+    /* Security check */
     if (!xarSecurityCheck('ViewITSP')) return;
     /* Lets get the UID of the current user to check for overridden defaults */
     $uid = xarUserGetVar('uid');
