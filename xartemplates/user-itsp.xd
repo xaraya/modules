@@ -1,5 +1,4 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
 </div>
@@ -75,7 +74,7 @@
                         </xar:foreach>
                         <tr>
                             <td>
-                            Credits needed
+                            <xar:mlstring>Totals</xar:mlstring>
                             </td>
                             <td>
                             #$plan.mincredit#
@@ -141,8 +140,6 @@
             </xar:foreach>
         </xar:if>
     </xar:if>
-
-
 </div>
 
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
