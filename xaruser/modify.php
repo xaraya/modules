@@ -104,10 +104,21 @@ function itsp_user_modify($args)
                     $lcourse['name'] = xarVarPrepForDisplay($course['name']);
                     $lcourse['intendedcredits'] = $course['intendedcredits'];
 
-                   // $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
+                    $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
+                    if (!empty($enrollstatus)) {
+                        $lcourse['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
+                              array('status' => $enrollstatus['studstatus']));
+                        $lcourse['credits'] = $enrollstatus['credits'];
+                        $lcourse['startdate'] = $enrollstatus['startdate'];
+                        $creditsnow = $creditsnow + $enrollstatus['credits'];
+                    } else {
+                        $lcourse['studstatus'] = '';
+                        $lcourse['credits'] = '';
+                        $lcourse['startdate'] = '';
+                        $creditsnow = $creditsnow + $course['intendedcredits'];
+                    }
                     /* Add this item to the list of items to be displayed */
                     $data['lcourses'][] = $lcourse;
-                    $creditsnow = $creditsnow + $course['intendedcredits'];
                 }
                 break;
             // The default will pull all linked courses. These can hold any type of courses

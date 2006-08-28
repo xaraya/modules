@@ -1,17 +1,29 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment> This template is for items coming from the courses module
   // You can copy this template to your include directory and edit the fieldnames
-  // Do not edit the amount of fields without providing standard hidden values
+  // Do not edit the number of fields without providing standard hidden values
 </xar:comment>
 <fieldset>
     <xar:if condition="!empty($lcourses)">
         <legend><xar:mlstring>You have added:</xar:mlstring></legend>
         <xar:foreach in="$lcourses" value="$lcourse">
             <div class="xar-form-input-wrapper">
-                 <label for="#$lcourse.name#" class="xar-form-label" title="#xarML('This is the name')#">
+                 <label for="#$lcourse.name#" class="xar-form-label" title="#xarML('This is the name of the course')#">
                       #$lcourse.name#
                  </label>
-                  Credits: #$lcourse.intendedcredits# (Date:) (Status:)
+                 <xar:if condition="empty($lcourse.studstatus)">
+                     <xar:ml>
+                        <xar:mlstring>Course Credits: #(1)</xar:mlstring>
+                        <xar:mlvar>#$lcourse.intendedcredits#</xar:mlvar>
+                     </xar:ml>
+                 <xar:else />
+                     <xar:ml>
+                        <xar:mlstring>#(1) on #(2), #(3) credits</xar:mlstring>
+                        <xar:mlvar>#$lcourse.studstatus#</xar:mlvar>
+                        <xar:mlvar>#$lcourse.startdate#</xar:mlvar>
+                        <xar:mlvar>#$lcourse.intendedcredits#</xar:mlvar>
+                     </xar:ml>
+                 </xar:if>
             </div>
         </xar:foreach>
     <xar:else />
