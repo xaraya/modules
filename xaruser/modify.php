@@ -79,8 +79,6 @@ function itsp_user_modify($args)
         $data['rule_cat'] = $rules['rule_cat'];
         $data['rule_source'] = $rules['rule_source'];
 
-
-  //      }
         switch ($rules['rule_source']) {
             case 'courses':
                 // get the pitem details for this itsp
@@ -105,6 +103,8 @@ function itsp_user_modify($args)
                     /* Clean up the item text before display */
                     $lcourse['name'] = xarVarPrepForDisplay($course['name']);
                     $lcourse['intendedcredits'] = $course['intendedcredits'];
+
+                   // $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                     /* Add this item to the list of items to be displayed */
                     $data['lcourses'][] = $lcourse;
                     $creditsnow = $creditsnow + $course['intendedcredits'];

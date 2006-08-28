@@ -30,6 +30,7 @@ function itsp_userapi_countcredits($args)
             new SystemException($msg));
         return;
     }
+    $credits = 0;
     // See where we will get the credits from
     $rules = xarModApiFunc('itsp','user','splitrules',array('pitemid'=>$pitemid));
     if (strcmp($rules['rule_source'],'courses')==0) {
