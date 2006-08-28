@@ -14,9 +14,9 @@
 /**
  * Gets items of a DynamicData object 'status'
  *
- * @author Brian McGilligan
- * @param $args['itemtype'] - Item type
- * @returns list of items of the item type
+ * @author MichelV <michelv@xarayahosting.nl>
+ * @param int status - Item id to get info for
+ * @return array Item with all info obtained from dd
  */
 function courses_userapi_getstatus($args)
 {

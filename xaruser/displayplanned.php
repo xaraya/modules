@@ -45,13 +45,26 @@ function courses_user_displayplanned($args)
     $courseid = $item['courseid'];
     $course = xarModAPIFunc('courses','user','get', array('courseid' => $courseid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-/*
+
     // Let any transformation hooks know that we want to transform some text
     //TODO: necessary?
-    $item['transform'] = array('name','lecturers');
+    $item['transform'] = array(
+                        'prerequisites',
+                        'aim',
+                        'method',
+                        'language',
+                        'longdesc',
+                        'costs',
+                        'committee',
+                        'coordinators',
+                        'lecturers',
+                        'location',
+                        'material',
+                        'info',
+                        'program');
     $item['itemtype'] = $course['coursetype'];
     $item = xarModCallHooks('item', 'transform', $planningid, $item);
-*/
+
     // Fill in the details of the item.
     $data['planningid'] = $planningid;
     $data['item'] = $item;
