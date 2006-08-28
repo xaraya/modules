@@ -91,25 +91,16 @@ function itsp_user_display($args)
         }
         /* Clean up the item text before display */
         $pitem['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
-        $pitem['pitemdesc'] = xarVarPrepForDisplay($pitem['pitemdesc']);
+        $pitem['pitemdesc'] = xarVarPrepHTMLDisplay($pitem['pitemdesc']);
         $pitem['mincredit'] = xarVarPrepForDisplay($pitem['mincredit']);
         /* Add this item to the list of items to be displayed */
         $data['planitems'][] = $pitem;
     }
 
-
    // $data['planitems'] = $planitems;
-  //  $data['is_bold'] = xarModGetVar('itsp', 'bold');
-    /* Note : module variables can also be specified directly in the
-     * blocklayout template by using &xar-mod-<modname>-<varname>;
-     * Note that you could also pass on the $item variable, and specify
-     * the labels directly in the blocklayout template. But make sure you
-     * use the <xar:ml>, <xar:mlstring> or <xar:mlkey> tags then, so that
-     * labels can be translated for other languages...
+    /*
      * Save the currently displayed item ID in a temporary variable cache
      * for any blocks that might be interested (e.g. the Others block)
-     * You should use this -instead of globals- if you want to make
-     * information available elsewhere in the processing of this page request
      */
     xarVarSetCached('Blocks.itsp', 'planid', $planid);
     /* Let any hooks know that we are displaying an item.

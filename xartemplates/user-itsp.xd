@@ -45,11 +45,7 @@
                      </label>
                      #$plan.plandesc#
                 </div>
-                <div class="xar-form-input-wrapper">
-                     <label for="planitems" class="xar-form-label" title="#xarML('Name of the plan')#">
-                          <xar:mlstring>The sections:</xar:mlstring>
-                     </label>
-
+               <div class="xar-form-input-wrapper">
                     <table>
                         <thead>
                             <tr>

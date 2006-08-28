@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP Plans</xar:mlstring></span>
 </div>
@@ -31,12 +31,11 @@
         <th><xar:mlstring>Credits needed</xar:mlstring></th>
         <th><xar:mlstring>Obtained</xar:mlstring></th>
         <xar:foreach in="$planitems" value="$pitem">
-
-        <tr>
-            <td>#$pitem.pitemname#</td>
-            <td>#$pitem.pitemdesc#</td>
-            <td>#$pitem.mincredit#</td>
-        </tr>
+            <tr>
+                <td>#$pitem.pitemname#</td>
+                <td>#$pitem.pitemdesc#</td>
+                <td>#$pitem.mincredit#</td>
+            </tr>
         </xar:foreach>
         </table>
 
