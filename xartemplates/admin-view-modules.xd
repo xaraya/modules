@@ -8,6 +8,38 @@
 
     <xar:template file="admin-menu" />
 
+    <a href="#xarModURL('security', 'admin', 'new')#"><xar:mlstring>New</xar:mlstring></a>
+
+    <table  width="100%">
+        <tr>
+            <th>
+                Module
+            </th>
+            <th>
+                Itemtype
+            </th>
+            <th>
+                Item Id
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <select name="param_modid">
+                    <option value="0">A module name</option>
+                </select>
+            </td>
+            <td>
+                <select name="param_itemtype">
+                    <option value="0">A module name</option>
+                </select>
+            </td>
+            <td>
+                <select name="param_itemid">
+                    <option value="0">A module name</option>
+                </select>
+            </td>
+        </tr>
+    </table>
 
     <table width="100%">
         <tr>
@@ -29,7 +61,8 @@
                 <td><xar:mlstring>System</xar:mlstring></td>
             </xar:if>
                 <td>
-                    <a href="#xarModURL('security', 'admin', 'view', array('mode' => 'itemtypes', 'modid' => $modid))#"><xar:mlstring>View Details</xar:mlstring></a>
+                    <a href="#xarModURL('security', 'admin', 'view', array('modid' => $modid))#"><xar:mlstring>Modify Module Security Levels</xar:mlstring></a>
+                    | <a href="#xarModURL('security', 'admin', 'view', array('mode' => 'itemtypes', 'modid' => $modid))#"><xar:mlstring>View Details</xar:mlstring></a>
                 </td>
             </tr>
             <xar:set name="count">$count+1</xar:set>

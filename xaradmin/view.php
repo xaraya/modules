@@ -21,22 +21,28 @@ function security_admin_view($args)
 
     if( !xarVarFetch('modid',    'id',  $modid,    0,         XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemtype', 'id',  $itemtype, 0,         XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('mode',     'str', $mode,     'modules', XARVAR_NOT_REQUIRED) ){ return false; }
     extract($args);
 
     $data = array();
 
-    $data['items'] = xarModAPIFunc('security', 'user', 'getall',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype,
-            'mode'     => $mode
-        )
-    );
+    $data['modules'] = xarModAPIFunc('modules', 'admin', 'getlist');
+
+     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
+
+    $data['groups'] = array();
+    foreach( $groups as $key => $group ){ $data['groups'][$group['uid']] = $group; }
+
+//    $data['items'] = xarModAPIFunc('security', 'user', 'getall',
+//        array(
+//            'modid'    => $modid,
+//            'itemtype' => $itemtype,
+//            'mode'     => $mode
+//        )
+//    );
 
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
 
-    return xarTplModule('security', 'admin', 'view', $data, $mode);
+    return xarTplModule('security', 'admin', 'view', $data);
 }
 ?>

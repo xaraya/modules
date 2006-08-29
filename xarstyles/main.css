@@ -1,0 +1,26 @@
+
+.xar-security-levels-table
+{
+    width: 100%;
+}
+
+.xar-security-levels-table tr td
+{
+    text-align: center;
+}
+
+.xar-security-levels-table-role
+{
+    width: 28%;
+}
+
+.xar-security-levels-table-col
+{
+    text-align:center;
+    width: 12%;
+}
+
+.xar-security-level-input
+{
+    /*display: block;*/
+}

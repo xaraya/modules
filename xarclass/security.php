@@ -174,25 +174,29 @@ class Security
 
         foreach( $levels as $role_id => $level )
         {
-            $query =
-                "INSERT INTO $securityRolesTable "
-                . "(modid, itemtype, itemid, uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin)  "
-                . "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
+            if( $level->overview > 0 || $level->read > 0   || $level->comment > 0
+                || $level->write > 0 || $level->manage > 0 || $level->admin > 0 )
+            {
+                $query =
+                    "INSERT INTO $securityRolesTable "
+                    . "(modid, itemtype, itemid, uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin)  "
+                    . "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
 
-            $bindvars = array(
-                isset($modid)      ? $modid    : 0
-                , isset($itemtype) ? $itemtype : 0
-                , isset($itemid)   ? $itemid   : 0
-                , isset($role_id)  ? $role_id  : 0
-                , !empty($level->overview)? 1 : 0
-                , !empty($level->read)    ? 1 : 0
-                , !empty($level->comment) ? 1 : 0
-                , !empty($level->write)   ? 1 : 0
-                , !empty($level->manage)  ? 1 : 0
-                , !empty($level->admin)   ? 1 : 0
-            );
-            $result = $dbconn->Execute($query, $bindvars);
-            if( !$result ) return false;
+                $bindvars = array(
+                    isset($modid)      ? $modid    : 0
+                    , isset($itemtype) ? $itemtype : 0
+                    , isset($itemid)   ? $itemid   : 0
+                    , isset($role_id)  ? $role_id  : 0
+                    , !empty($level->overview)? 1 : 0
+                    , !empty($level->read)    ? 1 : 0
+                    , !empty($level->comment) ? 1 : 0
+                    , !empty($level->write)   ? 1 : 0
+                    , !empty($level->manage)  ? 1 : 0
+                    , !empty($level->admin)   ? 1 : 0
+                );
+                $result = $dbconn->Execute($query, $bindvars);
+                if( !$result ) return false;
+            }
         }
 
         return true;

@@ -1,0 +1,54 @@
+<script type="text/javascript">
+
+var security = eval(#$json_security#);
+</script>
+
+<table class="xar-security-levels-table">
+    <tr>
+        <th class="xar-security-levels-table-role"><xar:mlstring>Role</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Overview</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Read</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Comment</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Write</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Manage</xar:mlstring></th>
+        <th class="xar-security-levels-table-col"><xar:mlstring>Admin</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$security:levels" key="$key" value="$level">
+        <tr>
+            <td><xar:var name="$security:user_names.$key" /></td>
+
+            <xar:foreach in="$level" key="$what" value="$has_it">
+                <td>
+                    <xar:if condition="$has_it gt 0">
+                        <input type="checkbox" id="security[#$key#][#$what#]" name="security[#$key#][#$what#]" value="1" checked="checked" class="xar-security-level-input" onchange="return alert(eval('(' + '#$json_security#' + ')'));" />
+                    <xar:else />
+                        <input type="checkbox" id="security[#$key#][#$what#]" name="security[#$key#][#$what#]" value="1" class="xar-security-level-input" onchange="alert('fdsafsad');" />
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        </tr>
+    </xar:foreach>
+    <xar:if condition="!empty($groups)">
+    <tr>
+        <td>
+            <select name="group" onchange="return xar_security_changeInputName('', this.form, this.value)">
+                <option value="-1">Add group to security table.</option>
+                <xar:foreach in="$groups" key="$key" value="$group">
+                    <option value="#$key#"><xar:var name="group.name" /></option>
+                </xar:foreach>
+            </select>
+        </td>
+        <td><input type="checkbox" id="levels_xoverview" name="levels_xoverview" value="1" /></td>
+        <td><input type="checkbox" id="levels_xread" name="levels_xread" value="1" /></td>
+        <td><input type="checkbox" id="levels_xcomment" name="levels_xcomment" value="1" /></td>
+        <td><input type="checkbox" id="levels_xwrite" name="levels_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="levels_xmanage" name="levels_xmanage" value="1" /></td>
+        <td><input type="checkbox" id="levels_xadmin" name="levels_xadmin" value="1" /></td>
+    </tr>
+    </xar:if>
+</table>
+
+<div class="xar-align-center">
+    <input type="button" id="securitysave" name="securitysave" value="#xarML('Save')#" onclick="return SaveSecurity();" />
+</div>

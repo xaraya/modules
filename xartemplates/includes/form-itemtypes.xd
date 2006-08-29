@@ -1,0 +1,5 @@
+<select id="param_itemtype" name="param_itemtype" class="xar-form-textlong" onchange="return xar_security_ItemtypeChanged();">
+    <xar:foreach in="$itemtypes" key="$key" value="$itemtype">
+        <option value="#$key#"><xar:var name="$itemtype.label" /></option>
+    </xar:foreach>
+</select>

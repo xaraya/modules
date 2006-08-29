@@ -26,13 +26,13 @@ function security_userapi_get($args)
     /*
         Check for required params modid and itemid
     */
-    if( empty($modid) )
+    if( !isset($modid) )
     {
         $msg = xarML("Missing required param modid");
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_REQUIRED_PARAM', $msg);
         return false;
     }
-    if( empty($itemid) )
+    if( !isset($itemid) )
     {
         $msg = xarML("Missing required param itemid");
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_REQUIRED_PARAM', $msg);
@@ -61,23 +61,15 @@ function security_userapi_get($args)
         If they don't exist then we can not have group
         levels so we return and empty array()
     */
-    $query = "SELECT " . join(', ', $fields) . " "
-        . "FROM $table ";
-    if( !empty($modid) )
-    {
-        $where[] = " modid = ? ";
-        $bindvars[] = $modid;
-    }
-    if( !empty($itemtype) )
-    {
-        $where[] = " itemtype = ? ";
-        $bindvars[] = $itemtype;
-    }
-    if( !empty($itemid) )
-    {
-        $where[] = " itemid = ? ";
-        $bindvars[] = $itemid;
-    }
+    $query = "SELECT " . join(', ', $fields) . " FROM $table ";
+
+    $where[] = " modid = ? ";
+    $bindvars[] = $modid;
+    $where[] = " itemtype = ? ";
+    $bindvars[] = $itemtype;
+    $where[] = " itemid = ? ";
+    $bindvars[] = $itemid;
+
     if( count($leftjoins) > 0 )
     {
         $query .= join(' ', $leftjoins);
@@ -93,7 +85,7 @@ function security_userapi_get($args)
     if( !$result ){ return false; }
 
     $level = array();
-    $security = new SecurityLevels();
+    $security = new SecurityLevels($modid, $itemtype, $itemid);
     while( (list($uid, $overview, $read,
     	$comment, $write, $manage, $admin, $username) = $result->fields) != null )
     {
