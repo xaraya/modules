@@ -67,6 +67,7 @@ Table with planitems: the building blocks. These are the blocks a student can us
 -ID
 -Name item
 -Minimum Credits to meet
+- Maximum credits (credits)
 -Rule(s) which courses can be involved, or which open items can be added. This dictates what table to get the courses from.
 Ruleformat: (compare to privileges) coursetype:Level:Category:internal/external/open
 "All" in the rule determines All
@@ -105,7 +106,8 @@ Table with links between plan and planitems. Planitems can be reused.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $fields = "xar_pitemid  I         NotNull    DEFAULT 0,
                xar_planid   I         NotNull    DEFAULT 0,
-               xar_datemodi I(10)     Null       DEFAULT NULL,
+               xar_order    I         NotNull    DEFAULT 0,
+               xar_datemodi I(11)     Null       DEFAULT NULL,
                xar_modiby   I         NotNull    DEFAULT 0
               ";
 
@@ -525,7 +527,23 @@ function itsp_upgrade($oldversion)
             xarModSetVar('itsp', 'officemail', 'office@yourdomain.com');
             xarModSetVar('itsp', 'OverrideSV', 0);
             xarModSetVar('itsp', 'UseStatusVersions', 0);
-        case '0.3.6':
+        case '0.3.7':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $planlinkstable = $xartable['itsp_planlinks'];
+            /* Get a data dictionary object with all the item create methods in it */
+            $fields = "xar_order    I         NotNull    DEFAULT 0";
+            /* Create or alter the table as necessary */
+            $result = $datadict->changeTable($planlinkstable, $fields);
+            if (!$result) {return;}
+
+            $planlinkstable = $xartable['itsp_planlinks'];
+            // Apply changes
+            $result = $datadict->alterColumn($planlinkstable, 'xar_datemodi I(11)     Null       DEFAULT NULL');
+            if (!$result) return;
+
+        case '0.4.0':
             break;
     }
     /* Update successful */

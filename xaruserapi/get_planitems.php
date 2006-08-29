@@ -19,7 +19,6 @@
  * @param planid id of the plan to get the items for
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
- * @returns array
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -45,10 +44,12 @@ function itsp_userapi_get_planitems($args)
      * operation if it is ever needed
      */
     $query = "SELECT xar_pitemid,
+                     xar_order,
                      xar_datemodi,
                      xar_modiby
               FROM $planlinkstable
-              WHERE xar_planid = ?";
+              WHERE xar_planid = ?
+              ORDER BY xar_order";
 
     $result = &$dbconn->Execute($query,array($planid));
     /* Check for an error with the database code, adodb has already raised
@@ -67,10 +68,12 @@ function itsp_userapi_get_planitems($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($pitemid,
+             $order,
              $datemodi,
              $modiby) = $result->fields;
         if (xarSecurityCheck('ViewITSPPlan', 0, 'Plan', "$planid:$pitemid")) {
             $items[] = array('pitemid'    => $pitemid,
+                             'order'      => $order,
                              'datemodi'   => $datemodi,
                              'modiby'     => $modiby);
         }
