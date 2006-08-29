@@ -14,8 +14,8 @@
 /**
  * utility function to pass individual item links to whoever
  *
- * @param  int $args ['itemtype'] item type (optional)
- * @param  array $args ['itemids'] array of item ids to get
+ * @param  int itemtype item type (optional)
+ * @param  array itemids array of item ids to get
  * @return array containing the itemlink(s) for the item(s).
  * @todo implement this function for planned courses and courses themselves
  */
@@ -45,6 +45,7 @@ function courses_userapi_getitemlinks($args)
                                         'title' => xarML('Display Course Parameter'),
                                         'label' => xarML('Course parameter')
                                        );
+    }
     return $itemlinks;
 }
 ?>
