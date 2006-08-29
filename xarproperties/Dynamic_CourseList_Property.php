@@ -99,9 +99,9 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         $select_options = array();
 
         extract($args);
+        // Initialise
         $courses=array();
         $data= array();
-        //$users=array(0;
 
         if (!isset($value)) {
             $value = $this->value;
@@ -123,14 +123,14 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                 $select_options['coursetype'] = $this->coursetype;
             }
             $courses = xarModAPIFunc('courses', 'user', 'getall', $select_options);
-            $options[] = array('id' => 0, 'name' => xarML('Please choose a course'));
+            $options[] = array('courseid' => 0, 'coursename' => xarML('Please choose a course'));
             // Loop for each course retrieved and populate the options array.
             // TODO: have options show usefull info
             if (empty($this->showlist)) {
                 // Simple case (default) -
                 foreach ($courses as $course) {
-                    $name = xarVarPrepForDisplay($course['number']).' '.xarVarPrepForDisplay($course['name']);
-                    $options[] = array('id' => $course['courseid'], 'name' => $name);
+                    $coursename = xarVarPrepForDisplay($course['number']).' '.xarVarPrepForDisplay($course['name']);
+                    $options[] = array('courseid' => $course['courseid'], 'coursename' => $coursename);
                 }
             } else {
                 // Complex case: allow specific fields to be selected.
@@ -139,7 +139,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                     foreach ($this->showlist as $showfield) {
                         $namevalue[] = $course[$showfield];
                     }
-                    $options[] = array('id' => $course['courseid'], 'name' => implode($this->showglue, $namevalue));
+                    $options[] = array('courseid' => $course['courseid'], 'coursename' => implode($this->showglue, $namevalue));
                 }
             }
         }

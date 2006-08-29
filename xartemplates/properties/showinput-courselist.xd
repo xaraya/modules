@@ -1,18 +1,18 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 
 <xar:if condition="count($options) gt 1">
-    <select name="courseid" id="courseid">
+    <select name="#$name#" id="#$id#">
         <xar:foreach in="$options" value="$option" >
-            <xar:if condition="empty($option['id']) or $option['id'] ne $option['name']">
-                <xar:if condition="$option['id'] eq $value" >
-                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
+            <xar:if condition="empty($option['courseid']) or $option['courseid'] ne $option['coursename']">
+                <xar:if condition="$option['courseid'] eq $value" >
+                    <option value="#$option['courseid']#" selected="selected">#$option['coursename']#</option>
                 <xar:else />
-                    <option value="#$option['id']#">#$option['name']#</option>
+                    <option value="#$option['courseid']#">#$option['coursename']#</option>
                 </xar:if>
-            <xar:elseif condition="$option['id'] eq $value" />
-                <option selected="selected">#$option['name']#</option>
+            <xar:elseif condition="$option['courseid'] eq $value" />
+                <option selected="selected">#$option['coursename']#</option>
             <xar:else />
-                <option>#$option['name']#</option>
+                <option>#$option['coursename']#</option>
             </xar:if>
         </xar:foreach>
     </select>
