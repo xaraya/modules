@@ -52,13 +52,15 @@ function registration_user_register()
         case 'choices':
             xarTplSetPageTitle(xarML('Log In'));
             $loginlabel = xarML('Sign In');
-            $data = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
+            $data       = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
             break;
 
         case 'checkage':
-            $minage = xarModGetVar('registration', 'minage');
-            $submitlink=xarModURL('registration','user','register',array('phase'=>'registerform'));
-            $data = xarTplModule('registration','user', 'checkage', array('minage'    => $minage,'submitlink'=>$submitlink));
+            $minage     = xarModGetVar('registration', 'minage');
+            $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
+            $data       = xarTplModule('registration','user', 'checkage', 
+                                 array('minage'     => $minage,
+                                       'submitlink' => $submitlink));
             break;
 
         case 'registerform': //Make this default now login is handled by authsystem
@@ -102,7 +104,7 @@ function registration_user_register()
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['values'] = $values;
-            $item['phase'] = $phase;
+            $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
             if (empty($hooks)) {
@@ -114,23 +116,24 @@ function registration_user_register()
                 $hookoutput = $hooks;
             }
 
-            $data = xarTplModule('registration','user', 'registerform', array('authid' => $authid,
-                                                                       'values'     => $values,
-                                                                       'invalid'    => $invalid,
-                                                                       'properties' => $properties,
-                                                                       'hookoutput' => $hookoutput,
-                                                                       'withupload' => isset($withupload) ? $withupload : (int) FALSE,
-                                                                       'userlabel'  => xarML('New User')));
+            $data = xarTplModule('registration','user', 'registerform', 
+                           array('authid'     => $authid,
+                                 'values'     => $values,
+                                 'invalid'    => $invalid,
+                                 'properties' => $properties,
+                                 'hookoutput' => $hookoutput,
+                                 'withupload' => isset($withupload) ? $withupload : (int) FALSE,
+                                 'userlabel'  => xarML('New User')));
             break;
 
         case 'checkregistration':
 
-            if (!xarVarFetch('username','str:1:100',$username,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('realname','str:1:100',$realname,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass1','str:4:100',$pass1,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass2','str:4:100',$pass2,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('email','str:1:100',$email,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('agreetoterms','checkbox',$agreetoterms,false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('username',     'str:1:100', $username,     '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('realname',     'str:1:100', $realname,     '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pass1',        'str:4:100', $pass1,        '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pass2',        'str:4:100', $pass2,        '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('email',        'str:1:100', $email,        '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('agreetoterms', 'checkbox',  $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
@@ -162,9 +165,9 @@ function registration_user_register()
              */
             $item = array();
             $item['module'] = 'registration';
-            $item['itemid']='';
+            $item['itemid'] = '';
             $item['values'] = $values; // TODO: this includes the password. Do we want this?
-            $item['phase'] = $phase;
+            $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new','', $item);
 
             if (empty($hooks)) {
@@ -194,10 +197,9 @@ function registration_user_register()
 
             } else {
                 // check for duplicate usernames
-                $user = xarModAPIFunc('roles',
-                                      'user',
-                                      'get',
-                                       array('uname' => $username));
+                $user = xarModAPIFunc('roles', 'user', 'get',
+                                array('uname' => $username));
+                
                 if ($user != false) {
                     unset($user);
                     $invalid['username'] = xarML('That username is already taken.');
@@ -230,7 +232,7 @@ function registration_user_register()
                 //user the roles validatevar function - no need to duplicate
                 $emailcheck = xarModAPIFunc('roles', 'user', 'validatevar',
                                             array('var' => $email,
-                                                  'type' => 'email'));
+                                                 'type' => 'email'));
 
                 if ($emailcheck == false) {
                     $invalid['email'] = xarML('There is an error in your email address');
@@ -333,25 +335,25 @@ function registration_user_register()
 
             break;
         case 'createuser':
-            if (!xarVarFetch('username','str:1:100',$username,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('realname','str:1:100',$realname,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass','str:4:100',$pass,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('ip','str:4:100',$ip,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('email','str:1:100',$email,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('username',  'str:1:100', $username, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('realname',  'str:1:100', $realname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pass',      'str:4:100', $pass,     '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('ip',        'str:4:100', $ip,       '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('email',     'str:1:100', $email,    '', XARVAR_NOT_REQUIRED)) return;
 
             //Set some general vars that we need in various options
             $pending = xarModGetVar('registration', 'explicitapproval');
             
             //Get the default auth module data
-            $defaultauthdata=xarModAPIFunc('roles','user','getdefaultauthdata');
-            $defaultloginmodname=$defaultauthdata['defaultloginmodname'];
-            $authmodule=$defaultauthdata['defaultauthmodname'];
-            
+            $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
+            $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
+            $authmodule          = $defaultauthdata['defaultauthmodname'];
+
             $loginlink =xarModURL($defaultloginmodname,'user','main');
 
-            $tplvars=array();
-            $tplvars['loginlink']=$loginlink;
-            $tplvars['pending']=$pending;
+            $tplvars = array();
+            $tplvars['loginlink'] = $loginlink;
+            $tplvars['pending']   = $pending;
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
@@ -428,22 +430,24 @@ function registration_user_register()
                 if(!xarMakeRoleMemberByID($uid, $defaultRole['uid'])) return;
                 xarModSetVar('roles', 'lastuser', $uid);
 
-                if ($pending == 1) $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
+                if ($pending == 1) {
+                    $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
+
                 // Note this template is for validation, and validation and pending, now also used for pending alone
-                else {
+                } else {
                      // send welcome email (option)
                      // MichelV Should this be moved to registration, or stay in roles?
                     if (xarModGetVar('registration', 'sendwelcomeemail')) {
                         if (!xarModAPIFunc('roles',  'admin', 'senduseremail',
-                                             array('uid' => array($uid => '1'),
-                                                   'mailtype'    => 'welcome'))) {
+                                             array('uid' => array($uid       => '1'),
+                                                                  'mailtype' => 'welcome'))) {
                             $msg = xarML('Problem sending welcome email');
                             xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
                         }
                     }
                     xarModAPIFunc('authsystem', 'user', 'login',
-                                   array('uname' => $username,
-                                         'pass' => $pass,
+                                   array('uname'      => $username,
+                                         'pass'       => $pass,
                                          'rememberme' => 0));
                     $redirect=xarServerGetBaseURL();
                     xarResponseRedirect($redirect);
@@ -451,12 +455,12 @@ function registration_user_register()
             } else {
                 //Set the user account not validated and add conf code
                 $userdata = array('uname'    => $username,
-                                    'realname' => $realname,
-                                    'email'    => $email,
-                                    'pass'     => $pass,
-                                    'date'     => $now,
-                                    'valcode'  => $confcode,
-                                    'state'    => ROLES_STATE_NOTVALIDATED);
+                                  'realname' => $realname,
+                                  'email'    => $email,
+                                  'pass'     => $pass,
+                                  'date'     => $now,
+                                  'valcode'  => $confcode,
+                                  'state'    => ROLES_STATE_NOTVALIDATED);
                 // Create user - this will also create the dynamic properties (if any) via the create hook
                 $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata );
 
@@ -477,8 +481,8 @@ function registration_user_register()
 
                 // Get the group id
                 $defaultRole = xarModAPIFunc('roles', 'user', 'get',
-                                              array('name'  => $userRole,
-                                                    'type'   => 1));
+                                       array('name'  => $userRole,
+                                             'type'  => 1));
 
                 if (empty($defaultRole)) return;
 
