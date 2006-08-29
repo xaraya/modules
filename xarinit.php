@@ -95,8 +95,8 @@ president@whitehouse.gov';
                 'blockType' => 'rlogin'));
     if (!$tid) return;
 
-    /* This init function brings our module to version 1.2.0, run the upgrades for the rest of the initialisation */
-    return registration_upgrade('1.2.0');
+    /* This init function brings our module to version 1.0.0, run the upgrades for the rest of the initialisation */
+    return registration_upgrade('1.0.1');
 }
 
 function registration_activate()
@@ -124,12 +124,16 @@ function registration_upgrade($oldVersion)
         xarModDelVar('registration', 'lockouttries'); // to authsystem
         xarModDelVar('registration', 'uselockout'); // to authsystem
         $defaultregmodule= xarModGetVar('roles','defaultregmodule');
+        if (!isset($defaultregmodule)) {
+            xarModSetVar('roles','defaultregmodule', xarModGetIDFromName('registration'));
+        }
+        case '1.0.1':
+        $defaultregmodule= xarModGetVar('roles','defaultregmodule');
         if (!isset($defaultregmodule) || $defaultregmodule < 1) {
             xarModSetVar('roles','defaultregmodule', xarModGetIDFromName('registration'));
         }
-            break;
-        case '1.2.0':
-            // Code to upgrade from version 1.2.0 goes here
+        case '1.0.2': //current version
+
             break;
     }
     // Update successful
