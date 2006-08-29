@@ -146,16 +146,14 @@ function registration_upgrade($oldVersion)
 function registration_delete()
 {
    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName'  => 'registration',
                              'blockType'=> 'rlogin'))) return;
 
     //check if the roles default registration module is set
     //If so - we have to remove the registration value if it's registration module
-    $regid=xarModGetIDFromName('registration');
-    $defaultregvalue =  xarModGetVar('roles','defaultregmodule');
+    $regid = xarModGetIDFromName('registration');
+    $defaultregvalue = xarModGetVar('roles','defaultregmodule');
     if (isset($defaultregmodule) && $defaultregmodule==$regid) {
         xarModSetVar('roles','defaultregmodule',NULL);
     }

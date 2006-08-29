@@ -28,8 +28,8 @@ function registration_user_main()
     } elseif ($allowregistration != true) {
         
         //Get default authentication module info for login
-        $defaultauthdata=xarModAPIFunc('roles','user','getdefaultauthdata');
-        $defaultloginmodname=$defaultauthdata['defaultloginmodname'];
+        $defaultauthdata     = xarModAPIFunc('roles','user','getdefaultauthdata');
+        $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
 
         xarResponseRedirect(xarModURL($defaultloginmodname, 'user', 'showloginform'));
 

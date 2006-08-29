@@ -22,11 +22,9 @@ function registration_adminapi_getmenulinks()
     $menulinks = array();
 
     if (xarSecurityCheck('AdminRegistration',0)) {
-        $menulinks[] = Array('url'   => xarModURL('registration',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the registration module configuration'),
-                              'label' => xarML('Modify Config'));
+        $menulinks[] = Array('url'   => xarModURL('registration', 'admin', 'modifyconfig'),
+                             'title' => xarML('Modify the registration module configuration'),
+                             'label' => xarML('Modify Config'));
     }
     return $menulinks;
 }
