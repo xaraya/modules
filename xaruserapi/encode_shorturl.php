@@ -32,11 +32,11 @@ function registration_userapi_encode_shorturl($args)
     if (!isset($func)) {return;}
 
     $path = array();
-    $get = $args;
+    $get  = $args;
     $module = 'registration';
 
     $aliasisset = xarModGetVar($module, 'useModuleAlias');
-    $aliasname = xarModGetVar($module, 'aliasname');
+    $aliasname  = xarModGetVar($module, 'aliasname');
 
     if (!empty($aliasisset) && !empty($aliasname)) {
         $module_for_alias = xarModGetAlias($aliasname);

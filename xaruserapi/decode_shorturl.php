@@ -33,7 +33,7 @@ function registration_userapi_decode_shorturl($params)
     $module = 'registration';
     /* Check and see if we have a module alias */
     $aliasisset = xarModGetVar('registration', 'useModuleAlias');
-    $aliasname = xarModGetVar('registration','aliasname');
+    $aliasname  = xarModGetVar('registration','aliasname');
     if (($aliasisset) && isset($aliasname)) {
         $usealias   = true;
     } else{

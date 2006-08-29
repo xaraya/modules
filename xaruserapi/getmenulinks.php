@@ -21,24 +21,18 @@ function registration_userapi_getmenulinks()
     if (xarModGetVar('registration', 'allowregistration')){
     // Security check
         if (!xarUserIsLoggedIn()){
-            $menulinks[] = array('url'   => xarModURL('registration',
-                                                      'user',
-                                                      'main'),
+            $menulinks[] = array('url'   => xarModURL('registration', 'user', 'main'),
                                  'title' => xarML('Register'),
                                  'label' => xarML('Register'));
         }
     }
     if (xarModGetVar('registration', 'showprivacy')){
-        $menulinks[] = array('url'   => xarModURL('registration',
-                                                  'user',
-                                                  'privacy'),
+        $menulinks[] = array('url'   => xarModURL('registration', 'user', 'privacy'),
                              'title' => xarML('Privacy Policy for this Website'),
                              'label' => xarML('Privacy Policy'));
     }
     if (xarModGetVar('registration', 'showterms')){
-        $menulinks[] = array('url'   => xarModURL('registration',
-                                                  'user',
-                                                  'terms'),
+        $menulinks[] = array('url'   => xarModURL('registration', 'user', 'terms'),
                              'title' => xarML('Terms of Use for this website'),
                              'label' => xarML('Terms of Use'));
     }
