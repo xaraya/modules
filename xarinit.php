@@ -124,8 +124,8 @@ function registration_upgrade($oldVersion)
         xarModDelVar('registration', 'lockouttries'); // to authsystem
         xarModDelVar('registration', 'uselockout'); // to authsystem
         $defaultregmodule= xarModGetVar('roles','defaultregmodule');
-        if (!isset($defaultregmodule)) {
-            xarModSetVar('roles','defaultregmodule',xarModGetIDFromName('registration'));
+        if (!isset($defaultregmodule) || $defaultregmodule < 1) {
+            xarModSetVar('roles','defaultregmodule', xarModGetIDFromName('registration'));
         }
             break;
         case '1.2.0':
