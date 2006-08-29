@@ -184,6 +184,7 @@ function comments_userapi_add($args)
             xarModGetVar('xarcachemanager','FlushOnNewComment')) {
             $modinfo = xarModGetInfo($modid);
             xarOutputFlushCached("$modinfo[name]-");
+            xarOutputFlushCached("comments-block");
         }
         // Call create hooks for categories, hitcount etc.
         $args['module'] = 'comments';
