@@ -22,7 +22,7 @@
  * @param  string 'pitemname' the name of the item to be created
  * @param  string 'pitemdesc' the description of the item to be created
  * @param int 'mincredit'
- * @param int 'credits'
+ * @param int 'credits' The maximum number of credits
  * @param string 'rule_cat'
  * @param int 'rule_level'
  * @param int 'rule_type'

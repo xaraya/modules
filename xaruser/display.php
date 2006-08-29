@@ -92,7 +92,8 @@ function itsp_user_display($args)
         /* Clean up the item text before display */
         $pitem['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
         $pitem['pitemdesc'] = xarVarPrepHTMLDisplay($pitem['pitemdesc']);
-        $pitem['mincredit'] = xarVarPrepForDisplay($pitem['mincredit']);
+        $pitem['mincredit'] = $pitem['mincredit'];
+        $pitem['credits']   = $pitem['credits'];
         /* Add this item to the list of items to be displayed */
         $data['planitems'][] = $pitem;
     }

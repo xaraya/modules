@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>ITSP Plans</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>ITSP Education plan details</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
 
@@ -34,7 +34,15 @@
             <tr>
                 <td>#$pitem.pitemname#</td>
                 <td>#$pitem.pitemdesc#</td>
-                <td>#$pitem.mincredit#</td>
+                <td>
+                    <xar:if condition="$pitem.credits gt $pitem.mincredit">
+                        #$pitem.mincredit# - #$pitem.credits#
+                    <xar:elseif condition="($pitem.credits eq $pitem.mincredit) AND ($pitem.credits gt 0)" />
+                        #$pitem.mincredit#
+                    <xar:else />
+                        &ge; #$pitem.mincredit#
+                    </xar:if>
+                </td>
             </tr>
         </xar:foreach>
         </table>

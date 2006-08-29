@@ -31,13 +31,13 @@ function itsp_admin_modify_pitem($args)
     if (!xarVarFetch('objectid',    'id',     $objectid,   $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',     'array',  $invalid,    array(),   XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',     'int:0:', $credits,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',   'int:1:', $mincredit,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateopen',    'int:1:', $dateopen,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dateclose',   'int:1:', $dateclose,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemname',   'str:1:', $pitemname,  $pitemname, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemdesc',   'str:1:', $pitemdesc,  $pitemdesc, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemrules',  'str:1:', $pitemrules, $pitemrules, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',     'int:0:', $credits,    $credits, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',   'int:0:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateopen',    'int:1:', $dateopen,   $dateopen, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dateclose',   'int:1:', $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('rule_cat',    'str::', $rule_cat,    $rule_cat,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rule_type',   'int::', $rule_type,   $rule_type,   XARVAR_NOT_REQUIRED)) return;

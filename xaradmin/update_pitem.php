@@ -35,8 +35,8 @@ function itsp_admin_update_pitem($args)
     if (!xarVarFetch('pitemname',  'str:1:', $pitemname,   $pitemname,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemdesc',  'str:1:', $pitemdesc,   $pitemdesc,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemrules', 'str:1:', $pitemrules,  $pitemrules, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('credits',    'str::', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mincredit',  'str::', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('credits',    'int:0:', $credits,    $credits,   XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mincredit',  'int:0:', $mincredit,  $mincredit, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateopen',   'isset',  $dateopen,   $dateopen,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateclose',  'isset',  $dateclose,  $dateclose, XARVAR_NOT_REQUIRED)) return;
 
@@ -52,19 +52,11 @@ function itsp_admin_update_pitem($args)
     /* Confirm authorisation code.
      */
     if (!xarSecConfirmAuthKey()) return;
-    /* Notable by its absence there is no security check here.  This is because
-     * the security check is carried out within the API function and as such we
-     * do not duplicate the work here
-     */
-
+    // Sanity check.
+    //TODO: MichelV: Why do credits and mincredit not validate to integers?
     $invalid = array();
-    if (empty($credits)) {// || !is_integer($credits)
-        $invalid['credits'] = 1;
-        $number = '';
-    }
     if (empty($pitemname) || !is_string($pitemname)) {
         $invalid['pitemname'] = 1;
-        $name = '';
     }
 
     /* check if we have any errors */
