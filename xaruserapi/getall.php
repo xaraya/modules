@@ -33,6 +33,12 @@ function courses_userapi_getall($args)
     if (!isset($sortby) || !in_array($sortby,$valid)) { // Should be orderby and then sortby ASC DESC
         $sortby = 'number';
     }
+    if (!isset($catid)) {
+        $catid ='';
+    }
+    if (!isset($cids)) {
+        $cids = array();
+    }
     if (!isset($level) || !is_numeric($level)) {
         $level = 0;
     }
@@ -80,11 +86,12 @@ function courses_userapi_getall($args)
         $itemtype = NULL;
     }
     // Category selection
-    if (!empty($catid) && xarModIsHooked('categories','courses', array('itemtype' => $itemtype)) && ($catid > 0)) {
+    if (((!empty($catid)) || !empty($cids)) && xarModIsHooked('categories','courses', array('itemtype' => $itemtype))) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('modid' => xarModGetIDFromName('courses'),
                                              'catid' => $catid,
+                                             'cids' => $cids,
                                              'itemtype' => $itemtype));
         if (!empty($categoriesdef)) {
             $query .= " FROM ($coursestable
@@ -106,7 +113,7 @@ function courses_userapi_getall($args)
         $query .= " AND xar_level = $level ";
     }
     // Level selection
-    if (isset($coursetype) && ($coursetype > 0)) {
+    if ($coursetype > 0) {
         $query .= " AND xar_type = $coursetype ";
     }
     $query .= " ORDER BY $coursestable.xar_" . $sortby;

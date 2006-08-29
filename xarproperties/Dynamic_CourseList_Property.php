@@ -24,7 +24,7 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 class Dynamic_CourseList_Property extends Dynamic_Select_Property
 {
-    var $catid = -1;//array();
+    var $cids = array();
     var $showlist = array();
     var $orderlist = array();
     var $coursetype = -1;
@@ -41,7 +41,7 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
     * option-types:
     *   category:catid[,catid] - select only courses who are members of the given category(ies)
     *   level:value - select only courses of the given level (int)
-    *   coursetype:value - select only courses of the given value for type (varchar)
+    *   coursetype:value - select only courses of the given value for type (integer)
     *   show:field[,field] - show the specified field(s) in the select item
     *   showglue:string - string to join multiple fields together
     *   order:field[,field] - order the selection by the specified field
@@ -65,9 +65,10 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         }
     }
     /**
-     * @return bool
+     * Validate the value used
+     *
+     * @return bool true for validated, false for not validated
      */
-    // TODO: validate the selected user against the specified group(s).
     function validateValue($value = null)
     {
         if (!isset($value)) {
@@ -91,7 +92,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
         return false;
     }
     /**
-     * Show the input dropdown
+     * Show the input dropdown of courses.
+     *
      * @return array
      */
     function showInput($args = array())
@@ -116,8 +118,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
             if (!empty($this->orderlist)) {
                 $select_options['order'] = implode(',', $this->orderlist);
             }
-            if ($this->catid <> -1) {
-                $select_options['catid'] = $this->catid;
+            if (!empty($this->cids)) {
+                $select_options['cids'] = $this->cids;
             }
             if ($this->coursetype <> -1) {
                 $select_options['coursetype'] = $this->coursetype;
@@ -213,8 +215,8 @@ class Dynamic_CourseList_Property extends Dynamic_Select_Property
                 if ($option_type == 'showglue') {
                     $this->showglue = $option_value;
                 }
-                if ($option_type == 'category' && is_numeric($option_value) && ($option_value > 0)) {
-                    $this->catid = $option_value;
+                if ($option_type == 'category') {
+                    $this->cids = array_merge($this->cids, explode('+', $option_value));
                 }
                 if ($option_type == 'show') {
                     $this->showlist = array_merge($this->showlist, explode(',', $option_value));
