@@ -24,6 +24,13 @@
  *
  * @author  Marc Lutolf <marcinmilan@xaraya.com>
  * @author Jo Dalle Nogare
+ * @param string phase The phase we are in. Each phase has an extra set of params
+                        choices
+                        checkage
+                        registerform (DEFAULT)
+                        checkregistration
+                        createuser
+ * @return array
  * @TODO jojodee - rethink and provide cleaner separation between roles, authsystem/authentication and registration
  */
 function registration_user_register()
@@ -58,7 +65,7 @@ function registration_user_register()
         case 'checkage':
             $minage     = xarModGetVar('registration', 'minage');
             $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
-            $data       = xarTplModule('registration','user', 'checkage', 
+            $data       = xarTplModule('registration','user', 'checkage',
                                  array('minage'     => $minage,
                                        'submitlink' => $submitlink));
             break;
@@ -116,7 +123,7 @@ function registration_user_register()
                 $hookoutput = $hooks;
             }
 
-            $data = xarTplModule('registration','user', 'registerform', 
+            $data = xarTplModule('registration','user', 'registerform',
                            array('authid'     => $authid,
                                  'values'     => $values,
                                  'invalid'    => $invalid,
@@ -199,7 +206,7 @@ function registration_user_register()
                 // check for duplicate usernames
                 $user = xarModAPIFunc('roles', 'user', 'get',
                                 array('uname' => $username));
-                
+
                 if ($user != false) {
                     unset($user);
                     $invalid['username'] = xarML('That username is already taken.');
@@ -311,7 +318,7 @@ function registration_user_register()
             // check if any of the fields (or dynamic properties) were invalid
             if (count($invalid) > 0 || !$isvalid) {
                 // if so, return to the previous template
-                return xarTplModule('registration','user', 'registerform', 
+                return xarTplModule('registration','user', 'registerform',
                                  array('authid'      => $authid,
                                        'values'      => $values,
                                        'invalid'     => $invalid,
@@ -322,7 +329,7 @@ function registration_user_register()
             }
 
             // everything seems OK -> go on to the next step
-            $data = xarTplModule('registration','user', 'confirmregistration', 
+            $data = xarTplModule('registration','user', 'confirmregistration',
                                  array('username'    => $username,
                                        'email'       => $email,
                                        'realname'    => $realname,
@@ -343,7 +350,7 @@ function registration_user_register()
 
             //Set some general vars that we need in various options
             $pending = xarModGetVar('registration', 'explicitapproval');
-            
+
             //Get the default auth module data
             $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
             $defaultloginmodname = $defaultauthdata['defaultloginmodname'];

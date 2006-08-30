@@ -10,12 +10,12 @@
  * @subpackage Registration module
  * @link http://xaraya.com/index.php/release/30205.html
  */
-
 /**
  * Modify Function to the Blocks Admin
- * @author Jo Dalle Nogare 
+ * @author Jo Dalle Nogare
  * @author Jim McDonald
  * @param $blockinfo array containing title,content
+ * @return array $args array
  */
 function registration_rloginblock_modify($blockinfo)
 {
@@ -44,6 +44,7 @@ function registration_rloginblock_modify($blockinfo)
 /**
  * Updates the Block config from the Blocks Admin
  * @param $blockinfo array containing title,content
+ * @return array
  */
 function registration_rloginblock_update($blockinfo)
 {

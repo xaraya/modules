@@ -13,6 +13,7 @@
 /**
  * Shows the user terms if set as a modvar
  * @author  Marc Lutolf <marcinmilan@xaraya.com>
+ * @return array empty array
  */
 function registration_user_terms()
 {

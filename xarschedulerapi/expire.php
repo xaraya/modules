@@ -15,6 +15,7 @@
  *
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  * @access private
+ * @todo MichelV: can we deprecate this?
  */
 function registration_schedulerapi_expire($args)
 {

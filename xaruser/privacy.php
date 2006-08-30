@@ -13,6 +13,7 @@
 /**
  * Shows the privacy policy if set as a modvar
  * @author  Marc Lutolf <marcinmilan@xaraya.com>
+ * @return array Empty array, the privacy info is in the template itself
  */
 function registration_user_privacy()
 {

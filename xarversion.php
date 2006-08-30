@@ -15,7 +15,7 @@
 /* WARNING
  * Modification of this file is not supported.
  * Any modification is at your own risk and
- * may lead to inablity of the system to process
+ * may lead to inability of the system to process
  * the file correctly, resulting in unexpected results.
  */
 $modversion['name']           = 'registration';
@@ -35,6 +35,6 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Registration';
 $modversion['category']       = 'Users & Groups';
-$modversion['dependency'] = array(27,42);
+$modversion['dependency']     = array(27,42);
 $modversion['dependencyinfo'] = array(27 => 'roles',42=>'authsystem');
 ?>

@@ -11,7 +11,9 @@
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
- * utility function pass individual menu items to the main menu
+ * utility function to pass individual menu items to the main menu
+ *
+ * Registration has only one menu item for admins
  *
  * @author Marc Lutolf <marcinmilan@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
