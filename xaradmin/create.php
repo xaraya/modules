@@ -13,6 +13,13 @@
  */
 /**
  * create item from xarModFunc('articles','admin','new')
+ *
+ * @param id     ptid       The publication Type ID for this new article
+ * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
+ * @param string preview    Are we gonna see a preview?
+ * @param string save       Call the save action
+ * @param string return_url The URL to return to
+ * @return  bool true on success, or mixed on failure
  */
 function articles_admin_create()
 {

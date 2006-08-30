@@ -13,16 +13,23 @@
  */
 /**
  * update item from articles_admin_modify
+ *
+ * @param id     ptid       The publication Type ID for this new article
+ * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
+ * @param string preview    Are we gonna see a preview? (OPTIONAL)
+ * @param string save       Call the save action (OPTIONAL)
+ * @param string return_url The URL to return to (OPTIONAL)
+ * @return  bool true on success, or mixed on failure
  */
 function articles_admin_update()
 {
     // Get parameters
-    if(!xarVarFetch('aid',      'isset', $aid,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('modify_cids', 'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('save',     'isset', $save,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('aid',          'isset', $aid,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid',         'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('preview',      'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('save',         'isset', $save,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
