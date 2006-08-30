@@ -81,11 +81,11 @@ class Security
             FROM $secRolesTable
         ";
 
-        $where[] = "$secRolesTable.modid = ?";
+        $where[] = "$secRolesTable.modid IN (0, ?)";
         $bindvars[] = (int)$modid;
-        $where[] = "$secRolesTable.itemtype = ?";
+        $where[] = "$secRolesTable.itemtype IN (0, ?)";
         $bindvars[] = (int)$itemtype;
-        $where[] = "$secRolesTable.itemid = ?";
+        $where[] = "$secRolesTable.itemid IN (0, ?)";
         $bindvars[] = (int)$itemid;
 
 

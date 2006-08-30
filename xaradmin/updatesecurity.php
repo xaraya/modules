@@ -19,8 +19,6 @@
 */
 function security_admin_updatesecurity($args)
 {
-    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
-
     if( !xarVarFetch('modid',    'id', $modid,     0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemtype', 'id', $itemtype,  0,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('itemid',   'id', $itemid,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
@@ -28,6 +26,8 @@ function security_admin_updatesecurity($args)
     if( !xarVarFetch('levels','array',$levels, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
     extract($args);
+
+    if( !Security::check(SECURITY_ADMIN, $modid, $itemtype, $itemid) ){ return false; }
 
     $security = new SecurityLevels($modid, $itemtype, $itemid);
     foreach( $levels as $role_id => $level )

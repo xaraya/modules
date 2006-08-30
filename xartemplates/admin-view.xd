@@ -145,8 +145,6 @@ function xar_security_Toggle( uid, leveltype )
 
     <xar:template file="admin-menu" />
 
-    <a href="#xarModURL('security', 'admin', 'new')#"><xar:mlstring>New</xar:mlstring></a>
-
     <table  width="100%">
         <tr>
             <th><xar:mlstring>Module</xar:mlstring></th>
