@@ -11,7 +11,19 @@
                  <label for="#$icourse.title#" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
                       #$icourse.title#
                  </label>
-                  Credits: #$icourse.credits# (Date:) (Status:)
+                 <xar:ml>
+                    <xar:mlstring>Credits: #(1).</xar:mlstring>
+                    <xar:mlvar>#$icourse.credits#</xar:mlvar>
+                 </xar:ml>
+                 &nbsp;
+                 <xar:if condition="$icourse.dateappr gt 0">
+                     <xar:ml>
+                        <xar:mlstring>Date approved: #(1)</xar:mlstring>
+                        <xar:mlvar>#xarlocalegetformatteddate('medium',$icourse.dateappr)#</xar:mlvar>
+                     </xar:ml>
+                 <xar:else />
+                    <xar:mlstring>Not yet approved</xar:mlstring>
+                 </xar:if>
             </div>
         </xar:foreach>
     <xar:else />
