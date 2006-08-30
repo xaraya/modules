@@ -50,6 +50,7 @@ class GoogleMap_Property extends Dynamic_Property
 
         return parent::showInput($data);
     }
+
     function showOutput($data = array())
     {
         if (isset($data['module'])) {
