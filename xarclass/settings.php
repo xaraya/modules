@@ -114,7 +114,7 @@ class SecuritySettings
         $var_name .= ".$this->itemtype";
 
         // Need to store module levels in the database so check function will work.
-        Security::create($this->default_module_levels, $this->modid, $this->itemtype, 0);
+        //Security::create($this->default_module_levels, $this->modid, $this->itemtype, 0);
 
         return xarModSetVar('security', $var_name, serialize($this));
     }

@@ -138,9 +138,11 @@
         <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_item_levels', 'levels' => $settings->default_item_levels)</xar:set>
         <xar:template file="security-table" subdata="$subdata" />
 
+        <xar:comment>
         <h4><xar:mlstring>Module Security</xar:mlstring></h4>
         <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_module_levels', 'levels' => $settings->default_module_levels)</xar:set>
         <xar:template file="security-table" subdata="$subdata" />
+        </xar:comment>
 
     </fieldset>
 

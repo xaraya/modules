@@ -1,7 +1,7 @@
 <div class="xar-form-input-wrapper">
-    <select id="param_itemid" name="param_itemid" class="xar-form-textlong" onchange="return xar_security_ItemIdChanged();">
+    <select id="param_itemid" name="param_itemid" class="xar-form-textlong" onchange="return xar_security_ItemidChanged();">
         <xar:foreach in="$itemids" key="$key" value="$item">
-            <option value="#$key#"><xar:var name="$item.label" /></option>
+            <option value="#$key#"><xar:var name="$item" /></option>
         </xar:foreach>
      </select>
 </div>

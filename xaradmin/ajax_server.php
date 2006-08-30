@@ -18,7 +18,8 @@ function security_admin_ajax_server($args)
             $itemtypes = xarModApiFunc($info['name'], 'user', 'getitemtypes', array(), false);
 
             if( is_null($itemtypes) ){ $itemtypes = array(); }
-            array_unshift($itemtypes, array('label' => 'None/All'));
+            $itemtypes[0] = array('label' => 'None/All');
+            ksort($itemtypes);
 
             $data['itemtypes'] = $itemtypes;
             $data['template']  = 'form-itemtypes';
@@ -44,7 +45,8 @@ function security_admin_ajax_server($args)
 
         case 'savesecurity':
             if( !xarVarFetch('param_security', 'str', $security) ){ return false; }
-                        ini_set('include_path',ini_get('include_path').':modules/security/xarclass:modules/security/xarclass/Zend');
+
+            ini_set('include_path',ini_get('include_path').':modules/security/xarclass:modules/security/xarclass/Zend');
             include_once('Json.php');
             $security = Zend_Json::decode($security, Zend_Json::TYPE_OBJECT);
             Security::update($security->levels, $security->modid, $security->itemtype, $security->itemid);
@@ -56,12 +58,16 @@ function security_admin_ajax_server($args)
             if( !xarVarFetch('param_modid', 'int', $modid, null) ){ return false; }
             if( !xarVarFetch('param_itemtype', 'int', $itemtype, null) ){ return false; }
             $info = xarModGetInfo($modid);
-
-            $itemids = null;
-            if( is_null($itemids) ){ $itemids = array(); }
-            array_push($itemids, array('label' => 'None/All'));
-
-            $data['itemids'] = $itemids;
+            $itemids = xarModApiFunc('security', 'user', 'getallitemids'
+                , array(
+                    'modid'      => $modid
+                    , 'itemtype' => $itemtype
+                )
+            );
+            //array_unshift($itemids, 'None/All');
+            $itemids[0] = 'None/All';
+            ksort($itemids);
+            $data['itemids']   = $itemids;
             $data['template']  = 'form-itemids';
             $data = xarTplModule('security', 'admin', 'ajax_server', $data);
             break;
