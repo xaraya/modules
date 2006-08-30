@@ -34,7 +34,6 @@ function xar_security_LoadSecurity()
     var url = 'index.php?module=security&type=admin&func=ajax_server';
     var pars = 'action=loadsecurity&param_modid='+$F('param_modid')+'&param_itemtype='+$F('param_itemtype') +
         '&param_itemid='+$F('param_itemid');
-    alert(pars);
     var myAjax = new Ajax.Request( url, { method: 'post', parameters: pars, onComplete: xar_security_showResponse });
 }
 
