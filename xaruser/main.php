@@ -19,17 +19,9 @@
 function helpdesk_user_main()
 {
     // Security check
-    if (!xarSecurityCheck('readhelpdesk')) return;
+    if( !Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE) ){ return false; }
 
-    if (!xarModGetVar('helpdesk', 'User can Submit') && !xarSecurityCheck('submithelpdesk')) {
-        $data['error'] = xarML('Administration has disabled the user interface');
-        return $data;
-    }
-
-    // Add menu to output
-    $data['menu']      = xarModFunc('helpdesk', 'user', 'menu');
-
-    $data['summary']   = xarModFunc('helpdesk', 'user', 'summaryfooter');
+    $data = array();
 
     return xarTplModule('helpdesk', 'user', 'main', $data);
 }

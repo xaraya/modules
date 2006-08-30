@@ -9,7 +9,7 @@
 </div>
 <div class="xar-mod-body">
 
-    <xar:var name="menu" />
+    <xar:module main="false" module="helpdesk" func="menu" />
 
     <table width="100%">
         <tr>
@@ -19,7 +19,7 @@
         </tr>
         <tr class="xar-accent">
             <td class="xar-title"><xar:mlstring>Name:</xar:mlstring></td>
-            <td><xar:var name="name" /></td>
+            <td><xar:var name="name" /> - <xar:var name="email" /></td>
             <td class="xar-title"><xar:mlstring>Phone Number:</xar:mlstring></td>
             <td><xar:var name="phone" /></td>
         </tr>
@@ -57,6 +57,7 @@
             <xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
             </td>
         </tr>
+        <xar:if condition="Security::check(SECURITY_WRITE, $module, $itemtype, $itemid, false)">
         <tr class="">
             <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
             <td colspan="3">
@@ -64,6 +65,8 @@
                 <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
             </td>
         </tr>
+        </xar:if>
+
         <xar:if condition="xarModIsHooked('dynamicdata','helpdesk',1)">
             <xar:data-getitem name="$ddprops" module="helpdesk" itemtype="1" itemid="$tid" />
             <xar:if condition="!empty($ddprops)">
@@ -93,7 +96,9 @@
         </xar:if>
     </table>
 
-    <xar:template file="additional-comments-form" />
+    <xar:if condition="Security::check(SECURITY_WRITE, $module, $itemtype, $itemid, false)">
+        <xar:template file="additional-comments-form" />
+    </xar:if>
 
     <h3><xar:mlstring>Comments</xar:mlstring></h3>
     <xar:foreach in="$history" value="$comment">
@@ -113,6 +118,6 @@
         <xar:var name="hook" />
     </xar:foreach>
 
-    <div class="xar-margin-thickends"><xar:var name="summary" /></div>
+    <div class="xar-margin-thickends"><xar:module main="false" module="helpdesk" func="summaryfooter" /></div>
 
 </div>

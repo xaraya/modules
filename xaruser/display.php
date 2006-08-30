@@ -39,22 +39,15 @@ function helpdesk_user_display($args)
         return false;
     }
 
-    // Load the API
-    if( !xarModAPILoad('helpdesk', 'user') ){ return false; }
+    $has_security = Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE, $ticket_id);
+    if( !$has_security ){ return false; }
 
-    // Get the ticket Data:
-    xarModAPILoad('security', 'user');
     $data = xarModAPIFunc('helpdesk', 'user', 'getticket',
         array(
             'tid' => $ticket_id,
             'security_level' => SECURITY_READ
         )
     );
-
-    /*
-        If we don't get a ticket back, then the user does not have privs
-        to view this ticket
-    */
     if( empty($data) ){ return false; }
 
     $data['history'] = xarModAPIFunc('helpdesk', 'user', 'getcomments',
@@ -76,6 +69,12 @@ function helpdesk_user_display($args)
         )
     );
 
+    $data['assignees'] = xarModAPIFunc('helpdesk', 'user', 'gets',
+        array(
+            'itemtype' => REPRESENTATIVE_ITEMTYPE
+        )
+    );
+
     /*
         Call the hooks
     */
@@ -85,9 +84,10 @@ function helpdesk_user_display($args)
     $item['returnurl'] =  xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
     $data['hooks'] = xarModCallHooks('item', 'display', $ticket_id, $item);
 
+    $data['module']    = 'helpdesk';
+    $data['itemtype']  = TICKET_ITEMTYPE;
+    $data['itemid']    = $ticket_id;
     $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
-    $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
     return xarTplModule('helpdesk', 'user', 'display', $data);
 }

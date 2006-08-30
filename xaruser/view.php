@@ -35,8 +35,15 @@ function helpdesk_user_view($args)
     if( !xarVarFetch('search_fields','array', $search_fields, null,  XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('keywords',     'str',     $keywords,    null,  XARVAR_NOT_REQUIRED) ){ return false; }
 
+    // Load the needed APIs
+    if( !xarModAPILoad('helpdesk', 'user') ){ return false; }
+    if( !xarModAPILoad('security', 'user') ){ return false; }
+
+    $has_security = Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE);
+    if( !$has_security ){ return false; }
+
     $check_session_vars = array(
-        'selection' => 'MYALL',
+        'selection' => 'MYPERSONAL',
         'sortorder' => 'TICKET_ID',
         'order' => 'ASC',
         'startnum' => 1,
@@ -67,16 +74,12 @@ function helpdesk_user_view($args)
         }
     }
 
+//    if( !xarSecurityCheck('edithelpdesk', 0) )
+//    {
+//        $selection = 'MYPERSONAL';
+//    }
+
     $data = array();
-    $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
-
-    // Need to think if annon should be able to view some tickets
-    $data['UserLoggedIn'] = xarUserIsLoggedIn();
-    if (!$data['UserLoggedIn']) {
-        return xarTplModule('helpdesk', 'user', 'view', $data);
-    }
-
     // Lets get the ticket now for the view
     $data['tickets']  = xarModAPIFunc('helpdesk', 'user', 'gettickets',
         array(

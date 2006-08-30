@@ -9,25 +9,14 @@
 </div>
 
 <div class="xar-mod-body">
-  #$menu#
 
-  <xar:if condition="!$UserLoggedIn">
-    <p><xar:mlstring>Not logged in!</xar:mlstring></p>
-    <p class="xar-title">
-      <xar:mlstring>Sorry, this feature is not available for anonymous users.<br/>
-        Please login and try again.</xar:mlstring>
-    </p>
-    <xar:else />
+    <xar:module main="false" module="helpdesk" func="menu" />
 
     <fieldset>
         <legend><xar:mlstring>Search</xar:mlstring></legend>
 
         <form action="#xarModURL('helpdesk', 'user', 'view')#" method="post" name="searchtickets">
           <input type="hidden" name="userid" value="#$userid#" />
-          <xar:if condition="!$EditAccess">
-            <input type="hidden" name="ticketsource" value="1" />
-            <input type="hidden" name="nontechsubmit" value="1" />
-          </xar:if>
 
           <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Keywords:</xar:mlstring></label>
@@ -50,6 +39,5 @@
         </form>
     </fieldset>
 
-  </xar:if>
-  #$summary#
+    <xar:module main="false" module="helpdesk" func="summaryfooter" />
 </div>

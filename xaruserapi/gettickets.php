@@ -31,8 +31,8 @@ function helpdesk_userapi_gettickets($args)
     if( !isset($sortorder) ){ $sortorder = ''; }
 
     // Database information
-    $dbconn         =& xarDBGetConn();
-    $xartable       =& xarDBGetTables();
+    $dbconn         = xarDBGetConn();
+    $xartable       = xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
 
     xarSessionSetVar('ResultTitle', '');
@@ -128,32 +128,26 @@ function helpdesk_userapi_gettickets($args)
     */
     switch($selection)
     {
-        case 'MYALL':
-            //xarSessionSetVar('ResultTitle', xarML('My Tickets'));
-            break;
-
-        // Mainly for reps so they can see tickets they are involved with
-        case 'MYPERSONAL':
-            //xarSessionSetVar('ResultTitle', xarML('My Tickets'));
-            $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
-            $bindvars[] = (int)$userid;
-            $bindvars[] = (int)$userid;
-            break;
-
         case 'ALL':
-            //xarSessionSetVar('ResultTitle', xarML('All Tickets'));
+        case 'MYALL':
             break;
 
         case 'MYASSIGNEDALL':
-            //xarSessionSetVar('ResultTitle', xarML('My Assigned Tickets'));
             $where[] = "xar_assignedto = ?";
             $bindvars[] = (int)$userid;
             break;
 
         case 'UNASSIGNED':
-            //xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
             $where[] = "xar_assignedto < ?";
             $bindvars[] = 2;
+            break;
+
+        case 'MYPERSONAL':
+        default:
+            if( empty($userid) ){ $userid = xarUserGetVar('uid'); }
+            $where[] = " ( xar_openedby = ? OR xar_assignedto = ? ) ";
+            $bindvars[] = (int)$userid;
+            $bindvars[] = (int)$userid;
             break;
     }
 

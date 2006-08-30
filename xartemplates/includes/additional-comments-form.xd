@@ -17,6 +17,21 @@
         </select>
     </div>
 
+    <xar:if condition="xarSecurityCheck('edithelpdesk', 0)">
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Assigned To</xar:mlstring></label>
+            <select name="assigned_to" class="xar-form-textlong">
+                <xar:foreach in="$assignees" key="$key" value="$value">
+                    <xar:if condition="$value['name'] eq $assignedto">
+                    <option value="#$value.name#" selected="selected">#xarUserGetVar('name', $value.name)#</option>
+                    <xar:else />
+                    <option value="#$value.name#">#xarUserGetVar('name', $value.name)#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+    </xar:if>
+
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Comment</xar:mlstring></label>
         <textarea name="comment" class="xar-form-textarealarge"></textarea>

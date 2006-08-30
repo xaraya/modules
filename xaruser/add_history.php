@@ -12,6 +12,7 @@ function helpdesk_user_add_history($args)
 
     if( !xarVarFetch('itemid',  'id',      $itemid) ){ return false; }
     if( !xarVarFetch('status',  'int',     $statusid,  null) ){ return false; }
+    if( !xarVarFetch('assigned_to', 'int', $assigned_to,  null, XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('comment', 'html:basic', $comment,  null) ){ return false; }
     extract($args);
 
@@ -22,14 +23,7 @@ function helpdesk_user_add_history($args)
         return false;
     }
 
-    $has_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'     => xarModGetIDFromName('helpdesk'),
-            'itemtype'  => TICKET_ITEMTYPE,
-            'itemid'    => $itemid,
-            'level'     => SECURITY_WRITE
-        )
-    );
+    $has_security = Security::check(SECURITY_WRITE, 'helpdesk', TICKET_ITEMTYPE, $itemid);
     if( !$has_security ){ return false; }
 
     $ticket = xarModAPIFunc('helpdesk', 'user', 'getticket',
@@ -50,6 +44,22 @@ function helpdesk_user_add_history($args)
         )
     );
     if( !$result ){ return false; }
+
+    if( $ticket['assignedto'] != $assigned_to )
+    {
+        if( !is_null($assigned_to) )
+        {
+            $result = xarModAPIFunc('helpdesk', 'user', 'update_field',
+                array(
+                    'itemid' => $itemid
+                    , 'field'  => 'assignedto'
+                    , 'value'  => $assigned_to
+                )
+            );
+            if( !$result ){ return false; }
+        }
+        $ticket['assignedto'] = $assigned_to;
+    }
 
     /*
         Compare Current Status with New status to determine if it needs to be

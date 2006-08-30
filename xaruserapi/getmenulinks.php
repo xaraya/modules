@@ -20,18 +20,11 @@
  */
 function helpdesk_userapi_getmenulinks()
 {
-    // Some of these values get used more than once in this procedure.
-    // Make the call to get their value here to prevent multiple function calls
-    // and/or db queries
-    //$allowusercheckstatus  = xarModGetVar('helpdesk', 'User can check status');
-    //$allowusersubmitticket = xarModGetVar('helpdesk', 'User can Submit');
-    //$allowanonsubmitticket = xarModGetVar('helpdesk', 'Anonymous can Submit');
-    $userisloggedin        = xarUserIsLoggedIn();
-
+    $modid = xarModGetIDFromName('helpdesk');
     $menulinks = array();
 
     // Security Check
-    if( xarSecurityCheck('readhelpdesk',0) )
+    if( Security::check(SECURITY_READ, $modid, TICKET_ITEMTYPE, null, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'main'),
@@ -42,7 +35,7 @@ function helpdesk_userapi_getmenulinks()
     }
 
     // Security Check
-    if( xarSecurityCheck('adminhelpdesk',0) )
+    if( Security::check(SECURITY_ADMIN, $modid, TICKET_ITEMTYPE, null, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'admin','main'),
@@ -54,7 +47,7 @@ function helpdesk_userapi_getmenulinks()
     }
 
     // Security Check
-    if( xarSecurityCheck('readhelpdesk',0) )
+    if( Security::check(SECURITY_WRITE, $modid, TICKET_ITEMTYPE, null, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'new'),
@@ -64,8 +57,7 @@ function helpdesk_userapi_getmenulinks()
         );
     }
 
-    // Security Check
-    if( xarSecurityCheck('readhelpdesk',0)  && $userisloggedin == true )
+    if( Security::check(SECURITY_READ, $modid, TICKET_ITEMTYPE, null, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'search'),
@@ -73,11 +65,7 @@ function helpdesk_userapi_getmenulinks()
             'title' => xarML('Search'),
             'label' => xarML('Search')
         );
-    }
 
-    // Security Check
-    if( xarSecurityCheck('readhelpdesk',0) && $userisloggedin == true )
-    {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'view'),
             'page' => 'view',

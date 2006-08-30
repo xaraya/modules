@@ -7,7 +7,7 @@
 
 <div class="xar-mod-body">
 
-<xar:var name="menu" />
+<xar:module main="false" module="helpdesk" func="menu" />
 
 <p>
     <xar:ml>
@@ -41,6 +41,6 @@ be sure to include your e-mail so we can contact you
 We will do our best to answer any questions and fix any problems.
 -->
 
-<p><xar:var name="summary" /></p>
+<p><xar:module main="false" module="helpdesk" func="summaryfooter" /></p>
 
 </div>

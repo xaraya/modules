@@ -65,6 +65,8 @@
     <xar:mlstring>Further information on the Helpdesk module can be found at</xar:mlstring>
   </p>
   <ul>
+    <li><xar:mlstring><a href="http://www.abrasiontechnology.com/">Abrasion Technology</a></xar:mlstring>
+    </li>
     <li><xar:mlstring>Help Desk Extension page at</xar:mlstring> <a title="#xarML('Help Desk Module - Xaraya Extension 910')#" href="http://www.xaraya.com/index.php/release/910.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>

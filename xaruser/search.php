@@ -26,28 +26,11 @@
 */
 function helpdesk_user_search()
 {
-    $data['UserLoggedIn'] = xarUserIsLoggedIn();
-    $data['menu']         = xarModFunc('helpdesk', 'user', 'menu');
+    if( !Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE) ){ return true; }
 
-    // Don't allow anonymous users to Search ...
-    // Need to change this in the future ?
-    $AllowUserCheckStatus  = xarModGetVar('helpdesk', 'User can check status');
-    $AllowUserSubmitTicket = xarModGetVar('helpdesk', 'User can Submit');
-    $AllowAnonSubmitTicket = xarModGetVar('helpdesk', 'Anonymous can Submit');
-    $data['EditAccess']    = xarSecurityCheck('edithelpdesk', 0);
-    $AdminAccess = xarSecurityCheck('adminhelpdesk', 0);
-
-    // Security check
-    // No need for a security check if Anonymous Adding is enabled:
-    // So ONLY check security if AllowAnonAdd is NOT TRUE
-    if (!$AllowAnonSubmitTicket){
-        if( !xarSecurityCheck('readhelpdesk') ){ return false; }
-    }
-
-    $data['enabledimages']   = xarModGetVar('helpdesk', 'Enable Images');
-    $data['username'] = xarUserGetVar('uname');
-    $data['userid'] = xarUserGetVar('uid');
-    $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
+    $data['enabledimages'] = xarModGetVar('helpdesk', 'Enable Images');
+    $data['username']      = xarUserGetVar('uname');
+    $data['userid']        = xarUserGetVar('uid');
 
     return xarTplModule('helpdesk', 'user', 'search', $data);
 }

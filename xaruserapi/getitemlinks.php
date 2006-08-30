@@ -13,12 +13,12 @@ function helpdesk_userapi_getitemlinks($args)
 
     // Only supporting tickets for now.
     if( !isset($itemtype) || $itemtype != 1 ){ $itemtype = 1; }
-    if( !isset($itemids) ){ return array(); }
+    //if( !isset($itemids) ){ return array(); }
 
     $items = xarModAPIFunc('helpdesk', 'user', 'gettickets',
         array(
             'itemtype' => $itemtype
-            , 'itemids' => $itemids
+            , 'itemids' => !empty($itemids) ? $itemids : null
         )
     );
 
