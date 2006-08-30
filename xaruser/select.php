@@ -27,6 +27,9 @@ function AddressBook_user_select($args)
 
     if(!empty($company)) {
         $addresslist = xarModAPIFunc('addressbook','user','getall',array('company'=>$company));
+        array_shift($addresslist);
+        $instructions = array('id'=>'0','displayName'=>xarML('Select a contact...'));
+        array_unshift($addresslist, $instructions);
 
         if (!isset($addresslist)) return;
     } else {
