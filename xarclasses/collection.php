@@ -64,12 +64,8 @@
 			return $code;
 		}
 		public function getIterator() {
-			try {
-				$arrayobj = new Array_Object(&$this->elements);
-				return $arrayobj->getIterator();
-			} catch(Exception $e) {
-				return null;
-			}
+			$arrayobj = new ArrayObject(&$this->elements);
+			return $arrayobj->getIterator();
 		}
 	}
 
