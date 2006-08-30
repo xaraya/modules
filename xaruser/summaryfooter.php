@@ -19,15 +19,14 @@
 function helpdesk_user_summaryfooter()
 {
     // Security check
-    if( !xarSecurityCheck('readhelpdesk') ){ return; }
+    //if( !Security::check(SECURITY_READ, 'helpdesk') ){ return false; }
 
     $data['total_tickets'] = xarModAPIFunc('helpdesk', 'user', 'getstats');
 
     $data['userisloggedin']  = xarUserIsLoggedIn();
 
-    if ($data['userisloggedin'])
+    if( Security::check(SECURITY_READ, 'helpdesk', 0, 0, false) )
     {
-        $data['editaccess']  = xarSecurityCheck('edithelpdesk', 0);
         $data['username']    = xarUserGetVar('uname');
         $data['userid']      = xarUserGetVar('uid');
         $data['userstats']   = xarModAPIFunc('helpdesk', 'user', 'getuserticketstats',

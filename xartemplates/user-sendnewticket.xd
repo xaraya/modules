@@ -18,7 +18,7 @@
        </xar:ml>
     </p>
 
-    <xar:if condition="xarUserIsLoggedIn()">
+    <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, $tid, false)">
         <xar:set name="link_url">xarModURL('helpdesk', 'user', 'display', array('tid' => $tid))</xar:set>
         <xar:if condition="$enabledimages">
             <a href="#$link_url#" title="View Ticket">

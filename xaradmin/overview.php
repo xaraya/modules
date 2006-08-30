@@ -24,7 +24,8 @@ function helpdesk_admin_overview($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('adminhelpdesk')) { return; }
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
 
     $data = array();
 

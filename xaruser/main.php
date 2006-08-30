@@ -19,7 +19,7 @@
 function helpdesk_user_main()
 {
     // Security check
-    if( !Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE) ){ return false; }
+    if( !Security::check(SECURITY_OVERVIEW, 'helpdesk') ){ return false; }
 
     $data = array();
 

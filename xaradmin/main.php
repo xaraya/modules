@@ -20,7 +20,8 @@
  */
 function helpdesk_admin_main()
 {
-    if (!xarSecurityCheck('adminhelpdesk')) { return; }
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
 
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'view', array('itemtype' => 1)));
     return true;

@@ -39,8 +39,7 @@ function helpdesk_user_display($args)
         return false;
     }
 
-    $has_security = Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE, $ticket_id);
-    if( !$has_security ){ return false; }
+    if( !Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE, $ticket_id) ){ return false; }
 
     $data = xarModAPIFunc('helpdesk', 'user', 'getticket',
         array(

@@ -22,7 +22,8 @@
 function helpdesk_admin_new($args)
 {
     // Security check
-    if (!xarSecurityCheck('addhelpdesk')) return;
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
     if( !xarModAPILoad('helpdesk') ){ return false; }
 
     // Admin functions of this type can be called by other modules.  If this

@@ -27,6 +27,8 @@ function helpdesk_user_sendmail($args)
     // Get parameters
     extract($args);
 
+    //if( !Security::check(SECURITY_READ, 'helpdesk') ){ return false; }
+
     /*
         NOTE: $ticket_args releated directly to the ticket.
         $ticket_args used to generate $mail_args which is used to send mail to an user.

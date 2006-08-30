@@ -20,7 +20,7 @@
             <legend><xar:mlstring>Ticket</xar:mlstring></legend>
 
             <!-- If Not Logged in, Place Username, Email, and phone info in form: -->
-            <xar:if condition="!$userisloggedin || $editaccess">
+            <xar:if condition="!$userisloggedin or Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false)">
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
                 <input name="name" maxlength="255" value="#$ticket.name#" class="xar-form-textlong" />(required)
@@ -73,7 +73,7 @@
                     </xar:loop>
                 </select>
             </div>
-            <xar:if condition="xarModGetVar('helpdesk', 'AllowStatusChangeOnSubmit') or $editaccess">
+            <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false) or xarModGetVar('helpdesk', 'AllowStatusChangeOnSubmit')">
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label"><xar:mlstring>Status:</xar:mlstring></label>
                     <select name="status" class="xar-form-textlong">
@@ -84,7 +84,7 @@
                     </select>
                 </div>
             </xar:if>
-            <xar:if condition="$editaccess">
+            <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false)">
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label"><xar:mlstring>Ticket Opened By:</xar:mlstring></label>
                     <select name="openedby" class="xar-form-textlong">
@@ -127,7 +127,7 @@
                 <textarea name="issue" class="xar-form-textarealarge"><xar:var name="ticket.issue" /></textarea>
             </div>
 
-            <xar:if condition="$editaccess">
+            <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false)">
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label"><xar:mlstring>Technician Notes:</xar:mlstring></label>
                     <textarea name="notes" class="xar-form-textarealarge"><xar:var name="ticket.notes" /></textarea>
@@ -139,10 +139,13 @@
             <legend><xar:mlstring>Actions</xar:mlstring></legend>
 
             <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+            <xar:comment>
             <xar:if condition="!$editaccess">
                 <input type="hidden" name="source"  value="1" />
                 <input type="hidden" name="nontech" value="1" />
             </xar:if>
+            </xar:comment>
+
             <input type="hidden" name="username" value="#$ticket.username#"/>
             <input type="hidden" name="userid"   value="#$ticket.userid#"/>
 

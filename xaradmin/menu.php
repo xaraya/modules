@@ -18,7 +18,8 @@
  */
 function helpdesk_admin_menu()
 {
-    if (!xarSecurityCheck('readhelpdesk')) return;
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
 
     xarVarFetch('func',      'str', $data['page'],       'main', XARVAR_NOT_REQUIRED);
     xarVarFetch('itemtype',  'str', $data['itemtype'],   10,     XARVAR_NOT_REQUIRED);

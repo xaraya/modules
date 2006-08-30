@@ -9,7 +9,7 @@
 </div>
 <div class="xar-mod-body">
 
-    <xar:var name="menu" />
+    <xar:module main="false" module="helpdesk" func="menu" />
 
     <form action="#xarModURL('helpdesk', 'user', 'modify')#" method="post" name="modify" enctype="multipart/form-data">
 
@@ -68,7 +68,8 @@
             </xar:loop>
             </select>
         </div>
-        <xar:if condition="$EditAccess">
+
+        <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, $tid, false)">
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Ticket Opened By:</xar:mlstring></label>
             <select name="openedby" class="xar-form-textlong">
@@ -142,5 +143,6 @@
     </fieldset>
     </form>
 
-    <xar:var name="summary" />
+    <xar:module main="false" module="helpdesk" func="summaryfooter" />
+
 </div>

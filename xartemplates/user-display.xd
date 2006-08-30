@@ -61,8 +61,10 @@
         <tr class="">
             <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
             <td colspan="3">
-                <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
-                <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
+                <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a>
+                <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, $itemid, false)">
+                    | <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
+                </xar:if>
             </td>
         </tr>
         </xar:if>
@@ -96,7 +98,7 @@
         </xar:if>
     </table>
 
-    <xar:if condition="Security::check(SECURITY_WRITE, $module, $itemtype, $itemid, false)">
+    <xar:if condition="Security::check(SECURITY_COMMENT, $module, $itemtype, $itemid, false)">
         <xar:template file="additional-comments-form" />
     </xar:if>
 

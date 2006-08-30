@@ -19,8 +19,7 @@
 */
 function helpdesk_user_new()
 {
-    if( !xarSecurityCheck('readhelpdesk') ){ return false; }
-    if( !xarModAPILoad('helpdesk') ){ return false; }
+    if( !Security::check(SECURITY_WRITE, 'helpdesk', TICKET_ITEMTYPE) ){ return false; }
 
     if( !xarVarFetch('create', 'str:1:20', $create_ticket, null, XARVAR_NOT_REQUIRED) ){ return false; }
 
@@ -319,6 +318,9 @@ function helpdesk_user_new()
     $item['multiple'] = false;
     $item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
     $data['hooks'] = xarModCallHooks('item', 'new', $itemtype, $item, 'helpdesk');
+
+    $data['module'] = 'helpdesk';
+    $data['itemtype'] = TICKET_ITEMTYPE;
 
     return xarTplModule('helpdesk', 'user', 'new', $data);
 }

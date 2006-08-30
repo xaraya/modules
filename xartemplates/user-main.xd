@@ -7,40 +7,34 @@
 
 <div class="xar-mod-body">
 
-<xar:module main="false" module="helpdesk" func="menu" />
+    <xar:module main="false" module="helpdesk" func="menu" />
 
-<p>
-    <xar:ml>
-        <xar:mlstring>Welcome to the #(1). Please click New Ticket to submit any questions or problems.</xar:mlstring>
-        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
-    </xar:ml>
-</p>
+    <p>
+        <xar:ml>
+            <xar:mlstring>Welcome to the #(1). Please click New Ticket to submit any questions or problems.</xar:mlstring>
+            <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+        </xar:ml>
+    </p>
 
-<p>
-    <xar:mlstring>If you are a registered site member and are logged in,
-return to this page and 'View Tickets' to see a response to your inquiries.</xar:mlstring>
-</p>
+    <p>
+        <xar:mlstring>If you are a registered site member and are logged in,
+    return to this page and 'View Tickets' to see a response to your inquiries.</xar:mlstring>
+    </p>
 
-<xar:if condition="!xarUserIsLoggedIn()">
- <xar:comment>
- <!-- This is just not ready yet -->
- <xar:mlstring>Display box for user to view ticket status by email address and ticket number!</xar:mlstring>
- <span>
-    <form action="" method="GET">
-        <span>Email:</span> <input type="text" name="email" value="" /><br />
-        <span>Ticket Id:</span> <input type="text" name="tid" value="" /><br />
-        <input type="submit" name="submit" value="submit" /> <br />
-    </form>
- </span>
-</xar:comment>
-</xar:if>
+    <xar:comment>
+    <xar:if condition="!xarUserIsLoggedIn()">
+     <!-- This is just not ready yet -->
+     <xar:mlstring>Display box for user to view ticket status by email address and ticket number!</xar:mlstring>
+     <span>
+        <form action="" method="GET">
+            <span>Email:</span> <input type="text" name="email" value="" /><br />
+            <span>Ticket Id:</span> <input type="text" name="tid" value="" /><br />
+            <input type="submit" name="submit" value="submit" /> <br />
+        </form>
+     </span>
+    </xar:if>
+    </xar:comment>
 
-
-<!--If you are not a registered site member or are not logged in,
-be sure to include your e-mail so we can contact you
-We will do our best to answer any questions and fix any problems.
--->
-
-<p><xar:module main="false" module="helpdesk" func="summaryfooter" /></p>
+    <xar:module main="false" module="helpdesk" func="summaryfooter" />
 
 </div>

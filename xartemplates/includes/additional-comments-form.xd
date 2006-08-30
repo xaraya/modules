@@ -4,6 +4,7 @@
     <legend><xar:mlstring>Additional Comments</xar:mlstring></legend>
 
     <form action="&xar-modurl-helpdesk-user-add_history;" method="POST">
+    <xar:if condition="Security::check(SECURITY_WRITE, $module, $itemtype, $itemid, false)">
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Status</xar:mlstring></label>
         <select name="status" class="xar-form-textlong">
@@ -16,8 +17,9 @@
             </xar:foreach>
         </select>
     </div>
+    </xar:if>
 
-    <xar:if condition="xarSecurityCheck('edithelpdesk', 0)">
+    <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, $itemid, false)">
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Assigned To</xar:mlstring></label>
             <select name="assigned_to" class="xar-form-textlong">

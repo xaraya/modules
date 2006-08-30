@@ -25,8 +25,7 @@ function helpdesk_admin_create($args)
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-    // Security Check
-    if (!xarSecurityCheck('edithelpdesk')) return;
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
 
     extract($args);
 

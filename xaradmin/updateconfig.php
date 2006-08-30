@@ -23,7 +23,8 @@ function helpdesk_admin_updateconfig()
     // in false data to the system
     if( !xarSecConfirmAuthKey() ){ return false; }
 
-    if( !xarModAPILoad('helpdesk') ){ return false; }
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
 
     if( !xarVarFetch('itemtype', 'int', $itemtype, TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED) ){ return false; }
 

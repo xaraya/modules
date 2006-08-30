@@ -25,7 +25,7 @@
 
 $modversion['id']           = '910';
 $modversion['name']         = 'Help Desk';
-$modversion['version']      = '0.8.1';
+$modversion['version']      = '0.8.2';
 $modversion['displayname']  = xarML('Help Desk');
 $modversion['description']  = 'Helpdesk Module';
 $modversion['author']       = 'Brian McGilligan';

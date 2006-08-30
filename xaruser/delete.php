@@ -25,15 +25,7 @@ function helpdesk_user_delete($args)
     /*
         Security check to prevent un authorized users from deleting it
     */
-    $has_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'     => xarModGetIDFromName('helpdesk'),
-            'itemtype'  => $itemtype,
-            'itemid'    => $tid,
-            'level'     => SECURITY_WRITE
-        )
-    );
-    if( !$has_security ){  return false; }
+    if( !Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, $tid) ){ return false; }
 
     if( !empty($confirm) )
     {

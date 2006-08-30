@@ -6,12 +6,13 @@
         <label class="xar-form-label"><xar:mlstring>Total Tickets in System</xar:mlstring></label>
         <xar:var name="total_tickets" />
     </div>
-    <xar:if condition="$userisloggedin">
+
+    <xar:if condition="Security::check(SECURITY_READ, 'helpdesk', 0, 0, false)">
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Stats for</xar:mlstring> <xar:var name="username" /></label>
         </div>
 
-        <xar:if condition="$editaccess">
+        <xar:if condition="Security::check(SECURITY_WRITE, 'helpdesk', 0, 0, false)">
         <div class="xar-form-input-wrapper xar-floatleft xar-clearright">
             <xar:if condition="$enablemystatshyperlink and $userstats['assignedopen'] gt 0">
                 <a href="#xarModURL('helpdesk', 'user', 'view', array('selection'=>'MYASSIGNEDALL'))#" title="View tickets assigned to you">

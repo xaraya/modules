@@ -22,6 +22,8 @@
 */
 function helpdesk_admin_update($args)
 {
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
     xarVarFetch('itemid',   'id', $itemid,      NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('itemtype', 'id', $itemtype,    NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('objectid', 'id', $objectid,    NULL, XARVAR_NOT_REQUIRED);

@@ -39,8 +39,7 @@ function helpdesk_user_view($args)
     if( !xarModAPILoad('helpdesk', 'user') ){ return false; }
     if( !xarModAPILoad('security', 'user') ){ return false; }
 
-    $has_security = Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE);
-    if( !$has_security ){ return false; }
+    if( !Security::check(SECURITY_READ, 'helpdesk', TICKET_ITEMTYPE) ){ return false; }
 
     $check_session_vars = array(
         'selection' => 'MYPERSONAL',

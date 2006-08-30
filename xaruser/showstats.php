@@ -20,6 +20,8 @@
 */
 function helpdesk_user_showstats()
 {
+    if( !Security::check(SECURITY_READ, 'helpdesk') ){ return false; }
+
     $data['menu']      = xarModFunc('helpdesk', 'user', 'menu');
 
     $data['summary']   = xarModFunc('helpdesk', 'user', 'summaryfooter');

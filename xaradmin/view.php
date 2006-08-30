@@ -22,7 +22,7 @@ function helpdesk_admin_view()
 {
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('edithelpdesk')) return;
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
 
     // Get Vars
     xarVarFetch('itemtype', 'int', $itemtype,  10, XARVAR_NOT_REQUIRED);

@@ -9,8 +9,8 @@
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
-    <xar:sec mask="adminhelpdesk" catch="false">
 
+    <xar:if condition="Security::check(SECURITY_ADMIN, 'helpdesk', 0, 0, false)">
         <xar:set name="manage_funcs">array('view', 'display', 'new', 'modify', 'delete')</xar:set>
         <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
         <dd class="#$tabclass#">
@@ -40,6 +40,6 @@
             <xar:mlstring>Overview</xar:mlstring>
           </a>
         </dd>
-    </xar:sec>
+    </xar:if>
   </dl>
 </div>

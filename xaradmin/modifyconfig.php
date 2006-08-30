@@ -21,7 +21,8 @@ function helpdesk_admin_modifyconfig()
 {
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if( !xarSecurityCheck('adminhelpdesk') ){ return; }
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
 
     if( !xarModAPILoad('helpdesk') ){ return false; }
 

@@ -21,6 +21,8 @@
 */
 function helpdesk_admin_delete($args)
 {
+    if( !Security::check(SECURITY_ADMIN, 'helpdesk') ){ return false; }
+
     // Get Vars
     if (!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',  'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}

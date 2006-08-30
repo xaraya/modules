@@ -30,15 +30,7 @@ function helpdesk_user_modify($args)
     /*
         Security check to prevent un authorized users from modifying it
     */
-    $has_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'     => xarModGetIDFromName('helpdesk'),
-            'itemtype'  => $itemtype,
-            'itemid'    => $tid,
-            'level'     => SECURITY_WRITE
-        )
-    );
-    if( !$has_security ){ return false; }
+    if( !Security::check(SECURITY_WRITE, 'helpdesk', $itemtype, $tid) ){ return false; }
 
     /*
         Get the ticket Data
@@ -145,12 +137,13 @@ function helpdesk_user_modify($args)
     $item['itemtype'] = $itemtype;
     $data['hooks'] = xarModCallHooks('item', 'modify', $tid, $item);
 
+    $data['module']         = 'helpdesk';
+    $data['itemtype']       = $itemtype;
     $data['tid']            = $tid;
-    $data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
-    $data['EditAccess']     = xarSecurityCheck('edithelpdesk', 0);
-    $data['UserLoggedIn']   = xarUserIsLoggedIn();
+    //$data['menu']           = xarModFunc('helpdesk', 'user', 'menu');
+    //$data['UserLoggedIn']   = xarUserIsLoggedIn();
     $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
-    $data['summary']        = xarModFunc('helpdesk', 'user', 'summaryfooter');
+    //$data['summary']        = xarModFunc('helpdesk', 'user', 'summaryfooter');
 
     return xarTplModule('helpdesk', 'user', 'modify', $data);
 }

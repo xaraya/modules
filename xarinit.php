@@ -471,6 +471,8 @@ function helpdesk_upgrade($oldversion)
             xarModSetVar('helpdesk', 'default_resolved_status', 3);
         case '0.7.8':
         case '0.7.9':
+        case '0.8.0':
+        case '0.8.1':
 
         default:
             break;
