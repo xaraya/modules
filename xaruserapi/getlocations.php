@@ -17,7 +17,7 @@
  *
  */
 
-include_once 'modules/xen/xarclasses/xenddquery.php';
+sys::import('modules.xen.xarclasses.xenddquery');
 
 function maps_userapi_getlocations($args)
 {

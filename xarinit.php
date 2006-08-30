@@ -90,6 +90,14 @@ function maps_init()
     xarRegisterPrivilege('AddMaps','All','maps','All','All','ACCESS_ADD');
     xarRegisterPrivilege('DeleteMaps','All','maps','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminMaps','All','maps','All','All','ACCESS_ADMIN');
+    xarMakePrivilegeRoot('ViewMaps');
+    xarMakePrivilegeRoot('ReadMaps');
+    xarMakePrivilegeRoot('CommentMaps');
+    xarMakePrivilegeRoot('ModerateMaps');
+    xarMakePrivilegeRoot('EditMaps');
+    xarMakePrivilegeRoot('AddMaps');
+    xarMakePrivilegeRoot('DeleteMaps');
+    xarMakePrivilegeRoot('AdminMaps');
 
 # --------------------------------------------------------
 #
