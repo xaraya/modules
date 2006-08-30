@@ -147,6 +147,9 @@ function itsp_user_modify($args)
                     /* Clean up the item text before display */
                     $icourse['title'] = xarVarPrepForDisplay($icourse['icoursetitle']);
                     $icourse['credits'] = $icourse['icoursecredits'];
+                    // Add a delete link
+                    $icourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('icourseid' => $icourse['icourseid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
+
                     /* Add this item to the list of items to be displayed */
                     $data['icourses'][] = $icourse;
                 }

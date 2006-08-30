@@ -24,6 +24,7 @@
                  <xar:else />
                     <xar:mlstring>Not yet approved</xar:mlstring>
                  </xar:if>
+                 <a href="#$icourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>
             </div>
         </xar:foreach>
     <xar:else />
