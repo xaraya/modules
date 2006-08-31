@@ -73,7 +73,9 @@ class GoogleMap_Property extends Dynamic_Property
     function getlocations($data = array())
     {
         if (isset($data['locations'])) {
-            return $data['locations'];
+        	$locations = array();
+        	foreach ($data['locations'] as $location) $locations[] = $location->toArrAY();
+            return $locations;
         } else {
             $uselocations =  unserialize(xarModUserVars::get('maps', 'uselocations', $this->regid));
             $locations = array();
