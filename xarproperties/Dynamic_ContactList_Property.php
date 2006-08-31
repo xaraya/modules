@@ -125,7 +125,7 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data['tabindex'] =!empty($tabindex) ? $tabindex : 0;
         $data['invalid']  =!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
         if(!empty($data['company'])) {
-            $data['contactselect'] = xarModFunc('addressbook', 'user', 'select', array('company' => $data['company'], 'fieldname' => $data['name'], 'fieldid' => $data['id']));
+            $data['contactselect'] = xarModFunc('addressbook', 'user', 'select', array('company' => $data['company'], 'fieldname' => $data['name'], 'fieldid' => $data['id'], 'value' => $data['value']));
         } else {
             $data['contactselect'] = "";
         }
