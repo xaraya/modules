@@ -8,6 +8,8 @@
 
     <xar:template file="admin-menu" />
 
+    <p><xar:mlstring>Note: The "Browse Security" page in the security module can be used to define who should have what security levels in the helpdesk module.</xar:mlstring></p>
+
     <h3><xar:mlstring>Status</xar:mlstring></h3>
 
     <ul>
