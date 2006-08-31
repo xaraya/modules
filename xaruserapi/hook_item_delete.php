@@ -11,6 +11,12 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
+/**
+ * Delete a hooked item
+ * @param module
+ * @param itemtype
+ * @param itemid
+ */.
 function subitems_userapi_hook_item_delete($args)
 {
     extract($args);
@@ -26,7 +32,9 @@ function subitems_userapi_hook_item_delete($args)
     }
 
     // a object should be linked to this hook
-    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return $extrainfo;
+    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) {
+        return $extrainfo;
+    }
     // nothing to see here
     if (empty($ddobjectlink)) return $extrainfo;
 
@@ -39,7 +47,9 @@ function subitems_userapi_hook_item_delete($args)
     $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
                                      'status' => 1));
-    if (!isset($object)) return $extrainfo;
+    if (!isset($object)) {
+        return $extrainfo;
+    }
 
     // get existing subitems
     $ids = xarModAPIFunc('subitems','user','dditems_getids',array('objectid' => $objectid,'itemid' => $extrainfo['itemid']));

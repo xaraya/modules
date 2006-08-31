@@ -13,6 +13,7 @@
  */
 /**
  * generate the common admin menu configuration
+ * @return array
  */
 function subitems_adminapi_menu()
 {

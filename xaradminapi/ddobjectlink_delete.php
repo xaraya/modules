@@ -15,11 +15,11 @@
  * delete a subitems item
  *
  * @author the subitems module development team
- * @param  $args ['objectid'] ID of the item or
- * @param $args['modid'] && $args['itemtype']
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param  id $args ['objectid'] ID of the item or
+ * @param id $args['modid']
+ * @param id $args['itemtype']
+ * @return bool true on success of deletion, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function subitems_adminapi_ddobjectlink_delete($args)
 {

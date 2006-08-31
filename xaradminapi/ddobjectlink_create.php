@@ -15,16 +15,16 @@
  * create a new subitems item
  *
  * @author the subitems module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
- * @returns int
- * @return subitems item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param id objectid
+ * @param string module
+ * @param int itemtype
+ * @param string template
+ * @return int subitems item ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function subitems_adminapi_ddobjectlink_create($args)
 {
     extract($args);
-
 
     $invalid = array();
     if (!isset($objectid) ||!is_numeric($objectid))
@@ -44,7 +44,6 @@ function subitems_adminapi_ddobjectlink_create($args)
         return;
     }
 
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -55,7 +54,7 @@ function subitems_adminapi_ddobjectlink_create($args)
                        xar_itemtype,
                        xar_template)
              VALUES (?, ?, ?, ?)";
-
+             // TODO: MichelV: is typecasting truly needed in here. ID shouldn't be typecasted in general
     $bindvars = array((int) $objectid,
                       (string) $module,
                       (int) $itemtype,

@@ -12,16 +12,12 @@
  * @author Subitems Module Development Team
  */
 /**
- * Update
- * @param $args['fname'] name of forum
- * @param $args['fdesc'] description of forum
- * @param $args['tid'] topic id to update
- * @returns int
- * @return autolink ID on success, false on failure
+ * Update a dd link
+ * @param $args['objectid']
+ * @return bool
  */
 function subitems_adminapi_ddobjectlink_update($args)
 {
-
     // Get arguments from argument array
     extract($args);
 
@@ -49,11 +45,11 @@ function subitems_adminapi_ddobjectlink_update($args)
     if(    !isset($set)   )
         $invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
 
-    // Argument check - make sure that at least on paramter is present
+    // Argument check - make sure that at least on parameter is present
     // if not then set an appropriate error message and return
     if ( isset($invalid) ) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'xarbb');
+                    join(', ',$invalid), 'admin', 'ddobjectlink_update', 'subitems');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -89,7 +85,7 @@ function subitems_adminapi_ddobjectlink_update($args)
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
-    // Let any hooks know that we have created a new topic
+    // Let any hooks know that we have updated a new topic
     $args['module'] = 'subitems';
     $args['itemtype'] = 1; // topic
     $args['itemid'] = $objectid;

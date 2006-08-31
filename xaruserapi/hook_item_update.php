@@ -11,6 +11,10 @@
  * @link http://xaraya.com/index.php/release/9356.html
  * @author Subitems Module Development Team
  */
+/**
+ * Update a hooked item (do nothing)
+ * @return array
+ */
 function subitems_userapi_hook_item_update($args)
 {
     extract($args);

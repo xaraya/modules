@@ -15,7 +15,6 @@
  * utility function pass individual menu items to the main menu
  *
  * @author the subitems module development team
- * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function subitems_adminapi_getmenulinks()

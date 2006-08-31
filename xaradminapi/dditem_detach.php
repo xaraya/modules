@@ -12,14 +12,13 @@
  * @author Subitems Module Development Team
  */
 /**
- * create a new subitems item
+ * detach a dynamic subitems item
  *
  * @author the subitems module development team
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
- * @returns int
- * @return subitems item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param  id ddid
+ * @param  id objectid
+ * @return bool true on successfull delete/detach operation
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function subitems_adminapi_dditem_detach($args)
 {

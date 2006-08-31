@@ -13,13 +13,13 @@
  */
 
 /**
- * example event handler for the system event ServerRequest
+ * subitems event handler for the system event ServerRequest VOID
  *
  * this function is called when the system triggers the
  * event in index.php on each Server Request
  *
- * @author the Example module development team
- * @returns bool
+ * @author the Subitems module development team
+ * @return nothing
  *//*
 function subitems_eventapi_OnServerRequest()
 {
