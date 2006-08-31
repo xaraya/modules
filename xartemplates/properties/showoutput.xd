@@ -1,22 +1,3 @@
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#$mapskey#" type="text/javascript"></script>
-<xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
-
-<script type="text/javascript">
-    //<![CDATA[
-    var mapnumber
-    if (window.attachEvent) {
-        window.attachEvent("onload", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
-            fillmap();
-        });
-    } else {
-        window.addEventListener("load", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
-            fillmap();
-        }, false);
-    }
-    //]]>
-</script>
 
 <script type="text/javascript">
   function fillmap(){
@@ -36,4 +17,4 @@
     </xar:foreach>
   }
 </script>
-<div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+<div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"; #$style#></div>
