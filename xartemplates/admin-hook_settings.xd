@@ -41,7 +41,7 @@
         <legend><xar:mlstring>Options</xar:mlstring></legend>
 
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label"><xar:mlstring>Exclude Groups</xar:mlstring></label>
+            <label title="#xarML('Groups not to add when an item is created.')#" class="xar-form-label"><xar:mlstring>Exclude Groups</xar:mlstring></label>
             <select name="exclude_gids[]" multiple="multiple" class="xar-form-textlong">
                 <xar:foreach in="$all_groups" key="$key" value="$group">
                     <xar:if condition="isset($settings:exclude_groups[$key])">
@@ -53,7 +53,7 @@
              </select>
         </div>
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label"><xar:mlstring>Default Group Level</xar:mlstring></label>
+            <label title="#xarML('Default group level when an item is created.')#" class="xar-form-label"><xar:mlstring>Default Group Level</xar:mlstring></label>
             <xar:set name="width">100/(count($sec_levels)+1)</xar:set>
             <table class="xar-norm-outline xar-clearboth">
                 <tr>
@@ -83,7 +83,7 @@
         <legend><xar:mlstring>Owner</xar:mlstring></legend>
 
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label"><xar:mlstring>Item Table</xar:mlstring></label>
+            <label title="#xarML('Table which items are stored in.')#" class="xar-form-label"><xar:mlstring>Item Table</xar:mlstring></label>
             <select name="owner_table" class="xar-form-textlong"
                 onchange="javascript: submit();">
                 <option value="">Use Owner Module</option>
@@ -99,7 +99,7 @@
 
         <xar:if condition="!empty($columns)">
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Primary Key</xar:mlstring></label>
+                <label title="#xarML('The primary key of the selected table.')#" class="xar-form-label"><xar:mlstring>Primary Key</xar:mlstring></label>
                 <select name="primary_key" class="xar-form-textlong">
                     <option value="">Select Primary Key</option>
                     <xar:foreach in="$columns" key="$key" value="$column">
@@ -115,7 +115,7 @@
 
         <xar:if condition="!empty($columns)">
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Owner Column</xar:mlstring></label>
+                <label title="#xarML('The column which stores the items owner\'s user id.')#" class="xar-form-label"><xar:mlstring>Owner Column</xar:mlstring></label>
                 <select name="owner_column" class="xar-form-textlong">
                     <option value="">Select Owner Column</option>
                     <xar:foreach in="$columns" key="$key" value="$column">
@@ -134,15 +134,10 @@
     <fieldset>
         <legend><xar:mlstring>Security</xar:mlstring></legend>
 
-        <h4><xar:mlstring>Default Item Security</xar:mlstring></h4>
+        <label title="#xarML('The template used when items are created.')#" class="xar-form-label"><xar:mlstring>Default Item Security</xar:mlstring></label>
         <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_item_levels', 'levels' => $settings->default_item_levels)</xar:set>
-        <xar:template file="security-table" subdata="$subdata" />
-
-        <xar:comment>
-        <h4><xar:mlstring>Module Security</xar:mlstring></h4>
-        <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_module_levels', 'levels' => $settings->default_module_levels)</xar:set>
-        <xar:template file="security-table" subdata="$subdata" />
-        </xar:comment>
+        <br />
+        <div class="xar-clearboth"><xar:template file="security-table" subdata="$subdata" /></div>
 
     </fieldset>
 

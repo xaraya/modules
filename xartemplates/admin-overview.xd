@@ -15,12 +15,11 @@
             The security module is a Unix style privilege system for xaraya based items.  In short the security module defines a users available action which can be performed on an item.
         </xar:mlstring>
     </p>
-    <p><xar:mlstring>The security module is a Unix style privilege system for xaraya based items, except that security has different levels and more of them.</xar:mlstring></p>
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <p>
     <xar:mlstring>
-        Normally as a user you should not have to do anything.  A module supporting security should automatically configure the system to use security.  Unless you want to change the default settings that the module setup. You may desire to do this if you have different needs.
+        Normally as a user you should not have to do much.  A module supporting security should automatically configure the system hooks to use security.  However you will more than likely what to setup module and / or item level security.  This allows you to define who sees, uses the module and how.
     </xar:mlstring>
     </p>
     <p>
@@ -28,22 +27,34 @@
         Manual setup: Just hook the module you want into the security modules using the modules configure hooks option.  Once this is done you can go into the security module's Hook Settings option and configure default security settings for a particular module, itemtype pair.  Every time an item is created it will be created with the default settings you define.
     </xar:mlstring>
     </p>
-    <h4><xar:mlstring>Modules utilizing the security module:</xar:mlstring></h4>
+
+    <h3><xar:mlstring>General Security Level Meanings</xar:mlstring></h3>
+    <p><xar:mlstring>Note: some modules may different from what is written here.  But most modules should stay close to these definitions</xar:mlstring></p>
     <ul>
-        <li><xar:mlstring>Gallery</xar:mlstring></li>
-        <li><xar:mlstring>Helpdesk</xar:mlstring></li>
+        <li><xar:mlstring>Overview: Can view lists of items and/or overview screens</xar:mlstring></li>
+        <li><xar:mlstring>Read: Can view item details (display pages).</xar:mlstring></li>
+        <li><xar:mlstring>Comment: Can add comments or other items to an item.</xar:mlstring></li>
+        <li><xar:mlstring>Write: Can create and/or modifiy an item.</xar:mlstring></li>
+        <li><xar:mlstring>Manage: Can delete and/or perform other special actions on an item.</xar:mlstring></li>
+        <li><xar:mlstring>Admin: Can change security on an item</xar:mlstring></li>
     </ul>
 
     <h3><xar:mlstring>Security Administration Options</xar:mlstring></h3>
     <p>
         <xar:mlstring>From the menu, you have three choices.  "Overview",
-            "Hooks Settings", and "Enable Module Security".</xar:mlstring>
+            "Hooks Settings", and "Browse Security".</xar:mlstring>
         <ul>
-            <li><xar:mlstring>Overview -- Allows you to view this screen.</xar:mlstring></li>
-            <li><xar:mlstring>Hooks Settings -- Allows you to set default
-                security levels for module / itemtype pairs.</xar:mlstring></li>
+            <li><xar:mlstring>Overview -- This help screen.</xar:mlstring></li>
+            <li><xar:mlstring>Browse Security -- Modify any security levels.</xar:mlstring></li>
+            <li><xar:mlstring>Hooks Settings -- Set default security levels for module / itemtype pairs.</xar:mlstring></li>
         </ul>
     </p>
+
+    <h3><xar:mlstring>Modules utilizing the security module:</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Gallery</xar:mlstring></li>
+        <li><xar:mlstring>Helpdesk</xar:mlstring></li>
+    </ul>
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
     <p><xar:mlstring>There are no included blocks</xar:mlstring></p>

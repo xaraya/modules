@@ -18,7 +18,7 @@ function security_admin_ajax_server($args)
             $itemtypes = xarModApiFunc($info['name'], 'user', 'getitemtypes', array(), false);
 
             if( is_null($itemtypes) ){ $itemtypes = array(); }
-            $itemtypes[0] = array('label' => 'None/All');
+            $itemtypes[0] = array('label' => 'All');
             ksort($itemtypes);
 
             $data['itemtypes'] = $itemtypes;
@@ -64,8 +64,7 @@ function security_admin_ajax_server($args)
                     , 'itemtype' => $itemtype
                 )
             );
-            //array_unshift($itemids, 'None/All');
-            $itemids[0] = 'None/All';
+            $itemids[0] = 'All';
             ksort($itemids);
             $data['itemids']   = $itemids;
             $data['template']  = 'form-itemids';
