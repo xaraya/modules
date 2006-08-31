@@ -183,6 +183,7 @@ function keywords_init()
 // TODO: tweak this - allow viewing keywords of "your own items" someday ?
 // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
     xarRegisterMask('ReadKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('AdminKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // create the dynamic object that will represent our items
@@ -273,6 +274,9 @@ function keywords_upgrade($oldversion)
 
         case '1.0.3':
             xarModSetVar('keywords', 'useitemtype', 0);
+        
+        case '1.0.4':
+            xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
 
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here

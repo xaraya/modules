@@ -19,7 +19,8 @@ function keywords_adminapi_separekeywords($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    //if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AddKeywords')) return;
 
     $delimiters = xarModGetVar('keywords', 'delimiters');
 
