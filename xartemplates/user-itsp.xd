@@ -6,13 +6,11 @@
     <xar:set name="items">#$pitems#</xar:set>
 </xar:if>
 
-
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
 
-    <!-- the variables used in this menu template come from itsp_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
     <h2><xar:mlstring>My ITSP</xar:mlstring></h2>
@@ -46,9 +44,9 @@
             <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
 
             <xar:if condition="$fulldetails">
-              <input type="checkbox" name="fulldetails" id="fulldetails" value="1" checked="checked"/>
+              <input type="checkbox" name="showdetails" id="showdetails" value="1" checked="checked"/>
               <xar:else/>
-              <input type="checkbox" name="fulldetails" id="fulldetails" value="1" />
+              <input type="checkbox" name="showdetails" id="showdetails" value="1" />
             </xar:if>
             <input type="submit" value="#xarML('Reload')#" />
         </form>
@@ -82,33 +80,48 @@
                             <tr>
                                 <td>
                                      <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+
+                                </td>
+
                                      <xar:if condition="$fulldetails AND !empty($item.courses)">
-                                     <br />
+                                     <td style="border: 0px">&nbsp;</td>
+                                     <td style="border: 0px">&nbsp;</td>
+                                     <td style="border: 0px">&nbsp;</td>
+
+                                     </tr>
                                         <xar:foreach in="$item.courses" value="$course">
-                                            #$course.title# #$course.credits#<br />
+<tr style="border: 0px"><td style="border: 0px">
+                                            #$course.number# #$course.title# </td><td style="border: 0px">&nbsp;</td><td  style="border: 0px">#$course.credits#</td><td  style="border: 0px">&nbsp;</td>
+                                            </tr>
+
                                         </xar:foreach>
+                                        <tr>
+                                        <td>&nbsp;</td>
                                      </xar:if>
+
+                                <td>
+                                     <strong>#$item.mincredit#</strong>
                                 </td>
                                 <td>
-                                     #$item.mincredit#
+                                     <strong>#$item.creditsnow#</strong>
                                 </td>
-                                <td>
-                                     #$item.creditsnow#
+                                <td >
+                                &nbsp;
                                 </td>
                             </tr>
-                        </xar:foreach>
+                                     </xar:foreach>
                         <tr>
                             <td>
                             <xar:mlstring>Totals</xar:mlstring>
                             </td>
                             <td>
-                            #$plan.mincredit#
+                            <strong>#$plan.mincredit#</strong>
                             </td>
                             <td>
                             <xar:if condition="$sumcreditsnow lt $plan.mincredit">
                             <span style="color:red">#$sumcreditsnow#&nbsp;</span>
                             <xar:else />
-                            #$sumcreditsnow#
+                            <span style="color:red"><strong>#$sumcreditsnow#</strong></span>
                             </xar:if>
                             </td>
                             <td>

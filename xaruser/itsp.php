@@ -31,7 +31,8 @@ function itsp_user_itsp($args)
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showdetails', 'checkbox', $fulldetails, xarSessionGetVar('itsp.fulldetails'), XARVAR_NOT_REQUIRED)) return;
+   // echo $fulldetails;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
      */
@@ -53,7 +54,6 @@ function itsp_user_itsp($args)
                               array('itspid' => $itspid));
     }
 
-
     if (empty($item)) {
         xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
         $data = xarModAPIFunc('itsp', 'user', 'menu');
@@ -62,6 +62,12 @@ function itsp_user_itsp($args)
     /* Add the ITSP user menu */
     // This also gets already all the planitems...
     $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
+    if (empty($fulldetails)) {
+        $fulldetails = false;
+    }
+    xarSessionSetVar('itsp.showdetails', $fulldetails);
+    $data['fulldetails'] = $fulldetails;
+
     $itspid = $item['itspid'];
     $data['itspid'] = $itspid;
     // First see if there is an id to get.
@@ -114,7 +120,7 @@ function itsp_user_itsp($args)
                         $realcourse = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
                         $course['title'] = xarVarPrepForDisplay($realcourse['name']);
                         $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
-
+                        $course['number'] = xarVarPrepForDisplay($realcourse['number']);
                         $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                         if (!empty($enrollstatus)) {
                             $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
@@ -155,7 +161,7 @@ function itsp_user_itsp($args)
                         /* Clean up the item text before display */
                         $course['title'] = xarVarPrepForDisplay($course['icoursetitle']);
                         $course['credits'] = $course['icoursecredits'];
-
+                        $course['number'] = '';
                         /* Add this item to the list of items to be displayed */
                         $fullitem['courses'][] = $course;
                     }
@@ -175,7 +181,7 @@ function itsp_user_itsp($args)
     $data['plan'] = $plan;
     // Security
     $data['authid'] = xarSecGenAuthKey();
-    $data['fulldetails'] = $fulldetails;
+
     xarVarSetCached('Blocks.itsp', 'itspid', $itspid);
     /* Let any hooks know that we are displaying an item.
      */
@@ -195,7 +201,8 @@ function itsp_user_itsp($args)
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */
-    xarTplSetPageTitle(xarVarPrepForDisplay($item['itspid']));
+    $itspuser = xarUserGetVar('name', $item['userid']);
+    xarTplSetPageTitle(xarVarPrepForDisplay($itspuser));
     /* Return the template variables defined in this function */
     return $data;
 }
