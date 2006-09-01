@@ -75,13 +75,19 @@
                                 <th><xar:mlstring>Section</xar:mlstring></th>
                                 <th><xar:mlstring>Needed</xar:mlstring></th>
                                 <th><xar:mlstring>Planned</xar:mlstring></th>
-                                <th><xar:mlstring>Passed</xar:mlstring></th>
+                                <th><xar:mlstring>Obtained</xar:mlstring></th>
                             </tr>
                         </thead>
                         <xar:foreach in="$items" value="$item">
                             <tr>
                                 <td>
                                      <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+                                     <xar:if condition="$fulldetails AND !empty($item.courses)">
+                                     <br />
+                                        <xar:foreach in="$item.courses" value="$course">
+                                            #$course.title# #$course.credits#<br />
+                                        </xar:foreach>
+                                     </xar:if>
                                 </td>
                                 <td>
                                      #$item.mincredit#

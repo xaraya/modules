@@ -112,18 +112,18 @@ function itsp_user_itsp($args)
                             $course['link'] = '';
                         }
                         $realcourse = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
-                        $course['name'] = xarVarPrepForDisplay($realcourse['name']);
-                        $course['intendedcredits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
+                        $course['title'] = xarVarPrepForDisplay($realcourse['name']);
+                        $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
 
                         $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                         if (!empty($enrollstatus)) {
                             $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
                                   array('status' => $enrollstatus['studstatus']));
-                            $course['credits'] = $enrollstatus['credits'];
+                            $course['obtcredits'] = $enrollstatus['credits'];
                             $course['startdate'] = $enrollstatus['startdate'];
                         } else {
                             $course['studstatus'] = '';
-                            $course['credits'] = '';
+                            $course['obtcredits'] = '';
                             $course['startdate'] = '';
                         }
                         /* Add this item to the list of items to be displayed */
