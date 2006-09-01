@@ -85,21 +85,22 @@ function itsp_user_update()
                 if (!xarVarFetch('courseid', 'id',     $courseid,  '', XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('dateappr',  'str::', $dateappr,  '', XARVAR_NOT_REQUIRED)) return;
                 // Make sure we will not add the empty string as a course
-                if (!empty($courseid) && $courseid > 0) {
+                if (!empty($lcourseid) && $lcourseid > 0) {
                     // Create a new linked course
                     if (!xarModApiFunc('itsp','admin','create_courselink',
                                         array('itspid' =>$itspid,
                                               'pitemid' => $pitemid,
-                                              'lcourseid' => $courseid,
+                                              'lcourseid' => $lcourseid,
                                               'dateappr' => $dateappr)
                                         )) {
+                        xarSessionSetVar('statusmsg', xarML('Course Item was NOT added!'));
                         return;
                     } else {
                         xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
                     }
                 }
                 // else update the lcourse
-                xarSessionSetVar('statusmsg', xarML('Course Item was NOT added!'));
+
                 break;
             default:
                 if (!xarVarFetch('icourseid',   'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
