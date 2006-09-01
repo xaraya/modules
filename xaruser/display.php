@@ -41,7 +41,7 @@ function window_user_display($args)
     $security = xarModGetVar('window', 'security');
 
     if (!xarVarFetch('page', 'str', $page, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('title', 'str', $title, xarML('External Application'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title', 'str', $title, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('height', 'str', $width, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('width', 'str', $height, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('auto_resize', 'str', $auto_resize, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -65,6 +65,7 @@ function window_user_display($args)
                     $vsize = $item['vsize'];
                     $hsize = $item['hsize'];
                     $id = $item['itemid'];
+                    $description = $item['description'];
                 }
             }
         }
@@ -128,20 +129,21 @@ function window_user_display($args)
     // Check if title was passed in URL
     if(!$title) {
         if($use_fixed_title) {
-            $title = 'External Application';
+            $title = xarML('External Application');
+        } elseif (!empty($description)) {
+            $title = xarVarPrepForDisplay($description);
         } else {
             $title = '';
         }
     } else {
-        $end_title = '';
+        $title = '';
     }
 
     // Add the Open Direct link if set
     if ($open_direct) {
         if($use_fixed_title) {
             $title .= "<br />[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
-        }
-        else {
+        } else {
             $title .= "[ <a href=\"$page\" target=\"_blank\">".xarML("Open application")."</a> ]";
         }
     }

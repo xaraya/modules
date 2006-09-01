@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/3002.html
  * @author Window Module Development Team
  */
+/**
+ * Add an url to the database
+ */
 function window_adminapi_addurl($args)
 {
     if (!xarSecurityCheck('AdminWindow')) return;
@@ -62,14 +65,14 @@ function window_adminapi_addurl($args)
             $data['message'] = xarML('Bad URL');
             return false;
         }
-       
+
        // $urlitem = xarModAPIFunc('window','user','getall',array('name'=>$host,'alias' => $alias));
 
        $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
         $urltable = $xartable['window'];
 
-        // Check If this URL or Alias allready exists in DB
+        // Check If this URL or Alias already exists in DB
         // caveman says:
         // This check should happen regardless of either an edit or
         // an add was we don't won't duplicate values in the database.
