@@ -92,7 +92,7 @@ function itsp_user_itsp($args)
     }
 
     // Get all planitems, only if full details are requested
-    if ($fulldetails) {
+    if ($fulldetails == 1) {
         $items = $data['pitems'];
         foreach ($items as $fullitem) {
             // get id
