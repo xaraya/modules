@@ -31,8 +31,8 @@ function itsp_user_itsp($args)
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('showdetails', 'checkbox', $fulldetails, xarSessionGetVar('itsp.fulldetails'), XARVAR_NOT_REQUIRED)) return;
-   // echo $fulldetails;
+    if (!xarVarFetch('showdetails', 'int::', $showdetails, $showdetails, XARVAR_NOT_REQUIRED)) return;
+
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
      */
@@ -62,11 +62,17 @@ function itsp_user_itsp($args)
     /* Add the ITSP user menu */
     // This also gets already all the planitems...
     $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
-    if (empty($fulldetails)) {
-        $fulldetails = false;
+    /* Set the type of detail view */
+    $details = xarSessionGetVar('itsp.fulldetails');
+    if (is_int($showdetails)) {
+        xarSessionSetVar('itsp.fulldetails', $showdetails);
+    } elseif (empty($showdetails) && $details == 1) {
+        xarSessionSetVar('itsp.fulldetails', 1);
+    } else {
+        xarSessionSetVar('itsp.fulldetails', 0);
     }
-    xarSessionSetVar('itsp.fulldetails', $fulldetails);
-    $data['fulldetails'] = $fulldetails;
+    $fulldetails = xarSessionGetVar('itsp.fulldetails');
+    $data['fulldetails'] = xarSessionGetVar('itsp.fulldetails');
 
     $itspid = $item['itspid'];
     $data['itspid'] = $itspid;

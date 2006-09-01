@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:if condition="$fulldetails">
+<xar:if condition="$fulldetails eq 1">
     <xar:set name="items">#$fullitems#</xar:set>
 <xar:else />
     <xar:set name="items">#$pitems#</xar:set>
@@ -37,18 +37,16 @@
         </strong>
     <xar:else />
         <form method="post" action="&xar-modurl-itsp-user-itsp;">
-            <xar:mlstring>Show all details</xar:mlstring>
-
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
             <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
-
-            <xar:if condition="$fulldetails">
-              <input type="checkbox" name="showdetails" id="showdetails" value="1" checked="checked"/>
+            <xar:if condition="$fulldetails eq 0 ">
+              <input type="hidden" name="showdetails" id="showdetails" value="1" />
+              <input type="submit" value="#xarML('Show details')#" />
               <xar:else/>
-              <input type="checkbox" name="showdetails" id="showdetails" value="1" />
+              <input type="hidden" name="showdetails" id="showdetails" value="0" />
+              <input type="submit" value="#xarML('Show summary')#" />
             </xar:if>
-            <input type="submit" value="#xarML('Reload')#" />
         </form>
 
         <form method="post" action="&xar-modurl-itsp-user-submit;">
@@ -83,7 +81,7 @@
 
                                 </td>
 
-                                     <xar:if condition="$fulldetails AND !empty($item.courses)">
+                                     <xar:if condition="$fulldetails eq 1 AND !empty($item.courses)">
                                      <td style="border: 0px">&nbsp;</td>
                                      <td style="border: 0px">&nbsp;</td>
                                      <td style="border: 0px">&nbsp;</td>
