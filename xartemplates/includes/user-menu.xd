@@ -28,6 +28,7 @@
         <xar:else />
             <dd><a href="#$navITSPUrl#"><xar:mlstring>My ITSP</xar:mlstring></a></dd>
         </xar:if>
+        <dd><a href="#" onclick="window.print();return false">Print</a></dd>
         <dt class="help"><xar:mlstring>Sections</xar:mlstring>:</dt>
         <xar:if condition="!empty($pitems)">
             <xar:foreach in="$pitems" value="$item">
