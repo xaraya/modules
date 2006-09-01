@@ -86,5 +86,5 @@
             <xar:data-input type="maplocation" name="locations" id="maps_locations" />
         </div>
     </fieldset>
-    <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+    <div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#" ></div>
 </form>

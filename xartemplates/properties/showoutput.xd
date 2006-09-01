@@ -36,4 +36,4 @@
     </xar:foreach>
   }
 </script>
-<div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px; ; #$style#"></div>
+<div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#"></div>

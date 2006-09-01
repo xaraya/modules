@@ -103,8 +103,8 @@ function maps_init()
 #
 # Set up modvars
 #
-    xarModVars::set('maps', 'mapwidth', 800);
-    xarModVars::set('maps', 'mapheight', 600);
+    xarModVars::set('maps', 'mapwidth', '800px');
+    xarModVars::set('maps', 'mapheight', '600px');
     xarModVars::set('maps', 'zoomlevel', 6);
     xarModVars::set('maps', 'centerlatitude', 48.5132);
     xarModVars::set('maps', 'centerlongitude', 2.1745);
