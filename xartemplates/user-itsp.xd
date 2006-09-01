@@ -1,4 +1,12 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="$fulldetails">
+    <xar:set name="items">#$fullitems#</xar:set>
+<xar:else />
+    <xar:set name="items">#$pitems#</xar:set>
+</xar:if>
+
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
 </div>
@@ -30,6 +38,21 @@
         <a href="#xarModUrl('itsp','user','view')#"><xar:mlstring>here</xar:mlstring></a>
         </strong>
     <xar:else />
+        <form method="post" action="&xar-modurl-itsp-user-itsp;">
+            <xar:mlstring>Show all details</xar:mlstring>
+
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+            <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','itsp')#" />
+
+            <xar:if condition="$fulldetails">
+              <input type="checkbox" name="fulldetails" id="fulldetails" value="1" checked="checked"/>
+              <xar:else/>
+              <input type="checkbox" name="fulldetails" id="fulldetails" value="1" />
+            </xar:if>
+            <input type="submit" value="#xarML('Reload')#" />
+        </form>
+
         <form method="post" action="&xar-modurl-itsp-user-submit;">
             <fieldset>
                 <legend><xar:mlstring>Information</xar:mlstring></legend>
@@ -55,18 +78,18 @@
                                 <th><xar:mlstring>Passed</xar:mlstring></th>
                             </tr>
                         </thead>
-                        <xar:foreach in="$pitems" value="$item">
-                        <tr>
-                            <td>
-                                 <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
-                            </td>
-                            <td>
-                                 #$item.mincredit#
-                            </td>
-                            <td>
-                                 #$item.creditsnow#
-                            </td>
-                        </tr>
+                        <xar:foreach in="$items" value="$item">
+                            <tr>
+                                <td>
+                                     <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+                                </td>
+                                <td>
+                                     #$item.mincredit#
+                                </td>
+                                <td>
+                                     #$item.creditsnow#
+                                </td>
+                            </tr>
                         </xar:foreach>
                         <tr>
                             <td>
@@ -85,6 +108,7 @@
                             <td>
                             &nbsp;
                             </td>
+                        </tr>
                     </table>
                 </div>
             </fieldset>

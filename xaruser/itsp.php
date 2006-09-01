@@ -31,7 +31,7 @@ function itsp_user_itsp($args)
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
      */
@@ -62,8 +62,8 @@ function itsp_user_itsp($args)
     /* Add the ITSP user menu */
     // This also gets already all the planitems...
     $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
-
-    $data['itspid'] = $item['itspid'];
+    $itspid = $item['itspid'];
+    $data['itspid'] = $itspid;
     // First see if there is an id to get.
     // Check status
     $stati = xarModApiFunc('itsp','user','getstatusinfo');
@@ -79,8 +79,95 @@ function itsp_user_itsp($args)
        return $data;
     }
 
+    // Get all planitems, only if full details are requested
+    if ($fulldetails) {
+        $items = $data['pitems'];
+        foreach ($items as $fullitem) {
+            // get id
+            $pitemid = $fullitem['pitemid'];
+            if (!empty($pitemid) && is_numeric($pitemid)) {
+                // get planitem
+                $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
+                if (!isset($pitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
+                $fullitem['rule_source'] = $rules['rule_source'];
+                switch ($rules['rule_source']) {
+                    case 'courses':
+                    // get the pitem details for this itsp
+                    // get all linked courses that already have been added to the ITSP for this pitemid
+                    $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid, 'pitemid' => $pitemid));
+
+                    if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
+                    // for each linked course get the details
+                    foreach ($courselinks as $course) {
+                        // Add read link
+                        $courseid = $course['lcourseid'];
+                        if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All")) {
+                            $course['link'] = xarModURL('courses',
+                                'user',
+                                'display',
+                                array('courseid' => $courseid));
+                        } else {
+                            $course['link'] = '';
+                        }
+                        $realcourse = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
+                        $course['name'] = xarVarPrepForDisplay($realcourse['name']);
+                        $course['intendedcredits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
+
+                        $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
+                        if (!empty($enrollstatus)) {
+                            $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
+                                  array('status' => $enrollstatus['studstatus']));
+                            $course['credits'] = $enrollstatus['credits'];
+                            $course['startdate'] = $enrollstatus['startdate'];
+                        } else {
+                            $course['studstatus'] = '';
+                            $course['credits'] = '';
+                            $course['startdate'] = '';
+                        }
+                        /* Add this item to the list of items to be displayed */
+                        // TODO: place at correct place
+                        $fullitem['courses'][] = $course;
+                    }
+                    break;
+                // external courses
+                case 'external':
+                default:
+                    // get all linked courses that already have been added to the ITSP for this plan item
+                    $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
+                    // for each linked course get the details
+                    if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                    /*
+                     * Loop through each item and display it.
+                     */
+                    foreach ($courselinks as $course) {
+                        // Add read link
+                        $courseid = $course['icourseid'];
+                        if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+                            $course['link'] = xarModURL('itsp',
+                                'user',
+                                'display_icourse',
+                                array('icourseid' => $courseid));
+                        } else {
+                            $course['link'] = '';
+                        }
+                        /* Clean up the item text before display */
+                        $course['title'] = xarVarPrepForDisplay($course['icoursetitle']);
+                        $course['credits'] = $course['icoursecredits'];
+
+                        /* Add this item to the list of items to be displayed */
+                        $fullitem['courses'][] = $course;
+                    }
+                }
+            $data['fullitems'][] = $fullitem;
+            }
+        }
+    } else {
+        $data['fullitems'] = array();
+    }
     $item['itemtype'] = 2;
-    // Add the ITSP
+    // Add the ITSP to the array
     $data['item'] = $item;
     // Get the plan
     $plan = xarModApiFunc('itsp','user','get_plan',array('planid' => $planid));
@@ -88,7 +175,7 @@ function itsp_user_itsp($args)
     $data['plan'] = $plan;
     // Security
     $data['authid'] = xarSecGenAuthKey();
-
+    $data['fulldetails'] = $fulldetails;
     xarVarSetCached('Blocks.itsp', 'itspid', $itspid);
     /* Let any hooks know that we are displaying an item.
      */

@@ -18,8 +18,8 @@
  * the full itsp and the values from the menu can be considered the full ITSP
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param id itspid
- * @param id pitemid
+ * @param id itspid The id of the ITSP to show (OPTIONAL)
+ * @param id pitemid ID of the planitem to highlight (OPTIONAL)
  * @return array
  */
 function itsp_userapi_menu()
