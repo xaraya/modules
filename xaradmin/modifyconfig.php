@@ -59,8 +59,8 @@ function maps_admin_modifyconfig()
 			if (!xarVarFetch('longitude', 'str:1', $centerlongitude, xarModVars::get('maps', 'centerlongitude'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('latitude', 'str:1', $centerlatitude, xarModVars::get('maps', 'centerlatitude'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('zoomlevel', 'int:1', $zoomlevel, xarModVars::get('maps', 'zoomlevel'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('mapwidth', 'int:1', $mapwidth, xarModVars::get('maps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
-			if (!xarVarFetch('mapheight', 'int:1', $mapheight, xarModVars::get('maps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapwidth', 'str:1', $mapwidth, xarModVars::get('maps', 'mapwidth'), XARVAR_NOT_REQUIRED)) return;
+			if (!xarVarFetch('mapheight', 'str:1', $mapheight, xarModVars::get('maps', 'mapheight'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('glargemapcontrol', 'checkbox', $glargemapcontrol, xarModVars::get('maps', 'glargemapcontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('gsmallmapcontrol', 'checkbox', $gsmallmapcontrol, xarModVars::get('maps', 'gsmallmapcontrol'), XARVAR_NOT_REQUIRED)) return;
 			if (!xarVarFetch('gsmallzoomcontrol', 'checkbox', $gsmallzoomcontrol, xarModVars::get('maps', 'gsmallzoomcontrol'), XARVAR_NOT_REQUIRED)) return;
