@@ -65,7 +65,7 @@ function itsp_user_itsp($args)
     if (empty($fulldetails)) {
         $fulldetails = false;
     }
-    xarSessionSetVar('itsp.showdetails', $fulldetails);
+    xarSessionSetVar('itsp.fulldetails', $fulldetails);
     $data['fulldetails'] = $fulldetails;
 
     $itspid = $item['itspid'];
