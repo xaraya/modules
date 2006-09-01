@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/3002.html
  * @author Marc Lutolf
  */
-
 /**
- * Pass individual menu items to the user  menu
+ * Pass individual menu items to the user menu
  *
  * @return array containing the menulinks for the main menu items.
  */

@@ -11,15 +11,13 @@
  * @link http://xaraya.com/index.php/release/3002.html
  * @author Marc Lutolf
  */
-
 /**
- * Pass individual menu items to the admin  menu
+ * Pass individual menu items to the admin menu
  *
  * @return array containing the menulinks for the main menu items.
  */
 function window_adminapi_getmenulinks()
 {
-
     $urls = xarModAPIFunc('window','user','getall',array('status' => 1));
     foreach($urls as $url) {
         $url_parts = parse_url($url['name']);

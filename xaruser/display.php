@@ -17,7 +17,12 @@
 /**
  * External page entry point
  *
- * @return  data on success or void on falure
+ * @param string page
+ * @param string title
+ * @param string height
+ * @param string width
+ * @param string auto_resize
+ * @return  data on success or void on failure
  * @throws  XAR_SYSTEM_EXCEPTION, 'NOT_ALLOWED'
 */
 function window_user_display($args)
@@ -78,7 +83,6 @@ function window_user_display($args)
     // Store URL parts in array
     $url_parts = parse_url($page);
 
-
     // Check that a page was specified
     if(!isset($page) || ($page == '')) {
         $msg = xarML('No page to display was specified.',
@@ -125,12 +129,10 @@ function window_user_display($args)
     if(!$title) {
         if($use_fixed_title) {
             $title = 'External Application';
-        }
-        else {
+        } else {
             $title = '';
         }
-    }
-    else {
+    } else {
         $end_title = '';
     }
 
@@ -161,7 +163,7 @@ function window_user_display($args)
     }
 
     if (isset($id)) {
-        $data['hooks'] = xarModCallHooks('item', 'display', $id, 
+        $data['hooks'] = xarModCallHooks('item', 'display', $id,
             array('itemtype'  => $id,
                   'returnurl' => xarModURL('window', 'user', 'main', array('page' => $page, 'id' => $id))),
                   'window');
@@ -173,6 +175,7 @@ function window_user_display($args)
     $data['vsize'] = $vsize;
     $data['auto_resize'] = $auto_resize;
     $data['open_direct'] = $open_direct;
+    $data['use_fixed_title'] = $use_fixed_title;
 
     return $data;
 

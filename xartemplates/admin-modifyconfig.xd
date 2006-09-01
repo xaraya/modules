@@ -1,6 +1,4 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
 
 <div class="xar-mod-head">
@@ -16,7 +14,7 @@
     <xar:template type="module" module="window" file="admin-menu" />
     <h2>
         <xar:mlstring>
-            Modify Configuration 
+            Modify Configuration
         </xar:mlstring>
     </h2>
 
@@ -24,7 +22,7 @@
         <dl class="xar-tabs">
             <dt class="help">
                 <xar:mlstring>
-                    Actions: 
+                    Actions:
                 </xar:mlstring>
             </dt>
             <xar:if condition="$tab eq 'general'">
@@ -48,7 +46,7 @@
                 <dd class="active">
                     <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=display">
                         <xar:mlstring>
-                            Display 
+                            Display
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -56,7 +54,7 @@
                 <dd>
                     <a href="&xar-modurl-window-admin-modifyconfig;&amp;tab=display">
                         <xar:mlstring>
-                            Display 
+                            Display
                         </xar:mlstring>
                     </a>
                 </dd>

@@ -275,6 +275,7 @@ class Frame_Property extends Dynamic_Property
         $data['open_direct'] = $open_direct;
         $data['use_iframe'] = $use_iframe;
         $data['use_object'] = $use_object;
+        $data['use_fixed_title'] = $use_fixed_title;
 
 /*      2x stuff
         // Let parent deal with the rest;
