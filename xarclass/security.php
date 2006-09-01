@@ -29,15 +29,16 @@ class Security
      */
     function check($needed_level, $modid=0, $itemtype=0, $itemid=0, $throw_exception=true)
     {
+        // Security admin also has access to eveything.
         if( $modid != 'security' and Security::check(SECURITY_ADMIN, 'security', 0, 0, false) ){ return true; }
 
         if( is_string($modid) ){ $modid = xarModGetIdFromName($modid); }
 
         // TODO ADD caching mechanism here
-        $cache_name = "security.$modid.$itemtype.$itemid.$needed_level";
+        $cache_name = "security.$needed_level.$modid.$itemtype.$itemid";
         if( xarVarIsCached('modules.security', $cache_name) )
         {
-            return xarVarGetCached('modules.security', $cache_name);
+            return (boolean) xarVarGetCached('modules.security', $cache_name);
         }
 
         // Get Module Settings
@@ -81,13 +82,26 @@ class Security
             FROM $secRolesTable
         ";
 
-        $where[] = "$secRolesTable.modid IN (0, ?)";
-        $bindvars[] = (int)$modid;
-        $where[] = "$secRolesTable.itemtype IN (0, ?)";
-        $bindvars[] = (int)$itemtype;
-        $where[] = "$secRolesTable.itemid IN (0, ?)";
-        $bindvars[] = (int)$itemid;
-
+        // Admin is a special priv. Right now it should be the only one that is inherited.
+        //  So if some one is given admin levels to a module it counts for every thing under it.
+        if( $field == 'xadmin' )
+        {
+            $where[] = "$secRolesTable.modid IN (0, ?) ";
+            $bindvars[] = (int)$modid;
+            $where[] = "$secRolesTable.itemtype IN (0, ?) ";
+            $bindvars[] = (int)$itemtype;
+            $where[] = "$secRolesTable.itemid IN (0, ?) ";
+            $bindvars[] = (int)$itemid;
+        }
+        else
+        {
+            $where[] = "$secRolesTable.modid = ? ";
+            $bindvars[] = (int)$modid;
+            $where[] = "$secRolesTable.itemtype = ? ";
+            $bindvars[] = (int)$itemtype;
+            $where[] = "$secRolesTable.itemid = ?";
+            $bindvars[] = (int)$itemid;
+        }
 
         //Check Groups
         $uids = array(0, xarUserGetVar('uid'));
@@ -110,6 +124,7 @@ class Security
         }
 
         $result = $dbconn->Execute($query, $bindvars);
+
 
         // Cache the result for faster lookups later.
         xarVarSetCached('modules.security', $cache_name, !$result->EOF);
