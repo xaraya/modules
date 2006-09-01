@@ -14,9 +14,12 @@
 /**
  * Generate the common user menu configuration
  *
- * This menu is used in the ITSP area for users
+ * This menu is used in the ITSP area for users. It gets
+ * the full itsp and the values from the menu can be considered the full ITSP
  *
  * @author MichelV <michelv@xarayahosting.nl>
+ * @param id itspid
+ * @param id pitemid
  * @return array
  */
 function itsp_userapi_menu()
@@ -28,10 +31,13 @@ function itsp_userapi_menu()
     /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('Individual Training and Supervision Plan');
 
-    // Specify the labels/links for more menu items if relevant
-
-    // Get the planitems that a user must use in his ITSP
     $userid = xarUserGetVar('uid');
+    // If there is no itspid specified, then assume we want to see the current user's ITSP
+    if (!$itspid) {
+        $where = "xar_userid = $userid";
+    } else {
+        $where = "xar_itspid = $itspid";
+    }
     //Get ITSP
     //Better ignore error
     //$itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
@@ -45,7 +51,7 @@ function itsp_userapi_menu()
     $query = "SELECT xar_itspid,
                      xar_planid
               FROM $itsptable
-              WHERE xar_userid = $userid";
+              WHERE $where";
 
     $result = &$dbconn->Execute($query);
     /* Check for an error with the database code, adodb has already raised

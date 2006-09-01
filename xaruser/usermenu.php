@@ -21,10 +21,10 @@
 function itsp_user_usermenu($args)
 {
     extract($args);
-    /* Security check  - if the user has read access to the menu, show a
-     * link to display the details of the item
-     */
-    if (!xarSecurityCheck('ViewITSP'),0) return '';
+    /* Security check */
+     if (!xarSecurityCheck('ViewITSP',0)) {
+         return '';
+     }
 
     /* First, lets find out where we are in our logic.  If the phase
      * variable is set, we will load the correct page in the loop.

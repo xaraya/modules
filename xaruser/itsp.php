@@ -38,10 +38,6 @@ function itsp_user_itsp($args)
     if (!empty($objectid)) {
         $itspid = $objectid;
     }
-    /* Add the ITSP user menu */
-    // This also gets already all the planitems...
-    $data = xarModAPIFunc('itsp', 'user', 'menu');
-
     // We have a valid ITSP?
     if (empty($itspid)) {
         $item = xarModAPIFunc('itsp',
@@ -57,10 +53,15 @@ function itsp_user_itsp($args)
                               array('itspid' => $itspid));
     }
 
+
     if (empty($item)) {
         xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
+        $data = xarModAPIFunc('itsp', 'user', 'menu');
         return $data;
     }
+    /* Add the ITSP user menu */
+    // This also gets already all the planitems...
+    $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
 
     $data['itspid'] = $item['itspid'];
     // First see if there is an id to get.

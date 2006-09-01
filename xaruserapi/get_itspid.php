@@ -1,6 +1,6 @@
 <?php
 /**
- * Get a specific ITSP id
+ * Get a specific ITSP by userid
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation
