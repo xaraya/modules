@@ -22,7 +22,7 @@
             <p><xar:mlstring>There are two options that allow you to configure urls. The general modify configuration option, and one for managing URL specific settings.</xar:mlstring></p>
             <p><xar:mlstring>General configuration settings are valid for all URLs.</xar:mlstring> </p>
             <p>
-              <xar:mlstring>The general configuration settings available are:</xar:mlstring>:
+              <xar:mlstring>The general configuration settings available are:</xar:mlstring>
               <ul>
                 <li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
                 <li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
@@ -36,7 +36,7 @@
                 <li><xar:mlstring>Define the height and width of the display.</xar:mlstring></li>
               </ul>
             </p>
-            <p><xar:mlstring>You can also define specific settings for different pages.</xar:mlstring> <xar:mlstring>URL specific settings, such as the dimensions of the display, will override the general settings.</xar:mlstring> </p>
+            <p><xar:mlstring>You can also define specific settings for different pages. URL specific settings, such as the dimensions of the display, will override the general settings.</xar:mlstring> </p>
 
             <p><xar:mlstring>To display an external page, create an entry for it in the user menu. (See the Blocks module for information on how to do this.)
             In the URL field of the menu entry write the following:</xar:mlstring></p>
