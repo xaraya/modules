@@ -86,5 +86,6 @@
             <xar:data-input type="maplocation" name="locations" id="maps_locations" />
         </div>
     </fieldset>
+    <xar:if condition="!isset($style)">""</xar:if>
     <div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#" ></div>
 </form>

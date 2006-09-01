@@ -36,4 +36,5 @@
     </xar:foreach>
   }
 </script>
+<xar:if condition="!isset($style)">""</xar:if>
 <div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#"></div>
