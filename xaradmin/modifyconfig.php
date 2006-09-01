@@ -81,6 +81,7 @@ function maps_admin_modifyconfig()
 				xarModVars::set('maps', 'centerlongitude', $centerlongitude);
 				xarModVars::set('maps', 'centerlatitude', $centerlatitude);
 				xarModVars::set('maps', 'mapwidth', $mapwidth);
+				xarModVars::set('maps', 'mapheight', $mapheight);
 				xarModVars::set('maps', 'glargemapcontrol', $glargemapcontrol);
 				xarModVars::set('maps', 'gsmallmapcontrol', $gsmallmapcontrol);
 				xarModVars::set('maps', 'gsmallzoomcontrol', $gsmallzoomcontrol);
