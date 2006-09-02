@@ -82,26 +82,12 @@ class Security
             FROM $secRolesTable
         ";
 
-        // Admin is a special priv. Right now it should be the only one that is inherited.
-        //  So if some one is given admin levels to a module it counts for every thing under it.
-        if( $field == 'xadmin' )
-        {
-            $where[] = "$secRolesTable.modid IN (0, ?) ";
-            $bindvars[] = (int)$modid;
-            $where[] = "$secRolesTable.itemtype IN (0, ?) ";
-            $bindvars[] = (int)$itemtype;
-            $where[] = "$secRolesTable.itemid IN (0, ?) ";
-            $bindvars[] = (int)$itemid;
-        }
-        else
-        {
-            $where[] = "$secRolesTable.modid = ? ";
-            $bindvars[] = (int)$modid;
-            $where[] = "$secRolesTable.itemtype = ? ";
-            $bindvars[] = (int)$itemtype;
-            $where[] = "$secRolesTable.itemid = ?";
-            $bindvars[] = (int)$itemid;
-        }
+        $where[] = "$secRolesTable.modid IN (0, ?) ";
+        $bindvars[] = (int)$modid;
+        $where[] = "$secRolesTable.itemtype IN (0, ?) ";
+        $bindvars[] = (int)$itemtype;
+        $where[] = "$secRolesTable.itemid = ?";
+        $bindvars[] = (int)$itemid;
 
         //Check Groups
         $uids = array(0, xarUserGetVar('uid'));

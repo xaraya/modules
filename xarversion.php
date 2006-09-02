@@ -26,5 +26,5 @@ $modversion['user'] = 0;
 $modversion['securityschema'] = array('security::All' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Global';
-$modversion['dependency'] = array();
+$modversion['dependency'] = array(785);
 ?>
