@@ -10,6 +10,7 @@
  * @subpackage Ajax Library Module
  * @author Brian McGilligan <brian@mcgilligan.us>
  */
+
 $modversion['name'] = 'ajax';
 $modversion['displayname'] = 'Ajax Library';
 $modversion['id'] = '785';
