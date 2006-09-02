@@ -35,7 +35,7 @@
 		{
 			$this->loaddata($args);
 		}
-		private function loaddata(array $args)
+		protected function loaddata(array $args)
 		{
 			if (isset($args['id'])) $this->id = $args['id'];
 			if (isset($args['name'])) $this->name = $args['name'];
