@@ -28,6 +28,7 @@
 					'id' => $this->id,
 					'name' => $this->name,
 					'description' => $this->description,
+					'windowtext' => $this->windowtext,
 					'longitude' => $this->longitude,
 					'latitude' => $this->latitude,
 				);
