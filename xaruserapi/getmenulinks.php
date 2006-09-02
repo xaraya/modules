@@ -20,11 +20,11 @@
  */
 function helpdesk_userapi_getmenulinks()
 {
-    $modid = xarModGetIDFromName('helpdesk');
+    $modid = (int) xarModGetIDFromName('helpdesk');
     $menulinks = array();
 
     // Security Check
-    if( Security::check(SECURITY_READ, $modid, TICKET_ITEMTYPE, null, false) )
+    if( Security::check(SECURITY_READ, $modid, 0, 0, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'main'),
@@ -35,7 +35,7 @@ function helpdesk_userapi_getmenulinks()
     }
 
     // Security Check
-    if( Security::check(SECURITY_ADMIN, $modid, TICKET_ITEMTYPE, null, false) )
+    if( Security::check(SECURITY_ADMIN, $modid, 0, 0, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'admin','main'),
@@ -47,7 +47,7 @@ function helpdesk_userapi_getmenulinks()
     }
 
     // Security Check
-    if( Security::check(SECURITY_WRITE, $modid, TICKET_ITEMTYPE, null, false) )
+    if( Security::check(SECURITY_WRITE, $modid, TICKET_ITEMTYPE, 0, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'new'),
@@ -57,7 +57,7 @@ function helpdesk_userapi_getmenulinks()
         );
     }
 
-    if( Security::check(SECURITY_READ, $modid, TICKET_ITEMTYPE, null, false) )
+    if( Security::check(SECURITY_READ, $modid, TICKET_ITEMTYPE, 0, false) )
     {
         $menulinks[] = array(
             'url'   => xarModURL('helpdesk', 'user', 'search'),
