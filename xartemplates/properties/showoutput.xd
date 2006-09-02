@@ -23,7 +23,7 @@
     <xar:foreach in="$locations" value="$location">
         <xar:if condition="empty($location['latitude2'])">
             point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-            marker = createMarker(mapnumber,point,"#$location['name']#");
+            marker = createMarker(mapnumber,point,"#$location['windowtext']#");
             maps[mapnumber].addOverlay(marker);
         <xar:else />
             var points = new Array();
