@@ -36,50 +36,18 @@ function security_adminapi_updatehook($args)
     if( !empty($objectid) )
         $itemid = $objectid;
 
-    $has_admin_security = xarModAPIFunc('security', 'user', 'check',
-        array(
-            'modid'    => $modid,
-            'itemtype' => $itemtype,
-            'itemid'   => $itemid,
-            'level'    => SECURITY_ADMIN,
-            'hide_exception' => true
-        )
-    );
-    if( !$has_admin_security ){ return ''; }
+    if( !Security::check(SECURITY_ADMIN, $modid, $itemtype, $itemid, false) ){ return ''; }
 
-    // Do a little poll to see if
-    if( !xarVarFetch('group',  'int',   $group,  0,       XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('levels','array',$levels, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
-    if( !xarVarFetch('overview', 'array', $overview,array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('read',     'array', $read,    array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('comment',  'array', $comment, array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('write',    'array', $write,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('manage',   'array', $manage,  array(), XARVAR_NOT_REQUIRED) ){ return false; }
-    if( !xarVarFetch('admin',    'array', $admin,   array(), XARVAR_NOT_REQUIRED) ){ return false; }
-
-    $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
-    $levels = array();
-
-    // Calc all new levels
-    foreach( $secLevels as $secLevel )
+    $security = new SecurityLevels($modid, $itemtype, $itemid);
+    foreach( $levels as $role_id => $level )
     {
-        foreach( $$secLevel['name'] as $role_id => $value )
-        {
-            if( $role_id > -1 )
-            {
-                $levels[$role_id][$secLevel['name']] = $value;
-            }
-        }
+        $security->add(new SecurityLevel($level), $role_id);
     }
 
-    $settings['levels'] = $levels;
-    $sargs = array(
-        'modid'    => $modid,
-        'itemtype' => $itemtype,
-        'itemid'   => $itemid,
-        'settings' => $settings
-    );
-    xarModAPIFunc('security', 'admin', 'update', $sargs);
+    $result = Security::update($security, $modid, $itemtype, $itemid);
+    if( !$result ){ return false; }
 
     return $extrainfo;
 }

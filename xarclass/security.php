@@ -34,7 +34,6 @@ class Security
 
         if( is_string($modid) ){ $modid = xarModGetIdFromName($modid); }
 
-        // TODO ADD caching mechanism here
         $cache_name = "security.$needed_level.$modid.$itemtype.$itemid";
         if( xarVarIsCached('modules.security', $cache_name) )
         {
