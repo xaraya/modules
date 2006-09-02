@@ -14,6 +14,7 @@
 		public $id;
 		public $name;
 		public $description;
+		public $windowtext;
 		public $longitude;
 		public $latitude;
 
@@ -40,6 +41,7 @@
 			if (isset($args['id'])) $this->id = $args['id'];
 			if (isset($args['name'])) $this->name = $args['name'];
 			if (isset($args['description'])) $this->description = $args['description'];
+			if (isset($args['windowtext'])) $this->windowtext = $args['windowtext'];
 			if (isset($args['longitude'])) $this->longitude = $args['longitude'];
 			if (isset($args['latitude'])) $this->latitude = $args['latitude'];
 		}
