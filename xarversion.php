@@ -1,35 +1,31 @@
 <?php
 /**
- * Initialize the formantibot module
+ * Ajax Library - A Prototype library collection.
  *
- * @package Xaraya modules
- * @copyright (C) 2002-2006 The Digital Development Foundation 
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license   New BSD License
+ * @link http://www.xaraya.com
  *
- * @subpackage Formantibot
- * @copyright (C) 2008,2009 2skies.com
- * @link http://xarigami.com/project/formantibot
- * @author Carl P. Corliss <carl.corliss@xaraya.com>
- * @author Jo Dalle Nogare <icedlava@2skies.com>
+ * @subpackage Ajax Library Module
+ * @author Brian McGilligan <brian@mcgilligan.us>
  */
-
-$modversion['name'] = 'formantibot';
-$modversion['directory'] = 'formantibot';
-$modversion['id'] = '761';
-$modversion['version'] = '0.6.2';
-$modversion['displayname']    = 'Formantibot';
-$modversion['description'] = 'Captcha image input for securing forms';
+$modversion['name'] = 'ajax';
+$modversion['displayname'] = 'Ajax Library';
+$modversion['id'] = '785';
+$modversion['version'] = '0.9.0';
+$modversion['description'] = ' A Prototype library collection.';
 $modversion['credits'] = 'xardocs/credits.txt';
-$modversion['help'] = '';
+$modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';
-$modversion['license'] = '';
+$modversion['license'] = 'xardocs/license.txt';
 $modversion['official'] = 1;
-$modversion['author'] = 'Jo Dalle Nogare';
-$modversion['contact'] = 'http://xarigami.com';
+$modversion['author'] = 'Brian McGilligan';
+$modversion['contact'] = 'brian@mcgilligan.us';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['class'] = 'Utility';
-$modversion['category'] = 'Content';
-$modversion['requires'] = array();
+$modversion['securityschema'] = array('ajax::All' => '::');
+$modversion['class'] = 'Complete';
+$modversion['category'] = 'Global';
+$modversion['dependency'] = array();
 ?>

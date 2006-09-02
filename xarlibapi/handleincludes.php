@@ -10,8 +10,13 @@
  * @subpackage Ajax Library Module
  * @author Brian McGilligan <brian@mcgilligan.us>
  */
-function ajax_admin_main($args)
+
+function ajax_libapi_handleincludes($args)
 {
-    return array();
+    if( !isset($name) ){ $name = "prototype"; }
+    $out = "xarModAPIFunc("
+    . "'ajax', 'lib', 'includes', "
+    . "array('name'=>'" . $name . "')); ";
+    return $out;
 }
 ?>

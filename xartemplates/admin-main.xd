@@ -1,75 +1,48 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> License: New BSD</xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Format Anti-Bot Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>Ajax Library</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-  <xar:template type="module" module="formantibot" file="admin-menu" />
-   <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-    <h2>
-        <xar:mlstring>Overview</xar:mlstring>
-    </h2>
-    <h3>
-            <xar:mlstring>What is it?</xar:mlstring>
-    </h3>
-        <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em> 
-            <xar:mlstring>The module secures forms from abuse by bot's by requiring translation and input of numeric or image based text, sometimes known as CAPTCHA.
-            The module can be used in conjunction with other Xarigami and Xaraya modules that support it either via hooks or through direct use of apis in the module.</xar:mlstring></p>
-            <p><xar:mlstring>The following modules currently support FormAnti-Bot:</xar:mlstring></p>
-            <ul>
-                <li><xar:mlstring>Xarigami and Xaraya Sitecontact module - a contact form module allowing multiple, custom contact forms, and optional saving of data.</xar:mlstring></li>
-                <li><xar:mlstring>Xarigami and Xaraya Comments module - a comments module with moderation and spam control features.</xar:mlstring></li>
-                <li><xar:mlstring>Xarigami xarBB  - a lightweight forum module that can be optioned up with various features via hooks.</xar:mlstring></li>                
-            </ul>
-        <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
-       </h3>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>The Ajax Library module is a collection of javascript libraries generally based on prototype.</xar:mlstring>
+        <p><xar:mlstring>The following libraries are include:</xar:mlstring></p>
         <ul>
-            <xar:set name="hookurl">#xarModURL('modules','admin','hooks',array('hook'=>'formantibot'))#</xar:set>
-            <li>
-                <a href="#$hookurl#"><xar:mlstring>Hook Formantibot</xar:mlstring></a><xar:mlstring> to the module in which  you wish to display the captcha.</xar:mlstring>
-            </li>
-            <li>
-               <xar:set name="configurl">#xarModURL('formantibot','admin','modifyconfig')#</xar:set>
-                <xar:mlstring> Choose the type of captcha you would like to use in the </xar:mlstring><a href="#$configurl#"><xar:mlstring>Modify Configuration page</xar:mlstring></a>. 
-                <xar:mlstring>Currently both image captcha and a simple numeric challenge question captcha are available.</xar:mlstring>
-            </li>            
-            <li>
-                <a href="#$configurl#"><xar:mlstring>Set configuration settings</xar:mlstring></a><xar:mlstring> in the Formantibot modify configuration page as you would like them.</xar:mlstring>
-            </li>
+            <li><a href="http://prototype.conio.net/" target="_blank">Prototype</a></li>
+            <li><a href="http://script.aculo.us/" target="_blank">Scriptaculous</a></li>
+            <li><a href="http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/" target="_blank">validation</a></li>
         </ul>
-        <p><xar:mlstring>Developer note: 
-            In using the Formantibot hooks, it was necessary to call the usual create hook earlier than usual in the target module. 
-            We need to get the hook results (whether the code was valid or not) prior to creating a new item. 
-            If it is invalid code then like other invalid form variables, it is used to decide whether to return the user to the form.
-            Thus we use a 'submit' hook that needs to be called in modules prior to the item creation.
-        </xar:mlstring>
-        </p>
-         <h3>
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>None</xar:mlstring>
-        </p>
-        <h3>
-            <xar:mlstring>Included Hooks</xar:mlstring>
-    </h3>
-        <p>
-            <xar:mlstring>Display/new and submit hooks are supplied.</xar:mlstring>
-        </p> 
-  <h3>
-    <xar:mlstring>Further Information</xar:mlstring>
-  </h3>
-  <p>
-    <xar:mlstring>Further information on the FormAnti-Bot module can be found at</xar:mlstring>
-  </p>
-  <ul>
-    <li><xar:mlstring>FormAnti-Bot Project page at</xar:mlstring> <a title="#xarML('FormAnti-Bot project page')#" href="http://xarigami.com/project/xarigami_formantibot">Xarigami Formantibot</a>.
-    </li>
-    <li><xar:mlstring>Related tutorials and documentation on FormAnti-Bot found at</xar:mlstring> <a href="http://xarigami.com/resources/" title="#xarML('Related documentation on FormAnti-Bot')#"><xar:mlstring>Xarigami Resources</xar:mlstring></a>
-    </li>
-  </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Revision</xar:mlstring> 1.1.1&nbsp; 2008-12-27
-  </p>
-</div>
+    </p>
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>This module is geared towards module developers.  It provides them with a rich set of libraries to create ajax based module.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>The libraries are split up into the following components.</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>prototype</xar:mlstring></li>
+            <li><xar:mlstring>scriptaculous</xar:mlstring></li>
+            <li><xar:mlstring>builder</xar:mlstring></li>
+            <li><xar:mlstring>controls</xar:mlstring></li>
+            <li><xar:mlstring>dragdrop</xar:mlstring></li>
+            <li><xar:mlstring>effects</xar:mlstring></li>
+            <li><xar:mlstring>slider</xar:mlstring></li>
+            <li><xar:mlstring>validation</xar:mlstring></li>
+        </ul>
+    </p>
 
+    <p>
+        <xar:mlstring>By default prototype is always included as most if not all libraries require it.  By including scriptaculous the following packages will be automatically included: builder, controls, dragdrop, effects, slider.  If you only want some components then you will need to call them each seperately.</xar:mlstring>
+    </p>
+
+    <p>
+        <xar:mlstring>Now to include these components on a page the Ajax Library module provides a ajax-lib tag.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Examples:</xar:mlstring></h3>
+    <p>
+        &lt;xar:ajax-lib name="prototype" /&gt;
+        <br /> &lt;xar:ajax-lib name="scriptaculous" /&gt;
+        <br /> &lt;xar:ajax-lib name="effects" /&gt;
+    </p>
+</div>
