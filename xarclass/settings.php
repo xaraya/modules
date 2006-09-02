@@ -96,9 +96,12 @@ class SecuritySettings
         }
 
         // Convers the default item levels for new items
-        foreach( $array_params['levels'] as $role => $level_set )
+        if( is_array($array_params['levels']) )
         {
-            $this->default_item_levels[$role] = new SecurityLevel($level_set);
+            foreach( $array_params['levels'] as $role => $level_set )
+            {
+                $this->default_item_levels[$role] = new SecurityLevel($level_set);
+            }
         }
     }
 
