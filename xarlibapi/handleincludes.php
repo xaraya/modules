@@ -13,6 +13,7 @@
 
 function ajax_libapi_handleincludes($args)
 {
+    extract($args);
     if( !isset($name) ){ $name = "prototype"; }
     $out = "xarModAPIFunc("
     . "'ajax', 'lib', 'includes', "

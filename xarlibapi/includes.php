@@ -12,6 +12,8 @@
  */
 function ajax_libapi_includes($args)
 {
+    extract($args);
+
     if( !isset($name) ){ $name = "prototype"; }
 
     $libs_needed = array('prototype');
