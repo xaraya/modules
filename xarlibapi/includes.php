@@ -29,6 +29,17 @@ function ajax_libapi_includes($args)
     }
     elseif( $name != 'prototype' )
     {
+        if( $name == 'validation' )
+        {
+            require_once "modules/themes/xarclass/xarcss.class.php";
+            $css_args = array(
+                'scope'    => 'module'
+                , 'module' => 'ajax'
+                , 'file'   => 'validation'
+            );
+            $obj = new xarCSS($css_args);
+            $obj->run_output();
+        }
         $libs_needed[] = $name;
     }
 
