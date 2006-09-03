@@ -27,7 +27,7 @@ class SecuritySettings
         , 'write'   => SECURITY_WRITE
         , 'manage'  => SECURITY_MANAGE
         , 'admin'   => SECURITY_ADMIN
-        , 'none'    => SECURITY_NONE
+        //, 'none'    => SECURITY_NONE
     );
 
     /**
@@ -92,7 +92,10 @@ class SecuritySettings
         $this->default_group_level = new SecurityLevel();
         foreach( $this->levels as $label => $value )
         {
-            $this->default_group_level->$label = $array_params['default_group_level'] & $value;
+            if( $label != 'none' )
+            {
+                $this->default_group_level->$label = $array_params['default_group_level'] & $value;
+            }
         }
 
         // Convers the default item levels for new items

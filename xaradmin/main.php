@@ -17,17 +17,10 @@
 */
 function security_admin_main($args)
 {
-    extract($args);
     if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
+    extract($args);
 
-    if( xarModGetVar('adminpanels', 'overview') == 0 )
-    {
-        xarResponseRedirect(xarModURL('security', 'admin', 'overview'));
-    }
-    else
-    {
-        xarResponseRedirect(xarModURL('security', 'admin', 'hook_settings'));
-    }
+    xarResponseRedirect(xarModURL('security', 'admin', 'overview'));
 
     return false;
 }

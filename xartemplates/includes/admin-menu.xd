@@ -9,29 +9,27 @@
         <dt class="help" title="Choose an action to perform">
             <xar:mlstring>Actions:</xar:mlstring>
         </dt>
-        <xar:sec mask="AdminSecurity" catch="false">
-            <xar:set name="manage_funcs">array('view')</xar:set>
-            <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-security-admin-view;">
-                    <xar:mlstring>Browse Security</xar:mlstring>
-                </a>
-            </dd>
+        <xar:set name="manage_funcs">array('view')</xar:set>
+        <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-security-admin-view;">
+                <xar:mlstring>Browse Security</xar:mlstring>
+            </a>
+        </dd>
 
-            <xar:set name="manage_funcs">array('hook_settings')</xar:set>
-            <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-security-admin-hook_settings;">
-                    <xar:mlstring>Hook Settings</xar:mlstring>
-                </a>
-            </dd>
+        <xar:set name="manage_funcs">array('hook_settings')</xar:set>
+        <xar:set name="tabclass">in_array($activetab, $manage_funcs)?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-security-admin-hook_settings;">
+                <xar:mlstring>Hook Settings</xar:mlstring>
+            </a>
+        </dd>
 
-            <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-                <a href="&xar-modurl-security-admin-overview;">
-                    <xar:mlstring>Overview</xar:mlstring>
-                </a>
-            </dd>
-        </xar:sec>
+        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-security-admin-overview;">
+                <xar:mlstring>Overview</xar:mlstring>
+            </a>
+        </dd>
     </dl>
 </div>
