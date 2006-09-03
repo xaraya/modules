@@ -67,13 +67,14 @@
                     </xar:if>
 
                     <option value="">-------------</option>
-                    <xar:if condition="xarSecurityCheck('edithelpdesk',0)">
+                    <xar:if condition="Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false)">
                         <option value="MYPERSONAL"><xar:mlstring>My Tickets</xar:mlstring></option>
                         <option value="MYASSIGNEDALL"><xar:mlstring>My Assigned Tickets</xar:mlstring></option>
                         <option value="UNASSIGNED"><xar:mlstring>Unassigned Tickets</xar:mlstring></option>
                         <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
                     <xar:else />
-                        <option value="MYALL"><xar:mlstring>My Tickets</xar:mlstring></option>
+                        <option value="MYPERSONAL"><xar:mlstring>My Tickets</xar:mlstring></option>
+                        <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
                     </xar:if>
                     </select>
                 </td>

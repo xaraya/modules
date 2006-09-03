@@ -187,7 +187,7 @@ function helpdesk_userapi_gettickets($args)
     if( count($left_join) > 0 ){ $sql .= join(' ', $left_join); }
     if( count($whereor) > 0 ){ $where[] = '(' . join(' OR ', $whereor) . ')'; }
     if( count($where) > 0 ){ $sql .= ' WHERE ' . join(' AND ', $where); }
-    //if( $count != true ){ $sql .= " GROUP BY xar_id"; }
+    if( $count == true ){ $sql .= " GROUP BY $helpdesktable.xar_id"; }
 
     switch($sortorder)
     {

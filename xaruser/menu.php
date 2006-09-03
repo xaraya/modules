@@ -18,19 +18,9 @@
  */
 function helpdesk_user_menu()
 {
-    if (!xarSecurityCheck('readhelpdesk')) return;
-
-    $data['userisloggedin'] = xarUserIsLoggedIn();
-
-    xarVarFetch('func',      'str', $data['page'],       'main', XARVAR_NOT_REQUIRED);
-    xarVarFetch('selection', 'str', $data['selection'],  '',     XARVAR_NOT_REQUIRED);
-
+    if( !xarVarFetch('func',      'str', $data['page'],       'main', XARVAR_NOT_REQUIRED) ){ return false; }
+    if( !xarVarFetch('selection', 'str', $data['selection'],  '',     XARVAR_NOT_REQUIRED) ){ return false; }
     $data['menulinks'] = xarModAPIFunc('helpdesk', 'user', 'getmenulinks');
-
-    $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
-
-    xarTplAddStyleLink('helpdesk', 'style', $fileExt = 'css');
-
     return xarTplModule('helpdesk', 'user', 'menu', $data);
 }
 ?>

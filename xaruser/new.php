@@ -251,9 +251,6 @@ function helpdesk_user_new()
     // Make the call to get their value here to prevent multiple function calls
     // and/or db queries
     $data['allowcloseonsubmit']    = xarModGetVar('helpdesk', 'AllowCloseOnSubmit');
-    $data['readaccess']            = xarSecurityCheck('readhelpdesk', 0);
-    $data['editaccess']            = xarSecurityCheck('edithelpdesk', 0);
-    $data['adminaccess']           = xarSecurityCheck('adminhelpdesk', 0);
     $data['userisloggedin']        = xarUserIsLoggedIn();
 
     if (!xarVarFetch('itemtype', 'int', $itemtype, TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED)) return;
@@ -295,7 +292,7 @@ function helpdesk_user_new()
         array('itemtype' => STATUS_ITEMTYPE)
     );
 
-    if( $data['editaccess'] )
+    if( Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false) )
     {
         $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
             array('itemtype' => REPRESENTATIVE_ITEMTYPE)

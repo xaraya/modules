@@ -141,7 +141,7 @@ function helpdesk_admin_setup_security($args)
         if( $data['security_user_levels_ok'] == false )
         {
             $settings->default_item_levels['user'] = array(
-                'overwrite' => 1
+                'overview'  => 1
                 , 'read'    => 1
                 , 'comment' => 1
                 , 'write'   => 1
@@ -154,7 +154,7 @@ function helpdesk_admin_setup_security($args)
         if( $data['security_tech_levels_ok'] == false && $tech_group_id > 0 )
         {
             $settings->default_item_levels[$tech_group_id] = array(
-                'overwrite' => 1
+                'overview'  => 1
                 , 'read'    => 1
                 , 'comment' => 1
                 , 'write'   => 1
@@ -167,7 +167,7 @@ function helpdesk_admin_setup_security($args)
         if( $data['security_world_levels_ok'] == false )
         {
             $settings->default_item_levels[0] = array(
-                'overwrite' => 0
+                'overview'  => 0
                 , 'read'    => 0
                 , 'comment' => 0
                 , 'write'   => 0
@@ -222,12 +222,19 @@ function helpdesk_level_to_numeric($level)
     );
 
     $numeric_level = 0;
-    foreach( $level as $key => $value )
+    if( is_array($level) )
     {
-        if( $value == 1 )
+        foreach( $level as $key => $value )
         {
-            $numeric_level += $map[$key];
+            if( $value == 1 )
+            {
+                $numeric_level += $map[$key];
+            }
         }
+    }
+    else
+    {
+        $numeric_level = $level;
     }
 
     return $numeric_level;

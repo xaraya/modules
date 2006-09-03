@@ -1,5 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="tmp">xarTplAddStyleLink('base', 'navtabs')</xar:set>
+<xar:style scope="module" module="base" file="navtabs"  />
+<xar:style scope="module" module="helpdesk" file="style"  />
+
 <dl class="xar-tabs" style="margin-bottom: 0px;">
 
     <xar:foreach in="$menulinks" key="$key" value="$link">

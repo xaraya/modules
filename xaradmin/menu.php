@@ -38,8 +38,6 @@ function helpdesk_admin_menu()
         }
     }
 
-    xarTplAddStyleLink('helpdesk', 'style', $fileExt = 'css');
-
     return xarTplModule('helpdesk', 'admin', 'menu', $data);
 }
 ?>

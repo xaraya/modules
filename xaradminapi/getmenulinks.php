@@ -19,7 +19,8 @@
 function helpdesk_adminapi_getmenulinks()
 {
     $menulinks = array();
-    if( xarSecurityCheck('adminhelpdesk',0) ) {
+    if( Security::check(SECURITY_ADMIN, 'helpdesk', 0, 0, false) )
+    {
         $menulinks[] = array('url'   => xarModURL('helpdesk', 'admin', 'view'),
             'title' => xarML('View Items'),
             'label' => xarML('View Items')
