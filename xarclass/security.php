@@ -41,7 +41,7 @@ class Security
         }
 
         // Get Module Settings
-        $settings = SecuritySettings::factory($modid, $itemtype);
+        //$settings = SecuritySettings::factory($modid, $itemtype);
 
         // Get DB conn ready
         $dbconn =& xarDBGetConn();
@@ -89,16 +89,24 @@ class Security
         $bindvars[] = (int)$itemid;
 
         //Check Groups
+        $uid = xarUserGetVar('uid');
         $uids = array(0, xarUserGetVar('uid'));
-        $roles = new xarRoles();
-        $user = $roles->getRole(xarUserGetVar('uid'));
-        $tmp = $user->getParents();
-        foreach( $tmp as $u )
-        {
-            $uids[] = $u->uid;
-        }
-        $where[] = "uid IN (". join(', ', $uids) .")";
 
+        $groups_cache_name = "security.groups.$uid";
+        if( xarVarIsCached('modules.security', $groups_cache_name) )
+        {
+            $where[] = xarVarGetCached('modules.security', $groups_cache_name);
+        }
+        else
+        {
+            $roles = new xarRoles();
+            $user = $roles->getRole($uid);
+            $tmp = $user->getParents();
+            foreach( $tmp as $u ){ $uids[] = $u->uid; }
+            $group_where = "uid IN (". join(', ', $uids) .")";
+            xarVarSetCached('modules.security', $groups_cache_name, $group_where);
+            $where[] = $group_where;
+        }
 
         // Check for world
         $where[] = "$field = 1";
