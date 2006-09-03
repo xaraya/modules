@@ -29,18 +29,29 @@ function helpdesk_userapi_update_status($args)
     $db_table = $xartable['helpdesk_tickets'];
 
     $resolved_statuses = xarModAPIFunc('helpdesk', 'user', 'get_resolved_statuses');
-    if( in_array($status, $resolved_statuses) ){ $closer = xarUserGetVar('uid'); }
-    else{ $closer = null; }
-
-    $sql = "
-        UPDATE $db_table
-        SET
-            xar_statusid  = ?
-            ,xar_closedby = ?
-            ,xar_updated  = ?
-        WHERE xar_id = ?
-    ";
-    $bindvars = array($status, $closer, date("Y-m-d H:i:s"), $itemid);
+    if( in_array($status, $resolved_statuses) )
+    {
+        $sql = "
+            UPDATE $db_table
+            SET
+                xar_statusid  = ?
+                ,xar_closedby = ?
+                ,xar_updated  = ?
+            WHERE xar_id = ?
+        ";
+        $bindvars = array($status, xarUserGetVar('uid'), date("Y-m-d H:i:s"), $itemid);
+    }
+    else
+    {
+        $sql = "
+            UPDATE $db_table
+            SET
+                xar_statusid  = ?
+                ,xar_updated  = ?
+            WHERE xar_id = ?
+        ";
+        $bindvars = array($status, date("Y-m-d H:i:s"), $itemid);
+    }
 
     $result = $dbconn->Execute($sql, $bindvars);
     if( !$result ){ return false; }
