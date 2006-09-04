@@ -30,11 +30,10 @@ function itsp_userapi_decode_shorturl($params)
     $aliasisset = xarModGetVar('itsp', 'useModuleAlias');
     $aliasname = xarModGetVar('itsp','aliasname');
     if (($aliasisset) && isset($aliasname)) {
-        $usealias   = true;
+        $usealias = true;
     } else{
         $usealias = false;
     }
-
 
     /* Analyse the different parts of the virtual path
      * $params[1] contains the first part after index.php/itsp
@@ -54,16 +53,36 @@ function itsp_userapi_decode_shorturl($params)
         return array('main', $args);
     } elseif (preg_match('/^list/i', $params[1])) {
         /* something that starts with 'list' is probably for the view function
-         * Note : make sure your encoding/decoding is consistent ! :-)
          */
         return array('view', $args);
+    } elseif (preg_match('/^modify/i', $params[1])) {
+        /* something that starts with 'list' is probably for the view function
+         */
+        return array('modify', $args);
+    } elseif (preg_match('/^display/i', $params[1], $matches)) {
+        /* something that starts with 'list' is probably for the view function
+         */
+        if (preg_match('/^(\d+)/', $params[2], $matches)) {
+            /* something that starts with a number must be for the display function
+             */
+            $planid = $matches[1];
+            $args['planid'] = $planid;
+        }
+        return array('display', $args);
+    } elseif (preg_match('/^itsp/i', $params[1])) {
+        /* something that starts with 'list' is probably for the view function
+
+        if (preg_match('/^(\d+)/', $params[2], $matches)) {
+            $itspid = $matches[1];
+            $args['itspid'] = $itspid;
+        }*/
+        return array('itsp', $args);
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
         /* something that starts with a number must be for the display function
-         * Note : make sure your encoding/decoding is consistent ! :-)
          */
-        $exid = $matches[1];
-        $args['exid'] = $exid;
-        return array('display', $args);
+        $itspid = $matches[1];
+        $args['itspid'] = $itspid;
+        return array('itsp', $args);
     } else {
         /* the first part might be something variable like a category name
          * In order to match that, you'll have to retrieve all relevant
@@ -99,5 +118,6 @@ function itsp_userapi_decode_shorturl($params)
          */
     }
     /* default : return nothing -> no short URL decoded */
+
 }
 ?>
