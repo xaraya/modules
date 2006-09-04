@@ -32,7 +32,9 @@ function itsp_user_review($args)
     if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',   'id', $userid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
      */
@@ -40,76 +42,87 @@ function itsp_user_review($args)
         $itspid = $objectid;
     }
     // We have a valid ITSP?
-    if (empty($itspid)) {
+    if (!empty($userid)) {
         $item = xarModAPIFunc('itsp',
                           'user',
                           'get_itspid',
-                          array('userid' => xarUserGetVar('uid')));
-    } else {
-
+                          array('userid' => $userid));
+        if (!empty($item)) {
+            xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itpsid'=>$item['itspid'], 'pitemid'=> $pitemid)));
+        }
+    } elseif (!empty($itspid)) {
         // The user API function is called to get the ITSP
         $item = xarModAPIFunc('itsp',
                               'user',
                               'get',
                               array('itspid' => $itspid));
+        if (!empty($item)) {
+            xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itpsid'=>$itspid, 'pitemid'=> $pitemid)));
+        }
     }
-
-
+/*
     if (empty($item)) {
         xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
         $data = xarModAPIFunc('itsp', 'user', 'menu');
         return $data;
     }
-    /* Add the ITSP user menu */
-    // This also gets already all the planitems...
-    $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
+    */
 
-    $data['itspid'] = $item['itspid'];
-    // First see if there is an id to get.
+    $data = array();
+    $uid = xarUserGetVar('uid');
+    // Get all the ITSPs and set their status
+    $items = xarModAPIFunc('itsp',
+                              'user',
+                              'getall',
+                              array('startnum' => $startnum,
+                                    'numitems' => xarModGetUserVar('itsp',
+                                                 'itemsperpage', $uid)));
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+
     // Check status
     $stati = xarModApiFunc('itsp','user','getstatusinfo');
     $data['stati'] = $stati;
-    $itspstatus = $item['itspstatus'];
-    $data['statusname'] = $stati[$itspstatus];
-    $data['itspstatus'] = $itspstatus;
 
-    $planid = $item['planid'];
-    $userid = $item['userid'];
-    // Security check
-    if (!xarSecurityCheck('ReadITSP',1,'ITSP',"$itspid:$planid:$userid")) {
-       return $data;
+    foreach ($items as $item) {
+        $itspid = $item['itspid'];
+        $userid = $item['userid'];
+        $planid = $item['planid'];
+        // Add read link
+        if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+            $item['itsplink'] = xarModURL('itsp',
+                'user',
+                'itsp',
+                array('itspid' => $itspid));
+            /* Security check 2 - else only display the item name (or whatever is
+             * appropriate for your module)
+             */
+        } else {
+            $item['itsplink'] = '';
+        }
+        $item['username'] = xarUserGetVar('name', $userid);
+        $item['rolelink'] = xarModURL('roles',
+                'user',
+                'display',
+                array('uid' => $userid));
+        $itspstatus = $item['itspstatus'];
+        $item['statusname'] = xarVarPrepForDisplay($stati[$itspstatus]);
+
+        // Total credits
+        $data['items'][] = $item;
     }
-
-    $item['itemtype'] = 2;
-    // Add the ITSP to the array
-    $data['item'] = $item;
-    // Get the plan
-    $plan = xarModApiFunc('itsp','user','get_plan',array('planid' => $planid));
-    if (empty($plan) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    $data['plan'] = $plan;
     // Security
     $data['authid'] = xarSecGenAuthKey();
     $data['fulldetails'] = $fulldetails;
-    xarVarSetCached('Blocks.itsp', 'itspid', $itspid);
-    /* Let any hooks know that we are displaying an item.
-     */
-    $item['returnurl'] = xarModURL('itsp',
-        'user',
-        'display',
-       array('itspid' => $itspid));
-    $hooks = xarModCallHooks('item',
-        'display',
-        $itspid,
-        $item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = array();
-    } else {
-        $data['hookoutput'] = $hooks;
-    }
+
+    $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 2)),
+        xarModURL('itsp', 'user', 'review', array('startnum' => '%%')),
+        xarModGetUserVar('itsp', 'itemsperpage', $uid));
+
     /* Once again, we are changing the name of the title for better
-     * Search engine capability.
-     */
-    xarTplSetPageTitle(xarVarPrepForDisplay($item['itspid']));
+     * search engine capability.*/
+
+    xarTplSetPageTitle(xarML('Review ITSPs'));
     /* Return the template variables defined in this function */
     return $data;
 }

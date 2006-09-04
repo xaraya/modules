@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>ITSP</xar:mlstring></span>
+</div>
+<div class="xar-mod-body xar-border-thin">
+
+    <h2><xar:mlstring>All ITSPs you can choose from</xar:mlstring></h2>
+
+    <table>
+        <tr>
+            <th><xar:mlstring>User Name</xar:mlstring></th>
+            <th><xar:mlstring>Status</xar:mlstring></th>
+            <th><xar:mlstring>Last edit</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                 <a href="#$item.rolelink#">#$item.username#</a>
+            </td>
+            <td>
+                <xar:if condition="empty($item.itsplink)">
+                    #$item.statusname#
+                <xar:else />
+                    <a href="#$item.itsplink#">#$item.statusname#</a>
+                </xar:if>
+            </td>
+            <td>
+                #xarlocalegetformatteddate('medium',$item.datemodi)#
+            </td>
+        </tr>
+        </xar:foreach>
+
+    </table>
+
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+</div>
