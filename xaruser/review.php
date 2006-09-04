@@ -48,7 +48,7 @@ function itsp_user_review($args)
                           'get_itspid',
                           array('userid' => $userid));
         if (!empty($item)) {
-            xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itpsid'=>$item['itspid'], 'pitemid'=> $pitemid)));
+            xarResponseRedirect(xarModURL('itsp', 'user', 'itsp', array('itpsid'=>$item['itspid'], 'pitemid'=> $pitemid)));
         }
     } elseif (!empty($itspid)) {
         // The user API function is called to get the ITSP
@@ -57,7 +57,7 @@ function itsp_user_review($args)
                               'get',
                               array('itspid' => $itspid));
         if (!empty($item)) {
-            xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itpsid'=>$itspid, 'pitemid'=> $pitemid)));
+            xarResponseRedirect(xarModURL('itsp', 'user', 'itsp', array('itpsid'=>$itspid, 'pitemid'=> $pitemid)));
         }
     }
 /*
@@ -107,7 +107,8 @@ function itsp_user_review($args)
         $itspstatus = $item['itspstatus'];
         $item['statusname'] = xarVarPrepForDisplay($stati[$itspstatus]);
 
-        // Total credits
+        // TODO: Total credits
+        // TODO: all link to change status
         $data['items'][] = $item;
     }
     // Security
