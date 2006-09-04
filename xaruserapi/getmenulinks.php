@@ -21,12 +21,11 @@ function window_userapi_getmenulinks()
     $urls = xarModAPIFunc('window','user','getall',array('status' => 1));
     foreach($urls as $url) {
         $url_parts = parse_url($url['name']);
-        $menulinks[] = array('url'   => xarModURL('window',
-                                                  'user',
-                                                  'display',array('page' => $url['name'])),
-                              'title' => $url['description'],
-                              'label' => $url['label']);
+        $menulinks[] = array('url'   => xarModURL('window',  'user','display', array('page' => $url['name'])),
+                             'title' => $url['description'],
+                             'label' => $url['label']);
     }
+
     if (xarSecurityCheck('ReadWindow',0)) {
     }
 
