@@ -59,9 +59,10 @@ function itsp_user_itsp($args)
         $data = xarModAPIFunc('itsp', 'user', 'menu');
         return $data;
     }
+    $itspid = $item['itspid'];
     /* Add the ITSP user menu */
     // This also gets already all the planitems...
-    $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $item['itspid']));
+    $data = xarModAPIFunc('itsp', 'user', 'menu', array('itspid' => $itspid));
     /* Set the type of detail view */
     $details = xarSessionGetVar('itsp.fulldetails');
     if (is_int($showdetails)) {
@@ -74,7 +75,6 @@ function itsp_user_itsp($args)
     $fulldetails = xarSessionGetVar('itsp.fulldetails');
     $data['fulldetails'] = xarSessionGetVar('itsp.fulldetails');
 
-    $itspid = $item['itspid'];
     $data['itspid'] = $itspid;
     // First see if there is an id to get.
     // Check status
@@ -209,6 +209,8 @@ function itsp_user_itsp($args)
      */
     $itspuser = xarUserGetVar('name', $item['userid']);
     xarTplSetPageTitle(xarVarPrepForDisplay($itspuser));
+    $data['uid'] = xarUserGetVar('uid');
+    $data['itspuser'] = $itspuser;
     /* Return the template variables defined in this function */
     return $data;
 }

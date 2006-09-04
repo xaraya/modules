@@ -242,7 +242,7 @@ function itsp_user_modify($args)
     $data['authid']      = xarSecGenAuthKey();
     $data['hookoutput']  = $hooks;
     $data['item']        = $item;
-
+    xarTplSetPageTitle(xarVarPrepForDisplay($pitem['pitemname']));
     return $data;
 }
 ?>
