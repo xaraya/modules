@@ -18,9 +18,9 @@
                      </xar:ml>
                  <xar:else />
                      <xar:ml>
-                        <xar:mlstring>#(1) on #(2), #(3) credits</xar:mlstring>
+                        <xar:mlstring>#(1) for #(2), #(3) credits</xar:mlstring>
                         <xar:mlvar>#$lcourse.studstatus#</xar:mlvar>
-                        <xar:mlvar>#$lcourse.startdate#</xar:mlvar>
+                        <xar:mlvar>#xarlocalegetformatteddate('medium',$lcourse.startdate)#</xar:mlvar>
                         <xar:mlvar>#$lcourse.intendedcredits#</xar:mlvar>
                      </xar:ml>
                  </xar:if>

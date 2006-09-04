@@ -127,12 +127,14 @@ function itsp_user_itsp($args)
                         $course['title'] = xarVarPrepForDisplay($realcourse['name']);
                         $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
                         $course['number'] = xarVarPrepForDisplay($realcourse['number']);
+
                         $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
-                        if (!empty($enrollstatus)) {
+                        // TODO: this returns an array. We now assume to take the first item, but this may not be correct.
+                        if (!empty($enrollstatus[0]) && is_numeric($enrollstatus[0]['studstatus'])) {
                             $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
-                                  array('status' => $enrollstatus['studstatus']));
-                            $course['obtcredits'] = $enrollstatus['credits'];
-                            $course['startdate'] = $enrollstatus['startdate'];
+                                  array('status' => $enrollstatus[0]['studstatus']));
+                            $course['obtcredits'] = $enrollstatus[0]['credits'];
+                            $course['startdate'] = $enrollstatus[0]['startdate'];
                         } else {
                             $course['studstatus'] = '';
                             $course['obtcredits'] = '';

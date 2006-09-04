@@ -70,8 +70,15 @@ function itsp_userapi_get_courselink($args)
      * set should be closed when it has been finished with
      */
     $result->Close();
+
+    // Get the correct ITSP for this link
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid' => $itspid));
+    /* Check for exceptions */
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
+    $userid = $itsp['userid'];
+    $planid = $itsp['planid'];
     /* Security check */
-    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:All:All")) {
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
     /* Create the item array */

@@ -106,12 +106,12 @@ function itsp_user_modify($args)
                     // Add a delete link
                     $lcourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('courselinkid' => $lcourse['courselinkid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
                     $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
-                    if (!empty($enrollstatus)) {
+                    if (!empty($enrollstatus[0])  && is_numeric($enrollstatus[0]['studstatus'])){
                         $lcourse['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
-                              array('status' => $enrollstatus['studstatus']));
-                        $lcourse['credits'] = $enrollstatus['credits'];
-                        $lcourse['startdate'] = $enrollstatus['startdate'];
-                        $creditsnow = $creditsnow + $enrollstatus['credits'];
+                              array('status' => $enrollstatus[0]['studstatus']));
+                        $lcourse['credits'] = $enrollstatus[0]['credits'];
+                        $lcourse['startdate'] = $enrollstatus[0]['startdate'];
+                        $creditsnow = $creditsnow + $enrollstatus[0]['credits'];
                     } else {
                         $lcourse['studstatus'] = '';
                         $lcourse['credits'] = '';
