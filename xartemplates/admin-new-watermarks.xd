@@ -1,0 +1,34 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Gallery Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+    <xar:template file="admin-sub-menu" />
+
+    <script type="text/javascript">
+        function reloadform()
+        {
+            document.watermark.reload.value = 'reload';
+            document.watermark.submit();
+        }
+    </script>
+
+    <form name="watermark" action="#xarModURL('gallery', 'admin', 'new')#" method="POST">
+
+    <xar:template file="admin-watermarks-form" />
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="what" value="#$what#" />
+            <input type="hidden" name="reload" value="create" />
+            <input type="submit" name="create" value="#$submit_text#" class="xar-form-text" />
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>

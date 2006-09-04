@@ -1,0 +1,50 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>New File</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <form action="#xarModURL('gallery', 'user', 'new')#" method="POST" enctype="multipart/form-data">
+
+    <xar:template file="admin-files-form" />
+
+    <fieldset>
+        <legend><xar:mlstring>Gallery Links</xar:mlstring></legend>
+
+        <xar:foreach in="$galleries" key="$key" value="$gallery">
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label"><xar:var name="album.display_name" /></label>
+            <xar:if condition="$key eq $album_id">
+            <input type="checkbox" name="links[#$key#]" value="#$album.name#" class="xar-form-text" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="links[#$key#]" value="#$album.name#" class="xar-form-text" />
+            </xar:if>
+        </div>
+        </xar:foreach>
+
+    </fieldset>
+
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="isset($file_id)">
+            <input type="hidden" name="file_id" value="#$file_id#" class="xar-form-text" />
+            </xar:if>
+            <xar:if condition="isset($gallery_id)">
+            <input type="hidden" name="album_id" value="#$album_id#" class="xar-form-text" />
+            </xar:if>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="what" value="#$what#" />
+            <input type="submit" name="submit" value="#$submit_text#" />
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>

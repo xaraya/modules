@@ -1,0 +1,86 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<fieldset>
+    <legend>
+        <xar:mlstring>Main</xar:mlstring>
+    </legend>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+        <input type="text" id="name" name="name" value="#$album.name#" class="xar-form-textlong required" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Display Name</xar:mlstring></label>
+        <input type="text" id="display_name" name="display_name" value="#$album.display_name#" class="xar-form-textlong required" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
+        <textarea id="desc" name="desc" class="xar-form-textareamedium required"><xar:var name="album.description" /></textarea>
+    </div>
+
+</fieldset>
+
+<fieldset>
+    <legend><xar:mlstring>Settings</xar:mlstring></legend>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Preview Image</xar:mlstring></label>
+        <input type="text" id="settings_preview_image" name="settings_preview_image" value="1" class="xar-form-text" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Show Date</xar:mlstring></label>
+        <input type="checkbox" id="settings_show_date" name="settings_show_date" value="1" class="xar-form-textshort" #$album.settings.show_date# />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Sort On</xar:mlstring></label>
+        <select id="settings_sort_order" name="settings_sort_order" class="xar-form-text">
+        <xar:foreach in="$sort_orders" key="$key" value="$order">
+            <xar:if condition="$album.settings.sort_order eq $key">
+                <option value="#$key#" selected="selected"><xar:var name="$order" /></option>
+            <xar:else />
+                <option value="#$key#"><xar:var name="$order" /></option>
+            </xar:if>
+        </xar:foreach>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Sort Type</xar:mlstring></label>
+        <select id="settings_sort_type" name="settings_sort_type" class="xar-form-text">
+        <xar:foreach in="$sort_types" key="$key" value="$sort_type">
+            <xar:if condition="$album.settings.sort_type eq $key">
+                <option value="#$key#" selected="selected"><xar:var name="$sort_type" /></option>
+            <xar:else />
+                <option value="#$key#"><xar:var name="$sort_type" /></option>
+            </xar:if>
+        </xar:foreach>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Items Per Page</xar:mlstring></label>
+        <input type="text" id="settings_items_per_page" name="settings_items_per_page" value="#$album.settings.items_per_page#" class="xar-form-textshort required" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Columns Per Page</xar:mlstring></label>
+        <input type="text" id="settings_cols_per_page" name="settings_cols_per_page" value="#$album.settings.cols_per_page#" class="xar-form-textshort required" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Default Item Width</xar:mlstring></label>
+        <input type="text" id="settings_file_width" name="settings_file_width" value="#$album.settings.file_width#" class="xar-form-textshort" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Watermark</xar:mlstring></label>
+        <select id="settings_watermark" name="settings_watermark" class="xar-form-text">
+        <xar:foreach in="$watermarks" key="$key" value="$watermark">
+            <xar:if condition="$album.settings.watermark_id eq $key">
+                <option value="#$key#" selected="selected"><xar:var name="$watermark.name" /></option>
+            <xar:else />
+                <option value="#$key#"><xar:var name="$watermark.name" /></option>
+            </xar:if>
+        </xar:foreach>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>File Quality</xar:mlstring></label>
+        <input type="text" id="settings_file_quality" name="settings_file_quality" value="#$album.settings.file_quality#" class="xar-form-textshort required" />
+    </div>
+
+</fieldset>

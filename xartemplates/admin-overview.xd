@@ -1,0 +1,67 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Gallery Overview</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>The Xaraya Gallery module is a basic photo album management tool.  Gallery allows users to create "albums", which are a collection of files or photos.  Albums can be browsed through with the user interface.</xar:mlstring>
+    </p>
+
+    <h3>How to use it?</h3>
+    <p>
+        <xar:mlstring>From the menu, you have three choices.  "Albums", "Photos", "Watermarks", "Modify Configuration", and "Overview".</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Albums -- Perform actions on albums. Albums may be viewed, approved, rejected, deleted, re-ordered, etc.</xar:mlstring></li>
+            <li><xar:mlstring>Photos -- Perform actions on photos. Photos may be viewed, approved, rejected, deleted, re-ordered, etc.</xar:mlstring></li>
+            <li><xar:mlstring>Watermarks -- Perform actions on watermarks. Watermarks may be viewed, added, modified, deleted, etc.</xar:mlstring></li>
+            <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for Gallery.</xar:mlstring></li>
+            <li><xar:mlstring>Overview -- Allows you to view this screen, giving basic intructions on how to use Gallery.</xar:mlstring></li>
+        </ul>
+    </p>
+
+    <h3><xar:mlstring>Important Setup Instructions!</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>The Gallery module utilizies the security module for manages users access rights to albums and photos. Using the security module gives site admins a huge degree of flexibility.  Site admin can define if users can view, modifiy, or manage rights to content that they create (albums and photos).</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>Upon installation of the gallery module the security settings were automatically set. Although these setting should work for most, they may not fit the exact needs of everyone.  But they can be easily modified through the security module.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>Gallery uses the filesystem to store uploaded photos.  So you will need to create a directory that your web server can write to if you have not already done so. Then you will need to set that path if the configuration page of this module.</xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>There are two blocks included with Gallery, Albums and Photos.</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Albums -- Displays a list of albums.</xar:mlstring></li>
+            <li><xar:mlstring>Photos -- Displays a list of photos.</xar:mlstring></li>
+        </ul>
+    </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <p><xar:mlstring>There are no included hooks</xar:mlstring></p>
+
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>Further information on the Gallery module can be found at:</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring><a href="http://www.abrasiontechnology.com/">Abrasion Technology</a></xar:mlstring>
+        </li>
+        <li><xar:mlstring>Gallery Extension page at</xar:mlstring> <a title="#xarML('Gallery Module - Xaraya Extension 910')#" href="http://www.xaraya.com/index.php/release/476.html">Xaraya Extension and Releases</a>.
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Gallery found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/gallery/" title="#xarML('Related documentation on Security')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Gallery Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-08-13
+    </p>
+</div>

@@ -1,0 +1,38 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Gallery Albums</span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:if condition="xarSessionGetVar('statusmsg')">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+        <xar:set name="dummy">#xarSessionDelVar('statusmsg')#</xar:set>
+    </xar:if>
+
+    <xar:foreach in="$albums" key="$album_id" value="$album">
+        <div class="xar-margin-thickends xar-clearboth">
+
+            <xar:if condition="!empty($album.settings.preview_file)">
+                <div class="xar-floatleft xar-margin-thicksides xar-margin-thickends">
+                    <xar:set name="path">$files_path.$album['settings']['preview_file']</xar:set>
+                    <a href="#$album.link#">
+                    <xar:set name="params">array('w' => 100,'q' => 90, 'ace' => true)</xar:set>
+
+                    <xar:image-resize src="$path" params="$params" label="Album" />
+                    </a>
+                </div>
+            </xar:if>
+            <a href="#$album.link#">
+                <h3>
+                    <xar:var name="album.display_name" />
+                </h3>
+                <xar:if condition="!empty($album.num_items)">
+                    &nbsp;(<xar:var name="album.num_items" /> photos) <br />
+                </xar:if>
+            </a>
+            <xar:var name="album.description" />
+        </div>
+    </xar:foreach>
+    <div class="xar-clearboth"></div>
+</div>

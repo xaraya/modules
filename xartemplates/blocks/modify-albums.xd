@@ -1,0 +1,47 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Number of Albums:</xar:mlstring>
+    </label>
+
+    <input type="text" name="numitems" value="#$numitems#" class="xar-form-textshort" />
+</div>
+
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Limit:</xar:mlstring>
+    </label>
+
+    <input type="text" name="limit" value="#$limit#" class="xar-form-textshort" />
+</div>
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Albums:</xar:mlstring>
+    </label>
+
+    <select name="albums[]" multiple="true" class="xar-form-textlong">
+        <xar:foreach in="$all_albums" key="$album_id" value="$album">
+            <xar:if condition="in_array($album_id, $albums)">
+            <option value="#$album_id#" selected="selected"><xar:var name="album.name" /></option>
+            <xar:else />
+            <option value="#$album_id#"><xar:var name="album.name" /></option>
+            </xar:if>
+        </xar:foreach>
+
+    </select>
+</div>
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Order By:</xar:mlstring>
+    </label>
+
+    <select name="order" class="xar-form-textlong">
+        <xar:foreach in="$orders" key="$key" value="$value">
+            <xar:if condition="$order eq $key">
+            <option value="#$key#" selected="selected"><xar:var name="value" /></option>
+            <xar:else />
+            <option value="#$key#"><xar:var name="value" /></option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+</div>

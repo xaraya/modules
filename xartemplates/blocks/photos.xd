@@ -1,0 +1,18 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:if condition="count($files) gt 0">
+<xar:foreach in="$files" key="$photo_id" value="$photo">
+<div class="xar-margin-endsthick xar-align-center">
+    <xar:set name="path">$file_path . $photo['file']</xar:set>
+    <xar:if condition="!empty($photo['summary'])">
+        <xar:set name="label">$photo['summary']</xar:set>
+    <xar:else />
+        <xar:set name="label">'Gallery File'</xar:set>
+    </xar:if>
+    <h4><xar:var name="$photo.date" /></h4>
+    <a href="#$photo.link#">
+        <xar:image-resize src="$path" width="275px" constrain="1" static="1" label="$label" />
+    </a>
+    <xar:var name="$photo.summary" />
+</div>
+</xar:foreach>
+</xar:if>

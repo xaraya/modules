@@ -1,0 +1,72 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">My Photos</span>
+</div>
+
+<div class="xar-mod-body">
+    <script type="text/javascript">
+        function popUp(URL) {
+            day = new Date();
+            id = day.getTime();
+            eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=600,height=400,left = 212,top = 159');");
+        }
+    </script>
+
+    <xar:if condition="xarSessionGetVar('statusmsg')">
+        <h4>#xarSessionGetVar('statusmsg')#</h4>
+        <xar:set name="dummy">xarSessionDelVar('statusmsg')</xar:set>
+    </xar:if>
+
+    <table class="xar-margin-thickends xar-fullwidth">
+        <tr>
+            <th><xar:mlstring>File</xar:mlstring></th>
+            <th><xar:mlstring>Date</xar:mlstring></th>
+            <th><xar:mlstring>State</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$files" key="$file_id" value="$file">
+        <tr>
+            <td>
+                <a href="javascript:popUp('#$file.view_link#')">
+                <xar:set name="path">$files_path.$file['file']</xar:set>
+                <xar:if condition="file_exists($path)">
+                <xar:set name="params">array('w' => 35,'q' => 90, 'ace' => true)</xar:set>
+                <xar:image-resize src="$path" static="1" label="image" params="$params" />
+                </xar:if>
+                <xar:if condition="!empty($file.name)">
+                    <xar:var name="file.name" /> -
+                    <xar:var name="file.summary" />
+                <xar:else />
+                    <xar:var name="file.file" />
+                </xar:if>
+                </a>
+            </td>
+            <td>
+                <xar:var name="file.date" />
+            </td>
+            <td>
+                #$states[$file['state']]#
+            </td>
+            <td>
+                <xar:if condition="isset($file.view_link)">
+                    <a href="javascript:popUp('#$file.view_link#')"><xar:mlstring>Display file</xar:mlstring></a>
+                </xar:if>
+                <xar:if condition="isset($file.modify_link)">
+                    | <a href="#$file.modify_link#"><xar:mlstring>Modify</xar:mlstring></a>
+                </xar:if>
+                <xar:if condition="isset($file.delete_link)">
+                    | <a href="#$file.delete_link#"><xar:mlstring>Delete</xar:mlstring></a>
+                </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+    </table>
+    </form>
+
+    <xar:if condition="isset($pager)">
+    <div class="xar-align-center">
+        <xar:var name="pager" />
+    </div>
+    </xar:if>
+</div>

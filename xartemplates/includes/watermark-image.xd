@@ -1,0 +1,17 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label"><xar:mlstring>File Name</xar:mlstring></label>
+    <input type="text" name="#$for#[filename]" value="#$args.filename#" class="xar-form-textlong" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label"><xar:mlstring>Alignment</xar:mlstring></label>
+    <input type="text" name="#$for#[alignment]" value="#$args.alignment#" class="xar-form-textlong" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label"><xar:mlstring>Opacity</xar:mlstring></label>
+    <input type="text" name="#$for#[opacity]" value="#$args.opacity#" class="xar-form-textlong" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label"><xar:mlstring>Margin</xar:mlstring></label>
+    <input type="text" name="#$for#[margin]" value="#$args.margin#" class="xar-form-textlong" />
+</div>

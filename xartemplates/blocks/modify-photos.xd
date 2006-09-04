@@ -1,0 +1,71 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Number of Files:</xar:mlstring>
+    </label>
+
+    <input type="text" name="numitems" value="#$numitems#" class="xar-form-textshort" />
+</div>
+
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Galleries:</xar:mlstring>
+    </label>
+
+    <select name="galleries[]" multiple="true" class="xar-form-textlong">
+        <option value="-1">All</option>
+        <xar:foreach in="$all_galleries" key="$strip_id" value="$strip">
+            <xar:if condition="in_array($strip_id, $galleries)">
+            <option value="#$strip_id#" selected="selected"><xar:var name="strip.name" /></option>
+            <xar:else />
+            <option value="#$strip_id#"><xar:var name="strip.name" /></option>
+            </xar:if>
+        </xar:foreach>
+
+    </select>
+</div>
+
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Limit:</xar:mlstring>
+    </label>
+
+    <input type="text" name="limit" value="#$limit#" class="xar-form-textshort" />
+</div>
+
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Files:</xar:mlstring>
+    </label>
+
+    <select name="files[]" multiple="true" class="xar-form-textlong">
+        <option value="-1">All</option>
+        <xar:foreach in="$all_files" key="$photo_id" value="$photo">
+            <xar:if condition="in_array($photo_id, $files)">
+            <option value="#$photo_id#" selected="selected"><xar:var name="photo.name" /> - <xar:var name="photo.date" /></option>
+            <xar:else />
+            <option value="#$photo_id#"><xar:var name="photo.name" /> - <xar:var name="photo.date" /></option>
+            </xar:if>
+
+
+
+        </xar:foreach>
+
+    </select>
+</div>
+
+<div class="xar-form-wrapper">
+    <label class="xar-form-label">
+        <xar:mlstring>Order By:</xar:mlstring>
+    </label>
+
+    <select name="order" class="xar-form-textlong">
+        <xar:foreach in="$orders" key="$key" value="$value">
+            <xar:if condition="$order eq $key">
+            <option value="#$key#" selected="selected"><xar:var name="value" /></option>
+            <xar:else />
+            <option value="#$key#"><xar:var name="value" /></option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+</div>

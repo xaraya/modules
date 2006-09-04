@@ -1,0 +1,40 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Administration</span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <xar:template file="admin-sub-menu" />
+
+    <table width="100%" class="xar-norm-outline">
+        <tr>
+            <th><xar:mlstring>Name</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+
+        <xar:if condition="count($watermarks) le 0">
+            <tr>
+                <td colspan="2" class="xar-padding-thick xar-align-center">
+                    <strong><xar:mlstring>There are no watermarks!</xar:mlstring></strong>
+                </td>
+            </tr>
+        </xar:if>
+
+        <xar:foreach in="$watermarks" key="$key" value="$watermark">
+            <tr>
+                <td>
+                    <xar:if condition="isset($watermark.name)">
+                        <xar:var name="watermark.name" />
+                    </xar:if>
+                </td>
+                <td>
+                    <a href="#$watermark.modify_link#">Modify</a>
+                    | <a href="#$watermark.delete_link#">Delete</a>
+                </td>
+            </tr>
+        </xar:foreach>
+
+    </table>
+</div>

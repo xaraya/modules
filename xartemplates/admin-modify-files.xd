@@ -1,0 +1,71 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Gallery Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+    <xar:template file="admin-sub-menu" />
+
+    <form action="#xarModURL('gallery', 'admin', 'modify')#" method="POST" enctype="multipart/form-data">
+
+    <xar:template file="admin-files-form" />
+
+    <fieldset>
+        <legend><xar:mlstring>Options</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label">State</label>
+            <select name="state" class="xar-form-text">
+            <xar:foreach in="$states" key="$key" value="$state">
+                <xar:if condition="$key eq $file.state">
+                    <option value="#$key#" selected="selected"><xar:var name="state" /></option>
+                <xar:else />
+                    <option value="#$key#"><xar:var name="state" /></option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+        </div>
+
+
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>Album Links</xar:mlstring></legend>
+
+        <xar:foreach in="$albums" key="$album_id" value="$album">
+        <div class="xar-form-input-wrapper xar-clearboth">
+            <label name="" class="xar-form-label"><xar:var name="album.display_name" /></label>
+            <xar:if condition="isset($file.album_ids.$album_id)">
+            <input type="checkbox" name="links[#$album_id#]" value="#$album.name#" class="xar-form-text" checked="checked" />
+            <xar:else />
+            <input type="checkbox" name="links[#$album_id#]" value="#$album.name#" class="xar-form-text" />
+            </xar:if>
+        </div>
+        </xar:foreach>
+
+    </fieldset>
+
+
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="isset($file_id)">
+            <input type="hidden" name="file_id" value="#$file_id#" class="xar-form-text" />
+            </xar:if>
+            <xar:if condition="isset($album_id)">
+            <input type="hidden" name="album_id" value="#$album_id#" class="xar-form-text" />
+            </xar:if>
+            <input type="hidden" name="what" value="files" class="xar-form-text" />
+            <input type="submit" name="modify" value="#$submit_text#" class="xar-form-text" />
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>

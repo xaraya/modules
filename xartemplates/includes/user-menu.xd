@@ -1,0 +1,57 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+
+<xar:set name="album_id">xarRequestGetVar('album_id')</xar:set>
+<xar:set name="file_id">xarRequestGetVar('file_id')</xar:set>
+<xar:set name="catid">xarRequestGetVar('catid')</xar:set>
+<xar:set name="current_url">xarServerGetCurrentURL()</xar:set>
+<fieldset>
+    <legend>Actions</legend>
+
+<xar:if condition="!empty($file_id)">
+    <xar:if condition=" Security::check(SECURITY_WRITE, 'gallery', FILE_ITEMTYPE, $file_id, false)">
+        <h4><xar:mlstring>Current Photo Options</xar:mlstring></h4>
+        <ul>
+        <xar:set name="url">
+            xarModURL('gallery', 'user', 'modify',
+                array(
+                    'album_id'    => $album_id,
+                    'file_id'     => $file_id,
+                    'redirecturl' => $current_url
+                )
+            );
+        </xar:set>
+        <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>Modify Photo</xar:mlstring></a></li>
+
+        <xar:if condition="!empty($file_id)">
+            <xar:set name="url">
+                xarModURL('gallery', 'admin', 'set_preview_file',
+                    array(
+                        'album_id'    => $album_id,
+                        'file_id'     => $file_id,
+                        'redirecturl' => $current_url
+                    )
+                );
+            </xar:set>
+            <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>Make Album Cover</xar:mlstring></a></li>
+        </xar:if>
+        </ul>
+    </xar:if>
+</xar:if>
+
+<h4><xar:mlstring>Gallery Options</xar:mlstring></h4>
+<ul>
+    <xar:set name="url">xarModURL('gallery', 'user', 'new_files',array('album_id' => $album_id))</xar:set>
+    <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>Upload New Photos</xar:mlstring></a></li>
+
+    <xar:if condition="xarUserIsLoggedIn()">
+        <xar:set name="url">xarModURL('gallery', 'user', 'my_view')</xar:set>
+        <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>My Photos</xar:mlstring></a></li>
+    </xar:if>
+
+    <xar:set name="url">xarModURL('gallery', 'user', 'main')</xar:set>
+    <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>View Albums</xar:mlstring></a></li>
+
+    <xar:set name="url">xarModURL('gallery', 'user', 'new_album_wizard',array('catid' => $catid))</xar:set>
+    <li><a href="#$url#" class="xar-gallery-link"><xar:mlstring>Create an Album</xar:mlstring></a></li>
+</ul>
+</fieldset>

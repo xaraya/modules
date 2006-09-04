@@ -1,0 +1,9 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:comment>
+<xar:if condition="xarModGetVar('gallery', 'album_sort') eq 'display_order'">
+
+UP / DOWN
+
+</xar:if>
+</xar:comment>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<schema version="0.2">
+    <table name="dailyphotos_strips">
+        <desc>Strips</desc>
+		<field name="strip_id" type="I"><KEY/><AUTOINCREMENT/></field>
+		<field name="name" type="C" size="50"><NOTNULL/></field>
+		<field name="display_name" type="C" size="50"><NOTNULL/></field>
+		<field name="description" type="C" size="255"></field>
+		<field name="status" type="C" size="10"></field>
+    </table>
+    
+    <table name="dailyphotos_strips_settings">
+        <desc>Strip Settings</desc>
+		<field name="strip_id" type="I"></field>
+		
+		<field name="watermark_id" type="I"><NOTNULL/></field>				
+		<field name="preview_photo" type="C" size="255"><NOTNULL/></field>				
+
+		<field name="photo_quality" type="I" default="100"><NOTNULL/></field>				
+		
+		<field name="photos_per_page" type="I" default="10"><NOTNULL/></field>		
+		<field name="cols_per_page" type="I" default="2"><NOTNULL/></field>
+		<field name="photo_width" type="C" size="10" default="150px"><NOTNULL/></field>
+		<field name="show_date" type="C" size="1"><NOTNULL/></field>
+        
+		<field name="sort_order" type="C" size="20" default="photo_id|ASC"><NOTNULL/></field>
+
+		<index name="i_dailphotos_strips_settings_strip_id">
+            <col>strip_id</col>
+            <UNIQUE/>
+        </index>
+        
+    </table>
+
+    <table name="dailyphotos_photos">
+        <desc>Strip Photos</desc>
+		<field name="photo_id" type="I"><KEY/><AUTOINCREMENT/></field>
+		<field name="name" type="C" size="100"></field>
+		<field name="summary" type="C" size="255"></field>
+		<field name="photo" type="C" size="255"></field>
+		<field name="external_id" type="C" size="255"></field>
+		<field name="status" type="C" size="10"></field>
+		
+		<field name="created" type="I"></field>
+		<field name="modified" type="I"></field>
+		
+		<field name="file_type" type="C" size="25"></field>
+		<field name="file_size" type="I"></field>
+    </table>
+    
+    <table name="dailyphotos_photo_linkage">
+        <desc>Link photos to strips</desc>
+		<field name="id" type="I"><KEY/><AUTOINCREMENT/></field>
+		<field name="strip_id" type="I"></field>
+		<field name="photo_id" type="I"></field>
+    </table>
+</schema>

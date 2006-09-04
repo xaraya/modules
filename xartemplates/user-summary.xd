@@ -1,0 +1,63 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-body xar-clearboth">
+    <div class="xar-floatright" style="width: 35%;">
+        <fieldset>
+            <legend>Actions</legend>
+            <a href="#xarModURL('gallery', 'user', 'new')#" >New Photo</a><br />
+            <a href="#xarModURL('gallery', 'user', 'my_view')#">View All</a>
+        </fieldset>
+    </div>
+
+    <h2 style="padding-top: 15px;">My Photos</h2>
+
+    <script type="text/javascript">
+        function popUp(URL) {
+            day = new Date();
+            id = day.getTime();
+            eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=1,menubar=0,resizable=1,width=600,height=400,left = 212,top = 159');");
+        }
+    </script>
+
+    <table class="xar-norm-outline xar-margin-thickends xar-fullwidth xar-clearboth">
+        <tr>
+            <th><xar:mlstring>File</xar:mlstring></th>
+            <th><xar:mlstring>Date</xar:mlstring></th>
+            <th><xar:mlstring>State</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+        <xar:if condition="!empty($files)">
+        <xar:foreach in="$files" key="$file_id" value="$file">
+        <tr>
+             <td>
+
+                <xar:if condition="!empty($file.name)">
+                    <xar:var name="file.name" /> -
+                    <xar:var name="file.summary" />
+                <xar:else />
+                    <xar:var name="file.file" />
+                </xar:if>
+            </td>
+            <td>
+                <xar:var name="file.date" />
+            </td>
+            <td>
+                #$states[$file['state']]#
+            </td>
+            <td>
+                <xar:if condition="isset($file.view_link)">
+                    <a href="javascript:popUp('#$file.view_link#')"><xar:mlstring>Display file</xar:mlstring></a>
+                </xar:if>
+                <xar:if condition="isset($file.modify_link)">
+                    | <a href="#$file.modify_link#"><xar:mlstring>Modify</xar:mlstring></a>
+                </xar:if>
+            </td>
+        </tr>
+        </xar:foreach>
+
+        <xar:else />
+            <tr><td colspan="4"> <strong> You have no photos. </strong> </td></tr>
+        </xar:if>
+    </table>
+    </form>
+
+</div>

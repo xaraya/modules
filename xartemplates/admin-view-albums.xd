@@ -1,0 +1,90 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:base-include-javascript module="gallery" filename="checkall.js" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Gallery Administration</span>
+</div>
+
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <xar:template file="admin-sub-menu" />
+
+    <xar:if condition="xarSessionGetVar('statusmsg')">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+        <xar:set name="dummy">xarSessionDelVar('statusmsg')</xar:set>
+    </xar:if>
+
+    <form name="albums" action="#xarModURL('gallery', 'admin', 'view')#" method="POST">
+    <table class="xar-norm-outline xar-margin-thickends xar-fullwidth">
+        <tr>
+            <th class="xar-align-center">
+                <a href="javascript: xar_gallery_checkall(document.albums);" style="font-size:80%;">
+                    <xar:mlstring>(Un)Select All</xar:mlstring>
+                </a>
+            </th>
+            <th><xar:mlstring>Order</xar:mlstring></th>
+            <th><xar:mlstring>Album Name</xar:mlstring></th>
+            <th><xar:mlstring>State</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+
+        <xar:if condition="count($albums) le 0">
+            <tr>
+                <td colspan="5" class="xar-padding-thick xar-align-center">
+                    <strong><xar:mlstring>There are no albums!</xar:mlstring></strong>
+                </td>
+            </tr>
+        </xar:if>
+
+        <xar:set name="count">0</xar:set>
+        <xar:foreach in="$albums" key="$album_id" value="$album">
+        <xar:if condition="$count % 2 eq 0">
+            <xar:set name="class">'xar-norm'</xar:set>
+        <xar:else />
+            <xar:set name="class">'xar-alt'</xar:set>
+        </xar:if>
+        <tr class="#$class#">
+            <td class="xar-align-center">
+                <input type="checkbox" name="albums[#$album_id#]" value="#$album_id#" />
+            </td>
+            <td class="xar-align-center">
+                <input type="hidden" name="old_order[#$album_id#]" value="#$album.order#" />
+                <input type="textbox" name="order[#$album_id#]" value="#$album.order#" size="2" />
+            </td>
+            <td>
+            <xar:var name="album.display_name" /> -
+            <xar:var name="album.description" />
+            </td>
+            <td>
+                #$states[$album['state']]#
+            </td>
+            <td>
+                <xar:if condition="isset($album.view_link)">
+                    <a href="#$album.view_link#"><xar:mlstring>View Photos</xar:mlstring></a>
+                </xar:if>
+                <xar:if condition="isset($album.modify_link)">
+                    | <a href="#$album.modify_link#"><xar:mlstring>Modify</xar:mlstring></a>
+                </xar:if>
+                <xar:if condition="isset($album.delete_link)">
+                    | <a href="#$album.delete_link#"><xar:mlstring>Delete</xar:mlstring></a>
+                </xar:if>
+            </td>
+        </tr>
+        <xar:set name="count">$count+1</xar:set>
+        </xar:foreach>
+        <tr>
+            <td colspan="5">
+                <select name="state">
+                <xar:foreach in="$states" key="$key" value="$state">
+                    <option value="#$key#"><xar:var name="state" /></option>
+                </xar:foreach>
+                </select>
+                <input type="hidden" name="what" value="#$what#" />
+                <input type="submit" name="reload" value="Reload" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>

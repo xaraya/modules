@@ -1,0 +1,65 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<fieldset>
+    <legend>
+        <xar:mlstring>Watermark</xar:mlstring>
+    </legend>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+        <input type="text" name="name" value="#$name#" class="xar-form-textlong" />
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <xar:mlstring>Main</xar:mlstring>
+    </legend>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Type</xar:mlstring></label>
+        <select name="main[type]" class="xar-form-textlong" onchange="reloadform();">
+            <xar:foreach in="$types" key="$key" value="$wm_type">
+                <xar:if condition="$key eq $main.type">
+                    <option value="#$key#" selected="selected"><xar:var name="$wm_type" /></option>
+                <xar:else />
+                    <option value="#$key#"><xar:var name="$wm_type" /></option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+    </div>
+
+    <xar:set name="subdata">array('for' => 'main', 'args' => $main)</xar:set>
+
+    <xar:if condition="$main.type eq 'image'">
+        <xar:template file="watermark-image" subdata="$subdata" />
+    <xar:else />
+        <xar:template file="watermark-text" subdata="$subdata" />
+    </xar:if>
+</fieldset>
+
+<fieldset>
+    <legend>
+        <xar:mlstring>Thumbnail</xar:mlstring>
+    </legend>
+
+    <div class="xar-form-input-wrapper">
+        <label class="xar-form-label"><xar:mlstring>Type</xar:mlstring></label>
+        <select name="thumbnail[type]" class="xar-form-textlong"  onchange="reloadform();">
+            <xar:foreach in="$types" key="$key" value="$wm_type">
+                <xar:if condition="$key eq $thumbnail.type">
+                    <option value="#$key#" selected="selected"><xar:var name="$wm_type" /></option>
+                <xar:else />
+                    <option value="#$key#"><xar:var name="$wm_type" /></option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+    </div>
+
+    <xar:set name="subdata">array('for' => 'thumbnail', 'args' => $thumbnail)</xar:set>
+
+    <xar:if condition="$thumbnail.type eq 'image'">
+        <xar:template file="watermark-image" subdata="$subdata" />
+    <xar:else />
+        <xar:template file="watermark-text" subdata="$subdata" />
+    </xar:if>
+</fieldset>

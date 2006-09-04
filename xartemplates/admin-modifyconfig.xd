@@ -1,0 +1,97 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+
+<xar:ajax-lib name="validation" />
+<xar:ajax-lib name="effects" />
+<xar:base-include-javascript module="gallery" filename="modifyConfig.js" position="body" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Gallery Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <form id="modifyconfig" name="modifyconfig" action="#xarModURL('gallery', 'admin', 'modifyconfig')#" method="POST">
+
+    <fieldset>
+        <legend>
+            <xar:mlstring>Main</xar:mlstring>
+        </legend>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Support Short Urls:</xar:mlstring></label>
+            <input type="checkbox" id="support_short_urls" name="support_short_urls" value="1" class="xar-form-textshort" #$shorturls# />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Items Per Page:</xar:mlstring></label>
+            <input type="text" id="items_per_page" name="items_per_page" value="#$items_per_page#" class="xar-form-textshort required validate-digits" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Column Per Page:</xar:mlstring></label>
+            <input type="text" id="cols_per_page" name="cols_per_page" value="#$cols_per_page#" class="xar-form-textshort required validate-digits" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>File Path:</xar:mlstring></label>
+            <input type="text" id="file_path" name="file_path" value="#$file_path#" class="xar-form-text required validate-filepath" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Module Alias:</xar:mlstring></label>
+            <input type="text" id="module_alias" name="module_alias" value="#$module_alias#" class="xar-form-text" />
+        </div>
+        <xar:set name="sorts">array('album_id' => 'Album Id', 'date' => 'Date', 'random' => 'Random', 'display_order' => 'Manual')</xar:set>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Sort:</xar:mlstring></label>
+            <select id="sort" name="sort" class="xar-form-text">
+                <xar:foreach in="$sorts" key="$key" value="$value">
+                    <xar:if condition="$key eq $sort">
+                        <option value="#$key#" selected="selected"><xar:var name="value" /></option>
+                    <xar:else />
+                        <option value="#$key#"><xar:var name="value" /></option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+        <xar:set name="sorts">array('ASC' => 'Ascending', 'DESC' => 'Descending')</xar:set>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Sort Order:</xar:mlstring></label>
+            <select id="sort_order" name="sort_order" class="xar-form-text">
+                <xar:foreach in="$sorts" key="$key" value="$value">
+                    <xar:if condition="$key eq $sort_order">
+                        <option value="#$key#" selected="selected"><xar:var name="value" /></option>
+                    <xar:else />
+                        <option value="#$key#"><xar:var name="value" /></option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Messages</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-labellong"><xar:mlstring>New Gallery Success Message:</xar:mlstring></label>
+            <textarea id="new_album_success" name="new_album_success" class="xar-form-textareasmall">#$new_album_success#</textarea>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-labellong"><xar:mlstring>New File Success Message:</xar:mlstring></label>
+            <textarea id="new_file_success" name="new_file_success" class="xar-form-textareasmall">#$new_file_success#</textarea>
+        </div>
+    </fieldset>
+
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" id="submit" name="submit" value="#xarML('Modify Config')#" class="xar-form-text" />
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>

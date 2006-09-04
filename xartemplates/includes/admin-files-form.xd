@@ -1,0 +1,41 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<fieldset>
+    <legend>
+        <xar:mlstring>Main</xar:mlstring>
+    </legend>
+    <script type="text/javascript">
+        function popUp(URL) {
+            day = new Date();
+            id = day.getTime();
+            eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=1,menubar=0,resizable=1,width=600,height=400,left = 212,top = 159');");
+        }
+    </script>
+
+    <div class="xar-form-input-wrapper xar-clearboth">
+        <label class="xar-form-label">
+            <xar:mlstring>New File</xar:mlstring>
+        </label>
+        <input type="file" name="file" value="" class="xar-form-textlong" />
+    </div>
+
+    <xar:if condition="!empty($file.file)">
+    <div class="xar-form-input-wrapper xar-clearboth">
+        <label class="xar-form-label"><xar:mlstring>Preview Current Image</xar:mlstring></label>
+        <xar:set name="path">xarModGetVar('gallery', 'file_path').$file['file']</xar:set>
+        <xar:set name="preview_path">xarModURL('gallery', 'user', 'display', array('file_id' => $file['file_id'], 'theme' => 'print'))</xar:set>
+        <xar:set name="params">array('w' => '50px', 'q' => 75)</xar:set>
+        <a href="javascript:popUp('#$preview_path#')">
+        <xar:image-resize src="$path" static="1" params="$params" label="preivew" />
+        </a>
+    </div>
+    </xar:if>
+    <div class="xar-form-input-wrapper xar-clearboth">
+        <label class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+        <input type="text" name="name" value="#$file.name#" class="xar-form-textlong" />
+    </div>
+    <div class="xar-form-input-wrapper xar-clearboth">
+        <label class="xar-form-label"><xar:mlstring>Summary</xar:mlstring></label>
+        <textarea name="summary" class="xar-form-textareasmall"><xar:var name="file.summary" /></textarea>
+    </div>
+
+</fieldset>

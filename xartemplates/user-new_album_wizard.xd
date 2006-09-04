@@ -1,0 +1,68 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>New Album Wizard</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <form action="#xarModURL('gallery', 'user', 'new_album_wizard')#" method="POST" enctype="multipart/form-data">
+    <fieldset>
+        <legend><xar:mlstring>Album</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label"><xar:mlstring>Name</xar:mlstring></label>
+            <input type="text" name="album_name" value="" class="xar-form-text" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
+            <input type="text" name="desc" value="" class="xar-form-text" />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><xar:mlstring>Photos</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label"><xar:mlstring>Number of Photos</xar:mlstring></label>
+            <input type="text" name="numitems" value="#$numitems#" class="xar-form-text" />
+            <input type="submit" name="reload" value="Reload" class="xar-form-text" />
+        </div>
+        <xar:for start="$i = 1" test="$i < $numitems+1" iter="$i++">
+        <div class="xar-form-input-wrapper">
+            <label name="" class="xar-form-label xar-padding-thickends">
+                <u><xar:mlstring>Photo</xar:mlstring> <xar:var name="$i" /></u>
+            </label>
+            <div class="xar-form-input-wrapper xar-clearleft">
+                <label class="xar-form-label" style="text-indent: 2em;">
+                    <xar:mlstring>Select Photo</xar:mlstring>
+                </label>
+                <input type="file" name="file[#$i#]" value="" class="xar-form-text" />
+            </div>
+            <div class="xar-form-input-wrapper xar-clearleft">
+                <label class="xar-form-label" style="text-indent: 2em;"><xar:mlstring>Title (optional)</xar:mlstring></label>
+                <input type="text" name="title[#$i#]" value="" class="xar-form-text" />
+            </div>
+        </div>
+        </xar:for>
+    </fieldset>
+
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" name="submit" value="#$submit_text#" class="xar-form-text" />
+            <xar:comment>
+            <input type="button" name="clear" value="#xarML('Clear')#" class="xar-form-text" />
+            </xar:comment>
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>

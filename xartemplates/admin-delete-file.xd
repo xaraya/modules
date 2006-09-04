@@ -1,0 +1,31 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">Delete File</span>
+</div>
+<div class="xar-mod-body xar-align-center">
+
+    <h3>Are you sure you want to delete this file?</h3>
+
+    <xar:set name="path">$files_path.$file['file']</xar:set>
+    <xar:set name="params">array('w' => 400,'q' => 90, 'ace' => true)</xar:set>
+    <div class="xar-margin-thickends">
+        <xar:image-resize src="$path" static="1" label="$file[name]" params="$params" />
+    </div>
+
+    <form action="#xarModURL('gallery', 'admin', 'delete')#" method="POST">
+
+        <input name="what" type="hidden" value="files" />
+        <input name="file_id" type="hidden" value="#$file['file_id']#" />
+        <xar:if condition="isset($album_id)">
+        <input type="hidden" name="album_id" value="#$album_id#" />
+        </xar:if>
+        <input name="authid" type="hidden" value="#xarSecGenAuthKey()#" />
+        <input name="returnurl" type="hidden" value="#$returnurl#" />
+
+        <input name="confirm" type="submit" class="xar-form-textmedium" value="#xarML('Confirm')#" />
+
+
+    </form>
+
+
+</div>

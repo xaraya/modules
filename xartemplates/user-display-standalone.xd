@@ -1,0 +1,7 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+
+<div class="xar-mod-body xar-gallery">
+    <h2><xar:var name="file.name" /></h2>
+    <xar:template file="display-main-image" />
+</div>

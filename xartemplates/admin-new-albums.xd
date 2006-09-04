@@ -1,0 +1,38 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+
+<xar:ajax-lib name="validation" />
+<xar:ajax-lib name="effects" />
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Gallery Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <xar:template file="admin-menu" />
+
+    <xar:template file="admin-sub-menu" />
+
+    <form id="newalbum" action="#xarModURL('gallery', 'admin', 'new')#" method="POST">
+
+    <xar:template file="admin-albums-form" />
+
+    <xar:foreach in="$hooks" value="$hook">
+        <xar:var name="hook" />
+    </xar:foreach>
+
+    <fieldset>
+        <legend><xar:mlstring>Actions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" name="create" value="#$submit_text#" class="xar-form-text" />
+        </div>
+
+    </fieldset>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    // Loads the validation object on the form
+    new Validation('newalbum');
+</script>

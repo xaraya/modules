@@ -1,0 +1,40 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:if condition="!empty($gallery.settings.show_date)">
+    <h3><xar:var name="$file.date" /></h3>
+</xar:if>
+
+<xar:set name="path">$files_path.$file['file']</xar:set>
+
+<xar:comment>
+    Setup the watermark it maybe text or an image
+</xar:comment>
+<xar:set name="fltr">array()</xar:set>
+<xar:if condition="!empty($watermark['type'])">
+    <xar:if condition="$watermark['type'] eq 'image' and !empty($watermark['filename'])">
+        <xar:set name="wmi">"{$watermark['filename']}|{$watermark['alignment']}|{$watermark['opacity']}|{$watermark['margin']}"</xar:set>
+        <xar:set name="fltr">array("wmi|$wmi")</xar:set>
+    <xar:elseif condition="$watermark['type'] eq 'text'" />
+        <xar:set name="wmt">"{$watermark['text']}|{$watermark['size']}|{$watermark['alignment']}|{$watermark['hex_color']}|{$watermark['ttf_font']}|{$watermark['opacity']}|{$watermark['margin']}|{$watermark['angle']}"</xar:set>
+        <xar:set name="fltr">array("wmt|$wmt")</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:if condition="isset($gallery['settings']['file_quality'])">
+    <xar:set name="quality">$gallery['settings']['file_quality']</xar:set>
+<xar:else />
+    <xar:set name="quality">90</xar:set>
+</xar:if>
+<xar:set name="params">array('w' => 500,'q' => $quality, 'ace' => true, 'fltr' => $fltr)</xar:set>
+
+<xar:if condition="!empty($file.summary)">
+    <xar:set name="label"><xar:var name="$file.summary" /></xar:set>
+<xar:elseif condition="!empty($file.name)" />
+    <xar:set name="label"><xar:var name="$file.name" /></xar:set>
+<xar:else />
+    <xar:set name="label">'Gallery File'</xar:set>
+</xar:if>
+<xar:image-resize src="$path" static="1" label="$label" params="$params" />
+
+<xar:if condition="!empty($file.summary)">
+    <p><xar:var name="$file.summary" /></p>
+</xar:if>

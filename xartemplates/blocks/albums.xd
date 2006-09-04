@@ -1,0 +1,19 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<div class="xar-padding-thick xar-align-center">
+    <xar:foreach in="$albums" key="$album_id" value="$album">
+        <xar:if condition="!empty($album.settings.preview_file)">
+            <xar:set name="params">array('w' => 150,'q' => 90, 'ace' => true)</xar:set>
+            <xar:set name="path">$file_path.$album['settings']['preview_file']</xar:set>
+            <xar:if condition="!empty($album.name)">
+                <xar:set name="label"><xar:var name="$album.name" /></xar:set>
+            <xar:else />
+                <xar:set name="label">'Album'</xar:set>
+            </xar:if>
+
+            <a href="#$album.link#"><xar:image-resize src="$path" static="1" label="$label" params="$params" /></a>
+
+            &nbsp;
+
+        </xar:if>
+    </xar:foreach>
+</div>

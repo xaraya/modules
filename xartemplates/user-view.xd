@@ -1,0 +1,82 @@
+<xar:comment> License: New BSD License http://www.abrasiontechnology.com/index.php/page/7 </xar:comment>
+<xar:style scope="module" file="gallery"  />
+
+<xar:if condition="!empty($album.display_name)">
+    <xar:set name="name">$album['display_name']</xar:set>
+<xar:else />
+    <xar:set name="name">"Gallery"</xar:set>
+</xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:var name="name" /></span>
+</div>
+<xar:if condition="!empty($album)">
+    <xar:set name="thumbnail_width">$album['settings']['file_width']</xar:set>
+    <xar:set name="quality">$album['settings']['file_quality']</xar:set>
+</xar:if>
+<div class="xar-mod-body">
+
+    <xar:if condition="xarSessionGetVar('statusmsg')">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+        <xar:set name="dummy">#xarSessionDelVar('statusmsg')#</xar:set>
+    </xar:if>
+
+    <xar:comment>
+        Setup the watermark it maybe text or an image
+    </xar:comment>
+    <xar:set name="fltr">array()</xar:set>
+    <xar:if condition="!empty($watermark['type'])">
+        <xar:if condition="$watermark['type'] eq 'image' and !empty($watermark['filename'])">
+            <xar:set name="wmi">"{$watermark['filename']}|{$watermark['alignment']}|{$watermark['opacity']}|{$watermark['margin']}"</xar:set>
+            <xar:set name="fltr">array("wmi|$wmi")</xar:set>
+        <xar:elseif condition="$main_watermark['type'] eq 'text'" />
+            <xar:set name="wmt">"{$watermark['text']}|{$watermark['size']}|{$watermark['alignment']}|{$watermark['hex_color']}|{$watermark['ttf_font']}|{$watermark['opacity']}|{$watermark['margin']}|{$watermark['angle']}"</xar:set>
+            <xar:set name="fltr">array("wmt|$wmt")</xar:set>
+        </xar:if>
+    </xar:if>
+
+    <xar:if condition="count($files) gt 0">
+        <table class="xar-gallery-view xar-align-center">
+        <xar:set name="i">0</xar:set>
+        <xar:set name="num">count($files)</xar:set>
+        <xar:while condition="$i lt $num and count($files) gt 0">
+            <tr>
+                <xar:set name="j">0</xar:set>
+                <xar:while condition="$j lt $album.settings.cols_per_page and ($file = array_shift($files)) ne null">
+                <xar:set name="params">
+                    array(
+                        'w'      => $thumbnail_width
+                        , 'q'    => $quality
+                        , 'far'  => true
+                        , 'fltr' => $fltr)
+                </xar:set>
+                <td class="xar-align-center">
+                    <xar:if condition="!empty($album.settings.show_date)">
+                    <a href="#$file.link#"><h3><xar:var name="$file.date" /></h3></a>
+                    </xar:if>
+                    <xar:set name="path">$files_path.$file['file']</xar:set>
+                    <a href="#$file.link#"><xar:image-resize src="$path" static="1" label="Media" params="$params" /></a>
+                </td>
+                <xar:set name="j">$j+1</xar:set>
+                </xar:while>
+            </tr>
+            <xar:set name="i">$i+1</xar:set>
+        </xar:while>
+        </table>
+    <xar:else />
+        <h3>No Approved files</h3>
+        <p>
+            There are no approved files in this album yet. Please come back later.
+        </p>
+    </xar:if>
+
+    <xar:if condition="!empty($pager)">
+        <div class="xar-standard-box-padding xar-align-center">
+        <xar:var name="$pager" />
+        </div>
+    </xar:if>
+</div>
+
+<div class="xar-clearboth">&nbsp;</div>
+<xar:foreach in="$hooks" value="$hook">
+    <xar:var name="hook" />
+</xar:foreach>
