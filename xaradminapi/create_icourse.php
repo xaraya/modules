@@ -48,8 +48,11 @@ function itsp_adminapi_create_icourse($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:All:All")) {//TODO: check
-        return;
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+    $planid = $itsp['planid'];
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+       return;
     }
     $datemodi = time();
     $modiby = xarUserGetVar('uid');

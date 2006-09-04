@@ -45,7 +45,10 @@ function itsp_userapi_get_itspcourse($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewITSP')) return;
+
+    if (!xarSecurityCheck('ViewITSP', 1)) {
+       return;
+    }
     /* Get database setup
      */
     $dbconn =& xarDBGetConn();
@@ -73,6 +76,7 @@ function itsp_userapi_get_itspcourse($args)
      * the exception so we just return
      */
     if (!$result) return;
+    $item = array();
     /* Check for no rows found, and if so, close the result set and return an exception */
     if ($result->EOF) {
         $result->Close();

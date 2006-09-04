@@ -53,11 +53,17 @@ function itsp_userapi_getall_itspcourses($args)
         return;
     }
 
-    $items = array();
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewITSP')) return;
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+    $planid = $itsp['planid'];
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('ViewITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
+       return;
+    }
+    $items = array();
+
     /* Get database setup
      */
     $dbconn =& xarDBGetConn();
@@ -91,7 +97,7 @@ function itsp_userapi_getall_itspcourses($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($icourseid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icoursecredits, $icourselevel, $icourseresult,
         $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
-        if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
+        if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
             $items[] = array('icourseid'      => $icourseid,
                              'pitemid'        => $pitemid,
                              'icoursetitle'   => $icoursetitle,

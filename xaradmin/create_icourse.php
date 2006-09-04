@@ -42,6 +42,7 @@ function itsp_admin_create_icourse($args)
     if (!xarVarFetch('icourseresult',  'str:1:255', $icourseresult,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('icoursedate',    'str::',     $icoursedate,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dateappr',       'str::',     $dateappr,       '', XARVAR_NOT_REQUIRED)) return;
+  //  if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
     // Invalid check
     if (!xarVarFetch('invalid', 'array',  $invalid, array(), XARVAR_NOT_REQUIRED)) return;
 
@@ -80,8 +81,10 @@ function itsp_admin_create_icourse($args)
                                 'dateclose' => $dateclose));
     }
 */
-     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
+     /* Confirm authorisation code.
+     Does not work when coming from user function
+     */
+ //  if (!xarSecConfirmAuthKey($authid)) return;
     /* The API function is called. */
     $icourseid = xarModAPIFunc('itsp',
                               'admin',
@@ -100,7 +103,10 @@ function itsp_admin_create_icourse($args)
     /* The return value of the function is checked here, and if the function
      * suceeded then an appropriate message is posted.
      */
-    if (!isset($icourseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+     if (!isset($icourseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+         xarSessionSetVar('statusmsg', xarML('The #(1) was NOT created!',$displaytitle));
+         return false; // throw back
+     }
     xarSessionSetVar('statusmsg', xarML('The #(1) was successfully created!',$displaytitle));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work

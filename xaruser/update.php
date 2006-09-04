@@ -53,7 +53,8 @@ function itsp_user_update()
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
-
+     /* Confirm authorisation code. */
+    if (!xarSecConfirmAuthKey('itsp.modify')) return;
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
         //get planitem
@@ -102,20 +103,24 @@ function itsp_user_update()
                 // else update the lcourse
 
                 break;
+            case 'external':
             default:
-                if (!xarVarFetch('icourseid',   'id',    $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursetitle', 'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseloc',  'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedesc',   'str::',    $icoursedesc, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursecredits',   'int::',    $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourselevel', 'str:1:255',    $icourselevel, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseresult',  'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedate',   'str::',    $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('dateappr',   'str::',    $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('displaytitle',  'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseloc',      'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedesc',     'str::',        $icoursedesc, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursecredits',  'int::',        $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourselevel',    'str:1:255',    $icourselevel, '', XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icourseresult',   'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('dateappr',        'str::',        $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('displaytitle',    'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+                // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
+                /* Confirm authorisation code.*/
+                // if (!xarSecConfirmAuthKey($authid)) return;
 
-                if (!xarModFunc('itsp',
+                $icourseid = xarModApiFunc('itsp',
                                    'admin',
                                    'create_icourse',
                                    array(
@@ -130,11 +135,14 @@ function itsp_user_update()
                                    'icourseresult'=> $icourseresult,
                                    'icoursedate'=> $icoursedate,
                                    'dateappr'=> $dateappr,
-                                   'displaytitle' => $displaytitle,
-                                   'authid' => xarSecGenAuthKey('itsp')
-                                         )
-                                )) {
-                    return; /* throw back */
+                                   'displaytitle' => $displaytitle)
+                                   );
+                /* The return value of the function is checked here, and if the function
+                 * suceeded then an appropriate message is posted.
+                 */
+                if (!isset($icourseid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                    xarSessionSetVar('statusmsg', xarML('The #(1) was NOT created!',$displaytitle));
+                    return false; // throw back
                 }
                 xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
         }
