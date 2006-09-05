@@ -22,6 +22,10 @@
             <label class="xar-form-label"><xar:mlstring>Support Short Urls:</xar:mlstring></label>
             <input type="checkbox" id="support_short_urls" name="support_short_urls" value="1" class="xar-form-textshort" #$shorturls# />
         </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label"><xar:mlstring>Obfuscate Photo Names:</xar:mlstring></label>
+            <input type="checkbox" id="obfuscate_file_name" name="obfuscate_file_name" value="1" class="xar-form-textshort" #$obfuscate_file_name# />
+        </div>
 
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Items Per Page:</xar:mlstring></label>

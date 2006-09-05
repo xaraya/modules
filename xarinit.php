@@ -24,6 +24,7 @@ function gallery_init()
     // Set up module variables
     xarModSetVar('gallery', 'name',           'Gallery');
     xarModSetVar('gallery', 'SupportShortURLs', 0);
+    xarModSetVar('gallery', 'obfuscate_file_name', true);
     xarModSetVar('gallery', 'items_per_page', 10);
     xarModSetVar('gallery', 'files_per_page', 10);
     xarModSetVar('gallery', 'cols_per_page',  2);
@@ -126,6 +127,9 @@ function gallery_upgrade($oldversion)
             // Removes and privileges that may have been created
             xarRemoveMasks('gallery');
             xarRemoveInstances('gallery');
+
+            // obfuscating uploaded file paths is now optional
+            xarModSetVar('gallery', 'obfuscate_file_name', true);
 
             gallery_db_sync_tables();
             break;

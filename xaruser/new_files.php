@@ -38,6 +38,7 @@ function gallery_user_new_files($args)
         if( !xarVarFetch('summary', 'str', $summary, '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('links', 'array', $links, array()) ){ return false; }
         if( !xarVarFetch('title', 'array', $titles, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('returnurl', 'str', $returnurl, '', XARVAR_NOT_REQUIRED) ){ return false; }
 
         /*
             Start processing uploaded files
@@ -101,20 +102,26 @@ function gallery_user_new_files($args)
             }
         }
 
-        if( !empty($album_id) )
+        if( !empty($returnurl) )
         {
-            $url = xarModURL('gallery', 'user', 'view',
-                array(
-                    //'what' => $what,
-                    'album_id' => $album_id
-                )
-            );
+            $url = $returnurl;
         }
         else
         {
-            $url = xarModURL('gallery', 'user', 'main');
+            if( !empty($album_id) )
+            {
+                $url = xarModURL('gallery', 'user', 'view',
+                    array(
+                        //'what' => $what,
+                        'album_id' => $album_id
+                    )
+                );
+            }
+            else
+            {
+                $url = xarModURL('gallery', 'user', 'main');
+            }
         }
-
         // Look like it was a success.
         xarSessionSetVar('status_message', xarModGetVar('gallery', 'new_file_success'));
 
@@ -144,7 +151,7 @@ function gallery_user_new_files($args)
     */
     $data['album_id'] = $album_id;
     $data['submit_text'] = 'Create';
-    $data['returnurl'] = xarRequestGetVar('HTTP_HOST');
+    $data['returnurl'] = $_SERVER['HTTP_REFERER'];
     $data['authid'] = xarSecGenAuthKey();
 
     $hooks = xarModCallHooks('item', 'new', '',

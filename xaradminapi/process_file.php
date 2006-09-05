@@ -66,15 +66,29 @@ function gallery_adminapi_process_file($args)
         $overwrite = false;
     }
 
+    $file_info = $file;
+
     /*
         Prepare path and save uploaded file.
     */
-    $salt = "gallery"; // We use this salt so that dervatives don't collide as we are just hashing an int and if  other modules do something similarwe would get the wrong image at times
-    $md5_name = md5("$salt-$file_id");
+    if( xarModGetVar('gallery', 'obfuscate_file_name') == true )
+    {
+        $salt = "gallery"; // We use this salt so that dervatives don't collide as we are just hashing an int and if  other modules do something similarwe would get the wrong image at times
+        $md5_name = md5("$salt-$file_id-{$file['name']}");
 
-    $file_path = realpath(xarModGetVar('gallery', 'file_path'));
+        $file_path = realpath(xarModGetVar('gallery', 'file_path'));
 
-    $file_path .= '/' . $md5_name;
+        $file_path .= '/' . $md5_name;
+
+        $file_info['file'] = $md5_name;
+    }
+    else
+    {
+        $file_name = $file_id . '-' . $file['name'];
+        $file_path = realpath(xarModGetVar('gallery', 'file_path')) . '/' . $file_name;
+        $file_info['file'] = $file_name;
+    }
+
     if( file_exists($file_path) && $overwrite == false )
     {
         /*
@@ -85,10 +99,6 @@ function gallery_adminapi_process_file($args)
 
     move_uploaded_file($file['tmp_name'], $file_path);
     chmod($file_path, 0644);
-
-    $file_info = $file;
-
-    $file_info['file'] = $md5_name;
 
     return $file_info;
 }
