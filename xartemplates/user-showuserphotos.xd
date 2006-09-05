@@ -1,0 +1,28 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('flickring','useModuleAlias')">
+            #xarModGetVar('flickring','aliasname')#
+        <xar:else />
+            <xar:mlstring>Flickr User Photos</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:if condition="isset($photos['photo'])">
+        <xar:set name="i">0</xar:set>    
+        <xar:foreach in="$photos['photo']" value="$photo">
+            <a href="#$photos_url##$photo['id']#" alt="User URL">
+                <img border="0" alt="#$photo['title']#" src="#$f->buildPhotoURL($photo,'Square')#">
+            </a>
+            <xar:set name="i">$i+1</xar:set>
+            <xar:if condition="$i % 6 == 0">
+                <br />
+            </xar:if>
+        </xar:foreach>
+    <xar:else />
+        <xar:ml>
+            <xar:mlstring>No photos found for #(1)</xar:mlstring>
+            <xar:mlvar>#$username#</xar:mlvar>
+        </xar:ml>
+    </xar:if>
+</div>

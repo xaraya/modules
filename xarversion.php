@@ -5,7 +5,7 @@
 $modversion['name']           = 'flickring'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '789';
 $modversion['version']        = '0.0.1'; /* three point version number */
-$modversion['displayname']    = xarML('flickring');
+$modversion['displayname']    = xarML('Flickring');
 $modversion['description']    = 'phpFlickr wrapper';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

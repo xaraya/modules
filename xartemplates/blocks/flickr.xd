@@ -1,0 +1,7 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:mlstring>Enter a username to search for</xar:mlstring>
+<form action="#$form_action#" method="post">
+    <input type="text" name="username" id="username" value="" />
+    <br />
+    <input type="submit" name="find_userphotos" value="#xarML('Find Photos')#" />
+</form>
