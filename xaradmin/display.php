@@ -45,8 +45,6 @@ function helpdesk_admin_display($args)
     $data['itemid'] = $itemid;
     $data['itemtype'] = $itemtype;
 
-    if (!xarSecurityCheck('readhelpdesk',1,'Item',$itemid)) return;
-
     // get user settings for 'bold'
     $data['is_bold'] = xarModGetUserVar('helpdesk', 'bold');
 

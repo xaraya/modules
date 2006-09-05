@@ -32,7 +32,7 @@ function helpdesk_userapi_get_companies($args)
     );
 
     $companies = array();
-    if( !xarSecurityCheck('edithelpdesk', 0) )
+    if( !Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false) )
     {
         // Lose all groups the user is not in
         $user = $roles->getRole( xarUserGetVar('uid') );

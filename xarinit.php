@@ -150,14 +150,6 @@ function helpdesk_init()
     // Module variable for testing
     xarModSetVar('helpdesk', 'debug message', '');
 
-//    xarRegisterMask('viewhelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_OVERVIEW');
-//    xarRegisterMask('readhelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_READ');
-//    xarRegisterMask('submithelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_COMMENT');
-//    xarRegisterMask('edithelpdesk',   'All','helpdesk','helpdesk','All', 'ACCESS_EDIT');
-//    xarRegisterMask('addhelpdesk',    'All','helpdesk','helpdesk','All', 'ACCESS_ADD');
-//    xarRegisterMask('deletehelpdesk', 'All','helpdesk','helpdesk','All', 'ACCESS_DELETE');
-//    xarRegisterMask('adminhelpdesk',  'All','helpdesk','helpdesk','All', 'ACCESS_ADMIN');
-
     // let's hook cats in
     $cid = xarModAPIFunc('categories', 'admin', 'create',
         array(
@@ -473,6 +465,9 @@ function helpdesk_upgrade($oldversion)
         case '0.7.9':
         case '0.8.0':
         case '0.8.1':
+            // Removes and privileges that may have been created
+            xarRemoveMasks('helpdesk');
+            xarRemoveInstances('helpdesk');
 
         default:
             break;

@@ -73,11 +73,6 @@ function helpdesk_user_view($args)
         }
     }
 
-//    if( !xarSecurityCheck('edithelpdesk', 0) )
-//    {
-//        $selection = 'MYPERSONAL';
-//    }
-
     $data = array();
     // Lets get the ticket now for the view
     $data['tickets']  = xarModAPIFunc('helpdesk', 'user', 'gettickets',

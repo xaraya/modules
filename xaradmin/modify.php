@@ -50,8 +50,6 @@ function helpdesk_admin_modify($args)
         return $msg;
     }
 
-    if (!xarSecurityCheck('edithelpdesk',1,'item',$itemid)) return;
-
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('module' => 'helpdesk',

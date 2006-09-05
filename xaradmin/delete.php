@@ -71,13 +71,6 @@ function helpdesk_admin_delete($args)
     $newid = $object->getItem();
     if (!isset($newid) || $newid != $itemid) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
-    if (!xarSecurityCheck('deletehelpdesk',1,'item',$itemid)) return;
-
     $data['menu']      = xarModFunc('helpdesk','admin','menu');
     $data['menutitle'] = xarModAPIFunc('helpdesk','admin','menu');
 
