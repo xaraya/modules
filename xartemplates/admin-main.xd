@@ -41,7 +41,7 @@
               </ul>
             </p>
             <p>
-              <strong><xar:mlstring>The Diplay settings (included from version 1.1.4):</xar:mlstring></strong>
+              <strong><xar:mlstring>The Display settings (included from version 1.1.4):</xar:mlstring></strong>
               <ul>
                   <li><xar:mlstring>Display User Menu - automatically displays an entry in the default User Menu for each URL entry that allows user access.</xar:mlstring></li>
                   <li><xar:mlstring>Default URL for users - select the default URL to be displayed to Users if the User menu is active and no page is passed in.</xar:mlstring></li>
@@ -53,7 +53,7 @@
             <p><xar:mlstring>You can also define specific settings for different pages. URL specific settings, such as the dimensions of the display, will override the general settings.</xar:mlstring> </p>
             <h4><xar:mlstring>Displaying an External Page</xar:mlstring></h4>
             <p><xar:mlstring>To display an external page, you can automatically display the page entry in the Window option in the Main Menu on your site (set this Display option on, in the Modify Config). 
-                Alternatively you can create an entry directly for it by specifiying the URL. To do this, in the URL field of the menu entry write the following:</xar:mlstring></p>
+                Alternatively you can create an entry directly for it by specifying the URL. To do this, in the URL field of the menu entry write the following:</xar:mlstring></p>
             <pre>
             index.php?module=window&amp;page=&lt;your page&gt;
             </pre>
