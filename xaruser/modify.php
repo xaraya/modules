@@ -130,7 +130,8 @@ function gallery_user_modify($args)
 
                     // If user is not admin change status of file when a
                     // new one is uploaded
-                    if( !xarSecurityCheck('AdminPanel') )
+                    if( Security::check(SECURITY_ADMIN, 'gallery', FILE_ITEMTYPE, $file_id, false)
+                        or Security::check(SECURITY_ADMIN, 'gallery', FILE_ITEMTYPE, 0, false) )
                     {
                         $params['status'] = 'SUBMITTED';
                     }
