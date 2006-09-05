@@ -5,7 +5,7 @@
 <div class="xar-mod-body">
     <xar:template type="module" module="window" file="admin-menu" />
     <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
- 
+
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
@@ -26,7 +26,7 @@
               <xar:mlstring>The Modify Configuration settings are available are General settings and Display options. </xar:mlstring>
             </p>
             <p>
-              <xar:mlstring>The General settings:</xar:mlstring>
+              <strong><xar:mlstring>The General settings:</xar:mlstring></strong>
               <ul>
                 <li><xar:mlstring>Display only pages off the local server, or also from other servers on the Internet.</xar:mlstring></li>
                 <li><xar:mlstring>Buffer the output before displaying it.</xar:mlstring></li>
@@ -41,9 +41,10 @@
               </ul>
             </p>
             <p>
-              <xar:mlstring>The Diplay settings (From version 1.1.4):</xar:mlstring>
+              <strong><xar:mlstring>The Diplay settings (included from version 1.1.4):</xar:mlstring></strong>
               <ul>
                   <li><xar:mlstring>Display User Menu - automatically displays an entry in the default User Menu for each URL entry that allows user access.</xar:mlstring></li>
+                  <li><xar:mlstring>Default URL for users - select the default URL to be displayed to Users if the User menu is active and no page is passed in.</xar:mlstring></li>
                   <li><xar:mlstring>Use IFrame Tag - uses and IFrame to display the specified URL pages (php4 and php5)</xar:mlstring></li>
                   <li><xar:mlstring>Use Object Tag - uses the Window Dynamic Data Property object to display the specified URL (php5 only)</xar:mlstring></li>
               </ul>
