@@ -36,7 +36,6 @@ function window_user_main($args)
                 'height' => $height,
                 'width' => $width,
                 'auto_resize'=>$auto_resize);
-
     return xarResponseRedirect(xarModURL('window', 'user', 'display', $data));
 
     return true;

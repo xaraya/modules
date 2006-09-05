@@ -1,6 +1,7 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title">#$title#</span>
 </div>
+<xar:if condition="!empty($page)">
 <xar:if condition="xarModGetVar('window','use_object')">
     <xar:data-input type="frame" page="$page" />
 <xar:else />
@@ -14,6 +15,9 @@
     -->
     </iframe>
     </div>
+</xar:if>
+<xar:else />
+  <xar:mlstring>No Default Page Configured</xar:mlstring>
 </xar:if>
 <xar:if condition="!empty($hooks)">
     <br />

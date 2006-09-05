@@ -137,6 +137,7 @@ function window_upgrade($oldversion)
             if (!$result) return;
             $result3->close();
         case '1.1.4'; // current version
+            xarModSetVar('window','defaulturl','');
             break;
     }
     return true;

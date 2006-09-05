@@ -173,9 +173,25 @@
                     <label for="showusermenu">
                         <xar:mlstring>Display User Menu</xar:mlstring>
                     </label>
-
                  </div>
-
+                 <div class="xar-form-input-wrapper">
+                    <label for="defaulturl" class="xar-form-label">
+                        <xar:mlstring>Default URL for Users:</xar:mlstring>
+                    </label>
+                      <select name="defaulturl" id="defaulturl">
+                          <xar:loop name="$urllist">
+                              <xar:if condition="xarModGetVar('window','defaulturl') eq $loop:item['name']">
+                                  <option value="#$loop:item['name']#" selected="selected">
+                                      #$loop:item['name']#
+                                  </option>
+                                  <xar:else />
+                                  <option value="#$loop:item['name']#">
+                                      #$loop:item['name']# 
+                                  </option>
+                              </xar:if>
+                          </xar:loop>
+                      </select>
+                  </div>
                   <div class="xar-form-input-wrapper-after">
                     <xar:if condition="xarModGetVar('window', 'use_iframe')">
                         <input type="checkbox" name="use_iframe" id="use_iframe" value="1" checked="checked" />

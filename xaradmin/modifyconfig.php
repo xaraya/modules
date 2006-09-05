@@ -28,6 +28,12 @@ function window_admin_modifyconfig()
             // this is sort of stupid, but I don't think there is a better way at present
             $windowid=xarModGetIDFromName('window');
             $info = xarModGetInfo($windowid);
+            $urls = xarModAPIFunc('window','user','getall',array('status' => 1)); // get all active URLS
+            if (is_array($urls)) {
+                $data['urllist']= $urls;
+            } else {
+                $data['urllist']= '';
+            }
             if (!xarVarFetch('showusermenu','int', $data['showusermenu'],$info['usercapable'],XARVAR_NOT_REQUIRED)) return;
             
             $data['showusermenu'] =$info['usercapable'];

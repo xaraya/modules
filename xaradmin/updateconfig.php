@@ -59,11 +59,11 @@ function window_admin_updateconfig($var)
                                             'usercapable'  => $usermenu));
             if (!xarVarFetch('use_iframe', 'checkbox', $use_iframe, true, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('use_object', 'checkbox', $use_object, true, XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('defaulturl', 'str:0:', $defaulturl, '', XARVAR_NOT_REQUIRED)) return;
             xarModSetVar('window', 'use_iframe',  $use_iframe
 );
             xarModSetVar('window', 'use_object', $use_object);
-
+            xarModSetVar('window', 'defaulturl', $defaulturl);
             break;
         case 'tab3':
             break;

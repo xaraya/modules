@@ -49,6 +49,13 @@ function window_user_display($args)
     if ($security) {
         if (!xarSecurityCheck('ReadWindow')) return;
 
+        if (empty($page)){
+            $defaulturl = xarModGetVar('window','defaulturl');
+        }
+        if (isset($defaulturl) && !empty($defaulturl)) {
+            $page =$defaulturl;
+        }
+
         $result=xarModAPIFunc('window','user','getall');
 
         $db_checked = 0;
