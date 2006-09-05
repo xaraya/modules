@@ -20,10 +20,10 @@
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
             <p><xar:mlstring>There are two options that allow you to configure urls. The general modify configuration option, and one for managing URL specific settings.</xar:mlstring></p>
-            <p><xar:mlstring>Modify configuration settings are valid for all URLs.</xar:mlstring> </p>
+            <p><xar:mlstring></xar:mlstring> </p>
             <h4><xar:mlstring>Modify Config Options</xar:mlstring></h4>
             <p>
-              <xar:mlstring>The Modify Configuration settings are available are General settings and Display options. </xar:mlstring>
+              <xar:mlstring>Modify configuration settings are valid for all URLs and are available for General URL settings and Display options. </xar:mlstring>
             </p>
             <p>
               <strong><xar:mlstring>The General settings:</xar:mlstring></strong>
