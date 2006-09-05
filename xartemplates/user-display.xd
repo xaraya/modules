@@ -19,7 +19,9 @@
         </tr>
         <tr class="xar-accent">
             <td class="xar-title"><xar:mlstring>Name:</xar:mlstring></td>
-            <td><xar:var name="name" /> - <xar:var name="email" /></td>
+            <td>
+                <a href="#xarModURL('roles', 'user', 'email', array('uid' => $openedby))#"><xar:var name="name" /></a>
+            </td>
             <td class="xar-title"><xar:mlstring>Phone Number:</xar:mlstring></td>
             <td><xar:var name="phone" /></td>
         </tr>

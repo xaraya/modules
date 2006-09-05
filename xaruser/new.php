@@ -219,6 +219,8 @@ function helpdesk_user_new()
             /*
                 Get template ready to display message to user.
             */
+            $data['module'] = 'helpdesk';
+            $data['itemtype'] = TICKET_ITEMTYPE;
             $data['userid'] = $userid;
             $data['enabledimages']  = xarModGetVar('helpdesk', 'Enable Images');
             $data['userisloggedin'] = xarUserIsLoggedIn();
