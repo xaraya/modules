@@ -139,6 +139,9 @@ function security_upgrade($oldversion)
             Security::update($levels, xarModGetIDFromName('security'));
 
         case '0.9.1':
+            // Removes and privileges that may have been created
+            xarRemoveMasks('security');
+            xarRemoveInstances('security');
             break;
 
         default:
@@ -182,10 +185,6 @@ function security_delete()
 
     $result = xarModUnregisterHook('item', 'update', 'API', 'security', 'admin', 'updatehook');
     if( !$result ){ return false; }
-
-    // Removes and privileges that may have been created
-    xarRemoveMasks('security');
-    xarRemoveInstances('security');
 
     // Deletion successful
     return true;

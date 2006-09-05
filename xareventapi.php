@@ -32,6 +32,16 @@ function security_eventapi_OnServerRequest($args)
 
     $modid = xarModGetIdFromName($module);
 
+    if( xarVarIsCached("modules.security", 'itemtype') )
+    {
+        $itemtype = xarVarGetCached("modules.security", 'itemtype');
+    }
+
+    if( xarVarIsCached("modules.security", 'itemid') )
+    {
+        $itemid = xarVarGetCached("modules.security", 'itemid');
+    }
+
     if( !empty($catid) && empty($itemid) && xarModIsHooked('security', 'categories') )
     {
         $modid = xarModGetIdFromName('categories');

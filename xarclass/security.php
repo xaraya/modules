@@ -40,9 +40,6 @@ class Security
             return (boolean) xarVarGetCached('modules.security', $cache_name);
         }
 
-        // Get Module Settings
-        //$settings = SecuritySettings::factory($modid, $itemtype);
-
         // Get DB conn ready
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
@@ -254,19 +251,30 @@ class Security
         if( isset($limit_gids) and count($limit_gids) > 0 )
         {
             $uids = $limit_gids;
+            $where[] = "$secRolesTable.uid IN (". join(', ', $uids) .")  ";
         }
         else
         {
-            $roles = new xarRoles();
-            $user = $roles->getRole($currentUserId);
-            $tmp = $user->getParents();
-            $uids = array(0, $currentUserId);
-            foreach( $tmp as $u )
+            //Check Groups
+            $uid = xarUserGetVar('uid');
+            $uids = array(0, xarUserGetVar('uid'));
+
+            $groups_cache_name = "security.groups.$uid";
+            if( xarVarIsCached('modules.security', $groups_cache_name) )
             {
-                $uids[] = $u->uid;
+                $where[] = xarVarGetCached('modules.security', $groups_cache_name);
+            }
+            else
+            {
+                $roles = new xarRoles();
+                $user = $roles->getRole($uid);
+                $tmp = $user->getParents();
+                foreach( $tmp as $u ){ $uids[] = $u->uid; }
+                $group_where = "$secRolesTable.uid IN (". join(', ', $uids) .")  ";
+                xarVarSetCached('modules.security', $groups_cache_name, $group_where);
+                $where[] = $group_where;
             }
         }
-        $where[] = "$secRolesTable.uid IN (". join(', ', $uids) .")  ";
 
         switch( $level )
         {
