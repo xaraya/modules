@@ -19,36 +19,36 @@
 */
 function security_adminapi_updatehook($args)
 {
+    // This func is no longer used. Thanks to ajax this is not needed now.
     extract($args);
-
-    xarModAPILoad('security', 'user');
+    return $extrainfo;
 
     // setup vars
-    $modid = 0;
-    if( !empty($extrainfo['module']) )
-        $modid = xarModGetIdFromName($extrainfo['module']);
-
-    $itemtype = 0;
-    if( !empty($extrainfo['itemtype']) )
-        $itemtype = $extrainfo['itemtype'];
-
-    $itemid = 0;
-    if( !empty($objectid) )
-        $itemid = $objectid;
-
-    if( !Security::check(SECURITY_ADMIN, $modid, $itemtype, $itemid, false) ){ return ''; }
-
-    if( !xarVarFetch('levels','array',$levels, '', XARVAR_NOT_REQUIRED) ){ return false; }
-
-    $security = new SecurityLevels($modid, $itemtype, $itemid);
-    foreach( $levels as $role_id => $level )
-    {
-        $security->add(new SecurityLevel($level), $role_id);
-    }
-
-    $result = Security::update($security, $modid, $itemtype, $itemid);
-    if( !$result ){ return false; }
-
-    return $extrainfo;
+//    $modid = 0;
+//    if( !empty($extrainfo['module']) )
+//        $modid = xarModGetIdFromName($extrainfo['module']);
+//
+//    $itemtype = 0;
+//    if( !empty($extrainfo['itemtype']) )
+//        $itemtype = $extrainfo['itemtype'];
+//
+//    $itemid = 0;
+//    if( !empty($objectid) )
+//        $itemid = $objectid;
+//
+//    if( !Security::check(SECURITY_ADMIN, $modid, $itemtype, $itemid, false) ){ return ''; }
+//
+//    if( !xarVarFetch('levels','array',$levels, '', XARVAR_NOT_REQUIRED) ){ return false; }
+//
+//    $security = new SecurityLevels($modid, $itemtype, $itemid);
+//    foreach( $levels as $role_id => $level )
+//    {
+//        $security->add(new SecurityLevel($level), $role_id);
+//    }
+//
+//    $result = Security::update($security, $modid, $itemtype, $itemid);
+//    if( !$result ){ return false; }
+//
+//    return $extrainfo;
 }
 ?>

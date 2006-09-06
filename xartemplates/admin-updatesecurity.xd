@@ -1,0 +1,27 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:ajax-lib name="prototype" />
+<xar:base-include-javascript module="security" filename="common.js" />
+<xar:base-include-javascript module="security" filename="json.js" position="head" />
+
+<script type="text/javascript">
+var security = null;
+var groups = { "" : "Please select a group" <xar:foreach in="$groups" key="$key" value="$group">, "#$key#" : "#$group.name#"</xar:foreach> };
+</script>
+
+
+<fieldset>
+    <legend>Security Levels</legend>
+
+    <div id="securitymessage"></div>
+
+    <div id="securitylevels"></div>
+
+    <input type="hidden" id="param_modid" value="#$modid#" />
+    <input type="hidden" id="param_itemtype" value="#$itemtype#" />
+    <input type="hidden" id="param_itemid" value="#$itemid#" />
+
+</fieldset>
+
+<script type="text/javascript">
+xar_security_LoadSecurity();
+</script>

@@ -64,22 +64,11 @@ function security_init()
             'security', 'admin', 'createhook')) {
         return false;
     }
-    if (!xarModRegisterHook('item', 'update', 'API',
-            'security', 'admin', 'updatehook')) {
-        return false;
-    }
 
     // Set default security.
     $default_admin_id = xarModGetVar('roles', 'admin');
     $levels[$default_admin_id] = new SecurityLevel(1, 1, 1, 1, 1, 1);
     Security::update($levels, xarModGetIDFromName('security'));
-
-    /*
-      Register the module components that are privileges objects Format is
-      xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-    */
-    //xarRegisterMask('UseSecurity', 'All', 'security', 'All', 'All', 'ACCESS_READ');
-    //xarRegisterMask('AdminSecurity', 'All', 'security', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -142,6 +131,11 @@ function security_upgrade($oldversion)
             // Removes and privileges that may have been created
             xarRemoveMasks('security');
             xarRemoveInstances('security');
+
+            // No longer need. Done with ajax now.
+            $result = xarModUnregisterHook('item', 'update', 'API', 'security', 'admin', 'updatehook');
+            if( !$result ){ return false; }
+
             break;
 
         default:

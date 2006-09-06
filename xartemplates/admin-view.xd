@@ -2,6 +2,7 @@
 <xar:style scope="module" module="security" file="main" />
 <xar:ajax-lib name="prototype" />
 <xar:base-include-javascript module="security" filename="json.js" position="head" />
+<xar:base-include-javascript module="security" filename="common.js" position="head" />
 <xar:base-include-javascript module="security" filename="adminAjax.js" position="head" />
 
 <script type="text/javascript">

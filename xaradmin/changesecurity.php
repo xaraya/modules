@@ -46,64 +46,21 @@ function security_admin_changesecurity($args)
     if( !$has_admin_security ){ return ''; }
 
     $data = array();
+    //$settings = SecuritySettings::factory($modid, $itemtype);
 
-    xarModAPILoad('security');
-    $settings = SecuritySettings::factory($modid, $itemtype);
-
-    /*
-        Get all the current security and owner info
-    */
     // Make sure their are levels if not quit
     $args = array('modid' => $modid, 'itemtype' => $itemtype, 'itemid' => $itemid);
-    $security = xarModAPIFunc('security', 'user', 'get', $args);
+    $data['security'] = xarModAPIFunc('security', 'user', 'get', $args);
 
-    // Make user this has an owner otherwise quit
-    if( empty($settings->owner_table) )
-    {
-        $owner = xarModAPIFunc('owner', 'user', 'get', $args);
-        //if( !$owner ) return '';
-    }
-    else
-    {
-        // Use owner table field settings to extract the owner from the database
-        $dbconn   =& xarDBGetConn();
-        $sql = "
-            SELECT {$settings->owner_column}
-            FROM {$settings->owner_table}
-            WHERE {$settings->owner_primary_key} = ?
-        ";
-        $result = $dbconn->Execute($sql, array($itemid));
-        if( !$result ){ return false; }
-        $owner['uid'] = $result->fields[0];
-    }
 
     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
+    $data['groups'] = array(0 => array('name' => xarML('All Roles')));
+    foreach( $groups as $key => $group ){ $data['groups'][$group['uid']] = $group; }
 
-    $tmp = array(0 => array('name' => xarML('All Roles')));
-    foreach( $groups as $key => $group ){ $tmp[$group['uid']] = $group; }
-    $groups = $tmp;
-
-    $secLevels = xarModAPIFunc('security', 'user', 'getlevels');
-
-    /*
-        Setup vars for the template
-    */
-    $data['standalone'] = true;
-    if( xarRequestGetVar('type') == 'admin' || xarRequestGetVar('func') == 'modify' )
-    {
-        $data['standalone'] = false;
-    }
-    $data['settings'] = $settings;
-    $data['owner']    = $owner['uid'];
-    $data['sec_levels']= $secLevels; // different security levels
-    $data['security']   = $security; // Sec levels for each group
-    $data['all_groups']   = $groups; // Groups user is in
-    $data['modid']    = $modid;
+    $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
-    $data['itemid']   = $itemid;
-    $data['action']   = xarModURL('security', 'admin', 'creategroupsecurity');
-    $data['returnurl']= $returnUrl;
+    $data['itemid'] = $itemid;
 
-    return xarTplModule('security', 'admin', 'changesecurity', $data);
+    return xarTplModule('security', 'admin', 'updatesecurity', $data);
 }
 ?>
