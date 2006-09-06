@@ -44,5 +44,5 @@ $modversion['securityschema'] = array('helpdesk::' => '::');
 /*
     270 - Security Module
 */
-$modversion['dependency'] = array(14, 147, 182, 270);
+$modversion['dependency'] = array(14, 147, 182, 270, 785);
 ?>
