@@ -53,11 +53,11 @@ function security_init()
         Register all the modules hooks
     */
     if (!xarModRegisterHook('item', 'display', 'GUI',
-            'security', 'admin', 'changesecurity')) {
+            'security', 'admin', 'modifysecurity')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'modify', 'GUI',
-            'security', 'admin', 'changesecurity')) {
+            'security', 'admin', 'modifysecurity')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'create', 'API',
@@ -135,6 +135,19 @@ function security_upgrade($oldversion)
             // No longer need. Done with ajax now.
             $result = xarModUnregisterHook('item', 'update', 'API', 'security', 'admin', 'updatehook');
             if( !$result ){ return false; }
+            $result = xarModUnregisterHook('item', 'display', 'GUI', 'security', 'admin', 'changesecurity');
+            if( !$result ){ return false; }
+            $result = xarModUnregisterHook('item', 'modify', 'GUI', 'security', 'admin', 'changesecurity');
+            if( !$result ){ return false; }
+
+            if (!xarModRegisterHook('item', 'display', 'GUI',
+                    'security', 'admin', 'modifysecurity')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'modify', 'GUI',
+                    'security', 'admin', 'modifysecurity')) {
+                return false;
+            }
 
             break;
 
@@ -168,10 +181,10 @@ function security_delete()
     xarModDelAllVars('security');
 
     /* Unregister each of the hooks that have been created */
-    $result = xarModUnregisterHook('item', 'display', 'GUI', 'security', 'admin', 'changesecurity');
+    $result = xarModUnregisterHook('item', 'display', 'GUI', 'security', 'admin', 'modifysecurity');
     if( !$result ){ return false; }
 
-    $result = xarModUnregisterHook('item', 'modify', 'GUI', 'security', 'admin', 'changesecurity');
+    $result = xarModUnregisterHook('item', 'modify', 'GUI', 'security', 'admin', 'modifysecurity');
     if( !$result ){ return false; }
 
     $result = xarModUnregisterHook('item', 'create', 'API', 'security', 'admin', 'createhook');

@@ -1,6 +1,6 @@
 function xar_security_LoadSecurity()
 {
-    var url = 'index.php?module=security&type=admin&func=ajax_server';
+    var url = 'index.php?module=security&type=ajax&func=server';
     var pars = 'action=loadsecurity&param_modid='+$F('param_modid')+'&param_itemtype='+$F('param_itemtype') +
         '&param_itemid='+$F('param_itemid');
     var myAjax = new Ajax.Request( url, { method: 'post', parameters: pars, onComplete: xar_security_showResponse });
@@ -61,7 +61,7 @@ function xar_security_GenerateLevelsTable()
 
 function xar_security_SaveSecurity()
 {
-    var url = 'index.php?module=security&type=admin&func=ajax_server';
+    var url = 'index.php?module=security&type=ajax&func=server';
     var pars = 'action=savesecurity&param_security='+ JSON.stringify(security);
     var myAjax = new Ajax.Request( url, { method: 'post', parameters: pars, onComplete: xar_security_Saved });
 }

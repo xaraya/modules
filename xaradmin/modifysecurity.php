@@ -16,7 +16,7 @@
 
     @return string module output
 */
-function security_admin_changesecurity($args)
+function security_admin_modifysecurity($args)
 {
     extract($args);
 
@@ -61,6 +61,6 @@ function security_admin_changesecurity($args)
     $data['itemtype'] = $itemtype;
     $data['itemid'] = $itemid;
 
-    return xarTplModule('security', 'admin', 'updatesecurity', $data);
+    return xarTplModule('security', 'admin', 'modifysecurity', $data);
 }
 ?>

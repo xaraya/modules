@@ -1,14 +1,15 @@
 <?php
 
-function security_admin_ajax_server($args)
+function security_ajax_server($args)
 {
     ini_set('max_execution_time', 5);
-    if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
+    //if( !Security::check(SECURITY_ADMIN, 'security') ){ return false; }
 
     if( !xarVarFetch('action', 'str:1:20', $action, null) ){ return false; }
 
     ob_end_clean();
 
+    xarModAPILoad('security');
     $data = '';
     switch( $action )
     {
@@ -23,7 +24,7 @@ function security_admin_ajax_server($args)
 
             $data['itemtypes'] = $itemtypes;
             $data['template']  = 'form-itemtypes';
-            $data = xarTplModule('security', 'admin', 'ajax_server', $data);
+            $data = xarTplModule('security', 'ajax', 'server', $data);
             break;
 
         case 'loadsecurity':
@@ -68,7 +69,7 @@ function security_admin_ajax_server($args)
             ksort($itemids);
             $data['itemids']   = $itemids;
             $data['template']  = 'form-itemids';
-            $data = xarTplModule('security', 'admin', 'ajax_server', $data);
+            $data = xarTplModule('security', 'ajax', 'server', $data);
             break;
 
         default:
