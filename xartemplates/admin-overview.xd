@@ -33,7 +33,11 @@
         <xar:mlstring>Upon installation of the gallery module the security settings were automatically set. Although these setting should work for most, they may not fit the exact needs of everyone.  But they can be easily modified through the security module.</xar:mlstring>
     </p>
     <p>
-        <xar:mlstring>Gallery uses the filesystem to store uploaded photos.  So you will need to create a directory that your web server can write to if you have not already done so. Then you will need to set that path if the configuration page of this module.</xar:mlstring>
+        <xar:mlstring>Gallery uses the filesystem to store uploaded photos.  So you will need to create a directory that your web server can write to if you have not already done so. It is recommended that this path be located outside your webroot.</xar:mlstring>
+    </p>
+
+    <p>
+        <xar:mlstring>The Images module is used to manipulate photos.  The Gallery module uses static images feature of the images module. The derivative path setup should be located inside the webroot.  This speeds serving up of images as they will only need to be resized once.</xar:mlstring>
     </p>
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>

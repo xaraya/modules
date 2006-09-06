@@ -36,7 +36,7 @@
             <input type="text" id="cols_per_page" name="cols_per_page" value="#$cols_per_page#" class="xar-form-textshort required validate-digits" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label"><xar:mlstring>File Path:</xar:mlstring></label>
+            <label title="#xarML('Path to store uploaded images. Recommended to be outside the webroot')#" class="xar-form-label"><xar:mlstring>File Path:</xar:mlstring></label>
             <input type="text" id="file_path" name="file_path" value="#$file_path#" class="xar-form-text required validate-filepath" />
         </div>
         <div class="xar-form-input-wrapper">
