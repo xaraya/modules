@@ -67,12 +67,6 @@ function security_admin_hook_settings($args)
         }
         if( !isset($settings->default_item_levels['user']) ){ $settings->default_item_levels['user'] = new SecurityLevel(); }
 
-        $settings->default_module_levels = null;
-        foreach( $default_module_levels as $key => $role_level )
-        {
-            $settings->default_module_levels[$key] = new SecurityLevel($role_level);
-        }
-
         $settings->save();
     }
 
@@ -97,8 +91,10 @@ function security_admin_hook_settings($args)
     $data['show_remove'] = true;
     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
     $data['all_groups'][0] = array('name' => xarML('All'));
+    $data['all_roles'][0] = array('name' => xarML('All Roles'));
     foreach( $groups as $group )
     {
+        $data['all_roles'][$group['uid']] = $group;
         $data['all_groups'][$group['uid']] = $group;
     }
 

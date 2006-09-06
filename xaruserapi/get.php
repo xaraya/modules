@@ -89,6 +89,7 @@ function security_userapi_get($args)
     while( (list($uid, $overview, $read,
     	$comment, $write, $manage, $admin, $username) = $result->fields) != null )
     {
+        if( $username == null ){ $username = 'All Users'; }
         $security->add(
             new SecurityLevel(
                 array(

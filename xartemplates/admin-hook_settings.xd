@@ -135,7 +135,7 @@
         <legend><xar:mlstring>Security</xar:mlstring></legend>
 
         <label title="#xarML('The template used when items are created.')#" class="xar-form-label"><xar:mlstring>Default Item Security</xar:mlstring></label>
-        <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_groups, 'name' => 'default_item_levels', 'levels' => $settings->default_item_levels)</xar:set>
+        <xar:set name="subdata">array('sec_levels' => $sec_levels, 'all_groups' => $all_roles, 'name' => 'default_item_levels', 'levels' => $settings->default_item_levels)</xar:set>
         <br />
         <div class="xar-clearboth"><xar:template file="security-table" subdata="$subdata" /></div>
 

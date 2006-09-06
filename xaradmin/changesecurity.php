@@ -79,7 +79,7 @@ function security_admin_changesecurity($args)
 
     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
 
-    $tmp = array();
+    $tmp = array(0 => array('name' => xarML('All Roles')));
     foreach( $groups as $key => $group ){ $tmp[$group['uid']] = $group; }
     $groups = $tmp;
 

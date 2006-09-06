@@ -27,18 +27,10 @@ function security_admin_view($args)
 
     $data['modules'] = xarModAPIFunc('modules', 'admin', 'getlist');
 
-     $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
+    $groups = xarModAPIFunc('roles', 'user', 'getallgroups');
 
-    $data['groups'] = array();
+    $data['groups'] = array(0 => array('name' => xarML('All Roles')));
     foreach( $groups as $key => $group ){ $data['groups'][$group['uid']] = $group; }
-
-//    $data['items'] = xarModAPIFunc('security', 'user', 'getall',
-//        array(
-//            'modid'    => $modid,
-//            'itemtype' => $itemtype,
-//            'mode'     => $mode
-//        )
-//    );
 
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;

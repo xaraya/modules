@@ -41,7 +41,7 @@ function xar_security_showResponse(originalRequest)
     // Remoce old message
     $('securitymessage').innerHTML = '';
     security = null;
-    security = JSON.parse(originalRequest.responseText);
+    security = eval("(" + originalRequest.responseText + ")");
     xar_security_GenerateLevelsTable();
 }
 
