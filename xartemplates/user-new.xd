@@ -1,5 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-include-javascript module="helpdesk" filename="validateTicket.js" />
+
+<xar:ajax-lib name="validation" />
+<xar:ajax-lib name="effects" />
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -13,7 +15,7 @@
 
     <xar:module main="false" module="helpdesk" func="menu" />
 
-    <form action="&xar-modurl-helpdesk-user-new;" method="POST" name="newticket" enctype="multipart/form-data">
+    <form action="&xar-modurl-helpdesk-user-new;" method="POST" id="newticket" name="newticket" enctype="multipart/form-data">
 
         <fieldset>
 
@@ -23,7 +25,7 @@
             <xar:if condition="!$userisloggedin or Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false)">
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>Name:</xar:mlstring></label>
-                <input name="name" maxlength="255" value="#$ticket.name#" class="xar-form-textlong" />(required)
+                <input name="name" maxlength="255" value="#$ticket.name#" class="xar-form-textlong required" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>Phone:</xar:mlstring></label>
@@ -31,18 +33,18 @@
             </div>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>E-mail:</xar:mlstring></label>
-                <input name="email" maxlength="255" value="#$ticket.email#" class="xar-form-textlong" />(required)
+                <input name="email" maxlength="255" value="#$ticket.email#" class="xar-form-textlong required validate-email" />
             </div>
             </xar:if>
             <xar:if condition="xarModGetVar('helpdesk', 'AllowDomainName')">
                 <div class="xar-form-input-wrapper">
                     <label class="xar-form-label"><xar:mlstring>Domain:</xar:mlstring></label>
-                    <input name="domain" maxlength="255" value="#$ticket.domain#" class="xar-form-textlong" />(required)
+                    <input name="domain" maxlength="255" value="#$ticket.domain#" class="xar-form-textlong required" />
                 </div>
             </xar:if>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>Subject:</xar:mlstring></label>
-                <input name="subject" maxlength="255" value="#$ticket.subject#" class="xar-form-textlong" />(required)
+                <input name="subject" maxlength="255" value="#$ticket.subject#" class="xar-form-textlong required" />
             </div>
             <xar:if condition="!empty($groups)">
             <div class="xar-form-input-wrapper">
@@ -124,7 +126,7 @@
             </xar:if>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label"><xar:mlstring>Issue Description:</xar:mlstring></label>
-                <textarea name="issue" class="xar-form-textarealarge"><xar:var name="ticket.issue" /></textarea>
+                <textarea name="issue" class="xar-form-textarealarge required"><xar:var name="ticket.issue" /></textarea>
             </div>
 
             <xar:if condition="Security::check(SECURITY_MANAGE, $module, $itemtype, 0, false)">
@@ -166,3 +168,6 @@
 
     <xar:module main="false" module="helpdesk" func="summaryfooter" />
 </div>
+<script type="text/javascript">
+new Validation('newticket');
+</script>

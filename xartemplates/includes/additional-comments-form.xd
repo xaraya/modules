@@ -1,9 +1,11 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-include-javascript module="helpdesk" filename="validateQuickHistory.js" />
+<xar:ajax-lib name="validation" />
+<xar:ajax-lib name="effects" />
+
 <fieldset>
     <legend><xar:mlstring>Additional Comments</xar:mlstring></legend>
 
-    <form action="&xar-modurl-helpdesk-user-add_history;" method="POST">
+    <form action="&xar-modurl-helpdesk-user-add_history;" id="add_history" method="POST">
     <xar:if condition="Security::check(SECURITY_WRITE, $module, $itemtype, $itemid, false)">
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Status</xar:mlstring></label>
@@ -36,7 +38,7 @@
 
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Comment</xar:mlstring></label>
-        <textarea name="comment" class="xar-form-textarealarge"></textarea>
+        <textarea name="comment" class="xar-form-textarealarge required"></textarea>
     </div>
 
     <div class="xar-form-input-wrapper-after">
@@ -47,3 +49,6 @@
     </form>
 
 </fieldset>
+<script type="text/javascript">
+new Validation('add_history');
+</script>
