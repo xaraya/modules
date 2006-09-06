@@ -60,8 +60,10 @@ function xproject_adminapi_create($args)
                   hours_planned,
                   hours_spent,
                   hours_remaining,
+                  estimate,
+                  budget,
                   associated_sites)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
@@ -83,6 +85,8 @@ function xproject_adminapi_create($args)
               $hours_planned,
               $hours_spent,
               $hours_remaining,
+              $estimate,
+              $budget,
               $associated_sites ? $associated_sites : "");
               
     $result = &$dbconn->Execute($query,$bindvars);

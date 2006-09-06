@@ -26,7 +26,7 @@
     
                 <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Draft&amp;memberid=#$mymemberid#"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if></td>
                 <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Active&amp;memberid=#$mymemberid#"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if></td>
-                <td width="25%"><a href="&xar-modurl-xproject-admin-main;&amp;status=Archive"><xar:mlstring>Archive</xar:mlstring></a></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-main;&amp;status=Closed"><xar:mlstring>Archive</xar:mlstring></a></td>
                 <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Configuration</xar:mlstring></a></td>
             
             </tr></table>
@@ -72,7 +72,7 @@
                     </select>
                 </xar:if>
                 <input type="submit" value="Go">
-                <xar:data-input type="checkbox" name="verbose" value="$verbose" />#$verbose#<xar:mlstring> Verbose?</xar:mlstring>
+                <xar:data-input type="checkbox" name="verbose" value="$verbose" /><xar:mlstring> Verbose?</xar:mlstring>
                 </div>
                 </form>
             </td></tr>

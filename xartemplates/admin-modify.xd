@@ -47,24 +47,20 @@
         </td>
     </tr>
     <tr>
-        <td><xar:data-label property="$properties['private']" /></td>
-        <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
-    </tr>
-    <tr>
         <td><xar:data-label property="$properties['description']" /></td>
         <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['status']" /></td>
-        <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+        <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" />
+            <xar:data-label property="$properties['private']" />
+            <xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['priority']" /></td>
-        <td><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['importance']" /></td>
-        <td><xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
+        <td><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" />
+            <xar:data-label property="$properties['importance']" />
+            <xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['projecttype']" /></td>
@@ -75,32 +71,52 @@
         <td><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
     </tr>
     <tr>
-        <td><xar:data-label property="$properties['planned_start_date']" /></td>
-        <td><xar:data-input property="$properties['planned_start_date']" name="planned_start_date" value="$item['planned_start_date']" /></td>
+        <td><xar:mlstring>Planned Timeframe</xar:mlstring></td>
+        <td><xar:data-input property="$properties['planned_start_date']" name="planned_start_date" size="10" value="$item['planned_start_date']" />
+            <xar:mlstring> through </xar:mlstring>
+            <xar:data-input property="$properties['planned_end_date']" name="planned_end_date" size="10" value="$item['planned_end_date']" /></td>
     </tr>
     <tr>
-        <td><xar:data-label property="$properties['planned_end_date']" /></td>
-        <td><xar:data-input property="$properties['planned_end_date']" name="planned_end_date" value="$item['planned_end_date']" /></td>
+        <td><xar:mlstring>Actual Dates</xar:mlstring></td>
+        <td><xar:data-input property="$properties['actual_start_date']" name="actual_start_date" size="10" value="$item['actual_start_date']" />
+            <xar:mlstring> through </xar:mlstring>
+            <xar:data-input property="$properties['actual_end_date']" name="actual_end_date" size="10" value="$item['actual_end_date']" /></td>
     </tr>
     <tr>
-        <td><xar:data-label property="$properties['actual_start_date']" /></td>
-        <td><xar:data-input property="$properties['actual_start_date']" name="actual_start_date" value="$item['actual_start_date']" /></td>
+        <td><xar:mlstring>Hours</xar:mlstring></td>
+        <td>
+            <div>
+                <div style="float: left; width: 150px;">
+                    <xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" />
+                    <xar:mlstring>Planned</xar:mlstring>
+                </div>
+                <div style="float: left; width: 150px;">
+                    <xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" />
+                    <xar:mlstring>Spent</xar:mlstring>
+                </div>
+                <div style="float: left; width: 150px;">
+                    <xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" />
+                    <xar:mlstring>Remaining</xar:mlstring>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </td>
     </tr>
     <tr>
-        <td><xar:data-label property="$properties['actual_end_date']" /></td>
-        <td><xar:data-input property="$properties['actual_end_date']" name="actual_end_date" value="$item['actual_end_date']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['hours_planned']" /></td>
-        <td><xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['hours_spent']" /></td>
-        <td><xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['hours_remaining']" /></td>
-        <td><xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" /></td>
+        <td><xar:mlstring>Budget</xar:mlstring></td>
+        <td>
+            <div>
+                <div style="float: left; width: 250px; white-space: nowrap;">
+                    <xar:data-input property="$properties['estimate']" name="estimate" value="$item['estimate']" />
+                    <xar:mlstring>Estimated</xar:mlstring>
+                </div>
+                <div style="float: left; width: 250px; white-space: nowrap;">
+                    <xar:data-input property="$properties['budget']" name="budget" value="$item['budget']" />
+                    <xar:mlstring>Budgeted</xar:mlstring>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['associated_sites']" /></td>

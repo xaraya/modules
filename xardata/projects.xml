@@ -51,7 +51,7 @@
     <property name="clientid">
       <id>5</id>
       <label>Client</label>
-      <type>userlist</type>
+      <type>contactlist</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
@@ -76,7 +76,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>7</order>
-      <validation>;Draft;Pending Approval;R & D;Hold;Active;Archive</validation>
+      <validation>;Draft;Prospecting;Qualification;Needs Analysis;Value Proposition;ID Decision Makers;Perception Analysis;Proposal/Price Quote;Negotiation/Review;Closed Won;Closed Lost;R & D;Hold;Active;Archive</validation>
     </property>
     <property name="priority">
       <id>8</id>
@@ -176,7 +176,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>17</order>
-      <validation></validation>
+      <validation>:8</validation>
     </property>
     <property name="hours_spent">
       <id>18</id>
@@ -186,7 +186,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>18</order>
-      <validation></validation>
+      <validation>:8</validation>
     </property>
     <property name="hours_remaining">
       <id>19</id>
@@ -196,16 +196,36 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>19</order>
-      <validation></validation>
+      <validation>:8</validation>
+    </property>
+    <property name="estimate">
+      <id>20</id>
+      <label>Hours Remaining</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>20</order>
+      <validation>:12</validation>
+    </property>
+    <property name="budget">
+      <id>21</id>
+      <label>Hours Remaining</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>21</order>
+      <validation>:12</validation>
     </property>
     <property name="associated_sites">
-      <id>20</id>
+      <id>22</id>
       <label>Associated Sites</label>
       <type>multiselect</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
-      <order>20</order>
+      <order>22</order>
       <validation></validation>
     </property>
   </properties>

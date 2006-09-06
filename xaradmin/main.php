@@ -15,6 +15,8 @@ function xproject_admin_main($args)
     if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
     
+    $uid = xarUserGetVar('uid');
+    
     $args['verbose'] = $verbose;
     $args['status'] = $status;
     $args['sortby'] = $sortby;
@@ -28,7 +30,7 @@ function xproject_admin_main($args)
     
     $data['showsearch'] = 1;
     
-    if(!$args['memberid']) {
+    if(!$memberid) {
         $items = xarModAPIFunc('xproject', 'user', 'getall',
                                 array('startnum' => $startnum,
                                       'status' => $status,
@@ -50,6 +52,7 @@ function xproject_admin_main($args)
                                       'q' => $q,
                                       'numitems' => xarModGetVar('xproject','itemsperpage')));
     }
+    
     $args['items'] = $items;
     
     $args['returnurl'] = xarModURL('xproject', 
@@ -65,6 +68,43 @@ function xproject_admin_main($args)
 	
     $args['authid'] = xarSecGenAuthKey();
     $args['inline'] = 0;
+    
+    if(!$memberid) {
+        $args['pager'] = xarTplGetPager($startnum,
+            xarModAPIFunc('xproject', 'user', 'countitems',
+                        array('status' => $status,
+                              'sortby' => $sortby,
+                              'clientid' => $clientid,
+                              'max_priority' => $max_priority,
+                              'max_importance' => $max_importance,
+                              'q' => $q)),
+            xarModURL('xproject', 'admin', 'view', array('startnum' => '%%'))
+            ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
+            xarModGetUserVar('xproject', 'itemsperpage', $uid));
+    } else {
+        $args['pager'] = xarTplGetPager($startnum,
+            xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                        array('status' => $status,
+                              'sortby' => $sortby,
+                              'clientid' => $clientid,
+                              'memberid' => $memberid,
+                              'max_priority' => $max_priority,
+                              'max_importance' => $max_importance,
+                              'q' => $q)),
+            xarModURL('xproject', 
+                    'admin', 
+                    'view', 
+                    array('startnum' => '%%',
+                          'status' => $status,
+                          'sortby' => $sortby,
+                          'clientid' => $clientid,
+                          'memberid' => $memberid,
+                          'max_priority' => $max_priority,
+                          'max_importance' => $max_importance,
+                          'q' => $q))
+            ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
+            xarModGetUserVar('xproject', 'itemsperpage', $uid));
+    }
     
     $data['projectlist'] = xarTplModule('xproject', 
                                         'admin', 

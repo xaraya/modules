@@ -31,7 +31,7 @@
         </td>
         
         <td class="xar-norm">
-            <xar:if condition="empty($loop:item['link'])">#$loop:item['page_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['page_name']#</a></xar:if>
+            <strong>#$loop:item['page_name']#</strong>
             <div style="padding: 5px;">
             #$loop:item['description']#
             </div>

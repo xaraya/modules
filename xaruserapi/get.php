@@ -36,6 +36,8 @@ function xproject_userapi_get($args)
                   hours_planned,
                   hours_spent,
                   hours_remaining,
+                  estimate,
+                  budget,
                   associated_sites
             FROM $xprojecttable
             WHERE projectid = ?";
@@ -70,6 +72,8 @@ function xproject_userapi_get($args)
           $hours_planned,
           $hours_spent,
           $hours_remaining,
+          $estimate,
+          $budget,
           $associated_sites) = $result->fields;
 
     $result->Close();
@@ -100,6 +104,8 @@ function xproject_userapi_get($args)
                   'hours_planned'       => $hours_planned,
                   'hours_spent'         => $hours_spent,
                   'hours_remaining'     => $hours_remaining,
+                  'estimate'            => sprintf("%.2f", $estimate),
+                  'budget'              => sprintf("%.2f", $budget),
                   'associated_sites'    => $associated_sites);
 
     return $item;

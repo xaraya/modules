@@ -43,17 +43,17 @@ function xproject_admin_display($args)
     
     if (xarSecurityCheck('EditXProject', 0, 'Item', "$item[project_name]:All:$item[projectid]")) {
         $item['editurl'] = xarModURL('xproject',
-            'admin',
-            'modify',
-            array('projectid' => $item['projectid']));
+                                    'admin',
+                                    'modify',
+                                    array('projectid' => $item['projectid']));
     } else {
         $item['editurl'] = '';
     }
     if (xarSecurityCheck('DeleteXProject', 0, 'Item', "$item[project_name]:All:$item[projectid]")) {
         $item['deleteurl'] = xarModURL('xproject',
-            'admin',
-            'delete',
-            array('projectid' => $item['projectid']));
+                                        'admin',
+                                        'delete',
+                                        array('projectid' => $item['projectid']));
     } else {
         $item['deleteurl'] = '';
     }

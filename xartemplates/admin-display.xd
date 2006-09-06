@@ -132,6 +132,14 @@
                         </div>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <td class="xar-title"><xar:mlstring>Budget</xar:mlstring></td>
+                    <td class="xar-norm"><div class="xar-sub">
+                        <span style="padding-right: 10px;"><xar:mlstring>Estimated</xar:mlstring>: $<xar:data-output property="$properties['estimate']" value="$item['estimate']" /></span>
+                        <span style="padding-right: 10px;"><xar:mlstring>Budgeted</xar:mlstring>: $<xar:data-output property="$properties['budget']" value="$item['budget']" /></span>
+                        </div>
+                    </td>
+                </tr>
                 <xar:if condition="!empty($item['description'])">
                     <tr valign="top">
                         <td class="xar-title"><xar:data-label property="$properties['description']" /></td>

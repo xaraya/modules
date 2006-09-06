@@ -79,6 +79,8 @@ function xproject_adminapi_update($args)
                   hours_planned = ?,
                   hours_spent = ?,
                   hours_remaining = ?,
+                  estimate = ?,
+                  budget = ?,
                   associated_sites = ?
             WHERE projectid = ?";
 
@@ -101,6 +103,8 @@ function xproject_adminapi_update($args)
               $hours_planned,
               $hours_spent,
               $hours_remaining,
+              $estimate,
+              $budget,
               $associated_sites,
               $projectid);
               

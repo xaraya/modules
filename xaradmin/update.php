@@ -23,6 +23,8 @@ function xproject_admin_update($args)
     if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('estimate', 'str::', $estimate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('budget', 'str::', $budget, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
 
@@ -56,6 +58,8 @@ function xproject_admin_update($args)
                         'hours_planned'     => $hours_planned,
                         'hours_spent'		=> $hours_spent,
                         'hours_remaining'	=> $hours_remaining,
+                        'estimate'	        => $estimate,
+                        'budget'	        => $budget,
                         'associated_sites'	=> $associated_sites))) {
 		return;
 	}

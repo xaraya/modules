@@ -86,6 +86,8 @@ function xproject_userapi_getmemberprojects($args)
                   a.hours_planned,
                   a.hours_spent,
                   a.hours_remaining,
+                  a.estimate,
+                  a.budget,
                   a.associated_sites
             FROM $xprojecttable a, $teamtable b
             WHERE b.projectid = a.projectid
@@ -146,6 +148,8 @@ function xproject_userapi_getmemberprojects($args)
               $hours_planned,
               $hours_spent,
               $hours_remaining,
+              $estimate,
+              $budget,
               $associated_sites) = $result->fields;
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
             $projects[] = array('projectid'         => $projectid,
@@ -167,6 +171,8 @@ function xproject_userapi_getmemberprojects($args)
                               'hours_planned'       => $hours_planned,
                               'hours_spent'         => $hours_spent,
                               'hours_remaining'     => $hours_remaining,
+                              'estimate'            => $estimate,
+                              'budget'              => $budget,
                               'associated_sites'    => $associated_sites);
         }
     }

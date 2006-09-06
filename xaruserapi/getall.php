@@ -25,6 +25,9 @@ function xproject_userapi_getall($args)
     if (!isset($sortby)) {
         $sortby = "";
     }
+    if (!isset($status)) {
+        $status = "";
+    }
     if (!isset($clientid) || !is_numeric($clientid)) {
         $clientid = 0;
     }
@@ -73,6 +76,8 @@ function xproject_userapi_getall($args)
                   hours_planned,
                   hours_spent,
                   hours_remaining,
+                  estimate,
+                  budget,
                   associated_sites
             FROM $xprojecttable
             WHERE projectid > 0 ";
@@ -80,10 +85,18 @@ function xproject_userapi_getall($args)
 //	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //	$sql .= " AND $taskcolumn[projectid] = $projectid";
 	if($private == "public") $sql .= " AND private != '1'";
-	if(!empty($status)) $sql .= " AND status = '".$status."'";
-	if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
+    
+	if($status == "New") { 
+        $sql .= " AND status NOT IN ('Draft','Closed Won','Closed Lost', 'R & D','Hold','Active','Archive')";
+    } elseif(!empty($status)) {
+        $sql .= " AND status = '".$status."'";
+    }
+	
+    if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
 	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
 	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
+	if(!empty($planned_end_date)) $sql .= " AND planned_end_date <= '".$planned_end_date."'";
+	if(!empty($min_planned_end_date)) $sql .= " AND planned_end_date >= '".$min_planned_end_date."'";
     if(!empty($q)) {
         $sql .= " AND (project_name LIKE '%".$q."%'
                     OR description LIKE '%".$q."%')";
@@ -105,6 +118,7 @@ function xproject_userapi_getall($args)
         default:
             $sql .= " ORDER BY project_name";
     }
+    
 //die($sql);
 /*
     if ($selected_project != "all") {
@@ -134,6 +148,14 @@ function xproject_userapi_getall($args)
     
     if ($dbconn->ErrorNo() != 0) return;
 
+    if ($result->EOF) {
+        $result->Close();
+        $msg = xarML('SQL: ');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg.$sql));
+        return;
+    }
+
     $projects = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -156,6 +178,8 @@ function xproject_userapi_getall($args)
               $hours_planned,
               $hours_spent,
               $hours_remaining,
+              $estimate,
+              $budget,
               $associated_sites) = $result->fields;
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
             $projects[] = array('projectid'         => $projectid,
@@ -177,6 +201,8 @@ function xproject_userapi_getall($args)
                               'hours_planned'       => $hours_planned,
                               'hours_spent'         => $hours_spent,
                               'hours_remaining'     => $hours_remaining,
+                              'estimate'            => sprintf("%.2f", $estimate),
+                              'budget'              => sprintf("%.2f", $budget),
                               'associated_sites'    => $associated_sites);
         }
     }

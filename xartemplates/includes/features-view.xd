@@ -16,7 +16,7 @@
 
     <xar:loop name="$features">
     <tr><td class="xar-norm">
-            <xar:if condition="empty($loop:item['link'])">#$loop:item['feature_name']#<xar:else /><a href="#$loop:item['link']#" onClick="return loadContent(this.href,'new_feature');">#$loop:item['feature_name']#</a></xar:if>
+            <strong>#$loop:item['feature_name']#</strong>
             
         </td>
 

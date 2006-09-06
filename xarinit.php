@@ -43,6 +43,8 @@ function xproject_init()
                                 'hours_planned'     =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                                 'hours_spent'       =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                                 'hours_remaining'   =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+                                'budget'            =>  array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2),
+                                'estimate'          =>  array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2),
                                 'associated_sites'  =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>'') );
     $query = xarDBCreateTable($xProjects_table,$xProjects_fields);
     if (empty($query)) return;
@@ -505,14 +507,33 @@ function xproject_upgrade($oldversion)
         case '2.5':
         case '2.6':
         case '2.7':
-        case '2.8':
             xarModDelVar('xproject','usersettings');
             $objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/xproject/xardata/usersettings.xml'));
             if (empty($objectid)) return;
-            xarModSetVar('xproject','usersettings',$objectid);    
+            xarModSetVar('xproject','usersettings',$objectid);  
+        case '2.8':  
             
         case '2.9':
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->addColumn($projects_table, 'budget F NotNull Default 0');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'estimate F NotNull Default 0');
+            if (!$result) return;
+            
+        case '3.0':
+            
+            // REPLACE PROJECTS SCHEMA
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+
+        case '3.1':
             break;
 
     }
