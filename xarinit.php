@@ -466,6 +466,28 @@ function xtasks_upgrade($oldversion)
             xarModSetVar('xtasks','modulesettings',$modulesettings);
 
         case '1.5.16':
+    
+            $worklog_table = $xartable['xtasks_worklog'];
+        
+            $worklog_fields = array(
+                'worklogid'			    =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+                'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+                'eventdate'	            =>array('type'=>'date','null'=>TRUE),
+                'hours'				    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+                'notes'	                =>array('type'=>'text'));
+        
+            $sql = xarDBCreateTable($worklog_table,$worklog_fields);
+            if (empty($sql)) return;
+            $dbconn->Execute($sql);
+            if ($dbconn->ErrorNo() != 0) {
+                $msg = xarML('DATABASE_ERROR', $sql);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                return;
+            }
+            
+        case '1.6':
             break;
 
     }

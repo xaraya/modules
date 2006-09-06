@@ -38,33 +38,35 @@
                 <div style="float: left; width: 65px;">
                     <xar:data-output property="$properties['importance']" value="$importance" />
                 </div>
-                <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
-                    <div style="height: 10px; vertical-align: top;">
-                        <xar:if condition="$taskinfo.importance gt 1">
-                            <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
-                        </xar:if>
-                    </div>
-                    <div style="height: 8px; vertical-align: top;">
-                        <xar:if condition="$taskinfo.importance lt 9">
-                            <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
-                        </xar:if>
+                    <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                        <div style="height: 7px;">
+                            <xar:if condition="$taskinfo.importance gt 1">
+                                <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                        <div style="height: 8px;">
+                            <xar:if condition="$taskinfo.importance lt 9">
+                                <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                            </xar:if>
+                        </div>
                     </div>
                 </div>
                 <div style="clear; both;"></div>
             </td>
         
             <td class="xar-norm" style="text-align: center;">
-                <div style="float: left; width: 65px;">#$taskinfo['priority']#</div>
-                <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
-                    <div style="height: 10px; vertical-align: top;">
-                        <xar:if condition="$taskinfo.priority gt 1">
-                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
-                        </xar:if>
-                    </div>
-                    <div style="height: 8px; vertical-align: top;">
-                        <xar:if condition="$taskinfo.priority lt 9">
-                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
-                        </xar:if>
+                <div style="float: left; width: 20px;">#$taskinfo['priority']#</div>
+                    <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                        <div style="height: 7px;">
+                            <xar:if condition="$taskinfo.priority gt 1">
+                                <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                            </xar:if>
+                        </div>
+                        <div style="height: 8px;">
+                            <xar:if condition="$taskinfo.priority lt 9">
+                                <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                            </xar:if>
+                        </div>
                     </div>
                 </div>
                 <div style="clear; both;"></div>
@@ -84,7 +86,7 @@
                 </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;ownerid=#$mymemberid#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;ownerid=#$mymemberid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
         
         </tr>
         

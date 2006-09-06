@@ -18,6 +18,9 @@ function xtasks_userapi_get($args)
     $xtasks_table = $xartable['xtasks'];
 
     $query = "SELECT taskid,
+                   objectid,
+                   modid,
+                   itemtype,
                    parentid,
                    projectid,
                    task_name,
@@ -55,6 +58,9 @@ function xtasks_userapi_get($args)
     }
 
     list($taskid,
+         $objectid,
+         $modid,
+         $itemtype,
          $parentid,
          $projectid,
          $task_name,
@@ -85,6 +91,9 @@ function xtasks_userapi_get($args)
     }
 
     $task = array('taskid' => $taskid,
+                'objectid' => $objectid,
+                'modid' => $modid,
+                'itemtype' => $itemtype,
                 'parentid' => $parentid,
                 'projectid' => $projectid,
                 'task_name' => $task_name,

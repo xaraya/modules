@@ -11,7 +11,7 @@ function xtasks_admin_modify($args)
         $taskid = $objectid;
     }
     if (empty($returnurl)) {
-        $returnurl = $_SERVER['HTTP_REFERER'];
+        $returnurl = xarModURL('xtasks', 'admin', 'display', array('taskid' => $taskid));
     }
 	$item = xarModAPIFunc('xtasks',
                          'user',

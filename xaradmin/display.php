@@ -21,6 +21,7 @@ function xtasks_admin_display($args)
     $data['xtasks_objectid'] = xarModGetVar('xtask', 'xtasks_objectid');
 
     if (!xarModAPILoad('xtasks', 'user')) return;
+    if (!xarModAPILoad('xproject', 'user')) return;
 
     if (!empty($objectid)) {
         $taskid = $objectid;
@@ -36,13 +37,7 @@ function xtasks_admin_display($args)
                           'get',
                           array('taskid' => $taskid));
 
-    if (!isset($item)) {
-        $msg = xarML('Not authorized to access #(1) items',
-                    'xtasks');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return $msg;
-    }
+    if (!isset($item)) return;
     
     if (xarSecurityCheck('EditXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
         $item['editurl'] = xarModURL('xtasks',
@@ -79,18 +74,36 @@ function xtasks_admin_display($args)
                               'user',
                               'get',
                               array('taskid' => $item['parentid']));
-    
-        if (!isset($parentinfo)) {
-            $msg = xarML('Not authorized to access #(1) item parent',
-                        'xtasks');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                           new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            return $msg;
+                              
+        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION && xarCurrentErrorID() == 'ID_NOT_EXIST') {
+            xarErrorHandled();
         }
     
-        $data['parentid'] = $parentinfo['taskid'];
-        $data['parentname'] = $parentinfo['task_name'];
-        $data['parenturl'] = xarModURL('xtasks', 'admin', 'display', array('taskid' => $data['parentid']));
+        if ($parentinfo) {
+            $data['parentid'] = $parentinfo['taskid'];
+            $data['parentname'] = $parentinfo['task_name'];
+            $data['parenturl'] = xarModURL('xtasks', 'admin', 'display', array('taskid' => $data['parentid']));
+        }
+    }
+
+    $data['projectid'] = "";
+    $data['project_name'] = "";
+    $data['project_url'] = "";
+    if($item['objectid'] > 0 && $item['modid'] = xarModGetIDFromName('xproject')) {
+        $projectinfo = xarModAPIFunc('xproject',
+                              'user',
+                              'get',
+                              array('projectid' => $item['objectid'])); 
+                              
+        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION && xarCurrentErrorID() == 'ID_NOT_EXIST') {
+            xarErrorHandled();
+        }
+    
+        if ($projectinfo) {
+            $data['projectid'] = $projectinfo['projectid'];
+            $data['project_name'] = $projectinfo['project_name'];
+            $data['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $data['projectid']));
+        }
     }
         
     $modid = xarModGetIDFromName(xarModGetName());

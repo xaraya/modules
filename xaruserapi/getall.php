@@ -20,25 +20,40 @@ function xtasks_userapi_getall($args)
         $modid = xarModGetIDFromName($modname);
     }
     
+    $show_project = xarModGetUserVar('xtasks', 'show_project');
+    $show_client = xarModGetUserVar('xtasks', 'show_client');
+    
+    if (!isset($mode)) {
+        $mode = "";
+    }
     if (!isset($parentid)
         && !isset($projectid)
         && (!isset($modid) || !isset($objectid))) {
         $parentid = '0';
     }
-
     if (!isset($orderby)) {
         $orderby = "";
     }
-
     if (!isset($startnum)) {
         $startnum = 1;
     }
-
     if (empty($startnum)) {
         $startnum = 1;
     }
     if (!isset($numitems)) {
         $numitems = -1;
+    }
+    if (!isset($max_priority)) {
+        $max_priority = 9;
+    }
+    if (!isset($max_importance)) {
+        $max_importance = 9;
+    }
+    if (!isset($private)) {
+        $private = "";
+    }
+    if (!isset($q)) {
+        $q = "";
     }
 
     $invalid = array();
@@ -102,11 +117,16 @@ function xtasks_userapi_getall($args)
             
     $whereclause = array();
             
-    if(isset($mymemberid) && $mymemberid > 0) {
-        $whereclause[] = "a.owner=".$mymemberid;
-    }        
     if(isset($memberid) && $memberid > 0) {
-        $whereclause[] = "(a.creator=".$memberid." OR a.assigner=".$memberid.")";
+        $whereclause[] = "a.owner=".$memberid;
+    }
+            
+    if(isset($creator) && $creator > 0) {
+        $whereclause[] = "a.owner=".$creator;
+    }
+            
+    if(isset($assigner) && $assigner > 0) {
+        $whereclause[] = "a.owner=".$assigner;
     }
             
     if (!empty($modid) 
@@ -137,11 +157,24 @@ function xtasks_userapi_getall($args)
         $whereclause[] = "a.parentid=".$parentid;
     }
             
+    if ($mode == "Open") {
+        $whereclause[] = "a.status != 'Closed'";
+    }
+            
     if (!empty($statusfilter)) {
         $whereclause[] = "a.status='".$statusfilter."'";
     } else {
         $statusfilter = "";
     }
+    
+	if($private == "public") $whereclause[] = "a.private != '1'";
+	if(!empty($status)) $whereclause[] = "a.status = '".$status."'";
+//	if($clientid > 0) $whereclause[] = "clientid = '".$clientid."'";
+	if($max_priority > 0) $whereclause[] = "a.priority <= '".$max_priority."'";
+	if($max_importance > 0) $whereclause[] = "a.importance <= '".$max_importance."'";
+    if(!empty($q)) {
+        $whereclause[] = "(a.task_name LIKE '%".$q."%' OR a.description LIKE '%".$q."%')";
+    }    
     
     if(count($whereclause) > 0) $sql .= " WHERE ".implode(" AND ", $whereclause);
         
@@ -247,6 +280,12 @@ function xtasks_userapi_getall($args)
             } else {
                 $days_untouched = 0;
             }
+            
+            $projectinfo = array();
+            if(($show_project || $show_client) && $projectid > 0) {
+                $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
+            }
+            
             $tasks[] = array('taskid' => $taskid,
                             'objectid' => $objectid,
                             'modid' => $modid,
@@ -275,7 +314,8 @@ function xtasks_userapi_getall($args)
                             'hours_planned' => $hours_planned,
                             'hours_spent' => $hours_spent,
                             'hours_remaining' => $hours_remaining,
-                            'numchildren' => $numchildren);
+                            'numchildren' => $numchildren,
+                            'projectinfo' => $projectinfo);
         }
     }
 

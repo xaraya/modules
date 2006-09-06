@@ -59,7 +59,7 @@ function xtasks_admin_workspace($args)
     }
     
     $data['startnum'] = $startnum;
-    $data['orderby'] = $orderby;
+    $data['orderby'] = $orderby ? $orderby : "status";
     $data['depth'] = 0;
     $data['maxdepth'] = xarModGetVar('xtasks', 'maxdepth');
 
@@ -79,7 +79,7 @@ function xtasks_admin_workspace($args)
                                   'startnum' => $startnum,
                                   'memberid' => isset($memberid) ? $memberid : false,
                                   'mymemberid' => isset($mymemberid) ? $mymemberid : false,
-                                  'orderby' => $orderby,
+                                  'orderby'  => $orderby,
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     

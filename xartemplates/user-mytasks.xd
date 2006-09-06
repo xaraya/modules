@@ -8,6 +8,8 @@
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
+        <th><xar:mlstring>Project</xar:mlstring></th>
+        <th><xar:mlstring>Client</xar:mlstring></th>
         <th><xar:mlstring>Task Name</xar:mlstring></th>
         <th><xar:mlstring>Importance</xar:mlstring></th>
         <th><xar:mlstring>Priority</xar:mlstring></th>
@@ -22,22 +24,26 @@
         <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
         
-        <tr><td class="xar-norm">
+        <tr><td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><xar:data-output type="contactlist" value="$taskinfo['projectinfo']['clientid']" /></xar:if></td>
+        
+            <td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['project_name'])">#$taskinfo['projectinfo']['project_name']#</xar:if></td>
+            
+            <td class="xar-norm">
                 <a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
             </td>
-            
+                
             <xar:set name="importance">$taskinfo['importance']</xar:set>
             <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
         
             <td class="xar-norm" style="text-align: center;">
-                <div style="float: left; width: 65px;">#$taskinfo['priority']#</div>
-                <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
-                    <div style="height: 10px; vertical-align: top;">
+                <div style="float: left; width: 10px;">#$taskinfo['priority']#</div>
+                <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                    <div style="height: 7px;">
                         <xar:if condition="$taskinfo.priority gt 1">
                             <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
                         </xar:if>
                     </div>
-                    <div style="height: 8px; vertical-align: top;">
+                    <div style="height: 8px;">
                         <xar:if condition="$taskinfo.priority lt 9">
                             <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
                         </xar:if>
@@ -57,12 +63,12 @@
                 </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: right;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: right; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
         
         </tr>
-            
-        <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$taskinfo['description']#</td></tr>
-
+        <xar:if condition="!empty($taskinfo['description'])">
+            <tr><td class="xar-norm" colspan="6" style="padding-left: 25px;">#$taskinfo['description']#</td></tr>
+        </xar:if>
     </xar:foreach>
 
 

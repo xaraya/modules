@@ -1,10 +1,12 @@
 <?php
 
-function xtasks_worklog_new()
+function xtasks_worklog_new($args)
 {
-    if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
+    extract($args);
 
-    if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskid',     'id',     $taskid)) return;
+
+    if (!xarVarFetch('inline', 'int', $inline, 0, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xtasks', 'user')) return;
     
@@ -14,17 +16,17 @@ function xtasks_worklog_new()
         return;
     }
 
-    $projectinfo = xarModAPIFunc('xtasks',
+    $taskinfo = xarModAPIFunc('xtasks',
                           'user',
                           'get',
-                          array('projectid' => $projectid));
+                          array('taskid' => $taskid));
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['projectid'] = $projectid;
+    $data['taskid'] = $taskid;
     $data['inline'] = $inline;
-    $data['projectinfo'] = $projectinfo;
+    $data['taskinfo'] = $taskinfo;
 
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Create Feature'));
+    $data['addbutton'] = xarVarPrepForDisplay(xarML('Submit Work'));
 
     return $data;
 }

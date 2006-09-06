@@ -36,15 +36,22 @@
         <td><xar:data-label property="$properties['owner']" /></td>
         <td><xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" /></td>
     </tr>
+    <xar:if condition="$item['assigner']">
+        <tr>
+            <td><xar:data-label property="$properties['assigner']" /></td>
+            <td><xar:data-output property="$properties['assigner']" name="assigner" value="$item['assigner']" /></td>
+        </tr>
+    </xar:if>
+    <xar:if condition="$item['creator']">
+        <tr>
+            <td><xar:data-label property="$properties['creator']" /></td>
+            <td><xar:data-output property="$properties['creator']" name="creator" value="$item['creator']" /></td>
+        </tr>
+    </xar:if>
     <tr>
         <td><xar:data-label property="$properties['date_approved']" /></td>
         <td><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
     </tr>
-    
-    
-    
-    
-    
     <tr>
         <td><xar:mlstring>Planned Timeframe</xar:mlstring></td>
         <td><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" size="10" value="$item['date_start_planned']" />

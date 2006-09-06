@@ -46,7 +46,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>4</order>
-      <validation>Draft;Pending Approval;Active;Closed</validation>
+      <validation>;Draft;Pending Approval;Active;Closed</validation>
     </property>
     <property name="priority">
       <id>55</id>

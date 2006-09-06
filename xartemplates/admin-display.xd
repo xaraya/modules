@@ -31,10 +31,32 @@ function xtaskToggleView(id){
                         <span style="float:right;">[&nbsp;<xar:if condition="empty($item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
                         </span></td>
                 </tr>
+                <xar:if condition="!empty($project_name)">
+                    <tr valign="top">
+                        <td class="xar-title xar-align-right"><xar:mlstring>Project</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectid#">#$project_name#</a></td>
+                    </tr>
+                </xar:if>
                 <xar:if condition="!empty($parentname)">
                     <tr valign="top">
                         <td class="xar-title xar-align-right"><xar:mlstring>Parent Task</xar:mlstring></td>
                         <td class="xar-norm xar-align-left"><xar:if condition="empty($parenturl)">#$parentname#<xar:else /><a href="#$parenturl#">#$parentname#</a></xar:if></td>
+                    </tr>
+                </xar:if>
+                <tr valign="top">
+                    <td class="xar-title xar-align-right"><xar:mlstring>Assigned To</xar:mlstring></td>
+                    <td class="xar-norm xar-align-left"><xar:if condition="!empty($item['owner'])"><xar:data-output property="$properties['owner']" value="$item['owner']" /><xar:else /><xar:mlstring>Open/Available</xar:mlstring></xar:if></td>
+                </tr>
+                <xar:if condition="$item['assigner'] gt 0">
+                    <tr valign="top">
+                        <td class="xar-title xar-align-right"><xar:mlstring>Assigned By</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left"><xar:data-output property="$properties['assigner']" value="$item['assigner']" /></td>
+                    </tr>
+                </xar:if>
+                <xar:if condition="$item['creator'] gt 0">
+                    <tr valign="top">
+                        <td class="xar-title xar-align-right"><xar:mlstring>Created By</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left"><xar:data-output property="$properties['creator']" value="$item['creator']" /></td>
                     </tr>
                 </xar:if>
                 <tr valign="top">

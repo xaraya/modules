@@ -15,6 +15,10 @@
 function xtasks_adminapi_update($args)
 {
     extract($args);
+    
+    if(!isset($assigner) || empty($assigner) || $assigner == 0) {
+        $assigner = xarSessionGetVar('uid');
+    }
 
     $invalid = array();
     if (!isset($taskid) || !is_numeric($taskid)) {

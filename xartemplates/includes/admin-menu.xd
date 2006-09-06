@@ -22,7 +22,7 @@
 
         <td width="25%"><a href="&xar-modurl-xtasks-admin-new;"><xar:mlstring>New Task</xar:mlstring></a></td>
         <td width="25%"><a href="&xar-modurl-xtasks-user-taskarchive;"><xar:mlstring>Task Archive</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xtasks-admin-search;&amp;status=Archive"><xar:mlstring>Search Tasks</xar:mlstring></a></td>
+        <td width="25%"><a href="&xar-modurl-xtasks-admin-search;"><xar:mlstring>Search Tasks</xar:mlstring></a></td>
         <td width="25%"><a href="&xar-modurl-xtasks-admin-modifyconfig;"><xar:mlstring>Module Config</xar:mlstring></a></td>
         
         </tr></table>
@@ -30,8 +30,8 @@
         
 </table>
 
-<xar:if condition="!empty($status)">
-    <div>#$status#</div>
+<xar:if condition="!empty($statusmsg)">
+    <div>#$statusmsg#</div>
 </xar:if>
 
 <br />

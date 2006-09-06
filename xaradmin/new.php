@@ -43,12 +43,19 @@ function xtasks_admin_new($args)
     if($data['modid'] == xarModGetIDFromName('xtasks') && $data['itemtype'] == 1) {
         $data['parentid'] = $objectid;
         $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $objectid));
+        $data['projectid'] = $parentinfo['projectid'];
+        $data['objectid'] = $parentinfo['taskid'];
+        $data['modid'] = xarModGetIDFromName('xtasks');
+        $data['itemtype'] = 1;
         $data['priority'] = $parentinfo['priority'];
         $data['status'] = $parentinfo['status'];
         $data['private'] = $parentinfo['private'];
         $data['importance'] = $parentinfo['importance'];
         $data['date_end_planned'] = $parentinfo['date_end_planned'];
     }
+
+    if(empty($data['modid'])) $data['modid'] = xarModGetIDFromName('xtasks');
+    if(empty($data['itemtype'])) $data['itemtype'] = 1;
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 

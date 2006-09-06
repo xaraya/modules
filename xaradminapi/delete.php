@@ -41,7 +41,7 @@ function xtasks_adminapi_delete($args)
 
     if (!isset($project) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecAuthAction(0, 'xtasks::', "$task[task_name]::$taskid", ACCESS_DELETE)) {
+    if (!xarSecurityCheck('DeleteXTask', 1, 'Item', "$task[task_name]:All:$taskid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xtasks', xarVarPrepForStore($projectid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

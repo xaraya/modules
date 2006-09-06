@@ -1,0 +1,32 @@
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Log Work Performed</xar:mlstring></h2>
+    <div align="center">
+    
+        <form method="post" action="&xar-modurl-xproject-features-create;">
+        
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="taskid" value="#$taskid#" />
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td><xar:mlstring>Work Date</xar:mlstring></td>
+                    <td><xar:data-input type="calendar" name="eventdate" /></td>
+                </tr>
+                <tr>
+                    <td><xar:mlstring>Hours Worked</xar:mlstring></td>
+                    <td><xar:data-input type="textbox" name="hours" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><xar:mlstring>Notes</xar:mlstring></td>
+                    <td><xar:data-input type="textarea_small" name="notes" /></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align="center"><br /><input type="submit" name="submit" value="Log"></td>
+                </tr>
+            </table>
+            
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
+        
+        </form>
+    </div>
+</div>
