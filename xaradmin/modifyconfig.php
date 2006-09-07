@@ -32,6 +32,7 @@ function gallery_admin_modifyconfig()
         */
         if( !xarVarFetch('support_short_urls', 'checkbox', $short_urls, '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('obfuscate_file_name', 'checkbox', $obfuscate_file_name, null, XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('enable_lightbox', 'checkbox', $enable_lightbox, null, XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('items_per_page', 'int', $items_per_page, 10, XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('cols_per_page', 'int', $cols_per_page, 3, XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('file_path', 'str', $file_path, '', XARVAR_NOT_REQUIRED) ){ return false; }
@@ -43,6 +44,7 @@ function gallery_admin_modifyconfig()
 
         xarModSetVar('gallery', 'SupportShortURLs', $short_urls);
         xarModSetVar('gallery', 'obfuscate_file_name', $obfuscate_file_name);
+        xarModSetVar('gallery', 'enable_lightbox', $enable_lightbox);
         xarModSetVar('gallery', 'items_per_page', $items_per_page);
         xarModsetVar('gallery', 'cols_per_page', $cols_per_page);
         xarModsetVar('gallery', 'new_album_success', $new_album_success);
@@ -84,6 +86,12 @@ function gallery_admin_modifyconfig()
     { $data['obfuscate_file_name'] = 'checked=checked'; }
     else
     { $data['obfuscate_file_name'] = ''; }
+
+    $enable_lightbox = xarModGetVar('gallery', 'enable_lightbox');
+    if( $enable_lightbox == true )
+    { $data['enable_lightbox'] = 'checked=checked'; }
+    else
+    { $data['enable_lightbox'] = ''; }
 
     $data['items_per_page'] = xarModGetVar('gallery', 'items_per_page');
     $data['cols_per_page'] = xarModGetVar('gallery', 'cols_per_page');

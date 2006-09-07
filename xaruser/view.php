@@ -169,6 +169,12 @@ function gallery_user_view($args)
     $data['files'] = $files;
     $data['num_cols'] = xarModGetVar('gallery', 'cols_per_page');
 
-    return $data;
+    if( xarModGetVar('gallery', 'enable_lightbox') == true ){
+        $template = 'lightbox';
+    } else {
+        $template = null;
+    }
+
+    return xarTplModule('gallery', 'user', 'view', $data, $template);
 }
 ?>

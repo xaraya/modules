@@ -25,6 +25,7 @@ function gallery_init()
     xarModSetVar('gallery', 'name',           'Gallery');
     xarModSetVar('gallery', 'SupportShortURLs', 0);
     xarModSetVar('gallery', 'obfuscate_file_name', true);
+    xarModSetVar('gallery', 'enable_lightbox', false);
     xarModSetVar('gallery', 'items_per_page', 10);
     xarModSetVar('gallery', 'files_per_page', 10);
     xarModSetVar('gallery', 'cols_per_page',  2);
@@ -36,12 +37,6 @@ function gallery_init()
     xarModsetVar('gallery', 'new_album_success', $new_gallery_success);
     $new_file_success = "Your photos were uploaded successfully.";
     xarModsetVar('gallery', 'new_file_success', $new_file_success);
-
-    /*
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-     */
-//    xarRegisterMask('ViewGallery', 'All', 'album', 'All','All:All','ACCESS_READ', '');
-//    xarRegisterMask('AdminGallery', 'All', 'album', 'All','All:All','ACCESS_ADMIN', '');
 
     $result = xarModAPIFunc('gallery', 'admin', 'init_security');
     if( $result == false ){ return false; }
@@ -130,6 +125,7 @@ function gallery_upgrade($oldversion)
 
             // obfuscating uploaded file paths is now optional
             xarModSetVar('gallery', 'obfuscate_file_name', true);
+            xarModSetVar('gallery', 'enable_lightbox', false);
 
             gallery_db_sync_tables();
             break;
