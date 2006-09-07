@@ -35,11 +35,11 @@
     <fieldset>
         <legend><xar:mlstring>Add courses</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-             <label for="courseid" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
+             <label for="lcourseid" class="xar-form-label" title="#xarML('Choose one of the following courses to add')#">
                   <xar:mlstring>Add course:</xar:mlstring>
              </label>
              <xar:comment>Here the dynamic property gets the list of courses one can add</xar:comment>
-             <xar:data-input name="courseid" type="courselist" validation="$pitemrules" show="number,name"/>
+             <xar:data-input name="lcourseid" type="courselist" validation="$pitemrules" show="number,name"/>
         </div>
     </fieldset>
 </xar:if>
