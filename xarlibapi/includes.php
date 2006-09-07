@@ -40,13 +40,26 @@ function ajax_libapi_includes($args)
             $obj = new xarCSS($css_args);
             $obj->run_output();
         }
+        elseif( $name == 'lightbox' )
+        {
+            require_once "modules/themes/xarclass/xarcss.class.php";
+            $css_args = array(
+                'scope'    => 'module'
+                , 'module' => 'ajax'
+                , 'file'   => 'lightbox'
+            );
+            $obj = new xarCSS($css_args);
+            $obj->run_output();
+
+            $libs_needed[] = 'effects';
+        }
         $libs_needed[] = $name;
     }
 
-    $base = xarServerGetBaseURL() . "modules/ajax/xartemplates/includes/";
     foreach( $libs_needed as $lib )
     {
-        xarTplAddJavaScript('head', 'src', $base . $lib . '.js');
+        xarModAPIFunc('base', 'javascript', 'modulefile',
+            array('module' => 'ajax', 'filename' => "$lib.js", 'position' => 'head'));
     }
 
     return;

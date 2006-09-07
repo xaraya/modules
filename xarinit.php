@@ -32,7 +32,9 @@ function ajax_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '0.1.0':
+        case '0.9.0':
+
+            break;
 
         default:
             // Couldn't find a previous version to upgrade
