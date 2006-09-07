@@ -13,6 +13,7 @@
  * @param   string  $params     The array of parameters to apply for processing
  * @param   boolean $static     Use static link instead of dynamic one where possible (default FALSE)
  * @param   string  $baseurl    (optional) Base URL for the static links
+ * @param   boolean $returnpath (optional) Flag to return the image path instead of the image tag
  * @returns string
  * @return an <img> tag for the newly resized image
  */
@@ -47,6 +48,8 @@ function images_userapi_resize($args)
         xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
+
+    if( !isset($returnpath) ){ $returnpath = false; }
 
     $notSupported = FALSE;
 
@@ -132,6 +135,10 @@ function images_userapi_resize($args)
                                  array('fileId' => base64_encode($location)));
             }
 
+            if( $returnpath == true ){
+                return $url;
+            }
+
             return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
         }
 
@@ -174,6 +181,10 @@ function images_userapi_resize($args)
             // use the location of the processed image here
             $url = xarModURL('images', 'user', 'display',
                              array('fileId' => base64_encode($location)));
+        }
+
+        if( $returnpath == true ){
+            return $url;
         }
 
         return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
@@ -286,6 +297,10 @@ function images_userapi_resize($args)
                          array('fileId' => is_numeric($src) ? $src : base64_encode($src),
                                'height' => $image->getHeight(),
                                'width'  => $image->getWidth()));
+    }
+
+    if( $returnpath == true ){
+        return $url;
     }
 
     $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
