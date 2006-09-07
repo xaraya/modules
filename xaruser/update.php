@@ -55,6 +55,12 @@ function itsp_user_update()
     }
      /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey('itsp.modify')) return;
+    $newstatus = 1;
+    $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
+    if (!$updatestatus) {
+        xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
+        return false; // throw back
+    }
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
         //get planitem
