@@ -62,25 +62,29 @@
 
         <xar:comment>Include the template here that will add all fields
         The template name begins with modify- and has a suffix of the source for the courses.
-        These included templates are located at /xartemplates/includes/</xar:comment>
-        <xar:template type="module" file="modify-$rule_source" />
+        These included templates are located at /xartemplates/includes/
+        The template will only be included when the student can be changes.</xar:comment>
 
-        <xar:if condition="!empty($hooks)">
+            <xar:template type="module" file="modify-$rule_source" />
+
+            <xar:if condition="!empty($hooks)">
+                <fieldset>
+                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                        <xar:foreach in="$hooks" key="$hookmodule">
+                           #$hooks[$hookmodule]#
+                        </xar:foreach>
+                </fieldset>
+            </xar:if>
+        <xar:if condition="$canedit">
             <fieldset>
-                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                    <xar:foreach in="$hooks" key="$hookmodule">
-                       #$hooks[$hookmodule]#
-                    </xar:foreach>
+                <div class="xar-form-input-wrapper-after">
+                   <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                   <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+                   <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
+                   <input type="submit" value="#xarML('Add')#" />
+                </div>
             </fieldset>
         </xar:if>
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-               <input type="hidden" name="authid" id="authid" value="#$authid#" />
-               <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
-               <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
-               <input type="submit" value="#xarML('Add')#" />
-            </div>
-        </fieldset>
     </form>
 </div>
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
