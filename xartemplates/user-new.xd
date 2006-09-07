@@ -11,7 +11,6 @@
 // -->
 </script>
 
-<!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Individual Training and Supervision Plan</xar:mlstring></span>
 </div>
@@ -32,6 +31,18 @@
                     </xar:loop>
                  </select>
             </div>
+            <div class="xar-form-input-wrapper">
+                 <label for="userid" class="xar-form-label" title="#xarML('Use the full uid for the user to create the ITSP for')#">
+                        <xar:mlstring>ID of the user to add this ITSP for:</xar:mlstring>
+                 </label>
+                 <input type="text" name="userid" id="userid" value="#$userid#" maxlength="10" class="xar-form-textshort" />
+                 <xar:if condition="!empty($invalid['userid'])">
+                     <div class="xar-error">
+                            <xar:mlstring>ERROR! This is not a valid userid</xar:mlstring>
+                     </div>
+                 </xar:if>
+            </div>
+
 <xar:comment>
             <div class="xar-form-input-wrapper">
                 <label for="plandesc" class="xar-form-label" title="#xarML('This is the item number')#">
@@ -45,17 +56,7 @@
                 </xar:if>
             </div>
 
-            <div class="xar-form-input-wrapper">
-                 <label for="planrules" class="xar-form-label" title="#xarML('This is the rule that applies to this plan')#">
-                        <xar:mlstring>Rules for this plan:</xar:mlstring>
-                 </label>
-                 <input type="text" name="planrules" id="planrules" value="#$planrules#" maxlength="255" class="xar-form-textmedium" />
-                 <xar:if condition="!empty($invalid['planrules'])">
-                     <div class="xar-error">
-                            <xar:mlstring>ERROR! This is not a valid rule</xar:mlstring>
-                     </div>
-                 </xar:if>
-            </div>
+
             <div class="xar-form-input-wrapper">
                  <label for="credits" class="xar-form-label" title="#xarML('This is the credits that need to be obtained in the plan')#">
                         <xar:mlstring>Credits:</xar:mlstring>
@@ -126,7 +127,7 @@
         <fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#xarML('Choose this education plan')#" />
+                <input type="submit" value="#xarML('Create an ITSP for this education plan')#" />
 
                 </div>
         </fieldset>

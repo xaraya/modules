@@ -65,7 +65,7 @@ function itsp_user_new($args)
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      */
     if (empty($userid)) {
-        $data['userid'] = '';
+        $data['userid'] = xarUserGetVar('uid');
     } else {
         $data['userid'] = $userid;
     }

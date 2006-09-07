@@ -74,8 +74,8 @@ function itsp_userapi_getall_plans($args)
                      xar_modiby
               FROM $planstable";
 
-    if (isset($enddate) && !empty($enddate) && ($enddate >0) ) {
-        $query .= " WHERE xar_dateclose > $enddate OR xar_dateclose IS NULL";
+    if (is_numeric($enddate) && ($enddate > 0) ) {
+        $query .= " WHERE xar_dateclose > $enddate OR xar_dateclose IS NULL OR xar_dateclose = 0";
     }
     $query .= " ORDER BY xar_planname ";
 

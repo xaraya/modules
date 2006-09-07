@@ -13,15 +13,14 @@
  */
 
 /**
- * Create a new itsp item
+ * Create a new itsp
  *
  * This is a standard userapi function to create a module item
  *
  * @author the ITSP module development team
  * @param  $args ['name'] name of the item
  * @param  $args ['number'] number of the item
- * @returns int
- * @return itsp item ID on success, false on failure
+ * @return int itsp item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function itsp_userapi_create($args)

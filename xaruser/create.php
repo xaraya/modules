@@ -27,7 +27,7 @@ function itsp_user_create($args)
     extract($args);
 
     if (!xarVarFetch('objectid',      'id',     $objectid,      $objectid, XARVAR_NOT_REQUIRED)) return; //??
-    if (!xarVarFetch('invalid',       'str:1:', $invalid,       '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',       'array',  $invalid,       array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userid',        'int:1:', $userid,        xarUserGetVar('uid'),  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planid',        'int:1:', $planid,        $planid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itspstatus',    'int:1:', $itspstatus,    0,    XARVAR_NOT_REQUIRED)) return;
@@ -70,7 +70,7 @@ function itsp_user_create($args)
                                 'invalid'       => $invalid));
     }
     // Confirm authorisation code.
- //   if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) return;
     // Create the ITSP
     $itspid = xarModAPIFunc('itsp',
                             'user',
@@ -89,7 +89,7 @@ function itsp_user_create($args)
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'user', 'display', array('objectid'=> $itspid)));
+    xarResponseRedirect(xarModURL('itsp', 'user', 'itsp', array('itspid'=> $itspid)));
     /* Return true, in this case */
     return true;
 }
