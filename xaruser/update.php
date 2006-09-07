@@ -35,13 +35,11 @@ function itsp_user_update()
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
 
-   // if (!xarVarFetch('authid',   'str::', $authid,  '',  XARVAR_NOT_REQUIRED)) return;
     if (!empty($objectid)) {
         $pitemid = $objectid;
     }
- //   if (!xarSecConfirmAuthKey()) return;
     // TODO: include check here for passing variables.
-    //   $itspid = $itsp['itspid'];
+
     // The user API function is called to get the ITSP
     $itsp = xarModAPIFunc('itsp',
                           'user',

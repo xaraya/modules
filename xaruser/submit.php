@@ -26,6 +26,7 @@
  * @param int newstatus The new status of the ITSP
  * @since 16 May 2006
  * @return bool true on success of submission
+ * @todo MichelV <1> Work on the security check so only the itsp id is enough
  */
 function itsp_user_submit($args)
 {
@@ -43,7 +44,15 @@ function itsp_user_submit($args)
     if (($itspid < 1) || (empty($newstatus))) {
         return $data;
     }
-    if (!xarSecurityCheck('ReadITSP', 1, 'itsp', "$itspid:All:All")) {
+    // Get the ITSP to be able to pass security checks. Annoying but true.
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid' => $itspid));
+    if (empty($itsp)) {
+        xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
+        return false; // throw back
+    }
+    $planid = $itsp['planid'];
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
     /* Confirm authorisation code. */
