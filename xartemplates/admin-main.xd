@@ -8,14 +8,15 @@
         <xar:mlstring>The Ajax Library module is a collection of javascript libraries generally based on prototype.</xar:mlstring>
         <p><xar:mlstring>The following libraries are include:</xar:mlstring></p>
         <ul>
-            <li><a href="http://prototype.conio.net/" target="_blank">Prototype</a></li>
-            <li><a href="http://script.aculo.us/" target="_blank">Scriptaculous</a></li>
-            <li><a href="http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/" target="_blank">validation</a></li>
+            <li><a href="http://prototype.conio.net/" target="_blank">Prototype 1.5.0rc1</a></li>
+            <li><a href="http://script.aculo.us/" target="_blank">Scriptaculous 1.6.3</a></li>
+            <li><a href="http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/" target="_blank">Really easy field validation with Prototype 1.5.3</a></li>
+            <li><a href="http://www.huddletogether.com/projects/lightbox2/" target="_blank">Lightbox 2.02</a></li>
         </ul>
     </p>
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <p>
-        <xar:mlstring>This module is geared towards module developers.  It provides them with a rich set of libraries to create ajax based module.</xar:mlstring>
+        <xar:mlstring>This module is geared towards module developers.  It provides them with a rich set of libraries to create ajax based module.  To learn howto use each of these plese goto that components site, links are above.  It would be impossible to example them here.</xar:mlstring>
     </p>
     <p>
         <xar:mlstring>The libraries are split up into the following components.</xar:mlstring>
@@ -28,6 +29,7 @@
             <li><xar:mlstring>effects</xar:mlstring></li>
             <li><xar:mlstring>slider</xar:mlstring></li>
             <li><xar:mlstring>validation</xar:mlstring></li>
+            <li><xar:mlstring>lightbox</xar:mlstring></li>
         </ul>
     </p>
 
@@ -45,4 +47,22 @@
         <br /> &lt;xar:ajax-lib name="scriptaculous" /&gt;
         <br /> &lt;xar:ajax-lib name="effects" /&gt;
     </p>
+
+    <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Further information on the Helpdesk module can be found at</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring><a href="http://www.abrasiontechnology.com/">Abrasion Technology</a></xar:mlstring></li>
+        <li><xar:mlstring>Ajax Library Extension page at</xar:mlstring> <a title="#xarML('Ajax Library Module - Xaraya Extension 785')#" href="http://www.xaraya.com/index.php/release/785.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring></li>
+        <li><xar:mlstring>Related tutorials and documentation on the Ajax Library found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/ajax/" title="#xarML('Related documentation on Ajax Library')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+    </ul>
+
+    <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Ajax Library Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-09-07
+    </p>
+
 </div>
