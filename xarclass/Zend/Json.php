@@ -47,7 +47,7 @@ class Zend_Json
     static public function decode($encodedValue, $objectDecodeType = null)
     {
         // @todo Zend::loadClass()
-        include_once 'Zend/Json/Decoder.php';
+        include_once 'modules/security/xarclass/Zend/Json/Decoder.php';
         return Zend_Json_Decoder::decode($encodedValue, $objectDecodeType);
     }
 
@@ -66,7 +66,7 @@ class Zend_Json
     static public function encode($valueToEncode)
     {
         // @todo Zend::loadClass()
-        include_once 'Zend/Json/Encoder.php';
+        include_once 'modules/security/xarclass/Zend/Json/Encoder.php';
     	return Zend_Json_Encoder::encode($valueToEncode);
     }
 }

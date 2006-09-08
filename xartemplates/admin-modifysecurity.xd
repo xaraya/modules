@@ -1,7 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="security" filename="json.js" position="head" />
 <xar:ajax-lib name="prototype" />
 <xar:base-include-javascript module="security" filename="common.js" />
-<xar:base-include-javascript module="security" filename="json.js" position="head" />
 
 <script type="text/javascript">
 var security = null;

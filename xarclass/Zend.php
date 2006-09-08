@@ -22,7 +22,7 @@
 /**
  * Zend_Exception
  */
-require_once 'Zend/Exception.php';
+require_once 'modules/security/xarclass/Zend/Exception.php';
 
 
 /**
@@ -248,7 +248,7 @@ final class Zend
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
         if (PHP_SAPI == 'cli') {
             $output = PHP_EOL . $label
-                    . PHP_EOL . $output 
+                    . PHP_EOL . $output
                     . PHP_EOL;
         } else {
             $output = '<pre>'
@@ -317,8 +317,8 @@ final class Zend
      * Retrieves a registered shared object, where $name is the
      * registered name of the object to retrieve.
      *
-     * If the $name argument is NULL, an array will be returned where 
-	 * the keys to the array are the names of the objects in the registry 
+     * If the $name argument is NULL, an array will be returned where
+	 * the keys to the array are the names of the objects in the registry
 	 * and the values are the class names of those objects.
      *
      * @see     register()
@@ -347,7 +347,7 @@ final class Zend
         return self::$_registry[$name];
     }
 
-    
+
     /**
      * Returns TRUE if the $name is a named object in the
      * registry, or FALSE if $name was not found in the registry.
