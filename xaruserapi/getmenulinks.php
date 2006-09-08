@@ -34,6 +34,11 @@ function xproject_userapi_getmenulinks()
                               'title' => xarML('Query project entries'),
                               'label' => xarML('Search Projects'));
         if (xarUserIsLoggedIn()) {
+            $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                      'admin',
+                                                      'newcombo'),
+                                 'title' => xarML('Quick project/contact form'),
+                                 'label' => xarML('New Project'));
         
             $uid = xarSessionGetVar('uid');
             $mymemberid = xarModGetUserVar('xproject', 'mymemberid');

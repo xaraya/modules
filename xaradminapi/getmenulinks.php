@@ -23,6 +23,11 @@ function xproject_adminapi_getmenulinks()
     $menulinks = array();
 
     if (xarSecurityCheck('ReadXProject', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                  'admin',
+                                                  'dashboard'),
+                             'title' => xarML('Summary of information on current projects'),
+                             'label' => xarML('Project Dashboard'));
         
         $uid = xarSessionGetVar('uid');
         $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
@@ -51,6 +56,11 @@ function xproject_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('AddXProject', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                  'admin',
+                                                  'newcombo'),
+                             'title' => xarML('Quick project/contact form'),
+                             'label' => xarML('Quick Project Form'));
 
         $menulinks[] = Array('url'   => xarModURL('xproject',
                                                    'admin',

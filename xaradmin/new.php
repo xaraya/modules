@@ -1,7 +1,11 @@
 <?php
 
-function xproject_admin_new()
+function xproject_admin_new($args)
 {
+    extract($args);
+    
+    if (!xarVarFetch('clientid', 'id', $clientid, 0, XARVAR_NOT_REQUIRED)) return;
+    
     $data = xarModAPIFunc('xproject','admin','menu');
 
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
@@ -9,9 +13,8 @@ function xproject_admin_new()
     if (!xarSecurityCheck('AddXProject')) {
         return;
     }
-
-    $data['authid'] = xarSecGenAuthKey();
-    $data['clientid'] = xarSessionGetVar('uid');
+    
+    $data['clientid'] = $clientid;
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Create Project'));
 

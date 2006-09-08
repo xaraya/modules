@@ -1,0 +1,138 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
+
+<div id="tasklist">
+
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Dashboard</xar:mlstring></span></div>
+    
+    <div class="xar-mod-body">
+    
+        <fieldset><legend><strong>Top Ten Projects</strong></legend>
+    
+            <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
+                <tr>
+            
+                    <th><xar:mlstring>Project</xar:mlstring></th>
+                    <th><xar:mlstring>Client</xar:mlstring></th>
+                    <th><xar:mlstring>Budget</xar:mlstring></th>
+                    <th><xar:mlstring>Target Date</xar:mlstring></th>
+                </tr>
+            
+                <xar:if condition="isset($activeprojects)">
+                    <xar:foreach in="$top_projects" value="$projectinfo">
+                        <tr><td class="xar-norm">
+                                <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a>
+                            </td>
+                            
+                            <td class="xar-norm">
+                                <a class="xar-norm" href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$properties['clientid']" value="$projectinfo['clientid']" /></a>
+                            </td>
+                        
+                            <td class="xar-norm">$#$projectinfo['budget']#</td>
+                        
+                            <td class="xar-norm"><xar:data-output property="$properties['planned_end_date']" value="$projectinfo['planned_end_date']" dateformat="%b %d, %Y" /></td>
+                        
+                        </tr>
+                    </xar:foreach>
+                </xar:if>
+            </table>
+        
+        </fieldset>
+        
+    </div>
+    
+    <br />
+    
+    <div class="xar-mod-body">
+    
+        <fieldset><legend><strong>Current WIP Projects</strong></legend>
+    
+            <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
+                <tr>
+            
+                    <th><xar:mlstring>Agent</xar:mlstring></th>
+                    <th><xar:mlstring>Client</xar:mlstring></th>
+                    <th><xar:mlstring>Project</xar:mlstring></th>
+                    <th><xar:mlstring>Budget</xar:mlstring></th>
+                    <th><xar:mlstring>Target Date</xar:mlstring></th>
+                </tr>
+            
+                <xar:if condition="isset($activeprojects)">
+                    <xar:loop name="$activeprojects">
+                        <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
+                        <xar:set name="ownerid">$loop->item['ownerid']</xar:set>
+                        <xar:set name="budget">$loop->item['budget']</xar:set>
+                        <xar:set name="this_clientid">$loop->item['clientid']</xar:set>
+                            
+                        <tr>
+                            <td class="xar-norm">
+                                <xar:data-output property="$properties['ownerid']" value="$ownerid" />
+                            </td>
+                            
+                            <td class="xar-norm">
+                                <a class="xar-norm" href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$this_clientid#"><xar:data-output property="$properties['clientid']" value="$this_clientid" /></a>
+                            </td>
+                            
+                            <td class="xar-norm">
+                                <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$loop:item['projectid']#">#$loop:item['project_name']#</a>
+                            </td>
+                            
+                            <td class="xar-norm">
+                                $ <xar:data-output property="$properties['budget']" value="$budget" />
+                            </td>
+                            
+                            <td class="xar-norm">
+                                <xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%d %B %Y" />
+                            </td>
+                        </tr>
+                    </xar:loop>
+                </xar:if>
+            </table>
+        </fieldset>
+    </div>
+    
+    <br />
+    
+    <xar:set name="ttlowners">count($newprojectlist)</xar:set>
+    <xar:set name="columnwidth">(int)(100 / $ttlowners)</xar:set>
+    
+    <div class="xar-mod-body">
+    
+        <fieldset><legend><strong>New Business</strong></legend>
+            <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
+            <xar:foreach in="$newprojectlist" key="$ownerid" value="$ownerprojects">
+                <td style="width: #$columnwidth#%; vertical-align: top;">
+                    <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
+                        <tr>
+                            <th>
+                                <xar:if condition="$ownerid gt 0">
+                                    <xar:data-output property="$properties['ownerid']" value="$ownerid" />
+                                <xar:else />
+                                    <xar:mlstring>Unassigned</xar:mlstring>
+                                </xar:if>
+                            </th>
+                        </tr>
+                
+                        <xar:if condition="isset($ownerprojects)">
+                            <xar:foreach in="$ownerprojects" value="$projectinfo">
+                                    
+                                <tr>
+                                    <td class="xar-norm">
+                                        <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a>
+                                    </td>
+                                    
+                                    <td class="xar-norm" style="white-space: nowrap;">
+                                        $<xar:data-output property="$properties['estimate']" value="$projectinfo['estimate']" />
+                                    </td>
+                                </tr>
+                            </xar:foreach>
+                        </xar:if>
+                    </table>
+                </td>
+            </xar:foreach>
+            </table>
+        </fieldset>
+    <br />
+    
+    </div>
+</div>

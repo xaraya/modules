@@ -34,8 +34,17 @@
     </tr>
     <tr>
         <td><xar:mlstring>Team</xar:mlstring></td>
-        <td><xar:data-input type="contactlist" name="memberid" />
-            <xar:mlstring>Project Role</xar:mlstring><xar:data-input property="$team_properties['projectrole']" name="projectrole" />
+        <td>
+            <div>
+                <div style="width: 100px; float: left;">
+                    <xar:mlstring>Add Member</xar:mlstring>:
+                </div>
+                <div style="width: 350px; float: left;">
+                    <xar:data-input type="contactlist" name="memberid" />
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <xar:mlstring>Project Role</xar:mlstring><xar:data-input property="$team_properties['projectrole']" name="projectrole" size="24" />
             <xar:foreach in="$teamlist" value="$memberinfo" >
                 <div>#$memberinfo.membername#
                     <xar:if condition="!empty($memberinfo.projectrole)">

@@ -148,14 +148,6 @@ function xproject_userapi_getall($args)
     
     if ($dbconn->ErrorNo() != 0) return;
 
-    if ($result->EOF) {
-        $result->Close();
-        $msg = xarML('SQL: ');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg.$sql));
-        return;
-    }
-
     $projects = array();
 
     for (; !$result->EOF; $result->MoveNext()) {

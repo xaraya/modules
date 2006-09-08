@@ -10,7 +10,8 @@
 
 <form method="post" action="&xar-modurl-xproject-admin-create;">
 
-<input type="hidden" name="authid" value="#$authid#" />
+
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
 <input type="hidden" name="clientid" value="#$clientid#" />
 <xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
 <input type="hidden" name="ownerid" value="#$ownerid#" />
@@ -113,8 +114,6 @@
         <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
     </tr>
 </table>
-
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
 
 </form>
 </div>
