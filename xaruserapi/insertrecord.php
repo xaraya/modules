@@ -263,7 +263,7 @@ function addressbook_userapi_insertrecord($args)
     $item['module'] = 'addressbook';
     $item['itemid'] = $itemid;
     xarModCallHooks('item', 'create', $itemid, $item);
-    return true;
+    return $itemid;
 } // END insertrecord
 
 ?>
