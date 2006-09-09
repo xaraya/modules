@@ -36,10 +36,15 @@ function itsp_userapi_countitems($args)
 
     //Switch for the itemtypes
     switch ($itemtype) {
-        case '1':
+        case 1:
         $table = $xartable['itsp_plans'];
-        case '2':
+        break;
+        case 2:
         $table = $xartable['itsp_itsp'];
+        break;
+        case 3:
+        $table = $xartable['itsp_planitems'];
+        break;
     }
     $query = "SELECT COUNT(1)
               FROM $table";

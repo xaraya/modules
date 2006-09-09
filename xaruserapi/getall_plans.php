@@ -30,6 +30,9 @@ function itsp_userapi_getall_plans($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
+    if (!isset($enddate)) {
+        $enddate = 0;
+    }
     /* Argument check - make sure that all required arguments are present and
      * in the right format, if not then set an appropriate error message
      * and return
