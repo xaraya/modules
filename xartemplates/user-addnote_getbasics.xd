@@ -77,7 +77,11 @@
                     </xar:if>
                 </select>
             </p>
-            <p>
+                <xar:comment>Temp Fix</xar:comment>
+                <xar:if condition="!isset($supportcheck)">
+				    <xar:set name='supportcheck'>'1'</xar:set>
+				</xar:if>
+                <p>
                 <label for="supportcheck" class="xar-form-label">
                     <span class="help" title="#xarML('Do you have a demonstration of the release?')#">
                         <xar:mlstring>Is this Extension Supported?</xar:mlstring>

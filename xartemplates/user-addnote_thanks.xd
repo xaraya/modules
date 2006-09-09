@@ -1,18 +1,19 @@
 <xar:set name="adddoclink">xarModURL('release','user','adddocs')</xar:set>
-<div class="xar-mod-head">
-   <span class="xar-mod-title">
-       <xar:mlstring>Release Module</xar:mlstring>
-   </span>
-</div>
+<xar:if condition="xarUserIsLoggedIn()">
+    <xar:set name="adddoclink">xarModURL('articles','admin','new',array('ptid'=>'9','catid'=>'18'))</xar:set>
+<xar:else/>
+   <xar:set name="addoclink">xarModURL('roles','user','main')</xar:set>
+</xar:if>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+
 <div class="xar-mod-body">
 <h2><xar:mlstring>Extension Release :: Thank You</xar:mlstring></h2>
 
+<xar:mlstring>Your Release Notification has been sent for review. It should appear on the site very shortly.
+In the meantime you can </xar:mlstring>
 <xar:if condition="xarUserIsLoggedIn()">
-    <xar:mlstring>Your Release Notification has been sent for review. 
-    It should appear on the site very shortly.In the meantime you can 
-    </xar:mlstring>
-    <a href="#$adddoclink#"><xar:mlstring>begin to add online documentation.</xar:mlstring></a>.
+<a href="#$adddoclink#"><xar:mlstring>begin to add online documentation.</xar:mlstring></a>.
+<xar:else />
+<a href="#$adddoclink#"><xar:mlstring>log in to add online documentation</xar:mlstring></a>.
 </xar:if>
 </div>
-
-

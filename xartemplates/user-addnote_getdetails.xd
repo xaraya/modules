@@ -89,7 +89,19 @@
                     </xar:foreach>
                 </select>
             </p>
+            
             <p>
+                <label for="rstate" class="xar-form-label">
+                    <span class="help" title="#xarML('Do you want this listed on the new release RSS feed?')#">
+                       <xar:mlstring>Add to RSS New Release feed?</xar:mlstring>
+                     </span>
+                </label>
+                <xar:if condition="$usefeed eq '1'">
+                    <input type="checkbox" name="usefeed" id="usefeed" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="usefeed" name="usefeed" id="usefeed" value="1" />
+                </xar:if>
+             </p>            
             <p>
                 <label for="changelog" class="xar-form-label">
                     <span class="help" title="#xarML('Enter your changelog for the release')#">

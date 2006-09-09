@@ -1,38 +1,43 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from release_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Administration</xar:mlstring></span></div>
-<div style="margin: auto;">
- 
-<!-- the specific template for the current admin function comes here -->
 
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
-<form method="post" action="&xar-modurl-release-admin-updateconfig;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+<div class="xar-mod-head">
+   <span class="xar-mod-title"><xar:mlstring>Release Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+   <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+   <xar:template type="module" file="admin-menu" />
+    <form method="post" id="post" action="&xar-modurl-release-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper-after">
+           <xar:if condition="$shorturlschecked">
+              <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+           <xar:else/>
+              <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+           </xar:if>
+         <label for="shorturls" title="#xarML('Enable short URLS?')#">
+              <xar:mlstring>Enable short URLs?</xar:mlstring>
+           </label>
+      </div>
 
-<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
-<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
+      <div class="xar-form-input-wrapper">
+          <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of example items per page')#">
+              <xar:mlstring>Release Items Per Page:</xar:mlstring>
+           </label>
+           <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
+      </div>
+   </fieldset>
+   <xar:if condition="!empty($hooks)">
+   <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+            #$hooks#
+    </fieldset>
+    </xar:if>
 
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
-
-<tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
+    <div class="xar-form-input-wrapper-after">
+        <input type="submit" value="#$updatebutton#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    </div>
 </form>
 
-</table>
-<br />
 </div>

@@ -1,10 +1,10 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span>
+</div>
 <xar:set name="submitnote"><xar:mlstring>Submit Changes</xar:mlstring></xar:set>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Preview Release By</xar:mlstring> #$username#</h2>
-
-<div style="align:center;">
+<xar:template type="module" file="admin-menu" />
 <p>
     <form action="#xarModURL('release', 'admin', 'modifynote')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -195,6 +195,22 @@
             </tr>
             <tr>
                 <td align="left" valign="top" class="xar-norm">
+                <label for="rstate" class="xar-form-label">
+                    <span class="help" title="#xarML('Do you want this listed on the new release RSS feed?')#">
+                       <xar:mlstring>Add to RSS New Release feed?</xar:mlstring>
+                     </span>
+                </label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                <xar:if condition="$usefeed eq '1'">
+                    <input type="checkbox" name="usefeedchecked" id="usefeedchecked" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="usefeedchecked" id="usefeedchecked" value="1" />
+                </xar:if>
+                </td>
+             </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
                     <label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
@@ -253,5 +269,4 @@
         <input type="submit" value="#$submitnote#"  tabindex="6" />
     </form>
     </p>
-</div>
 </div>
