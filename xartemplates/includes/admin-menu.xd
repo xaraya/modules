@@ -1,0 +1,51 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <xar:sec mask="EditRelease" catch="false">
+        <xar:set name="tabclass">($activetab=='viewids')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-release-admin-viewids;">
+                <xar:mlstring>Manage Registrations</xar:mlstring>
+            </a>
+        </dd>
+        <xar:set name="tabclass">($activetab=='viewnotes')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-release-admin-viewnotes;">
+                <xar:mlstring>Manage Release Notes</xar:mlstring>
+            </a>
+        </dd>
+       <xar:set name="tabclass">($activetab=='viewdocs')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-release-admin-viewdocs;">
+                <xar:mlstring>View Docs</xar:mlstring>
+            </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-release-admin-modifyconfig;" onclick="#$onclick#">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-release-admin-overview;" onclick="#$onclick#">
+                <xar:mlstring>Overview</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>
+</xar:if>
