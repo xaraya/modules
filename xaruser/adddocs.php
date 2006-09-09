@@ -2,13 +2,13 @@
 /**
  * Display a release
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Display a release
@@ -54,9 +54,7 @@ function release_user_adddocs()
            if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
             // The user API function is called.
-            $data = xarModAPIFunc('release',
-                                  'user',
-                                  'getid',
+            $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
 
             
@@ -93,9 +91,7 @@ function release_user_adddocs()
             $data['return'] = 'module';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -127,9 +123,7 @@ function release_user_adddocs()
             $data['return'] = 'theme';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -161,9 +155,7 @@ function release_user_adddocs()
             $data['return'] = 'blockgroups';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -195,9 +187,7 @@ function release_user_adddocs()
             $data['return'] = 'blocks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -230,9 +220,7 @@ function release_user_adddocs()
             $data['return'] = 'hooks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -260,10 +248,10 @@ function release_user_adddocs()
 
         case 'update':
             if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-            if(!xarVarFetch('mtype', 'isset',    $mtype,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-            if(!xarVarFetch('title', 'str:1:',   $title,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-            if(!xarVarFetch('return','isset',   $return,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-            if(!xarVarFetch('doc',   'isset',   $doc,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('mtype', 'isset',    $mtype,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('title', 'str:1:',   $title,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('return','isset',    $return,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('doc',   'isset',    $doc,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 
            if (!xarSecConfirmAuthKey()) return;
@@ -275,9 +263,7 @@ function release_user_adddocs()
            }
 
             // The user API function is called. 
-            if (!xarModAPIFunc('release',
-                               'user',
-                               'createdoc',
+            if (!xarModAPIFunc('release', 'user', 'createdoc',
                                 array('rid'         => $rid,
                                       'type'        => $mtype,
                                       'title'       => $title,

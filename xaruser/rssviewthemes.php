@@ -2,13 +2,13 @@
 /**
  * RSS feed with themes
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Add an extension and request an ID
@@ -26,9 +26,7 @@ function release_user_rssviewthemes()
     $data['items'] = array();
 
     // The user API function is called.
-    $items = xarModAPIFunc('release',
-                           'user',
-                           'getallrssmodsnotes',
+    $items = xarModAPIFunc('release', 'user', 'getallrssmodsnotes',
                             array('type' => 'theme'));
     
     // Check individual permissions for Edit / Delete
@@ -36,18 +34,14 @@ function release_user_rssviewthemes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release',
-                               'user',
-                               'getid',
+        $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
 
         $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
 
-        $items[$i]['displaylink'] =  xarModURL('release',
-                                               'user',
-                                               'displaynote',
+        $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
                                                 array('rnid' => $item['rnid']),
                                                 '1');
 
@@ -63,5 +57,4 @@ function release_user_rssviewthemes()
     return $data;
 
 }
-
 ?>

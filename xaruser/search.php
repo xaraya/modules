@@ -2,12 +2,13 @@
 /**
  * Release Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005-2006 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Release
+ * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  * @original author Jim McDonalds, dracos, mikespub et al.
  */
 /**

@@ -2,19 +2,19 @@
 /**
  * Display a release
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Display a release
  *
  * @param rid ID
- * 
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
@@ -30,15 +30,11 @@ function release_user_display($args)
     if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'display', XARVAR_NOT_REQUIRED)) return;
     // The user API function is called. 
-    $id = xarModAPIFunc('release',
-                         'user',
-                         'getid',
+    $id = xarModAPIFunc('release', 'user', 'getid',
                           array('rid' => $rid));
 
 
-    $getuser = xarModAPIFunc('roles',
-                             'user',
-                             'get',
+    $getuser = xarModAPIFunc('roles', 'user','get',
                               array('uid' => $id['uid']));
 
     $stateoptions=array();
@@ -54,14 +50,10 @@ function release_user_display($args)
         case 'view':
         default:
 
-            $hooks = xarModCallHooks('item',
-                                     'display',
-                                     $rid,
+            $hooks = xarModCallHooks('item', 'display',$rid,
                                      array('module' => 'release',
                                            'itemtype'  => '1',
-                                           'returnurl' => xarModURL('release',
-                                                                    'user',
-                                                                    'display',
+                                           'returnurl' => xarModURL('release', 'user','display',
                                                                      array('rid' => $rid))
                                           ),
                                      'release'
@@ -78,13 +70,11 @@ function release_user_display($args)
             $data['docs'] = 0;
             $data['general'] = 2;
             break;
-        
+
         case 'version':
             // The user API function is called.
             $items = array();
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user','getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -99,28 +89,20 @@ function release_user_display($args)
                 $item = $items[$i];
 
                 // The user API function is called.
-                $getid = xarModAPIFunc('release',
-                                       'user',
-                                       'getid',
+                $getid = xarModAPIFunc('release', 'user','getid',
                                        array('rid' => $items[$i]['rid']));
 
                 $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
                 $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
                 $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
                 $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
-                $items[$i]['displaylink'] =  xarModURL('release',
-                                                  'user',
-                                                  'displaynote',
+                $items[$i]['displaylink'] =  xarModURL('release', 'user','displaynote',
                                                    array('rnid' => $items[$i]['rnid']));
 
-                $getuser = xarModAPIFunc('roles',
-                                         'user',
-                                         'get',
+                $getuser = xarModAPIFunc('roles','user','get',
                                           array('uid' => $getid['uid']));
 
-                $items[$i]['contacturl'] = xarModURL('roles',
-                                                     'user',
-                                                     'display',
+                $items[$i]['contacturl'] = xarModURL('roles','user','display',
                                                       array('uid' => $getid['uid']));
 
 
@@ -135,9 +117,7 @@ function release_user_display($args)
                 $items[$i]['changelog'] = nl2br($items[$i]['changelog']);
                 $items[$i]['notes'] = nl2br($items[$i]['notes']);
 
-                $items[$i]['comments'] = xarModAPIFunc('comments',
-                                                       'user',
-                                                       'get_count',
+                $items[$i]['comments'] = xarModAPIFunc('comments', 'user','get_count',
                                                        array('modid' => xarModGetIDFromName('release'),
                                                              'objectid' => $item['rnid']));
                 
@@ -149,12 +129,10 @@ function release_user_display($args)
                     $items[$i]['comments'] .= ' ';
                 }
 
-               $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
-                                                       'user',
-                                                       'get',
+               $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user','get',
                                                        array('modname' => 'release',
                                                              'objectid' => $item['rnid']));
-                
+
                 if (!$items[$i]['hitcount']) {
                     $items[$i]['hitcount'] = '0';
                 } elseif ($items[$i]['hitcount'] == 1) {
@@ -185,9 +163,7 @@ function release_user_display($args)
             $data['mtype'] = 'mgeneral';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user','getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -201,9 +177,7 @@ function release_user_display($args)
 
                 $uid = xarUserGetVar('uid');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release',
-                                                 'user',
-                                                 'getdoc',
+                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -221,9 +195,7 @@ function release_user_display($args)
             $data['mtype'] = 'tgeneral';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user','getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -237,9 +209,7 @@ function release_user_display($args)
 
                 $uid = xarUserGetVar('uid');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release',
-                                                 'user',
-                                                 'getdoc',
+                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -256,9 +226,7 @@ function release_user_display($args)
             $data['mtype'] = 'bgroups';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user','getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -273,9 +241,7 @@ function release_user_display($args)
 
                 $uid = xarUserGetVar('uid');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release',
-                                                 'user',
-                                                 'getdoc',
+                $items[$i]['docurl'] = xarModURL('release', 'user','getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -293,9 +259,7 @@ function release_user_display($args)
             $data['mtype'] = 'mblocks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -309,9 +273,7 @@ function release_user_display($args)
 
                 $uid = xarUserGetVar('uid');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release',
-                                                 'user',
-                                                 'getdoc',
+                $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 
@@ -329,9 +291,7 @@ function release_user_display($args)
             $data['mtype'] = 'mhooks';
             // The user API function is called. 
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
                                           'type'=> $data['mtype']));
 
@@ -345,9 +305,7 @@ function release_user_display($args)
 
                 $uid = xarUserGetVar('uid');
                 $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarModURL('release',
-                                                 'user',
-                                                 'getdoc',
+                $items[$i]['docurl'] = xarModURL('release', 'user', 'getdoc',
                                                  array('rdid' => $item['rdid']));
             }
 

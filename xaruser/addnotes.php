@@ -1,8 +1,17 @@
 <?php
-
+/*
+ * Add an extension release note
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
+ */
 function release_user_addnotes($args)
 {
-
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
     xarVarFetch('phase', 'enum:getmodule:start:getbasics:getdetails:preview:update',
@@ -38,18 +47,16 @@ function release_user_addnotes($args)
             if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
 
             // The user API function is called.
-            $data = xarModAPIFunc('release',
-                                  'user',
-                                  'getid',
+            $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
 
-            
+
             $uid = xarUserGetVar('uid');
 
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';
             } else {
-                $message = xarML('You are not allowed to add a release notification to this module');               
+                $message = xarML('You are not allowed to add a release notification to this module');
             }
 
             //TODO FIX ME!!!
@@ -95,7 +102,7 @@ function release_user_addnotes($args)
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
-
+           if (!xarVarFetch('usefeed', 'int:0:1', $usefeed,1, XARVAR_NOT_REQUIRED)) {return;}
            //if (!xarSecConfirmAuthKey()) return;
 
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
@@ -108,7 +115,8 @@ function release_user_addnotes($args)
                                                                               'pricecheck'   => $pricecheck,
                                                                               'supportcheck' => $supportcheck,
                                                                               'democheck'    => $democheck,
-                                                                              'stateoptions' => $stateoptions));
+                                                                              'stateoptions' => $stateoptions,
+                                                                              'usefeed'      => $usefeed));
 
             break;
         
@@ -126,7 +134,8 @@ function release_user_addnotes($args)
            if (!xarVarFetch('changelog', 'str', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('notes', 'str', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, null, XARVAR_NOT_REQUIRED)) {return;}
-
+           if (!xarVarFetch('usefeed', 'checkbox', $usefeed,true, XARVAR_NOT_REQUIRED)) {return;}
+           $usefeed = $usefeed?1:0;
            //if (!xarSecConfirmAuthKey()) return;
            //Get some info for the extensions state
            foreach ($stateoptions as $key => $value) {
@@ -157,14 +166,15 @@ function release_user_addnotes($args)
                                                                               'notes'       => $notes,
                                                                               'rstate'      => $rstate,
                                                                               'stateoptions'=> $stateoptions,
-                                                                              'extstate'     => $extstate));
+                                                                              'extstate'     => $extstate,
+                                                                              'usefeed'      => $usefeed));
 
 
 
             break;
 
         case 'update':
-       if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
            if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
@@ -177,12 +187,11 @@ function release_user_addnotes($args)
            if (!xarVarFetch('changelog', 'str:1:', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('notes', 'str:1:', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
-
+           if (!xarVarFetch('usefeed', 'checkbox', $usefeed, true, XARVAR_NOT_REQUIRED)) {return;}
            //if (!xarSecConfirmAuthKey()) return;
             // The user API function is called.
-            $data = xarModAPIFunc('release',
-                                  'user',
-                                  'getid',
+            $usefeed = $usefeed?1:0;
+            $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
             if ($data['type'] == 0) {
                 $exttype='Module';
@@ -195,9 +204,7 @@ function release_user_addnotes($args)
             }
 
             // The user API function is called.
-            if (!xarModAPIFunc('release',
-                               'user',
-                               'createnote',
+            if (!xarModAPIFunc('release', 'user', 'createnote',
                                 array('rid'         => $rid,
                                       'version'     => $version,
                                       'price'       => $pricecheck,
@@ -210,7 +217,8 @@ function release_user_addnotes($args)
                                       'changelog'   => $changelog,
                                       'type'        => $exttype,
                                       'notes'       => $notes,
-                                      'rstate'      => $rstate))) return;
+                                      'rstate'      => $rstate,
+                                      'usefeed'     => $usefeed))) return;
 
             xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Thank You')));
 

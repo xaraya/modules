@@ -2,13 +2,13 @@
 /**
  * Add a new extension
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Add an extension and request an ID
@@ -32,13 +32,13 @@ function release_userapi_getallrssextnotes($args)
     $xartable =& xarDBGetTables();
 
     $releasenotes = $xartable['release_notes'];
-    //jojodeeWe want
+    //We just want those approved and those that are required in the RSS feed
     $query = "SELECT xar_rnid,
                      xar_rid,
                      xar_type,
                      xar_version
             FROM $releasenotes
-            WHERE xar_approved = 2
+            WHERE xar_approved = 2 and xar_usefeed = 1
             ORDER by xar_time DESC";
 
     $result =& $dbconn->Execute($query);

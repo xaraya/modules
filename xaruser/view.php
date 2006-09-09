@@ -2,12 +2,13 @@
 /**
  * Main view for Releases
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * @author niceguyeddie
@@ -46,10 +47,8 @@ function release_user_view()
         $sort = 'id';
     }
 
-    // The user API function is called to get all release IDs.
-    $items = xarModAPIFunc('release',
-                         'user',
-                         'getallrids',
+    // The user API function is called to get all extension IDs.
+    $items = xarModAPIFunc('release', 'user', 'getallrids',
                    array('idtypes'  => $idtypes,
                          'catid'    => $catid,
                          'sort'     => $sort,
@@ -80,42 +79,32 @@ function release_user_view()
         /* use the xarUserGetVar func as we only want name 
          * TODO: Where is this user taken to?
          */
-        $getuser = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
+        $getuser = xarModAPIFunc('roles', 'user', 'get',
                                   array('uid' => $item['uid']));
 
         // Author Name and Contact URL
 
-        $items[$i]['contacturl'] = xarModURL('roles',
-                                             'user',
-                                             'display',
+        $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
                                               array('uid' => $item['uid']));
-        
+
         // InfoURL
-        $items[$i]['infourl'] = xarModURL('release',
-                                          'user',
-                                          'display',
+        $items[$i]['infourl'] = xarModURL('release', 'user', 'display',
                                           array('rid' => $item['rid']));
         $items[$i]['infotitle'] = xarML('View');
 
         // Edit
         if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['editurl'] = xarModURL('release',
-                                              'user',
-                                              'modifyid',
+            $items[$i]['editurl'] = xarModURL('release', 'user', 'modifyid',
                                                array('rid' => $item['rid']));
             $items[$i]['edittitle'] = xarML('Edit');
         } else {
             $items[$i]['edittitle'] = '';
             $items[$i]['editurl'] = '';
         }
-        
+
         // Add Release Note URL
         if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['addurl'] = xarModURL('release',
-                                              'user',
-                                              'addnotes',
+            $items[$i]['addurl'] = xarModURL('release', 'user', 'addnotes',
                                                array('rid' => $item['rid'],
                                                      'phase' => 'start'));
             $items[$i]['addtitle'] = xarML('Add');
@@ -126,9 +115,7 @@ function release_user_view()
 
         // Add Docs URL
         if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
-            $items[$i]['adddocs'] = xarModURL('release',
-                                              'user',
-                                              'adddocs',
+            $items[$i]['adddocs'] = xarModURL('release', 'user', 'adddocs',
                                                array('rid' => $item['rid'],
                                                      'phase' => 'start'));
             $items[$i]['adddocstitle'] = xarML('Add');
@@ -140,12 +127,10 @@ function release_user_view()
         $items[$i]['comments'] = '0';
         if (xarModIsAvailable('comments')){
             // Get Comments
-            $items[$i]['comments'] = xarModAPIFunc('comments',
-                                                   'user',
-                                                   'get_count',
+            $items[$i]['comments'] = xarModAPIFunc('comments', 'user', 'get_count',
                                                    array('modid' => xarModGetIDFromName('release'),
                                                          'objectid' => $item['rid']));
-            
+
             if ($items[$i]['comments'] != '0') {
                 $items[$i]['comments'] .= ' ';
             }
@@ -154,21 +139,17 @@ function release_user_view()
         $items[$i]['hitcount'] = '0';
         if (xarModIsAvailable('hitcount')){
             // Get Hits
-            $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
-                                                   'user',
-                                                   'get',
+            $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user', 'get',
                                                    array('modname' => 'release',
                                                          'itemtype' => '1',
                                                          'objectid' => $item['rid']));
-            
+
             if ($items[$i]['hitcount'] != '0') {
                 $items[$i]['hitcount'] .= ' ';
             }
         }
 
-        $items[$i]['docs'] = xarModAPIFunc('release',
-                                           'user',
-                                           'countdocs',
+        $items[$i]['docs'] = xarModAPIFunc('release', 'user','countdocs',
                                            array('rid' => $item['rid']));
 
         //Get some info for the extensions state

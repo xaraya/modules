@@ -2,12 +2,13 @@
 /**
  * Modify an ID
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Modify an ID by user
@@ -33,13 +34,9 @@ function release_user_modifyid()
 
         case 'modify':
         default:
-            
-            $rid = xarVarCleanFromInput('rid');
-
+            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) return;
             // The user API function is called.
-            $data = xarModAPIFunc('release',
-                                  'user',
-                                  'getid',
+            $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
 
             if ($data == false) return;
@@ -50,7 +47,7 @@ function release_user_modifyid()
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';
             } else {
-                $message = xarML('You are not allowed to add a release notification to this module');               
+                $message = xarML('You are not allowed to add a release notification to this module');
             }
             $stateoptions=array();
             $stateoptions[0] = xarML('Planning');
@@ -73,61 +70,47 @@ function release_user_modifyid()
                 $cathook = '';
             } else {
                 $cathook = $hooks['categories'];
-            } 
+            }
             $data['cathook'] = $cathook;
 
             $data['authid'] = xarSecGenAuthKey();
 
             break;
-        
-        case 'update':
 
-            list($rid,
-                 $uid,
-                 $regname,
-                 $displname,
-                 $desc,
-                 $certified,
-                 $idtype,
-                 $class,
-                 $rstate,
-                 $cids) = xarVarCleanFromInput('rid',
-                                               'uid',
-                                               'regname',
-                                               'displname',
-                                               'desc',
-                                               'certified',
-                                               'idtype',
-                                               'class',
-                                               'rstate',
-                                               'modify_cids');
-            
+        case 'update':
+            if (!xarVarFetch('rid',       'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('uid',       'int:1:',  $uid, null, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('regname',   'str:1:',  $regname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('desc',      'desc:1:', $desc, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('idtype',    'int:0:',  $idtype, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('rstate',    'int:0:',  $rstate, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cids',      'str:0:',  $cids, '', XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
-            // The user API function is called. 
-            if (!xarModAPIFunc('release',
-                               'user',
-                               'updateid',
-                                array('rid' => $rid,
-                                      'uid' => $uid,
-                                      'regname' => $regname,
+            // The user API function is called.
+            if (!xarModAPIFunc('release', 'user','updateid',
+                                array('rid'       => $rid,
+                                      'uid'       => $uid,
+                                      'regname'   => $regname,
                                       'displname' => $displname,
-                                      'desc' => $desc,
+                                      'desc'      => $desc,
                                       'certified' => $certified,
-                                      'type' => $idtype,
-                                      'class' => $class,
-                                      'rstate' => $rstate,
-                                      'cids' => $cids))) return;
+                                      'type'      => $idtype,
+                                      'class'     => $class,
+                                      'rstate'    => $rstate,
+                                      'cids'      => $cids))) return;
 
             xarResponseRedirect(xarModURL('release', 'user', 'view'));
 
             return true;
 
             break;
-    }   
-    
+    }
+
     return $data;
 }
-
 ?>

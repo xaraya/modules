@@ -2,13 +2,13 @@
 /**
  * View notes
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Display a release
@@ -40,9 +40,7 @@ function release_user_viewnotes()
         default:
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -56,9 +54,7 @@ function release_user_viewnotes()
         case 'certified':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -73,9 +69,7 @@ function release_user_viewnotes()
         case 'price':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -90,9 +84,7 @@ function release_user_viewnotes()
         case 'free':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -107,9 +99,7 @@ function release_user_viewnotes()
         case 'supported':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
@@ -127,9 +117,7 @@ function release_user_viewnotes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release',
-                               'user',
-                               'getid',
+        $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
 
@@ -138,14 +126,10 @@ function release_user_viewnotes()
                                                'displaynote',
                                                 array('rnid' => $item['rnid']));
 
-        $getuser = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
+        $getuser = xarModAPIFunc('roles', 'user', 'get',
                                   array('uid' => $getid['uid']));
 
-        $items[$i]['contacturl'] = xarModURL('roles',
-                                             'user',
-                                             'display',
+        $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
                                               array('uid' => $getid['uid']));
 
         $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);

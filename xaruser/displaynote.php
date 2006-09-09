@@ -2,13 +2,13 @@
 /**
  * Display a note
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Display a note
@@ -28,33 +28,23 @@ function release_user_displaynote()
 
 
     // The user API function is called.
-    $item = xarModAPIFunc('release',
-                          'user',
-                          'getnote',
+    $item = xarModAPIFunc('release', 'user', 'getnote',
                           array('rnid' => $rnid));
 
     if ($item == false) return;
 
-    // The user API function is called. 
-    $id = xarModAPIFunc('release',
-                         'user',
-                         'getid',
+    // The user API function is called.
+    $id = xarModAPIFunc('release', 'user', 'getid',
                           array('rid' => $item['rid']));
 
 
-    $getuser = xarModAPIFunc('roles',
-                             'user',
-                             'get',
+    $getuser = xarModAPIFunc('roles', 'user', 'get',
                               array('uid' => $id['uid']));
 
 
-    $hooks = xarModCallHooks('item',
-                                    'display',
-                                    $rnid,
+    $hooks = xarModCallHooks('item','display', $rnid,
                                     array('itemtype'  => '2',
-                                          'returnurl' => xarModURL('release',
-                                                                   'user',
-                                                                   'displaynote',
+                                          'returnurl' => xarModURL('release', 'user','displaynote',
                                                                    array('rnid' => $rnid))
                                          )
                                     );

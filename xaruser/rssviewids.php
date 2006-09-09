@@ -1,5 +1,15 @@
 <?php
-
+/*
+ * View RSS ids
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
+ */
 function release_user_rssviewids()
 {
     // Security Check
@@ -19,25 +29,19 @@ function release_user_rssviewids()
         default:
 
             // The user API function is called. 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallids');
+            $items = xarModAPIFunc('release', 'user', 'getallids');
             break;
 
         case 'themes':
 
-            // The user API function is called. 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getthemeids');
+            // The user API function is called.
+            $items = xarModAPIFunc('release', 'user', 'getthemeids');
             break;
 
         case 'modules':
 
-            // The user API function is called. 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getmoduleids');
+            // The user API function is called.
+            $items = xarModAPIFunc('release', 'user', 'getmoduleids');
             break;
     }
 
@@ -59,22 +63,16 @@ function release_user_rssviewids()
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
         $items[$i]['desc'] = xarVarPrepForDisplay($item['desc']);
 
-        $getuser = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
+        $getuser = xarModAPIFunc('roles', 'user', 'get',
                                   array('uid' => $item['uid']));
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
-        $items[$i]['contacturl'] = xarModURL('roles',
-                                             'user',
-                                             'display',
+        $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
                                               array('uid' => $item['uid']));
-        
+
         // InfoURL
-        $items[$i]['infourl'] = xarModURL('release',
-                                          'user',
-                                          'display',
+        $items[$i]['infourl'] = xarModURL('release', 'user', 'display',
                                           array('rid' => $item['rid']));
 
     }

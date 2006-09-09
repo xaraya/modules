@@ -2,13 +2,13 @@
 /**
  * Display a release
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Display a release
@@ -24,9 +24,7 @@ function release_user_rssviewdocs()
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     // The user API function is called. 
-    $id = xarModAPIFunc('release',
-                         'user',
-                         'getallids',
+    $id = xarModAPIFunc('release', 'user', 'getallids',
                           array('certified' => '2'));
 
 

@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/773.html
  */
 
-
 function release_user_rssviewnotes()
 {
      if(!xarVarFetch('releaseno',   'int:0:', $releaseno,  NULL, XARVAR_DONT_SET)) {return;}
@@ -22,9 +21,7 @@ function release_user_rssviewnotes()
 
 
     // The user API function is called.
-    $items = xarModAPIFunc('release',
-                           'user',
-                           'getallrssextnotes',array('releaseno'=>$releaseno));
+    $items = xarModAPIFunc('release', 'user','getallrssextnotes',array('releaseno'=>$releaseno));
 
     $totalitems=count($items);
     // Check individual permissions for Edit / Delete
@@ -32,16 +29,12 @@ function release_user_rssviewnotes()
         $item = $items[$i];
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release',
-                               'user',
-                               'getid',
+        $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
 
-        $items[$i]['displaylink'] =  xarModURL('release',
-                                               'user',
-                                               'displaynote',
+        $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
                                                 array('rnid' => $item['rnid']),
                                                 '1');
 
