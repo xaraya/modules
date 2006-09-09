@@ -2,13 +2,13 @@
 /**
  * Release Block
  * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003-2006 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release module development team 
+ * @link http://xaraya.com/index.php/release/773.html
  */
 
 /**
@@ -60,12 +60,16 @@ function release_latestblock_display($blockinfo)
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     } 
+    if (!isset($vars['shownonfeeditems']) || empty($vars['shownonfeeditems'])) {
+        $vars['shownonfeeditems'] = 0;
+    } 
 
     // The API function is called to get all notes
     $items = xarModAPIFunc(
         'release', 'user', 'getallnotes',
         array('numitems' => $vars['numitems'],
-              'approved' => 2)
+              'approved' => 2,
+              'usefeed'  => $vars['shownonfeeditems'])
     );
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
 
