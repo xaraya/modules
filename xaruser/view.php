@@ -27,7 +27,6 @@ function release_user_view()
     if (!isset($startnum)) {
         $startnum = 1;
     }
-
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
@@ -77,6 +76,7 @@ function release_user_view()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
+        $items[$i]['rstate'] = xarVarPrepForDisplay($item['rstate']);        
         /* use the xarUserGetVar func as we only want name 
          * TODO: Where is this user taken to?
          */

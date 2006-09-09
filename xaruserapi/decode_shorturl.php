@@ -50,6 +50,8 @@ function release_userapi_decode_shorturl($params)
           $args['sort']='name';
         }elseif (!empty($params[2]) && ($params[2] == 'author.html')) {
           $args['sort']='author';
+          }elseif (!empty($params[2]) && ($params[2] == 'rstate.html')) {
+          $args['sort']='rstate';
         }
         return array('view', $args);
     } elseif (preg_match('/^addid/i', $params[1])) {

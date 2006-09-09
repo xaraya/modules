@@ -98,9 +98,9 @@
     </xar:if>
     <div style="clear:both; text-align:left; margin-top:10px;margin-bottom:10px;width:100%;">
         <xar:if condition="!empty($catid) and ($catid ne '10')">
-            <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
+            <xar:categories-navigation showcatcount="2" showchildren="1" module="release" itemtype="" catid="$catid" showempty="1" />
         <xar:else />
-            <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="11" showcatcount="1" showempty="1" />
+            <xar:categories-navigation showcatcount="2"  showchildren="1" module="release" itemtype="" catid="11" showempty="1" />
         </xar:if>
     </div>
     <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
@@ -111,16 +111,16 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
             <tr>
                 <th nowrap="nowrap">
-                    <a href="#xarModURL('release','user','view',array('sort'=>'id'))#"><xar:mlstring>ID</xar:mlstring></a>
+                    <a title="#xarML('Sort project extensions by Registered ID')#" href="#xarModURL('release','user','view',array('sort'=>'id'))#"><xar:mlstring>ID</xar:mlstring></a>
                 </th>
                 <th width="30%" align="left">
-                    <a href="#xarModURL('release','user','view',array('sort'=>'name'))#"><xar:mlstring>Name (regname sort)</xar:mlstring></a>
+                    <a title="#xarML('Sort project extensions by Registered Name')#" href="#xarModURL('release','user','view',array('sort'=>'name'))#"><xar:mlstring>Name (regname sort)</xar:mlstring></a>
                 </th>
                 <th width="25%" align="left">
-                    <a href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uname)</xar:mlstring></a>
+                    <a title="#xarML('Sort project extensions by Author Name')#"  href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uname)</xar:mlstring></a>
                 </th>
                 <th width="5%">
-                    <xar:mlstring>Release</xar:mlstring>
+                    <xar:mlstring>Release Notification</xar:mlstring>
                 </th>
                 <xar:comment>jojodee: Taking out docs link here until docs actually works
                 Putting in State instead for now
@@ -129,7 +129,7 @@
                 </th>
                 </xar:comment>
                 <th width="10%">
-                    <xar:mlstring>State</xar:mlstring>
+                    <a title="#xarML('Sort project extensions by Project State')#"  href="#xarModURL('release','user','view',array('sort'=>'rstate'))#"><xar:mlstring>State </xar:mlstring></a>
                 </th>
                 <xar:if condition="$commenthook eq true">
                     <th width="5%">
