@@ -114,19 +114,17 @@ function html_userapitransformoutput($text)
 
         $text = preg_replace('!(</?(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6])[^>]*>)\s*</p>!', "$1", $text);
 
-        // optionally line breaks
-        // TODO: this implies that the 'do simple linebreaks' option is both a transform in its own
-        // right *and* a modifier to the smart transform. Or perhaps it is the other way around?
-        // Can be make the options a little more clear.
-        if ($dobreak == 1) $text = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $text);
-
         // Remove all <br>s after a block tag
         $text = preg_replace('!(</?(?:table|thead|tfoot|caption|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6])[^>]*>)\s*<br />!', "$1", $text);
-
-        // A <br/> for a single newline, on its own, with no tags immediately surrounding it.
-        // This allows breaks within a paragraph (where double-newlines define the paragraphs)
-        // Preserve any additional white space
-        $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);
+        
+        //Remove the plain linebreak transform and add this one as optional
+        //Add in another below now to compensate, but only add linebreaks not br tags in case html is not used (ieg bbcode)
+        if ($dobreak == 1)  {       
+            // A <br/> for a single newline, on its own, with no tags immediately surrounding it.
+            // This allows breaks within a paragraph (where double-newlines define the paragraphs)
+            // Preserve any additional white space
+            $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);
+        }
 
         // Remove a <br> before a block tag
         // TODO: this does not include all block tags, h1-6, tables etc?
@@ -134,11 +132,11 @@ function html_userapitransformoutput($text)
 
         // Remove paragraphs and breaks from within any <pre> tags.
         $text = preg_replace('!(<pre.*?>)(.*?)</pre>!ise', " stripslashes('$1') .  stripslashes(html_userapitransformoutput_clean_pre('$2'))  . '</pre>' ", $text);
-
+               
         // Since this is HTML now, it can be safely trimmed.
         $text = trim($text);
     } elseif ($dobreak == 1) { // just do line breaks
-         $text = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $text);
+          $text =  preg_replace('/([^>]\s*)[\n](\s*[^<])/', '$1<br />'."\n".'$2', $text);     
     }
 
     return $text;
