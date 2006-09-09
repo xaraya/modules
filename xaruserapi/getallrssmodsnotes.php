@@ -1,4 +1,15 @@
 <?php
+/*
+ * Get all module release notes for the rss feed
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
+ */
 
 function release_userapi_getallrssmodsnotes($args)
 {
@@ -19,11 +30,11 @@ function release_userapi_getallrssmodsnotes($args)
                      xar_rid,
                      xar_version
             FROM $releasenotes
-            WHERE xar_certified = ?
+            WHERE xar_certified = ? and xar_userfeed = ?
             AND xar_type = ?
             ORDER by xar_time DESC";
 
-    $bindvars = array(2, $type);
+    $bindvars = array(2, 1, $type);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

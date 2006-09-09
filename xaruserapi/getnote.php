@@ -1,20 +1,19 @@
 <?php
 /**
- * Get module IDs
+ * Get a releae note
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
-/**
- * Get module IDs
- * 
+/*
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * @TODO 
+ * @TODO
  */
 function release_userapi_getnote($args)
 {
@@ -50,13 +49,14 @@ function release_userapi_getnote($args)
                      xar_certified,
                      xar_type,
                      xar_approved,
-                     xar_rstate
+                     xar_rstate,
+                     xar_usefeed
             FROM $releasetable
             WHERE xar_rnid = ?";
     $result =& $dbconn->Execute($query,array($rnid));
     if (!$result) return;
 
-    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $type, $approved,$rstate) = $result->fields;
+    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $type, $approved,$rstate,$usefeed) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -80,7 +80,8 @@ function release_userapi_getnote($args)
                          'certified'  => $certified,
                          'type'       => $type,
                          'approved'   => $approved,
-                         'rstate'     => $rstate);
+                         'rstate'     => $rstate,
+                         'usefeed'   => $usefeed);
 
     return $releaseinfo;
 }

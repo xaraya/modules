@@ -1,6 +1,6 @@
 <?php
 /**
- * Get module IDs
+ * Get all the extension notes for RSS feed
  *
  * @package modules
  * @copyright (C) 2005-2006 The Digital Development Foundation
@@ -39,7 +39,7 @@ function release_userapi_getallrssextnotes($args)
                      xar_type,
                      xar_version
             FROM $releasenotes
-            WHERE xar_approved = 2
+            WHERE xar_approved = 2 and xar_usefeed = 1
             ORDER by xar_time DESC";
 
 

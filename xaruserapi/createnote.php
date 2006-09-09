@@ -1,4 +1,15 @@
 <?php
+/*
+ * Create a release notification
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
+ */
 
 function release_userapi_createnote($args)
 {
@@ -31,7 +42,8 @@ function release_userapi_createnote($args)
     $changelog   = !empty($changelog)? $changelog : '';
     $notes       = !empty($notes)? $notes : '';
     $type        = !empty($type)? $type : 'Module';
-    $rstate      = !empty($rstate)? $rstate : 0;    
+    $rstate      = !empty($rstate)? $rstate : 0;
+    $usefeed     = !empty($usefeed)? $usefeed : 1;
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
     $time = time();
@@ -52,12 +64,13 @@ function release_userapi_createnote($args)
                      xar_certified,
                      xar_approved,
                      xar_type,
-                     xar_rstate
+                     xar_rstate,
+                     xar_usefeed
               )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
-                      $supportlink,$changelog,$notes,$time,$certified,$approved,$type,$rstate);
+    $bindvars = array($nextId,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
+                      $supportlink,$changelog,$notes,$time,$certified,$approved,$type,$rstate,(int)$usefeed);
     $result =&$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
@@ -71,5 +84,4 @@ function release_userapi_createnote($args)
     return $rnid;
 
 }
-
 ?>

@@ -2,13 +2,15 @@
 /**
  * Get module IDs
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
+
 /**
  * Get module IDs
  * 

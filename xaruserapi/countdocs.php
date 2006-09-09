@@ -2,13 +2,13 @@
 /**
  * Count the number of docs
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
- * @author Release Module Development Team 
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * count the number of docs per release
