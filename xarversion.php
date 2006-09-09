@@ -3,16 +3,17 @@
  * Release Version definitions
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 
 $modversion['name'] = 'release';
 $modversion['id'] = '773';
-$modversion['version'] = '0.1.2';
+$modversion['version'] = '0.2.0';
 $modversion['displayname']    = xarML('Release');
 $modversion['description'] = 'Registration and Release information for themes and modules';
 $modversion['credits'] = 'xardocs/credits.txt';
@@ -27,5 +28,5 @@ $modversion['admin'] = 1;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 // Dependent on categories
-$modversion['dependency'] = array(147);
+$modversion['dependency'] = array(147); //categories
 ?>
