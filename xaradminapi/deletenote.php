@@ -2,12 +2,13 @@
 /**
  * Delete a note
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Delete a note
@@ -31,9 +32,7 @@ function release_adminapi_deletenote($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('release',
-                          'user',
-                          'getnote',
+    $link = xarModAPIFunc('release', 'user', 'getnote',
                          array('rnid' => $rnid));
 
     if ($link == false) {

@@ -2,12 +2,13 @@
 /**
  * Update a note
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Update a note
@@ -31,9 +32,7 @@ function release_adminapi_updatenote($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('release',
-                          'user',
-                          'getnote',
+    $link = xarModAPIFunc('release', 'user', 'getnote',
                           array('rnid' => $rnid));
 
     if ($link == false) {
@@ -68,10 +67,11 @@ function release_adminapi_updatenote($args)
                 xar_enotes = ?,
                 xar_certified = ?,
                 xar_approved = ?,
-                xar_rstate = ?
+                xar_rstate = ?,
+                xar_usefeed = ?
             WHERE xar_rnid = ?";
     $bindvars=array($version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
-                    $changelog,$notes,$enotes,$certified,$approved,$rstate,$rnid);
+                    $changelog,$notes,$enotes,$certified,$approved,$rstate,$usefeed,$rnid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
