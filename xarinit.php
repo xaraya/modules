@@ -259,6 +259,19 @@ function release_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
             // fall through to next upgrade
+           //now populate the existing release notes with the default of 1
+
+           $query= "SELECT COUNT(1)
+                    FROM $releasenotes";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateusefeed = "UPDATE $releasenotes
+                                 SET xar_usefeed    = 1";
+               $doupdate =& $dbconn->Execute($updateusefeed);
+               if (!$doupdate) return;
+           }
         case '0.2.0': //current version
 
         break;
