@@ -2,15 +2,16 @@
 /**
  * Delete an id
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
- * Delete and ID
+ * Delete an ID
  * 
  * @param $rid ID
  * 
@@ -31,9 +32,7 @@ function release_admin_deleteid()
     } 
 
     // The user API function is called.
-    $data = xarModAPIFunc('release',
-                          'user',
-                          'getid',
+    $data = xarModAPIFunc('release', 'user', 'getid',
                           array('rid' => $rid));
 
     if ($data == false) return;
@@ -53,9 +52,7 @@ function release_admin_deleteid()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!xarModAPIFunc('release',
-                       'admin',
-                       'deleteid', 
+    if (!xarModAPIFunc('release', 'admin', 'deleteid',
                         array('rid' => $rid))) return;
 
     // Redirect

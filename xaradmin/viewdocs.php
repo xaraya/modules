@@ -27,15 +27,7 @@ function release_admin_viewdocs()
     if (!xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('type', 'str', $type, $type, XARVAR_NOT_REQUIRED)) return;
-    /*
-    list($startnum,
-         $phase,
-         $filter,
-         $type) = xarVarCleanFromInput('startnum',
-                                       'phase',
-                                       'filter',
-                                       'type');
-    */
+
     $data['items'] = array();
 
     if (empty($phase)){
@@ -47,9 +39,7 @@ function release_admin_viewdocs()
         case 'unapproved':
         default:
 
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getdocs',
+            $items = xarModAPIFunc('release',  'user', 'getdocs',
                                     array('approved' => 1));
 
             if ($items == false){
@@ -62,9 +52,7 @@ function release_admin_viewdocs()
         default:
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release',  'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
@@ -78,9 +66,7 @@ function release_admin_viewdocs()
         case 'certified':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
@@ -95,9 +81,7 @@ function release_admin_viewdocs()
         case 'price':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
@@ -112,9 +96,7 @@ function release_admin_viewdocs()
         case 'supported':
 
             // The user API function is called.
-            $items = xarModAPIFunc('release',
-                                   'user',
-                                   'getallnotes',
+            $items = xarModAPIFunc('release', 'user', 'getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
@@ -132,18 +114,14 @@ function release_admin_viewdocs()
         $item = $items[$i];
 
         if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL('release',
-                                              'admin',
-                                              'modifynote',
+            $items[$i]['editurl'] = xarModURL('release', 'admin','modifynote',
                                               array('rnid' => $item['rnid']));
         } else {
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL('release',
-                                               'admin',
-                                               'deletenote',
+            $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deletenote',
                                                array('rnid' => $item['rnid']));
         } else {
             $items[$i]['deleteurl'] = '';
@@ -152,9 +130,7 @@ function release_admin_viewdocs()
 
 
         // The user API function is called.
-        $getid = xarModAPIFunc('release',
-                               'user',
-                               'getid',
+        $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
         $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
@@ -164,14 +140,10 @@ function release_admin_viewdocs()
                                           'displaynote',
                                            array('rnid' => $item['rnid']));
 
-        $getuser = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
+        $getuser = xarModAPIFunc('roles', 'user', 'get',
                                   array('uid' => $getid['uid']));
 
-        $items[$i]['contacturl'] = xarModURL('roles',
-                                             'user',
-                                             'display',
+        $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
                                               array('uid' => $getid['uid']));
 
 
@@ -198,5 +170,4 @@ function release_admin_viewdocs()
     return $data;
 
 }
-
 ?>

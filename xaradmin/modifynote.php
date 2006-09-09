@@ -2,12 +2,13 @@
 /**
  * Modify a Note
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Release Module
+ * @link http://xaraya.com/index.php/release/773.html
  */
 /**
  * Modify a note
@@ -31,25 +32,19 @@ function release_admin_modifynote()
         default:
             
             // The user API function is called.
-            $data = xarModAPIFunc('release',
-                                  'user',
-                                  'getnote',
+            $data = xarModAPIFunc('release', 'user', 'getnote',
                                   array('rnid' => $rnid));
 
             if ($data == false) return;
 
             // The user API function is called.
-            $id = xarModAPIFunc('release',
-                                  'user',
-                                  'getid',
+            $id = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $data['rid']));
 
             if ($id == false) return;
 
             // The user API function is called.
-            $user = xarModAPIFunc('roles',
-                                  'user',
-                                  'get',
+            $user = xarModAPIFunc('roles', 'user', 'get',
                                   array('uid' => $id['uid']));
 
             if ($id == false) return;
@@ -81,48 +76,30 @@ function release_admin_modifynote()
             }
 
             break;
-        
+
         case 'update':
-
-            list($rid,
-                 $regname,
-                 $version,
-                 $pricecheck,
-                 $supportcheck,
-                 $democheck,
-                 $dllink,
-                 $price,
-                 $demolink,
-                 $supportlink,
-                 $changelog,
-                 $enotes,
-                 $certified,
-                 $approved,
-                 $notes,
-                 $rstate) = xarVarCleanFromInput('rid',
-                                                'regname',
-                                                'version',
-                                                'pricecheck',
-                                                'supportcheck',
-                                                'democheck',
-                                                'dllink',
-                                                'price',
-                                                'demolink',
-                                                'supportlink',
-                                                'changelog',
-                                                'enotes',
-                                                'certified',
-                                                'approved',
-                                                'notes',
-                                                'rstate');
-
+           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+           if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('dllink', 'str:1:', $dllink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('price', 'float', $price, 0, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('demolink', 'str:1:254', $demolink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('supportlink', 'str:1:254', $supportlink, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('changelog', 'str:1:', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('notes', 'str:1:', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('certified', 'int:1:2', $certified, 1, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('approved', 'int:1:2', $approved, 1, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, true, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('enotes', 'str:0:', $enotes, '', XARVAR_NOT_REQUIRED)) {return;}
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
-
+            $usefeed = $usefeedchecked? 1: 0;
             // The user API function is called.
-            if (!xarModAPIFunc('release',
-                               'admin',
-                               'updatenote',
+            if (!xarModAPIFunc('release', 'admin', 'updatenote',
                                 array('rid'         => $rid,
                                       'rnid'        => $rnid,
                                       'version'     => $version,
@@ -138,7 +115,8 @@ function release_admin_modifynote()
                                       'enotes'      => $enotes,
                                       'certified'   => $certified,
                                       'approved'    => $approved,
-                                      'rstate'      => $rstate))) return;
+                                      'rstate'      => $rstate,
+                                      'usefeed'     => $usefeed))) return;
 
 
             xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));
