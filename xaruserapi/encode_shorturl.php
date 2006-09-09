@@ -23,6 +23,7 @@ function release_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
+
     // Check if we have something to work with
     if (!isset($func)) {
         return;

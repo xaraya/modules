@@ -82,7 +82,7 @@ function release_user_modifyid()
             if (!xarVarFetch('uid',       'int:1:',  $uid, null, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('regname',   'str:1:',  $regname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('desc',      'desc:1:', $desc, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('desc',      'str:0:', $desc, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('idtype',    'int:0:',  $idtype, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;

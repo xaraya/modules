@@ -72,7 +72,7 @@ function release_userapi_getallrids($args)
                      $releasetable.xar_certified,
                      $releasetable.xar_approved,
                      $releasetable.xar_rstate,
-                     $rolestable.xar_uname
+                     $rolestable.xar_uname as xar_uname
             FROM $releasetable 
             LEFT JOIN $rolestable
             ON $releasetable.xar_uid = $rolestable.xar_uid";
@@ -128,7 +128,6 @@ function release_userapi_getallrids($args)
             if ($criteria == 'id') {
                 $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'author') {
-
                 $sortparts[] = ' xar_uname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'name') {
                 $sortparts[] = ' xar_regname ' . (!empty($sortorder) ? $sortorder : 'ASC');

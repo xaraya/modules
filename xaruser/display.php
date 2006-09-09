@@ -28,7 +28,7 @@ function release_user_display($args)
     if (!xarVarFetch('rid', 'int:1:', $rid, null)) {return;}
     if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'display', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
     // The user API function is called. 
     $id = xarModAPIFunc('release', 'user', 'getid',
                           array('rid' => $rid));
@@ -44,6 +44,7 @@ function release_user_display($args)
     $stateoptions[3] = xarML('Production/Stable');
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
+
 
     switch(strtolower($phase)) {
 
@@ -155,6 +156,7 @@ function release_user_display($args)
             $data['version'] = 2;
             $data['items'] = $items;
             $data['general'] = 2;
+            $data['tab'] = 'versions';
             break;
 
 

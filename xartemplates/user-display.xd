@@ -97,7 +97,7 @@
                         </a>
                    </dd>
                </xar:if>
-               <xar:if condition="$tab eq 'version'">
+               <xar:if condition="$tab eq 'versions'">
                    <dd class="active">
                        <a href="#xarServerGetCurrentURL()#">
                            <xar:mlstring>Version History</xar:mlstring>
