@@ -45,7 +45,7 @@ function release_adminapi_updatenote($args)
 
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
-    $enotes = !empty($enotes)? $enotes :'';
+
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

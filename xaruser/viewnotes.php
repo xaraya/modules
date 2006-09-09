@@ -44,7 +44,8 @@ function release_user_viewnotes()
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
-                                        'approved' => 2));
+                                        'approved' => 2,
+                                        'usefeed'  => 1));//only those that want to be on the feed
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
@@ -59,7 +60,7 @@ function release_user_viewnotes()
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'certified'=> 2));
-            
+
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }

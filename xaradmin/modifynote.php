@@ -69,6 +69,7 @@ function release_admin_modifynote()
             $data['changelogf'] = nl2br($data['changelog']);
             $data['notesf'] = nl2br($data['notes']);
             $data['authid'] = xarSecGenAuthKey();
+
             if ($data['type']==0) {
               $data['idtype']='Module';
             }else {
@@ -93,11 +94,12 @@ function release_admin_modifynote()
            if (!xarVarFetch('certified', 'int:1:2', $certified, 1, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('approved', 'int:1:2', $approved, 1, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
-           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, true, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, false, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('enotes', 'str:0:', $enotes, '', XARVAR_NOT_REQUIRED)) {return;}
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
             $usefeed = $usefeedchecked? 1: 0;
+
             // The user API function is called.
             if (!xarModAPIFunc('release', 'admin', 'updatenote',
                                 array('rid'         => $rid,

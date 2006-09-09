@@ -33,7 +33,7 @@ function release_latestblock_modify($blockinfo)
     } 
 
     // Send content to template
-    return array('numitems' => $vars['numitems'], 
+    return array('numitems' => $vars['numitems'],
                  'shownonfeeditems' => $vars['shownonfeeditems'],
                  'blockid' => $blockinfo['bid']);
 } 

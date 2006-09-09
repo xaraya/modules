@@ -15,13 +15,13 @@
     </dt>
 
     <xar:sec mask="EditRelease" catch="false">
-        <xar:set name="tabclass">($activetab=='viewids')?'active':''</xar:set>
+        <xar:set name="tabclass">($activetab=='viewids')||($activetab=='deleteid')||($activetab=='modifyid')?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-release-admin-viewids;">
                 <xar:mlstring>Manage Registrations</xar:mlstring>
             </a>
         </dd>
-        <xar:set name="tabclass">($activetab=='viewnotes')?'active':''</xar:set>
+        <xar:set name="tabclass">($activetab=='viewnotes')||($activetab=='modifynote')?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-release-admin-viewnotes;">
                 <xar:mlstring>Manage Release Notes</xar:mlstring>

@@ -97,9 +97,9 @@
                      </span>
                 </label>
                 <xar:if condition="$usefeed eq '1'">
-                    <input type="checkbox" name="usefeed" id="usefeed" value="1" checked="checked"/>
+                    <input type="checkbox" name="usefeedchecked" id="usefeedchecked" value="1" checked="checked"/>
                 <xar:else/>
-                    <input type="usefeed" name="usefeed" id="usefeed" value="1" />
+                    <input type="checkbox" name="usefeedchecked" id="usefeedchecked" value="1" />
                 </xar:if>
              </p>            
             <p>

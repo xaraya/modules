@@ -47,7 +47,7 @@ function release_admin_viewnotes()
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
-                                        'approved' => 1));
+                                        'unapproved' => 1));
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }

@@ -10,7 +10,7 @@
  * @subpackage Release Module
  * @link http://xaraya.com/index.php/release/773.html
  */
- */ 
+
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form

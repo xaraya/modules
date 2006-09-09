@@ -34,6 +34,7 @@ function release_userapi_getallnotes($args)
     $releasenotes = $xartable['release_notes'];
     $releaseids = $xartable['release_id'];
     $bindvars=array();
+    $where = '';
     $query = "SELECT rnotes.xar_rnid,
                      rnotes.xar_rid,
                      rids.xar_regname,
@@ -57,35 +58,39 @@ function release_userapi_getallnotes($args)
                      rnotes.xar_usefeed
             FROM $releasenotes as rnotes,$releaseids as rids
             WHERE rnotes.xar_rid=rids.xar_rid";
-    if (!empty($approved)) {
-        $query .= " AND rnotes.xar_approved = ?";
-        $bindvars[] = ($approved);
-    } 
+
     if (!empty($certified)) {
-        $query .= " AND rnotes.xar_certified = ?
+        $where .= " AND rnotes.xar_certified = ?
                     AND rnotes.xar_approved = 2";
-        $bindvars[] = ($certified);
-    } 
-    if (!empty($supported)) {
-        $query .= " AND rnotes.xar_supported = ?
+        $bindvars[] = $certified;
+    } elseif (!empty($supported)) {
+        $where .= " AND rnotes.xar_supported = ?
                     AND rnotes.xar_approved = 2";
-        $bindvars[] = ($supported);
-    } 
-    if (!empty($price)) {
-        $query .= " AND rnotes.xar_price = ?
+        $bindvars[] = $supported;
+    } elseif (!empty($price)) {
+        $where .= " AND rnotes.xar_price = ?
                     AND rnotes.xar_approved = 2";
-        $bindvars[] = ($price);
-    } 
-    if (!empty($rid)) {
-        $query .= " AND rnotes.xar_rid = ?
+        $bindvars[] = $price;
+    } elseif (!empty($rid)) {
+        $where .= " AND rnotes.xar_rid = ?
                     AND rnotes.xar_approved = 2";
-        $bindvars[] = ($rid);
+        $bindvars[] = $rid;
+    }elseif (!empty($approved)) {
+        $where .= " AND rnotes.xar_approved = ?";
+        $bindvars[] = $approved;
     }
     if (!empty($usefeed)) {
-        $query .= " AND rnotes.xar_usefeed = ?
+        if (!empty($where)) {
+            $where .= " AND rnotes.xar_usefeed = ?";
+        } else{
+            $where .= " AND rnotes.xar_usefeed = ?
                     AND rnotes.xar_approved = 2";
-        $bindvars[] = ($usefeed);
+        }
+        $bindvars[] = $usefeed;
     }
+
+    $query .= $where;
+
     $query .= " ORDER by xar_time DESC";
 
             //ORDER BY xar_rnid";
@@ -98,9 +103,9 @@ function release_userapi_getallnotes($args)
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
-                                   'regname'      => $regname,
-                                   'type'         => $type,
-                                   'uid'          => $uid,
+                                   'regname'    => $regname,
+                                   'type'       => $type,
+                                   'uid'        => $uid,
                                    'version'    => $version,
                                    'price'      => $price,
                                    'priceterms' => $priceterms,

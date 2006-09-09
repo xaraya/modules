@@ -81,7 +81,7 @@ function release_userapi_getnote($args)
                          'type'       => $type,
                          'approved'   => $approved,
                          'rstate'     => $rstate,
-                         'usefeed'   => $usefeed);
+                         'usefeed'    => $usefeed);
 
     return $releaseinfo;
 }

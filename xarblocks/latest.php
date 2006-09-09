@@ -62,15 +62,14 @@ function release_latestblock_display($blockinfo)
     } 
     if (!isset($vars['shownonfeeditems']) || empty($vars['shownonfeeditems'])) {
         $vars['shownonfeeditems'] = 0;
-    } 
-
+    }
+    $usefeed = ($vars['shownonfeeditems'] == 0)?1:null; //null - no selection on usefeed, 1 selecct for rss only
     // The API function is called to get all notes
-    $items = xarModAPIFunc(
-        'release', 'user', 'getallnotes',
-        array('numitems' => $vars['numitems'],
-              'approved' => 2,
-              'usefeed'  => $vars['shownonfeeditems'])
-    );
+    $items = xarModAPIFunc('release', 'user', 'getallnotes',
+                     array('numitems' => $vars['numitems'],
+                           'usefeed'  => $usefeed)
+                          );
+    
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
 
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay

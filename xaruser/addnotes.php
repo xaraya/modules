@@ -102,9 +102,9 @@ function release_user_addnotes($args)
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('supportcheck', 'int:1:2', $supportcheck, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('democheck', 'int:1:2', $democheck, null, XARVAR_NOT_REQUIRED)) {return;}
-           if (!xarVarFetch('usefeed', 'int:0:1', $usefeed,1, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked,false, XARVAR_NOT_REQUIRED)) {return;}
            //if (!xarSecConfirmAuthKey()) return;
-
+           $usefeed = $usefeedchecked?1:0;
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
@@ -134,8 +134,8 @@ function release_user_addnotes($args)
            if (!xarVarFetch('changelog', 'str', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('notes', 'str', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, null, XARVAR_NOT_REQUIRED)) {return;}
-           if (!xarVarFetch('usefeed', 'checkbox', $usefeed,true, XARVAR_NOT_REQUIRED)) {return;}
-           $usefeed = $usefeed?1:0;
+           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, false, XARVAR_NOT_REQUIRED)) {return;}
+           $usefeed = $usefeedchecked?1:0;
            //if (!xarSecConfirmAuthKey()) return;
            //Get some info for the extensions state
            foreach ($stateoptions as $key => $value) {
@@ -187,10 +187,10 @@ function release_user_addnotes($args)
            if (!xarVarFetch('changelog', 'str:1:', $changelog, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('notes', 'str:1:', $notes, '', XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
-           if (!xarVarFetch('usefeed', 'checkbox', $usefeed, true, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, false, XARVAR_NOT_REQUIRED)) {return;}
            //if (!xarSecConfirmAuthKey()) return;
             // The user API function is called.
-            $usefeed = $usefeed?1:0;
+            $usefeed = $usefeedchecked?1:0;
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
             if ($data['type'] == 0) {
