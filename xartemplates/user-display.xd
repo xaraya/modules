@@ -77,7 +77,7 @@
     <div  style="clear: both; padding-top: 5px;">
 
         <span style="float: left; width: 99%; text-align: left;padding-top:10px;">
-        <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+        <xar:style scope="module" file="navtabs" module="base" />
             <dl class="xar-tabs">
                 <dt class="help" title="#xarML('Click on a tab to explore further')#">
                     <xar:mlstring>
@@ -97,7 +97,7 @@
                         </a>
                    </dd>
                </xar:if>
-               <xar:if condition="$tab eq 'versions'">
+               <xar:if condition="$tab eq 'version'">
                    <dd class="active">
                        <a href="#xarServerGetCurrentURL()#">
                            <xar:mlstring>Version History</xar:mlstring>
@@ -121,7 +121,7 @@
                    </dd>
                </xar:if>
             </dl>
-        </xar:if>
+
 <xar:comment>bug 3435
         <form action="#xarModURL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
@@ -151,9 +151,9 @@
 <xar:if condition="$version eq 2">
     <xar:if condition="!empty($message)">
        <div style="clear: both; padding-top:20px;">
-        <span style="float: left; width: 90%; text-align: center;">
+        <h3>
         #$message#
-        </span>
+        </h3>
     </div>
     <xar:else />
     <xar:loop name="$items">

@@ -152,7 +152,6 @@ function release_user_display($args)
 
             }
 
-
             $data['version'] = 2;
             $data['items'] = $items;
             $data['general'] = 2;
