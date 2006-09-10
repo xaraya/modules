@@ -4,9 +4,11 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>
-            Foo Administration 
-        </xar:mlstring>
+        <xar:if condition="xarModGetVar('foo','useModuleAlias')">
+            #xarModGetVar('foo','aliasname')#
+        <xar:else />
+            <xar:mlstring>Foo Administration</xar:mlstring>
+        </xar:if>
     </span>
 </div>
 <div class="xar-mod-body">
@@ -110,6 +112,23 @@
                             Enable Short URLs 
                         </xar:mlstring>
                     </label>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                        <xar:mlstring>
+                            Use a module alias
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="checked">xarModGetVar('foo','useModuleAlias')</xar:set>
+                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" value="1" checked="$checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                            <xar:mlstring>
+                                Module Alias Name
+                            </xar:mlstring>
+                    </label>
+                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('foo', 'aliasname')#" size="32" maxlength="100" />
                 </div>
             </fieldset>
             <fieldset>

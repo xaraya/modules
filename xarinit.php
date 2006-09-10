@@ -37,6 +37,9 @@ function foo_init()
 # Set up modvars
 #
     xarModVars::set('foo', 'itemsperpage', 20);
+    xarModVars::set('foo', 'useModuleAlias',0);
+    xarModVars::set('foo', 'aliasname','Foo');
+
     // Add variables like this next one when creating utility modules
     // This variable is referenced in the xaradmin/modifyconfig-utility.php file
     // This variable is referenced in the xartemplates/includes/defaults.xd file
