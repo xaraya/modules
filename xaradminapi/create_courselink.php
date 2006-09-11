@@ -28,13 +28,18 @@ function itsp_adminapi_create_courselink($args)
     extract($args);
     /* Argument check */
     $invalid = array();
-    if (!isset($lcourseid) || !is_int($lcourseid)) {
+    if (!isset($lcourseid) || !is_numeric($lcourseid)) {
         $invalid[] = 'lcourseid';
     }
-    if (!isset($itspid) || !is_int($itspid)) {
+    if (!isset($itspid) || !is_numeric($itspid)) {
         $invalid[] = 'itspid';
+    } else {
+        $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+        if (empty($itsp)) {
+            $invalid[] = 'ITSP identifier';
+        }
     }
-    if (!isset($pitemid) || !is_int($pitemid)) {
+    if (!isset($pitemid) || !is_numeric($pitemid)) {
         $invalid[] = 'pitemid';
     }
     if (count($invalid) > 0) {
@@ -47,8 +52,8 @@ function itsp_adminapi_create_courselink($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-     echo $itspid;
-    $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
+    // echo $itspid;
+
     $planid = $itsp['planid'];
     $userid = $itsp['userid'];
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
