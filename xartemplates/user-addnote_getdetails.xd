@@ -1,11 +1,12 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Release Module</xar:mlstring>
+        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
     </span>
 </div>
 
 <div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Further Details</xar:mlstring></h2>
+<h2><xar:mlstring>Notify Release - Details</xar:mlstring></h2>
+    <xar:template type="module" file="user-menu" />
     <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="preview" />
@@ -93,7 +94,7 @@
             <p>
                 <label for="rstate" class="xar-form-label">
                     <span class="help" title="#xarML('Do you want this listed on the new release RSS feed?')#">
-                       <xar:mlstring>Add to RSS New Release feed?</xar:mlstring>
+                       <xar:mlstring>Add to Latest Release list and RSS Feed ?</xar:mlstring>
                      </span>
                 </label>
                 <xar:if condition="$usefeed eq '1'">
@@ -101,8 +102,8 @@
                 <xar:else/>
                     <input type="checkbox" name="usefeedchecked" id="usefeedchecked" value="1" />
                 </xar:if>
-             </p>            
-            <p>
+             </p>
+            <p class="xar-clearleft">
                 <label for="changelog" class="xar-form-label">
                     <span class="help" title="#xarML('Enter your changelog for the release')#">
                         <xar:mlstring>ChangeLog</xar:mlstring>

@@ -1,10 +1,89 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Extension Registration &amp; Release</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span>
+</div>
 
 <div class="xar-mod-body">
 <!-- Let's put non-repeating detail as header and list releases underneath -->
 <xar:set name="extname">ucfirst($regname)</xar:set>
 <xar:set name="goback"><xar:mlstring>Back to List</xar:mlstring></xar:set>
 <xar:set name="listview">xarModURL('release','user','view',array('tab'=>'back'))</xar:set>
+<xar:if condition="$type == 0">
+   <xar:set name="exttype"><xar:mlstring>Module</xar:mlstring></xar:set>
+<xar:else />
+    <xar:set name="exttype"><xar:mlstring>Theme</xar:mlstring></xar:set>
+</xar:if>
+<!--
+<h2><xar:mlstring>Display Project Extension</xar:mlstring></h2>
+<xar:template type="module" file="user-submenu" />
+-->
+<h2>
+<xar:ml>
+<xar:mlstring>Extension ID: #(1) #(2) - #(3)</xar:mlstring>
+   <xar:mlvar>#$rid#</xar:mlvar>
+   <xar:mlvar>#$exttype#</xar:mlvar>
+   <xar:mlvar>#$extname#</xar:mlvar>
+</xar:ml>
+</h2>
+    <div  style="clear: both; padding-top: 5px;">
+        <xar:style scope="module" file="navtabs" module="base" />
+            <dl class="xar-tabs">
+                <dt class="help" title="#xarML('Click on a tab to explore further')#">
+                    <xar:mlstring>
+                        Options:
+                    </xar:mlstring>
+                </dt>
+               <xar:if condition="$tab eq 'basic'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Summary</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view', 'tab'=>'basic'))#">
+                              <xar:ml>
+                                  <xar:mlstring>#(1) Summary</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                        </a>
+                   </dd>
+               </xar:if>
+               <xar:if condition="$tab eq 'versions'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Version History</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Version History</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+
+                   </dd>
+               </xar:if>
+               <xar:if condition="$tab eq 'back'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                           <xar:mlstring>View Extensions List</xar:mlstring>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="&xar-modurl-release-user-view;">
+                            <xar:mlstring>View Extension List</xar:mlstring></a>
+                   </dd>
+               </xar:if>
+            </dl>
+
 <xar:if condition="$general eq 2" >
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
@@ -70,57 +149,11 @@
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
             <xar:mlstring>Categories:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
-            <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
+        <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
+
         </span>
     </div>
 </xar:if>
-    <div  style="clear: both; padding-top: 5px;">
-
-        <span style="float: left; width: 99%; text-align: left;padding-top:10px;">
-        <xar:style scope="module" file="navtabs" module="base" />
-            <dl class="xar-tabs">
-                <dt class="help" title="#xarML('Click on a tab to explore further')#">
-                    <xar:mlstring>
-                        Options:
-                    </xar:mlstring>
-                </dt>
-               <xar:if condition="$tab eq 'basic'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>Basic Information</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view', 'tab'=>'basic'))#">
-                              <xar:mlstring>Basic Information</xar:mlstring>
-                        </a>
-                   </dd>
-               </xar:if>
-               <xar:if condition="$tab eq 'versions'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>Version History</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#">
-                               <xar:mlstring>Version History</xar:mlstring>
-                   </dd>
-               </xar:if>
-               <xar:if condition="$tab eq 'back'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>Back to List</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="#$listview#">#$goback#</a>
-                   </dd>
-               </xar:if>
-            </dl>
 
 <xar:comment>bug 3435
         <form action="#xarModURL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
@@ -156,11 +189,21 @@
         </h3>
     </div>
     <xar:else />
+    <div class="xar-article-wrapper xar-fullwidth xar-clearboth">
+    <h2 ><xar:mlstring>Version History</xar:mlstring></h2>
     <xar:loop name="$items">
        <div style="clear: both; padding-top: 5px;">
         <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
         <div class="xar-norm" style="padding: 3px;">
-            <h3><a href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h3>
+            <h3>
+                <a href="#$loop:item['displaylink']#">
+                <xar:ml>
+                    <xar:mlstring>#(1) Version #(2)</xar:mlstring>
+                    <xar:mlvar>#$extname#</xar:mlvar>
+                    <xar:mlvar>#$loop:item['version']#</xar:mlvar>
+                </xar:ml>
+                </a>
+                </h3>
             <div class="xar-accent" style="padding: 2px;">
             <span class="xar-sub">
                 <xar:mlstring>Author:</xar:mlstring>
@@ -249,6 +292,7 @@
         </div>
     </div>
     </xar:loop>
+    </div>
     </xar:if>
 
 <xar:elseif condition="$docs eq 2" />

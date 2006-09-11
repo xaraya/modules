@@ -8,12 +8,14 @@
     <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
     </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Xaraya Extensions and Releases Overview
-        </xar:mlstring>
-    </span>
+	<span class="xar-mod-title">
+		<xar:mlstring>
+			Xaraya Extension Registration and Release
+		</xar:mlstring>
+	</span>
 </div>
+<h2><xar:mlstring>Overview</xar:mlstring></h2>
+<xar:template type="module" file="user-menu" />
 <div class="xar-mod-body">
     <xar:comment>
         xaraya.com specific block

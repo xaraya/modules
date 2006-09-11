@@ -1,12 +1,24 @@
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
-
-<h2>
-    <xar:mlstring>
-        Search for Registered Extensions
-    </xar:mlstring>
-</h2>
+<xar:if condition="!isset($ishooked) or empty($ishooked)">
+<div class="xar-mod-head">
+   <span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Search Registered Extensions</xar:mlstring></h2>
+<xar:template type="module" file="user-menu" />
+    <form method="post" action="&xar-modurl-release-user-search;">
+          <p><label for="q"><xar:mlstring>Search for</xar:mlstring></label>
+          <input type="text" name="q" id="q" value="" size="20" />
+          <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
+          <input type="submit" name="search" value="#$search#" />
+          </p>
+         <p>
+         <xar:mlstring>By author</xar:mlstring>
+         <input type="text" name="author" id="author" value="" size="20" />
+         </p>
+</xar:if>
 <xar:if condition="!empty($release) and count($release) gt 0">
     <h4>
         <xar:mlstring>
@@ -97,3 +109,6 @@
     </xar:mlstring>
 
 </p>
+<xar:if condition="empty($ishooked)">
+</div>
+</xar:if>

@@ -35,13 +35,13 @@
         </dd>
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-release-admin-modifyconfig;" onclick="#$onclick#">
+          <a href="&xar-modurl-release-admin-modifyconfig;">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
         <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-release-admin-overview;" onclick="#$onclick#">
+            <a href="&xar-modurl-release-admin-overview;">
                 <xar:mlstring>Overview</xar:mlstring>
             </a>
         </dd>

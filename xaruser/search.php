@@ -24,8 +24,9 @@
  * @param string desc
  * @return array
  */
-function release_user_search()
+function release_user_search($args)
 {
+    extract($args);
     if (!xarVarFetch('q',         'isset',  $q,        NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('bool',      'isset',  $bool,     NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('sort',      'isset',  $sort,     NULL, XARVAR_DONT_SET)) return;
@@ -38,8 +39,13 @@ function release_user_search()
     if(!xarVarFetch('authorsearch','isset',  $authorsearch,   NULL, XARVAR_DONT_SET)) {return;}
     $data       = array();
     $search     = array();
-
-  if (!isset($q) || strlen(trim($q)) <= 0) {
+   if (isset($args['objectid'])) {
+        $ishooked = 1;
+    } else {
+        $ishooked = '';
+    }
+    $data['ishooked']=$ishooked;
+   if (!isset($q) || strlen(trim($q)) <= 0) {
         if (isset($author) && strlen(trim($author)) > 0) {
             $q = $author;
             $search['author']=$author;
@@ -89,8 +95,7 @@ function release_user_search()
         $desc='';
     }
 
-
-     if (isset($author)) {
+    if (isset($author)) {
         // Check user id is real (can't use roles api here - throws a fit - need a utility function)
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
@@ -112,6 +117,7 @@ function release_user_search()
     } else {
         $search['author']='';
     }
+
     $search['q']=$q;
     $seach['modid']= xarModGetIDFromName('release');
     /* Search for release information */

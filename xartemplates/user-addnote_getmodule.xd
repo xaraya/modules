@@ -1,12 +1,12 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Release Module</xar:mlstring>
+        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
     </span>
 </div>
 
 <div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Add a Release Note</xar:mlstring></h2>
-
+<h2><xar:mlstring>Notify File Release - Select Extension</xar:mlstring></h2>
+    <xar:template type="module" file="user-menu" />
 <xar:mlstring>Enter your extension ID below, so the system can begin the release notification process.</xar:mlstring>
    <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />

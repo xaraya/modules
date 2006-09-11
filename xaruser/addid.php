@@ -106,7 +106,7 @@ function release_user_addid()
                 break;
         }
     } else {
-        $data['message'] = xarML('You Must Be Logged In to Assign an ID');
+        $data['message'] = xarML('You Must Be Logged In to Register a Project ID');
     }
 
     return $data;

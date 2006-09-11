@@ -19,13 +19,14 @@
  * @author Release module development team
  * @return array with notes info
  */
-function release_user_displaynote()
+function release_user_displaynote($args)
 {
+    extract($args);
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     if (!xarVarFetch('rnid', 'int:1:', $rnid, null)) {return;}
-
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
 
     // The user API function is called.
     $item = xarModAPIFunc('release', 'user', 'getnote',
@@ -81,6 +82,11 @@ function release_user_displaynote()
     $item['type'] = $id['type'];
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
+    $item['extensionpage']= xarModURL('release','user','display',
+                                array('rid' => $item['rid'],
+                                      'phase' => 'version',
+                                      'tab'  => 'versions'));
+
     $item['realname'] = $getuser['name'];
     $item['notes'] = nl2br($item['notes']);
     $item['changelog'] = nl2br($item['changelog']);

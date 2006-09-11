@@ -4,11 +4,17 @@
 <xar:else/>
    <xar:set name="addoclink">xarModURL('roles','user','main')</xar:set>
 </xar:if>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Project Registration &amp; Releases</xar:mlstring>
+    </span>
+</div>
 
 <div class="xar-mod-body">
-<h2><xar:mlstring>Extension Release :: Thank You</xar:mlstring></h2>
-
+<h2>
+    <xar:mlstring>Release Notification Complete - Thank You</xar:mlstring>
+</h2>
+<xar:template type="module" file="user-menu" />
 <xar:mlstring>Your Release Notification has been sent for review. It should appear on the site very shortly.
 In the meantime you can </xar:mlstring>
 <xar:if condition="xarUserIsLoggedIn()">
