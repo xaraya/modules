@@ -33,9 +33,25 @@ function release_user_display($args)
     $id = xarModAPIFunc('release', 'user', 'getid',
                           array('rid' => $rid));
 
+    $cats = xarModAPIFunc('categories','user','getitemcats',
+                           array('module'=>'release','item'=>$rid)
+                         );
 
     $getuser = xarModAPIFunc('roles', 'user','get',
                               array('uid' => $id['uid']));
+    //set the type
+    if ($id['type']==0) {
+        $exttype = xarML('Module');
+    }elseif ($id['type']==1) {
+        $exttype = xarML('Theme');
+    }
+    $data['exttype']=$exttype;
+    //determine edit link
+    if ((xarUserGetVar('uid') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
+        $data['editlink']=xarModURL('release','user','modifyid',array('rid'=>$rid));
+    } else {
+        $data['editlink']='';
+    }
 
     $stateoptions=array();
     $stateoptions[0] = xarML('Planning');

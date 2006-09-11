@@ -12,19 +12,18 @@
  */
 /**
  * Modify an ID by user
- * 
- * @param $rnid 
- * 
+ *
+ * @param $rid
+ *
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * @TODO remove legacy xarVarCleanFromInput()
  */
-function release_user_modifyid()
+function release_user_modifyid($args)
 {
+    extract($args);
     // Security Check
-    if(!xarSecurityCheck('OverviewRelease')) return;
-
-    $phase = xarVarCleanFromInput('phase');
+    if(!xarSecurityCheck('EditRelease')) return;
+    if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
 
     if (empty($phase)){
         $phase = 'modify';
@@ -35,6 +34,7 @@ function release_user_modifyid()
         case 'modify':
         default:
             if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) return;
+
             // The user API function is called.
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
@@ -72,7 +72,6 @@ function release_user_modifyid()
                 $cathook = $hooks['categories'];
             }
             $data['cathook'] = $cathook;
-
             $data['authid'] = xarSecGenAuthKey();
 
             break;
@@ -88,6 +87,7 @@ function release_user_modifyid()
             if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('rstate',    'int:0:',  $rstate, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cids',      'str:0:',  $cids, '', XARVAR_NOT_REQUIRED)) return;
+           if (!xarVarFetch('modifyreferer', 'str:0:',  $modifyreferer, '', XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
@@ -104,7 +104,7 @@ function release_user_modifyid()
                                       'rstate'    => $rstate,
                                       'cids'      => $cids))) return;
 
-            xarResponseRedirect(xarModURL('release', 'user', 'view'));
+          xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$rid)));
 
             return true;
 

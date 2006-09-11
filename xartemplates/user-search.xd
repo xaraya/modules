@@ -15,7 +15,7 @@
           <input type="submit" name="search" value="#$search#" />
           </p>
          <p>
-         <xar:mlstring>By author</xar:mlstring>
+         <xar:mlstring>By author </xar:mlstring>
          <input type="text" name="author" id="author" value="" size="20" />
          </p>
 </xar:if>

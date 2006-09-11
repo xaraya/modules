@@ -7,22 +7,20 @@
 <xar:set name="extname">ucfirst($regname)</xar:set>
 <xar:set name="goback"><xar:mlstring>Back to List</xar:mlstring></xar:set>
 <xar:set name="listview">xarModURL('release','user','view',array('tab'=>'back'))</xar:set>
-<xar:if condition="$type == 0">
-   <xar:set name="exttype"><xar:mlstring>Module</xar:mlstring></xar:set>
-<xar:else />
-    <xar:set name="exttype"><xar:mlstring>Theme</xar:mlstring></xar:set>
-</xar:if>
 <!--
 <h2><xar:mlstring>Display Project Extension</xar:mlstring></h2>
 <xar:template type="module" file="user-submenu" />
 -->
 <h2>
 <xar:ml>
-<xar:mlstring>Extension ID: #(1) #(2) - #(3)</xar:mlstring>
+<xar:mlstring>Registered ID #(1) : #(2) - #(3)</xar:mlstring>
    <xar:mlvar>#$rid#</xar:mlvar>
    <xar:mlvar>#$exttype#</xar:mlvar>
    <xar:mlvar>#$extname#</xar:mlvar>
 </xar:ml>
+<xar:if condition="!empty($editlink)">
+&nbsp;<a href="#$editlink#">[edit]</a>
+</xar:if>
 </h2>
     <div  style="clear: both; padding-top: 5px;">
         <xar:style scope="module" file="navtabs" module="base" />
@@ -32,6 +30,18 @@
                         Options:
                     </xar:mlstring>
                 </dt>
+               <xar:if condition="$tab eq 'back'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                           <xar:mlstring>View Extensions List</xar:mlstring>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="&xar-modurl-release-user-view;">
+                            <xar:mlstring>View Extension List</xar:mlstring></a>
+                   </dd>
+               </xar:if>
                <xar:if condition="$tab eq 'basic'">
                    <dd class="active">
                        <a href="#xarServerGetCurrentURL()#">
@@ -67,47 +77,38 @@
                                   <xar:mlstring>#(1) Version History</xar:mlstring>
                                   <xar:mlvar>#$extname#</xar:mlvar>
                               </xar:ml>
+                        </a>
+                   </dd>
+               </xar:if>
 
-                   </dd>
-               </xar:if>
-               <xar:if condition="$tab eq 'back'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>View Extensions List</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="&xar-modurl-release-user-view;">
-                            <xar:mlstring>View Extension List</xar:mlstring></a>
-                   </dd>
-               </xar:if>
             </dl>
 
 <xar:if condition="$general eq 2" >
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            <xar:mlstring>Extension No:</xar:mlstring></span>
+            <xar:mlstring>Registered ID:</xar:mlstring></span>
         </span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
-            <strong>#$rid#</strong></span>
+            #$rid#
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-        <xar:if condition="$type == 0">
-            <xar:mlstring>Module</xar:mlstring>:</span>
-        <xar:else />
-            <xar:mlstring>Theme</xar:mlstring>:</span>
-        </xar:if>
-        </span>
+            <xar:mlstring>Extension Type:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
-            <strong>#$extname#</strong>
+            #$exttype#
         </span>
     </div>
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
-            <xar:mlstring>Name:</xar:mlstring></span>
+            <xar:mlstring>Registered Name:</xar:mlstring></span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
+            #$extname#
+        </span>
+    </div>
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            <xar:mlstring>Display Name:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$displname#
         </span>
@@ -131,6 +132,7 @@
         </xar:if>
         </span>
     </div>
+
     <div style="clear: both;">
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
             <xar:mlstring>Author:</xar:mlstring></span>
@@ -149,8 +151,8 @@
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
             <xar:mlstring>Categories:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
-        <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
-
+        <xar:categories-catinfo module="release" itemtype="0" itemid="$rid" base="11" ifempty="No Classification"/>
+        <!--<xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />-->
         </span>
     </div>
 </xar:if>
@@ -189,7 +191,7 @@
         </h3>
     </div>
     <xar:else />
-    <div class="xar-article-wrapper xar-fullwidth xar-clearboth">
+    <div class="xar-article-wrapper xar-fullwidth xar-clearboth" style="padding-top:10px;">
     <h2 ><xar:mlstring>Version History</xar:mlstring></h2>
     <xar:loop name="$items">
        <div style="clear: both; padding-top: 5px;">
@@ -203,7 +205,7 @@
                     <xar:mlvar>#$loop:item['version']#</xar:mlvar>
                 </xar:ml>
                 </a>
-                </h3>
+            </h3>
             <div class="xar-accent" style="padding: 2px;">
             <span class="xar-sub">
                 <xar:mlstring>Author:</xar:mlstring>

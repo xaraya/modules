@@ -25,6 +25,17 @@
                         Options:
                     </xar:mlstring>
                 </dt>
+              <xar:if condition="$tab eq 'back'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                           <xar:mlstring>View Extension List</xar:mlstring>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="&xar-modurl-release-user-view;"><xar:mlstring>View Extension List</xar:mlstring></a>
+                   </dd>
+               </xar:if>                
                <xar:if condition="$tab eq 'basic'">
                    <dd class="active">
                        <a href="#xarServerGetCurrentURL()#">
@@ -62,17 +73,7 @@
                               </xar:ml>
                    </dd>
                </xar:if>
-               <xar:if condition="$tab eq 'back'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>View Extension List</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="&xar-modurl-release-user-view;"><xar:mlstring>View Extension List</xar:mlstring></a>
-                   </dd>
-               </xar:if>
+
             </dl>
 
     <div class="docs-article-wrapper">

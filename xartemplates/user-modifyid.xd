@@ -6,8 +6,9 @@
     <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />    
-        <input type="hidden" name="rid" id="rid" value="#$rid#" />    
-        <input type="hidden" name="certified" id="certified" value="#$certified#" />    
+        <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="certified" id="certified" value="#$certified#" />
+
         <table border="0" cellpadding="5">
             <tr>
                 <td align="left" valign="top" class="xar-norm">
