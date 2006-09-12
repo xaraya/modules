@@ -31,10 +31,10 @@ function release_userapi_getallrssmodsnotes($args)
                      xar_version
             FROM $releasenotes
             WHERE xar_certified = ? and xar_userfeed = ?
-            AND xar_type = ?
+            AND xar_exttype = ?
             ORDER by xar_time DESC";
 
-    $bindvars = array(2, 1, $type);
+    $bindvars = array(2, 1, $exttype);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
@@ -53,5 +53,4 @@ function release_userapi_getallrssmodsnotes($args)
     // Return the users
     return $releaseinfo;
 }
-
 ?>

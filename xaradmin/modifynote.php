@@ -70,10 +70,12 @@ function release_admin_modifynote()
             $data['notesf'] = nl2br($data['notes']);
             $data['authid'] = xarSecGenAuthKey();
 
-            if ($data['type']==0) {
-              $data['idtype']='Module';
-            }else {
-              $dadta['idtype']='Theme';
+            $exttypes = xarModAPIFunc('release','user','getexttypes');
+            $data['exttypes']=$exttypes;
+            foreach ($exttypes as $k=>$v) {
+                if ($data['exttype']==$k) {
+                    $data['exttypename']=$v;
+                }
             }
 
             break;
@@ -128,15 +130,13 @@ function release_admin_modifynote()
                                       'rstate'      => $rstate,
                                       'usefeed'     => $usefeed))) return;
 
-
             xarResponseRedirect(xarModURL('release', 'user', 'displaynote',array('rnid'=>$rnid)));
 
             return true;
 
             break;
     }   
-    
+
     return $data;
 }
-
 ?>

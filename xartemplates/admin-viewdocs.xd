@@ -20,7 +20,7 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-            #$type#
+            #$exttypename#
         </td>
         <td class="xar-norm">
             #$title#
@@ -42,7 +42,7 @@
     <xar:else />
     <tr>
         <td class="xar-accent">
-            #$type#
+            #exttypename#
         </td>
         <td class="xar-accent">
             #$title#

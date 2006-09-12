@@ -38,7 +38,6 @@ function release_userapi_getallnotes($args)
     $query = "SELECT rnotes.xar_rnid,
                      rnotes.xar_rid,
                      rids.xar_regname,
-                     rids.xar_type,
                      rids.xar_uid,
                      rnotes.xar_version,
                      rnotes.xar_price,
@@ -55,7 +54,8 @@ function release_userapi_getallnotes($args)
                      rnotes.xar_certified,
                      rnotes.xar_approved,
                      rnotes.xar_rstate,
-                     rnotes.xar_usefeed
+                     rnotes.xar_usefeed,
+                     rnotes.xar_exttype
             FROM $releasenotes as rnotes,$releaseids as rids
             WHERE rnotes.xar_rid=rids.xar_rid";
 
@@ -99,12 +99,12 @@ function release_userapi_getallnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $regname, $type, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved,$rstate, $usefeed) = $result->fields;
+        list($rnid, $rid, $regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink, 
+             $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
                                    'regname'    => $regname,
-                                   'type'       => $type,
                                    'uid'        => $uid,
                                    'version'    => $version,
                                    'price'      => $price,
@@ -121,7 +121,8 @@ function release_userapi_getallnotes($args)
                                    'certified'  => $certified,
                                    'approved'   => $approved,
                                    'rstate'     => $rstate,
-                                   'usefeed'    => $usefeed);
+                                   'usefeed'    => $usefeed,
+                                   'exttype'    => $exttype);
         }
     }
 

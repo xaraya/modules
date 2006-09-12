@@ -1,6 +1,6 @@
 <?php
 /**
- * Release Block - Latest Projects
+ * Release Block - Latest Project Extensions
  * 
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation

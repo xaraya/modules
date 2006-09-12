@@ -39,7 +39,7 @@ function release_userapi_search($args)
                     xar_regname,
                     xar_displname,
                     xar_desc,
-                    xar_type
+                    xar_exttype
               FROM  $releasetable
               WHERE  (";
 
@@ -59,7 +59,7 @@ function release_userapi_search($args)
     }
 
     if (isset($regname)) {
-        if (isset($rid) || isset($tid)) {
+        if (isset($rid) || isset($uid)) {
             $sql .= " OR ";
         }
         $sql .= " xar_regname LIKE ?";
@@ -67,14 +67,14 @@ function release_userapi_search($args)
         $bindvars[] = '%'.$regname.'%';
     }
    if (isset($displname)) {
-        if (isset($rid) || isset($tid) || isset($regname)) {
+        if (isset($rid) || isset($uid) || isset($regname)) {
             $sql .= " OR ";
         }
         $sql .= " xar_displname LIKE ?";
         $bindvars[] = '%'.$displname.'%';
     }
     if (isset($desc)) {
-        if (isset($rid) || isset($tid) || isset($regname) || isset($displname)) {
+        if (isset($rid) || isset($uid) || isset($regname) || isset($displname)) {
             $sql .= " OR ";
         }
         $sql .= " xar_desc LIKE ?";

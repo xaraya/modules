@@ -50,10 +50,6 @@ function release_init()
                                                               'null'        => false,
                                                               'default'     => ''),
                                    'xar_desc'        => array('type'        => 'text'),
-                                   'xar_type'        => array('type'        => 'integer',
-                                                              'null'        => false,
-                                                              'default'     => '0',
-                                                              'increment'   => false),
                                    'xar_class'       => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
@@ -71,9 +67,9 @@ function release_init()
                                                               'default'     => '0',
                                                               'increment'   => false),
                                    'xar_regtime'     => array('type'        => 'integer',
-                                                                 'unsigned'    => TRUE,
-                                                                 'null'        => false,
-                                                                 'default'     => '0'),
+                                                              'unsigned'    => TRUE,
+                                                              'null'        => false,
+                                                              'default'     => '0'),
                                    'xar_modified'    => array('type'        => 'integer',
                                                                  'unsigned'    => TRUE,
                                                                  'null'        => false,
@@ -89,13 +85,17 @@ function release_init()
                                                               'null'        => false,
                                                               'default'     => '0',
                                                               'size'        => 'tiny',
+                                                              'increment'   => false),
+                                    'xar_exttype'     => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
                                                               'increment'   => false)
                                                               ));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
-                   'fields'    => array('xar_regname','xar_type'),
+                   'fields'    => array('xar_regname','xar_exttype'),
                    'unique'    => TRUE);
     $query = xarDBCreateIndex($releasetable,$index);
     $result =& $dbconn->Execute($query);
@@ -153,10 +153,6 @@ function release_init()
                                                                  'null'        => false,
                                                                  'default'     => '0'),
                                    'xar_enotes'         => array('type'        => 'text'),
-                                   'xar_type'           => array('type'        => 'varchar',
-                                                                  'size'        => 100,
-                                                                  'null'        => false,
-                                                                  'default'     => ''),
                                    'xar_certified'      => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '1',
@@ -173,7 +169,11 @@ function release_init()
                                                                  'size'         => 'tiny',
                                                                  'null'         => false,
                                                                  'default'      => '1',
-                                                                 'increment'    => false)
+                                                                 'increment'    => false),
+                                     'xar_exttype'     => array('type'        => 'integer',
+                                                                'null'        => false,
+                                                                'default'     => '0',
+                                                                'increment'   => false)
                                                                  ));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -196,10 +196,10 @@ function release_init()
                                                                  'null'        => false,
                                                                  'default'     => ''),
                                    'xar_docs'           => array('type'        => 'text'),
-                                   'xar_type'           => array('type'        => 'varchar',
-                                                                 'size'        => 100,
-                                                                 'null'        => false,
-                                                                 'default'     => ''),
+                                   'xar_exttype'         => array('type'        => 'integer',
+                                                                  'null'        => false,
+                                                                  'default'     => '0',
+                                                                  'increment'   => false),
                                    'xar_time'           => array('type'        => 'integer',
                                                                  'unsigned'    => TRUE,
                                                                  'null'        => false,
@@ -234,7 +234,7 @@ function release_init()
                              'blockType' => 'latestprojects'))) return;
     // Enable categories hooks for release
     xarModAPIFunc('modules','admin','enablehooks',
-          array('callerModName' => 'release', 'hookModName' => 'categories'));        
+          array('callerModName' => 'release', 'hookModName' => 'categories'));
     // search hook
     if (!xarModRegisterHook('item', 'search', 'GUI', 'release', 'user', 'search')) {
         return false;
@@ -360,18 +360,108 @@ function release_upgrade($oldversion)
             if (!$result) return;
 
             for (; !$result->EOF; $result->MoveNext()) {
-               $updateusefeed = "UPDATE $releaseid
-                                 SET xar_regtime = 0, xar_modified =0, xar_members = '', xar_scmlink='', xar_openproj = 1";
-               $doupdate =& $dbconn->Execute($updateusefeed);
-               if (!$doupdate) return;
+               $updateids = "UPDATE $releaseid
+                                 SET xar_regtime = 0,
+                                 xar_modified =0, 
+                                 xar_members = '', 
+                                 xar_scmlink = '',
+                                 xar_openproj = 1";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
            }
+        case '0.3.0':
+          $dbconn =& xarDBGetConn();
+          $xartable =& xarDBGetTables();
+          xarDBLoadTableMaintenanceAPI();
+
           // Register Block types
-         if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
+          if (!xarModAPIFunc('blocks',
+                             'admin',
+                              'register_block_type',
                        array('modName'   => 'latestprojects',
                              'blockType' => 'latestprojects'))) return;
-        case '0.3.0': //current version
+
+          $releaseid = $xartable['release_id'];
+          $releasenotes = $xartable['release_notes'];
+
+          $query = xarDBAlterTable($releaseid,
+                              array('command'  => 'add',
+                                    'field'   => 'xar_exttype',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'default' => '0'));
+           $result = &$dbconn->Execute($query);
+           if (!$result) return;
+           $query= "SELECT COUNT(1)
+                    FROM $releaseid ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateids= "UPDATE $releaseid
+                                 SET xar_exttype  = 2
+                                 WHERE xar_type   = 1";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
+           }
+           $query= "SELECT COUNT(1)
+                    FROM $releaseid ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateids= "UPDATE $releaseid
+                                 SET xar_exttype = 1
+                                 WHERE xar_type  = 0";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
+           }
+           //add a new exttype field to the release note table
+           $query = xarDBAlterTable($releasenotes,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_exttype',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+           $query= "SELECT COUNT(1)
+                    FROM $releasenotes ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updatetypes= "UPDATE $releasenotes
+                                 SET xar_exttype  = 2
+                                 WHERE xar_type   = 'Theme'";
+               $doidupdate =& $dbconn->Execute($updatetypes);
+               if (!$doidupdate) return;
+           }
+           $query= "SELECT COUNT(1)
+                    FROM $releasenotes ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updatetypes= "UPDATE $releasenotes
+                                 SET xar_exttype = 1
+                                 WHERE xar_type  = 'Module'";
+               $doidupdate =& $dbconn->Execute($updatetypes);
+               if (!$doidupdate) return;
+           }
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+                   'fields'    => array('xar_regname','xar_type'),
+                   'unique'    => TRUE);
+    $query = xarDBDropIndex($releaseid,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+                   'fields'    => array('xar_regname','xar_exttype'),
+                   'unique'    => TRUE);
+    $query = xarDBCreateIndex($releaseid,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+       case '0.4.0': //current version
 
         break;
     }
@@ -385,7 +475,6 @@ function release_upgrade($oldversion)
  */
 function release_delete()
 {
-
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

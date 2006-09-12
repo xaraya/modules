@@ -14,8 +14,11 @@
                 <xar:else />
                 <li>
                     <a href="#$item['link']#">
-                        #xarVarPrepForDisplay(ucfirst($item['regname']))# #$item['exttype']# <xar:mlstring>by </xar:mlstring> <a href="#$item['authorlink']#">#$item['author']#</a>
+                        #xarVarPrepForDisplay(ucfirst($item['regname']))# #$item['exttype']#
                     </a>
+                    <xar:mlstring>by </xar:mlstring>
+                    <a href="#$item['authorlink']#">#$item['author']#</a>
+
                 </li>
             </xar:if>
         </xar:foreach>

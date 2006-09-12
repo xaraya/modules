@@ -20,23 +20,32 @@ function release_admin_viewids()
 
     $uid = xarUserGetVar('uid');
 
-    if (!isset($idtypes)) {
-       $idtypes=1;
+    if (!isset($exttype)) {
+       $exttype=1;
     }
 
+   //TODO -hardcode for now until we get the rest working
     if ($phase == 'modules') {
-        $idtypes=3;
-    } elseif ($phase =='themes') {
-        $idtypes=2;
-    } else{
-        $idtypes=1;
+        $exttype=1;
+    }elseif ($phase =='themes') {
+        $exttype=2;
+    }elseif ($phase =='properties') {
+        $exttype=3;
+    }elseif ($phase =='blocks') {
+        $exttype=4;
+    }elseif ($phase =='custom') {
+        $exttype=5;
+    }elseif ($phase =='templatepack') {
+        $exttype=6;
+    }elseif ($phase =='addon') {
+        $exttype=7;
+    }else{
+     $exttype=1;
     }
 
     // The user API function is called. 
-    $items = xarModAPIFunc('release',
-                           'user',
-                           'getallids',
-                       array('idtypes' => $idtypes,
+    $items = xarModAPIFunc('release', 'user', 'getallids',
+                       array('exttype' => $exttype,
                              'startnum' => $startnum,
                              'numitems' => xarModGetUserVar('release',
                                                             'itemsperpage',$uid),
@@ -57,9 +66,7 @@ function release_admin_viewids()
 
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('EditRelease', 0)) {
-            $items[$i]['editurl'] = xarModURL('release',
-                                              'user',
-                                              'modifyid',
+            $items[$i]['editurl'] = xarModURL('release', 'user', 'modifyid',
                                               array('rid' => $item['rid']));
         } else {
             $items[$i]['editurl'] = '';
@@ -67,9 +74,7 @@ function release_admin_viewids()
 
         $items[$i]['deletetitle'] = xarML('Delete');
         if (xarSecurityCheck('DeleteRelease', 0)) {
-            $items[$i]['deleteurl'] = xarModURL('release',
-                                               'admin',
-                                               'deleteid',
+            $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deleteid',
                                                array('rid' => $item['rid']));
         } else {
             $items[$i]['deleteurl'] = '';
@@ -79,7 +84,7 @@ function release_admin_viewids()
     //Add the pager
     $data['phase']=$phase;
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
+        xarModAPIFunc('release', 'user', 'countitems',array('exttype'=>$extype)),
         xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
 

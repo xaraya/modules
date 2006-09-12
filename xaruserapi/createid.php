@@ -17,7 +17,7 @@ function release_userapi_createid($args)
 
     // Argument check
     if ((!isset($regname)) ||
-        (!isset($type))) {
+        (!isset($exttype))) {
 
         $msg = xarML('Wrong arguments to release_userapi_createid.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION,
@@ -45,10 +45,10 @@ function release_userapi_createid($args)
 
     // Check if that regname exists
     $query = "SELECT xar_rid FROM $releasetable
-            WHERE xar_regname = ?
-            AND xar_type = ?";
+              WHERE xar_regname = ?
+              AND xar_exttype = ?";
 
-    $result =& $dbconn->Execute($query,array($regname,$type));
+    $result =& $dbconn->Execute($query,array($regname,$exttype));
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
@@ -98,7 +98,6 @@ function release_userapi_createid($args)
               xar_regname,
               xar_displname,
               xar_desc,
-              xar_type,
               xar_class,
               xar_certified,
               xar_approved,
@@ -107,12 +106,13 @@ function release_userapi_createid($args)
               xar_modified,
               xar_members,
               xar_scmlink,
-              xar_openproj
+              xar_openproj,
+              xar_exttype
               )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextid,(int)$uid,$regname,$displname,$desc,$type,$class,$certified,$approved,$rstate,
-                      (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj);
+    $bindvars = array($nextid,(int)$uid,$regname,$displname,$desc,$class,$certified,$approved,$rstate,
+                      (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj,(int)$exttype);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

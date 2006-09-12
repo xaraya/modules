@@ -28,7 +28,7 @@ function release_userapi_updateid($args)
         (!isset($uid)) ||
         (!isset($regname)) ||
         (!isset($displname)) ||
-        (!isset($type)) ||
+        (!isset($exttype)) ||
         (!isset($class))) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -71,7 +71,6 @@ function release_userapi_updateid($args)
             SET xar_uid       = ?,
                 xar_regname   = ?,
                 xar_displname = ?,
-                xar_type      = ?,
                 xar_class     = ?,
                 xar_desc      = ?,
                 xar_certified = ?,
@@ -81,10 +80,11 @@ function release_userapi_updateid($args)
                 xar_modified  = ?,
                 xar_members   = ?,
                 xar_scmlink   = ?,
-                xar_openproj  = ?
+                xar_openproj  = ?,
+                xar_exttype   = ?
             WHERE xar_rid     = ?";
-    $bindvars = array($uid,$regname,$displname,$type,$class,$desc,$certified,$approved,$rstate,
-                      $regtime, $modified, $members, $scmlink, $openproj, $rid);
+    $bindvars = array($uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
+                      $regtime, $modified, $members, $scmlink, $openproj, $exttype,$rid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

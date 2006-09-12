@@ -24,9 +24,9 @@
 function release_admin_viewnotes()
 {
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase',    'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter',   'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exttype', 'str:1:',  $exttype, 0, XARVAR_NOT_REQUIRED)) return;
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
@@ -152,7 +152,7 @@ function release_admin_viewnotes()
         $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
+        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
         $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
                                            array('rnid' => $item['rnid']));
@@ -191,5 +191,4 @@ function release_admin_viewnotes()
     return $data;
 
 }
-
 ?>

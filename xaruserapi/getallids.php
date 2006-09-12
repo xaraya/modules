@@ -15,6 +15,7 @@
  * get all users
  * @returns array
  * @return array of users, or false on failure
+ * @TODO check if this is needed - use getallrids instead? or save this for quick alternative
  */
 function release_userapi_getallids($args)
 {
@@ -44,7 +45,6 @@ function release_userapi_getallids($args)
                      xar_regname,
                      xar_displname,
                      xar_desc,
-                     xar_type,
                      xar_class,
                      xar_certified,
                      xar_approved,
@@ -53,20 +53,21 @@ function release_userapi_getallids($args)
                      xar_modified,
                      xar_members,
                      xar_scmlink,
-                     xar_openproj
+                     xar_openproj,
+                     xar_exttype
             FROM $releasetable
             ORDER BY xar_rid";
     if (!empty($certified)) {
         $query .= " WHERE xar_certified = ?";
       $bindvars[]=$certified;
     }
-    if (isset($type) and !empty($type)) {
+    if (isset($exttype) and !empty($exttype)) {
         if (!empty($certified)) {
-           $query .= " AND xar_type = ?";
+           $query .= " AND xar_exttype = ?";
         }else {
-           $query .= " WHERE xar_type = ?";
+           $query .= " WHERE xar_exttype = ?";
         }
-       $bindvars[]= $type;
+       $bindvars[]= $exttype;
     }
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
@@ -74,15 +75,14 @@ function release_userapi_getallids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, 
-             $rstate, $regtime, $modified, $members, $scmlink,$openproj) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $class, $certified, $approved, 
+             $rstate, $regtime, $modified, $members, $scmlink,$openproj, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,
                                    'desc'       => $desc,
-                                   'type'       => $type,
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
@@ -91,7 +91,8 @@ function release_userapi_getallids($args)
                                    'modified'   => $modified,
                                    'members'    => $members,
                                    'scmlink'    => $scmlink,
-                                   'openproj'   => $openproj);
+                                   'openproj'   => $openproj,
+                                   'exttype'    => $exttype);
         }
     }
 

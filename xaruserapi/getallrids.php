@@ -27,9 +27,7 @@ function release_userapi_getallrids($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    if (!isset($idtypes)) {
-        $idtypes = 1;
-    }
+
     if (!isset($catid)) {
     $catid =NULL;
     }
@@ -41,7 +39,6 @@ function release_userapi_getallrids($args)
     } else {
         $sortlist = explode(',',$sort);
     }
-
 
     $releaseinfo = array();
 
@@ -59,7 +56,7 @@ function release_userapi_getallrids($args)
     {
         $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
                               array('modid'    => 773,
-                                    'itemtype' => 0,
+                                    'itemtype' => 0, //has to stay this way til we can convert this
                                     'cids'     => array($catid),
                                     'andcids'  => 1));
     }
@@ -69,7 +66,6 @@ function release_userapi_getallrids($args)
                      $releasetable.xar_regname,
                      $releasetable.xar_displname,
                      $releasetable.xar_desc,
-                     $releasetable.xar_type,
                      $releasetable.xar_class,
                      $releasetable.xar_certified,
                      $releasetable.xar_approved,
@@ -79,6 +75,7 @@ function release_userapi_getallrids($args)
                      $releasetable.xar_members,
                      $releasetable.xar_scmlink,
                      $releasetable.xar_openproj,
+                     $releasetable.xar_exttype,
                      $rolestable.xar_uname as xar_uname
             FROM $releasetable 
             LEFT JOIN $rolestable
@@ -103,6 +100,7 @@ function release_userapi_getallrids($args)
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
+    /*
     switch ($idtypes) {
       case 3: // module
            $where[] = "xar_type = '0'";
@@ -111,7 +109,9 @@ function release_userapi_getallrids($args)
            $where[] = "xar_type = '1'";
           break;
     }
+*/
 
+  
     if (!empty($certified)) {
         $where[] = " xar_certified = ?";
         $bindvars[] = $certified;
@@ -155,23 +155,20 @@ function release_userapi_getallrids($args)
     } else { // default is 'rid
         $query .= ' ORDER BY  xar_rid ASC';
     }
-
     //  $query .= " ORDER BY xar_rid";
-
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,$rstate,
-             $regtime, $modified, $members, $scmlink, $openproj, $uname) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
+             $regtime, $modified, $members, $scmlink,$openproj,$exttype, $uname) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,
                                    'desc'       => $desc,
-                                   'type'       => $type,
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
@@ -181,6 +178,7 @@ function release_userapi_getallrids($args)
                                    'members'    => $members,
                                    'scmlink'    => $scmlink,
                                    'openproj'   => $openproj,
+                                   'exttype'    => $exttype,
                                    'author'     => $uname);
         }
     }

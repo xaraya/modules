@@ -15,7 +15,7 @@
 <xar:ml>
 <xar:mlstring>Registered ID #(1) : #(2) - #(3)</xar:mlstring>
    <xar:mlvar>#$rid#</xar:mlvar>
-   <xar:mlvar>#$exttype#</xar:mlvar>
+   <xar:mlvar>#$exttypename#</xar:mlvar>
    <xar:mlvar>#$extname#</xar:mlvar>
 </xar:ml>
 <xar:if condition="!empty($editlink)">
@@ -37,7 +37,7 @@
         <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
             <xar:mlstring>Extension Type:</xar:mlstring></span>
         <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
-            #$exttype#
+            #$exttypename#
         </span>
     </div>
     <div style="clear: both;">
@@ -147,7 +147,7 @@
         <xar:mlstring>Basic Information</xar:mlstring>
         <input type="radio" name="phase" id="phase" value="version"  />
         <xar:mlstring>Version History</xar:mlstring>
-    <xar:if condition="$type eq 'Module'">
+    <xar:if condition="$exttype eq 1">
         <input type="radio" name="phase" id="phase" value="docsmodule"  />
         <xar:mlstring>General Use</xar:mlstring>
         <input type="radio" name="phase" id="phase" value="docsblocks"  />

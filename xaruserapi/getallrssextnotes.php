@@ -36,12 +36,11 @@ function release_userapi_getallrssextnotes($args)
     //Need to only get the last x release notes for efficiency
     $query = "SELECT xar_rnid,
                      xar_rid,
-                     xar_type,
-                     xar_version
+                     xar_version,
+                     xar_exttype
             FROM $releasenotes
             WHERE xar_approved = 2 and xar_usefeed = 1
             ORDER by xar_time DESC";
-
 
     if (isset($releaseno) && is_numeric($releaseno)) { //unlimited if not set??
        $result =& $dbconn->SelectLimit($query, $releaseno, 0);
@@ -52,12 +51,12 @@ function release_userapi_getallrssextnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $type, $version) = $result->fields;
+        list($rnid, $rid, $version, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
-                                   'type'       => $type,
-                                   'version'    => $version);
+                                   'version'    => $version,
+                                   'exttype'    => $exttype);
         }
     }
 

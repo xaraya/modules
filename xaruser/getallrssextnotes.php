@@ -35,7 +35,7 @@ function release_userapi_getallrssextnotes($args)
     //We just want those approved and those that are required in the RSS feed
     $query = "SELECT xar_rnid,
                      xar_rid,
-                     xar_type,
+                     xar_exttype,
                      xar_version
             FROM $releasenotes
             WHERE xar_approved = 2 and xar_usefeed = 1
@@ -46,11 +46,11 @@ function release_userapi_getallrssextnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $type, $version) = $result->fields;
+        list($rnid, $rid, $exttype, $version) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
-                                   'type'       => $type,
+                                   'exttype'    => $exttype,
                                    'version'    => $version);
         }
     }
@@ -60,5 +60,4 @@ function release_userapi_getallrssextnotes($args)
     // Return the users
     return $releaseinfo;
 }
-
 ?>

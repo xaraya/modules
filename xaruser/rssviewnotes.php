@@ -39,9 +39,7 @@ function release_user_rssviewnotes()
                                                 '1');
 
         $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
-
     }
-
 
     // Add the array of items to the template variables
     $data['items'] = $items;
@@ -50,5 +48,4 @@ function release_user_rssviewnotes()
     return $data;
 
 }
-
 ?>

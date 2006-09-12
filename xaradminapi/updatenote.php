@@ -34,15 +34,18 @@ function release_adminapi_updatenote($args)
     // The user API function is called
     $link = xarModAPIFunc('release', 'user', 'getnote',
                           array('rnid' => $rnid));
-
+    
     if ($link == false) {
         $msg = xarML('No Such Release Note Present');
-        xarErrorSet(XAR_USER_EXCEPTION, 
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
+    if (!isset($exttype)) {
+        $exttype = $link['exttype'];
+    }
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
@@ -69,17 +72,18 @@ function release_adminapi_updatenote($args)
                 xar_certified = ?,
                 xar_approved = ?,
                 xar_rstate = ?,
-                xar_usefeed = ?
+                xar_usefeed = ?,
+                xar_exttype = ?
             WHERE xar_rnid = ?";
     $bindvars=array($version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
-                    $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,$rnid);
+                    $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,(int)$exttype,$rnid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let the calling process know that we have finished successfully
     // Let any hooks know that we have created a new user.
     $args['module'] = 'release';
-    $args['itemtype'] = 0;
+    $args['itemtype'] = $exttype;
     $args['itemid'] = $rnid;
     xarModCallHooks('item', 'update', $rnid, $args);
 

@@ -19,7 +19,11 @@ function release_latestprojectsblock_init()
 {
     return array(
         'numitems' => 5,
-        'showonlists'=>0
+        'showonlists'=>0,
+        'nocache' => 0, // cache by default
+        'pageshared' => 1,
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 
@@ -30,9 +34,9 @@ function release_latestprojectsblock_init()
 function release_latestprojectsblock_info()
 { 
     // Values
-    return array('text_type' => 'Latest',
+    return array('text_type' => 'Latest Extensions',
         'module' => 'release',
-        'text_type_long' => 'Show latest release notes',
+        'text_type_long' => 'Show latest registered extensions',
         'allow_multiple' => true,
         'form_content' => false,
         'form_refresh' => false,
@@ -90,11 +94,13 @@ function release_latestprojectsblock_display($blockinfo)
             } else {
                 $item['link'] = '';
             }
-            if ($item['type']==1) {
-               $item['exttype'] = xarML('Module');
-            }else{
-               $item['exttype'] = xarML('Theme');
+            $exttypes = xarModAPIFunc('release','user','getexttypes');
+            foreach ($exttypes as $k=>$v) {
+                if ($item['exttype'] == $k){
+                  $item['exttypename'] = $v;
+                }
             }
+
             $roles = new xarRoles();
             $role = $roles->getRole($item['uid']);
             $item['author']= $role->getName();
@@ -111,5 +117,4 @@ function release_latestprojectsblock_display($blockinfo)
 
     return $blockinfo;
 }
-
 ?>

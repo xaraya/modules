@@ -43,7 +43,7 @@
             </tr>
         </table>
         <br /><br />
-        <xar:if condition="$type eq 'Module'">
+        <xar:if condition="$exttype eq 1">
         <input type="radio" name="phase" id="phase" value="module"  />
             <xar:mlstring>General Use</xar:mlstring>
         <input type="radio" name="phase" id="phase" value="blocks"  />

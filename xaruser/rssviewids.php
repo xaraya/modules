@@ -9,6 +9,7 @@
  *
  * @subpackage Release Module
  * @link http://xaraya.com/index.php/release/773.html
+ * @TODO - get to get rid of the duplication and hard coded stuff in this
  */
 function release_user_rssviewids()
 {
@@ -82,5 +83,4 @@ function release_user_rssviewids()
     return $data;
 
 }
-
 ?>

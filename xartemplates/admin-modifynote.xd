@@ -43,7 +43,7 @@
                     <xar:mlstring>Type</xar:mlstring>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                    #$idtype#
+                    #$exttypename#
                 </td>
             </tr>
             <tr>
@@ -118,15 +118,17 @@
                         <label for="idtype"><xar:mlstring>Type</xar:mlstring></label>
                     </td>
                     <td align="left" valign="top" class="xar-norm">
-                        <select name="idtype" id="idtype">
-                        <xar:if condition="$idtype eq 'Module'">
-                            <option value="0" selected="selected"><xar:mlstring>Module</xar:mlstring></option>
-                            <option value="1"><xar:mlstring>Theme</xar:mlstring></option>
-                        <xar:else />
-                            <option value="0"><xar:mlstring>Module</xar:mlstring></option>
-                            <option value="1" selected="selected"><xar:mlstring>Theme</xar:mlstring></option>
-                        </xar:if>
-                        </select>
+                       <select name="exttype" id="exttype">
+                     <xar:foreach in="$exttypes" key="$k" value="$v">
+                     <xar:if condition="$k ne 0">
+                         <xar:if condition="$exttype eq $k">
+                                <option value="#$k#" selected="selected">#$v#</option>
+                         <xar:else />
+                                <option value="#$k#">#$v#</option>
+                         </xar:if>
+                     </xar:if>
+                    </xar:foreach>
+                 </select>
                     </td>
                 </tr>
             <tr>

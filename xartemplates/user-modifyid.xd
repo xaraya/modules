@@ -39,7 +39,22 @@
                     <xar:mlstring>Type</xar:mlstring>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                <xar:if condition="$type eq '0'">
+                 <xar:sec mask="AdminRelease" catch="false">
+                 <select name="exttype" id="exttype">
+                     <xar:foreach in="$exttypes" key="$k" value="$v">
+                     <xar:if condition="$k ne 0">
+                         <xar:if condition="$exttype eq $k">
+                                <option value="#$k#" selected="selected">#$v#</option>
+                         <xar:else />
+                                <option value="#$k#">#$v#</option>
+                         </xar:if>
+                     </xar:if>
+                    </xar:foreach>
+                 </select>
+                <xar:else />
+                     #$exttypename#
+                </xar:sec>
+<!--
                     <xar:sec id="checktype1" mask="AdminRelease" catch="false">
                         <input type="radio" name="idtype" value="0" checked="checked" /><xar:mlstring>Module</xar:mlstring>
                         <input type="radio" name="idtype" value="1" /><xar:mlstring>Theme</xar:mlstring>
@@ -56,6 +71,7 @@
                         <xar:mlstring>Theme</xar:mlstring>
                     </xar:sec>
                 </xar:if>
+-->
                 </td>
             </tr>
             <tr>
@@ -142,7 +158,7 @@
                     </label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                    <xar:if condition="$openproj eq 1"> 
+                    <xar:if condition="$openproj eq 1">
                         <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
                     <xar:else/>
                          <input type="checkbox" name="openproj" id="openproj" value="1" />

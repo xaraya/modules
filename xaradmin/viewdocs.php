@@ -26,7 +26,7 @@ function release_admin_viewdocs()
     if (!xarVarFetch('phase', 'enum:unapproved:viewall:certified:price:supported', $phase, 'unapproved', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int', $starnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('filter', 'str', $filter, $filter, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type', 'str', $type, $type, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exttype', 'str', $exttype, $exttype, XARVAR_NOT_REQUIRED)) return;
 
     $data['items'] = array();
 
@@ -133,7 +133,7 @@ function release_admin_viewdocs()
         $getid = xarModAPIFunc('release', 'user', 'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
+        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
         $items[$i]['displaylink'] =  xarModURL('release',
                                           'user',

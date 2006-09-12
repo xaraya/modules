@@ -18,7 +18,11 @@
 function release_latestblock_init()
 {
     return array(
-        'numitems' => 5
+        'numitems' => 5,
+        'nocache' => 0, // cache by default
+        'pageshared' => 1,
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 } 
 
@@ -99,6 +103,8 @@ function release_latestblock_display($blockinfo)
 
         }
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $data['exttypes']=$exttypes;
     $data['blockid'] = $blockinfo['bid'];
     // Now we need to send our output to the template.
     // Just return the template data.

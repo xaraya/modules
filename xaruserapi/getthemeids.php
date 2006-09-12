@@ -16,7 +16,7 @@
  * 
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
- * @TODO 
+ * @TODO Review - do we really need this now? Let's amalgamate ...
  */
 function release_userapi_getthemeids($args)
 {
@@ -29,6 +29,10 @@ function release_userapi_getthemeids($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
+    $exttypes= xarModAPIFunc('release','user','getexttypes');
+    $text = xarML('Theme');
+    $extid = array_search($text,$exttypes)
+    $releaseinfo = array();
 
     $releaseinfo = array();
 
@@ -46,7 +50,6 @@ function release_userapi_getthemeids($args)
                      xar_regname,
                      xar_displname,
                      xar_desc,
-                     xar_type,
                      xar_class,
                      xar_certified,
                      xar_approved,
@@ -55,25 +58,25 @@ function release_userapi_getthemeids($args)
                      xar_modified,
                      xar_members,
                      xar_scmlink,
-                     xar_openproj
+                     xar_openproj,
+                     xar_exttype
             FROM $releasetable
-            WHERE xar_type = '1'
+            WHERE xar_exttype = ?
             ORDER BY xar_rid";
-
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $bindvars = array($extid);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, 
-                     $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+                     $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,
                                    'desc'       => $desc,
-                                   'type'       => $type,
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
@@ -82,7 +85,8 @@ function release_userapi_getthemeids($args)
                                    'modified'   => $modified,
                                    'members'    => $members,
                                    'scmlink'    => $scmlink,
-                                   'openproj'   => $openproj);
+                                   'openproj'   => $openproj,
+                                   'exttype'    => $exttype);
         }
     }
 
@@ -91,5 +95,4 @@ function release_userapi_getthemeids($args)
     // Return the users
     return $releaseinfo;
 }
-
 ?>

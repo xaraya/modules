@@ -44,7 +44,7 @@ function release_user_displaynote($args)
 
 
     $hooks = xarModCallHooks('item','display', $rnid,
-                                    array('itemtype'  => '2',
+                                    array('itemtype'  => $item['exttype'],
                                           'returnurl' => xarModURL('release', 'user','displaynote',
                                                                    array('rnid' => $rnid))
                                          )
@@ -75,11 +75,16 @@ function release_user_displaynote($args)
        $stateoption=$stateoptions[$key];
      }
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $fliptypes = array_flip($exttypes);
+    $exttypename = array_search($id['exttype'],$fliptypes);
+    $item['exttypename'] = $exttypename;
     $item['stateoption']=$stateoption;
     $item['desc'] = nl2br($id['desc']);
     $item['regname'] = $id['regname'];
     $item['displname'] = $id['displname'];
-    $item['type'] = $id['type'];
+    $item['exttype'] = $id['exttype'];
+    $item['exttypes'] = $exttypes;
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['extensionpage']= xarModURL('release','user','display',

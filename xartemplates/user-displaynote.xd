@@ -22,11 +22,11 @@
     <div class="docs-article-wrapper">
 
               <h2 style="float: left; width: 20%; text-align:left;">
-                      <xar:if condition="$type eq '0'">
-                           <xar:mlstring>Module:</xar:mlstring>
-                      <xar:else />
-                           <xar:mlstring>Theme:</xar:mlstring>
+                  <xar:foreach in="$exttypes" key="$k" value="$v">
+                      <xar:if condition="$exttype eq $k">
+                           #$v#:
                       </xar:if>
+                  </xar:foreach>
               </h2>
               <h2 style="float: right; width: 78%; text-align: left;">
               <a href="#$extensionpage#" title="#xarML('View the Extension Overview Page')#">

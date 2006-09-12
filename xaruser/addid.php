@@ -36,7 +36,7 @@ function release_user_addid()
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
     $data['stateoptions']=$stateoptions;
-
+    $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
     if (xarUserIsLoggedIn()){
         switch(strtolower($phase)) {
 
@@ -54,7 +54,7 @@ function release_user_addid()
                 } 
                 $data['cathook'] = $cathook;
                 //Set some defaults
-                $data['idtype']='';
+                $data['exttype']='';
                 $data['class']='1';
                 $data['rstate']='0';
                 $data['openproj']=0;
@@ -67,7 +67,7 @@ function release_user_addid()
                 if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('displname', 'str:1:', $displname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('desc', 'str:1:', $desc, '', XARVAR_NOT_REQUIRED)) {return;};
-                if (!xarVarFetch('idtype', 'int:0:3', $idtype, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('exttype', 'int:0:', $exttype, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('class', 'int:0:', $class, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('rstate', 'int:0:6', $rstate, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('members', 'str:0:', $members, '', XARVAR_NOT_REQUIRED)) {return;};
@@ -82,20 +82,19 @@ function release_user_addid()
                 if (!xarSecConfirmAuthKey()) return;
 
                 // The user API function is called.
-                // TODO: MichelV Why is there a fixed certified here?
                 $newrid =  xarModAPIFunc('release', 'user', 'createid',
-                                    array('uid' => $uid,
-                                          'regname' => $regname,
+                                    array('uid'       => $uid,
+                                          'regname'   => $regname,
                                           'displname' => $displname,
-                                          'desc' => $desc,
+                                          'desc'      => $desc,
                                           'certified' => '1',
-                                          'type' => $idtype,
-                                          'class' => $class,
-                                          'rstate'=> $rstate,
-                                          'members' => $members,
-                                          'scmlink' => $scmlink,
-                                          'openproj'=> $openproj,
-                                          'cids' => $cids));
+                                          'exttype'   => $exttype,
+                                          'class'     => $class,
+                                          'rstate'    => $rstate,
+                                          'members'   => $members,
+                                          'scmlink'   => $scmlink,
+                                          'openproj'  => $openproj,
+                                          'cids'      => $cids));
                 if ($newrid==false) {
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back

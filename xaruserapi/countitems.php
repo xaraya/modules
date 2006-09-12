@@ -23,9 +23,6 @@ function release_userapi_countitems($args)
 {
     extract($args);
 
-    if (!isset($idtypes)) {
-        $idtypes = 1; //All items
-    }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
@@ -34,7 +31,7 @@ function release_userapi_countitems($args)
     //Joins on Catids
     if(!empty($catid))
     {
-        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
                               array('modid'    => 773,
                                     'itemtype' => 0,
                                     'cids'     => array($catid),
@@ -63,7 +60,7 @@ function release_userapi_countitems($args)
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
-
+/*
     switch ($idtypes) {
     case 3: // module
         $where[] = "xar_type = '0'";
@@ -72,7 +69,10 @@ function release_userapi_countitems($args)
         $where[] = "xar_type = '1'";
         break;
     }
-
+    if (!empty($exttype)) {
+        $where[] = " xar_exttype = ?";
+        $bindvars[] = $exttype;
+    }*/
     if (!empty($certified)) {
         $where[] = " xar_certified = ?";
         $bindvars[] = $certified;

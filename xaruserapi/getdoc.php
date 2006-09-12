@@ -31,7 +31,7 @@ function release_userapi_getdoc($args)
                      xar_rid,
                      xar_title,
                      xar_docs,
-                     xar_type,
+                     xar_exttype,
                      xar_time,
                      xar_approved
             FROM $releasetable
@@ -39,7 +39,7 @@ function release_userapi_getdoc($args)
     $result =& $dbconn->Execute($query,array($rdid));
     if (!$result) return;
 
-    list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;
+    list($rdid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -50,7 +50,7 @@ function release_userapi_getdoc($args)
                          'rid'        => $rid,
                          'title'      => $title,
                          'docs'       => $docs,
-                         'type'       => $type,
+                         'exttype'       => $exttype,
                          'time'       => $time,
                          'approved'   => $approved);
 

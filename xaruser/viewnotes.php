@@ -23,7 +23,7 @@ function release_user_viewnotes()
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('exttype', 'str:1:', $exttype, '', XARVAR_NOT_REQUIRED)) return;
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
@@ -112,6 +112,7 @@ function release_user_viewnotes()
             $phasedesc =xarML('Supported');
             break;
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
     $numitems=count($items);
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < $numitems; $i++) {
@@ -122,9 +123,7 @@ function release_user_viewnotes()
                                array('rid' => $items[$i]['rid']));
 
 
-        $items[$i]['displaylink'] =  xarModURL('release',
-                                               'user',
-                                               'displaynote',
+        $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
                                                 array('rnid' => $item['rnid']));
 
         $getuser = xarModAPIFunc('roles', 'user', 'get',
@@ -133,7 +132,9 @@ function release_user_viewnotes()
         $items[$i]['contacturl'] = xarModURL('roles', 'user', 'display',
                                               array('uid' => $getid['uid']));
 
-        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
+        $flipext = array_flip($exttypes);
+        $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
+        $item[$i]['exttypename']=array_search($getid['exttype'],$flipext);
         $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
@@ -141,13 +142,13 @@ function release_user_viewnotes()
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
         $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));
 
-   
+
        //Add pager
        $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
         xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
                                                                            'filter'=>$filter,
-                                                                            'type' =>$type)),
+                                                                            'exttype' =>$exttype)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
     }
 

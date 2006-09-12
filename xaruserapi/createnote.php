@@ -18,6 +18,7 @@ function release_userapi_createnote($args)
 
     // Argument check
     if ((!isset($rid)) ||
+        (!isset($exttype)) ||
         (!isset($version))) {
 
         $msg = xarML('Wrong arguments to release_userapi_create.');
@@ -41,7 +42,7 @@ function release_userapi_createnote($args)
     $supportlink = !empty($supportlink)? $supportlink : '';
     $changelog   = !empty($changelog)? $changelog : '';
     $notes       = !empty($notes)? $notes : '';
-    $type        = !empty($type)? $type : 'Module';
+    $exttype     = !empty($exttype)? $exttype : 1;
     $rstate      =  isset($rstate)? $rstate : 0;
     $usefeed     =  isset($usefeed)? $usefeed : 0;
 
@@ -64,14 +65,14 @@ function release_userapi_createnote($args)
                      xar_time,
                      xar_certified,
                      xar_approved,
-                     xar_type,
                      xar_rstate,
-                     xar_usefeed
+                     xar_usefeed,
+                     xar_exttype
               )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array($nextId,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
-                      $supportlink,$changelog,$notes,$time,$certified,$approved,$type,$rstate,(int)$usefeed);
+                      $supportlink,$changelog,$notes,$time,$certified,$approved,$rstate,(int)$usefeed,(int)$exttype);
     $result =&$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

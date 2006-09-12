@@ -193,16 +193,8 @@ function release_user_addnotes($args)
             $usefeed = $usefeedchecked?1:0;
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
-            if ($data['type'] == 0) {
-                $exttype='Module';
-            } elseif ($data['type'] == 1)  {
-                $exttype='Theme';
-            } elseif ($data['type'] ==2) {
-                $exttype='PubType';
-            } elseif ($data['type']==3) {
-                $exttype='Enhancement';
-            }
-
+                                  
+            $exttype = $data['exttype'];
             // The user API function is called.
             if (!xarModAPIFunc('release', 'user', 'createnote',
                                 array('rid'         => $rid,
@@ -215,7 +207,7 @@ function release_user_addnotes($args)
                                       'demolink'    => $demolink,
                                       'supportlink' => $supportlink,
                                       'changelog'   => $changelog,
-                                      'type'        => $exttype,
+                                      'exttype'     => $exttype,
                                       'notes'       => $notes,
                                       'rstate'      => $rstate,
                                       'usefeed'     => $usefeed))) return;

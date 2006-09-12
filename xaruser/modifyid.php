@@ -32,6 +32,8 @@ function release_user_modifyid($args)
     if (empty($phase)){
         $phase = 'modify';
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $data['exttypes']=$exttypes;
 
     switch(strtolower($phase)) {
 
@@ -103,7 +105,7 @@ function release_user_modifyid($args)
             if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('desc',      'str:0:',  $desc, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('idtype',    'int:0:',  $idtype, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('exttype',   'int:0:',  $exttype, null, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('rstate',    'int:0:',  $rstate, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('newmembers', 'str:0:', $newmembers, '', XARVAR_NOT_REQUIRED)) return;
@@ -140,7 +142,7 @@ function release_user_modifyid($args)
                                       'displname' => $displname,
                                       'desc'      => $desc,
                                       'certified' => $certified,
-                                      'type'      => $idtype,
+                                      'exttype'   => $exttype,
                                       'class'     => $class,
                                       'rstate'    => $rstate,
                                       'members'   => $members,

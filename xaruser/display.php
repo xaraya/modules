@@ -40,12 +40,11 @@ function release_user_display($args)
     $getuser = xarModAPIFunc('roles', 'user','get',
                               array('uid' => $id['uid']));
     //set the type
-    if ($id['type']==0) {
-        $exttype = xarML('Module');
-    }elseif ($id['type']==1) {
-        $exttype = xarML('Theme');
-    }
-    $data['exttype']=$exttype;
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $fliptype = array_flip($exttypes);
+    $exttypename = array_search($id['exttype'],$fliptype);
+    $data['exttypename']=$exttypename;
+    $data['exttypes']=$exttypes;
     //determine edit link
     if ((xarUserGetVar('uid') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
         $data['editlink']=xarModURL('release','user','modifyid',array('rid'=>$rid));
@@ -91,7 +90,7 @@ function release_user_display($args)
 
             $hooks = xarModCallHooks('item', 'display',$rid,
                                      array('module' => 'release',
-                                           'itemtype'  => '1',
+                                           'itemtype'  => $id['exttype'],
                                            'returnurl' => xarModURL('release', 'user','display',
                                                                      array('rid' => $rid))
                                           ),
@@ -132,7 +131,7 @@ function release_user_display($args)
                 $getid = xarModAPIFunc('release', 'user','getid',
                                        array('rid' => $items[$i]['rid']));
 
-                $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
+                $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
                 $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
                 $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
                 $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
@@ -381,11 +380,12 @@ function release_user_display($args)
     $data['time']=$time;
     $data['desc'] = nl2br($id['desc']);
     $data['regname'] = $id['regname'];
-    $data['regtime'] = $id['regtime'];    
+    $data['regtime'] = $id['regtime'];
     $data['displname'] = $id['displname'];
     $scmlink = str_replace('http://','',$id['scmlink']);
     $data['scmlink']= !empty($scmlink) ? $id['scmlink'] : '';
-    $data['type'] = $id['type'];
+    $data['exttype'] = $id['exttype'];
+    $data['exttypename'] = $exttypename;
     $data['class'] = $id['class'];
     $data['modified'] = $id['modified'];
     $data['memberstring']= $memberstring;

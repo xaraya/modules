@@ -13,7 +13,7 @@
 /**
  * @author niceguyeddie
  * @author jojodee
- * @param int $idtypes: 1- all, 2-themes, 3-modules
+ * @param int $exttypes
  * @param enum sort - sort criteria
  * @TODO : sort ok but need to make sticky over categories etc ...and vice versa
  */
@@ -31,16 +31,25 @@ function release_user_view()
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     $uid = xarUserGetVar('uid');
-    // Set the type of extension
-    if (!isset($idtypes)) {
-       $idtypes=1;
-    }
+
+
+    //TODO -hardcode for now until we get the rest working
     if ($phase == 'modules') {
-        $idtypes=3;
+        $exttype=1;
     }elseif ($phase =='themes') {
-        $idtypes=2;
+        $exttype=2;
+    }elseif ($phase =='properties') {
+        $exttype=3;
+    }elseif ($phase =='blocks') {
+        $exttype=4;
+    }elseif ($phase =='custom') {
+        $exttype=5;
+    }elseif ($phase =='templatepack') {
+        $exttype=6;
+    }elseif ($phase =='addon') {
+        $exttype=7;
     }else{
-     $idtypes=1;
+     $exttype=1;
     }
     $data = array();
     if (empty($sort)) {
@@ -49,13 +58,14 @@ function release_user_view()
 
     // The user API function is called to get all extension IDs.
     $items = xarModAPIFunc('release', 'user', 'getallrids',
-                   array('idtypes'  => $idtypes,
-                         'catid'    => $catid,
-                         'sort'     => $sort,
-                         'startnum' => $startnum,
-                         'numitems' => xarModGetUserVar('release',
+                   array('exttype'  => $exttype,
+                         'catid'     => $catid,
+                         'sort'      => $sort,
+                         'startnum'  => $startnum,
+                         'numitems'  => xarModGetUserVar('release',
                                                         'itemsperpage',$uid),
                           ));
+
     //Add common definition of the extension state array
     //TODO: <jojodee> This needs to be extensible ..not hard coded here ...
     $stateoptions=array();
@@ -145,7 +155,7 @@ function release_user_view()
             // Get Hits
             $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user', 'get',
                                                    array('modname' => 'release',
-                                                         'itemtype' => '1',
+                                                         'itemtype' => $exttype,
                                                          'objectid' => $item['rid']));
 
             if ($items[$i]['hitcount'] != '0') {
@@ -163,12 +173,15 @@ function release_user_view()
            }
        }
 
-       $allitems = xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid));
+       $allitems = xarModAPIFunc('release', 'user', 'countitems',array('exttype'=>$exttype,'catid'=>$catid));
 
-           $data['pager'] = xarTplGetPager($startnum,
-           $allitems,
-           xarModURL('release', 'user', 'view', array('startnum' => '%%','idtypes'=>$idtypes,'catid'=>$catid, 'sort'=>$sort)),
-          xarModGetUserVar('release', 'itemsperpage', $uid));
+           $data['pager'] = xarTplGetPager($startnum, $allitems,
+           xarModURL('release', 'user', 'view', 
+               array('startnum' => '%%',
+                     'exttype'=>$exttype,
+                     'catid'=>$catid,
+                     'sort'=>$sort)),
+               xarModGetUserVar('release', 'itemsperpage', $uid));
 
     }
     if (!isset($allitems)) {
@@ -178,8 +191,10 @@ function release_user_view()
     $data['numitems']=$allitems;
     $data['phase']=$phase;
     $data['catid'] = $catid;
+    $data['exttype'] = $exttype;
     // Add the array of items to the template variables
     $data['items'] = $items;
+    
     return $data;
 
 }

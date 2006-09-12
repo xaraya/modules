@@ -47,16 +47,17 @@ function release_userapi_getnote($args)
                      xar_time,
                      xar_enotes,
                      xar_certified,
-                     xar_type,
                      xar_approved,
                      xar_rstate,
-                     xar_usefeed
+                     xar_usefeed,
+                     xar_exttype
             FROM $releasetable
             WHERE xar_rnid = ?";
     $result =& $dbconn->Execute($query,array($rnid));
     if (!$result) return;
 
-    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $type, $approved,$rstate,$usefeed) = $result->fields;
+    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, 
+        $changelog, $notes, $time, $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -78,10 +79,10 @@ function release_userapi_getnote($args)
                          'time'       => $time,
                          'enotes'     => $enotes,
                          'certified'  => $certified,
-                         'type'       => $type,
                          'approved'   => $approved,
                          'rstate'     => $rstate,
-                         'usefeed'    => $usefeed);
+                         'usefeed'    => $usefeed,
+                         'exttype'    => $exttype);
 
     return $releaseinfo;
 }

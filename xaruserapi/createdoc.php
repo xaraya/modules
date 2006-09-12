@@ -26,7 +26,7 @@ function release_userapi_createdoc($args)
     if ((!isset($rid)) ||
         (!isset($title)) ||
         (!isset($doc)) ||
-        (!isset($type)) ||
+        (!isset($exttype)) ||
         (!isset($approved))) {
 
         $msg = xarML('Wrong arguments to release_userapi_createdoc.');
@@ -54,13 +54,13 @@ function release_userapi_createdoc($args)
               xar_rid,
               xar_title,
               xar_docs,
-              xar_type,
+              xar_exttype,
               xar_time,
               xar_approved
               )
             VALUES (?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,$rid,$title,$doc,$type,$time,$approved);
+    $bindvars = array($nextId,$rid,$title,$doc,$exttype,$time,$approved);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

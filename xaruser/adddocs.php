@@ -24,7 +24,7 @@ function release_user_adddocs()
     if(!xarSecurityCheck('OverviewRelease')) return;
     if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('phase', 'str:1:',    $phase,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('type',  'isset',    $type,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('exttype',  'isset',    $exttype,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
 
     $data['items'] = array();
@@ -79,7 +79,7 @@ function release_user_adddocs()
             $data = xarTplModule('release','user', 'adddocs_start', array('rid'       => $data['rid'],
                                                                           'name'      => $data['name'],
                                                                           'desc'      => $data['desc'],
-                                                                          'type'      => $data['type'],
+                                                                          'exttype'      => $data['exttype'],
                                                                           'message'   => $message,
                                                                           'authid'    => $authid));
 
@@ -93,7 +93,7 @@ function release_user_adddocs()
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
-                                          'type'=> $data['mtype']));
+                                          'exttype'=> $data['mtype']));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no general module documentation defined');
@@ -125,7 +125,7 @@ function release_user_adddocs()
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
-                                          'type'=> $data['mtype']));
+                                          'exttype'=> $data['mtype']));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no general theme documentation defined');
@@ -189,7 +189,7 @@ function release_user_adddocs()
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
-                                          'type'=> $data['mtype']));
+                                          'exttype'=> $data['mtype']));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no blocks documentation defined');
@@ -222,7 +222,7 @@ function release_user_adddocs()
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
                                     array('rid' => $rid,
-                                          'type'=> $data['mtype']));
+                                          'exttype'=> $data['mtype']));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no hook documentation defined');
