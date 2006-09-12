@@ -18,7 +18,7 @@
  */
 function release_userapi_getallrids($args)
 {
-    extract($args); 
+    extract($args);
 
     // Optional arguments.
     if (!isset($startnum)) {
@@ -30,7 +30,9 @@ function release_userapi_getallrids($args)
     if (!isset($idtypes)) {
         $idtypes = 1;
     }
-
+    if (!isset($catid)) {
+    $catid =NULL;
+    }
 
     if (empty($sort)) {
         $sortlist = array('rids');
@@ -72,6 +74,11 @@ function release_userapi_getallrids($args)
                      $releasetable.xar_certified,
                      $releasetable.xar_approved,
                      $releasetable.xar_rstate,
+                     $releasetable.xar_regtime,
+                     $releasetable.xar_modified,
+                     $releasetable.xar_members,
+                     $releasetable.xar_scmlink,
+                     $releasetable.xar_openproj,
                      $rolestable.xar_uname as xar_uname
             FROM $releasetable 
             LEFT JOIN $rolestable
@@ -97,22 +104,27 @@ function release_userapi_getallrids($args)
         $query .= $from;
     }
     switch ($idtypes) {
-    case 3: // module
-        $where[] = "xar_type = '0'";
-        break;
-    case 2: // theme
-        $where[] = "xar_type = '1'";
-        break;
+      case 3: // module
+           $where[] = "xar_type = '0'";
+           break;
+       case 2: // theme
+           $where[] = "xar_type = '1'";
+          break;
     }
 
     if (!empty($certified)) {
         $where[] = " xar_certified = ?";
         $bindvars[] = $certified;
     }
-   if (count($where) > 0)
-    {
+
+   if (!empty($openproj)) {
+       $where[] = " xar_openproj = ?";
+        $bindvars[] = (int)$openproj;
+   }
+   if (count($where) > 0) {
         $query .= ' WHERE ' . join(' AND ', $where);
-    }
+   }
+
     if (count($sortlist) > 0) {
         $sortparts = array();
       foreach ($sortlist as $criteria) {
@@ -133,11 +145,12 @@ function release_userapi_getallrids($args)
                 $sortparts[] = ' xar_regname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'rstate') {
                 $sortparts[] = ' xar_rstate ' . (!empty($sortorder) ? $sortorder : 'ASC');
+            } elseif ($criteria == 'regtime') {
+                $sortparts[] = ' xar_regtime ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } else {
-                // ignore unknown sort fields
+                 $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             }
         }
-
         $query .= ' ORDER BY ' . join(', ',$sortparts);
     } else { // default is 'rid
         $query .= ' ORDER BY  xar_rid ASC';
@@ -150,7 +163,8 @@ function release_userapi_getallrids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,$rstate,$uname) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,$rstate,
+             $regtime, $modified, $members, $scmlink, $openproj, $uname) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
@@ -162,6 +176,11 @@ function release_userapi_getallrids($args)
                                    'certified'  => $certified,
                                    'approved'   => $approved,
                                    'rstate'     => $rstate,
+                                   'regtime'    => $regtime,
+                                   'modified'   => $modified,
+                                   'members'    => $members,
+                                   'scmlink'    => $scmlink,
+                                   'openproj'   => $openproj,
                                    'author'     => $uname);
         }
     }

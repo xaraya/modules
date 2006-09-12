@@ -1,0 +1,19 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-form-input-wrapper">
+    <label for="numitems#$blockid#" title="#xarML('Enter the number of items to display.')#" class="xar-form-label">
+        <xar:mlstring>Number of Items:</xar:mlstring>
+    </label>
+    <input type="text" name="numitems" id="numitems#$blockid#" value="5" size="5" maxlength="5" />
+    <br style="clear:both;" />
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition="$showonlists eq '1'">
+        <input type="checkbox" name="$showonlists" id="$showonlists" value="1" checked="checked"/>
+    <xar:else/>
+        <input type="checkbox" name="$showonlists" id="$showonlists" value="1" />
+    </xar:if>
+    <label for="numitems#$blockid#" title="#xarML('Display items in site lists eg latest projects?')#">
+        <xar:mlstring>Include all items including non-open?</xar:mlstring>
+    </label>
+    <br style="clear:both;" />
+</div>

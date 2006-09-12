@@ -15,6 +15,7 @@
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
  * @returns mixed description of return
+ * @deprecated ? This is not used afaik (jojodee)
  */
 function release_userapi_searchids($args) 
 {

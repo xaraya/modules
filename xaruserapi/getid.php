@@ -36,13 +36,19 @@ function release_userapi_getid($args)
                      xar_class,
                      xar_certified,
                      xar_approved,
-                     xar_rstate
+                     xar_rstate,
+                     xar_regtime,
+                     xar_modified,
+                     xar_members,
+                     xar_scmlink,
+                     xar_openproj
             FROM $releasetable
             WHERE xar_rid = ?";
     $result =& $dbconn->Execute($query,array($rid));
     if (!$result) return;
 
-    list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;
+    list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved,
+         $rstate, $regtime, $modified, $members, $scmlink, $openproj ) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -58,9 +64,13 @@ function release_userapi_getid($args)
                          'class'      => $class,
                          'certified'  => $certified,
                          'approved'   => $approved,
-                         'rstate'     => $rstate);
+                         'rstate'     => $rstate,
+                         'regtime'    => $regtime,
+                         'modified'   => $modified,
+                         'members'    => $members,
+                         'scmlink'    => $scmlink,
+                         'openproj'   => $openproj);
 
     return $releaseinfo;
 }
-
 ?>

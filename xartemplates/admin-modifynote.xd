@@ -27,6 +27,7 @@
                 </td>
                 <td align="left" valign="top" class="xar-norm">
                     #xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z', $time)#
+                    <xar:data-input type="calendar" name="newtime" id="newtime" />
                 </td>
             </tr>
             <tr>

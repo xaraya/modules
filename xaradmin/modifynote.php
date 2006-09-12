@@ -26,16 +26,16 @@ function release_admin_modifynote()
     if (!xarVarFetch('rnid', 'id', $rnid)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
 
+    // The user API function is called.
+    $data = xarModAPIFunc('release', 'user', 'getnote',
+                                  array('rnid' => $rnid));
+
+    if ($data == false) return;
+
     switch(strtolower($phase)) {
 
         case 'modify':
         default:
-            
-            // The user API function is called.
-            $data = xarModAPIFunc('release', 'user', 'getnote',
-                                  array('rnid' => $rnid));
-
-            if ($data == false) return;
 
             // The user API function is called.
             $id = xarModAPIFunc('release', 'user', 'getid',
@@ -96,15 +96,23 @@ function release_admin_modifynote()
            if (!xarVarFetch('rstate', 'int:0:6', $rstate, 0, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('usefeedchecked', 'checkbox', $usefeedchecked, false, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('enotes', 'str:0:', $enotes, '', XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('newtime', 'isset', $newtime, '', XARVAR_NOT_REQUIRED)) {return;}
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
             $usefeed = $usefeedchecked? 1: 0;
+            $newtime = strtotime($newtime);
+            if ($newtime >0) {
+              $newtime= $newtime- xarMLS_userOffset($newtime) * 3600;
+            } else{
+               $newtime= $data['time'];
+            }
 
             // The user API function is called.
             if (!xarModAPIFunc('release', 'admin', 'updatenote',
                                 array('rid'         => $rid,
                                       'rnid'        => $rnid,
                                       'version'     => $version,
+                                      'time'        => $newtime,
                                       'price'       => $pricecheck,
                                       'supported'   => $supportcheck,
                                       'demo'        => $democheck,
@@ -121,7 +129,7 @@ function release_admin_modifynote()
                                       'usefeed'     => $usefeed))) return;
 
 
-            xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));
+            xarResponseRedirect(xarModURL('release', 'user', 'displaynote',array('rnid'=>$rnid)));
 
             return true;
 

@@ -61,6 +61,28 @@ function release_user_display($args)
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
 
+    $memberlist = array();
+    $members = trim($id['members']);
+    $memberstring='';
+    if (isset($members) && !empty($members)) {
+        $memberdata = unserialize($members);
+        if (count($memberdata)>0) {
+            foreach ($memberdata as $k => $v) {
+                $memberlist[]=array($v=>xarUserGetVar('uname',$v));
+            }
+        }
+
+
+        foreach ($memberlist as $key=>$iid) {
+            foreach($iid as $userid=>$username) {
+               if ($key == 0) {
+                    $memberstring = "<a href=\"".xarModURL('roles','user','display',array('uid'=>$userid))."\">".$username."</a>";
+                }else{
+                    $memberstring .=", <a href=\"".xarModURL('roles','user','display',array('uid'=>$userid))."\">".$username."</a>";
+                }
+            }
+        }
+    }
 
     switch(strtolower($phase)) {
 
@@ -75,6 +97,7 @@ function release_user_display($args)
                                           ),
                                      'release'
                                      );
+
 
             if (empty($hooks)) {
                 $data['hooks'] = '';
@@ -115,6 +138,12 @@ function release_user_display($args)
                 $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
                 $items[$i]['displaylink'] =  xarModURL('release', 'user','displaynote',
                                                    array('rnid' => $items[$i]['rnid']));
+                if (xarSecurityCheck('AdminRelease',0)) {
+                    $items[$i]['editlink'] =  xarModURL('release', 'admin','modifynote',
+                                                   array('rnid' => $items[$i]['rnid']));
+                }else{
+                    $items[$i]['editlink'] =  '';
+                }
 
                 $getuser = xarModAPIFunc('roles','user','get',
                                           array('uid' => $getid['uid']));
@@ -300,7 +329,7 @@ function release_user_display($args)
             $data['version'] = 0;
             $data['docs'] = 2;
             $data['general'] = 0;
-  return $data;
+            return $data;
             break;
 
         case 'docshooks':
@@ -336,7 +365,7 @@ function release_user_display($args)
             break;
 
     }
-      foreach ($stateoptions as $key => $value) {
+    foreach ($stateoptions as $key => $value) {
          if ($key==$id['rstate']) {
              $rstatesel=$stateoptions[$key];
          }
@@ -352,9 +381,14 @@ function release_user_display($args)
     $data['time']=$time;
     $data['desc'] = nl2br($id['desc']);
     $data['regname'] = $id['regname'];
+    $data['regtime'] = $id['regtime'];    
     $data['displname'] = $id['displname'];
+    $scmlink = str_replace('http://','',$id['scmlink']);
+    $data['scmlink']= !empty($scmlink) ? $id['scmlink'] : '';
     $data['type'] = $id['type'];
     $data['class'] = $id['class'];
+    $data['modified'] = $id['modified'];
+    $data['memberstring']= $memberstring;
     $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $data['realname'] = $getuser['name'];
     $data['rid'] = $rid;

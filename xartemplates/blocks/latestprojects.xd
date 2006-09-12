@@ -1,0 +1,36 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<xar:set name="releaselink">
+    xarModURL('release','user','view')
+</xar:set>
+<xar:if condition="count($items) ge 1">
+    <ul>
+    <xar:foreach in="$items" value="$item">
+            <xar:if condition="empty($item['link'])">
+                <li>
+                    #xarVarPrepForDisplay($item['rid'])#
+                </li>
+                <xar:else />
+                <li>
+                    <a href="#$item['link']#">
+                        #xarVarPrepForDisplay(ucfirst($item['regname']))# #$item['exttype']# <xar:mlstring>by </xar:mlstring> <a href="#$item['authorlink']#">#$item['author']#</a>
+                    </a>
+                </li>
+            </xar:if>
+        </xar:foreach>
+    </ul>
+    <p class="fc-text-c">
+        <a href="#$releaselink#">
+            <xar:mlstring>
+                Browse All Registered Extensions
+            </xar:mlstring>
+        </a>
+    </p>
+    <xar:else />
+    <p class="fc-text-c">
+        <xar:mlstring>
+            No Registered Extensions to Display
+        </xar:mlstring>
+    </p>
+</xar:if>

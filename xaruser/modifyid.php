@@ -24,6 +24,10 @@ function release_user_modifyid($args)
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
     if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('rid', 'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
+
+    $data = xarModAPIFunc('release', 'user', 'getid', array('rid' => $rid));
+    if ($data == false) return;
 
     if (empty($phase)){
         $phase = 'modify';
@@ -33,17 +37,32 @@ function release_user_modifyid($args)
 
         case 'modify':
         default:
-            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) return;
 
-            // The user API function is called.
-            $data = xarModAPIFunc('release', 'user', 'getid',
-                                  array('rid' => $rid));
-
-            if ($data == false) return;
             // The user API function is called.
 
             $uid = xarUserGetVar('uid');
+            $memberstring = '';
+            $members=trim($data['members']);
+            if (isset($members) && !empty($members)) {
+               $memberdata = unserialize($members);
+                if (count($memberdata)>0) {
+                    foreach ($memberdata as $k => $v) {
+                       $memberlist[]=xarUserGetVar('uname',$v);
+                    }
+                }
+                $memberstring='';
+                foreach ($memberlist as $key=>$uname) {
+                    if ($key == 0) {
+                    $memberstring = $uname;
+                    }else{
+                    $memberstring .=','.$uname;
+                    }
+                }
+            }
 
+            $data['memberlist']=$memberstring;
+            $openproj = $data['openproj'];
+            $data['openproj'] = isset($openproj) && $openproj>0 ? 1:0;
             if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
                 $message = '';
             } else {
@@ -63,6 +82,7 @@ function release_user_modifyid($args)
                 }
             }
             $data['rstatesel']=$rstatesel;
+
             $data['stateoptions']=$stateoptions;
             $item['module'] = 'release';
             $hooks = xarModCallHooks('item', 'modify', $rid, $item);
@@ -77,19 +97,40 @@ function release_user_modifyid($args)
             break;
 
         case 'update':
-            if (!xarVarFetch('rid',       'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
+
             if (!xarVarFetch('uid',       'int:1:',  $uid, null, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('regname',   'str:1:',  $regname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('desc',      'str:0:', $desc, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('desc',      'str:0:',  $desc, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('certified', 'int:0:1', $certified, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('idtype',    'int:0:',  $idtype, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('class',     'int:0:',  $class, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('rstate',    'int:0:',  $rstate, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('newmembers', 'str:0:', $newmembers, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('scmlink',   'str:0:',  $scmlink, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('openproj',   'checkbox',  $openproj, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cids',      'str:0:',  $cids, '', XARVAR_NOT_REQUIRED)) return;
-           if (!xarVarFetch('modifyreferer', 'str:0:',  $modifyreferer, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('modifyreferer', 'str:0:',  $modifyreferer, '', XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
+            $existingmembers = $data['members'];
+            $openproj = isset($openproj)? 1:0;
+            $memberslist=array();
+            if (!empty($newmembers)) {
+              $newmemberlist = explode(',',$newmembers);
+
+              foreach ($newmemberlist as $k=>$v) {
+                  $userRole = xarModAPIFunc('roles',  'user',  'get',
+                                       array('uname' => trim($v)));
+                  if (is_array($userRole)) {
+                      $memberslist[]=$userRole['uid'];
+                  }
+              }
+
+              $members = serialize($memberslist);
+            }else {
+                $members = '';
+            }
 
             // The user API function is called.
             if (!xarModAPIFunc('release', 'user','updateid',
@@ -102,6 +143,9 @@ function release_user_modifyid($args)
                                       'type'      => $idtype,
                                       'class'     => $class,
                                       'rstate'    => $rstate,
+                                      'members'   => $members,
+                                      'scmlink'   => $scmlink,
+                                      'openproj'  => $openproj,
                                       'cids'      => $cids))) return;
 
           xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$rid)));

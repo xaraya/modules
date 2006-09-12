@@ -62,6 +62,9 @@ function release_userapi_createid($args)
     if (empty($approved)){
         $approved = 1;
     }
+
+    $modified = time();
+
     $allrids=array();
     // Get all IDs
     $query2 = "SELECT xar_rid FROM $releasetable ORDER BY xar_rid";
@@ -73,6 +76,8 @@ function release_userapi_createid($args)
             $allrids[] = array('rid'=> $rid);
     }
     $result->Close();
+    //set the registration time
+    $regtime = time();
     //jojodee - we want to get all the rids that exist and may not be sequential,
     // and allocate first free number to the next rid available for the extension
 
@@ -85,7 +90,7 @@ function release_userapi_createid($args)
           $nextid++;
        }
     }
-  if ($nextid == 0) return;
+    if ($nextid == 0) return;
 
     $query = "INSERT INTO $releasetable (
               xar_rid,
@@ -97,11 +102,17 @@ function release_userapi_createid($args)
               xar_class,
               xar_certified,
               xar_approved,
-              xar_rstate
+              xar_rstate,
+              xar_regtime,
+              xar_modified,
+              xar_members,
+              xar_scmlink,
+              xar_openproj
               )
-            VALUES (?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextid,$uid,$regname,$displname,$desc,$type,$class,$certified,$approved,$rstate);
+    $bindvars = array($nextid,(int)$uid,$regname,$displname,$desc,$type,$class,$certified,$approved,$rstate,
+                      (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

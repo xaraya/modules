@@ -50,7 +50,12 @@ function release_userapi_getthemeids($args)
                      xar_class,
                      xar_certified,
                      xar_approved,
-                     xar_rstate
+                     xar_rstate,
+                     xar_regtime,
+                     xar_modified,
+                     xar_members,
+                     xar_scmlink,
+                     xar_openproj
             FROM $releasetable
             WHERE xar_type = '1'
             ORDER BY xar_rid";
@@ -60,7 +65,8 @@ function release_userapi_getthemeids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, 
+                     $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
@@ -71,7 +77,12 @@ function release_userapi_getthemeids($args)
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
-                                   'rstate'     => $rstate);
+                                   'rstate'     => $rstate
+                                   'regtime'    => $regtime,
+                                   'modified'   => $modified,
+                                   'members'    => $members,
+                                   'scmlink'    => $scmlink,
+                                   'openproj'   => $openproj);
         }
     }
 

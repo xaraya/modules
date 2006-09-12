@@ -48,12 +48,25 @@ function release_userapi_getallids($args)
                      xar_class,
                      xar_certified,
                      xar_approved,
-                     xar_rstate
+                     xar_rstate,
+                     xar_regtime,
+                     xar_modified,
+                     xar_members,
+                     xar_scmlink,
+                     xar_openproj
             FROM $releasetable
             ORDER BY xar_rid";
     if (!empty($certified)) {
         $query .= " WHERE xar_certified = ?";
-      $bindvars[]=($certified);
+      $bindvars[]=$certified;
+    }
+    if (isset($type) and !empty($type)) {
+        if (!empty($certified)) {
+           $query .= " AND xar_type = ?";
+        }else {
+           $query .= " WHERE xar_type = ?";
+        }
+       $bindvars[]= $type;
     }
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
@@ -61,7 +74,8 @@ function release_userapi_getallids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, 
+             $rstate, $regtime, $modified, $members, $scmlink,$openproj) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
@@ -72,7 +86,12 @@ function release_userapi_getallids($args)
                                    'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
-                                   'rstate'     => $rstate);
+                                   'rstate'     => $rstate,
+                                   'regtime'    => $regtime,
+                                   'modified'   => $modified,
+                                   'members'    => $members,
+                                   'scmlink'    => $scmlink,
+                                   'openproj'   => $openproj);
         }
     }
 

@@ -57,6 +57,7 @@ function release_user_addid()
                 $data['idtype']='';
                 $data['class']='1';
                 $data['rstate']='0';
+                $data['openproj']=0;
 
                 break;
 
@@ -65,15 +66,18 @@ function release_user_addid()
                 if (!xarVarFetch('uid', 'int:1:', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
                 if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('displname', 'str:1:', $displname, NULL, XARVAR_NOT_REQUIRED)) {return;};
-                if (!xarVarFetch('desc', 'str:1:', $desc, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('desc', 'str:1:', $desc, '', XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('idtype', 'int:0:3', $idtype, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('class', 'int:0:', $class, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('rstate', 'int:0:6', $rstate, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('members', 'str:0:', $members, '', XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('scmlink', 'str:0:', $scmlink, '', XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('openproj', 'checkbox', $openproj, 0, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 
                 // Get the UID of the person submitting the module
                 $uid = xarUserGetVar('uid');
-
+                $openproj = isset($openproj)? 1:0;
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) return;
 
@@ -88,6 +92,9 @@ function release_user_addid()
                                           'type' => $idtype,
                                           'class' => $class,
                                           'rstate'=> $rstate,
+                                          'members' => $members,
+                                          'scmlink' => $scmlink,
+                                          'openproj'=> $openproj,
                                           'cids' => $cids));
                 if ($newrid==false) {
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {

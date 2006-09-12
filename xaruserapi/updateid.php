@@ -47,6 +47,11 @@ function release_userapi_updateid($args)
                      new DefaultUserException($msg));
         return; 
     }
+    //this should not change once registered
+    if (!isset($regtime)) {
+       $regtime=$link['regtime'];
+    }
+    $modified = time();
 
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
@@ -71,9 +76,15 @@ function release_userapi_updateid($args)
                 xar_desc      = ?,
                 xar_certified = ?,
                 xar_approved  = ?,
-                xar_rstate    = ?
+                xar_rstate    = ?,
+                xar_regtime   = ?,
+                xar_modified  = ?,
+                xar_members   = ?,
+                xar_scmlink   = ?,
+                xar_openproj  = ?
             WHERE xar_rid     = ?";
-    $bindvars = array($uid,$regname,$displname,$type,$class,$desc,$certified,$approved,$rstate,$rid);
+    $bindvars = array($uid,$regname,$displname,$type,$class,$desc,$certified,$approved,$rstate,
+                      $regtime, $modified, $members, $scmlink, $openproj, $rid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

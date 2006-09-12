@@ -37,43 +37,6 @@
 <h2><xar:mlstring>View All Registered Projects</xar:mlstring></h2>
 <xar:template type="module" file="user-menu" />
 
-<xar:comment> Put these in the tab menu
-    <xar:if condition="xarUserIsLoggedIn()">
-         <h2 class="fc-half">
-            [
-            <a href="#$addextension#">
-                <xar:mlstring>
-                    Register an Extension
-                </xar:mlstring>
-            </a>
-            ]
-        </h2>
-    <xar:else />
-        <h2 class="fc-half">
-            <xar:mlstring>
-                Log In to Add an Extension
-            </xar:mlstring>
-        </h2>
-    </xar:if>
-    <h2 class="fc-half" style="clear:left;">
-         [
-        <a href="#$searchlink#">
-            <xar:mlstring>
-                Search: Registered Extensions
-            </xar:mlstring>
-        </a>
-        ]
-    </h2>
-    <h2 class="fc-half fc-text-r">
-        [
-        <a href="#$releaseoverview#">
-            <xar:mlstring>
-                Help: Extensions &amp; Releases
-            </xar:mlstring>
-        </a>
-        ]
-    </h2>
-</xar:comment>
     <form class="fc-full" action="&xar-modurl-release-user-view;" method="post" enctype="application/x-www-form-urlencoded">
         <xar:if condition="!empty($catid)">
             <input type="hidden" name="catid" value="#$catid#" />

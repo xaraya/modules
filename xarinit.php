@@ -69,6 +69,26 @@ function release_init()
                                    'xar_rstate'      => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
+                                                              'increment'   => false),
+                                   'xar_regtime'     => array('type'        => 'integer',
+                                                                 'unsigned'    => TRUE,
+                                                                 'null'        => false,
+                                                                 'default'     => '0'),
+                                   'xar_modified'    => array('type'        => 'integer',
+                                                                 'unsigned'    => TRUE,
+                                                                 'null'        => false,
+                                                                 'default'     => '0'),
+                                   'xar_members'     => array('type'        => 'text',
+                                                              'null'        => false,
+                                                              'default'     => ''),
+                                   'xar_scmlink'     => array('type'        => 'varchar',
+                                                              'size'        => 255,
+                                                              'null'        => false,
+                                                              'default'     => ''),
+                                   'xar_openproj'    => array('type'       => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'size'        => 'tiny',
                                                               'increment'   => false)
                                                               ));
     $result =& $dbconn->Execute($query);
@@ -206,7 +226,12 @@ function release_init()
                        'register_block_type',
                        array('modName'   => 'release',
                              'blockType' => 'latest'))) return;
-    
+     // Register Block types
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'   => 'latestprojects',
+                             'blockType' => 'latestprojects'))) return;
     // Enable categories hooks for release
     xarModAPIFunc('modules','admin','enablehooks',
           array('callerModName' => 'release', 'hookModName' => 'categories'));        
@@ -272,7 +297,81 @@ function release_upgrade($oldversion)
                $doupdate =& $dbconn->Execute($updateusefeed);
                if (!$doupdate) return;
            }
-        case '0.2.0': //current version
+        case '0.2.0': 
+          $dbconn =& xarDBGetConn();
+          $xartable =& xarDBGetTables();
+          $releaseid = $xartable['release_id'];
+
+          xarDBLoadTableMaintenanceAPI();
+          $query = xarDBAlterTable($releaseid,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_regtime',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'size'    => '11',
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            $query = xarDBAlterTable($releaseid,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_modified',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'size'    => '11',
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            $query = xarDBAlterTable($releaseid,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_members',
+                                    'type'    => 'text',
+                                    'null'    =>  false,
+                                    'default' => ''));
+
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            $query = xarDBAlterTable($releaseid,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_scmlink',
+                                    'type'    => 'varchar',
+                                    'null'    =>  false,
+                                    'size'    => '255',
+                                    'default' => ''));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            $query = xarDBAlterTable($releaseid,
+                             array('command'  => 'add',
+                                    'field'   => 'xar_openproj',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'size'    => 'tiny',
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            $query= "SELECT COUNT(1)
+                    FROM $releaseid";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            for (; !$result->EOF; $result->MoveNext()) {
+               $updateusefeed = "UPDATE $releaseid
+                                 SET xar_regtime = 0, xar_modified =0, xar_members = '', xar_scmlink='', xar_openproj = 1";
+               $doupdate =& $dbconn->Execute($updateusefeed);
+               if (!$doupdate) return;
+           }
+          // Register Block types
+         if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'   => 'latestprojects',
+                             'blockType' => 'latestprojects'))) return;
+        case '0.3.0': //current version
 
         break;
     }
@@ -312,7 +411,12 @@ function release_delete()
                        'unregister_block_type',
                         array('modName'   => 'release',
                               'blockType' => 'latest'))) return;
-
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                        array('modName'   => 'latestprojects',
+                              'blockType' => 'latestprojects'))) return;
     // Disable categories hooks for release
        xarModAPIFunc('modules','admin','disablehooks',
           array('callerModName' => 'release', 'hookModName' => 'categories'));

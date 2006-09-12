@@ -1,15 +1,18 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Registration &amp; Releases</xar:mlstring></span></div>
+<xar:if condition="!isset($tab)">
+    <xar:set name="tab">''</xar:set>
+</xar:if>
+<xar:set name="extname">ucfirst($regname)</xar:set>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Modify A Release ID</xar:mlstring></h2>
-<div style="margin: auto;">
+<h2><xar:mlstring>Modify Registered Extension Entry</xar:mlstring></h2>
+<xar:template type="module" file="user-minimenu" />
     <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />    
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
         <input type="hidden" name="certified" id="certified" value="#$certified#" />
 
-        <table border="0" cellpadding="5">
+        <table border="0" width="99%" cellpadding="5">
             <tr>
                 <td align="left" valign="top" class="xar-norm">
                     <xar:mlstring>Extension ID</xar:mlstring>
@@ -65,10 +68,19 @@
             </tr>
             <tr>
                 <td align="left" valign="top" class="xar-norm">
+                 <label for="newmembers"><xar:mlstring>Members</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="newmembers" id="newmembers" value="#$memberlist#" size="40" maxlength="250" tabindex="2" />
+                    <xar:mlstring>Comma separated list of usernames</xar:mlstring>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
                     <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                    <textarea name="displname" id="displname" tabindex="4" rows="10" cols="50">#$displname#</textarea> 
+                    <textarea name="displname" id="displname" tabindex="4" rows="10" cols="50">#$displname#</textarea>
                 </td>
             </tr>
             <tr>
@@ -113,6 +125,31 @@
                 </td>
             </tr>
             <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="scmlink"><xar:mlstring>SCM Link</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:data-input type="url" name="scmlink" value="$scmlink" id="scmlink" size="100" maxlength="250" />
+                </td>
+            </tr>
+            
+             <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="openproj" class="xar-form-label">
+                       <span class="help" title="#xarML('Do you want this listed on public blocks')#">
+                           <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+                        </span>
+                    </label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:if condition="$openproj eq 1"> 
+                        <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
+                    <xar:else/>
+                         <input type="checkbox" name="openproj" id="openproj" value="1" />
+                     </xar:if>
+                </td>
+             </tr>
+            <tr>
                 <td align="left" valign="top" class="xar-norm" colspan="2">
                     #$cathook#
                 </td>
@@ -123,4 +160,4 @@
         </p>
     </form>
 </div>
-</div>
+

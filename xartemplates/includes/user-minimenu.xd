@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+        <xar:style scope="module" file="navtabs" module="base" />
+            <dl class="xar-tabs">
+                <dt class="help" title="#xarML('Click on a tab to explore further')#">
+                    <xar:mlstring>
+                        Options:
+                    </xar:mlstring>
+                </dt>
+               <xar:if condition="$tab eq 'back'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                           <xar:mlstring>View Extensions List</xar:mlstring>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="&xar-modurl-release-user-view;">
+                            <xar:mlstring>View Extension List</xar:mlstring></a>
+                   </dd>
+               </xar:if>
+               <xar:if condition="$tab eq 'basic'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Summary</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view', 'tab'=>'basic'))#">
+                              <xar:ml>
+                                  <xar:mlstring>#(1) Summary</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                        </a>
+                   </dd>
+               </xar:if>
+               <xar:if condition="$tab eq 'versions'">
+                   <dd class="active">
+                       <a href="#xarServerGetCurrentURL()#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Version History</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                       </a>
+                   </dd>
+               <xar:else />
+                   <dd>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#">
+                             <xar:ml>
+                                  <xar:mlstring>#(1) Version History</xar:mlstring>
+                                  <xar:mlvar>#$extname#</xar:mlvar>
+                              </xar:ml>
+                        </a>
+                   </dd>
+               </xar:if>
+
+            </dl>

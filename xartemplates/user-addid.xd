@@ -94,6 +94,19 @@
                       </xar:foreach>
                       </select>
                   </p>
+                  
+                <p>
+                    <label for="openproj" class="xar-form-label">
+                       <span class="help" title="#xarML('Do you want this listed on public blocks')#">
+                           <xar:mlstring>Add to Latest Project List?</xar:mlstring>
+                        </span>
+                    </label>
+                    <xar:if condition="$openproj eq '1'">
+                        <input type="checkbox" name="openproj" id="openproj" value="1" checked="checked"/>
+                    <xar:else/>
+                         <input type="checkbox" name="openproj" id="openproj" value="1" />
+                     </xar:if>
+                 </p>
                  <p>
                         #$cathook#
                  </p>

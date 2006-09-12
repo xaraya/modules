@@ -94,7 +94,7 @@
                      #$changelogf#
                 </div>
             </p>
-            <p>
+            <p style="clear:left;">
                  <label for="additionalnotes" class="xar-form-label">
                     <xar:mlstring>Additional Notes</xar:mlstring>
                 </label>

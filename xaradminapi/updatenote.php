@@ -65,13 +65,14 @@ function release_adminapi_updatenote($args)
                 xar_changelog = ?,
                 xar_notes = ?,
                 xar_enotes = ?,
+                xar_time = ?,
                 xar_certified = ?,
                 xar_approved = ?,
                 xar_rstate = ?,
                 xar_usefeed = ?
             WHERE xar_rnid = ?";
     $bindvars=array($version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
-                    $changelog,$notes,$enotes,$certified,$approved,$rstate,$usefeed,$rnid);
+                    $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,$rnid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

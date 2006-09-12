@@ -18,64 +18,7 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
     
- <xar:style scope="module" file="navtabs" module="base" />
-            <dl class="xar-tabs">
-                <dt class="help" title="#xarML('Click on a tab to explore further')#">
-                    <xar:mlstring>
-                        Options:
-                    </xar:mlstring>
-                </dt>
-              <xar:if condition="$tab eq 'back'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                           <xar:mlstring>View Extension List</xar:mlstring>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="&xar-modurl-release-user-view;"><xar:mlstring>View Extension List</xar:mlstring></a>
-                   </dd>
-               </xar:if>                
-               <xar:if condition="$tab eq 'basic'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                             <xar:ml>
-                                  <xar:mlstring>#(1) Summary</xar:mlstring>
-                                  <xar:mlvar>#$extname#</xar:mlvar>
-                              </xar:ml>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view', 'tab'=>'basic'))#">
-                             <xar:ml>
-                                  <xar:mlstring>#(1) Summary</xar:mlstring>
-                                  <xar:mlvar>#$extname#</xar:mlvar>
-                              </xar:ml>
-                        </a>
-                   </dd>
-               </xar:if>
-               <xar:if condition="$tab eq 'versions'">
-                   <dd class="active">
-                       <a href="#xarServerGetCurrentURL()#">
-                             <xar:ml>
-                                  <xar:mlstring>#(1) Version History</xar:mlstring>
-                                  <xar:mlvar>#$extname#</xar:mlvar>
-                              </xar:ml>
-                       </a>
-                   </dd>
-               <xar:else />
-                   <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#">
-                             <xar:ml>
-                                  <xar:mlstring>#(1) Version History</xar:mlstring>
-                                  <xar:mlvar>#$extname#</xar:mlvar>
-                              </xar:ml>
-                   </dd>
-               </xar:if>
-
-            </dl>
-
+ <xar:template type="module" file="user-minimenu" />
     <div class="docs-article-wrapper">
 
               <h2 style="float: left; width: 20%; text-align:left;">
