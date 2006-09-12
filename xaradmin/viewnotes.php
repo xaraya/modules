@@ -36,7 +36,8 @@ function release_admin_viewnotes()
     if (empty($phase)){
         $phase = 'unapproved';
     }
-
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $data['exttypes']=$exttypes;
     switch(strtolower($phase)) {
 
         case 'unapproved':

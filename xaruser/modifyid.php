@@ -25,10 +25,11 @@ function release_user_modifyid($args)
     if(!xarSecurityCheck('EditRelease')) return;
     if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rid', 'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('return_url', 'str:0:',  $return_url, null, XARVAR_NOT_REQUIRED)) return;
+    
     $data = xarModAPIFunc('release', 'user', 'getid', array('rid' => $rid));
     if ($data == false) return;
-
+    $data['return_url']= $return_url;
     if (empty($phase)){
         $phase = 'modify';
     }
@@ -113,6 +114,7 @@ function release_user_modifyid($args)
             if (!xarVarFetch('openproj',   'checkbox',  $openproj, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cids',      'str:0:',  $cids, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('modifyreferer', 'str:0:',  $modifyreferer, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('return_url', 'str:0:',  $return_url, '', XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
             $existingmembers = $data['members'];
@@ -150,9 +152,12 @@ function release_user_modifyid($args)
                                       'openproj'  => $openproj,
                                       'cids'      => $cids))) return;
 
-          xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$rid)));
-
-            return true;
+          if (isset($return_url)) {
+              xarResponseRedirect($return_url);
+          }else{
+              xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$rid)));
+          }
+          return true;
 
             break;
     }

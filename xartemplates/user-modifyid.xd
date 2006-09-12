@@ -10,6 +10,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />    
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />        
         <input type="hidden" name="certified" id="certified" value="#$certified#" />
 
         <table border="0" width="99%" cellpadding="5">
@@ -54,24 +55,6 @@
                 <xar:else />
                      #$exttypename#
                 </xar:sec>
-<!--
-                    <xar:sec id="checktype1" mask="AdminRelease" catch="false">
-                        <input type="radio" name="idtype" value="0" checked="checked" /><xar:mlstring>Module</xar:mlstring>
-                        <input type="radio" name="idtype" value="1" /><xar:mlstring>Theme</xar:mlstring>
-                    <xar:else/>
-                        <xar:mlstring>Module</xar:mlstring>
-                        <input type="hidden" name="idtype" id="idtype" value="0" />
-                    </xar:sec>
-                <xar:else />
-                    <xar:sec id="checktype2" mask="AdminRelease" catch="false" component="release" >
-                        <input type="radio" name="idtype" value="0" /><xar:mlstring>Module</xar:mlstring>
-                        <input type="radio" name="idtype" value="1" checked="checked" /><xar:mlstring>Theme</xar:mlstring>
-                    <xar:else/>
-                        <input type="hidden" name="idtype" id="idtype" value="1" />
-                        <xar:mlstring>Theme</xar:mlstring>
-                    </xar:sec>
-                </xar:if>
--->
                 </td>
             </tr>
             <tr>

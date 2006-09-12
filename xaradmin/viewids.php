@@ -20,9 +20,6 @@ function release_admin_viewids()
 
     $uid = xarUserGetVar('uid');
 
-    if (!isset($exttype)) {
-       $exttype=1;
-    }
 
    //TODO -hardcode for now until we get the rest working
     if ($phase == 'modules') {
@@ -44,7 +41,7 @@ function release_admin_viewids()
     }
 
     // The user API function is called. 
-    $items = xarModAPIFunc('release', 'user', 'getallids',
+    $items = xarModAPIFunc('release', 'user', 'getallrids',
                        array('exttype' => $exttype,
                              'startnum' => $startnum,
                              'numitems' => xarModGetUserVar('release',
@@ -84,10 +81,9 @@ function release_admin_viewids()
     //Add the pager
     $data['phase']=$phase;
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countitems',array('exttype'=>$extype)),
+        xarModAPIFunc('release', 'user', 'countitems',array('exttype'=>$exttype)),
         xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
-
     // Add the array of items to the template variables
     $data['items'] = $items;
     return $data;

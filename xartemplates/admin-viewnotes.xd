@@ -68,11 +68,11 @@
         </xar:if>
         <tr>
           <td class="#$rowclass#">
-            <xar:if condition="$loop:item['type'] == 0">
-              <h3><xar:mlstring>Module</xar:mlstring>:</h3>
-            <xar:else />        
-              <h3><xar:mlstring>Theme</xar:mlstring>:</h3>
-            </xar:if>
+              <xar:foreach in="$exttypes" key="$k" value="$v">
+                  <xar:if condition="$loop:item['exttype'] eq $k">
+                      #$v#
+                  </xar:if>
+              </xar:foreach>
           </td>
           <td class="#$rowclass#">
                   #$loop:item['regname']#
