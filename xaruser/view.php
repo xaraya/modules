@@ -91,8 +91,8 @@ function release_user_view()
         // InfoURL
         $items[$i]['infourl'] = xarModURL('release', 'user', 'display',
                                           array('eid' => $item['eid'],
-                                                'phase' => 'version',
-                                                'tab'  => 'versions'
+                                                'phase' => 'view',
+                                                'tab'  => 'basic'
                                           ));
         $items[$i]['infotitle'] = xarML('View');
 

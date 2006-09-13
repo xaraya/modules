@@ -22,7 +22,18 @@
             <input type="hidden" name="phase" id="phase" value="update" />
             <fieldset class="formelements xar-norm">
             <legend><xar:mlstring>Extension Information</xar:mlstring></legend>
-            
+            <xar:if condition="isset($msg) and !empty($msg)">
+            <p class="xar-error">#$msg#</p>
+            </xar:if>
+           <p class="param">
+                <label for="ridno" class="xar-form-label">
+                    <span class="help" title="#xarML('If you want a particular number as an id, enter it here. If available it will be used.')#">
+                        <xar:mlstring>Registration ID:</xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="ridno" id="ridno" value="" size="15" maxlength="15" tabindex="1" />
+                <xar:mlstring> Leave blank, unless you want to nominate a specific ID for your extension.</xar:mlstring>
+            </p>
             <p class="param">
                 <label for="startbackup" class="xar-form-label">
                     <span class="help" title="#xarML('Enter a unique name for the extension, no spaces or special characters.')#">
@@ -30,6 +41,7 @@
                     </span>
                 </label>
                 <input type="text" name="regname" id="regname" value="" size="25" maxlength="60" tabindex="2" />
+                <xar:mlstring>Lower case, no spaces or special characters (underscore and hyphens accepted).</xar:mlstring>
             </p>
 
             <p class="param">

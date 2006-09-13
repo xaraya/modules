@@ -25,15 +25,19 @@ function release_userapi_createid($args)
                         new SystemException($msg));
         return false;
     }
-    $regname = strtolower($regname);
+    if (!isset($ridno)) $ridno = 0; //make it zero and check for this before using it for allocations
+    $regname = trim(strtolower($regname));
     //get our new registration ID for this extension type
-    $regid = xarModAPIFunc('release','user','allocateid',array('regname'=>$regname, 'exttype'=>$exttype,'rid'=>$rid));
+    $regid = xarModAPIFunc('release','user','allocateid',
+          array('regname' => $regname,
+                'exttype' => $exttype,
+                'ridno'     => $ridno));
 
-    if (!isset($regid)){
-      $msg = xarML('Unable to create an ID for this extension.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
+    if (!($regid)){
+      $msg = xarML('<p>Sorry, unable to create an ID for this extension. The name you requested is either already registered for that extension type, or there is a problem with the name format. Please check the name for valid characters, and choose a valid name if necessary to try again.</p>');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',                       
+                    new SystemException($msg));
+        return false;
     }
     //we now have our new rid for this extension
     $rid = $regid;

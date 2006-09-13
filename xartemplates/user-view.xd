@@ -52,7 +52,7 @@
         <xar:set name="displayphase">
             ucfirst($phase)
         </xar:set>
-        <div class="fc-clear">
+        <div class="xar-clearboth">
             <xar:ml>
                 <xar:mlstring>
                     Currently displaying filtered by: <strong>#(1)</strong>
@@ -64,14 +64,14 @@
         </div>
         <input type="hidden" name="phase" value="#$phase#" />
     </xar:if>
-    <div style="clear:both; text-align:left; margin-top:10px;margin-bottom:10px;width:100%;">
+    <div class="xar-clearboth xar-fullwidth xar-align-left xar-padding-thickends">
         <xar:if condition="!empty($catid) and ($catid ne '10')">
             <xar:categories-navigation showcatcount="2" showchildren="1" module="release" itemtype="" catid="$catid" showempty="1" />
         <xar:else />
             <xar:categories-navigation showcatcount="2"  showchildren="1" module="release" itemtype="" catid="11" showempty="1" />
         </xar:if>
     </div>
-    <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
+    <div class="xar-clearboth xar-fullwidth xar-align-center xar-padding-thickends">
     <xar:if condition="$numitems lt '1'">
         <xar:mlstring>There are no extensions to display</xar:mlstring>
     <xar:else />

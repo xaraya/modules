@@ -119,6 +119,47 @@ function release_user_display($args)
         } else {
             $data['hooks'] = $hooks;
         }
+
+       // The user API function is called.
+       $items = array();
+       $items = xarModAPIFunc('release', 'user','getallnotes',
+                                  array('startnum' => $startnum,
+                                        'numitems' => xarModGetVar('release',
+                                                                  'itemsperpage'),
+                                        'eid' => $eid));
+        if (empty($items)){
+                $data['message'] = xarML('There is no version history on this module');
+            }
+        $latest=array();
+        if (isset($items) && isset($items[0])){
+            $latest=$items[0];
+        }
+        if (!isset($latest['dllink'])){
+               $latest['dllink']='';
+            }
+        if (!isset($latest['version'])){
+               $latest['version']='';
+        }
+
+        //use the release editor notes for xaraya mtn repo latest nightly until we get more fields
+        if (isset($latest['enotes']) && strpos($latest['enotes'],'mt.xaraya.com')) {
+
+          $latest['nightlylink']=$latest['enotes'];
+        }else{
+          $latest['nightlylink']='';
+        }
+        if (xarModIsAvailable('articles') && xarModIsAvailable('keywords') && isset($id['regname'])){
+           $latest['onsitedocs']=xarModURL('keywords','user','main',array('keyword'=>$id['regname']));
+        }else{
+           $latest['onsitedocs'] ='';
+        }
+        if (!isset($id['scmlink'])){
+               $latest['scmlink']='';
+        }else{
+            $latest['scmlink']=$id['scmlink'];
+        }
+        $data['latest']=$latest;
+
     switch(strtolower($phase)) {
         case 'view':
         default:
@@ -129,18 +170,6 @@ function release_user_display($args)
             break;
 
         case 'version':
-
-            // The user API function is called.
-            $items = array();
-            $items = xarModAPIFunc('release', 'user','getallnotes',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('release',
-                                                                  'itemsperpage'),
-                                        'eid' => $eid));
-
-            if (empty($items)){
-                $data['message'] = xarML('There is no version history on this module');
-            }
 
             // Check individual permissions for Edit / Delete
             for ($i = 0; $i < count($items); $i++) {

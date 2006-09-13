@@ -18,13 +18,16 @@
  * @return array
  * @author Release module development team
  */
-function release_user_addid()
+function release_user_addid($args)
 {
+    extract($args);
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     xarVarFetch('phase', 'enum:add:update', $phase, 'add', XARVAR_NOT_REQUIRED);
+    xarVarFetch('msg', 'str', $msg, '', XARVAR_NOT_REQUIRED);
 
+    $data['msg']=$msg;
     if (empty($phase)){
         $phase = 'add';
     }
@@ -38,7 +41,7 @@ function release_user_addid()
     $data['stateoptions']=$stateoptions;
 
     $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
-    
+
     $data['exttypes']=$exttypes;
     if (xarUserIsLoggedIn()){
         switch(strtolower($phase)) {
@@ -65,7 +68,7 @@ function release_user_addid()
                 break;
 
             case 'update':
-
+                if (!xarVarFetch('ridno', 'int:1:', $ridno, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('uid', 'int:1:', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
                 if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('displname', 'str:1:', $displname, NULL, XARVAR_NOT_REQUIRED)) {return;};
@@ -83,10 +86,11 @@ function release_user_addid()
                 $openproj = isset($openproj)? 1:0;
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) return;
-
+                if (!isset($ridno)) $ridno = 0;
                 // The user API function is called.
                 $newid =  xarModAPIFunc('release', 'user', 'createid',
-                                    array('uid'       => $uid,
+                                    array('ridno'     => $ridno,
+                                          'uid'       => $uid,
                                           'regname'   => $regname,
                                           'displname' => $displname,
                                           'desc'      => $desc,

@@ -19,8 +19,9 @@
 function release_userapi_allocateid($args)
 {
     extract($args);
+
    /* Get rid of leading and trailing spaces in the name */
-    $regname = trim(strtolower($regname));
+
     if (!isset($regname) || !isset($exttype)) {
        $msg = xarML('Both a registration name and extension type were not provided and are needed for registration.');
         xarErrorSet(XAR_USER_EXCEPTION,
@@ -37,16 +38,17 @@ function release_userapi_allocateid($args)
                         new SystemException($msg));
               return false;
     }
-    if (isset($rid) && $rid >0) { //could be a supplied ID, let's check if it's available.
-      $checkrid = xarModAPIFunc('release','user','getid',array('rid'=>$rid, 'exttype'=>$exttype));
+    if (isset($ridno) && is_integer($ridno) && $ridno >0) { //could be a supplied ID, let's check if it's available.
+      $checkrid = xarModAPIFunc('release','user','getid',array('rid'=>$ridno, 'exttype'=>$exttype));
       if (isset($checkrid['regname']) && !empty($checkrid['regname'])) { //the rid is take, try again
-          $msg = xarML('Sorry, your chosen ID has already been allocated for this extension type, please try another or one will automatically be allocated.');
-              xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_PARAM',
-                        new SystemException($msg));
-              return false;
+          xarErrorFree();xarErrorHandled();
+          return;
+      }else {
+        //we are done here - use this rid as it seems ok
+        return $ridno;
       }
-    }
+     }
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -62,12 +64,11 @@ function release_userapi_allocateid($args)
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-    $msg = xarML('Sorry, the name you requested is already registered for that extension type, please choose another.');
-        xarErrorSet(XAR_USER_EXCEPTION,
-        'BAD_PARAM',
+       $msg = xarML('Sorry, the name you requested is already registered for that extension type, please choose another.');
+        xarErrorSet(XAR_USER_EXCEPTION,'BAD_PARAM',
         new SystemException($msg));
-               return false;
-        }
+          return false;
+    }
 
     $bindvars=array();
     //for modules and themes the numbers are allocated as previously sharing and unique within the range
