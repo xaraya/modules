@@ -25,9 +25,17 @@ function release_userapi_decode_shorturl($params)
 { 
     // Initialise the argument list we will return
     $args = array(); 
-    if ($params[0] == 'rid') {
-        if (is_numeric($params[1])) { 
-            $args['rid'] = (int) $params[1];
+
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $flipext = array_flip($exttypes);
+    $extnamearray =array();
+    foreach ($exttypes as $k=>$v){
+        $extnamearray[] = strtolower($v);
+    }
+
+    if ($params[1] == 'eid') {
+        if (is_numeric($params[2])) {
+            $args['eid'] = (int) $params[2];
             return array('display', $args);
         } else {
             //Lots of hits for categories... But how can we discover them
@@ -57,37 +65,66 @@ function release_userapi_decode_shorturl($params)
     } elseif (preg_match('/^addid/i', $params[1])) {
             return array('addid', $args);
     } elseif ($params[1] == 'displaynote') {
-        if (!empty($params[2]) && preg_match('/^(\d+)/',$params[2],$matches)) {
-            $args['rnid']=$matches[1];
-            return array('displaynote', $args);
-        }
+            if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+             $args['rnid']=$matches[1];
+            }
+        return array('displaynote', $args);
     }elseif (preg_match('/^addnotes/i', $params[1])) {
         if (empty($params[2])) {
            return array('addnotes', $args);
         }elseif (!empty($params[2]) && ($params[2] == 'start')) {
            $args['phase']='start';
         }
-        if (!empty($params[3]) && preg_match('/^(\d+)/',$params[3],$matches)) {
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
+             $args['rid']=$matches[1];
+             $args['exttype'] =(int)array_search($params[2],$flipext);
+            }
+        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+              $eid = $matches[1];
+              $args['eid'] = (int)$eid;
+        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
             $args['rid']=$matches[1];
+            $args['exttype']= 1;//try module?
         }
         return array('addnotes', $args);
    } elseif ($params[1] == 'modifyid') {
-        if (!empty($params[2]) && preg_match('/^(\d+)/',$params[2],$matches)) {
+       if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
+             $args['rid']=$matches[1];
+             $args['exttype'] =(int)array_search($params[2],$flipext);
+            }
+        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+              $eid = $matches[1];
+              $args['eid'] = (int)$eid;
+        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
             $args['rid']=$matches[1];
-            return array('modifyid', $args);
+            $args['exttype']= 1;//try module?
         }
+        return array('modifyid', $args);
     } elseif ($params[1] == 'version') {
-        if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
-        // something that starts with a number must be for the display function
-            $rid = $matches[1];
-            $args['rid'] = (int)$rid;
-            $args['phase']='version';
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
+            if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
+            // something that starts with a number must be for the display function
+                $rid = $matches[1];
+                $args['rid'] = (int)$rid;
+                $args['phase']='version';
+                $args['exttype'] =(int)array_search($params[2],$flipext);
+            }
+        }elseif(!empty($params[2]) && preg_match('/^eid/i', $params[2]) && preg_match('/^(\d+)/', $params[3], $matches)) {
+                $eid = $matches[1];
+                $args['eid'] = (int)$eid;
+                $args['phase']='version';
+           
+        }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
+            $args['rid']=(int)$matches[1];
         }
         return array('display', $args);
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
-        // something that starts with a number must be for the display function
+        // something that starts with a number must try the display function for modules
         $rid = $matches[1];
         $args['rid'] = $rid;
+        $args['exttype']=1;//module
         $args['phase']='view';
         return array('display', $args);
     } else {

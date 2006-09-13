@@ -57,14 +57,14 @@ function release_admin_viewids()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-
+        $items[$i]['eid'] = xarVarPrepForDisplay($item['eid']);
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
 
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release', 'user', 'modifyid',
-                                              array('rid' => $item['rid']));
+                                              array('eid' => $item['eid']));
         } else {
             $items[$i]['editurl'] = '';
         }
@@ -72,7 +72,7 @@ function release_admin_viewids()
         $items[$i]['deletetitle'] = xarML('Delete');
         if (xarSecurityCheck('DeleteRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release', 'admin', 'deleteid',
-                                               array('rid' => $item['rid']));
+                                               array('eid' => $item['eid']));
         } else {
             $items[$i]['deleteurl'] = '';
         }

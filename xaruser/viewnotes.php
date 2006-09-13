@@ -33,6 +33,8 @@ function release_user_viewnotes()
     if (empty($phase)){
         $phase = 'viewall';
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $data['exttypes'] = $exttypes;
 
     switch(strtolower($phase)) {
 
@@ -112,7 +114,7 @@ function release_user_viewnotes()
             $phasedesc =xarML('Supported');
             break;
     }
-    $exttypes = xarModAPIFunc('release','user','getexttypes');
+
     $numitems=count($items);
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < $numitems; $i++) {
@@ -120,7 +122,7 @@ function release_user_viewnotes()
 
         // The user API function is called.
         $getid = xarModAPIFunc('release', 'user', 'getid',
-                               array('rid' => $items[$i]['rid']));
+                               array('eid' => $items[$i]['eid']));
 
 
         $items[$i]['displaylink'] =  xarModURL('release', 'user', 'displaynote',
@@ -137,6 +139,7 @@ function release_user_viewnotes()
         $item[$i]['exttypename']=array_search($getid['exttype'],$flipext);
         $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+        $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
         $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
         $items[$i]['realname'] = $getuser['name'];
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));

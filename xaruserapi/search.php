@@ -34,7 +34,8 @@ function release_userapi_search($args)
     $releasetable = & $xartable['release_id'];
     $where = '';
     $releases = array();
-    $sql = "SELECT  xar_rid,
+    $sql = "SELECT  xar_eid,
+                    xar_rid,
                     xar_uid,
                     xar_regname,
                     xar_displname,
@@ -89,10 +90,11 @@ function release_userapi_search($args)
         return array();
     }
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $exttype) = $result->fields;
+        list($eid, $rid, $uid, $regname, $displname, $desc, $exttype) = $result->fields;
         $exttype = $exttype == 0? xarML('Module') : xarML('Theme');
         if (xarSecurityCheck('ReadRelease', 0)) {
-            $releases[] = array('rid' => $rid,
+            $releases[] = array('eid' => $eid,
+                                'rid' => $rid,
                                 'uid' => $uid,
                                 'regname' => $regname,
                                 'displname' => $displname,

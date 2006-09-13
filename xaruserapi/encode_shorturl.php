@@ -28,6 +28,14 @@ function release_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
+    //get the extension types
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $extname ='';
+    if (isset($exttype)) {
+        $exttypename = array_search($exttype,$exttypes);
+        $extname = strtolower($exttypename);
+    }
+
     // default path is empty -> no short URL
     $path = '';
     // if we want to add some common arguments as URL parameters below
@@ -46,15 +54,32 @@ function release_userapi_encode_shorturl($args)
     } elseif ($func == 'display') {
         // check for required parameters
         if (isset($rid) && is_numeric($rid)) {
-           if (isset($phase) && $phase=='version'){
-                $path = '/' . $module . '/version/' . $rid . '.html';
-           }elseif (isset($phase) && $phase=='view'){
-                $path = '/' . $module . '/' . $rid . '.html';
+           if (!isset($exttype)) {// have to assume it's a module for backward compatibility ==1
+               if (isset($phase) && $phase=='version'){
+                    $path = '/' . $module . '/version/module/' . $rid . '.html';
+               }elseif (isset($phase) && $phase=='view'){
+                    $path = '/' . $module . '/module/' . $rid . '.html';
+               }else {
+                    $path = '/' . $module . '/module/' . $rid . '.html';
+               }
            }else {
-                $path = '/' . $module . '/' . $rid . '.html';
+                if (isset($phase) && $phase=='version'){
+                    $path = '/' . $module . '/version/'.$extname.'/' . $rid . '.html';
+               }elseif (isset($phase) && $phase=='view'){
+                    $path = '/' . $module . '/' . $extname.'/' .$rid . '.html';
+               }else {
+                    $path = '/' . $module . '/' .$extname.'/' . $rid . '.html';
+                }
            }
-        } else {
 
+        } elseif (isset($eid)) {
+            if (isset($phase) && $phase=='version'){
+                    $path = '/' . $module . '/version/eid/' . $eid;
+            }elseif (isset($phase) && $phase=='view'){
+                    $path = '/' . $module . '/eid/' . $eid;
+            }else {
+                    $path = '/' . $module . '/eid/' . $eid;
+            }
         }
     } elseif ($func == 'viewnotes') {
         $path = '/' . $module . '/viewnotes.html';
@@ -68,19 +93,45 @@ function release_userapi_encode_shorturl($args)
 
     } elseif ($func == 'addnotes') {
         // check for required parameters
-        if (isset($phase) && ($phase=='start')) {
-            $path = '/' . $module . '/addnotes/start/' . $rid . '.html';
-        } else {
-             $path = '/' . $module . '/addnotes.html';
+        if (isset($rid)){
+            if (!isset($exttype)){ //have to assume a module .. backward compatibility, ugg
+                if (isset($phase) && ($phase=='start')) {
+                    $path = '/' . $module . '/addnotes/start/module/' . $rid . '.html';
+                } else {
+                     $path = '/' . $module . '/module/addnotes.html';
+                }
+            }else {
+                if (isset($phase) && ($phase=='start')) {
+                    $path = '/' . $module . '/addnotes/start/'.$extname.'/' . $rid . '.html';
+                } else {
+                     $path = '/' . $module . '/'.$extname.'/addnotes.html';
+                }
+            }
+        }elseif (isset($eid)){
+           if (isset($phase) && ($phase=='start')) {
+                    $path = '/' . $module . '/addnotes/start/eid/' . $eid;
+           } else {
+                     $path = '/' . $module . '/eid/addnotes.html';
+           }
         }
     } elseif ($func == 'addid') {
         $path = '/' . $module . '/addid.html';
 
     } elseif ($func == 'modifyid') {
-        // check for required parameters
-        if (isset($rid) && is_numeric($rid)) {
-            $path = '/' . $module . '/modifyid/' . $rid . '.html';
-        } else {
+        if (isset($rid)) {
+            if (!isset($exttype)){ //have to assume a module .. backward compatibility, ugg
+                // check for required parameters
+                if (isset($rid) && is_numeric($rid)) {
+                    $path = '/' . $module . '/modifyid/module/' . $rid . '.html';
+                } else {
+                }
+            }else {
+                if (isset($rid) && is_numeric($rid)) {
+                    $path = '/' . $module . '/modifyid/'.$extname.'/'. $rid . '.html';
+               }
+            }
+        }elseif (isset($eid)){
+             $path = '/' . $module . '/modifyid/eid/'. $eid;
         }
 
     } else {

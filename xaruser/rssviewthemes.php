@@ -27,7 +27,7 @@ function release_user_rssviewthemes()
 
     // The user API function is called.
     $items = xarModAPIFunc('release', 'user', 'getallrssmodsnotes',
-                            array('type' => 'theme'));
+                            array('exttype' => 2)); //themes
     
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -35,7 +35,7 @@ function release_user_rssviewthemes()
 
         // The user API function is called.
         $getid = xarModAPIFunc('release', 'user', 'getid',
-                               array('rid' => $items[$i]['rid']));
+                               array('eid' => $items[$i]['eid']));
 
         $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
 

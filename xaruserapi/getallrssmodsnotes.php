@@ -27,6 +27,7 @@ function release_userapi_getallrssmodsnotes($args)
     $releasenotes = $xartable['release_notes'];
 
     $query = "SELECT xar_rnid,
+                     xar_eid,
                      xar_rid,
                      xar_version
             FROM $releasenotes
@@ -40,9 +41,10 @@ function release_userapi_getallrssmodsnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $version) = $result->fields;
+        list($rnid, $eid,$rid, $version) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
+                                   'eid'        => $eid,
                                    'rid'        => $rid,
                                    'version'    => $version);
         }

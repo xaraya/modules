@@ -10,7 +10,8 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />    
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
-        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />        
+        <input type="hidden" name="eid" id="eid" value="#$eid#" />        
+        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
         <input type="hidden" name="certified" id="certified" value="#$certified#" />
 
         <table border="0" width="99%" cellpadding="5">

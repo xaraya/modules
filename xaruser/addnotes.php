@@ -45,10 +45,10 @@ function release_user_addnotes($args)
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
             if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
-
+            if (!xarVarFetch('exttype', 'int:1:', $extype, null, XARVAR_NOT_REQUIRED)) {return;}
             // The user API function is called.
             $data = xarModAPIFunc('release', 'user', 'getid',
-                                  array('rid' => $rid));
+                                  array('rid' => $rid, 'exttype' => $exttype));
 
 
             $uid = xarUserGetVar('uid');
@@ -67,11 +67,13 @@ function release_user_addnotes($args)
             xarTplSetPageTitle(xarVarPrepForDisplay($data['regname']));
 
             $authid = xarSecGenAuthKey();
-            $data = xarTplModule('release','user', 'addnote_start', array('rid'       => $data['rid'],
-                                                                          'regname'   => $data['regname'],
-                                                                          'desc'      => $data['desc'],
-                                                                          'message'   => $message,
-                                                                          'authid'    => $authid));
+            $data = xarTplModule('release','user', 'addnote_start', 
+                                                   array('eid'       => $data['eid'],
+                                                         'rid'       => $data['rid'],
+                                                         'regname'   => $data['regname'],
+                                                         'desc'      => $data['desc'],
+                                                         'message'   => $message,
+                                                         'authid'    => $authid));
 
             break;
 
@@ -193,11 +195,12 @@ function release_user_addnotes($args)
             $usefeed = $usefeedchecked?1:0;
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid));
-                                  
+
             $exttype = $data['exttype'];
             // The user API function is called.
             if (!xarModAPIFunc('release', 'user', 'createnote',
-                                array('rid'         => $rid,
+                                array('eid'         => $eid,
+                                      'rid'         => $rid,
                                       'version'     => $version,
                                       'price'       => $pricecheck,
                                       'priceterms'  => $price,

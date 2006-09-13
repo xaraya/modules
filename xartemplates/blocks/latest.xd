@@ -14,7 +14,7 @@
                 <xar:else />
                 <li>
                     <a href="#$item['link']#">
-                        #xarVarPrepForDisplay(ucfirst($item['regname']))# V#xarVarPrepForDisplay($item['version'])# 
+                        #xarVarPrepForDisplay(ucfirst($item['regname']))# V#xarVarPrepForDisplay($item['version'])#
                     </a>
                 </li>
             </xar:if>

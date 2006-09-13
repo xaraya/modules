@@ -33,7 +33,7 @@ function release_adminapi_deleteid($args)
 
     // The user API function is called
     $link = xarModAPIFunc('release', 'user', 'getid',
-                         array('rid' => $rid));
+                         array('eid' => $eid));
 
     if ($link == false) {
         $msg = xarML('No Such Release ID Present');
@@ -54,12 +54,12 @@ function release_adminapi_deleteid($args)
 
     // Delete the item
     $query = "DELETE FROM $releasetable
-            WHERE xar_rid = ?";
-    $result =& $dbconn->Execute($query,array($rid));
+            WHERE xar_eid = ?";
+    $result =& $dbconn->Execute($query,array($eid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link
-    xarModCallHooks('item', 'delete', $rid, '');
+    xarModCallHooks('item', 'delete', $eid, '');
 
     // Let the calling process know that we have finished successfully
     return true;

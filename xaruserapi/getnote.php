@@ -33,6 +33,7 @@ function release_userapi_getnote($args)
 
     // Get link
     $query = "SELECT xar_rnid,
+                     xar_eid,
                      xar_rid,
                      xar_version,
                      xar_price,
@@ -56,7 +57,7 @@ function release_userapi_getnote($args)
     $result =& $dbconn->Execute($query,array($rnid));
     if (!$result) return;
 
-    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, 
+    list($rnid, $eid,$rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink,
         $changelog, $notes, $time, $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
     $result->Close();
 
@@ -64,8 +65,9 @@ function release_userapi_getnote($args)
         return false;
     }
 
-    $releaseinfo = array('rnid'       => $rnid,
-                         'rid'        => $rid,
+    $releaseinfo = array('rnid'       => (int)$rnid,
+                         'eid'        => (int)$eid,
+                         'rid'        => (int)$rid,
                          'version'    => $version,
                          'price'      => $price,
                          'priceterms' => $priceterms,

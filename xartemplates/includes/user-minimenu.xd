@@ -30,7 +30,7 @@
                    </dd>
                <xar:else />
                    <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view', 'tab'=>'basic'))#">
+                        <a href="#xarModUrl('release', 'user', 'display', array('eid' => (int)$eid, 'phase' => 'view', 'tab'=>'basic'))#">
                               <xar:ml>
                                   <xar:mlstring>#(1) Summary</xar:mlstring>
                                   <xar:mlvar>#$extname#</xar:mlvar>
@@ -49,7 +49,7 @@
                    </dd>
                <xar:else />
                    <dd>
-                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#">
+                        <a href="#xarModUrl('release', 'user', 'display', array('eid' => (int)$eid, 'phase' => 'version', 'tab'=>'versions'))#">
                              <xar:ml>
                                   <xar:mlstring>#(1) Version History</xar:mlstring>
                                   <xar:mlvar>#$extname#</xar:mlvar>

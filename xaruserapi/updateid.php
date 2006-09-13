@@ -24,7 +24,8 @@ function release_userapi_updateid($args)
     extract($args);
 
     // Argument check
-    if ((!isset($rid)) ||
+    if ((!isset($eid)) ||
+        (!isset($rid)) ||
         (!isset($uid)) ||
         (!isset($regname)) ||
         (!isset($displname)) ||
@@ -38,14 +39,14 @@ function release_userapi_updateid($args)
 
     // The user API function is called
     $link = xarModAPIFunc('release', 'user', 'getid',
-                          array('rid' => $rid));
+                          array('eid' => $eid));
 
     if ($link == false) {
         $msg = xarML('No Such Release ID Present');
-        xarErrorSet(XAR_USER_EXCEPTION, 
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
     //this should not change once registered
     if (!isset($regtime)) {
@@ -68,7 +69,8 @@ function release_userapi_updateid($args)
 
     // Update the link
     $query = "UPDATE $releasetable
-            SET xar_uid       = ?,
+            SET xar_rid       = ?,
+                xar_uid       = ?,
                 xar_regname   = ?,
                 xar_displname = ?,
                 xar_class     = ?,
@@ -82,8 +84,8 @@ function release_userapi_updateid($args)
                 xar_scmlink   = ?,
                 xar_openproj  = ?,
                 xar_exttype   = ?
-            WHERE xar_rid     = ?";
-    $bindvars = array($uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
+            WHERE xar_eid     = ?";
+    $bindvars = array($rid,$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
                       $regtime, $modified, $members, $scmlink, $openproj, $exttype,$rid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
@@ -95,12 +97,11 @@ function release_userapi_updateid($args)
     $args['cids'] = $cids;
 
     // Let the calling process know that we have finished successfully
-    // Let any hooks know that we have created a new user.
-    //xarModCallHooks('item', 'update', $rid, 'rid');
-    xarModCallHooks('item', 'update', $rid, $args);
+
+    xarModCallHooks('item', 'update', $eid, $args);
 
     // Return the id of the newly created user to the calling process
-    return $rid;
+    return $eid;
 }
 
 ?>

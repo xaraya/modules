@@ -37,6 +37,7 @@ function release_userapi_getallnotes($args)
     $where = '';
     $query = "SELECT rnotes.xar_rnid,
                      rnotes.xar_rid,
+                     rnotes.xar_eid,
                      rids.xar_regname,
                      rids.xar_uid,
                      rnotes.xar_version,
@@ -57,7 +58,7 @@ function release_userapi_getallnotes($args)
                      rnotes.xar_usefeed,
                      rnotes.xar_exttype
             FROM $releasenotes as rnotes,$releaseids as rids
-            WHERE rnotes.xar_rid=rids.xar_rid";
+            WHERE rnotes.xar_eid=rids.xar_eid";
 
     if (!empty($certified)) {
         $where .= " AND rnotes.xar_certified = ?
@@ -78,6 +79,10 @@ function release_userapi_getallnotes($args)
     }elseif (!empty($approved)) {
         $where .= " AND rnotes.xar_approved = ?";
         $bindvars[] = $approved;
+    } elseif (!empty($eid)) {
+        $where .= " AND rnotes.xar_eid = ?
+                    AND rnotes.xar_approved = 2";
+                    $bindvars[]=$eid;
     }
     if (!empty($usefeed)) {
         if (!empty($where)) {
@@ -99,11 +104,12 @@ function release_userapi_getallnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink, 
+        list($rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
              $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved,$rstate,$usefeed,$exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
+                                   'eid'        => $eid,
                                    'regname'    => $regname,
                                    'uid'        => $uid,
                                    'version'    => $version,

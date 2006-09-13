@@ -93,6 +93,7 @@ function release_userapi_createid($args)
     if ($nextid == 0) return;
 
     $query = "INSERT INTO $releasetable (
+              xar_eid,
               xar_rid,
               xar_uid,
               xar_regname,
@@ -109,19 +110,18 @@ function release_userapi_createid($args)
               xar_openproj,
               xar_exttype
               )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextid,(int)$uid,$regname,$displname,$desc,$class,$certified,$approved,$rstate,
+    $bindvars = array($nextid,(int)$rid,(int)$uid,$regname,$displname,$desc,$class,$certified,$approved,$rstate,
                       (int)$regtime,(int)$modified,$members,$scmlink,(int)$openproj,(int)$exttype);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let any hooks know that we have created a new user.
-    xarModCallHooks('item', 'create', $nextid, 'rid');
-   $rid=$nextid;
+    xarModCallHooks('item', 'create', $nextid, 'eid');
+   $eid=$nextid;
     // Return the id of the newly created user to the calling process
-  return $rid;
+  return $eid;
 
 }
-
 ?>

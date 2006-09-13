@@ -82,7 +82,7 @@ function release_user_addid()
                 if (!xarSecConfirmAuthKey()) return;
 
                 // The user API function is called.
-                $newrid =  xarModAPIFunc('release', 'user', 'createid',
+                $newid =  xarModAPIFunc('release', 'user', 'createid',
                                     array('uid'       => $uid,
                                           'regname'   => $regname,
                                           'displname' => $displname,
@@ -95,7 +95,7 @@ function release_user_addid()
                                           'scmlink'   => $scmlink,
                                           'openproj'  => $openproj,
                                           'cids'      => $cids));
-                if ($newrid==false) {
+                if ($neweid==false) {
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back
                     }
@@ -107,7 +107,7 @@ function release_user_addid()
                     return $data;
                 }
 
-                xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$newrid)));
+                xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$neweid)));
                 return true;
                 break;
         }

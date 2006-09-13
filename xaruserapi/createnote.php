@@ -18,6 +18,7 @@ function release_userapi_createnote($args)
 
     // Argument check
     if ((!isset($rid)) ||
+        (!isset($eid)) ||
         (!isset($exttype)) ||
         (!isset($version))) {
 
@@ -51,6 +52,7 @@ function release_userapi_createnote($args)
     $time = time();
     $query = "INSERT INTO $releasetable (
                      xar_rnid,
+                     xar_eid,
                      xar_rid,
                      xar_version,
                      xar_price,
@@ -69,9 +71,9 @@ function release_userapi_createnote($args)
                      xar_usefeed,
                      xar_exttype
               )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
+    $bindvars = array($nextId,(int)$eid,(int)$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
                       $supportlink,$changelog,$notes,$time,$certified,$approved,$rstate,(int)$usefeed,(int)$exttype);
     $result =&$dbconn->Execute($query,$bindvars);
     if (!$result) return;

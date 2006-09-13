@@ -25,11 +25,11 @@ function release_user_adddocs()
     if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('phase', 'str:1:',    $phase,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('exttype',  'isset',    $exttype,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-
+    if(!xarVarFetch('eid',   'isset',    $eid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     $data['items'] = array();
     $data['rid'] = $rid;
-
+    $data['eid'] = $eid;
     if (empty($phase)){
         $phase = 'getmodule';
     }
@@ -55,7 +55,7 @@ function release_user_adddocs()
 
             // The user API function is called.
             $data = xarModAPIFunc('release', 'user', 'getid',
-                                  array('rid' => $rid));
+                                  array('eid' => $eid));
 
             
             $uid = xarUserGetVar('uid');
@@ -76,12 +76,14 @@ function release_user_adddocs()
             xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
 
             $authid = xarSecGenAuthKey();
-            $data = xarTplModule('release','user', 'adddocs_start', array('rid'       => $data['rid'],
-                                                                          'name'      => $data['name'],
-                                                                          'desc'      => $data['desc'],
-                                                                          'exttype'      => $data['exttype'],
-                                                                          'message'   => $message,
-                                                                          'authid'    => $authid));
+            $data = xarTplModule('release','user', 'adddocs_start', 
+                  array('rid'       => $data['rid'],
+                        'eid'       => $data['eid'],
+                        'name'      => $data['name'],
+                        'desc'      => $data['desc'],
+                        'exttype'      => $data['exttype'],
+                        'message'   => $message,
+                        'authid'    => $authid));
 
             break;
 
@@ -89,17 +91,17 @@ function release_user_adddocs()
 
             $data['mtype'] = 'mgeneral';
             $data['return'] = 'module';
-            // The user API function is called. 
+            // The user API function is called.
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no general module documentation defined');
             }
 
-            
+
             xarTplSetPageTitle(xarVarPrepForDisplay(xarML('General Information')));
 
 
@@ -124,7 +126,7 @@ function release_user_adddocs()
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
             if (empty($items)){
@@ -156,7 +158,7 @@ function release_user_adddocs()
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -188,7 +190,7 @@ function release_user_adddocs()
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
             if (empty($items)){
@@ -221,7 +223,7 @@ function release_user_adddocs()
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'exttype'=> $data['mtype']));
 
             if (empty($items)){
@@ -252,7 +254,7 @@ function release_user_adddocs()
             if(!xarVarFetch('title', 'str:1:',   $title,    NULL, XARVAR_NOT_REQUIRED)) {return;}
             if(!xarVarFetch('return','isset',    $return,   NULL, XARVAR_NOT_REQUIRED)) {return;}
             if(!xarVarFetch('doc',   'isset',    $doc,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-
+            if(!xarVarFetch('eid',   'isset',    $eid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
            if (!xarSecConfirmAuthKey()) return;
 
@@ -264,14 +266,15 @@ function release_user_adddocs()
 
             // The user API function is called. 
             if (!xarModAPIFunc('release', 'user', 'createdoc',
-                                array('rid'         => $rid,
+                                array('eid'         => $eid,
+                                      'rid'         => $rid,
                                       'type'        => $mtype,
                                       'title'       => $title,
                                       'doc'         => $doc,
                                       'approved'    => $approved))) return;
 
             xarResponseRedirect(xarModURL('release', 'user', 'adddocs', array('phase' => $return, 
-                                                                              'rid' => $rid)));
+                                                                              'eid' => $eid)));
 
            $data = '';
             break;

@@ -36,8 +36,7 @@ function release_user_displaynote($args)
 
     // The user API function is called.
     $id = xarModAPIFunc('release', 'user', 'getid',
-                          array('rid' => $item['rid']));
-
+                          array('eid' => $item['eid']));
 
     $getuser = xarModAPIFunc('roles', 'user', 'get',
                               array('uid' => $id['uid']));
@@ -81,6 +80,8 @@ function release_user_displaynote($args)
     $item['exttypename'] = $exttypename;
     $item['stateoption']=$stateoption;
     $item['desc'] = nl2br($id['desc']);
+    $rid = $id['rid'];
+    $item['rid'] = $rid;
     $item['regname'] = $id['regname'];
     $item['displname'] = $id['displname'];
     $item['exttype'] = $id['exttype'];
@@ -88,7 +89,7 @@ function release_user_displaynote($args)
     $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['extensionpage']= xarModURL('release','user','display',
-                                array('rid' => $item['rid'],
+                                array('eid' => $item['eid'],
                                       'phase' => 'version',
                                       'tab'  => 'versions'));
 

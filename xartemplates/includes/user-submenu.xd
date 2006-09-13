@@ -18,13 +18,13 @@
         </dd>
     <xar:set name="tabclass">($activetab=='display')?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-release-user-display;&amp;regid=#$rid#" title="#xarML('Summary View of Extension Information')#">
+            <a href="&xar-modurl-release-user-display;&amp;eid=#$eid#" title="#xarML('Summary View of Extension Information')#">
                 <xar:mlstring>Extension Summary</xar:mlstring>
             </a>
         </dd>
     <xar:set name="tabclass">($activetab=='display')?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version', 'tab'=>'versions'))#" title="#xarML('Get a registered ID for your extension project')#">
+            <a href="#xarModUrl('release', 'user', 'display', array('eid' => $eid, 'phase' => 'version', 'tab'=>'versions'))#" title="#xarML('Get a registered ID for your extension project')#">
                 <xar:mlstring>File Releases</xar:mlstring>
             </a>
         </dd>

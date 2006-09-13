@@ -25,9 +25,9 @@ function release_userapi_getexttypes($args)
                       2 => xarML('Theme'),
                       3 => xarML('Property'),
                       4 => xarML('Block'),
-                      5 => xarML('Custom Function'),
-                      6 => xarML('Template Pack'),
-                      7 => xarML('Add On')
+                      5 => xarML('Function'),
+                      6 => xarML('TemplatePack'),
+                      7 => xarML('AddOn')
                  );
     return $exttypes;
 }

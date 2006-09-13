@@ -10,6 +10,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="rid" id="eid" value="#$eid#" />        
         <input type="hidden" name="rnid" id="rnid" value="#$rnid#" />    
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
         <table border="0" cellpadding="5">

@@ -29,7 +29,7 @@
     <ul>
         <xar:foreach in="$release" key="$key" value="$extension">
             <li>
-                <a href="#xarModURL('release', 'user', 'display', array('rid' => $extension['rid']))#">
+                <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
                     #$extension['exttype']# - ID #$extension['rid']#  #$extension['displname']#
                 </a>
                 <xar:mlstring> by </xar:mlstring>

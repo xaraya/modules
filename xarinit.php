@@ -32,11 +32,14 @@ function release_init()
 
     // *_user_data
     $query = xarDBCreateTable($releasetable,
-                             array('xar_rid'         => array('type'        => 'integer',
+                             array('xar_eid'         => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
                                                               'increment'   => true,
-                                                              'primary_key' => true),
+                                                             'primary_key' => true),
+                                   'xar_rid'         => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0'),
                                    'xar_uid'         => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
@@ -100,6 +103,13 @@ function release_init()
     $query = xarDBCreateIndex($releasetable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+   
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_rid',
+                   'fields'    => array('xar_rid','xar_exttype'),
+                   'unique'    => TRUE);
+    $query = xarDBCreateIndex($releasetable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     $releasenotes = $xartable['release_notes'];
 
@@ -110,7 +120,7 @@ function release_init()
                                                                 'default'      => '0',
                                                                 'increment'    => true,
                                                                 'primary_key'  => true),
-                                   'xar_rid'            => array('type'        => 'integer',
+                                   'xar_eid'            => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '0',
                                                                  'increment'   => false),
@@ -177,6 +187,13 @@ function release_init()
                                                                  ));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_notes_eid',
+                   'fields'    => array('xar_eid'),
+                   'unique'    => TRUE);
+    $query = xarDBCreateIndex($releasenotes,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
 
     $releasedocs = $xartable['release_docs'];
 
@@ -188,6 +205,10 @@ function release_init()
                                                                  'increment'   => true,
                                                                  'primary_key' => true),
                                    'xar_rid'            => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_eid'            => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '0',
                                                                  'increment'   => false),
@@ -448,20 +469,93 @@ function release_upgrade($oldversion)
                $doidupdate =& $dbconn->Execute($updatetypes);
                if (!$doidupdate) return;
            }
-    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+        $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
                    'fields'    => array('xar_regname','xar_type'),
                    'unique'    => TRUE);
-    $query = xarDBDropIndex($releaseid,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+        $query = xarDBDropIndex($releaseid,$index);
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
 
-    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+        $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
                    'fields'    => array('xar_regname','xar_exttype'),
                    'unique'    => TRUE);
-    $query = xarDBCreateIndex($releaseid,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-       case '0.4.0': //current version
+        $query = xarDBCreateIndex($releaseid,$index);
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+       case '0.4.0':
+
+         $dbconn =& xarDBGetConn();
+          $xartable =& xarDBGetTables();
+          xarDBLoadTableMaintenanceAPI();
+
+          $releaseid = $xartable['release_id'];
+          $releasenotes = $xartable['release_notes'];
+          $releasedocs = $xartable['release_docs'];
+          $query = xarDBAlterTable($releaseid,
+                              array('command'  => 'add',
+                                    'field'   => 'xar_eid',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'default' => '0'));
+           $result = &$dbconn->Execute($query);
+           if (!$result) return;
+           $query= "SELECT COUNT(1)
+                    FROM $releaseid ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateids= "UPDATE $releaseid
+                                 SET xar_eid  = xar_rid";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
+           }
+
+          $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_rid',
+          'fields'    => array('xar_rid','xar_exttype'),
+          'unique'    => TRUE);
+          $query = xarDBCreateIndex($releaseid,$index);
+          $result =& $dbconn->Execute($query);
+
+           $query = xarDBAlterTable($releasenotes,
+                              array('command'  => 'add',
+                                    'field'   => 'xar_eid',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'default' => '0'));
+           $result = &$dbconn->Execute($query);
+           if (!$result) return;
+           $query= "SELECT COUNT(1)
+                    FROM $releasenotes";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateids= "UPDATE $releasenotes
+                                 SET xar_eid  = xar_rid";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
+           }
+         $query = xarDBAlterTable($releasedocs,
+                              array('command'  => 'add',
+                                    'field'   => 'xar_eid',
+                                    'type'    => 'integer',
+                                    'null'    =>  false,
+                                    'default' => '0'));
+           $result = &$dbconn->Execute($query);
+           if (!$result) return;
+           $query= "SELECT COUNT(1)
+                    FROM $releasedocs ";
+           $result =& $dbconn->Execute($query);
+           if (!$result) return;
+
+           for (; !$result->EOF; $result->MoveNext()) {
+               $updateids= "UPDATE $releasedocs
+                                 SET xar_eid  = xar_rid";
+               $doidupdate =& $dbconn->Execute($updateids);
+               if (!$doidupdate) return;
+           }
+       case '0.4.1': // current version
 
         break;
     }

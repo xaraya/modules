@@ -49,7 +49,7 @@ function release_userapi_countitems($args)
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
-        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_rid';
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
 
         if (!empty($categoriesdef['more'])) 
         {
@@ -83,7 +83,7 @@ function release_userapi_countitems($args)
         $query .= ' WHERE ' . join(' AND ', $where);
     }
 
-    $query .= " ORDER BY xar_rid";
+    $query .= " ORDER BY xar_eid";
 
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;

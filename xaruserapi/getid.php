@@ -14,20 +14,20 @@ function release_userapi_getid($args)
 {
     extract($args);
 
-    if (!isset($rid)) {
+    if (!isset($eid) && (!isset($rid))) {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
 
     // Get link
-    $query = "SELECT xar_rid,
+    $query = "SELECT DISTINCT xar_eid,
+                     xar_rid,
                      xar_uid,
                      xar_regname,
                      xar_displname,
@@ -42,12 +42,23 @@ function release_userapi_getid($args)
                      xar_scmlink,
                      xar_openproj,
                      xar_exttype
-            FROM $releasetable
-            WHERE xar_rid = ?";
-    $result =& $dbconn->Execute($query,array($rid));
+            FROM $releasetable ";
+   if (isset($eid)) {
+            $query .= "WHERE xar_eid = ?";
+            $bindvars = array($eid);
+   }elseif (isset($rid) && isset($exttype) && !empty($exttype)){
+           $query .= "WHERE xar_rid = ? AND xar_exttype = ?";
+            $bindvars = array((int)$rid,(int)$exttype);
+   }elseif (isset($rid) && (!isset($exttype) || empty($exttype))) { //legacy check
+       //try modules and themes for backward compatibility
+           $query .= "WHERE xar_rid = ? ";
+            $bindvars = array((int)$rid);
+   }
+
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    list($rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+    list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
          $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype ) = $result->fields;
     $result->Close();
 
@@ -55,8 +66,9 @@ function release_userapi_getid($args)
         return false;
     }
 
-    $releaseinfo = array('rid'        => $rid,
-                         'uid'        => $uid,
+    $releaseinfo = array('eid'        => (int)$eid,
+                         'rid'        => (int)$rid,
+                         'uid'        => (int)$uid,
                          'regname'    => $regname,
                          'displname'  => $displname,
                          'desc'       => $desc,
@@ -69,7 +81,7 @@ function release_userapi_getid($args)
                          'members'    => $members,
                          'scmlink'    => $scmlink,
                          'openproj'   => $openproj,
-                         'exttype'    => $exttype);
+                         'exttype'    => (int)$exttype);
 
     return $releaseinfo;
 }

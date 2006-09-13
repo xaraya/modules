@@ -33,7 +33,7 @@ function release_userapi_getallrids($args)
     }
 
     if (empty($sort)) {
-        $sortlist = array('rids');
+        $sortlist = array('eids');
     } elseif (is_array($sort)) {
         $sortlist = $sort;
     } else {
@@ -61,7 +61,8 @@ function release_userapi_getallrids($args)
                                     'andcids'  => 1));
     }
 
-    $query = "SELECT DISTINCT xar_rid,
+    $query = "SELECT DISTINCT xar_eid,
+                     $releasetable.xar_rid,
                      $releasetable.xar_uid,
                      $releasetable.xar_regname,
                      $releasetable.xar_displname,
@@ -89,7 +90,7 @@ function release_userapi_getallrids($args)
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
-        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_rid';
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
         
         if (!empty($categoriesdef['more'])) 
         {
@@ -111,7 +112,7 @@ function release_userapi_getallrids($args)
     }
 */
 
-  
+
     if (!empty($certified)) {
         $where[] = " xar_certified = ?";
         $bindvars[] = $certified;
@@ -138,7 +139,7 @@ function release_userapi_getallrids($args)
                 $sortorder = '';
             }
             if ($criteria == 'id') {
-                $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
+                $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'author') {
                 $sortparts[] = ' xar_uname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'name') {
@@ -148,12 +149,12 @@ function release_userapi_getallrids($args)
             } elseif ($criteria == 'regtime') {
                 $sortparts[] = ' xar_regtime ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } else {
-                 $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
+                 $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             }
         }
         $query .= ' ORDER BY ' . join(', ',$sortparts);
     } else { // default is 'rid
-        $query .= ' ORDER BY  xar_rid ASC';
+        $query .= ' ORDER BY  xar_eid ASC';
     }
     //  $query .= " ORDER BY xar_rid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
@@ -161,10 +162,11 @@ function release_userapi_getallrids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
+        list($eid,$rid, $uid, $regname, $displname, $desc,$class, $certified, $approved,$rstate,
              $regtime, $modified, $members, $scmlink,$openproj,$exttype, $uname) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rid'        => $rid,
+            $releaseinfo[] = array('eid'        => $eid,
+                                   'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,

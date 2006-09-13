@@ -35,6 +35,7 @@ function release_userapi_getallrssextnotes($args)
     $releasenotes = $xartable['release_notes'];
     //Need to only get the last x release notes for efficiency
     $query = "SELECT xar_rnid,
+                     xar_eid,
                      xar_rid,
                      xar_version,
                      xar_exttype
@@ -51,9 +52,10 @@ function release_userapi_getallrssextnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $version, $exttype) = $result->fields;
+        list($rnid, $eid, $rid, $version, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
+                                   'eid'        => $eid,
                                    'rid'        => $rid,
                                    'version'    => $version,
                                    'exttype'    => $exttype);

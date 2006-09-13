@@ -21,6 +21,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="getdetails" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="eid" id="eid" value="#$eid#" />        
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
  
         <fieldset class="formelements xar-norm">

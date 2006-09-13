@@ -40,7 +40,8 @@ function release_userapi_getallids($args)
 
     $releasetable = $xartable['release_id'];
     $bindvars=array();
-    $query = "SELECT xar_rid,
+    $query = "SELECT xar_eid,
+                     xar_rid,
                      xar_uid,
                      xar_regname,
                      xar_displname,
@@ -56,7 +57,7 @@ function release_userapi_getallids($args)
                      xar_openproj,
                      xar_exttype
             FROM $releasetable
-            ORDER BY xar_rid";
+            ORDER BY xar_eid";
     if (!empty($certified)) {
         $query .= " WHERE xar_certified = ?";
       $bindvars[]=$certified;
@@ -75,10 +76,11 @@ function release_userapi_getallids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $class, $certified, $approved, 
+        list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
              $rstate, $regtime, $modified, $members, $scmlink,$openproj, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rid'        => $rid,
+            $releaseinfo[] = array('eid'        => $eid,
+                                   'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,

@@ -15,6 +15,7 @@
         <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="eid" id="eid" value="#$eid#" />
         <input type="hidden" name="name" id="name" value="#$name#" />
         <table border="0" cellpadding="5">
             <tr>

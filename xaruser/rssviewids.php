@@ -59,6 +59,7 @@ function release_user_rssviewids()
         $item = $items[$i];
 
         // Basic Information
+        $items[$i]['eid'] = xarVarPrepForDisplay($item['eid']);        
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
         $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);

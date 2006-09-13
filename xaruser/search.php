@@ -34,6 +34,7 @@ function release_user_search($args)
     if (!xarVarFetch('displname', 'str:0:', $displname,'',   XARVAR_DONT_SET)) return;
     if (!xarVarFetch('desc',      'str:0:', $desc,     '',   XARVAR_DONT_SET)) return;
     if (!xarVarFetch('rid',       'id',     $rid,      0,    XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('eid',       'id',     $eid,      0,    XARVAR_DONT_SET)) return;    
     if (!xarVarFetch('uid',       'id',     $uid,      NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('author',     'isset',  $author,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorsearch','isset',  $authorsearch,   NULL, XARVAR_DONT_SET)) {return;}

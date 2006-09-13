@@ -29,6 +29,7 @@ function release_admin_modifynote()
     // The user API function is called.
     $data = xarModAPIFunc('release', 'user', 'getnote',
                                   array('rnid' => $rnid));
+    $eid = $data['eid'];
 
     if ($data == false) return;
 
@@ -39,7 +40,7 @@ function release_admin_modifynote()
 
             // The user API function is called.
             $id = xarModAPIFunc('release', 'user', 'getid',
-                                  array('rid' => $data['rid']));
+                                  array('eid' => $data['eid']));
 
             if ($id == false) return;
 
@@ -62,6 +63,7 @@ function release_admin_modifynote()
                     $rstatesel=$stateoptions[$key];
                 }
             }
+            $data['rid']=$id['rid'];            
             $data['rstatesel']=$rstatesel;
             $data['stateoptions']=$stateoptions;
             $data['regname'] = $id['regname'];
@@ -81,6 +83,7 @@ function release_admin_modifynote()
             break;
 
         case 'update':
+          if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
            if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
@@ -111,7 +114,8 @@ function release_admin_modifynote()
 
             // The user API function is called.
             if (!xarModAPIFunc('release', 'admin', 'updatenote',
-                                array('rid'         => $rid,
+                                array('eid'         => $eid,
+                                      'rid'         => $rid,
                                       'rnid'        => $rnid,
                                       'version'     => $version,
                                       'time'        => $newtime,

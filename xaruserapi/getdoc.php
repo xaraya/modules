@@ -28,6 +28,7 @@ function release_userapi_getdoc($args)
 
     // Get link
     $query = "SELECT xar_rdid,
+                     xar_eid,
                      xar_rid,
                      xar_title,
                      xar_docs,
@@ -39,7 +40,7 @@ function release_userapi_getdoc($args)
     $result =& $dbconn->Execute($query,array($rdid));
     if (!$result) return;
 
-    list($rdid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+    list($rdid, $eid,$rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -47,6 +48,7 @@ function release_userapi_getdoc($args)
     }
 
     $releaseinfo = array('rdid'       => $rdid,
+                         'eid'        => $eid,
                          'rid'        => $rid,
                          'title'      => $title,
                          'docs'       => $docs,
@@ -56,5 +58,4 @@ function release_userapi_getdoc($args)
 
     return $releaseinfo;
 }
-
 ?>

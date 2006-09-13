@@ -83,7 +83,7 @@ function release_latestblock_display($blockinfo)
         foreach ($items as $item) {
             // Security check 2 - if the user has read access to the item, show a
             // link to display the details of the item
-            if (xarSecurityCheck('OverviewRelease', 0, 'Item', "$item[rnid]:All:$item[rid]")) {
+            if (xarSecurityCheck('OverviewRelease', 0, 'Item', "$item[rnid]:All:$item[eid]")) {
                 $item['link'] = xarModURL(
                     'release', 'user', 'displaynote',
                     array('rnid' => $item['rnid'])

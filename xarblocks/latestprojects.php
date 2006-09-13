@@ -86,7 +86,7 @@ function release_latestprojectsblock_display($blockinfo)
             if (xarSecurityCheck('OverviewRelease', 0)) {
                 $item['link'] = xarModURL(
                     'release', 'user', 'display',
-                    array('rid' => $item['rid'])
+                    array('eid' => $item['eid'])
                 );
 
                 // Security check 2 - else only display the item name (or whatever is

@@ -57,7 +57,8 @@ function release_adminapi_updatenote($args)
 
     // Update the link
     $query = "UPDATE $releasenotetable
-            SET xar_version = ?,
+            SET xar_rid = ?
+                xar_version = ?,
                 xar_price = ?,
                 xar_supported = ?,
                 xar_demo = ?,
@@ -75,7 +76,7 @@ function release_adminapi_updatenote($args)
                 xar_usefeed = ?,
                 xar_exttype = ?
             WHERE xar_rnid = ?";
-    $bindvars=array($version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
+    $bindvars=array($rid,$version,$price,$supported,$demo,$dllink,$demolink,$priceterms,$supportlink,
                     $changelog,$notes,$enotes,$time,$certified,$approved,$rstate,$usefeed,(int)$exttype,$rnid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

@@ -45,7 +45,8 @@ function release_userapi_getthemeids($args)
 
     $releasetable = $xartable['release_id'];
 
-    $query = "SELECT xar_rid,
+    $query = "SELECT xar_eid,
+                     xar_rid,
                      xar_uid,
                      xar_regname,
                      xar_displname,
@@ -62,17 +63,18 @@ function release_userapi_getthemeids($args)
                      xar_exttype
             FROM $releasetable
             WHERE xar_exttype = ?
-            ORDER BY xar_rid";
+            ORDER BY xar_eid";
     $bindvars = array($extid);
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
+        list($eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
                      $rstate, $regtime, $modified, $members, $scmlink, $rstate, $openproj, $exttype) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
-            $releaseinfo[] = array('rid'        => $rid,
+            $releaseinfo[] = array('eid'        => $eid,
+                                   'rid'        => $rid,
                                    'uid'        => $uid,
                                    'regname'    => $regname,
                                    'displname'  => $displname,

@@ -44,6 +44,7 @@ function release_userapi_getdocs($args)
 
     $bindvars = array();
     $query = "SELECT xar_rdid,
+                     xar_eid,
                      xar_rid,
                      xar_title,
                      xar_docs,
@@ -53,15 +54,15 @@ function release_userapi_getdocs($args)
             FROM $releasedocstable
 
                      /*";
-    if (!empty($apporved)) {
-        $query .= " WHERE xar_rid = ? AND xar_approved = ? AND xar_exttype = ?";
-        array_push($bindvars, $rid, $approved, $exttype);
+    if (!empty($approved)) {
+        $query .= " WHERE xar_eid = ? AND xar_approved = ? AND xar_exttype = ?";
+        array_push($bindvars, $eid, $approved, $exttype);
     } elseif(empty($exttype)) {
         $query .= " WHERE xar_approved = ?";
         array_push($bindvars, $approved);
     } else {
-        $query .= "*/ WHERE xar_rid = ? AND xar_exttype = ?";
-        array_push($bindvars, $rid, $exttype);
+        $query .= "*/ WHERE xar_eid = ? AND xar_exttype = ?";
+        array_push($bindvars, $eid, $exttype);
     }
 
     $query .= " ORDER BY xar_rdid";
@@ -71,9 +72,10 @@ function release_userapi_getdocs($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rdid, $rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
+        list($rdid, $eid,$rid, $title, $docs, $exttype, $time, $approved) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releasedocs[] = array('rdid'       => $rdid,
+                                   'eid'        => $eid,
                                    'rid'        => $rid,
                                    'title'      => $title,
                                    'docs'       => $docs,

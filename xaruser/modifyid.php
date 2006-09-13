@@ -24,10 +24,10 @@ function release_user_modifyid($args)
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
     if (!xarVarFetch('phase', 'str:0:', $phase, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('rid', 'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('eid', 'int:1:',  $eid, null, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:0:',  $return_url, null, XARVAR_NOT_REQUIRED)) return;
     
-    $data = xarModAPIFunc('release', 'user', 'getid', array('rid' => $rid));
+    $data = xarModAPIFunc('release', 'user', 'getid', array('eid' => $eid));
     if ($data == false) return;
     $data['return_url']= $return_url;
     if (empty($phase)){
@@ -35,7 +35,7 @@ function release_user_modifyid($args)
     }
     $exttypes = xarModAPIFunc('release','user','getexttypes');
     $data['exttypes']=$exttypes;
-
+    $rid = $data['rid'];
     switch(strtolower($phase)) {
 
         case 'modify':
@@ -88,7 +88,7 @@ function release_user_modifyid($args)
 
             $data['stateoptions']=$stateoptions;
             $item['module'] = 'release';
-            $hooks = xarModCallHooks('item', 'modify', $rid, $item);
+            $hooks = xarModCallHooks('item', 'modify', $eid, $item);
             if (empty($hooks['categories'])) {
                 $cathook = '';
             } else {
@@ -100,7 +100,7 @@ function release_user_modifyid($args)
             break;
 
         case 'update':
-
+            if (!xarVarFetch('rid',       'int:1:',  $rid, null, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('uid',       'int:1:',  $uid, null, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('regname',   'str:1:',  $regname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('displname', 'str:1:',  $displname, '', XARVAR_NOT_REQUIRED)) return;
@@ -138,7 +138,8 @@ function release_user_modifyid($args)
 
             // The user API function is called.
             if (!xarModAPIFunc('release', 'user','updateid',
-                                array('rid'       => $rid,
+                                array('eid'       => $eid,
+                                      'rid'       => $rid,
                                       'uid'       => $uid,
                                       'regname'   => $regname,
                                       'displname' => $displname,
@@ -155,7 +156,7 @@ function release_user_modifyid($args)
           if (isset($return_url)) {
               xarResponseRedirect($return_url);
           }else{
-              xarResponseRedirect(xarModURL('release', 'user', 'display',array('rid'=>$rid)));
+              xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$eid)));
           }
           return true;
 

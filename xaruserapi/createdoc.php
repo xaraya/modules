@@ -23,7 +23,8 @@ function release_userapi_createdoc($args)
     extract($args);
 
     // Argument check
-    if ((!isset($rid)) ||
+    if ((!isset($eid)) ||
+        (!isset($rid)) ||    
         (!isset($title)) ||
         (!isset($doc)) ||
         (!isset($exttype)) ||
@@ -51,6 +52,7 @@ function release_userapi_createdoc($args)
     $time = time();
     $query = "INSERT INTO $releasetable (
               xar_rdid,
+              xar_eid,
               xar_rid,
               xar_title,
               xar_docs,
@@ -58,9 +60,9 @@ function release_userapi_createdoc($args)
               xar_time,
               xar_approved
               )
-            VALUES (?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId,$rid,$title,$doc,$exttype,$time,$approved);
+    $bindvars = array($nextId,$eid,$rid,$title,$doc,$exttype,$time,$approved);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

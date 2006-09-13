@@ -21,7 +21,7 @@
 function release_admin_deleteid()
 {
     // Get parameters
-    if (!xarVarFetch('rid', 'id', $rid)) return;
+    if (!xarVarFetch('eid', 'id', $eid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
     
@@ -33,7 +33,7 @@ function release_admin_deleteid()
 
     // The user API function is called.
     $data = xarModAPIFunc('release', 'user', 'getid',
-                          array('rid' => $rid));
+                          array('eid' => $eid));
 
     if ($data == false) return;
 
@@ -53,7 +53,7 @@ function release_admin_deleteid()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('release', 'admin', 'deleteid',
-                        array('rid' => $rid))) return;
+                        array('eid' => $eid))) return;
 
     // Redirect
     xarResponseRedirect(xarModURL('release', 'admin', 'viewids'));

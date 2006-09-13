@@ -25,29 +25,55 @@ function release_user_display($args)
 
     extract($args);
 
-    if (!xarVarFetch('rid', 'int:1:', $rid, null)) {return;}
+    if (!xarVarFetch('rid', 'int', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('exttype', 'int', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('startnum', 'int', $startnum, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('phase', 'str:1:7', $phase, 'view', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
-    // The user API function is called. 
-    $id = xarModAPIFunc('release', 'user', 'getid',
-                          array('rid' => $rid));
+
+    // The user API function is called.
+
+    if (isset($eid)){
+        $id = xarModAPIFunc('release', 'user', 'getid',
+                             array('eid' => $eid));
+        $rid = (int)$id['rid'];
+        $exttype = (int)$id['exttype'];
+    }elseif (isset($rid)) { //just in case we have older url
+      if (isset ($exttype)) {
+        $id = xarModAPIFunc('release', 'user', 'getid',
+                          array('rid' => $rid,
+                                'exttype' => $exttype));
+      }else{
+        $id = xarModAPIFunc('release', 'user', 'getid',
+                          array('rid' => (int)$rid));
+
+        }
+        $eid = (int)$id['eid'];
+        $exttype = (int)$id['exttype'];
+    }
+
 
     $cats = xarModAPIFunc('categories','user','getitemcats',
-                           array('module'=>'release','item'=>$rid)
+                           array('module'=>'release','item'=>$eid)
                          );
 
-    $getuser = xarModAPIFunc('roles', 'user','get',
-                              array('uid' => $id['uid']));
+
     //set the type
     $exttypes = xarModAPIFunc('release','user','getexttypes');
     $fliptype = array_flip($exttypes);
-    $exttypename = array_search($id['exttype'],$fliptype);
+    $exttypename = array_search($exttype,$fliptype);
     $data['exttypename']=$exttypename;
     $data['exttypes']=$exttypes;
+    $data['rid'] = $rid;
+    $data['eid'] = $eid;
+    $getuser = xarModAPIFunc('roles', 'user','get',
+                              array('uid' => $id['uid']));
+
+    $realname = $getuser['name'];
     //determine edit link
     if ((xarUserGetVar('uid') == $id['uid']) || xarSecurityCheck('EditRelease',0)) {
-        $data['editlink']=xarModURL('release','user','modifyid',array('rid'=>$rid));
+        $data['editlink']=xarModURL('release','user','modifyid',array('eid'=>$eid));
     } else {
         $data['editlink']='';
     }
@@ -84,21 +110,18 @@ function release_user_display($args)
     }
 
     switch(strtolower($phase)) {
-
         case 'view':
         default:
-
-            $hooks = xarModCallHooks('item', 'display',$rid,
-                                     array('module' => 'release',
-                                           'itemtype'  => $id['exttype'],
-                                           'returnurl' => xarModURL('release', 'user','display',
-                                                                     array('rid' => $rid))
-                                          ),
+            $hooks = xarModCallHooks('item', 'display',$eid,
+                               array('module'    => 'release',
+                                     'itemtype'  => $exttype,
+                                     'returnurl' => xarModURL('release', 'user','display', array('eid' => $eid))
+                                     ),
                                      'release'
                                      );
 
 
-            if (empty($hooks)) {
+            if (!isset($hooks) || empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
                 $data['hooks'] = join('',$hooks);
@@ -111,13 +134,14 @@ function release_user_display($args)
             break;
 
         case 'version':
+
             // The user API function is called.
             $items = array();
             $items = xarModAPIFunc('release', 'user','getallnotes',
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
-                                        'rid' => $rid));
+                                        'eid' => $eid));
 
             if (empty($items)){
                 $data['message'] = xarML('There is no version history on this module');
@@ -129,8 +153,9 @@ function release_user_display($args)
 
                 // The user API function is called.
                 $getid = xarModAPIFunc('release', 'user','getid',
-                                       array('rid' => $items[$i]['rid']));
+                                       array('eid' => $items[$i]['eid']));
 
+                $items[$i]['rid'] = xarVarPrepForDisplay($getid['rid']);
                 $items[$i]['exttype'] = xarVarPrepForDisplay($getid['exttype']);
                 $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
                 $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
@@ -203,13 +228,13 @@ function release_user_display($args)
             $data['tab'] = 'versions';
             break;
 
-
+      /*
         case 'docsmodule':
             $data['mtype'] = 'mgeneral';
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user','getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -241,7 +266,7 @@ function release_user_display($args)
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user','getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -272,7 +297,7 @@ function release_user_display($args)
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user','getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -305,7 +330,7 @@ function release_user_display($args)
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -337,7 +362,7 @@ function release_user_display($args)
             // The user API function is called. 
 
             $items = xarModAPIFunc('release', 'user', 'getdocs',
-                                    array('rid' => $rid,
+                                    array('eid' => $eid,
                                           'type'=> $data['mtype']));
 
             if (empty($items)){
@@ -362,6 +387,7 @@ function release_user_display($args)
             $data['general'] = 0;
 
             break;
+            */
 
     }
     foreach ($stateoptions as $key => $value) {
@@ -384,14 +410,12 @@ function release_user_display($args)
     $data['displname'] = $id['displname'];
     $scmlink = str_replace('http://','',$id['scmlink']);
     $data['scmlink']= !empty($scmlink) ? $id['scmlink'] : '';
-    $data['exttype'] = $id['exttype'];
     $data['exttypename'] = $exttypename;
     $data['class'] = $id['class'];
     $data['modified'] = $id['modified'];
     $data['memberstring']= $memberstring;
     $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
-    $data['realname'] = $getuser['name'];
-    $data['rid'] = $rid;
+    $data['realname'] = $realname;
     $data['startnum']=$startnum;
 
 return $data;
