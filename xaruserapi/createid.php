@@ -27,7 +27,7 @@ function release_userapi_createid($args)
     }
     $regname = strtolower($regname);
     //get our new registration ID for this extension type
-    $regid = xarModAPIFunc('release','user','allocateid',array('regname'=>$regname, 'exttype'=>$exttype));
+    $regid = xarModAPIFunc('release','user','allocateid',array('regname'=>$regname, 'exttype'=>$exttype,'rid'=>$rid));
 
     if (!isset($regid)){
       $msg = xarML('Unable to create an ID for this extension.');

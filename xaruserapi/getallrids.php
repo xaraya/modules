@@ -31,7 +31,6 @@ function release_userapi_getallrids($args)
     if (!isset($catid)) {
     $catid =NULL;
     }
-
     if (empty($sort)) {
         $sortlist = array('rids');
     } elseif (is_array($sort)) {
@@ -148,7 +147,7 @@ function release_userapi_getallrids($args)
                 $sortparts[] = ' xar_rstate ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'regtime') {
                 $sortparts[] = ' xar_regtime ' . (!empty($sortorder) ? $sortorder : 'DESC');
-            } elseif ($criteria == 'eids') {
+            } else{
                  $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             }
         }
@@ -156,6 +155,7 @@ function release_userapi_getallrids($args)
     } else { // default is 'rid
         $query .= ' ORDER BY  xar_eid ASC';
     }
+
     //  $query .= " ORDER BY xar_rid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;

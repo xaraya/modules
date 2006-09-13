@@ -33,24 +33,14 @@ function release_user_view()
     $uid = xarUserGetVar('uid');
 
 
-    //TODO -hardcode for now until we get the rest working
-    if ($phase == 'modules') {
-        $exttype=1;
-    }elseif ($phase =='themes') {
-        $exttype=2;
-    }elseif ($phase =='properties') {
-        $exttype=3;
-    }elseif ($phase =='blocks') {
-        $exttype=4;
-    }elseif ($phase =='custom') {
-        $exttype=5;
-    }elseif ($phase =='templatepack') {
-        $exttype=6;
-    }elseif ($phase =='addon') {
-        $exttype=7;
-    }else{
-     $exttype=1;
+   $xarexttypes = xarModAPIFunc('release','user','getexttypes');
+    foreach ($xarexttypes as $k=>$v) {
+        $testv = strtolower($v);
+        if ($phase == $testv) {
+            $exttype=$k;
+        }
     }
+
     $data = array();
     if (empty($sort)) {
         $sort = 'id';
@@ -115,7 +105,15 @@ function release_user_view()
             $items[$i]['edittitle'] = '';
             $items[$i]['editurl'] = '';
         }
-
+      // Delete
+        if (($uid == $item['uid']) or (xarSecurityCheck('DeleteRelease', 0))) {
+            $items[$i]['delurl'] = xarModURL('release', 'admin', 'deleteid',
+                                               array('eid' => $item['eid']));
+            $items[$i]['deltitle'] = xarML('Delete');
+        } else {
+            $items[$i]['deltitle'] = '';
+            $items[$i]['delurl'] = '';
+        }
         // Add Release Note URL
         if (($uid == $item['uid']) or (xarSecurityCheck('EditRelease', 0))) {
             $items[$i]['addurl'] = xarModURL('release', 'user', 'addnotes',
@@ -143,7 +141,8 @@ function release_user_view()
             // Get Comments
             $items[$i]['comments'] = xarModAPIFunc('comments', 'user', 'get_count',
                                                    array('modid' => xarModGetIDFromName('release'),
-                                                         'objectid' => $item['eid']));
+                                                        'itemtype' => $item['exttype'],
+                                                         'objectid' => (int)$item['eid']));
 
             if ($items[$i]['comments'] != '0') {
                 $items[$i]['comments'] .= ' ';
@@ -154,9 +153,9 @@ function release_user_view()
         if (xarModIsAvailable('hitcount')){
             // Get Hits
             $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user', 'get',
-                                                   array('modname' => 'release',
-                                                         'itemtype' => $exttype,
-                                                         'objectid' => $item['eid']));
+                                                   array('modid' => xarModGetIDFromName('release'),
+                                                         'itemtype' => $item['exttype'],
+                                                         'objectid' => (int)$item['eid']));
 
             if ($items[$i]['hitcount'] != '0') {
                 $items[$i]['hitcount'] .= ' ';

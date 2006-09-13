@@ -108,26 +108,21 @@ function release_user_display($args)
             }
         }
     }
+    $item['module'] = 'release';
+        $item['itemtype'] = $exttype;
+        $item['item'] = $eid;
+        $item['returnurl']=xarModURL('release', 'user','display', array('eid' => $eid));
+        $hooks = xarModCallHooks('item','display', $eid, $item);
 
+        if (empty($hooks)) {
+            $data['hooks'] = '';
+        } else {
+            $data['hooks'] = $hooks;
+        }
     switch(strtolower($phase)) {
         case 'view':
         default:
-            $hooks = xarModCallHooks('item', 'display',$eid,
-                               array('module'    => 'release',
-                                     'itemtype'  => $exttype,
-                                     'returnurl' => xarModURL('release', 'user','display', array('eid' => $eid))
-                                     ),
-                                     'release'
-                                     );
 
-
-            if (!isset($hooks) || empty($hooks)) {
-                $data['hooks'] = '';
-            } elseif (is_array($hooks)) {
-                $data['hooks'] = join('',$hooks);
-            } else {
-                $data['hooks'] = $hooks;
-            }
             $data['version'] = 0;
             $data['docs'] = 0;
             $data['general'] = 2;
@@ -189,6 +184,7 @@ function release_user_display($args)
 
                 $items[$i]['comments'] = xarModAPIFunc('comments', 'user','get_count',
                                                        array('modid' => xarModGetIDFromName('release'),
+                                                             'itemtype' =>(int)$item['exttype'],
                                                              'objectid' => $item['rnid']));
                 
                 if (!$items[$i]['comments']) {
@@ -201,6 +197,7 @@ function release_user_display($args)
 
                $items[$i]['hitcount'] = xarModAPIFunc('hitcount', 'user','get',
                                                        array('modname' => 'release',
+                                                        'itemtype' =>(int)$item['exttype'],
                                                              'objectid' => $item['rnid']));
 
                 if (!$items[$i]['hitcount']) {

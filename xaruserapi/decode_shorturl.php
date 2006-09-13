@@ -22,10 +22,9 @@
  *          string arguments, or empty if it failed
  */
 function release_userapi_decode_shorturl($params)
-{ 
+{
     // Initialise the argument list we will return
-    $args = array(); 
-
+    $args = array();
     $exttypes = xarModAPIFunc('release','user','getexttypes');
     $flipext = array_flip($exttypes);
     $extnamearray =array();
@@ -33,7 +32,7 @@ function release_userapi_decode_shorturl($params)
         $extnamearray[] = strtolower($v);
     }
 
-    if ($params[1] == 'eid') {
+    if (isset($params[1]) && ($params[1] == 'eid')) {
         if (is_numeric($params[2])) {
             $args['eid'] = (int) $params[2];
             return array('display', $args);
@@ -64,7 +63,7 @@ function release_userapi_decode_shorturl($params)
         return array('view', $args);
     } elseif (preg_match('/^addid/i', $params[1])) {
             return array('addid', $args);
-    } elseif ($params[1] == 'displaynote') {
+   } elseif (preg_match('/^displaynote/i', $params[1])) {
             if (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
              $args['rnid']=$matches[1];
             }
@@ -75,7 +74,7 @@ function release_userapi_decode_shorturl($params)
         }elseif (!empty($params[2]) && ($params[2] == 'start')) {
            $args['phase']='start';
         }
-        if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
+        if (!empty($params[2]) && in_array($params[2], $extnamearray)){
             if (!empty($params[3]) && preg_match('/^(\d+)/', $params[3], $matches)){
              $args['rid']=$matches[1];
              $args['exttype'] =(int)array_search($params[2],$flipext);
@@ -87,6 +86,7 @@ function release_userapi_decode_shorturl($params)
             $args['rid']=$matches[1];
             $args['exttype']= 1;//try module?
         }
+
         return array('addnotes', $args);
    } elseif ($params[1] == 'modifyid') {
        if (!empty($params[2]) && in_array($params[2], $extnamearray)){//try eid first
@@ -115,7 +115,7 @@ function release_userapi_decode_shorturl($params)
                 $eid = $matches[1];
                 $args['eid'] = (int)$eid;
                 $args['phase']='version';
-           
+
         }elseif (!empty($params[2]) && preg_match('/^(\d+)/', $params[2], $matches)){
             $args['rid']=(int)$matches[1];
         }

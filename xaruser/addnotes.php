@@ -15,8 +15,30 @@ function release_user_addnotes($args)
     extract($args);
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
-    xarVarFetch('phase', 'enum:getmodule:start:getbasics:getdetails:preview:update',
-                         $phase, 'getmodule', XARVAR_NOT_REQUIRED);
+    xarVarFetch('phase', 'enum:getmodule:start:getbasics:getdetails:preview:update',$phase, 'getmodule', XARVAR_NOT_REQUIRED);
+    if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
+    
+    if (isset($eid) && $eid>0) {
+      $data = xarModAPIFunc('release', 'user', 'getid',
+                                  array('eid' => $eid));
+
+    }
+    if (!isset($eid) && isset($rid) && isset($exttype)) {
+      $data = xarModAPIFunc('release', 'user', 'getid',
+                                  array('rid' => $rid, 'exttype' =>$exttype));
+
+    }
+    if (isset($data) && !empty($data['regname'])){
+        $rid = $data['rid'];
+        $exttype = $data['exttype'];
+        $regname = $data['regname'];
+        $eid =$data['eid'];
+    } else {
+        $regname ='';
+    }
+
 
     $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
     $data['exttypes']=$exttypes;
@@ -42,15 +64,17 @@ function release_user_addnotes($args)
 
             $authid = xarSecGenAuthKey();
             $data = xarTplModule('release','user', 'addnote_getmodule',
-                array('authid' => $authid,'exttypes'=>$exttypes, 'message'=>$m));
+                array('authid' => $authid,
+                      'rid'=>$rid, 
+                      'regname'=>$regname, 
+                      'exttype'=>$exttype,
+                      'exttypes'=>$exttypes, 
+                      'message'=>$m));
 
             break;
 
         case 'start':
-            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
 
-            // The user API function is called.
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid, 'exttype' => $exttype));
 
@@ -83,6 +107,7 @@ function release_user_addnotes($args)
                                                    array('eid'       => $data['eid'],
                                                          'rid'       => $data['rid'],
                                                          'regname'   => $data['regname'],
+                                                         'displname'=>   $data['displname'],
                                                          'desc'      => $data['desc'],
                                                          'message'   => $message,
                                                          'exttype'  => $exttype,
@@ -91,10 +116,6 @@ function release_user_addnotes($args)
 
         case 'getbasics':
 
-           if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
-           if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
-           if (!xarVarFetch('eid', 'str:1:', $eid, NULL, XARVAR_NOT_REQUIRED)) {return;};
-           if (!xarVarFetch('exttype', 'str:1:', $exttype, NULL, XARVAR_NOT_REQUIRED)) {return;};
            //if (!xarSecConfirmAuthKey()) return;
            $democheck=1;
            $supportcheck=1;
@@ -113,6 +134,7 @@ function release_user_addnotes($args)
             break;
 
         case 'getdetails':
+
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}

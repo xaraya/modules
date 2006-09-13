@@ -104,7 +104,7 @@
                         <xar:mlstring>Comments</xar:mlstring>
                     </th>
                 </xar:if>
-                <xar:if condition="$hithook eq true">
+                <xar:if condition="xarModIsHooked('hitcount','release')">
                     <th width="5%">
                         <xar:mlstring>Hits</xar:mlstring>
                     </th>
@@ -154,16 +154,18 @@
                             #$loop:item['comments']#
                         </td>
                     </xar:if>
-                    <xar:if condition="$hithook eq true">
+                    <xar:if condition="xarModIsHooked('hitcount','release')">
                         <td width="5%" class="#$rowclass#">
                             #$loop:item['hitcount']#
                         </td>
                     </xar:if>
                     <td class="#$rowclass#" nowrap="nowrap">
-                        <xar:if condition="empty($loop:item['editurl'])">
                             <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
-                        <xar:else />
-                            <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a> | <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                        <xar:if condition="!empty($loop:item['editurl'])">
+                            | <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                        </xar:if>
+                        <xar:if condition="!empty($loop:item['delurl'])">
+                            | <a href="#$loop:item['delurl']#">#$loop:item['deltitle']#</a>
                         </xar:if>
                     </td>
                 </tr>

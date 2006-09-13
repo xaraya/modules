@@ -51,7 +51,7 @@
                          </xar:if>
                      </xar:if>
                     </xar:foreach>
-                 </select>
+                 </select> 
                 <xar:else />
                      #$exttypename#
                 </xar:sec>
@@ -83,7 +83,7 @@
                     <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                    <input type="text" name="displname" id="displname" tabindex="3" size="40" maxlength="250" >
+                    <input type="text" name="displname" id="displname" tabindex="3" value="#$displname#" size="40" maxlength="250" >
                 </td>
             </tr>
             <tr>

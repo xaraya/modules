@@ -27,6 +27,7 @@ function release_user_modifyid($args)
     if (!xarVarFetch('eid', 'int:1:',  $eid, null, XARVAR_NOT_REQUIRED)) return;
 
     $data = xarModAPIFunc('release', 'user', 'getid', array('eid' => $eid));
+
     if ($data == false) return;
 
     if (empty($phase)){
@@ -87,6 +88,7 @@ function release_user_modifyid($args)
 
             $data['stateoptions']=$stateoptions;
             $item['module'] = 'release';
+            $item['itemtype'] = 0;
             $hooks = xarModCallHooks('item', 'modify', $eid, $item);
             if (empty($hooks['categories'])) {
                 $cathook = '';

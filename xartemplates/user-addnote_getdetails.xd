@@ -11,7 +11,7 @@
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="preview" />
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
-        <input type="hidden" name="eid" id="eid" value="#$eid#" />        
+        <input type="hidden" name="eid" id="eid" value="#$eid#" />
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
         <input type="hidden" name="version" id="version" value="#$version#" />
         <input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />
@@ -31,7 +31,7 @@
                  <label for="extensionname" class="xar-form-label">
                     <xar:mlstring>Extension Registered Name</xar:mlstring>
                 </label>
-                #$regname#
+                #$regname# 
             </p>
 
             <p>

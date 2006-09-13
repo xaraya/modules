@@ -13,33 +13,20 @@
 function release_admin_viewids()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'enum:modules:themes:all:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
 
     $uid = xarUserGetVar('uid');
 
-
-   //TODO -hardcode for now until we get the rest working
-    if ($phase == 'modules') {
-        $exttype=1;
-    }elseif ($phase =='themes') {
-        $exttype=2;
-    }elseif ($phase =='properties') {
-        $exttype=3;
-    }elseif ($phase =='blocks') {
-        $exttype=4;
-    }elseif ($phase =='custom') {
-        $exttype=5;
-    }elseif ($phase =='templatepack') {
-        $exttype=6;
-    }elseif ($phase =='addon') {
-        $exttype=7;
-    }else{
-     $exttype=1;
+    $xarexttypes = xarModAPIFunc('release','user','getexttypes');
+    foreach ($xarexttypes as $k=>$v) {
+        $testv = strtolower($v);
+        if ($phase == $testv) {
+            $exttype=$k;
+        }
     }
-
     // The user API function is called. 
     $items = xarModAPIFunc('release', 'user', 'getallrids',
                        array('exttype' => $exttype,
@@ -60,7 +47,7 @@ function release_admin_viewids()
         $items[$i]['eid'] = xarVarPrepForDisplay($item['eid']);
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
-
+        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
         $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release', 'user', 'modifyid',

@@ -293,7 +293,13 @@
                 <p>#$docsf#</p>
         </xar:loop>
     </xar:if>
-
-    #$hooks#
 </xar:if>
+
 </div>
+<xar:if condition="!empty($hooks)">
+<div style="clear:both;padding:10px;">
+    <xar:foreach in="$hooks" key="$hookmodule">
+        #$hooks[$hookmodule]# 
+    </xar:foreach>
+</div>
+</xar:if>

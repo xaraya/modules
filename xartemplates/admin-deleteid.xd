@@ -8,10 +8,22 @@
     <input type="hidden" name="eid" id="eid" value="#$eid#" />
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
-
-    <span class="xar-title"><xar:mlstring>Confirm deletion of release id</xar:mlstring></span><br /><br />
-
-    <input type="submit" value="#xarML('Confirm')#"  tabindex="1" /><br /><br />
+    <fieldset>
+    <legend><xar:mlstring>Confirm deletion</xar:mlstring></legend>
+    <div class="xar-form-input-wrapper-after">
+          <label for="regid" class="xar-form-label">
+          <xar:mlstring>Registered ID:</xar:mlstring>
+          </label>
+           #$rid#
+       </div>
+       <div class="xar-form-input-wrapper-after">
+          <label for="regname" class="xar-form-label">
+          <xar:mlstring>Extension Registered Name:</xar:mlstring>
+          </label>
+           #$regname#
+       </div>
+    </fieldset>
+    <input type="submit" value="#xarML('Confirm')#"  tabindex="1" />
     
     <a href="#xarModURL('release', 'admin', 'viewids')#"><xar:mlstring>Cancel deletion of release id</xar:mlstring></a>
 </form>        

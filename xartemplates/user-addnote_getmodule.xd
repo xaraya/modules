@@ -20,7 +20,10 @@
                         <xar:mlstring>Extension ID</xar:mlstring>
                     </span>
                     </label>
-                <input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
+                <input type="text" name="rid" id="rid" value="#$rid#" size="5" maxlength="5" tabindex="1" />
+                <xar:if condition="!empty($regname)">
+                &nbsp; #$regname#
+                </xar:if>
             </p>
             <p>
                 <label for="rid" class="xar-form-label">

@@ -96,22 +96,22 @@ function release_userapi_encode_shorturl($args)
         if (isset($rid)){
             if (!isset($exttype)){ //have to assume a module .. backward compatibility, ugg
                 if (isset($phase) && ($phase=='start')) {
-                    $path = '/' . $module . '/addnotes/start/module/' . $rid . '.html';
+                    $path = '/' . $module . '/addnotes/module/' . $rid . '.html';
                 } else {
                      $path = '/' . $module . '/module/addnotes.html';
                 }
             }else {
                 if (isset($phase) && ($phase=='start')) {
-                    $path = '/' . $module . '/addnotes/start/'.$extname.'/' . $rid . '.html';
+                    $path = '/' . $module . '/addnotes/'.$extname.'/' . $rid . '.html';
                 } else {
                      $path = '/' . $module . '/'.$extname.'/addnotes.html';
                 }
             }
         }elseif (isset($eid)){
            if (isset($phase) && ($phase=='start')) {
-                    $path = '/' . $module . '/addnotes/start/eid/' . $eid;
+                    $path = '/' . $module . '/addnotes/eid/' . $eid;
            } else {
-                     $path = '/' . $module . '/eid/addnotes.html';
+                     $path = '/' . $module . '/addnotes.html';
            }
         }
     } elseif ($func == 'addid') {

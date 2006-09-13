@@ -9,18 +9,20 @@
     <xar:if condition="!empty($message)">
         #$message#
     <xar:else />
-
+    <p>
     <xar:mlstring>From this screen, you will be adding a release note for your extension.
-                  Please enter all applicable information.  Release notes are held for validation.  
-                  If your extension has never had a release before, it may take extra time to 
-                  determine the certification status.  For more information on the certification
-                  of extensions, and their benefits, please read this information (insert link).
+                  Please enter all applicable information.  
+                  
+                  Release notes are held for validation.
+                  If your extension has never had a release before, it may take extra time to
+                  validate its' status.  
     </xar:mlstring>
+    </p>
     <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="getbasics" />    
         <input type="hidden" name="rid" id="rid" value="#$rid#" /> 
-        <input type="hidden" name="eid" id="eid" value="#$eid#" />              
+        <input type="hidden" name="eid" id="eid" value="#$eid#" />
         <input type="hidden" name="regname" id="regname" value="#$regname#" />
       
         <fieldset class="formelements xar-norm">

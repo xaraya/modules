@@ -18,7 +18,7 @@
  * Original Author of file: John Cox via phpMailer Team
  * @author Release module development team
  */
-function release_admin_deleteid()
+function release_admin_deleteid($args)
 {
     // Get parameters
     if (!xarVarFetch('eid', 'id', $eid)) return;
@@ -36,7 +36,8 @@ function release_admin_deleteid()
                           array('eid' => $eid));
 
     if ($data == false) return;
-
+    $rid = $data['rid'];
+    $regname = $data['regname'];
     // Security Check
     if(!xarSecurityCheck('DeleteRelease')) return;
 
@@ -53,7 +54,7 @@ function release_admin_deleteid()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('release', 'admin', 'deleteid',
-                        array('eid' => $eid))) return;
+                        array('eid' => $eid,'rid'=>$rid, 'regname'=>$regname))) return;
 
     // Redirect
     xarResponseRedirect(xarModURL('release', 'admin', 'viewids'));
