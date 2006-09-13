@@ -12,10 +12,14 @@
  */
 function release_user_addnotes($args)
 {
+    extract($args);
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
     xarVarFetch('phase', 'enum:getmodule:start:getbasics:getdetails:preview:update',
                          $phase, 'getmodule', XARVAR_NOT_REQUIRED);
+
+    $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
+    $data['exttypes']=$exttypes;
 
     if (empty($phase)){
         $phase = 'getmodule';
@@ -33,23 +37,31 @@ function release_user_addnotes($args)
     switch(strtolower($phase)) {
         case 'getmodule':
         default:
-            // First we need to get the module that we are adding the release note to.
-            // This will be done in several stages so that the information is accurate.
+            // First we need to get the extension and extension type that we are adding the release note to.
+            if (!isset($m)) $m ='';
 
             $authid = xarSecGenAuthKey();
-            $data = xarTplModule('release','user', 'addnote_getmodule', array('authid'    => $authid));
+            $data = xarTplModule('release','user', 'addnote_getmodule',
+                array('authid' => $authid,'exttypes'=>$exttypes, 'message'=>$m));
 
             break;
 
         case 'start':
-            // First we need to get the module that we are adding the release note to.
-            // This will be done in several stages so that the information is accurate.
             if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('exttype', 'int:1:', $extype, null, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
+
             // The user API function is called.
             $data = xarModAPIFunc('release', 'user', 'getid',
                                   array('rid' => $rid, 'exttype' => $exttype));
 
+            $exttypename = array_search($exttype,array_flip($exttypes));
+
+            if (!isset($data['regname']) || empty($data['regname'])) {
+                 $m = xarML('Sorry, that extension number and extension type combination does not exist');
+
+                 xarResponseRedirect(xarModURL('release', 'user', 'addnotes',
+                        array('m'=>$m,'rid'=>$rid,'exttype'=>$exttype,'phase'=>'getmodule')));
+            }
 
             $uid = xarUserGetVar('uid');
 
@@ -73,15 +85,16 @@ function release_user_addnotes($args)
                                                          'regname'   => $data['regname'],
                                                          'desc'      => $data['desc'],
                                                          'message'   => $message,
+                                                         'exttype'  => $exttype,
                                                          'authid'    => $authid));
-
             break;
 
         case 'getbasics':
 
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
-
+           if (!xarVarFetch('eid', 'str:1:', $eid, NULL, XARVAR_NOT_REQUIRED)) {return;};
+           if (!xarVarFetch('exttype', 'str:1:', $exttype, NULL, XARVAR_NOT_REQUIRED)) {return;};
            //if (!xarSecConfirmAuthKey()) return;
            $democheck=1;
            $supportcheck=1;
@@ -89,16 +102,20 @@ function release_user_addnotes($args)
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
-           $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'      => $rid,
+           $data = xarTplModule('release','user', 'addnote_getbasics', array('eid'       => $eid,
+                                                                             'rid'      => $rid,
                                                                              'regname'  => $regname,
                                                                              'authid'   => $authid,
                                                                              'democheck' => $democheck,
                                                                              'supportcheck' => $supportcheck,
+                                                                             'exttype'  => $exttype,
                                                                              'pricecheck' => $pricecheck));
             break;
 
         case 'getdetails':
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
            if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
@@ -110,13 +127,15 @@ function release_user_addnotes($args)
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
-           $data = xarTplModule('release','user', 'addnote_getdetails', array('rid'          => $rid,
+           $data = xarTplModule('release','user', 'addnote_getdetails', array('eid'          => $eid,
+                                                                              'rid'          => $rid,
                                                                               'regname'      => $regname,
                                                                               'authid'       => $authid,
                                                                               'version'      => $version,
                                                                               'pricecheck'   => $pricecheck,
                                                                               'supportcheck' => $supportcheck,
                                                                               'democheck'    => $democheck,
+                                                                              'exttype'      => $exttype,
                                                                               'stateoptions' => $stateoptions,
                                                                               'usefeed'      => $usefeed));
 
@@ -124,6 +143,8 @@ function release_user_addnotes($args)
         
         case 'preview':
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
            if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}
@@ -152,6 +173,7 @@ function release_user_addnotes($args)
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_preview',    array('rid'         => $rid,
+                                                                              'eid'         => $eid,
                                                                               'regname'     => $regname,
                                                                               'authid'      => $authid,
                                                                               'version'     => $version,
@@ -167,6 +189,7 @@ function release_user_addnotes($args)
                                                                               'notesf'      => $notesf,
                                                                               'notes'       => $notes,
                                                                               'rstate'      => $rstate,
+                                                                              'exttype'     => $exttype,
                                                                               'stateoptions'=> $stateoptions,
                                                                               'extstate'     => $extstate,
                                                                               'usefeed'      => $usefeed));
@@ -177,6 +200,8 @@ function release_user_addnotes($args)
 
         case 'update':
            if (!xarVarFetch('rid', 'int:1:', $rid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('eid', 'int:1:', $eid, null, XARVAR_NOT_REQUIRED)) {return;}
+           if (!xarVarFetch('exttype', 'int:1:', $exttype, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
            if (!xarVarFetch('version', 'str:1:', $version, null, XARVAR_NOT_REQUIRED)) {return;}
            if (!xarVarFetch('pricecheck', 'int:1:2', $pricecheck, null, XARVAR_NOT_REQUIRED)) {return;}

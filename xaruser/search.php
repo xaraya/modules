@@ -118,6 +118,8 @@ function release_user_search($args)
     } else {
         $search['author']='';
     }
+    $exttypes = xarModAPIFunc('release','user','getexttypes');
+    $data['exttypes']=$exttypes;
 
     $search['q']=$q;
     $seach['modid']= xarModGetIDFromName('release');

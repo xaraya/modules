@@ -28,9 +28,15 @@
     </h4>
     <ul>
         <xar:foreach in="$release" key="$key" value="$extension">
+
+             <xar:foreach in="$exttypes" key="$k" value="$v">
+                <xar:if condition="$extension['exttype'] eq $k and ($k ne 0)">
+                      <xar:set name="exttypename">$v</xar:set>
+                </xar:if>
+             </xar:foreach>
             <li>
                 <a href="#xarModURL('release', 'user', 'display', array('eid' => $extension['eid']))#">
-                    #$extension['exttype']# - ID #$extension['rid']#  #$extension['displname']#
+                    #$exttypename# - ID #$extension['rid']#  #$extension['displname']#
                 </a>
                 <xar:mlstring> by </xar:mlstring>
                 <a href="#xarModURL('roles', 'user', 'display', array('uid' => $extension['uid']))#">#$extension['author']#</a>

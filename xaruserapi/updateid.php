@@ -25,7 +25,6 @@ function release_userapi_updateid($args)
 
     // Argument check
     if ((!isset($eid)) ||
-        (!isset($rid)) ||
         (!isset($uid)) ||
         (!isset($regname)) ||
         (!isset($displname)) ||
@@ -69,8 +68,7 @@ function release_userapi_updateid($args)
 
     // Update the link
     $query = "UPDATE $releasetable
-            SET xar_rid       = ?,
-                xar_uid       = ?,
+            SET xar_uid       = ?,
                 xar_regname   = ?,
                 xar_displname = ?,
                 xar_class     = ?,
@@ -85,8 +83,8 @@ function release_userapi_updateid($args)
                 xar_openproj  = ?,
                 xar_exttype   = ?
             WHERE xar_eid     = ?";
-    $bindvars = array($rid,$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
-                      $regtime, $modified, $members, $scmlink, $openproj, $exttype,$rid);
+    $bindvars = array((int)$uid,$regname,$displname,$class,$desc,$certified,$approved,$rstate,
+                      $regtime, $modified, $members, $scmlink, $openproj, (int)$exttype,(int)$eid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

@@ -22,7 +22,7 @@ function release_user_view()
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase',    'str:1:', $phase,    'all', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('catid',    'int',    $catid,    NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('sort',     'str', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sort',     'str', $sort, 'id', XARVAR_NOT_REQUIRED)) {return;}
    // Default parameters
     if (!isset($startnum)) {
         $startnum = 1;

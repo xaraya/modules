@@ -33,7 +33,7 @@ function release_userapi_getallrids($args)
     }
 
     if (empty($sort)) {
-        $sortlist = array('eids');
+        $sortlist = array('rids');
     } elseif (is_array($sort)) {
         $sortlist = $sort;
     } else {
@@ -61,7 +61,7 @@ function release_userapi_getallrids($args)
                                     'andcids'  => 1));
     }
 
-    $query = "SELECT DISTINCT xar_eid,
+    $query = "SELECT $releasetable.xar_eid,
                      $releasetable.xar_rid,
                      $releasetable.xar_uid,
                      $releasetable.xar_regname,
@@ -139,7 +139,7 @@ function release_userapi_getallrids($args)
                 $sortorder = '';
             }
             if ($criteria == 'id') {
-                $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
+                $sortparts[] = ' xar_rid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'author') {
                 $sortparts[] = ' xar_uname ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'name') {
@@ -148,7 +148,7 @@ function release_userapi_getallrids($args)
                 $sortparts[] = ' xar_rstate ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'regtime') {
                 $sortparts[] = ' xar_regtime ' . (!empty($sortorder) ? $sortorder : 'DESC');
-            } else {
+            } elseif ($criteria == 'eids') {
                  $sortparts[] = ' xar_eid ' . (!empty($sortorder) ? $sortorder : 'ASC');
             }
         }

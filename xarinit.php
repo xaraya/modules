@@ -251,7 +251,7 @@ function release_init()
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'   => 'latestprojects',
+                       array('modName'   => 'release',
                              'blockType' => 'latestprojects'))) return;
     // Enable categories hooks for release
     xarModAPIFunc('modules','admin','enablehooks',
@@ -399,7 +399,7 @@ function release_upgrade($oldversion)
           if (!xarModAPIFunc('blocks',
                              'admin',
                               'register_block_type',
-                       array('modName'   => 'latestprojects',
+                       array('modName'   => 'release',
                              'blockType' => 'latestprojects'))) return;
 
           $releaseid = $xartable['release_id'];

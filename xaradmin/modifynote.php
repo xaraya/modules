@@ -67,6 +67,7 @@ function release_admin_modifynote()
             $data['rstatesel']=$rstatesel;
             $data['stateoptions']=$stateoptions;
             $data['regname'] = $id['regname'];
+            $data['exttype'] = $id['exttype'];
             $data['username'] = $user['name'];
             $data['changelogf'] = nl2br($data['changelog']);
             $data['notesf'] = nl2br($data['notes']);
@@ -128,6 +129,7 @@ function release_admin_modifynote()
                                       'supportlink' => $supportlink,
                                       'changelog'   => $changelog,
                                       'notes'       => $notes,
+                                      'exttype'     => $exttype,
                                       'enotes'      => $enotes,
                                       'certified'   => $certified,
                                       'approved'    => $approved,

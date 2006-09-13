@@ -8,18 +8,17 @@
     <ul>
     <xar:foreach in="$items" value="$item">
             <xar:if condition="empty($item['link'])">
-                <li>
-                    #xarVarPrepForDisplay($item['rid'])#
-                </li>
+                <li>#xarVarPrepForDisplay($item['rid'])#</li>
                 <xar:else />
-                <li>
-                    <a href="#$item['link']#">
-                        #xarVarPrepForDisplay(ucfirst($item['regname']))# #$item['exttype']#
-                    </a>
-                    <xar:mlstring>by </xar:mlstring>
-                    <a href="#$item['authorlink']#">#$item['author']#</a>
-
-                </li>
+                <xar:set name="nicename">xarVarPrepForDisplay(ucfirst($item['regname']))</xar:set>
+                <li><xar:ml>
+                <xar:mlstring>#(1) <a href="#(2)">#(3)</a> by <a href="#(4)">#(5)</a></xar:mlstring>
+                <xar:mlvar>#$item['exttypename']#</xar:mlvar>
+                <xar:mlvar>#$item['link']#</xar:mlvar>
+                <xar:mlvar>#$nicename#</xar:mlvar>
+                <xar:mlvar>#$item['authorlink']#</xar:mlvar>
+                <xar:mlvar>#$item['author']#</xar:mlvar>
+                </xar:ml></li>
             </xar:if>
         </xar:foreach>
     </ul>
@@ -33,7 +32,7 @@
     <xar:else />
     <p class="fc-text-c">
         <xar:mlstring>
-            No Registered Extensions to Display
+            No New Regisered Extensions to Display
         </xar:mlstring>
     </p>
 </xar:if>

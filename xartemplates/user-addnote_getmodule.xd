@@ -22,12 +22,13 @@
                     </label>
                 <input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
             </p>
-         <p>
+            <p>
                 <label for="rid" class="xar-form-label">
                     <span class="help" title="#xarML('Select the type of your extension')#">
                         <xar:mlstring>Extension Type</xar:mlstring>
                     </span>
                     </label>
+
                    <select name="exttype" id="exttype">
                      <xar:foreach in="$exttypes" key="$k" value="$v">
                      <xar:if condition="$k ne 0">
@@ -40,6 +41,9 @@
                     </xar:foreach>
                  </select>
             </p>
+            <xar:if condition="!empty($m)">
+            <span class="xar-error">#$m#</span>
+            </xar:if>
         </fieldset>
         <p>
             <input type="submit" value="#xarML('Begin Release Notification')#"  tabindex="6" />

@@ -11,7 +11,6 @@
         <input type="hidden" name="phase" id="phase" value="update" />    
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
         <input type="hidden" name="eid" id="eid" value="#$eid#" />        
-        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
         <input type="hidden" name="certified" id="certified" value="#$certified#" />
 
         <table border="0" width="99%" cellpadding="5">
@@ -63,7 +62,11 @@
                     <label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
+                 <!--
+                   <xar:data-input type="userlist" name="uid" id="uid" value="$uid" size ="5" tabindex="2" validation="state:3" />
+                 -->
                     <input type="text" name="uid" id="uid" value="#$uid#" size="5" maxlength="10" tabindex="2" />
+
                 </td>
             </tr>
             <tr>
@@ -80,7 +83,7 @@
                     <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
                 </td>
                 <td align="left" valign="top" class="xar-norm">
-                    <textarea name="displname" id="displname" tabindex="4" rows="10" cols="50">#$displname#</textarea>
+                    <input type="text" name="displname" id="displname" tabindex="3" size="40" maxlength="250" >
                 </td>
             </tr>
             <tr>

@@ -57,7 +57,7 @@ function release_adminapi_updatenote($args)
 
     // Update the link
     $query = "UPDATE $releasenotetable
-            SET xar_rid = ?
+            SET xar_rid = ?,
                 xar_version = ?,
                 xar_price = ?,
                 xar_supported = ?,

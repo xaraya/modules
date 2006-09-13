@@ -91,7 +91,6 @@ function release_userapi_search($args)
     }
     for (; !$result->EOF; $result->MoveNext()) {
         list($eid, $rid, $uid, $regname, $displname, $desc, $exttype) = $result->fields;
-        $exttype = $exttype == 0? xarML('Module') : xarML('Theme');
         if (xarSecurityCheck('ReadRelease', 0)) {
             $releases[] = array('eid' => $eid,
                                 'rid' => $rid,

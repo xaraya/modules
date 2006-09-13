@@ -36,7 +36,10 @@ function release_user_addid()
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
     $data['stateoptions']=$stateoptions;
+
     $exttypes = xarModAPIFunc('release','user','getexttypes'); //extension types
+    
+    $data['exttypes']=$exttypes;
     if (xarUserIsLoggedIn()){
         switch(strtolower($phase)) {
 
@@ -54,7 +57,7 @@ function release_user_addid()
                 } 
                 $data['cathook'] = $cathook;
                 //Set some defaults
-                $data['exttype']='';
+                $data['exttype']=1;
                 $data['class']='1';
                 $data['rstate']='0';
                 $data['openproj']=0;
@@ -95,7 +98,7 @@ function release_user_addid()
                                           'scmlink'   => $scmlink,
                                           'openproj'  => $openproj,
                                           'cids'      => $cids));
-                if ($neweid==false) {
+                if ($newid==false) {
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back
                     }
@@ -107,7 +110,7 @@ function release_user_addid()
                     return $data;
                 }
 
-                xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$neweid)));
+                xarResponseRedirect(xarModURL('release', 'user', 'display',array('eid'=>$newid)));
                 return true;
                 break;
         }
