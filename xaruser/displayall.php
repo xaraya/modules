@@ -165,8 +165,6 @@ function comments_user_displayall($args)
             $msgdate=xarLocaleFormatDate("%b %d, %Y",$msgunixtime);
             $msgday=xarLocaleFormatDate("%A",$msgunixtime);
 
-            $daylabel=0;
-
             $hoursdiff=($timenow - $msgunixtime)/3600;
             if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
                 $daylabel=xarML('Today');
