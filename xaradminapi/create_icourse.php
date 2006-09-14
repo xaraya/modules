@@ -54,8 +54,12 @@ function itsp_adminapi_create_icourse($args)
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
        return;
     }
-    $datemodi = time();
-    $modiby = xarUserGetVar('uid');
+    if (!empty($datemodi) || !is_int($datemodi)) {
+        $datemodi = time();
+    }
+    if (!empty($modiby) || !is_int($modiby)) {
+        $modiby = xarUserGetVar('uid');
+    }
 
     if (!empty($dateappr) && is_string($dateappr)) {
         $dateappr = strtotime($dateappr);

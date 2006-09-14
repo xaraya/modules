@@ -123,6 +123,29 @@ function itsp_user_update()
                 // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
                 /* Confirm authorisation code.*/
                 // if (!xarSecConfirmAuthKey($authid)) return;
+                // TODO: return to form if we do not validate this item
+                /* if (empty($icoursetitle)) {
+                    $invalid[] = 'icoursetitle';
+                }
+
+                    // check if we have any errors
+                if (count($invalid) > 0) {
+                    return xarModFunc('itsp', 'admin', 'new',
+                                      array('itspid' => $itspid,
+                                           'pitemid' => $pitemid,
+                                           'icourseid'=>$icourseid,
+                                           'icoursetitle'=> $icoursetitle,
+                                           'icourseloc'=>  $icourseloc,
+                                           'icoursedesc'=> $icoursedesc,
+                                           'icoursecredits'=>  $icoursecredits,
+                                           'icourselevel'=> $icourselevel,
+                                           'icourseresult'=> $icourseresult,
+                                           'icoursedate'=> $icoursedate,
+                                           'dateappr'=> $dateappr,
+                                           'displaytitle' => $displaytitle,
+                                           'invalid'      => $invalid));
+                }
+                */
 
                 $icourseid = xarModApiFunc('itsp',
                                    'admin',
