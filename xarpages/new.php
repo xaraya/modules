@@ -18,11 +18,19 @@ function xproject_pages_new()
                           'user',
                           'get',
                           array('projectid' => $projectid));
+    
+	$pagelist = xarModAPIFunc('xproject',
+                         'pages',
+                         'getall',
+                         array('projectid' => $projectid));
+	
+	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     $data['authid'] = xarSecGenAuthKey();
     $data['projectid'] = $projectid;
     $data['inline'] = $inline;
     $data['projectinfo'] = $projectinfo;
+    $data['pagelist'] = $pagelist;
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Create Feature'));
 

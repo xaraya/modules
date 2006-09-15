@@ -5,6 +5,7 @@ function xproject_pages_update($args)
     extract($args);
     
     if (!xarVarFetch('pageid', 'id', $pageid)) return;
+    if (!xarVarFetch('parentid', 'id', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('page_name', 'str:1:', $page_name, $page_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
@@ -18,6 +19,7 @@ function xproject_pages_update($args)
 					'pages',
 					'update',
 					array('pageid'	        => $pageid,
+						'parentid' 	        => $parentid,
 						'page_name' 	    => $page_name,
                         'status'	        => $status,
                         'description'       => $description,

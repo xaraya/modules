@@ -11,7 +11,6 @@ function xproject_admin_main($args)
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('clientid', 'int', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mymemberid', 'int', $mymemberid, $mymemberid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
     
@@ -22,7 +21,7 @@ function xproject_admin_main($args)
     $args['sortby'] = $sortby;
     $args['q'] = $q;
     $args['clientid'] = $clientid;
-    $args['memberid'] = $mymemberid ? $mymemberid : $memberid;
+    $args['memberid'] = $memberid;
     $args['max_priority'] = $max_priority;
     $args['max_importance'] = $max_importance;
     

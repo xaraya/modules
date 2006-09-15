@@ -46,16 +46,18 @@ function xproject_pagesapi_create($args)
     $query = "INSERT INTO $pagetable (
                   pageid,
                   page_name,
+                  parentid,
                   projectid,
                   status,
                   sequence,
                   description,
                   relativeurl)
-            VALUES (?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
               $page_name,
+              $parentid,
               $projectid,
               $status,
               $sequence,

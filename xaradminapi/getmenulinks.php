@@ -21,6 +21,10 @@
 function xproject_adminapi_getmenulinks()
 {
     $menulinks = array();
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     if (xarSecurityCheck('ReadXProject', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xproject',
@@ -35,15 +39,17 @@ function xproject_adminapi_getmenulinks()
             $menulinks[] = Array('url'   => xarModURL('xproject',
                                                       'admin',
                                                       'main',
-                                                      array('status' => "Draft",
-                                                            'mymemberid' => $mymemberid)),
+                                                      array('status' => $draftstatus,
+                                                            'mymemberid' => $mymemberid,
+                                                            'sortby' => "priority")),
                                  'title' => xarML('Work on your draft projects before submitting'),
                                  'label' => xarML('My Drafts'));
             $menulinks[] = Array('url'   => xarModURL('xproject',
                                                       'admin',
                                                       'main',
-                                                      array('status' => "WIP",
-                                                            'mymemberid' => $mymemberid)),
+                                                      array('status' => $activestatus,
+                                                            'mymemberid' => $mymemberid,
+                                                            'sortby' => "priority")),
                                  'title' => xarML('View active projects you are part of the team for'),
                                  'label' => xarML('My Active'));
         }

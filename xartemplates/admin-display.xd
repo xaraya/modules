@@ -4,6 +4,8 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
+<xar:set name="websiteprojecttype">xarModGetUserVar('xproject', 'websiteprojecttype')</xar:set>
+
 <xar:template type="module" file="admin-menu" />
 <div class="xar-mod-body">
     <h2 style="text-align: center;">#$project_name#</h2>
@@ -160,24 +162,27 @@
             <xar:else />
                 <xar:set name="features_style">"display: none;"</xar:set>
             </xar:if>
-            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Features</xar:mlstring></span><span class="xar-mod-title" style="float: left;"> [ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_features'); return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_features');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
+            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Features</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_features'); return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_features');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
             <div id="project_features" style="#$features_style#">
                 <div id="features_form"></div>
                 <xar:template type="module" file="features-view" />
             </div>
             
-            <xar:set name="pagesmode">"pages"</xar:set>
-            <xar:if condition="$mode eq 'pages'">
-                <xar:set name="pages_style">"display: block;"</xar:set>
-            <xar:else />
-                <xar:set name="pages_style">"display: none;"</xar:set>
+            <xar:set name="websiteprojecttype">xarModGetVar('xproject', 'websiteprojecttype')</xar:set>
+            <xar:if condition="$websiteprojecttype eq $item.projecttype">
+                <xar:set name="pagesmode">"pages"</xar:set>
+                <xar:if condition="$mode eq 'pages'">
+                    <xar:set name="pages_style">"display: block;"</xar:set>
+                <xar:else />
+                    <xar:set name="pages_style">"display: none;"</xar:set>
+                </xar:if>
+                <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
+                <div id="project_pages" style="#$pages_style#">
+                    <div id="pages_form"></div>
+                    <xar:template type="module" file="pages-view" />
+                </div>
             </xar:if>
-            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Pages</xar:mlstring></span><span class="xar-mod-title" style="float: left;"> [ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
-            <div id="project_pages" style="#$pages_style#">
-                <div id="pages_form"></div>
-                <xar:template type="module" file="pages-view" />
-            </div>
-            
+                        
             <xar:set name="pagesmode">"logs"</xar:set>
             <xar:if condition="$mode eq 'logs'">
                 <xar:set name="logs_style">"display: block;"</xar:set>

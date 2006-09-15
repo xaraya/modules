@@ -5,6 +5,7 @@ function xproject_pages_modify($args)
 	extract($args);
     
     if (!xarVarFetch('pageid',     'id',     $pageid,     $pageid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('inline',     'str',     $inline,     '',     XARVAR_NOT_REQUIRED)) return;
 	
     if (!empty($objectid)) {
         $pageid = $objectid;
@@ -16,6 +17,13 @@ function xproject_pages_modify($args)
                          'pages',
                          'get',
                          array('pageid' => $pageid));
+	
+	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+	$pagelist = xarModAPIFunc('xproject',
+                         'pages',
+                         'getall',
+                         array('projectid' => $item['projectid']));
 	
 	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
@@ -43,6 +51,10 @@ function xproject_pages_modify($args)
 	$data['item'] = $item;
     
     $data['projectinfo'] = $projectinfo;
+    
+    $data['pagelist'] = $pagelist;
+    
+    $data['inline'] = $inline;
     
     return $data;
 }

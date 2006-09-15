@@ -57,6 +57,7 @@ function xproject_pagesapi_update($args)
 
     $query = "UPDATE $pagestable
             SET page_name =?, 
+                  parentid = ?,
                   status = ?,
                   description = ?,
                   relativeurl = ?
@@ -64,6 +65,7 @@ function xproject_pagesapi_update($args)
 
     $bindvars = array(
               $page_name,
+              $parentid,
               $status,
               $description,
               $relativeurl,

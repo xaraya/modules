@@ -1,3 +1,6 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
 <xar:template type="module" file="admin-menu" />
     
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Configuration</xar:mlstring></span></div>
@@ -39,6 +42,22 @@
             </xar:if>
         </xar:foreach>
         </select>
+    </fieldset>
+    
+    <fieldset><legend><xar:mlstring>Website Project Type</xar:mlstring></legend>
+        <xar:data-input property="$properties['projecttype']" name="websiteprojecttype" value="$websiteprojecttype" />
+    </fieldset>
+    
+    <fieldset><legend><xar:mlstring>Draft Status</xar:mlstring></legend>
+        <xar:data-input property="$properties['status']" name="draftstatus" value="$draftstatus" />
+    </fieldset>
+    
+    <fieldset><legend><xar:mlstring>Active Status</xar:mlstring></legend>
+        <xar:data-input property="$properties['status']" name="activestatus" value="$activestatus" />
+    </fieldset>
+    
+    <fieldset><legend><xar:mlstring>Archive Status</xar:mlstring></legend>
+        <xar:data-input property="$properties['status']" name="archivestatus" value="$archivestatus" />
     </fieldset>
     
     <input type="hidden" name="authid" value="#$authid#" />

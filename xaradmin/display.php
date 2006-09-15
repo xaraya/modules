@@ -112,37 +112,8 @@ function xproject_admin_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($projectpages)) return;
-
-    for ($i = 0; $i < count($projectpages); $i++) {
-        $pagesinfo = $projectpages[$i];
-        if (xarSecurityCheck('ReadXProject', 0, 'Item', "$pagesinfo[project_name]:All:$pagesinfo[projectid]")) {//TODO: security
-            $projectpages[$i]['link'] = xarModURL('xproject',
-                                               'pages',
-                                               'display',
-                                               array('pageid' => $pagesinfo['pageid'],
-                                                    'inline' => 1));
-        }
-        if (xarSecurityCheck('EditXProject', 0, 'Item', "$pagesinfo[project_name]:All:$pagesinfo[projectid]")) {//TODO: security
-            $projectpages[$i]['editurl'] = xarModURL('xproject',
-                                               'pages',
-                                               'modify',
-                                               array('pageid' => $pagesinfo['pageid'],
-                                                    'inline' => 1));
-        } else {
-            $projectpages[$i]['editurl'] = '';
-        }
-        if (xarSecurityCheck('DeleteXProject', 0, 'Item', "$pagesinfo[project_name]:All:$pagesinfo[projectid]")) {
-            $projectpages[$i]['deleteurl'] = xarModURL('xproject',
-                                               'pages',
-                                               'delete',
-                                               array('pageid' => $pagesinfo['pageid'],
-                                                    'inline' => 1));
-        } else {
-            $projectpages[$i]['deleteurl'] = '';
-        }
-    }
     
-    $data['pages_onclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
+    $data['pages_formclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
 
     $logs = xarModAPIFunc('xproject',
                           'log',

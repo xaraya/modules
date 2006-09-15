@@ -30,7 +30,7 @@
     </property>
     <property name="project_name">
       <id>3</id>
-      <label>Project Name</label>
+      <label>Project/Opportunity</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -60,7 +60,7 @@
     </property>
     <property name="ownerid">
       <id>6</id>
-      <label>Webmaster</label>
+      <label>Bus Dev Rep</label>
       <type>userlist</type>
       <default></default>
       <source>dynamic_data</source>
@@ -70,7 +70,7 @@
     </property>
     <property name="status">
       <id>7</id>
-      <label>Status</label>
+      <label>Project Pipeline</label>
       <type>dropdown</type>
       <default></default>
       <source>dynamic_data</source>
@@ -106,7 +106,7 @@
       <source>dynamic_data</source>
       <status>2</status>
       <order>10</order>
-      <validation>Website;Print;CD;Mixed Media;Advertising;Consulting</validation>
+      <validation>Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
     </property>
     <property name="private">
       <id>11</id>

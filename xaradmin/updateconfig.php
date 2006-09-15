@@ -41,6 +41,11 @@ function xproject_admin_updateconfig()
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('staffcategory', 'int',      $staffcategory, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientcategory', 'int',      $clientcategory, 0, XARVAR_NOT_REQUIRED)) return;
+    
+    if (!xarVarFetch('websiteprojecttype', 'str',      $websiteprojecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('draftstatus', 'str',      $draftstatus, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activestatus', 'str',      $activestatus, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('archivestatus', 'str',      $archivestatus, '', XARVAR_NOT_REQUIRED)) return;
 /*
     xarModSetVar('xproject', 'displaydates', $displaydates);
     xarModSetVar('xproject', 'displayhours', $displayhours);
@@ -61,6 +66,11 @@ function xproject_admin_updateconfig()
     xarModSetVar('xproject', 'itemsperpage', $itemsperpage);
     xarModSetVar('xproject', 'staffcategory', $staffcategory);
     xarModSetVar('xproject', 'clientcategory', $clientcategory);
+    
+    xarModSetVar('xproject', 'websiteprojecttype', $websiteprojecttype);
+    xarModSetVar('xproject', 'draftstatus', $draftstatus);
+    xarModSetVar('xproject', 'activestatus', $activestatus);
+    xarModSetVar('xproject', 'archivestatus', $archivestatus);
 /*
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('xproject', 'useModuleAlias', $modulealias);

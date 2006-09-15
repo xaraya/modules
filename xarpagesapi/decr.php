@@ -67,7 +67,7 @@ function xproject_pagesapi_decr($args)
         return;
     }
     
-    xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid']));
+    xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid'], 'parentid' => $item['parentid']));
 
     return true;
 }

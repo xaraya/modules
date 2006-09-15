@@ -20,6 +20,7 @@ function xproject_admin_createcombo($args)
 //    if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('companyselect_clientid', 'id', $companyselect_clientid, $companyselect_clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -39,7 +40,7 @@ function xproject_admin_createcombo($args)
 
     xarModAPILoad('addressbook','user');
 
-    if($newcontact) {
+    if($newcontact && (!empty($fname) || !empty($lname))) {
         if(empty($newcompany)) $newcompany = $company;
         $clientid = xarModAPIFunc('addressbook',
                             'user',
@@ -70,6 +71,8 @@ function xproject_admin_createcombo($args)
                                 'img'		    => '',
                                 'c_main'		=> 1,
                                 'user_id'		=> xarSessionGetVar('uid')));
+    } elseif($companyselect_clientid) {
+        $clientid = $companyselect_clientid;
     }
     $clientinfo = xarModAPIFunc('addressbook','user','getDetailValues',array('id'=>$clientid));
     if($clientinfo == false) return;

@@ -30,11 +30,20 @@
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
-<div id="tasklist">
+<div id="topten">
 
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project List</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>MY TOP 10</xar:mlstring></span></div>
     
     <div class="xar-mod-body">
+    
+    <select name="top10view">
+        <option value=""> - Pick a Category - /option>
+        <option value="1">Top 10 Leads</option>
+        <option value="1">Top 10 Clients</option>
+        <option value="1">Top 10 Current Projects</option>
+        <option value="1">Top 10 Active Projects</option>
+        <option value="1">Top 10 New Projects</option>
+    </select>
     
     <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
         <tr>
@@ -151,17 +160,6 @@
                 </xar:if>
             </xar:loop>
         </xar:if>
-    </table>
-    
-    <br />
-    
+    </table>    
     </div>
-    
-    <xar:if condition="isset($pager)">
-        <div class="xar-mod-foot" style="text-align: center;">
-            #$pager#
-        </div>
-    </xar:if>
-    
-    <div style="text-align: center;"><em>Project importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>
 </div>

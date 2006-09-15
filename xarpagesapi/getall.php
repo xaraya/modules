@@ -43,6 +43,7 @@ function xproject_pagesapi_getall($args)
     $pagestable = $xartable['xProject_pages'];
 
     $sql = "SELECT pageid,
+                  parentid,
                   page_name,
                   $pagestable.projectid,
                   $projectstable.project_name,
@@ -53,7 +54,8 @@ function xproject_pagesapi_getall($args)
             FROM $pagestable, $projectstable
             WHERE $projectstable.projectid = $pagestable.projectid
             AND $pagestable.projectid = $projectid
-            ORDER BY sequence, page_name";
+            ".(isset($parentid) ? " AND $pagestable.parentid = $parentid " : "")."
+            ORDER BY parentid, sequence, page_name";
 
     $result = $dbconn->Execute($sql);
 
@@ -63,6 +65,7 @@ function xproject_pagesapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($pageid,
+              $thisparentid,
               $page_name,
               $projectid,
               $project_name,
@@ -71,14 +74,21 @@ function xproject_pagesapi_getall($args)
               $description,
               $relativeurl) = $result->fields;
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
-            $items[] = array('pageid'            => $pageid,
-                              'page_name'        => $page_name,
-                              'projectid'        => $projectid,
-                              'project_name'     => $project_name,
-                              'status'           => $status,
-                              'sequence'         => $sequence,
-                              'description'      => $description,
-                              'relativeurl'      => $relativeurl);
+            $children = array();
+            if(isset($parentid)) {
+                $children = xarModAPIFunc('xproject', 'pages', 'getall', array('projectid' => $projectid, 'parentid' => $pageid));
+            }                        
+            $items[$pageid] = array(
+                            'pageid'           => $pageid,
+                            'parentid'         => $thisparentid,
+                            'page_name'        => $page_name,
+                            'projectid'        => $projectid,
+                            'project_name'     => $project_name,
+                            'status'           => $status,
+                            'sequence'         => $sequence,
+                            'description'      => $description,
+                            'relativeurl'      => $relativeurl,
+                            'children'         => $children);
         }
     }
 

@@ -16,6 +16,7 @@ function xproject_pages_create($args)
     extract($args);
     
     if (!xarVarFetch('page_name', 'str:1:', $page_name, $page_name, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parentid', 'id', $parentid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sequence', 'int::', $sequence, '', XARVAR_NOT_REQUIRED)) return;
@@ -28,6 +29,7 @@ function xproject_pages_create($args)
                         'pages',
                         'create',
                         array('page_name' 	    => $page_name,
+                            'parentid'          => $parentid,
                             'projectid'         => $projectid,
                             'status'	        => $status,
                             'sequence'	        => $sequence,

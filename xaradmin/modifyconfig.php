@@ -26,6 +26,10 @@ function xproject_admin_modifyconfig()
     $data['itemsperpage'] = xarModGetVar('xproject', 'itemsperpage');
     $data['staffcategory'] = xarModGetVar('xproject', 'staffcategory');
     $data['clientcategory'] = xarModGetVar('xproject', 'clientcategory');
+    $data['websiteprojecttype'] = xarModGetVar('xproject', 'websiteprojecttype');
+    $data['draftstatus'] = xarModGetVar('xproject', 'draftstatus');
+    $data['activestatus'] = xarModGetVar('xproject', 'activestatus');
+    $data['archivestatus'] = xarModGetVar('xproject', 'archivestatus');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'xproject',

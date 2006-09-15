@@ -23,6 +23,10 @@ function xproject_adminapi_menu($args)
     extract($args);
     
     if(!xarModLoad('addressbook', 'user')) return;
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
@@ -31,6 +35,9 @@ function xproject_adminapi_menu($args)
     if (!xarVarFetch('status', 'str', $status, '', XARVAR_NOT_REQUIRED)) return;
     if($status) xarSessionSetVar('status', $status);
     else xarSessionDelVar('status');
+    if (!xarVarFetch('projecttype', 'str', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if($projecttype) xarSessionSetVar('projecttype', $projecttype);
+    else xarSessionDelVar('projecttype');
     if (!xarVarFetch('max_priority', 'int', $max_priority, 9, XARVAR_NOT_REQUIRED)) return;
     if($max_priority) xarSessionSetVar('max_priority', $max_priority);
     if (!xarVarFetch('max_importance', 'int', $max_importance, 9, XARVAR_NOT_REQUIRED)) return;
@@ -53,6 +60,10 @@ function xproject_adminapi_menu($args)
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     $menu['mymemberid'] = $mymemberid ? $mymemberid : "0";
     $menu['status'] = $status;
+    $menu['draftstatus'] = $draftstatus;
+    $menu['activestatus'] = $activestatus;
+    $menu['archivestatus'] = $archivestatus;
+    $menu['projecttype'] = $projecttype;
     $menu['statusmsg'] = xarSessionGetVar('statusmsg');
     xarSessionDelVar('statusmsg');
     $menu['q'] = $q;

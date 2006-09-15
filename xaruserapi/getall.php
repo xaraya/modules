@@ -34,6 +34,9 @@ function xproject_userapi_getall($args)
     if (!isset($max_priority) || !is_numeric($max_priority)) {
         $max_priority = 0;
     }
+    if (!isset($projecttype)) {
+        $projecttype = "";
+    }
     if (!isset($max_importance) || !is_numeric($max_importance)) {
         $max_importance = 0;
     }
@@ -93,6 +96,7 @@ function xproject_userapi_getall($args)
     }
 	
     if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
+	if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
 	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
 	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
 	if(!empty($planned_end_date)) $sql .= " AND planned_end_date <= '".$planned_end_date."'";
@@ -145,7 +149,7 @@ function xproject_userapi_getall($args)
 */
 
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-    
+
     if ($dbconn->ErrorNo() != 0) return;
 
     $projects = array();

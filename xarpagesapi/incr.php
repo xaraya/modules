@@ -43,7 +43,7 @@ function xproject_pagesapi_incr($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('EditXProject', 1, 'Item', "All:All:All")) {
         return;
     }
 
@@ -67,7 +67,7 @@ function xproject_pagesapi_incr($args)
         return;
     }
     
-    xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid']));
+    xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid'], 'parentid' => $item['parentid']));
 
     return true;
 }

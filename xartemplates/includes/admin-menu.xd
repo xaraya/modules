@@ -24,9 +24,9 @@
         <tr><td>
             <table border="0" width="100%"><tr align="center" valign="middle">
     
-                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Draft&amp;memberid=#$mymemberid#"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if></td>
-                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=Active&amp;memberid=#$mymemberid#"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if></td>
-                <td width="25%"><a href="&xar-modurl-xproject-admin-main;&amp;status=Closed"><xar:mlstring>Archive</xar:mlstring></a></td>
+                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$draftstatus#&amp;sortby=priority&amp;memberid=#$mymemberid#"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if></td>
+                <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$activestatus#&amp;sortby=priority&amp;memberid=#$mymemberid#"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if></td>
+                <td width="25%"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$archivestatus#"><xar:mlstring>Archive</xar:mlstring></a></td>
                 <td width="25%"><a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Configuration</xar:mlstring></a></td>
             
             </tr></table>
@@ -52,6 +52,7 @@
                 <input type="hidden" name="sortby" value="#$sortby#">
                 <div style="margin: 2px;">
                 <xar:mlstring>Search: </xar:mlstring><input type="text" name="q" value="#$q#" size="10">
+                <xar:data-input property="$properties['projecttype']" name="projecttype" value="$projecttype" />
                 <xar:mlstring>Min Importance: </xar:mlstring><xar:data-input property="$properties['importance']" name="max_importance" value="$max_importance" />
                 <xar:mlstring>Min Priority: </xar:mlstring><xar:data-input property="$properties['priority']" name="max_priority" value="$max_priority" />
                 </div>

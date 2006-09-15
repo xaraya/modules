@@ -1,0 +1,30 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="pages_objectid">xarModGetVar('xproject','pages_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="3" itemid="$pages_objectid" />
+
+<xar:if condition="!isset($m)"><xar:set name="m">16</xar:set></xar:if>
+<xar:set name="m">(int)($m - 1)</xar:set>
+<xar:set name="m_hex">dechex($m)</xar:set>
+<xar:set name="bg_color">"#".$m_hex.$m_hex.$m_hex.$m_hex.$m_hex.$m_hex</xar:set>
+<xar:set name="textpct">(int)( ($m / 16) * 100 )</xar:set>
+
+<div class="xar-mod-body" id="pages_view" style="text-align: left; background-color: #$bg_color#; ">
+    <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+        <tr>
+            <th><xar:mlstring>Page Hierarchy</xar:mlstring></th>
+            <th style="width: 100px;"><a href="&xar-modurl-xproject-pages-view;&amp;projectid=#$projectid#" onClick="return loadContent(this.href,'pages_view');"><xar:mlstring>Page List</xar:mlstring></a></th>
+        </tr>
+    </table>
+        <xar:set name="ttlpages">count($projectpages)</xar:set>
+    
+        <xar:loop name="$projectpages">
+            <div style="font-size: #$textpct#%;"><strong>#$loop:item['page_name']#</strong></div>
+            <xar:set name="childpages">$loop->item['children']</xar:set>
+            <xar:template type="module" file="sitemapnode" subdata="array('m'=&gt;$m,
+                                                                        'authid'=&gt;$authid,
+                                                                        'projectid'=&gt;$projectid,
+                                                                        'projectpages'=&gt;$childpages)" />
+    
+        </xar:loop>
+</div>

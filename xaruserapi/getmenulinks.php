@@ -20,6 +20,11 @@
  */
 function xproject_userapi_getmenulinks()
 {
+    $menulinks = array();
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     if (xarSecurityCheck('ReadXProject', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xproject',
@@ -46,14 +51,14 @@ function xproject_userapi_getmenulinks()
                 $menulinks[] = Array('url'   => xarModURL('xproject',
                                                           'admin',
                                                           'main',
-                                                          array('status' => "Draft",
+                                                          array('status' => $draftstatus,
                                                                 'mymemberid' => $mymemberid)),
                                      'title' => xarML('Work on your draft projects before submitting'),
                                      'label' => xarML('My Drafts'));
                 $menulinks[] = Array('url'   => xarModURL('xproject',
                                                           'admin',
                                                           'main',
-                                                          array('status' => "WIP",
+                                                          array('status' => $activestatus,
                                                                 'mymemberid' => $mymemberid)),
                                      'title' => xarML('View active projects you are part of the team for'),
                                      'label' => xarML('My Active'));

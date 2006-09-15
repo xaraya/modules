@@ -67,6 +67,7 @@ function xproject_init()
     
     $features_table = $xarTables['xProject_features'];
     $features_fields = array('featureid'            =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'parentid'          =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'projectid'         =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'feature_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                                 'details'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
@@ -172,7 +173,6 @@ function xproject_init()
                         new DefaultUserException($msg));
         return;
     }
-    // save the object id for later
     xarModSetVar('xproject','features_objectid',$features_objectid);
 
 
@@ -184,7 +184,6 @@ function xproject_init()
                         new DefaultUserException($msg));
         return;
     }
-    // save the object id for later
     xarModSetVar('xproject','pages_objectid',$pages_objectid);
 
     $log_objectid = xarModAPIFunc('dynamicdata','util','import',
@@ -195,15 +194,23 @@ function xproject_init()
                         new DefaultUserException($msg));
         return;
     }
-    // save the object id for later
     xarModSetVar('xproject','log_objectid',$log_objectid);
+    
+    $team_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xproject/xardata/team.xml'));
+    if (empty($team_objectid))  {
+        $msg = xarML('Failed to import team.xml...');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+                        new DefaultUserException($msg));
+        return;
+    }
+    xarModSetVar('xproject','team_objectid',$team_objectid);
+            
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/xardata/usersettings.xml'));
     if (empty($objectid)) return;
     xarModSetVar('xproject','usersettings',$objectid);
-    
-//    $xartable =& xarDBGetTables();
 
     xarModSetVar('xproject', 'SupportShortURLs', 0);
     /* If you provide short URL encoding functions you might want to also
@@ -523,7 +530,7 @@ function xproject_upgrade($oldversion)
             
         case '3.0':
             
-            // REPLACE PROJECTS SCHEMA
+            // UPDATE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
                 xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
@@ -534,8 +541,23 @@ function xproject_upgrade($oldversion)
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
 
         case '3.1':
-            break;
+            $pages_table = $xarTables['xProject_pages'];
+            $result = $datadict->ChangeTable($pages_table, 'parentid I NotNull Default 0');
+            if (!$result) return;
 
+        case '3.2':
+            $team_objectid = xarModGetVar('xproject','team_objectid');
+            if (!empty($team_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $team_objectid));
+            }
+            $team_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/team.xml'));
+            if (empty($team_objectid)) return;
+            xarModSetVar('xproject','team_objectid',$team_objectid);
+
+        case '3.3':
+            break;
+            
     }
 
     return true;

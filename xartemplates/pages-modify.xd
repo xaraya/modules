@@ -40,6 +40,24 @@
             
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
+                    <td><xar:mlstring>Parent Page</xar:mlstring></td>
+                    <td>
+                        <select name="parentid">
+                            <option value="0"><xar:mlstring>Root level page, no parent</xar:mlstring></option>
+                            <xar:foreach in="$pagelist" value="$pageinfo">
+                                <xar:if condition="$pageinfo['pageid'] ne $item['pageid']">
+                                    <xar:if condition="$pageinfo.pageid eq $item.parentid">
+                                        <xar:set name="selected">"selected"</xar:set>
+                                    <xar:else />
+                                        <xar:set name="selected">""</xar:set>
+                                    </xar:if>
+                                    <option value="#$pageinfo['pageid']#"#$selected#>#$pageinfo['page_name']#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td><xar:data-label property="$properties['page_name']" /></td>
                     <td><xar:data-input property="$properties['page_name']" name="page_name" value="$item['page_name']" /></td>
                 </tr>

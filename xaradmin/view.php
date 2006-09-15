@@ -7,6 +7,7 @@ function xproject_admin_view($args)
     if (!xarVarFetch('verbose', 'checkbox', $verbose, 0, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str', $status, $status, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projecttype', 'str', $projecttype, $projecttype, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('q', 'str', $q, '', XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
@@ -28,6 +29,7 @@ function xproject_admin_view($args)
         $items = xarModAPIFunc('xproject', 'user', 'getall',
                                 array('startnum' => $startnum,
                                       'status' => $status,
+                                      'projecttype' => $projecttype,
                                       'sortby' => $sortby,
                                       'clientid' => $clientid,
                                       'max_priority' => $max_priority,
@@ -39,6 +41,7 @@ function xproject_admin_view($args)
                                 array('memberid' => $memberid,
                                       'startnum' => $startnum,
                                       'status' => $status,
+                                      'projecttype' => $projecttype,
                                       'sortby' => $sortby,
                                       'clientid' => $clientid,
                                       'max_priority' => $max_priority,
@@ -55,6 +58,7 @@ function xproject_admin_view($args)
         $data['pager'] = xarTplGetPager($startnum,
             xarModAPIFunc('xproject', 'user', 'countitems',
                         array('status' => $status,
+                              'projecttype' => $projecttype,
                               'sortby' => $sortby,
                               'clientid' => $clientid,
                               'max_priority' => $max_priority,
@@ -65,6 +69,7 @@ function xproject_admin_view($args)
                     'view', 
                     array('startnum' => '%%',
                           'status' => $status,
+                          'projecttype' => $projecttype,
                           'sortby' => $sortby,
                           'clientid' => $clientid,
                           'max_priority' => $max_priority,
@@ -76,6 +81,7 @@ function xproject_admin_view($args)
         $data['pager'] = xarTplGetPager($startnum,
             xarModAPIFunc('xproject', 'user', 'countmemberprojects',
                         array('status' => $status,
+                              'projecttype' => $projecttype,
                               'sortby' => $sortby,
                               'clientid' => $clientid,
                               'memberid' => $memberid,
@@ -87,6 +93,7 @@ function xproject_admin_view($args)
                     'view', 
                     array('startnum' => '%%',
                           'status' => $status,
+                          'projecttype' => $projecttype,
                           'sortby' => $sortby,
                           'clientid' => $clientid,
                           'memberid' => $memberid,
@@ -102,6 +109,7 @@ function xproject_admin_view($args)
                                 'view', 
                                 array('startnum' => '%%',
                                       'status' => $status,
+                                      'projecttype' => $projecttype,
                                       'sortby' => $sortby,
                                       'clientid' => $clientid,
                                       'max_priority' => $max_priority,

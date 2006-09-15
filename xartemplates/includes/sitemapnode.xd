@@ -1,0 +1,25 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="!isset($m)"><xar:set name="m">16</xar:set></xar:if>
+<xar:set name="m">(int)($m - 1)</xar:set>
+<xar:set name="m_hex">dechex($m)</xar:set>
+<xar:set name="bg_color">"#".$m_hex.$m_hex.$m_hex.$m_hex.$m_hex.$m_hex</xar:set>
+<xar:set name="textpct">(int)( ($m / 16) * 100 )</xar:set>
+
+<xar:if condition="count($projectpages) gt 0">
+    <div style="background-color: #$bg_color#; text-align: left; margin-left: 50px;">    
+            <xar:loop name="$projectpages">
+                <div style="font-size: #$textpct#%;">
+                    <div><strong>>> #$loop->item['page_name']#</strong></div>
+                    <div><em>#$loop->item['description']#</em></div>
+                </div>
+                
+                <xar:set name="childpages">$loop->item['children']</xar:set>
+                <xar:template type="module" file="sitemapnode" subdata="array('m'=&gt;$m,
+                                                                            'authid'=&gt;$authid,
+                                                                            'projectid'=&gt;$projectid,
+                                                                            'projectpages'=&gt;$childpages)" />
+            </xar:loop>
+            <div style="clear: both;"></div>
+    </div>
+</xar:if>

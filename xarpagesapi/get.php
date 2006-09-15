@@ -19,6 +19,7 @@ function xproject_pagesapi_get($args)
     $pagestable = $xartable['xProject_pages'];
 
     $query = "SELECT pageid,
+                  parentid,
                   page_name,
                   $pagestable.projectid,
                   $projectstable.project_name,
@@ -42,6 +43,7 @@ function xproject_pagesapi_get($args)
     }
 
     list($pageid,
+          $parentid,
           $page_name,
           $projectid,
           $project_name,
@@ -60,6 +62,7 @@ function xproject_pagesapi_get($args)
     }
 
     $item = array('pageid'              => $pageid,
+                  'parentid'            => $parentid,
                   'page_name'           => $page_name,
                   'projectid'           => $projectid,
                   'project_name'        => $project_name,

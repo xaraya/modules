@@ -14,6 +14,8 @@
 function xproject_pagesapi_sequence($args)
 {
     extract($args);
+    
+    if(!isset($parentid)) $parentid = 0;
 
     $invalid = array();
     if (!isset($projectid) || !is_numeric($projectid)) {
@@ -39,7 +41,8 @@ function xproject_pagesapi_sequence($args)
     $itemlist = xarModAPIFunc('xproject',
                             'pages',
                             'getall',
-                            array('projectid' => $projectid));
+                            array('projectid' => $projectid,
+                                'parentid' => $parentid));
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

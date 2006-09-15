@@ -16,6 +16,9 @@ function xproject_userapi_countmemberprojects($args)
     if (!isset($clientid) || !is_numeric($clientid)) {
         $clientid = 0;
     }
+    if (!isset($projecttype)) {
+        $projecttype = "";
+    }
     if (!isset($max_priority) || !is_numeric($max_priority)) {
         $max_priority = 0;
     }
@@ -36,6 +39,7 @@ function xproject_userapi_countmemberprojects($args)
             
 	if($private == "public") $sql .= " AND private != '1'";
 	if(!empty($status)) $sql .= " AND status = '".$status."'";
+	if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
 	if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
 	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
 	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
