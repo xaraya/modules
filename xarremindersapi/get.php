@@ -6,7 +6,7 @@ function xtasks_remindersapi_get($args)
 
     if (!isset($reminderid) || !is_numeric($reminderid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'feature ID', 'user', 'get', 'xproject');
+                    'reminder ID', 'reminders', 'get', 'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
@@ -15,20 +15,15 @@ function xtasks_remindersapi_get($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $projectstable = $xartable['xProjects'];
-    $reminderstable = $xartable['xProject_reminders'];
+    $reminderstable = $xartable['xtasks_reminders'];
 
     $query = "SELECT reminderid,
-                  reminder_name,
-                  $reminderstable.projectid,
-                  $projectstable.project_name,
-                  $reminderstable.status,
-                  sequence,
-                  $reminderstable.description,
-                  relativeurl
-            FROM $reminderstable, $projectstable
-            WHERE $projectstable.projectid = $reminderstable.projectid
-            AND reminderid = ?";
+                  taskid,
+                  ownerid,
+                  eventdate,
+                  reminder
+            FROM $reminderstable
+            WHERE reminderid = ?";
     $result = &$dbconn->Execute($query,array($reminderid));
 
     if (!$result) return;
@@ -42,31 +37,25 @@ function xtasks_remindersapi_get($args)
     }
 
     list($reminderid,
-          $reminder_name,
-          $projectid,
-          $project_name,
-          $status,
-          $sequence,
-          $description,
-          $relativeurl) = $result->fields;
+          $taskid,
+          $ownerid,
+          $eventdate,
+          $reminder) = $result->fields;
 
     $result->Close();
 
-    if (!xarSecurityCheck('ReadXProject', 1, 'Item', "$project_name:All:$projectid")) {
-        $msg = xarML('Not authorized to view this project.');
+    if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
+        $msg = xarML('Not authorized to view this reminder.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
-    $item = array('reminderid'              => $reminderid,
-                  'reminder_name'           => $reminder_name,
-                  'projectid'           => $projectid,
-                  'project_name'        => $project_name,
-                  'status'              => $status,
-                  'sequence'            => $sequence,
-                  'description'         => $description,
-                  'relativeurl'         => $relativeurl);
+    $item = array('reminderid'      => $reminderid,
+                  'taskid'          => $taskid,
+                  'ownerid'         => $ownerid,
+                  'eventdate'       => $eventdate,
+                  'reminder'        => $reminder);
 
     return $item;
 }

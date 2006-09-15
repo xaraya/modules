@@ -2,18 +2,27 @@
 
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+                                    
+<xar:set name="returnurl">urlencode(xarServerGetCurrentURL())</xar:set>
 
-<script language="javascript">
-function xtaskToggleView(id){
-    var el = document.getElementById(id);
-    if(el.style.display != 'none'){
-        el.style.display = 'none';
-    }
-    else{
-        el.style.display = 'table';
-    }
-}
-</script>
+<xar:set name="newargs">"&amp;inline=1&amp;returnurl=".$returnurl</xar:set>
+<xar:if condition="isset($parentid)">
+    <xar:set name="newargs">$newargs."&amp;parentid=".$parentid</xar:set>
+</xar:if>
+<xar:if condition="isset($objectid)">
+    <xar:set name="newargs">$newargs."&amp;objectid=".$objectid</xar:set>
+</xar:if>
+<xar:if condition="isset($modid)">
+    <xar:set name="newargs">$newargs."&amp;modid=".$modid</xar:set>
+</xar:if>
+<xar:if condition="isset($itemtype)">
+    <xar:set name="newargs">$newargs."&amp;itemtype=".$itemtype</xar:set>
+</xar:if>
+
+<xar:set name="xtasks_modid">xarModGetIDFromName('xtasks')</xar:set>
+<xar:if condition="$modid eq $xtasks_modid and $itemtype eq 1">
+    <xar:set name="newargs">$newargs."&amp;parentid=".$objectid</xar:set>
+</xar:if>
 
 <xar:template type="module" file="admin-menu" />
 <div class="xar-mod-body">
@@ -124,7 +133,21 @@ function xtaskToggleView(id){
                 </tr>
                 <tr>
                     <td colspan="2" class="xar-norm">
-        
+
+                        <xar:if condition="$mode eq 'worklog'">
+                            <xar:set name="worklog_style">"display: block;"</xar:set>
+                        <xar:else />
+                            <xar:set name="worklog_style">"display: none;"</xar:set>
+                        </xar:if>
+                    
+                        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Worklog</xar:mlstring> [ <a href="&xar-modurl-xtasks-worklog-new;&amp;taskid=#$taskid##$newargs#" onclick="twist_open('worklog'); return loadContent(this.href,'newworklog')"><xar:mlstring>Document Work Performed</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('worklog');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
+                        <div style="#$worklog_style#" id="worklog">
+                            <div id="newworklog"></div>
+                            <xar:if condition="is_array($worklog)">
+                                <xar:template type="module" file="worklog" subdata="array('worklog'=&gt;$worklog)" />
+                            </xar:if>
+                        </div>
+                        
                         <xar:if condition="!empty($hooks)">
                             <xar:if condition="!isset($mode)">
                                 <xar:set name="mode">""</xar:set>
@@ -136,27 +159,6 @@ function xtaskToggleView(id){
                                         <xar:set name="tasks_style">"display: block;"</xar:set>
                                     <xar:else />
                                         <xar:set name="tasks_style">"display: none;"</xar:set>
-                                    </xar:if>
-                                    
-                                    <xar:set name="returnurl">urlencode(xarServerGetCurrentURL())</xar:set>
-                                    <xar:set name="newargs">"&amp;inline=1&amp;returnurl=".$returnurl</xar:set>
-                                    <xar:if condition="isset($parentid)">
-                                        <xar:set name="newargs">$newargs."&amp;parentid=".$parentid</xar:set>
-                                    </xar:if>
-                                    
-                                    <xar:if condition="isset($objectid)">
-                                        <xar:set name="newargs">$newargs."&amp;objectid=".$objectid</xar:set>
-                                    </xar:if>
-                                    <xar:if condition="isset($modid)">
-                                        <xar:set name="newargs">$newargs."&amp;modid=".$modid</xar:set>
-                                    </xar:if>
-                                    <xar:if condition="isset($itemtype)">
-                                        <xar:set name="newargs">$newargs."&amp;itemtype=".$itemtype</xar:set>
-                                    </xar:if>
-                                    
-                                    <xar:set name="xtasks_modid">xarModGetIDFromName('xtasks')</xar:set>
-                                    <xar:if condition="$modid eq $xtasks_modid and $itemtype eq 1">
-                                        <xar:set name="newargs">$newargs."&amp;parentid=".$objectid</xar:set>
                                     </xar:if>
                                     
                                     <a name="tasklist">

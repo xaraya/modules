@@ -4,28 +4,22 @@ function xtasks_worklog_delete($args)
 {
     extract($args);
     
-    if (!xarVarFetch('reminderid', 'id', $reminderid)) return;
-    if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('worklogid', 'id', $worklogid)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-
-
-    if (!empty($objectid)) {
-        $reminderid = $objectid;
-    }
 
     if (!xarModAPILoad('xtasks', 'user')) return;
     
     $item = xarModAPIFunc('xtasks',
-                         'reminders',
+                         'worklog',
                          'get',
-                         array('reminderid' => $reminderid));
+                         array('worklogid' => $worklogid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
 
-    if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('AuditWorklog', 1, 'Item', "Al:All:Al")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xproject', xarVarPrepForDisplay($projectid));
+                    'xtasks', xarVarPrepForDisplay($worklogid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
@@ -33,18 +27,19 @@ function xtasks_worklog_delete($args)
 
     if (empty($confirm)) {
 
-        $projectinfo = xarModAPIFunc('xtasks',
+        $taskinfo = xarModAPIFunc('xtasks',
                               'user',
                               'get',
-                              array('projectid' => $item['projectid']));
+                              array('taskid' => $item['taskid']));
                               
         xarModLoad('xtasks','admin');
         $data = xarModAPIFunc('xtasks','admin','menu');
 
-        $data['reminderid'] = $reminderid;
-        $data['projectinfo'] = $projectinfo;
-
-        $data['reminder_name'] = xarVarPrepForDisplay($item['reminder_name']);
+        $data['item'] = $item;
+        $data['worklogid'] = $worklogid;
+        $data['taskid'] = $item['taskid'];
+        $data['taskinfo'] = $taskinfo;
+        
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();
@@ -53,14 +48,14 @@ function xtasks_worklog_delete($args)
     }
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('xtasks',
-                     'reminders',
+                     'worklog',
                      'delete',
-                     array('reminderid' => $reminderid))) {
+                     array('worklogid' => $worklogid))) {
         return;
     }
-    xarSessionSetVar('statusmsg', xarML('Page Deleted'));
+    xarSessionSetVar('statusmsg', xarML('Worklog Record Deleted'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "reminders")));
+    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $item['taskid'], 'mode' => "worklog")));
 
     return true;
 }

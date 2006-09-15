@@ -1,0 +1,42 @@
+<object name="reminders">
+  <objectid>239</objectid>
+  <label>xTasks Reminders</label>
+  <moduleid>704</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="ownerid">
+      <id>2761</id>
+      <label>Owner</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="eventdate">
+      <id>2762</id>
+      <label>eventdate</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="reminder">
+      <id>2763</id>
+      <label>Reminder</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

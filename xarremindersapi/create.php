@@ -14,69 +14,47 @@ function xtasks_remindersapi_create($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($reminder_name) || !is_string($reminder_name)) {
-        $invalid[] = 'reminder_name';
+    if (!isset($taskid) || !is_string($taskid)) {
+        $invalid[] = 'taskid';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'reminders', 'create', 'xproject');
+                    join(', ',$invalid), 'reminders', 'create', 'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
-    if (!xarSecurityCheck('AddXProject', 1, 'Item', "All:All:All")) {
+    if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
         $msg = xarML('Not authorized to add #(1) items',
-                    'xproject');
+                    'reminder');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
         return;
-    }
-    
-    if(!isset($sequence)) {
-        $ttlreminders = xarModAPIFunc('xproject', 'reminders', 'getall', array('projectid' => $projectid));
-        $sequence = count($ttlreminders) + 1;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $remindertable = $xartable['xProject_reminders'];
+    $remindertable = $xartable['xtasks_reminders'];
 
     $nextId = $dbconn->GenId($remindertable);
 
     $query = "INSERT INTO $remindertable (
                   reminderid,
-                  reminder_name,
-                  projectid,
-                  status,
-                  sequence,
-                  description,
-                  relativeurl)
-            VALUES (?,?,?,?,?,?,?)";
+                  taskid,
+                  ownerid,
+                  eventdate,
+                  reminder)
+            VALUES (?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
-              $reminder_name,
-              $projectid,
-              $status,
-              $sequence,
-              $description,
-              $relativeurl);
+              $taskid,
+              $ownerid,
+              $eventdate,
+              $reminder);
               
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    
-    if((int)$sequence == $sequence) {
-        xarModAPIFunc('xproject', 'reminders', 'sequence', array('projectid' => $projectid));
-    }
-
-    $logdetails = "Page created: ".$reminder_name.".";
-    $logid = xarModAPIFunc('xproject',
-                        'log',
-                        'create',
-                        array('projectid'   => $projectid,
-                            'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
 
     $reminderid = $dbconn->PO_Insert_ID($remindertable, 'reminderid');
 

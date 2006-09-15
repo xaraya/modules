@@ -6,7 +6,7 @@ function xtasks_remindersapi_delete($args)
 
     if (!isset($reminderid) || !is_numeric($reminderid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'feature ID', 'features', 'delete', 'xproject');
+                    'reminder ID', 'reminders', 'delete', 'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -20,9 +20,9 @@ function xtasks_remindersapi_delete($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
+                    'xtasks', xarVarPrepForStore($projectid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
@@ -31,7 +31,7 @@ function xtasks_remindersapi_delete($args)
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $reminderstable = $xartable['xProject_reminders'];
+    $reminderstable = $xartable['xtasks_reminders'];
 
     // does it have children ?
     $sql = "DELETE FROM $reminderstable
@@ -45,18 +45,6 @@ function xtasks_remindersapi_delete($args)
         return;
     }
     
-    xarModAPIFunc('xproject', 'reminders', 'sequence', array('projectid' => $item['projectid']));
-
-    $logdetails = "Page removed: ".$item['reminder_name'].".";
-    $logid = xarModAPIFunc('xproject',
-                        'log',
-                        'create',
-                        array('projectid'   => $item['projectid'],
-                            'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
-
-    // Let the calling process know that we have finished successfully
     return true;
 }
 

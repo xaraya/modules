@@ -29,7 +29,7 @@
             <td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['project_name'])">#$taskinfo['projectinfo']['project_name']#</xar:if></td>
             
             <td class="xar-norm">
-                <a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
+                <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
             </td>
                 
             <xar:set name="importance">$taskinfo['importance']</xar:set>

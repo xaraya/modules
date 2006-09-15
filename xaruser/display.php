@@ -92,6 +92,10 @@ function xtasks_user_display($args)
         $data['parentname'] = $parentinfo['task_name'];
         $data['parenturl'] = xarModURL('xtasks', 'admin', 'display', array('taskid' => $data['parentid']));
     }
+    
+    $worklog = xarModAPIFunc('xtasks', 'worklog', 'getallfromtask', array('taskid' => $item['taskid']));
+    
+    $data['worklog'] = $worklog;
         
     $modid = xarModGetIDFromName(xarModGetName());
     $data['modid'] = $modid;

@@ -4,31 +4,29 @@ function xtasks_worklog_create($args)
 {
     extract($args);
     
-    if (!xarVarFetch('reminder_name', 'str:1:', $reminder_name, $reminder_name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sequence', 'int::', $sequence, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('relativeurl', 'str::', $relativeurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('eventdate', 'str::', $eventdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours', 'str::', $hours, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
                                             
     if (!xarSecConfirmAuthKey()) return;
 
-    $reminderid = xarModAPIFunc('xtasks',
-                        'reminders',
+    $worklogid = xarModAPIFunc('xtasks',
+                        'worklog',
                         'create',
-                        array('reminder_name' 	    => $reminder_name,
-                            'projectid'         => $projectid,
-                            'status'	        => $status,
-                            'sequence'	        => $sequence,
-                            'description'       => $description,
-                            'relativeurl'  	    => $relativeurl));
+                        array('taskid' 	    => $taskid,
+                            'ownerid'       => $ownerid,
+                            'eventdate'	    => $eventdate,
+                            'hours'         => $hours,
+                            'notes'  	    => $notes));
 
 
-    if (!isset($reminderid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (!isset($worklogid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
+    xarSessionSetVar('statusmsg', xarMLByKey('WORKLOGCREATED'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('projectid' => $projectid, 'mode' => "reminders")));
+    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $taskid, 'mode' => "worklog")));
 
     return true;
 }

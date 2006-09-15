@@ -4,31 +4,31 @@ function xtasks_worklog_update($args)
 {
     extract($args);
     
-    if (!xarVarFetch('reminderid', 'id', $reminderid)) return;
-    if (!xarVarFetch('reminder_name', 'str:1:', $reminder_name, $reminder_name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sequence', 'int::', $sequence, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('relativeurl', 'str::', $relativeurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('worklogid', 'id', $worklogid)) return;
+    if (!xarVarFetch('eventdate', 'str:1:', $eventdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours', 'int::', $hours, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
                                         
     if (!xarSecConfirmAuthKey()) return;
     
+    $worklog = xarModAPIFunc('xtasks', 'worklog', 'get', array('worklogid' => $worklogid));
+    
+    if(!$worklog) return;
+    
     if(!xarModAPIFunc('xtasks',
-					'reminders',
+					'worklog',
 					'update',
-					array('reminderid'	        => $reminderid,
-						'reminder_name' 	    => $reminder_name,
-                        'status'	        => $status,
-                        'description'       => $description,
-                        'relativeurl'  	    => $relativeurl))) {
+					array('worklogid'	=> $worklogid,
+						'eventdate'	    => $eventdate,
+                        'hours'         => $hours,
+                        'notes'  	    => $notes))) {
 		return;
 	}
 
 
-	xarSessionSetVar('statusmsg', xarML('Page Updated'));
+	xarSessionSetVar('statusmsg', xarML('Work Record Updated'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('projectid' => $projectid, 'mode' => "reminders")));
+    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $worklog['taskid'], 'mode' => "worklog")));
 
     return true;
 }

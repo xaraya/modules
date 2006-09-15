@@ -27,8 +27,10 @@ function xtasks_admin_workspace($args)
         $data['returnurl'] = $extrainfo;
     }
     
-    $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
-
+    if(!strpos($data['returnurl'], "mode=tasks")) {
+        $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
+    }
+    
     if (isset($args['modid'])) {
         $modid = $args['modid'];
     } elseif (!empty($args['extrainfo']) && !empty($args['extrainfo']['module'])) {

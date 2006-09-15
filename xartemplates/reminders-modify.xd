@@ -1,0 +1,39 @@
+<xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xTasks" itemtype="2" itemid="$worklog_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Audit Work Record</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-xtasks-worklog-update;">
+    
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="worklogid" value="#$worklogid#" />
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:mlstring>Task Name</xar:mlstring></td>
+            <td><strong>#$taskinfo['task_name']#</strong></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Work Performed By</xar:mlstring></td>
+            <td><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Work Date</xar:mlstring></td>
+            <td><xar:data-input property="$properties['eventdate']" name="eventdate" value="$item['eventdate']" /></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Hours Worked</xar:mlstring></td>
+            <td><xar:data-input property="$properties['hours']" name="hours" value="$item['hours']" /></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Notes</xar:mlstring></td>
+            <td><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+        </tr>
+        <tr>
+            <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+        </tr>
+    </table>
+    
+    </form>
+</div>

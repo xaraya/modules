@@ -4,45 +4,37 @@ function xtasks_worklog_modify($args)
 {
 	extract($args);
     
-    if (!xarVarFetch('reminderid',     'id',     $reminderid,     $reminderid,     XARVAR_NOT_REQUIRED)) return;
-	
-    if (!empty($objectid)) {
-        $reminderid = $objectid;
-    }
+    if (!xarVarFetch('worklogid',     'id',     $worklogid,     $worklogid,     XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xtasks', 'user')) return;
     
 	$item = xarModAPIFunc('xtasks',
-                         'reminders',
+                         'worklog',
                          'get',
-                         array('reminderid' => $reminderid));
+                         array('worklogid' => $worklogid));
 	
 	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('AuditWorklog', 1, 'Item', "All:All:All")) {
         return;
     }
 
-    $projectinfo = xarModAPIFunc('xtasks',
+    $taskinfo = xarModAPIFunc('xtasks',
                           'user',
                           'get',
-                          array('projectid' => $item['projectid']));
+                          array('taskid' => $item['taskid']));
     
     $data = xarModAPIFunc('xtasks','admin','menu');
     
-	$data['reminderid'] = $item['reminderid'];
+	$data['worklogid'] = $item['worklogid'];
 	
     $data['authid'] = xarSecGenAuthKey();
 	
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
 
-	$item['module'] = 'xtasks';
-    
-    $data['statuslist'] = array('Draft','Proposed','Approved','WIP','QA','Archived');
-
 	$data['item'] = $item;
-    
-    $data['projectinfo'] = $projectinfo;
+
+	$data['taskinfo'] = $taskinfo;
     
     return $data;
 }

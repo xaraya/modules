@@ -8,9 +8,6 @@ function xtasks_remindersapi_update($args)
     if (!isset($reminderid) || !is_numeric($reminderid)) {
         $invalid[] = 'reminder ID';
     }
-    if (!isset($reminder_name) || !is_string($reminder_name)) {
-        $invalid[] = 'reminder_name';
-    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'reminders', 'update', 'xproject');
@@ -19,21 +16,21 @@ function xtasks_remindersapi_update($args)
         return;
     }
 
-    $item = xarModAPIFunc('xproject',
+    $item = xarModAPIFunc('xtasks',
                             'reminders',
                             'get',
                             array('reminderid' => $reminderid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $reminderstable = $xartable['xProject_reminders'];
+    $reminderstable = $xartable['xtasks_reminders'];
 
     $query = "UPDATE $reminderstable
             SET reminder_name =?, 
@@ -58,15 +55,6 @@ function xtasks_remindersapi_update($args)
             new SystemException($msg));
         return;
     }
-
-    $logdetails = "Page modified: ".$item['reminder_name'].".";
-    $logid = xarModAPIFunc('xproject',
-                        'log',
-                        'create',
-                        array('projectid'   => $item['projectid'],
-                            'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
 
     return true;
 }

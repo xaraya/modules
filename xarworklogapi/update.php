@@ -5,49 +5,47 @@ function xtasks_worklogapi_update($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($reminderid) || !is_numeric($reminderid)) {
-        $invalid[] = 'reminder ID';
+    if (!isset($worklogid) || !is_numeric($worklogid)) {
+        $invalid[] = 'worklogid';
     }
-    if (!isset($reminder_name) || !is_string($reminder_name)) {
-        $invalid[] = 'reminder_name';
+    if (!isset($eventdate) || !is_string($eventdate)) {
+        $invalid[] = 'eventdate';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'reminders', 'update', 'xproject');
+            join(', ', $invalid), 'worklog', 'update', 'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
 
-    $item = xarModAPIFunc('xproject',
-                            'reminders',
+    $item = xarModAPIFunc('xtasks',
+                            'worklog',
                             'get',
-                            array('reminderid' => $reminderid));
+                            array('worklogid' => $worklogid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('AuditWorklog', 1, 'Item', "All:All:All")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $reminderstable = $xartable['xProject_reminders'];
+    $worklogtable = $xartable['xtasks_worklog'];
 
-    $query = "UPDATE $reminderstable
-            SET reminder_name =?, 
-                  status = ?,
-                  description = ?,
-                  relativeurl = ?
-            WHERE reminderid = ?";
+    $query = "UPDATE $worklogtable
+            SET eventdate =?, 
+                  hours = ?,
+                  notes = ?
+            WHERE worklogid = ?";
 
     $bindvars = array(
-              $reminder_name,
-              $status,
-              $description,
-              $relativeurl,
-              $reminderid);
+              $eventdate,
+              $hours,
+              $notes,
+              $worklogid);
               
     $result = &$dbconn->Execute($query,$bindvars);
 
@@ -58,15 +56,6 @@ function xtasks_worklogapi_update($args)
             new SystemException($msg));
         return;
     }
-
-    $logdetails = "Page modified: ".$item['reminder_name'].".";
-    $logid = xarModAPIFunc('xproject',
-                        'log',
-                        'create',
-                        array('projectid'   => $item['projectid'],
-                            'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
 
     return true;
 }

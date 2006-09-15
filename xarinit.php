@@ -138,7 +138,7 @@ function xtasks_init()
         'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'eventdate'	            =>array('type'=>'date','null'=>TRUE),
-        'reminder'	            =>array('type'=>'text'),
+        'reminder'	            =>array('type'=>'text'));
 
     $sql = xarDBCreateTable($reminders_table,$reminders_fields);
     if (empty($sql)) return;
@@ -195,6 +195,16 @@ function xtasks_init()
                               array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
     if (empty($objectid)) return;
     xarModSetVar('xtasks','modulesettings',$modulesettings);
+    
+    $worklog_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/worklog.xml'));
+    if (empty($worklog_objectid)) return;
+    xarModSetVar('xtasks','worklog_objectid',$worklog_objectid);
+
+    $reminders_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/reminders.xml'));
+    if (empty($reminders_objectid)) return;
+    xarModSetVar('xtasks','reminders_objectid',$reminders_objectid);
 
     xarModSetVar('xtasks', 'dateformat', '');
     xarModSetVar('xtasks', 'autorefresh', 600);
@@ -271,6 +281,15 @@ function xtasks_init()
     xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
     
+    xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    
+    xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+
+    xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    
     return true;
 }
 
@@ -341,7 +360,7 @@ function xtasks_upgrade($oldversion)
                 'taskid'			    =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
                 'ownerid'				=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
                 'eventdate'	            =>array('type'=>'date','null'=>TRUE),
-                'warning'	            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'));
+                'reminder'	            =>array('type'=>'text'));
         
             $sql = xarDBCreateTable($reminders_table,$reminders_fields);
             if (empty($sql)) return;
@@ -488,6 +507,46 @@ function xtasks_upgrade($oldversion)
             }
             
         case '1.6':
+    
+            xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+        case '1.6.1':
+        
+            $worklog_objectid = xarModGetVar('xtasks','worklog_objectid');
+            if (!empty($worklog_objectid)) {
+                if(xarModAPIFunc('dynamicdata',
+                                'admin',
+                                'deleteobject',
+                                array('objectid' => $worklog_objectid,
+                                    'module' => "xtasks",
+                                    'itemtype' => 2))) {
+                    xarModSetVar('xtasks','worklog_objectid', '');
+                }
+            }
+            $worklog_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/worklog.xml'));
+            if (empty($worklog_objectid)) {
+                return;
+            }
+            xarModSetVar('xtasks','worklog_objectid',$worklog_objectid);
+
+        case '1.6.2':
+    
+            xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    
+            xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+        case '1.6.3':
+
+            $reminders_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/reminders.xml'));
+            if (empty($reminders_objectid)) return;
+            xarModSetVar('xtasks','reminders_objectid',$reminders_objectid);
+
+        case '1.6.4':
             break;
 
     }

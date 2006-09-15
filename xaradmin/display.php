@@ -105,6 +105,10 @@ function xtasks_admin_display($args)
             $data['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $data['projectid']));
         }
     }
+    
+    $worklog = xarModAPIFunc('xtasks', 'worklog', 'getall', array('taskid' => $item['taskid']));
+    
+    $data['worklog'] = $worklog;
         
     $modid = xarModGetIDFromName(xarModGetName());
     $data['modid'] = $modid;
