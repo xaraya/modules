@@ -47,11 +47,23 @@ function itsp_userapi_splitrules($args)
     $rule_cat = $rule_parts[1];
     $rule_parts = explode(':',$Rsource);
     $rule_source = $rule_parts[1];
+    // See if we have a mixed source
 
+    $mixnr = stripos($rule_source, 'mix_');
+   // echo $mixnr;
+    if ($mixnr === false) {
+        $mix = false;
+        $source = $rule_source;
+    } else {
+        $mix = true;
+        $source = substr($rule_source, 4);
+    }
+//echo $mix;
     $item['rule_type']   = $rule_type;
     $item['rule_level']  = $rule_level;
     $item['rule_cat']    = $rule_cat;
-    $item['rule_source'] = $rule_source;
+    $item['rule_source'] = $source;
+    $item['mix'] = $mix;
 //echo $rule_source;
     return $item;
 }

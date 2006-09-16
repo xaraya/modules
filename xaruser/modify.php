@@ -78,49 +78,24 @@ function itsp_user_modify($args)
         $data['rule_level'] = $rules['rule_level'];
         $data['rule_cat'] = $rules['rule_cat'];
         $data['rule_source'] = $rules['rule_source'];
+        // See if mix is true, then we need both sources
+
+//        if ($rules['mix']) {
+
+
 
         switch ($rules['rule_source']) {
             case 'courses':
-                // get the pitem details for this itsp
-                // get all linked courses that already have been added to the ITSP for this pitemid
-                $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid, 'pitemid' => $pitemid));
-                // for each linked course get the details
-                if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
-                $creditsnow = 0;
-                foreach ($courselinks as $lcourse) {
-                    // Add read link
-                    $courseid = $lcourse['lcourseid'];
-                    if (xarSecurityCheck('ReadITSPPlan', 0, 'Plan', "$planid:All")) {
-                        $lcourse['link'] = xarModURL('courses',
-                            'user',
-                            'display',
-                            array('courseid' => $courseid));
-                    } else {
-                        $lcourse['link'] = '';
-                    }
-                    $course = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
-                    /* Clean up the item text before display */
-                    $lcourse['name'] = xarVarPrepForDisplay($course['name']);
-                    $lcourse['intendedcredits'] = xarVarPrepForDisplay($course['intendedcredits']);
-                    // Add a delete link
-                    $lcourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('courselinkid' => $lcourse['courselinkid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
-                    $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
-                    if (!empty($enrollstatus[0])  && is_numeric($enrollstatus[0]['studstatus'])){
-                        $lcourse['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
-                              array('status' => $enrollstatus[0]['studstatus']));
-                        $lcourse['credits'] = $enrollstatus[0]['credits'];
-                        $lcourse['startdate'] = $enrollstatus[0]['startdate'];
-                        $creditsnow = $creditsnow + $enrollstatus[0]['credits'];
-                    } else {
-                        $lcourse['studstatus'] = '';
-                        $lcourse['credits'] = '';
-                        $lcourse['startdate'] = '';
-                        $creditsnow = $creditsnow + $course['intendedcredits'];
-                    }
-                    /* Add this item to the list of items to be displayed */
-                    $data['lcourses'][] = $lcourse;
-                }
+            //itspid
+            //pitemid
+            //planid
+                $lcourses = xarModApiFunc('itsp','user','getmodifycourses',
+                                                    array('itspid' => $itspid,
+                                                          'pitemid'=>$pitemid,
+                                                          'planid'=>$planid,
+                                                          'userid' => $userid));
+                $creditsnow = $lcourses['creditsnow'];
+                $data['lcourses'] = $lcourses['lcourses'];
                 break;
             // The default will pull all linked courses. These can hold any type of courses
             // The source here is the template name that will be used.

@@ -105,7 +105,7 @@ function itsp_user_itsp($args)
                 $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
                 $rule_source = $rules['rule_source'];
                 $fullitem['rule_source'] = $rule_source;
-                switch ($rules_source) {
+                switch ($rule_source) {
                     case 'courses':
                     // get the pitem details for this itsp
                     // get all linked courses that already have been added to the ITSP for this pitemid
