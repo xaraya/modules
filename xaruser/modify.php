@@ -80,20 +80,25 @@ function itsp_user_modify($args)
         $data['rule_source'] = $rules['rule_source'];
         // See if mix is true, then we need both sources
 
-//        if ($rules['mix']) {
-
-
+        if ($rules['mix']) {
+            // get the courses to modify
+            $lcourses = xarModApiFunc('itsp','user','getmodifycourses',
+                                                array('itspid'  => $itspid,
+                                                      'pitemid' => $pitemid,
+                                                      'planid'  => $planid,
+                                                      'userid'  => $userid));
+            $creditsnow = $lcourses['creditsnow'];
+            $data['lcourses'] = $lcourses['lcourses'];
+        }
 
         switch ($rules['rule_source']) {
             case 'courses':
-            //itspid
-            //pitemid
-            //planid
+                // get the courses to modify
                 $lcourses = xarModApiFunc('itsp','user','getmodifycourses',
-                                                    array('itspid' => $itspid,
-                                                          'pitemid'=>$pitemid,
-                                                          'planid'=>$planid,
-                                                          'userid' => $userid));
+                                                    array('itspid'  => $itspid,
+                                                          'pitemid' => $pitemid,
+                                                          'planid'  => $planid,
+                                                          'userid'  => $userid));
                 $creditsnow = $lcourses['creditsnow'];
                 $data['lcourses'] = $lcourses['lcourses'];
                 break;

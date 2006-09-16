@@ -12,14 +12,16 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP
+ * Get the linked courses and prepare
  *
- * Get all courses to modify
+ * This function uses preparation functions as well, and is therefore also a display type of function
  *
  * @author the ITSP module development team
  * @since 16 Sept 2006
- * @param  $args ['itspid'] id of itsp item to get
- * @param  $args ['userid'] id of the user to get the itsp for
+ * @param int $args['itspid'] id of itsp item to get
+ * @param int $args['userid'] id of the user to get the itsp for
+ * @param int pitemid
+ * @param int planid
  * @return array with item, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -78,7 +80,7 @@ function itsp_userapi_getmodifycourses($args)
             $lcourse['startdate'] = '';
             $creditsnow = $creditsnow + $course['intendedcredits'];
         }
-        /* Add this item to the list of items to be displayed */
+        /* Add this item to the list of items to be returned */
         $data['lcourses'][] = $lcourse;
         $data['creditsnow'] = $creditsnow;
     }
