@@ -26,8 +26,7 @@ function itsp_user_view()
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable that will hold the data
     $data = xarModAPIFunc('itsp', 'user', 'menu');
-    /* Prepare the variable that will hold some status message if necessary */
-    $data['status'] = '';
+
     /* Prepare the array variable that will hold all items for display */
     $data['items'] = array();
     /* Specify some other variables for use in the function template */
@@ -46,7 +45,7 @@ function itsp_user_view()
               'numitems' => xarModGetUserVar('itsp','itemsperpage',$uid)));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    /* TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
+    /*
      * Loop through each item and display it.
      */
     foreach ($items as $item) {
@@ -88,7 +87,7 @@ function itsp_user_view()
         /* Add this item to the list of items to be displayed */
         $data['items'][] = $item;
     }
-    /* TODO: how to integrate cat ids in pager (automatically) when needed ???
+    /*
      * Get the UID so we can see if there are any overridden defaults.
      */
     $uid = xarUserGetVar('uid');
@@ -100,7 +99,7 @@ function itsp_user_view()
         xarModURL('itsp', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('itsp', 'itemsperpage', $uid));
 
-    /* Same as above.  We are changing the name of the page to raise
+    /* Same as above. We are changing the name of the page to raise
      * better search engine compatibility.
      */
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View our Educational plans')));

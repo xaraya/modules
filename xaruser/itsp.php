@@ -101,9 +101,11 @@ function itsp_user_itsp($args)
                 // get planitem
                 $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
                 if (!isset($pitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                // Get the rules for the source of this plan item
                 $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
-                $fullitem['rule_source'] = $rules['rule_source'];
-                switch ($rules['rule_source']) {
+                $rule_source = $rules['rule_source'];
+                $fullitem['rule_source'] = $rule_source;
+                switch ($rules_source) {
                     case 'courses':
                     // get the pitem details for this itsp
                     // get all linked courses that already have been added to the ITSP for this pitemid
@@ -173,6 +175,7 @@ function itsp_user_itsp($args)
                         /* Add this item to the list of items to be displayed */
                         $fullitem['courses'][] = $course;
                     }
+                    break;
                 }
             $data['fullitems'][] = $fullitem;
             }
