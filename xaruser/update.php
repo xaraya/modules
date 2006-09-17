@@ -53,99 +53,95 @@ function itsp_user_update()
     }
      /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey('itsp.modify')) return;
+    // TODO: make related to previous status?
     $newstatus = 1;
     $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
     if (!$updatestatus) {
         xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
         return false; // throw back
     }
+
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
         //get planitem
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitemrules'] = $pitem['pitemrules'];
         // Splice the rule
-        if (!empty($pitem['pitemrules'])) {
-            list($Rtype, $Rlevel, $Rcat, $Rsource) = explode(";", $pitem['pitemrules']);
 
-            $rule_parts = explode(':',$Rtype);
-            $rule_type = $rule_parts[1];
-            $rule_parts = explode(':',$Rlevel);
-            $rule_level = $rule_parts[1];
-            $rule_parts = explode(':',$Rcat);
-            $rule_cat = $rule_parts[1];
-            $rule_parts = explode(':',$Rsource);
-            $rule_source = $rule_parts[1];
+        $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
+        // Splice the rule
+        $data['rule_type'] = $rules['rule_type'];
+        $data['rule_level'] = $rules['rule_level'];
+        $data['rule_cat'] = $rules['rule_cat'];
+        $data['rule_source'] = $rules['rule_source'];
+        // See if mix is true, then we need both sources
 
-            $data['rule_type'] = $rule_type;
-            $data['rule_level'] = $rule_level;
-            $data['rule_cat'] = $rule_cat;
-            $data['rule_source'] = $rule_source;
-
+        if ($rules['mix']) {
+            $source = 'mix';
+        } else {
+            $source = $rules['rule_source'];
         }
-        switch ($rule_source) {
-            case 'courses':
-                // Then we are adding a course, if this id is set
-                if (!xarVarFetch('lcourseid', 'id',    $lcourseid, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('courseid', 'id',     $courseid,  '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('dateappr',  'str::', $dateappr,  '', XARVAR_NOT_REQUIRED)) return;
-                // Make sure we will not add the empty string as a course
-                if (!empty($lcourseid) && $lcourseid > 0) {
-                    // Create a new linked course
-                    if (!xarModApiFunc('itsp','admin','create_courselink',
-                                        array('itspid' =>$itspid,
-                                              'pitemid' => $pitemid,
-                                              'lcourseid' => $lcourseid,
-                                              'dateappr' => $dateappr)
-                                        )) {
-                        xarSessionSetVar('statusmsg', xarML('Course Item was NOT added!'));
-                        return;
-                    } else {
-                        xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
-                    }
-                }
-                // else update the lcourse
 
-                break;
-            case 'external':
-            default:
-                if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseloc',      'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedesc',     'str::',        $icoursedesc, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursecredits',  'int::',        $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourselevel',    'str:1:255',    $icourselevel, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icourseresult',   'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('dateappr',        'str::',        $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('displaytitle',    'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
-                // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
-                /* Confirm authorisation code.*/
-                // if (!xarSecConfirmAuthKey($authid)) return;
-                // TODO: return to form if we do not validate this item
-                /* if (empty($icoursetitle)) {
-                    $invalid[] = 'icoursetitle';
+        if ((strcmp($source, 'courses') == 0) || (strcmp($source, 'mix') == 0)) {
+            // Then we are adding a course, if this id is set
+            if (!xarVarFetch('lcourseid', 'id',    $lcourseid, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('courseid', 'id',     $courseid,  '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('dateappr',  'str::', $dateappr,  '', XARVAR_NOT_REQUIRED)) return;
+            // Make sure we will not add the empty string as a course
+            if (!empty($lcourseid) && $lcourseid > 0) {
+                // Create a new linked course
+                if (!xarModApiFunc('itsp','admin','create_courselink',
+                                    array('itspid' =>$itspid,
+                                          'pitemid' => $pitemid,
+                                          'lcourseid' => $lcourseid,
+                                          'dateappr' => $dateappr)
+                                    )) {
+                    xarSessionSetVar('statusmsg', xarML('Course Item was NOT added!'));
+                    return;
+                } else {
+                    xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
                 }
+            }
+        } elseif ((strcmp($source, 'courses') != 0) || (strcmp($source, 'mix') == 0)) {
+            // else update the lcourse
+            if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icourseloc',      'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icoursedesc',     'str::',        $icoursedesc, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icoursecredits',  'int::',        $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icourselevel',    'str:1:255',    $icourselevel, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icourseresult',   'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('dateappr',        'str::',        $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('displaytitle',    'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+            // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
+            /* Confirm authorisation code.*/
+            // if (!xarSecConfirmAuthKey($authid)) return;
+            // TODO: return to form if we do not validate this item
+            /* if (empty($icoursetitle)) {
+                $invalid[] = 'icoursetitle';
+            }
 
-                    // check if we have any errors
-                if (count($invalid) > 0) {
-                    return xarModFunc('itsp', 'admin', 'new',
-                                      array('itspid' => $itspid,
-                                           'pitemid' => $pitemid,
-                                           'icourseid'=>$icourseid,
-                                           'icoursetitle'=> $icoursetitle,
-                                           'icourseloc'=>  $icourseloc,
-                                           'icoursedesc'=> $icoursedesc,
-                                           'icoursecredits'=>  $icoursecredits,
-                                           'icourselevel'=> $icourselevel,
-                                           'icourseresult'=> $icourseresult,
-                                           'icoursedate'=> $icoursedate,
-                                           'dateappr'=> $dateappr,
-                                           'displaytitle' => $displaytitle,
-                                           'invalid'      => $invalid));
-                }
-                */
+                // check if we have any errors
+            if (count($invalid) > 0) {
+                return xarModFunc('itsp', 'admin', 'new',
+                                  array('itspid' => $itspid,
+                                       'pitemid' => $pitemid,
+                                       'icourseid'=>$icourseid,
+                                       'icoursetitle'=> $icoursetitle,
+                                       'icourseloc'=>  $icourseloc,
+                                       'icoursedesc'=> $icoursedesc,
+                                       'icoursecredits'=>  $icoursecredits,
+                                       'icourselevel'=> $icourselevel,
+                                       'icourseresult'=> $icourseresult,
+                                       'icoursedate'=> $icoursedate,
+                                       'dateappr'=> $dateappr,
+                                       'displaytitle' => $displaytitle,
+                                       'invalid'      => $invalid));
+            }
+            */
+            if (!empty($icoursetitle) && !empty($icoursecredits)) {
 
                 $icourseid = xarModApiFunc('itsp',
                                    'admin',
@@ -172,31 +168,10 @@ function itsp_user_update()
                     return false; // throw back
                 }
                 xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
+            }
         }
     }
 
-
-/*
-    $invalid = array();
-    if (empty($number) || !is_numeric($number)) {
-        $invalid['number'] = 1;
-        $number = '';
-    }
-    if (empty($name) || !is_string($name)) {
-        $invalid['name'] = 1;
-        $name = '';
-    }
-
-    // check if we have any errors
-    if (count($invalid) > 0) {
-        // call the user_new function and return the template vars
-
-        return xarModFunc('itsp', 'user', 'modify',
-                          array('name'     => $name,
-                                'number'   => $number,
-                                'invalid'  => $invalid));
-    }
-*/
   //  xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
