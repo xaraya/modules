@@ -105,8 +105,15 @@ function itsp_user_itsp($args)
                 $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
                 $rule_source = $rules['rule_source'];
                 $fullitem['rule_source'] = $rule_source;
-                switch ($rule_source) {
+                // TODO: implement mix possibility
+                if ($rules['mix']) {
+                    $source = 'mix';
+                } else {
+                    $source = $rule_source;
+                }
+                switch ($source) {
                     case 'courses':
+                    case 'mix':
                     // get the pitem details for this itsp
                     // get all linked courses that already have been added to the ITSP for this pitemid
                     $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid, 'pitemid' => $pitemid));
@@ -146,7 +153,9 @@ function itsp_user_itsp($args)
                         // TODO: place at correct place
                         $fullitem['courses'][] = $course;
                     }
-                    break;
+                    if (strcmp($source, 'courses') == 0) {
+                        break;
+                    }
                 // external courses
                 case 'external':
                 default:
