@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
     <xar:template file="admin-menu" type="module" />
-    <h2><xar:mlstring>Manuall Sync Groups</xar:mlstring></h2>    
+    <h2><xar:mlstring>Manually Sync Groups</xar:mlstring></h2>
     <div class="xar-standard-box-padding ">
     <xar:if condition="$success">
         <xar:ml>
