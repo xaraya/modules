@@ -544,6 +544,7 @@ function itsp_upgrade($oldversion)
             if (!$result) return;
 
         case '0.4.0':
+        case '0.4.1':
             break;
     }
     /* Update successful */
