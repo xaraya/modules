@@ -8,7 +8,7 @@
   <img src="modules/example/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  
+
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>The ITSP module is a module to organise and plan Education plans.</xar:mlstring></em>
@@ -18,9 +18,9 @@
     <li><xar:mlstring>Hold Education Education Plans. The plans have plan items that represent education blocks.</xar:mlstring></li>
     <li><xar:mlstring>Let users choose an education plan that they will follow (create an ITSP).</xar:mlstring></li>
     <li><xar:mlstring>Let those users add courses and external courses to the their ITSP.</xar:mlstring></li>
-   
+
   </ol>
-  
+
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
     <xar:mlstring>Install the courses module.</xar:mlstring><br />
@@ -28,21 +28,23 @@
     <xar:mlstring>Create templates for each plan item that a student can add.</xar:mlstring><br />
     <xar:mlstring>The educationplan items are blocks of courses, or requirements. They are those blocks that you can set rules for, like At least 3 credits,
     At this level a course, minimum 4 courses". But, like with publication types in articles, you might want those blocks of requirements to have different texts.
-    For this, you can add your own templates for each planitem. You will need to provide a template for each plan item in yourtheme/modules/itsp/includes</xar:mlstring><br />
-    
-    
+    For this, you can add your own templates for each planitem. You will need to provide a template for each plan item in your theme/modules/itsp/includes</xar:mlstring><br />
+
+    <xar:mlstring>The source for the items that will be stored for a planitem can be set. You can use courses from the courses module (use 'courses' as the source); use external as the standard
+    source for items that are defined as external courses (use 'external' as the source); or use the combination of the two: use 'mix_[yourname]' when both courses from the courses module and external courses can be used (use mix_yourname as the source).
+    </xar:mlstring><br />
   </p>
-  
+
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>None at the moment</xar:mlstring></li>
   </ul>
- 
+
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>None</xar:mlstring></li>
   </ul>
-  
+
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
