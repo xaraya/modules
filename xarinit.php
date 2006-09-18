@@ -22,7 +22,7 @@ function xproject_init()
     $xarTables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
-    
+
     $xProjects_table = $xarTables['xProjects'];
     $xProjects_fields = array('projectid'           =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                                 'project_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
@@ -64,7 +64,7 @@ function xproject_init()
     $query = xarDBCreateIndex($xProjects_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $features_table = $xarTables['xProject_features'];
     $features_fields = array('featureid'            =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                                 'parentid'          =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -86,7 +86,7 @@ function xproject_init()
     $query = xarDBCreateIndex($features_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $pages_table = $xarTables['xProject_pages'];
     $pages_fields = array('pageid'      =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                         'parentid'      =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -107,13 +107,13 @@ function xproject_init()
     $query = xarDBCreateIndex($pages_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $log_table = $xarTables['xProject_log'];
     $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                         'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
-                        'createdate'    =>  array('type'=>'datetime','null'=>TRUE,'default'=>''),
+                        'createdate'    =>  array('type'=>'datetime','null'=>TRUE),
                         'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
     $query = xarDBCreateTable($log_table,$log_fields);
     if (empty($query)) return;
@@ -126,7 +126,7 @@ function xproject_init()
     $query = xarDBCreateIndex($log_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $team_table = $xarTables['xProject_team'];
     $team_fields = array('projectid'    =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'projectrole'   =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -144,7 +144,7 @@ function xproject_init()
     $query = xarDBCreateIndex($team_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
 
@@ -196,7 +196,7 @@ function xproject_init()
         return;
     }
     xarModSetVar('xproject','log_objectid',$log_objectid);
-    
+
     $team_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/xardata/team.xml'));
     if (empty($team_objectid))  {
@@ -206,7 +206,7 @@ function xproject_init()
         return;
     }
     xarModSetVar('xproject','team_objectid',$team_objectid);
-            
+
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xproject/xardata/usersettings.xml'));
@@ -224,7 +224,7 @@ function xproject_init()
 
 //    xarBlockTypeRegister('xproject', 'first');
 //    xarBlockTypeRegister('xproject', 'others');
-    
+
     /**
      * Define instances for this module
      * Format is
@@ -236,7 +236,7 @@ function xproject_init()
     $query1 = "SELECT DISTINCT projectid FROM $xarTables[xProjects]";
 
     $query2 = "SELECT DISTINCT project_name FROM $xarTables[xProjects]";
-    
+
     $instances = array(
                         array('header' => 'Project ID:',
                                 'query' => $query1,
@@ -271,26 +271,31 @@ function xproject_init()
     xarRegisterMask('AdminXProject', 'All', 'xproject', 'Group', 'All:All:All', 'ACCESS_ADMIN');
     return true;
 }
-
+/**
+ * Upgrade xProject
+ *
+ * @param string oldversion
+ * @return bool true on success
+ */
 function xproject_upgrade($oldversion)
 {
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
-            
+
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    
+
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
-    
+
     switch($oldversion) {
         case '0.2.0':
         case '1.0':
             $xproject_table = $xarTables['xProjects'];
             $features_table = $xarTables['xProject_features'];
             $pages_table = $xarTables['xProject_pages'];
-            
+
             // ADD WEBSITEPROJECT FIELD TO PROJECTS
             $result = $datadict->ChangeTable($xproject_table, 'websiteproject C(1) NotNull');
             if (!$result) return;
@@ -302,11 +307,11 @@ function xproject_upgrade($oldversion)
             // ADD SEQUENCE FIELD TO PAGES
             $result = $datadict->ChangeTable($pages_table, 'sequence F NotNull Default 0');
             if (!$result) return;
-            
+
             // ADD RELATIVEURL CHECKBOX FIELD TO PROJECTS
             $result = $datadict->ChangeTable($pages_table, 'relativeurl C(1) NotNull');
             if (!$result) return;
-            
+
             // REPLACE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
@@ -316,7 +321,7 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/projects.xml'));
             if (empty($projects_objectid)) return;
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
-            
+
             // REPLACE FEATURES SCHEMA
             $features_objectid = xarModGetVar('xproject','features_objectid');
             if (!empty($features_objectid)) {
@@ -326,7 +331,7 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/features.xml'));
             if (empty($features_objectid)) return;
             xarModSetVar('xproject','features_objectid',$features_objectid);
-        
+
             // REPLACE PAGES SCHEMA
             $pages_objectid = xarModGetVar('xproject','pages_objectid');
             if (!empty($pages_objectid)) {
@@ -336,9 +341,9 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/pages.xml'));
             if (empty($pages_objectid)) return;
             xarModSetVar('xproject','pages_objectid',$pages_objectid);
-            
+
         case '1.1':
-    
+
             $log_table = $xarTables['xProject_log'];
             $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                                 'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>''),
@@ -350,7 +355,7 @@ function xproject_upgrade($oldversion)
             if (empty($query)) return;
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-        
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectid',
                            'fields'    => array('projectid'),
                            'unique'    => FALSE);
@@ -367,14 +372,14 @@ function xproject_upgrade($oldversion)
             if (empty($log_objectid)) return;
             // save the object id for later
             xarModSetVar('xproject','log_objectid',$log_objectid);
-            
+
             // CHANGE WEBSITEPROJECT CHECKBOX TO A TYPE SELECTION
             $projects_table = $xarTables['xProjects'];
             $result = $datadict->dropColumn($projects_table, 'websiteproject');
             if (!$result) return;
             $result = $datadict->addColumn($projects_table, 'projecttype C(64) NotNull');
             if (!$result) return;
-            
+
             // REPLACE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
@@ -384,15 +389,15 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/projects.xml'));
             if (empty($projects_objectid)) return;
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
-        
-        
+
+
         case '1.2':
             // ADD REFERENCE FIELD TO PROJECTS TABLE
             $projects_table = $xarTables['xProjects'];
             $result = $datadict->addColumn($projects_table, 'reference C(250) NotNull');
             if (!$result) return;
-            
-        case '1.3':            
+
+        case '1.3':
             // REPLACE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
@@ -402,9 +407,9 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/projects.xml'));
             if (empty($projects_objectid)) return;
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
-            
+
         case '1.4':
-            
+
             // CHANGE WEBSITEPROJECT CHECKBOX TO A TYPE SELECTION
             $projects_table = $xarTables['xProjects'];
             $result = $datadict->dropColumn($projects_table, 'date_approved');
@@ -413,7 +418,7 @@ function xproject_upgrade($oldversion)
             if (!$result) return;
 
         case '1.5':
-    
+
             $team_table = $xarTables['xProject_team'];
             $team_fields = array('projectid'    =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'memberid'      =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -422,62 +427,62 @@ function xproject_upgrade($oldversion)
             if (empty($query)) return;
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-        
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_teamid',
                            'fields'    => array('projectid', 'memberid'),
                            'unique'    => TRUE);
             $query = xarDBCreateIndex($team_table,$index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
         case '1.6':
             $team_table = $xarTables['xProject_team'];
             $result = $datadict->addColumn($team_table, 'membersource C(32)');
             if (!$result) return;
-            
+
         case '1.7':
             $log_table = $xarTables['xProject_log'];
             $result = $datadict->alterColumn($log_table, 'createdate T');
             if (!$result) return;
-            
+
         case '1.8':
             $team_table = $xarTables['xProject_team'];
             $result = $datadict->addColumn($team_table, 'roleid I(11) NotNull Default 0');
             if (!$result) return;
-            
+
         case '1.9':
             $team_table = $xarTables['xProject_team'];
-            
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_teamid');
             $query = xarDBDropIndex($team_table, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectrole',
                            'fields'    => array('projectid', 'roleid'),
                            'unique'    => TRUE);
             $query = xarDBCreateIndex($team_table,$index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
         case '2.0':
             $team_table = $xarTables['xProject_team'];
-            
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_projectrole');
             $query = xarDBDropIndex($team_table, $index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_teamid',
                            'fields'    => array('projectid', 'memberid'),
                            'unique'    => TRUE);
             $query = xarDBCreateIndex($team_table,$index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
-            
+
+
         case '2.1':
-            
+
             // REPLACE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
@@ -487,7 +492,7 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/xardata/projects.xml'));
             if (empty($projects_objectid)) return;
             xarModSetVar('xproject','projects_objectid',$projects_objectid);
-            
+
             // REPLACE FEATURES SCHEMA
             $features_objectid = xarModGetVar('xproject','features_objectid');
             if (!empty($features_objectid)) {
@@ -497,21 +502,21 @@ function xproject_upgrade($oldversion)
                                       array('file' => 'modules/xproject/xardata/features.xml'));
             if (empty($features_objectid)) return;
             xarModSetVar('xproject','features_objectid',$features_objectid);
-            
+
         case '2.2':
             $team_objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/xproject/xardata/team.xml'));
             if (empty($team_objectid)) return;
             xarModSetVar('xproject','team_objectid',$team_objectid);
-        
-        
-        
+
+
+
         case '2.3':
             $team_table = $xarTables['xProject_team'];
             $result = $datadict->alterColumn($team_table, 'projectrole C(32)');
             if (!$result) return;
-        
-        case '2.4':  
+
+        case '2.4':
         case '2.5':
         case '2.6':
         case '2.7':
@@ -519,18 +524,18 @@ function xproject_upgrade($oldversion)
             $objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/xproject/xardata/usersettings.xml'));
             if (empty($objectid)) return;
-            xarModSetVar('xproject','usersettings',$objectid);  
-        case '2.8':  
-            
+            xarModSetVar('xproject','usersettings',$objectid);
+        case '2.8':
+
         case '2.9':
             $projects_table = $xarTables['xProjects'];
             $result = $datadict->addColumn($projects_table, 'budget F NotNull Default 0');
             if (!$result) return;
             $result = $datadict->addColumn($projects_table, 'estimate F NotNull Default 0');
             if (!$result) return;
-            
+
         case '3.0':
-            
+
             // UPDATE PROJECTS SCHEMA
             $projects_objectid = xarModGetVar('xproject','projects_objectid');
             if (!empty($projects_objectid)) {
@@ -556,14 +561,19 @@ function xproject_upgrade($oldversion)
             if (empty($team_objectid)) return;
             xarModSetVar('xproject','team_objectid',$team_objectid);
 
-        case '3.3':
+        case '3.3.0':
             break;
-            
+
     }
 
     return true;
 }
-
+/**
+ * Delete the module
+ *
+ * @param none
+ * @return bool true on success of deletion
+ */
 function xproject_delete()
 {
     xarDBLoadTableMaintenanceAPI();
@@ -591,7 +601,7 @@ function xproject_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
     }
     xarModDelVar('xproject','projects_objectid');
-    
+
     $features_objectid = xarModGetVar('xproject','features_objectid');
     if (!empty($features_objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $features_objectid));
@@ -621,7 +631,7 @@ function xproject_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
     xarModDelVar('xproject','usersettings');
-    
+
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('xproject','aliasname');
