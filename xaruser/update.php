@@ -60,15 +60,13 @@ function itsp_user_update()
         $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
         $data['pitemrules'] = $pitem['pitemrules'];
         // Splice the rule
-
         $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
-        // Splice the rule
         $data['rule_type'] = $rules['rule_type'];
         $data['rule_level'] = $rules['rule_level'];
         $data['rule_cat'] = $rules['rule_cat'];
         $data['rule_source'] = $rules['rule_source'];
-        // See if mix is true, then we need both sources
 
+        // See if mix is true, then we need both sources
         if ($rules['mix']) {
             $source = 'mix';
         } else {
@@ -99,7 +97,7 @@ function itsp_user_update()
             }
         }
         if ((strcmp($source, 'courses') != 0) || $rules['mix']) {
-            // else update the lcourse
+            // else update the itsp course
             if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icourseloc',      'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
@@ -110,11 +108,10 @@ function itsp_user_update()
             if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dateappr',        'str::',        $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('displaytitle',    'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
-         //   if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
             // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
             /* Confirm authorisation code.*/
             // if (!xarSecConfirmAuthKey($authid)) return;
-            // TODO: return to form if we do not validate this item
+            // Return to form if we do not validate this item
             if (empty($icoursetitle) && !empty($icoursecredits)) {
                 $invalid['icoursetitle'] = 1;
                 xarSessionSetVar('statusmsg', xarML('Please add a title'));
@@ -178,9 +175,8 @@ function itsp_user_update()
             return false; // throw back
         }
     } else {
-        xarSessionSetVar('statusmsg', xarML('There was nothing to do 2'));
+        xarSessionSetVar('statusmsg', xarML('There was nothing to do'));
     }
-  //  xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
