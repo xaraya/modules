@@ -34,7 +34,7 @@ function itsp_user_update()
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
-$die = 'shit';
+
     if (!empty($objectid)) {
         $pitemid = $objectid;
     }
@@ -52,7 +52,7 @@ $die = 'shit';
         return;
     }
      /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey('itsp.modify')) return $die;
+    if (!xarSecConfirmAuthKey('itsp.modify')) return;
 
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
@@ -75,7 +75,7 @@ $die = 'shit';
             $source = $rules['rule_source'];
         }
 
-      //  if ((strcmp($source, 'courses') == 0) || (strcmp($source, 'mix') == 0)) {
+        if ((strcmp($source, 'courses') == 0) || (strcmp($source, 'mix') == 0)) {
             // Then we are adding a course, if this id is set
             if (!xarVarFetch('lcourseid', 'id',    $lcourseid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('courseid', 'id',     $courseid,  '', XARVAR_NOT_REQUIRED)) return;
@@ -94,8 +94,11 @@ $die = 'shit';
                 } else {
                     xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
                 }
+            } else {
+                xarSessionSetVar('statusmsg', xarML('There was nothing to do 1'));
             }
-     //   } elseif ((strcmp($source, 'courses') != 0) || (strcmp($source, 'mix') == 0)) {
+        }
+        if ((strcmp($source, 'courses') != 0) || $rules['mix']) {
             // else update the lcourse
             if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
@@ -112,13 +115,17 @@ $die = 'shit';
             /* Confirm authorisation code.*/
             // if (!xarSecConfirmAuthKey($authid)) return;
             // TODO: return to form if we do not validate this item
-            /* if (empty($icoursetitle)) {
+            if (empty($icoursetitle) && !empty($icoursecredits)) {
                 $invalid[] = 'icoursetitle';
+                xarSessionSetVar('statusmsg', xarML('Please add a title'));
             }
-
+            if (!empty($icoursetitle) && empty($icoursecredits)) {
+                $invalid[] = 'icoursecredits';
+                xarSessionSetVar('statusmsg', xarML('Please add credits'));
+            }
                 // check if we have any errors
             if (count($invalid) > 0) {
-                return xarModFunc('itsp', 'admin', 'new',
+                return xarModFunc('itsp', 'user', 'modify',
                                   array('itspid' => $itspid,
                                        'pitemid' => $pitemid,
                                        'icourseid'=>$icourseid,
@@ -133,7 +140,6 @@ $die = 'shit';
                                        'displaytitle' => $displaytitle,
                                        'invalid'      => $invalid));
             }
-            */
             if (!empty($icoursetitle) && !empty($icoursecredits)) {
 
                 $icourseid = xarModApiFunc('itsp',
@@ -162,10 +168,7 @@ $die = 'shit';
                 }
                 xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully added!'));
             }
-       // } else {
-       //     die();
-       // }
-
+        }
         // TODO: make related to previous status?
         // TODO: move this to later?
         $newstatus = 1;
@@ -175,7 +178,7 @@ $die = 'shit';
             return false; // throw back
         }
     } else {
-        xarSessionSetVar('statusmsg', xarML('There was nothing to do'));
+        xarSessionSetVar('statusmsg', xarML('There was nothing to do 2'));
     }
   //  xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
