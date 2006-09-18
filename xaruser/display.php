@@ -3,7 +3,7 @@
  * XProject Module - A simple task management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -43,7 +43,7 @@ function xtasks_user_display($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return $msg;
     }
-    
+
     if (xarSecurityCheck('EditXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
         $item['editurl'] = xarModURL('xtasks',
             'admin',
@@ -60,12 +60,12 @@ function xtasks_user_display($args)
     } else {
         $item['deleteurl'] = '';
     }
-    
+
     list($item['task_name']) = xarModCallHooks('item',
                                          'transform',
                                          $item['taskid'],
                                          array($item['task_name']));
-    
+
     $data['item'] = $item;
     $data['authid'] = xarSecGenAuthKey();
     $data['task_name'] = $item['task_name'];
@@ -79,7 +79,7 @@ function xtasks_user_display($args)
                               'user',
                               'get',
                               array('taskid' => $item['parentid']));
-    
+
         if (!isset($parentinfo)) {
             $msg = xarML('Not authorized to access #(1) item parent',
                         'xtasks');
@@ -87,16 +87,16 @@ function xtasks_user_display($args)
                            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             return $msg;
         }
-    
+
         $data['parentid'] = $parentinfo['taskid'];
         $data['parentname'] = $parentinfo['task_name'];
         $data['parenturl'] = xarModURL('xtasks', 'admin', 'display', array('taskid' => $data['parentid']));
     }
-    
+
     $worklog = xarModAPIFunc('xtasks', 'worklog', 'getallfromtask', array('taskid' => $item['taskid']));
-    
+
     $data['worklog'] = $worklog;
-        
+
     $modid = xarModGetIDFromName(xarModGetName());
     $data['modid'] = $modid;
     $data['itemtype'] = 1;
@@ -112,7 +112,7 @@ function xtasks_user_display($args)
                                                            array('taskid' => $taskid))
                                   ),
                             'xtasks');
-                            
+
     if (empty($hooks)) {
         $data['hooks'] = array();
     } else {

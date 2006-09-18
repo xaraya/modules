@@ -3,7 +3,7 @@
  * Utility function to pass admin menu links
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function xtasks_adminapi_getmenulinks()
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
 
     $menulinks = array();
-    
+
     $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                'user',
                                                'settings'),
@@ -47,7 +47,7 @@ function xtasks_adminapi_getmenulinks()
     }
 
     if (xarSecurityCheck('ReadXTask', 0)) {
-    
+
         $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                    'admin',
                                                    'view',

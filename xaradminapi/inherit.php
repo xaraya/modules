@@ -3,7 +3,7 @@
  * XTasks Module - A task management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/704.html
  * @author St.Ego
  */
- 
+
 function xtasks_adminapi_inherit($args)
 {
     extract($args);
@@ -26,9 +26,9 @@ function xtasks_adminapi_inherit($args)
     if (count($invalid) > 0) {
         if($parentid == $taskid) {
             $invalid[] = 'Relation to Self';
-        }    
+        }
     }
-    
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'update', 'xtasks');
@@ -71,7 +71,7 @@ function xtasks_adminapi_inherit($args)
     $bindvars = array(
                     $parentid ? $parentid : 0,
                     $taskid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

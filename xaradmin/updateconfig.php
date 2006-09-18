@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@
 function xtasks_admin_updateconfig()
 {
     if (!xarSecConfirmAuthKey()) return;
-    
+
 
 //    if (!xarVarFetch('displaydates', 'checkbox', $displaydates, false, XARVAR_NOT_REQUIRED)) return;
 //    if (!xarVarFetch('displayhours', 'checkbox', $displayhours, false, XARVAR_NOT_REQUIRED)) return;
