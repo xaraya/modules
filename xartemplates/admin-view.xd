@@ -30,7 +30,7 @@
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
-<div id="tasklist">
+<div id="projectlist">
 
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project List</xar:mlstring></span></div>
     
@@ -59,11 +59,11 @@
                     </td>
                 
                     <xar:set name="importance">$loop->item['importance']</xar:set>
-                    <td class="xar-norm" style="vertical-align: center;">
+                    <td class="xar-norm" style="vertical-align: middle;">
                         <div style="float: left; width: 65px;">
                             <xar:data-output property="$properties['importance']" value="$importance" />
                         </div>
-                        <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                        <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
                             <div style="height: 7px;">
                                 <xar:if condition="$importance gt 1">
                                     <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$loop:item['projectid']#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top"></a>
@@ -75,14 +75,14 @@
                                 </xar:if>
                             </div>
                         </div>
-                        <div style="clear; both;"></div>
+                        <div style="clear: both;"></div>
                     
                     
                     </td>
                 
                     <td class="xar-norm">
                         <div style="float: left; width: 20px; text-align: right;">#$loop:item['priority']#</div>
-                        <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                        <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
                             <div style="height: 7px;">
                                 <xar:if condition="$loop:item.priority gt 1">
                                     <a href="&xar-modurl-xproject-admin-reprioritize;&amp;projectid=#$loop:item.projectid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top"></a>
@@ -94,7 +94,7 @@
                                 </xar:if>
                             </div>
                         </div>
-                        <div style="clear; both;"></div>
+                        <div style="clear: both;"></div>
                     </td>
                 
                     <td class="xar-norm"><a href="&xar-modurl-xproject-admin-view;&amp;status=#$loop:item['status']#">#$loop:item['status']#</a></td>
