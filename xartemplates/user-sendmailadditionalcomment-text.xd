@@ -7,7 +7,9 @@
 <xar:mlstring>Comment:</xar:mlstring>
 #$comment#
 
-<xar:mlstring>View your ticket:</xar:mlstring>
+<xar:mlstring>Please do not respond directly to this e-mail.</xar:mlstring>
+
+<xar:mlstring>View your ticket and respond:</xar:mlstring>
 <a href="#$viewticket#">#$viewticket#</a>
 
 <xar:mlstring>View all your tickets:</xar:mlstring>
