@@ -110,6 +110,7 @@ function itsp_user_modify($args)
                 $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
                 // for each linked course get the details
                 if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                //echo count($courselinks);
                 /*
                  * Loop through each item and display it.
                  */

@@ -27,8 +27,11 @@
                  <a href="#$lcourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>
             </div>
         </xar:foreach>
-    <xar:elseif condition="!empty($icourses)" />
-        <legend><xar:mlstring>You have added:</xar:mlstring></legend>
+    </xar:if>
+    <xar:if condition="!empty($icourses)" >
+        <xar:if condition="empty($lcourses)">
+            <legend><xar:mlstring>You have added:</xar:mlstring></legend>
+        </xar:if>
         <xar:foreach in="$icourses" value="$icourse">
             <div class="xar-form-input-wrapper">
                  <label for="#$icourse.title#" class="xar-form-label" title="#xarML('These are the courses you have added before')#">
@@ -50,7 +53,8 @@
                  <a href="#$icourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>
             </div>
         </xar:foreach>
-    <xar:else />
+    </xar:if>
+    <xar:if condition="empty($icourses) AND empty($lcourses)" >
         <legend><xar:mlstring>You have not added any course yet</xar:mlstring></legend>
     </xar:if>
 </fieldset>

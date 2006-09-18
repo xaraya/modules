@@ -24,7 +24,7 @@
  * @param array invalid
  * @since 20 feb 2006
  * @todo michelv: <1>why doesn't the sec check in here work?
- *                <2> Set the correct return URL
+ *
  */
 function itsp_user_update()
 {
@@ -34,7 +34,7 @@ function itsp_user_update()
     if (!xarVarFetch('objectid', 'id',    $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id',    $pitemid,  $pitemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid',  'array', $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
-
+$die = 'shit';
     if (!empty($objectid)) {
         $pitemid = $objectid;
     }
@@ -46,20 +46,13 @@ function itsp_user_update()
                           'get',
                           array('itspid' => $itspid));
     $planid = $itsp['planid'];
-    /* Security check */
     $userid = $itsp['userid'];
+    /* Security check */
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
      /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey('itsp.modify')) return;
-    // TODO: make related to previous status?
-    $newstatus = 1;
-    $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
-    if (!$updatestatus) {
-        xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
-        return false; // throw back
-    }
+    if (!xarSecConfirmAuthKey('itsp.modify')) return $die;
 
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
@@ -82,7 +75,7 @@ function itsp_user_update()
             $source = $rules['rule_source'];
         }
 
-        if ((strcmp($source, 'courses') == 0) || (strcmp($source, 'mix') == 0)) {
+      //  if ((strcmp($source, 'courses') == 0) || (strcmp($source, 'mix') == 0)) {
             // Then we are adding a course, if this id is set
             if (!xarVarFetch('lcourseid', 'id',    $lcourseid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('courseid', 'id',     $courseid,  '', XARVAR_NOT_REQUIRED)) return;
@@ -102,7 +95,7 @@ function itsp_user_update()
                     xarSessionSetVar('statusmsg', xarML('Course Item was successfully added!'));
                 }
             }
-        } elseif ((strcmp($source, 'courses') != 0) || (strcmp($source, 'mix') == 0)) {
+     //   } elseif ((strcmp($source, 'courses') != 0) || (strcmp($source, 'mix') == 0)) {
             // else update the lcourse
             if (!xarVarFetch('icourseid',       'id',           $icourseid, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
@@ -167,11 +160,23 @@ function itsp_user_update()
                     xarSessionSetVar('statusmsg', xarML('The #(1) was NOT created!',$displaytitle));
                     return false; // throw back
                 }
-                xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
+                xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully added!'));
             }
-        }
-    }
+       // } else {
+       //     die();
+       // }
 
+        // TODO: make related to previous status?
+        // TODO: move this to later?
+        $newstatus = 1;
+        $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
+        if (!$updatestatus) {
+            xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
+            return false; // throw back
+        }
+    } else {
+        xarSessionSetVar('statusmsg', xarML('There was nothing to do'));
+    }
   //  xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
