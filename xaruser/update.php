@@ -110,17 +110,17 @@ function itsp_user_update()
             if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dateappr',        'str::',        $dateappr, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('displaytitle',    'str:1:255',    $displaytitle, xarML('external course'),  XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
+         //   if (!xarVarFetch('invalid',         'array',        $invalid,  array(),   XARVAR_NOT_REQUIRED)) return;
             // if (!xarVarFetch('authid',         'str::',     $authid,         '', XARVAR_NOT_REQUIRED)) return;
             /* Confirm authorisation code.*/
             // if (!xarSecConfirmAuthKey($authid)) return;
             // TODO: return to form if we do not validate this item
             if (empty($icoursetitle) && !empty($icoursecredits)) {
-                $invalid[] = 'icoursetitle';
+                $invalid['icoursetitle'] = 1;
                 xarSessionSetVar('statusmsg', xarML('Please add a title'));
             }
             if (!empty($icoursetitle) && empty($icoursecredits)) {
-                $invalid[] = 'icoursecredits';
+                $invalid['icoursecredits'] = 1;
                 xarSessionSetVar('statusmsg', xarML('Please add credits'));
             }
                 // check if we have any errors

@@ -144,7 +144,7 @@ function itsp_user_modify($args)
                 if (!xarVarFetch('icourseresult',  'str:1:255', $icourseresult,  $icourseresult,  XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icoursedate',    'str::',     $icoursedate,    $icoursedate,    XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('dateappr',       'str::',     $dateappr,       $dateappr,       XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('invalid',        'array',     $invalid,        array(),         XARVAR_NOT_REQUIRED)) return;
+              //  if (!xarVarFetch('invalid',        'array',     $invalid,        array(),         XARVAR_NOT_REQUIRED)) return;
 
                 //if (!xarSecurityCheck('AddITSPPlan')) return;
                 // get the levels in courses
@@ -223,6 +223,7 @@ function itsp_user_modify($args)
     $data['authid']      = xarSecGenAuthKey('itsp.modify');
     $data['hookoutput']  = $hooks;
     $data['item']        = $item;
+
     xarTplSetPageTitle(xarVarPrepForDisplay($pitem['pitemname']));
     return $data;
 }
