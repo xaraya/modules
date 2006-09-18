@@ -30,57 +30,55 @@
         </div>
     </xar:if>
     <h2><xar:mlstring>Modify Page</xar:mlstring></h2>
-    <div align="center">
     
-        <form method="post" action="&xar-modurl-xproject-pages-update;">
+    <form method="post" action="&xar-modurl-xproject-pages-update;">
+    
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="pageid" value="#$item['pageid']#" />
+        <input type="hidden" name="projectid" value="#$item['projectid']#" />
         
-            <input type="hidden" name="authid" value="#$authid#" />
-            <input type="hidden" name="pageid" value="#$item['pageid']#" />
-            <input type="hidden" name="projectid" value="#$item['projectid']#" />
-            
-            <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                <tr>
-                    <td><xar:mlstring>Parent Page</xar:mlstring></td>
-                    <td>
-                        <select name="parentid">
-                            <option value="0"><xar:mlstring>Root level page, no parent</xar:mlstring></option>
-                            <xar:foreach in="$pagelist" value="$pageinfo">
-                                <xar:if condition="$pageinfo['pageid'] ne $item['pageid']">
-                                    <xar:if condition="$pageinfo.pageid eq $item.parentid">
-                                        <xar:set name="selected">"selected"</xar:set>
-                                    <xar:else />
-                                        <xar:set name="selected">""</xar:set>
-                                    </xar:if>
-                                    <option value="#$pageinfo['pageid']#"#$selected#>#$pageinfo['page_name']#</option>
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:mlstring>Parent Page</xar:mlstring></td>
+                <td>
+                    <select name="parentid">
+                        <option value="0"><xar:mlstring>Root level page, no parent</xar:mlstring></option>
+                        <xar:foreach in="$pagelist" value="$pageinfo">
+                            <xar:if condition="$pageinfo['pageid'] ne $item['pageid']">
+                                <xar:if condition="$pageinfo.pageid eq $item.parentid">
+                                    <xar:set name="selected">"selected"</xar:set>
+                                <xar:else />
+                                    <xar:set name="selected">""</xar:set>
                                 </xar:if>
-                            </xar:foreach>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['page_name']" /></td>
-                    <td><xar:data-input property="$properties['page_name']" name="page_name" value="$item['page_name']" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['status']" /></td>
-                    <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['description']" /></td>
-                    <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['relativeurl']" /></td>
-                    <td><xar:data-input property="$properties['relativeurl']" name="relativeurl" value="$item['relativeurl']" /></td>
-                </tr>
-                <tr>
-                    <xar:set name="updatebtn"><xar:mlstring>Update Page</xar:mlstring></xar:set>
-                    <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
-                </tr>
-            </table>
-            
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
+                                <option value="#$pageinfo['pageid']#"#$selected#>#$pageinfo['page_name']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['page_name']" /></td>
+                <td><xar:data-input property="$properties['page_name']" name="page_name" value="$item['page_name']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['description']" /></td>
+                <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['relativeurl']" /></td>
+                <td><xar:data-input property="$properties['relativeurl']" name="relativeurl" value="$item['relativeurl']" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Update Page</xar:mlstring></xar:set>
+                <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+            </tr>
+        </table>
         
-        </form>
-    </div>
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
+    
+    </form>
 </div>

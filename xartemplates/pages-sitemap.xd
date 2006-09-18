@@ -19,7 +19,11 @@
         <xar:set name="ttlpages">count($projectpages)</xar:set>
     
         <xar:loop name="$projectpages">
-            <div style="font-size: #$textpct#%;"><strong>#$loop:item['page_name']#</strong></div>
+            <div style="font-size: #$textpct#%;">
+                <div><strong>>> #$loop->item['page_name']#</strong></div>
+                <div><em>#$loop->item['description']#</em></div>
+            </div>
+            
             <xar:set name="childpages">$loop->item['children']</xar:set>
             <xar:template type="module" file="sitemapnode" subdata="array('m'=&gt;$m,
                                                                         'authid'=&gt;$authid,

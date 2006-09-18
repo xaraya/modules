@@ -32,7 +32,7 @@
                 </xar:if>
             </td>
             
-            <td class="xar-norm">
+            <td class="xar-norm" style="text-align: left;">
                 <strong>#$loop:item['page_name']#</strong>
                 <div style="padding: 5px;">
                 #$loop:item['description']#
@@ -42,11 +42,10 @@
             <td class="xar-norm" style="text-align: center;">#$loop:item['status']#
             </td>
         
-            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.delete.gif" border="0"></a></td>
         
           </tr>
     
         </xar:loop>
-    
     </table>
 </div>

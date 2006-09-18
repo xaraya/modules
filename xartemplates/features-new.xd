@@ -32,46 +32,44 @@
         </div>
     </xar:if>
     <h2><xar:mlstring>Add A New Feature</xar:mlstring></h2>
-    <div align="center">
     
-        <form method="post" action="&xar-modurl-xproject-features-create;">
+    <form method="post" action="&xar-modurl-xproject-features-create;">
+    
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="projectid" value="#$projectid#" />
         
-            <input type="hidden" name="authid" value="#$authid#" />
-            <input type="hidden" name="projectid" value="#$projectid#" />
-            
-            <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                <tr>
-                    <td><xar:data-label property="$properties['feature_name']" /></td>
-                    <td><xar:data-input property="$properties['feature_name']" name="feature_name" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['importance']" /></td>
-                    <td><xar:data-input property="$properties['importance']" name="importance" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['date_approved']" /></td>
-                    <td><xar:data-input property="$properties['date_approved']" name="date_approved" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['date_available']" /></td>
-                    <td><xar:data-input property="$properties['date_available']" name="date_available" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['details']" /></td>
-                    <td><xar:data-input property="$properties['details']" name="details" /></td>
-                </tr>
-                <tr>
-                    <td><xar:data-label property="$properties['tech_notes']" /></td>
-                    <td><xar:data-input property="$properties['tech_notes']" name="tech_notes" /></td>
-                </tr>
-                <tr>
-                    <xar:set name="updatebtn"><xar:mlstring>Add Feature</xar:mlstring></xar:set>
-                    <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
-                </tr>
-            </table>
-            
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:data-label property="$properties['feature_name']" /></td>
+                <td><xar:data-input property="$properties['feature_name']" name="feature_name" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['importance']" /></td>
+                <td><xar:data-input property="$properties['importance']" name="importance" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['date_approved']" /></td>
+                <td><xar:data-input property="$properties['date_approved']" name="date_approved" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['date_available']" /></td>
+                <td><xar:data-input property="$properties['date_available']" name="date_available" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['details']" /></td>
+                <td><xar:data-input property="$properties['details']" name="details" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['tech_notes']" /></td>
+                <td><xar:data-input property="$properties['tech_notes']" name="tech_notes" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Add Feature</xar:mlstring></xar:set>
+                <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+            </tr>
+        </table>
         
-        </form>
-    </div>
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
+    
+    </form>
 </div>

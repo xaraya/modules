@@ -6,7 +6,7 @@ function xproject_admin_update($args)
     if (!xarVarFetch('reference', 'str::', $reference, $reference, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('memberid', 'id', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;

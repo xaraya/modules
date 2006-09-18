@@ -73,7 +73,7 @@ function xproject_init()
                                 'details'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'tech_notes'        =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'importance'        =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
-                                'date_approved'     =>  array('type'=>'date','null'=>TRUE,'default'=>''),
+                                'date_approved'     =>  array('type'=>'date','null'=>TRUE),
                                 'date_available'    =>  array('type'=>'date','null'=>TRUE) );
     $query = xarDBCreateTable($features_table,$features_fields);
     if (empty($query)) return;
@@ -89,6 +89,7 @@ function xproject_init()
     
     $pages_table = $xarTables['xProject_pages'];
     $pages_fields = array('pageid'      =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                        'parentid'      =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'projectid'     =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                         'page_name'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                         'status'        =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),

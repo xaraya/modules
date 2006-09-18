@@ -106,7 +106,7 @@
       <source>dynamic_data</source>
       <status>2</status>
       <order>10</order>
-      <validation>Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
+      <validation>;Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
     </property>
     <property name="private">
       <id>11</id>

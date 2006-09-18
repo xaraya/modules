@@ -18,7 +18,7 @@ function xproject_admin_create($args)
     if (!xarVarFetch('reference', 'str::', $reference, $reference, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'checkbox', $private, $private, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('memberid', 'id', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;

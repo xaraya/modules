@@ -28,38 +28,36 @@
         </div>
     </xar:if>
     <h2><xar:mlstring>Delete Page</xar:mlstring></h2>
-    <div align="center">
     
-        <h3><xar:mlstring>Confirm deleting this Page?</xar:mlstring></h3>
-        
-        <form method="post" action="&xar-modurl-xproject-pages-delete;">
-            <input type="hidden" name="authid" value="#$authid#" />
-            <input type="hidden" name="confirm" value="true" />
-            <input type="hidden" name="pageid" value="#$pageid#" />
-        
-            <table border="0" cellpadding="2" cellspacing="0">
-                <tr>
-                    <td align="right" width="50%">
-                        <xar:mlstring>Page ID</xar:mlstring>
-                    </td>
-                    <td width="50%">
-                        #$pageid#
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" width="50%">
-                        <xar:mlstring>Page</xar:mlstring>
-                    </td>
-                    <td width="50%">
-                        #$page_name#
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><br />
-                            <input type="submit" value="#$confirmbutton#"  />
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+    <h3><xar:mlstring>Confirm deleting this Page?</xar:mlstring></h3>
+    
+    <form method="post" action="&xar-modurl-xproject-pages-delete;">
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="confirm" value="true" />
+        <input type="hidden" name="pageid" value="#$pageid#" />
+    
+        <table border="0" cellpadding="2" cellspacing="0">
+            <tr>
+                <td align="right" width="50%">
+                    <xar:mlstring>Page ID</xar:mlstring>
+                </td>
+                <td width="50%">
+                    #$pageid#
+                </td>
+            </tr>
+            <tr>
+                <td align="right" width="50%">
+                    <xar:mlstring>Page</xar:mlstring>
+                </td>
+                <td width="50%">
+                    #$page_name#
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><br />
+                        <input type="submit" value="#$confirmbutton#"  />
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>

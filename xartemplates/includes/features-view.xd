@@ -4,7 +4,6 @@
 <xar:data-getitem name="$properties" module="xProject" itemtype="2" itemid="$features_objectid" />
 
 <div class="xar-mod-body">
-<div align="center">
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
@@ -57,5 +56,4 @@
 
 <br />
 
-</div>
 </div>

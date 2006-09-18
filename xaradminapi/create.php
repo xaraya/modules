@@ -14,6 +14,10 @@ function xproject_adminapi_create($args)
     extract($args);
     
     if(isset($associated_sites) && is_array($associated_sites)) $associated_sites = serialize($associated_sites);
+    
+    if (!isset($clientid)) {
+        $clientid = 0;
+    }
 
     $invalid = array();
     if (!isset($project_name) || !is_string($project_name) || empty($project_name)) {
