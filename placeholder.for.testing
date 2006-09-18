@@ -11,9 +11,7 @@ New xmlrpc attempt with external poster
 First change
 Inserted line on concurrent change
 Second change
-Another inserted line on concurrent change
-Third (this should conflit) change
-Appending some stuff here, so i'm sure to get
+removed
 a conflict on pushing this first and then
 pulling that into something else
 Took both, inserted this as extra during the merge
@@ -32,3 +30,6 @@ he thrusts his fists against the posts and still insists he sees the ghosts
 
 deja vu
 
+monotone 0.29 troubles
+and one more
+For a bug
