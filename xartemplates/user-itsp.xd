@@ -68,7 +68,7 @@
                      #$plan.planname#
                 </div>
                 <div class="xar-form-input-wrapper">
-                     <label for="plandesc" class="xar-form-label" title="#xarML('Name of the plan')#">
+                     <label for="plandesc" class="xar-form-label" title="#xarML('Full description of the plan')#">
                           <xar:mlstring>Description:</xar:mlstring>
                      </label>
                      #$plan.plandesc#
@@ -126,9 +126,9 @@
                             </td>
                             <td>
                             <xar:if condition="$sumcreditsnow lt $plan.mincredit">
-                            <span style="color:red">#$sumcreditsnow#&nbsp;</span>
+                                <span style="color:red"><strong>#$sumcreditsnow#</strong></span>
                             <xar:else />
-                            <span style="color:red"><strong>#$sumcreditsnow#</strong></span>
+                                <span style="color:green"><strong>#$sumcreditsnow#</strong></span>
                             </xar:if>
                             </td>
                             <td>
