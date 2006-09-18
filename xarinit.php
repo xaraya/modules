@@ -183,17 +183,16 @@ function xtasks_init()
     $xtasks_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/tasks.xml'));
     if (empty($xtasks_objectid)) return;
-    // save the object id for later
     xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
 
     $usersettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/usersettings.xml'));
-    if (empty($objectid)) return;
+    if (empty($usersettings)) return;
     xarModSetVar('xtasks','usersettings',$usersettings);
 
     $modulesettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
-    if (empty($objectid)) return;
+    if (empty($modulesettings)) return;
     xarModSetVar('xtasks','modulesettings',$modulesettings);
     
     $worklog_objectid = xarModAPIFunc('dynamicdata','util','import',
