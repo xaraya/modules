@@ -12,7 +12,7 @@
 function xproject_teamapi_create($args)
 {
     extract($args);
-    
+
     if(!xarModLoad('addressbook', 'user')) return;
 
     $invalid = array();
@@ -35,7 +35,7 @@ function xproject_teamapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
         return;
     }
-    
+
     $item = xarModAPIFunc('xproject',
                             'team',
                             'get',
@@ -46,7 +46,7 @@ function xproject_teamapi_create($args)
         xarSessionSetVar('statusmsg', xarML('Team Member already assigned'));
         return;
     }
-    
+
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -64,15 +64,15 @@ function xproject_teamapi_create($args)
               $projectid,
               $projectrole,
               $memberid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    
+
     $displayName = '';
     if(xarModIsAvailable('addressbook') && xarModAPILoad('addressbook', 'user')) {
         $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
         $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
-    
+
         if ((!empty($item['fname']) && !empty($item['lname'])) ||
             (!empty($item['fname']) || !empty($item['lname']))) {
             if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -90,7 +90,7 @@ function xproject_teamapi_create($args)
                 $displayName .= xarVarPrepHTMLDisplay($item['fname']);
             }
         }
-    }    
+    }
     $userdetails = $displayName;
 
     $logdetails = "Team member added: ".$userdetails.".";
@@ -99,8 +99,8 @@ function xproject_teamapi_create($args)
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "TEAM"));
+                            'details'        => $logdetails,
+                            'changetype'    => "TEAM"));
 
     return true;
 }

@@ -1,7 +1,5 @@
 <?php
 /**
- *
- *
  * Administration System
  *
  * @package Xaraya eXtensible Management System
@@ -16,10 +14,6 @@ function xproject_teamapi_getmembers($args)
     extract($args);
 
     if (!xarSecurityCheck('ViewXProject', 0, 'Item', "All:All:All")) {//TODO: security
-        $msg = xarML('Not authorized to access #(1) items',
-                    'xproject');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
@@ -36,17 +30,17 @@ function xproject_teamapi_getmembers($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
+
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($memberid) = $result->fields;
-        
+
         if($memberid > 0) {
             $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
             $displayName = '';
             $displayName .= "[".xarVarPrepHTMLDisplay($item['company'])."] ";
-    
+
             if ((!empty($item['fname']) && !empty($item['lname'])) ||
                 (!empty($item['fname']) || !empty($item['lname']))) {
                 if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -67,11 +61,11 @@ function xproject_teamapi_getmembers($args)
         } elseif($roleid > 0) {
             $displayName = xarUserGetVar('uname', $roleid);
         }
-                                        
+
         $items[] = array('memberid'    => $memberid,
-                          'membername'  => $displayName);
+                         'membername'  => $displayName);
     }
-    
+
     usort($items, "teamsort");
 
     $result->Close();
@@ -79,12 +73,11 @@ function xproject_teamapi_getmembers($args)
     return $items;
 }
 
-function teamsort($a, $b) {
+function teamsort($a, $b)
+{
     if ($a['membername'] == $b['membername']) {
         return 0;
     }
     return ($a['membername'] < $b['membername']) ? -1 : 1;
 }
-
-
 ?>

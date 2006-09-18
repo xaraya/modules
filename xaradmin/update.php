@@ -29,43 +29,43 @@ function xproject_admin_update($args)
     if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
-    
+
     if(!xarModLoad('addressbook', 'user')) return;
 
     if(empty($returnurl)) $returnurl = xarModURL('xproject', 'admin', 'view');
-    
-    if (!xarSecConfirmAuthKey()) return;
-    
-    if(!xarModAPIFunc('xproject',
-					'admin',
-					'update',
-					array('projectid'	    => $projectid,
-						'project_name' 	    => $project_name,
-						'reference' 	    => $reference,
-                        'private'	        => $private,
-                        'description'	    => $description,
-                        'clientid'	        => $clientid,
-                        'ownerid'	        => $ownerid,
-                        'status'	        => $status,
-                        'priority'		    => $priority,
-                        'importance'		=> $importance,
-                        'projecttype'       => $projecttype,
-                        'date_approved'	    => $date_approved,
-                        'planned_start_date'=> $planned_start_date,
-                        'planned_end_date'	=> $planned_end_date,
-                        'actual_start_date' => $actual_start_date,
-                        'actual_end_date'	=> $actual_end_date,
-                        'hours_planned'     => $hours_planned,
-                        'hours_spent'		=> $hours_spent,
-                        'hours_remaining'	=> $hours_remaining,
-                        'estimate'	        => $estimate,
-                        'budget'	        => $budget,
-                        'associated_sites'	=> $associated_sites))) {
-		return;
-	}
 
-	xarSessionSetVar('statusmsg', xarML('Project Updated'));
-    
+    if (!xarSecConfirmAuthKey()) return;
+
+    if(!xarModAPIFunc('xproject',
+                    'admin',
+                    'update',
+                    array('projectid'        => $projectid,
+                        'project_name'         => $project_name,
+                        'reference'         => $reference,
+                        'private'            => $private,
+                        'description'        => $description,
+                        'clientid'            => $clientid,
+                        'ownerid'            => $ownerid,
+                        'status'            => $status,
+                        'priority'            => $priority,
+                        'importance'        => $importance,
+                        'projecttype'       => $projecttype,
+                        'date_approved'        => $date_approved,
+                        'planned_start_date'=> $planned_start_date,
+                        'planned_end_date'    => $planned_end_date,
+                        'actual_start_date' => $actual_start_date,
+                        'actual_end_date'    => $actual_end_date,
+                        'hours_planned'     => $hours_planned,
+                        'hours_spent'        => $hours_spent,
+                        'hours_remaining'    => $hours_remaining,
+                        'estimate'            => $estimate,
+                        'budget'            => $budget,
+                        'associated_sites'    => $associated_sites))) {
+        return;
+    }
+
+    xarSessionSetVar('statusmsg', xarML('Project Updated'));
+
     if(is_numeric($memberid) && $memberid > 0) {
         if(!xarModAPIFunc('xproject',
                         'team',
@@ -73,11 +73,11 @@ function xproject_admin_update($args)
                         array('projectid' => $projectid,
                             'memberid' => $memberid,
                             'projectrole' => $projectrole))) {
-            // team member added               
-        	xarSessionSetVar('statusmsg', xarML('Team Member added to Project'));             
+            // team member added
+            xarSessionSetVar('statusmsg', xarML('Team Member added to Project'));
         }
     }
-                            
+
     xarResponseRedirect($returnurl);
 
     return true;

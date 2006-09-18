@@ -53,7 +53,7 @@ function xproject_teamapi_getall($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
+
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -62,12 +62,12 @@ function xproject_teamapi_getall($args)
               $projectrole,
               $roleid,
               $memberid) = $result->fields;
-        
+
         if($memberid > 0) {
             $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
             $displayName = '';
             $displayName .= "[".xarVarPrepHTMLDisplay($item['company'])."] ";
-    
+
             if ((!empty($item['fname']) && !empty($item['lname'])) ||
                 (!empty($item['fname']) || !empty($item['lname']))) {
                 if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -88,7 +88,7 @@ function xproject_teamapi_getall($args)
         } elseif($roleid > 0) {
             $displayName = xarUserGetVar('uname', $roleid);
         }
-                                        
+
         $items[] = array('projectid'    => $projectid,
                           'project_name'=> $project_name,
                           'projectrole' => $projectrole,

@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 function xproject_features_create($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('feature_name', 'str:1:', $feature_name, $feature_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importance', 'int::', $importance, $importance, XARVAR_NOT_REQUIRED)) return;
@@ -28,14 +28,14 @@ function xproject_features_create($args)
     $featureid = xarModAPIFunc('xproject',
                         'features',
                         'create',
-                        array('feature_name' 	=> $feature_name,
+                        array('feature_name'     => $feature_name,
                             'projectid'         => $projectid,
                             'importance'        => $importance,
-                            'details'	        => $details,
+                            'details'            => $details,
                             'tech_notes'        => $tech_notes,
                             'importance'        => $importance,
-                            'date_approved'		=> $date_approved,
-                            'date_available'	=> $date_available));
+                            'date_approved'        => $date_approved,
+                            'date_available'    => $date_available));
 
 
     if (!isset($featureid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;

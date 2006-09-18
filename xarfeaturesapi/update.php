@@ -1,9 +1,9 @@
 <?php
 /**
- * Update an example item
+ * Update an  item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,9 +12,9 @@
  * @author Example Module Development Team
  */
 /**
- * Update an example item
+ * Update an item
  *
- * @author the Example module development team
+ * @author the xProject module development team
  * @param  $args ['exid'] the ID of the item
  * @param  $args ['name'] the new name of the item
  * @param  $args ['number'] the new number of the item
@@ -56,7 +56,7 @@ function xproject_featuresapi_update($args)
     $featurestable = $xartable['xProject_features'];
 
     $query = "UPDATE $featurestable
-            SET feature_name =?, 
+            SET feature_name =?,
                   importance = ?,
                   details = ?,
                   tech_notes = ?,
@@ -72,7 +72,7 @@ function xproject_featuresapi_update($args)
               $date_approved,
               $date_available,
               $featureid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;
@@ -89,8 +89,8 @@ function xproject_featuresapi_update($args)
                         'create',
                         array('projectid'   => $item['projectid'],
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "FEATURE"));
+                            'details'        => $logdetails,
+                            'changetype'    => "FEATURE"));
 
     return true;
 }

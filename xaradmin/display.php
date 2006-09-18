@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,7 +31,7 @@ function xproject_admin_display($args)
     $data['projectid'] = $projectid;
     $data['mode'] = $mode;
     $data['status'] = '';
-    
+
     $data['mymemberid'] = "0";
 
     $item = xarModAPIFunc('xproject',
@@ -40,7 +40,7 @@ function xproject_admin_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($item)) return;
-    
+
     if (xarSecurityCheck('EditXProject', 0, 'Item', "$item[project_name]:All:$item[projectid]")) {
         $item['editurl'] = xarModURL('xproject',
                                     'admin',
@@ -57,12 +57,12 @@ function xproject_admin_display($args)
     } else {
         $item['deleteurl'] = '';
     }
-    
+
     list($item['project_name']) = xarModCallHooks('item',
                                          'transform',
                                          $item['projectid'],
                                          array($item['project_name']));
-    
+
     $teamlist = xarModAPIFunc('xproject',
                             'team',
                             'getall',
@@ -74,7 +74,7 @@ function xproject_admin_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($features)) return;
-    
+
     for ($i = 0; $i < count($features); $i++) {
         $feature = $features[$i];
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$feature[project_name]:All:$feature[projectid]")) {//TODO: security
@@ -103,16 +103,16 @@ function xproject_admin_display($args)
             $features[$i]['deleteurl'] = '';
         }
     }
-    
+
     $data['features_onclick'] = "onClick=\"return loadContent(this.href,'features_form');\"";
-    
+
     $projectpages = xarModAPIFunc('xproject',
                           'pages',
                           'getall',
                           array('projectid' => $projectid));
 
     if (!isset($projectpages)) return;
-    
+
     $data['pages_formclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
 
     $logs = xarModAPIFunc('xproject',
@@ -121,16 +121,16 @@ function xproject_admin_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($logs)) return;
-    
+
     $data['item'] = $item;
-	$data['teamlist'] = $teamlist;
+    $data['teamlist'] = $teamlist;
     $data['features'] = $features;
     $data['projectpages'] = $projectpages;
     $data['logs'] = $logs;
     $data['authid'] = xarSecGenAuthKey();
     $data['project_name'] = $item['project_name'];
     $data['description'] = $item['description'];
-    
+
     $modid = xarModGetIDFromName(xarModGetName());
     $data['modid'] = $modid;
     $data['itemtype'] = 1;
@@ -146,7 +146,7 @@ function xproject_admin_display($args)
                                                            array('projectid' => $projectid))
                                   ),
                             'xproject');
-                            
+
     if (empty($hooks)) {
         $data['hooks'] = array();
     } else {

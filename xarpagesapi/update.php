@@ -3,7 +3,7 @@
  * Update a project page item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -56,7 +56,7 @@ function xproject_pagesapi_update($args)
     $pagestable = $xartable['xProject_pages'];
 
     $query = "UPDATE $pagestable
-            SET page_name =?, 
+            SET page_name =?,
                   parentid = ?,
                   status = ?,
                   description = ?,
@@ -70,7 +70,7 @@ function xproject_pagesapi_update($args)
               $description,
               $relativeurl,
               $pageid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;
@@ -87,8 +87,8 @@ function xproject_pagesapi_update($args)
                         'create',
                         array('projectid'   => $item['projectid'],
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
+                            'details'        => $logdetails,
+                            'changetype'    => "PAGE"));
 
     return true;
 }

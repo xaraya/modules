@@ -7,7 +7,7 @@ function xproject_pages_new()
     if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xproject', 'user')) return;
-    
+
     $data = xarModAPIFunc('xproject','admin','menu');
 
     if (!xarSecurityCheck('AddXProject')) {
@@ -18,13 +18,13 @@ function xproject_pages_new()
                           'user',
                           'get',
                           array('projectid' => $projectid));
-    
-	$pagelist = xarModAPIFunc('xproject',
+
+    $pagelist = xarModAPIFunc('xproject',
                          'pages',
                          'getall',
                          array('projectid' => $projectid));
-	
-	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     $data['authid'] = xarSecGenAuthKey();
     $data['projectid'] = $projectid;

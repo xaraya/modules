@@ -1,5 +1,5 @@
 <?php
- 
+
 function xproject_adminapi_chngimportance($args)
 {
     extract($args);
@@ -46,9 +46,9 @@ function xproject_adminapi_chngimportance($args)
                 WHERE projectid = ?";
         $importance = $item['importance'] - 2;
     }
-    
+
     $bindvars = array($projectid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
@@ -56,14 +56,14 @@ function xproject_adminapi_chngimportance($args)
     $userid = xarUserGetVar('uid');
     $logdetails = "Project modified.";
     $logdetails .= "<br>Project importance changed from ".$item['importance']." to ".$importance;
-        
+
     $logid = xarModAPIFunc('xproject',
                         'log',
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => $userid,
-                            'details'	    => $logdetails,
-                            'changetype'	=> "MODIFIED"));
+                            'details'        => $logdetails,
+                            'changetype'    => "MODIFIED"));
 
     return true;
 }

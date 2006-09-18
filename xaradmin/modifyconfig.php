@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@ function xproject_admin_modifyconfig()
 {
     //xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','admin','menu');
-    
+
     if (!xarSecurityCheck('AdminXProject', 0)) {
         return;
     }
@@ -43,8 +43,8 @@ function xproject_admin_modifyconfig()
          * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
          */
         $data['hookoutput'] = $hooks;
-    }    
-    
+    }
+
     return $data;
 }
 

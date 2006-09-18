@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -41,7 +41,7 @@ function xproject_admin_updateconfig()
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('staffcategory', 'int',      $staffcategory, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientcategory', 'int',      $clientcategory, 0, XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!xarVarFetch('websiteprojecttype', 'str',      $websiteprojecttype, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('draftstatus', 'str',      $draftstatus, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('activestatus', 'str',      $activestatus, '', XARVAR_NOT_REQUIRED)) return;
@@ -66,7 +66,7 @@ function xproject_admin_updateconfig()
     xarModSetVar('xproject', 'itemsperpage', $itemsperpage);
     xarModSetVar('xproject', 'staffcategory', $staffcategory);
     xarModSetVar('xproject', 'clientcategory', $clientcategory);
-    
+
     xarModSetVar('xproject', 'websiteprojecttype', $websiteprojecttype);
     xarModSetVar('xproject', 'draftstatus', $draftstatus);
     xarModSetVar('xproject', 'activestatus', $activestatus);

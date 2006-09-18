@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +20,7 @@ function xproject_pages_sitemap($args)
 
     $data = array();
     $data['projectid'] = $projectid;
-    
+
     $projectpages = xarModAPIFunc('xproject',
                           'pages',
                           'getall',
@@ -28,9 +28,9 @@ function xproject_pages_sitemap($args)
                                 'parentid' => "0"));
 
     if (!isset($projectpages)) return;
-    
+
     $data['pages_formclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
-    
+
     $data['projectpages'] = $projectpages;
     $data['authid'] = xarSecGenAuthKey();
 

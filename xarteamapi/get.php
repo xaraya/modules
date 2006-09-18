@@ -5,7 +5,7 @@ function xproject_teamapi_get($args)
     extract($args);
 
     $invalid = array();
-    
+
     if (!isset($projectid) || !is_numeric($projectid)) {
         $invalid[] = 'projectid';
     }
@@ -56,7 +56,7 @@ function xproject_teamapi_get($args)
           $member_id) = $result->fields;
 
     $result->Close();
-        
+
     if($member_id > 0) {
         $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $member_id));
         $displayName = '';
@@ -92,7 +92,7 @@ function xproject_teamapi_get($args)
                     'membername'  => $displayName);
         return $item;
     }
-    
+
     return;
 }
 

@@ -3,7 +3,7 @@
 function xproject_admin_view($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('verbose', 'checkbox', $verbose, 0, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('status', 'str', $status, $status, XARVAR_NOT_REQUIRED)) return;
@@ -15,16 +15,16 @@ function xproject_admin_view($args)
     if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
-    
+
     $uid = xarUserGetVar('uid');
-    
+
     $data = array();
-    
+
     if(isset($verbose)) $data['verbose'] = $verbose;
-    
+
 //    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
-    
+
     if(!$memberid) {
         $items = xarModAPIFunc('xproject', 'user', 'getall',
                                 array('startnum' => $startnum,
@@ -49,11 +49,11 @@ function xproject_admin_view($args)
                                       'q' => $q,
                                       'numitems' => xarModGetUserVar('xproject', 'itemsperpage', $uid)));
     }
-    
+
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-    
+
     $data['items'] = $items;
-    
+
     if(!$memberid) {
         $data['pager'] = xarTplGetPager($startnum,
             xarModAPIFunc('xproject', 'user', 'countitems',
@@ -64,9 +64,9 @@ function xproject_admin_view($args)
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
                               'q' => $q)),
-            xarModURL('xproject', 
-                    'admin', 
-                    'view', 
+            xarModURL('xproject',
+                    'admin',
+                    'view',
                     array('startnum' => '%%',
                           'status' => $status,
                           'projecttype' => $projecttype,
@@ -88,9 +88,9 @@ function xproject_admin_view($args)
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
                               'q' => $q)),
-            xarModURL('xproject', 
-                    'admin', 
-                    'view', 
+            xarModURL('xproject',
+                    'admin',
+                    'view',
                     array('startnum' => '%%',
                           'status' => $status,
                           'projecttype' => $projecttype,
@@ -103,10 +103,10 @@ function xproject_admin_view($args)
             ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
             xarModGetUserVar('xproject', 'itemsperpage', $uid));
     }
-    
-    $data['returnurl'] = xarModURL('xproject', 
-                                'admin', 
-                                'view', 
+
+    $data['returnurl'] = xarModURL('xproject',
+                                'admin',
+                                'view',
                                 array('startnum' => '%%',
                                       'status' => $status,
                                       'projecttype' => $projecttype,
@@ -116,10 +116,10 @@ function xproject_admin_view($args)
                                       'max_importance' => $max_importance,
                                       'q' => $q,
                                       'inline' => 1));
-	
+
     $data['authid'] = xarSecGenAuthKey();
     $data['inline'] = $inline;
-    
+
     $data['verbose'] = $verbose;
     $data['status'] = $status;
     $data['clientid'] = $clientid;
@@ -127,8 +127,8 @@ function xproject_admin_view($args)
     $data['memberid'] = $memberid;
     $data['max_priority'] = $max_priority;
     $data['max_importance'] = $max_importance;
-    
-	return $data;
+
+    return $data;
 }
 
 ?>

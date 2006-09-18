@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -41,10 +41,6 @@ function xproject_teamapi_delete($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
-        $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
         return;
     }
 
@@ -52,7 +48,7 @@ function xproject_teamapi_delete($args)
     $xartable = xarDBGetTables();
 
     $teamtable = $xartable['xProject_team'];
-    
+
     $sql = "DELETE FROM $teamtable
             WHERE projectid = $projectid
             AND memberid = $memberid";
@@ -60,18 +56,16 @@ function xproject_teamapi_delete($args)
 
     if (!$result) return;
 
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR'. $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-    
+    /* Check for an error with the database code, adodb has already raised
+     * the exception so we just return
+     */
+    if (!$result) return;
+
     $displayName = '';
     if(xarModIsAvailable('addressbook') && xarModAPILoad('addressbook', 'user')) {
         $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
         $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
-    
+
         if ((!empty($item['fname']) && !empty($item['lname'])) ||
             (!empty($item['fname']) || !empty($item['lname']))) {
             if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -89,7 +83,7 @@ function xproject_teamapi_delete($args)
                 $displayName .= xarVarPrepHTMLDisplay($item['fname']);
             }
         }
-    }    
+    }
     $userdetails = $displayName;
 
     $logdetails = "Team member removed: ".$userdetails.".";
@@ -98,8 +92,8 @@ function xproject_teamapi_delete($args)
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "TEAM"));
+                            'details'        => $logdetails,
+                            'changetype'    => "TEAM"));
 
     // Let the calling process know that we have finished successfully
     return true;

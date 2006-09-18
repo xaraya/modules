@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 function xproject_admin_delete($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('projectid', 'id', $projectid)) return;
     if (!xarVarFetch('action', 'str', $action, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
@@ -25,7 +25,7 @@ function xproject_admin_delete($args)
     if (!empty($objectid)) {
         $projectid = $objectid;
     }
-    
+
     $project = xarModAPIFunc('xproject',
                          'user',
                          'get',
@@ -57,7 +57,7 @@ function xproject_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
-    
+
     if($action == "delete") {
         if (!xarModAPIFunc('xproject',
                          'admin',

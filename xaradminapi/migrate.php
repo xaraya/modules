@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,13 +25,9 @@ function xproject_adminapi_migrate($args)
                         'get',
                         array('projectid' => $projectid));
 
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
     if (!xarSecAuthAction(0, 'xproject::Project', "$item[name]::$projectid", ACCESS_MODERATE)) {
-        $msg = xarML('Not authorized to edit #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
         return;
     }
 
@@ -74,12 +70,10 @@ function xproject_adminapi_migrate($args)
 
         $dbconn->Execute($sql);
 
-        if ($dbconn->ErrorNo() != 0) {
-            $msg = xarML('DATABASE_ERROR', $sql);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                           new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            return;
-        }
+        /* Check for an error with the database code, adodb has already raised
+         * the exception so we just return
+         */
+        if (!$result) return;
 
         return $taskid;
 
@@ -94,12 +88,10 @@ function xproject_adminapi_migrate($args)
 
             $result = $dbconn->SelectLimit($sql, -1, 0);
 
-            if ($dbconn->ErrorNo() != 0) {
-                $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                return;
-            }
+            /* Check for an error with the database code, adodb has already raised
+             * the exception so we just return
+             */
+            if (!$result) return;
 
             $selectedids = array();
             for (; !$result->EOF; $result->MoveNext()) {
@@ -115,12 +107,10 @@ function xproject_adminapi_migrate($args)
 
             $dbconn->Execute($sql);
 
-            if ($dbconn->ErrorNo() != 0) {
-                $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                return;
-            }
+            /* Check for an error with the database code, adodb has already raised
+             * the exception so we just return
+             */
+            if (!$result) return;
         }
 
         return $taskid;
@@ -136,27 +126,25 @@ function xproject_adminapi_migrate($args)
 
         $dbconn->Execute($sql);
 
-        if ($dbconn->ErrorNo() != 0) {
-            $msg = xarML('DATABASE_ERROR', $sql);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                           new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            return;
-        }
+        /* Check for an error with the database code, adodb has already raised
+         * the exception so we just return
+         */
+        if (!$result) return;
 
         $sql = "DELETE FROM $taskstable WHERE xar_taskid IN (" . implode(",",$affectedtasks) . ")";
 
         $dbconn->Execute($sql);
 
-        if ($dbconn->ErrorNo() != 0) {
-            $msg = xarML('DATABASE_ERROR', $sql);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                           new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-            return;
-        }
+        /* Check for an error with the database code, adodb has already raised
+         * the exception so we just return
+         */
+        if (!$result) return;
 
         return $taskid;
 
-    } else $sql = "(no query)";
+    } else {
+        $sql = "(no query)";
+    }
     //
     // EXPECTED ISSUES:
     // * Deletion of subtasks must be recursive/iterative

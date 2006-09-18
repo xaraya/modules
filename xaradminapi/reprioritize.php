@@ -1,5 +1,5 @@
 <?php
- 
+
 function xproject_adminapi_reprioritize($args)
 {
     extract($args);
@@ -46,9 +46,9 @@ function xproject_adminapi_reprioritize($args)
                 WHERE projectid = ?";
         $priority = $item['priority'] - 1;
     }
-    
+
     $bindvars = array($projectid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
@@ -56,14 +56,14 @@ function xproject_adminapi_reprioritize($args)
     $userid = xarUserGetVar('uid');
     $logdetails = "Project modified.";
     $logdetails .= "<br>Project priority changed from ".$item['priority']." to ".$priority;
-        
+
     $logid = xarModAPIFunc('xproject',
                         'log',
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => $userid,
-                            'details'	    => $logdetails,
-                            'changetype'	=> "MODIFIED"));
+                            'details'        => $logdetails,
+                            'changetype'    => "MODIFIED"));
 
     return true;
 }

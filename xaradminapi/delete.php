@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -33,7 +33,7 @@ function xproject_adminapi_delete($args)
 
     if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$project[project_name]:All:$projectid")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xproject', xarVarPrepForStore($projectid));
+                    'xproject', $projectid);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
@@ -46,22 +46,20 @@ function xproject_adminapi_delete($args)
 
     // does it have children ?
     $sql = "DELETE FROM $xprojecttable
-            WHERE projectid = " . $projectid;
-    $result = $dbconn->Execute($sql);
+            WHERE projectid = ?";
+    $result = $dbconn->Execute($sql, array($projectid));
 
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    /* Check for an error with the database code, adodb has already raised
+     * the exception so we just return
+     */
+    if (!$result) return;
 
     $pagestable = $xartable['xProject_pages'];
 
     // does it have children ?
     $sql = "DELETE FROM $pagestable
-            WHERE projectid = " . $projectid;
-    $result = $dbconn->Execute($sql);
+            WHERE projectid = ?";
+    $result = $dbconn->Execute($sql, array($projectid));
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
@@ -71,10 +69,10 @@ function xproject_adminapi_delete($args)
     }
 
     $featurestable = $xartable['xProject_features'];
-    
+
     $sql = "DELETE FROM $featurestable
-            WHERE projectid = " . $projectid;
-    $result = $dbconn->Execute($sql);
+            WHERE projectid = ?";
+    $result = $dbconn->Execute($sql, array($projectid));
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);

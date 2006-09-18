@@ -60,7 +60,7 @@ function xproject_logapi_create($args)
               $projectid,
               $userid,
               $details);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

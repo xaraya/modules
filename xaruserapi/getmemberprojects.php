@@ -96,18 +96,18 @@ function xproject_userapi_getmemberprojects($args)
             WHERE b.projectid = a.projectid
             AND b.memberid = $memberid";
 
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-	if($private == "public") $sql .= " AND private != '1'";
-	if(!empty($status)) $sql .= " AND status = '".$status."'";
-	if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
-	if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
-	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
-	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
+//    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//    $sql .= " AND $taskcolumn[projectid] = $projectid";
+    if($private == "public") $sql .= " AND private != '1'";
+    if(!empty($status)) $sql .= " AND status = '".$status."'";
+    if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
+    if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
+    if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
+    if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
     if(!empty($q)) {
         $sql .= " AND (project_name LIKE '%".$q."%'
                     OR description LIKE '%".$q."%')";
-    }    
+    }
     switch($sortby) {
         case "importance":
             $sql .= " ORDER BY importance";

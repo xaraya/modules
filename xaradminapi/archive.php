@@ -44,7 +44,7 @@ function xproject_adminapi_archive($args)
               "Archive",
               $actual_end_date ? $actual_end_date : NULL,
               $projectid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
@@ -53,14 +53,14 @@ function xproject_adminapi_archive($args)
     $logdetails = "Project archived.";
     if($actual_end_date != $item['actual_end_date'])
         $logdetails .= "<br>Actual Project timeframe modified.";
-        
+
     $logid = xarModAPIFunc('xproject',
                         'log',
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => $userid,
-                            'details'	    => $logdetails,
-                            'changetype'	=> "ARCHIVED"));
+                            'details'        => $logdetails,
+                            'changetype'    => "ARCHIVED"));
 
     return true;
 }

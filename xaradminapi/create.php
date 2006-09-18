@@ -12,9 +12,9 @@
 function xproject_adminapi_create($args)
 {
     extract($args);
-    
+
     if(isset($associated_sites) && is_array($associated_sites)) $associated_sites = serialize($associated_sites);
-    
+
     if (!isset($clientid)) {
         $clientid = 0;
     }
@@ -92,7 +92,7 @@ function xproject_adminapi_create($args)
               $estimate,
               $budget,
               $associated_sites ? $associated_sites : "");
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
@@ -104,8 +104,8 @@ function xproject_adminapi_create($args)
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "CREATED"));
+                            'details'        => $logdetails,
+                            'changetype'    => "CREATED"));
 
     $item = $args;
     $item['module'] = 'xproject';

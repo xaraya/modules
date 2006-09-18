@@ -52,9 +52,9 @@ function xproject_logapi_getall($args)
             WHERE $projectstable.projectid = $logtable.projectid
             AND $logtable.projectid = $projectid";
 
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-//	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
+//    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//    $sql .= " AND $taskcolumn[projectid] = $projectid";
+//    if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
     $sql .= " ORDER BY $logtable.createdate DESC";
 
 /*
@@ -84,7 +84,7 @@ function xproject_logapi_getall($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
+
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {

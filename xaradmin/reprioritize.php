@@ -9,21 +9,21 @@ function xproject_admin_reprioritize($args)
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
     if(!xarModAPIFunc('xproject',
-					'admin',
-					'reprioritize',
-					array('projectid'	=> $projectid,
+                    'admin',
+                    'reprioritize',
+                    array('projectid'    => $projectid,
                         'mode'          => $mode))) {
-		return;
-	}
+        return;
+    }
 
 
-	xarSessionSetVar('statusmsg', xarML('Project Priority Changed'));
+    xarSessionSetVar('statusmsg', xarML('Project Priority Changed'));
 
-    if(!empty($returnurl)) {    
+    if(!empty($returnurl)) {
         xarResponseRedirect($returnurl);
         return true;
     }
-    
+
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
 
     return true;

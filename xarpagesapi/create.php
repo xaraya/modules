@@ -30,7 +30,7 @@ function xproject_pagesapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
         return;
     }
-    
+
     if(!isset($sequence)) {
         $ttlpages = xarModAPIFunc('xproject', 'pages', 'getall', array('projectid' => $projectid));
         $sequence = count($ttlpages) + 1;
@@ -63,10 +63,10 @@ function xproject_pagesapi_create($args)
               $sequence,
               $description,
               $relativeurl);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    
+
     if((int)$sequence == $sequence) {
         xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $projectid));
     }
@@ -77,8 +77,8 @@ function xproject_pagesapi_create($args)
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "PAGE"));
+                            'details'        => $logdetails,
+                            'changetype'    => "PAGE"));
 
     $pageid = $dbconn->PO_Insert_ID($pagetable, 'pageid');
 

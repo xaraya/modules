@@ -3,7 +3,7 @@
 function xproject_features_update($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('featureid', 'id', $featureid)) return;
     if (!xarVarFetch('feature_name', 'str:1:', $feature_name, $feature_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
@@ -14,21 +14,21 @@ function xproject_features_update($args)
     if (!xarVarFetch('date_available', 'str::', $date_available, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
-    
-    if(!xarModAPIFunc('xproject',
-					'features',
-					'update',
-					array('featureid'	    => $featureid,
-						'feature_name' 	    => $feature_name,
-                        'importance'	    => $importance,
-                        'details'	        => $details,
-                        'tech_notes'        => $tech_notes,
-                        'date_approved'		=> $date_approved,
-                        'date_available'	=> $date_available))) {
-		return;
-	}
 
-	xarSessionSetVar('statusmsg', xarML('Feature Updated'));
+    if(!xarModAPIFunc('xproject',
+                    'features',
+                    'update',
+                    array('featureid'        => $featureid,
+                        'feature_name'         => $feature_name,
+                        'importance'        => $importance,
+                        'details'            => $details,
+                        'tech_notes'        => $tech_notes,
+                        'date_approved'        => $date_approved,
+                        'date_available'    => $date_available))) {
+        return;
+    }
+
+    xarSessionSetVar('statusmsg', xarML('Feature Updated'));
 
     xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "features")));
 

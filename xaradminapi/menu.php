@@ -3,7 +3,7 @@
  * Generate admin menu
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,17 +13,17 @@
  */
 /**
  * Generate admin menu
- * 
+ *
  * Standard function to generate a common admin menu configuration for the module
  *
  * @author St.Ego
  */
 function xproject_adminapi_menu($args)
-{ 
+{
     extract($args);
-    
+
     if(!xarModLoad('addressbook', 'user')) return;
-    
+
     $draftstatus = xarModGetVar('xproject', 'draftstatus');
     $activestatus = xarModGetVar('xproject', 'activestatus');
     $archivestatus = xarModGetVar('xproject', 'archivestatus');
@@ -48,9 +48,9 @@ function xproject_adminapi_menu($args)
     if($memberid) xarSessionSetVar('memberid', $memberid);
     else xarSessionDelVar('memberid');
     if (!xarVarFetch('inline',     'int',     $inline,     0,     XARVAR_NOT_REQUIRED)) return;
-    
+
     $teammembers = xarModAPIFunc('xproject', 'team', 'getmembers');
-    
+
     $menu = array();
     $menu['menutitle'] = xarML('xProject Administration');
     $menu['memberid'] = $memberid;
@@ -72,7 +72,7 @@ function xproject_adminapi_menu($args)
     $menu['max_importance'] = $max_importance;
     $menu['showsearch'] = $showsearch;
     $menu['teammembers'] = $teammembers;
-     
+
     return $menu;
-} 
+}
 ?>

@@ -2,14 +2,14 @@
 
 function xproject_team_new($args)
 {
-    
+
     extract($args);
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xproject', 'user')) return;
-    
+
     $data = xarModAPIFunc('xproject', 'admin', 'menu');
 
     if (!xarSecurityCheck('AddXProject')) {

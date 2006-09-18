@@ -60,7 +60,7 @@ function xproject_pagesapi_getall($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
+
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -77,7 +77,7 @@ function xproject_pagesapi_getall($args)
             $children = array();
             if(isset($parentid)) {
                 $children = xarModAPIFunc('xproject', 'pages', 'getall', array('projectid' => $projectid, 'parentid' => $pageid));
-            }                        
+            }
             $items[$pageid] = array(
                             'pageid'           => $pageid,
                             'parentid'         => $thisparentid,

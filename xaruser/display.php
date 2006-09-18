@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -52,7 +52,7 @@ function xproject_user_display($args)
                                     'admin',
                                     'display',
                                     array('projectid' => $project['projectid']));
-                                    
+
     $data['description'] = $project['description'];
     $data['item'] = $project;
 
@@ -62,7 +62,7 @@ function xproject_user_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($features)) return;
-    
+
     $data['features'] = $features;
 
     $hooks = xarModCallHooks('item',

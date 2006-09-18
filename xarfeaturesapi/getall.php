@@ -55,9 +55,9 @@ function xproject_featuresapi_getall($args)
             WHERE $projectstable.projectid = $featurestable.projectid
             AND $featurestable.projectid = $projectid";
 
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-//	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
+//    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//    $sql .= " AND $taskcolumn[projectid] = $projectid";
+//    if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
     $sql .= " ORDER BY $featurestable.importance, feature_name";
 
 /*
@@ -87,7 +87,7 @@ function xproject_featuresapi_getall($args)
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
+
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {

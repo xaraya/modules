@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 function xproject_admin_create($args)
 {
     extract($args);
-    
+
     if (!xarVarFetch('reference', 'str::', $reference, $reference, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'checkbox', $private, $private, XARVAR_NOT_REQUIRED)) return;
@@ -45,27 +45,27 @@ function xproject_admin_create($args)
     $projectid = xarModAPIFunc('xproject',
                         'admin',
                         'create',
-                        array('project_name' 	=> $project_name,
-                            'reference' 	    => $reference,
-                            'private'	        => $private,
-                            'description'	    => $description,
-                            'clientid'	        => $clientid,
-                            'ownerid'	        => $ownerid,
-                            'status'	        => $status,
-                            'priority'		    => $priority,
-                            'importance'		=> $importance,
-                            'projecttype'	    => $projecttype,
-                            'date_approved'	    => $date_approved,
+                        array('project_name'     => $project_name,
+                            'reference'         => $reference,
+                            'private'            => $private,
+                            'description'        => $description,
+                            'clientid'            => $clientid,
+                            'ownerid'            => $ownerid,
+                            'status'            => $status,
+                            'priority'            => $priority,
+                            'importance'        => $importance,
+                            'projecttype'        => $projecttype,
+                            'date_approved'        => $date_approved,
                             'planned_start_date'=> $planned_start_date,
-                            'planned_end_date'	=> $planned_end_date,
+                            'planned_end_date'    => $planned_end_date,
                             'actual_start_date' => $actual_start_date,
-                            'actual_end_date'	=> $actual_end_date,
+                            'actual_end_date'    => $actual_end_date,
                             'hours_planned'     => $hours_planned,
-                            'hours_spent'		=> $hours_spent,
-                            'hours_remaining'	=> $hours_remaining,
-                            'estimate'	        => $estimate,
-                            'budget'	        => $budget,
-                            'associated_sites'	=> $associated_sites));
+                            'hours_spent'        => $hours_spent,
+                            'hours_remaining'    => $hours_remaining,
+                            'estimate'            => $estimate,
+                            'budget'            => $budget,
+                            'associated_sites'    => $associated_sites));
 
 
     if (!isset($projectid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;

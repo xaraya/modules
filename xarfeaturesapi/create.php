@@ -58,7 +58,7 @@ function xproject_featuresapi_create($args)
               $importance,
               $date_approved,
               $date_available);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
@@ -70,8 +70,8 @@ function xproject_featuresapi_create($args)
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => xarUserGetVar('uid'),
-                            'details'	    => $logdetails,
-                            'changetype'	=> "FEATURE"));
+                            'details'        => $logdetails,
+                            'changetype'    => "FEATURE"));
 
 
     $featureid = $dbconn->PO_Insert_ID($featuretable, 'featureid');

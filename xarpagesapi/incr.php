@@ -3,7 +3,7 @@
  * Update a project page item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,7 +57,7 @@ function xproject_pagesapi_incr($args)
             WHERE pageid = ?";
 
     $bindvars = array($pageid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;
@@ -66,7 +66,7 @@ function xproject_pagesapi_incr($args)
             new SystemException($msg));
         return;
     }
-    
+
     xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid'], 'parentid' => $item['parentid']));
 
     return true;

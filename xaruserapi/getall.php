@@ -85,26 +85,26 @@ function xproject_userapi_getall($args)
             FROM $xprojecttable
             WHERE projectid > 0 ";
 
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-	if($private == "public") $sql .= " AND private != '1'";
-    
-	if($status == "New") { 
+//    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//    $sql .= " AND $taskcolumn[projectid] = $projectid";
+    if($private == "public") $sql .= " AND private != '1'";
+
+    if($status == "New") {
         $sql .= " AND status NOT IN ('Draft','Closed Won','Closed Lost', 'R & D','Hold','Active','Archive')";
     } elseif(!empty($status)) {
         $sql .= " AND status = '".$status."'";
     }
-	
+
     if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
-	if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
-	if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
-	if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
-	if(!empty($planned_end_date)) $sql .= " AND planned_end_date <= '".$planned_end_date."'";
-	if(!empty($min_planned_end_date)) $sql .= " AND planned_end_date >= '".$min_planned_end_date."'";
+    if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
+    if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
+    if($max_importance > 0) $sql .= " AND importance <= '".$max_importance."'";
+    if(!empty($planned_end_date)) $sql .= " AND planned_end_date <= '".$planned_end_date."'";
+    if(!empty($min_planned_end_date)) $sql .= " AND planned_end_date >= '".$min_planned_end_date."'";
     if(!empty($q)) {
         $sql .= " AND (project_name LIKE '%".$q."%'
                     OR description LIKE '%".$q."%')";
-    }    
+    }
     switch($sortby) {
         case "importance":
             $sql .= " ORDER BY importance";
@@ -122,7 +122,7 @@ function xproject_userapi_getall($args)
         default:
             $sql .= " ORDER BY project_name";
     }
-    
+
 //die($sql);
 /*
     if ($selected_project != "all") {

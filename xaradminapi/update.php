@@ -3,7 +3,7 @@
  * Update an example item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@
 function xproject_adminapi_update($args)
 {
     extract($args);
-    
+
     if(is_array($associated_sites)) $associated_sites = serialize($associated_sites);
 
     $invalid = array();
@@ -61,9 +61,9 @@ function xproject_adminapi_update($args)
     $xprojecttable = $xartable['xProjects'];
 
     $query = "UPDATE $xprojecttable
-            SET project_name =?, 
-                  reference =?, 
-                  private = ?, 
+            SET project_name =?,
+                  reference =?,
+                  private = ?,
                   description = ?,
                   clientid = ?,
                   ownerid = ?,
@@ -107,7 +107,7 @@ function xproject_adminapi_update($args)
               $budget,
               $associated_sites,
               $projectid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
@@ -132,14 +132,14 @@ function xproject_adminapi_update($args)
     if($actual_start_date != $item['actual_start_date']
         || $actual_end_date != $item['actual_end_date'])
         $logdetails .= "<br>Actual Project timeframe modified.";
-        
+
     $logid = xarModAPIFunc('xproject',
                         'log',
                         'create',
                         array('projectid'   => $projectid,
                             'userid'        => $userid,
-                            'details'	    => $logdetails,
-                            'changetype'	=> "MODIFIED"));
+                            'details'        => $logdetails,
+                            'changetype'    => "MODIFIED"));
 
     $item['module'] = 'xproject';
     $item['itemid'] = $projectid;

@@ -9,21 +9,21 @@ function xproject_admin_chngimportance($args)
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
     if(!xarModAPIFunc('xproject',
-					'admin',
-					'chngimportance',
-					array('projectid'	    => $projectid,
+                    'admin',
+                    'chngimportance',
+                    array('projectid'        => $projectid,
                         'mode'              => $mode))) {
-		return;
-	}
+        return;
+    }
 
 
-	xarSessionSetVar('statusmsg', xarML('Project Importance Changed'));
+    xarSessionSetVar('statusmsg', xarML('Project Importance Changed'));
 
     if(!empty($returnurl)) {
         xarResponseRedirect($returnurl);
         return true;
     }
-    
+
     xarResponseRedirect(xarModURL('xproject', 'admin', 'view'));
 
     return true;

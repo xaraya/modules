@@ -3,7 +3,7 @@
  * Update an example item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,7 +28,7 @@ function xproject_teamapi_update($args)
     if (!isset($projectrole)) {
         $invalid[] = 'projectrole';
     }
-    
+
     if (!isset($projectid) || !is_numeric($projectid)) {
         $invalid[] = 'projectid';
     }
@@ -71,7 +71,7 @@ function xproject_teamapi_update($args)
               $projectrole,
               $projectid,
               $memberid);
-              
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;
