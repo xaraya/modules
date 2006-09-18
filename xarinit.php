@@ -1,16 +1,4 @@
 <?php
-
-
-
-
-
-// OOOOH! LOOK! A FUCKING CHANGE!!!!!!!!!!!!
-
-
-
-
-
-
 /**
  * XProject Module - A simple project management module
  *
