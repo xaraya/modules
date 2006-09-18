@@ -44,7 +44,8 @@ function itsp_userapi_countcredits($args)
             $credits = $credits + $course['intendedcredits'];
         }
 
-    } elseif ((strcmp($rules['rule_source'],'courses')!=0) || $rules['mix'])  {
+    }
+    if ((strcmp($rules['rule_source'],'courses')!=0) || $rules['mix'])  {
         /* Get database setup */
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
@@ -61,15 +62,17 @@ function itsp_userapi_countcredits($args)
          */
         if (!$result) return;
         /* Obtain the number of items */
-        list($credits) = $result->fields;
+        list($icredits) = $result->fields;
         /* All successful database queries produce a result set, and that result
          * set should be closed when it has been finished with
          */
         $result->Close();
     }
     // We do not want to return an empty value
-    if (empty($credits)) {
-        $credits = 0;
+    if (empty($icredits)) {
+        $credits = $credits;
+    } else {
+        $credits = $credits + $icredits;
     }
     /* Return the number of credits */
     return $credits;
