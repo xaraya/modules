@@ -14,7 +14,7 @@
 $modversion['name'] = 'ajax';
 $modversion['displayname'] = 'Ajax Library';
 $modversion['id'] = '785';
-$modversion['version'] = '0.9.0';
+$modversion['version'] = '0.9.1';
 $modversion['description'] = ' A Prototype library collection.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

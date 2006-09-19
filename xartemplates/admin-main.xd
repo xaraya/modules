@@ -9,9 +9,10 @@
         <p><xar:mlstring>The following libraries are include:</xar:mlstring></p>
         <ul>
             <li><a href="http://prototype.conio.net/" target="_blank">Prototype 1.5.0rc1</a></li>
-            <li><a href="http://script.aculo.us/" target="_blank">Scriptaculous 1.6.3</a></li>
+            <li><a href="http://script.aculo.us/" target="_blank">Scriptaculous 1.6.4</a></li>
             <li><a href="http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/" target="_blank">Really easy field validation with Prototype 1.5.3</a></li>
             <li><a href="http://www.huddletogether.com/projects/lightbox2/" target="_blank">Lightbox 2.02</a></li>
+            <li><a href="http://www.openrico.org" target="_blank">Open Rico 1.1.2</a></li>
         </ul>
     </p>
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
@@ -30,6 +31,7 @@
             <li><xar:mlstring>slider</xar:mlstring></li>
             <li><xar:mlstring>validation</xar:mlstring></li>
             <li><xar:mlstring>lightbox</xar:mlstring></li>
+            <li><xar:mlstring>rico</xar:mlstring></li>
         </ul>
     </p>
 
