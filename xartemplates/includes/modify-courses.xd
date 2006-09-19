@@ -24,7 +24,9 @@
                         <xar:mlvar>#$lcourse.intendedcredits#</xar:mlvar>
                      </xar:ml>
                  </xar:if>
-                 <a href="#$lcourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>
+                 <xar:if condition="!empty($lcourse.deletelink)">
+                    <a href="#$lcourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>&nbsp;
+                 </xar:if>
             </div>
         </xar:foreach>
     <xar:else />
