@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/704.html
  * @author St.Ego
  */
-
 $modversion['name']         = 'xtasks';
 $modversion['id']           = '704';
 $modversion['version']      = '1.6.4';

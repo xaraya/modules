@@ -1,8 +1,8 @@
 <object name="usersettings_xtasks">
   <objectid>12</objectid>
   <label>User Settings For xTasks</label>
-  <moduleid>27</moduleid>
-  <itemtype>704</itemtype>
+  <moduleid>704</moduleid>
+  <itemtype>7</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>

@@ -1,7 +1,7 @@
 <object name="modulesettings_xtasks">
   <objectid>11</objectid>
   <label>Module Settings for xTasks</label>
-  <moduleid>1</moduleid>
+  <moduleid>704</moduleid>
   <itemtype>704</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
