@@ -137,7 +137,30 @@ function itsp_user_update()
                                        'displaytitle' => $displaytitle,
                                        'invalid'      => $invalid));
             }
-            if (!empty($icoursetitle) && !empty($icoursecredits)) {
+            // See if we update an item
+            if (!empty($icourseid)) {
+                if(!xarModApiFunc('itsp',
+                                   'admin',
+                                   'update_icourse',
+                                   array(
+                                   'itspid' => $itspid,
+                                   'pitemid' => $pitemid,
+                                   'icourseid'=>$icourseid,
+                                   'icoursetitle'=> $icoursetitle,
+                                   'icourseloc'=>  $icourseloc,
+                                   'icoursedesc'=> $icoursedesc,
+                                   'icoursecredits'=>  $icoursecredits,
+                                   'icourselevel'=> $icourselevel,
+                                   'icourseresult'=> $icourseresult,
+                                   'icoursedate'=> $icoursedate,
+                                   'dateappr'=> $dateappr,
+                                   'displaytitle' => $displaytitle)
+                                   )) {
+                    return;
+                }
+                xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully updated!'));
+
+            } elseif (!empty($icoursetitle) && !empty($icoursecredits)) {
 
                 $icourseid = xarModApiFunc('itsp',
                                    'admin',
