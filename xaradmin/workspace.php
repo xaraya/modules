@@ -1,18 +1,29 @@
 <?php
-
+/**
+ * xTasks Module - Project ToDo management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xTasks Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
 function xtasks_admin_workspace($args)
-{        
+{
     extract($args);
-    
+
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby', 'str', $orderby, '', XARVAR_NOT_REQUIRED)) return;
-    
+
     $data = array();
 
     if (!xarSecurityCheck('AddXTask')) {
         return;
     }
-    
+
     if (isset($extrainfo) && is_array($extrainfo)) {
         if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
@@ -26,11 +37,11 @@ function xtasks_admin_workspace($args)
     } else {
         $data['returnurl'] = $extrainfo;
     }
-    
+
     if(!strpos($data['returnurl'], "mode=tasks")) {
         $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
     }
-    
+
     if (isset($args['modid'])) {
         $modid = $args['modid'];
     } elseif (!empty($args['extrainfo']) && !empty($args['extrainfo']['module'])) {
@@ -59,7 +70,7 @@ function xtasks_admin_workspace($args)
     } else {
         xarVarFetch('objectid','isset',$objectid,NULL,XARVAR_NOT_REQUIRED);
     }
-    
+
     $data['startnum'] = $startnum;
     $data['orderby'] = $orderby ? $orderby : "status";
     $data['depth'] = 0;
@@ -84,7 +95,7 @@ function xtasks_admin_workspace($args)
                                   'orderby'  => $orderby,
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-    
+
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $items[$i]['link'] = xarModURL('xtasks',
@@ -108,9 +119,9 @@ function xtasks_admin_workspace($args)
             $items[$i]['deleteurl'] = '';
         }
     }
-    
+
     $data['items'] = $items;
-    
+
     $data['show_importance'] = xarModGetUserVar('xtasks', 'show_importance');
     $data['show_priority'] = xarModGetUserVar('xtasks', 'show_priority');
     $data['show_age'] = xarModGetUserVar('xtasks', 'show_age');
@@ -121,8 +132,8 @@ function xtasks_admin_workspace($args)
     $data['show_owner'] = xarModGetUserVar('xtasks', 'show_owner');
     $data['show_project'] = xarModGetUserVar('xtasks', 'show_project');
     $data['show_client'] = xarModGetUserVar('xtasks', 'show_client');
-        
-	return $data;
+
+    return $data;
 }
 
 ?>

@@ -1,23 +1,34 @@
 <?php
-
+/**
+ * xTasks Module - Project ToDo management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xTasks Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
 function xtasks_reminders_modify($args)
 {
-	extract($args);
-    
+    extract($args);
+
     if (!xarVarFetch('reminderid',     'id',     $reminderid,     $reminderid,     XARVAR_NOT_REQUIRED)) return;
-	
+
     if (!empty($objectid)) {
         $reminderid = $objectid;
     }
 
     if (!xarModAPILoad('xtasks', 'user')) return;
-    
-	$item = xarModAPIFunc('xtasks',
+
+    $item = xarModAPIFunc('xtasks',
                          'reminders',
                          'get',
                          array('reminderid' => $reminderid));
-	
-	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
         return;
@@ -27,23 +38,23 @@ function xtasks_reminders_modify($args)
                           'user',
                           'get',
                           array('projectid' => $item['projectid']));
-    
+
     $data = xarModAPIFunc('xtasks','admin','menu');
-    
-	$data['reminderid'] = $item['reminderid'];
-	
+
+    $data['reminderid'] = $item['reminderid'];
+
     $data['authid'] = xarSecGenAuthKey();
-	
+
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
 
-	$item['module'] = 'xtasks';
-    
+    $item['module'] = 'xtasks';
+
     $data['statuslist'] = array('Draft','Proposed','Approved','WIP','QA','Archived');
 
-	$data['item'] = $item;
-    
+    $data['item'] = $item;
+
     $data['projectinfo'] = $projectinfo;
-    
+
     return $data;
 }
 

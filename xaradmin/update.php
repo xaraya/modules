@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * xTasks Module - Project ToDo management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xTasks Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
 function xtasks_admin_update($args)
 {
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
@@ -29,9 +40,9 @@ function xtasks_admin_update($args)
     extract($args);
     if (!xarSecConfirmAuthKey()) return;
     if(!xarModAPIFunc('xtasks',
-					'admin',
-					'update',
-					array('taskid'	            => $taskid,
+                    'admin',
+                    'update',
+                    array('taskid'                => $taskid,
                         'parentid'              => $parentid,
                         'projectid'             => $projectid,
                         'task_name'             => $task_name,
@@ -53,17 +64,17 @@ function xtasks_admin_update($args)
                         'hours_planned'         => $hours_planned,
                         'hours_spent'           => $hours_spent,
                         'hours_remaining'       => $hours_remaining))) {
-		return;
-	}
+        return;
+    }
 
 
-	xarSessionSetVar('statusmsg', xarML('Task Updated'));
+    xarSessionSetVar('statusmsg', xarML('Task Updated'));
 
     if(!empty($returnurl)) {
         xarResponseRedirect($returnurl);
         return true;
     }
-    
+
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'view'));
 
     return true;

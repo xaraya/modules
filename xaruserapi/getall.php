@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * xTasks Module - Project ToDo management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xTasks Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
 /**
  *
  *
@@ -15,14 +26,14 @@
 function xtasks_userapi_getall($args)
 {
     extract($args);
-    
+
     if(!empty($modname)) {
         $modid = xarModGetIDFromName($modname);
     }
-    
+
     $show_project = xarModGetUserVar('xtasks', 'show_project');
     $show_client = xarModGetUserVar('xtasks', 'show_client');
-    
+
     if (!isset($mode)) {
         $mode = "";
     }
@@ -114,29 +125,29 @@ function xtasks_userapi_getall($args)
             FROM $xtaskstable a
             LEFT JOIN $xtaskstable b
             ON b.parentid = a.taskid";
-            
+
     $whereclause = array();
-            
+
     if(isset($memberid) && $memberid > 0) {
         $whereclause[] = "a.owner=".$memberid;
     }
-            
+
     if(isset($creator) && $creator > 0) {
         $whereclause[] = "a.owner=".$creator;
     }
-            
+
     if(isset($assigner) && $assigner > 0) {
         $whereclause[] = "a.owner=".$assigner;
     }
-            
-    if (!empty($modid) 
+
+    if (!empty($modid)
         && !empty($objectid)
         && $modid == xarModGetIDFromName('xtasks')) {
         $parentid = $objectid;
 //        $modid = 0;
 //        $objectid = 0;
     }
-    
+
     if (!empty($projectid)) {
         $whereclause[] = "a.projectid=".$projectid;
     } elseif (!empty($modid)) {
@@ -148,7 +159,7 @@ function xtasks_userapi_getall($args)
             $hookedsql .= " AND a.itemtype=".$itemtype;
         }
         $hookedsql .= " )";
-            
+
         if (!empty($parentid)) {
             $hookedsql .= " OR a.parentid=".$parentid;
         }
@@ -156,31 +167,31 @@ function xtasks_userapi_getall($args)
     } elseif (!empty($parentid)) {
         $whereclause[] = "a.parentid=".$parentid;
     }
-            
+
     if ($mode == "Open") {
         $whereclause[] = "a.status != 'Closed'";
     }
-            
+
     if (!empty($statusfilter)) {
         $whereclause[] = "a.status='".$statusfilter."'";
     } else {
         $statusfilter = "";
     }
-    
-	if($private == "public") $whereclause[] = "a.private != '1'";
-	if(!empty($status)) $whereclause[] = "a.status = '".$status."'";
-//	if($clientid > 0) $whereclause[] = "clientid = '".$clientid."'";
-	if($max_priority > 0) $whereclause[] = "a.priority <= '".$max_priority."'";
-	if($max_importance > 0) $whereclause[] = "a.importance <= '".$max_importance."'";
+
+    if($private == "public") $whereclause[] = "a.private != '1'";
+    if(!empty($status)) $whereclause[] = "a.status = '".$status."'";
+//    if($clientid > 0) $whereclause[] = "clientid = '".$clientid."'";
+    if($max_priority > 0) $whereclause[] = "a.priority <= '".$max_priority."'";
+    if($max_importance > 0) $whereclause[] = "a.importance <= '".$max_importance."'";
     if(!empty($q)) {
         $whereclause[] = "(a.task_name LIKE '%".$q."%' OR a.description LIKE '%".$q."%')";
-    }    
-    
+    }
+
     if(count($whereclause) > 0) $sql .= " WHERE ".implode(" AND ", $whereclause);
-        
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-//	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
+
+//    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
+//    $sql .= " AND $taskcolumn[projectid] = $projectid";
+//    if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
     $sql .= " GROUP BY a.taskid ";
 
     switch($orderby) {
@@ -280,12 +291,12 @@ function xtasks_userapi_getall($args)
             } else {
                 $days_untouched = 0;
             }
-            
+
             $projectinfo = array();
             if(($show_project || $show_client) && $projectid > 0) {
                 $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
             }
-            
+
             $tasks[] = array('taskid' => $taskid,
                             'objectid' => $objectid,
                             'modid' => $modid,

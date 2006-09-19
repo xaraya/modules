@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * xTasks Module - Project ToDo management module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xTasks Module
+ * @link http://xaraya.com/index.php/release/704.html
+ * @author St.Ego
+ */
 function xtasks_admin_search($args)
-{        
+{
     extract($args);
-    
+
     if(!xarModLoad('addressbook', 'user')) return;
-    
+
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby', 'str', $orderby, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
@@ -15,16 +26,16 @@ function xtasks_admin_search($args)
     if (!xarVarFetch('mymemberid', 'int', $mymemberid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_priority', 'int', $max_priority, 9, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_importance', 'int', $max_importance, 9, XARVAR_NOT_REQUIRED)) return;
-    
+
     $data = xarModAPIFunc('xtasks','admin','menu');
 
     if (!xarSecurityCheck('AddXTask')) {
         return;
     }
-    
+
     $modid = xarModGetIDFromName(xarModGetName());
     $itemtype = 1;
-    
+
     $returnurl = xarModURL('xtasks', 'admin', 'search',
                         array('orderby' => $orderby,
                             'q' => $q,
@@ -32,9 +43,9 @@ function xtasks_admin_search($args)
                             'memberid' => $memberid,
                             'max_priority' => $max_priority,
                             'max_importance' => $max_importance));
-    
+
     $data['returnurl'] = $returnurl."&amp;mode=tasks";
-    
+
     $data['q'] = $q;
     $data['depth'] = 0;
     $data['verbose'] = $verbose;
@@ -49,7 +60,7 @@ function xtasks_admin_search($args)
     $data['authid'] = xarSecGenAuthKey('xtasks');
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
-    
+
 //    xarModAPILoad('xtaskss', 'user');
     $items = xarModAPIFunc('xtasks', 'user', 'getall',
                             array('parentid'    => 0,
@@ -63,7 +74,7 @@ function xtasks_admin_search($args)
                                   'orderby' => $orderby,
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-    
+
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
         $items[$i]['link'] = xarModURL('xtasks',
@@ -87,13 +98,13 @@ function xtasks_admin_search($args)
             $items[$i]['deleteurl'] = '';
         }
     }
-    
+
     $data['items'] = $items;
-    
+
     $teammembers = xarModAPIFunc('xproject', 'team', 'getmembers');
-    
+
     $data['teammembers'] = $teammembers;
-    
+
     $data['show_importance'] = xarModGetUserVar('xtasks', 'show_importance');
     $data['show_priority'] = xarModGetUserVar('xtasks', 'show_priority');
     $data['show_age'] = xarModGetUserVar('xtasks', 'show_age');
@@ -104,8 +115,8 @@ function xtasks_admin_search($args)
     $data['show_owner'] = xarModGetUserVar('xtasks', 'show_owner');
     $data['show_project'] = xarModGetUserVar('xtasks', 'show_project');
     $data['show_client'] = xarModGetUserVar('xtasks', 'show_client');
-        
-	return $data;
+
+    return $data;
 }
 
 ?>
