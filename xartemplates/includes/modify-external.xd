@@ -24,7 +24,12 @@
                  <xar:else />
                     <xar:mlstring>Not yet approved</xar:mlstring>
                  </xar:if>
-                 <a href="#$icourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>
+                 <xar:if condition="!empty($icourse.deletelink)">
+                    <a href="#$icourse.deletelink#"><xar:mlstring>Delete</xar:mlstring></a>&nbsp;
+                 </xar:if>
+                 <xar:if condition="!empty($icourse.editlink)">
+                    <a href="#$icourse.editlink#"><xar:mlstring>Edit</xar:mlstring></a>
+                 </xar:if>
             </div>
         </xar:foreach>
     <xar:else />
@@ -33,7 +38,14 @@
 </fieldset>
 <xar:if condition="$canedit">
     <fieldset>
-        <legend><xar:mlstring>Add a new course</xar:mlstring></legend>
+        <legend>
+            <xar:if condition="empty($icourseid)" >
+                <xar:mlstring>Add a new course</xar:mlstring>
+            <xar:else />
+                <xar:mlstring>Edit your course</xar:mlstring>
+            </xar:if>
+        </legend>
+
         <div class="xar-form-input-wrapper">
              <label for="icoursetitle" class="xar-form-label" title="#xarML('Official full title')#">
                   <xar:mlstring>Course title</xar:mlstring>

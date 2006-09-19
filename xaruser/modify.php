@@ -64,7 +64,13 @@ function itsp_user_modify($args)
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
-
+    // See if the user can edit
+    $canedit = false;
+    $itspstatus = $itsp['itspstatus'];
+    if ($itspstatus < 4 || $itspstatus == 5) {
+        $canedit = true;
+    }
+    $data['canedit'] = $canedit;
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {
         // get planitem
@@ -106,34 +112,6 @@ function itsp_user_modify($args)
             // The source here is the template name that will be used.
             case 'external':
             default:
-                // get all linked courses that already have been added to the ITSP for this plan item
-                $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
-                // for each linked course get the details
-                if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-                //echo count($courselinks);
-                /*
-                 * Loop through each item and display it.
-                 */
-                foreach ($courselinks as $icourse) {
-                    // Add read link
-                    $icourseid = $icourse['icourseid'];
-                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
-                        $icourse['link'] = xarModURL('itsp',
-                            'user',
-                            'display_icourse',
-                            array('icourseid' => $icourseid));
-                    } else {
-                        $icourse['link'] = '';
-                    }
-                    /* Clean up the item text before display */
-                    $icourse['title'] = xarVarPrepForDisplay($icourse['icoursetitle']);
-                    $icourse['credits'] = $icourse['icoursecredits'];
-                    // Add a delete link
-                    $icourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('icourseid' => $icourse['icourseid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
-
-                    /* Add this item to the list of items to be displayed */
-                    $data['icourses'][] = $icourse;
-                }
                 // Set data for a new item
                 if (!xarVarFetch('icourseid',      'id',        $icourseid,      $icourseid,      XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('icoursetitle',   'str:1:255', $icoursetitle,   $icoursetitle,   XARVAR_NOT_REQUIRED)) return;
@@ -153,6 +131,18 @@ function itsp_user_modify($args)
                 // Get the coursetypes for the types rule
                 $data['coursetypes'] = xarModAPIFunc('courses', 'user', 'getall_coursetypes');
                 $data['invalid'] = $invalid;
+                $data['icourseid'] ='';
+                if (!empty($icourseid)) {
+                    $icourse = xarModApiFunc('itsp','user','get_itspcourse',array('icourseid' => $icourseid));
+                    $icoursetitle = $icourse['icoursetitle'];
+                    $icourseloc =$icourse['icourseloc'];
+                    $icoursedesc =$icourse['icoursedesc'];
+                    $icoursecredits =$icourse['icoursecredits'];
+                    $icourselevel = $icourse['icourselevel'];
+                    $icourseresult = $icourse['icourseresult'];
+                    $icoursedate =$icourse['icoursedate'];
+                    $data['icourseid'] = $icourseid;
+                }
 
                 /* For E_ALL purposes, we need to check to make sure the vars are set.
                  * If they are not set, then we need to set them empty to surpress errors
@@ -198,6 +188,52 @@ function itsp_user_modify($args)
                 } else {
                     $data['dateappr'] = $dateappr;
                 }
+
+                // get all linked courses that already have been added to the ITSP for this plan item
+                $courselinks = xarModApiFunc('itsp','user','getall_itspcourses',array('itspid'=>$itspid, 'pitemid' => $pitemid));
+                // for each linked course get the details
+                if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                //echo count($courselinks);
+                /*
+                 * Loop through each item and display it.
+                 */
+                foreach ($courselinks as $icourse) {
+                    // Add read link
+                    $icourseid = $icourse['icourseid'];
+                    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+                        $icourse['link'] = xarModURL('itsp',
+                            'user',
+                            'display_icourse',
+                            array('icourseid' => $icourseid));
+                    } else {
+                        $icourse['link'] = '';
+                    }
+                    if ($canedit && xarSecurityCheck('EditITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+                        $icourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('icourseid' => $icourseid,
+                                                                                                    'authid' => xarSecGenAuthKey('itsp'),
+                                                                                                    'pitemid' => $pitemid,
+                                                                                                    'itspid' => $itspid));
+
+                        $icourse['editlink'] = xarModURL('itsp','user','modify',array('itspid'=>$itspid,
+                                                                                      'pitemid'=>$pitemid,
+                                                                                      'icourseid' => $icourseid));
+                    } else {
+                        $icourse['deletelink'] = '';
+                        $icourse['editlink'] = '';
+                    }
+
+
+                    /* Clean up the item text before display */
+                    $icourse['title'] = xarVarPrepForDisplay($icourse['icoursetitle']);
+                    $icourse['credits'] = $icourse['icoursecredits'];
+                    // Add a delete link
+                    $icourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('icourseid' => $icourse['icourseid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
+
+                    /* Add this item to the list of items to be displayed */
+                    $data['icourses'][] = $icourse;
+                }
+
+
                 $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid,'itspid'=>$itspid));
         }
         $data['pitem'] = $pitem;
@@ -206,13 +242,7 @@ function itsp_user_modify($args)
 
     $data['pitemid'] = $pitemid;
 
-    // See if the user can edit
-    $canedit = false;
-    $itspstatus = $itsp['itspstatus'];
-    if ($itspstatus < 4 || $itspstatus == 5) {
-        $canedit = true;
-    }
-    $data['canedit'] = $canedit;
+
     // Call hooks
     $item['module'] = 'itsp';
     $item['itemtype'] = 2;

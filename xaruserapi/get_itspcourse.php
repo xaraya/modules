@@ -15,8 +15,6 @@
  * Get all external courses that have been added to an ITSP by a student
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param int numitems $ the number of items to retrieve (default -1 = all)
- * @param int startnum $ start with this item number (default 1)
  * @param int icourseid The id of the course to get
  * @since 30 Aug 2006
  * @return array Array of item, or false on failure

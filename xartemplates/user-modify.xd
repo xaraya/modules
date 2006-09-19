@@ -78,10 +78,15 @@
         <xar:if condition="$canedit">
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
-                   <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                   <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
-                   <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
-                   <input type="submit" value="#xarML('Add')#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+                    <input type="hidden" name="pitemid" id="pitemid" value="#$pitemid#" />
+                    <xar:if condition="empty($icourseid)">
+                        <input type="submit" value="#xarML('Add')#" />
+                    <xar:else />
+                        <input type="hidden" name="icourseid" id="icourseid" value="#$icourseid#" />
+                        <input type="submit" value="#xarML('Update')#" />
+                    </xar:if>
                 </div>
             </fieldset>
         </xar:if>
