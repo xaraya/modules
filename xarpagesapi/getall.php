@@ -1,15 +1,17 @@
 <?php
-
 /**
+ * XProject Module - A simple project management module
  *
- *
- * Administration System
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage xproject module
+ * @subpackage XProject Module
+ * @link http://xaraya.com/index.php/release/665.html
+ * @author XProject Module Development Team
+ */
+/**
  * @author Chad Kraeft <stego@xaraya.com>
 */
 function xproject_pagesapi_getall($args)

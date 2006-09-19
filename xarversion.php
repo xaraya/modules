@@ -28,4 +28,5 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
+$modversion['dependency']     = array(66417); /* This module depends on the html module */
 ?>
