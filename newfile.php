@@ -4,5 +4,6 @@ debuggin
 dangerous
 One of these
 error out
+test 1
 
 ?>
