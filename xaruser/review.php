@@ -35,6 +35,7 @@ function itsp_user_review($args)
     if (!xarVarFetch('userid',   'id', $userid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('statusselect', 'int:0:', $statusselect, '', XARVAR_NOT_REQUIRED)) return;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
      */
@@ -72,17 +73,17 @@ function itsp_user_review($args)
     $uid = xarUserGetVar('uid');
     // Get all the ITSPs and set their status
     $items = xarModAPIFunc('itsp',
-                              'user',
-                              'getall',
-                              array('startnum' => $startnum,
-                                    'numitems' => xarModGetUserVar('itsp',
-                                                 'itemsperpage', $uid)));
+                          'user',
+                          'getall',
+                          array('startnum' => $startnum,
+                                'numitems' => xarModGetUserVar('itsp','itemsperpage', $uid),
+                                'statusselect' => $statusselect));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Check status
     $stati = xarModApiFunc('itsp','user','getstatusinfo');
     $data['stati'] = $stati;
-
+    $data['statusselect'] = $statusselect;
     foreach ($items as $item) {
         $itspid = $item['itspid'];
         $userid = $item['userid'];
@@ -116,8 +117,8 @@ function itsp_user_review($args)
     $data['fulldetails'] = $fulldetails;
 
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 2)),
-        xarModURL('itsp', 'user', 'review', array('startnum' => '%%')),
+        xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 2, 'itspstatus' =>$statusselect)),
+        xarModURL('itsp', 'user', 'review', array('startnum' => '%%', 'statusselect' => $statusselect)),
         xarModGetUserVar('itsp', 'itemsperpage', $uid));
 
     /* Once again, we are changing the name of the title for better

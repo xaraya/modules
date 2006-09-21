@@ -23,11 +23,6 @@
  */
 function itsp_userapi_getall($args)
 {
-    /* Get arguments from argument array - all arguments to this function
-     * should be obtained from the $args array, getting them from other places
-     * such as the environment is not allowed, as that makes assumptions that
-     * will not hold in future versions of Xaraya
-     */
     extract($args);
     /* Optional arguments.
      * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
@@ -77,12 +72,6 @@ function itsp_userapi_getall($args)
      * using - $table doesn't cut it in more complex modules
      */
     $itsptable = $xartable['itsp_itsp'];
-    /* TODO: how to select by cat ids (automatically) when needed ???
-     * Get items - the formatting here is not mandatory, but it does make the
-     * SQL statement relatively easy to read.  Also, separating out the sql
-     * statement from the SelectLimit() command allows for simpler debug
-     * operation if it is ever needed
-     */
     $query = "SELECT xar_itspid,
                      xar_userid,
                    xar_planid,
@@ -93,8 +82,13 @@ function itsp_userapi_getall($args)
                    xar_datecertaward,
                    xar_datemodi,
                    xar_modiby
-              FROM $itsptable
-              ORDER BY xar_itspid";
+              FROM $itsptable ";
+
+    if (isset($statusselect) && is_numeric($statusselect)) {
+        $query .= " WHERE xar_itspstatus = $statusselect ";
+    }
+
+    $query .= " ORDER BY xar_itspid";
     /* SelectLimit also supports bind variable, they get to be put in
      * as the last parameter in the function below. In this case we have no
      * bind variables, so we left the parameter out. We could have passed in an

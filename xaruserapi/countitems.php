@@ -33,25 +33,28 @@ function itsp_userapi_countitems($args)
      */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    $query = "SELECT COUNT(*) ";
 
     //Switch for the itemtypes
     switch ($itemtype) {
         case 1:
-        $table = $xartable['itsp_plans'];
+        $query .= " FROM $xartable[itsp_plans] ";
         break;
         case 2:
-        $table = $xartable['itsp_itsp'];
+        $query .= "FROM $xartable[itsp_itsp] ";
+        if(isset($itspstatus) && !empty($itspstatus)) {
+            $query .= " WHERE xar_itspstatus = $itspstatus ";
+        }
         break;
         case 3:
-        $table = $xartable['itsp_planitems'];
+        $query .= " FROM $xartable[itsp_planitems] ";
         break;
     }
-    $query = "SELECT COUNT(1)
-              FROM $table";
+
     /* If there are no variables you can pass in an empty array for bind variables
      * or no parameter.
      */
-    $result = &$dbconn->Execute($query,array());
+    $result = &$dbconn->Execute($query);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return
      */

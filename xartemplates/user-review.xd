@@ -3,9 +3,39 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP</xar:mlstring></span>
 </div>
-<div class="xar-mod-body xar-border-thin">
-
+<div class="xar-mod-body">
     <h2><xar:mlstring>All ITSPs you can choose from</xar:mlstring></h2>
+    <h3>Search a user</h3>
+
+    <h3>Show ITSPs of status</h3>
+
+    <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('itsp','user','review')#">
+    <select name="statusselect" id="statusselect" onchange="this.form.submit();">
+        <xar:if condition="empty($statusselect)">
+            <option value="" selected="selected">
+                <xar:mlstring>ALL</xar:mlstring>
+            </option>
+        <xar:else />
+            <option value="">
+                <xar:mlstring>ALL</xar:mlstring>
+            </option>
+        </xar:if>
+        <xar:foreach in="$stati" key="$id" value="$name">
+            <xar:if condition="!empty($statusselect) AND ($id eq $statusselect)">
+                <xar:comment>Selected</xar:comment>
+                <option value="#$id#" selected="selected">
+                    #$name#
+                </option>
+            <xar:else/>
+                <option value="#$id#">
+                    #$name#
+                </option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+
+</form>
+
 
     <table>
         <tr>
