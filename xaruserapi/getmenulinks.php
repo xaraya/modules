@@ -42,6 +42,13 @@ function itsp_userapi_getmenulinks()
             'title' => xarML('View your education plan'),
             'label' => xarML('My ITSP'));
     }
+    if (xarSecurityCheck('EditITSP', 0)) {
+        $menulinks[] = array('url' => xarModURL('itsp',
+                'user',
+                'review'),
+            'title' => xarML('Review the ITSPs'),
+            'label' => xarML('Review ITSPs'));
+    }
     /* If we return nothing, then we need to tell PHP this, in order to avoid an ugly
      * E_ALL error.
      */
