@@ -23,7 +23,7 @@
             <legend><xar:mlstring>Creating a new plan item</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('This is the item name')#">
+                 <label for="pitemname" class="xar-form-label" title="#xarML('This is the item name')#">
                       <xar:mlstring>Item Name:</xar:mlstring>
                  </label>
                  <input type="text" name="pitemname" id="pitemname" value="#$pitemname#" maxlength="32" class="xar-form-textmedium" />
@@ -64,7 +64,7 @@
             </div>
 
             <div class="xar-form-input-wrapper">
-                 <label for="name" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
+                 <label for="dateclose" class="xar-form-label" title="#xarML('This is the date this pitem can be applied to')#">
                         <xar:mlstring>Date this plan item closes:</xar:mlstring>
                  </label>
                  <xar:data-input name="dateclose" type="calendar" validation="date" value="$dateclose" />
