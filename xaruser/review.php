@@ -142,10 +142,14 @@ function itsp_user_review($args)
     $data['authid'] = xarSecGenAuthKey();
     $data['fulldetails'] = $fulldetails;
 
+    if (empty($getname)) {
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('itsp', 'user', 'countitems', array('itemtype' => 2, 'itspstatus' =>$statusselect)),
         xarModURL('itsp', 'user', 'review', array('startnum' => '%%', 'statusselect' => $statusselect)),
         xarModGetUserVar('itsp', 'itemsperpage', $uid));
+    } else {
+        $data['pager'] = '';
+    }
 
     /* Once again, we are changing the name of the title for better
      * search engine capability.*/
