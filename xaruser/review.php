@@ -1,6 +1,6 @@
 <?php
 /**
- * Display the ITSP for one user
+ * Review the ITSPs
  *
  * @package modules
  * @copyright (C) 2006 The Digital Development Foundation
@@ -12,16 +12,20 @@
  * @author ITSP Module Development Team
  */
 /**
- * Display the user's ITSP
+ * Show a page to review ITSPs
  *
- * Show the user the full details of the plan chosen, and the status of all items.
+ * For the moment, this page is mainly a short cut list
  *
  * @author the ITSP module development team
- * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['itspid'] the item id used for this itsp module
+ * @param array $args an array of arguments (if called by other modules)
+ * @param int $args ['objectid'] a generic object id (if called by other modules)
+ * @param int $args ['itspid'] the item id used for this itsp module
+ * @param int $args['userid'] optional
+ * @param int $args['fulldetails'] optional
+ * @param int $args['startnum'] The startnumber, default to 1
+ * @param string $args['statusselect'] A string to search for in the name of the user OPTIONAL
  * @since 1 Sept 2006
- * @return array
+ * @return array $data with the data for the template.
  */
 function itsp_user_review($args)
 {
@@ -35,7 +39,7 @@ function itsp_user_review($args)
     if (!xarVarFetch('userid',   'id', $userid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('statusselect', 'int:0:', $statusselect, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('statusselect', 'int:0:', $statusselect, 4, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('username', 'str:1:', $getname, '', XARVAR_NOT_REQUIRED)) return;
     /* At this stage we check to see if we have been passed $objectid, the
      * generic item identifier.
