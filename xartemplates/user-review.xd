@@ -9,21 +9,21 @@
 
     <table>
         <tr>
-            <th><xar:mlstring>User Name</xar:mlstring></th>
-            <th><xar:mlstring>Status</xar:mlstring></th>
+            <th><xar:mlstring>ITSP Status</xar:mlstring></th>
+            <th><xar:mlstring>User</xar:mlstring></th>
             <th><xar:mlstring>Last edit</xar:mlstring></th>
         </tr>
         <xar:foreach in="$items" value="$item">
         <tr>
-            <td>
-                 <a href="#$item.rolelink#">#$item.username#</a>
-            </td>
             <td>
                 <xar:if condition="empty($item.itsplink)">
                     #$item.statusname#
                 <xar:else />
                     <a href="#$item.itsplink#">#$item.statusname#</a>
                 </xar:if>
+            </td>
+            <td>
+                 <a href="#$item.rolelink#">#$item.username#</a>
             </td>
             <td>
                 #xarlocalegetformatteddate('medium',$item.datemodi)#
