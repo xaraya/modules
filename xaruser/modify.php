@@ -93,8 +93,11 @@ function itsp_user_modify($args)
                                                       'pitemid' => $pitemid,
                                                       'planid'  => $planid,
                                                       'userid'  => $userid));
-            $creditsnow = $lcourses['creditsnow'];
-            $data['lcourses'] = $lcourses['lcourses'];
+            // Only add the credits when there are none found.
+            if (!empty($lcourses)) {
+                $creditsnow = $lcourses['creditsnow'];
+                $data['lcourses'] = $lcourses['lcourses'];
+            }
         }
 
         switch ($rules['rule_source']) {
