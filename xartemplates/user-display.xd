@@ -11,8 +11,7 @@
             you'll get this warning :-)
         </xar:mlstring>
         <xar:mlstring>
-            Please place your own templates in themes/<em>yourtheme</em>/modules/articles
-            The templates will get the extension .xt there.
+            Please place your own templates in themes/<em>yourtheme</em>/modules/articles . The templates will get the extension .xt there.
         </xar:mlstring>
     </p>
 </div>
