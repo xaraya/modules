@@ -6,24 +6,24 @@
  */
 
 function preinit() {
-    // Initialize
-    tinyMCE.setWindowArg('mce_windowresize', false);
+	// Initialize
+	tinyMCE.setWindowArg('mce_windowresize', false);
 }
 
 function init() {
-    tinyMCEPopup.resizeToInnerSize();
-    SXE.initElementDialog('abbr');
-    if (SXE.currentAction == "update") {
-        SXE.showRemoveButton();
-    }
+	tinyMCEPopup.resizeToInnerSize();
+	SXE.initElementDialog('abbr');
+	if (SXE.currentAction == "update") {
+		SXE.showRemoveButton();
+	}
 }
 
 function insertAbbr() {
-    SXE.insertElement('abbr');
-    tinyMCEPopup.close();
+	SXE.insertElement('abbr');
+	tinyMCEPopup.close();
 }
 
 function removeAbbr() {
-    SXE.removeElement('abbr');
-    tinyMCEPopup.close();
+	SXE.removeElement('abbr');
+	tinyMCEPopup.close();
 }

@@ -9,36 +9,36 @@
 tinyMCE.importPluginLanguagePack('autosave');
 
 var TinyMCE_AutoSavePlugin = {
-    getInfo : function() {
-        return {
-            longname : 'Auto save',
-            author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_autosave.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
-        };
-    },
+	getInfo : function() {
+		return {
+			longname : 'Auto save',
+			author : 'Moxiecode Systems',
+			authorurl : 'http://tinymce.moxiecode.com',
+			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_autosave.html',
+			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+		};
+	},
 
-    // Private plugin internal methods
+	// Private plugin internal methods
 
-    _beforeUnloadHandler : function() {
-        var n, inst, anyDirty = false, msg = tinyMCE.getLang("lang_autosave_unload_msg");
+	_beforeUnloadHandler : function() {
+		var n, inst, anyDirty = false, msg = tinyMCE.getLang("lang_autosave_unload_msg");
 
-        if (tinyMCE.getParam("fullscreen_is_enabled"))
-            return;
+		if (tinyMCE.getParam("fullscreen_is_enabled"))
+			return;
 
-        for (n in tinyMCE.instances) {
-            inst = tinyMCE.instances[n];
+		for (n in tinyMCE.instances) {
+			inst = tinyMCE.instances[n];
 
-            if (!tinyMCE.isInstance(inst))
-                continue;
+			if (!tinyMCE.isInstance(inst))
+				continue;
 
-            if (inst.isDirty())
-                return msg;
-        }
+			if (inst.isDirty())
+				return msg;
+		}
 
-        return;
-    }
+		return;
+	}
 };
 
 window.onbeforeunload = TinyMCE_AutoSavePlugin._beforeUnloadHandler;

@@ -6,24 +6,24 @@
  */
 
 function preinit() {
-    // Initialize
-    tinyMCE.setWindowArg('mce_windowresize', false);
+	// Initialize
+	tinyMCE.setWindowArg('mce_windowresize', false);
 }
 
 function init() {
-    tinyMCEPopup.resizeToInnerSize();
-    SXE.initElementDialog('cite');
-    if (SXE.currentAction == "update") {
-        SXE.showRemoveButton();
-    }
+	tinyMCEPopup.resizeToInnerSize();
+	SXE.initElementDialog('cite');
+	if (SXE.currentAction == "update") {
+		SXE.showRemoveButton();
+	}
 }
 
 function insertCite() {
-    SXE.insertElement('cite');
-    tinyMCEPopup.close();
+	SXE.insertElement('cite');
+	tinyMCEPopup.close();
 }
 
 function removeCite() {
-    SXE.removeElement('cite');
-    tinyMCEPopup.close();
+	SXE.removeElement('cite');
+	tinyMCEPopup.close();
 }

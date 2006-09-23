@@ -6,57 +6,57 @@
  */
 
 /* Import plugin specific language pack */
-    .importPluginLanguagePack('nonbreaking');
+tinyMCE.importPluginLanguagePack('nonbreaking');
 
-var     _NonBreakingPlugin = {
-    getInfo : function() {
-        return {
-            longname : 'Visual characters',
-            author : 'Moxiecode Systems',
-            authorurl : 'http://    .moxiecode.com',
-            infourl : 'http://    .moxiecode.com/    /docs/plugin_visualchars.html',
-            version :     .majorVersion + "." +     .minorVersion
-        };
-    },
+var TinyMCE_NonBreakingPlugin = {
+	getInfo : function() {
+		return {
+			longname : 'Visual characters',
+			author : 'Moxiecode Systems',
+			authorurl : 'http://tinymce.moxiecode.com',
+			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_visualchars.html',
+			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+		};
+	},
 
-    getControlHTML : function(cn) {
-        switch (cn) {
-            case "nonbreaking":
-                return     .getButtonHTML(cn, 'lang_nonbreaking_desc', '{$pluginurl}/images/nonbreaking.gif', 'mceNonBreaking', false);
-        }
+	getControlHTML : function(cn) {
+		switch (cn) {
+			case "nonbreaking":
+				return tinyMCE.getButtonHTML(cn, 'lang_nonbreaking_desc', '{$pluginurl}/images/nonbreaking.gif', 'mceNonBreaking', false);
+		}
 
-        return "";
-    },
+		return "";
+	},
 
 
-    execCommand : function(editor_id, element, command, user_interface, value) {
-        var inst =     .getInstanceById(editor_id), h;
+	execCommand : function(editor_id, element, command, user_interface, value) {
+		var inst = tinyMCE.getInstanceById(editor_id), h;
 
-        switch (command) {
-            case "mceNonBreaking":
-                h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;</span>' : '&nbsp;';
-                    .execInstanceCommand(editor_id, 'mceInsertContent', false, h);
-                return true;
-        }
+		switch (command) {
+			case "mceNonBreaking":
+				h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;</span>' : '&nbsp;';
+				tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, h);
+				return true;
+		}
 
-        return false;
-    },
+		return false;
+	},
 
-    handleEvent : function(e) {
-        var inst, h;
+	handleEvent : function(e) {
+		var inst, h;
 
-        if (!    .isOpera && e.type == 'keydown' && e.keyCode == 9 &&     .getParam('nonbreaking_force_tab', false)) {
-            inst =     .selectedInstance;
+		if (!tinyMCE.isOpera && e.type == 'keydown' && e.keyCode == 9 && tinyMCE.getParam('nonbreaking_force_tab', false)) {
+			inst = tinyMCE.selectedInstance;
 
-            h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;&middot;&middot;</span>' : '&nbsp;&nbsp;&nbsp;';
-                .execInstanceCommand(inst.editorId, 'mceInsertContent', false, h);
+			h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;&middot;&middot;</span>' : '&nbsp;&nbsp;&nbsp;';
+			tinyMCE.execInstanceCommand(inst.editorId, 'mceInsertContent', false, h);
 
-                .cancelEvent(e);
-            return false;
-        }
+			tinyMCE.cancelEvent(e);
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 };
 
-    .addPlugin("nonbreaking",     _NonBreakingPlugin);
+tinyMCE.addPlugin("nonbreaking", TinyMCE_NonBreakingPlugin);
