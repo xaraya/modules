@@ -37,6 +37,10 @@
         {
             $this->loaddata($args);
         }
+        function hash()
+        {
+            return sha1(serialize($this));
+        }
         protected function loaddata(array $args)
         {
             if (isset($args['id'])) $this->id = $args['id'];
