@@ -14,22 +14,17 @@
 
 class GoogleMap_Property extends Dynamic_Property
 {
+    public $id         = 30040;
+    public $name       = 'gmap';
+    public $desc       = 'Google Map';
+    public $reqmodules = array('maps');
+
     private $regid = 30038;
     function __construct($args)
     {
         parent::__construct($args);
         $this->tplmodule = 'maps';
         $this->filepath   = 'modules/maps/xarproperties';
-    }
-
-    static function getRegistrationInfo()
-    {
-        $info = new PropertyRegistration();
-        $info->reqmodules = array('maps');
-        $info->id   = 30040;
-        $info->name = 'gmap';
-        $info->desc = 'Google Map';
-        return $info;
     }
 
     function showInput($data = array())
@@ -73,8 +68,8 @@ class GoogleMap_Property extends Dynamic_Property
     function getlocations($data = array())
     {
         if (isset($data['locations'])) {
-        	$locations = array();
-        	foreach ($data['locations'] as $location) $locations[] = $location->toArrAY();
+            $locations = array();
+            foreach ($data['locations'] as $location) $locations[] = $location->toArrAY();
             return $locations;
         } else {
             $uselocations =  unserialize(xarModUserVars::get('maps', 'uselocations', $this->regid));

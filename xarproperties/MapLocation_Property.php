@@ -22,6 +22,11 @@ sys::import('modules.dynamicdata.xarproperties.Dynamic_ObjectRef_Property');
  */
 class MapLocation_Property extends Dynamic_ObjectRef_Property
 {
+    public $id         = 30041;
+    public $name       = 'maplocation';
+    public $desc       = 'Map Location';
+    public $reqmodules = array('math');
+
     // We explicitly use names here instead of id's, so we are independent of
     // how dd assigns them at a given time. Otherwise the validation is not
     // exportable to other sites.
@@ -33,17 +38,6 @@ class MapLocation_Property extends Dynamic_ObjectRef_Property
     {
         parent::__construct($args);
         $this->filepath   = 'modules/maps/xarproperties';
-    }
-
-    static function getRegistrationInfo()
-    {
-        $info = new PropertyRegistration();
-        $info->reqmodules = array('maps');
-        $info->id   = 30041;
-        $info->name = 'maplocation';
-        $info->desc = 'Map Location';
-
-        return $info;
     }
 }
 ?>
