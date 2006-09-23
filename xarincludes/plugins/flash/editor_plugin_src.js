@@ -242,7 +242,7 @@ var TinyMCE_FlashPlugin = {
         var withInName;
         var withInValue;
         var attributes = new Array();
-        var whiteSpaceRegExp = new RegExp('^[ \n\r\t]+', 'g');
+        var whiteSpaceRegExp = new RegExp('^[ \n\r    ]+', 'g');
 
         if (attribute_string == null || attribute_string.length < 2)
             return null;

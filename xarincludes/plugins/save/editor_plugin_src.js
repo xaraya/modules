@@ -6,16 +6,16 @@
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('save');
+    .importPluginLanguagePack('save');
 
-var TinyMCE_SavePlugin = {
+var     _SavePlugin = {
     getInfo : function() {
         return {
             longname : 'Save',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_save.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_save.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
@@ -29,7 +29,7 @@ var TinyMCE_SavePlugin = {
     getControlHTML : function(cn) {
         switch (cn) {
             case "save":
-                return tinyMCE.getButtonHTML(cn, 'lang_save_desc', '{$pluginurl}/images/save.gif', 'mceSave');
+                return     .getButtonHTML(cn, 'lang_save_desc', '{$pluginurl}/images/save.gif', 'mceSave');
         }
 
         return "";
@@ -42,35 +42,35 @@ var TinyMCE_SavePlugin = {
         // Handle commands
         switch (command) {
             case "mceSave":
-                if (tinyMCE.getParam("fullscreen_is_enabled"))
+                if (    .getParam("fullscreen_is_enabled"))
                     return true;
 
-                var inst = tinyMCE.selectedInstance;
+                var inst =     .selectedInstance;
                 var formObj = inst.formElement.form;
 
-                if (tinyMCE.getParam("save_enablewhendirty") && !inst.isDirty())
+                if (    .getParam("save_enablewhendirty") && !inst.isDirty())
                     return true;
 
                 if (formObj) {
-                    tinyMCE.triggerSave();
+                        .triggerSave();
 
                     // Use callback instead
                     var os;
-                    if ((os = tinyMCE.getParam("save_onsavecallback"))) {
+                    if ((os =     .getParam("save_onsavecallback"))) {
                         if (eval(os + '(inst);')) {
-                            inst.startContent = tinyMCE.trim(inst.getBody().innerHTML);
+                            inst.startContent =     .trim(inst.getBody().innerHTML);
                             /*inst.undoLevels = new Array();
                             inst.undoIndex = 0;
                             inst.typingUndoIndex = -1;
                             inst.undoRedo = true;
                             inst.undoLevels[inst.undoLevels.length] = inst.startContent;*/
-                            tinyMCE.triggerNodeChange(false, true);
+                                .triggerNodeChange(false, true);
                         }
 
                         return true;
                     }
 
-                    // Disable all UI form elements that TinyMCE created
+                    // Disable all UI form elements that      created
                     for (var i=0; i<formObj.elements.length; i++) {
                         var elementId = formObj.elements[i].name ? formObj.elements[i].name : formObj.elements[i].id;
 
@@ -78,7 +78,7 @@ var TinyMCE_SavePlugin = {
                             formObj.elements[i].disabled = true;
                     }
 
-                    tinyMCE.isNotDirty = true;
+                        .isNotDirty = true;
 
                     if (formObj.onsubmit == null || formObj.onsubmit() != false)
                         inst.formElement.form.submit();
@@ -92,24 +92,24 @@ var TinyMCE_SavePlugin = {
     },
 
     handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
-        if (tinyMCE.getParam("fullscreen_is_enabled")) {
-            tinyMCE.switchClass(editor_id + '_save', 'mceButtonDisabled');
+        if (    .getParam("fullscreen_is_enabled")) {
+                .switchClass(editor_id + '_save', 'mceButtonDisabled');
             return true;
         }
 
-        if (tinyMCE.getParam("save_enablewhendirty")) {
-            var inst = tinyMCE.getInstanceById(editor_id);
+        if (    .getParam("save_enablewhendirty")) {
+            var inst =     .getInstanceById(editor_id);
 
             if (inst.isDirty()) {
-                tinyMCE.switchClass(editor_id + '_save', 'mceButtonNormal');
+                    .switchClass(editor_id + '_save', 'mceButtonNormal');
                 return true;
             }
 
-            tinyMCE.switchClass(editor_id + '_save', 'mceButtonDisabled');
+                .switchClass(editor_id + '_save', 'mceButtonDisabled');
         }
 
         return true;
     }
 };
 
-tinyMCE.addPlugin("save", TinyMCE_SavePlugin);
+    .addPlugin("save",     _SavePlugin);

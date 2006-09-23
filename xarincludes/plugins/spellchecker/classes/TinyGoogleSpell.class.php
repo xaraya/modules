@@ -1,11 +1,11 @@
 <?php
-/* *
+/**
  * Tiny Spelling Interface for TinyMCE Spell Checking.
  *
  * Copyright © 2006 Moxiecode Systems AB
  */
 
-class TinyGoogleSpell
+class TinyGoogleSpell 
 {
     var $lang;
 
@@ -47,7 +47,7 @@ class TinyGoogleSpell
         $matches = $this->_getMatches($word);
 
         if (count($matches) > 0)
-            $sug = explode("\t", utf8_encode($this->unhtmlentities($matches[0][4])));
+            $sug = explode("    ", utf8_encode($this->unhtmlentities($matches[0][4])));
 
         return $sug;
     }

@@ -6,23 +6,23 @@
  */
 
 /* Import theme    specific language pack */
-tinyMCE.importPluginLanguagePack('print');
+    .importPluginLanguagePack('print');
 
-var TinyMCE_PrintPlugin = {
+var     _PrintPlugin = {
     getInfo : function() {
         return {
             longname : 'Print',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_print.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_print.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
     getControlHTML : function(cn)    {
         switch (cn) {
             case "print":
-                return tinyMCE.getButtonHTML(cn, 'lang_print_desc', '{$pluginurl}/images/print.gif', 'mcePrint');
+                return     .getButtonHTML(cn, 'lang_print_desc', '{$pluginurl}/images/print.gif', 'mcePrint');
         }
 
         return "";
@@ -35,7 +35,7 @@ var TinyMCE_PrintPlugin = {
         // Handle commands
         switch (command) {
             case "mcePrint":
-                tinyMCE.getInstanceById(editor_id).contentWindow.print();
+                    .getInstanceById(editor_id).contentWindow.print();
                 return true;
         }
 
@@ -44,4 +44,4 @@ var TinyMCE_PrintPlugin = {
     }
 };
 
-tinyMCE.addPlugin("print", TinyMCE_PrintPlugin);
+    .addPlugin("print",     _PrintPlugin);

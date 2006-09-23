@@ -7,9 +7,9 @@
 <link rel ="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 <script>
 function asd() {
-	
-		parent.document.title="TinyMCE_URL.class.js Overview";
-	
+    
+        parent.document.title="TinyMCE_URL.class.js Overview";
+    
 }
 </script>
 </head>
@@ -26,10 +26,10 @@ function asd() {
   
   
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
-  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">    &nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
   
 
-  <td bgcolor="#FFFFFF" class="NavBarCell1"> 	<font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1">     <font class="NavBarFont1">Class</font>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
@@ -67,19 +67,19 @@ function asd() {
 
 <hr>
 <center>
-	
-	   <h2>TinyMCE_URL.class.js</h2>
-	
+    
+       <h2>TinyMCE_URL.class.js</h2>
+    
 </center>
 
-	
+    
 
 
 <h4>Summary</h4>
 <p>
-	
-		No overview generated for 'TinyMCE_URL.class.js'<BR/><BR/>
-	
+    
+        No overview generated for 'TinyMCE_URL.class.js'<BR/><BR/>
+    
 </p>
 
 <hr>
@@ -92,9 +92,7 @@ function asd() {
 
 
         <pre class="sourceview"><span class="comment">/**
- * $RCSfile: overview-summary-TinyMCE_URL.class.js.html,v $
- * $Revision: 1.42 $
- * $Date: 2006/04/14 20:00:31 $
+ * $Id: TinyMCE_URL.class.js 59 2006-08-20 20:53:19Z spocke $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -110,70 +108,70 @@ function asd() {
  * <span class="attrib">@type</span> TinyMCE_URL_Item
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.parseURL = <span class="reserved">function</span>(url_str) {
-	var urlParts = new Array();
+    var urlParts = new Array();
 
-	<span class="reserved">if</span> (url_str) {
-		var pos, lastPos;
+    <span class="reserved">if</span> (url_str) {
+        var pos, lastPos;
 
-		<span class="comment">// Parse protocol part</span>
-		pos = url_str.indexOf(<span class="literal">'://'</span>);
-		<span class="reserved">if</span> (pos != -1) {
-			urlParts[<span class="literal">'protocol'</span>] = url_str.substring(0, pos);
-			lastPos = pos + 3;
-		}
+        <span class="comment">// Parse protocol part</span>
+        pos = url_str.indexOf(<span class="literal">'://'</span>);
+        <span class="reserved">if</span> (pos != -1) {
+            urlParts[<span class="literal">'protocol'</span>] = url_str.substring(0, pos);
+            lastPos = pos + 3;
+        }
 
-		<span class="comment">// Find port or path start</span>
-		<span class="reserved">for</span> (var i=lastPos; i&lt;url_str.length; i++) {
-			var chr = url_str.charAt(i);
+        <span class="comment">// Find port or path start</span>
+        <span class="reserved">for</span> (var i=lastPos; i&lt;url_str.length; i++) {
+            var chr = url_str.charAt(i);
 
-			<span class="reserved">if</span> (chr == <span class="literal">':'</span>)
-				break;
+            <span class="reserved">if</span> (chr == <span class="literal">':'</span>)
+                break;
 
-			<span class="reserved">if</span> (chr == <span class="literal">'/'</span>)
-				break;
-		}
-		pos = i;
+            <span class="reserved">if</span> (chr == <span class="literal">'/'</span>)
+                break;
+        }
+        pos = i;
 
-		<span class="comment">// Get host</span>
-		urlParts[<span class="literal">'host'</span>] = url_str.substring(lastPos, pos);
+        <span class="comment">// Get host</span>
+        urlParts[<span class="literal">'host'</span>] = url_str.substring(lastPos, pos);
 
-		<span class="comment">// Get port</span>
-		urlParts[<span class="literal">'port'</span>] = <span class="literal">""</span>;
-		lastPos = pos;
-		<span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">':'</span>) {
-			pos = url_str.indexOf(<span class="literal">'/'</span>, lastPos);
-			urlParts[<span class="literal">'port'</span>] = url_str.substring(lastPos+1, pos);
-		}
+        <span class="comment">// Get port</span>
+        urlParts[<span class="literal">'port'</span>] = <span class="literal">""</span>;
+        lastPos = pos;
+        <span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">':'</span>) {
+            pos = url_str.indexOf(<span class="literal">'/'</span>, lastPos);
+            urlParts[<span class="literal">'port'</span>] = url_str.substring(lastPos+1, pos);
+        }
 
-		<span class="comment">// Get path</span>
-		lastPos = pos;
-		pos = url_str.indexOf(<span class="literal">'?'</span>, lastPos);
+        <span class="comment">// Get path</span>
+        lastPos = pos;
+        pos = url_str.indexOf(<span class="literal">'?'</span>, lastPos);
 
-		<span class="reserved">if</span> (pos == -1)
-			pos = url_str.indexOf(<span class="literal">'#'</span>, lastPos);
+        <span class="reserved">if</span> (pos == -1)
+            pos = url_str.indexOf(<span class="literal">'#'</span>, lastPos);
 
-		<span class="reserved">if</span> (pos == -1)
-			pos = url_str.length;
+        <span class="reserved">if</span> (pos == -1)
+            pos = url_str.length;
 
-		urlParts[<span class="literal">'path'</span>] = url_str.substring(lastPos, pos);
+        urlParts[<span class="literal">'path'</span>] = url_str.substring(lastPos, pos);
 
-		<span class="comment">// Get query</span>
-		lastPos = pos;
-		<span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">'?'</span>) {
-			pos = url_str.indexOf(<span class="literal">'#'</span>);
-			pos = (pos == -1) ? url_str.length : pos;
-			urlParts[<span class="literal">'query'</span>] = url_str.substring(lastPos+1, pos);
-		}
+        <span class="comment">// Get query</span>
+        lastPos = pos;
+        <span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">'?'</span>) {
+            pos = url_str.indexOf(<span class="literal">'#'</span>);
+            pos = (pos == -1) ? url_str.length : pos;
+            urlParts[<span class="literal">'query'</span>] = url_str.substring(lastPos+1, pos);
+        }
 
-		<span class="comment">// Get anchor</span>
-		lastPos = pos;
-		<span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">'#'</span>) {
-			pos = url_str.length;
-			urlParts[<span class="literal">'anchor'</span>] = url_str.substring(lastPos+1, pos);
-		}
-	}
+        <span class="comment">// Get anchor</span>
+        lastPos = pos;
+        <span class="reserved">if</span> (url_str.charAt(pos) == <span class="literal">'#'</span>) {
+            pos = url_str.length;
+            urlParts[<span class="literal">'anchor'</span>] = url_str.substring(lastPos+1, pos);
+        }
+    }
 
-	<span class="reserved">return</span> urlParts;
+    <span class="reserved">return</span> urlParts;
 };
 
 <span class="comment">/**
@@ -184,27 +182,27 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.parseURL = <span class="r
  * <span class="attrib">@type</span> string
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.serializeURL = <span class="reserved">function</span>(up) {
-	var o = <span class="literal">""</span>;
+    var o = <span class="literal">""</span>;
 
-	<span class="reserved">if</span> (up[<span class="literal">'protocol'</span>])
-		o += up[<span class="literal">'protocol'</span>] + <span class="literal">"://"</span>;
+    <span class="reserved">if</span> (up[<span class="literal">'protocol'</span>])
+        o += up[<span class="literal">'protocol'</span>] + <span class="literal">"://"</span>;
 
-	<span class="reserved">if</span> (up[<span class="literal">'host'</span>])
-		o += up[<span class="literal">'host'</span>];
+    <span class="reserved">if</span> (up[<span class="literal">'host'</span>])
+        o += up[<span class="literal">'host'</span>];
 
-	<span class="reserved">if</span> (up[<span class="literal">'port'</span>])
-		o += <span class="literal">":"</span> + up[<span class="literal">'port'</span>];
+    <span class="reserved">if</span> (up[<span class="literal">'port'</span>])
+        o += <span class="literal">":"</span> + up[<span class="literal">'port'</span>];
 
-	<span class="reserved">if</span> (up[<span class="literal">'path'</span>])
-		o += up[<span class="literal">'path'</span>];
+    <span class="reserved">if</span> (up[<span class="literal">'path'</span>])
+        o += up[<span class="literal">'path'</span>];
 
-	<span class="reserved">if</span> (up[<span class="literal">'query'</span>])
-		o += <span class="literal">"?"</span> + up[<span class="literal">'query'</span>];
+    <span class="reserved">if</span> (up[<span class="literal">'query'</span>])
+        o += <span class="literal">"?"</span> + up[<span class="literal">'query'</span>];
 
-	<span class="reserved">if</span> (up[<span class="literal">'anchor'</span>])
-		o += <span class="literal">"#"</span> + up[<span class="literal">'anchor'</span>];
+    <span class="reserved">if</span> (up[<span class="literal">'anchor'</span>])
+        o += <span class="literal">"#"</span> + up[<span class="literal">'anchor'</span>];
 
-	<span class="reserved">return</span> o;
+    <span class="reserved">return</span> o;
 };
 
 <span class="comment">/**
@@ -216,76 +214,76 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.serializeURL = <span clas
  * <span class="attrib">@type</span> string
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.convertAbsoluteURLToRelativeURL = <span class="reserved">function</span>(base_url, url_to_relative) {
-	var baseURL = <span class="reserved">this</span>.parseURL(base_url);
-	var targetURL = <span class="reserved">this</span>.parseURL(url_to_relative);
-	var strTok1;
-	var strTok2;
-	var breakPoint = 0;
-	var outPath = <span class="literal">""</span>;
-	var forceSlash = false;
+    var baseURL = <span class="reserved">this</span>.parseURL(base_url);
+    var targetURL = <span class="reserved">this</span>.parseURL(url_to_relative);
+    var strTok1;
+    var strTok2;
+    var breakPoint = 0;
+    var outPath = <span class="literal">""</span>;
+    var forceSlash = false;
 
-	<span class="reserved">if</span> (targetURL.path == <span class="literal">""</span>)
-		targetURL.path = <span class="literal">"/"</span>;
-	<span class="reserved">else</span>
-		forceSlash = true;
+    <span class="reserved">if</span> (targetURL.path == <span class="literal">""</span>)
+        targetURL.path = <span class="literal">"/"</span>;
+    <span class="reserved">else</span>
+        forceSlash = true;
 
-	<span class="comment">// Crop away last path part</span>
-	base_url = baseURL.path.substring(0, baseURL.path.lastIndexOf(<span class="literal">'/'</span>));
-	strTok1 = base_url.split(<span class="literal">'/'</span>);
-	strTok2 = targetURL.path.split(<span class="literal">'/'</span>);
+    <span class="comment">// Crop away last path part</span>
+    base_url = baseURL.path.substring(0, baseURL.path.lastIndexOf(<span class="literal">'/'</span>));
+    strTok1 = base_url.split(<span class="literal">'/'</span>);
+    strTok2 = targetURL.path.split(<span class="literal">'/'</span>);
 
-	<span class="reserved">if</span> (strTok1.length &gt;= strTok2.length) {
-		<span class="reserved">for</span> (var i=0; i&lt;strTok1.length; i++) {
-			<span class="reserved">if</span> (i &gt;= strTok2.length || strTok1[i] != strTok2[i]) {
-				breakPoint = i + 1;
-				break;
-			}
-		}
-	}
+    <span class="reserved">if</span> (strTok1.length &gt;= strTok2.length) {
+        <span class="reserved">for</span> (var i=0; i&lt;strTok1.length; i++) {
+            <span class="reserved">if</span> (i &gt;= strTok2.length || strTok1[i] != strTok2[i]) {
+                breakPoint = i + 1;
+                break;
+            }
+        }
+    }
 
-	<span class="reserved">if</span> (strTok1.length &lt; strTok2.length) {
-		<span class="reserved">for</span> (var i=0; i&lt;strTok2.length; i++) {
-			<span class="reserved">if</span> (i &gt;= strTok1.length || strTok1[i] != strTok2[i]) {
-				breakPoint = i + 1;
-				break;
-			}
-		}
-	}
+    <span class="reserved">if</span> (strTok1.length &lt; strTok2.length) {
+        <span class="reserved">for</span> (var i=0; i&lt;strTok2.length; i++) {
+            <span class="reserved">if</span> (i &gt;= strTok1.length || strTok1[i] != strTok2[i]) {
+                breakPoint = i + 1;
+                break;
+            }
+        }
+    }
 
-	<span class="reserved">if</span> (breakPoint == 1)
-		<span class="reserved">return</span> targetURL.path;
+    <span class="reserved">if</span> (breakPoint == 1)
+        <span class="reserved">return</span> targetURL.path;
 
-	<span class="reserved">for</span> (var i=0; i&lt;(strTok1.length-(breakPoint-1)); i++)
-		outPath += <span class="literal">"../"</span>;
+    <span class="reserved">for</span> (var i=0; i&lt;(strTok1.length-(breakPoint-1)); i++)
+        outPath += <span class="literal">"../"</span>;
 
-	<span class="reserved">for</span> (var i=breakPoint-1; i&lt;strTok2.length; i++) {
-		<span class="reserved">if</span> (i != (breakPoint-1))
-			outPath += <span class="literal">"/"</span> + strTok2[i];
-		<span class="reserved">else</span>
-			outPath += strTok2[i];
-	}
+    <span class="reserved">for</span> (var i=breakPoint-1; i&lt;strTok2.length; i++) {
+        <span class="reserved">if</span> (i != (breakPoint-1))
+            outPath += <span class="literal">"/"</span> + strTok2[i];
+        <span class="reserved">else</span>
+            outPath += strTok2[i];
+    }
 
-	targetURL.protocol = null;
-	targetURL.host = null;
-	targetURL.port = null;
-	targetURL.path = outPath == <span class="literal">""</span> &amp;&amp; forceSlash ? <span class="literal">"/"</span> : outPath;
+    targetURL.protocol = null;
+    targetURL.host = null;
+    targetURL.port = null;
+    targetURL.path = outPath == <span class="literal">""</span> &amp;&amp; forceSlash ? <span class="literal">"/"</span> : outPath;
 
-	<span class="comment">// Remove document prefix from local anchors</span>
-	var fileName = baseURL.path;
-	var pos;
+    <span class="comment">// Remove document prefix from local anchors</span>
+    var fileName = baseURL.path;
+    var pos;
 
-	<span class="reserved">if</span> ((pos = fileName.lastIndexOf(<span class="literal">'/'</span>)) != -1)
-		fileName = fileName.substring(pos + 1);
+    <span class="reserved">if</span> ((pos = fileName.lastIndexOf(<span class="literal">'/'</span>)) != -1)
+        fileName = fileName.substring(pos + 1);
 
-	<span class="comment">// Is local anchor</span>
-	<span class="reserved">if</span> (fileName == targetURL.path &amp;&amp; targetURL.anchor != <span class="literal">""</span>)
-		targetURL.path = <span class="literal">""</span>;
+    <span class="comment">// Is local anchor</span>
+    <span class="reserved">if</span> (fileName == targetURL.path &amp;&amp; targetURL.anchor != <span class="literal">""</span>)
+        targetURL.path = <span class="literal">""</span>;
 
-	<span class="comment">// If empty and not local anchor force filename or slash</span>
-	<span class="reserved">if</span> (targetURL.path == <span class="literal">""</span> &amp;&amp; !targetURL.anchor)
-		targetURL.path = fileName != <span class="literal">""</span> ? fileName : <span class="literal">"/"</span>;
+    <span class="comment">// If empty and not local anchor force filename or slash</span>
+    <span class="reserved">if</span> (targetURL.path == <span class="literal">""</span> &amp;&amp; !targetURL.anchor)
+        targetURL.path = fileName != <span class="literal">""</span> ? fileName : <span class="literal">"/"</span>;
 
-	<span class="reserved">return</span> <span class="reserved">this</span>.serializeURL(targetURL);
+    <span class="reserved">return</span> <span class="reserved">this</span>.serializeURL(targetURL);
 };
 
 <span class="comment">/**
@@ -297,65 +295,65 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.convertAbsoluteURLToRelat
  * <span class="attrib">@type</span> string
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.convertRelativeToAbsoluteURL = <span class="reserved">function</span>(base_url, relative_url) {
-	var baseURL = <span class="reserved">this</span>.parseURL(base_url);
-	var relURL = <span class="reserved">this</span>.parseURL(relative_url);
+    var baseURL = <span class="reserved">this</span>.parseURL(base_url), baseURLParts, relURLParts;
+    var relURL = <span class="reserved">this</span>.parseURL(relative_url);
 
-	<span class="reserved">if</span> (relative_url == <span class="literal">""</span> || relative_url.charAt(0) == <span class="literal">'/'</span> || relative_url.indexOf(<span class="literal">'://'</span>) != -1 || relative_url.indexOf(<span class="literal">'mailto:'</span>) != -1 || relative_url.indexOf(<span class="literal">'javascript:'</span>) != -1)
-		<span class="reserved">return</span> relative_url;
+    <span class="reserved">if</span> (relative_url == <span class="literal">""</span> || relative_url.charAt(0) == <span class="literal">'/'</span> || relative_url.indexOf(<span class="literal">'://'</span>) != -1 || relative_url.indexOf(<span class="literal">'mailto:'</span>) != -1 || relative_url.indexOf(<span class="literal">'javascript:'</span>) != -1)
+        <span class="reserved">return</span> relative_url;
 
-	<span class="comment">// Split parts</span>
-	baseURLParts = baseURL[<span class="literal">'path'</span>].split(<span class="literal">'/'</span>);
-	relURLParts = relURL[<span class="literal">'path'</span>].split(<span class="literal">'/'</span>);
+    <span class="comment">// Split parts</span>
+    baseURLParts = baseURL[<span class="literal">'path'</span>].split(<span class="literal">'/'</span>);
+    relURLParts = relURL[<span class="literal">'path'</span>].split(<span class="literal">'/'</span>);
 
-	<span class="comment">// Remove empty chunks</span>
-	var newBaseURLParts = new Array();
-	<span class="reserved">for</span> (var i=baseURLParts.length-1; i&gt;=0; i--) {
-		<span class="reserved">if</span> (baseURLParts[i].length == 0)
-			continue;
+    <span class="comment">// Remove empty chunks</span>
+    var newBaseURLParts = new Array();
+    <span class="reserved">for</span> (var i=baseURLParts.length-1; i&gt;=0; i--) {
+        <span class="reserved">if</span> (baseURLParts[i].length == 0)
+            continue;
 
-		newBaseURLParts[newBaseURLParts.length] = baseURLParts[i];
-	}
-	baseURLParts = newBaseURLParts.reverse();
+        newBaseURLParts[newBaseURLParts.length] = baseURLParts[i];
+    }
+    baseURLParts = newBaseURLParts.reverse();
 
-	<span class="comment">// Merge relURLParts chunks</span>
-	var newRelURLParts = new Array();
-	var numBack = 0;
-	<span class="reserved">for</span> (var i=relURLParts.length-1; i&gt;=0; i--) {
-		<span class="reserved">if</span> (relURLParts[i].length == 0 || relURLParts[i] == <span class="literal">"."</span>)
-			continue;
+    <span class="comment">// Merge relURLParts chunks</span>
+    var newRelURLParts = new Array();
+    var numBack = 0;
+    <span class="reserved">for</span> (var i=relURLParts.length-1; i&gt;=0; i--) {
+        <span class="reserved">if</span> (relURLParts[i].length == 0 || relURLParts[i] == <span class="literal">"."</span>)
+            continue;
 
-		<span class="reserved">if</span> (relURLParts[i] == <span class="literal">'..'</span>) {
-			numBack++;
-			continue;
-		}
+        <span class="reserved">if</span> (relURLParts[i] == <span class="literal">'..'</span>) {
+            numBack++;
+            continue;
+        }
 
-		<span class="reserved">if</span> (numBack &gt; 0) {
-			numBack--;
-			continue;
-		}
+        <span class="reserved">if</span> (numBack &gt; 0) {
+            numBack--;
+            continue;
+        }
 
-		newRelURLParts[newRelURLParts.length] = relURLParts[i];
-	}
+        newRelURLParts[newRelURLParts.length] = relURLParts[i];
+    }
 
-	relURLParts = newRelURLParts.reverse();
+    relURLParts = newRelURLParts.reverse();
 
-	<span class="comment">// Remove end from absolute path</span>
-	var len = baseURLParts.length-numBack;
-	var absPath = (len &lt;= 0 ? <span class="literal">""</span> : <span class="literal">"/"</span>) + baseURLParts.slice(0, len).join(<span class="literal">'/'</span>) + <span class="literal">"/"</span> + relURLParts.join(<span class="literal">'/'</span>);
-	var start = <span class="literal">""</span>, end = <span class="literal">""</span>;
+    <span class="comment">// Remove end from absolute path</span>
+    var len = baseURLParts.length-numBack;
+    var absPath = (len &lt;= 0 ? <span class="literal">""</span> : <span class="literal">"/"</span>) + baseURLParts.slice(0, len).join(<span class="literal">'/'</span>) + <span class="literal">"/"</span> + relURLParts.join(<span class="literal">'/'</span>);
+    var start = <span class="literal">""</span>, end = <span class="literal">""</span>;
 
-	<span class="comment">// Build output URL</span>
-	relURL.protocol = baseURL.protocol;
-	relURL.host = baseURL.host;
-	relURL.port = baseURL.port;
+    <span class="comment">// Build output URL</span>
+    relURL.protocol = baseURL.protocol;
+    relURL.host = baseURL.host;
+    relURL.port = baseURL.port;
 
-	<span class="comment">// Re-add trailing slash if it's removed</span>
-	<span class="reserved">if</span> (relURL.path.charAt(relURL.path.length-1) == <span class="literal">"/"</span>)
-		absPath += <span class="literal">"/"</span>;
+    <span class="comment">// Re-add trailing slash if it's removed</span>
+    <span class="reserved">if</span> (relURL.path.charAt(relURL.path.length-1) == <span class="literal">"/"</span>)
+        absPath += <span class="literal">"/"</span>;
 
-	relURL.path = absPath;
+    relURL.path = absPath;
 
-	<span class="reserved">return</span> <span class="reserved">this</span>.serializeURL(relURL);
+    <span class="reserved">return</span> <span class="reserved">this</span>.serializeURL(relURL);
 };
 
 <span class="comment">/**
@@ -368,66 +366,66 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.convertRelativeToAbsolute
  * <span class="attrib">@type</span> string
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.convertURL = <span class="reserved">function</span>(url, node, on_save) {
-	var prot = document.location.protocol;
-	var host = document.location.hostname;
-	var port = document.location.port;
+    var prot = document.location.protocol;
+    var host = document.location.hostname;
+    var port = document.location.port;
 
-	<span class="comment">// Pass through file protocol</span>
-	<span class="reserved">if</span> (prot == <span class="literal">"file:"</span>)
-		<span class="reserved">return</span> url;
+    <span class="comment">// Pass through file protocol</span>
+    <span class="reserved">if</span> (prot == <span class="literal">"file:"</span>)
+        <span class="reserved">return</span> url;
 
-	<span class="comment">// Something is wrong, remove weirdness</span>
-	url = tinyMCE.regexpReplace(url, <span class="literal">'(http|https):///'</span>, <span class="literal">'/'</span>);
+    <span class="comment">// Something is wrong, remove weirdness</span>
+    url = tinyMCE.regexpReplace(url, <span class="literal">'(http|https):///'</span>, <span class="literal">'/'</span>);
 
-	<span class="comment">// Mailto link or anchor (Pass through)</span>
-	<span class="reserved">if</span> (url.indexOf(<span class="literal">'mailto:'</span>) != -1 || url.indexOf(<span class="literal">'javascript:'</span>) != -1 || tinyMCE.regexpReplace(url,<span class="literal">'[ \t\r\n\+]|%20'</span>,<span class="literal">''</span>).charAt(0) == <span class="literal">"#"</span>)
-		<span class="reserved">return</span> url;
+    <span class="comment">// Mailto link or anchor (Pass through)</span>
+    <span class="reserved">if</span> (url.indexOf(<span class="literal">'mailto:'</span>) != -1 || url.indexOf(<span class="literal">'javascript:'</span>) != -1 || tinyMCE.regexpReplace(url,<span class="literal">'[     \r\n\+]|%20'</span>,<span class="literal">''</span>).charAt(0) == <span class="literal">"#"</span>)
+        <span class="reserved">return</span> url;
 
-	<span class="comment">// Fix relative/Mozilla</span>
-	<span class="reserved">if</span> (!tinyMCE.isMSIE &amp;&amp; !on_save &amp;&amp; url.indexOf(<span class="literal">"://"</span>) == -1 &amp;&amp; url.charAt(0) != <span class="literal">'/'</span>)
-		<span class="reserved">return</span> tinyMCE.settings[<span class="literal">'base_href'</span>] + url;
+    <span class="comment">// Fix relative/Mozilla</span>
+    <span class="reserved">if</span> (!tinyMCE.isMSIE &amp;&amp; !on_save &amp;&amp; url.indexOf(<span class="literal">"://"</span>) == -1 &amp;&amp; url.charAt(0) != <span class="literal">'/'</span>)
+        <span class="reserved">return</span> tinyMCE.settings[<span class="literal">'base_href'</span>] + url;
 
-	<span class="comment">// Handle relative URLs</span>
-	<span class="reserved">if</span> (on_save &amp;&amp; tinyMCE.getParam(<span class="literal">'relative_urls'</span>)) {
-		var curl = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], url);
-		<span class="reserved">if</span> (curl.charAt(0) == <span class="literal">'/'</span>)
-			curl = tinyMCE.settings[<span class="literal">'document_base_prefix'</span>] + curl;
+    <span class="comment">// Handle relative URLs</span>
+    <span class="reserved">if</span> (on_save &amp;&amp; tinyMCE.getParam(<span class="literal">'relative_urls'</span>)) {
+        var curl = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], url);
+        <span class="reserved">if</span> (curl.charAt(0) == <span class="literal">'/'</span>)
+            curl = tinyMCE.settings[<span class="literal">'document_base_prefix'</span>] + curl;
 
-		var urlParts = tinyMCE.parseURL(curl);
-		var tmpUrlParts = tinyMCE.parseURL(tinyMCE.settings[<span class="literal">'document_base_url'</span>]);
+        var urlParts = tinyMCE.parseURL(curl);
+        var tmpUrlParts = tinyMCE.parseURL(tinyMCE.settings[<span class="literal">'document_base_url'</span>]);
 
-		<span class="comment">// Force relative</span>
-		<span class="reserved">if</span> (urlParts[<span class="literal">'host'</span>] == tmpUrlParts[<span class="literal">'host'</span>] &amp;&amp; (urlParts[<span class="literal">'port'</span>] == tmpUrlParts[<span class="literal">'port'</span>]))
-			<span class="reserved">return</span> tinyMCE.convertAbsoluteURLToRelativeURL(tinyMCE.settings[<span class="literal">'document_base_url'</span>], curl);
-	}
+        <span class="comment">// Force relative</span>
+        <span class="reserved">if</span> (urlParts[<span class="literal">'host'</span>] == tmpUrlParts[<span class="literal">'host'</span>] &amp;&amp; (urlParts[<span class="literal">'port'</span>] == tmpUrlParts[<span class="literal">'port'</span>]))
+            <span class="reserved">return</span> tinyMCE.convertAbsoluteURLToRelativeURL(tinyMCE.settings[<span class="literal">'document_base_url'</span>], curl);
+    }
 
-	<span class="comment">// Handle absolute URLs</span>
-	<span class="reserved">if</span> (!tinyMCE.getParam(<span class="literal">'relative_urls'</span>)) {
-		var urlParts = tinyMCE.parseURL(url);
-		var baseUrlParts = tinyMCE.parseURL(tinyMCE.settings[<span class="literal">'base_href'</span>]);
+    <span class="comment">// Handle absolute URLs</span>
+    <span class="reserved">if</span> (!tinyMCE.getParam(<span class="literal">'relative_urls'</span>)) {
+        var urlParts = tinyMCE.parseURL(url);
+        var baseUrlParts = tinyMCE.parseURL(tinyMCE.settings[<span class="literal">'base_href'</span>]);
 
-		<span class="comment">// Force absolute URLs from relative URLs</span>
-		url = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], url);
+        <span class="comment">// Force absolute URLs from relative URLs</span>
+        url = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], url);
 
-		<span class="comment">// If anchor and path is the same page</span>
-		<span class="reserved">if</span> (urlParts[<span class="literal">'anchor'</span>] &amp;&amp; urlParts[<span class="literal">'path'</span>] == baseUrlParts[<span class="literal">'path'</span>])
-			<span class="reserved">return</span> <span class="literal">"#"</span> + urlParts[<span class="literal">'anchor'</span>];
-	}
+        <span class="comment">// If anchor and path is the same page</span>
+        <span class="reserved">if</span> (urlParts[<span class="literal">'anchor'</span>] &amp;&amp; urlParts[<span class="literal">'path'</span>] == baseUrlParts[<span class="literal">'path'</span>])
+            <span class="reserved">return</span> <span class="literal">"#"</span> + urlParts[<span class="literal">'anchor'</span>];
+    }
 
-	<span class="comment">// Remove current domain</span>
-	<span class="reserved">if</span> (tinyMCE.getParam(<span class="literal">'remove_script_host'</span>)) {
-		var start = <span class="literal">""</span>, portPart = <span class="literal">""</span>;
+    <span class="comment">// Remove current domain</span>
+    <span class="reserved">if</span> (tinyMCE.getParam(<span class="literal">'remove_script_host'</span>)) {
+        var start = <span class="literal">""</span>, portPart = <span class="literal">""</span>;
 
-		<span class="reserved">if</span> (port != <span class="literal">""</span>)
-			portPart = <span class="literal">":"</span> + port;
+        <span class="reserved">if</span> (port != <span class="literal">""</span>)
+            portPart = <span class="literal">":"</span> + port;
 
-		start = prot + <span class="literal">"//"</span> + host + portPart + <span class="literal">"/"</span>;
+        start = prot + <span class="literal">"//"</span> + host + portPart + <span class="literal">"/"</span>;
 
-		<span class="reserved">if</span> (url.indexOf(start) == 0)
-			url = url.substring(start.length-1);
-	}
+        <span class="reserved">if</span> (url.indexOf(start) == 0)
+            url = url.substring(start.length-1);
+    }
 
-	<span class="reserved">return</span> url;
+    <span class="reserved">return</span> url;
 };
 
 <span class="comment">/**
@@ -437,38 +435,38 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.convertURL = <span class=
  * <span class="attrib">@param</span> {HTMLElement} body HTML element to convert all URLs in.
  */</span>
 TinyMCE_Engine.<span class="reserved">prototype</span>.convertAllRelativeURLs = <span class="reserved">function</span>(body) {
-	<span class="comment">// Convert all image URL:s to absolute URL</span>
-	var elms = body.getElementsByTagName(<span class="literal">"img"</span>);
-	<span class="reserved">for</span> (var i=0; i&lt;elms.length; i++) {
-		var src = tinyMCE.getAttrib(elms[i], <span class="literal">'src'</span>);
+    <span class="comment">// Convert all image URL:s to absolute URL</span>
+    var elms = body.getElementsByTagName(<span class="literal">"img"</span>);
+    <span class="reserved">for</span> (var i=0; i&lt;elms.length; i++) {
+        var src = tinyMCE.getAttrib(elms[i], <span class="literal">'src'</span>);
 
-		var msrc = tinyMCE.getAttrib(elms[i], <span class="literal">'mce_src'</span>);
-		<span class="reserved">if</span> (msrc != <span class="literal">""</span>)
-			src = msrc;
+        var msrc = tinyMCE.getAttrib(elms[i], <span class="literal">'mce_src'</span>);
+        <span class="reserved">if</span> (msrc != <span class="literal">""</span>)
+            src = msrc;
 
-		<span class="reserved">if</span> (src != <span class="literal">""</span>) {
-			src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], src);
-			elms[i].setAttribute(<span class="literal">"src"</span>, src);
-		}
-	}
+        <span class="reserved">if</span> (src != <span class="literal">""</span>) {
+            src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], src);
+            elms[i].setAttribute(<span class="literal">"src"</span>, src);
+        }
+    }
 
-	<span class="comment">// Convert all link URL:s to absolute URL</span>
-	var elms = body.getElementsByTagName(<span class="literal">"a"</span>);
-	<span class="reserved">for</span> (var i=0; i&lt;elms.length; i++) {
-		var href = tinyMCE.getAttrib(elms[i], <span class="literal">'href'</span>);
+    <span class="comment">// Convert all link URL:s to absolute URL</span>
+    var elms = body.getElementsByTagName(<span class="literal">"a"</span>);
+    <span class="reserved">for</span> (var i=0; i&lt;elms.length; i++) {
+        var href = tinyMCE.getAttrib(elms[i], <span class="literal">'href'</span>);
 
-		var mhref = tinyMCE.getAttrib(elms[i], <span class="literal">'mce_href'</span>);
-		<span class="reserved">if</span> (mhref != <span class="literal">""</span>)
-			href = mhref;
+        var mhref = tinyMCE.getAttrib(elms[i], <span class="literal">'mce_href'</span>);
+        <span class="reserved">if</span> (mhref != <span class="literal">""</span>)
+            href = mhref;
 
-		<span class="reserved">if</span> (href &amp;&amp; href != <span class="literal">""</span>) {
-			href = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], href);
-			elms[i].setAttribute(<span class="literal">"href"</span>, href);
-		}
-	}
+        <span class="reserved">if</span> (href &amp;&amp; href != <span class="literal">""</span>) {
+            href = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings[<span class="literal">'base_href'</span>], href);
+            elms[i].setAttribute(<span class="literal">"href"</span>, href);
+        }
+    }
 };
 </pre>
-	<hr>
+    <hr>
 
 
 
@@ -483,7 +481,7 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.convertAllRelativeURLs = 
   
   
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
-  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">    &nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
   
 
   <td bgcolor="#FFFFFF" class="NavBarCell1"> <font class="NavBarFont1">Class</font>&nbsp;</td>
@@ -525,6 +523,6 @@ TinyMCE_Engine.<span class="reserved">prototype</span>.convertAllRelativeURLs = 
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Apr 14 21:59:23 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Wed Sep 13 17:44:10 2006</div>
 </body>
 </html>

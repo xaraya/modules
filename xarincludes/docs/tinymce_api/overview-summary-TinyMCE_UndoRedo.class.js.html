@@ -7,9 +7,9 @@
 <link rel ="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 <script>
 function asd() {
-	
-		parent.document.title="TinyMCE_UndoRedo.class.js Overview";
-	
+    
+        parent.document.title="TinyMCE_UndoRedo.class.js Overview";
+    
 }
 </script>
 </head>
@@ -26,10 +26,10 @@ function asd() {
   
   
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
-  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">    &nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
   
 
-  <td bgcolor="#FFFFFF" class="NavBarCell1"> 	<font class="NavBarFont1">Class</font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1">     <font class="NavBarFont1">Class</font>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-tree.html"><font class="NavBarFont1"><b>Tree</b></font></a>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="index-all.html"--><font class="NavBarFont1"><b>Index</b></font></a>&nbsp;</td>
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="help-doc.html"><font class="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
@@ -67,19 +67,19 @@ function asd() {
 
 <hr>
 <center>
-	
-	   <h2>TinyMCE_UndoRedo.class.js</h2>
-	
+    
+       <h2>TinyMCE_UndoRedo.class.js</h2>
+    
 </center>
 
-	
+    
 
 
 <h4>Summary</h4>
 <p>
-	
-		No overview generated for 'TinyMCE_UndoRedo.class.js'<BR/><BR/>
-	
+    
+        No overview generated for 'TinyMCE_UndoRedo.class.js'<BR/><BR/>
+    
 </p>
 
 <hr>
@@ -109,9 +109,7 @@ function asd() {
 
 
         <pre class="sourceview"><span class="comment">/**
- * $RCSfile: overview-summary-TinyMCE_UndoRedo.class.js.html,v $
- * $Revision: 1.42 $
- * $Date: 2006/04/14 20:00:31 $
+ * $Id: TinyMCE_UndoRedo.class.js 18 2006-06-29 14:11:23Z spocke $
  *
  * <span class="attrib">@author</span> Moxiecode
  * <span class="attrib">@copyright</span> Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -124,117 +122,117 @@ function asd() {
  * <span class="attrib">@constructor</span>
  */</span>
 <span class="reserved">function</span> TinyMCE_UndoRedo(inst) {
-	<span class="reserved">this</span>.instance = inst;
-	<span class="reserved">this</span>.undoLevels = new Array();
-	<span class="reserved">this</span>.undoIndex = 0;
-	<span class="reserved">this</span>.typingUndoIndex = -1;
-	<span class="reserved">this</span>.undoRedo = true;
+    <span class="reserved">this</span>.instance = inst;
+    <span class="reserved">this</span>.undoLevels = new Array();
+    <span class="reserved">this</span>.undoIndex = 0;
+    <span class="reserved">this</span>.typingUndoIndex = -1;
+    <span class="reserved">this</span>.undoRedo = true;
 };
 
 TinyMCE_UndoRedo.<span class="reserved">prototype</span> = {
-	<span class="comment">/**
-	 * Adds a new undo level, this will take a snapshot of the current instance HTML or use the specified level.
-	 *
-	 * <span class="attrib">@param</span> {TinyMCE_UndoRedoLevel} l Optional undo/redo level to add.
-	 * <span class="attrib">@return</span> true/false on success or failure.
-	 * <span class="attrib">@type</span> boolean
-	 */</span>
-	add : <span class="reserved">function</span>(l) {
-		var b;
+    <span class="comment">/**
+     * Adds a new undo level, this will take a snapshot of the current instance HTML or use the specified level.
+     *
+     * <span class="attrib">@param</span> {TinyMCE_UndoRedoLevel} l Optional undo/redo level to add.
+     * <span class="attrib">@return</span> true/false on success or failure.
+     * <span class="attrib">@type</span> boolean
+     */</span>
+    add : <span class="reserved">function</span>(l) {
+        var b;
 
-		<span class="reserved">if</span> (l) {
-			<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoLevels.length] = l;
-			<span class="reserved">return</span> true;
-		}
+        <span class="reserved">if</span> (l) {
+            <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoLevels.length] = l;
+            <span class="reserved">return</span> true;
+        }
 
-		var inst = <span class="reserved">this</span>.instance;
+        var inst = <span class="reserved">this</span>.instance;
 
-		<span class="reserved">if</span> (<span class="reserved">this</span>.typingUndoIndex != -1) {
-			<span class="reserved">this</span>.undoIndex = <span class="reserved">this</span>.typingUndoIndex;
-			<span class="comment">// tinyMCE.debug("Override: " + this.undoIndex);</span>
-		}
+        <span class="reserved">if</span> (<span class="reserved">this</span>.typingUndoIndex != -1) {
+            <span class="reserved">this</span>.undoIndex = <span class="reserved">this</span>.typingUndoIndex;
+            <span class="comment">// tinyMCE.debug("Override: " + this.undoIndex);</span>
+        }
 
-		var newHTML = tinyMCE.trim(inst.getBody().innerHTML);
-		<span class="reserved">if</span> (<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex] &amp;&amp; newHTML != <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content) {
-			<span class="comment">//tinyMCE.debug(newHTML, this.undoLevels[this.undoIndex]);</span>
+        var newHTML = tinyMCE.trim(inst.getBody().innerHTML);
+        <span class="reserved">if</span> (<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex] &amp;&amp; newHTML != <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content) {
+            <span class="comment">//tinyMCE.debug(newHTML, this.undoLevels[this.undoIndex]);</span>
 
-			tinyMCE.dispatchCallback(inst, <span class="literal">'onchange_callback'</span>, <span class="literal">'onChange'</span>, inst);
+            tinyMCE.dispatchCallback(inst, <span class="literal">'onchange_callback'</span>, <span class="literal">'onChange'</span>, inst);
 
-			<span class="comment">// Time to compress</span>
-			var customUndoLevels = tinyMCE.settings[<span class="literal">'custom_undo_redo_levels'</span>];
-			<span class="reserved">if</span> (customUndoLevels != -1 &amp;&amp; <span class="reserved">this</span>.undoLevels.length &gt; customUndoLevels) {
-				<span class="reserved">for</span> (var i=0; i&lt;<span class="reserved">this</span>.undoLevels.length-1; i++) {
-					<span class="comment">//tinyMCE.debug(this.undoLevels[i] + "=" + this.undoLevels[i+1]);</span>
-					<span class="reserved">this</span>.undoLevels[i] = <span class="reserved">this</span>.undoLevels[i+1];
-				}
+            <span class="comment">// Time to compress</span>
+            var customUndoLevels = tinyMCE.settings[<span class="literal">'custom_undo_redo_levels'</span>];
+            <span class="reserved">if</span> (customUndoLevels != -1 &amp;&amp; <span class="reserved">this</span>.undoLevels.length &gt; customUndoLevels) {
+                <span class="reserved">for</span> (var i=0; i&lt;<span class="reserved">this</span>.undoLevels.length-1; i++) {
+                    <span class="comment">//tinyMCE.debug(this.undoLevels[i] + "=" + this.undoLevels[i+1]);</span>
+                    <span class="reserved">this</span>.undoLevels[i] = <span class="reserved">this</span>.undoLevels[i+1];
+                }
 
-				<span class="reserved">this</span>.undoLevels.length--;
-				<span class="reserved">this</span>.undoIndex--;
-			}
+                <span class="reserved">this</span>.undoLevels.length--;
+                <span class="reserved">this</span>.undoIndex--;
+            }
 
-			b = inst.undoBookmark;
-			<span class="reserved">if</span> (!b)
-				b = inst.selection.getBookmark();
+            b = inst.undoBookmark;
+            <span class="reserved">if</span> (!b)
+                b = inst.selection.getBookmark();
 
-			<span class="reserved">this</span>.undoIndex++;
-			<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex] = {
-				content : newHTML,
-				bookmark : b
-			};
+            <span class="reserved">this</span>.undoIndex++;
+            <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex] = {
+                content : newHTML,
+                bookmark : b
+            };
 
-			<span class="reserved">this</span>.undoLevels.length = <span class="reserved">this</span>.undoIndex + 1;
+            <span class="reserved">this</span>.undoLevels.length = <span class="reserved">this</span>.undoIndex + 1;
 
-			<span class="comment">//tinyMCE.debug("level added" + this.undoIndex);</span>
-			<span class="reserved">return</span> true;
+            <span class="comment">//tinyMCE.debug("level added" + this.undoIndex);</span>
+            <span class="reserved">return</span> true;
 
-			<span class="comment">// tinyMCE.debug(this.undoIndex + "," + (this.undoLevels.length-1));</span>
-		}
+            <span class="comment">// tinyMCE.debug(this.undoIndex + "," + (this.undoLevels.length-1));</span>
+        }
 
-		<span class="reserved">return</span> false;
-	},
+        <span class="reserved">return</span> false;
+    },
 
-	<span class="comment">/**
-	 * Performes a undo action, this will restore the HTML contents of the editor to a former state.
-	 */</span>
-	undo : <span class="reserved">function</span>() {
-		var inst = <span class="reserved">this</span>.instance;
+    <span class="comment">/**
+     * Performes a undo action, this will restore the HTML contents of the editor to a former state.
+     */</span>
+    undo : <span class="reserved">function</span>() {
+        var inst = <span class="reserved">this</span>.instance;
 
-		<span class="comment">// Do undo</span>
-		<span class="reserved">if</span> (<span class="reserved">this</span>.undoIndex &gt; 0) {
-			<span class="reserved">this</span>.undoIndex--;
-			tinyMCE.setInnerHTML(inst.getBody(), <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content);
-			inst.repaint();
-			<span class="reserved">if</span> (inst.settings.custom_undo_redo_restore_selection)
-				inst.selection.moveToBookmark(<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].bookmark);
-		}
+        <span class="comment">// Do undo</span>
+        <span class="reserved">if</span> (<span class="reserved">this</span>.undoIndex &gt; 0) {
+            <span class="reserved">this</span>.undoIndex--;
+            tinyMCE.setInnerHTML(inst.getBody(), <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content);
+            inst.repaint();
+            <span class="reserved">if</span> (inst.settings.custom_undo_redo_restore_selection)
+                inst.selection.moveToBookmark(<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].bookmark);
+        }
 
-		<span class="comment">// tinyMCE.debug("Undo - undo levels:" + this.undoLevels.length + ", undo index: " + this.undoIndex);</span>
-	},
+        <span class="comment">// tinyMCE.debug("Undo - undo levels:" + this.undoLevels.length + ", undo index: " + this.undoIndex);</span>
+    },
 
-	<span class="comment">/**
-	 * Performes a undo action, this will restore the HTML contents of the editor to a former undoed state.
-	 */</span>
-	redo : <span class="reserved">function</span>() {
-		var inst = <span class="reserved">this</span>.instance;
+    <span class="comment">/**
+     * Performes a undo action, this will restore the HTML contents of the editor to a former undoed state.
+     */</span>
+    redo : <span class="reserved">function</span>() {
+        var inst = <span class="reserved">this</span>.instance;
 
-		tinyMCE.execCommand(<span class="literal">"mceEndTyping"</span>);
+        tinyMCE.execCommand(<span class="literal">"mceEndTyping"</span>);
 
-		<span class="reserved">if</span> (<span class="reserved">this</span>.undoIndex &lt; (<span class="reserved">this</span>.undoLevels.length-1)) {
-			<span class="reserved">this</span>.undoIndex++;
-			tinyMCE.setInnerHTML(inst.getBody(), <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content);
-			inst.repaint();
-<span class="comment">//					if (this.undoIndex &gt; 0)</span>
-<span class="comment">//						inst.selection.moveToBookmark(this.undoLevels[this.undoIndex-1].bookmark);</span>
-			<span class="reserved">if</span> (inst.settings.custom_undo_redo_restore_selection)
-				inst.selection.moveToBookmark(<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].bookmark);
-			<span class="comment">// tinyMCE.debug("Redo - undo levels:" + this.undoLevels.length + ", undo index: " + this.undoIndex);</span>
-		}
+        <span class="reserved">if</span> (<span class="reserved">this</span>.undoIndex &lt; (<span class="reserved">this</span>.undoLevels.length-1)) {
+            <span class="reserved">this</span>.undoIndex++;
+            tinyMCE.setInnerHTML(inst.getBody(), <span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].content);
+            inst.repaint();
+<span class="comment">//                    if (this.undoIndex &gt; 0)</span>
+<span class="comment">//                        inst.selection.moveToBookmark(this.undoLevels[this.undoIndex-1].bookmark);</span>
+            <span class="reserved">if</span> (inst.settings.custom_undo_redo_restore_selection)
+                inst.selection.moveToBookmark(<span class="reserved">this</span>.undoLevels[<span class="reserved">this</span>.undoIndex].bookmark);
+            <span class="comment">// tinyMCE.debug("Redo - undo levels:" + this.undoLevels.length + ", undo index: " + this.undoIndex);</span>
+        }
 
-		tinyMCE.triggerNodeChange();
-	}
+        tinyMCE.triggerNodeChange();
+    }
 };
 </pre>
-	<hr>
+    <hr>
 
 
 
@@ -249,7 +247,7 @@ TinyMCE_UndoRedo.<span class="reserved">prototype</span> = {
   
   
   <td bgcolor="#EEEEFF" class="NavBarCell1">    <a href="overview-summary.html"><font class="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td>
-  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">	&nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
+  <td bgcolor="#FFFFFF" class="NavBarCell1Rev">    &nbsp;<font class="NavBarFont1Rev"><b>File</b></font>&nbsp;</td>
   
 
   <td bgcolor="#FFFFFF" class="NavBarCell1"> <font class="NavBarFont1">Class</font>&nbsp;</td>
@@ -291,6 +289,6 @@ TinyMCE_UndoRedo.<span class="reserved">prototype</span> = {
 <font size="-1">
 
 </font>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Apr 14 21:59:23 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Wed Sep 13 17:44:10 2006</div>
 </body>
 </html>

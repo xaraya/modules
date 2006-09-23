@@ -1,39 +1,39 @@
 /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_plugin_src.js 80 2006-09-13 15:51:56Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */ 
-tinyMCE.importPluginLanguagePack('paste');
+    .importPluginLanguagePack('paste');
 
-var TinyMCE_PastePlugin = {
+var     _PastePlugin = {
     getInfo : function() {
         return {
             longname : 'Paste text/word',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_paste.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_paste.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
     initInstance : function(inst) {
-        if (tinyMCE.isMSIE && tinyMCE.getParam("paste_auto_cleanup_on_paste", false))
-            tinyMCE.addEvent(inst.getBody(), "paste", TinyMCE_PastePlugin._handlePasteEvent);
+        if (    .isMSIE &&     .getParam("paste_auto_cleanup_on_paste", false))
+                .addEvent(inst.getBody(), "paste",     _PastePlugin._handlePasteEvent);
     },
 
     getControlHTML : function(cn) { 
         switch (cn) { 
             case "pastetext":
-                return tinyMCE.getButtonHTML(cn, 'lang_paste_text_desc', '{$pluginurl}/images/pastetext.gif', 'mcePasteText', true);
+                return     .getButtonHTML(cn, 'lang_paste_text_desc', '{$pluginurl}/images/pastetext.gif', 'mcePasteText', true);
 
             case "pasteword":
-                return tinyMCE.getButtonHTML(cn, 'lang_paste_word_desc', '{$pluginurl}/images/pasteword.gif', 'mcePasteWord', true);
+                return     .getButtonHTML(cn, 'lang_paste_word_desc', '{$pluginurl}/images/pasteword.gif', 'mcePasteWord', true);
 
             case "selectall":
-                return tinyMCE.getButtonHTML(cn, 'lang_selectall_desc', '{$pluginurl}/images/selectall.gif', 'mceSelectAll', true);
+                return     .getButtonHTML(cn, 'lang_selectall_desc', '{$pluginurl}/images/selectall.gif', 'mceSelectAll', true);
         } 
 
         return ''; 
@@ -43,43 +43,40 @@ var TinyMCE_PastePlugin = {
         switch (command) { 
             case "mcePasteText": 
                 if (user_interface) {
-                    if ((tinyMCE.isMSIE && !tinyMCE.isOpera) && !tinyMCE.getParam('paste_use_dialog', false))
-                        TinyMCE_PastePlugin._insertText(clipboardData.getData("Text"), true); 
+                    if ((    .isMSIE && !    .isOpera) && !    .getParam('paste_use_dialog', false))
+                            _PastePlugin._insertText(clipboardData.getData("Text"), true); 
                     else { 
                         var template = new Array(); 
                         template['file']    = '../../plugins/paste/pastetext.htm'; // Relative to theme 
                         template['width']  = 450; 
                         template['height'] = 400; 
                         var plain_text = ""; 
-                        tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'}); 
+                            .openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'}); 
                     }
                 } else
-                    TinyMCE_PastePlugin._insertText(value['html'], value['linebreaks']);
+                        _PastePlugin._insertText(value['html'], value['linebreaks']);
 
                 return true;
 
             case "mcePasteWord": 
                 if (user_interface) {
-                    if ((tinyMCE.isMSIE && !tinyMCE.isOpera) && !tinyMCE.getParam('paste_use_dialog', false)) {
-                        var html = TinyMCE_PastePlugin._clipboardHTML();
-
-                        if (html && html.length > 0)
-                            TinyMCE_PastePlugin._insertWordContent(html);
+                    if ((    .isMSIE && !    .isOpera) && !    .getParam('paste_use_dialog', false)) {
+                            _PastePlugin._insertWordContent(    _PastePlugin._clipboardHTML());
                     } else { 
                         var template = new Array(); 
                         template['file']    = '../../plugins/paste/pasteword.htm'; // Relative to theme 
                         template['width']  = 450; 
                         template['height'] = 400; 
                         var plain_text = ""; 
-                        tinyMCE.openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'});
+                            .openWindow(template, {editor_id : editor_id, plain_text: plain_text, resizable : "yes", scrollbars : "no", inline : "yes", mceDo : 'insert'});
                     }
                 } else
-                    TinyMCE_PastePlugin._insertWordContent(value);
+                        _PastePlugin._insertWordContent(value);
 
                 return true;
 
             case "mceSelectAll":
-                tinyMCE.execInstanceCommand(editor_id, 'selectall'); 
+                    .execInstanceCommand(editor_id, 'selectall'); 
                 return true; 
 
         } 
@@ -93,17 +90,17 @@ var TinyMCE_PastePlugin = {
     _handlePasteEvent : function(e) {
         switch (e.type) {
             case "paste":
-                var html = TinyMCE_PastePlugin._clipboardHTML();
-                var r, inst = tinyMCE.selectedInstance;
+                var html =     _PastePlugin._clipboardHTML();
+                var r, inst =     .selectedInstance;
 
                 // Removes italic, strong etc, the if was needed due to bug #1437114
                 if (inst && (r = inst.getRng()) && r.text.length > 0)
-                    tinyMCE.execCommand('delete');
+                        .execCommand('delete');
 
                 if (html && html.length > 0)
-                    tinyMCE.execCommand('mcePasteWord', false, html);
+                        .execCommand('mcePasteWord', false, html);
 
-                tinyMCE.cancelEvent(e);
+                    .cancelEvent(e);
                 return false;
         }
 
@@ -114,20 +111,20 @@ var TinyMCE_PastePlugin = {
         if (content && content.length > 0) {
             if (bLinebreaks) { 
                 // Special paragraph treatment 
-                if (tinyMCE.getParam("paste_create_paragraphs", true)) {
-                    var rl = tinyMCE.getParam("paste_replace_list", '\u2122,<sup>TM</sup>,\u2026,...,\u201c|\u201d,",\u2019,\',\u2013|\u2014|\u2015|\u2212,-').split(',');
+                if (    .getParam("paste_create_paragraphs", true)) {
+                    var rl =     .getParam("paste_replace_list", '\u2122,<sup>TM</sup>,\u2026,...,\u201c|\u201d,",\u2019,\',\u2013|\u2014|\u2015|\u2212,-').split(',');
                     for (var i=0; i<rl.length; i+=2)
                         content = content.replace(new RegExp(rl[i], 'gi'), rl[i+1]);
 
-                    content = tinyMCE.regexpReplace(content, "\r\n\r\n", "</p><p>", "gi"); 
-                    content = tinyMCE.regexpReplace(content, "\r\r", "</p><p>", "gi"); 
-                    content = tinyMCE.regexpReplace(content, "\n\n", "</p><p>", "gi"); 
+                    content =     .regexpReplace(content, "\r\n\r\n", "</p><p>", "gi"); 
+                    content =     .regexpReplace(content, "\r\r", "</p><p>", "gi"); 
+                    content =     .regexpReplace(content, "\n\n", "</p><p>", "gi"); 
 
                     // Has paragraphs 
                     if ((pos = content.indexOf('</p><p>')) != -1) { 
-                        tinyMCE.execCommand("Delete"); 
+                            .execCommand("Delete"); 
 
-                        var node = tinyMCE.selectedInstance.getFocusElement(); 
+                        var node =     .selectedInstance.getFocusElement(); 
 
                         // Get list of elements to break 
                         var breakElms = new Array(); 
@@ -155,14 +152,14 @@ var TinyMCE_PastePlugin = {
                     } 
                 } 
 
-                if (tinyMCE.getParam("paste_create_linebreaks", true)) {
-                    content = tinyMCE.regexpReplace(content, "\r\n", "<br />", "gi"); 
-                    content = tinyMCE.regexpReplace(content, "\r", "<br />", "gi"); 
-                    content = tinyMCE.regexpReplace(content, "\n", "<br />", "gi"); 
+                if (    .getParam("paste_create_linebreaks", true)) {
+                    content =     .regexpReplace(content, "\r\n", "<br />", "gi"); 
+                    content =     .regexpReplace(content, "\r", "<br />", "gi"); 
+                    content =     .regexpReplace(content, "\n", "<br />", "gi"); 
                 }
             } 
         
-            tinyMCE.execCommand("mceInsertRawHTML", false, content); 
+                .execCommand("mceInsertRawHTML", false, content); 
         }
     },
 
@@ -173,14 +170,14 @@ var TinyMCE_PastePlugin = {
             var middot = String.fromCharCode(183);
             var cb;
 
-            if ((cb = tinyMCE.getParam("paste_insert_word_content_callback", "")) != "")
+            if ((cb =     .getParam("paste_insert_word_content_callback", "")) != "")
                 content = eval(cb + "('before', content)");
 
-            var rl = tinyMCE.getParam("paste_replace_list", '\u2122,<sup>TM</sup>,\u2026,...,\u201c|\u201d,",\u2019,\',\u2013|\u2014|\u2015|\u2212,-').split(',');
+            var rl =     .getParam("paste_replace_list", '\u2122,<sup>TM</sup>,\u2026,...,\u201c|\u201d,",\u2019,\',\u2013|\u2014|\u2015|\u2212,-').split(',');
             for (var i=0; i<rl.length; i+=2)
                 content = content.replace(new RegExp(rl[i], 'gi'), rl[i+1]);
 
-            if (tinyMCE.getParam("paste_convert_headers_to_strong", false)) {
+            if (    .getParam("paste_convert_headers_to_strong", false)) {
                 content = content.replace(new RegExp('<p class=MsoHeading.*?>(.*?)<\/p>', 'gi'), '<p><b>$1</b></p>');
             }
 
@@ -191,16 +188,16 @@ var TinyMCE_PastePlugin = {
             content = content.replace(new RegExp('<br style="page-break-before: always;.*>', 'gi'), '-- page break --'); // Replace pagebreaks
             content = content.replace(new RegExp('<(!--)([^>]*)(--)>', 'g'), "");  // Word comments
 
-            if (tinyMCE.getParam("paste_remove_spans", true))
+            if (    .getParam("paste_remove_spans", true))
                 content = content.replace(/<\/?span[^>]*>/gi, "");
 
-            if (tinyMCE.getParam("paste_remove_styles", true))
+            if (    .getParam("paste_remove_styles", true))
                 content = content.replace(new RegExp('<(\\w[^>]*) style="([^"]*)"([^>]*)', 'gi'), "<$1$3");
 
             content = content.replace(/<\/?font[^>]*>/gi, "");
 
             // Strips class attributes.
-            switch (tinyMCE.getParam("paste_strip_class_attributes", "all")) {
+            switch (    .getParam("paste_strip_class_attributes", "all")) {
                 case "all":
                     content = content.replace(/<(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3");
                     break;
@@ -210,7 +207,7 @@ var TinyMCE_PastePlugin = {
                     break;
             }
 
-            content = content.replace(new RegExp('href="?' + TinyMCE_PastePlugin._reEscape("" + document.location) + '', 'gi'), 'href="' + tinyMCE.settings['document_base_url']);
+            content = content.replace(new RegExp('href="?' +     _PastePlugin._reEscape("" + document.location) + '', 'gi'), 'href="' +     .settings['document_base_url']);
             content = content.replace(/<(\w[^>]*) lang=([^ |>]*)([^>]*)/gi, "<$1$3");
             content = content.replace(/<\\?\?xml[^>]*>/gi, "");
             content = content.replace(/<\/?\w+:[^>]*>/gi, "");
@@ -220,34 +217,34 @@ var TinyMCE_PastePlugin = {
     //        content = content.replace(/\/?&nbsp;*/gi, ""); &nbsp;
     //        content = content.replace(/<p>&nbsp;<\/p>/gi, '');
 
-            if (!tinyMCE.settings['force_p_newlines']) {
+            if (!    .settings['force_p_newlines']) {
                 content = content.replace('', '' ,'gi');
                 content = content.replace('</p>', '<br /><br />' ,'gi');
             }
 
-            if (!tinyMCE.isMSIE && !tinyMCE.settings['force_p_newlines']) {
+            if (!    .isMSIE && !    .settings['force_p_newlines']) {
                 content = content.replace(/<\/?p[^>]*>/gi, "");
             }
 
             content = content.replace(/<\/?div[^>]*>/gi, "");
 
             // Convert all middlot lists to UL lists
-            if (tinyMCE.getParam("paste_convert_middot_lists", true)) {
+            if (    .getParam("paste_convert_middot_lists", true)) {
                 var div = document.createElement("div");
                 div.innerHTML = content;
 
                 // Convert all middot paragraphs to li elements
-                var className = tinyMCE.getParam("paste_unindented_list_class", "unIndentedList");
+                var className =     .getParam("paste_unindented_list_class", "unIndentedList");
 
-                while (TinyMCE_PastePlugin._convertMiddots(div, "--list--")) ; // bull
-                while (TinyMCE_PastePlugin._convertMiddots(div, middot, className)) ; // Middot
-                while (TinyMCE_PastePlugin._convertMiddots(div, bull)) ; // bull
+                while (    _PastePlugin._convertMiddots(div, "--list--")) ; // bull
+                while (    _PastePlugin._convertMiddots(div, middot, className)) ; // Middot
+                while (    _PastePlugin._convertMiddots(div, bull)) ; // bull
 
                 content = div.innerHTML;
             }
 
             // Replace all headers with strong and fix some other issues
-            if (tinyMCE.getParam("paste_convert_headers_to_strong", false)) {
+            if (    .getParam("paste_convert_headers_to_strong", false)) {
                 content = content.replace(/<h[1-6]>&nbsp;<\/h[1-6]>/gi, '<p>&nbsp;&nbsp;</p>');
                 content = content.replace(/<h[1-6]>/gi, '<p><b>');
                 content = content.replace(/<\/h[1-6]>/gi, '</b></p>');
@@ -257,12 +254,14 @@ var TinyMCE_PastePlugin = {
 
             content = content.replace(/--list--/gi, ""); // Remove --list--
 
-            if ((cb = tinyMCE.getParam("paste_insert_word_content_callback", "")) != "")
+            if ((cb =     .getParam("paste_insert_word_content_callback", "")) != "")
                 content = eval(cb + "('after', content)");
 
             // Insert cleaned content
-            tinyMCE.execCommand("mceInsertContent", false, content);
-            window.setTimeout('tinyMCE.execCommand("mceCleanup");', 1); // Do normal cleanup detached from this thread
+                .execCommand("mceInsertContent", false, content);
+
+            if (    .getParam('paste_force_cleanup_wordpaste', true))
+                window.setTimeout('    .execCommand("mceCleanup");', 1); // Do normal cleanup detached from this thread
         }
     },
 
@@ -356,11 +355,11 @@ var TinyMCE_PastePlugin = {
     },
 
     _clipboardHTML : function() {
-        var div = document.getElementById('_TinyMCE_clipboardHTML');
+        var div = document.getElementById('_    _clipboardHTML');
 
         if (!div) {
             var div = document.createElement('DIV');
-            div.id = '_TinyMCE_clipboardHTML';
+            div.id = '_    _clipboardHTML';
 
             with (div.style) {
                 visibility = 'hidden';
@@ -383,4 +382,4 @@ var TinyMCE_PastePlugin = {
     }
 };
 
-tinyMCE.addPlugin("paste", TinyMCE_PastePlugin);
+    .addPlugin("paste",     _PastePlugin);

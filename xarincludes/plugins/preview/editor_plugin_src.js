@@ -6,16 +6,16 @@
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('preview');
+    .importPluginLanguagePack('preview');
 
-var TinyMCE_PreviewPlugin = {
+var     _PreviewPlugin = {
     getInfo : function() {
         return {
             longname : 'Preview',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_preview.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
@@ -25,7 +25,7 @@ var TinyMCE_PreviewPlugin = {
     getControlHTML : function(cn) {
         switch (cn) {
             case "preview":
-                return tinyMCE.getButtonHTML(cn, 'lang_preview_desc', '{$pluginurl}/images/preview.gif', 'mcePreview');
+                return     .getButtonHTML(cn, 'lang_preview_desc', '{$pluginurl}/images/preview.gif', 'mcePreview');
         }
 
         return "";
@@ -38,9 +38,9 @@ var TinyMCE_PreviewPlugin = {
         // Handle commands
         switch (command) {
             case "mcePreview":
-                var previewPage = tinyMCE.getParam("plugin_preview_pageurl", null);
-                var previewWidth = tinyMCE.getParam("plugin_preview_width", "550");
-                var previewHeight = tinyMCE.getParam("plugin_preview_height", "600");
+                var previewPage =     .getParam("plugin_preview_pageurl", null);
+                var previewWidth =     .getParam("plugin_preview_width", "550");
+                var previewHeight =     .getParam("plugin_preview_height", "600");
 
                 // Use a custom preview page
                 if (previewPage) {
@@ -50,11 +50,11 @@ var TinyMCE_PreviewPlugin = {
                     template['width'] = previewWidth;
                     template['height'] = previewHeight;
 
-                    tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", inline : "yes", content : tinyMCE.getContent(), content_css : tinyMCE.getParam("content_css")});
+                        .openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", inline : "yes", content :     .getContent(), content_css :     .getParam("content_css")});
                 } else {
                     var win = window.open("", "mcePreview", "menubar=no,toolbar=no,scrollbars=yes,resizable=yes,left=20,top=20,width=" + previewWidth + ",height="  + previewHeight);
                     var html = "";
-                    var c = tinyMCE.getContent();
+                    var c =     .getContent();
                     var pos = c.indexOf('<body'), pos2;
 
                     if (pos != -1) {
@@ -63,25 +63,25 @@ var TinyMCE_PreviewPlugin = {
                         c = c.substring(pos + 1, pos2);
                     }
 
-                    html += tinyMCE.getParam('doctype');
+                    html +=     .getParam('doctype');
                     html += '<html xmlns="http://www.w3.org/1999/xhtml">';
                     html += '<head>';
-                    html += '<title>' + tinyMCE.getLang('lang_preview_desc') + '</title>';
-                    html += '<base href="' + tinyMCE.settings['base_href'] + '" />';
+                    html += '<title>' +     .getLang('lang_preview_desc') + '</title>';
+                    html += '<base href="' +     .settings['base_href'] + '" />';
                     html += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-                    html += '<link href="' + tinyMCE.getParam("content_css") + '" rel="stylesheet" type="text/css" />';
+                    html += '<link href="' +     .getParam("content_css") + '" rel="stylesheet" type="text/css" />';
                     html += '<script type="text/javascript">';
-                    html += 'window.opener.TinyMCE_PreviewPlugin._setDoc(document);';
-                    html += 'window.opener.TinyMCE_PreviewPlugin._setWin(window);';
-                    html += 'writeFlash = window.opener.TinyMCE_PreviewPlugin._writeFlash;';
-                    html += 'writeShockWave = window.opener.TinyMCE_PreviewPlugin._writeShockWave;';
-                    html += 'writeQuickTime = window.opener.TinyMCE_PreviewPlugin._writeQuickTime;';
-                    html += 'writeRealMedia = window.opener.TinyMCE_PreviewPlugin._writeRealMedia;';
-                    html += 'writeWindowsMedia = window.opener.TinyMCE_PreviewPlugin._writeWindowsMedia;';
-                    html += 'writeEmbed = window.opener.TinyMCE_PreviewPlugin._writeEmbed;';
+                    html += 'window.opener.    _PreviewPlugin._setDoc(document);';
+                    html += 'window.opener.    _PreviewPlugin._setWin(window);';
+                    html += 'writeFlash = window.opener.    _PreviewPlugin._writeFlash;';
+                    html += 'writeShockWave = window.opener.    _PreviewPlugin._writeShockWave;';
+                    html += 'writeQuickTime = window.opener.    _PreviewPlugin._writeQuickTime;';
+                    html += 'writeRealMedia = window.opener.    _PreviewPlugin._writeRealMedia;';
+                    html += 'writeWindowsMedia = window.opener.    _PreviewPlugin._writeWindowsMedia;';
+                    html += 'writeEmbed = window.opener.    _PreviewPlugin._writeEmbed;';
                     html += '</script>';
                     html += '</head>';
-                    html += '<body dir="' + tinyMCE.getParam("directionality") + '" onload="window.opener.TinyMCE_PreviewPlugin._onLoad();">';
+                    html += '<body dir="' +     .getParam("directionality") + '" onload="window.opener.    _PreviewPlugin._onLoad();">';
                     html += c;
                     html += '</body>';
                     html += '</html>';
@@ -97,20 +97,20 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _setDoc : function(d) {
-        TinyMCE_PreviewPlugin._doc = d;
+            _PreviewPlugin._doc = d;
         d._embeds = new Array();
     },
 
     _setWin : function(d) {
-        TinyMCE_PreviewPlugin._win = d;
+            _PreviewPlugin._win = d;
     },
 
     _onLoad : function() {
-        var nl, i, el = new Array(), d = TinyMCE_PreviewPlugin._doc, sv, ne;
+        var nl, i, el = new Array(), d =     _PreviewPlugin._doc, sv, ne;
 
         nl = d.getElementsByTagName("script");
         for (i=0; i<nl.length; i++) {
-            sv = tinyMCE.isMSIE ? nl[i].innerHTML : nl[i].firstChild.nodeValue;
+            sv =     .isMSIE ? nl[i].innerHTML : nl[i].firstChild.nodeValue;
 
             if (new RegExp('write(Flash|ShockWave|WindowsMedia|QuickTime|RealMedia)\\(.*', 'g').test(sv))
                 el[el.length] = nl[i];
@@ -124,8 +124,8 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeFlash : function(p) {
-        p.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], p.src);
-        TinyMCE_PreviewPlugin._writeEmbed(
+        p.src =     .convertRelativeToAbsoluteURL(    .settings['base_href'], p.src);
+            _PreviewPlugin._writeEmbed(
             'D27CDB6E-AE6D-11cf-96B8-444553540000',
             'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0',
             'application/x-shockwave-flash',
@@ -134,8 +134,8 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeShockWave : function(p) {
-        p.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], p.src);
-        TinyMCE_PreviewPlugin._writeEmbed(
+        p.src =     .convertRelativeToAbsoluteURL(    .settings['base_href'], p.src);
+            _PreviewPlugin._writeEmbed(
             '166B1BCA-3F9C-11CF-8075-444553540000',
             'http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=8,5,1,0',
             'application/x-director',
@@ -144,8 +144,8 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeQuickTime : function(p) {
-        p.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], p.src);
-        TinyMCE_PreviewPlugin._writeEmbed(
+        p.src =     .convertRelativeToAbsoluteURL(    .settings['base_href'], p.src);
+            _PreviewPlugin._writeEmbed(
             '02BF25D5-8C17-4B23-BC80-D3488ABDDC6B',
             'http://www.apple.com/qtactivex/qtplugin.cab#version=6,0,2,0',
             'video/quicktime',
@@ -154,8 +154,8 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeRealMedia : function(p) {
-        p.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], p.src);
-        TinyMCE_PreviewPlugin._writeEmbed(
+        p.src =     .convertRelativeToAbsoluteURL(    .settings['base_href'], p.src);
+            _PreviewPlugin._writeEmbed(
             'CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA',
             'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0',
             'audio/x-pn-realaudio-plugin',
@@ -164,9 +164,9 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeWindowsMedia : function(p) {
-        p.src = tinyMCE.convertRelativeToAbsoluteURL(tinyMCE.settings['base_href'], p.src);
+        p.src =     .convertRelativeToAbsoluteURL(    .settings['base_href'], p.src);
         p.url = p.src;
-        TinyMCE_PreviewPlugin._writeEmbed(
+            _PreviewPlugin._writeEmbed(
             '6BF52A52-394A-11D3-B153-00C04F79FAA6',
             'http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701',
             'application/x-mplayer2',
@@ -175,7 +175,7 @@ var TinyMCE_PreviewPlugin = {
     },
 
     _writeEmbed : function(cls, cb, mt, p) {
-        var h = '', n, d = TinyMCE_PreviewPlugin._doc, ne, c;
+        var h = '', n, d =     _PreviewPlugin._doc, ne, c;
 
         h += '<object classid="clsid:' + cls + '" codebase="' + cb + '"';
         h += typeof(p.id) != "undefined" ? 'id="' + p.id + '"' : '';
@@ -199,4 +199,4 @@ var TinyMCE_PreviewPlugin = {
     }
 };
 
-tinyMCE.addPlugin("preview", TinyMCE_PreviewPlugin);
+    .addPlugin("preview",     _PreviewPlugin);

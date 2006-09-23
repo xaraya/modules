@@ -118,10 +118,10 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <TR BGCOLOR="white" CLASS="TableRowColor">
    <TD>
       <CODE>
-	 <B>
-	    <A HREF="TinyMCE_Layer.html#TinyMCE_Layer()">TinyMCE_Layer</A> 
-	 </B>
-	 (&lt;string&gt; id, &lt;boolean&gt; bm)
+     <B>
+        <A HREF="TinyMCE_Layer.html#TinyMCE_Layer()">TinyMCE_Layer</A> 
+     </B>
+     (&lt;string&gt; id, &lt;boolean&gt; bm)
       </CODE>
       <BR>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -146,256 +146,273 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#create">create</A></B>(&lt;string&gt; n, &lt;string&gt; c, &lt;HTMLElement&gt; p)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Creates a element for the layer based on the id and specified name.
+     <CODE>
+        <B>
+           <A HREF="#create">create</A></B>(&lt;string&gt; n, &lt;string&gt; c, &lt;HTMLElement&gt; p, &lt;string&gt; h)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Creates a element for the layer based on the id and specified name.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getAbsPosition">getAbsPosition</A></B>(&lt;DOMElement&gt; n)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the absolute x, y cordinate of the specified node.
+     <CODE>
+        <B>
+           <A HREF="#exists">exists</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns true/false if a element exists for the layer.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;Object</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getBlocker">getBlocker</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the blocker DOM element, this is a invisible iframe.
+     <CODE>
+        <B>
+           <A HREF="#getAbsPosition">getAbsPosition</A></B>(&lt;DOMElement&gt; n)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the absolute x, y cordinate of the specified node.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getElement">getElement</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the DOM element that the layer is binded to.
+     <CODE>
+        <B>
+           <A HREF="#getBlocker">getBlocker</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the blocker DOM element, this is a invisible iframe.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#hide">hide</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Hides the layer.
+     <CODE>
+        <B>
+           <A HREF="#getElement">getElement</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the DOM element that the layer is binded to.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#isVisible">isVisible</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns true/false if the layer is visible or not.
+     <CODE>
+        <B>
+           <A HREF="#hide">hide</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Hides the layer.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#moveBy">moveBy</A></B>(&lt;int&gt; x, &lt;int&gt; y)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Moves the layer relative in pixels.
+     <CODE>
+        <B>
+           <A HREF="#isVisible">isVisible</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns true/false if the layer is visible or not.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#moveRelativeTo">moveRelativeTo</A></B>(&lt;HTMLElement&gt; re, &lt;string&gt; p)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Moves the layer relative to the specified HTML element.
+     <CODE>
+        <B>
+           <A HREF="#moveBy">moveBy</A></B>(&lt;int&gt; x, &lt;int&gt; y)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Moves the layer relative in pixels.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#moveTo">moveTo</A></B>(&lt;int&gt; x, &lt;int&gt; y)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Moves the layer absolute in pixels.
+     <CODE>
+        <B>
+           <A HREF="#moveRelativeTo">moveRelativeTo</A></B>(&lt;HTMLElement&gt; re, &lt;string&gt; p)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Moves the layer relative to the specified HTML element.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;int</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#parseInt">parseInt</A></B>(&lt;string&gt; s)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Parses a int value this method will return 0 if the string is empty.
+     <CODE>
+        <B>
+           <A HREF="#moveTo">moveTo</A></B>(&lt;int&gt; x, &lt;int&gt; y)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Moves the layer absolute in pixels.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;int</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#resizeBy">resizeBy</A></B>(&lt;int&gt; w, &lt;int&gt; h)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Resizes the layer by the specified relative width and height.
+     <CODE>
+        <B>
+           <A HREF="#parseInt">parseInt</A></B>(&lt;string&gt; s)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Parses a int value this method will return 0 if the string is empty.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#resizeTo">resizeTo</A></B>(&lt;int&gt; w, &lt;int&gt; h)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Resizes the layer to the specified width and height.
+     <CODE>
+        <B>
+           <A HREF="#resizeBy">resizeBy</A></B>(&lt;int&gt; w, &lt;int&gt; h)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Resizes the layer by the specified relative width and height.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#setBlockMode">setBlockMode</A></B>(&lt;boolean&gt; s)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Sets the block mode.
+     <CODE>
+        <B>
+           <A HREF="#resizeTo">resizeTo</A></B>(&lt;int&gt; w, &lt;int&gt; h)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Resizes the layer to the specified width and height.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#show">show</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Shows the layer.
+     <CODE>
+        <B>
+           <A HREF="#setBlockMode">setBlockMode</A></B>(&lt;boolean&gt; s)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Sets the block mode.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#updateBlocker">updateBlocker</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Updates the select/iframe/flash blocker this will also block the caret in Firefox.
+     <CODE>
+        <B>
+           <A HREF="#show">show</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Shows the layer.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#updateBlocker">updateBlocker</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Updates the select/iframe/flash blocker this will also block the caret in Firefox.
       </TD>
    </TR>
 
@@ -476,7 +493,7 @@ TinyMCE_Layer</H3>
 
    <A NAME="create"><!-- --></A>
    <H3>create</H3>
-   <PRE>HTMLElement <B>create</B>(&lt;string&gt; n, &lt;string&gt; c, &lt;HTMLElement&gt; p)</PRE>
+   <PRE>HTMLElement <B>create</B>(&lt;string&gt; n, &lt;string&gt; c, &lt;HTMLElement&gt; p, &lt;string&gt; h)</PRE>
    
       <UL>Creates a element for the layer based on the id and specified name.</UL>
    
@@ -495,6 +512,9 @@ TinyMCE_Layer</H3>
      <UL><CODE>p</CODE> -  Optional parent element reference, defaults to body.  
       </UL> 
    
+     <UL><CODE>h</CODE> -  Optional HTML code to insert into element.  
+      </UL> 
+   
    </UL>
    
    <!-- METHOD PARAMETERS END -->
@@ -504,6 +524,31 @@ TinyMCE_Layer</H3>
    <B>Returns:</B>
         <UL>
         HTML DOM element that got created.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="exists"><!-- --></A>
+   <H3>exists</H3>
+   <PRE>boolean <B>exists</B>()</PRE>
+   
+      <UL>Returns true/false if a element exists for the layer.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        true/false if a element exists for the layer.   
         </UL>
    </UL>
    
@@ -654,7 +699,7 @@ TinyMCE_Layer</H3>
      <UL><CODE>x</CODE> -  Horizontal relative position in pixels.  
       </UL> 
    
-     <UL><CODE>y</CODE> -  Vertical relative position in pixels. 	   
+     <UL><CODE>y</CODE> -  Vertical relative position in pixels.        
       </UL> 
    
    </UL>
@@ -683,7 +728,7 @@ TinyMCE_Layer</H3>
      <UL><CODE>re</CODE> -  Element to move the layer relative to.  
       </UL> 
    
-     <UL><CODE>p</CODE> -  Position of the layer tl = top left, tr = top right, bl = bottom left, br = bottom right. 	   
+     <UL><CODE>p</CODE> -  Position of the layer tl = top left, tr = top right, bl = bottom left, br = bottom right.        
       </UL> 
    
    </UL>
@@ -712,7 +757,7 @@ TinyMCE_Layer</H3>
      <UL><CODE>x</CODE> -  Horizontal absolute position in pixels.  
       </UL> 
    
-     <UL><CODE>y</CODE> -  Vertical absolute position in pixels. 	   
+     <UL><CODE>y</CODE> -  Vertical absolute position in pixels.        
       </UL> 
    
    </UL>
@@ -774,7 +819,7 @@ TinyMCE_Layer</H3>
      <UL><CODE>w</CODE> -  Relative width value.  
       </UL> 
    
-     <UL><CODE>h</CODE> -  Relative height value. 	   
+     <UL><CODE>h</CODE> -  Relative height value.        
       </UL> 
    
    </UL>
@@ -803,7 +848,7 @@ TinyMCE_Layer</H3>
      <UL><CODE>w</CODE> -  Width value.  
       </UL> 
    
-     <UL><CODE>h</CODE> -  Height value. 	   
+     <UL><CODE>h</CODE> -  Height value.        
       </UL> 
    
    </UL>
@@ -831,7 +876,7 @@ TinyMCE_Layer</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>s</CODE> -  Block mode state, true is the default value. 	   
+     <UL><CODE>s</CODE> -  Block mode state, true is the default value.
       </UL> 
    
    </UL>
@@ -947,6 +992,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 
 </FONT>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Apr 14 21:59:23 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Wed Sep 13 17:44:10 2006</div>
 </BODY>
 </HTML>

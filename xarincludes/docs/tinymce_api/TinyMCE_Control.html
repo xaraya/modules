@@ -121,6 +121,22 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <TR BGCOLOR="white" CLASS="TableRowColor">
    <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
    <CODE>&nbsp;Object</CODE></FONT></TD>
+   <TD><CODE><B><A HREF="#data">data</A></B></CODE>
+   <BR>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+   </TR>
+   
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+   <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+   <CODE>&nbsp;Object</CODE></FONT></TD>
+   <TD><CODE><B><A HREF="#foreColor">foreColor</A></B></CODE>
+   <BR>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+   </TR>
+   
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+   <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+   <CODE>&nbsp;Object</CODE></FONT></TD>
    <TD><CODE><B><A HREF="#hasMouseMoved">hasMouseMoved</A></B></CODE>
    <BR>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -203,10 +219,10 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <TR BGCOLOR="white" CLASS="TableRowColor">
    <TD>
       <CODE>
-	 <B>
-	    <A HREF="TinyMCE_Control.html#TinyMCE_Control()">TinyMCE_Control</A> 
-	 </B>
-	 (&lt;Array&gt; settings)
+     <B>
+        <A HREF="TinyMCE_Control.html#TinyMCE_Control()">TinyMCE_Control</A> 
+     </B>
+     (&lt;Array&gt; settings)
       </CODE>
       <BR>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -231,341 +247,511 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#addPlugin">addPlugin</A></B>(&lt;string&gt; n, p)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Adds a plugin to the editor instance.
+     <CODE>
+        <B>
+           <A HREF="#addPlugin">addPlugin</A></B>(&lt;string&gt; n, p)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Adds a plugin to the editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#addShortcut">addShortcut</A></B>(&lt;string&gt; m, &lt;Object&gt; k, &lt;string&gt; d, &lt;string&gt; cmd, &lt;boolean&gt; ui, &lt;Object&gt; va)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Adds a keyboard shortcut to a specific command.
+     <CODE>
+        <B>
+           <A HREF="#addShortcut">addShortcut</A></B>(&lt;string&gt; m, &lt;Object&gt; k, &lt;string&gt; d, &lt;string&gt; cmd, &lt;boolean&gt; ui, &lt;Object&gt; va)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Adds a keyboard shortcut to a specific command.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#autoResetDesignMode">autoResetDesignMode</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Auto resets the design mode of the document if it gets lost.
+     <CODE>
+        <B>
+           <A HREF="#autoResetDesignMode">autoResetDesignMode</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Auto resets the design mode of the document if it gets lost.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Object</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;Object</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#execCommand">execCommand</A></B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;mixed&gt; value)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Executes a command on the current instance.
+     <CODE>
+        <B>
+           <A HREF="#execCommand">execCommand</A></B>(&lt;string&gt; command, &lt;boolean&gt; user_interface, &lt;mixed&gt; value)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Executes a command on the current instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getBody">getBody</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the body element of a editor instance.
+     <CODE>
+        <B>
+           <A HREF="#getBody">getBody</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the body element of a editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMDocument</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;DOMDocument</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getDoc">getDoc</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the DOM document of a editor instance.
+     <CODE>
+        <B>
+           <A HREF="#getContainerWin">getContainerWin</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the container window of a editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;HTMLElement</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;Object</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getFocusElement">getFocusElement</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the currently selected element.
+     <CODE>
+        <B>
+           <A HREF="#getData">getData</A></B>(&lt;String&gt; na)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Get custom data storage object by name.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMRange</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;DOMDocument</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getRng">getRng</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selections first range instance.
+     <CODE>
+        <B>
+           <A HREF="#getDoc">getDoc</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the DOM document of a editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;DOMSelection</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getSel">getSel</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the browsers selection instance.
+     <CODE>
+        <B>
+           <A HREF="#getFocusElement">getFocusElement</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the currently selected element.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;Window</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;string</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#getWin">getWin</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns the window of a editor instance.
+     <CODE>
+        <B>
+           <A HREF="#getHTML">getHTML</A></B>(&lt;bool&gt; r)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the cleaned HTML of the editor control instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#handleShortcut">handleShortcut</A></B>(&lt;DOMEvent&gt; e)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Executes shortcuts based on the event information.
+     <CODE>
+        <B>
+           <A HREF="#getParentBlockElement">getParentBlockElement</A></B>(&lt;HTMLNode&gt; n)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the first block element parent of the specified node.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;HTMLElement</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#hasPlugin">hasPlugin</A></B>(&lt;string&gt; n)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns true/false if the instance has the current plugin available.
+     <CODE>
+        <B>
+           <A HREF="#getParentElement">getParentElement</A></B>(n, &lt;string&gt; na)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the parent element of the specified node based on the search criteria.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;DOMNode</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#isDirty">isDirty</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns true/false if the editor instance is dirty or not.
+     <CODE>
+        <B>
+           <A HREF="#getParentNode">getParentNode</A></B>(&lt;DOMNode&gt; n, &lt;function&gt; f)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns a node by the specified selector function.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;DOMRange</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#isHidden">isHidden</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns if the instance is hidden or not.
+     <CODE>
+        <B>
+           <A HREF="#getRng">getRng</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the browsers selections first range instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;boolean</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;DOMSelection</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#queryCommandState">queryCommandState</A></B>(&lt;string&gt; c)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns a command specific state, for example if bold is enabled or not.
+     <CODE>
+        <B>
+           <A HREF="#getSel">getSel</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the browsers selection instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;mixed</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;Object</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#queryCommandValue">queryCommandValue</A></B>(&lt;string&gt; c)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Returns a command specific value, for example the current font size.
+     <CODE>
+        <B>
+           <A HREF="#getViewPort">getViewPort</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the viewport of the editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;Window</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#repaint">repaint</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Repaints the editarea in Gecko browsers.
+     <CODE>
+        <B>
+           <A HREF="#getWin">getWin</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns the window of a editor instance.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#setBaseHREF">setBaseHREF</A></B>(&lt;string&gt; u)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Sets the base href url of the current document instance.
+     <CODE>
+        <B>
+           <A HREF="#handleShortcut">handleShortcut</A></B>(&lt;DOMEvent&gt; e)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Executes shortcuts based on the event information.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#switchSettings">switchSettings</A></B>()
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Switches the global TinyMCE settings to the current instance settings.
+     <CODE>
+        <B>
+           <A HREF="#hasPlugin">hasPlugin</A></B>(&lt;string&gt; n)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns true/false if the instance has the current plugin available.
       </TD>
    </TR>
 
    <TR BGCOLOR="white" CLASS="TableRowColor">
       <TD ALIGN="right" VALIGN="top" WIDTH="1%">
-	 <FONT SIZE="-1">
-	    <CODE>&nbsp;void</CODE>
-	 </FONT>
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
       </TD>
       <TD>
-	 <CODE>
-	    <B>
-	       <A HREF="#triggerSave">triggerSave</A></B>(&lt;boolean&gt; skip_cleanup, &lt;boolean&gt; skip_callback)
-	 </CODE>
-	 <BR>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 Moves the contents from the TinyMCE editor control instance to the hidden textarea
+     <CODE>
+        <B>
+           <A HREF="#isDirty">isDirty</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns true/false if the editor instance is dirty or not.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#isHidden">isHidden</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns if the instance is hidden or not.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;boolean</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#queryCommandState">queryCommandState</A></B>(&lt;string&gt; c)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns a command specific state, for example if bold is enabled or not.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;mixed</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#queryCommandValue">queryCommandValue</A></B>(&lt;string&gt; c)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Returns a command specific value, for example the current font size.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#repaint">repaint</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Repaints the editarea in Gecko browsers.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#resizeToContent">resizeToContent</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Auto resizes the current editor instance to match the inner document size.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#select">select</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Selects this instance as the currently selected instance.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#setBaseHREF">setBaseHREF</A></B>(&lt;string&gt; u)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Sets the base href url of the current document instance.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#setHTML">setHTML</A></B>(&lt;string&gt; h)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Sets the HTML contents of the instance.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#switchSettings">switchSettings</A></B>()
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Switches the global TinyMCE settings to the current instance settings.
+      </TD>
+   </TR>
+
+   <TR BGCOLOR="white" CLASS="TableRowColor">
+      <TD ALIGN="right" VALIGN="top" WIDTH="1%">
+     <FONT SIZE="-1">
+        <CODE>&nbsp;void</CODE>
+     </FONT>
+      </TD>
+      <TD>
+     <CODE>
+        <B>
+           <A HREF="#triggerSave">triggerSave</A></B>(&lt;boolean&gt; skip_cleanup, &lt;boolean&gt; skip_callback)
+     </CODE>
+     <BR>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     Moves the contents from the TinyMCE editor control instance to the hidden textarea
  that got replaced with TinyMCE.
       </TD>
    </TR>
@@ -592,6 +778,24 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
    <A NAME="cleanup"><!-- --></A>
    <H3>cleanup</H3>
    <PRE>Object&nbsp;<B>cleanup</B></PRE>
+   <UL>
+   
+   
+   </UL>
+   <HR>
+   
+   <A NAME="data"><!-- --></A>
+   <H3>data</H3>
+   <PRE>Object&nbsp;<B>data</B></PRE>
+   <UL>
+   
+   
+   </UL>
+   <HR>
+   
+   <A NAME="foreColor"><!-- --></A>
+   <H3>foreColor</H3>
+   <PRE>Object&nbsp;<B>foreColor</B></PRE>
    <UL>
    
    
@@ -747,7 +951,7 @@ TinyMCE_Control</H3>
      <UL><CODE>n</CODE> -  Plugin name to check for.  
       </UL> 
    
-     <UL><CODE>n</CODE> -  TinyMCE plugin instance. 	   
+     <UL><CODE>n</CODE> -  TinyMCE plugin instance.        
       </UL> 
    
    </UL>
@@ -894,6 +1098,66 @@ TinyMCE_Control</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
+   <A NAME="getContainerWin"><!-- --></A>
+   <H3>getContainerWin</H3>
+   <PRE>DOMDocument <B>getContainerWin</B>()</PRE>
+   
+      <UL>Returns the container window of a editor instance. The container window is the window where the current instance lives in.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        container window of a editor instance.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getData"><!-- --></A>
+   <H3>getData</H3>
+   <PRE>Object <B>getData</B>(&lt;String&gt; na)</PRE>
+   
+      <UL>Get custom data storage object by name. The name should be for example the theme name or plugin name.
+ The custom data storage can be used to store plugin/theme specific information on a editor instance. A empty
+ object will be created automaticly the first time called.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>na</CODE> -  Name of data storate to retrive.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Data storage object   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
    <A NAME="getDoc"><!-- --></A>
    <H3>getDoc</H3>
    <PRE>DOMDocument <B>getDoc</B>()</PRE>
@@ -945,6 +1209,149 @@ TinyMCE_Control</H3>
    <UL>   
    <B>Deprecated</B> <I></I><BR/><BR/>
    </UL>
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getHTML"><!-- --></A>
+   <H3>getHTML</H3>
+   <PRE>string <B>getHTML</B>(&lt;bool&gt; r)</PRE>
+   
+      <UL>Returns the cleaned HTML of the editor control instance.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>r</CODE> -  Optional raw parameter, if set to true. Cleanup will be skipped.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Cleaned HTML content string.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getParentBlockElement"><!-- --></A>
+   <H3>getParentBlockElement</H3>
+   <PRE>HTMLElement <B>getParentBlockElement</B>(&lt;HTMLNode&gt; n)</PRE>
+   
+      <UL>Returns the first block element parent of the specified node.
+ This method will not go below the point of the instance body.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  Node get parent block element for.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        First block element parent of the specified node or null if it wasn't found.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getParentElement"><!-- --></A>
+   <H3>getParentElement</H3>
+   <PRE>HTMLElement <B>getParentElement</B>(n, &lt;string&gt; na)</PRE>
+   
+      <UL>Returns the parent element of the specified node based on the search criteria.
+ This method will not go below the point of the instance body.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>na</CODE> -  Comma separated list of element names to get.  
+      </UL> 
+   
+     <UL><CODE>node</CODE> -  Node to get parent element of.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        HTMLElement or null based on search criteras.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getParentNode"><!-- --></A>
+   <H3>getParentNode</H3>
+   <PRE>DOMNode <B>getParentNode</B>(&lt;DOMNode&gt; n, &lt;function&gt; f)</PRE>
+   
+      <UL>Returns a node by the specified selector function. This function will
+ loop through all parent nodes and call the specified function for each node.
+ If the function then returns true it will stop the execution and return that node.
+ This function will not go below the instance body element.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>n</CODE> -  HTML node to search parents on.  
+      </UL> 
+   
+     <UL><CODE>f</CODE> -  Selection function to execute on each node.  
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        DOMNode or null if it wasn't found.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
@@ -1005,6 +1412,31 @@ TinyMCE_Control</H3>
    <UL>   
    <B>Deprecated</B> <I></I><BR/><BR/>
    </UL>
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="getViewPort"><!-- --></A>
+   <H3>getViewPort</H3>
+   <PRE>Object <B>getViewPort</B>()</PRE>
+   
+      <UL>Returns the viewport of the editor instance.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+   <UL>
+   <B>Returns:</B>
+        <UL>
+        Viewport object with fields top, left, width and height.   
+        </UL>
+   </UL>
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
    
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
@@ -1238,6 +1670,43 @@ TinyMCE_Control</H3>
    <!-- ADDITIONAL ATTRIBUTES  END -->
 <HR>
 
+   <A NAME="resizeToContent"><!-- --></A>
+   <H3>resizeToContent</H3>
+   <PRE>void <B>resizeToContent</B>()</PRE>
+   
+      <UL>Auto resizes the current editor instance to match the inner document size.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="select"><!-- --></A>
+   <H3>select</H3>
+   <PRE>void <B>select</B>()</PRE>
+   
+      <UL>Selects this instance as the currently selected instance. This will also dispatch a selectInstance call to all
+ themes, plugins and other listeners.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
    <A NAME="setBaseHREF"><!-- --></A>
    <H3>setBaseHREF</H3>
    <PRE>void <B>setBaseHREF</B>(&lt;string&gt; u)</PRE>
@@ -1253,7 +1722,33 @@ TinyMCE_Control</H3>
    <UL>
    <B>Parameters:</B>
    
-     <UL><CODE>u</CODE> -  URL to set as base URL or null to remove it. 	   
+     <UL><CODE>u</CODE> -  URL to set as base URL or null to remove it.        
+      </UL> 
+   
+   </UL>
+   
+   <!-- METHOD PARAMETERS END -->
+
+   
+
+   <!-- ADDITIONAL ATTRIBUTES START -->
+   
+   <!-- ADDITIONAL ATTRIBUTES  END -->
+<HR>
+
+   <A NAME="setHTML"><!-- --></A>
+   <H3>setHTML</H3>
+   <PRE>void <B>setHTML</B>(&lt;string&gt; h)</PRE>
+   
+      <UL>Sets the HTML contents of the instance.</UL>
+   
+
+   <!-- METHOD PARAMETERS START -->
+   
+   <UL>
+   <B>Parameters:</B>
+   
+     <UL><CODE>h</CODE> -  HTML content string to replace body with.        
       </UL> 
    
    </UL>
@@ -1302,7 +1797,7 @@ TinyMCE_Control</H3>
      <UL><CODE>skip_cleanup</CODE> -  Optional Skip cleanup, simply move the contents as fast as possible.  
       </UL> 
    
-     <UL><CODE>skip_callback</CODE> -  Optional Skip callback, don't call the save_callback function. 	   
+     <UL><CODE>skip_callback</CODE> -  Optional Skip callback, don't call the save_callback function.
       </UL> 
    
    </UL>
@@ -1382,6 +1877,6 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor
 <FONT SIZE="-1">
 
 </FONT>
-<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Fri Apr 14 21:59:23 2006</div>
+<div class="jsdoc_ctime">Documentation generated by <a href="http://jsdoc.sourceforge.net/" target="_parent">JSDoc</a> on Wed Sep 13 17:44:10 2006</div>
 </BODY>
 </HTML>

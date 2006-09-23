@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_plugin_src.js 59 2006-08-20 20:53:19Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -58,8 +58,8 @@ var TinyMCE_AdvancedImagePlugin = {
     cleanup : function(type, content) {
         switch (type) {
             case "insert_to_editor_dom":
-                var imgs = content.getElementsByTagName("img");
-                for (var i=0; i<imgs.length; i++) {
+                var imgs = content.getElementsByTagName("img"), src, i;
+                for (i=0; i<imgs.length; i++) {
                     var onmouseover = tinyMCE.cleanupEventStr(tinyMCE.getAttrib(imgs[i], 'onmouseover'));
                     var onmouseout = tinyMCE.cleanupEventStr(tinyMCE.getAttrib(imgs[i], 'onmouseout'));
 

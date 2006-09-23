@@ -93,8 +93,8 @@ var TinyMCE_FullPagePlugin = {
                         tmp += docType + '\n';
                         tmp += '<html xmlns="http:/'+'/www.w3.org/1999/xhtml" lang="' + lang + '" xml:lang="' + lang + '">\n';
                         tmp += '<head>\n';
-                        tmp += '\t<title>' + title + '</title>\n';
-                        tmp += '\t<meta http-equiv="Content-Type" content="text/html; charset=' + enc + '" />\n';
+                        tmp += '    <title>' + title + '</title>\n';
+                        tmp += '    <meta http-equiv="Content-Type" content="text/html; charset=' + enc + '" />\n';
                         tmp += '</head>\n';
                         tmp += '<body';
 

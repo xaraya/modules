@@ -6,23 +6,23 @@
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('nonbreaking');
+    .importPluginLanguagePack('nonbreaking');
 
-var TinyMCE_NonBreakingPlugin = {
+var     _NonBreakingPlugin = {
     getInfo : function() {
         return {
             longname : 'Visual characters',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_visualchars.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_visualchars.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
     getControlHTML : function(cn) {
         switch (cn) {
             case "nonbreaking":
-                return tinyMCE.getButtonHTML(cn, 'lang_nonbreaking_desc', '{$pluginurl}/images/nonbreaking.gif', 'mceNonBreaking', false);
+                return     .getButtonHTML(cn, 'lang_nonbreaking_desc', '{$pluginurl}/images/nonbreaking.gif', 'mceNonBreaking', false);
         }
 
         return "";
@@ -30,12 +30,12 @@ var TinyMCE_NonBreakingPlugin = {
 
 
     execCommand : function(editor_id, element, command, user_interface, value) {
-        var inst = tinyMCE.getInstanceById(editor_id), h;
+        var inst =     .getInstanceById(editor_id), h;
 
         switch (command) {
             case "mceNonBreaking":
                 h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;</span>' : '&nbsp;';
-                tinyMCE.execInstanceCommand(editor_id, 'mceInsertContent', false, h);
+                    .execInstanceCommand(editor_id, 'mceInsertContent', false, h);
                 return true;
         }
 
@@ -45,13 +45,13 @@ var TinyMCE_NonBreakingPlugin = {
     handleEvent : function(e) {
         var inst, h;
 
-        if (!tinyMCE.isOpera && e.type == 'keydown' && e.keyCode == 9 && tinyMCE.getParam('nonbreaking_force_tab', false)) {
-            inst = tinyMCE.selectedInstance;
+        if (!    .isOpera && e.type == 'keydown' && e.keyCode == 9 &&     .getParam('nonbreaking_force_tab', false)) {
+            inst =     .selectedInstance;
 
             h = (inst.visualChars && inst.visualChars.state) ? '<span class="mceItemHiddenVisualChar">&middot;&middot;&middot;</span>' : '&nbsp;&nbsp;&nbsp;';
-            tinyMCE.execInstanceCommand(inst.editorId, 'mceInsertContent', false, h);
+                .execInstanceCommand(inst.editorId, 'mceInsertContent', false, h);
 
-            tinyMCE.cancelEvent(e);
+                .cancelEvent(e);
             return false;
         }
 
@@ -59,4 +59,4 @@ var TinyMCE_NonBreakingPlugin = {
     }
 };
 
-tinyMCE.addPlugin("nonbreaking", TinyMCE_NonBreakingPlugin);
+    .addPlugin("nonbreaking",     _NonBreakingPlugin);

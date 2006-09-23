@@ -1,5 +1,5 @@
 /**
- * $Id: editor_template_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_template_src.js 61 2006-08-21 21:02:03Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -10,7 +10,7 @@ tinyMCE.importThemeLanguagePack('advanced');
 
 var TinyMCE_AdvancedTheme = {
     // Private theme fields
-    _defColors : "000000,993300,333300,003300,003366,000080,333399,333333,800000,FF6600,808000,008000,008080,0000FF,666699,808080,FF0000,FF9900,99CC00,339966,33CCCC,3366FF,800080,999999,FF00FF,FFCC00,FFFF00,00FF00,00FFFF,00CCFF,993366,C0C0C0,FF99CC,FFCC99,FFFF99,CCFFCC,CCFFCC,CCFFFF,99CCFF,CC99FF,FFFFFF",
+    _defColors : "000000,993300,333300,003300,003366,000080,333399,333333,800000,FF6600,808000,008000,008080,0000FF,666699,808080,FF0000,FF9900,99CC00,339966,33CCCC,3366FF,800080,999999,FF00FF,FFCC00,FFFF00,00FF00,00FFFF,00CCFF,993366,C0C0C0,FF99CC,FFCC99,FFFF99,CCFFCC,CCFFFF,99CCFF,CC99FF,FFFFFF",
     _autoImportCSSClasses : true,
     _resizer : {},
     _buttons : [
@@ -304,10 +304,10 @@ var TinyMCE_AdvancedTheme = {
                     }
 
                     //if (onmouseover != "")
-                    //  onmouseover = eval(tinyMCE.settings['urlconverter_callback'] + "(onmouseover, img, true);");
+                    //    onmouseover = eval(tinyMCE.settings['urlconverter_callback'] + "(onmouseover, img, true);");
 
                     //if (onmouseout != "")
-                    //  onmouseout = eval(tinyMCE.settings['urlconverter_callback'] + "(onmouseout, img, true);");
+                    //    onmouseout = eval(tinyMCE.settings['urlconverter_callback'] + "(onmouseout, img, true);");
 
                     action = "update";
                 }
@@ -500,7 +500,7 @@ var TinyMCE_AdvancedTheme = {
      */
     getEditorTemplate : function(settings, editorId) {
         function removeFromArray(in_array, remove_array) {
-            var outArray = new Array();
+            var outArray = new Array(), skip;
             
             for (var i=0; i<in_array.length; i++) {
                 skip = false;
@@ -757,6 +757,8 @@ var TinyMCE_AdvancedTheme = {
      * Node change handler.
      */
     handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection, setup_content) {
+        var alignNode, breakOut, classNode;
+
         function selectByValue(select_elm, value, first_index) {
             first_index = typeof(first_index) == "undefined" ? false : true;
 
@@ -881,7 +883,7 @@ var TinyMCE_AdvancedTheme = {
                 }
 
                 className = tinyMCE.getAttrib(path[i], "class");
-                if (nodeName == "img" && className.indexOf('mceItem') != -1) {
+                if ((nodeName == "img" || nodeName == "span") && className.indexOf('mceItem') != -1) {
                     nodeName = className.replace(/mceItem([a-z]+)/gi, '$1').toLowerCase();
                     nodeData = path[i].getAttribute('title');
                 }
@@ -1139,7 +1141,7 @@ var TinyMCE_AdvancedTheme = {
 
         if (selectElm && selectElm.getAttribute('cssImported') != 'true') {
             var csses = tinyMCE.getCSSClasses(editor_id);
-            if (csses && selectElm) {
+            if (csses && selectElm)    {
                 for (i=0; i<csses.length; i++)
                     selectElm.options[selectElm.options.length] = new Option(csses[i], csses[i]);
             }
@@ -1347,24 +1349,21 @@ var TinyMCE_AdvancedTheme = {
     },
 
     _getColorHTML : function(id, n, cm) {
-        var x, y, h, cl;
+        var i, h, cl;
 
         h = '<span class="mceMenuLine"></span>';
         cl = tinyMCE.getParam(n, TinyMCE_AdvancedTheme._defColors).split(',');
 
-        h += '<table class="mceColors">';
-        for (y=0; y<Math.round(cl.length / 8); y++) {
-            h += '<tr>';
+        h += '<table class="mceColors"><tr>';
+        for (i=0; i<cl.length; i++) {
+            c = 'tinyMCE.execInstanceCommand(\'' + id + '\', \'' + cm + '\', false, \'#' + cl[i] + '\');';
+            h += '<td><a href="javascript:' + c + '" style="background-color: #' + cl[i] + '" onclick="' + c + ';return false;"></a></td>';
 
-            for (x=0; x<8; x++) {
-                c = 'tinyMCE.execInstanceCommand(\'' + id + '\', \'' + cm + '\', false, \'#' + cl[y * 8 + x] + '\');';
-                h += '<td><a href="javascript:' + c + '" style="background-color: #' + cl[y * 8 + x] + '" onclick="' + c + ';return false;"></a></td>';
-            }
-
-            h += '</tr>';
+            if ((i+1) % 8 == 0)
+                h += '</tr><tr>';
         }
 
-        h += '</table>';
+        h += '</tr></table>';
         /*
         h += '<a href="" class="mceMoreColors">More colors</a>';
         */

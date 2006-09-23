@@ -1,3 +1,8 @@
+* Version 1.1.2 xx Sept 2006
+- Fixes including fore and background colour (xar bug  5837)
+- Updated spellchecker plugin (requires Curl)
+- Three new plugins called visulachars, nonbreaking, xhtmlxtras
+
 * Version 1.1.1 June 26
 - Add on/off switch for filebrowser in the tinymceconfig.inc file
 - Some bug fixes related to IE, base element and relative URLs, and style plugin fix

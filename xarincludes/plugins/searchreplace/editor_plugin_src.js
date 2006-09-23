@@ -6,16 +6,16 @@
  */
 
 /* Import theme    specific language pack */
-tinyMCE.importPluginLanguagePack('searchreplace');
+    .importPluginLanguagePack('searchreplace');
 
-var TinyMCE_SearchReplacePlugin = {
+var     _SearchReplacePlugin = {
     getInfo : function() {
         return {
             longname : 'Search/Replace',
             author : 'Moxiecode Systems',
-            authorurl : 'http://tinymce.moxiecode.com',
-            infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_searchreplace.html',
-            version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
+            authorurl : 'http://    .moxiecode.com',
+            infourl : 'http://    .moxiecode.com/    /docs/plugin_searchreplace.html',
+            version :     .majorVersion + "." +     .minorVersion
         };
     },
 
@@ -26,9 +26,9 @@ var TinyMCE_SearchReplacePlugin = {
     getControlHTML : function(cn)    {
         switch (cn) {
             case "search":
-                return tinyMCE.getButtonHTML(cn, 'lang_searchreplace_search_desc', '{$pluginurl}/images/search.gif', 'mceSearch', true);
+                return     .getButtonHTML(cn, 'lang_searchreplace_search_desc', '{$pluginurl}/images/search.gif', 'mceSearch', true);
             case "replace":
-                return tinyMCE.getButtonHTML(cn, 'lang_searchreplace_replace_desc', '{$pluginurl}/images/replace.gif', 'mceSearchReplace', true);
+                return     .getButtonHTML(cn, 'lang_searchreplace_replace_desc', '{$pluginurl}/images/replace.gif', 'mceSearchReplace', true);
         }
         return "";
     },
@@ -37,7 +37,7 @@ var TinyMCE_SearchReplacePlugin = {
      * Executes    the    search/replace commands.
      */
     execCommand : function(editor_id, element, command,    user_interface,    value) {
-        var instance = tinyMCE.getInstanceById(editor_id);
+        var instance =     .getInstanceById(editor_id);
 
         function defValue(key, default_value) {
             value[key] = typeof(value[key]) == "undefined" ? default_value : value[key];
@@ -64,7 +64,7 @@ var TinyMCE_SearchReplacePlugin = {
         // Handle commands
         switch (command) {
             case "mceResetSearch":
-                tinyMCE.lastSearchRng = null;
+                    .lastSearchRng = null;
                 return true;
 
             case "mceSearch":
@@ -75,35 +75,35 @@ var TinyMCE_SearchReplacePlugin = {
                     if (value['replacestring'] != null) {
                         template['file'] = '../../plugins/searchreplace/replace.htm'; // Relative to theme
                         template['width'] = 320;
-                        template['height'] = 100 + (tinyMCE.isNS7 ? 20 : 0);
-                        template['width'] += tinyMCE.getLang('lang_searchreplace_replace_delta_width', 0);
-                        template['height'] += tinyMCE.getLang('lang_searchreplace_replace_delta_height', 0);
+                        template['height'] = 100 + (    .isNS7 ? 20 : 0);
+                        template['width'] +=     .getLang('lang_searchreplace_replace_delta_width', 0);
+                        template['height'] +=     .getLang('lang_searchreplace_replace_delta_height', 0);
                     } else {
                         template['file'] = '../../plugins/searchreplace/search.htm'; // Relative to theme
                         template['width'] = 310;
-                        template['height'] = 105 + (tinyMCE.isNS7 ? 25 : 0);
-                        template['width'] += tinyMCE.getLang('lang_searchreplace_search_delta_width', 0);
-                        template['height'] += tinyMCE.getLang('lang_searchreplace_search_delta_width', 0);
+                        template['height'] = 105 + (    .isNS7 ? 25 : 0);
+                        template['width'] +=     .getLang('lang_searchreplace_search_delta_width', 0);
+                        template['height'] +=     .getLang('lang_searchreplace_search_delta_width', 0);
                     }
 
                     instance.execCommand('SelectAll');
 
-                    if (tinyMCE.isMSIE) {
+                    if (    .isMSIE) {
                         var r = instance.selection.getRng();
                         r.collapse(true);
                         r.select();
                     } else
                         instance.selection.getSel().collapseToStart();
 
-                    tinyMCE.openWindow(template, value);
+                        .openWindow(template, value);
                 } else {
-                    var win = tinyMCE.getInstanceById(editor_id).contentWindow;
-                    var doc = tinyMCE.getInstanceById(editor_id).contentWindow.document;
-                    var body = tinyMCE.getInstanceById(editor_id).contentWindow.document.body;
+                    var win =     .getInstanceById(editor_id).contentWindow;
+                    var doc =     .getInstanceById(editor_id).contentWindow.document;
+                    var body =     .getInstanceById(editor_id).contentWindow.document.body;
 
                     // Whats the point
                     if (body.innerHTML == "") {
-                        alert(tinyMCE.getLang('lang_searchreplace_notfound'));
+                        alert(    .getLang('lang_searchreplace_notfound'));
                         return true;
                     }
 
@@ -113,13 +113,13 @@ var TinyMCE_SearchReplacePlugin = {
 
                         // Search next one
                         value['replacemode'] = "none";
-                        tinyMCE.execInstanceCommand(editor_id, 'mceSearch', user_interface, value, false);
+                            .execInstanceCommand(editor_id, 'mceSearch', user_interface, value, false);
 
                         return true;
                     }
 
-                    if (tinyMCE.isMSIE) {
-                        var rng = tinyMCE.lastSearchRng ? tinyMCE.lastSearchRng : doc.selection.createRange();
+                    if (    .isMSIE) {
+                        var rng =     .lastSearchRng ?     .lastSearchRng : doc.selection.createRange();
                         var flags = 0;
 
                         if (value['wholeword'])
@@ -142,7 +142,7 @@ var TinyMCE_SearchReplacePlugin = {
                                 replaceSel(value['string'], value['replacestring'], value['backwards']);
                             }
 
-                            alert(tinyMCE.getLang('lang_searchreplace_allreplaced'));
+                            alert(    .getLang('lang_searchreplace_allreplaced'));
                             return true;
                         }
 
@@ -150,20 +150,20 @@ var TinyMCE_SearchReplacePlugin = {
                             rng.scrollIntoView();
                             rng.select();
                             rng.collapse(value['backwards']);
-                            tinyMCE.lastSearchRng = rng;
+                                .lastSearchRng = rng;
                         } else
-                            alert(tinyMCE.getLang('lang_searchreplace_notfound'));
+                            alert(    .getLang('lang_searchreplace_notfound'));
                     } else {
                         if (value['replacemode'] == "all") {
                             while (win.find(value['string'], value['casesensitive'], value['backwards'], value['wrap'], value['wholeword'], false, false))
                                 replaceSel(value['string'], value['replacestring'], value['backwards']);
 
-                            alert(tinyMCE.getLang('lang_searchreplace_allreplaced'));
+                            alert(    .getLang('lang_searchreplace_allreplaced'));
                             return true;
                         }
 
                         if (!win.find(value['string'], value['casesensitive'], value['backwards'], value['wrap'], value['wholeword'], false, false))
-                            alert(tinyMCE.getLang('lang_searchreplace_notfound'));
+                            alert(    .getLang('lang_searchreplace_notfound'));
                     }
                 }
                 return true;
@@ -171,7 +171,7 @@ var TinyMCE_SearchReplacePlugin = {
             case "mceSearchReplace":
                 value['replacestring'] = "";
 
-                tinyMCE.execInstanceCommand(editor_id, 'mceSearch', user_interface, value, false);
+                    .execInstanceCommand(editor_id, 'mceSearch', user_interface, value, false);
                 return true;
         }
 
@@ -180,4 +180,4 @@ var TinyMCE_SearchReplacePlugin = {
     }
 };
 
-tinyMCE.addPlugin("searchreplace", TinyMCE_SearchReplacePlugin);
+    .addPlugin("searchreplace",     _SearchReplacePlugin);

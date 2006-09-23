@@ -1,5 +1,5 @@
-    /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+/**
+ * $Id: editor_plugin_src.js 59 2006-08-20 20:53:19Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -116,7 +116,7 @@ var TinyMCE_TablePlugin = {
     },
 
     handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
-        var colspan = "1", rowspan = "1";
+        var colspan = "1", rowspan = "1", tdElm;
 
         var inst = tinyMCE.getInstanceById(editor_id);
 
@@ -1000,7 +1000,7 @@ var TinyMCE_TablePlugin = {
                         for (var y=0; y<rows.length; y++) {
                             for (var x=0; x<rows[y].length; x++) {
                                 var html = rows[y][x].innerHTML;
-                                var chk = tinyMCE.regexpReplace(html, "[ \t\r\n]", "");
+                                var chk = tinyMCE.regexpReplace(html, "[     \r\n]", "");
 
                                 if (chk != "<br/>" && chk != "<br>" && chk != "&nbsp;" && (x+y > 0))
                                     tdElm.innerHTML += html;
