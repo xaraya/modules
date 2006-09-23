@@ -1,5 +1,5 @@
 <?php
-    class MapObject 
+    class TempObject 
     {
 
         function toString()
@@ -19,7 +19,7 @@
             return sha1(serialize($this));
         }
     }
-    class BasicCollection extends MapObject implements Collection
+    class BasicCollection extends TempObject implements Collection
     {
         protected $elements;
 
