@@ -6,6 +6,7 @@
  *
  */
 
+
 class TinyPspellShell 
 {
     var $lang;
