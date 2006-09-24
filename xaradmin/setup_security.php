@@ -140,40 +140,23 @@ function helpdesk_admin_setup_security($args)
         $update_security_levels = false;
         if( $data['security_user_levels_ok'] == false )
         {
-            $settings->default_item_levels['user'] = array(
-                'overview'  => 1
-                , 'read'    => 1
-                , 'comment' => 1
-                , 'write'   => 1
-                , 'manage'  => 0
-                , 'admin'   => 0
-            );
+            $settings->default_item_levels['user'] =
+                new SecurityLevel(1,1,1,1,0,0);
             $update_security_levels = true;
         }
 
         if( $data['security_tech_levels_ok'] == false && $tech_group_id > 0 )
         {
-            $settings->default_item_levels[$tech_group_id] = array(
-                'overview'  => 1
-                , 'read'    => 1
-                , 'comment' => 1
-                , 'write'   => 1
-                , 'manage'  => 0
-                , 'admin'   => 0
-            );
+            $settings->default_item_levels[$tech_group_id] =
+                new SecurityLevel(1,1,1,1,0,0);
             $update_security_levels = true;
         }
 
         if( $data['security_world_levels_ok'] == false )
         {
-            $settings->default_item_levels[0] = array(
-                'overview'  => 0
-                , 'read'    => 0
-                , 'comment' => 0
-                , 'write'   => 0
-                , 'manage'  => 0
-                , 'admin'   => 0
-            );
+            $settings->default_item_levels[0] =
+                new SecurityLevel(0,0,0,0,0,0);
+
             // Also forcing default group level
             // if user is runnning this they want
             // a low default group level

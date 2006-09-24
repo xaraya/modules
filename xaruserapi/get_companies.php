@@ -12,8 +12,10 @@
  * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
 /**
-    Gets the valid companies of the current user if any exist
-*/
+ *  Gets the valid companies of the current user if any exist
+ *
+ *  @param $args['keyvalue']
+ */
 function helpdesk_userapi_get_companies($args)
 {
     extract($args);
@@ -32,7 +34,7 @@ function helpdesk_userapi_get_companies($args)
     );
 
     $companies = array();
-    if( !Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false) )
+    if( !Security::check(SECURITY_MANAGE, 'helpdesk', 0, 0, false) )
     {
         // Lose all groups the user is not in
         $user = $roles->getRole( xarUserGetVar('uid') );
@@ -44,14 +46,27 @@ function helpdesk_userapi_get_companies($args)
             {
                 if( $parent->uid == $group['uid'] )
                 {
-                    $companies[] = $group;
+                    $companies[$group['uid']] = $group;
                     break;
                 }
             }
         }
     }
     else
-        $companies = $groups;
+    {
+        foreach( $groups as $group )
+        {
+            $companies[$group['uid']] = $group;
+        }
+    }
+
+    if( isset($keyvalue) && $keyvalue == true )
+    {
+        foreach($companies as $key => $value)
+        {
+            $companies[$key] = $value['name'];
+        }
+    }
 
     return $companies;
 }

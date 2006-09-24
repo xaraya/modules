@@ -67,8 +67,7 @@ function helpdesk_user_sendmail($args)
         let the mail module decide which to send
     */
     $mail_args = array();
-    switch($mailaction)
-    {
+    switch($mailaction){
         case 'new':
             // Setup Ticket.
             $mail_args = array();
@@ -89,8 +88,7 @@ function helpdesk_user_sendmail($args)
             /**
              * Send out a email to user assigned to ticket if one exists
              */
-            if( !empty($ticket_args['assignedto']) )
-            {
+            if( !empty($ticket_args['assignedto']) ){
                 $mail_args = array();
                 $mail_args['userid'] = $ticket_args['assignedto'];
                 $mail_args['name'] = xarUserGetVar('name',$ticket_args['assignedto']);
@@ -107,6 +105,7 @@ function helpdesk_user_sendmail($args)
                 $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailnewassigned', $data, 'html');
                 $result = helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
             }
+
             break;
 
         case 'closed':
@@ -179,6 +178,28 @@ function helpdesk_user_sendmail($args)
 
     } //End switch
 
+    // send emails to additional email addresses.  Generally the people emailed
+    // have a vested interest in the ticket.
+    if( isset($additional_emails) and count($additional_emails) > 0 ){
+        foreach( $additional_emails as $uid => $email ){
+            $mail_args = array();
+            $mail_args['userid'] = $uid;
+            $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
+            // done for anon submitted tickets
+            $mail_args['email'] = $email;
+            $mail_args['mailsubject'] =
+                xarModGetVar('themes', 'SiteName') . " [#$tid] $subject ";
+            $ticket_args['viewtickets'] = xarModUrl('helpdesk', 'user', 'view',
+                array('selection' => 'MYALL')
+            );
+
+            $data = array_merge($ticket_args, $mail_args);
+            $textmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'text');
+            $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'html');
+            helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
+            $sent_mail[] = $ticket_args[$user];
+        }
+    }
 
     return true;
 }

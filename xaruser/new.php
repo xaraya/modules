@@ -50,7 +50,7 @@ function helpdesk_user_new()
         if( !xarVarFetch('email',    'str:1:',   $email,     '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('domain',   'str:1:',   $domain,    '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('subject',  'str:1:',   $subject,   '', XARVAR_NOT_REQUIRED) ){ return false; }
-        if( !xarVarFetch('nontech',  'str:1:',   $nontech,   '', XARVAR_NOT_REQUIRED) ){ return false; }
+        //if( !xarVarFetch('nontech',  'str:1:',   $nontech,   '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('source',   'int:1:',   $source,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('status',   'int:1:',   $status,    0,  XARVAR_NOT_REQUIRED) ){ return false; }
         if( empty($status) ){ $status = xarModGetVar('helpdesk', 'default_open_status'); }
@@ -61,6 +61,7 @@ function helpdesk_user_new()
         if( !xarVarFetch('issue',    'html:basic',$issue,     '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('notes',    'html:basic',$notes,     '', XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('new_cids', 'array',    $cids, array(), XARVAR_NOT_REQUIRED) ){ return false; }
+        if( !xarVarFetch('security_select_groups', 'array', $companies, array(), XARVAR_NOT_REQUIRED) ){ return false; }
         if( !xarVarFetch('closeonsubmit','int', $closeonsubmit,0,XARVAR_NOT_REQUIRED) ){ return false; }
 
         if( empty($name) ){ $name = xarUserGetVar('name', $openedby); }
@@ -76,41 +77,39 @@ function helpdesk_user_new()
             $email = $tmp_email;
         }
 
-        //$email = ''; // simulate no email address
-
         // If it is closed by someone, the ticket must be closed
         if( !empty($closedby) ){ $status = xarModGetVar('helpdesk', 'default_resolved_status'); }
 
         // If there is not assigned to rep we will try and
         // find a rep to assign the ticket to
+        $assignable_reps = xarModAPIFunc('helpdesk', 'user', 'get_assignable_reps',
+            array('cids'      => $cids
+                , 'companies' => count($companies) > 0 ? current($companies) : null
+            )
+        );
         if( empty($assignedto) )
         {
             $assignedto = xarModAPIFunc('helpdesk', 'user', 'assignto',
-                array('cids' => $cids)
+                array('reps' => $assignable_reps)
             );
         }
 
         // Check Required Variables. Make sure they are filled out and valid.
         $invalid = false;
-        if( empty($name) )
-        {
+        if( empty($name) ){
             $invalid = true;
         }
-        if( empty($subject) )
-        {
+        if( empty($subject) ){
             $invalid = true;
         }
-        if( !xarVarValidate('email', $email, true) )
-        {
+        if( !xarVarValidate('email', $email, true) ){
             $invalid = true;
         }
-        if( empty($issue) )
-        {
+        if( empty($issue) ){
             $invalid = true;
         }
 
-        if( $invalid === false )
-        {
+        if( $invalid === false ){
             // Ticket is valid and ok to create
             $return_val = xarModAPIFunc('helpdesk','user','create',
                 array(
@@ -156,27 +155,35 @@ function helpdesk_user_new()
                 @author MichelV.
                 $mail needs to be set
             */
+
+            $additional_emails = array();
+            if( isset($assignable_reps) and count($assignable_reps) > 0 ){
+                foreach( $assignable_reps as $rid ){
+                    $additional_emails[] = xarUserGetVar('email', $rid);
+                }
+            }
+
             $mail = xarModFunc('helpdesk','user','sendmail',
                 array(
-                    'phone'       => $phone,
-                    'email'       => $email, // Needed for anon submitted tickets
-                    'subject'     => $subject,
-                    'domain'      => $domain,
-                    'source'      => $source,
-                    'priority'    => $priority,
-                    'status'      => $status,
-                    'openedby'    => $openedby,
-                    'assignedto'  => $assignedto,
-                    'closedby'    => $closedby,
-                    'issue'       => $issue,
-                    'notes'       => $notes,
-                    'tid'         => $return_val,
-                    'mailaction'  => 'new'
+                    'phone'                 => $phone
+                    , 'email'               => $email // Needed for anon submitted tickets
+                    , 'subject'             => $subject
+                    , 'domain'              => $domain
+                    , 'source'              => $source
+                    , 'priority'            => $priority
+                    , 'status'              => $status
+                    , 'openedby'            => $openedby
+                    , 'assignedto'          => $assignedto
+                    , 'closedby'            => $closedby
+                    , 'issue'               => $issue
+                    , 'notes'               => $notes
+                    , 'tid'                 => $return_val
+                    , 'mailaction'          => 'new'
+                    , 'additional_emails'   => $additional_emails
                 )
             );
             // Check if the email has been sent.
-            if( $mail === false )
-            {
+            if( $mail === false ){
                 $msg = xarML('Email to user was not sent!');
                 xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                 new SystemException($msg));
@@ -200,8 +207,7 @@ function helpdesk_user_new()
                 )
             );
 
-            if( !empty($notes) )
-            {
+            if( !empty($notes) ){
                 $result = xarModAPIFunc('comments', 'user', 'add',
                     array(
                         'modid'    => $modid,
@@ -231,7 +237,7 @@ function helpdesk_user_new()
         // Ticket was found to be invalid so lets send user input back
         $ticket = array(
             'userid'      => $openedby,
-            'username'    =>  xarUserGetVar('uname', $openedby),
+            'username'    => xarUserGetVar('uname', $openedby),
             'name'        => $name,
             'phone'       => $phone,
             'email'       => $email,
@@ -257,8 +263,7 @@ function helpdesk_user_new()
 
     if (!xarVarFetch('itemtype', 'int', $itemtype, TICKET_ITEMTYPE, XARVAR_NOT_REQUIRED)) return;
 
-    if( !isset($ticket) )
-    {
+    if( !isset($ticket) ){
         $ticket = array(
             'userid'      => xarUserGetVar('uid'),
             'username'    => xarUserGetVar('uname'),
@@ -294,8 +299,7 @@ function helpdesk_user_new()
         array('itemtype' => STATUS_ITEMTYPE)
     );
 
-    if( Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false) )
-    {
+    if( Security::check(SECURITY_MANAGE, 'helpdesk', TICKET_ITEMTYPE, 0, false) ){
         $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets',
             array('itemtype' => REPRESENTATIVE_ITEMTYPE)
         );
