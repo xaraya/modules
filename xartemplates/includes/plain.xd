@@ -14,7 +14,13 @@
         <xar:loop name="$items">
         <tr>
             <td class="xar-norm-outline" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-                #$loop:item['url']#
+                <xar:if condition="!empty($loop:item['title'])">
+                    <strong>#xarVarPrepForDisplay($loop:item['title'])#</strong><br />
+                </xar:if>
+                <xar:if condition="!empty($loop:item['desc'])">
+                    <em>#xarVarPrepForDisplay($loop:item['desc'])#</em><br />
+                </xar:if>
+                <a href="#xarVarPrepForDisplay($loop:item['url'])#">#xarVarPrepForDisplay($loop:item['url'])#</a>
             </td>
             <td class="xar-norm-outline" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
                 #$loop:item['order']#

@@ -30,7 +30,7 @@
             </xar:mlstring>
         </a>
     </p>
-    <form action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);">
         <fieldset>
             <legend>
                 <strong>

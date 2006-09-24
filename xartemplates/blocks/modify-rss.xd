@@ -6,9 +6,9 @@
       <select name="rssurl" id="rssurl#$blockid#">
       <xar:loop name="$items">
         <xar:if condition="$rssurl eq $loop:item['url']">
-          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#" selected="selected">#xarVarPrepForDisplay($loop:item['url'])#</option>
+          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#" selected="selected">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item['url'])#</option>
         <xar:else />
-          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#">#xarVarPrepForDisplay($loop:item['url'])#</option>
+          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item['url'])#</option>
         </xar:if>
       </xar:loop>
       </select>
