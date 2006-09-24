@@ -119,7 +119,6 @@ function security_upgrade($oldversion)
 
             $result = security_upgrade_082();
             if( !$result ){ return false; }
-            break;
 
         case '0.8.3':
         case '0.9.0':
@@ -271,21 +270,15 @@ function security_upgrade_082()
             $modid = xarModGetIdFromName($module_name);
             foreach( $itemtypes as $itemtype => $crap_value )
             {
-                $settings = xarModAPIFunc('security', 'user', 'get_default_settings',
-                    array(
-                        'modid' => $modid,
-                        'itemtype' => $itemtype
-                    )
-                );
+                $settings = SecuritySettings::factory($modid, $itemtype);
 
-                if( count($settings['owner']) == 3 )
+                if( $settings->owner_table != null )
                 {
-                    $owner = $settings['owner'];
                     // Need to join with other table to get what we need
                     // Module itemtype pair is using the owner module.
                     // Join with that table and do a INSERT .. SELECT
                     $query = " INSERT INTO $roles_table (modid, itemtype, itemid, uid, xoverview, xread, xcomment, xwrite, xmanage, xadmin ) "
-                        . "SELECT $sec_table.xar_modid, $sec_table.xar_itemtype, $sec_table.xar_itemid, {$owner['table']}.{$owner['column']}, "
+                        . "SELECT $sec_table.xar_modid, $sec_table.xar_itemtype, $sec_table.xar_itemid, {$settings->owner_table}.{$settings->owner_column}, "
                         . "IF(xar_userlevel & 32 > 0, 1 , 0), "
                         . "IF(xar_userlevel & 16 > 0, 1 , 0), "
                         . "IF(xar_userlevel & 8 > 0, 1 , 0), "
@@ -293,7 +286,7 @@ function security_upgrade_082()
                         . "IF(xar_userlevel & 2 > 0, 1 , 0), "
                         . "IF(xar_userlevel & 1 > 0, 1 , 0) "
                         . "FROM $sec_table "
-                        . "INNER JOIN {$owner['table']} ON {$owner['table']}.{$owner['primary_key']} = $sec_table.xar_itemid "
+                        . "INNER JOIN {$settings->owner_table} ON {$settings->owner_table}.{$settings->owner_primary_key} = $sec_table.xar_itemid "
                         . "WHERE $sec_table.xar_modid  = $modid "
                         . "AND $sec_table.xar_itemtype = $itemtype "
                         ;
