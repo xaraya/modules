@@ -197,7 +197,7 @@ function helpdesk_user_sendmail($args)
             $textmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'text');
             $htmlmessage = xarTplModule('helpdesk', 'user', 'sendmailadditionalcomment', $data, 'html');
             helpdesk_userapi_sendmail($mail_args, $htmlmessage, $textmessage);
-            $sent_mail[] = $ticket_args[$user];
+            $sent_mail[] = $uid;
         }
     }
 
