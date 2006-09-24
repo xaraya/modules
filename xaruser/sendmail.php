@@ -184,7 +184,7 @@ function helpdesk_user_sendmail($args)
         foreach( $additional_emails as $uid => $email ){
             $mail_args = array();
             $mail_args['userid'] = $uid;
-            $mail_args['name'] = xarUserGetVar('name',$ticket_args[$user]);
+            $mail_args['name'] = xarUserGetVar('name', $uid);
             // done for anon submitted tickets
             $mail_args['email'] = $email;
             $mail_args['mailsubject'] =
