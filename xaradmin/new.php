@@ -16,7 +16,7 @@
  *
  * This function presents the template from which the article is created
  * @param int ptid The publication type id
- * @param int catid The category id this article will belong to
+ * @param string catid The category id this article will belong to
  * @param id itemtype the itemtype, if forced
  * @param string return_url The url to return to
  * @return mixed call to template with data array and name of template to use
@@ -26,10 +26,10 @@ function articles_admin_new($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('ptid',  'id', $ptid, NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'id', $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',        'id',    $ptid,       NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('catid',       'str',   $catid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype',    'id',    $itemtype,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($preview) && isset($article)) {
         $ptid = $article['ptid'];
