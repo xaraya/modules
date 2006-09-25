@@ -375,7 +375,7 @@ if (isset($action)) {
                         $q->addfield('products_image',$product['products_image']);
                         $q->addfield('products_price',$product['products_price']);
                         $q->addfield('products_discount_allowed',$product['products_discount_allowed']);
-                        $q->addfield('products_date_added',mktime());
+                        $q->addfield('products_date_added',time());
                         $q->addfield('products_date_available',$product['products_date_available']);
                         $q->addfield('products_weight',$product['products_weight']);
                         $q->addfield('products_status',0);
@@ -459,7 +459,7 @@ if (isset($action)) {
     $pager = new splitPageResults($page,
                                   $q->getrows(),
                                   xarModURL('commerce','admin','customers'),
-                                  xarModGetVar('commerce', 'itemsperpage')
+                                  xarModVars::get('commerce', 'itemsperpage')
                                  );
     $data['pagermsg'] = $pager->display_count('Displaying #(1) to #(2) (of #(3) customers)');
     $data['displaylinks'] = $pager->display_links();

@@ -91,7 +91,7 @@ function commerce_admin_product_screen()
                     $q->addtable($xartables['commerce_products']);
                     if ($action == 'insert_product') {
                         $q->settype('INSERT');
-                        $q->addfield('products_date_added', mktime());
+                        $q->addfield('products_date_added', time());
                         if(!$q->run()) return;
 
                         $q = new xenQuery('INSERT', $xartables['commerce_products_to_categories']);
@@ -102,7 +102,7 @@ function commerce_admin_product_screen()
                     }
                     elseif ($action == 'update_product') {
                         $q->settype('UPDATE');
-                        $q->addfield('products_last_modified', mktime());
+                        $q->addfield('products_last_modified', time());
                         $q->eq('products_id', $data['pID']);
                         if(!$q->run()) return;
                     }
@@ -401,11 +401,11 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
                     $q->addtable('commerce_categories');
                     if ($action == 'insert_category') {
                         $q->addfield('parent_id',$current_category_id);
-                        $q->addfield('date_added',mktime());
+                        $q->addfield('date_added',time());
 //                        $categories_id = xtc_db_insert_id();
                     }
                     elseif ($action == 'update_category') {
-                        $q->addfield('last_modified',mktime());
+                        $q->addfield('last_modified',time());
                         $q->eq('categories_id',$categories_id);
                     }
 

@@ -66,7 +66,7 @@ function commerce_init()
     if (!$q->run($query)) return;
 
 /* Move to customers module
-	$query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_memo";
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_customers_memo";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_customers_memo (
       memo_id int(11) NOT NULL auto_increment,
@@ -79,7 +79,7 @@ function commerce_init()
     )";
     if (!$q->run($query)) return;
 */
-/*	Move to products module
+/*  Move to products module
     $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_products_xsell";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_commerce_products_xsell (
@@ -180,10 +180,13 @@ function commerce_init()
     /*
       Our list of objects
     */
+
+    $ice_objects = $defaultdata;
+    /*
     $ice_objects = array(
-    					 'ice_countries',
-//    					 'ice_currencies',
-//						 'ice_taxclasses',
+                         'ice_countries',
+//                       'ice_currencies',
+//                       'ice_taxclasses',
 //                         'ice_taxrates',
 //                         'ice_zones',
 //                         'ice_taxzones',
@@ -193,7 +196,7 @@ function commerce_init()
                          'ice_configuration', 'ice_config_groups',
                          'ice_roles'
                          );
-
+*/
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
@@ -210,13 +213,12 @@ function commerce_init()
     // data in XML files [ice-objectname]-def.xml an [ice-objectname]-data.xml
 
     // TODO: This will bomb out if the object already exists
-	$objects = array();
+    $objects = array();
 
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-data.xml';
+        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-dat.xml';
 
-        $objects = array();
         $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
         if (!$objectid) return;
         else $objects[$ice_object] = $objectid;
@@ -227,7 +229,7 @@ function commerce_init()
         }
     }
 
-	xarModSetVar('commerce','ice_objects',serialize($objects));
+    xarModVars::set('commerce','ice_objects',serialize($objects));
 
     /** END ICE MODEL **/
 
@@ -789,7 +791,7 @@ $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_custo
 #
 # Create modvars we will need
 #
-    xarModSetVar('commerce', 'itemsperpage', 20);
+    xarModVars::set('commerce', 'itemsperpage', 20);
 
 # --------------------------------------------------------
 #
@@ -886,52 +888,57 @@ $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_custo
                                'description' => 'Commerce Base Category',
                                'parent_id' => 0));
     // save the id for later
-    xarModSetVar('commerce', 'ice_basecategory', $cid);
+    xarModVars::set('commerce', 'ice_basecategory', $cid);
 
 # --------------------------------------------------------
 #
 # Set a parent group with privileges and a user for commerce
 #
 
-	if ($createdefaultgroup) {
-		$role = xarFindRole($defaultgroupname);
-		if (empty($role)) {
-			$everybody = xarFindRole('Everybody');
-			$new = array('name' => $defaultgroupname,
-						 'itemtype' => ROLES_GROUPTYPE,
-						 'parentid' => $everybody->getID(),
-						);
-			$uid = xarModAPIFunc('roles','admin','create',$new);
-		}
-		if ($createdefaultuser) {
-			$new = array('name' => $defaultusername,
-						 'uname' => strtolower($defaultusername),
-						 'email' => 'none@none.com',
-						 'pass' => $defaultuserpass,
-						 'state' => ROLES_STATE_ACTIVE,
-						 'itemtype' => ROLES_USERTYPE,
-						 'parentid' => $uid,
-						);
-			$uid = xarModAPIFunc('roles','admin','create',$new);
-		}
-	}
+    if ($createdefaultgroup) {
+        $role = xarFindRole($defaultgroupname);
+        if (empty($role)) {
+            $everybody = xarFindRole('Everybody');
+            $new = array('name' => $defaultgroupname,
+                         'itemtype' => ROLES_GROUPTYPE,
+                         'parentid' => $everybody->getID(),
+                        );
+            $uid = xarModAPIFunc('roles','admin','create',$new);
+        } else {
+            $uid = $role->getID();
+        }
+        if ($createdefaultuser) {
+            $role = xarFindRole($defaultgroupname);
+            if (empty($role)) {
+                $new = array('name' => $defaultusername,
+                             'uname' => strtolower($defaultusername),
+                             'email' => 'none@none.com',
+                             'pass' => $defaultuserpass,
+                             'state' => ROLES_STATE_ACTIVE,
+                             'itemtype' => ROLES_USERTYPE,
+                             'parentid' => $uid,
+                            );
+                $uid = xarModAPIFunc('roles','admin','create',$new);
+            }
+        }
+    }
 
 # --------------------------------------------------------
 #
-# Register masks
+# Register privileges
 #
-	if ($createdefaultprivileges) {
-		xarRegisterPrivilege('ViewCommerce','All','commerce','All','All','ACCESS_OVERVIEW');
-		xarRegisterPrivilege('ReadCommerce','All','commerce','All','All','ACCESS_READ');
-		xarRegisterPrivilege('EditCommerce','All','commerce','All','All','ACCESS_EDIT');
-		xarRegisterPrivilege('AddCommerce','All','commerce','All','All','ACCESS_ADD');
-		xarRegisterPrivilege('DeleteCommerce','All','commerce','All','All','ACCESS_DELETE');
-		xarRegisterPrivilege('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
-		$role = xarFindRole($defaultgroupname);
-		if (!empty($role)) {
-			xarAssignPrivilege('ViewCommerce',$defaultgroupname);
-		}
-	}
+    if ($createdefaultprivileges) {
+        xarRegisterPrivilege('ViewCommerce','All','commerce','All','All','ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadCommerce','All','commerce','All','All','ACCESS_READ');
+        xarRegisterPrivilege('EditCommerce','All','commerce','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddCommerce','All','commerce','All','All','ACCESS_ADD');
+        xarRegisterPrivilege('DeleteCommerce','All','commerce','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
+        $role = xarFindRole($defaultgroupname);
+        if (!empty($role)) {
+            xarAssignPrivilege('ViewCommerce',$defaultgroupname);
+        }
+    }
 
 # --------------------------------------------------------
 #
@@ -939,7 +946,7 @@ $query = "DROP TABLE IF EXISTS " . $prefix . "_commerce_personal_offers_by_custo
 #
     $info = xarModGetInfo(xarModGetIDFromName('commerce'));
     $modules[$info['name']] = $info['regid'];
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
 // Initialisation successful
     return true;
@@ -970,51 +977,20 @@ function commerce_delete()
 {
 # --------------------------------------------------------
 #
-# Remove database tables
-#
-    $tablenameprefix = xarDBGetSiteTablePrefix() . '_commerce_';
-    $tables = xarDBGetTables();
-    $q = new xenQuery();
-        foreach ($tables as $table) {
-        if (is_array($table)) continue;
-        if (strpos($table,$tablenameprefix) === 0) {
-            $query = "DROP TABLE IF EXISTS " . $table;
-            if (!$q->run($query)) return;
-        }
-    }
-
-# --------------------------------------------------------
-#
-# Delete all DD objects created by commerce modules
-#
-	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
-	foreach ($ice_objects as $key => $value)
-	    $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
-
-# --------------------------------------------------------
-#
 # Purge all the roles created by this module
 #
-	$role = xarFindRole('CommerceGroup');
-	if (!empty($role)) {
-		$descendants = $role->getDescendants();
-		foreach ($descendants as $item)
-			if (!$item->purge()) return;
-		if (!$role->purge()) return;
-	}
-
-# --------------------------------------------------------
-#
-# Remove modvars, masks and privilege instances
-#
-    xarModDelAllVars('commerce');
-    xarRemoveMasks('commerce');
-    xarRemoveInstances('commerce');
+    $role = xarFindRole('CommerceGroup');
+    if (!empty($role)) {
+        $descendants = $role->getDescendants();
+        foreach ($descendants as $item)
+            if (!$item->purge()) return;
+        if (!$role->purge()) return;
+    }
 
     // Remove from the list of commerce modules
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     unset($modules['commerce']);
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
 # --------------------------------------------------------
 #
@@ -1031,10 +1007,7 @@ function commerce_delete()
 
     // The modules module will take care of all the other blocks
 
-
-// Delete successful
-
-	return true;
+    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'commerce'));
 }
 
 ?>

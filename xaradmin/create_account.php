@@ -246,7 +246,7 @@ function commerce_admin_create_account()
                     $q = new xenQuery('INSERT',$xartables['commerce_customers_info']);
                     $q->addfield('customers_info_id',$cc_id);
                     $q->addfield('customers_info_number_of_logons',0);
-                    $q->addfield('customers_info_date_account_created',mktime());
+                    $q->addfield('customers_info_date_account_created',time());
                     if(!$q->run()) return;
 
                     // Create insert into admin access table if admin is created.

@@ -18,7 +18,10 @@ $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 // this module depends on the categories module
 // this module depends on the xen module
-$modversion['dependency'] = array(147,3005);
-$modversion['dependencyinfo'] = array(147 => 'categories',
-									  3005 => 'xen');
+$modversion['dependency'] = array(147,3005,30012);
+$modversion['dependencyinfo'] = array(
+                                      147 => 'categories',
+                                      3005 => 'xen',
+                                      30012 => 'math'
+                                      );
 ?>

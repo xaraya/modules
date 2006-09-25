@@ -116,10 +116,10 @@ function commerce_configmenublock_display($blockinfo)
 
 
     // this is how we are marking the currently loaded module
-    $marker = xarModGetVar('adminpanels', 'marker');
+    $marker = xarModVars::get('adminpanels', 'marker');
     $dec = '';
     // dont show marker unless specified
-    if(!xarModGetVar('adminpanels', 'showmarker')){
+    if(!xarModVars::get('adminpanels', 'showmarker')){
         $marker = '';
     } elseif ($marker === 'x09' || $marker === '900' || $marker === '0900') {
         // TODO: remove after beta testing's done
@@ -135,29 +135,29 @@ function commerce_configmenublock_display($blockinfo)
     $currenturl = str_replace('&', '&amp;', xarServerGetCurrentURL());
 
 
-	// TPL override
-	if (empty($blockinfo['template'])) {
-		$template = 'configmenu';
-	} else {
-		$template = $blockinfo['template'];
-	}
-	$data = xarTplBlock('commerce',
-						$template,
-						array(  'content'     => $content,
-								'marker'        => $marker,
-								'currenturl'     => $currenturl));
+    // TPL override
+    if (empty($blockinfo['template'])) {
+        $template = 'configmenu';
+    } else {
+        $template = $blockinfo['template'];
+    }
+    $data = xarTplBlock('commerce',
+                        $template,
+                        array(  'content'     => $content,
+                                'marker'        => $marker,
+                                'currenturl'     => $currenturl));
 
     // Get this working for now - should not be returning null - fix later in xarinit
-    $ice_modules= xarModGetVar('commerce','ice_modules');
+    $ice_modules= xarModVars::get('commerce','ice_modules');
     if (isset($ice_modules)) {
-    	$modules = unserialize(xarModGetVar('commerce','ice_modules'));
-	    unset($modules['commerce']);
-	    foreach ($modules as $key => $value) {
-		    $data .= xarTplBlock($key,
-							$template,
-							array(  'content'     => $content,
-									'marker'        => $marker,
-									'currenturl'     => $currenturl));
+        $modules = unserialize(xarModVars::get('commerce','ice_modules'));
+        unset($modules['commerce']);
+        foreach ($modules as $key => $value) {
+            $data .= xarTplBlock($key,
+                            $template,
+                            array(  'content'     => $content,
+                                    'marker'        => $marker,
+                                    'currenturl'     => $currenturl));
         }
     }
     // Populate block info and pass to BlockLayout.

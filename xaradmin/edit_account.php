@@ -241,7 +241,7 @@ function commerce_admin_edit_account()
                     if(!$q->run()) return;
 
                     $q = new xenQuery('UPDATE',$xartables['commerce_customers_info']);
-                    $q->addfield('customers_info_date_account_last_modified',mktime());
+                    $q->addfield('customers_info_date_account_last_modified',time());
                     $q->eq('customers_info_id',$cID);
                     if(!$q->run()) return;
 

@@ -3,6 +3,7 @@
   <label>Configuration settings</label>
   <moduleid>182</moduleid>
   <itemtype>21</itemtype>
+  <parent>0</parent>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>

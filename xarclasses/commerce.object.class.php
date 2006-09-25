@@ -60,6 +60,7 @@ class xenCommerceObject extends xenObject
         $userid = xarSessionGetVar('uid');
         $date = date("Ymd") ;
         $time = date("H:i:s") ;
+        sys::import('modules.roles.class.xarQuery');
         $logentry = new xarQuery("INSERT",
                      array($this->logtable),
                      array(

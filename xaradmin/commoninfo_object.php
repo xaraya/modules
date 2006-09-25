@@ -43,7 +43,7 @@ function commerce_admin_commoninfo_object($args = array() )
     $data['tplmodule'] = isset($tplmodule) ? $tplmodule : 'dynamicdata';
 
 
-    $data['itemsperpage'] = xarModGetVar('commerce', 'itemsperpage');
+    $data['itemsperpage'] = xarModVars::get('commerce', 'itemsperpage');
     $data['use_grouping'] = isset($use_grouping) ? $use_grouping : false;
     $data['group_field'] = isset($group_field) ? $group_field : null;
     $data['group_value'] = isset($group_value) ? $group_value : null;

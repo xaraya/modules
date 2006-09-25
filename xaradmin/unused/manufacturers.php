@@ -28,7 +28,7 @@ function commerce_admin_manufacturers()
                 $q = new xenQuery('INSERT');
                 $q->settable($xartables['commerce_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
-                $q->addfield('date_added',mktime());
+                $q->addfield('date_added',time());
                 if(!$q->run()) return;
                 $lastID = $q->lastid($xartables['commerce_manufacturers'], 'manufacturers_id');
 
@@ -51,7 +51,7 @@ function commerce_admin_manufacturers()
                 if(!xarVarFetch('manufacturers_name','str',$manufacturers_name)) {return;}
                 $q = new xenQuery('UPDATE', $xartables['commerce_manufacturers']);
                 $q->addfield('manufacturers_name',$manufacturers_name);
-                $q->addfield('last_modified',mktime());
+                $q->addfield('last_modified',time());
                 $q->eq('manufacturers_id',$cID);
                 if(!$q->run()) return;
 
@@ -115,14 +115,14 @@ function commerce_admin_manufacturers()
     $q->join('mi.manufacturers_id','m.manufacturers_id');
     $q->eq('mi.languages_id',$currentlang['id']);
     $q->setorder('manufacturers_name');
-    $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
-    $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
+    $q->setrowstodo(xarModVars::get('commerce', 'itemsperpage'));
+    $q->setstartat(($page - 1) * xarModVars::get('commerce', 'itemsperpage') + 1);
     if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),
                                   xarModURL('commerce','admin','manufacturers'),
-                                  xarModGetVar('commerce', 'itemsperpage')
+                                  xarModVars::get('commerce', 'itemsperpage')
                                  );
     $data['pagermsg'] = $pager->display_count('Displaying #(1) to #(2) (of #(3) manufacturers)');
     $data['displaylinks'] = $pager->display_links();

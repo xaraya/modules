@@ -60,13 +60,13 @@ function commerce_admin_categories_screen()
                         $q1->settype('INSERT');
                         $q2->settype('INSERT');
                         $q->addfield('xar_parent',$categories_id);
-                        $q2->addfield('date_added',mktime());
+                        $q2->addfield('date_added',time());
                     }
                     elseif ($action == 'update_category') {
                         $q->settype('UPDATE');
                         $q1->settype('UPDATE');
                         $q2->settype('UPDATE');
-                        $q2->addfield('last_modified',mktime());
+                        $q2->addfield('last_modified',time());
                         $q->eq('xar_cid',$categories_id);
                     }
 

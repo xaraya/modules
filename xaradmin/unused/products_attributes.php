@@ -178,8 +178,8 @@ function commerce_admin_products_attributes()
                 $q->addfields(array('products_options_id', 'products_options_name'));
                 $q->eq('products_options_id', $option_id);
                 $q->eq('language_id', $currentlang['id']);
-                $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
-                $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
+                $q->setrowstodo(xarModVars::get('commerce', 'itemsperpage'));
+                $q->setstartat(($option_page - 1) * xarModVars::get('commerce', 'itemsperpage') + 1);
                 if(!$q->run()) return;
                 $data['options_values'] = $q->row();
                 break;
@@ -233,8 +233,8 @@ function commerce_admin_products_attributes()
     $q = new xenQuery('SELECT',$xartables['commerce_products_options']);
     $q->eq('language_id',$currentlang['id']);
     $q->setorder($option_order_by);
-    $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
-    $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
+    $q->setrowstodo(xarModVars::get('commerce', 'itemsperpage'));
+    $q->setstartat(($option_page - 1) * xarModVars::get('commerce', 'itemsperpage') + 1);
     if(!$q->run()) return;
     $data['option_values'] = $q->output;
 
@@ -261,8 +261,8 @@ function commerce_admin_products_attributes()
     $q = new xenQuery('SELECT',$xartables['commerce_products_options_values']);
     $q->addfields(array('products_options_values_id', 'products_options_values_name'));
     $q->eq('language_id',$currentlang['id']);
-    $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
-    $q->setstartat(($option_page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
+    $q->setrowstodo(xarModVars::get('commerce', 'itemsperpage'));
+    $q->setstartat(($option_page - 1) * xarModVars::get('commerce', 'itemsperpage') + 1);
 //            $q->setstatement();
 //            echo $q->getstatement();exit;
     if(!$q->run()) return;

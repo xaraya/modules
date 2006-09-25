@@ -11,14 +11,15 @@
 // ----------------------------------------------------------------------
 
 // Sets the status of a banner
-function commerce_userapi_set_banner_status($args) {
+function commerce_userapi_set_banner_status($args)
+{
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
 
     extract($args);
     if (!isset($status)) $status = 0;
     $q = new xenQuery('UPDATE',$xartables['commerce_banners']);
-    $q->addfield('date_status_change',mktime());
+    $q->addfield('date_status_change',time());
     $q->eq('banners_id',$banners_id);
     if ($status == '1') {
         $q->eq('status',1);

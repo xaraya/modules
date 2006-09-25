@@ -3,6 +3,7 @@
   <label>Configuration groups</label>
   <moduleid>182</moduleid>
   <itemtype>22</itemtype>
+  <parent>0</parent>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>

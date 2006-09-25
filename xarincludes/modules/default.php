@@ -165,6 +165,7 @@
         $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $language));
         $language_id = $currentlang['id'];
 
+        sys::import('modules.roles.class.xarQuery');
         $q = new xarQuery ('SELECT',$xartables['commerce_content_manager']);
         $q->addfields(array('content_title',
                     'content_heading',
@@ -187,8 +188,8 @@
         $greeting_string = xarML('Nice to see you again #(1). ',
         '<span class="greetUser">' . $currentuser['name'] . '</span>');
         if (xarModIsAvailable('products')) {
-			$greeting_string .= xarML('Would you like to visit our #(1)?',
-			'<a href="' . xarModURL('products','user','products_new') . '"><u>new products</u></a>');
+            $greeting_string .= xarML('Would you like to visit our #(1)?',
+            '<a href="' . xarModURL('products','user','products_new') . '"><u>new products</u></a>');
         }
     }
     else {
