@@ -124,10 +124,10 @@ function commerce_configmenublock_display($blockinfo)
 
 
     // this is how we are marking the currently loaded module
-    $marker = xarModGetVar('adminpanels', 'marker');
+    $marker = xarModVars::get('adminpanels', 'marker');
     $dec = '';
     // dont show marker unless specified
-    if(!xarModGetVar('adminpanels', 'showmarker')){
+    if(!xarModVars::get('adminpanels', 'showmarker')){
         $marker = '';
     } elseif ($marker === 'x09' || $marker === '900' || $marker === '0900') {
         // TODO: remove after beta testing's done

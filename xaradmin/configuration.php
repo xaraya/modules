@@ -29,7 +29,7 @@ function products_admin_configuration()
             $q = new xenQuery('UPDATE', $table['product_configuration']);
             $tablefields = array(
                 array('name' => 'configuration_value','value' => $configuration_value),
-                array('name' => 'last_modified','value' => mktime()),
+                array('name' => 'last_modified','value' => time()),
             );
             $q->addfields($tablefields);
             $q->eq('configuration_id',$cID);

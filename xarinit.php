@@ -340,7 +340,7 @@ function products_init()
 #
 # Set up modvars
 #
-    xarModSetVar('products', 'itemsperpage', 20);
+    xarModVars::set('products', 'itemsperpage', 20);
 
 # --------------------------------------------------------
 #
@@ -396,7 +396,7 @@ function products_init()
         return false;
     }
 
-	xarModRegisterHook('module', 'getconfig', 'API','products', 'admin', 'getconfighook');
+    xarModRegisterHook('module', 'getconfig', 'API','products', 'admin', 'getconfighook');
     xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'products'));
     xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'math', 'hookModName' => 'products'));
 
@@ -475,10 +475,10 @@ function products_init()
 #
 # Add this module to the list of installed commerce suite modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     $info = xarModGetInfo(xarModGetIDFromName('products'));
     $modules[$info['name']] = $info['regid'];
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
 // Initialisation successful
     return true;
@@ -507,24 +507,6 @@ function products_upgrade($oldversion)
  */
 function products_delete()
 {
-    $tablenameprefix = xarDBGetSiteTablePrefix() . '_product_';
-    $tables = xarDBGetTables();
-    $q = new xenQuery();
-        foreach ($tables as $table) {
-        if (strpos($table,$tablenameprefix) === 0) {
-            $query = "DROP TABLE IF EXISTS " . $table;
-            if (!$q->run($query)) return;
-        }
-    }
-
-# --------------------------------------------------------
-#
-# Remove modvars, masks and privilege instances
-#
-    xarModDelAllVars('products');
-    xarRemoveMasks('products');
-    xarRemoveInstances('products');
-
 # --------------------------------------------------------
 #
 # Delete block types for this module
@@ -557,12 +539,11 @@ function products_delete()
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }
     // Remove from the list of commerce modules
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     unset($modules['products']);
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
-	// Delete successful
-	return true;
+    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'products'));
 }
 # --------------------------------------------------------
 

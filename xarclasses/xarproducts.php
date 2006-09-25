@@ -23,7 +23,7 @@ include_once 'modules/xen/xarclasses/xenquery.php';
  */
 class xarProducts
 {
-  
+
 /*** Attributes: ***/
 
   // it's all database that we eract
@@ -44,19 +44,20 @@ class xarProducts
    * initialise tables
    * @access public
    */
-  function xarProducts( ) {
-    
+  function xarProducts( )
+  {
+
       $xartable =& xarDBGetTables();
       $this->productsTable = $xartable['products_products'];
       $this->productsAttributesTable = $xartable['products_products_attributes'];
-      
+
       /* TODO LATER
       $this->rolesTable = $xartable['roles'];
       $this->productsNotificationTable = $xartable['products_products_notifications'];
       $this->productsGratuatedTable = $xartable['xar_products_products_graduated_prices'];
       */
-      
-      
+
+
   } // end of member function xarProducts
 
   /**
@@ -75,67 +76,68 @@ class xarProducts
    * @param modid moduleid to attach the produc
    * @access public
    */
-  function addProduct($args){
-      
+  function addProduct($args)
+  {
+
       extract($args);
-      
-      
+
+
       if (!isset($products_status)){
-       return;   
+       return;
       }
-      
+
       if (!isset($dateAvailable)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_sort)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_model)){
-       return;   
+       return;
       }
-      
+
       if (!isset($fsk18)){
-       return;   
+       return;
       }
-      
+
       if (!isset($shipping_status)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_quantity)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_weight)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_price)){
-       return;   
-      }    
-      
+       return;
+      }
+
       if (!isset($iid)){
-       return;   
+       return;
       }
-      
+
       if (!isset($itemtype)){
-       return;   
+       return;
       }
-            
+
       if (!isset($modid)){
-       return;   
+       return;
       }
-      
+
       // Transform the date in a timestamp format
       $dateTransform = explode('-', $dateAvailable);
       $dateA = mktime(0, 0, 0, $dateTransform[1], $dateTransform[2], $dateTransform[0]);
-      
+
       //INSERTION in the product table
-       
+
           $q = new xenQuery('INSERT', $this->productsTable);
-          
+
            $tablefields = array(
             array('name' => 'products_quantity',      'value' => $products_quantity),
             array('name' => 'products_shippingtime',     'value' => $shipping_status),
@@ -143,53 +145,54 @@ class xarProducts
             array('name' => 'products_sort', 'value' =>  $products_sort),
             array('name' => 'products_price',  'value' => $products_price),
             array('name' => 'products_discount_allowed',  'value' => 0.00),
-            array('name' => 'products_date_added',  'value' => mktime()),
+            array('name' => 'products_date_added',  'value' => time()),
             array('name' => 'products_date_available',  'value' => $dateA),
             array('name' => 'products_weight',  'value' => $products_weight),
             array('name' => 'products_status',  'value' => $products_status),
             array('name' => 'products_fsk18',  'value' => $fsk18),
             array('name' => 'xar_modid',  'value' => $modid),
             array('name' => 'xar_itemtype',  'value' => $itemtype),
-            array('name' => 'xar_itemid',  'value' => $iid)            
+            array('name' => 'xar_itemid',  'value' => $iid)
         );
-       
+
         $q->addfields($tablefields);
-  
-        if (!$q->run()) return;       
-                
+
+        if (!$q->run()) return;
+
   } // end of member function addProduct
 
   /**
    * Remove a product in database
    * @param iid itemid to remove the product
    * @param itemtype itemtype to remove the produc
-   * @param modid moduleid to remove the produc 
+   * @param modid moduleid to remove the produc
    * @access public
    */
-  function removeProduct($args) {
-      
+  function removeProduct($args)
+  {
+
       extract($args);
-      
+
       if (!isset($iid)){
-       return;   
+       return;
       }
-      
+
       if (!isset($itemtype)){
-       return;   
+       return;
       }
-            
+
       if (!isset($modid)){
-       return;   
+       return;
       }
-      
+
       $q = new xenQuery('DELETE', $this->productsTable);
-      
+
       $q->eq('xar_modid', $modid);
       $q->eq('xar_itemtype', $itemtype);
       $q->eq('xar_itemid', $iid);
-      
-      if (!$q->run()) return;      
-    
+
+      if (!$q->run()) return;
+
   } // end of member function removeProduct
 
   /**
@@ -206,58 +209,59 @@ class xarProducts
    * @param products_price
    * @access public
    */
-  function modifyProduct($args) {
-      
+  function modifyProduct($args)
+  {
+
       extract($args);
       if (!isset($products_id)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_status)){
-       return;   
+       return;
       }
-      
+
       if (!isset($dateAvailable)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_sort)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_model)){
-       return;   
+       return;
       }
-      
+
       if (!isset($fsk18)){
-       return;   
+       return;
       }
-      
+
       if (!isset($shipping_status)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_quantity)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_weight)){
-       return;   
+       return;
       }
-      
+
       if (!isset($products_price)){
-       return;   
-      }    
-      
-      
+       return;
+      }
+
+
       // Transform the date in a timestamp format
       $dateTransform = explode('-', $dateAvailable);
       $dateA = mktime(0, 0, 0, $dateTransform[1], $dateTransform[2], $dateTransform[0]);
-      
+
       //UPDATE in the product table
-       
+
           $q = new xenQuery('UPDATE', $this->productsTable);
-          
+
            $tablefields = array(
             array('name' => 'products_quantity',      'value' => $products_quantity),
             array('name' => 'products_shippingtime',     'value' => $shipping_status),
@@ -265,31 +269,32 @@ class xarProducts
             array('name' => 'products_sort', 'value' =>  $products_sort),
             array('name' => 'products_price',  'value' => $products_price),
             array('name' => 'products_discount_allowed',  'value' => 0.00),
-            array('name' => 'products_date_added',  'value' => mktime()),
+            array('name' => 'products_date_added',  'value' => time()),
             array('name' => 'products_date_available',  'value' => $dateA),
             array('name' => 'products_weight',  'value' => $products_weight),
             array('name' => 'products_status',  'value' => $products_status),
-            array('name' => 'products_fsk18',  'value' => $fsk18)            
+            array('name' => 'products_fsk18',  'value' => $fsk18)
         );
-        
-        $q->eq('products_id', $products_id);       
+
+        $q->eq('products_id', $products_id);
         $q->addfields($tablefields);
-  
-        if (!$q->run()) return;  
+
+        if (!$q->run()) return;
   } // end of member function modifyProduct
 
   /**
-   * Give all infos in product table 
+   * Give all infos in product table
    * @param iid itemid
    * @param itemtype
    * @param modid
    * @return infosProduct infos about the product associate with the item
    * @access public
    */
-  function getInfosProduct($args) {
-      
+  function getInfosProduct($args)
+  {
+
      extract($args);
-      
+
      //Select the good product
      $q = new xenQuery('SELECT');
      $q->addtable($this->productsTable, 'products');
@@ -310,52 +315,56 @@ class xarProducts
                           'manufacturers_id',
                           'products_ordered',
                           'products_fsk18'));
-                          
+
      $q->eq('xar_modid', $modid);
      $q->eq('xar_itemid', $iid);
      $q->eq('xar_itemtype', $itemtype);
-     
+
      $q->run();
-     
+
      return $q->output();
-      
-    
+
+
   } // end of member function getInfosProduct
 
   /**
    *
-   * @param  id_product    * @param  id_attribute    * @return 
+   * @param  id_product    * @param  id_attribute    * @return
    * @access public
    */
-  function assignAttribut( $id_product,  $id_attribute ) {
-    
+  function assignAttribut( $id_product,  $id_attribute )
+  {
+
   } // end of member function assignAttribut
 
   /**
    *
-   * @param  id_products    * @param  id_attribut    * @return 
+   * @param  id_products    * @param  id_attribut    * @return
    * @access public
    */
-  function removeAttribute( $id_products,  $id_attribut ) {
-    
+  function removeAttribute( $id_products,  $id_attribut )
+  {
+
   } // end of member function removeAttribute
 
   /**
    *
-   * @param  id of the product    * @param  newPrice    * @param datetime expireDate    * @return 
+   * @param  id of the product    * @param  newPrice    * @param datetime expireDate    * @return
    * @access public
    */
-  function addSpecialOffer( $args) {
-    
+  function addSpecialOffer( $args)
+  {
+
   } // end of member function addSpecialOffer
 
   /**
    *
-   * @param  id    * @return 
+   * @param  id    * @return
    * @access public
    */
-  function removeSpecialOffer( $id ) {
-    
+  function removeSpecialOffer( $id )
+  {
+
   } // end of member function removeSpecialOffer
 
   /**
@@ -363,8 +372,9 @@ class xarProducts
    * @return void
    * @access public
    */
-  function getAllProducts( ) {
-    
+  function getAllProducts( )
+  {
+
   } // end of member function getAllProducts
 
 

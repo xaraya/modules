@@ -33,7 +33,7 @@ function products_admin_categories_screen()
     if(!xarVarFetch('current_category_id',  'int',  $data['current_category_id'], '', XARVAR_NOT_REQUIRED)) {return;}
 
 /*
-	$configuration = xarModAPIFunc('commerce','admin','load_configuration');
+    $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
@@ -77,13 +77,13 @@ function products_admin_categories_screen()
                         $q1->settype('INSERT');
                         $q2->settype('INSERT');
                         $q->addfield('xar_parent',$categories_id);
-                        $q2->addfield('date_added',mktime());
+                        $q2->addfield('date_added',time());
                     }
                     elseif ($action == 'update_category') {
                         $q->settype('UPDATE');
                         $q1->settype('UPDATE');
                         $q2->settype('UPDATE');
-                        $q2->addfield('last_modified',mktime());
+                        $q2->addfield('last_modified',time());
                         $q->eq('xar_cid',$categories_id);
                     }
 

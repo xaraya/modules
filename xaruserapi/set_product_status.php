@@ -11,14 +11,15 @@
 // ----------------------------------------------------------------------
 
 // Sets the status of a product
-function commerce_userapi_set_product_status($args) {
+function commerce_userapi_set_product_status($args)
+{
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
 
     extract($args);
     if (!isset($status)) $status = 0;
     $q = new xenQuery('UPDATE',$xartables['commerce_products']);
-    $q->addfield('product_last_modified',mktime());
+    $q->addfield('product_last_modified',time());
     $q->eq('product_id',$pID);
     if ($status == 1) {
         $q->addfield('product_status',1);

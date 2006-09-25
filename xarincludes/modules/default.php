@@ -165,7 +165,7 @@
         $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $language));
         $language_id = $currentlang['id'];
 
-        $q = new xarQuery ('SELECT',$xartables['product_content_manager']);
+        $q = new xenQuery ('SELECT',$xartables['product_content_manager']);
         $q->addfields(array('content_title',
                     'content_heading',
                     'content_text',

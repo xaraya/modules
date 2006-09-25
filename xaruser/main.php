@@ -25,7 +25,7 @@ function products_user_main()
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
 
-    if (xarModGetVar('modules', 'disableoverview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     }
     else {

@@ -89,7 +89,7 @@ function products_admin_product_screen()
                     $q->addtable($xartables['products_products']);
                     if ($action == 'insert_product') {
                         $q->settype('INSERT');
-                        $q->addfield('product_date_added', mktime());
+                        $q->addfield('product_date_added', time());
                         if(!$q->run()) return;
 
                         $q = new xenQuery('INSERT', $xartables['products_products_to_categories']);
@@ -100,7 +100,7 @@ function products_admin_product_screen()
                     }
                     elseif ($action == 'update_product') {
                         $q->settype('UPDATE');
-                        $q->addfield('product_last_modified', mktime());
+                        $q->addfield('product_last_modified', time());
                         $q->eq('product_id', $data['pID']);
                         if(!$q->run()) return;
                     }
@@ -328,18 +328,18 @@ function products_admin_product_screen()
     $data['customers_statuses_array'] = $customers_statuses_array;
 */
     if (xarModIsAvailable('customers')) {
-		xarModLoad('customers');
-		$xartables = xarDBGetTables();
-		$q = new xenQuery('SELECT',$xartables['customers_customers_status']);
-		$q->addfields(array('customers_status_image AS status_image',
-									   'customers_status_id AS status_id',
-									   'customers_status_name AS status_name'));
-		$q->eq('language_id',$currentlang['id']);
-		$q->ne('customers_status_id',0);
-		if(!$q->run()) return;
-		$data['group_data'] = $q->output();
+        xarModLoad('customers');
+        $xartables = xarDBGetTables();
+        $q = new xenQuery('SELECT',$xartables['customers_customers_status']);
+        $q->addfields(array('customers_status_image AS status_image',
+                                       'customers_status_id AS status_id',
+                                       'customers_status_name AS status_name'));
+        $q->eq('language_id',$currentlang['id']);
+        $q->ne('customers_status_id',0);
+        if(!$q->run()) return;
+        $data['group_data'] = $q->output();
     } else {
-		$data['group_data'] = array();
+        $data['group_data'] = array();
     }
 
 // calculate brutto price for display
@@ -405,11 +405,11 @@ if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
                     $q->addtable('products_categories');
                     if ($action == 'insert_category') {
                         $q->addfield('parent_id',$current_category_id);
-                        $q->addfield('date_added',mktime());
+                        $q->addfield('date_added',time());
 //                        $categories_id = xtc_db_insert_id();
                     }
                     elseif ($action == 'update_category') {
-                        $q->addfield('last_modified',mktime());
+                        $q->addfield('last_modified',time());
                         $q->eq('categories_id',$categories_id);
                     }
 
