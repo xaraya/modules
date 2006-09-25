@@ -93,6 +93,7 @@ function customers_init()
 # Set up privileges
 #
     xarRegisterPrivilege('AdminCustomers','All','customers','All','All','ACCESS_ADMIN');
+    xarMakePrivilegeRoot('AdminCustomers');
 
 # --------------------------------------------------------
 #
@@ -108,7 +109,7 @@ function customers_init()
     if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'customers', 'user', 'usermenu')) return false;
     xarModAPIFunc('modules', 'admin', 'enablehooks', array('callerModName' => 'roles', 'hookModName' => 'customers'));
 
-	xarModRegisterHook('module', 'getconfig', 'API','customers', 'admin', 'getconfighook');
+    xarModRegisterHook('module', 'getconfig', 'API','customers', 'admin', 'getconfighook');
     xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'customers'));
 
 # --------------------------------------------------------
@@ -156,7 +157,7 @@ function customers_init()
         }
     }
 
-	$objects = unserialize(xarModGetVar('commerce','ice_objects'));
+    $objects = unserialize(xarModVars::get('commerce','ice_objects'));
     foreach($ice_objects as $ice_object) {
         $def_file = 'modules/customers/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/customers/xardata/'.$ice_object.'-data.xml';
@@ -171,24 +172,24 @@ function customers_init()
         }
     }
 
-	xarModSetVar('commerce','ice_objects',serialize($objects));
+    xarModSetVar('commerce','ice_objects',serialize($objects));
 
-	$role = xarFindRole('Customers');
-	if (empty($role)) {
-		$parent = xarFindRole('CommerceRoles');
-		if (empty($parent)) $parent = xarFindRole('Everybody');
-		$new = array('name' => 'Customers',
-					 'itemtype' => ROLES_GROUPTYPE,
-					 'parentid' => $parent->getID(),
-					);
-		$uid1 = xarModAPIFunc('roles','admin','create',$new);
-	}
+    $role = xarFindRole('Customers');
+    if (empty($role)) {
+        $parent = xarFindRole('CommerceRoles');
+        if (empty($parent)) $parent = xarFindRole('Everybody');
+        $new = array('name' => 'Customers',
+                     'itemtype' => ROLES_GROUPTYPE,
+                     'parentid' => $parent->getID(),
+                    );
+        $uid1 = xarModAPIFunc('roles','admin','create',$new);
+    }
 
 # --------------------------------------------------------
 #
 # Add this module to the list of installed commerce suite modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     $info = xarModGetInfo(xarModGetIDFromName('customers'));
     $modules[$info['name']] = $info['regid'];
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
@@ -205,52 +206,23 @@ function customers_delete()
 {
 # --------------------------------------------------------
 #
-# Remove database tables
-#
-    // Load table maintenance API
-    xarDBLoadTableMaintenanceAPI();
-
-    // Generate the SQL to drop the table using the API
-    $prefix = xarDBGetSiteTablePrefix();
-    $table = $prefix . "_customers";
-    $query = xarDBDropTable($table);
-    if (empty($query)) return; // throw back
-
-# --------------------------------------------------------
-#
-# Delete the DD objects created by this module
-#
-	$ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
-	if (isset($ice_objects['ice_customers']))
-		$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_customers']));
-
-# --------------------------------------------------------
-#
 # Purge all the roles created by this module
 #
-	$role = xarFindRole('Customers');
-	$descendants = $role->getDescendants();
-	foreach ($descendants as $item)
-		if (!$item->purge()) return;
-	if (!$role->purge()) return;
-
-# --------------------------------------------------------
-#
-# Remove modvars, masks and privilege instances
-#
-    xarModDelAllVars('customers');
-    xarRemoveMasks('customers');
-    xarRemoveInstances('customers');
+    $role = xarFindRole('Customers');
+    $descendants = $role->getDescendants();
+    foreach ($descendants as $item)
+        if (!$item->purge()) return;
+    if (!$role->purge()) return;
 
 # --------------------------------------------------------
 #
 # Remove this module from the list of commerce modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     unset($modules['customers']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-    return true;
+    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'customers'));
 }
 
 ?>

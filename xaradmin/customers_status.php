@@ -161,14 +161,14 @@ function commerce_admin_customers_status()
     $q = new xenQuery('SELECT',$xartables['commerce_customers_status']);
     $q->eq('language_id',$currentlang['id']);
     $q->setorder('customers_status_id');
-    $q->setrowstodo(xarModGetVar('commerce', 'itemsperpage'));
-    $q->setstartat(($page - 1) * xarModGetVar('commerce', 'itemsperpage') + 1);
+    $q->setrowstodo(xarModVars::get('commerce', 'itemsperpage'));
+    $q->setstartat(($page - 1) * xarModVars::get('commerce', 'itemsperpage') + 1);
     if(!$q->run()) return;
 
     $pager = new splitPageResults($page,
                                   $q->getrows(),
                                   xarModURL('commerce','admin','customers_status'),
-                                  xarModGetVar('commerce', 'itemsperpage')
+                                  xarModVars::get('commerce', 'itemsperpage')
                                  );
     $data['pagermsg'] = $pager->display_count('Displaying #(1) to #(2) (of #(3) customer groups)');
     $data['displaylinks'] = $pager->display_links();
