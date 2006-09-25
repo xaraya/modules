@@ -122,7 +122,7 @@ function carts_init()
 #
 # Set up modvars
 #
-    xarModSetVar('carts', 'itemsperpage', 20);
+    xarModVars::set('carts', 'itemsperpage', 20);
 
 # --------------------------------------------------------
 #
@@ -181,19 +181,19 @@ function carts_init()
     if (!xarModRegisterHook('item', 'display', 'GUI', 'carts', 'user', 'displayhook')) return false;
     if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'carts', 'user', 'usermenu'))  return false;
 
-	xarModRegisterHook('module', 'getconfig', 'API','carts', 'admin', 'getconfighook');
+    xarModRegisterHook('module', 'getconfig', 'API','carts', 'admin', 'getconfighook');
     xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'carts'));
 
 # --------------------------------------------------------
 #
 # Add this module to the list of installed commerce suite modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     $info = xarModGetInfo(xarModGetIDFromName('carts'));
     $modules[$info['name']] = $info['regid'];
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
-	// Initialisation successful
+    // Initialisation successful
     return true;
 }
 
@@ -275,13 +275,13 @@ function carts_delete()
 #
 # Remove this module from the list of commerce modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
+    $modules = unserialize(xarModVars::get('commerce', 'ice_modules'));
     unset($modules['carts']);
-    $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
+    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
-	// Delete successful
+    // Delete successful
 
-	return true;
+    return true;
 }
 # --------------------------------------------------------
 
