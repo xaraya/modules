@@ -26,42 +26,47 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 class Supplier_Property extends Dynamic_Select_Property
 {
+    public $id         = 30024;
+    public $name       = 'supplier';
+    public $desc       = 'Supplier';
+    public $reqmodules = array('vendors');
+
     public $grouplist = array();
     public $categorylist = array();
     public $supplierlist = array();
 
     function __construct($args)
     {
-    	parent::__construct($args);
-		$this->filepath   = 'modules/vendors/xarproperties';
+        parent::__construct($args);
+        $this->filepath   = 'modules/vendors/xarproperties';
 
         if (count($this->options) == 0) {
-			include_once 'modules/xen/xarclasses/xenobject.class.php';
-        	$q = new xenQuery();
+            include_once 'modules/xen/xarclasses/xenobject.class.php';
+            $q = new xenQuery();
             if (!empty($this->grouplist)) {
-            	foreach ($this->grouplist as $group) {
-//            		$q->eq('charttype',$type);
-            	}
+                foreach ($this->grouplist as $group) {
+//                  $q->eq('charttype',$type);
+                }
             }
             if (!empty($this->categorylist)) {
-            	foreach ($this->categorylist as $category) {
-//            		$q->eq('category',$category);
-            	}
+                foreach ($this->categorylist as $category) {
+//                  $q->eq('category',$category);
+                }
             }
             if (!empty($this->supplierlist)) {
-            	foreach ($this->supplierlist as $supplier) {
-            		$q->eq('id',$supplier);
-            	}
+                foreach ($this->supplierlist as $supplier) {
+                    $q->eq('id',$supplier);
+                }
             }
             $suppliers = xarModAPIFunc('vendors',
                              'user',
                              'getallsuppliers',array('conditions' => $q));
-        	$with = isset($args['with']) ? $args['with'] : false;
-        	if ($with == 'blank') {
+            $with = isset($args['with']) ? $args['with'] : false;
+            if ($with == 'blank') {
                 $this->options[] = array('id' => '', 'name' => ' ');
-        	} elseif ($with == 'choose') {
+            } elseif ($with == 'choose') {
                 $this->options[] = array('id' => '', 'name' => xarML('Please choose an option'));
-        	}
+            }
             foreach ($suppliers as $supplier) {
                 $this->options[] = array('id' => $supplier['id'], 'name' => $supplier['name']);
             }
@@ -70,33 +75,23 @@ class Supplier_Property extends Dynamic_Select_Property
 
     function parseValidation($validation = '')
     {
-		foreach(preg_split('/(?<!\\\);/', $this->validation) as $option) {
-			// Semi-colons can be escaped with a '\' prefix.
-			$option = str_replace('\;', ';', $option);
-			// An option comes in two parts: option-type:option-value
-			if (strchr($option, ':')) {
-				list($option_type, $option_value) = explode(':', $option, 2);
-				if ($option_type == 'group') {
-					$this->grouplist = array_merge($this->grouplist, explode(',', $option_value));
-				}
-				if ($option_type == 'category') {
-					$this->categorylist = array_merge($this->categorylist, explode(',', $option_value));
-				}
-				if ($option_type == 'supplier') {
-					$this->supplierlist = array_merge($this->supplierlist, explode(',', $option_value));
-				}
-			}
-		}
-    }
-
-    static function getRegistrationInfo()
-    {
-        $info = new PropertyRegistration();
-        $info->reqmodules = array('vendors');
-        $info->id   = 30024;
-        $info->name = 'supplier';
-        $info->desc = 'Supplier';
-        return $info;
+        foreach(preg_split('/(?<!\\\);/', $this->validation) as $option) {
+            // Semi-colons can be escaped with a '\' prefix.
+            $option = str_replace('\;', ';', $option);
+            // An option comes in two parts: option-type:option-value
+            if (strchr($option, ':')) {
+                list($option_type, $option_value) = explode(':', $option, 2);
+                if ($option_type == 'group') {
+                    $this->grouplist = array_merge($this->grouplist, explode(',', $option_value));
+                }
+                if ($option_type == 'category') {
+                    $this->categorylist = array_merge($this->categorylist, explode(',', $option_value));
+                }
+                if ($option_type == 'supplier') {
+                    $this->supplierlist = array_merge($this->supplierlist, explode(',', $option_value));
+                }
+            }
+        }
     }
 }
 
