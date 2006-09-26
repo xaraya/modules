@@ -1,5 +1,5 @@
 
-<form action="&xar-modurl-user-jump;" method="post">
+<form action="&xar-modurl-xarbb-user-jump;" method="post">
     <label for="xarbb_jump_menu"><xar:mlstring>Forum Jump</xar:mlstring></label>
     <select name="f" id="xarbb_jump_menu" onchange="this.form.submit();">
         <optgroup label="#xarML('Options')#">
