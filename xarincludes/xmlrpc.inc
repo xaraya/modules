@@ -823,6 +823,7 @@ class xmlrpcval
         global $xmlrpcTypes;
         $this->me=array();
         $this->mytype=0;
+        if($type=="") $type = 'string'; // FIXME: this should not be needed
         switch($xmlrpcTypes[$type]) {
             case 1: // scalar
                 $this->addScalar($val,$type);
