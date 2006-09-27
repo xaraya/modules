@@ -52,7 +52,7 @@ function xproject_user_display($args)
                                     'admin',
                                     'display',
                                     array('projectid' => $project['projectid']));
-
+                                    
     $data['description'] = $project['description'];
     $data['item'] = $project;
 
@@ -62,7 +62,7 @@ function xproject_user_display($args)
                           array('projectid' => $projectid));
 
     if (!isset($features)) return;
-
+    
     $data['features'] = $features;
 
     $hooks = xarModCallHooks('item',

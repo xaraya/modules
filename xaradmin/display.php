@@ -109,7 +109,8 @@ function xproject_admin_display($args)
     $projectpages = xarModAPIFunc('xproject',
                           'pages',
                           'getall',
-                          array('projectid' => $projectid));
+                          array('projectid' => $projectid,
+                                'parentid' => 0));
 
     if (!isset($projectpages)) return;
 
@@ -132,20 +133,19 @@ function xproject_admin_display($args)
     $data['description'] = $item['description'];
 
     $modid = xarModGetIDFromName(xarModGetName());
-    $data['modid'] = $modid;
-    $data['itemtype'] = 1;
-    $data['objectid'] = $projectid;
+    $item['modid'] = $modid;
+    $item['module'] = "xproject";
+    $item['itemtype'] = 1;
+    $item['itemid'] = $projectid;
+    $item['returnurl'] = xarModURL('xproject',
+                                    'admin',
+                                    'display',
+                                    array('projectid' => $projectid));
 
     $hooks = xarModCallHooks('item',
                              'display',
                              $projectid,
-                             array('module'    => 'xproject',
-                                   'returnurl' => xarModURL('xproject',
-                                                           'admin',
-                                                           'display',
-                                                           array('projectid' => $projectid))
-                                  ),
-                            'xproject');
+                             $item);
 
     if (empty($hooks)) {
         $data['hooks'] = array();

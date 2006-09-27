@@ -13,7 +13,7 @@
     <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
         <tr>
             <th><xar:mlstring>Page Hierarchy</xar:mlstring></th>
-            <th style="width: 100px;"><a href="&xar-modurl-xproject-pages-view;&amp;projectid=#$projectid#" onClick="return loadContent(this.href,'pages_view');"><xar:mlstring>Page List</xar:mlstring></a></th>
+            <th style="width: 100px;"><a href="&xar-modurl-xproject-pages-view;&amp;projectid=#$projectid#&amp;parentid=0" onClick="return loadContent(this.href,'pages_view');"><xar:mlstring>Page List</xar:mlstring></a></th>
         </tr>
     </table>
         <xar:set name="ttlpages">count($projectpages)</xar:set>

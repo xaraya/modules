@@ -1,21 +1,16 @@
 <?php
 /**
- * XProject Module - A simple project management module
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
-/**
  * Administration System
  *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xproject module
  * @author Chad Kraeft <stego@xaraya.com>
- */
+*/
 function xproject_userapi_getall($args)
 {
     extract($args);
@@ -108,7 +103,8 @@ function xproject_userapi_getall($args)
     if(!empty($min_planned_end_date)) $sql .= " AND planned_end_date >= '".$min_planned_end_date."'";
     if(!empty($q)) {
         $sql .= " AND (project_name LIKE '%".$q."%'
-                    OR description LIKE '%".$q."%')";
+                    OR description LIKE '%".$q."%'
+                    OR reference LIKE '%".$q."%')";
     }
     switch($sortby) {
         case "importance":
@@ -121,7 +117,7 @@ function xproject_userapi_getall($args)
             $sql .= " ORDER BY status";
             break;
         case "planned_end_date":
-            $sql .= " ORDER BY planned_end_date DESC";
+            $sql .= " ORDER BY planned_end_date";
             break;
         case "project_name":
         default:

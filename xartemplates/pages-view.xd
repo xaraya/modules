@@ -10,42 +10,41 @@
             <th style="width: 50px;">Order</th>
             <th><xar:mlstring>Page Name/Description</xar:mlstring></th>
             <th style="width: 60px;"><xar:mlstring>Status</xar:mlstring></th>
-            <th style="width: 100px;"><a href="&xar-modurl-xproject-pages-sitemap;&amp;projectid=#$projectid#" onClick="return loadContent(this.href,'pages_view');"><xar:mlstring>Sitemap</xar:mlstring></a></th>
+            <th style="width: 100px;"><a href="&xar-modurl-xproject-pages-sitemap;&amp;projectid=#$projectid#&amp;parentid=0" onClick="return loadContent(this.href,'pages_view');"><xar:mlstring>Sitemap</xar:mlstring></a></th>
         </tr>
         
         <xar:set name="ttlpages">count($projectpages)</xar:set>
     
         <xar:loop name="$projectpages">
         <tr>
-            <td class="xar-norm" style="text-align: center;">
+            <td class="xar-norm" style="padding-left: 10px;">
                 <xar:if condition="$ttlpages gt 1">
                     <div style="height: 10px; vertical-align: top;">
                         <xar:if condition="$loop:item['sequence'] gt 1">
-                            <a href="&xar-modurl-xproject-pages-decr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/up.gif" border="0" align="top"></a>
+                            <a href="&xar-modurl-xproject-pages-decr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/up.gif" border="0" align="top" /></a>
                         </xar:if>
                     </div>                        
                     <div style="height: 8px; vertical-align: top;">
                         <xar:if condition="$loop:item['sequence'] lt $ttlpages">
-                            <a href="&xar-modurl-xproject-pages-incr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/down.gif" border="0" align="top"></a>
+                            <a href="&xar-modurl-xproject-pages-incr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/down.gif" border="0" align="top" /></a>
                         </xar:if>
                     </div>
                 </xar:if>
             </td>
             
             <td class="xar-norm" style="text-align: left;">
-                <strong>#$loop:item['page_name']#</strong>
+                <strong><a href="&xar-modurl-xproject-pages-display;&amp;pageid=#$loop:item['pageid']#">#$loop:item['page_name']#</a></strong>
                 <div style="padding: 5px;">
                 #$loop:item['description']#
                 </div>
             </td>
         
-            <td class="xar-norm" style="text-align: center;">#$loop:item['status']#
-            </td>
+            <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
         
-            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1"#$pages_formclick#><img src="modules/xproject/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.delete.gif" border="0" /></a></td>
         
           </tr>
-    
+          <xar:template type="module" file="childpages" subdata="array('parentid' =&gt; $loop:item['pageid'],'pages_formclick' =&gt; $pages_formclick)" />
         </xar:loop>
     </table>
 </div>

@@ -7,7 +7,7 @@
     <xar:template type="module" file="admin-menu" />
 </xar:if>
 
-<div class="xar-mod-body">
+<div class="xar-mod-body" id="pages_form" name="pages_form">
     <xar:if condition="$inline ne 1">
         <h2 style="text-align: center;"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo.projectid#">#$projectinfo.project_name#</a></h2>
         <div align="center">
@@ -38,6 +38,10 @@
         <input type="hidden" name="authid" value="#$authid#" />
         <input type="hidden" name="projectid" value="#$projectid#" />
         
+        <xar:if condition="!isset($parentid)">
+            <xar:set name="parentid">"0"</xar:set>
+        </xar:if>
+
         <table width="100%" border="0" cellspacing="0" cellpadding="2">
             <tr>
                 <td><xar:mlstring>Parent Page</xar:mlstring></td>
@@ -45,7 +49,11 @@
                     <select name="parentid">
                         <option value="0"><xar:mlstring>Root level page, no parent</xar:mlstring></option>
                         <xar:foreach in="$pagelist" value="$pageinfo">
-                            <option value="#$pageinfo['pageid']#">#$pageinfo['page_name']#</option>
+                            <xar:if condition="$pageinfo.pageid eq $parentid">
+                                <option value="#$pageinfo['pageid']#" selected="selected">#$pageinfo['page_name']#</option>
+                            <xar:else />
+                                <option value="#$pageinfo['pageid']#">#$pageinfo['page_name']#</option>
+                            </xar:if>
                         </xar:foreach>
                     </select>
                 </td>
@@ -67,8 +75,7 @@
                 <td><xar:data-input property="$properties['description']" name="description" /></td>
             </tr>
             <tr>
-                <xar:set name="updatebtn"><xar:mlstring>Add Page</xar:mlstring></xar:set>
-                <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+                <td colspan="2" align="center"><br /><input type="submit" name="submit" value="Add Page" /></td>
             </tr>
         </table>
         

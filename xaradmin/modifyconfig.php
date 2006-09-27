@@ -16,33 +16,47 @@ function xproject_admin_modifyconfig()
     //xarModLoad('xproject','user');
     $data = xarModAPIFunc('xproject','admin','menu');
 
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecurityCheck('AdminXProject', 0)) {
         return;
     }
 
     $data['authid'] = xarSecGenAuthKey();
 
-    $data['categories'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
-    $data['itemsperpage'] = xarModGetVar('xproject', 'itemsperpage');
-    $data['staffcategory'] = xarModGetVar('xproject', 'staffcategory');
-    $data['clientcategory'] = xarModGetVar('xproject', 'clientcategory');
-    $data['websiteprojecttype'] = xarModGetVar('xproject', 'websiteprojecttype');
-    $data['draftstatus'] = xarModGetVar('xproject', 'draftstatus');
-    $data['activestatus'] = xarModGetVar('xproject', 'activestatus');
-    $data['archivestatus'] = xarModGetVar('xproject', 'archivestatus');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+    $hooks = array();
 
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'xproject',
-                       array('module' => 'xproject'));
-    if (empty($hooks)) {
-        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
-    } else {
-        $data['hooks'] = $hooks;
+    switch ($data['tab']) {
 
-         /* You can use the output from individual hooks in your template too, e.g. with
-         * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
-         */
-        $data['hookoutput'] = $hooks;
+        case 'hooks':
+            $hooks = xarModCallHooks('module', 'modifyconfig', 'xproject',
+                               array('module' => 'xproject',
+                                   'itemtype' => 0));
+
+            if (empty($hooks)) {
+                $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for this module'));
+            } else {
+                $data['hooks'] = $hooks;
+
+                 /* You can use the output from individual hooks in your template too, e.g. with
+                 * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
+                 */
+                $data['hookoutput'] = $hooks;
+            }
+            break;
+        default:
+
+            $data['categories'] = xarModAPIFunc('addressbook','util','getitems',array('tablename'=>'categories'));
+            $data['itemsperpage'] = xarModGetVar('xproject', 'itemsperpage');
+            $data['staffcategory'] = xarModGetVar('xproject', 'staffcategory');
+            $data['clientcategory'] = xarModGetVar('xproject', 'clientcategory');
+            $data['websiteprojecttype'] = xarModGetVar('xproject', 'websiteprojecttype');
+            $data['draftstatus'] = xarModGetVar('xproject', 'draftstatus');
+            $data['activestatus'] = xarModGetVar('xproject', 'activestatus');
+            $data['archivestatus'] = xarModGetVar('xproject', 'archivestatus');
+            $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+
+            break;
     }
 
     return $data;

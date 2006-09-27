@@ -561,7 +561,7 @@ function xproject_upgrade($oldversion)
             if (empty($team_objectid)) return;
             xarModSetVar('xproject','team_objectid',$team_objectid);
 
-        case '3.3.0':
+        case '3.3':
             break;
 
     }
@@ -656,5 +656,4 @@ function xproject_delete()
 
     return true;
 }
-
 ?>

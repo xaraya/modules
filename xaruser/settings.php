@@ -1,15 +1,15 @@
 <?php
 /**
- * XProject Module - A simple project management module
+ * Example user settings
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
+ * @subpackage Dynamic Data Example Module
+ * @link http://xaraya.com/index.php/release/66.html
+ * @author mikespub <mikespub@xaraya.com>
  */
 function xproject_user_settings()
 {

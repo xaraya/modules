@@ -1,17 +1,15 @@
 <?php
+
 /**
- * XProject Module - A simple project management module
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ *
+ * Administration System
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
-/**
+ * @subpackage xproject module
  * @author Chad Kraeft <stego@xaraya.com>
 */
 function xproject_pagesapi_getall($args)
@@ -19,12 +17,12 @@ function xproject_pagesapi_getall($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($projectid) || !is_numeric($projectid)) {
-        $invalid[] = 'projectid';
+    if ((!isset($projectid) || !is_numeric($projectid)) && (!isset($parentid) || !is_numeric($parentid))) {
+        $invalid[] = 'projectid or parentid';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'features', 'getall', 'xProject');
+                    join(', ',$invalid), 'pages', 'getall', 'xProject');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
@@ -55,14 +53,14 @@ function xproject_pagesapi_getall($args)
                   relativeurl
             FROM $pagestable, $projectstable
             WHERE $projectstable.projectid = $pagestable.projectid
-            AND $pagestable.projectid = $projectid
+            ".(isset($projectid) ? " AND $pagestable.projectid = $projectid " : "")."
             ".(isset($parentid) ? " AND $pagestable.parentid = $parentid " : "")."
             ORDER BY parentid, sequence, page_name";
 
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-
+    
     $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -79,7 +77,7 @@ function xproject_pagesapi_getall($args)
             $children = array();
             if(isset($parentid)) {
                 $children = xarModAPIFunc('xproject', 'pages', 'getall', array('projectid' => $projectid, 'parentid' => $pageid));
-            }
+            }                        
             $items[$pageid] = array(
                             'pageid'           => $pageid,
                             'parentid'         => $thisparentid,

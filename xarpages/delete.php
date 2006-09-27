@@ -14,7 +14,7 @@
 function xproject_pages_delete($args)
 {
     extract($args);
-
+    
     if (!xarVarFetch('pageid', 'id', $pageid)) return;
     if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
@@ -25,7 +25,7 @@ function xproject_pages_delete($args)
     }
 
     if (!xarModAPILoad('xproject', 'user')) return;
-
+    
     $item = xarModAPIFunc('xproject',
                          'pages',
                          'get',
@@ -48,7 +48,7 @@ function xproject_pages_delete($args)
                               'user',
                               'get',
                               array('projectid' => $item['projectid']));
-
+                              
         xarModLoad('xproject','admin');
         $data = xarModAPIFunc('xproject','admin','menu');
 

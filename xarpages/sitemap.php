@@ -20,7 +20,7 @@ function xproject_pages_sitemap($args)
 
     $data = array();
     $data['projectid'] = $projectid;
-
+    
     $projectpages = xarModAPIFunc('xproject',
                           'pages',
                           'getall',
@@ -28,9 +28,9 @@ function xproject_pages_sitemap($args)
                                 'parentid' => "0"));
 
     if (!isset($projectpages)) return;
-
+    
     $data['pages_formclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
-
+    
     $data['projectpages'] = $projectpages;
     $data['authid'] = xarSecGenAuthKey();
 

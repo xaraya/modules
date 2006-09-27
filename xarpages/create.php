@@ -41,8 +41,12 @@ function xproject_pages_create($args)
 
     xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "pages")));
-
+    if($parentid > 0) {
+        xarResponseRedirect(xarModURL('xproject', 'pages', 'display', array('pageid' => $parentid, 'mode' => "pages")));
+    } else {
+        xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "pages")));
+    }
+    
     return true;
 }
 

@@ -46,20 +46,22 @@ function xproject_adminapi_delete($args)
 
     // does it have children ?
     $sql = "DELETE FROM $xprojecttable
-            WHERE projectid = ?";
-    $result = $dbconn->Execute($sql, array($projectid));
+            WHERE projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
 
-    /* Check for an error with the database code, adodb has already raised
-     * the exception so we just return
-     */
-    if (!$result) return;
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
 
     $pagestable = $xartable['xProject_pages'];
 
     // does it have children ?
     $sql = "DELETE FROM $pagestable
-            WHERE projectid = ?";
-    $result = $dbconn->Execute($sql, array($projectid));
+            WHERE projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
@@ -69,10 +71,10 @@ function xproject_adminapi_delete($args)
     }
 
     $featurestable = $xartable['xProject_features'];
-
+   
     $sql = "DELETE FROM $featurestable
-            WHERE projectid = ?";
-    $result = $dbconn->Execute($sql, array($projectid));
+            WHERE projectid = " . $projectid;
+    $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
@@ -81,9 +83,9 @@ function xproject_adminapi_delete($args)
         return;
     }
 
-    $item['module'] = 'xproject';
-    $item['itemid'] = $projectid;
-    xarModCallHooks('item', 'delete', $projectid, $item);
+    $args['module'] = 'xproject';
+    $args['itemid'] = $projectid;
+    xarModCallHooks('item', 'delete', $projectid, $args);
 
     // Let the calling process know that we have finished successfully
     return true;

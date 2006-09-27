@@ -27,7 +27,7 @@ function xproject_logapi_deleteall($args)
     $xartable = xarDBGetTables();
 
     $logtable = $xartable['xProject_log'];
-
+    
     $sql = "DELETE FROM $logtable
             WHERE projectid = " . $projectid;
     $result = $dbconn->Execute($sql);

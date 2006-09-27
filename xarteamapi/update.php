@@ -1,18 +1,18 @@
 <?php
 /**
- * XProject Module - A simple project management module
+ * Update an example item
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
+ * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
  */
 /**
- * Update an item
+ * Update an example item
  *
  * @author the Example module development team
  * @param  $args ['exid'] the ID of the item
@@ -28,7 +28,7 @@ function xproject_teamapi_update($args)
     if (!isset($projectrole)) {
         $invalid[] = 'projectrole';
     }
-
+    
     if (!isset($projectid) || !is_numeric($projectid)) {
         $invalid[] = 'projectid';
     }
@@ -71,7 +71,7 @@ function xproject_teamapi_update($args)
               $projectrole,
               $projectid,
               $memberid);
-
+              
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;

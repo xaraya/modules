@@ -7,12 +7,12 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
+ * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
  */
 /**
- * Update an item
+ * Update an example item
  *
  * @author the Example module development team
  * @param  $args ['exid'] the ID of the item
@@ -57,7 +57,7 @@ function xproject_pagesapi_decr($args)
             WHERE pageid = ?";
 
     $bindvars = array($pageid);
-
+              
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) { // return;
@@ -66,7 +66,7 @@ function xproject_pagesapi_decr($args)
             new SystemException($msg));
         return;
     }
-
+    
     xarModAPIFunc('xproject', 'pages', 'sequence', array('projectid' => $item['projectid'], 'parentid' => $item['parentid']));
 
     return true;

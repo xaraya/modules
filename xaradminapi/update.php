@@ -1,18 +1,18 @@
 <?php
 /**
- * XProject Module - A simple project management module
+ * Update an example item
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
+ * @subpackage Example Module
+ * @link http://xaraya.com/index.php/release/36.html
+ * @author Example Module Development Team
  */
 /**
- * Update an item
+ * Update an example item
  *
  * @author the Example module development team
  * @param  $args ['exid'] the ID of the item
@@ -141,10 +141,11 @@ function xproject_adminapi_update($args)
                             'details'        => $logdetails,
                             'changetype'    => "MODIFIED"));
 
-    $item['module'] = 'xproject';
-    $item['itemid'] = $projectid;
-    $item['name'] = $project_name;
-    xarModCallHooks('item', 'update', $projectid, $item);
+    $args['module'] = 'xproject';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $projectid;
+    $args['name'] = $project_name;
+    xarModCallHooks('item', 'update', $projectid, $args);
 
     return true;
 }

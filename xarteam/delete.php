@@ -14,14 +14,14 @@
 function xproject_team_delete($args)
 {
     extract($args);
-
+    
     if (!xarVarFetch('projectid', 'id', $projectid)) return;
     if (!xarVarFetch('memberid', 'isset', $memberid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xproject', 'user')) return;
     if (!xarModLoad('addressbook', 'user')) return;
-
+    
     $memberinfo = xarModAPIFunc('xproject',
                          'team',
                          'get',
@@ -40,7 +40,7 @@ function xproject_team_delete($args)
     }
 
     if (empty($confirm)) {
-
+                              
         xarModLoad('xproject','user');
         $data = xarModAPIFunc('xproject','user','menu');
 

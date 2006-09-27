@@ -14,7 +14,7 @@
 function xproject_features_delete($args)
 {
     extract($args);
-
+   
     if (!xarVarFetch('featureid', 'id', $featureid)) return;
     if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
@@ -24,7 +24,7 @@ function xproject_features_delete($args)
     }
 
     if (!xarModAPILoad('xproject', 'user')) return;
-
+   
     $item = xarModAPIFunc('xproject',
                          'features',
                          'get',
@@ -47,7 +47,7 @@ function xproject_features_delete($args)
                               'user',
                               'get',
                               array('projectid' => $item['projectid']));
-
+                             
         xarModLoad('xproject','user');
         $data = xarModAPIFunc('xproject','admin','menu');
 

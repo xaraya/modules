@@ -14,7 +14,7 @@
 function xproject_pagesapi_sequence($args)
 {
     extract($args);
-
+    
     if(!isset($parentid)) $parentid = 0;
 
     $invalid = array();
@@ -48,32 +48,32 @@ function xproject_pagesapi_sequence($args)
     $xartable =& xarDBGetTables();
 
     $pages_table = $xartable['xProject_pages'];
-
+    
     if(count($itemlist) > 0) {
         $sequence = 1;
         foreach($itemlist as $iteminfo) {
-
+                
             $query = "UPDATE $pages_table
                       SET sequence = ?
                       WHERE pageid = ?";
-
+        
             $bindvars = array(
                       $sequence,
                       $iteminfo['pageid']);
-
+                      
             $result = &$dbconn->Execute($query,$bindvars);
-
+        
             if (!$result) { // return;
                 $msg = xarML('SQL: #(1)', $dbconn->ErrorMsg());
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));
                 return;
             }
-
+        
             $sequence++;
         }
     }
-
+        
     return true;
 }
 ?>

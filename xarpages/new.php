@@ -1,19 +1,9 @@
 <?php
-/**
- * XProject Module - A simple project management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
+
 function xproject_pages_new()
 {
     if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parentid',     'id',     $parentid,     $parentid,     XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
 
@@ -39,6 +29,7 @@ function xproject_pages_new()
 
     $data['authid'] = xarSecGenAuthKey();
     $data['projectid'] = $projectid;
+    $data['parentid'] = $parentid;
     $data['inline'] = $inline;
     $data['projectinfo'] = $projectinfo;
     $data['pagelist'] = $pagelist;

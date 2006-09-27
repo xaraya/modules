@@ -19,7 +19,8 @@
             <xar:else />
                 <a href="#$loop:item['link']#">#$loop:item['project_name']#</a>
             </xar:if>
-            <div><strong><xar:data-output property="$properties['clientid']" value="$clientid" /></strong></div>
+            <div><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$clientid#"><xar:data-output property="$properties['clientid']" value="$clientid" /></a></div>
+            <div><strong>#$loop:item['reference']#</strong></div>
         </div>
         <div class="xar-norm" style="padding-left: 25px;">#$loop:item['description']#
             <div class="xar-sub">
@@ -49,7 +50,7 @@
                 <xar:else />
                     <xar:set name="pct_variance">"0"</xar:set>
                 </xar:if>
-                <br>#$pct_complete#% Complete of #$ttlhours# Hours (#$pct_variance#% variance)
+                <br />#$pct_complete#% Complete of #$ttlhours# Hours (#$pct_variance#% variance)
                 
                 <xar:if condition="$pct_variance lt 100">
                     <xar:set name="progress_color">"#000099"</xar:set>

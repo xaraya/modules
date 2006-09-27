@@ -23,15 +23,14 @@ function xproject_team_create($args)
 
     if (!xarSecConfirmAuthKey()) return;
 
-    $featureid = xarModAPIFunc('xproject',
+    if (!xarModAPIFunc('xproject',
                         'team',
                         'create',
                         array('projectid'   => $projectid,
-                            'memberid'        => $memberid,
-                            'projectrole'    => $projectrole));
-
-
-    if (!isset($featureid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+                            'memberid'      => $memberid,
+                            'projectrole'   => $projectrole))) {
+        return;
+    }
 
     xarSessionSetVar('statusmsg', xarMLByKey('MEMBERCREATED'));
 

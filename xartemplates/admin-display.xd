@@ -4,6 +4,11 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
+<xar:set name="id_list">array()</xar:set>
+<xar:set name="id_list[]">$projectid</xar:set>
+<xar:data-getitems name="$moreproperties" value="$values" module="xProject" itemtype="0" itemid="$id_list" />
+
+
 <xar:set name="websiteprojecttype">xarModGetUserVar('xproject', 'websiteprojecttype')</xar:set>
 
 <xar:template type="module" file="admin-menu" />
@@ -23,6 +28,14 @@
                     </span>
                 </td>
             </tr>
+            <xar:if condition="isset($values[$projectid])">
+                <xar:foreach in="$values[$projectid]" key="$field" value="$nextvalue" >
+                    <tr valign="top">
+                        <td class="xar-title"><xar:data-label property="$moreproperties[$field]" /></td>
+                        <td class="xar-norm"><xar:data-output property="$moreproperties[$field]" value="$values[$projectid][$field]" /></td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
             <xar:if condition="!empty($item['reference'])">
                 <tr valign="top">
                     <td class="xar-title"><xar:data-label property="$properties['reference']" /></td>
@@ -38,7 +51,7 @@
                 <td class="xar-norm"><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
             </tr>
             <tr>
-                <td class="xar-title"><xar:mlstring>Team</xar:mlstring></td>
+                <td class="xar-title"><xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</td>
                 <td class="xar-norm">
                     <xar:foreach in="$teamlist" value="$memberinfo" >
                         <div>#$memberinfo.membername#
@@ -162,7 +175,7 @@
         <xar:else />
             <xar:set name="features_style">"display: none;"</xar:set>
         </xar:if>
-        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Features</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_features'); return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_features');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
+        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Features</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_features'); return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_features');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
         <div id="project_features" style="#$features_style#">
             <div id="features_form"></div>
             <xar:template type="module" file="features-view" />
@@ -176,50 +189,26 @@
             <xar:else />
                 <xar:set name="pages_style">"display: none;"</xar:set>
             </xar:if>
-            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
+            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
             <div id="project_pages" style="#$pages_style#">
                 <div id="pages_form"></div>
                 <xar:template type="module" file="pages-view" />
             </div>
         </xar:if>
                     
-        <xar:set name="pagesmode">"logs"</xar:set>
         <xar:if condition="$mode eq 'logs'">
             <xar:set name="logs_style">"display: block;"</xar:set>
         <xar:else />
             <xar:set name="logs_style">"display: none;"</xar:set>
         </xar:if>
-        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Change Log</xar:mlstring></span><span style="float: right;"><a href="javascript: void twist('project_logs');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" id="spinnerimg_project_logs"></a></span></div>
+        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Change Log</xar:mlstring></span><span style="float: right;"><a href="javascript: void twist('project_logs');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" id="spinnerimg_project_logs" /></a></span></div>
         <div id="project_logs" style="#$logs_style#">
             <xar:template type="module" file="log-view" />
         </div>
         
         <xar:if condition="!empty($hooks)">
             <xar:foreach in="$hooks" key="$hookmodule">
-                <xar:if condition="trim($hookmodule) eq 'xtasks'">
-                    <xar:if condition="$mode eq 'tasks'">
-                        <xar:set name="tasks_style">"display: block;"</xar:set>
-                    <xar:else />
-                        <xar:set name="tasks_style">"display: none;"</xar:set>
-                    </xar:if>
-                    
-                    <xar:set name="returnurl">urlencode(xarServerGetCurrentURL())</xar:set>
-                    <xar:set name="newargs">"&amp;inline=1&amp;returnurl=".$returnurl</xar:set>
-                    <xar:if condition="isset($objectid)">
-                        <xar:set name="newargs">$newargs."&amp;objectid=".$objectid</xar:set>
-                    </xar:if>
-                    <xar:if condition="isset($modid)">
-                        <xar:set name="newargs">$newargs."&amp;modid=".$modid</xar:set>
-                    </xar:if>
-                    <xar:if condition="isset($itemtype)">
-                        <xar:set name="newargs">$newargs."&amp;itemtype=".$itemtype</xar:set>
-                    </xar:if>
-                    
-                    <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Tasks</xar:mlstring> [ <a href="&xar-modurl-xtasks-admin-new;#$newargs#" onclick="twist_open('project_tasks'); return loadContent(this.href,'newtaskform')"><xar:mlstring>Add Task</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0"></a></span></div>
-                    <div align="center" style="#$tasks_style#" id="project_tasks">#$hooks[$hookmodule]#</div>
-                <xar:elseif condition="trim($hooks[$hookmodule]) ne ''" />
-                    <div>#$hooks[$hookmodule]#</div>
-                </xar:if>
+                <div>#$hooks[$hookmodule]#</div>
             </xar:foreach>
         </xar:if>
         

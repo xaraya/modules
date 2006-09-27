@@ -15,12 +15,13 @@
  * utility function pass individual menu items to the main menu
  *
  * @author the XProject module development team
+ * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function xproject_userapi_getmenulinks()
 {
     $menulinks = array();
-
+    
     $draftstatus = xarModGetVar('xproject', 'draftstatus');
     $activestatus = xarModGetVar('xproject', 'activestatus');
     $archivestatus = xarModGetVar('xproject', 'archivestatus');
@@ -43,7 +44,7 @@ function xproject_userapi_getmenulinks()
                                                       'newcombo'),
                                  'title' => xarML('Quick project/contact form'),
                                  'label' => xarML('New Project'));
-
+        
             $uid = xarSessionGetVar('uid');
             $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
             if(is_numeric($mymemberid) && $mymemberid > 0) {

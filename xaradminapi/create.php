@@ -1,21 +1,14 @@
 <?php
 /**
- * XProject Module - A simple project management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
-/**
  * Administration System
  *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xproject module
  * @author Chad Kraeft <stego@xaraya.com>
- */
+*/
 function xproject_adminapi_create($args)
 {
     extract($args);
@@ -114,10 +107,10 @@ function xproject_adminapi_create($args)
                             'details'        => $logdetails,
                             'changetype'    => "CREATED"));
 
-    $item = $args;
-    $item['module'] = 'xproject';
-    $item['itemid'] = $projectid;
-    xarModCallHooks('item', 'create', $projectid, $item);
+    $args['module'] = 'xproject';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $projectid;
+    xarModCallHooks('item', 'create', $projectid, $args);
 
     return $projectid;
 }

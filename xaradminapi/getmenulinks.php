@@ -15,6 +15,7 @@
  * utility function pass individual menu items to the main menu
  *
  * @author the XProject module development team
+ * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function xproject_adminapi_getmenulinks()

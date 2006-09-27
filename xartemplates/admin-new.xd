@@ -109,11 +109,13 @@
         <td><xar:data-input property="$properties['associated_sites']" name="associated_sites" /></td>
     </tr>
     <tr>
+        <td colspan="2">#$hooks#</td>
+    </tr>
+    <tr>
         <xar:set name="updatebtn"><xar:mlstring>Add Project</xar:mlstring></xar:set>
-        <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+        <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
     </tr>
 </table>
 
 </form>
 </div>
-<div class="xar-mod-foot">#$hooks#</div>

@@ -15,21 +15,23 @@ function xproject_pages_view($args)
 {
     extract($args);
     if (!xarVarFetch('projectid', 'id', $projectid)) return;
+    if (!xarVarFetch('parentid', 'int::', $parentid, 0, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xproject', 'admin')) return;
 
     $data = xarModAPIFunc('xproject','admin','menu');
     $data['projectid'] = $projectid;
-
+    
     $projectpages = xarModAPIFunc('xproject',
                           'pages',
                           'getall',
-                          array('projectid' => $projectid));
+                          array('projectid' => $projectid,
+                                'parentid' => $parentid));
 
     if (!isset($projectpages)) return;
-
-    $data['pages_formclick'] = "onClick=\"return loadContent(this.href,'pages_form');\"";
-
+    
+    $data['pages_formclick'] = "return loadContent(this.href,'pages_form');";
+    
     $data['projectpages'] = $projectpages;
     $data['authid'] = xarSecGenAuthKey();
 

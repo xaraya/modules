@@ -89,6 +89,8 @@ function xproject_admin_update($args)
         }
     }
 
+    xarModCallHooks('item', 'update', $projectid, $args);
+
     xarResponseRedirect($returnurl);
 
     return true;

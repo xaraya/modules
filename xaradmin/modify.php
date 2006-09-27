@@ -1,16 +1,5 @@
 <?php
-/**
- * XProject Module - A simple project management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
+
 function xproject_admin_modify($args)
 {
     extract($args);
@@ -50,13 +39,15 @@ function xproject_admin_modify($args)
 
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
 
-    $item['module'] = 'xproject';
-
     $data['statuslist'] = array('Draft','Proposed','Approved','WIP','QA','Archived');
 
     $data['item'] = $projectinfo;
 
     $data['returnurl'] = xarServerGetVar('HTTP_REFERER');
+
+    $projectinfo['module'] = "xproject";
+    $projectinfo['itemtype'] = 0;
+    $projectinfo['itemid'] = $projectid;
 
     $hooks = xarModCallHooks('item','modify',$projectid,$projectinfo);
 

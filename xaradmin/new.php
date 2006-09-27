@@ -31,6 +31,8 @@ function xproject_admin_new($args)
 
     $item = array();
     $item['module'] = 'xproject';
+    $item['itemid'] = 0;
+    $item['itemtype'] = 0;
     $hooks = xarModCallHooks('item','new','',$item);
     if (empty($hooks)) {
         $data['hooks'] = '';

@@ -14,7 +14,7 @@
 
 $modversion['name']         = 'xproject';
 $modversion['id']           = '665';
-$modversion['version']      = '3.3.0';
+$modversion['version']      = '3.3';
 $modversion['displayname']  = xarML('xProject');
 $modversion['description']  = 'Project Manager';
 $modversion['credits']      = 'docs/credits.txt';
@@ -28,5 +28,5 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-$modversion['dependency']     = array(66417); /* This module depends on the html module */
+$modversion['dependency']   = array(66417); /* This module depends on the addressbook module */
 ?>

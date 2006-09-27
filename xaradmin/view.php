@@ -1,16 +1,5 @@
 <?php
-/**
- * XProject Module - A simple project management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage XProject Module
- * @link http://xaraya.com/index.php/release/665.html
- * @author XProject Module Development Team
- */
+
 function xproject_admin_view($args)
 {
     extract($args);
@@ -32,6 +21,8 @@ function xproject_admin_view($args)
     $data = array();
 
     if(isset($verbose)) $data['verbose'] = $verbose;
+
+    $data['authid'] = xarSecGenAuthKey();
 
 //    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
@@ -127,7 +118,7 @@ function xproject_admin_view($args)
                                       'max_importance' => $max_importance,
                                       'q' => $q,
                                       'inline' => 1));
-
+    
     $data['authid'] = xarSecGenAuthKey();
     $data['inline'] = $inline;
 
