@@ -12,7 +12,9 @@
     <xar:mlstring>What is it?</xar:mlstring>
   </h3>
   <p>
-      <xar:mlstring>The Headlines module allows you to syndicate content from other website.  It also allows you to use predetermined hooks from Xaraya if you have them installed and activated.</xar:mlstring>
+      <xar:mlstring>The Headlines module allows you to syndicate content from other websites.
+      It also allows you to use hooks such as Category, Scheduler, or Ping from those Xaraya
+      modules to extend functionality or display of headlines to your site visitors.</xar:mlstring>
   </p>
   <h3>
     <xar:mlstring>How to use it?</xar:mlstring>
@@ -75,7 +77,7 @@
               the URL of the feedsource and the title of your headline feed source (not the headline item).
           </xar:mlstring></li>
       </ol>
-      <p><xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline field.</xar:mlstring></p>
+      <p><xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline fields.</xar:mlstring></p>
 <h4>
     <xar:mlstring>Extending the display of Headlines</xar:mlstring>
   </h4>
@@ -89,7 +91,7 @@
   </h3>
   <p>
             <ul>
-                <li><xar:mlstring><strong>RSS Block</strong> allows you to provide selected feeds in blocks on your siten and define number of items, title, and refresh times.</xar:mlstring></li>
+                <li><xar:mlstring><strong>RSS Block</strong> allows you to provide selected feeds in blocks on your site and define number of items, title, and refresh times.</xar:mlstring></li>
                 <li><xar:mlstring><strong>Cloud Block</strong> Creates a cloud block from blog feeds, using Ping module to notify of updates and Scheduler module to update.</xar:mlstring></li>
 
             </ul>
@@ -108,7 +110,7 @@
     </p>
     <p>
             <xar:mlstring>
-            feedParser was created due to the lack of a good, flexible, class-based RSS feed parser for PHP. It has been built as a class, and currently handles RSS 0.91, RSS 0.92, RSS 0.93, RSS 1.0, and RSS 2.0 feeds. For channels it grabs the title, description, link, and creator. For items it grabs the title, description, link, and date. It also provides a form of the date converted into the local timezone to facilitate cronological sorting of items. The dates are provided in UNIX timestamp format for easy manipulation by other PHP functions. </xar:mlstring>
+            feedParser was created due to the lack of a good, flexible, class-based RSS feed parser for PHP. It has been built as a class, and currently handles RSS 0.91, RSS 0.92, RSS 0.93, RSS 1.0, and RSS 2.0 feeds. For channels it grabs the title, description, link, and creator. For items it grabs the title, description, link, and date. It also provides a form of the date converted into the local timezone to facilitate chronological sorting of items. The dates are provided in UNIX timestamp format for easy manipulation by other PHP functions. </xar:mlstring>
     </p>
         <h3><xar:mlstring>Further Information</xar:mlstring></h3>
   <p>
