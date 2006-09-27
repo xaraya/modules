@@ -18,6 +18,23 @@
     <xar:mlstring>How to use it?</xar:mlstring>
   </h3>
   <p>
+      <xar:mlstring>You can use the headlines module in two main ways.</xar:mlstring>
+      <ol>
+          <li><xar:mlstring>Enter the URL to one or more feeds in the administration area, and allow 
+              your users to browse those headlines from the main Headline user menu option.
+              </xar:mlstring>
+          </li>
+          <li><xar:mlstring>In addition to the above user browsing throught the main Headlines user page,
+              you can selectively import headline articles into one of your Article publication types. 
+              This can be done in a batch, or by browsing and selecting which headline item to import. 
+              </xar:mlstring>
+          </li>
+      </ol>
+  </p>
+  <h4>
+    <xar:mlstring>Adding Feeds and Configuration</xar:mlstring>
+  </h4>
+  <p>
             <xar:mlstring>
             From the menu, you have three choices:
             </xar:mlstring>
@@ -31,14 +48,36 @@
                          Here you can set </xar:mlstring>
                          <ul>
                            <li><xar:mlstring>the number of feeds per page</xar:mlstring></li>
-                           <li><xar:mlstring>optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items.</xar:mlstring></li>
+                           <li><xar:mlstring>optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items (see Preparing Your Pubtype for Headline Import below).</xar:mlstring></li>
                            <li><xar:mlstring>choose which content to import to your selected publication type. Feed, Title, Description and an optional link to the originating feed item can also be added in your publication type summary field.
-                              </xar:mlstring>
+                              </xar:mlstring></li>
                            </ul>
                 </li>
              </ol>
 
        </p>
+  <h4>
+    <xar:mlstring>Preparing Your Article Pubtype for Headline Import</xar:mlstring>
+  </h4>
+  <p>
+      <xar:mlstring>The default News publication type in Articles, or similar is ideal for use with the Headlines module.
+      The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines. 
+      Field in your publication type such as status and pubdate are also used as usual, but not in the import process.
+      </xar:mlstring>
+  </p>
+      <ol>
+          <li><xar:mlstring><strong>Title</strong>: textbox - used to hold the imported headline title and link to the original feed item and source.</xar:mlstring></li>
+          <li><xar:mlstring><strong>Summary</strong>: textarea - used to hold the imported summary of the headline item</xar:mlstring></li>
+          <li><xar:mlstring><strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline item.
+              You will need to custom format this field as required for display in your pubtype display and summary template.</xar:mlstring></li>
+          <li><xar:mlstring><strong>Notes</strong>: URL/Title property. By changing this to a URL/Title property it will automatically display the feed source and feed title as a
+              clickable link on display of your imported headline item. However, you can format this as you need in your template. The content is imported and stored as a serialized array containing
+              the URL of the feedsource and the title of your headline feed source (not the headline item).
+          </xar:mlstring></li>
+      </ol>
+<h4>
+    <xar:mlstring>Extending the display of Headlines</xar:mlstring>
+  </h4>
         <p>
             <xar:mlstring>
             Hook the Categories module to Headlines to classify your feeds by category on display.
@@ -81,6 +120,6 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2006-04-09
+         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-09-28
   </p>
 </div>

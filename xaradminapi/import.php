@@ -19,9 +19,7 @@ function headlines_adminapi_import($args)
     if (empty($hid) || empty($importpubtype)) return 0;
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines',
-                          'user',
-                          'get',
+    $links = xarModAPIFunc('headlines', 'user', 'get',
                           array('hid' => $hid));
 
 
@@ -31,15 +29,12 @@ function headlines_adminapi_import($args)
     $feedfile = $links['url'];
 
     if (xarModGetVar('headlines', 'magpie')){
-        $imports = xarModAPIFunc('magpie',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+        $imports = xarModAPIFunc('magpie',  'user', 'process',
+                           array('feedfile' => $feedfile));
+
     } else {
-        $imports = xarModAPIFunc('headlines',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+        $imports = xarModAPIFunc('headlines', 'user', 'process',
+                           array('feedfile' => $feedfile));
     }
 
     if (!empty($imports['warning'])){
@@ -56,6 +51,7 @@ function headlines_adminapi_import($args)
 
     $imported = 0;
     foreach ($imports['feedcontent'] as $import) {
+        $sourcelink = array();
         // skip the items we're not interested in (if any)
         if (!empty($iid) && !empty($import['id']) && $iid != $import['id']) continue;
         // skip the items we already imported in the past
@@ -64,11 +60,12 @@ function headlines_adminapi_import($args)
         $article['title']    = $import['title'];
         $article['summary']  = $import['description'];
         $article['body']     = $import['link'];
-        $article['notes']    = '<a href="' . $imports['chanlink'] . '">' . $imports['chantitle'] . '</a>';
+        $sourcelink       = array('link' => $imports['chanlink'], 'title' => $imports['chantitle']);
+        $article['notes'] = serialize($sourcelink);
         $article['aid']      = 0;
         $article['ptid']     = $importpubtype;
         $article['authorid'] = xarUserGetVar('uid');
-        //$article['status']   = 2;
+        //$article['status'] = 2;
         if (!xarModAPIFunc('articles', 'admin', 'create', $article)) return;
         $imported++;
         if (!empty($import['id'])) {
@@ -76,14 +73,14 @@ function headlines_adminapi_import($args)
         }
     }
 
-// FIXME: make 200 configurable ? :-)
+    // save the import list, truncating it to max history number
+    $historynum = 200;//(int)xarModGetVar('headlines','historynum');
 
-    // save the import list, truncating it to 200 entries if necessary
     if (!empty($imported) && !empty($importhistory)) {
         $importlist = split(';',$importhistory);
         $numitems = count($importlist);
-        if ($numitems > 200) {
-            $importlist = array_slice($importlist, $numitems - 200);
+        if ($numitems > $historynum && $historynum >= 0) {
+            $importlist = array_slice($importlist, $numitems - $historynum);
             $importhistory = join(';',$importlist);
         }
         unset($importlist);

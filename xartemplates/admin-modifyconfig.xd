@@ -15,7 +15,7 @@
         </xar:mlstring>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset xar-norm">
+        <fieldset class="xar-norm">
             <legend>
                 <strong>
                     <xar:mlstring>
