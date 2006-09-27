@@ -47,7 +47,7 @@
                 <li><xar:mlstring><strong>Modify Configuration</strong>: Update the global configuration for the module.
                          Here you can set </xar:mlstring>
                          <ul>
-                           <li><xar:mlstring>the number of feeds per page</xar:mlstring></li>
+                           <li><xar:mlstring>the number of feeds per page.</xar:mlstring></li>
                            <li><xar:mlstring>optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items (see Preparing Your Pubtype for Headline Import below).</xar:mlstring></li>
                            <li><xar:mlstring>choose which content to import to your selected publication type. Feed, Title, Description and an optional link to the originating feed item can also be added in your publication type summary field.
                               </xar:mlstring></li>
@@ -62,12 +62,12 @@
   <p>
       <xar:mlstring>The default News publication type in Articles, or similar is ideal for use with the Headlines module.
       The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines. 
-      Field in your publication type such as status and pubdate are also used as usual, but not in the import process.
+      Fields in your publication type such as status and pubdate are used in their usual function in the publication type, but not in the headline import process.
       </xar:mlstring>
   </p>
       <ol>
           <li><xar:mlstring><strong>Title</strong>: textbox - used to hold the imported headline title and link to the original feed item and source.</xar:mlstring></li>
-          <li><xar:mlstring><strong>Summary</strong>: textarea - used to hold the imported summary of the headline item</xar:mlstring></li>
+          <li><xar:mlstring><strong>Summary</strong>: textarea - used to hold the imported summary of the headline item.</xar:mlstring></li>
           <li><xar:mlstring><strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline item.
               You will need to custom format this field as required for display in your pubtype display and summary template.</xar:mlstring></li>
           <li><xar:mlstring><strong>Notes</strong>: URL/Title property. By changing this to a URL/Title property it will automatically display the feed source and feed title as a
@@ -75,6 +75,7 @@
               the URL of the feedsource and the title of your headline feed source (not the headline item).
           </xar:mlstring></li>
       </ol>
+      <p><xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline field.</xar:mlstring></p>
 <h4>
     <xar:mlstring>Extending the display of Headlines</xar:mlstring>
   </h4>
