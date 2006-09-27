@@ -1,0 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="pages_objectid">xarModGetVar('xproject','pages_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="3" itemid="$pages_objectid" />
+
+<xar:if condition="isset($depth)">
+    <xar:set name="depth">$depth+1</xar:set>
+<xar:else />
+    <xar:set name="depth">"1"</xar:set>
+</xar:if>
+
+<xar:set name="orderindent">$depth * 20</xar:set>
+<xar:set name="indent">($depth + 1) * 15</xar:set>
+
+<xar:set name="childpages">xarModAPIFunc('xproject', 'pages', 'getall', array('parentid'=>$parentid))</xar:set>
+        
+    <xar:set name="ttlpages">count($childpages)</xar:set>
+
+    <xar:loop name="$childpages">
+      <tr>
+        <td class="xar-norm" style="padding-left: #$orderindent#px;">
+            <xar:if condition="$ttlpages gt 1">
+                <div style="height: 10px; vertical-align: top;">
+                    <xar:if condition="$loop:item['sequence'] gt 1">
+                        <a href="&xar-modurl-xproject-pages-decr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/up.gif" border="0" align="top" /></a>
+                    </xar:if>
+                </div>                        
+                <div style="height: 8px; vertical-align: top;">
+                    <xar:if condition="$loop:item['sequence'] lt $ttlpages">
+                        <a href="&xar-modurl-xproject-pages-incr;&amp;pageid=#$loop:item['pageid']#"><img src="modules/xproject/xarimages/down.gif" border="0" align="top" /></a>
+                    </xar:if>
+                </div>
+            </xar:if>
+        </td>
+        
+        <td class="xar-norm" style="text-align: left; padding-left: #$indent#px;">
+            <img src="modules/xproject/xarimages/subtask-arrow.gif" />
+            <strong><a href="&xar-modurl-xproject-pages-display;&amp;pageid=#$loop:item['pageid']#">#$loop:item['page_name']#</a></strong>
+            <div style="padding: 5px;">
+            #$loop:item['description']#
+            </div>
+        </td>
+    
+        <td class="xar-norm" style="text-align: center;">#$loop:item['status']#
+        </td>
+    
+        <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.delete.gif" border="0" /></a></td>
+    
+      </tr>
+
+      <xar:template type="module" file="childpages" subdata="array('parentid' =&gt; $loop:item['pageid'],'pages_formclick' =&gt; $pages_formclick,'depth' =&gt; $depth)" />
+
+    </xar:loop>
+    

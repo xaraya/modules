@@ -1,0 +1,54 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$project_properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+<xar:set name="pages_objectid">xarModGetVar('xproject','pages_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="3" itemid="$pages_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-body">
+    <xar:if condition="$inline ne 1">
+        <h2 style="text-align: center;"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo.projectid#">#$projectinfo.project_name#</a></h2>
+        <div align="center">
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+                <tr valign="top">
+                    <td class="xar-norm"><xar:data-label property="$project_properties['description']" /></td>
+                    <td class="xar-norm" style="text-align: right; width: 30%;"><xar:data-output property="$project_properties['description']" value="$projectinfo['description']" /></td>
+                </tr>
+            </table>
+        </div>
+    </xar:if>
+    <h2><xar:mlstring>Page Details</xar:mlstring></h2>
+        
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:mlstring>Parent Page</xar:mlstring></td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['page_name']" /></td>
+            <td><xar:data-output property="$properties['page_name']" name="page_name" value="$item['page_name']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['status']" /></td>
+            <td><xar:data-output property="$properties['status']" name="status" value="$item['status']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['description']" /></td>
+            <td><xar:data-output property="$properties['description']" name="description" value="$item['description']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['relativeurl']" /></td>
+            <td><xar:data-output property="$properties['relativeurl']" name="relativeurl" value="$item['relativeurl']" /></td>
+        </tr>
+    </table>
+    
+    <xar:set name="pagesmode">"pages"</xar:set>
+    <xar:set name="pages_style">"display: block;"</xar:set>
+    <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Sub-Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;parentid=#$pageid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+    <div id="project_pages" style="#$pages_style#">
+        <div id="pages_form"></div>
+        <xar:template type="module" file="pages-view" />
+    </div>
+    
+</div>

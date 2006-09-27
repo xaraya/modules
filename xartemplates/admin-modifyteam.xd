@@ -1,0 +1,59 @@
+<xar:base-include-javascript position="head" module="addressbook" filename="loadcontacts.js" />
+<xar:base-include-javascript position="head" module="xproject" filename="joomla.javascript.js" />
+
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+<xar:set name="team_objectid">xarModGetVar('xproject','team_objectid')</xar:set>
+<xar:data-getitem name="$team_properties" module="xProject" itemtype="5" itemid="$team_objectid" />
+
+
+    <xar:set name="teamoptionkeys">""</xar:set>
+    <xar:foreach in="$teamlist" value="$option">
+        <xar:set name="teamoptionkeys">$teamoptionkeys . "," . $option['memberid']</xar:set>
+    </xar:foreach>
+
+    
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Project Team</xar:mlstring></h2>
+
+<form method="post" action="&xar-modurl-xproject-admin-updateteam;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="returnurl" value="#$returnurl#" />
+<input type="hidden" name="projectid" value="#$projectid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td style="width: 150px;"><em><xar:data-label property="$properties['project_name']" /></em></td>
+        <td><strong><xar:data-output property="$properties['project_name']" name="project_name" value="$item['project_name']" /></strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div style="float: left; width: 200px;">
+                <strong><xar:mlstring>Team</xar:mlstring> [<xar:mlstring>select company</xar:mlstring>]</strong><br />
+                <select name="teamtargetlist[]" id="teamtargetlist" size="5" style="width: 200px">
+                    <xar:foreach in="$teamlist" value="$option" >
+                        <option value="#$option['memberid']#"><xar:data-output type="contactlist" value="$option['memberid']" /></option>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div style="float: left; width: 50px; text-align: center; margin-top: 3em;">   
+                <input class="button" type="button" value="&lt;&lt;" onclick="addSelectedToList('teamsourcelist','teamtargetlist');implodeListKeys('teamtargetlist','teamimplodedlist',',');" title="#xarML('Add')#" />
+                <br />
+                <input class="button" type="button" value="&gt;&gt;" onclick="delSelectedFromList('teamtargetlist'); implodeListKeys('teamtargetlist','teamimplodedlist',',');" title="#xarML('Remove')#" />
+            </div>
+            <div style="float: left; width: 200px; height: 100%;">
+                <xar:data-input type="contactlist" name="teamsourcelist[]" size="5" value="$teamoptionkeys" multiple="yes" />
+                <input type="hidden" name="teamimplodedlist" id="teamimplodedlist" value="#$teamoptionkeys#" style="width: 200px;" />
+            </div>
+            <div style="clear: both;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><br /><input type="submit" value="#$updatebutton#" /></td>
+    </tr>
+</table>
+
+</form>
+</div>
