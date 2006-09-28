@@ -3,7 +3,7 @@
 function xtasks_admin_chngimportance($args)
 {
     extract($args);
-
+    
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
     if (!xarVarFetch('mode', 'str:1:', $mode, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
@@ -24,7 +24,7 @@ function xtasks_admin_chngimportance($args)
         xarResponseRedirect($returnurl);
         return true;
     }
-
+    
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'view'));
 
     return true;

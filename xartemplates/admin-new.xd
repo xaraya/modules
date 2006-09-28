@@ -1,6 +1,8 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
+<xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+
 <xar:if condition="!$inline">
     <xar:template type="module" file="admin-menu" />
 </xar:if>
@@ -28,6 +30,9 @@
 <xar:if condition="isset($parentid)">
     <input type="hidden" name="parentid" value="#$parentid#" />
 </xar:if>
+<xar:if condition="isset($projectid)">
+    <input type="hidden" name="projectid" value="#$projectid#" />
+</xar:if>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
@@ -37,6 +42,10 @@
     <tr>
         <td><xar:data-label property="$properties['description']" /></td>
         <td><xar:data-input property="$properties['description']" name="description" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['owner']" /></td>
+        <td><xar:data-input property="$properties['owner']" name="owner" value="$ownerid" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['status']" /></td>
@@ -84,11 +93,9 @@
     </tr>
     <tr>
         <xar:set name="updatebtn"><xar:mlstring>Create Task</xar:mlstring></xar:set>
-        <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+        <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
     </tr>
 </table>
-
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xtasks')#" />
 
 </form>
 </div>

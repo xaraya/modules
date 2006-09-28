@@ -1,0 +1,22 @@
+<xar:set name="reminders_objectid">xarModGetVar('xtasks','reminders_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="3" itemid="$reminders_objectid" />
+    
+<div class="xar-mod-body">
+    <div style="width: 655px;">
+        <div>
+            <div class="xar-title" style="float: left; width: 150px; margin-left: 50px;"><strong><xar:mlstring>Reminder Date</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: left; width: 120px;"><strong><xar:mlstring>For</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: right; width: 50px;"><strong><xar:mlstring>Notes</xar:mlstring></strong></div>
+            <div style="clear: both;"></div>
+        </div>
+        <xar:foreach in="$reminders" value="$reminderdetails">
+            <div>
+                <div class="xar-sub" style="float: left; width: 150px; margin-left: 50px;"><xar:data-output property="$properties['eventdate']" value="$reminderdetails['eventdate']" dateformat="%d-%b-%Y @%H:%M%p" />&nbsp;</div>
+                <div class="xar-sub" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$reminderdetails['ownerid']" /></div>
+                <div class="xar-sub" style="float: left; width: 120px;"><xar:data-output property="$properties['reminder']" value="$reminderdetails['reminder']" /></div>
+                <div class="xar-sub" style="float: right; width: 50px; text-align: right; word-wrap: nowrap;"><a href="&xar-modurl-xtasks-reminders-modify;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a>&nbsp;<a href="&xar-modurl-xtasks-reminders-delete;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></div>
+                <div style="clear: both;"></div>
+            </div>
+        </xar:foreach>
+    </div>
+</div>

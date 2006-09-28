@@ -13,7 +13,7 @@ function xtasks_remindersapi_delete($args)
     }
 
     // does it exist ?
-    $item = xarModAPIFunc('xproject',
+    $item = xarModAPIFunc('xtasks',
                             'reminders',
                             'get',
                             array('reminderid' => $reminderid));
@@ -22,7 +22,7 @@ function xtasks_remindersapi_delete($args)
 
     if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xtasks', xarVarPrepForStore($projectid));
+                    'xtasks', $projectid);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;

@@ -1,26 +1,16 @@
 <?php
-/**
- * xTasks Module - Project ToDo management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage xTasks Module
- * @link http://xaraya.com/index.php/release/704.html
- * @author St.Ego
- */
+
 function xtasks_admin_migrate($args)
 {
-    extract ($args);
-    if (!xarVarFetch('taskcheck', 'str::', $taskcheck, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('submit', 'str::', $submit, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('taskfocus', 'str::', $taskfocus, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('taskid', 'str::', $taskid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('taskoption', 'str::', $taskoption, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'str::', $projectid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('parentid', 'str::', $parentid, '', XARVAR_NOT_REQUIRED)) return;
+    extract($args);
+    
+    if (!xarVarFetch('taskcheck', 'str', $taskcheck, $taskcheck, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('submit', 'str', $submit, $submit, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskfocus', 'int', $taskfocus, $taskfocus, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskid', 'int', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskoption', 'str', $taskoption, $taskoption, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid', 'int', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parentid', 'int', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
 
@@ -35,7 +25,7 @@ function xtasks_admin_migrate($args)
                                     'submit'         => $submit,
                                     'taskfocus'        => $taskfocus))) {
 
-        xarSessionSetVar('statusmsg', xarML('Task(s) Migrated'));
+        xarSessionSetVar('statusmsg', xarML('Project(s) Migrated'));
     }
 
     xarResponseRedirect(xarModURL('xtasks',

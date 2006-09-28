@@ -3,8 +3,10 @@
 function xtasks_admin_new($args)
 {
     extract($args);
-
+    
     if (!xarVarFetch('inline', 'str', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parentid', 'int', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid', 'int', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modid', 'int', $modid, $modid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'int', $itemtype, $itemtype, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'int', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
@@ -31,6 +33,7 @@ function xtasks_admin_new($args)
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;
+    $data['projectid'] = 0;
     
     $data['parentid'] = 0;
     $data['priority'] = 5;
@@ -39,8 +42,12 @@ function xtasks_admin_new($args)
     $data['importance'] = 5;
     
     $data['date_start_planned'] = date("Y-m-d");
-
-    if($data['modid'] == xarModGetIDFromName('xtasks') && $data['itemtype'] == 1) {
+    
+    if($data['modid'] == xarModGetIDFromName('xproject')) {
+        $data['projectid'] = $objectid;
+    }
+    
+    if($data['modid'] == xarModGetIDFromName('xtasks')) {
         $data['parentid'] = $objectid;
         $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $objectid));
         $data['projectid'] = $parentinfo['projectid'];

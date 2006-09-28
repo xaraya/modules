@@ -5,8 +5,8 @@ function xtasks_remindersapi_getall($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($taskid) || !is_numeric($taskid)) {
-        $invalid[] = 'taskid';
+    if (!isset($ownerid) || !is_numeric($ownerid)) {
+        $invalid[] = 'ownerid';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -16,7 +16,7 @@ function xtasks_remindersapi_getall($args)
         return;
     }
 
-    if (!xarSecurityCheck('ViewReminders', 0, 'Item', "All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('UseReminders', 0, 'Item', "All:All:All")) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -35,7 +35,7 @@ function xtasks_remindersapi_getall($args)
                   eventdate,
                   reminder
             FROM $reminderstable
-            WHERE taskid = $taskid
+            WHERE ownerid = $ownerid
             ORDER BY eventdate";
 
     $result = $dbconn->Execute($sql);
@@ -50,7 +50,7 @@ function xtasks_remindersapi_getall($args)
               $ownerid,
               $eventdate,
               $reminder) = $result->fields;
-        if (xarSecurityCheck('ViewReminders', 0, 'Item', "All:All:All")) {
+        if (xarSecurityCheck('UseReminders', 0, 'Item', "All:All:All")) {
             $items[] = array('reminderid'       => $reminderid,
                               'taskid'          => $taskid,
                               'ownerid'         => $ownerid,

@@ -14,7 +14,7 @@ function xtasks_remindersapi_create($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($taskid) || !is_string($taskid)) {
+    if (!isset($taskid) || !is_numeric($taskid)) {
         $invalid[] = 'taskid';
     }
     if (count($invalid) > 0) {

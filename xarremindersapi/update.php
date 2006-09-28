@@ -8,6 +8,9 @@ function xtasks_remindersapi_update($args)
     if (!isset($reminderid) || !is_numeric($reminderid)) {
         $invalid[] = 'reminder ID';
     }
+    if (!isset($ownerid) || !is_numeric($ownerid)) {
+        $invalid[] = 'owner ID';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'reminders', 'update', 'xproject');
@@ -33,17 +36,15 @@ function xtasks_remindersapi_update($args)
     $reminderstable = $xartable['xtasks_reminders'];
 
     $query = "UPDATE $reminderstable
-            SET reminder_name =?, 
-                  status = ?,
-                  description = ?,
-                  relativeurl = ?
+            SET ownerid =?,
+                  eventdate =?,
+                  reminder =?
             WHERE reminderid = ?";
 
     $bindvars = array(
-              $reminder_name,
-              $status,
-              $description,
-              $relativeurl,
+              $ownerid,
+              $eventdate,
+              $reminder,
               $reminderid);
               
     $result = &$dbconn->Execute($query,$bindvars);

@@ -1,16 +1,5 @@
 <?php
-/**
- * xTasks Module - Project ToDo management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage xTasks Module
- * @link http://xaraya.com/index.php/release/704.html
- * @author St.Ego
- */
+
 function xtasks_admin_reprioritize($args)
 {
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
@@ -34,7 +23,7 @@ function xtasks_admin_reprioritize($args)
         xarResponseRedirect($returnurl);
         return true;
     }
-
+    
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'view'));
 
     return true;

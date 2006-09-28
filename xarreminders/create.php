@@ -1,45 +1,31 @@
 <?php
-/**
- * xTasks Module - Project ToDo management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage xTasks Module
- * @link http://xaraya.com/index.php/release/704.html
- * @author St.Ego
- */
+
 function xtasks_reminders_create($args)
 {
     extract($args);
-
-    if (!xarVarFetch('reminder_name', 'str:1:', $reminder_name, $reminder_name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sequence', 'int::', $sequence, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
+    
+    if (!xarVarFetch('taskid', 'id', $taskid, $taskid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('eventdate', 'str::', $eventdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ownerid', 'int::', $ownerid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('reminder', 'str::', $reminder, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('relativeurl', 'str::', $relativeurl, '', XARVAR_NOT_REQUIRED)) return;
-
+                                            
     if (!xarSecConfirmAuthKey()) return;
 
     $reminderid = xarModAPIFunc('xtasks',
                         'reminders',
                         'create',
-                        array('reminder_name'         => $reminder_name,
-                            'projectid'         => $projectid,
-                            'status'            => $status,
-                            'sequence'            => $sequence,
-                            'description'       => $description,
-                            'relativeurl'          => $relativeurl));
+                        array('taskid'          => $taskid,
+                            'eventdate'         => $eventdate,
+                            'ownerid'              => $ownerid,
+                            'reminder'          => $reminder));
 
 
     if (!isset($reminderid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
+    xarSessionSetVar('statusmsg', xarMLByKey('REMINDERCREATED'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('projectid' => $projectid, 'mode' => "reminders")));
+    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $taskid, 'mode' => "reminders")));
 
     return true;
 }

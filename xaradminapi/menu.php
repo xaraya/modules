@@ -3,7 +3,7 @@
  * Generate admin menu
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/704.html
  * @author St.Ego
  */
-
+ 
 function xtasks_adminapi_menu()
-{
+{ 
     /*Initialise the array that will hold the menu configuration */
     $menu = array();
     /* Specify the menu title to be used in your blocklayout template */
@@ -22,7 +22,7 @@ function xtasks_adminapi_menu()
      * Preset some status variable
      */
     $menu['statusmsg'] = '';
-
+     
     return $menu;
-}
+} 
 ?>

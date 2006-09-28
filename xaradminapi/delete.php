@@ -3,7 +3,7 @@
  * XProject Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,7 +24,7 @@ function xtasks_adminapi_delete($args)
         }
         return $extrainfo;
     }
-
+    
     if (!isset($taskid) || !is_numeric($taskid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item ID', 'admin', 'delete', 'xtasks');
@@ -56,13 +56,15 @@ function xtasks_adminapi_delete($args)
 
     // does it have children ?
     $sql = "DELETE FROM $xtasks_table
-            WHERE taskid = ?";
-    $result = $dbconn->Execute($sql, array($projectid));
+            WHERE taskid = " . $taskid;
+    $result = $dbconn->Execute($sql);
 
-    /* Check for an error with the database code, adodb has already raised
-     * the exception so we just return
-     */
-    if (!$result) return;
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
 
     $item['module'] = 'xtasks';
     $item['itemid'] = $taskid;

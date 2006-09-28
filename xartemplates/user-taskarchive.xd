@@ -3,6 +3,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recent Task Archive</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
+<xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
+
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
         <th><xar:mlstring>Project</xar:mlstring></th>
@@ -21,7 +23,7 @@
         <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
         <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
-    
+
         <tr><td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><xar:data-output type="contactlist" value="$taskinfo['projectinfo']['clientid']" /></xar:if></td>
         
             <td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['project_name'])">#$taskinfo['projectinfo']['project_name']#</xar:if></td>
@@ -49,7 +51,7 @@
         
             <td class="xar-norm" style="text-align: center;">#$taskinfo['status']#</td>
         
-            <td class="xar-norm" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
         
         </tr>
 
@@ -64,4 +66,4 @@
 <div class="xar-mod-foot" style="text-align: center;">
 #$pager#
 </div>
-<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>
+<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</em></div>

@@ -3,7 +3,7 @@
  * XTask Module - A simple project management module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -137,7 +137,8 @@ function xtasks_init()
         'reminderid'            =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'ownerid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'eventdate'                =>array('type'=>'date','null'=>TRUE),
+        'eventdate'                =>array('type'=>'datetime','null'=>TRUE),
+        'warning'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'reminder'                =>array('type'=>'text'));
 
     $sql = xarDBCreateTable($reminders_table,$reminders_fields);
@@ -149,14 +150,14 @@ function xtasks_init()
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-
+    
     $worklog_table = $xartable['xtasks_worklog'];
 
     $worklog_fields = array(
         'worklogid'                =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'ownerid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'eventdate'                =>array('type'=>'date','null'=>TRUE),
+        'eventdate'                =>array('type'=>'datetime','null'=>TRUE),
         'hours'                    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
         'notes'                    =>array('type'=>'text'));
 
@@ -169,7 +170,7 @@ function xtasks_init()
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-
+    
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
 
@@ -194,7 +195,7 @@ function xtasks_init()
                               array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
     if (empty($modulesettings)) return;
     xarModSetVar('xtasks','modulesettings',$modulesettings);
-
+    
     $worklog_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/worklog.xml'));
     if (empty($worklog_objectid)) return;
@@ -226,11 +227,11 @@ function xtasks_init()
     if (!xarModRegisterHook('item', 'display', 'GUI', 'xtasks', 'admin', 'workspace')) {
         return false;
     }
-
+    
     if (!xarModRegisterHook('item', 'delete', 'API', 'xtasks', 'admin', 'delete')) {
         return false;
     }
-
+    
     if (!xarModRegisterHook('module', 'remove', 'API', 'xtasks', 'admin', 'deleteall')) {
         return false;
     }
@@ -243,7 +244,7 @@ function xtasks_init()
     $query2 = "SELECT DISTINCT objectid FROM $xartable[xtasks]";
 
     $query3 = "SELECT DISTINCT taskid FROM $xartable[xtasks]";
-
+    
     $instances = array(
                         array('header' => 'Module ID:',
                                 'query' => $query1,
@@ -279,16 +280,19 @@ function xtasks_init()
     xarRegisterPrivilege('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
     xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
-
+    
+    xarRegisterPrivilege('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    xarRegisterMask('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+    
     xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
     xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
-
+    
     xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
     xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
 
     xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
     xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
-
+    
     return true;
 }
 
@@ -299,6 +303,8 @@ function xtasks_upgrade($oldversion)
 
     xarDBLoadTableMaintenanceAPI();
 
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
 
@@ -308,7 +314,7 @@ function xtasks_upgrade($oldversion)
                         new DefaultUserException($msg));
         return;
     }
-
+    
     switch($oldversion) {
 
         case '1.0':
@@ -316,24 +322,24 @@ function xtasks_upgrade($oldversion)
             if (!xarModRegisterHook('item', 'delete', 'API', 'xtasks', 'admin', 'delete')) {
                 return false;
             }
-
+            
             // ADD HOOKS TO DELETE TASKS WHEN PARENT OBJECT MODULE IS DELETED
             if (!xarModRegisterHook('module', 'remove', 'API', 'xtasks', 'admin', 'deleteall')) {
                 return false;
             }
-
-            // RESET INSTANCES TO FIX MODID RETRIEVAL
+            
+            // RESET INSTANCES TO FIX MODID RETRIEVAL    
             xarRemoveInstances('xtasks');
 
             $query1 = "SELECT DISTINCT $xartable[xtasks].modid
                                   FROM $xartable[xtasks]
                              LEFT JOIN $xartable[modules]
                                     ON $xartable[xtasks].modid = $xartable[modules].xar_regid";
-
+        
             $query2 = "SELECT DISTINCT objectid FROM $xartable[xtasks]";
-
+        
             $query3 = "SELECT DISTINCT taskid FROM $xartable[xtasks]";
-
+            
             $instances = array(
                                 array('header' => 'Module ID:',
                                         'query' => $query1,
@@ -349,18 +355,18 @@ function xtasks_upgrade($oldversion)
                                     )
                             );
             xarDefineInstance('xtasks','All',$instances);
-
+        
         case '1.1':
 
             $reminders_table = $xartable['xtasks_reminders'];
-
+        
             $reminders_fields = array(
                 'reminderid'            =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                 'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
                 'ownerid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
                 'eventdate'                =>array('type'=>'date','null'=>TRUE),
                 'reminder'                =>array('type'=>'text'));
-
+        
             $sql = xarDBCreateTable($reminders_table,$reminders_fields);
             if (empty($sql)) return;
             $dbconn->Execute($sql);
@@ -375,7 +381,7 @@ function xtasks_upgrade($oldversion)
                                       array('file' => 'modules/xtasks/xardata/usersettings.xml'));
             if (empty($objectid)) return;
             xarModSetVar('xtasks','usersettings',$objectid);
-
+            
         case '1.2':
 
             $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
@@ -415,7 +421,7 @@ function xtasks_upgrade($oldversion)
             xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
 
         case '1.4':
-        case '1.5':
+        case '1.5':            
         case '1.5.1':
         case '1.5.2':
         case '1.5.3':
@@ -431,7 +437,7 @@ function xtasks_upgrade($oldversion)
         case '1.5.13':
         case '1.5.14':
         case '1.5.15':
-
+        
             // RELOAD TASK OBJECT
             $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
             if (!empty($xtasks_objectid)) {
@@ -451,7 +457,7 @@ function xtasks_upgrade($oldversion)
                 return;
             }
             xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
-
+        
             // RELOAD USER SETTINGS
             $usersettings = xarModGetVar('xtasks','usersettings');
             if (!empty($usersettings)) {
@@ -469,7 +475,7 @@ function xtasks_upgrade($oldversion)
                                       array('file' => 'modules/xtasks/xardata/usersettings.xml'));
             if (empty($usersettings)) return;
             xarModSetVar('xtasks','usersettings',$usersettings);
-
+            
             // RELOAD MODULE SETTINGS
             $modulesettings = xarModGetVar('xtasks','modulesettings');
             if (!empty($modulesettings)) {
@@ -484,9 +490,9 @@ function xtasks_upgrade($oldversion)
             xarModSetVar('xtasks','modulesettings',$modulesettings);
 
         case '1.5.16':
-
+    
             $worklog_table = $xartable['xtasks_worklog'];
-
+        
             $worklog_fields = array(
                 'worklogid'                =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                 'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
@@ -494,7 +500,7 @@ function xtasks_upgrade($oldversion)
                 'eventdate'                =>array('type'=>'date','null'=>TRUE),
                 'hours'                    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                 'notes'                    =>array('type'=>'text'));
-
+        
             $sql = xarDBCreateTable($worklog_table,$worklog_fields);
             if (empty($sql)) return;
             $dbconn->Execute($sql);
@@ -504,14 +510,14 @@ function xtasks_upgrade($oldversion)
                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
-
+            
         case '1.6':
-
+    
             xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
             xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
-
+            
         case '1.6.1':
-
+        
             $worklog_objectid = xarModGetVar('xtasks','worklog_objectid');
             if (!empty($worklog_objectid)) {
                 if(xarModAPIFunc('dynamicdata',
@@ -531,13 +537,13 @@ function xtasks_upgrade($oldversion)
             xarModSetVar('xtasks','worklog_objectid',$worklog_objectid);
 
         case '1.6.2':
-
+    
             xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
             xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
-
+    
             xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
             xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
-
+            
         case '1.6.3':
 
             $reminders_objectid = xarModAPIFunc('dynamicdata','util','import',
@@ -546,6 +552,51 @@ function xtasks_upgrade($oldversion)
             xarModSetVar('xtasks','reminders_objectid',$reminders_objectid);
 
         case '1.6.4':
+    
+            xarRegisterPrivilege('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+        case '1.6.5':
+        case '1.6.6':
+
+            $reminders_objectid = xarModGetVar('xtasks','reminders_objectid');
+            if (!empty($reminders_objectid)) {
+                if(xarModAPIFunc('dynamicdata',
+                                'admin',
+                                'deleteobject',
+                                array('objectid' => $reminders_objectid,
+                                    'module' => "xtasks",
+                                    'itemtype' => 3))) {
+                    xarModSetVar('xtasks','reminders_objectid', '');
+                }
+            }
+            $reminders_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/reminders.xml'));
+            if (empty($reminders_objectid)) return;
+            xarModSetVar('xtasks','reminders_objectid',$reminders_objectid);
+            
+        case '1.6.7':
+
+            $reminders_table = $xartable['xtasks_reminders'];
+            $result = $datadict->alterColumn($reminders_table, 'eventdate T');
+            if (!$result) return;
+            
+        case '1.6.8':
+
+            $worklog_table = $xartable['xtasks_worklog'];
+            $result = $datadict->alterColumn($worklog_table, 'eventdate T');
+            if (!$result) return;
+            
+        case '1.6.9':
+        case '1.6.10':
+        case '1.6.11':
+        case '1.6.12':
+            $reminders_table = $xartable['xtasks_reminders'];
+            $result = $datadict->addColumn($reminders_table, 'reminder X');
+            if(xarCurrentErrorType() == 2) xarErrorFree();
+            $result = $datadict->addColumn($reminders_table, 'warning I(11) NotNull Default 0');
+            if(xarCurrentErrorType() == 2) xarErrorFree();
+        case '1.6.13':
             break;
 
     }
@@ -592,18 +643,30 @@ function xtasks_delete()
     }
     xarModDelVar('xtasks','xtasks_objectid');
 
+    $worklog_objectid = xarModGetVar('xtasks','worklog_objectid');
+    if (!empty($worklog_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $worklog_objectid));
+    }
+    xarModDelVar('xtasks','worklog_objectid');
+
+    $reminders_objectid = xarModGetVar('xtasks','reminders_objectid');
+    if (!empty($reminders_objectid)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $reminders_objectid));
+    }
+    xarModDelVar('xtasks','reminders_objectid');
+
     $usersettings = xarModGetVar('xtasks','usersettings');
     if (!empty($xtasks_objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $usersettings));
     }
     xarModDelVar('xtasks','xtasks_objectid');
 
     $modulesettings = xarModGetVar('xtasks','modulesettings');
     if (!empty($xtasks_objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $xtasks_objectid));
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $modulesettings));
     }
     xarModDelVar('xtasks','xtasks_objectid');
-
+    
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */
     $aliasname =xarModGetVar('xtasks','aliasname');
@@ -611,10 +674,10 @@ function xtasks_delete()
     if (isset($isalias) && ($isalias =='xtasks')){
         xarModDelAlias($aliasname,'xtasks');
     }
-
+    
     /* Delete any module variables */
     xarModDelAllVars('xtasks');
-
+ 
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                             'xtasks', 'user', 'workspace')) {
         return false;

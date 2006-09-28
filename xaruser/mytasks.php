@@ -1,37 +1,26 @@
 <?php
-/**
- * xTasks Module - Project ToDo management module
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage xTasks Module
- * @link http://xaraya.com/index.php/release/704.html
- * @author St.Ego
- */
-function xtasks_user_mytasks($args)
-{
-    extract($args);
 
+function xtasks_user_mytasks($args)
+{        
+    extract($args);
+    
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby', 'str', $orderby, '', XARVAR_NOT_REQUIRED)) return;
-
+    
     $data = xarModAPIFunc('xtasks', 'admin', 'menu');
 
     if (!xarSecurityCheck('AddXTask')) {
         return;
     }
-
+    
     if(empty($orderby)) $orderby = "priority";
-
+    
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
 
     if (empty($mymemberid)) {
         return;
     }
-
+    
     $data['startnum'] = $startnum;
     $data['orderby'] = $orderby;
     $data['depth'] = 0;
@@ -50,9 +39,9 @@ function xtasks_user_mytasks($args)
                                   'mode' => "Open",
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-
+    
     $data['items'] = $items;
-
+    
     $data['show_importance'] = xarModGetUserVar('xtasks', 'show_importance');
     $data['show_priority'] = xarModGetUserVar('xtasks', 'show_priority');
     $data['show_age'] = xarModGetUserVar('xtasks', 'show_age');
@@ -60,22 +49,22 @@ function xtasks_user_mytasks($args)
     $data['show_planned_dates'] = xarModGetUserVar('xtasks', 'show_planned_dates');
     $data['show_actual_dates'] = xarModGetUserVar('xtasks', 'show_actual_dates');
     $data['show_hours'] = xarModGetUserVar('xtasks', 'show_hours');
-
-    $data['returnurl'] = xarModURL('xtasks', 'user', 'mytasks',
+    
+    $data['returnurl'] = xarModURL('xtasks', 'user', 'mytasks', 
                     array('startnum' => '%%',
                             'orderby' => $orderby));
-
+    
     $uid = xarUserGetVar('uid');
-
+    
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('xtasks', 'user', 'countitems',
+        xarModAPIFunc('xtasks', 'user', 'countitems', 
                     array('memberid' => $mymemberid,
                             'statusfilter' => "Active")),
-        xarModURL('xtasks', 'user', 'mytasks',
+        xarModURL('xtasks', 'user', 'mytasks', 
                     array('startnum' => '%%',
                             'orderby' => $orderby)),
         xarModGetUserVar('xtasks', 'itemsperpage', $uid));
-
+        
     return $data;
 }
 

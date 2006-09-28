@@ -3,7 +3,7 @@
  * XProject Module - A simple task management module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 function xtasks_admin_delete($args)
 {
-
+    
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
     if (!xarVarFetch('action', 'str', $action, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
@@ -54,7 +54,7 @@ function xtasks_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
-
+    
     if($action == "delete") {
         if (!xarModAPIFunc('xtasks',
                          'admin',

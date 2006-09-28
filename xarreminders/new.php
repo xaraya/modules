@@ -2,29 +2,26 @@
 
 function xtasks_reminders_new()
 {
-    if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
-
-    if (!xarVarFetch('inline', 'int', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskid',     'id',     $taskid)) return;
 
     if (!xarModAPILoad('xtasks', 'user')) return;
     
     $data = xarModAPIFunc('xtasks','admin','menu');
 
-    if (!xarSecurityCheck('AddXProject')) {
+    if (!xarSecurityCheck('UseReminders')) {
         return;
     }
 
-    $projectinfo = xarModAPIFunc('xtasks',
+    $taskinfo = xarModAPIFunc('xtasks',
                           'user',
                           'get',
-                          array('projectid' => $projectid));
+                          array('taskid' => $taskid));
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['projectid'] = $projectid;
-    $data['inline'] = $inline;
-    $data['projectinfo'] = $projectinfo;
+    $data['taskid'] = $taskid;
+    $data['taskinfo'] = $taskinfo;
 
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Create Feature'));
+    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add Reminder'));
 
     return $data;
 }

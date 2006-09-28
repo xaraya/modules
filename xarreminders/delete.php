@@ -5,7 +5,6 @@ function xtasks_reminders_delete($args)
     extract($args);
     
     if (!xarVarFetch('reminderid', 'id', $reminderid)) return;
-    if (!xarVarFetch('objectid', 'isset', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
 
@@ -23,9 +22,9 @@ function xtasks_reminders_delete($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
 
-    if (!xarSecurityCheck('DeleteXProject', 1, 'Item', "$item[project_name]:All:$item[projectid]")) {
+    if (!xarSecurityCheck('UseReminders', 1, 'Item', "All:All:All")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
-                    'xproject', xarVarPrepForDisplay($projectid));
+                    'xtasks', xarVarPrepForDisplay($projectid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
@@ -33,18 +32,18 @@ function xtasks_reminders_delete($args)
 
     if (empty($confirm)) {
 
-        $projectinfo = xarModAPIFunc('xtasks',
+        $taskinfo = xarModAPIFunc('xtasks',
                               'user',
                               'get',
-                              array('projectid' => $item['projectid']));
+                              array('taskid' => $item['taskid']));
                               
         xarModLoad('xtasks','admin');
         $data = xarModAPIFunc('xtasks','admin','menu');
 
         $data['reminderid'] = $reminderid;
-        $data['projectinfo'] = $projectinfo;
+        $data['taskinfo'] = $taskinfo;
 
-        $data['reminder_name'] = xarVarPrepForDisplay($item['reminder_name']);
+        $data['item'] = $item;
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();
@@ -60,7 +59,7 @@ function xtasks_reminders_delete($args)
     }
     xarSessionSetVar('statusmsg', xarML('Page Deleted'));
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "reminders")));
+    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $item['taskid'], 'mode' => "reminders")));
 
     return true;
 }
