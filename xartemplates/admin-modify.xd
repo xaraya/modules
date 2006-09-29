@@ -1,108 +1,108 @@
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2> 
+    <h2>
         <xar:mlstring>
-            Modify Article 
+            Modify Article
         </xar:mlstring>
-    </h2> 
+    </h2>
     <xar:if condition="!empty($preview)">
         <div>
-            #$preview# 
+            #$preview#
         </div>
     </xar:if>
     <xar:comment>
-        You can use different admin-modify-[pubtype].xd templates for different pubtypes 
+        You can use different admin-modify-[pubtype].xd templates for different pubtypes
     </xar:comment>
     <xar:comment>
-        retrieve the previous article in publication type ptid (with any status here) 
+        retrieve the previous article in publication type ptid (with any status here)
     </xar:comment>
     <xar:comment>
         <xar:set name="prevartinfo">
-            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))# 
+            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
     </xar:comment>
     <xar:comment>
-        retrieve the next article in publication type ptid (with any status here) 
+        retrieve the next article in publication type ptid (with any status here)
     </xar:comment>
     <xar:comment>
         <xar:set name="nextartinfo">
-            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))# 
+            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
     </xar:comment>
     <xar:comment>
-        show a link to modify the previous article with title 
+        show a link to modify the previous article with title
     </xar:comment>
     <xar:comment>
         <xar:if condition="!empty($prevartinfo['aid'])">
-            <a href="#xarModURL('articles','admin','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a> 
+            <a href="#xarModURL('articles','admin','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
         </xar:if>
     </xar:comment>
     <xar:comment>
-        show a link to modify the next article with title 
+        show a link to modify the next article with title
     </xar:comment>
     <xar:comment>
         <xar:if condition="!empty($nextartinfo['aid'])">
-            <a href="#xarModURL('articles','admin','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a> 
+            <a href="#xarModURL('articles','admin','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
         </xar:if>
     </xar:comment>
     <xar:if condition="!empty($withupload)">
         <xar:set name="enctype">
-            'multipart/form-data' 
+            'multipart/form-data'
         </xar:set>
         <xar:else />
         <xar:set name="enctype">
-            'application/x-www-form-urlencoded' 
+            'application/x-www-form-urlencoded'
         </xar:set>
     </xar:if>
-    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']#>
+    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']# >
         <div class="xar-form-input-wrapper">
-            <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#"> 
+            <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#">
                 <xar:mlstring>
-                    Publication Type 
+                    Publication Type
                 </xar:mlstring>
-            </label> #$values['pubtype']# 
+            </label> #$values['pubtype']#
         </div>
         <xar:comment>
-            Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc. 
+            Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.
         </xar:comment>
         <xar:comment>
-            Contrary to admin-new.xd, it is not recommended to use $field['definition']['preset'] here 
+            Contrary to admin-new.xd, it is not recommended to use $field['definition']['preset'] here
         </xar:comment>
         <xar:foreach in="$fields" value="$field">
             <div class="xar-form-input-wrapper">
-                <label class="help xar-form-label" title="#$field['label']#" for="#$field['id']#">#$field['label']#</label> 
+                <label class="help xar-form-label" title="#$field['label']#" for="#$field['id']#">#$field['label']#</label>
                 <xar:articles-field definition="$field['definition']" />
             </div>
         </xar:foreach>
         <xar:if condition="!empty($formhooks['formdisplay'])">
             <div class="xar-form-input-wrapper">
-                <label class="help xar-form-label" title="Form Controls as determined by hook selection.')#"> 
+                <label class="help xar-form-label" title="#xarML('Form Controls as determined by hook selection.')#">
                     <xar:mlstring>
-                        Form Controls 
+                        Form Controls
                     </xar:mlstring>
-                </label> #$formhooks['formdisplay']# 
+                </label> #$formhooks['formdisplay']#
             </div>
         </xar:if>
         <xar:if condition="!empty($hooks)">
             <xar:foreach in="$hooks" key="$hookmodule">
-                #$hooks[$hookmodule]# 
+                #$hooks[$hookmodule]#
             </xar:foreach>
         </xar:if>
         <div class="xar-form-input-wrapper">
-            <label class="help xar-form-label" title="#xarML('This is the allowed HTML that this website has configured.')#"> 
+            <label class="help xar-form-label" title="#xarML('This is the allowed HTML that this website has configured.')#">
                 <xar:mlstring>
-                    Allowed HTML tags 
+                    Allowed HTML tags
                 </xar:mlstring>
-            </label> 
+            </label>
             <div class="xar-form-container-after">
-                #$allowedhtml# 
+                #$allowedhtml#
             </div>
         </div>
         <div class="xar-form-input-wrapper">
@@ -113,19 +113,19 @@
                 <input type="hidden" name="return_url" value="#$return_url#" />
                 <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
                 <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')">
-                    <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" /> 
+                    <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" />
                 </xar:if>
-                <input type="submit" value="#$updatelabel#" /> 
+                <input type="submit" value="#$updatelabel#" />
                 <xar:comment>
-                    show a link to delete the article 
+                    show a link to delete the article
                 </xar:comment>
                 <xar:comment>
                     <xar:sec mask="DeleteArticles" catch="false">
-                        <a href="#xarModURL('articles','admin','delete',array('aid' => $aid))#"> 
+                        <a href="#xarModURL('articles','admin','delete',array('aid' => $aid))#">
                             <xar:mlstring>
-                                Delete Article 
+                                Delete Article
                             </xar:mlstring>
-                        </a> 
+                        </a>
                     </xar:sec>
                 </xar:comment>
             </div>

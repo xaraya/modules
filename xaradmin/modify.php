@@ -15,7 +15,7 @@
  * modify article
  * @param int aid The ID of the article
  * @param string return_url
- * @param string preview
+ * @param int preview
  */
 function articles_admin_modify($args)
 {
@@ -81,7 +81,7 @@ function articles_admin_modify($args)
 
     $hooks = xarModCallHooks('item','modify',$aid,$article);
     if (empty($hooks)) {
-        $hooks = '';
+        $hooks = array();
     }
     $data['hooks'] = $hooks;
     // Array containing the different labels
