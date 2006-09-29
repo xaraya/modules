@@ -103,6 +103,14 @@ div.xarbb-tablewrapper table td.forumname {
     vertical-align: middle;
     /*height: 4em;*/
 }
+/*
+    Topic titles that have been transformed using the html
+	module will gain an extra 'p' tag, which should effectively by hidden.
+*/
+div.xarbb-tablewrapper table td.forumname p {
+    margin: 0;
+	padding: 0;
+}
 
 div.xarbb-tablewrapper table td.author {
     width: 11em;
