@@ -60,7 +60,8 @@ function xmlrpcserver_user_rsd($args)
             // MoveableType depends on MetaWeblogAPI so it should be inside the if
             if(xarModIsAvailable('moveabletype')) 
             {
-                $data['xmlrpc_apis']['MoveableType'] = array(
+                // Doh! in RSD it has to be Movable instead of Moveable all of a sudden.
+                $data['xmlrpc_apis']['MovableType'] = array(
                     'preferred'     =>  'true', // NOTE: string!
                     'link'          =>  $entrypoint,
                     'others'        =>  !empty($rootcats) ? 'blogId = "'.$rootcats[0]['catid'].'" ' : ''
