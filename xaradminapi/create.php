@@ -15,18 +15,17 @@
  * Create a new article
  * Usage : $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
  *
- * @param $args['title'] name of the item (this is the only mandatory argument)
- * @param $args['summary'] summary for this item
- * @param $args['body'] body text for this item
- * @param $args['notes'] notes for the item
- * @param $args['status'] status of the item
- * @param $args['ptid'] publication type ID for the item
- * @param $args['pubdate'] publication date in unix time format (or default now)
- * @param $args['authorid'] ID of the author (default is current user)
- * @param $args['language'] language of the item
- * @param $args['cids'] category IDs this item belongs to
- * @returns int
- * @return articles item ID on success, false on failure
+ * @param string $args['title'] name of the item (this is the only mandatory argument)
+ * @param string $args['summary'] summary for this item
+ * @param string $args['body'] body text for this item
+ * @param string $args['notes'] notes for the item
+ * @param int    $args['status'] status of the item
+ * @param int    $args['ptid'] publication type ID for the item
+ * @param int    $args['pubdate'] publication date in unix time format (or default now)
+ * @param int    $args['authorid'] ID of the author (default is current user)
+ * @param string $args['language'] language of the item
+ * @param array  $args['cids'] category IDs this item belongs to
+ * @return int articles item ID on success, false on failure
  */
 function articles_adminapi_create($args)
 {
