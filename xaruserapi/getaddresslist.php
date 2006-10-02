@@ -356,6 +356,10 @@ function addressbook_userapi_getAddressList($args)
                 $displayName .= xarVarPrepHTMLDisplay($$sortCols[0]);
             }
         }
+        
+        $displayName = '<a href="'
+                      .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                      .'">'.$displayName.'</a>';
 
         $displayRow[] = trim($displayName,",");
 
@@ -365,23 +369,33 @@ function addressbook_userapi_getAddressList($args)
         if ($sortCols[1] == 'sortname') {
             if (xarModGetVar('addressbook', 'name_order')==1) {
                 if ((!empty($fname)) && (!empty($lname))) {
-                    $displayRow[] = xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
+                    $displayRow[] = '<a href="'
+                                  .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                                  .'">'.xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname).'</a>';
                 } else {
-                    $displayRow[] = xarVarPrepHTMLDisplay($fname).xarVarPrepHTMLDisplay($lname);
+                    $displayRow[] = '<a href="'
+                                  .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                                  .'">'.xarVarPrepHTMLDisplay($fname).xarVarPrepHTMLDisplay($lname).'</a>';
                 }
             }
             else {
                 if ((!empty($lname)) && (!empty($fname))) {
-                    $displayRow[] = xarVarPrepHTMLDisplay($lname).', '.xarVarPrepHTMLDisplay($fname);
+                    $displayRow[] = '<a href="'
+                                  .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                                  .'">'.xarVarPrepHTMLDisplay($lname).', '.xarVarPrepHTMLDisplay($fname).'</a>';
                 } else {
-                    $displayRow[] = xarVarPrepHTMLDisplay($lname).xarVarPrepHTMLDisplay($fname);
+                    $displayRow[] = '<a href="'
+                                  .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                                  .'">'.xarVarPrepHTMLDisplay($lname).xarVarPrepHTMLDisplay($fname).'</a>';
                 }
             }
         }
         else {
             if ($sortCols[1] == 'sortcompany') {
                 if (!empty($company)) {
-                    $displayRow[] = xarVarPrepHTMLDisplay($company);
+                    $displayRow[] = '<a href="'
+                                  .xarModURL('addressbook','user','viewdetail',array('id'=>$id))
+                                  .'">'.xarVarPrepHTMLDisplay($company).'</a>';
                 } else {
                     $displayRow[] = '&nbsp;';
                 }

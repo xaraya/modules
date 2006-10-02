@@ -1,28 +1,32 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
-<xar:base-include-javascript position="head" module="addressbook" filename="loadcontacts.js" />
+<xar:base-include-javascript position="head" module="addressbook" filename="loadcontacts.js" />  
 
-<div>#$displayName#</div>
+<!-- <div>#$displayName#</div> -->
+
+<xar:set name="arraypos">strpos($id, "[]")</xar:set>
+<xar:set name="fieldname_id">$id</xar:set>
+<xar:if condition="$arraypos gt 0">
+    <xar:set name="fieldname_id">substr($id, 0, $arraypos)</xar:set>
+</xar:if>
 
 <xar:if condition="count($options) gt 1">
-    <select name="companyselect_#$name#" id="companyselect_#$id#" tabindex="0" onChange="loadcontacts('#$name#','#$id#')" onKeyup="loadcontacts('#$name#','#$id#')" >
-        <xar:foreach in="$options" value="$option" >
-            <xar:if condition="empty($option['id']) or $option['id'] ne $option['name']">
-                <xar:if condition="$option['id'] eq $company" >
-                    <option value="#$option['id']#" selected="selected">#$option['name']#</option>
-                <xar:else />
-                    <option value="#$option['id']#">#$option['name']#</option>
-                </xar:if>
-            <xar:elseif condition="$option['id'] eq $company" />
-                <option selected="selected">#$option['name']#</option>
+    <select name="companyselect_#$name#" id="companyselect_#$fieldname_id#" tabindex="0" onChange="loadcontacts('#$name#','#$fieldname_id#','#$size#')" onKeyup="loadcontacts('#$name#','#$fieldname_id#','#$size#')" >
+        <xar:foreach in="$options" value="$option">
+            <xar:if condition="empty($option['name'])">
+                <option value=" ">#$option['name']#</option>
+            <xar:elseif condition="$option['name'] eq $company" />
+                <option value="#$option['name']#" selected="selected">#$option['name']#</option>
             <xar:else />
-                <option>#$option['name']#</option>
+                <option value="#$option['name']#">#$option['name']#</option>
             </xar:if>
         </xar:foreach>
     </select>
     
-    <div id="contactselect_#$id#">
+    <input type="hidden" name="multiple" id="multiple" value="#$multiple#" />
+    
+    <div id="contactselect_#$fieldname_id#">
     #$contactselect#
     </div>
 

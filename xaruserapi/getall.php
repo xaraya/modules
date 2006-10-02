@@ -27,12 +27,6 @@ function addressbook_userapi_getall($args)
         $output[$key] = $value;
     }
 
-    if (!isset($company)) {
-        $output['company'] = "";
-    } else {
-        $output['company'] = $company;
-    }
-
     $addresslist = array();
 
     // SQL Query
@@ -90,7 +84,10 @@ function addressbook_userapi_getall($args)
     }
 
     // Filter Companies
-    if ($output['company']) {
+    if (!isset($company)) {
+        $output['company'] = "";
+    } else {
+        $output['company'] = $company;
         $output['sql'] .= " AND (company = \"".$output['company']."\")";
     }
 
@@ -479,7 +476,7 @@ function addressbook_userapi_getall($args)
         $iteminfo['displaydetails'] = $displayRow;
         $addresslist[$iteminfo['id']] = $iteminfo;
     } // END for $results
-
+    
     return $addresslist;
 
 } // END getAddressList
