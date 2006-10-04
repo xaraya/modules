@@ -5,7 +5,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-	<div class="xar-form-input-wrapper">
+    <div class="xar-form-input-wrapper">
         <h4><xar:mlstring>Some publisher notes</xar:mlstring></h4>
     </div>
     <div class="xar-form-input-wrapper">
@@ -19,7 +19,11 @@
             <xar:if condition="$loggedin eq true">
                 <xar:mlstring>To subscribe to a Newsletter,</xar:mlstring>&nbsp;<a href="#$subscribelink#"><xar:mlstring>Click Here</xar:mlstring></a>
             <xar:else />
+                <xar:if condition="$reg eq true">
                 <xar:mlstring>To subscribe to a Newsletter, you must first</xar:mlstring>&nbsp;<a href="#$registerlink#"><xar:mlstring>Register Here</xar:mlstring></a>
+                <xar:else />
+                    <xar:mlstring>To subscribe to a Newsletter, you must first</xar:mlstring>&nbsp;<a href="#$registerlink#"><xar:mlstring>Login Here</xar:mlstring></a>
+                </xar:if>
             </xar:if>
         </div>
     </fieldset>
