@@ -12,26 +12,23 @@
  * @author Courses Development team
  */
 /**
- * Enroll a user into a course and update database
+ * Enroll a user into a course.
+ *
+ * The factual enrollment is performed by an update in the database by the API function
  * @Author XarayaGeek/Michel V.
  *
- * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['planningid'] the planned course ID that the user will enroll to
+ * @param array $args an array of arguments (if called by other modules)
+ * @param int $args ['objectid'] a generic object id (if called by other modules)
+ * @param int  $args ['planningid'] the planned course ID that the user will enroll to
  * @param confirm OPTIONAL OR
  * @param noconfirm OPTIONAL
- * @param bool
  * @access PUBLIC
- * @return mixed
+ * @return mixed true on successfull enrollment, array with data for template when information is incomplete
+            or a confirmation is required.
  * @todo MichelV <1> Create admin configurable standard student status
  */
 function courses_user_enroll($args)
 {
-    // User must be logged in and have privilege
-    if (!xarSecurityCheck('ReadCourses', 0) ||!xarUserIsLoggedIn()) {
-        return $data['error'] = xarML('You must be logged in to enroll in this course. Please register and login');
-    }
-
     extract($args);
 
     if (!xarVarFetch('planningid', 'id',     $planningid, NULL,  XARVAR_DONT_SET)) return;
@@ -43,8 +40,20 @@ function courses_user_enroll($args)
     if (!empty($objectid)) {
         $planningid = $objectid;
     }
+    $data = array();
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
+
+    // User must be logged in and have privilege
+    if (!xarSecurityCheck('ReadCourses', 0) || !xarUserIsLoggedIn()) {
+        $data['loginerror'] = xarML('You must be logged in to enroll in this course.');
+        $regmoduleinfo = xarModGetInfo(xarModGetVar('roles', 'defaultregmodule'));
+        $authmoduleinfo = xarModGetinfo(xarModGetVar('roles', 'defaultauthmodule'));
+        $data['loginurl'] = xarModURL($authmoduleinfo['name'],'user','main');
+        $data['regurl'] = xarModURL($regmoduleinfo['name'],'user','main');
+        return $data;
+    }
+
     //Check to see if this user is already enrolled in this course
     $enrolled = xarModAPIFunc('courses',
                               'user',
@@ -74,7 +83,6 @@ function courses_user_enroll($args)
     }
     if (!$confirm) {
         // No confirmation yet, present form
-        $data=array();
         // How many student are enrolled already?
         $s_count = xarModApiFunc('courses','user','countparticipants', array('planningid',$planningid));
         // Set the correct status

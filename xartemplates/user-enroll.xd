@@ -5,62 +5,72 @@
 <div class="xar-mod-body">
     <div class="xar-courses-contents">
 
-    <h2><xar:mlstring>Enroll in this course?</xar:mlstring></h2>
+        <xar:if condition="isset($loginerror)">
+            #$loginerror#<br />
+            <xar:ml>
+                <xar:mlstring>If you have registered before, then please go <a href="#(1)"> here </a> to login.
+                If you have not registered before, then please <a href="#(2)">register here</a>.</xar:mlstring>
+                <xar:mlvar>#$loginurl#</xar:mlvar>
+                <xar:mlvar>#$regurl#</xar:mlvar>
+            </xar:ml>
+        <xar:else />
 
-        <h3><xar:mlstring>Please confirm</xar:mlstring></h3>
-        <fieldset>
-            <legend>
-                <xar:mlstring>Course</xar:mlstring>
-            </legend>
-            <div class="xar-form-input-wrapper">
-                 <label for="coursename"  class="xar-form-label" title="#xarML('The name of the course')#">
-                         <xar:mlstring>Coursename:</xar:mlstring>
-                 </label>
-                 #$coursename#
-            </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="startdate"  class="xar-form-label" title="#xarML('The date this course starts')#">
-                         <xar:mlstring>Date:</xar:mlstring>
-                 </label>
-                 #xarlocalegetformatteddate('medium',$planitem.startdate)#
-            </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="credits"  class="xar-form-label" title="#xarML('The credits for this course')#">
-                         <xar:mlstring>Credits:</xar:mlstring>
-                 </label>
-                 #$planitem.credits#
-            </div>
-            <div class="xar-form-input-wrapper">
-                 <label for="location"  class="xar-form-label" title="#xarML('The location for this course')#">
-                         <xar:mlstring>Location:</xar:mlstring>
-                 </label>
-                 #$planitem.location#
-            </div>
+            <h2><xar:mlstring>Enroll in this course?</xar:mlstring></h2>
 
-            <xar:if condition="$use_extreg">
-                <xar:ml>
-                <xar:mlstring>You will be redirected to #(1) when you choose to enroll.</xar:mlstring>
-                <xar:mlvar>#$planitem['regurl']#</xar:mlvar>
-                </xar:ml>
-            </xar:if>
-            <xar:if condition="$WaitingList">
-                <xar:mlstring>This course is fully booked. You can enroll, but you will be added to the waiting list for this course when you enroll.</xar:mlstring>
-            </xar:if>
-            <div class="xar-form-input-wrapper-after">
-            <form method="post" action="&xar-modurl-courses-user-enroll;">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+            <h3><xar:mlstring>Please confirm</xar:mlstring></h3>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Course</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                     <label for="coursename"  class="xar-form-label" title="#xarML('The name of the course')#">
+                             <xar:mlstring>Coursename:</xar:mlstring>
+                     </label>
+                     #$coursename#
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="startdate"  class="xar-form-label" title="#xarML('The date this course starts')#">
+                             <xar:mlstring>Date:</xar:mlstring>
+                     </label>
+                     #xarlocalegetformatteddate('medium',$planitem.startdate)#
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="credits"  class="xar-form-label" title="#xarML('The credits for this course')#">
+                             <xar:mlstring>Credits:</xar:mlstring>
+                     </label>
+                     #$planitem.credits#
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="location"  class="xar-form-label" title="#xarML('The location for this course')#">
+                             <xar:mlstring>Location:</xar:mlstring>
+                     </label>
+                     #$planitem.location#
+                </div>
 
-
-                <xar:if condition="$WaitingList">
-                    <input type="submit" name="confirm" value=" #xarML('Put me on the waitinglist')# " />
-                <xar:else />
-                    <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+                <xar:if condition="$use_extreg">
+                    <xar:ml>
+                    <xar:mlstring>You will be redirected to #(1) when you choose to enroll.</xar:mlstring>
+                    <xar:mlvar>#$planitem['regurl']#</xar:mlvar>
+                    </xar:ml>
                 </xar:if>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
-            </form>
-            </div>
-        </fieldset>
+                <xar:if condition="$WaitingList">
+                    <xar:mlstring>This course is fully booked. You can enroll, but you will be added to the waiting list for this course when you enroll.</xar:mlstring>
+                </xar:if>
+                <div class="xar-form-input-wrapper-after">
+                    <form method="post" action="&xar-modurl-courses-user-enroll;">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+
+                        <xar:if condition="$WaitingList">
+                            <input type="submit" name="confirm" value=" #xarML('Put me on the waitinglist')# " />
+                        <xar:else />
+                            <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+                        </xar:if>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
+                    </form>
+                </div>
+            </fieldset>
+        </xar:if>
     </div>
 </div>
