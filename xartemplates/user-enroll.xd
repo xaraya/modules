@@ -13,25 +13,25 @@
                 <xar:mlstring>Course</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('The name of the course')#">
+                 <label for="coursename"  class="xar-form-label" title="#xarML('The name of the course')#">
                          <xar:mlstring>Coursename:</xar:mlstring>
                  </label>
                  #$coursename#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('The date this course starts')#">
+                 <label for="startdate"  class="xar-form-label" title="#xarML('The date this course starts')#">
                          <xar:mlstring>Date:</xar:mlstring>
                  </label>
                  #xarlocalegetformatteddate('medium',$planitem.startdate)#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('The credits for this course')#">
+                 <label for="credits"  class="xar-form-label" title="#xarML('The credits for this course')#">
                          <xar:mlstring>Credits:</xar:mlstring>
                  </label>
                  #$planitem.credits#
             </div>
             <div class="xar-form-input-wrapper">
-                 <label for="itemid"  class="xar-form-label" title="#xarML('The location for this course')#">
+                 <label for="location"  class="xar-form-label" title="#xarML('The location for this course')#">
                          <xar:mlstring>Location:</xar:mlstring>
                  </label>
                  #$planitem.location#
