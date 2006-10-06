@@ -36,8 +36,8 @@ function courses_admin_updatecourse($args)
     if (!xarVarFetch('intendedcredits', 'float::', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq',            'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact',         'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid',      'int:1:', $contactuid,'', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse',      'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid',      'int:1:', $contactuid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse',      'checkbox', $hidecourse, 0, XARVAR_NOT_REQUIRED)) return;
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.
     if (!empty($objectid)) {
@@ -100,7 +100,7 @@ function courses_admin_updatecourse($args)
         $data['contactuid'] = $contactuid;
     }
     if (empty($hidecourse)) {
-        $data['hidecourse'] = '';
+        $data['hidecourse'] = 0;
     } else {
         $data['hidecourse'] = $hidecourse;
     }

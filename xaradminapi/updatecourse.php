@@ -78,7 +78,10 @@ function courses_adminapi_updatecourse($args)
                  xar_last_modified = ?
               WHERE xar_courseid = ?";
 
-    $bindvars = array($name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid,
+    $bindvars = array($name, $number,
+                      (int) $coursetype,
+                      (int) $level, $shortdesc, $intendedcredits, $freq, $contact,
+                      (int) $contactuid,
                       $hidecourse, $last_modified, $courseid);
     $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised

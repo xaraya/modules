@@ -24,9 +24,9 @@
  * @param string $freq the number of the course to be created
  * @param string $contact the number of the course to be created
  * @param int $contactuid the uid of the coordinator of the course to be created
- * @param int $hidecourse the number of the course to be created
+ * @param int $hidecourse Does this course need to be hidden from public?
  * @return array
- * @throws
+ * @throws none
  */
 function courses_admin_createcourse($args)
 {
@@ -41,8 +41,8 @@ function courses_admin_createcourse($args)
     if (!xarVarFetch('intendedcredits', 'float::', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('freq',        'str:1:', $freq, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('contact',     'str:1:', $contact, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('contactuid',  'int:1:', $contactuid, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hidecourse',  'int:1:', $hidecourse, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('contactuid',  'int:1:', $contactuid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hidecourse',  'checkbox', $hidecourse, 0, XARVAR_NOT_REQUIRED)) return;
     // Argument check
     $item = array();
     // Check for duplicate name and/or number
