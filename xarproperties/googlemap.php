@@ -12,7 +12,7 @@
  *
  */
 
-class GoogleMap_Property extends Dynamic_Property
+class GoogleMapProperty extends DataProperty
 {
     public $id         = 30040;
     public $name       = 'gmap';

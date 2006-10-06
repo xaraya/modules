@@ -1,4 +1,4 @@
-<?
+<?php
 function maps_admin_create()
 {
     if (!xarVarFetch('itemid',      'isset', $itemid,     0,    XARVAR_NOT_REQUIRED)) return;
@@ -8,10 +8,10 @@ function maps_admin_create()
 //    if (!xarSecConfirmAuthKey()) return;
 
     $objinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name' => 'maps_locations'));
-    $myobject = & Dynamic_Object_Master::getObject(array('moduleid' => $objinfo['moduleid'],
-                                         				 'itemtype' => $objinfo['itemtype'],
-                                         				 'itemid' => $itemid,
-                                         				 'fieldlist' => array('longitude','latitude','longitude2','latitude2','name')));
+    $myobject = & DataObjectMaster::getObject(array('moduleid' => $objinfo['moduleid'],
+                                                         'itemtype' => $objinfo['itemtype'],
+                                                         'itemid' => $itemid,
+                                                         'fieldlist' => array('longitude','latitude','longitude2','latitude2','name')));
     $isvalid = $myobject->checkInput();
 
 //var_dump($myobject->properties['latitude']);exit;

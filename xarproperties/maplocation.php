@@ -13,14 +13,14 @@
  */
 
 // We base it on the objectref property
-sys::import('modules.dynamicdata.xarproperties.Dynamic_ObjectRef_Property');
+sys::import('modules.dynamicdata.xarproperties.objectref');
 
 /**
  * Handle the maplocation property
  *
  * @package maps
  */
-class MapLocation_Property extends Dynamic_ObjectRef_Property
+class MapLocationProperty extends ObjectRefProperty
 {
     public $id         = 30041;
     public $name       = 'maplocation';
