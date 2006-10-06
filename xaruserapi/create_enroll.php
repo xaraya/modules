@@ -26,7 +26,7 @@ function courses_userapi_create_enroll($args)
     extract($args);
     if (!xarVarFetch('planningid', 'id',       $planningid)) return;
     if (!xarVarFetch('uid',        'int:1:',   $uid)) return;
-    if (!xarVarFetch('studstatus', 'int:1:',   $studstatus, '1')) return;
+    if (!xarVarFetch('studstatus', 'int:1:',   $studstatus, 1)) return;
    // if (!xarVarFetch('regdate',    'int:1:11', $regdate)) return;
 
     $invalid = array();
@@ -37,7 +37,7 @@ function courses_userapi_create_enroll($args)
         $invalid[] = 'planningid';
     }
      if (!isset($studstatus) || !is_numeric($studstatus)) {
-        $invalid[] = 'status';
+        $invalid[] = 'studstatus';
     }
 
     if (count($invalid) > 0) {

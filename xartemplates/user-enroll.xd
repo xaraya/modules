@@ -6,7 +6,7 @@
     <div class="xar-courses-contents">
 
         <xar:if condition="isset($loginerror)">
-            #$loginerror#<br />
+            <strong>#$loginerror#</strong><br />
             <xar:ml>
                 <xar:mlstring>If you have registered before, then please go <a href="#(1)"> here </a> to login.
                 If you have not registered before, then please <a href="#(2)">register here</a>.</xar:mlstring>

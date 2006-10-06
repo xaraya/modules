@@ -41,7 +41,7 @@ function courses_admin_participants()
 
     // Security check
     if (!xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) return;
-
+    // Get the participants and their status. This can be 0, or higher.
     $items = xarModAPIFunc('courses',
         'admin',
         'getallparticipants',
@@ -49,8 +49,6 @@ function courses_admin_participants()
               'numitems' => xarModGetVar('courses','itemsperpage'),
               'planningid' => $planningid
               ));
-    // Check for exceptions
-//    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {

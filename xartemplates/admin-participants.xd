@@ -8,8 +8,8 @@
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
         <form method="post" name="participants" id="participants" action="&xar-modurl-courses-admin-updatestatus;">
-        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-        <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
             <table>
                 <thead>
                     <tr>
@@ -21,45 +21,60 @@
                     </tr>
                 </thead>
                 <xar:foreach in="$items" value="$item">
-                <tr>
-                    <td><a href="#xarModURL('roles','user','display',array('uid'=>$item.userid))#">#xarUserGetVar('name',$item['userid'])#</a></td>
-                    <td>#xarUserGetVar('email',$item['userid'])#</td>
-                    <td>#xarLocaleGetFormattedDate('medium', $item['regdate'])#</td>
-                    <td>#$item['statusname']#</td>
-                    <td class="xar-norm">
-                        <xar:if condition="!empty($item['changestatusurl'])">
-                            <input type="checkbox" name="sids[#$item['sid']#]" id="sids[#$item['sid']#]" value="1" #$item['selected']# />
-                        </xar:if>
-                    </td>
-                    <td>
-                    <xar:comment>
-                       <xar:if condition="empty($item['changestatusurl'])">
-                           #$item['changestatustitle']#
-                       <xar:else />
-                           <a href="#$item['changestatusurl']#">#$item['changestatustitle']#</a>
-                       </xar:if>
-                       |</xar:comment>
-                       <xar:if condition="empty($item['deleteurl'])">
-                           #$item['deletetitle']#
-                       <xar:else />
-                           <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
-                       </xar:if>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><a href="#xarModURL('roles','user','display',array('uid'=>$item.userid))#">#xarUserGetVar('name',$item['userid'])#</a></td>
+                        <td>#xarUserGetVar('email',$item['userid'])#</td>
+                        <td>#xarLocaleGetFormattedDate('medium', $item['regdate'])#</td>
+                        <td>#$item['statusname']#</td>
+                        <td>
+                            <xar:if condition="!empty($item['changestatusurl'])">
+                                <input type="checkbox" name="sids[#$item.sid#]" id="sids[#$item.sid#]" value="1" #$item.selected# />
+                            </xar:if>
+                        </td>
+                        <td>
+                           <xar:if condition="empty($item['deleteurl'])">
+                               #$item['deletetitle']#
+                           <xar:else />
+                               <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+                           </xar:if>
+                        </td>
+                    </tr>
                 </xar:foreach>
             </table>
             <p>
-            <xar:mlstring>
-            Change the status of selected participants
-            </xar:mlstring>
-            :</label>&nbsp;
+                <xar:mlstring>Change the status of selected participants:</xar:mlstring>&nbsp;
                 <select name="statusid">
                 <xar:loop name="$status">
                     <option value="#$loop:item['statusid']#">#$loop:item['studstatus']#</option>
                 </xar:loop>
                 </select>
-                <input type="submit" value="#xarML('Change status of selected')#" />
+                <input type="submit" value="#xarML('Change status of selected student')#" />
             </p>
+        </form>
+
+        <form method="post" name="addparticipant" id="addparticipant" action="&xar-modurl-courses-admin-addparticipant;">
+            <fieldset>
+                <legend><xar:mlstring>Add a participant</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                     <label for="userid" class="xar-form-label" title="#xarML('Enter the Xaraya user id for the user')#">
+                            <xar:mlstring>User ID:</xar:mlstring>
+                     </label>
+                     <input type="text" name="userid" id="userid" value="" maxlength="5" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                     <label for="sendnotification" class="xar-form-label" title="#xarML('When checked, the user will receive an email notification')#">
+                         <xar:mlstring>Send notification?</xar:mlstring>
+                     </label>
+                     <input type="checkbox" name="sendnotification" id="sendnotification" value="1" />
+                </div>
+
+                <div class="xar-form-input-wrapper-after">
+                    <input type="submit" value="#xarML('Add this user as student')#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('courses-addparticipant')#" />
+                    <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+                    <input type="hidden" name="returnurl" id="returnurl" value="#xarModURL('courses','admin','participants',array('planningid'=> $planningid))#" />
+                </div>
+            </fieldset>
         </form>
     <br />
     <!-- add the pager here -->
