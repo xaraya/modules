@@ -66,7 +66,11 @@ function courses_adminapi_createcourse($args)
               xar_last_modified)
               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    $bindvars = array($nextId, $name, $number, $coursetype, $level, $shortdesc, $intendedcredits, $freq, $contact, $contactuid, $hidecourse, $last_modified);
+    $bindvars = array($nextId, $name, $number,
+                      (int) $coursetype,
+                      (int) $level, $shortdesc,
+                      $intendedcredits, $freq, $contact,
+                      (int) $contactuid, $hidecourse, $last_modified);
     $result = &$dbconn->Execute($query, $bindvars);
     if (!$result) return;
 

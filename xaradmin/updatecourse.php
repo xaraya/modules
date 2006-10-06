@@ -30,7 +30,7 @@ function courses_admin_updatecourse($args)
     if (!xarVarFetch('objectid',        'id', $objectid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',            'str:1:', $name)) return;
     if (!xarVarFetch('number',          'str:1:', $number)) return;
-    if (!xarVarFetch('coursetype',      'str:1:', $coursetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('coursetype',      'int::', $coursetype, $coursetype, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('level',           'int:1:', $level, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shortdesc',       'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('intendedcredits', 'float::', $intendedcredits, '', XARVAR_NOT_REQUIRED)) return;
