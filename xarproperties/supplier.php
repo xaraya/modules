@@ -9,7 +9,7 @@
  * Supplier Property
  * @author Marc Lutolf (mfl@netspan.ch)
  */
-include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
+sys::import('modules.base.xarproperties.dropdown');
 
 
     /*
@@ -24,7 +24,7 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
     *   supplier:name[,name] - select only certain supplier(s)
     */
 
-class Supplier_Property extends Dynamic_Select_Property
+class SupplierProperty extends SelectProperty
 {
     public $id         = 30024;
     public $name       = 'supplier';
