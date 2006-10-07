@@ -102,6 +102,10 @@ function xar_security_AddGroup()
 
 function xar_security_Toggle( uid, leveltype )
 {
-    security.levels[uid][leveltype] = !security.levels[uid][leveltype];
+    if( security.levels[uid][leveltype] == 0 ){
+        security.levels[uid][leveltype] = 1;
+    }else{
+        security.levels[uid][leveltype] = 0;
+    }
     return true;
 }

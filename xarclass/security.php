@@ -87,7 +87,7 @@ class Security
 
         //Check Groups
         $uid = xarUserGetVar('uid');
-        $uids = array(0, xarUserGetVar('uid'));
+        $uids = array(0, $uid);
 
         $groups_cache_name = "security.groups.$uid";
         if( xarVarIsCached('modules.security', $groups_cache_name) )
@@ -104,7 +104,6 @@ class Security
             xarVarSetCached('modules.security', $groups_cache_name, $group_where);
             $where[] = $group_where;
         }
-
         // Check for world
         $where[] = "$field = 1";
 
@@ -114,7 +113,6 @@ class Security
         }
 
         $result = $dbconn->Execute($query, $bindvars);
-
 
         // Cache the result for faster lookups later.
         xarVarSetCached('modules.security', $cache_name, !$result->EOF);

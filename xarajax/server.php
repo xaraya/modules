@@ -31,8 +31,9 @@ function security_ajax_server($args)
             if( !xarVarFetch('param_modid', 'int', $modid, 0) ){ return false; }
             if( !xarVarFetch('param_itemtype', 'int', $itemtype, 0) ){ return false; }
             if( !xarVarFetch('param_itemid', 'int', $itemid, 0) ){ return false; }
-            ini_set('include_path',ini_get('include_path').':modules/security/xarclass:modules/security/xarclass/Zend');
-            include_once('Json.php');
+
+            include_once('modules/security/xarclass/JSON.php');
+            $json = new Services_JSON();
             $data['security'] = xarModAPIFunc('security', 'user', 'get',
                 array(
                     'modid'      => $modid
@@ -40,16 +41,15 @@ function security_ajax_server($args)
                     , 'itemid'   => $itemid
                 )
             );
-            $data = Zend_Json::encode($data['security']);
+            $data = $json->encode($data['security']);
 
             break;
 
         case 'savesecurity':
             if( !xarVarFetch('param_security', 'str', $security) ){ return false; }
-
-            ini_set('include_path',ini_get('include_path').':modules/security/xarclass:modules/security/xarclass/Zend');
-            include_once('Json.php');
-            $security = Zend_Json::decode($security, Zend_Json::TYPE_OBJECT);
+            include_once('modules/security/xarclass/JSON.php');
+            $json = new Services_JSON();
+            $security = $json->decode($security);
             Security::update($security->levels, $security->modid, $security->itemtype, $security->itemid);
             $data = xarML('Save was successful!');
 
