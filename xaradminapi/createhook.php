@@ -83,7 +83,7 @@ function security_adminapi_createhook($args)
                 !isset($settings->exclude_groups[0])
             )
             {
-                $security->levels[$group] = $settings->default_item_levels[$owner_id];
+                $security->levels[$group] = $settings->default_group_level;
             }
         }
     }
