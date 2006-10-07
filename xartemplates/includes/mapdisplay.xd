@@ -1,4 +1,4 @@
-<xar:base-include-javascript filename="joomla.javascript.js" module="simpleadmin" position="head"/>
+<xar:base-include-javascript filename="joomla.javascript.js" position="head"/>
 <div class="xar-form-input-wrapper">
     <xar:set name="categoryoptions">array()</xar:set>
     <xar:foreach in="$categoryoptions" value="$option">

@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Property Gmap
+ * GoogleMapProperty
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2006 by to be added
@@ -15,7 +15,7 @@
 class GoogleMapProperty extends DataProperty
 {
     public $id         = 30040;
-    public $name       = 'gmap';
+    public $name       = 'googlemap';
     public $desc       = 'Google Map';
     public $reqmodules = array('maps');
 
