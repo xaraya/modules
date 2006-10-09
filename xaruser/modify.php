@@ -149,6 +149,7 @@ function itsp_user_modify($args)
                     $icourselevel = $icourse['icourselevel'];
                     $icourseresult = $icourse['icourseresult'];
                     $icoursedate =$icourse['icoursedate'];
+                    $dateappr = $icourse['dateappr'];
                     $data['icourseid'] = $icourseid;
                 }
 
