@@ -107,10 +107,10 @@ function addressbook_userapi_getAddressList($args)
                     if (strcasecmp($output['char'],'a')) {
                         $output['sql'] .= " AND (sortcompany LIKE '".$output['char']."%')";
                     } else {
-                        $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'z'))";
+                        $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'Z'))";
                     }
                 } else {
-                    $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'z'))";
+                    $output['sql'] .= " AND ((sortcompany < 'b') OR (sortcompany > 'Z'))";
                 }
             }
             else {
