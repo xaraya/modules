@@ -95,9 +95,6 @@ function courses_admin_plancourse($args)
     $data['committeelabel'] = xarVarPrepForDisplay(xarML('Course committee'));
     $data['lecturerslabel'] = xarVarPrepForDisplay(xarML('Course lecturers'));
     $data['locationlabel'] = xarVarPrepForDisplay(xarML('Course location'));
-    $data['programlabel'] = xarVarPrepForDisplay(xarML('Course Programme'));
-    $data['longdesclabel'] = xarVarPrepForDisplay(xarML('Long Course Description'));
-    $data['methodlabel'] = xarVarPrepForDisplay(xarML('Course Method'));
     $data['languagelabel'] = xarVarPrepForDisplay(xarML('Course Language'));
     $data['freqlabel'] = xarVarPrepForDisplay(xarML('Course Frequency'));
     $data['contactlabel'] = xarVarPrepForDisplay(xarML('Course Contact details'));

@@ -174,7 +174,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="longdesc" class="xar-form-label">
                         <span class="help" title="#xarML('Enter a complete description for this course, supplementing the short description.')#">
-                        #$longdesclabel#
+                        <xar:mlstring>Long Course Description</xar:mlstring>
                         </span>
                     </label>
                     <textarea class="fullright" name="longdesc" id="longdesc" wrap="virtual" rows="10" cols="40"></textarea>
@@ -185,7 +185,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="program" class="xar-form-label">
                         <span class="help" title="#xarML('The programme of this course.')#">
-                        #$programlabel#
+                        <xar:mlstring>The course programme</xar:mlstring>
                         </span>
                     </label>
                     <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
@@ -196,7 +196,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="method" class="xar-form-label">
                         <span class="help" title="#xarML('Describe the methods used in this course.')#">
-                        #$methodlabel#
+                        <xar:mlstring>Course Method</xar:mlstring>
                         </span>
                     </label>
                     <textarea class="fullright" name="method" id="method" wrap="virtual" rows="10" cols="40"></textarea>
@@ -213,17 +213,6 @@
                     <textarea class="fullright" name="lecturers" id="lecturers" wrap="virtual" rows="10" cols="40"></textarea>
                     <xar:if condition="!empty($invalid['lecturers'])">
                         <span style="color: red"><xar:mlstring>ERROR! This is not a valid lecturers description</xar:mlstring></span>
-                    </xar:if>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="program" class="xar-form-label">
-                        <span class="help" title="#xarML('Other program on this course.')#">
-                        <xar:mlstring>The course programme</xar:mlstring>
-                        </span>
-                    </label>
-                    <textarea class="fullright" name="program" id="program" wrap="virtual" rows="10" cols="40"></textarea>
-                    <xar:if condition="!empty($invalid['program'])">
-                        <span style="color: red"><xar:mlstring>ERROR! This is not a valid program description</xar:mlstring></span>
                     </xar:if>
                 </div>
            </fieldset>
