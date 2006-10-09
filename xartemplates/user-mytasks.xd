@@ -1,51 +1,72 @@
-<xar:template type="module" file="admin-menu" />
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
+
+<xar:template type="module" file="admin-menu" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>My Task List</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-        <th><xar:mlstring>Project</xar:mlstring></th>
-        <th><xar:mlstring>Client</xar:mlstring></th>
-        <th><xar:mlstring>Task Name</xar:mlstring></th>
+        <th><xar:mlstring>Client / Project</xar:mlstring></th>
+        <th style="width: auto;"><xar:mlstring>Task Name</xar:mlstring></th>
         <th><xar:mlstring>Importance</xar:mlstring></th>
         <th><xar:mlstring>Priority</xar:mlstring></th>
         <th><xar:mlstring>Date Due</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <th><a href="&xar-modurl-xtasks-user-mytasks;&amp;theme=print" target="_blank"><xar:mlstring>Printable</xar:mlstring></a></th>
     </tr>
 
     <xar:foreach in="$items" value="$taskinfo">
-
         <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
         <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
         <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
         
-        <tr><td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><xar:data-output type="contactlist" value="$taskinfo['projectinfo']['clientid']" /></xar:if></td>
-        
-            <td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['project_name'])">#$taskinfo['projectinfo']['project_name']#</xar:if></td>
+        <tr>
+            <td class="xar-norm">
+                <xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a></xar:if>
+                <xar:if condition="isset($taskinfo['projectinfo']['project_name'])"><div><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#&amp;mode=tasks">#$taskinfo['projectinfo']['project_name']#</a></div></xar:if>
+            </td>
             
             <td class="xar-norm">
                 <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
             </td>
                 
             <xar:set name="importance">$taskinfo['importance']</xar:set>
-            <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
-        
             <td class="xar-norm" style="text-align: center;">
-                <div style="float: left; width: 10px;">#$taskinfo['priority']#</div>
-                <div style="width: 10px; float: right; vertical-align: center; padding-top: .2em;">
+                <xar:if condition="$importance le 1">
+                    <strong><xar:data-output property="$properties['importance']" value="$importance" /></strong>
+                <xar:elseif condition="$importance ge 9" />
+                    <em><xar:data-output property="$properties['importance']" value="$importance" /></em>
+                <xar:else />
+                    <xar:data-output property="$properties['importance']" value="$importance" />
+                </xar:if>
+            </td>
+        
+            <xar:set name="priority">$taskinfo['priority']</xar:set>
+            <td class="xar-norm" style="text-align: center;">
+                <div style="float: left; width: 10px;">
+                    <xar:if condition="$priority le 1">
+                        <strong>#$taskinfo['priority']#</strong>
+                    <xar:elseif condition="$priority ge 9" />
+                        <em>#$taskinfo['priority']#</em>
+                    <xar:else />
+                        #$taskinfo['priority']#
+                    </xar:if>
+                </div>
+                <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
                     <div style="height: 7px;">
                         <xar:if condition="$taskinfo.priority gt 1">
-                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top"></a>
+                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
                         </xar:if>
                     </div>
                     <div style="height: 8px;">
                         <xar:if condition="$taskinfo.priority lt 9">
-                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top"></a>
+                            <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
                         </xar:if>
                     </div>
                 </div>
@@ -63,11 +84,11 @@
                 </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: right; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+            <td class="xar-norm" style="text-align: right; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
         
         </tr>
         <xar:if condition="!empty($taskinfo['description'])">
-            <tr><td class="xar-norm" colspan="6" style="padding-left: 25px;">#$taskinfo['description']#</td></tr>
+            <tr><td>&nbsp;</td><td class="xar-norm" colspan="5" style="padding-left: 25px;"><em>#$taskinfo['description']#</em></td></tr>
         </xar:if>
     </xar:foreach>
 
@@ -82,4 +103,4 @@
 <div class="xar-mod-foot" style="text-align: center;">
 #$pager#
 </div>
-<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>
+<div style="text-align: center;"><em><xar:mlstring>Task importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</xar:mlstring></em></div>

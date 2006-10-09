@@ -8,6 +8,16 @@
   <config></config>
   <isalias>0</isalias>
   <properties>
+    <property name="emailtaskupdates">
+      <id>70</id>
+      <label>Receive email when a new task is assigned to you or a task assigned to you is updated by someone else.</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
     <property name="show_owner">
       <id>71</id>
       <label>Show who the task is assigned to</label>
@@ -15,7 +25,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>1</order>
+      <order>2</order>
       <validation></validation>
     </property>
     <property name="show_project">
@@ -25,7 +35,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>2</order>
+      <order>3</order>
       <validation></validation>
     </property>
     <property name="show_client">
@@ -35,7 +45,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>3</order>
+      <order>4</order>
       <validation></validation>
     </property>
     <property name="show_importance">
@@ -45,7 +55,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>4</order>
+      <order>5</order>
       <validation></validation>
     </property>
     <property name="show_priority">
@@ -55,7 +65,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>5</order>
+      <order>6</order>
       <validation></validation>
     </property>
     <property name="show_age">
@@ -65,7 +75,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>6</order>
+      <order>7</order>
       <validation></validation>
     </property>
     <property name="show_hours">
@@ -75,7 +85,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>7</order>
+      <order>8</order>
       <validation></validation>
     </property>
     <property name="show_pctcomplete">
@@ -85,7 +95,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>8</order>
+      <order>9</order>
       <validation></validation>
     </property>
     <property name="show_planned_dates">
@@ -95,7 +105,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>9</order>
+      <order>10</order>
       <validation></validation>
     </property>
     <property name="show_actual_dates">
@@ -105,7 +115,7 @@
       <default></default>
       <source>user settings</source>
       <status>1</status>
-      <order>10</order>
+      <order>11</order>
       <validation></validation>
     </property>
 </object>

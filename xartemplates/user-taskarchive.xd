@@ -1,5 +1,9 @@
-<xar:template type="module" file="admin-menu" />
 <xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recent Task Archive</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
@@ -7,8 +11,7 @@
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-        <th><xar:mlstring>Project</xar:mlstring></th>
-        <th><xar:mlstring>Client</xar:mlstring></th>
+        <th><xar:mlstring>Client / Project</xar:mlstring></th>
         <th><xar:mlstring>Task Name</xar:mlstring></th>
         <th><xar:mlstring>Assigned To</xar:mlstring></th>
         <th><xar:mlstring>Date Completed</xar:mlstring></th>
@@ -24,12 +27,14 @@
         <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
 
-        <tr><td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><xar:data-output type="contactlist" value="$taskinfo['projectinfo']['clientid']" /></xar:if></td>
-        
-            <td class="xar-norm" style="text-align: center;"><xar:if condition="isset($taskinfo['projectinfo']['project_name'])">#$taskinfo['projectinfo']['project_name']#</xar:if></td>
+        <tr>
+            <td class="xar-norm">
+                <xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a></xar:if>
+                <xar:if condition="isset($taskinfo['projectinfo']['project_name'])"><div><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#">#$taskinfo['projectinfo']['project_name']#</a></div></xar:if>
+            </td>
             
             <td class="xar-norm">
-                <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
+                <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
             </td>
                 
             <xar:set name="owner">$taskinfo['owner']</xar:set>

@@ -1,5 +1,14 @@
 <xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="2" itemid="$worklog_objectid" />
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$taskproperties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="uid">xarSessionGetVar('uid')</xar:set>
+<xar:set name="currentdate">date("Y-m-d H:i:s")</xar:set>
+
+<xar:if condition="!isset($hours_remaining)">
+    <xar:set name="hours_remaining">0</xar:set>
+</xar:if>
 
 <div class="xar-mod-body">
     <h2><xar:mlstring>Log Work Performed</xar:mlstring></h2>
@@ -13,18 +22,27 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
                     <td><xar:mlstring>Work Date</xar:mlstring></td>
-                    <td><xar:data-input property="$properties['eventdate']" name="eventdate" /></td>
+                    <td><xar:data-input property="$properties['eventdate']" name="eventdate" value="$currentdate" /></td>
+                </tr>
+                <tr>
+                    <td><xar:mlstring>Performed By</xar:mlstring></td>
+                    <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$uid" /></td>
                 </tr>
                 <tr>
                     <td><xar:mlstring>Hours Worked</xar:mlstring></td>
                     <td><xar:data-input property="$properties['hours']" name="hours" /></td>
                 </tr>
                 <tr>
+                    <td><xar:mlstring>Hours Remaining</xar:mlstring></td>
+                    <td><xar:data-input property="$taskproperties['hours_remaining']" name="hours_remaining" value="$taskinfo['hours_remaining']" />
+                        <input type="checkbox" name="close" value="1" /><strong><xar:mlstring>Close Task?</xar:mlstring></strong></td>
+                </tr>
+                <tr>
                     <td><xar:mlstring>Notes</xar:mlstring></td>
                     <td><xar:data-input property="$properties['notes']" name="notes" /></td>
                 </tr>
                 <tr>
-                    <td colspan=2 align="center"><br /><input type="submit" name="submit" value="Log"></td>
+                    <td colspan="2" align="center"><br /><input type="submit" name="submit" value="Log" /></td>
                 </tr>
             </table>
             

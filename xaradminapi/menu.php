@@ -21,6 +21,7 @@ function xtasks_adminapi_menu()
     /* Specify the menu labels to be used in your blocklayout template
      * Preset some status variable
      */
+     
     $menu['statusmsg'] = '';
      
     return $menu;

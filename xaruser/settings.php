@@ -5,6 +5,7 @@ function xtasks_user_settings()
     $data = xarModAPIFunc('xtasks','admin','menu');
 
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('My Settings')));
+    xarModSetVar('xtasks', 'emailtaskupdates', false);
     xarModSetVar('xtasks', 'show_owner', false);
     xarModSetVar('xtasks', 'show_project', false);
     xarModSetVar('xtasks', 'show_client', false);

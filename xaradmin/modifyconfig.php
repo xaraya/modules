@@ -20,7 +20,7 @@ function xtasks_admin_modifyconfig()
         return;
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey('xtasks');
     
     $data['dateformat'] = xarModGetVar('xtasks', 'dateformat'); // int
     $data['maxdone'] = xarModGetVar('xtasks', 'maxdone');

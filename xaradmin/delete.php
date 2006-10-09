@@ -73,6 +73,18 @@ function xtasks_admin_delete($args)
         }
         xarSessionSetVar('statusmsg', xarML('Task Closed'));
     }
+    
+    if($task['parentid'] > 0) { // must also check if any other open tasks to account for first
+        $alltasksclosed = true;
+        $siblings = xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['parentid']));
+        foreach($siblings as $childtask) {
+            if($childtask['Status'] == "Open") $alltasksclosed = false;
+        }
+        if($alltasksclosed) {
+            xarResponseRedirect(xarModURL('xtasks', 'admin', 'delete', array('taskid' => $task['parentid'])));
+            return true;
+        }
+    }
 
     xarResponseRedirect($returnurl);
 

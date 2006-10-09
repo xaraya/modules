@@ -1,7 +1,8 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
-<xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
 
 <xar:if condition="!$inline">
     <xar:template type="module" file="admin-menu" />
@@ -14,8 +15,7 @@
 <form method="post" action="&xar-modurl-xtasks-admin-create;">
 
 <input type="hidden" name="authid" value="#$authid#" />
-<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
-<input type="hidden" name="ownerid" value="#$ownerid#" />
+
 <input type="hidden" name="returnurl" value="#$returnurl#" />
 
 <xar:if condition="isset($objectid)">

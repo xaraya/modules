@@ -40,7 +40,32 @@ function xtasks_user_mytasks($args)
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     
-    $data['items'] = $items;
+    $tasklist = array();
+    foreach($items as $item) {
+        $taskinfo = $item;
+        $taskinfo['project_name'] = "";
+        $taskinfo['projectinfo'] = array();
+        $taskinfo['project_url'] = "";
+        if($item['projectid'] > 0 && $item['modid'] = xarModGetIDFromName('xproject')) {
+            $projectinfo = xarModAPIFunc('xproject',
+                                  'user',
+                                  'get',
+                                  array('projectid' => $item['projectid'])); 
+                                  
+            if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION && xarCurrentErrorID() == 'ID_NOT_EXIST') {
+                xarErrorHandled();
+            }
+        
+            if ($projectinfo) {
+                $taskinfo['project_name'] = $projectinfo['project_name'];
+                $taskinfo['projectinfo'] = $projectinfo;
+                $taskinfo['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $projectinfo['projectid']));
+            }
+        }
+        $tasklist[] = $taskinfo;
+    }
+    
+    $data['items'] = $tasklist;
     
     $data['show_importance'] = xarModGetUserVar('xtasks', 'show_importance');
     $data['show_priority'] = xarModGetUserVar('xtasks', 'show_priority');

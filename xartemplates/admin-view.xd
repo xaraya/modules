@@ -16,46 +16,46 @@
     </tr>
 
     <xar:loop name="$items">
-    <tr><td class="xar-norm">
-            <xar:if condition="empty($loop:item['link'])">#$loop:item['task_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['task_name']#</a></xar:if>
-        </td>
+        <tr><td class="xar-norm">
+                <xar:if condition="empty($loop:item['link'])">#$loop:item['task_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['task_name']#</a></xar:if>
+            </td>
+            
+            <xar:set name="importance">$loop->item['importance']</xar:set>
+            <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
         
-        <xar:set name="importance">$loop->item['importance']</xar:set>
-        <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
+            <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
+        
+            <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
+        
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
+        
+        </tr>
     
-        <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
-    
-        <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
-    
-        <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
-    
-    </tr>
-
         <xar:set name="date_start_planned">$loop->item['date_start_planned']</xar:set>
         <xar:set name="date_start_actual">$loop->item['date_start_actual']</xar:set>
         <xar:set name="date_end_planned">$loop->item['date_end_planned']</xar:set>
         <xar:set name="date_end_actual">$loop->item['date_end_actual']</xar:set>
-        
-    <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$loop:item['description']#
-    <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
-        <br><xar:mlstring>Planned Timeframe:</xar:mlstring>
-        <xar:if condition="!empty($planned_start_date)">
-            <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></em>
+            
+        <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$loop:item['description']#
+        <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
+            <br /><xar:mlstring>Planned Timeframe:</xar:mlstring>
+            <xar:if condition="!empty($planned_start_date)">
+                <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></em>
+            </xar:if>
+            <xar:if condition="!empty($planned_end_date)">
+                <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></em>
+            </xar:if>
         </xar:if>
-        <xar:if condition="!empty($planned_end_date)">
-            <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></em>
+        <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
+            <br /><xar:mlstring>Actual Timeframe:</xar:mlstring>
+            <xar:if condition="!empty($actual_start_date)">
+                <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></em>
+            </xar:if>
+            <xar:if condition="!empty($planned_end_date)">
+                <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></em>
+            </xar:if>
         </xar:if>
-    </xar:if>
-    <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
-        <br><xar:mlstring>Actual Timeframe:</xar:mlstring>
-        <xar:if condition="!empty($actual_start_date)">
-            <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></em>
-        </xar:if>
-        <xar:if condition="!empty($planned_end_date)">
-            <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></em>
-        </xar:if>
-    </xar:if>
-    </td></tr>
+        </td></tr>
 
     </xar:loop>
 
@@ -70,4 +70,4 @@
 <div class="xar-mod-foot" style="text-align: center;">
 #$pager#
 </div>
-<div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br>Actual priority is a measure of immediate urgency.</em></div>
+<div style="text-align: center;"><em><xar:mlstring>Task importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</xar:mlstring></em></div>

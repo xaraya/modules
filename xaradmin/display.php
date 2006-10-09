@@ -88,6 +88,7 @@ function xtasks_admin_display($args)
 
     $data['projectid'] = "";
     $data['project_name'] = "";
+    $data['projectinfo'] = array();
     $data['project_url'] = "";
     if($item['objectid'] > 0 && $item['modid'] = xarModGetIDFromName('xproject')) {
         $projectinfo = xarModAPIFunc('xproject',
@@ -102,6 +103,7 @@ function xtasks_admin_display($args)
         if ($projectinfo) {
             $data['projectid'] = $projectinfo['projectid'];
             $data['project_name'] = $projectinfo['project_name'];
+            $data['projectinfo'] = $projectinfo;
             $data['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $data['projectid']));
         }
     }

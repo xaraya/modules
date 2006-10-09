@@ -3,8 +3,6 @@
 function xtasks_admin_update($args)
 {
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
-    if (!xarVarFetch('parentid', 'id', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('description', 'html:basic', $description, '', XARVAR_NOT_REQUIRED)) return;
@@ -32,8 +30,6 @@ function xtasks_admin_update($args)
                     'admin',
                     'update',
                     array('taskid'                => $taskid,
-                        'parentid'              => $parentid,
-                        'projectid'             => $projectid,
                         'task_name'             => $task_name,
                         'status'                => $status,
                         'priority'              => $priority,

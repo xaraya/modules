@@ -25,16 +25,18 @@ function xtasks_adminapi_create($args)
                        new SystemException($msg));
         return;
     }
+    
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
 
-    if (!isset($creator) || !is_string($creator)) {
+    if (!isset($creator) || !is_numeric($creator)) {
         $creator = xarSessionGetVar('uid');
     }
 
-    if (!isset($owner) || !is_string($owner)) {
-        $owner = xarModGetUserVar('xproject', 'mymemberid');
+    if (!isset($owner) || !is_numeric($owner)) {
+        $owner = $mymemberid;
     }
 
-    if (!isset($assigner) || !is_string($assigner)) {
+    if (!isset($assigner) || !is_numeric($assigner)) {
         $assigner = xarSessionGetVar('uid');
     }
     
@@ -113,7 +115,21 @@ function xtasks_adminapi_create($args)
 
 
     $taskid = $dbconn->PO_Insert_ID($xtaskstable, 'taskid');
+    
+    if(!empty($owner) && $owner != $mymemberid) {
+        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $owner, 'taskid' => $taskid, 'action' => "CREATE"));
+    }
+    
+    $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $parentid));
+    
+    $parent_hours_remaining = $parentinfo['hours_remaining'] + $hours_remaining;
 
+    xarModAPIFunc('xtasks', 'admin', 'updatehours',
+                array('taskid' => $parentinfo['taskid'],
+                    'hours_planned' => $hours_planned,
+                    'hours_spent' => $hours_spent,
+                    'hours_remaining' => $hours_remaining));
+    
     $item = $args;
     $item['module'] = 'xtasks';
     $item['itemid'] = $taskid;

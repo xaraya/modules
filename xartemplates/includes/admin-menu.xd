@@ -1,29 +1,99 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
 
 <xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('type', 'str::', $currentmodtype, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('func', 'str::', $currentmodfunc, '', XARVAR_NOT_REQUIRED)</xar:set>
 
 <table border="0" width="100%">
     
     <tr><th align="center" colspan="2">#$menutitle#</th></tr>
     <tr>
-        <td width="65" rowspan="2"><img src="modules/xtasks/xarimages/admin.jpg"></td>
+        <td width="65" rowspan="2"><img src="modules/xtasks/xarimages/admin.jpg" /></td>
         <td>
         <table border="0" width="100%"><tr align="center" valign="middle">
 
-            <td width="25%"><a href="&xar-modurl-xtasks-user-main;"><xar:mlstring>xTasks Overview</xar:mlstring></a></td>
-            <td width="25%"><xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xtasks-user-mytasks;"><xar:mlstring>My Tasks</xar:mlstring></a></xar:if></td>
-            <td width="25%"><a href="&xar-modurl-xtasks-user-availabletasks;"><xar:mlstring>Open Tasks</xar:mlstring></a></td>
-            <td width="25%"><a href="&xar-modurl-xtasks-user-settings;"><xar:mlstring>Settings</xar:mlstring></a></td>
+            <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
+                                    and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )">
+                    <strong><xar:mlstring>xTasks Overview</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-user-main;"><xar:mlstring>xTasks Overview</xar:mlstring></a>
+                </xar:if>
+            </td>
+            <td width="25%">
+                <xar:if condition="$mymemberid gt 0">
+                    <xar:if condition="$currentmodname eq 'xtasks' 
+                                        and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
+                                        and  $currentmodfunc eq 'mytasks'">
+                        <strong><xar:mlstring>My Tasks</xar:mlstring></strong>
+                    <xar:else />
+                        <a href="&xar-modurl-xtasks-user-mytasks;"><xar:mlstring>My Tasks</xar:mlstring></a>
+                    </xar:if>
+                </xar:if>
+            </td>
+            <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
+                                    and  $currentmodfunc eq 'availabletasks'">
+                    <strong><xar:mlstring>Open Tasks</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-user-availabletasks;"><xar:mlstring>Open Tasks</xar:mlstring></a>
+                </xar:if>
+            </td>
+            <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
+                                    and  $currentmodfunc eq 'settings'">
+                    <strong><xar:mlstring>Settings</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-user-settings;"><xar:mlstring>Settings</xar:mlstring></a>
+                </xar:if>
+            </td>
         
         </tr></table>
     </td></tr>
     <tr><td>
         <table border="0" width="100%"><tr align="center" valign="middle">
 
-        <td width="25%"><a href="&xar-modurl-xtasks-admin-new;"><xar:mlstring>New Task</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xtasks-user-taskarchive;"><xar:mlstring>Task Archive</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xtasks-worklog-view;"><xar:mlstring>Worklog</xar:mlstring></a></td>
-        <td width="25%"><a href="&xar-modurl-xtasks-admin-modifyconfig;"><xar:mlstring>Module Config</xar:mlstring></a></td>
+        <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and $currentmodtype eq 'admin' 
+                                    and $currentmodfunc eq 'new'">
+                    <strong><xar:mlstring>New Task</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-admin-new;"><xar:mlstring>New Task</xar:mlstring></a>
+                </xar:if>
+            </td>
+        <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
+                                    and $currentmodfunc eq 'taskarchive'">
+                    <strong><xar:mlstring>Task Archive</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-user-taskarchive;"><xar:mlstring>Task Archive</xar:mlstring></a>
+                </xar:if>
+            </td>
+        <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and $currentmodtype eq 'worklog'
+                                    and $currentmodfunc eq 'view'">
+                    <strong><xar:mlstring>Worklog</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-worklog-view;"><xar:mlstring>Worklog</xar:mlstring></a>
+                </xar:if>
+            </td>
+        <td width="25%">
+                <xar:if condition="$currentmodname eq 'xtasks' 
+                                    and $currentmodtype eq 'admin' 
+                                    and $currentmodfunc eq 'modifyconfig'">
+                    <strong><xar:mlstring>Module Config</xar:mlstring></strong>
+                <xar:else />
+                    <a href="&xar-modurl-xtasks-admin-modifyconfig;"><xar:mlstring>Module Config</xar:mlstring></a>
+                </xar:if>
+            </td>
         
         </tr></table>
     </td></tr>

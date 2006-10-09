@@ -18,10 +18,9 @@
  * module given the information passed back by the modification form
  * @author St.Ego
  */
-function xtasks_admin_updateconfig()
+function xtasks_admin_updateconfig($args)
 {
-    if (!xarSecConfirmAuthKey()) return;
-    
+    extract($args);    
 
 //    if (!xarVarFetch('displaydates', 'checkbox', $displaydates, false, XARVAR_NOT_REQUIRED)) return;
 //    if (!xarVarFetch('displayhours', 'checkbox', $displayhours, false, XARVAR_NOT_REQUIRED)) return;
@@ -43,6 +42,9 @@ function xtasks_admin_updateconfig()
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
+    
+    if (!xarSecurityCheck('AdminXProject')) return;
+    if (!xarSecConfirmAuthKey()) return;
 
 //    xarModSetVar('xtasks', 'displaydates', $displaydates);
 //    xarModSetVar('xtasks', 'displayhours', $displayhours);
@@ -88,8 +90,8 @@ function xtasks_admin_updateconfig()
 
     xarModCallHooks('module','updateconfig','xtasks',
                    array('module' => 'xtasks'));
-
-    if (!xarModFunc('dynamicdata','admin','update')) return;
+                   
+    xarSessionSetVar('statusmsg', xarML('xTasks module settings updated.'));
 
     xarResponseRedirect(xarModURL('xtasks', 'admin', 'main'));
 

@@ -2,6 +2,9 @@
 
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="xproject_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$proj_properties" module="xProject" itemtype="1" itemid="$xproject_objectid" />
                                     
 <xar:set name="returnurl">urlencode(xarServerGetCurrentURL())</xar:set>
 
@@ -40,6 +43,12 @@
                         <span style="float:right;">[&nbsp;<xar:if condition="empty($item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
                         </span></td>
                 </tr>
+                <xar:if condition="isset($projectinfo['clientid'])">
+                    <tr valign="top">
+                        <td class="xar-title xar-align-right"><xar:mlstring>Client</xar:mlstring></td>
+                        <td class="xar-norm xar-align-left"><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$proj_properties['clientid']" value="$projectinfo['clientid']" /></a></td>
+                    </tr>
+                </xar:if>
                 <xar:if condition="!empty($project_name)">
                     <tr valign="top">
                         <td class="xar-title xar-align-right"><xar:mlstring>Project</xar:mlstring></td>

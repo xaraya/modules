@@ -92,6 +92,12 @@ function xtasks_userapi_getall($args)
                    a.projectid,
                    a.task_name,
                    a.status,
+                   CASE 
+                        WHEN a.status = 'Active' THEN 1
+                        WHEN a.status = 'R & D' THEN 2
+                        WHEN a.status = 'Draft' THEN 3
+                        WHEN a.status = 'Closed' THEN 999
+                    END AS statusid,
                    a.priority,
                    a.importance,
                    a.description,
@@ -185,24 +191,24 @@ function xtasks_userapi_getall($args)
 
     switch($orderby) {
         case "task_name":
-            $sql .= " ORDER BY a.task_name";
+            $sql .= " ORDER BY statusid, a.task_name";
             break;
         case "importance":
-            $sql .= " ORDER BY a.importance";
+            $sql .= " ORDER BY statusid, a.importance";
             break;
         case "priority":
-            $sql .= " ORDER BY a.priority";
+            $sql .= " ORDER BY statusid, a.priority";
             break;
         case "status":
-            $sql .= " ORDER BY a.status";
+            $sql .= " ORDER BY statusid, a.status";
             break;
         default:
             if(isset($mymemberid)) {
-                $sql .= " ORDER BY a.priority, a.task_name ";
+                $sql .= " ORDER BY statusid, a.priority, a.task_name ";
             } elseif(isset($memberid)) {
-                $sql .= " ORDER BY a.importance, a.task_name ";
+                $sql .= " ORDER BY statusid, a.importance, a.task_name ";
             } else {//if($statusfilter == "Closed") {
-                $sql .= " ORDER BY a.status, a.date_end_actual DESC, a.task_name ";
+                $sql .= " ORDER BY statusid, a.status, a.date_end_actual DESC, a.task_name ";
             }
     }
 /*
@@ -249,6 +255,7 @@ function xtasks_userapi_getall($args)
              $projectid,
              $task_name,
              $status,
+             $statusid,
              $priority,
              $importance,
              $description,

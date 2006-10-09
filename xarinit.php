@@ -597,6 +597,26 @@ function xtasks_upgrade($oldversion)
             $result = $datadict->addColumn($reminders_table, 'warning I(11) NotNull Default 0');
             if(xarCurrentErrorType() == 2) xarErrorFree();
         case '1.6.13':
+        
+            // RELOAD USER SETTINGS
+            $usersettings = xarModGetVar('xtasks','usersettings');
+            if (!empty($usersettings)) {
+//                $test2 = xarModAPIFunc('dynamicdata','user','getobject',array('objectid' => $usersettings));
+                if(xarModAPIFunc('dynamicdata',
+                                'admin',
+                                'deleteobject',
+                                array('objectid' => $usersettings,
+                                    'module' => "Roles",
+                                    'itemtype' => 704))) {
+                    xarModSetVar('xtasks','usersettings', '');
+                }
+            }
+            $usersettings = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xtasks/xardata/usersettings.xml'));
+            if (empty($usersettings)) return;
+            xarModSetVar('xtasks','usersettings',$usersettings);
+        
+        case '1.7':
             break;
 
     }

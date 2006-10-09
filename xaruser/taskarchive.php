@@ -23,31 +23,32 @@ function xtasks_user_taskarchive($args)
                                 'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     
-    for ($i = 0; $i < count($items); $i++) {
-        $item = $items[$i];
-        $items[$i]['link'] = xarModURL('xtasks',
-            'admin',
-            'display',
-            array('taskid' => $item['taskid']));
-        if (xarSecurityCheck('EditXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
-            $items[$i]['editurl'] = xarModURL('xtasks',
-                'admin',
-                'modify',
-                array('taskid' => $item['taskid']));
-        } else {
-            $items[$i]['editurl'] = '';
+    $tasklist = array();
+    foreach($items as $item) {
+        $taskinfo = $item;
+        $taskinfo['project_name'] = "";
+        $taskinfo['projectinfo'] = array();
+        $taskinfo['project_url'] = "";
+        if($item['projectid'] > 0 && $item['modid'] = xarModGetIDFromName('xproject')) {
+            $projectinfo = xarModAPIFunc('xproject',
+                                  'user',
+                                  'get',
+                                  array('projectid' => $item['projectid'])); 
+                                  
+            if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION && xarCurrentErrorID() == 'ID_NOT_EXIST') {
+                xarErrorHandled();
+            }
+        
+            if ($projectinfo) {
+                $taskinfo['project_name'] = $projectinfo['project_name'];
+                $taskinfo['projectinfo'] = $projectinfo;
+                $taskinfo['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $projectinfo['projectid']));
+            }
         }
-        if (xarSecurityCheck('DeleteXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
-            $items[$i]['deleteurl'] = xarModURL('xtasks',
-                'admin',
-                'delete',
-                array('taskid' => $item['taskid']));
-        } else {
-            $items[$i]['deleteurl'] = '';
-        }
+        $tasklist[] = $taskinfo;
     }
     
-    $data['items'] = $items;
+    $data['items'] = $tasklist;
     
     $data['returnurl'] = xarModURL('xtasks', 'user', 'taskarchive', 
                     array('startnum' => '%%',

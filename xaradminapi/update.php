@@ -55,9 +55,7 @@ function xtasks_adminapi_update($args)
     $xtasktable = $xartable['xtasks'];
 
     $query = "UPDATE $xtasktable
-            SET parentid = ?,
-                  projectid = ?,
-                  task_name = ?,
+            SET task_name = ?,
                   status = ?,
                   priority = ?,
                   importance = ?,
@@ -78,8 +76,6 @@ function xtasks_adminapi_update($args)
             WHERE taskid = ?";
 
     $bindvars = array(
-                    $parentid ? $parentid : 0,
-                    $projectid ? $projectid : 0,
                     $task_name,
                     $status,
                     $priority,
@@ -107,6 +103,11 @@ function xtasks_adminapi_update($args)
     $item['itemid'] = $taskid;
     $item['name'] = $task_name;
     xarModCallHooks('item', 'update', $taskid, $item);
+    
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+    if(!empty($item['owner']) && $item['owner'] != $mymemberid) {
+        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $item['owner'], 'taskid' => $taskid, 'action' => "UPDATE"));
+    }
 
     return true;
 }

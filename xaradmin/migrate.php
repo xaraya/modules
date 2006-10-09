@@ -25,7 +25,7 @@ function xtasks_admin_migrate($args)
                                     'submit'         => $submit,
                                     'taskfocus'        => $taskfocus))) {
 
-        xarSessionSetVar('statusmsg', xarML('Project(s) Migrated'));
+        xarSessionSetVar('statusmsg', xarML('Tasks(s) Migrated'));
     }
 
     xarResponseRedirect(xarModURL('xtasks',
