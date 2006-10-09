@@ -18,7 +18,6 @@
                   <xar:mlstring>Show ITSPs of status</xar:mlstring>
              </label>
 
-
             <select name="statusselect" id="statusselect" onchange="this.form.submit();">
                 <xar:if condition="empty($statusselect)">
                     <option value="" selected="selected">
@@ -45,7 +44,6 @@
         </div>
     </form>
 
-
     <table>
         <tr>
             <th><xar:mlstring>ITSP Status</xar:mlstring></th>
@@ -69,7 +67,6 @@
             </td>
         </tr>
         </xar:foreach>
-
     </table>
 
     <div class="xar-align-center xar-padding-thick">

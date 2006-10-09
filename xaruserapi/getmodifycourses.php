@@ -43,12 +43,16 @@ function itsp_userapi_getmodifycourses($args)
         return;
     }
     $data = array();
+    $data['lcourses'] = array();
     // get the pitem details for this itsp
     // get all linked courses that already have been added to the ITSP for this pitemid
     $courselinks = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid, 'pitemid' => $pitemid));
     // for each linked course get the details
-    if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
+   // if (!isset($courselinks) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (count($courselinks) == 0) {
+        $data['creditsnow'] = 0;
+        return $data;
+    }
     $creditsnow = 0;
     foreach ($courselinks as $lcourse) {
         // Add read link
@@ -82,8 +86,9 @@ function itsp_userapi_getmodifycourses($args)
         }
         /* Add this item to the list of items to be returned */
         $data['lcourses'][] = $lcourse;
-        $data['creditsnow'] = $creditsnow;
+
     }
+    $data['creditsnow'] = $creditsnow;
     /* Return the item array */
     return $data;
 }

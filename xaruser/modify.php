@@ -108,8 +108,13 @@ function itsp_user_modify($args)
                                                           'pitemid' => $pitemid,
                                                           'planid'  => $planid,
                                                           'userid'  => $userid));
-                $creditsnow = $lcourses['creditsnow'];
-                $data['lcourses'] = $lcourses['lcourses'];
+                if (count($lcourses) >0) {
+                    $creditsnow = $lcourses['creditsnow'];
+                    $data['lcourses'] = $lcourses['lcourses'];
+                } else {
+                    $creditsnow = 0;
+                    $data['lcourses'] = array();
+                }
                 break;
             // The default will pull all linked courses. These can hold any type of courses
             // The source here is the template name that will be used.
