@@ -1,6 +1,6 @@
 <?php
 
-function teamsort($a, $b) 
+function teamsort($a, $b)
 {
     if ($a['membername'] == $b['membername']) {
         return 0;

@@ -27,6 +27,9 @@ function xproject_admin_create($args)
     if (!xarVarFetch('priority', 'int:1:', $priority, $priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('thumbnail', 'str::', $thumbnail, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('previewimage', 'str::', $previewimage, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('previewurl', 'str::', $previewurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('date_approved', 'str::', $date_approved, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planned_start_date', 'str::', $planned_start_date, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planned_end_date', 'str::', $planned_end_date, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -36,6 +39,7 @@ function xproject_admin_create($args)
     if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('estimate', 'str::', $estimate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('probability', 'str::', $probability, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('budget', 'str::', $budget, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
@@ -45,27 +49,31 @@ function xproject_admin_create($args)
     $projectid = xarModAPIFunc('xproject',
                         'admin',
                         'create',
-                        array('project_name'     => $project_name,
+                        array('project_name'    => $project_name,
                             'reference'         => $reference,
-                            'private'            => $private,
-                            'description'        => $description,
-                            'clientid'            => $clientid,
-                            'ownerid'            => $ownerid,
+                            'private'           => $private,
+                            'description'       => $description,
+                            'clientid'          => $clientid,
+                            'ownerid'           => $ownerid,
                             'status'            => $status,
-                            'priority'            => $priority,
+                            'priority'          => $priority,
                             'importance'        => $importance,
-                            'projecttype'        => $projecttype,
-                            'date_approved'        => $date_approved,
+                            'projecttype'       => $projecttype,
+                            'thumbnail'         => $thumbnail,
+                            'previewimage'      => $previewimage,
+                            'previewurl'        => $previewurl,
+                            'date_approved'     => $date_approved,
                             'planned_start_date'=> $planned_start_date,
-                            'planned_end_date'    => $planned_end_date,
+                            'planned_end_date'  => $planned_end_date,
                             'actual_start_date' => $actual_start_date,
-                            'actual_end_date'    => $actual_end_date,
+                            'actual_end_date'   => $actual_end_date,
                             'hours_planned'     => $hours_planned,
-                            'hours_spent'        => $hours_spent,
-                            'hours_remaining'    => $hours_remaining,
-                            'estimate'            => $estimate,
+                            'hours_spent'       => $hours_spent,
+                            'hours_remaining'   => $hours_remaining,
+                            'estimate'          => $estimate,
+                            'probability'       => $probability,
                             'budget'            => $budget,
-                            'associated_sites'    => $associated_sites));
+                            'associated_sites'  => $associated_sites));
 
 
     if (!isset($projectid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;

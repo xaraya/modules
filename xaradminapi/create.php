@@ -56,6 +56,9 @@ function xproject_adminapi_create($args)
                   priority,
                   importance,
                   projecttype,
+                  thumbnail,
+                  previewimage,
+                  previewurl,
                   date_approved,
                   planned_start_date,
                   planned_end_date,
@@ -65,9 +68,10 @@ function xproject_adminapi_create($args)
                   hours_spent,
                   hours_remaining,
                   estimate,
+                  probability,
                   budget,
                   associated_sites)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
@@ -81,6 +85,9 @@ function xproject_adminapi_create($args)
               $priority,
               $importance,
               $projecttype,
+              $thumbnail,
+              $previewimage,
+              $previewurl,
               $date_approved ? $date_approved : NULL,
               $planned_start_date ? $planned_start_date : NULL,
               $planned_end_date ? $planned_end_date : NULL,
@@ -90,6 +97,7 @@ function xproject_adminapi_create($args)
               $hours_spent,
               $hours_remaining,
               $estimate,
+              $probability,
               $budget,
               $associated_sites ? $associated_sites : "");
 

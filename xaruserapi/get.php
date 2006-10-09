@@ -28,6 +28,9 @@ function xproject_userapi_get($args)
                   priority,
                   importance,
                   projecttype,
+                  thumbnail,
+                  previewimage,
+                  previewurl,
                   date_approved,
                   planned_start_date,
                   planned_end_date,
@@ -37,6 +40,7 @@ function xproject_userapi_get($args)
                   hours_spent,
                   hours_remaining,
                   estimate,
+                  probability,
                   budget,
                   associated_sites
             FROM $xprojecttable
@@ -64,6 +68,9 @@ function xproject_userapi_get($args)
           $priority,
           $importance,
           $projecttype,
+          $thumbnail,
+          $previewimage,
+          $previewurl,
           $date_approved,
           $planned_start_date,
           $planned_end_date,
@@ -73,6 +80,7 @@ function xproject_userapi_get($args)
           $hours_spent,
           $hours_remaining,
           $estimate,
+          $probability,
           $budget,
           $associated_sites) = $result->fields;
 
@@ -96,6 +104,9 @@ function xproject_userapi_get($args)
                   'priority'            => $priority,
                   'importance'          => $importance,
                   'projecttype'         => $projecttype,
+                  'thumbnail'           => $thumbnail,
+                  'previewimage'        => $previewimage,
+                  'previewurl'          => $previewurl,
                   'date_approved'       => $date_approved == "0000-00-00" ? NULL : $date_approved,
                   'planned_start_date'  => $planned_start_date == "0000-00-00" ? NULL : $planned_start_date,
                   'planned_end_date'    => $planned_end_date == "0000-00-00" ? NULL : $planned_end_date,
@@ -105,6 +116,7 @@ function xproject_userapi_get($args)
                   'hours_spent'         => $hours_spent,
                   'hours_remaining'     => $hours_remaining,
                   'estimate'            => sprintf("%.2f", $estimate),
+                  'probability'         => $probability,
                   'budget'              => sprintf("%.2f", $budget),
                   'associated_sites'    => $associated_sites);
 

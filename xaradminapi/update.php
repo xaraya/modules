@@ -61,7 +61,7 @@ function xproject_adminapi_update($args)
     $xprojecttable = $xartable['xProjects'];
 
     $query = "UPDATE $xprojecttable
-            SET project_name =?,
+              SET project_name =?,
                   reference =?,
                   private = ?,
                   description = ?,
@@ -71,6 +71,9 @@ function xproject_adminapi_update($args)
                   priority = ?,
                   importance = ?,
                   projecttype = ?,
+                  thumbnail = ?,
+                  previewimage = ?,
+                  previewurl = ?,
                   date_approved = ?,
                   planned_start_date = ?,
                   planned_end_date = ?,
@@ -80,6 +83,7 @@ function xproject_adminapi_update($args)
                   hours_spent = ?,
                   hours_remaining = ?,
                   estimate = ?,
+                  probability = ?,
                   budget = ?,
                   associated_sites = ?
             WHERE projectid = ?";
@@ -95,6 +99,9 @@ function xproject_adminapi_update($args)
               $priority,
               $importance,
               $projecttype,
+              $thumbnail,
+              $previewimage,
+              $previewurl,
               $date_approved ? $date_approved : NULL,
               $planned_start_date ? $planned_start_date : NULL,
               $planned_end_date ? $planned_end_date : NULL,
@@ -104,6 +111,7 @@ function xproject_adminapi_update($args)
               $hours_spent,
               $hours_remaining,
               $estimate,
+              $probability,
               $budget,
               $associated_sites,
               $projectid);

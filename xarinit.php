@@ -35,6 +35,9 @@ function xproject_init()
                                 'priority'          =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'private'           =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
                                 'projecttype'       =>  array('type'=>'char','size'=>64,'null'=>FALSE,'default'=>''),
+                                'thumbnail'         =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
+                                'previewimage'      =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
+                                'previewurl'        =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
                                 'date_approved'     =>  array('type'=>'date','null'=>TRUE),
                                 'planned_start_date'=>  array('type'=>'date','null'=>TRUE),
                                 'planned_end_date'  =>  array('type'=>'date','null'=>TRUE),
@@ -45,6 +48,7 @@ function xproject_init()
                                 'hours_remaining'   =>  array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
                                 'budget'            =>  array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2),
                                 'estimate'          =>  array('type'=>'float', 'size' =>'decimal', 'width'=>12, 'decimals'=>2),
+                                'probability'       =>  array('type'=>'integer', 'size' =>2,'null'=>FALSE,'default'=>'0'),
                                 'associated_sites'  =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>'') );
     $query = xarDBCreateTable($xProjects_table,$xProjects_fields);
     if (empty($query)) return;
@@ -562,6 +566,28 @@ function xproject_upgrade($oldversion)
             xarModSetVar('xproject','team_objectid',$team_objectid);
 
         case '3.3':
+            
+            // UPDATE PROJECTS SCHEMA
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+            
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->addColumn($projects_table, 'thumbnail C(255) NotNull');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'previewimage C(255) NotNull');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'previewurl C(255) NotNull');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'probability I NotNull Default 0');
+            if (!$result) return;
+            
+        case '3.4':
             break;
 
     }

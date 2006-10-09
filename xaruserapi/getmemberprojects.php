@@ -81,6 +81,9 @@ function xproject_userapi_getmemberprojects($args)
                   a.priority,
                   a.importance,
                   a.projecttype,
+                  a.thumbnail,
+                  a.previewimage,
+                  a.previewurl,
                   a.date_approved,
                   a.planned_start_date,
                   a.planned_end_date,
@@ -90,6 +93,7 @@ function xproject_userapi_getmemberprojects($args)
                   a.hours_spent,
                   a.hours_remaining,
                   a.estimate,
+                  a.probability,
                   a.budget,
                   a.associated_sites
             FROM $xprojecttable a, $teamtable b
@@ -144,6 +148,9 @@ function xproject_userapi_getmemberprojects($args)
               $priority,
               $importance,
               $projecttype,
+              $thumbnail,
+              $previewimage,
+              $previewurl,
               $date_approved,
               $planned_start_date,
               $planned_end_date,
@@ -153,6 +160,7 @@ function xproject_userapi_getmemberprojects($args)
               $hours_spent,
               $hours_remaining,
               $estimate,
+              $probability,
               $budget,
               $associated_sites) = $result->fields;
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
@@ -167,6 +175,9 @@ function xproject_userapi_getmemberprojects($args)
                               'priority'            => $priority,
                               'importance'          => $importance,
                               'projecttype'         => $projecttype,
+                              'thumbnail'           => $thumbnail,
+                              'previewimage'        => $previewimage,
+                              'previewurl'          => $previewurl,
                               'date_approved'       => $date_approved == "0000-00-00" ? NULL : $date_approved,
                               'planned_start_date'  => $planned_start_date == "0000-00-00" ? NULL : $planned_start_date,
                               'planned_end_date'    => $planned_end_date == "0000-00-00" ? NULL : $planned_end_date,
@@ -175,8 +186,9 @@ function xproject_userapi_getmemberprojects($args)
                               'hours_planned'       => $hours_planned,
                               'hours_spent'         => $hours_spent,
                               'hours_remaining'     => $hours_remaining,
-                              'estimate'            => $estimate,
-                              'budget'              => $budget,
+                              'estimate'            => sprintf("%.2f", $estimate),
+                              'probability'         => $probability,
+                              'budget'              => sprintf("%.2f", $budget),
                               'associated_sites'    => $associated_sites);
         }
     }

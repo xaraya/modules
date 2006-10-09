@@ -14,6 +14,18 @@
 <input type="hidden" name="projectid" value="#$item.projectid#" />
 <input type="hidden" name="clientid" value="#$item.clientid#" />
 
+<xar:comment>Update must cache any quick-change fields that can be changed in another GUI for comparison.</xar:comment>
+<input type="hidden" name="cached_status" value="#$item.status#" />
+<input type="hidden" name="cached_private" value="#$item.private#" />
+<input type="hidden" name="cached_priority" value="#$item.priority#" />
+<input type="hidden" name="cached_importance" value="#$item.importance#" />
+<input type="hidden" name="cached_date_approved" value="#$item.date_approved#" />
+<input type="hidden" name="cached_planned_end_date" value="#$item.planned_end_date#" />
+<input type="hidden" name="cached_actual_end_date" value="#$item.actual_end_date#" />
+<input type="hidden" name="cached_hours_planned" value="#$item.hours_planned#" />
+<input type="hidden" name="cached_hours_spent" value="#$item.hours_spent#" />
+<input type="hidden" name="cached_hours_remaining" value="#$item.hours_remaining#" />
+
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <td><xar:data-label property="$properties['project_name']" /></td>
