@@ -35,6 +35,14 @@
 </xar:if>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
+
+    <xar:if condition="!$inline and !empty($projectinfo.project_name)">
+        <tr>
+            <td><xar:mlstring>Project</xar:mlstring></td>
+            <td><strong>#$projectinfo.project_name#</strong></td>
+        </tr>
+    </xar:if>
+
     <tr>
         <td><xar:data-label property="$properties['task_name']" /></td>
         <td><xar:data-input property="$properties['task_name']" name="task_name" /></td>

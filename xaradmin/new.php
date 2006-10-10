@@ -33,7 +33,14 @@ function xtasks_admin_new($args)
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;
-    $data['projectid'] = 0;
+    $data['projectid'] = $projectid;
+    
+    if($projectid > 0) {
+        $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
+    } else {
+        $projectinfo = array();
+    }
+    $data['projectinfo'] = $projectinfo;
     
     $data['parentid'] = 0;
     $data['priority'] = 5;

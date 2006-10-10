@@ -11,6 +11,7 @@ function xtasks_worklog_create($args)
     if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('close', 'str::', $close, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
                                             
     if (!xarSecConfirmAuthKey()) return;
 
@@ -47,8 +48,12 @@ function xtasks_worklog_create($args)
             }
         }
     }
+    
+    if(empty($returnurl)) {
+        $returnurl = xarModURL('xtasks', 'admin', 'display', array('taskid' => $taskid, 'mode' => "worklog"));
+    }
 
-    xarResponseRedirect(xarModURL('xtasks', 'admin', 'display', array('taskid' => $taskid, 'mode' => "worklog")));
+    xarResponseRedirect($returnurl);
 
     return true;
 }

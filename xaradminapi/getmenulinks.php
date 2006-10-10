@@ -40,6 +40,11 @@ function xtasks_adminapi_getmenulinks()
 
     if (xarSecurityCheck('AddXTask', 0)) {
         $menulinks[] = Array('url'   => xarModURL('xtasks',
+                                                   'user',
+                                                   'quick'),
+                              'title' => xarML('Quick Project Task Hours'),
+                              'label' => xarML('Quick Form'));
+        $menulinks[] = Array('url'   => xarModURL('xtasks',
                                                    'admin',
                                                    'new'),
                               'title' => xarML('Create a new project'),
