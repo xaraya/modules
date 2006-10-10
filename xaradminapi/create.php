@@ -120,16 +120,18 @@ function xtasks_adminapi_create($args)
         xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $owner, 'taskid' => $taskid, 'action' => "CREATE"));
     }
     
-    $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $parentid));
-    
-    $parent_hours_remaining = $parentinfo['hours_remaining'] + $hours_remaining;
-
-    xarModAPIFunc('xtasks', 'admin', 'updatehours',
-                array('taskid' => $parentinfo['taskid'],
-                    'hours_planned' => $hours_planned,
-                    'hours_spent' => $hours_spent,
-                    'hours_remaining' => $hours_remaining));
-    
+    if($parentid > 0) {
+        $parentinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $parentid));
+        
+        $parent_hours_remaining = $parentinfo['hours_remaining'] + $hours_remaining;
+        
+        xarModAPIFunc('xtasks', 'admin', 'updatehours',
+                    array('taskid' => $parentinfo['taskid'],
+                        'hours_planned' => $hours_planned,
+                        'hours_spent' => $hours_spent,
+                        'hours_remaining' => $hours_remaining));
+    }
+        
     $item = $args;
     $item['module'] = 'xtasks';
     $item['itemid'] = $taskid;

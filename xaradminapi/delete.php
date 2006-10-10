@@ -48,6 +48,11 @@ function xtasks_adminapi_delete($args)
                        new SystemException($msg));
         return;
     }
+    
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+    if(!empty($taskinfo['owner'])) {
+        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
+    }
 
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -64,11 +69,6 @@ function xtasks_adminapi_delete($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
-    }
-    
-    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
-    if(!empty($taskinfo['owner'])) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
     }
 
     $item['module'] = 'xtasks';
