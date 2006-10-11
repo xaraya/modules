@@ -59,8 +59,8 @@ function headlines_adminapi_import($args)
         $article             = array();
         $article['title']    = $import['title'];
         $article['summary']  = $import['description'];
-        $article['body']     = $import['link'];
-        $sourcelink       = array('link' => $imports['chanlink'], 'title' => $imports['chantitle']);
+        $article['body']     = $imports['chanlink'];
+        $sourcelink       = array('link' => $import['link'], 'title' => $imports['chantitle']);
         $article['notes'] = serialize($sourcelink);
         $article['aid']      = 0;
         $article['ptid']     = $importpubtype;
