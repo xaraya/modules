@@ -19,11 +19,11 @@
  * @param string $args['title'] title of article to get, and optional
  * @param string $args['summary'] summary of article to get, and optional
  * @param string $args['body'] body of article to get, and optional
- * @param int $args['authorid'] notes of article to get, and optional
+ * @param int $args['authorid'] id of the author of article to get, and optional
  * @param $args['pubdate'] pubdate of article to get, and optional
- * @param $args['notes'] notes of article to get, and optional
- * @param $args['status'] status of article to get, and optional
- * @param $args['language'] language of article to get
+ * @param string $args['notes'] notes of article to get, and optional
+ * @param int $args['status'] status of article to get, and optional
+ * @param string $args['language'] language of article to get
  * @param bool $args['withcids'] (optional) if we want the cids too (default false)
 // TODO
  * @param array $args['fields'] array with all the fields to return per article
