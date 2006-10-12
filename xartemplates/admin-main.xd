@@ -70,11 +70,11 @@
       <ol>
           <li><xar:mlstring><strong>Title</strong>: textbox - used to hold the imported headline title and link to the original feed item and source.</xar:mlstring></li>
           <li><xar:mlstring><strong>Summary</strong>: textarea - used to hold the imported summary of the headline item.</xar:mlstring></li>
-          <li><xar:mlstring><strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline item.
+          <li><xar:mlstring><strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline feed source site.
               You will need to custom format this field as required for display in your pubtype display and summary template.</xar:mlstring></li>
           <li><xar:mlstring><strong>Notes</strong>: URL/Title property. By changing this to a URL/Title property it will automatically display the feed source and feed title as a
               clickable link on display of your imported headline item. However, you can format this as you need in your template. The content is imported and stored as a serialized array containing
-              the URL of the feedsource and the title of your headline feed source (not the headline item).
+              the URL of the feedsource and the title of your headline feed source (not the item headline title).
           </xar:mlstring></li>
       </ol>
       <p><xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline fields.</xar:mlstring></p>
