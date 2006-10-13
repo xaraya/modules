@@ -1,6 +1,23 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:if condition="count($options) gt 0">
-    <select name="#$fieldname#" >
+
+<xar:if condition="empty($size)">
+    <xar:set name="size">1</xar:set>
+    <xar:if condition="empty($multiple)">
+        <xar:set name="size">5</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:set name="arraypos">strpos($fieldname, "[]")</xar:set>
+<xar:set name="fieldname_id">$fieldname</xar:set>
+<xar:if condition="$arraypos gt 0">
+    <xar:set name="fieldname_id">substr($fieldname, 0, $arraypos)</xar:set>
+</xar:if>
+
+<xar:if condition="count($options) gt 1 OR (count($options) gt 0 AND $size gt 1 AND $multiple)">
+    <select name="#$fieldname#" id="#$fieldname_id#" size="#$size#" >
+        <xar:if condition="$size eq 1">
+            <option value="">Select a contact...</option>
+        </xar:if>
         <xar:foreach in="$options" value="$option" >
             <xar:if condition="empty($option['id']) or $option['id'] ne $option['displayName']">
                 <xar:if condition="$option['id'] eq $value" >
@@ -9,12 +26,17 @@
                     <option value="#$option['id']#">#$option['displayName']#</option>
                 </xar:if>
             <xar:elseif condition="$option['id'] eq $value" />
-                <option selected="selected">#$option['displayName']#</option>
+                <option value="#$option['id']#" selected="selected">#$option['displayName']#</option>
             <xar:else />
-                <option>#$option['name']#</option>
+                <option value="#$option['id']#">#$option['name']#</option>
             </xar:if>
         </xar:foreach>
     </select>
+<xar:elseif condition="count($options) gt 0" />
+    <xar:foreach in="$options" value="$option" >
+        <strong>#$option['displayName']#</strong>
+        <input type="hidden" name="#$fieldname#" value="#$option['id']#" />
+    </xar:foreach>
 <xar:elseif condition="!empty($company)" />
     No Contacts found for this company.
 <xar:else />

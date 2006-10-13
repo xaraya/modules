@@ -149,6 +149,23 @@ function addressbook_user_viewdetail()
 
     $output['goBack'] = xarML('Back to list');
 
+    $hooks = xarModCallHooks('item',
+                             'display',
+                             $output['id'],
+                             array('module'    => 'addressbook',
+                                   'returnurl' => xarModURL('addressbook',
+                                                           'user',
+                                                           'viewdetail',
+                                                           array('id' => $output['id']))
+                                  ),
+                            'addressbook');
+                            
+    if (empty($hooks)) {
+        $output['hooks'] = array();
+    } else {
+        $output['hooks'] = $hooks;
+    }
+
     return xarModAPIFunc('addressbook','util','handleexception',array('output'=>$output));
 
 } // END viewdetail

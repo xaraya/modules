@@ -55,15 +55,26 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         } else {
             $data['value'] = $value;
         }
+
+        $data['size'] = !empty($size) ? $size : 1;
+
+        $data['multiple'] = !empty($multiple) ? $multiple : "";
         
         if(!xarModAPILoad('addressbook', 'user')) return;
+        
         // get the option corresponding to this value
-        if($data['value'] > 0) {
+        if(strstr($data['value'], ",")) {
+            // no default selected, remove all options from list instead
+            $data['displayName'] = "";
+//            $data['valueexplodelist'] = $data['value'];
+//            $data['valueexplodelist'] = substr($data['value'], 0, 1) == "," ? substr($data['value'], 1) : $data['value'];
+        } elseif($data['value'] > 0) {
             $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $data['value']));
         
             $displayName = '';
-            $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
-    
+            if(!empty($item['company'])) {
+                $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
+            }
             if ((!empty($item['fname']) && !empty($item['lname'])) ||
                 (!empty($item['fname']) || !empty($item['lname']))) {
                 if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
@@ -91,10 +102,11 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
             $data['company'] = $item['company'];
         }
         if (!isset($options) || count($options) == 0) {
-            $data['options'] = xarModAPIFunc('addressbook', 'user', 'getcompanies', array('company' => $data['company']));
-            array_shift($data['options']);
-            $instructions = array('id'=>'0','name'=>xarML('Select a company...'));
-            array_unshift($data['options'], $instructions);
+            $optionlist = xarModAPIFunc('addressbook', 'user', 'getcompanies', array('company' => $data['company']));
+            array_shift($optionlist);
+            $data['options'] = $optionlist;
+//            $instructions = array('id'=>'0','name'=>xarML('Select a company...'));
+//            array_unshift($data['options'], $instructions);
         } else {
             $data['options'] = $options;
         }
@@ -121,11 +133,18 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         } else {
             $data['id']= $id;
         }
-
+        
         $data['tabindex'] =!empty($tabindex) ? $tabindex : 0;
         $data['invalid']  =!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
         if(!empty($data['company'])) {
-            $data['contactselect'] = xarModFunc('addressbook', 'user', 'select', array('company' => $data['company'], 'fieldname' => $data['name'], 'fieldid' => $data['id'], 'value' => $data['value']));
+            $data['contactselect'] = xarModFunc('addressbook', 
+                                                'user', 
+                                                'select', 
+                                                array('company' => $data['company'], 
+                                                    'fieldname' => $data['name'], 
+                                                    'fieldid' => $data['id'],
+                                                    'value' => $data['value'], 
+                                                    'size' => $data['size']));
         } else {
             $data['contactselect'] = "";
         }
@@ -144,7 +163,9 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         // get the option corresponding to this value
         $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
         $displayName = '';
-        $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
+        if(!empty($item['company'])) {
+            $displayName .= xarVarPrepHTMLDisplay($item['company'])." - ";
+        }
 
         if ((!empty($item['fname']) && !empty($item['lname'])) ||
             (!empty($item['fname']) || !empty($item['lname']))) {

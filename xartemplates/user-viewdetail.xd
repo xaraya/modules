@@ -150,12 +150,18 @@
 <!-- BUTTONS -->
   <div style="padding:1em; text-align:center;">
     <form name="navForm" method="post" action="">
-<xar:if condition="isset($clip)">
-      <input type="button" value="#$copy2clipboard#" onclick="javascript:window.clipboardData.setData('Text','#$clip#');" />&nbsp;&nbsp;
-</xar:if>
+    <xar:if condition="isset($clip)">
+          <input type="button" value="#$copy2clipboard#" onclick="javascript:window.clipboardData.setData('Text','#$clip#');" />&nbsp;&nbsp;
+    </xar:if>
       <input type="button" value="#$goBack#" onclick="javascript:history.go(-1);" />
     </form>
     </div>
+    
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+            <div>#$hooks[$hookmodule]#</div>
+        </xar:foreach>
+    </xar:if>
 
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

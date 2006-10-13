@@ -1,5 +1,5 @@
 
-function loadcontacts(basefieldname,basefieldid) {
+function loadcontacts(basefieldname,basefieldid,size) {
     selectfield = document.getElementById('companyselect_'+basefieldid);
     selecturl = "index.php?module=addressbook&func=select";
 
@@ -9,5 +9,11 @@ function loadcontacts(basefieldname,basefieldid) {
         company = selectfield.options[selectfield.selectedIndex].text;
     }
     
-    return loadContent(selecturl + '&amp;company=' + company + '&amp;fieldname='+basefieldname+'&amp;fieldid='+basefieldid, 'contactselect_'+basefieldid);
+    multiplefield = document.getElementById('multiple');
+    multiple = multiplefield.value;
+    
+    if(size == false) size=1;
+//    else size=5;
+    
+    return loadContent(selecturl + '&amp;company=' + company + '&amp;fieldname='+basefieldname+'&amp;fieldid='+basefieldid+'&amp;size='+size+'&amp;multiple='+multiple, 'contactselect_'+basefieldid);
 }
