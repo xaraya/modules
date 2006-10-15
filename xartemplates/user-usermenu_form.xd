@@ -2,7 +2,7 @@
 <div class="xar-mod-body">
     <h2>
         <xar:mlstring>
-            Courses Module User Configuration
+            Courses Configuration
         </xar:mlstring>
     </h2>
 
@@ -43,6 +43,8 @@
             </tr>
             </xar:foreach>
         </table>
+    <xar:else />
+        <strong><xar:mlstring>You are not enrolled in any course</xar:mlstring></strong>
     </xar:if>
     <br />
     <xar:if condition="!empty($data1['titems'])">
@@ -76,7 +78,7 @@
 
     <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
     --
-    <label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>
+    <label for="itemsperpage"><xar:mlstring>Courses to show on one page</xar:mlstring></label>
 
     <input type="submit" value="#xarML('Modify')#"  tabindex="2" />
     </form>
