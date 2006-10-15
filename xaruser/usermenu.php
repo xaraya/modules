@@ -12,7 +12,7 @@
  * @author Courses development team.
  */
 /**
- * display the user menu hook
+ * Display the user menu hook
  *
  * This is a standard function to provide a link in the "Your Account Page".
  * It shows the courses the current role in enrolled in, teaches in or is a coordinator for.
@@ -35,6 +35,7 @@ function courses_user_usermenu($args)
     // Now we need to get the course information that the user is enrolled in so we can
     // pass the information to the template
     $data = array();
+    $uid = xarUserGetVar('uid');
     switch (strtolower($phase)) {
         case 'menu':
             // We need to define the icon that will go into the page.
@@ -50,7 +51,6 @@ function courses_user_usermenu($args)
             // Its good practice for the user menu to be personalized.  In order to do so, we
             // need to get some information about the user.
             $uname = xarUserGetVar('name');
-            $uid = xarUserGetVar('uid');
             $data1 = array();
             $data['items'] = array();
         //    $data['pager'] = '';
@@ -92,41 +92,76 @@ function courses_user_usermenu($args)
                     $data1['items'][] = $item;
                  }
              }
-             $titems = array();
+            $titems = array();
             // Get all teaching activities
             $titems = xarModAPIFunc('courses',
                  'user',
                  'getall_teaching',
                  array('startnum' => $startnum,
-                       'numitems' => xarModGetUserVar('courses',
-                       'itemsperpage', $uid)));
+                       'numitems' => xarModGetUserVar('courses','itemsperpage', $uid),
+                       'uid' => $uid));
             //       if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
             if (count($titems > 0)) {
              // Transform display
              // TODO define SecCheck
-             foreach ($titems as $item) {
-                if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
-                    $item['tlink'] = xarModURL('courses',
-                        'user',
-                        'displayplanned',
-                        array('planningid' => $item['planningid']));
-                    // Security check 2 - else only display the item name (or whatever is
-                    // appropriate for your module)
-                } else {
-                    $item['tlink'] = '';
-                }
-                // Clean up the item text before display
-                $item['tname'] = xarVarPrepForDisplay($item['name']);
-                $item['tcourseid'] = $item['courseid'];
-                $item['tplanningid'] = $item['planningid'];
-                $item['tstartdate'] = xarVarPrepForDisplay($item['startdate']);
-                //$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
-                //                      array('status' => $item['studstatus']));
+                 foreach ($titems as $item) {
+                    if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
+                        $item['tlink'] = xarModURL('courses',
+                            'user',
+                            'displayplanned',
+                            array('planningid' => $item['planningid']));
+                        // Security check 2 - else only display the item name (or whatever is
+                        // appropriate for your module)
+                    } else {
+                        $item['tlink'] = '';
+                    }
+                    // Clean up the item text before display
+                    $item['tname'] = xarVarPrepForDisplay($item['name']);
+                    $item['tcourseid'] = $item['courseid'];
+                    $item['tplanningid'] = $item['planningid'];
+                    $item['tstartdate'] = xarVarPrepForDisplay($item['startdate']);
+                    //$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
+                    //                      array('status' => $item['studstatus']));
 
-                // Add this item to the list of items to be displayed
-                $data1['titems'][] = $item;
-             }
+                    // Add this item to the list of items to be displayed
+                    $data1['titems'][] = $item;
+                 }
             }
+            // Get all coordination activities
+            $citems = xarModAPIFunc('courses',
+                 'user',
+                 'getall_contacts',
+                 array('startnum' => $startnum,
+                       'numitems' => xarModGetUserVar('courses','itemsperpage', $uid),
+                       'uid'      => $uid
+                       ));
+
+            if (count($citems > 0)) {
+             // Transform display
+             // TODO define SecCheck
+                 foreach ($citems as $item) {
+                    if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
+                        $item['clink'] = xarModURL('courses',
+                            'user',
+                            'display',
+                            array('courseid' => $item['courseid']));
+                        // Security check 2 - else only display the item name (or whatever is
+                        // appropriate for your module)
+                    } else {
+                        $item['clink'] = '';
+                    }
+                    // Clean up the item text before display
+                    $item['cname'] = xarVarPrepForDisplay($item['name']);
+                    $item['ccourseid'] = $item['courseid'];
+                    //$item['tstatusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
+                    //                      array('status' => $item['studstatus']));
+
+                    // Add this item to the list of items to be displayed
+                    $data1['citems'][] = $item;
+                 }
+            }
+
+
             // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
             $authid = xarSecGenAuthKey('courses');

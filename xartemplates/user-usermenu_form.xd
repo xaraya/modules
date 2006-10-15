@@ -6,13 +6,6 @@
         </xar:mlstring>
     </h2>
 
-    <form action="#xarModURL('courses', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="uid" id="uid" value="#$uid#" />
-    <input type="hidden" name="phase" id="phase" value="update" />
-    <br />
-    <br />
-
     <xar:if condition="!empty($status)">
         #$status#
     </xar:if>
@@ -20,27 +13,26 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="4"><xar:mlstring>Enrolled Courses</xar:mlstring>:</th>
+                    <th colspan="4"><xar:mlstring>You are enrolled in the courses</xar:mlstring>:</th>
                 </tr>
             </thead>
             <xar:foreach in="$data1['items']" value="$item">
-            <tr align="center">
-            <xar:if condition="$item['hideplanning'] eq 1">
-                <td style="background-color:#FF0000">
-                <xar:else />
-                <td>
-                </xar:if>
-                    <xar:if condition="empty($item['link'])">
-                        #$item['name']#
+                <tr align="center">
+                    <xar:if condition="$item['hideplanning'] eq 1">
+                        <td style="background-color:#FF0000">
                     <xar:else />
-                        <a href="#$item['link']#">#$item['name']#</a>
+                        <td>
                     </xar:if>
-                 </td>
-                <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
-                <td>#$item['statusname']#</td>
-                <td>#$item['planningid']#</td>
-
-            </tr>
+                        <xar:if condition="empty($item['link'])">
+                            #$item['name']#
+                        <xar:else />
+                            <a href="#$item['link']#">#$item['name']#</a>
+                        </xar:if>
+                     </td>
+                    <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
+                    <td>#$item['statusname']#</td>
+                    <td>#$item['planningid']#</td>
+                </tr>
             </xar:foreach>
         </table>
     <xar:else />
@@ -74,8 +66,31 @@
             </xar:foreach>
         </table>
     </xar:if>
-    <hr>
-
+    <br />
+    <xar:if condition="!empty($data1['citems'])">
+        <table>
+            <thead>
+                <tr>
+                    <th><xar:mlstring>Courses you coordinate</xar:mlstring></th>
+                </tr>
+            </thead>
+            <xar:foreach in="$data1['citems']" value="$item">
+                <tr align="center">
+                    <td>
+                        <xar:if condition="empty($item['clink'])">
+                            #$item['cname']#
+                        <xar:else />
+                            <a href="#$item['clink']#">#$item['cname']#</a>
+                        </xar:if>
+                     </td>
+                </tr>
+            </xar:foreach>
+        </table>
+    </xar:if>
+    <form action="#xarModURL('courses', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="uid" id="uid" value="#$uid#" />
+    <input type="hidden" name="phase" id="phase" value="update" />
     <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
     --
     <label for="itemsperpage"><xar:mlstring>Courses to show on one page</xar:mlstring></label>

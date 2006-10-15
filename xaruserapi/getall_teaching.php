@@ -17,6 +17,7 @@
  * @author MichelV <michelv@xarayahosting.nl>
  * @param numitems $ the number of items to retrieve (default -1 = all)
  * @param startnum $ start with this item number (default 1)
+ * @param int uid User ID OPTIONAL
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
@@ -25,8 +26,8 @@ function courses_userapi_getall_teaching($args)
     extract($args);
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('numitems', 'int:1:', $numitems, 20, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('uid',      'int:1:', $uid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED)) return;
 
-    $uid = xarUserGetVar('uid');
     $items = array();
     // Security check
     if (!xarSecurityCheck('ViewCourses')) return;
