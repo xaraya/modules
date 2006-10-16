@@ -16,7 +16,7 @@
  *
  * @param $args['objectid'] could be the query ? (currently unused)
  * @param $args['extrainfo'] all other parameters ? (currently unused)
- * @returns output
+ * @return array output
  */
 function articles_user_search($args)
 {
@@ -244,6 +244,7 @@ function articles_user_search($args)
     $data['results'] = array();
     $data['status'] = '';
     $data['ishooked'] = $ishooked;
+    // TODO: MichelV: $ishooked is never empty, but either 0 or 1
     if (empty($ishooked)) {
         $data['q'] = isset($q) ? xarVarPrepForDisplay($q) : null;
         $data['author'] = isset($author) ? xarVarPrepForDisplay($author) : null;
