@@ -7,8 +7,7 @@
             <tr>
                 <td align="left" valign="top" class="xar-normal">
                     <span class="xar-title"> #$title#
-                        <xar:if condition="!empty($editurl)">
-                            [<a href="#$editurl#">#$edittitle#</a>]
+                        <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
                         </xar:if>
                     </span>
                     <br />
