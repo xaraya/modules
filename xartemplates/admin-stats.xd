@@ -1,13 +1,14 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
-    <h2> 
+    <h2>
         <xar:mlstring>
            Utilities
         </xar:mlstring>
@@ -16,41 +17,41 @@
     <h3><xar:mlstring>Statistics</xar:mlstring></h3>
     <form method="post" action="#xarModURL('articles','admin','stats')#">
         <xar:mlstring>
-            Group by 
+            Group by
         </xar:mlstring>
         <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
-            <select name="group[#$i#]" id="group_#$i#"> 
+            <select name="group[#$i#]" id="group_#$i#">
                 <option value="">
                 </option>
                 <xar:foreach in="$fields" key="$name" value="$label">
                     <xar:if condition="!empty($group[$i]) and $group[$i] eq $name">
                         <option value="#$name#" selected="selected">
-                            #$label# 
+                            #$label#
                         </option>
                         <xar:else />
                         <option value="#$name#">
-                            #$label# 
+                            #$label#
                         </option>
                     </xar:if>
                 </xar:foreach>
-            </select> 
+            </select>
         </xar:for>
-        <input type="submit" value="#xarML('Select')#" /> 
+        <input type="submit" value="#xarML('Select')#" />
     </form>
     <xar:set name="pubtypeid">
-        null 
+        null
     </xar:set>
     <xar:set name="authorid">
-        null 
+        null
     </xar:set>
     <xar:set name="status">
-        null 
+        null
     </xar:set>
     <xar:set name="pubdate">
-        null 
+        null
     </xar:set>
     <xar:set name="language">
-        null 
+        null
     </xar:set>
     <xar:if condition="!empty($group[0])">
         <xar:set name="nextfield">$group[0]</xar:set>

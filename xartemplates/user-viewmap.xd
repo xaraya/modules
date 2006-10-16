@@ -1,9 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="count($cattree) gt 0">
-    <h2> 
+    <h2>
         <xar:mlstring>
             Article Map by Category
         </xar:mlstring>
-    </h2> 
+    </h2>
     <form method="post" action="#$maplink#">
         <div>
             <xar:mlstring>
@@ -17,9 +18,9 @@
     </form>
     <xar:foreach in="$cattree" value="$childcats">
         <xar:foreach in="$childcats" value="$cat">
-            #$cat['beforetags']# 
+            #$cat['beforetags']#
             <xar:if condition="!empty($cat['link'])">
-                <a href="#$cat['link']#">#$cat['name']#</a> 
+                <a href="#$cat['link']#">#$cat['name']#</a>
                 <xar:else />
                 #$cat['name']#
             </xar:if>
@@ -32,13 +33,13 @@
     <xar:template file="navtabs-user-map-extended" type="module" />
     <xar:elseif condition="count($catgrid) gt 0" />
     <xar:if condition="empty($descr)">
-        <h2> 
+        <h2>
             <xar:mlstring>
                 Article Map by Grid
             </xar:mlstring>
-        </h2> 
+        </h2>
         <xar:else />
-        <h2> 
+        <h2>
             <xar:ml>
                 <xar:mlstring>
                     Article Map by Grid for #(1)
@@ -47,7 +48,7 @@
                     #$descr#
                 </xar:mlvar>
             </xar:ml>
-        </h2> 
+        </h2>
     </xar:if>
     <table border="1" cellpadding="3" cellspacing="0">
         <xar:foreach in="$catgrid" key="$row">
@@ -68,18 +69,18 @@
     </table>
     <xar:template file="navtabs-user-map" type="module" />
     <xar:else />
-    <h2> 
+    <h2>
         <xar:mlstring>
             Article Map by Publication Type
         </xar:mlstring>
-    </h2> 
+    </h2>
     <br />
     <form method="post" action="#$maplink#">
         <div>
             <xar:mlstring>
                 Filter :
             </xar:mlstring>
-            <select name="ptid" onchange="javascript:this.form.submit();"> 
+            <select name="ptid" onchange="javascript:this.form.submit();">
                 <option value="">
                     <xar:mlstring>
                         Publication
@@ -96,7 +97,7 @@
                         </option>
                     </xar:if>
                 </xar:foreach>
-            </select> 
+            </select>
             <xar:foreach in="$catfilter" key="$cid">
                 &#160;&#160;&#160;#$catfilter[$cid]#
             </xar:foreach>
@@ -107,7 +108,7 @@
     <br />
     <xar:foreach in="$publinks" value="$pubtype">
         <xar:comment>
-            if you want to skip other publication types, remove these comments... 
+            if you want to skip other publication types, remove these comments...
             <xar:if condition="!empty($ptid) and $pubtype['pubid'] ne $ptid">
                 <xar:continue />
             </xar:if>
@@ -115,7 +116,7 @@
         <div class="xar-accent-outline">
             <div class="xar-title xar-accent xar-standard-box-padding">
                 <xar:if condition="empty($pubtype['publink'])">
-                    #$pubtype['pubtitle']# 
+                    #$pubtype['pubtitle']#
                     <xar:else />
                     <a href="#$pubtype['publink']#">#$pubtype['pubtitle']#</a>
                 </xar:if>
@@ -126,9 +127,9 @@
             <div class="xar-standard-box-padding">
                 <xar:foreach in="$pubtype['cats']" value="$childcats">
                     <xar:foreach in="$childcats" value="$cat">
-                        #$cat['beforetags']# 
+                        #$cat['beforetags']#
                         <xar:if condition="!empty($cat['link'])">
-                            <a href="#$cat['link']#">#$cat['name']#</a> 
+                            <a href="#$cat['link']#">#$cat['name']#</a>
                             <xar:else />
                             #$cat['name']#
                         </xar:if>

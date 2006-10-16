@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -25,30 +26,30 @@
             <xar:if condition="!empty($pubdate)">
                 <xar:ml>
                     <xar:mlstring>
-                        Publication Date : #(1) 
+                        Publication Date : #(1)
                     </xar:mlstring>
                     <xar:mlvar>
-                        #$pubdate# 
+                        #$pubdate#
                     </xar:mlvar>
                 </xar:ml>
             </xar:if>
             <xar:if condition="!empty($authorid)">
                 <xar:ml>
                     <xar:mlstring>
-                        By Author : #(1) 
+                        By Author : #(1)
                     </xar:mlstring>
                     <xar:mlvar>
-                        #xarUserGetVar('name',$authorid)# 
+                        #xarUserGetVar('name',$authorid)#
                     </xar:mlvar>
                 </xar:ml>
             </xar:if>
             <xar:if condition="!empty($language)">
                 <xar:ml>
                     <xar:mlstring>
-                        Language : #(1) 
+                        Language : #(1)
                     </xar:mlstring>
                     <xar:mlvar>
-                        #$language# 
+                        #$language#
                     </xar:mlvar>
                 </xar:ml>
             </xar:if>
@@ -116,23 +117,23 @@
                             </xar:if>
                             <td class="xar-align-center xar-norm">
                                 <xar:if condition="empty($item['viewurl'])">
-                                    #$item['viewtitle']# 
+                                    #$item['viewtitle']#
                                     <xar:else />
                                     <a href="#$item['viewurl']#">
                                         #$item['viewtitle']#
                                     </a>
                                 </xar:if>
-                                | 
+                                |
                                 <xar:if condition="empty($item['editurl'])">
-                                    #$item['edittitle']# 
+                                    #$item['edittitle']#
                                     <xar:else />
                                     <a href="#$item['editurl']#">
                                         #$item['edittitle']#
                                     </a>
                                 </xar:if>
-                                | 
+                                |
                                 <xar:if condition="empty($item['deleteurl'])">
-                                    #$item['deletetitle']# 
+                                    #$item['deletetitle']#
                                     <xar:else />
                                     <a href="#$item['deleteurl']#">
                                         #$item['deletetitle']#
@@ -149,7 +150,7 @@
                             <xar:mlstring>
                                 Change checked article status to
                             </xar:mlstring>
-                            :</label>&nbsp; 
+                            :</label>&nbsp;
                         <select name="status" id="status">
                         <xar:if condition="xarSecurityCheck('DeleteArticles',0,'Article',$ptid.':All:All:All')">
                             <option value="-1">
@@ -187,6 +188,6 @@
                 </xar:if>
             </div>
         </form>
-        #$pager# 
+        #$pager#
     </div>
 </div>

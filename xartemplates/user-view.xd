@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 
 <xar:if condition="!empty($ptid) or !empty($catid)">
@@ -35,7 +36,7 @@
         <xar:foreach in="$columns" key="$col">
             <div style="left: 1px; float: left; width: #$colwidth#%; vertical-align: top;">
                 <xar:foreach in="$columns[$col]" key="$row">
-                    #$columns[$col][$row]# 
+                    #$columns[$col][$row]#
                 </xar:foreach>
             </div>
         </xar:foreach>
@@ -43,12 +44,12 @@
 <xar:elseif condition="!empty($number)" />
     <xar:foreach in="$columns" key="$col">
         <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]# 
+            #$columns[$col][$row]#
         </xar:foreach>
     </xar:foreach>
 </xar:if>
 
-#$output# 
+#$output#
 
 <br class="xar-clearboth" />
 

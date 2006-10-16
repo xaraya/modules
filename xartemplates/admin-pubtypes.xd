@@ -1,158 +1,159 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
-    <h2> 
+    <h2>
         <xar:mlstring>
-            Publication Types 
+            Publication Types
         </xar:mlstring>
-    </h2> 
+    </h2>
     <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
     <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
         <p class="xar-error">#$statusmsg#</p>
     </xar:if>
     <xar:if condition="isset($action) and $action eq 'new'">
-        <h3 class="xar-align-left"> 
+        <h3 class="xar-align-left">
             <xar:mlstring>
-                New Publication Type 
+                New Publication Type
             </xar:mlstring>
-        </h3> 
+        </h3>
         <form method="post" action="#$link#">
             <div>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <table width="100%" border="0" cellpadding="2" cellspacing="0">
                     <tr>
                         <td class="xar-align-left">
-                            <label for="name"> 
+                            <label for="name">
                                 <xar:mlstring>
-                                    Type 
+                                    Type
                                 </xar:mlstring>
-                            </label> 
+                            </label>
                         </td>
                         <td class="xar-align-left">
-                            <input type="text" name="name" id="name" value="" size="20" maxlength="20" /> 
+                            <input type="text" name="name" id="name" value="" size="20" maxlength="20" />
                         </td>
                     </tr>
                     <tr>
                         <td class="xar-align-left">
-                            <label for="descr"> 
+                            <label for="descr">
                                 <xar:mlstring>
-                                    Description 
+                                    Description
                                 </xar:mlstring>
-                            </label> 
+                            </label>
                         </td>
                         <td class="xar-align-left">
-                            <input type="text" name="descr" id="descr" value="" size="50" maxlength="250" /> 
+                            <input type="text" name="descr" id="descr" value="" size="50" maxlength="250" />
                         </td>
                     </tr>
                 </table>
                 <p class="xar-align-left">
                     <xar:mlstring>
-                        Configuration 
+                        Configuration
                     </xar:mlstring>
-                    : 
+                    :
                     <br />
-                    ( 
+                    (
                     <xar:mlstring>
-                        leave Label empty if you don't want to use a field 
+                        leave Label empty if you don't want to use a field
                     </xar:mlstring>
-                    ) 
+                    )
                 </p>
                 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
                     <tr>
                         <th>
                             <xar:mlstring>
-                                Field 
+                                Field
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Label 
+                                Label
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Format 
+                                Format
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Input 
+                                Input
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Type 
+                                Type
                             </xar:mlstring>
                         </th>
                     </tr>
                     <xar:foreach in="$fields" value="$field">
                         <tr>
                             <td class="xar-align-left">
-                                <label for="label_#$field['name']#">#$field['name']#</label> 
+                                <label for="label_#$field['name']#">#$field['name']#</label>
                             </td>
                             <td class="xar-norm">
-                                <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" /> 
+                                <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
                                 <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
-                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# /> 
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# />
                             </td>
                             <td class="xar-norm">
-                                #$field['type']# 
+                                #$field['type']#
                             </td>
                         </tr>
                     </xar:foreach>
                 </table>
                 <p>
                     <xar:mlstring>
-                        <strong>Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default. 
+                        <strong>Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
                         <br />
-                        Don't forget to provide those templates before trying to add new articles... 
+                        Don't forget to provide those templates before trying to add new articles...
                     </xar:mlstring>
                 </p>
                 <br />
-                <input type="submit" value="#$buttonlabel#" /> 
+                <input type="submit" value="#$buttonlabel#" />
             </div>
         </form>
     </xar:if>
     <xar:if condition="isset($action) and $action eq 'modify'">
-        <h3 class="xar-align-left"> 
+        <h3 class="xar-align-left">
             <xar:mlstring>
-                Edit Publication Type 
+                Edit Publication Type
             </xar:mlstring>
-        </h3> 
+        </h3>
         <form method="post" action="#$link#">
             <div>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> 
+                <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                 <table width="100%" border="0" cellpadding="2" cellspacing="0">
                     <tr>
                         <td class="xar-align-left">
                             <xar:mlstring>
-                                Type 
+                                Type
                             </xar:mlstring>
                         </td>
                         <td class="xar-align-left">
-                            #$item['name']# 
+                            #$item['name']#
                         </td>
                     </tr>
                     <tr>
                         <td class="xar-align-left">
-                            <label for="descr"> 
+                            <label for="descr">
                                 <xar:mlstring>
-                                    Description 
+                                    Description
                                 </xar:mlstring>
-                            </label> 
+                            </label>
                         </td>
                         <td class="xar-align-left">
-                            <input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['descr'])#" size="50" maxlength="250" /> 
+                            <input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['descr'])#" size="50" maxlength="250" />
                         </td>
                     </tr>
                 </table>
@@ -175,27 +176,27 @@
                     <tr>
                         <th>
                             <xar:mlstring>
-                                Field 
+                                Field
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Label 
+                                Label
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Format 
+                                Format
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Input 
+                                Input
                             </xar:mlstring>
                         </th>
                         <th>
                             <xar:mlstring>
-                                Type 
+                                Type
                             </xar:mlstring>
                         </th>
                     </tr>
@@ -215,19 +216,19 @@
                             </xar:if>
                             </td>
                             <td class="xar-norm">
-                                <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" /> 
+                                <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
                                 <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
-                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# /> 
+                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# />
                             </td>
                             <td class="xar-norm">
-                                #$field['type']# 
+                                #$field['type']#
                             </td>
                         </tr>
-                        
+
                         <xar:comment>
                             Want to add validation for textareas - users are pulling out hair to work out how to change size of textareas on defaults
                             so move this to a link on the label name so we can do this without cluttering inteface
@@ -255,187 +256,187 @@
                     </xar:foreach>
                 </table>
                 <br />
-                <input type="submit" value="#$buttonlabel#" /> 
+                <input type="submit" value="#$buttonlabel#" />
             </div>
         </form>
         <xar:if condition="xarModIsHooked('dynamicdata','articles',$ptid)">
-            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))# 
+            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
         </xar:if>
-        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#"> 
+        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#">
                 <xar:mlstring>
-                    Export Definition to XML 
+                    Export Definition to XML
                 </xar:mlstring>
-            </a></h3> 
+            </a></h3>
     </xar:if>
     <xar:if condition="isset($action) and $action eq 'delete'">
-        <h3> 
+        <h3>
             <xar:mlstring>
-                Delete this Publication Type? 
+                Delete this Publication Type?
             </xar:mlstring>
-        </h3> 
+        </h3>
         <form method="post" action="#$link#">
             <div>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> 
+                <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                 <table border="0" cellpadding="2" cellspacing="0">
                     <tr>
                         <td class="xar-align-right">
                             <xar:mlstring>
-                                Type 
+                                Type
                             </xar:mlstring>
-                            : 
+                            :
                         </td>
                         <td class="xar-align-left">
-                            #$item['name']# 
+                            #$item['name']#
                         </td>
                     </tr>
                     <tr>
                         <td class="xar-align-right">
                             <xar:mlstring>
-                                Description 
+                                Description
                             </xar:mlstring>
-                            : 
+                            :
                         </td>
                         <td class="xar-align-left">
-                            #xarVarPrepForDisplay($item['descr'])# 
+                            #xarVarPrepForDisplay($item['descr'])#
                         </td>
                     </tr>
                 </table>
                 <p>
                     <xar:ml>
                         <xar:mlstring>
-                            The #(1) articles of this publication type will also be deleted. 
+                            The #(1) articles of this publication type will also be deleted.
                         </xar:mlstring>
                         <xar:mlvar>
-                            #$numitems# 
+                            #$numitems#
                         </xar:mlvar>
                     </xar:ml>
                 </p>
                 <xar:if condition="$ptid eq xarModGetVar('articles','defaultpubtype')">
                     <p>
-                        <strong> 
+                        <strong>
                             <xar:mlstring>
-                                Warning: this is the current default publication type ! 
+                                Warning: this is the current default publication type !
                             </xar:mlstring>
                             <br />
                             <xar:mlstring>
-                                Make sure you modify the configuration after deleting this. 
+                                Make sure you modify the configuration after deleting this.
                             </xar:mlstring>
-                        </strong> 
+                        </strong>
                     </p>
                 </xar:if>
                 <br />
-                <input type="submit" value="#$buttonlabel#" /> 
+                <input type="submit" value="#$buttonlabel#" />
                 <br />
                 <br />
-                <a href="&xar-modurl-articles-admin-pubtypes;"> 
+                <a href="&xar-modurl-articles-admin-pubtypes;">
                     <xar:mlstring>
-                        Cancel Delete 
+                        Cancel Delete
                     </xar:mlstring>
-                </a> 
+                </a>
             </div>
         </form>
     </xar:if>
     <xar:if condition="$action eq 'view'">
-        <h3 class="xar-align-left"><a href="#$newurl#"> 
+        <h3 class="xar-align-left"><a href="#$newurl#">
                 <xar:mlstring>
-                    Create New Publication Type 
+                    Create New Publication Type
                 </xar:mlstring>
-            </a></h3> 
+            </a></h3>
         <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
             <tr>
                 <th>
                     <xar:mlstring>
-                        Name 
+                        Name
                     </xar:mlstring>
                 </th>
                 <th>
                     <xar:mlstring>
-                        Description 
+                        Description
                     </xar:mlstring>
                 </th>
                 <th>
                     <xar:mlstring>
-                        Options 
+                        Options
                     </xar:mlstring>
                 </th>
             </tr>
             <xar:foreach in="$pubtypes" value="$pubtype">
                 <tr>
                     <td class="xar-norm">
-                        #$pubtype['name']# 
+                        #$pubtype['name']#
                     </td>
                     <td class="xar-norm">
-                        #xarVarPrepForDisplay($pubtype['descr'])# 
+                        #xarVarPrepForDisplay($pubtype['descr'])#
                     </td>
                     <td class="xar-norm">
                         <xar:if condition="!empty($pubtype['editurl'])">
-                            <a href="#$pubtype['editurl']#"> 
+                            <a href="#$pubtype['editurl']#">
                                 <xar:mlstring>
-                                    Edit 
+                                    Edit
                                 </xar:mlstring>
-                            </a> 
+                            </a>
                             <xar:else />
                             <xar:mlstring>
-                                Edit 
+                                Edit
                             </xar:mlstring>
                         </xar:if>
-                        | 
+                        |
                         <xar:if condition="!empty($pubtype['deleteurl'])">
-                            <a href="#$pubtype['deleteurl']#"> 
+                            <a href="#$pubtype['deleteurl']#">
                                 <xar:mlstring>
-                                    Delete 
+                                    Delete
                                 </xar:mlstring>
-                            </a> 
+                            </a>
                             <xar:else />
                             <xar:mlstring>
-                                Delete 
+                                Delete
                             </xar:mlstring>
                         </xar:if>
-                        | 
+                        |
                         <xar:if condition="!empty($pubtype['configurl'])">
-                            <a href="#$pubtype['configurl']#"> 
+                            <a href="#$pubtype['configurl']#">
                                 <xar:mlstring>
-                                    Article Config 
+                                    Article Config
                                 </xar:mlstring>
-                            </a> 
+                            </a>
                             <xar:else />
                             <xar:mlstring>
-                                Article Config 
+                                Article Config
                             </xar:mlstring>
                         </xar:if>
-                        | 
+                        |
                         <xar:if condition="!empty($pubtype['viewurl'])">
-                            <a href="#$pubtype['viewurl']#"> 
+                            <a href="#$pubtype['viewurl']#">
                                 <xar:mlstring>
-                                    View Articles 
+                                    View Articles
                                 </xar:mlstring>
-                            </a> 
+                            </a>
                             <xar:else />
                             <xar:mlstring>
-                                View Articles 
+                                View Articles
                             </xar:mlstring>
                         </xar:if>
-                        | 
+                        |
                         <xar:if condition="!empty($pubtype['addurl'])">
-                            <a href="#$pubtype['addurl']#"> 
+                            <a href="#$pubtype['addurl']#">
                                 <xar:mlstring>
-                                    Add Article 
+                                    Add Article
                                 </xar:mlstring>
-                            </a> 
+                            </a>
                             <xar:else />
                             <xar:mlstring>
-                                Add Article 
+                                Add Article
                             </xar:mlstring>
                         </xar:if>
                     </td>
                 </tr>
             </xar:foreach>
         </table>
-        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','importpubtype')#"> 
+        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','importpubtype')#">
                 <xar:mlstring>
-                    Import Definition from XML 
+                    Import Definition from XML
                 </xar:mlstring>
-            </a></h3> 
+            </a></h3>
     </xar:if>
     <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
 </div>

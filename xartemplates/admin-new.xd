@@ -1,27 +1,28 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
-    <h2> 
+    <h2>
         <xar:mlstring>
-            Add Article 
+            Add Article
         </xar:mlstring>
-    </h2> 
+    </h2>
     <xar:if condition="!empty($preview)">
         <div class="xar-fullwidth">
-            #$preview# 
+            #$preview#
         </div>
     </xar:if>
     <xar:comment>
-        You can use different admin-new-[pubtype].xd templates for different pubtypes 
+        You can use different admin-new-[pubtype].xd templates for different pubtypes
     </xar:comment>
     <xar:comment>
-        If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your articles 
+        If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your articles
 <!-- xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" func="new" itemtype="$ptid" catid="$catid" /-->
     </xar:comment>
     <xar:template file="navtabs" type="module" />

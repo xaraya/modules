@@ -1,34 +1,32 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration 
+            Articles Administration
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
-    <h2> 
+    <h2>
         <xar:ml>
             <xar:mlstring>
-                Validation for #(1) in #(2) 
+                Validation for #(1) in #(2)
             </xar:mlstring>
             <xar:mlvar>
-                #$label# 
+                #$label#
             </xar:mlvar>
             <xar:mlvar>
-                #$item['descr']# 
+                #$item['descr']#
             </xar:mlvar>
         </xar:ml>
-    </h2> 
+    </h2>
     <xar:if condition="!empty($isupload)">
         <xar:set name="enc_type">
-            'multipart/form-data' 
+            'multipart/form-data'
         </xar:set>
         <xar:else />
         <xar:set name="enc_type">
-            'application/x-www-form-urlencoded' 
+            'application/x-www-form-urlencoded'
         </xar:set>
     </xar:if>
     <form method="post" action="#xarModURL('articles', 'admin', 'showpropval')#" enctype="#$enc_type#">
@@ -36,23 +34,23 @@
             <table border="0" cellspacing="0" cellpadding="4">
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Name :</strong> 
+                        <strong>Name :</strong>
                     </td>
                     <td align="left">
-                        #$name# 
+                        #$name#
                     </td>
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Label :</strong> 
+                        <strong>Label :</strong>
                     </td>
                     <td align="left">
-                        #$label# 
+                        #$label#
                     </td>
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Property Type :</strong> 
+                        <strong>Property Type :</strong>
                     </td>
                     <td align="left">
                         <xar:data-output type="fieldtype" value="$type" />
@@ -60,23 +58,23 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Validation :</strong> 
+                        <strong>Validation :</strong>
                     </td>
                     <td align="left">
-                        #$validation# 
+                        #$validation#
                     </td>
                 </tr>
             </table>
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> <input type="hidden" name="field" id="field" value="#$field#" /> 
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" /> <input type="hidden" name="field" id="field" value="#$field#" />
             <table class="xar-norm">
                 <tr>
                     <td>
-                        #$showval# 
+                        #$showval#
                     </td>
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="submit" name="preview" value="#xarML('Preview')#" /> &nbsp;&nbsp;&nbsp; <input type="submit" name="confirm" value="#xarML('Update')#" /> 
+                        <input type="submit" name="preview" value="#xarML('Preview')#" /> &nbsp;&nbsp;&nbsp; <input type="submit" name="confirm" value="#xarML('Update')#" />
                     </td>
                 </tr>
             </table>

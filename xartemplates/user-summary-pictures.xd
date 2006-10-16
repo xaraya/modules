@@ -1,16 +1,17 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="!empty($categories) and count($categories) gt 0">
     <p>
-        [ 
+        [
         <xar:foreach in="$categories" value="$cat">
-            #$cat['cjoin']# 
+            #$cat['cjoin']#
             <a href="#$cat['clink']#">
                 #$cat['cname']#
             </a>
-        </xar:foreach> 
+        </xar:foreach>
         ]
     </p>
 </xar:if>
-<div id="main-content"> 
+<div id="main-content">
     <ul>
         <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
             <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
@@ -27,7 +28,7 @@
                             #$title#
                         </span>
                     </a>
-                </li> 
+                </li>
             </xar:foreach>
         <xar:else />
             <li>
@@ -39,9 +40,9 @@
                 </a>
             </li>
         </xar:if>
-    </ul> 
+    </ul>
 </div>
-      
+
 <xar:if condition="!empty($counter)">
     <xar:if condition="$counter eq 1">
         (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
@@ -56,7 +57,7 @@
             Keywords
         </xar:mlstring>:
         <xar:loop name="$keywords">
-            <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>  
+            <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
         </xar:loop>
     </xar:if>
 </div>

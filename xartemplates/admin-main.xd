@@ -1,212 +1,210 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
-    <span class="xar-mod-title"> 
+    <span class="xar-mod-title">
         <xar:mlstring>
-            Administration - Articles 
+            Administration - Articles
         </xar:mlstring>
-    </span> 
+    </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
     <img class="xar-module-icon" src="modules/articles/xarimages/admin.gif" alt="official icon" width="96" height="96" />
-    <h2> 
+    <h2>
         <xar:mlstring>
-            Overview 
+            Overview
         </xar:mlstring>
-    </h2> <h3> 
+    </h2> <h3>
         <xar:mlstring>
-            What is it? 
+            What is it?
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
-        <em> 
+        <em>
             <xar:mlstring>
-                Articles is a Xaraya Content Module responsible for the handling of generic and complex content structures. 
+                Articles is a Xaraya Content Module responsible for the handling of generic and complex content structures.
             </xar:mlstring>
-        </em> 
+        </em>
     </p>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            How to use it? 
+            How to use it?
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
         <xar:mlstring>
-            If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the articles module. 
+            If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the articles module.
         </xar:mlstring>
     </p>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            1. Publication types 
+            1. Publication types
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
         <xar:mlstring>
-            The articles module can manage 'articles' of different types at the same time, for instance news articles, longer documents in different sections, frequently asked questions, and so on. 
-        </xar:mlstring>
-    </p>
-    <p>
-        <xar:mlstring>
-            These types are called 'publication types', and each type of article can make use of a different set of data fields, with a different meaning for each data field. For example, the 'summary' field could be used for an Introduction in news articles, for providing some details about a question in FAQs, or not be used at all for section documents. 
+            The articles module can manage 'articles' of different types at the same time, for instance news articles, longer documents in different sections, frequently asked questions, and so on.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            There is a specific menu where you can manage those <strong>publication types</strong>, change the description that will appear in navigation menus, enable and disable data fields or change their meaning for a particular type, or even create or delete publication types according to your needs. 
+            These types are called 'publication types', and each type of article can make use of a different set of data fields, with a different meaning for each data field. For example, the 'summary' field could be used for an Introduction in news articles, for providing some details about a question in FAQs, or not be used at all for section documents.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Each publication type also has its own templates, so that you can customize the look &amp; feel of how each article will appear to your visitors. 
+            There is a specific menu where you can manage those <strong>publication types</strong>, change the description that will appear in navigation menus, enable and disable data fields or change their meaning for a particular type, or even create or delete publication types according to your needs.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            A default set of publication types and templates (corresponding to the old News, Sections and FAQs modules, if you're familiar with earlier versions of PostNuke or PHP-Nuke) is included as part of the installation. 
-        </xar:mlstring>
-    </p>
-    <h3> 
-        <xar:mlstring>
-            2. Categories 
-        </xar:mlstring>
-    </h3> 
-    <p>
-        <xar:mlstring>
-            Articles (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site. 
+            Each publication type also has its own templates, so that you can customize the look &amp; feel of how each article will appear to your visitors.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for articles when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.) 
+            A default set of publication types and templates (corresponding to the old News, Sections and FAQs modules, if you're familiar with earlier versions of PostNuke or PHP-Nuke) is included as part of the installation.
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            2. Categories
+        </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            Articles (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Once you have a set of categories you would like to use for your articles, you can go to <strong>Articles Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used. 
+            Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for articles when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.)
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view articles. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for. 
+            Once you have a set of categories you would like to use for your articles, you can go to <strong>Articles Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any articles about good restaurants in Brussels, for instance. 
-        </xar:mlstring>
-    </p>
-    <h3> 
-        <xar:mlstring>
-            3. Submitting or adding articles 
-        </xar:mlstring>
-    </h3> 
-    <p>
-        <xar:mlstring>
-            status = submitted, rejected, approved or on frontpage (for those pubtypes that use it !) 
-        </xar:mlstring>
-    </p>
-    <h3> 
-        <xar:mlstring>
-            4. Managing the overview and display of articles per publication type 
-        </xar:mlstring>
-    </h3> 
-    <p>
-        <xar:mlstring>
-            In <strong>Articles Configuration</strong>, set start view (list/browse), # of columns and items, show category links + # of comments (+ performance impact) 
+            A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view articles. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            + adapt specific templates! 
+            One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any articles about good restaurants in Brussels, for instance.
         </xar:mlstring>
     </p>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            5. Managing your 'front page' 
+            3. Submitting or adding articles
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
         <xar:mlstring>
-            cfr. frontpage status and # of columns and items - needs to be extended 
+            status = submitted, rejected, approved or on frontpage (for those pubtypes that use it !)
         </xar:mlstring>
     </p>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            6. Adding counters, ratings, comments, smilies, bb-code etc. 
+            4. Managing the overview and display of articles per publication type
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
         <xar:mlstring>
-            cfr. hooks + special note on counters 
-        </xar:mlstring>
-    </p>
-    <h3> 
-        <xar:mlstring>
-            7. Organising permissions 
-        </xar:mlstring>
-    </h3> 
-    <p>
-        <xar:mlstring>
-            this really needs a permissions wizard 
-        </xar:mlstring>
-    </p>
-    <h3> 
-        <xar:mlstring>
-            8. Short URL support 
-        </xar:mlstring>
-    </h3> 
-    <p>
-        <xar:mlstring>
-            overall enable/disable in 'base' admin + specific enable/disable in 'articles' admin + use of module aliases 
+            In <strong>Articles Configuration</strong>, set start view (list/browse), # of columns and items, show category links + # of comments (+ performance impact)
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Module aliases seem to be disabled at the moment - uncomment the line in includes/xarServer.php if you want to try it out 
+            + adapt specific templates!
         </xar:mlstring>
     </p>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            Included Blocks 
+            5. Managing your 'front page'
         </xar:mlstring>
-    </h3> 
+    </h3>
+    <p>
+        <xar:mlstring>
+            cfr. frontpage status and # of columns and items - needs to be extended
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            6. Adding counters, ratings, comments, smilies, bb-code etc.
+        </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            cfr. hooks + special note on counters
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            7. Organising permissions
+        </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            this really needs a permissions wizard
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            8. Short URL support
+        </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            overall enable/disable in 'base' admin + specific enable/disable in 'articles' admin + use of module aliases
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            Module aliases seem to be disabled at the moment - uncomment the line in includes/xarServer.php if you want to try it out
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            Included Blocks
+        </xar:mlstring>
+    </h3>
     <ul>
         <li>
             <xar:mlstring>
-                featured items 
+                featured items
             </xar:mlstring>
         </li>
         <li>
             <xar:mlstring>
-                glossary 
+                glossary
             </xar:mlstring>
         </li>
         <li>
             <xar:mlstring>
-                random 
+                random
             </xar:mlstring>
         </li>
         <li>
             <xar:mlstring>
-                related 
+                related
             </xar:mlstring>
         </li>
         <li>
             <xar:mlstring>
-                top items 
+                top items
             </xar:mlstring>
         </li>
     </ul>
-    <h3> 
+    <h3>
         <xar:mlstring>
-            Included Hooks 
+            Included Hooks
         </xar:mlstring>
-    </h3> 
+    </h3>
     <p>
         <xar:mlstring>
-            Search hook which provides the functionality to search your individual articles. 
+            Search hook which provides the functionality to search your individual articles.
         </xar:mlstring>
     </p>
 </div>

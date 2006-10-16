@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 <xar:if condition="!empty($ptid) or !empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
@@ -12,10 +13,10 @@
     <h2>
         <xar:ml>
             <xar:mlstring>
-                By Author : #(1) 
+                By Author : #(1)
             </xar:mlstring>
             <xar:mlvar>
-                #$author# 
+                #$author#
             </xar:mlvar>
         </xar:ml>
     </h2>
@@ -27,7 +28,7 @@
             <xar:foreach in="$columns" key="$col">
                 <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
                     <xar:foreach in="$columns[$col]" key="$row">
-                        #$columns[$col][$row]# 
+                        #$columns[$col][$row]#
                     </xar:foreach>
                 </td>
             </xar:foreach>
@@ -36,26 +37,26 @@
     <xar:elseif condition="!empty($number)" />
     <xar:foreach in="$columns" key="$col">
         <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]# 
+            #$columns[$col][$row]#
         </xar:foreach>
     </xar:foreach>
 </xar:if>
-#$output# 
+#$output#
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
         <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
             <xar:mlstring>
-                single-column display 
+                single-column display
             </xar:mlstring>
         </a>
         <xar:else />
         <a href="#xarModURL('articles','user','view')#">
             <xar:ml>
                 <xar:mlstring>
-                    #(1)-column display 
+                    #(1)-column display
                 </xar:mlstring>
                 <xar:mlvar>
-                    #$showcols# 
+                    #$showcols#
                 </xar:mlvar>
             </xar:ml>
         </a>
@@ -66,7 +67,7 @@
 
 <div class="xar-align-center">
 <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-    <p>#$viewpager#</p> 
+    <p>#$viewpager#</p>
     <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
         <xar:mlstring>Sort by </xar:mlstring>
         <xar:foreach in="$sortlinks" value="$sortitem">

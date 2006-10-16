@@ -1,14 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-norm xar-standard-box-padding">
     <xar:if condition="!empty($categories) and count($categories) gt 0">
-        [ 
+        [
         <xar:foreach in="$categories" value="$cat">
-            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a> 
+            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
         </xar:foreach>
-        ] 
+        ]
     </xar:if>
-    <h1> <a class="xar-title" href="#$link#">#$title#</a> </h1> 
+    <h1> <a class="xar-title" href="#$link#">#$title#</a> </h1>
     <div class="xar-accent xar-padding-thick">
-        <span class="xar-sub"> 
+        <span class="xar-sub">
             <xar:ml>
                 <xar:mlstring>
                     Posted by: #(1) on #(2) #(3)
@@ -29,29 +30,29 @@
                     <xar:mlstring>
                         read
                     </xar:mlstring>
-                    ) 
+                    )
                     <xar:else />
                     (#$counter#&nbsp;
                     <xar:mlstring>
                         reads
                     </xar:mlstring>
-                    ) 
+                    )
                 </xar:if>
             </xar:if>
-        </span> 
+        </span>
     </div>
     <div class="xar-align-right">
-        <span class="xar-sub"> #$topic_icons# </span> 
+        <span class="xar-sub"> #$topic_icons# </span>
     </div>
     <div class="xar-articles-summary">
-        #$summary# 
+        #$summary#
     </div>
     <xar:if condition="!empty($notes)">
         <div class="xar-articles-notes">
             <xar:mlstring>
-                Note 
+                Note
             </xar:mlstring>
-            : #$notes# 
+            : #$notes#
         </div>
     </xar:if>
     <div class="xar-align-right">
@@ -63,32 +64,32 @@
                 <xar:mlstring>
                     Read More
                 </xar:mlstring>
-            </a> 
+            </a>
             <xar:if condition="$words eq 1">
                 (#$words#&nbsp;
                 <xar:mlstring>
                     word
                 </xar:mlstring>
-                ) 
+                )
                 <xar:else />
                 (#$words#&nbsp;
                 <xar:mlstring>
                     words
                 </xar:mlstring>
-                ) 
+                )
             </xar:if>
         </xar:if>
         <xar:if condition="!empty($comments)">
-            #$comments# 
+            #$comments#
         </xar:if>
         <div class="xar-articles-keywords">
             <xar:if condition="!empty($keywords)">
                 <xar:mlstring>
-                    Keywords 
+                    Keywords
                 </xar:mlstring>
-                : 
+                :
                 <xar:loop name="$keywords">
-                    <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a> 
+                    <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
                 </xar:loop>
             </xar:if>
         </div>

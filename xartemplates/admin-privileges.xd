@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Articles Administration</xar:mlstring>
@@ -76,7 +77,7 @@
                         <xar:mlstring>Article</xar:mlstring>
                     </th>
                     <td>
-                    <xar:mlstring>Enter article number</xar:mlstring>: 
+                    <xar:mlstring>Enter article number</xar:mlstring>:
                     <input type="text" name="aid" id="aid" value="#$aid#" size="10" onchange="javascript:this.form.submit();" />
                     <!-- TODO: show dropdown box for all relevant articles (if not too many) -->
                     <xar:if condition="!empty($title)">
@@ -168,7 +169,7 @@
             </xar:ml>
             <br />
             <hr />
-            <br />(Instance Definition #$extinstance#) 
+            <br />(Instance Definition #$extinstance#)
             <br />
             <br />
             <input type="submit" name="apply" value="#$applylabel#" /></div>
@@ -176,11 +177,11 @@
         <br />
         <xar:mlstring>Some examples : (assuming your users have read access by default)
         <br />
-        <br />- In order to allow 'Friends' to submit News Articles (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Articles" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role. 
+        <br />- In order to allow 'Friends' to submit News Articles (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Articles" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
         <br />
-        <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role. 
+        <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.
         <br />
-        <br />- ... 
+        <br />- ...
         <br />
         <br /></xar:mlstring>
         <xar:mlstring>Note: if you want to deny access to all articles in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the articles map and categories navigation as well.</xar:mlstring>

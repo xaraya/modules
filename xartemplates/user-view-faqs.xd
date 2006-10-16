@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 <a name="titles">
 </a>
@@ -21,7 +22,7 @@
             <xar:foreach in="$columns" key="$col">
                 <td style="vertical-align: top;text-align: center;width: #$colwidth#%;">
                     <xar:foreach in="$columns[$col]" key="$row">
-                        #$columns[$col][$row]# 
+                        #$columns[$col][$row]#
                     </xar:foreach>
                 </td>
             </xar:foreach>
@@ -30,11 +31,11 @@
     <xar:elseif condition="!empty($number)" />
     <xar:foreach in="$columns" key="$col">
         <xar:foreach in="$columns[$col]" key="$row">
-            #$columns[$col][$row]# 
+            #$columns[$col][$row]#
         </xar:foreach>
     </xar:foreach>
 </xar:if>
-#$output# 
+#$output#
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
         <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
@@ -57,7 +58,7 @@
 </xar:if>
 <div class="xar-align-center">
 <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-    <p>#$viewpager#</p> 
+    <p>#$viewpager#</p>
     <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
         <xar:mlstring>Sort by </xar:mlstring>
         <xar:foreach in="$sortlinks" value="$sortitem">
@@ -77,7 +78,7 @@
         <xar:if condition="!empty($maplink)">
             <li style="display:inline;padding:0 .5em;">
                 <a href="#$maplink#">
-                    #$maplabel# 
+                    #$maplabel#
                 </a>
             </li>
         </xar:if>
@@ -85,7 +86,7 @@
             <li style="display:inline;padding:0 .5em;">
                 <a href="#$submitlink#" title="Submit Article">
                     <xar:mlstring>
-                        Contribute 
+                        Contribute
                     </xar:mlstring>
                 </a>
             </li>
@@ -93,7 +94,7 @@
         <xar:if condition="!empty($archivelink)">
             <li style="display:inline;padding:0 .5em;">
                 <a href="#$archivelink#">
-                    #$archivelabel# 
+                    #$archivelabel#
                 </a>
             </li>
         </xar:if>

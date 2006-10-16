@@ -1,13 +1,14 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="articles" file="gallery" />
 <xar:base-include-javascript filename="xar_articles_pictures.js" />
 <xar:template file="publinks" type="module" />
 <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" showcatcount="$showcatcount" showempty="0" />
 
-<div id="wrap"> 
-    <div id="header"> 
+<div id="wrap">
+    <div id="header">
         <h1>
             #$title#
-        </h1> 
+        </h1>
         <p>
             <xar:if condition="!empty($counter)">
                 ( #$counter#
@@ -21,14 +22,14 @@
                     #$edittitle#
                 </a>
                 ]
-            </xar:if> 
+            </xar:if>
         </p>
-    </div> 
-    <div id="main-content"> 
-        <div id="fullplate-photo"> 
+    </div>
+    <div id="main-content">
+        <div id="fullplate-photo">
             <p>
                 #$notes#
-            </p> 
+            </p>
             <div id='photoholder'>
                 <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
                     <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
@@ -47,17 +48,17 @@
                 </xar:if>
             </div>
             <xar:if condition="!empty($prevart) || !empty($nextart)">
-                <ul id="fullplate-navigation"> 
+                <ul id="fullplate-navigation">
                     <xar:if condition="!empty($prevart)">
-                        <li id="previous"><a href="#$prevart#">&laquo;</a></li> 
+                        <li id="previous"><a href="#$prevart#">&laquo;</a></li>
                     </xar:if>
                     <xar:if condition="!empty($nextart)">
-                        <li id="next"><a href="#$nextart#">&raquo;</a></li> 
+                        <li id="next"><a href="#$nextart#">&raquo;</a></li>
                     </xar:if>
-                </ul> 
+                </ul>
             </xar:if>
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>
 
 <br /><br />
