@@ -76,7 +76,8 @@ function polls_pollblock_display($blockinfo)
     $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $poll['pid']));
     $data['bid'] = $blockinfo['bid'];
-
+    //initialize our array to hold poll options, if any
+    $data['options']=array();
     // See if user is allowed to vote
     if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) &&
                          ($data['canvote'])){
