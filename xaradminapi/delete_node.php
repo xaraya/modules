@@ -61,18 +61,18 @@ function comments_adminapi_delete_node( $args )
     // delete the node
     $sql = "DELETE
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]=$node";
-
+             WHERE  xar_cid = ?";
+             $bindvars1 = array($node);
     // reset all parent id's == deletion node's id to that of
     // the deletion node's parent id
     $sql2 = "UPDATE $xartable[comments]
-                SET $ctable[pid]='$pid'
-              WHERE $ctable[pid]=$node";
-
-    if (!$dbconn->Execute($sql))
+                SET xar_pid = ?
+              WHERE xar_pid = ?";
+              $bindvars2 = array($pid, $node);
+    if (!$dbconn->Execute($sql,$bindvars1))
         return;
 
-    if (!$dbconn->Execute($sql2))
+    if (!$dbconn->Execute($sql2,$bindvars2))
         return;
 
     // Go through and fix all the l/r values for the comments
