@@ -76,8 +76,7 @@
             </xar:if>
         </dl>
     </div>
-    <xar:comment>
-        ------------------- Begin General Options ---------------------
+    <xar:comment> Begin General Options 
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
@@ -141,7 +140,7 @@
             </fieldset>
         </form>
         <xar:comment>
-            ----------------- Begin Registration Options -------------------
+            Begin Registration Options 
         </xar:comment>
         <xar:elseif condition="$tab eq 'registration'" />
         <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
