@@ -30,13 +30,15 @@ function sitetools_admin_cacheview($args)
         return;
     }
 
-    $cachedir  = xarModGetVar('sitetools','templcachepath');
-    $cachefile = xarModGetVar('sitetools','templcachepath').'/CACHEKEYS';
-    $scriptcache=xarModGetVar('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
+    $cachedir    = xarModGetVar('sitetools','templcachepath');
+    $cachefile   = xarModGetVar('sitetools','templcachepath').'/CACHEKEYS';
+    //Do not include the template for the current
+    $scriptcache = xarModGetVar('sitetools','templcachepath').'/d4609360b2e77516aabf27c1f468ee33.php';
     $data=array();
           $data['popup']=false;
     /* Check for confirmation. */
     $data['authid'] = xarSecGenAuthKey();
+    $data['return_url']=xarModURL('sitetools','admin','cacheview');
     if (empty($action)) {
         /* No action set yet - display cache file list and await action */
          $data['showfiles']=false;
