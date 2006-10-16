@@ -19,29 +19,70 @@
 function sitetools_admin_updateconfig()
 {
 
-   if (!xarVarFetch('adopath', 'str:4:128', $adopath, '')) return;
-    if (!xarVarFetch('rsspath', 'str:4:128', $rsspath, '')) return;
-    if (!xarVarFetch('templpath', 'str:4:128', $templpath,'')) return;
-    if (!xarVarFetch('backuppath', 'str:4:128', $backuppath,'')) return;
+    if (!xarVarFetch('adopath', 'str:4:254', $adopath, '')) return;
+    if (!xarVarFetch('rsspath', 'str:4:254', $rsspath, '')) return;
+    if (!xarVarFetch('templpath', 'str:4:254', $templpath,'')) return;
+    if (!xarVarFetch('backuppath', 'str:4:254', $backuppath,'')) return;
     if (!xarVarFetch('defaultbktype', 'str:4', $defaultbktype,'')) return;
     if (!xarVarFetch('lineterm', 'str:2:4', $lineterm,'')) return;
     if (!xarVarFetch('usetimestamp', 'int:1:', $usetimestamp, true)) return;
     if (!xarVarFetch('usedbprefix', 'int:1:', $usedbprefix, false)) return;
     if (!xarVarFetch('colnumber', 'int:1:', $colnumber,3)) return;
-    if (!xarVarFetch('confirm', 'str:4:128', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:4:254', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.  Note that the default values are set in
      * xarVarFetch when recieving the incoming values, so no extra processing
      * is needed when setting the variables here.
      */
-    xarModSetVar('sitetools','adocachepath',$adopath);
-    xarModSetVar('sitetools','rsscachepath', $rsspath);
-    xarModSetVar('sitetools','templcachepath', $templpath);
-    xarModSetVar('sitetools','backuppath', $backuppath);
+    $checkpath=array('adocachepath'   => $adopath,
+                     'rsscachepath'   => $rsspath,
+                     'templcachepath' => $templpath,
+                     'backuppath'     => $backuppath);
+    
+
+    foreach ($checkpath as $varname=>$pathname) {
+        $pathname= trim(ereg_replace('\/$', '', $pathname));
+        if ($pathname == '') {
+            $pathvar = substr($varname,0,3);
+            switch ($pathvar) {
+             case 'ado':
+                 xarModSetVar('sitetools', 'adocachepath', xarCoreGetVarDirPath()."/cache/adodb");
+                 break;
+             case 'tem':
+                 xarModSetVar('sitetools', 'templcachepath', xarCoreGetVarDirPath()."/cache/templates");
+                 break;
+             case 'rss':
+                 xarModSetVar('sitetools', 'rsscachepath', xarCoreGetVarDirPath()."/cache/templates");
+                 break;
+             case 'bac':
+                 xarModSetVar('sitetools', 'backuppath', xarCoreGetVarDirPath()."/uploads");
+                 break;
+            }
+
+        } else {
+            if (!file_exists($pathname) || !is_dir($pathname)) {
+                $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $pathname);
+                xarErrorSet(XAR_USER_EXCEPTION, 'INVALID_DIRECTORY', new DefaultUserException($msg));
+                return;
+            } elseif (!is_writable($pathname)) {
+                $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $pathname);
+                xarErrorSet(XAR_USER_EXCEPTION, 'NOT_WRITABLE', new DefaultUserException($msg));
+                return;
+            } else {
+                $match = array('/^\.\/var\//','/^var\//');
+                    //replace any ./var or /var or var at the beginning of the path with the real var path
+                   $pathname=preg_replace($match, xarCoreGetVarDirPath().'/',$pathname);
+
+                xarModSetVar('sitetools', $varname, $pathname);
+            }
+        }
+    }
+
+
     /*    xarModSetVar('sitetools','lineterm', $lineterm);  */
     xarModSetVar('sitetools','timestamp', $usetimestamp);
-    xarModSetVar('sitetools','usedbprefix', $usedbprefix);    
+    xarModSetVar('sitetools','usedbprefix', $usedbprefix);
     xarModSetVar('sitetools','colnumber',$colnumber);
     xarModSetVar('sitetools','defaultbktype',$defaultbktype);
 

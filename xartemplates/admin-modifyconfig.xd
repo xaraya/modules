@@ -11,7 +11,7 @@
 <xar:set name="backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
 <xar:set name="updatenote"><xar:mlstring>The default cache paths are entered below. 
                 Change them only if you have changed default cache directory paths.
-                Note there is no trailing slash in the path names.</xar:mlstring></xar:set>
+                Note these should be full paths and there is no trailing slash in the path names.</xar:mlstring></xar:set>
 <xar:set name="backupnote"><xar:mlstring>Check the following carefully, and correct them if necessary.</xar:mlstring></xar:set>
 <xar:set name="defado"><xar:mlstring>Default ADOdb Cache path is </xar:mlstring></xar:set>
 <xar:set name="defrss"><xar:mlstring>Default RSS Cache path is </xar:mlstring></xar:set>
