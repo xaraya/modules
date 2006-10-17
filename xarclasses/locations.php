@@ -12,6 +12,7 @@
     class BasicMapObject extends Object implements MapObject
     {
         public $id;
+        public $extid;
         public $name;
         public $description;
         public $windowtext;
@@ -26,6 +27,7 @@
         {
             return array(
                     'id' => $this->id,
+                    'extid' => $this->extid,
                     'name' => $this->name,
                     'description' => $this->description,
                     'windowtext' => $this->windowtext,
@@ -44,6 +46,7 @@
         protected function loaddata(array $args)
         {
             if (isset($args['id'])) $this->id = $args['id'];
+            if (isset($args['extid'])) $this->extid = $args['extid'];
             if (isset($args['name'])) $this->name = $args['name'];
             if (isset($args['description'])) $this->description = $args['description'];
             if (isset($args['windowtext'])) $this->windowtext = $args['windowtext'];
