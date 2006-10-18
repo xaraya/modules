@@ -72,7 +72,7 @@ function mime_userapi_analyze_file( $args )
     if (!$fileSize) {
         $parts = explode('.', $altFileName);
         if (is_array($parts) && count($parts)) {
-            $extension =& basename(end($parts));
+            $extension = basename(end($parts));
             $typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
             if (is_array($typeInfo) && count($typeInfo)) {
                 $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
