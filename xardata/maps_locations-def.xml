@@ -19,8 +19,18 @@
       <order>1</order>
       <validation></validation>
     </property>
-    <property name="name">
+    <property name="extid">
       <id>298</id>
+      <label>External ID</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>299</id>
       <label>Name</label>
       <type>textbox</type>
       <default></default>
@@ -30,7 +40,7 @@
       <validation></validation>
     </property>
     <property name="description">
-      <id>299</id>
+      <id>300</id>
       <label>Description</label>
       <type>textbox</type>
       <default></default>
@@ -40,7 +50,7 @@
       <validation></validation>
     </property>
     <property name="longitude">
-      <id>300</id>
+      <id>301</id>
       <label>Longitude</label>
       <type>integerbox</type>
       <default></default>
@@ -50,7 +60,7 @@
       <validation></validation>
     </property>
     <property name="latitude">
-      <id>301</id>
+      <id>302</id>
       <label>Latitude</label>
       <type>integerbox</type>
       <default></default>
@@ -60,7 +70,7 @@
       <validation></validation>
     </property>
     <property name="longitude2">
-      <id>302</id>
+      <id>303</id>
       <label>Longitude2</label>
       <type>integerbox</type>
       <default></default>
@@ -70,7 +80,7 @@
       <validation></validation>
     </property>
     <property name="latitude2">
-      <id>303</id>
+      <id>304</id>
       <label>Latitude2</label>
       <type>integerbox</type>
       <default></default>
@@ -80,7 +90,7 @@
       <validation></validation>
     </property>
     <property name="postal_code">
-      <id>304</id>
+      <id>305</id>
       <label>Postal Code</label>
       <type>textbox</type>
       <default></default>
@@ -90,7 +100,7 @@
       <validation></validation>
     </property>
     <property name="itemid">
-      <id>305</id>
+      <id>306</id>
       <label>Itemid</label>
       <type>integerbox</type>
       <default>0</default>
@@ -100,7 +110,7 @@
       <validation></validation>
     </property>
     <property name="moduleid">
-      <id>306</id>
+      <id>307</id>
       <label>moduleid</label>
       <type>module</type>
       <default></default>
@@ -110,7 +120,7 @@
       <validation></validation>
     </property>
     <property name="itemtype">
-      <id>307</id>
+      <id>308</id>
       <label>Itemtype</label>
       <type>integerbox</type>
       <default></default>
@@ -120,7 +130,7 @@
       <validation></validation>
     </property>
     <property name="datetime">
-      <id>308</id>
+      <id>309</id>
       <label>DateTime</label>
       <type>calendar</type>
       <default>xarModAPIFunc('maps','util','time')</default>
@@ -130,7 +140,7 @@
       <validation></validation>
     </property>
     <property name="created">
-      <id>309</id>
+      <id>310</id>
       <label>Created</label>
       <type>calendar</type>
       <default>xarModAPIFunc('maps','util','time')</default>
