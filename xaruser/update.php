@@ -1,6 +1,6 @@
 <?php
 /**
- * Standard function to update a current item
+ * Function to update a plan item
  *
  * @package modules
  * @copyright (C) 2006 The Digital Development Foundation
@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Update an itsp
+ * Update an itsp planitem
  *
  * This function is called with the results of the
  * form supplied by xarModFunc('itsp','user','modify') to update an itsp. It sorts out what
@@ -203,7 +203,7 @@ function itsp_user_update()
     /* This function generated no output, and so now it is complete we redirect
      * the user to an appropriate page for them to carry on their work
      */
-    xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itpsid'=>$itspid, 'pitemid'=> $pitemid)));
+    xarResponseRedirect(xarModURL('itsp', 'user', 'modify', array('itspid'=>$itspid, 'pitemid'=> $pitemid)));
     /* Return */
     return true;
 }

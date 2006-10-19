@@ -18,7 +18,7 @@
    and serves the relevant modify page. The source that is defined in the planitem will determine the include template.
  *
  * @author ITSP Module Development Team
- * @param int itspid The id of the itsp to be modified
+ * @param int itspid The id of the itsp to be modified OPTIONAL
  * @param int pitemid The id of the plan item to be modified
  * @todo add test for already followed courses
  *       add checks for types of planitems
