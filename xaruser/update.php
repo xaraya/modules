@@ -194,7 +194,7 @@ function itsp_user_update()
         $newstatus = 1;
         $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
         if (!$updatestatus) {
-            xarSessionSetVar('statusmsg', xarML('The ITSP nr #(1) was NOT found!',$itspid));
+            xarSessionSetVar('statusmsg', xarML('The ITSP with id #(1) was NOT found!',$itspid));
             return false; // throw back
         }
     } else {

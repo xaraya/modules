@@ -221,6 +221,13 @@ function itsp_user_itsp($args)
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */
+    $canapprove = false;
+    if ($itspstatus == 4) {
+        if (xarSecurityCheck('DeleteITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+            $canapprove = true;
+        }
+    }
+    $data['canapprove'] = $canapprove;
     $itspuser = xarUserGetVar('name', $item['userid']);
     xarTplSetPageTitle(xarVarPrepForDisplay($itspuser));
     $data['uid'] = xarUserGetVar('uid');

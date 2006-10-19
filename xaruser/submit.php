@@ -17,6 +17,7 @@
  * When a user submits the ITSP, it is sent to the education office for approval
  * Copies are sent to the student and to the supervisor.
  * Other updates to the status can be done from this function as well
+ * When the ITSP is approved, a similar action is performed
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int itspid
@@ -205,7 +206,15 @@ function itsp_user_submit($args)
 
             break;
         case 5:
+            if (!xarSecurityCheck('DeleteITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+                break;
+            }
             // Approved
+            if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
+                // todo: add error
+                return $data;
+            }
+            // TODO: send mails
             break;
         case 6:
             // Closed, not open anymore, ready for certificate
