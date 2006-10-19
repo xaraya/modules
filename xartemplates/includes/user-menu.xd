@@ -6,7 +6,7 @@
     <xar:set name="$navPlanUrl">#xarModURL('itsp','user','view')#</xar:set>
 </xar:if>
 <xar:if condition="!empty($itspid)">
-    <xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp')#</xar:set>
+    <xar:set name="$navITSPUrl">#xarModURL('itsp','user','itsp', array('itspid' => $itspid))#</xar:set>
 <xar:else />
     <xar:set name="$navITSPUrl">#xarModURL('itsp','user','view')#</xar:set>
 </xar:if>

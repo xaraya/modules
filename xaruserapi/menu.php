@@ -26,14 +26,14 @@ function itsp_userapi_menu()
 {
     /* Initialise the array that will hold the menu configuration */
     $menu = array();
-    if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',   'id', $itspid,   $itspid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
     /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('Individual Training and Supervision Plan');
 
     $userid = xarUserGetVar('uid');
     // If there is no itspid specified, then assume we want to see the current user's ITSP
-    if (!$itspid) {
+    if (empty($itspid)) {
         $where = "xar_userid = $userid";
     } else {
         $where = "xar_itspid = $itspid";
@@ -64,8 +64,6 @@ function itsp_userapi_menu()
     $result->Close();
 
     if(!empty($itspid)) {
-        //$planid = $itsp['planid'];
-        //$itspid = $itsp['itspid'];
         $menu['itspid'] = $itspid;
         $menu['planid'] = $planid;
         // Get the planitems for this plan in the ITSP
