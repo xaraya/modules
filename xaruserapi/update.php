@@ -15,8 +15,8 @@
  * Update an itsp with a new status (and others maybe)
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param  $args ['itspid'] the ID of the item
- * @param  $args ['newstatus'] the new name of the item
+ * @param int $args ['itspid'] the ID of the item
+ * @param int $args ['newstatus'] the new status of the item
  * @since 22 May 2006
  * @return bool true on success of update
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
