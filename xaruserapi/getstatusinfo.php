@@ -15,6 +15,7 @@
  * Get status information
  *
  * @author MichelV <michelv@xarayahosting.nl>
+ * @param none
  * @return array with status info data
  */
 function itsp_userapi_getstatusinfo()
@@ -26,7 +27,8 @@ function itsp_userapi_getstatusinfo()
      //   $statusoptions[3] = xarML('Supervisor agreed'); // Supervisor approved
         $statusoptions[4] = xarML('Submitted'); // Sent to the office, closed for editing
         $statusoptions[5] = xarML('Approved');
-        $statusoptions[6] = xarML('Closed');
+        $statusoptions[6] = xarML('Certificate Requested');
+        $statusoptions[7] = xarML('Closed');
 
         return $statusoptions;
 }

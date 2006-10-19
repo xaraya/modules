@@ -1,17 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-  <img src="modules/example/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <img src="modules/itsp/xarimages/admin.gif" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
-    <em><xar:mlstring>The ITSP module is a module to organise and plan Education plans.</xar:mlstring></em>
+    <em><xar:mlstring>The ITSP module is a module to organise the teaching and education for students.</xar:mlstring></em>
     <xar:mlstring>It is currently responsible for accomplishing three main tasks:</xar:mlstring>
   </p>
   <ol>
@@ -44,8 +42,19 @@
     external courses can be used (use mix_yourname as the source).
     </xar:mlstring><br />
   </p>
-
-  <h3><xar:mlstring>ITSP terminology</xar:mlstring></h3>
+  
+  <p><xar:mlstring>The ITSP can have different statusses. When it is created, it is in the first, called Added<xar:mlstring><br />
+  <xar:mlstring>If the user has added enough credits, the ITSP can be submitted and be placed in that status</xar:mlstring><br />
+  <xar:mlstring>When the educational staff approves the ITSP, it will be put in the Approved status.<xar:mlstring>
+  <xar:mlstring>Once approved, it can be updated by the user again. Now, it cannot be submitted again, but the user can request the certificate for it. When this
+  action is performed, the ITSP will go to the certificate requested status.<xar:mlstring>
+  </p>
+  <p><xar:mlstring>Create, or let users create, an ITSP via the user_new function. Choose the education plan you want to use and press the create button.</xar:mlstring><br />
+  Now, users can fill in the details for the planitems. This way, they will gather credits that will make up their planned credits. These credits are shown in the overview page. If 
+  the planitem has a minimum number of credits assigned, the user will see if there are enough credits entered.</xar:mlstring><br />
+  <xar:mlstring>If enough credits are entered, a user can choose to submit the ITSP for approval. The ITSP then goes to the next status: submitted.</xar:mlstring>
+ </p>
+  <h3><xar:mlstring>Glossary: ITSP terminology</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Plan: an educational plan, eg "Bachelor in Biology"</xar:mlstring></li>
     <li><xar:mlstring>Planitem: a part of the educational plan. This part can be a combination of courses from the courses module,
