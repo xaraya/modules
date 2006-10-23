@@ -1,27 +1,32 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+
+<h1 class="xar-mod-head xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></h1>
+
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Categories</xar:mlstring></h2>
+<div>
 
-<a href="&xar-modurl-categories-admin-modifycat;"><xar:mlstring>Add Category</xar:mlstring></a><br /><br />
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<div>
+<table border="0" cellspacing="0" cellpadding="0">
 <tr>
     <th><xar:mlstring>Name</xar:mlstring></th>
     <th><xar:mlstring>Description</xar:mlstring></th>
     <th><xar:mlstring>Image</xar:mlstring></th>
     <th><xar:mlstring>Options</xar:mlstring></th>
 </tr>
+
 <xar:loop name="$categories">
     <xar:if condition="(($loop:index + 1) % 2)">
         <tr>
-            <td align="left">
-                #$loop:item['xar_map']#
-                #$loop:item['name']#
+            <td style="test-align: left;">
+                #$loop:item.xar_map#
+                #xarVarPrepForDisplay($loop:item.name)#
             </td>
-            <td>#$loop:item['description']#</td>
-            <td><xar:if condition="empty($loop:item['image'])">&nbsp;<xar:else />#$loop:item['image']#</xar:if></td>
+            <td>#xarVarPrepForDisplay($loop:item.description)#</td>
+            <td><xar:if condition="empty($loop:item.image)">&nbsp;<xar:else />#$loop:item.image#</xar:if></td>
             <td style="text-align: center;">
+                <xar:sec mask="EditCategories" catch="false">
                 <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
@@ -29,17 +34,19 @@
                 <a href="#xarModURL('categories', 'admin', 'deletecat', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Delete</xar:mlstring>
                 </a>
+                </xar:sec>
             </td>
         </tr>
     <xar:else />
         <tr>
-            <td align="left" class="xar-accent">
-                #$loop:item['xar_map']#
-                #$loop:item['name']#
+            <td style="text-align: left;" class="xar-accent">
+                #$loop:item.xar_map#
+                #xarVarPrepForDisplay($loop:item.name)#
             </td>
-            <td class="xar-accent">#$loop:item['description']#</td>
-            <td class="xar-accent"><xar:if condition="empty($loop:item['image'])">&nbsp;<xar:else />#$loop:item['image']#</xar:if></td>
+            <td class="xar-accent">#xarVarPrepForDisplay($loop:item.description)#</td>
+            <td class="xar-accent"><xar:if condition="empty($loop:item.image)">&nbsp;<xar:else />#$loop:item.image#</xar:if></td>
             <td class="xar-accent" style="text-align: center;">
+                <xar:sec mask="EditCategories" catch="false">
                 <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
@@ -47,13 +54,16 @@
                 <a href="#xarModURL('categories', 'admin', 'deletecat', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Delete</xar:mlstring>
                 </a>
+                </xar:sec>
             </td>
         </tr>
     </xar:if>
 </xar:loop>
 </table>
-<br />
-<table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
+</div>
+
+<div>
+<table border="0" cellspacing="0" cellpadding="2" style="text-align: center;">
 <tr>
     <td>
         <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
@@ -74,7 +84,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' =&gt; $i, 'catsperpage' =&gt; $catsperpage))#">
                     #$i#
                 </a>
             </xar:if>
@@ -83,21 +93,25 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#-#$pagertotal#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' =&gt; $i, 'catsperpage' =&gt; $catsperpage))#">
                     #$i#-#$pagertotal#
                 </a>
             </xar:if>
         </xar:if>
     </td>
 </tr>
-<tr><td>
-<form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
-<xar:mlstring>Categories per page:</xar:mlstring>&nbsp;&nbsp;
-    <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
-    <input type="submit" value="#$reloadlabel#" />
-</form>
-</td></tr>
-<tr><td><xar:mlstring>Categories Total:</xar:mlstring>&nbsp;&nbsp;#$pagertotal#</td></tr>
-</table>
 
+<tr><td>
+    <form action="#xarModURL('categories','admin','viewcats')#" method="post">
+        <xar:mlstring>Categories per page:</xar:mlstring>&nbsp;
+        <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+        <input type="submit" value="#$reloadlabel#" />
+    </form>
+</td></tr>
+
+<tr><td><xar:mlstring>Categories Total:</xar:mlstring>&nbsp;#$pagertotal#</td></tr>
+</table>
+</div>
+
+</div>
 </div>

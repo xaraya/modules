@@ -33,39 +33,27 @@ function categories_admin_modifycat()
     $data = array();
 
     $data['imageoptions'] = array();
-    $data['imageoptions'][] = array('id' => '',
-                                    'name' => '');
+    $data['imageoptions'][] = array('id' => '', 'name' => xarML('-- No image --'));
     $image_array = xarModAPIFunc('categories','visual','findimages');
     foreach ($image_array as $image) {
-        $data['imageoptions'][] = array('id' => '',
-                                        'name' => $image);
+        $data['imageoptions'][] = array('id' => '', 'name' => $image);
     }
 
     $data['repeat'] = $repeat;
-// delete after testing, but imho button value don't use in code
-//    $data['addlabel'] = xarML('Add');
-//    $data['modifylabel'] = xarML('Modify');
-//    $data['reassignlabel'] = xarML('Reassign');
 
     if (!empty($cid)) {
-        //Editing an existing category
+        // Editing an existing category
 
         // Security check
-        if(!xarSecurityCheck('EditCategories',1,'All',"All:$cid")) return;
+        if (!xarSecurityCheck('EditCategories',1,'All',"All:$cid")) return;
 
         // Setting up necessary data.
         $data['cid'] = $cid;
-        $data['category'] = xarModAPIFunc('categories',
-                                          'user',
-                                          'getcatinfo',
-                                          array('cid' => $cid));
+        $data['category'] = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $cid));
 
-        $categories = xarModAPIFunc('categories',
-                                    'user',
-                                    'getcat',
-                                    array('cid' => false,
-                                          'eid' => $cid,
-                                          'getchildren' => true));
+        $categories = xarModAPIFunc('categories', 'user', 'getcat',
+            array('cid' => false, 'eid' => $cid, 'getchildren' => true)
+        );
 
         $data['func'] = 'modify';
 
@@ -73,24 +61,21 @@ function categories_admin_modifycat()
         $catinfo['module'] = 'categories';
         $catinfo['itemtype'] = 0;
         $catinfo['itemid'] = $cid;
-        $hooks = xarModCallHooks('item','modify',$cid,$catinfo);
+        $hooks = xarModCallHooks('item', 'modify', $cid, $catinfo);
         if (empty($hooks)) {
             $data['hooks'] = '';
         } else {
             $data['hooks'] = $hooks;
         }
-
     } else {
         // Adding a new Category
 
-        if(!xarSecurityCheck('AddCategories')) return;
+        if (!xarSecurityCheck('AddCategories')) return;
 
         // Setting up necessary data.
-        $categories = xarModAPIFunc('categories',
-                                    'user',
-                                    'getcat',
-                                    array('cid' => false,
-                                          'getchildren' => true));
+        $categories = xarModAPIFunc('categories', 'user', 'getcat',
+            array('cid' => false, 'getchildren' => true)
+        );
 
         $catinfo = array();
         $catinfo['module'] = 'categories';
@@ -108,19 +93,19 @@ function categories_admin_modifycat()
         $data['cid'] = NULL;
     }
 
-    $category_Stack = array ();
+    $category_Stack = array();
 
     foreach ($categories as $key => $category) {
         $categories[$key]['slash_separated'] = '';
 
         while ((count($category_Stack) > 0 ) &&
                ($category_Stack[count($category_Stack)-1]['indentation'] >= $category['indentation'])
-              ) {
-           array_pop($category_Stack);
+        ) {
+            array_pop($category_Stack);
         }
 
         foreach ($category_Stack as $stack_cat) {
-                $categories[$key]['slash_separated'] .= $stack_cat['name'].'&nbsp;/&nbsp;';
+            $categories[$key]['slash_separated'] .= $stack_cat['name'] . '&nbsp;/&nbsp;';
         }
 
         array_push($category_Stack, $category);
@@ -130,7 +115,7 @@ function categories_admin_modifycat()
     $data['categories'] = $categories;
 
     // Return output
-    return xarTplModule('categories','admin','editcat',$data);
+    return xarTplModule('categories', 'admin', 'editcat', $data);
 }
 
 ?>
