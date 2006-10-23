@@ -148,6 +148,11 @@ function security_upgrade($oldversion)
                 return false;
             }
 
+        case '0.9.2':
+        case '0.9.3':
+        case '0.9.4':
+        case '0.9.5':
+
             break;
 
         default:
