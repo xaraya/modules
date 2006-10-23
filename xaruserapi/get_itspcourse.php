@@ -85,8 +85,12 @@ function itsp_userapi_get_itspcourse($args)
     }
     list($itspid, $pitemid, $icoursetitle, $icourseloc, $icoursedesc, $icoursecredits, $icourselevel, $icourseresult,
     $icoursedate, $dateappr, $datemodi,$modiby) = $result->fields;
-    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:All:All")) {
-        $item = array('itspid'      => $itspid,
+    //$itspid:$planid:$userid
+    $itsp = xarModAPIFunc('itsp','user','get',array('itspid' => $itspid));
+    $userid = $itsp['userid'];
+    $planid = $itsp['planid'];
+    if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+        $item = array('itspid'        => $itspid,
                      'pitemid'        => $pitemid,
                      'icoursetitle'   => $icoursetitle,
                      'icourseloc'     => $icourseloc,
