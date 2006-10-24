@@ -163,7 +163,7 @@ function sitetools_admin_startcheck()
     $follow = xarModGetVar('sitetools','links_follow');
     xarModAPIFunc('sitetools','admin','checklinks',
                   array('skiplocal' => $skiplocal,
-                        'method' => $emthod,
+                        'method' => $method,
                         'follow' => $follow));
 }
 
