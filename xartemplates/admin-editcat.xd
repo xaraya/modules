@@ -44,9 +44,9 @@
                     <select name="image[#$cid#]" id="image_#$cid#">
                         <xar:loop name="$imageoptions">
                             <xar:if condition="!empty($category['image']) and $category['image'] eq $loop:item['name']">
-                                <option selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                <option value="#xarVarPrepForDisplay($loop:item.id)#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
                             <xar:else />
-                                <option>#xarVarPrepForDisplay($loop:item.name)#</option>
+                                <option value="#xarVarPrepForDisplay($loop:item.id)#">#xarVarPrepForDisplay($loop:item.name)#</option>
                             </xar:if>
                         </xar:loop>
                     </select>

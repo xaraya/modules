@@ -36,7 +36,7 @@ function categories_admin_modifycat()
     $data['imageoptions'][] = array('id' => '', 'name' => xarML('-- No image --'));
     $image_array = xarModAPIFunc('categories','visual','findimages');
     foreach ($image_array as $image) {
-        $data['imageoptions'][] = array('id' => '', 'name' => $image);
+        $data['imageoptions'][] = array('id' => $image, 'name' => $image);
     }
 
     $data['repeat'] = $repeat;
