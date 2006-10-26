@@ -71,17 +71,17 @@
                     </td>
                 </tr>
             </xar:if>
-             </table>
-            </div>
+        </table>
+        </div>
 
-            <div class="xar-form-input-wrapper-before">
-                        <xar:mlstring>
-                            Click on <strong>Delete</strong> to delete <strong>all</strong> changes
-                            associated with a module. Click on a <strong>module name</strong> to go to the module's statistics page. This page
-                            contains the figures for all of the module's items that have changes associated with them.
-                            You can delete all changes associated with a particular item from this page.
-                        </xar:mlstring>
-            </div>
+        <div class="xar-form-input-wrapper-before">
+                    <xar:mlstring>
+                        Click on <strong>Delete</strong> to delete <strong>all</strong> changes
+                        associated with a module. Click on a <strong>module name</strong> to go to the module's statistics page. This page
+                        contains the figures for all of the module's items that have changes associated with them.
+                        You can delete all changes associated with a particular item from this page.
+                    </xar:mlstring>
+        </div>
 
 <xar:else/>
     <h3><xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml></h3>
@@ -162,7 +162,7 @@
                 </tr>
             </xar:if>
         </table>
-             </div>
+        </div>
 
             <div class="xar-form-input-wrapper-before">
                 <xar:mlstring>
@@ -173,7 +173,6 @@
                 </xar:mlstring>
             </div>
 
-        </div>
 </xar:if>
 
 </div>

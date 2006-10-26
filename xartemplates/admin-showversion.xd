@@ -8,17 +8,17 @@
     </h2>
     <xar:if condition="!empty($restore)">
     <div class="xar-form-input-wrapper">
-    <h3>
-        <xar:mlstring>Restore this version of the module item ?</xar:mlstring>
-    </h3>
-    <form method="post" action="&xar-modurl-changelog-admin-showversion;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="modid" id="modid" value="#$modid#" />
-        <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-        <input type="hidden" name="logid" id="logid" value="#$logid#" />
-        <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
-    </form>
+        <h3>
+            <xar:mlstring>Restore this version of the module item ?</xar:mlstring>
+        </h3>
+        <form method="post" action="&xar-modurl-changelog-admin-showversion;">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="modid" id="modid" value="#$modid#" />
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <input type="hidden" name="logid" id="logid" value="#$logid#" />
+            <input type="submit" name="confirm" id="confirm" value="#$confirmbutton#"  />
+        </form>
     </div>
     </xar:if>
     <p class="xar-form-input-wrapper-before">
@@ -35,60 +35,58 @@
         </xar:ml>
         </legend>
         <div class="xar-form-input-wrapper">
-
-        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-            <tr>
-                <th><xar:mlstring>Version</xar:mlstring></th>
-                <th><xar:mlstring>Status</xar:mlstring></th>
-                <th><xar:mlstring>Editor</xar:mlstring></th>
-                <xar:if condition="$showhost">
-                <th><xar:mlstring>Hostname</xar:mlstring></th>
-                </xar:if>
-                <th><xar:mlstring>Date</xar:mlstring></th>
-                <th><xar:mlstring>Remark</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td class="xar-norm">#$version#</td>
-                <td class="xar-norm">#$status#</td>
-                <td class="xar-norm"><a href="#$profile#">#$editorname#</a></td>
-                <xar:if condition="$showhost">
-                <td class="xar-norm">#$hostname#</td>
-                </xar:if>
-                <td class="xar-norm">
-                    <xar:ml>
-                        <xar:mlstring>#(1) #(2)</xar:mlstring>
-                        <xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
-                        <xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
-                    </xar:ml>
-                </td>
-                <td class="xar-norm">#$remark#</td>
-            </tr>
-        </table>
-        <p>
-            <a href="#$link#"><xar:mlstring>Back to version listing</xar:mlstring></a>
-            -
-            <xar:if condition="!empty($prevversion)">
-            <a href="#$prevversion#"><xar:mlstring>Show previous version</xar:mlstring></a>
-            [<a href="#$prevdiff#"><xar:mlstring>diff</xar:mlstring></a>]
-            </xar:if>
-            -
-            <xar:if condition="!empty($nextversion)">
-            <a href="#$nextversion#"><xar:mlstring>Show next version</xar:mlstring></a>
-            [<a href="#$nextdiff#"><xar:mlstring>diff</xar:mlstring></a>]
-            </xar:if>
-            <xar:if condition="!empty($restorelink)">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+                <tr>
+                    <th><xar:mlstring>Version</xar:mlstring></th>
+                    <th><xar:mlstring>Status</xar:mlstring></th>
+                    <th><xar:mlstring>Editor</xar:mlstring></th>
+                    <xar:if condition="$showhost">
+                    <th><xar:mlstring>Hostname</xar:mlstring></th>
+                    </xar:if>
+                    <th><xar:mlstring>Date</xar:mlstring></th>
+                    <th><xar:mlstring>Remark</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td class="xar-norm">#$version#</td>
+                    <td class="xar-norm">#$status#</td>
+                    <td class="xar-norm"><a href="#$profile#">#$editorname#</a></td>
+                    <xar:if condition="$showhost">
+                    <td class="xar-norm">#$hostname#</td>
+                    </xar:if>
+                    <td class="xar-norm">
+                        <xar:ml>
+                            <xar:mlstring>#(1) #(2)</xar:mlstring>
+                            <xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
+                            <xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
+                        </xar:ml>
+                    </td>
+                    <td class="xar-norm">#$remark#</td>
+                </tr>
+            </table>
+            <p>
+                <a href="#$link#"><xar:mlstring>Back to version listing</xar:mlstring></a>
                 -
-                <a href="#$restorelink#"><xar:mlstring>Restore current version</xar:mlstring></a>
-            <xar:elseif condition="!empty($showlink)"/>
+                <xar:if condition="!empty($prevversion)">
+                <a href="#$prevversion#"><xar:mlstring>Show previous version</xar:mlstring></a>
+                [<a href="#$prevdiff#"><xar:mlstring>diff</xar:mlstring></a>]
+                </xar:if>
                 -
-                <a href="#$showlink#"><xar:mlstring>Show current version</xar:mlstring></a>
-            </xar:if>
-        </p>
-        </fieldset>
+                <xar:if condition="!empty($nextversion)">
+                <a href="#$nextversion#"><xar:mlstring>Show next version</xar:mlstring></a>
+                [<a href="#$nextdiff#"><xar:mlstring>diff</xar:mlstring></a>]
+                </xar:if>
+                <xar:if condition="!empty($restorelink)">
+                    -
+                    <a href="#$restorelink#"><xar:mlstring>Restore current version</xar:mlstring></a>
+                <xar:elseif condition="!empty($showlink)"/>
+                    -
+                    <a href="#$showlink#"><xar:mlstring>Show current version</xar:mlstring></a>
+                </xar:if>
+            </p>
         </div>
-
-        <xar:if condition="!empty($restore)">
-        <fieldset>
+    </fieldset>
+    <xar:if condition="!empty($restore)">
+    <fieldset>
         <legend>
             <xar:mlstring>Preview Version</xar:mlstring>
         </legend>
@@ -117,34 +115,34 @@
                 </xar:comment>
 
             </xar:if>
-        </div>
-        </fieldset>
-        </xar:if>
+            </div>
+    </fieldset>
+    </xar:if>
 
-        <fieldset>
+    <fieldset>
         <legend>
            <xar:mlstring>Field List</xar:mlstring>
         </legend>
         <div class="xar-form-input-wrapper">
-        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-            <tr>
-                <th><xar:mlstring>Fields</xar:mlstring></th>
-                <th><xar:mlstring>Values</xar:mlstring></th>
-            </tr>
-            <xar:foreach in="$fields" key="$field" value="$value">
-            <tr>
-                <td class="xar-norm">#$field#</td>
-                <td class="xar-norm">
-                    <xar:if condition="is_array($value) or is_object($value)">
-                        <xar:set name="value">serialize($value)</xar:set>
-                    </xar:if>
-                    <xar:set name="value">nl2br(xarVarPrepForDisplay($value))</xar:set>
-                    #$value#
-                </td>
-            </tr>
-            </xar:foreach>
-        </table>
+            <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+                <tr>
+                    <th><xar:mlstring>Fields</xar:mlstring></th>
+                    <th><xar:mlstring>Values</xar:mlstring></th>
+                </tr>
+                <xar:foreach in="$fields" key="$field" value="$value">
+                <tr>
+                    <td class="xar-norm">#$field#</td>
+                    <td class="xar-norm">
+                        <xar:if condition="is_array($value) or is_object($value)">
+                            <xar:set name="value">serialize($value)</xar:set>
+                        </xar:if>
+                        <xar:set name="value">nl2br(xarVarPrepForDisplay($value))</xar:set>
+                        #$value#
+                    </td>
+                </tr>
+                </xar:foreach>
+            </table>
         </div>
-        </fieldset>
+    </fieldset>
 
 </div>

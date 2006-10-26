@@ -3,7 +3,7 @@
  * Change Log Module version information
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,7 @@
  * @param $args['itemid'] item id
  * @param $args['logid'] log id
  * @return array of changes
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function changelog_adminapi_getversion($args)
 {
@@ -93,6 +93,4 @@ function changelog_adminapi_getversion($args)
 
     return $version;
 }
-
 ?>
-

@@ -3,7 +3,7 @@
  * Change Log Module version information
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,29 +19,20 @@ function changelog_admin_privileges($args)
     // Security Check
     if (!xarSecurityCheck('AdminChangeLog')) return;
 
-    // fixed params
-    list($moduleid,
-         $itemtype,
-         $itemid,
-         $apply,
-         $extpid,
-         $extname,
-         $extrealm,
-         $extmodule,
-         $extcomponent,
-         $extinstance,
-         $extlevel) = xarVarCleanFromInput('moduleid',
-                                           'itemtype',
-                                           'itemid',
-                                           'apply',
-                                           'extpid',
-                                           'extname',
-                                           'extrealm',
-                                           'extmodule',
-                                           'extcomponent',
-                                           'extinstance',
-                                           'extlevel');
     extract($args);
+
+    // fixed params
+    if (!xarVarFetch('moduleid',     'isset', $moduleid,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemtype',     'isset', $itemtype,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
 
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);
