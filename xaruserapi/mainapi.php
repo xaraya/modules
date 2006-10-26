@@ -4,7 +4,7 @@ function netquery_userapi_mainapi()
     include_once "modules/netquery/xarincludes/nqSniff.class.php";
     include_once "modules/netquery/xarincludes/nqTimer.class.php";
     $data = array();
-    $data['timer'] =& new nqTimer();
+    $data['timer'] = new nqTimer();
     $data['timer']->start('main');
     $data['authid'] = xarSecGenAuthKey();
     $data['maintitle']  = xarVarPrepForDisplay(xarML('Netquery'));
@@ -63,12 +63,14 @@ function netquery_userapi_mainapi()
     $data['traceexec_remote'] = xarModGetVar('netquery', 'traceexec_remote');
     $data['traceexec_remote_t'] = xarModGetVar('netquery', 'traceexec_remote_t');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
-    $data['browserinfo'] =& new nqSniff();
+    $data['browserinfo'] = new nqSniff();
     $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['browserinfo']->property('ip')));
     $data['countries'] = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $data['topcountries_limit']));
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['lgrouters'] = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => '2'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
+    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
+    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
     $data['results'] = '';
     $data['j'] = 0;
     $data['winsys'] = (DIRECTORY_SEPARATOR == '\\');
@@ -96,7 +98,8 @@ function netquery_userapi_mainapi()
     $data['lgrequests'] = $lgrequests;
     $wiexample = 'example';
     $j = 1;
-    while ($j <= $data['whois_max_limit']) {
+    while ($j <= $data['whois_max_limit'])
+    {
       $dom = "domain_".$j;
       $tld = "whois_tld_".$j;
       xarVarFetch($dom, 'str:1:', $domain[$j], $wiexample, XARVAR_NOT_REQUIRED);
@@ -120,7 +123,7 @@ function netquery_userapi_mainapi()
     xarVarFetch('router', 'str:1:', $data['router'], 'ATT Public', XARVAR_NOT_REQUIRED);
     xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
     xarVarFetch('formtype', 'str:1:', $data['formtype'], $data['querytype'], XARVAR_NOT_REQUIRED);
-    if ($data['formtype'] == 'none' || $data['formtype'] == 'countries') {$data['formtype'] = $data['querytype_default'];}
+  if ($data['formtype'] == 'none' || $data['formtype'] == 'countries') {$data['formtype'] = $data['querytype_default'];}
     if (isset($_REQUEST['b1']) || isset($_REQUEST['b1_x'])) {$data['formtype'] = 'whois'; $data['querytype'] = 'none';}
     if (isset($_REQUEST['b2']) || isset($_REQUEST['b2_x'])) {$data['formtype'] = 'whoisip'; $data['querytype'] = 'none';}
     if (isset($_REQUEST['b3']) || isset($_REQUEST['b3_x'])) {$data['formtype'] = 'lookup'; $data['querytype'] = 'none';}
@@ -161,76 +164,16 @@ function netquery_userapi_mainapi()
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
     $data['manlink'] = 'modules/netquery/xardocs/manual.html';
-    if (file_exists($data['capture_log_filepath'])) {
+    if (file_exists($data['capture_log_filepath']))
+    {
         $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
                                  'title' => xarML('View operations logfile'),
                                  'label' => xarML('View Log'));
-    } else {
+    }
+    else
+    {
         $data['loglink'] = '';
     }
     return $data;
-}
-function sanitizeSysString($string, $min = '', $max = '')
-{
-  $pattern = '/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i';
-  $string = preg_replace($pattern, '', $string);
-  $string = preg_replace('/\$/', '\\\$', $string);
-  $len = strlen($string);
-  if((($min != '') && ($len < $min)) || (($max != '') && ($len > $max)))
-    return FALSE;
-  return $string;
-}
-if (!function_exists('checkdnsrr'))
-{
-  function checkdnsrr($host, $type = '')
-  {
-    $digexec_local = xarModGetVar('netquery', 'digexec_local');
-    if(!empty($host)) {
-      if($type == '') $type = "MX";
-      $output = '';
-      $k = '';
-      $line = '';
-      @exec("$digexec_local -type=$type $host", $output);
-      while(list($k, $line) = each($output)) {
-        if(eregi("^$host", $line)) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-}
-if (!function_exists('getmxrr'))
-{
-  function getmxrr($hostname, &$mxhosts)
-  {
-    $digexec_local = xarModGetVar('netquery', 'digexec_local');
-    if (!is_array($mxhosts)) $mxhosts = array();
-    if (!empty($hostname )) {
-      $output = '';
-      $ret = '';
-      $k = '';
-      $line = '';
-      @exec("$digexec_local -type=MX $hostname", $output, $ret);
-      while (list($k, $line) = each($output)) {
-        if (ereg("^$hostname\tMX preference = ([0-9]+), mail exchanger = (.*)$", $line, $parts)) {
-          $mxhosts[$parts[1]]=$parts[2];
-        }
-      }
-      if (count($mxhosts)) {
-        reset($mxhosts);
-        ksort($mxhosts);
-        $i = 0;
-        while (list($pref,$host) = each($mxhosts)) {
-          $mxhosts2[$i] = $host;
-          $i++;
-        }
-        $mxhosts = $mxhosts2;
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
 }
 ?>
