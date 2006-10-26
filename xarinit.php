@@ -204,7 +204,7 @@ This table deals with the free courses. So: how to add the custom courses/items 
                xar_icoursetitle     C(255)    NotNull    DEFAULT '',
                xar_icourseloc       C(255)    NotNull    DEFAULT '',
                xar_icoursedesc      X         NotNull    DEFAULT '',
-               xar_icoursecredits   I         NotNull    DEFAULT 0,
+               xar_icoursecredits   F         NotNull    DEFAULT 0,
                xar_icourselevel     C(255)    NotNull    DEFAULT '',
                xar_icourseresult    C(255)    NotNull    DEFAULT '',
                xar_icoursedate      I(11)     Null       DEFAULT NULL,
@@ -546,6 +546,13 @@ function itsp_upgrade($oldversion)
         case '0.4.0':
         case '0.4.1':
         case '0.4.2':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+            $icoursestable = $xartable['itsp_itsp_courses'];
+            $result = $datadict->alterColumn($icoursestable, 'xar_icoursecredits   F         NotNull    DEFAULT 0');
+            if (!$result) return;
+        case '0.5.0':
             break;
     }
     /* Update successful */

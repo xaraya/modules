@@ -102,7 +102,7 @@ function itsp_user_update()
             if (!xarVarFetch('icoursetitle',    'str:1:255',    $icoursetitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icourseloc',      'str:1:255',    $icourseloc, '',  XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icoursedesc',     'str::',        $icoursedesc, '',   XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('icoursecredits',  'int::',        $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('icoursecredits',  'float:0.1:',   $icoursecredits, '',   XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icourselevel',    'str:1:255',    $icourselevel, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icourseresult',   'str:1:255',    $icourseresult, '',  XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('icoursedate',     'str::',        $icoursedate, '',   XARVAR_NOT_REQUIRED)) return;
@@ -149,7 +149,7 @@ function itsp_user_update()
                                    'icoursetitle'=> $icoursetitle,
                                    'icourseloc'=>  $icourseloc,
                                    'icoursedesc'=> $icoursedesc,
-                                   'icoursecredits'=>  $icoursecredits,
+                                   'icoursecredits'=>  (float) $icoursecredits,
                                    'icourselevel'=> $icourselevel,
                                    'icourseresult'=> $icourseresult,
                                    'icoursedate'=> $icoursedate,
@@ -172,7 +172,7 @@ function itsp_user_update()
                                    'icoursetitle'=> $icoursetitle,
                                    'icourseloc'=>  $icourseloc,
                                    'icoursedesc'=> $icoursedesc,
-                                   'icoursecredits'=>  $icoursecredits,
+                                   'icoursecredits'=> (float) $icoursecredits,
                                    'icourselevel'=> $icourselevel,
                                    'icourseresult'=> $icourseresult,
                                    'icoursedate'=> $icoursedate,

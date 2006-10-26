@@ -17,10 +17,11 @@
  * This is a standard adminapi function to create a module item
  *
  * @author the ITSP module development team
- * @param  string icoursetitle Title of the course
- * @param  int itspid
- * @param  int pitemid
+ * @param string icoursetitle Title of the course
+ * @param int itspid
+ * @param int pitemid
  * @param int icourseid The ID of the ITSP course to update
+ * @param float icoursecredits
  * @since 19 Sept 2006
  * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
