@@ -9,24 +9,32 @@ function netquery_admin_lgview()
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $routers = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => $startnum));
-    if (empty($routers)) {
+    if (empty($routers))
+    {
         $msg = xarML('There are no looking glass routers registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    for ($i = 0; $i < count($routers); $i++) {
+    for ($i = 0; $i < count($routers); $i++)
+    {
         $router = $routers[$i];
-        if (xarSecurityCheck('EditNetquery',0)) {
+        if (xarSecurityCheck('EditNetquery',0))
+        {
             $routers[$i]['editurl'] = xarModURL('netquery', 'admin', 'lgmodify', array('router_id' => $router['router_id']));
             $routers[$i]['edittitle'] = xarML('Edit');
-        } else {
+        }
+        else
+        {
             $routers[$i]['editurl'] = '';
             $routers[$i]['edittitle'] = '----';
         }
-        if (xarSecurityCheck('DeleteNetquery',0) && $router['router'] != 'default') {
+        if (xarSecurityCheck('DeleteNetquery',0) && $router['router'] != 'default')
+        {
             $routers[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'lgdelete', array('router_id' => $router['router_id']));
             $routers[$i]['deletetitle'] = xarML('Delete');
-        } else {
+        }
+        else
+        {
             $routers[$i]['deleteurl'] = '';
             $routers[$i]['deletetitle'] = '------';
         }

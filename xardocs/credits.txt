@@ -8,3 +8,4 @@ James Morris for much Xoops help
 Roger Raymond for the client info "sniffer"
 MaxMind for the GeoIP free country CSV data
 Stephen at Adelphia for AS##### lookup info
+Michael Hampton for the spambot blocker

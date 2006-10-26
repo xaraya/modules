@@ -2,7 +2,8 @@
 function netquery_adminapi_wicreate($args)
 {
     extract($args);
-    if ((!isset($whois_tld)) || (!isset($whois_server))) {
+    if ((!isset($whois_tld)) || (!isset($whois_server)))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

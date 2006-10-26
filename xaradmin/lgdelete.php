@@ -11,11 +11,13 @@ function netquery_admin_lgdelete()
     $data['confirminfo'] = xarML('Router Name').": ".$data['router']." - ".xarML('Address').": ".$data['address'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
-    if (empty($confirmation)) {
+    if (empty($confirmation))
+    {
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm')))
+    {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'lgview'));
     }
     if (!xarSecConfirmAuthKey()) return;

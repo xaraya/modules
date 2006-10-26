@@ -1,8 +1,9 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration Menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
@@ -24,7 +25,7 @@
       </xar:if>
       <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-wiview;">
-          <xar:mlstring>Whois TLDs</xar:mlstring>
+          <xar:mlstring>Whois</xar:mlstring>
         </a>
       </dd>
 
@@ -35,7 +36,7 @@
       </xar:if>
       <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-ptview;">
-          <xar:mlstring>Port Services</xar:mlstring>
+          <xar:mlstring>Ports</xar:mlstring>
         </a>
       </dd>
 
@@ -46,7 +47,7 @@
       </xar:if>
       <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-flview;">
-          <xar:mlstring>Category Flags</xar:mlstring>
+          <xar:mlstring>Flags</xar:mlstring>
         </a>
       </dd>
 
@@ -61,8 +62,19 @@
         </a>
       </dd>
 
-      <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+      <xar:if condition="$activetab eq 'bblogedit' or $activetab eq 'bbdelid' or $activetab eq 'bbdelete'">
+          <xar:set name="tabclass">'active'</xar:set>
+      <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+      </xar:if>
       <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-bblogedit;">
+          <xar:mlstring>Spam Log</xar:mlstring>
+        </a>
+      </dd>
+
+     <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+        <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-overview;">
           <xar:mlstring>Overview</xar:mlstring>
         </a>

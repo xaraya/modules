@@ -1,11 +1,11 @@
-!!! IMPORTANT NOTE FOR UPGRADES FROM NETQUERY VERSION 3.30 & EARLIER !!!
+!!! IMPORTANT NOTE FOR UPGRADES FROM NETQUERY VERSION 3.3 & EARLIER !!!
 
 Because this version of Netquery uses a revised Whois data table structure, you
 may get a lot of confusing error messages if you don't use the correct upgrade
 procedural sequence.  (Although no real harm is done, Xaraya gets especially
 upset if older Netquery blocks are left active during the process.) So, to avoid
 scaring yourself to death, please proceed as follows:
- 
+
 1) For all CMS editions (Postnuke, Xaraya and Xoops) any Netquery side blocks
 should be disbled and the module deactivated BEFORE the new files are uploaded
 to the server.  For the Xoops edition, the existing module version must be
@@ -18,17 +18,10 @@ old version files first, rather than relying on overwrites.
 3) For the standalone edition, just let nqsetup run as usual and it will upgrade
 data tables as required.  For the Postnuke and Xaraya editions, run the normal
 module update process from the CMS admin control panel and then re-activate the
-module and any blocks.  For the Xoops edition, this Netquery version must first be
-installed as if it were a new module, and then run the normal Xoops module update
-process and reactivate any blocks as desired.
+module and any blocks.  For the Xoops and PHP-Fusion editions, this Netquery
+version must be installed as if it were a new module, and then run the normal
+Xoops module update process and reactivate any blocks as desired.
 
-4) For the Xoops edition only, you will also need to re-install the port services
-and/or GeoIP data tables by selecting those "Install Data" options in the main
-Netquery admin configuration panel as desired.
-
-Sorry for the inconvenience.  It's the inevitable "price of progress", or, if you
-prefer, the author's failure to foresee all future DBMS structural requirements in
-the original version 1.0 release.  Hopefully, improved Whois functionality makes
-it worthwhile.
-
-RV.
+4) For the Xoops and PHP-Fusion editions, you will also need to re-install the
+port services and/or GeoIP data tables by selecting those "Install Data" options
+in the main Netquery admin configuration panel as desired.

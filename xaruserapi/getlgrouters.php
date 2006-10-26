@@ -2,23 +2,18 @@
 function netquery_userapi_getlgrouters($args)
 {
     extract($args);
-    if ((!isset($startnum)) || (!is_numeric($startnum))) {
-        $startnum = 1;
-    }
-    if ((!isset($numitems)) || (!is_numeric($numitems))) {
-        $numitems = 100000;
-    }
+    if ((!isset($startnum)) || (!is_numeric($startnum))) $startnum = 1;
+    if ((!isset($numitems)) || (!is_numeric($numitems))) $numitems = 100000;
     $lgrouters = array();
-    if (!xarSecurityCheck('OverviewNetquery')) {
-        return $routers;
-    }
+    if (!xarSecurityCheck('OverviewNetquery')) return $lgrouters;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $query = "SELECT * FROM $LGRouterTable ORDER BY router_id";
     $result =& $dbconn->SelectLimit($query, (int)$numitems, (int)$startnum-1);
     if (!$result) return;
-    for (; !$result->EOF; $result->MoveNext()) {
+    for (; !$result->EOF; $result->MoveNext())
+    {
         list($router_id,
              $router,
              $address,

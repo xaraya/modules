@@ -2,15 +2,14 @@
 function netquery_adminapi_getportflag($args)
 {
     extract($args);
-    if (!isset($flag)) {
+    if (!isset($flag))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $portflag = array();
-    if (!xarSecurityCheck('OverviewNetquery')) {
-        return $portflag;
-    }
+    if (!xarSecurityCheck('OverviewNetquery')) return $portflag;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];

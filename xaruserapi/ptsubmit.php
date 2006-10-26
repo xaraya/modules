@@ -2,7 +2,8 @@
 function netquery_userapi_ptsubmit($args)
 {
     extract($args);
-    if ((!isset($port_port)) || (!isset($port_protocol)) || (!isset($port_service))) {
+    if ((!isset($port_port)) || (!isset($port_protocol)) || (!isset($port_service)))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

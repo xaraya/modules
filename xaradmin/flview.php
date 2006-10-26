@@ -8,24 +8,32 @@ function netquery_admin_flview()
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $flags = xarModAPIFunc('netquery', 'user', 'getflags');
-    if (empty($flags)) {
+    if (empty($flags))
+    {
         $msg = xarML('There are no service flags registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    for ($i = 0; $i < count($flags); $i++) {
+    for ($i = 0; $i < count($flags); $i++)
+    {
         $flag = $flags[$i];
-        if (xarSecurityCheck('EditNetquery',0)) {
+        if (xarSecurityCheck('EditNetquery',0))
+        {
             $flags[$i]['editurl'] = xarModURL('netquery', 'admin', 'flmodify', array('flag_id' => $flag['flag_id']));
             $flags[$i]['edittitle'] = xarML('Edit');
-        } else {
+        }
+        else
+        {
             $flags[$i]['editurl'] = '';
             $flags[$i]['edittitle'] = '----';
         }
-        if (xarSecurityCheck('DeleteNetquery',0) && $flag['flagnum'] != 99) {
+        if (xarSecurityCheck('DeleteNetquery',0) && $flag['flagnum'] != 99)
+        {
             $flags[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'fldelete', array('flag_id' => $flag['flag_id']));
             $flags[$i]['deletetitle'] = xarML('Delete');
-        } else {
+        }
+        else
+        {
             $flags[$i]['deleteurl'] = '';
             $flags[$i]['deletetitle'] = '------';
         }

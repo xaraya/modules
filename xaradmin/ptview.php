@@ -9,23 +9,33 @@ function netquery_admin_ptview()
     list($data['buttondir']) = split('[._-]', $data['stylesheet']);
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
-    if ($pflag >= 0) {
+    if ($pflag >= 0)
+    {
         $portdata = xarModAPIFunc('netquery', 'admin', 'getportflag', array('flag' => $pflag));
-    } else {
+    }
+    else
+    {
         $pflag = '';
         $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $portnum));
     }
-    for ($i = 0; $i < count($portdata); $i++) {
+    for ($i = 0; $i < count($portdata); $i++)
+    {
         $port = $portdata[$i];
-        if (xarSecurityCheck('EditNetquery',0)) {
+        if (xarSecurityCheck('EditNetquery',0))
+        {
             $portdata[$i]['editurl'] = xarModURL('netquery', 'admin', 'ptmodify', array('port_id' => $port['port_id'], 'pflag' => $pflag));
-        } else {
+        }
+        else
+        {
             $portdata[$i]['editurl'] = '';
         }
         $portdata[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteNetquery',0)) {
+        if (xarSecurityCheck('DeleteNetquery',0))
+        {
             $portdata[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'ptdelete', array('port_id' => $port['port_id'], 'pflag' => $pflag));
-        } else {
+        }
+        else
+        {
             $portdata[$i]['deleteurl'] = '';
         }
         $portdata[$i]['deletetitle'] = xarML('Delete');

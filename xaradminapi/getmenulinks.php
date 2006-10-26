@@ -1,7 +1,8 @@
 <?php
 function netquery_adminapi_getmenulinks()
 {
-    if (xarSecurityCheck('AdminNetquery', 0)) {
+    if (xarSecurityCheck('AdminNetquery', 0))
+    {
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Modify configuration settings'),
                              'label' => xarML('Modify Configuration'));
@@ -17,10 +18,11 @@ function netquery_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
                              'title' => xarML('View-edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
+        $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
+                             'title' => xarML('View-edit spambot blocker log'),
+                             'label' => xarML('Manage Spam Log'));
     }
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
+    if (empty($menulinks)) $menulinks = '';
     return $menulinks;
 }
 ?>

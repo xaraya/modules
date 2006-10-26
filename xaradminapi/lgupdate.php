@@ -2,13 +2,15 @@
 function netquery_adminapi_lgupdate($args)
 {
     extract($args);
-    if ((!isset($router_id)) || (!isset($router_router)) || (!isset($router_address))) {
+    if ((!isset($router_id)) || (!isset($router_router)) || (!isset($router_address)))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => (int)$router_id));
-    if ($data == false) {
+    if ($data == false)
+    {
         $msg = xarML('No Such Looking Glass Router Present', 'netquery');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

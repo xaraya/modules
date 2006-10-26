@@ -9,22 +9,30 @@ function netquery_admin_wiview()
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $links = xarModAPIFunc('netquery', 'user', 'getlinks', array('startnum' => $startnum));
-    if (empty($links)) {
+    if (empty($links))
+    {
         $msg = xarML('There are no whois links registered');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-    for ($i = 0; $i < count($links); $i++) {
+    for ($i = 0; $i < count($links); $i++)
+    {
         $link = $links[$i];
-        if (xarSecurityCheck('EditNetquery',0)) {
+        if (xarSecurityCheck('EditNetquery',0))
+        {
             $links[$i]['editurl'] = xarModURL('netquery', 'admin', 'wimodify', array('whois_id' => $link['whois_id']));
-        } else {
+        }
+        else
+        {
             $links[$i]['editurl'] = '';
         }
         $links[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteNetquery',0)) {
+        if (xarSecurityCheck('DeleteNetquery',0))
+        {
             $links[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'widelete', array('whois_id' => $link['whois_id']));
-        } else {
+        }
+        else
+        {
             $links[$i]['deleteurl'] = '';
         }
         $links[$i]['deletetitle'] = xarML('Delete');

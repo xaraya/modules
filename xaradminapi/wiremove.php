@@ -2,13 +2,15 @@
 function netquery_adminapi_wiremove($args)
 {
     extract($args);
-    if (!isset($whois_id)) {
+    if (!isset($whois_id))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $data = xarModAPIFunc('netquery', 'admin', 'getlink', array('whois_id' => (int)$whois_id));
-    if (empty($data)) {
+    if (empty($data))
+    {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

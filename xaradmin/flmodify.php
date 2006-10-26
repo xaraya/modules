@@ -5,7 +5,8 @@ function netquery_admin_flmodify()
     if (!xarVarFetch('flag_id', 'int:1:100000', $flag_id)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    switch(strtolower($phase)) {
+    switch(strtolower($phase))
+    {
         case 'form':
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getflag', array('flag_id' => $flag_id));
@@ -17,7 +18,8 @@ function netquery_admin_flmodify()
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit')))
+            {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'flview'));
             }
             if (!xarVarFetch('flag_keyword', 'str:1:20', $flag_keyword)) return;

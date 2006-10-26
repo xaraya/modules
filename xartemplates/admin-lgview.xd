@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/nqUtility.js"></script>
 
 <xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 

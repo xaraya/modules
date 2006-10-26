@@ -1,0 +1,18 @@
+<xar:if condition="$bbbsettings.visible">
+    <p>
+    <xar:if condition="$bbbsettings.running">
+        <xar:mlstring>Running</xar:mlstring>
+        <xar:if condition="$bbbsettings.verbose">
+            &nbsp;- <xar:mlstring>Verbose</xar:mlstring>
+        </xar:if>
+        <xar:if condition="$bbbsettings.strict">
+            &nbsp;- <xar:mlstring>Strict</xar:mlstring>
+        </xar:if>
+    <xar:else />
+        <xar:mlstring>NOT Running</xar:mlstring>
+    </xar:if>
+    <xar:if condition="$bbbsettings.display_stats">
+        <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbbstats#</strong> <xar:mlstring>access attempts in the last 7 days</xar:mlstring>.
+    </xar:if>
+    </p>
+</xar:if>

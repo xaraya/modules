@@ -2,7 +2,8 @@
 function netquery_adminapi_flcreate($args)
 {
     extract($args);
-    if ((!isset($flag_flagnum)) || (!isset($flag_keyword)) || (!isset($flag_fontclr))) {
+    if ((!isset($flag_flagnum)) || (!isset($flag_keyword)) || (!isset($flag_fontclr)))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

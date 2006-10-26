@@ -2,9 +2,7 @@
 function netquery_netquickblock_modify($blockinfo)
 {
     $vars = @unserialize($blockinfo['content']);
-    if (!isset($vars['blockquery'])) {
-        $vars['blockquery'] = 'whois';
-    }
+    if (!isset($vars['blockquery'])) $vars['blockquery'] = 'whois';
     $winsys = (DIRECTORY_SEPARATOR == '\\');
     $output = array(
                      'blockquery'            => $vars['blockquery'],

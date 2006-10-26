@@ -4,8 +4,12 @@ Installation
 2. Install as usual from the modules page of the Xaraya admin panel.
 3. Use Xaraya's blocks admin to add one or more Netquery blocks if desired.
 4. Open Netquery's admin panel and configure features to be available to users.
+5. Add Netquery sidebar items as desired in the Xaraya blocks admin page.
 ---------------
 IMPORTANT NOTES:
+- Monitoring of spam activity occurs ONLY on pages where the spambot blocker
+  block is loaded and active.  If you want to hide the block from users,
+  uncheck the "Visible" option in Netquery's main admin configuration panel.
 - Netquery's local ping and traceroute features require read/execute permission
   for your system's ping and traceroute executables.  The logging feature
   requires write permission for the log file.

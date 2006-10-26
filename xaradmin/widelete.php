@@ -11,11 +11,13 @@ function netquery_admin_widelete()
     $data['confirminfo'] = xarML('TLD').": ".$data['whois_tld']." - ".xarML('Server').": ".$data['whois_server'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
-    if (empty($confirmation)) {
+    if (empty($confirmation))
+    {
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm')))
+    {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'wiview'));
     }
     if (!xarSecConfirmAuthKey()) return;

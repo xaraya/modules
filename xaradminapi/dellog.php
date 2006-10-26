@@ -9,7 +9,8 @@ function netquery_adminapi_dellog()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     $capture_log_filepath = xarModGetVar('netquery', 'capture_log_filepath');
-    if (file_exists($capture_log_filepath)) {
+    if (file_exists($capture_log_filepath))
+    {
       unlink($capture_log_filepath);
       touch ($capture_log_filepath);
     }

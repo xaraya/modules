@@ -2,15 +2,14 @@
 function netquery_userapi_getportdata($args)
 {
     extract($args);
-    if (!isset($port)) {
+    if (!isset($port))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $portdata = array();
-    if (!xarSecurityCheck('OverviewNetquery')) {
-        return $portdata;
-    }
+    if (!xarSecurityCheck('OverviewNetquery')) return $portdata;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
@@ -18,7 +17,8 @@ function netquery_userapi_getportdata($args)
     $bindvars = array($port);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
-    for (; !$result->EOF; $result->MoveNext()) {
+    for (; !$result->EOF; $result->MoveNext())
+    {
         list($port_id, $port, $protocol, $service, $comment, $flag) = $result->fields;
         $portdata[] = array('port_id'  => $port_id,
                             'port'     => $port,

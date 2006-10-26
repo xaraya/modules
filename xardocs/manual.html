@@ -52,6 +52,7 @@ major features:</p><ul>
  document.write('<a href="http://www.virtech.org/tools/"><img class="floatright" src="' + imagedir + '/nqtoppix.gif" alt="" /></a>');
 // --></script>
 </li>
+<li>spambot blocker with data logging,</li>
 <li>multidomain &amp; IP/AS whois lookups,</li>
 <li>autodiscovery for whois TLD server,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
@@ -174,7 +175,8 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">2. Install and Activate</td>
-        <td class="item-desc">From the CMS's admin menu, install and activate the new Netquery module as usual.</td>
+        <td class="item-desc">From the CMS's admin menu, install and activate the new Netquery module as usual.
+        The spambot blocker also requires loading and activation of its CMS block.</td>
     </tr>
     <tr>
         <td class="item">3. Choose Your Options</td>
@@ -244,6 +246,11 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Enable Looking Glass</td>
         <td class="item-desc">Interrogates looking glass routers using IPv4 and IPv6 daemons.</td>
     </tr>
+    <tr>
+        <td class="item">Enable Spambot Blocker</td>
+        <td class="item-desc">Standalone edition only. For CMS editions, load and activate the CMS block.
+                              Verbose logging option may be used to test activation.</td>
+    </tr>
     <tr><td class="item-heading" colspan="2">Edit Whois Server/TLD Links</td></tr>
     <tr>
         <td class="item">Edit</td>
@@ -296,6 +303,19 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new looking glass router.</td>
     </tr>
+    <tr><td class="item-heading" colspan="2">Manage Spambot Blocker Log</td></tr>
+    <tr>
+        <td class="item">Show</td>
+        <td class="item-desc">Display the complete logged data for the entry. (Mouseover key for brief info.)</td>
+    </tr>
+    <tr>
+        <td class="item">Whois IP</td>
+        <td class="item-desc">Display Whois lookup information (ARIN, RIPE, etc) for the IP address.</td>
+    </tr>
+    <tr>
+        <td class="item">Delete</td>
+        <td class="item-desc">Delete the selected entry or entries. (Auto-deletion occurs after 7 days.)</td>
+    </tr>
     <tr><td class="item-heading" colspan="2">Important Notes</td></tr>
     <tr>
         <td class="help-desc" colspan="2">
@@ -304,11 +324,10 @@ reconfigured to suit your needs and preferences.</p>
         - The Netquery Log option requires write permission for the specified path/filename.<br />
         - The GeoIP and ports data tables are not installed automatically. Select the "Install Data" options as indicated.<br />
         - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
-        - Deleting all whois pairs from the database table will produce an error. Disable the
-          whois feature option instead.<br />
         - Looking glass default settings, except disabled items, may be overridden by individual
           router settings.<br />
-        - Individual looking glass daemon port passwords take precedence over the default user password.
+        - Individual looking glass daemon port passwords take precedence over the default user password.<br />
+        - Spambot blocker protection for CMS editions requires loading and activation of its CMS block.
         </td>
     </tr>
 </table>

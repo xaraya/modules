@@ -143,7 +143,8 @@ function create_whoistable()
         array(111, 'vg', 'whois.adamsnames.tc', '', '', 'is not registered'),
         array(112, 'ws', 'whois.worldsite.ws', '', '', 'No match'),
         array(113, 'yu', 'whois.ripe.net', '', '', 'No entries found'));
-    foreach ($WhoisItems as $WhoisItem) {
+    foreach ($WhoisItems as $WhoisItem)
+    {
         list($id, $tld, $server, $prefix, $suffix, $unfound) = $WhoisItem;
         $query = "INSERT INTO $WhoisTable
                 (whois_id, whois_tld, whois_server, whois_prefix, whois_suffix, whois_unfound)
@@ -206,7 +207,8 @@ function create_lgroutertable()
         array(1, 'default', 'LG Default Settings', '', '', 1, 2601, '', 1, 2602, '', 1, 2603, '', 1, 2604, '', 1, 2605, '', 1, 2606, '', 1),
         array(2, 'ATT Public', 'route-server.ip.att.net', '', '', 1, 23, '', 0, 0, '', 0, 0, '', 1, 23, '', 1, 23, '', 0, 0, '', 1),
         array(3, 'Oregon-ix', 'route-views.oregon-ix.net', 'rviews', '', 1, 23, '', 0, 0, '', 0, 0, '', 1, 23, '', 1, 23, '', 0, 0, '', 1));
-    foreach ($LGRouters as $LGRouter) {
+    foreach ($LGRouters as $LGRouter)
+    {
         list($router_id, $router, $address, $username, $password,
              $zebra, $zebra_port, $zebra_password,
              $ripd, $ripd_port, $ripd_password,
@@ -301,7 +303,8 @@ function revise_geoiptable()
     $sql = 'UPDATE '.$GeoipTable.' SET ipend = end';
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
-    if ($database_type != 'sqlite') {
+    if ($database_type != 'sqlite')
+    {
         $result = $datadict->dropColumn($GeoipTable, 'start');
         if (!$result) return;
         $result = $datadict->dropColumn($GeoipTable, 'end');
@@ -368,7 +371,8 @@ function create_flagstable()
     $FlagItems =array(
         array(1, 0, 'service', 'black', 'white', 'http://www.virtech.org/tools/#', ''),
         array(2, 99, 'pending', 'green', 'white', '', ''));
-    foreach ($FlagItems as $FlagItem) {
+    foreach ($FlagItems as $FlagItem)
+    {
         list($id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1, $lookup_2) = $FlagItem;
         $query = "INSERT INTO $FlagsTable
                 (flag_id, flagnum, keyword, fontclr, backclr, lookup_1, lookup_2)
@@ -417,6 +421,40 @@ function create_portstable()
     if ($dbconn->ErrorNo() != 0) return;
     return true;
 }
+function drop_spamblockertable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $SpamblockerTable = $xartable['netquery_spamblocker'];
+    $result = $datadict->dropTable($SpamblockerTable);
+    if (!$result) return;
+    return true;
+}
+function create_spamblockertable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $taboptarray = array('REPLACE');
+    $idxoptarray = array('UNIQUE');
+    $SpamblockerTable = $xartable['netquery_spamblocker'];
+    $SpamblockerFields = "
+        id                I          PRIMARY     AUTO,
+        ip                C(20)      NOTNULL     DEFAULT '',
+        date              T          NOTNULL     DEFAULT '0000-00-00 00:00:00',
+        request_method    C(20)      NOTNULL     DEFAULT '',
+        request_uri       C(100)     NOTNULL     DEFAULT '',
+        server_protocol   C(20)      NOTNULL     DEFAULT '',
+        user_agent        C(100)     NOTNULL     DEFAULT '',
+        http_headers      X          NOTNULL     DEFAULT '',
+        request_entity    C(100)     NOTNULL     DEFAULT '',
+        bb_key            C(20)      NOTNULL     DEFAULT ''
+    ";
+    $result = $datadict->changeTable($SpamblockerTable, $SpamblockerFields);
+    if (!$result) return;
+    return true;
+}
 function drop_netquery_tables()
 {
     $dbconn =& xarDBGetConn();
@@ -428,6 +466,7 @@ function drop_netquery_tables()
     $FlagsTable = $xartable['netquery_flags'];
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $WhoisTable = $xartable['netquery_whois'];
+    $SpamblockerTable = $xartable['netquery_spamblocker'];
     $result = $datadict->dropTable($GeoipTable);
     if (!$result) return;
     $result = $datadict->dropTable($GeoccTable);
@@ -439,6 +478,8 @@ function drop_netquery_tables()
     $result = $datadict->dropTable($LGRouterTable);
     if (!$result) return;
     $result = $datadict->dropTable($WhoisTable);
+    if (!$result) return;
+    $result = $datadict->dropTable($SpamblockerTable);
     if (!$result) return;
     return true;
 }

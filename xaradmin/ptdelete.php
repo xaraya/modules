@@ -13,11 +13,13 @@ function netquery_admin_ptdelete()
     $data['confirminfo'] = xarML('Port').": ".$data['port']." - ".xarML('Protocol').": ".$data['protocol']." - ".xarML('Service').": ".$data['service'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
-    if (empty($confirmation)) {
+    if (empty($confirmation))
+    {
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm')))
+    {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'ptview', array('portnum' => $data['port'], 'pflag' => $data['pflag'])));
     }
     if (!xarSecConfirmAuthKey()) return;

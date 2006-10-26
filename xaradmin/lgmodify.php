@@ -5,7 +5,8 @@ function netquery_admin_lgmodify()
     if (!xarVarFetch('router_id', 'int', $router_id)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    switch(strtolower($phase)) {
+    switch(strtolower($phase))
+    {
         case 'form':
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => $router_id));
@@ -16,7 +17,8 @@ function netquery_admin_lgmodify()
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit')))
+            {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'lgview'));
             }
             if (!xarVarFetch('router_router', 'str:1:100', $router_router)) return;

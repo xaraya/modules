@@ -2,7 +2,8 @@
 function netquery_userapi_getlink($args)
 {
     extract($args);
-    if (!isset($whois_tld)) {
+    if (!isset($whois_tld))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

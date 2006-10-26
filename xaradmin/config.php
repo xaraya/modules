@@ -4,13 +4,15 @@ function netquery_admin_config()
     if (!xarSecurityCheck('EditRole')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED)) return;
-    switch(strtolower($phase)) {
+    switch(strtolower($phase))
+    {
         case 'modify':
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'configapi');
             break;
         case 'update':
-            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit')))
+            {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'main'));
             }
             if (!xarVarFetch('querytype_default', 'str:1:', $querytype_default, 'whois', XARVAR_NOT_REQUIRED)) return;
@@ -46,6 +48,10 @@ function netquery_admin_config()
             if (!xarVarFetch('traceexec_remote', 'str:1:', $traceexec_remote, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_remote_t', 'str:1:', $traceexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('looking_glass_enabled', 'checkbox', $looking_glass_enabled, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('bb_visible', 'checkbox', $bb_visible, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('bb_display_stats', 'checkbox', $bb_display_stats, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('bb_verbose', 'checkbox', $bb_verbose, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('bb_strict', 'checkbox', $bb_strict, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarSecConfirmAuthKey()) return;
             xarModSetVar('netquery', 'querytype_default', $querytype_default);
             xarModSetVar('netquery', 'exec_timer_enabled', $exec_timer_enabled);
@@ -80,6 +86,10 @@ function netquery_admin_config()
             xarModSetVar('netquery', 'traceexec_remote', $traceexec_remote);
             xarModSetVar('netquery', 'traceexec_remote_t', $traceexec_remote_t);
             xarModSetVar('netquery', 'looking_glass_enabled', $looking_glass_enabled);
+            xarModSetVar('netquery', 'bb_visible', $bb_visible);
+            xarModSetVar('netquery', 'bb_display_stats', $bb_display_stats);
+            xarModSetVar('netquery', 'bb_strict', $bb_strict);
+            xarModSetVar('netquery', 'bb_verbose', $bb_verbose);
             xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
             return true;
             break;

@@ -11,11 +11,13 @@ function netquery_admin_fldelete()
     $data['confirminfo'] = xarML('Keyword').": ".$data['keyword']." - ".xarML('Font').": ".$data['fontclr'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
-    if (empty($confirmation)) {
+    if (empty($confirmation))
+    {
         $data['authid'] = xarSecGenAuthKey();
         return $data;
     }
-    if ((!isset($Submit)) || ($Submit != xarML('Confirm'))) {
+    if ((!isset($Submit)) || ($Submit != xarML('Confirm')))
+    {
         xarResponseRedirect(xarModURL('netquery', 'admin', 'flview'));
     }
     if (!xarSecConfirmAuthKey()) return;

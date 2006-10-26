@@ -2,7 +2,8 @@
 function netquery_userapi_getlgrouter($args)
 {
     extract($args);
-    if (!isset($router)) {
+    if (!isset($router))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

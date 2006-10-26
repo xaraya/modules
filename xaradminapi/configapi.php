@@ -42,6 +42,8 @@ function netquery_adminapi_configapi()
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['cssfiles'] = xarModAPIFunc('netquery', 'admin', 'getcssfiles', './modules/netquery/xarstyles');
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
+    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
+    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
     $mappingsites = array();
       $mappingsites[] = array('name' => 'None', 'value' => 0);
       $mappingsites[] = array('name' => 'MapQuest', 'value' => 1);
@@ -72,11 +74,14 @@ function netquery_adminapi_configapi()
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
-    if (file_exists('modules/netquery/xaradmin/xageoip.php')) {
+    if (file_exists('modules/netquery/xaradmin/xageoip.php'))
+    {
         $data['xaglink'] = Array('url'   => xarModURL('netquery', 'admin', 'xageoip', array('step' => '1')),
                                  'title' => xarML('Install new GeoIP data table'),
                                  'label' => xarML('Install GeoIP Data'));
-    } else {
+    }
+    else
+    {
         $data['xaglink'] = Array('url'   => 'http://www.virtech.org/tools/',
                                  'title' => xarML('Get GeoIP data installer option'),
                                  'label' => xarML('Get GeoIP Data'));
@@ -93,14 +98,20 @@ function netquery_adminapi_configapi()
     $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
                              'title' => xarML('Edit services/exploits'),
                              'label' => xarML('Edit Port Services'));
+    $data['bbllink'] = Array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
+                             'title' => xarML('Manage spambot blocker Log'),
+                             'label' => xarML('Manage Blocker Log'));
     $data['p99link'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview', array('pflag' => '99')),
                              'title' => $data['portsubmits'].' '. xarML('New for Reflagging'),
                              'label' => xarML('None for Reflagging'));
-    if (file_exists('modules/netquery/xaradmin/xaports.php')) {
+    if (file_exists('modules/netquery/xaradmin/xaports.php'))
+    {
         $data['xaplink'] = Array('url'   => xarModURL('netquery', 'admin', 'xaports', array('step' => '1')),
                                  'title' => xarML('Install new ports data table'),
                                  'label' => xarML('Install Ports Data'));
-    } else {
+    }
+    else
+    {
         $data['xaplink'] = Array('url'   => 'http://www.virtech.org/tools/',
                                  'title' => xarML('Get ports data installer option'),
                                  'label' => xarML('Get Ports Data'));
@@ -108,14 +119,17 @@ function netquery_adminapi_configapi()
     $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
-    if (file_exists($data['capture_log_filepath'])) {
+    if (file_exists($data['capture_log_filepath']))
+    {
         $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
                                  'title' => xarML('View operations logfile'),
                                  'label' => xarML('View Log'));
         $data['clearlog'] = Array('url'  => xarModURL('netquery', 'admin', 'clearlog'),
                                  'title' => xarML('Clear operations log data'),
                                  'label' => xarML('Clear Log'));
-    } else {
+    }
+    else
+    {
         $data['loglink'] = '';
         $data['clearlog'] = '';
     }

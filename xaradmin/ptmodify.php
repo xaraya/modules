@@ -6,7 +6,8 @@ function netquery_admin_ptmodify()
     if (!xarVarFetch('pflag', 'int:0:200', $pflag, '-1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    switch(strtolower($phase)) {
+    switch(strtolower($phase))
+    {
         case 'form':
         default:
             $data = xarModAPIFunc('netquery', 'admin', 'getport', array('port_id' => $port_id));
@@ -24,7 +25,8 @@ function netquery_admin_ptmodify()
             break;
         case 'update':
             if (!xarVarFetch('port_port', 'int:1:100000', $port_port)) return;
-            if ((!isset($Submit)) || ($Submit != xarML('Submit'))) {
+            if ((!isset($Submit)) || ($Submit != xarML('Submit')))
+            {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'ptview', array('portnum' => $port_port, 'pflag' => $pflag)));
             }
             if (!xarVarFetch('port_protocol', 'str:1:3', $port_protocol)) return;

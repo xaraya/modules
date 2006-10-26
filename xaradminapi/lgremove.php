@@ -2,13 +2,15 @@
 function netquery_adminapi_lgremove($args)
 {
     extract($args);
-    if (!isset($router_id)) {
+    if (!isset($router_id))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => (int)$router_id));
-    if (empty($data)) {
+    if (empty($data))
+    {
         $msg = xarML('No Such Looking Glass Router Present', 'netquery');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

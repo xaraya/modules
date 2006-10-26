@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/nqUtility.js"></script>
 
 <xar:set name="cfglink">array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
@@ -15,6 +15,9 @@
 <xar:set name="lgvlink">array('url'   => xarModURL('netquery', 'admin', 'lgview'),
                              'title' => xarML('View-edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));</xar:set>
+<xar:set name="bbllink">array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
+                             'title' => xarML('View-edit spambot blocker log'),
+                             'label' => xarML('Manage Spam Log'));</xar:set>
 <xar:set name="hlplink">array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));</xar:set>
@@ -43,7 +46,7 @@
         <xar:mlstring>How to use it?</xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>From the administration menu, you have five choices:</xar:mlstring>
+        <xar:mlstring>From Netquery's main administration menu, you have six choices:</xar:mlstring>
         <ul>
         <li><a href="#$cfglink.url#">#$cfglink.label#</a><xar:mlstring>: From this
         menu option, you can select which Netquery functions will be available to users of
@@ -60,6 +63,9 @@
         <li><a href="#$lgvlink.url#">#$lgvlink.label#</a><xar:mlstring>: From this
         menu option, you can edit, add or delete "looking glass" router entries overriding
         default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
+        <li><a href="#$bbllink.url#">#$bbllink.label#</a><xar:mlstring>: From this
+        menu option, you can examine or delete entries in the log that is maintained by
+        Netquery's spambot blocker.</xar:mlstring></li>
         </ul>
     </p>
     <h3>
@@ -77,6 +83,7 @@
             <li><xar:mlstring>HTTP Request</xar:mlstring></li>
             <li><xar:mlstring>Ping Host</xar:mlstring></li>
             <li><xar:mlstring>Traceroute</xar:mlstring></li>
+            <li><xar:mlstring>Spambot Blocker</xar:mlstring></li>
         </ul>
     </p>
     <h3>

@@ -3,16 +3,20 @@ include_once ("modules/netquery/xarinitdata.php");
 function netquery_init()
 {
     $varLogsDir = xarCoreGetVarDirPath() . '/logs';
-    if (!is_writable($varLogsDir)) {
+    if (!is_writable($varLogsDir))
+    {
         $msg = xarML('Netquery module installation has failed. Please make #(1) writable by the web server process.', $varLogsDir);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
         return false;
     }
-    if (DIRECTORY_SEPARATOR == '\\') {
+    if (DIRECTORY_SEPARATOR == '\\')
+    {
       $digexec = 'nslookup.exe';
       $pingexec = 'ping.exe';
       $traceexec = 'tracert.exe';
-    } else {
+    }
+    else
+    {
       $digexec = 'dig';
       $pingexec = 'ping';
       $traceexec = 'traceroute';
@@ -50,7 +54,12 @@ function netquery_init()
     xarModSetVar('netquery', 'traceexec_remote', 'http://noc.thunderworx.net/cgi-bin/public/ping.pl');
     xarModSetVar('netquery', 'traceexec_remote_t', 'target');
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
+    xarModSetVar('netquery', 'bb_visible', 1);
+    xarModSetVar('netquery', 'bb_display_stats', 1);
+    xarModSetVar('netquery', 'bb_strict', 0);
+    xarModSetVar('netquery', 'bb_verbose', 0);
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'bblocker'))) return;
     xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
@@ -64,26 +73,32 @@ function netquery_init()
     create_portstable();
     create_geocctable();
     create_geoiptable();
+    create_spamblockertable();
     return true;
 }
 function netquery_upgrade($oldversion)
 {
     $varLogsDir = xarCoreGetVarDirPath() . '/logs';
-    if (!is_writable($varLogsDir)) {
+    if (!is_writable($varLogsDir))
+    {
         $msg = xarML('Netquery module upgrade has failed. Please make #(1) writable by the web server process.', $varLogsDir);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FUNCTION_FAILED', new SystemException($msg));
         return false;
     }
-    if (DIRECTORY_SEPARATOR == '\\') {
+    if (DIRECTORY_SEPARATOR == '\\')
+    {
       $digexec = 'nslookup.exe';
       $pingexec = 'ping.exe';
       $traceexec = 'tracert.exe';
-    } else {
+    }
+    else
+    {
       $digexec = 'dig';
       $pingexec = 'ping';
       $traceexec = 'traceroute';
     }
-    switch ($oldversion) {
+    switch ($oldversion)
+    {
         case '1.0.0':
             xarModSetVar('netquery', 'looking_glass_enabled', 1);
             return netquery_upgrade('1.1.0');
@@ -148,6 +163,14 @@ function netquery_upgrade($oldversion)
             revise_geoiptable();
             return netquery_upgrade('3.3.3');
         case '3.3.3':
+            xarModSetVar('netquery', 'bb_visible', 1);
+            xarModSetVar('netquery', 'bb_display_stats', 1);
+            xarModSetVar('netquery', 'bb_strict', 0);
+            xarModSetVar('netquery', 'bb_verbose', 0);
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'bblocker'))) return;
+            create_spamblockertable();
+            return netquery_upgrade('4.0.2');
+        case '4.0.2':
         default:
             break;
     }
@@ -157,6 +180,7 @@ function netquery_delete()
 {
     xarModDelAllVars('netquery');
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'bblocker'))) return;
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
     drop_netquery_tables();

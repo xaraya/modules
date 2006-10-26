@@ -32,7 +32,7 @@ Version 2.4 2005-03-10
 Version 3.0 2005-03-20
    - added GeoIP address country data lookup
    - made GeoIP and ports data installer option packages
-   - Converted Netquery to handle separate data pak options 
+   - Converted Netquery to handle separate data pak options
 Version 3.1 2005-04-15
    - added "top countries" logging and zoomable map links
    - changed geoflags data pak to use country codes
@@ -66,3 +66,7 @@ Version 3.31 2006-02-24
 Version 3.32 2006-03-15
    - Moved buttons out of fieldset legends (Firefox rendering issue)
    - Other minor bug fixes and coding cleanup
+Version 3.33 2006-05-08
+   - Special Postgres compatibility revision (Xaraya only)
+Version 4.0 2006-10-24
+   - added spambot blocker based on 'Bad Behavior' utility

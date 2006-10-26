@@ -2,7 +2,8 @@
 function netquery_adminapi_getport($args)
 {
     extract($args);
-    if (!isset($port_id)) {
+    if (!isset($port_id))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;

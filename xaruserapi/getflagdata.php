@@ -2,7 +2,8 @@
 function netquery_userapi_getflagdata($args)
 {
     extract($args);
-    if (!isset($flagnum)) {
+    if (!isset($flagnum))
+    {
         $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
