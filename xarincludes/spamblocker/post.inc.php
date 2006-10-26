@@ -22,7 +22,7 @@ function bb2_post($settings, $package)
     }
 
     // Catch a few completely broken spambots
-    if (isset($request_entity[' document.write(Math.round (']) || isset($request_entity['   document.write('])) {
+    if (isset($request_entity['	document.write(Math.round (']) || isset($request_entity['	document.write('])) {
         return "dfd9b1ad";
     }
 
