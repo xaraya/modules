@@ -17,9 +17,11 @@
  * Show the user the full details of the plan chosen, and the status of all items.
  *
  * @author the ITSP module development team
- * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['objectid'] a generic object id (if called by other modules)
- * @param  $args ['itspid'] the item id used for this itsp module
+ * @param  array $args an array of arguments (if called by other modules)
+ * @param  int $objectid a generic object id (if called by other modules)
+ * @param  int $itspid the item id used for this itsp module
+ * @param int showdetails
+ * @param int pitemid The id of the planitem to show
  * @return array
  */
 function itsp_user_itsp($args)
@@ -75,7 +77,6 @@ function itsp_user_itsp($args)
     $fulldetails = xarSessionGetVar('itsp.fulldetails');
     $data['fulldetails'] = xarSessionGetVar('itsp.fulldetails');
 
-    $data['itspid'] = $itspid;
     // First see if there is an id to get.
     // Check status
     $stati = xarModApiFunc('itsp','user','getstatusinfo');
@@ -105,7 +106,7 @@ function itsp_user_itsp($args)
                 $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
                 $rule_source = $rules['rule_source'];
                 $fullitem['rule_source'] = $rule_source;
-                // TODO: implement mix possibility
+                // mix possibility
                 if ($rules['mix']) {
                     $source = 'mix';
                 } else {
