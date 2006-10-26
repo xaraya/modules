@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/netquery/xarincludes/popup.js"></script>
+<script type="text/javascript" src="modules/netquery/xarincludes/nqUtility.js"></script>
 
 <xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
@@ -19,15 +19,16 @@
 <form class="nqadmin" action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
       <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <input type="hidden" name="phase" id="phase" value="update" />
-  <fieldset>
+      <fieldset>
       <legend>
-      <xar:mlstring>Options</xar:mlstring>
+          <xar:mlstring>Options</xar:mlstring>
       </legend>
       <xar:if condition="$exec_timer_enabled">
         <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" />
       </xar:if>
+
       <label for="exec_timer_enabled"><xar:mlstring>Enable Execution Timer</xar:mlstring></label>
       ~ <label for="querytype_default"><xar:mlstring>Default Query Type</xar:mlstring></label>:
       <select name="querytype_default" id="querytype_default">
@@ -41,7 +42,8 @@
           </xar:if>
         </xar:foreach>
       </select>
-      <br /><span class="nq-indent">
+      <br />
+      <span class="nq-indent">
       <span class="help" title="#xarML('CSS file for interface style elements')#"><label for="stylesheet"><xar:mlstring>Stylesheet</xar:mlstring></label></span>:
       <select name="stylesheet" id="stylesheet">
         <xar:foreach in="$cssfiles" value="$cssfile">
@@ -54,7 +56,9 @@
           </xar:if>
         </xar:foreach>
       </select>
+      </span>
   </fieldset>
+
   <fieldset><legend><xar:mlstring>Logging</xar:mlstring></legend>
       <xar:if condition="xarModGetVar('netquery', 'capture_log_enabled')">
         <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" checked="checked" />
@@ -250,7 +254,8 @@
       <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec_remote_t#" size="6" maxlength="10" />
       </span>
   </fieldset>
-  <fieldset><legend><xar:mlstring>Traceroute</xar:mlstring></legend>
+  <fieldset>
+  <legend><xar:mlstring>Traceroute</xar:mlstring></legend>
       <xar:if condition="$trace_enabled">
         <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" checked="checked" />
       <xar:else />
@@ -283,6 +288,40 @@
       </xar:if>
       <label for="looking_glass_enabled"><xar:mlstring>Enable Looking Glass</xar:mlstring></label>
       ~ <a href="#$lgvlink.url#">#$lgvlink.label#</a>
+  </fieldset>
+  <fieldset><legend><xar:mlstring>Spambot Blocker Options</xar:mlstring></legend>
+      <xar:if condition="$bbsettings.running">
+          <xar:mlstring>Spambot blocker is running</xar:mlstring>
+      <xar:else />
+          <xar:mlstring>Spambot blocker is NOT running</xar:mlstring>
+      </xar:if>
+      ~ <a href="#$bbllink.url#">#$bbllink.label#</a>
+      <br />
+      <xar:if condition="$bbsettings.visible">
+          <input type="checkbox" name="bb_visible" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_visible" value="true" />
+      </xar:if>
+      <xar:mlstring>Visible on user pages</xar:mlstring>
+      <xar:if condition="$bbsettings.verbose">
+          <input type="checkbox" name="bb_verbose" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_verbose" value="true" />
+      </xar:if>
+      <xar:mlstring>Verbose request logging (may slow down site)</xar:mlstring>
+      <br />
+      <xar:if condition="$bbsettings.display_stats">
+          <input type="checkbox" name="bb_display_stats" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_display_stats" value="true" />
+      </xar:if>
+      <xar:mlstring>Show stats if visible</xar:mlstring>
+      <xar:if condition="$bbsettings.strict">
+          <input type="checkbox" name="bb_strict" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_strict" value="true" />
+      </xar:if>
+      <xar:mlstring>Strict checking mode (may block some people)</xar:mlstring>
   </fieldset>
   <p>
       <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
