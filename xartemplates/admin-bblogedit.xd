@@ -1,0 +1,156 @@
+<script type="text/javascript" src="modules/netquery/xarincludes/nqUtility.js"></script>
+
+<xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
+
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Spambot Blocker Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+
+  <xar:template type="module" module="netquery" file="admin-menu" />
+
+<p>
+<xar:if condition="$bbsettings.running">
+    <xar:mlstring>Spambot blocker is running</xar:mlstring>
+    <xar:if condition="$bbsettings.verbose">
+        &nbsp;- <xar:mlstring>Verbose mode</xar:mlstring>
+    </xar:if>
+    <xar:if condition="$bbsettings.strict">
+        &nbsp;- <xar:mlstring>Strict mode</xar:mlstring>
+    </xar:if>
+<xar:else />
+    <xar:mlstring>Spambot blocker is NOT running</xar:mlstring>. <xar:mlstring>To activate</xar:mlstring>,
+    <a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>load the BB block</xar:mlstring></a>.
+</xar:if>
+<br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last 7 days</xar:mlstring>.
+</p>
+
+<form action="#xarModURL('netquery', 'admin', 'bblogedit')#" method="post">
+<input type="hidden" name="mode" id="mode" value="sql" />
+<fieldset>
+<legend><xar:mlstring>Entries In</xar:mlstring> #$bbsettings.log_table# <xar:mlstring>Table</xar:mlstring></legend>
+<table>
+<tr><td>
+Show all where
+<select name="field" id="field" size="1">
+     <option value="id">ID</option>
+     <option value="ip">IP</option>
+     <option value="request_entity">Request entity</option>
+     <option value="request_method">Request method</option>
+     <option value="request_uri">Request URL</option>
+     <option value="server_protocol">Server Protocol</option>
+     <option value="user_agent">User agent</option>
+     <option value="http_headers">HTTP Headers</option>
+     <option value="bb_key">Key</option>
+</select>
+<select name="where" id="where" size="1">
+     <option value="=">Is</option>
+     <option value="!=">Is not</option>
+     <option value="LIKE">Includes</option>
+</select>
+<input type="text" name="search" id="search" value="" size="10" maxlength="300" />
+Limit <input type="text" name="limit" value="30" size="3" maxlength="3" />&nbsp;
+&nbsp;<input type="submit" name="Submit" id="Submit" value="sql" />
+</td></tr>
+</table>
+</fieldset>
+</form>
+
+<xar:if condition="$bbmode eq 'all'">
+    <table>
+    <tr>
+        <th width="20px">id</th>
+        <th width="40px">ip</th>
+        <th width="40px">date</th>
+        <th width="20px">request method</th>
+        <th width="60px">request uri</th>
+        <th width="30px">server protocol</th>
+    </tr>
+    <tr>
+        <td>#$entry.id#</td>
+        <td>#$entry.ip#</td>
+        <td>#$entry.date#</td>
+        <td>#$entry.request_method#</td>
+        <td>#$entry.request_uri#</td>
+        <td>#$entry.server_protocol#</td>
+    </tr>
+    <tr>
+        <th colspan="1">user agent</th>
+        <th colspan="3">http headers</th>
+        <th colspan="1">request entity</th>
+        <th colspan="1">key</th>
+    </tr>
+    <tr>
+        <td colspan="1">#$entry.user_agent#</td>
+        <td colspan="3">#$entry.http_headers#</td>
+        <td colspan="1">#$entry.request_entity#</td>
+        <td colspan="1">#$entry.key#</td>
+    </tr>
+    <tr>
+        <th colspan="6">&nbsp;
+        <a href="#xarModURL('netquery', 'admin', 'bblogedit')#">#$returnlabel#</a>&nbsp;|&nbsp;
+        <a href="#xarModURL('netquery', 'admin', 'bbdelid')#&amp;id=#$entry.id#">#$deletelabel#</a>
+        </th>
+    </tr>
+    </table>
+</xar:if>
+
+<xar:if condition="$bbmode eq 'whoisip'">
+    <table>
+    <tr><td><xar:mlstring>Whois lookup for IP address</xar:mlstring> #$ip_addr#</td></tr>
+    <tr><td>#$whois_result#</td></tr>
+    <tr><th>&nbsp;<a href="#xarModURL('netquery', 'admin', 'bblogedit')#">#$returnlabel#</a></th></tr>
+    </table>
+</xar:if>
+
+<xar:if condition="$bbmode eq 'select'">
+    <form action="#xarModURL('netquery', 'admin', 'bbdelete')#" method="post">
+    <table>
+
+    <tr>
+        <th><input type="Checkbox" name="checkall" onclick="gCheckAll_2(checkall)" /></th>
+        <th width="40px">Entry</th>
+        <th width="40px">Show</th>
+        <th width="100px">Whois&nbsp;IP</th>
+        <th width="130px">Date&nbsp;Time</th>
+        <th width="65px">Key</th>
+        <th width="40px">Drop</th>
+    </tr>
+    <xar:if condition="!empty($entries)">
+        <xar:foreach in="$entries" value="$entry">
+          <xar:if condition="!empty($entry.id)">
+            <tr>
+                <td><input type="Checkbox" name="selection[#$entry.id#]" id="selection[#$entry.id#]" value="#$entry.id#" /></td>
+                <td>#$entry.id#</td>
+                <td><a href="#xarModURL('netquery', 'admin', 'bblogedit')#&amp;bbmode=all&amp;id=#$entry.id#">Show</a></td>
+                <td><a href="#xarModURL('netquery', 'admin', 'bblogedit')#&amp;bbmode=whoisip&amp;ip_addr=#$entry.ip#">#$entry.ip#</a></td>
+                <td>#$entry.date#</td>
+                <td><span title="#$entry.response#: #$entry.log#">#$entry.key#</span></td>
+                <td><a href="#$entry.deleteurl#">#$entry.deletetitle#</a></td>
+            </tr>
+          </xar:if>
+        </xar:foreach>
+        <tr><td colspan="7">
+        <input type="submit" name="DelSel" id="DelSel" value="#$delsellabel#" />
+        <input type="submit" name="DelAll" id="DelAll" value="#$delalllabel#" />
+        </td>
+        </tr>
+    <xar:else />
+        <tr>
+            <td colspan="7">NO RECORDS FOUND</td>
+        </tr>
+    </xar:if>
+    <tr>
+      <th colspan="7">
+        &nbsp;<a href="#$cfglink.url#">#$cfglink.title#</a>
+      </th>
+    </tr>
+    </table>
+    </form>
+</xar:if>
+
+<p align="center"><xar:mlstring>Spambot blocker module for Xaraya based on</xar:mlstring> Bad Behavior v2.0.6<br />
+<xar:mlstring>For more information please visit the</xar:mlstring> <a href="http://www.homelandstupidity.us/software/bad-behavior/">Bad Behavior</a> <xar:mlstring>homepage</xar:mlstring>.</p>
+
+</div>
