@@ -16,19 +16,13 @@ function netquery_netquickblock_info()
 function netquery_netquickblock_display($blockinfo)
 {
     include_once "modules/netquery/xarincludes/nqSniff.class.php";
-    if (!xarSecurityCheck('OverviewNetquery')) {
-        return;
-    }
-    if (empty($blockinfo['content'])) {
-        return '';
-    }
+    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (empty($blockinfo['content'])) return '';
     $vars = @unserialize($blockinfo['content']);
-    if (!isset($vars['blockquery'])) {
-        $vars['blockquery'] = 'whois';
-    }
+    if (!isset($vars['blockquery'])) $vars['blockquery'] = 'whois';
     $stylesheet = xarModGetVar('netquery', 'stylesheet');
     $buttondir = ((list($testdir) = split('[._-]', $stylesheet)) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
-    $browserinfo =& new nqSniff();
+    $browserinfo = new nqSniff();
     $geoip = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $browserinfo->property('ip')));
     $mapping_site = xarModGetVar('netquery', 'mapping_site');
     $topcountries_limit = xarModGetVar('netquery', 'topcountries_limit');
