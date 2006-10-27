@@ -20,7 +20,7 @@
  * @since 26 Oct 2006
  * @param int $args ['itspid'] id of itsp item to get
  * @return array with item, or false on failure
- * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, NO_PERMISSION
  */
 function itsp_userapi_getfullitsp($args)
 {
@@ -60,6 +60,11 @@ function itsp_userapi_getfullitsp($args)
 
 
     */
+    $planid = $itsp['planid'];
+    $userid = $itsp['userid'];
+    if (!xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+        return;
+    }
     $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$itsp['planid']));
     /*
     if (!empty($pitems)) {
