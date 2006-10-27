@@ -36,7 +36,13 @@ function itsp_userapi_getfullitsp($args)
             new SystemException($msg));
         return;
     }
+
+    // Set vars
+
+    $now = time();
+
     $item = array();
+    $item['courses'] = array();
     // Get ITSP
     $itsp = xarModApiFunc('itsp','user','get',array('itspid' => $itsp));
 
@@ -113,26 +119,31 @@ function itsp_userapi_getfullitsp($args)
                 foreach ($courselinks as $course) {
                     // Add read link
                     $courseid = $course['lcourseid'];
+
                     $realcourse = xarModApiFunc('courses','user','get', array('courseid'=>$courseid));
                     $course['title'] = xarVarPrepForDisplay($realcourse['name']);
                     $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
                     $course['number'] = xarVarPrepForDisplay($realcourse['number']);
-
+                    $course['description'] = xarVarPrepForDisplay($realcourse['shortdesc']);
                     $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                     // TODO: this returns an array. We now assume to take the first item, but this may not be correct.
+                    // TODO: make sure we only allow credits that are truly obtained.
+                    $course['obtcredits'] = '';
                     if (!empty($enrollstatus[0]) && is_numeric($enrollstatus[0]['studstatus'])) {
                         $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
                               array('status' => $enrollstatus[0]['studstatus']));
-                        $course['obtcredits'] = $enrollstatus[0]['credits'];
                         $course['startdate'] = $enrollstatus[0]['startdate'];
+                        if (($course['startdate'] < $now) && ($course['startdate'] > 0)) {
+                            $course['obtcredits'] = $enrollstatus[0]['credits'];
+                        }
                     } else {
                         $course['studstatus'] = '';
-                        $course['obtcredits'] = '';
                         $course['startdate'] = '';
                     }
+
                     /* Add this item to the list of items to be displayed */
                     // TODO: place at correct place
-                    $fullitem['courses'][] = $course;
+                    $item['courses'][] = $course;
                 }
                 if (strcmp($source, 'courses') == 0) {
                     break;
@@ -148,14 +159,24 @@ function itsp_userapi_getfullitsp($args)
                  * Loop through each item and display it.
                  */
                 foreach ($courselinks as $course) {
-                    // Add read link
+                    //
                     $courseid = $course['icourseid'];
                     /* Clean up the item text before display */
                     $course['title'] = xarVarPrepForDisplay($course['icoursetitle']);
                     $course['credits'] = $course['icoursecredits'];
                     $course['number'] = '';
+                    $course['obtcredits'] = $course['icourseresult'];
+                    $course['studstatus'] = $course['icourseresult'];
+                    $course['description'] = xarVarPrepForDisplay($course['icoursedesc']);
+                    $course['icourseloc'] = xarVarPrepForDisplay($course['icourseloc']);
+                    $course['startdate'] = $course['icoursedate'];
+                    if ($course['icoursedate'] > $now || $course['icoursedate'] == 0) {
+                        $course['obtcredits'] = 0;
+                    } elseif (is_int($course['dateappr']) && ($course['dateappr'] > 0)) {
+                        $course['obtcredits'] = $course['icoursecredits'];
+                    }
                     /* Add this item to the list of items to be displayed */
-                    $fullitem['courses'][] = $course;
+                    $item['courses'][] = $course;
                 }
 
                 /*
@@ -174,15 +195,8 @@ function itsp_userapi_getfullitsp($args)
                 */
                 break;
             }
-        $data['fullitems'][] = $fullitem;
         }
     }
-    $item['itemtype'] = 2;
-
-
-
-
-
 
     /* Return the item array */
     return $item;
