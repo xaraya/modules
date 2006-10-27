@@ -14,7 +14,7 @@
 /**
  * Display an item
  *
- * This is a standard function to provide detailed informtion on a single item
+ * This is a standard function to provide detailed information on a single item
  * available from the module.
  *
  * @author the Example module development team
