@@ -44,7 +44,7 @@ function itsp_userapi_getfullitsp($args)
     $item = array();
     $item['courses'] = array();
     // Get ITSP
-    $itsp = xarModApiFunc('itsp','user','get',array('itspid' => $itsp));
+    $itsp = xarModApiFunc('itsp','user','get',array('itspid' => $itspid));
 
     /* Create the item array
     $item = array('itspid'        => $itspid,

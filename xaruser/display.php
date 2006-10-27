@@ -14,8 +14,7 @@
 /**
  * Display a plan
  *
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * Display the details for one educational plan
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @since 22 Feb 2006
