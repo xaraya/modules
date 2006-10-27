@@ -233,6 +233,7 @@ function itsp_user_itsp($args)
     xarTplSetPageTitle(xarVarPrepForDisplay($itspuser));
     $data['uid'] = xarUserGetVar('uid');
     $data['itspuser'] = $itspuser;
+
     /* Return the template variables defined in this function */
     return $data;
 }

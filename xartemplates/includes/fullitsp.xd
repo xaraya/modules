@@ -1,0 +1,88 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>ITSP details</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <h2><xar:mlstring>ITSP</xar:mlstring></h2>
+    <strong><xar:mlstring>Name of student:</xar:mlstring> #$username#</strong><br />
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+
+        <p>
+            <xar:mlstring>Plan name:</xar:mlstring>
+            <strong>#$item.planname#</strong>
+        </p>
+        <p>
+            <xar:mlstring>General description:</xar:mlstring>
+            #$item.plandesc#
+        </p>
+        <p>
+            <xar:mlstring>Minimum number of credits needed:</xar:mlstring>
+            #$item.mincredit#
+        </p>
+    <xar:else />
+        <table>
+        <th><xar:mlstring>Title</xar:mlstring></th>
+        <th><xar:mlstring>Location</xar:mlstring></th>
+        <th><xar:mlstring>Startdate</xar:mlstring></th>
+        <th><xar:mlstring>Credits</xar:mlstring></th>
+        <th><xar:mlstring>Obtained credits</xar:mlstring></th>
+        <xar:foreach in="$fullitems" value="$pitem">
+            <tr>
+            <td><strong>#$pitem.pitemname#</strong></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>#$pitem.mincredit#</td>
+            </tr>
+            <xar:if condition="!empty($pitem.courses)">
+                <xar:foreach in="$pitem.courses" value="$item">
+                    <tr>
+                        <td>> #$item.title#: <br />
+                            #$item.description#</td>
+                        <xar:if condition="!empty($item.icourseloc)">
+                        <td>#$item.icourseloc#</td>
+                        <xar:else />
+                        <td>&nbsp;</td>
+                        </xar:if>
+                        <xar:if condition="$item.startdate gt 0">
+                            <td>#xarLocaleGetFormattedDate('medium', $item.startdate)#</td>
+                        <xar:else />
+                            <td>&nbsp;</td>
+                        </xar:if>
+                        <td>#$item.credits#</td>
+                        <td>#$item.obtcredits#</td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
+
+            </xar:foreach>
+        </table>
+#$obtcredits#
+        <!-- if you want to extend this module with dynamic data, you can retrieve
+        //   that data in the code via APIs, or use e.g. the following BL tags here.
+        //   For the different options, see the overview of dynamicdata...
+        -->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+
+</xar:if>
+</div>

@@ -169,14 +169,14 @@
             <xar:elseif condition="$itspstatus eq 4" />
                 <p><xar:mlstring> You have submitted your ITSP. You can not make changes to it untill it has been approved.</xar:mlstring></p>
             </xar:if>
-        </form>        
+        </form>
         <xar:if condition="$itspstatus eq 4 AND $canapprove" >
             <form method="post" action="&xar-modurl-itsp-user-submit;">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
                 <input type="hidden" name="newstatus" id="newstatus" value="5" />
                 <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','review')#" />
-                <input type="submit" value="#xarML('Approve this ITSP')#" />            
+                <input type="submit" value="#xarML('Approve this ITSP')#" />
             </form>
         </xar:if>
     </xar:if>

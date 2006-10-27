@@ -65,7 +65,15 @@ function itsp_userapi_getfullitsp($args)
     if (!xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
+
+    // User details
+
+    $itsp['username'] = xarUserGetVar('name',$itsp['userid']);
     $pitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$itsp['planid']));
+
+    $plan = xarModApiFunc('itsp','user','get_plan',array('planid'=>$itsp['planid']));
+
+    $itsp['plan'] = $plan;
     /*
     if (!empty($pitems)) {
         $item['pitemnames'] = array();
@@ -91,7 +99,7 @@ function itsp_userapi_getfullitsp($args)
     }
 
     */
-
+    $obtcredits = 0;
     foreach ($pitems as $fullitem) {
         // get id
         $pitemid = $fullitem['pitemid'];
@@ -99,10 +107,15 @@ function itsp_userapi_getfullitsp($args)
             // get planitem
             $pitem = xarModApiFunc('itsp','user','get_planitem',array('pitemid'=>$pitemid));
             if (!isset($pitem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+            // Prep for display
+            $fullitem['pitemname'] = xarVarPrepForDisplay($pitem['pitemname']);
+            $fullitem['mincredit'] = $pitem['mincredit'];
+            //Credits are in mincredit
             // Get the rules for the source of this plan item
             $rules = xarModApiFunc('itsp','user','splitrules',array('rules'=>$pitem['pitemrules']));
             $rule_source = $rules['rule_source'];
             $fullitem['rule_source'] = $rule_source;
+            $fullitem['courses'] =array();
             // Check for mix possibility
             if ($rules['mix']) {
                 $source = 'mix';
@@ -129,11 +142,11 @@ function itsp_userapi_getfullitsp($args)
                     $course['title'] = xarVarPrepForDisplay($realcourse['name']);
                     $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
                     $course['number'] = xarVarPrepForDisplay($realcourse['number']);
-                    $course['description'] = xarVarPrepForDisplay($realcourse['shortdesc']);
+                    $course['description'] = $realcourse['shortdesc'];
                     $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                     // TODO: this returns an array. We now assume to take the first item, but this may not be correct.
                     // TODO: make sure we only allow credits that are truly obtained.
-                    $course['obtcredits'] = '';
+                    $course['obtcredits'] = 0;
                     if (!empty($enrollstatus[0]) && is_numeric($enrollstatus[0]['studstatus'])) {
                         $course['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
                               array('status' => $enrollstatus[0]['studstatus']));
@@ -145,10 +158,10 @@ function itsp_userapi_getfullitsp($args)
                         $course['studstatus'] = '';
                         $course['startdate'] = '';
                     }
-
+                    $obtcredits += $course['obtcredits'];
                     /* Add this item to the list of items to be displayed */
                     // TODO: place at correct place
-                    $item['courses'][] = $course;
+                    $fullitem['courses'][] = $course;
                 }
                 if (strcmp($source, 'courses') == 0) {
                     break;
@@ -170,18 +183,23 @@ function itsp_userapi_getfullitsp($args)
                     $course['title'] = xarVarPrepForDisplay($course['icoursetitle']);
                     $course['credits'] = $course['icoursecredits'];
                     $course['number'] = '';
-                    $course['obtcredits'] = $course['icourseresult'];
+                    $course['obtcredits'] = 0;
                     $course['studstatus'] = $course['icourseresult'];
                     $course['description'] = xarVarPrepForDisplay($course['icoursedesc']);
                     $course['icourseloc'] = xarVarPrepForDisplay($course['icourseloc']);
-                    $course['startdate'] = $course['icoursedate'];
+                    if ($course['icoursedate'] > 0) {
+                        $course['startdate'] = $course['icoursedate'];
+                    } else {
+                        $course['startdate'] ='';
+                    }
                     if ($course['icoursedate'] > $now || $course['icoursedate'] == 0) {
                         $course['obtcredits'] = 0;
-                    } elseif (is_int($course['dateappr']) && ($course['dateappr'] > 0)) {
+                    } elseif ($course['dateappr'] > 0) {
                         $course['obtcredits'] = $course['icoursecredits'];
                     }
+                    $obtcredits += $course['obtcredits'];
                     /* Add this item to the list of items to be displayed */
-                    $item['courses'][] = $course;
+                    $fullitem['courses'][] = $course;
                 }
 
                 /*
@@ -201,9 +219,10 @@ function itsp_userapi_getfullitsp($args)
                 break;
             }
         }
+        $itsp['fullitems'][] = $fullitem;
     }
-
-    /* Return the item array */
-    return $item;
+    $itsp['obtcredits'] = $obtcredits;
+    /* Return the data array */
+    return $itsp;
 }
 ?>
