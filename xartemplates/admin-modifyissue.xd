@@ -46,7 +46,7 @@
                 <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
                     <xar:mlstring>Date:</xar:mlstring>
                 </label>
-                <xar:articles-field definition="$datedefinition" />
+                <xar:data-input name="issuedate" type="calendar" value="$issue['issuedate']" />
                 <span class="xar-error">*</span>
                 <xar:if condition="!empty($invalid['issuedate'])">
                     <div class="xar-error">

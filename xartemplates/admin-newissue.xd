@@ -49,7 +49,10 @@
             <label for="issuedate_input"  class="xar-form-label" title="#xarML('Projected Date of Issuance')#">
                 <xar:mlstring>Date:</xar:mlstring>
             </label>
+            <xar:data-input name="issuedate" type="calendar" value="time()" />
+            <xar:comment>
             <xar:articles-field definition="$datedefinition" />
+            </xar:comment>
         </div>
 
     </fieldset>

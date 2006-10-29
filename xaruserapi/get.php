@@ -38,7 +38,22 @@ function ebulletin_userapi_get($args)
     $pubstable = $xartable['ebulletin'];
 
     // query for all publications
-    $query = "SELECT * FROM $pubstable WHERE xar_id = ?";
+    $query = "SELECT
+        xar_id
+        , xar_template
+        , xar_name
+        , xar_desc
+        , xar_public
+        , xar_from
+        , xar_fromname
+        , xar_replyto
+        , xar_replytoname
+        , xar_subject
+        , xar_html
+        , xar_startday
+        , xar_endday
+        , xar_theme
+        FROM $pubstable WHERE xar_id = ?";
     $result = $dbconn->Execute($query, array($id));
     if (!$result) return;
 

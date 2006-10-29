@@ -54,17 +54,17 @@ function ebulletin_adminapi_generateissue($args)
         strtotime($today) <= 0) {
         $invalid[] = 'issue date';
     }
-    if (empty($startday) || !is_numeric($startday)) {
+    if (!is_numeric($startday)) {
         $invalid[] = 'start day';
     }
-    if (empty($endday) || !is_numeric($endday)) {
+    if (!is_numeric($endday)) {
         $invalid[] = 'end day';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'adminapi', 'getissuebody', 'eBulletin');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        return false;
     }
 
     // work out date ranges

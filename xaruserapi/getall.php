@@ -36,7 +36,22 @@ function ebulletin_userapi_getall($args)
     $pubtable = $xartable['ebulletin'];
 
     // generate query
-    $query = "SELECT * FROM $pubtable\n";
+    $query = "SELECT
+        xar_id
+        , xar_template
+        , xar_name
+        , xar_desc
+        , xar_public
+        , xar_from
+        , xar_fromname
+        , xar_replyto
+        , xar_replytoname
+        , xar_subject
+        , xar_html
+        , xar_startday
+        , xar_endday
+        , xar_theme
+        FROM $pubtable\n";
     $bindvars = array();
     if (isset($public)) {
         $query .= "WHERE xar_public = ?\n";

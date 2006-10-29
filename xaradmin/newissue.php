@@ -58,6 +58,7 @@ function ebulletin_admin_newissue($args)
     if (empty($published)) $published = false;
 
     // get other vars
+    // chnage
     $datedefinition = array(
         'name'       => 'issuedate',
         'type'       => 'calendar',

@@ -38,6 +38,12 @@ function ebulletin_init()
         'xar_replyto'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_replytoname'  => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_subject'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
+        'xar_template'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
+        'xar_html'         => array('type' => 'integer', 'size' => 1,     'null' => false),
+        'xar_startday'     => array('type' => 'integer', 'size' => 8,     'null' => false),
+        'xar_endday'       => array('type' => 'integer', 'size' => 8,     'null' => false),
+        'xar_theme'        => array('type' => 'varchar', 'size' => 255,   'null' => false),
+/*
         'xar_tpl_txt'      => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_tpl_html'     => array('type' => 'varchar', 'size' => 255,   'null' => false),
         'xar_numsago'      => array('type' => 'integer', 'size' => 8,     'null' => false),
@@ -45,7 +51,7 @@ function ebulletin_init()
         'xar_startsign'    => array('type' => 'varchar', 'size' => 8,     'null' => false),
         'xar_numsfromnow'  => array('type' => 'integer', 'size' => 8,     'null' => false),
         'xar_unitsfromnow' => array('type' => 'varchar', 'size' => 8,     'null' => false),
-        'xar_endsign'      => array('type' => 'varchar', 'size' => 8,     'null' => false)
+        'xar_endsign'      => array('type' => 'varchar', 'size' => 8,     'null' => false)*/
     );
 
     // let xarDB create the query for us

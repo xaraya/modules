@@ -50,23 +50,22 @@ function ebulletin_userapi_getsubscriber($args)
             $substable.xar_uid,
             $rolestable.xar_name AS xar_rolename,
             $rolestable.xar_email AS xar_roleemail
-        FROM $substable, $pubstable
-        LEFT JOIN $rolestable
-            ON $substable.xar_uid = $rolestable.xar_uid
-        WHERE $substable.xar_pid = $pubstable.xar_id
-        AND ($rolestable.xar_state IS NULL OR $rolestable.xar_state = ?)
+        FROM $substable
+        LEFT JOIN $pubstable ON $substable.xar_pid = $pubstable.xar_id
+        LEFT JOIN $rolestable ON $substable.xar_uid = $rolestable.xar_uid
+        WHERE ($rolestable.xar_state IS NULL OR $rolestable.xar_state = ?)
     ";
     $bindvars[] = 3;
 
     if (!empty($uid)) {
-        $query .= "AND $substable.xar_uid = ?";
+        $query .= " AND $substable.xar_uid = ?";
         $bindvars[] = $uid;
     }
     if (empty($uid) && !empty($email)) {
-        $query .= "AND $substable.xar_email LIKE ?";
+        $query .= " AND $substable.xar_email LIKE ?";
         $bindvars[] = $email;
     }
-    $query .= "ORDER BY $substable.xar_pid ASC\n";
+    $query .= " ORDER BY $substable.xar_pid ASC";
 
     // perform query
     $result = $dbconn->Execute($query, $bindvars);

@@ -77,7 +77,7 @@ function ebulletin_adminapi_create($args)
             xar_id,
             xar_template,
             xar_name,
-            xar_description,
+            xar_desc,
             xar_public,
             xar_from,
             xar_fromname,

@@ -54,19 +54,17 @@ function ebulletin_adminapi_createissue($args)
     if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
     // generate subject and body
-    list(
-        $subject,
-        $body_html,
-        $body_txt
-    ) = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(
-        'startday' => $pub['startday'],
-        'endday'   => $pub['endday'],
+    $issue = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(
+        'startday' => (int) $pub['startday'],
+        'endday'   => (int) $pub['endday'],
         'subject'  => $pub['subject'],
-        'today'    => $issuedate,
+        'today'    => date('Y-m-d', strtotime($issuedate)),
         'defaulttheme'  => $pub['theme'],
         'template_html' => $pub['template'],
         'template_txt'  => $pub['template'],
     ));
+    if( $issue === false ){ return false; }
+    list($subject, $body_html, $body_txt) = $issue;
 
     // prepare for database
     $dbconn = xarDBGetConn();
