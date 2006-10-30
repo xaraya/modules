@@ -29,10 +29,8 @@
                         <xar:mlstring>Course general details</xar:mlstring>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="name" class="xar-form-label">
-                            <span class="help" title="#xarML('The name of this course.')#">
-                            <xar:mlstring>Name</xar:mlstring>
-                            </span>
+                        <label for="name" class="xar-form-label" title="#xarML('The name of this course.')#">
+                            <xar:mlstring>Course Title</xar:mlstring>
                         </label>
                         #$course.name#
                     </div>
