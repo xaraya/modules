@@ -3,7 +3,13 @@
 <xar:template file="header" />
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Course details for </xar:mlstring>#$item['name']#&nbsp;#$item['number']#</span>
+    <span class="xar-mod-title">
+        <xar:ml>
+            <xar:mlstring>Course details for #(1) #(2)</xar:mlstring>
+            <xar:mlvar>#$item['name']#</xar:mlvar>
+            <xar:mlvar>#$item['number']#</xar:mlvar>
+        </xar:ml>
+    </span>
 </div>
 <div class="xar-mod-body">
     <div class="xar-courses-contents">
@@ -22,26 +28,20 @@
                         <strong><xar:mlstring>Course general details</xar:mlstring></strong>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="name" class="xar-form-label">
-                            <span class="help" title="#xarML('The full title of this course.')#">
+                        <label for="name" class="xar-form-label" title="#xarML('The full title of this course.')#">
                             <xar:mlstring>Course title</xar:mlstring>
-                            </span>
                         </label>
                         #$item['name']#
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="number" class="xar-form-label">
-                            <span class="help" title="#xarML('The code/number of this course.')#">
+                        <label for="number" class="xar-form-label" title="#xarML('The code/number of this course.')#">
                             <xar:mlstring>Course Code</xar:mlstring>
-                            </span>
                         </label>
                         #$item['number']#
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="freq" class="xar-form-label">
-                            <span class="help" title="#xarML('The Frequency of this course.')#">
-                            <xar:mlstring>Frequency</xar:mlstring>
-                            </span>
+                        <label for="freq" class="xar-form-label" title="#xarML('The Frequency of this course.')#">
+                            <xar:mlstring>Course Frequency</xar:mlstring>
                         </label>
                         #$item['freq']#
                     </div>
@@ -51,28 +51,24 @@
                         <strong><xar:mlstring>Course contents</xar:mlstring></strong>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="shortdesc" class="xar-form-label">
-                            <span class="help" title="#xarML('The short description for this course. Full details can be found at the planned courses page.')#">
+                        <label for="shortdesc" class="xar-form-label" title="#xarML('The short description for this course. Full details can be found at the planned courses page.')#">
                             <xar:mlstring>Description</xar:mlstring>
-                            </span>
                         </label>
+                        <span class="fullright">
                         #$item.shortdesc#
+                        </span>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="level" class="xar-form-label">
-                            <span class="help" title="#xarML('The level of this course')#">
+                        <label for="level" class="xar-form-label" title="#xarML('The level of this course')#">
                             <xar:mlstring>Level</xar:mlstring>
-                            </span>
                         </label>
                         <span class="fullright">
                         #$levelname#
                         </span>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="intendedcredits" class="xar-form-label">
-                            <span class="help" title="#xarML('The credits that in general will be given for this course.')#">
+                        <label for="intendedcredits" class="xar-form-label" title="#xarML('The credits that in general will be given for this course.')#">
                             <xar:mlstring>Intended credits</xar:mlstring>
-                            </span>
                         </label>
                         #$item.intendedcredits#
                     </div>
@@ -98,8 +94,9 @@
                                 <xar:mlvar>#$item.expected#</xar:mlvar>
                             </xar:ml>
                         <xar:else />
-                            #xarlocalegetformatteddate('medium',$item.startdate)# - #xarlocalegetformatteddate('medium',$item.enddate)#</td>
+                            #xarlocalegetformatteddate('medium',$item.startdate)# - #xarlocalegetformatteddate('medium',$item.enddate)#
                         </xar:if>
+                        </td>
                         <td>#$item.location#</td>
                         <td>#$item.credits#</td>
                         <td>
