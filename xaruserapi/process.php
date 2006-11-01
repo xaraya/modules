@@ -19,23 +19,28 @@
 function headlines_userapi_process($args)
 {
     extract($args);
+
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
     // Require the feedParser class
     require_once('modules/base/xarclass/feedParser.php');
 
-        // Sanitize the URL provided to us since
+    // Sanitize the URL provided to us since
     // some people can be very mean.
-    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
-    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+    $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
+    $feedfile = preg_replace("/^\//", "ummmmno", $feedfile);
 
     // Get the feed file (from cache or from the remote site)
     $feeddata = xarModAPIFunc('base', 'user', 'getfile',
-                              array('url' => $feedfile,
-                                    'cached' => true,
-                                    'cachedir' => 'cache/rss',
-                                    'refresh' => 3600,
-                                    'extension' => '.xml'));
+        array(
+            'url' => $feedfile,
+            'cached' => true,
+            'cachedir' => 'cache/rss',
+            'refresh' => (isset($refresh) ? $refresh : 3600),
+            'extension' => '.xml'
+        )
+    );
+
     if (!$feeddata) {
         $msg = xarML('There is a problem with a feed.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -43,9 +48,9 @@ function headlines_userapi_process($args)
     }
 
     // Check what makes a headline unique
-    $uniqueid = xarModGetVar('headlines','uniqueid');
+    $uniqueid = xarModGetVar('headlines', 'uniqueid');
     if (!empty($uniqueid)) {
-        $uniqueid = split(';',$uniqueid);
+        $uniqueid = split(';', $uniqueid);
     } else {
         $uniqueid = array();
     }
@@ -58,65 +63,82 @@ function headlines_userapi_process($args)
 
     if (empty($info['warning'])){
         foreach ($info as $content){
-             foreach ($content as $newline){
-                    if(is_array($newline)) {
-                        if (isset($newline['description'])){
-                            $description = $newline['description'];
-                        } else {
-                            $description = '';
-                        }
-                        if (isset($newline['title'])){
-                            $title = $newline['title'];
-                        } else {
-                            $title = '';
-                        }
-                        if (isset($newline['link'])){
-                            $link = $newline['link'];
-                        } else {
-                            $link = '';
-                        }
+            foreach ($content as $newline) {
+                if (is_array($newline)) {
+                    if (isset($newline['description'])) {
+                        $description = $newline['description'];
+                    } else {
+                        $description = '';
+                    }
 
-                        if (!empty($uniqueid)) {
-                            $params = array();
-                            foreach ($uniqueid as $part) {
-                                switch ($part) {
-                                    case 'feed':
-                                        $params[$part] = $feedfile;
-                                        break;
-                                    case 'link':
-                                        $params[$part] = $link;
-                                        break;
-                                    case 'title':
-                                        $params[$part] = $title;
-                                        break;
-                                    case 'description':
-                                        $params[$part] = $description;
-                                        break;
-                                    default:
-                                        break;
-                                }
+                    if (isset($newline['title'])) {
+                        $title = $newline['title'];
+                    } else {
+                        $title = '';
+                    }
+
+                    if (isset($newline['link'])) {
+                        $link = $newline['link'];
+                    } else {
+                        $link = '';
+                    }
+
+                    if (isset($newline['date'])) {
+                        $date = $newline['date'];
+                    } else {
+                        $date = '';
+                    }
+
+                    if (!empty($uniqueid)) {
+                        $params = array();
+                        foreach ($uniqueid as $part) {
+                            switch ($part) {
+                                case 'feed':
+                                    $params[$part] = $feedfile;
+                                    break;
+                                case 'link':
+                                    $params[$part] = $link;
+                                    break;
+                                case 'title':
+                                    $params[$part] = $title;
+                                    break;
+                                case 'description':
+                                    $params[$part] = $description;
+                                    break;
+                                default:
+                                    break;
                             }
-                            $id = md5(serialize($params));
-                            unset($params);
-                        } else {
-                            $id = md5(serialize($newline));
                         }
-                        $feedcontent[] = array('id' => $id, 'title' => $title, 'link' => $link, 'description' => $description);
+                        $id = md5(serialize($params));
+                        unset($params);
+                    } else {
+                        $id = md5(serialize($newline));
+                    }
+
+                    $feedcontent[] = array(
+                        'id' => $id,
+                        'title' => $title,
+                        'link' => $link,
+                        'description' => $description,
+                        'date' => $date,
+                    );
                 }
             }
         }
 
-        if (!empty($links['title'])){
+        if (!empty($links['title'])) {
             $data['chantitle'] = $links['title'];
         } else {
-            $data['chantitle']  =   $info['channel']['title'];
+            $data['chantitle'] = $info['channel']['title'];
         }
+
         if (!empty($links['desc'])){
             $data['chandesc'] = $links['desc'];
         } else {
-            $data['chandesc']   =   $info['channel']['description'];
+            $data['chandesc'] = $info['channel']['description'];
         }
-        $data['chanlink']   =   $info['channel']['link'];
+
+        $data['chanlink'] = $info['channel']['link'];
 
     } else {
         $msg = xarML('There is a problem with a feed.');
@@ -128,4 +150,5 @@ function headlines_userapi_process($args)
 
     return $data;
 }
+
 ?>

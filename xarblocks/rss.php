@@ -96,7 +96,9 @@ function headlines_rssblock_display($blockinfo)
         }
         $data = xarModAPIFunc('magpie', 'user', 'process', array('feedfile' => $feedfile));
     } else {
-        $data = xarModAPIFunc('headlines', 'user', 'process', array('feedfile' => $feedfile));
+        $data = xarModAPIFunc('headlines', 'user', 'process',
+            array('feedfile' => $feedfile, 'cache' => $vars['refresh'])
+        );
     }
 
     if (!empty($data['warning'])){
