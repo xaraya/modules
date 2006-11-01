@@ -1,5 +1,5 @@
 <?PHP
-/**
+/*
 added change
 debuggin
 dangerous
