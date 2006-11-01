@@ -1,74 +1,73 @@
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#"><label for="rssurl#$blockid#"><xar:mlstring>RSS File URL:</xar:mlstring></label>:</span>
+<xar:comment>Keep the markup simple and the inline styles to a minimum.</xar:comment>
+
+<p>
+    <span class="help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#">
+        <label for="rssurl#$blockid#"><xar:mlstring>RSS URL:</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <select name="rssurl" id="rssurl#$blockid#">
-      <xar:loop name="$items">
-        <xar:if condition="$rssurl eq $loop:item['url']">
-          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#" selected="selected">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item['url'])#</option>
-        <xar:else />
-          <option name="#xarVarPrepForDisplay($loop:item['url'])#" id="#xarVarPrepForDisplay($loop:item['url'])#" value="#xarVarPrepForDisplay($loop:item['url'])#">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item['url'])#</option>
+
+    <select name="rssurl" id="rssurl#$blockid#">
+        <xar:if condition="!empty($otherrssurl)">
+            <option value="" selected="selected"><xar:mlstring>-- Alternate URL --</xar:mlstring></option>
         </xar:if>
-      </xar:loop>
-      </select>
-    </span>
-    </div>
+        <xar:loop name="$items">
+            <xar:if condition="$rssurl eq $loop:item.url">
+                <option value="#xarVarPrepForDisplay($loop:item.url)#" selected="selected">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
+            <xar:else />
+                <option value="#xarVarPrepForDisplay($loop:item.url)#">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
+            </xar:if>
+        </xar:loop>
+    </select>
+</p>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Select this option if you want to show the channel title')#"><label for="show_chantitle#$blockid#"><xar:mlstring>Display channel title</xar:mlstring></label>:</span>
+<p>
+    <span class="help" title="#xarML('Alternate RSS URL, not pre-configured in the headlines module.')#">
+        <label for="otherrssurl#$blockid#"><xar:mlstring>Alternate RSS URL:</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <xar:if condition = "$show_chantitle eq 1">
-      <input type="checkbox" name="show_chantitle" value="1" checked="checked"/>
-      <xar:else />
-      <input type="checkbox" name="show_chantitle" value="1"/>
-      </xar:if>
-    </span>
-    </div>
+    <input type="text" name="otherrssurl" id="otherrssurl#$blockid#" style="width: 90%;" maxlength="200" value="#xarVarPrepForDisplay($otherrssurl)#" />
+</p>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Select this option if you want to show the channel descriptions')#"><label for="show_chandesc#$blockid#"><xar:mlstring>Display channel descriptions</xar:mlstring></label>:</span>
+<p>
+    <xar:if condition = "$show_chantitle eq 1">
+        <input id="show_chantitle#$blockid#" type="checkbox" name="show_chantitle" value="1" checked="checked" />
+    <xar:else />
+        <input id="show_chantitle#$blockid#" type="checkbox" name="show_chantitle" value="1" />
+    </xar:if>
+    <span class="help" title="#xarML('Select this option if you want to show the channel title')#">
+        <label for="show_chantitle#$blockid#"><xar:mlstring>Display channel title</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <xar:if condition = "$show_chandesc eq 1">
-      <input type="checkbox" name="show_chandesc" value="1" checked="checked"/>
-      <xar:else />
-      <input type="checkbox" name="show_chandesc" value="1"/>
-      </xar:if>
-    </span>
-    </div>
+</p>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Select this option if you want to show article descriptions, depending on the RSS version of the incoming feed.')#"><label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>:</span>
+<p>
+    <xar:if condition = "$show_chandesc eq 1">
+        <input id="show_chandesc#$blockid#" type="checkbox" name="show_chandesc" value="1" checked="checked"/>
+    <xar:else />
+        <input id="show_chandesc#$blockid#" type="checkbox" name="show_chandesc" value="1"/>
+    </xar:if>
+    <span class="help" title="#xarML('Select this option if you want to show the channel descriptions')#">
+        <label for="show_chandesc#$blockid#"><xar:mlstring>Display channel descriptions</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <xar:if condition = "$showdescriptions eq 1">
-      <input type="checkbox" name="showdescriptions" value="1" checked="checked"/>
-      <xar:else />
-      <input type="checkbox" name="showdescriptions" value="1"/>
-      </xar:if>
-    </span>
-    </div>
+</p>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Number of items to show.')#"><label for="maxitems#$blockid#"><xar:mlstring>Max Headlines to display</xar:mlstring></label>:</span>
+<p>
+    <xar:if condition = "$showdescriptions eq 1">
+        <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1" checked="checked"/>
+    <xar:else />
+        <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1"/>
+    </xar:if>
+    <span class="help" title="#xarML('Select this option if you want to show article descriptions, depending on the RSS version of the incoming feed.')#">
+        <label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
-    </span>
-    </div>
+</p>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Number of seconds before refreshing the feed.')#"><label for="refresh#$blockid#"><xar:mlstring>Refresh Rate</xar:mlstring></label>:</span>
+<p>
+    <span class="help" title="#xarML('Number of items to show.')#">
+        <label for="maxitems#$blockid#"><xar:mlstring>Max Headlines to display:</xar:mlstring></label>
     </span>
-    <span style="float: right; width: 78%; text-align: left;">
-      <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
-    </span>
-    </div>
+    <input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
+</p>
 
+<p>
+    <span class="help" title="#xarML('Number of seconds before refreshing the feed.')#"><label for="refresh#$blockid#"><xar:mlstring>Refresh Rate</xar:mlstring></label>:</span>
+        <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
+    </span>
+</p>

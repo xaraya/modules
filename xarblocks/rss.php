@@ -58,6 +58,8 @@ function headlines_rssblock_info()
  */
 function headlines_rssblock_display($blockinfo)
 {
+    // Keep all the default values in one place.
+    $defaults = headlines_rssblock_init();
 
     // Break out options from our content field.
     if (!is_array($blockinfo['content'])) {
@@ -77,20 +79,10 @@ function headlines_rssblock_display($blockinfo)
         $feedfile = $vars['rssurl'];
     }
 
-    if (!isset($vars['maxitems'])) {
-        $vars['maxitems'] = 5;
-    }
-    if (!isset($vars['show_chantitle'])) {
-        $vars['show_chantitle'] = 1;
-    }
-    if (!isset($vars['show_chandesc'])) {
-            $vars['show_chandesc'] = 1;
-    }
-
-    if (empty($vars['refresh'])) {
-        $vars['refresh'] = 3600;
-    }
-
+    if (!isset($vars['maxitems'])) $vars['maxitems'] = $defaults['maxitems'];
+    if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $defaults['show_chantitle'];
+    if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
+    if (empty($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
 
     if (xarModGetVar('headlines', 'magpie')){
         // Set some globals to bring Magpie into line with
@@ -102,15 +94,9 @@ function headlines_rssblock_display($blockinfo)
         if (!defined('MAGPIE_CACHE_AGE')) {
             define('MAGPIE_CACHE_AGE', round($vars['refresh'] / 2));
         }
-        $data = xarModAPIFunc('magpie',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+        $data = xarModAPIFunc('magpie', 'user', 'process', array('feedfile' => $feedfile));
     } else {
-        $data = xarModAPIFunc('headlines',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+        $data = xarModAPIFunc('headlines', 'user', 'process', array('feedfile' => $feedfile));
     }
 
     if (!empty($data['warning'])){
@@ -141,6 +127,9 @@ function headlines_rssblock_display($blockinfo)
  */
 function headlines_rssblock_modify($blockinfo)
 {
+    // Keep all the default values in one place.
+    $defaults = headlines_rssblock_init();
+
     // Break out options from our content field.
     // Prepare for when content is passed in as an array.
     if (!is_array($blockinfo['content'])) {
@@ -163,27 +152,26 @@ function headlines_rssblock_modify($blockinfo)
     $vars['items'] = $links;
 
     // Defaults
-    if (!isset($vars['rssurl'])) {
-        $vars['rssurl'] = '';
+    if (!isset($vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
+    if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
+
+    // If the current URL is not in the headlines list, then pass it in as 'custom'
+    $vars['otherrssurl'] = $vars['rssurl'];
+    if (is_array($links) && $vars['rssurl'] != $defaults['rssurl']) {
+        foreach($links as $link) {
+            if ($link['url'] == $vars['rssurl']) {
+                // The URL was found in the list, so it is not custom
+                $vars['otherrssurl'] = '';
+            }
+        }
     }
-    if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) {
-        $vars['rssurl'] = '';
-    }
-    if (!isset($vars['show_chantitle'])) {
-            $vars['show_chantitle'] = 1;
-    }
-    if (!isset($vars['show_chandesc'])) {
-            $vars['show_chandesc'] = 1;
-    }
-    if (!isset($vars['showdescriptions'])) {
-        $vars['showdescriptions'] = 0;
-    }
-    if (!isset($vars['maxitems'])) {
-        $vars['maxitems'] = 5;
-    }
-    if (!isset($vars['refresh'])) {
-        $vars['refresh'] = 3600;
-    }
+
+    // Defaults
+    if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $defaults['show_chantitle'];
+    if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
+    if (!isset($vars['showdescriptions'])) $vars['showdescriptions'] = $defaults['showdescriptions'];
+    if (!isset($vars['maxitems'])) $vars['maxitems'] = $defaults['maxitems'];
+    if (!isset($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
 
     $vars['blockid'] = $blockinfo['bid'];
 
@@ -197,13 +185,21 @@ function headlines_rssblock_modify($blockinfo)
  */
 function headlines_rssblock_insert($blockinfo)
 {
+    // Keep all the default values in one place.
+    $defaults = headlines_rssblock_init();
+
     $vars = array();
-    if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], 3600, XARVAR_NOT_REQUIRED)) {return;}
+
+    if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
+    // The 'otherrssurl' can override the 'rssurl'
+    if (!xarVarFetch('otherrssurl', 'str:1:', $otherrssurl, $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
+    if (!empty($otherrssurl) && $otherrssurl != $defaults['rssurl']) $vars['rssurl'] = $otherrssurl;
+
+    if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $defaults['show_chantitle'], XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $defaults['show_chandesc'], XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $defaults['refresh'], XARVAR_NOT_REQUIRED)) {return;}
 
     $blockinfo['content'] = $vars;
     return $blockinfo;
