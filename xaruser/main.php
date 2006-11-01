@@ -356,21 +356,9 @@ function netquery_user_main()
     {
         $target = "";
     }
-    if ($data['querytype'] != 'none' && $data['capture_log_enabled'] && $data['capture_log_filepath'])
+    if ($data['querytype'] != 'none')
     {
         $geoip = $data['geoip'];
-        $datetime = date($data['capture_log_dtformat']);
-        $fp = @fopen($data['capture_log_filepath'], 'a');
-        if ($fp)
-        {
-            $string = $datetime." - User: ".$data['browserinfo']->property('ip')." [";
-            if (!empty($geoip['cn'])) $string .= $geoip['cn'].", ";
-            $string .= $data['browserinfo']->property('platform')." ".$data['browserinfo']->property('os').", ";
-            $string .= $data['browserinfo']->property('browser')." ".$data['browserinfo']->property('version')."]";
-            $string .= " - Target: ".$target." \n";
-            $write = fputs($fp, $string);
-            @fclose($fp);
-        }
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
         $GeoccTable = $xartable['netquery_geocc'];

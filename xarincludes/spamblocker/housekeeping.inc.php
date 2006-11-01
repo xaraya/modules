@@ -2,9 +2,12 @@
 
 function bb2_housekeeping($settings, $package)
 {
-    // FIXME Yes, the interval's hard coded (again) for now.
-    $query = "DELETE FROM `" . $settings['log_table'] . "` WHERE `date` < DATE_SUB('" . bb2_db_date() . "', INTERVAL 7 DAY)";
-    bb2_db_query($query);
+    $retention = intval($settings['log_retain']);
+    if ($retention > 0)
+    {
+        $query = "DELETE FROM `" . $settings['log_table'] . "` WHERE `date` < DATE_SUB('" . bb2_db_date() . "', INTERVAL ".$retention." DAY)";
+        bb2_db_query($query);
+    }
 
     // Waste a bunch more of the spammer's time, sometimes.
     if (rand(1,1000) == 1) {

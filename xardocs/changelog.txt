@@ -69,4 +69,5 @@ Version 3.32 2006-03-15
 Version 3.33 2006-05-08
    - Special Postgres compatibility revision (Xaraya only)
 Version 4.0 2006-10-24
-   - added spambot blocker based on 'Bad Behavior' utility
+   - Added spambot blocker based on 'Bad Behavior' utility
+   - Integrated access monitoring, client info and logging

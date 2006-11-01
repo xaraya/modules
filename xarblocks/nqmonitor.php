@@ -1,5 +1,5 @@
 <?php
-function netquery_bblockerblock_init()
+function netquery_nqmonitorblock_init()
 {
     return array(
         'nocache'     => 0,
@@ -8,19 +8,19 @@ function netquery_bblockerblock_init()
         'cacheexpire' => null
     );
 }
-function netquery_bblockerblock_info()
+function netquery_nqmonitorblock_info()
 {
     return array(
-        'text_type' => 'bblocker',
+        'text_type' => 'nqmonitor',
         'module' => 'netquery',
-        'text_type_long' => xarML('Netquery spambot blocker'),
+        'text_type_long' => xarML('Netquery Access Monitor'),
         'allow_multiple' => false,
         'form_content' => false,
         'form_refresh' => false,
         'show_preview' => true
     );
 }
-function netquery_bblockerblock_display($blockinfo)
+function netquery_nqmonitorblock_display($blockinfo)
 {
     if (!is_array($blockinfo['content']))
     {

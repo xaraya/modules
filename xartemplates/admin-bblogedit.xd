@@ -3,33 +3,35 @@
 <xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Spambot Blocker Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Access Monitor Log Administration</xar:mlstring></span>
 </div>
 
 <div class="xar-mod-body">
-
-  <xar:template type="module" module="netquery" file="admin-menu" />
+    <xar:template type="module" module="netquery" file="admin-menu" />
 
 <p>
 <xar:if condition="$bbsettings.running">
-    <xar:mlstring>Spambot blocker is running</xar:mlstring>
+    <xar:mlstring>Access monitor is running</xar:mlstring>
     <xar:if condition="$bbsettings.verbose">
-        &nbsp;- <xar:mlstring>Verbose mode</xar:mlstring>
+        &nbsp;- <xar:mlstring>Logging all access</xar:mlstring>
     </xar:if>
-    <xar:if condition="$bbsettings.strict">
-        &nbsp;- <xar:mlstring>Strict mode</xar:mlstring>
+    <xar:if condition="$bbsettings.enabled">
+        &nbsp;- <xar:mlstring>Spambot screening</xar:mlstring>
+        <xar:if condition="$bbsettings.strict">
+            &nbsp;- <xar:mlstring>Strict checking</xar:mlstring>
+        </xar:if>
     </xar:if>
 <xar:else />
-    <xar:mlstring>Spambot blocker is NOT running</xar:mlstring>. <xar:mlstring>To activate</xar:mlstring>,
-    <a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>load the BB block</xar:mlstring></a>.
+    <xar:mlstring>Access monitor is NOT running</xar:mlstring>. <xar:mlstring>To activate</xar:mlstring>,
+    <a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>load its CMS block</xar:mlstring></a>.
 </xar:if>
-<br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last 7 days</xar:mlstring>.
+<br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
 </p>
 
 <form action="#xarModURL('netquery', 'admin', 'bblogedit')#" method="post">
-<input type="hidden" name="mode" id="mode" value="sql" />
+<input type="hidden" name="bbmode" id="bbmode" value="sql" />
 <fieldset>
-<legend><xar:mlstring>Entries In</xar:mlstring> #$bbsettings.log_table# <xar:mlstring>Table</xar:mlstring></legend>
+<legend><xar:mlstring>Entries In Access Log Table</xar:mlstring></legend>
 <table>
 <tr><td>
 Show all where
@@ -50,7 +52,7 @@ Show all where
      <option value="LIKE">Includes</option>
 </select>
 <input type="text" name="search" id="search" value="" size="10" maxlength="300" />
-Limit <input type="text" name="limit" value="30" size="3" maxlength="3" />&nbsp;
+Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="3" />&nbsp;
 &nbsp;<input type="submit" name="Submit" id="Submit" value="sql" />
 </td></tr>
 </table>
@@ -105,11 +107,10 @@ Limit <input type="text" name="limit" value="30" size="3" maxlength="3" />&nbsp;
 </xar:if>
 
 <xar:if condition="$bbmode eq 'select'">
-    <form action="#xarModURL('netquery', 'admin', 'bbdelete')#" method="post">
+    <form name="bbselect" id="bbselect" action="#xarModURL('netquery', 'admin', 'bbdelete')#" method="post">
     <table>
-
     <tr>
-        <th><input type="Checkbox" name="checkall" onclick="gCheckAll_2(checkall)" /></th>
+        <th><input type="checkbox" name="checker" id="checker" onclick="NQcheckall(bbselect, checker)" /></th>
         <th width="40px">Entry</th>
         <th width="40px">Show</th>
         <th width="100px">Whois&nbsp;IP</th>

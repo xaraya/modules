@@ -19,7 +19,7 @@ function netquery_admin_bblogedit()
         $entry = xarModAPIFunc('netquery', 'admin', 'getbbid', array('id' => $id));
         if ($entry == false) return;
         $data['entry'] = $entry;
-        $data['returnlabel'] = xarML('Return to Blocker Admin');
+        $data['returnlabel'] = xarML('Return to Access Log');
         $data['deletelabel'] = xarML('Delete Record');
         break;
       case 'whoisip':
@@ -27,7 +27,7 @@ function netquery_admin_bblogedit()
         $whois_result = xarModAPIFunc('netquery', 'user', 'whoisip', (array('ip_addr' => $ip_addr)));
         $data['ip_addr'] = $ip_addr;
         $data['whois_result'] = $whois_result;
-        $data['returnlabel'] = xarML('Return to Blocker Admin');
+        $data['returnlabel'] = xarML('Return to Access Log');
         break;
       case 'sql':
         if (!xarVarFetch('field', 'str:1:', $field, '', XARVAR_NOT_REQUIRED)) return;

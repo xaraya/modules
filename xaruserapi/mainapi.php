@@ -1,11 +1,13 @@
 <?php
 function netquery_userapi_mainapi()
 {
-    include_once "modules/netquery/xarincludes/nqSniff.class.php";
-    include_once "modules/netquery/xarincludes/nqTimer.class.php";
+    if (!defined('NQ4_CWD')) define('NQ4_CWD', substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), DIRECTORY_SEPARATOR)));
+    include_once(NQ4_CWD . "/xarincludes/nqTimer.class.php");
+    include_once(NQ4_CWD . "/xarincludes/nqSniff.class.php");
     $data = array();
     $data['timer'] = new nqTimer();
     $data['timer']->start('main');
+    $data['client'] = new nqSniff();
     $data['authid'] = xarSecGenAuthKey();
     $data['maintitle']  = xarVarPrepForDisplay(xarML('Netquery'));
     $data['subtitle']   = xarVarPrepForDisplay(xarML('Netquery User Options'));
@@ -33,10 +35,12 @@ function netquery_userapi_mainapi()
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
-    $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
-    $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
-    $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
-    $data['capture_log_dtformat'] = xarModGetVar('netquery', 'capture_log_dtformat');
+    $data['bb_enabled'] = xarModGetVar('netquery', 'bb_enabled');
+    $data['bb_retention'] = xarModGetVar('netquery', 'bb_retention');
+    $data['bb_verbose'] = xarModGetVar('netquery', 'bb_verbose');
+    $data['bb_strict'] = xarModGetVar('netquery', 'bb_strict');
+    $data['bb_visible'] = xarModGetVar('netquery', 'bb_visible');
+    $data['bb_display_stats'] = xarModGetVar('netquery', 'bb_display_stats');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
     $data['mapping_site'] = xarModGetVar('netquery', 'mapping_site');
     $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
@@ -63,14 +67,13 @@ function netquery_userapi_mainapi()
     $data['traceexec_remote'] = xarModGetVar('netquery', 'traceexec_remote');
     $data['traceexec_remote_t'] = xarModGetVar('netquery', 'traceexec_remote_t');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
-    $data['browserinfo'] = new nqSniff();
-    $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['browserinfo']->property('ip')));
+    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
+    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
+    $data['geoip'] = xarModAPIFunc('netquery', 'user', 'getgeoip', array('ip' => $data['client']->property('ip')));
     $data['countries'] = xarModAPIFunc('netquery', 'user', 'getcountries', array('numitems' => $data['topcountries_limit']));
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['lgrouters'] = xarModAPIFunc('netquery', 'user', 'getlgrouters', array('startnum' => '2'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
-    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
-    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
     $data['results'] = '';
     $data['j'] = 0;
     $data['winsys'] = (DIRECTORY_SEPARATOR == '\\');
@@ -164,16 +167,6 @@ function netquery_userapi_mainapi()
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));
     $data['manlink'] = 'modules/netquery/xardocs/manual.html';
-    if (file_exists($data['capture_log_filepath']))
-    {
-        $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
-                                 'title' => xarML('View operations logfile'),
-                                 'label' => xarML('View Log'));
-    }
-    else
-    {
-        $data['loglink'] = '';
-    }
     return $data;
 }
 ?>

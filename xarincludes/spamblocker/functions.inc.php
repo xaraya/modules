@@ -6,17 +6,22 @@ function bb2_insert_head()
 }
 function bb2_read_settings()
 {
+    $table_prefix = xarDBGetSiteTablePrefix();
     $bb_running = true;
+    $bb_enabled = xarModGetVar('netquery', 'bb_enabled');
+    $bb_retention = xarModGetVar('netquery', 'bb_retention');
     $bb_visible = xarModGetVar('netquery', 'bb_visible');
     $bb_display_stats = xarModGetVar('netquery', 'bb_display_stats');
     $bb_strict = xarModGetVar('netquery', 'bb_strict');
     $bb_verbose = xarModGetVar('netquery', 'bb_verbose');
     $settings = array('log_table' => $table_prefix.'_netquery_spamblocker',
-                  'running' => $bb_running,
-                  'visible' => $bb_visible,
-                  'display_stats' => $bb_display_stats,
-                  'strict' => $bb_strict,
-                  'verbose' => $bb_verbose );
+                      'log_retain' => $bb_retention,
+                      'enabled' => $bb_enabled,
+                      'running' => $bb_running,
+                      'visible' => $bb_visible,
+                      'display_stats' => $bb_display_stats,
+                      'strict' => $bb_strict,
+                      'verbose' => $bb_verbose );
     return $settings;
 }
 function bb2_insert_stats($force = false)
@@ -126,12 +131,15 @@ function match_cidr($addr, $cidr)
 }
 function bb2_load_headers()
 {
-    if (!is_callable('getallheaders')) {
+    if (!is_callable('getallheaders'))
+    {
         $headers = array();
-        foreach ($_SERVER as $h => $v)
-            if (ereg('HTTP_(.+)', $h, $hp))
-                $headers[str_replace("_", "-", uc_all($hp[1]))] = $v;
-    } else {
+        foreach($_SERVER as $name => $value)
+            if(substr($name, 0, 5) == 'HTTP_')
+                $headers[substr($name, 5)] = $value;
+    }
+    else
+    {
         $headers = getallheaders();
     }
     return $headers;

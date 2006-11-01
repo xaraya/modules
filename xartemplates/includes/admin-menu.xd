@@ -69,7 +69,7 @@
       </xar:if>
       <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-bblogedit;">
-          <xar:mlstring>Spam Log</xar:mlstring>
+          <xar:mlstring>Access Log</xar:mlstring>
         </a>
       </dd>
 

@@ -381,9 +381,8 @@
   </div>
 </xar:if>
 
-
 <xar:if condition="$clientinfo_enabled">
-<p>
+    <p>
     <xar:mlstring>Client Info</xar:mlstring> -
     <xar:if condition="!empty($geoip.cn)">
       <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" alt="" /></xar:if>
@@ -395,38 +394,39 @@
           #$geoip.cn#
       </xar:if>
     </xar:if>
-    <xar:mlstring>IP</xar:mlstring>: #$browserinfo->property("ip")# -
-    <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
-    <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("browser")# #$browserinfo->property("version")#
+    <xar:mlstring>IP</xar:mlstring>: #$client->property("ip")# -
+    <xar:mlstring>OS</xar:mlstring>: #$client->property("platform")# #$client->property("os")# -
+    <xar:mlstring>Browser</xar:mlstring> : #$client->property("browser")# #$client->property("version")#
     </p>
 </xar:if>
 
 <xar:if condition="$bbsettings.visible">
-<p>
+    <p>
     <xar:if condition="$bbsettings.running">
-        <xar:mlstring>Spambot blocker is running</xar:mlstring>
+        <xar:mlstring>Access monitor is running</xar:mlstring>
         <xar:if condition="$bbsettings.verbose">
-            &nbsp;- <xar:mlstring>Verbose mode</xar:mlstring>
+            &nbsp;- <xar:mlstring>Logging all access</xar:mlstring>
         </xar:if>
-        <xar:if condition="$bbsettings.strict">
-            &nbsp;- <xar:mlstring>Strict mode</xar:mlstring>
+        <xar:if condition="$bbsettings.enabled">
+            &nbsp;- <xar:mlstring>Spambot screening</xar:mlstring>
+            <xar:if condition="$bbsettings.strict">
+                 &nbsp;- <xar:mlstring>Strict checking</xar:mlstring>
+            </xar:if>
         </xar:if>
     <xar:else />
-        <xar:mlstring>Spambot blocker is NOT running</xar:mlstring>
+        <xar:mlstring>Access monitor is NOT running</xar:mlstring>
     </xar:if>
     <xar:if condition="$bbsettings.display_stats">
-       <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last 7 days</xar:mlstring>.
+       <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
     </xar:if>
-</p>
+    </p>
 </xar:if>
-<p>
+
 <xar:if condition="$exec_timer_enabled">
-  <xar:mlstring>Execution time</xar:mlstring>: #$timer->get_current('main')#
+    <p>
+    <xar:mlstring>Execution time</xar:mlstring>: #$timer->get_current('main')#
+    </p>
 </xar:if>
-<xar:if condition="!empty($loglink) and $capture_log_allowuser">
-  &nbsp;&nbsp;<a href="javascript:NQpopup('#$loglink.url#','console','400','600');">#$loglink.label#</a>
-</xar:if>
-</p>
 
 </div>
 </div>

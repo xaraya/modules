@@ -52,7 +52,7 @@ major features:</p><ul>
  document.write('<a href="http://www.virtech.org/tools/"><img class="floatright" src="' + imagedir + '/nqtoppix.gif" alt="" /></a>');
 // --></script>
 </li>
-<li>spambot blocker with data logging,</li>
+<li>access monitoring &amp; spambot blocking,</li>
 <li>multidomain &amp; IP/AS whois lookups,</li>
 <li>autodiscovery for whois TLD server,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
@@ -62,7 +62,7 @@ major features:</p><ul>
 <li>ICMP pings (local and/or remote),</li>
 <li>traceroutes (local and/or remote),</li>
 <li>looking glass router interrogation,</li>
-<li>usage log &amp; top countries mapping,</li>
+<li>top countries usage mapping,</li>
 <li>updateable GeoIP &amp; ports data paks,</li>
 <li>user inputs with admin notice &amp; approval,</li>
 <li>multi-instance sideblocks in CMS editions,</li>
@@ -176,7 +176,7 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">2. Install and Activate</td>
         <td class="item-desc">From the CMS's admin menu, install and activate the new Netquery module as usual.
-        The spambot blocker also requires loading and activation of its CMS block.</td>
+        The access monitor also requires loading and activation of its CMS block.</td>
     </tr>
     <tr>
         <td class="item">3. Choose Your Options</td>
@@ -190,9 +190,10 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item-desc">Enable execution timer and select the default query type for startup.</td>
     </tr>
     <tr>
-        <td class="item">Enable Netquery Log</td>
-        <td class="item-desc">Logs actions and <a href="#datetime">datetime</a> to specified path/filename.
-        (Requires write permission.)</td>
+        <td class="item">Access Monitor</td>
+        <td class="item-desc">Options for monitoring, screening and logging user access. Only blocked spambot access
+        attempts are logged unless the Log All Access option is checked. For CMS editions, the NQ monitor block must
+        be loaded and activated.</td>
     </tr>
     <tr>
         <td class="item">Enable Client Info</td>
@@ -246,11 +247,6 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Enable Looking Glass</td>
         <td class="item-desc">Interrogates looking glass routers using IPv4 and IPv6 daemons.</td>
     </tr>
-    <tr>
-        <td class="item">Enable Spambot Blocker</td>
-        <td class="item-desc">Standalone edition only. For CMS editions, load and activate the CMS block.
-                              Verbose logging option may be used to test activation.</td>
-    </tr>
     <tr><td class="item-heading" colspan="2">Edit Whois Server/TLD Links</td></tr>
     <tr>
         <td class="item">Edit</td>
@@ -303,7 +299,7 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new looking glass router.</td>
     </tr>
-    <tr><td class="item-heading" colspan="2">Manage Spambot Blocker Log</td></tr>
+    <tr><td class="item-heading" colspan="2">Manage Access Log</td></tr>
     <tr>
         <td class="item">Show</td>
         <td class="item-desc">Display the complete logged data for the entry. (Mouseover key for brief info.)</td>
@@ -314,20 +310,19 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">Delete</td>
-        <td class="item-desc">Delete the selected entry or entries. (Auto-deletion occurs after 7 days.)</td>
+        <td class="item-desc">Delete the selected entry or entries. (Auto-deletion occurs after specified interval.)</td>
     </tr>
     <tr><td class="item-heading" colspan="2">Important Notes</td></tr>
     <tr>
         <td class="help-desc" colspan="2">
         - Netquery's local ping and traceroute options and the use of Windows nslookup for email
           validation require read/execute permission for your server OS executables.<br />
-        - The Netquery Log option requires write permission for the specified path/filename.<br />
         - The GeoIP and ports data tables are not installed automatically. Select the "Install Data" options as indicated.<br />
         - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
         - Looking glass default settings, except disabled items, may be overridden by individual
           router settings.<br />
         - Individual looking glass daemon port passwords take precedence over the default user password.<br />
-        - Spambot blocker protection for CMS editions requires loading and activation of its CMS block.
+        - Access monitoring, screening and logging for CMS editions requires loading and activation of its CMS block.
         </td>
     </tr>
 </table>
@@ -528,574 +523,6 @@ BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
 <a href="javascript:newWindow('http://www.bind.com/routing.html');">Bind.com</a>
 <a href="javascript:newWindow('http://www.bgpexpert.com/resources.php');">BGP Expert</a>
 <a href="javascript:newWindow('http://www.routeviews.org/');">Routeviews</a></p>
-
-<h2><a id="datetime">Appendix 1</a>: Log Datetime Formatting</h2>
-
-<p>The following table lists recognized characters for use in the datetime format configuration string.
-Any other unrecognized characters included in the string are recorded as is.</p>
-
-<table>
-<col /><col /><col />
-<thead
-><tr
-class="help-topic"
-><th
-class="help-topic"
->Character</th
-><th
->Description</th
-><th
->Example Values</th
-></tr
-></thead
-><tbody
-><tr
-><td
-><var
-class="literal"
->a</var
-></td
-><td
->Lowercase Ante meridiem and Post meridiem</td
-><td
-><var
-class="literal"
->am</var
-> or <var
-class="literal"
->pm</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->A</var
-></td
-><td
->Uppercase Ante meridiem and Post meridiem</td
-><td
-><var
-class="literal"
->AM</var
-> or <var
-class="literal"
->PM</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->B</var
-></td
-><td
->Swatch Internet time</td
-><td
-><var
-class="literal"
->000</var
-> through <var
-class="literal"
->999</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->c</var
-></td
-><td
->ISO 8601 date (added in PHP 5)</td
-><td
->2004-02-12T15:19:21+00:00</td
-></tr
-><tr
-><td
-><var
-class="literal"
->d</var
-></td
-><td
->Day of the month, 2 digits with leading zeros</td
-><td
-><var
-class="literal"
->01</var
-> to <var
-class="literal"
->31</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->D</var
-></td
-><td
->A textual representation of a day, three letters</td
-><td
-><var
-class="literal"
->Mon</var
-> through <var
-class="literal"
->Sun</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->F</var
-></td
-><td
->A full textual representation of a month, such as January or March</td
-><td
-><var
-class="literal"
->January</var
-> through <var
-class="literal"
->December</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->g</var
-></td
-><td
->12-hour format of an hour without leading zeros</td
-><td
-><var
-class="literal"
->1</var
-> through <var
-class="literal"
->12</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->G</var
-></td
-><td
->24-hour format of an hour without leading zeros</td
-><td
-><var
-class="literal"
->0</var
-> through <var
-class="literal"
->23</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->h</var
-></td
-><td
->12-hour format of an hour with leading zeros</td
-><td
-><var
-class="literal"
->01</var
-> through <var
-class="literal"
->12</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->H</var
-></td
-><td
->24-hour format of an hour with leading zeros</td
-><td
-><var
-class="literal"
->00</var
-> through <var
-class="literal"
->23</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->i</var
-></td
-><td
->Minutes with leading zeros</td
-><td
-><var
-class="literal"
->00</var
-> to <var
-class="literal"
->59</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->I</var
-> (capital i)</td
-><td
->Whether or not the date is in daylights savings time</td
-><td
-><var
-class="literal"
->1</var
-> if Daylight Savings Time, <var
-class="literal"
->0</var
-> otherwise.</td
-></tr
-><tr
-><td
-><var
-class="literal"
->j</var
-></td
-><td
->Day of the month without leading zeros</td
-><td
-><var
-class="literal"
->1</var
-> to <var
-class="literal"
->31</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->l</var
-> (lowercase 'L')</td
-><td
->A full textual representation of the day of the week</td
-><td
-><var
-class="literal"
->Sunday</var
-> through <var
-class="literal"
->Saturday</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->L</var
-></td
-><td
->Whether it's a leap year</td
-><td
-><var
-class="literal"
->1</var
-> if it is a leap year, <var
-class="literal"
->0</var
-> otherwise.</td
-></tr
-><tr
-><td
-><var
-class="literal"
->m</var
-></td
-><td
->Numeric representation of a month, with leading zeros</td
-><td
-><var
-class="literal"
->01</var
-> through <var
-class="literal"
->12</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->M</var
-></td
-><td
->A short textual representation of a month, three letters</td
-><td
-><var
-class="literal"
->Jan</var
-> through <var
-class="literal"
->Dec</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->n</var
-></td
-><td
->Numeric representation of a month, without leading zeros</td
-><td
-><var
-class="literal"
->1</var
-> through <var
-class="literal"
->12</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->O</var
-></td
-><td
->Difference to Greenwich time (GMT) in hours</td
-><td
->Example: <var
-class="literal"
->+0200</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->r</var
-></td
-><td
-><a
-href="javascript:newWindow('http://www.faqs.org/rfcs/rfc2822');"
->RFC 2822</a
-> formatted date</td
-><td
->Example: <var
-class="literal"
->Thu, 21 Dec 2000 16:01:07 +0200</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->s</var
-></td
-><td
->Seconds, with leading zeros</td
-><td
-><var
-class="literal"
->00</var
-> through <var
-class="literal"
->59</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->S</var
-></td
-><td
->English ordinal suffix for the day of the month, 2 characters</td
-><td
->&#13;<var
-class="literal"
->st</var
->, <var
-class="literal"
->nd</var
->, <var
-class="literal"
->rd</var
->or
-<var
-class="literal"
->th</var
->. Works well with <var
-class="literal"
->j</var
->
-</td
-></tr
-><tr
-><td
-><var
-class="literal"
->t</var
-></td
-><td
->Number of days in the given month</td
-><td
-><var
-class="literal"
->28</var
-> through <var
-class="literal"
->31</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->T</var
-></td
-><td
->Timezone setting of this machine</td
-><td
->Examples: <var
-class="literal"
->EST</var
->, <var
-class="literal"
->MDT</var
-> ...</td
-></tr
-><tr
-><td
-><var
-class="literal"
->U</var
-></td
-><td
->Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</td
-><td
->See also <a
-href="javascript:newWindow('http://www.php.net/manual/en/function.time.php');"
-><b
-class="function"
->time()</b
-></a
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->w</var
-></td
-><td
->Numeric representation of the day of the week</td
-><td
-><var
-class="literal"
->0</var
-> (for Sunday) through <var
-class="literal"
->6</var
-> (for Saturday)</td
-></tr
-><tr
-><td
-><var
-class="literal"
->W</var
-></td
-><td
->ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</td
-><td
->Example: <var
-class="literal"
->42</var
-> (the 42nd week in the year)</td
-></tr
-><tr
-><td
-><var
-class="literal"
->Y</var
-></td
-><td
->A full numeric representation of a year, 4 digits</td
-><td
->Examples: <var
-class="literal"
->1999</var
-> or <var
-class="literal"
->2003</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->y</var
-></td
-><td
->A two digit representation of a year</td
-><td
->Examples: <var
-class="literal"
->99</var
-> or <var
-class="literal"
->03</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->z</var
-></td
-><td
->The day of the year (starting from 0)</td
-><td
-><var
-class="literal"
->0</var
-> through <var
-class="literal"
->365</var
-></td
-></tr
-><tr
-><td
-><var
-class="literal"
->Z</var
-></td
-><td
->Timezone offset in seconds. The offset for timezones west of UTC is always
-negative, and for those east of UTC is always positive.</td
-><td
-><var
-class="literal"
->-43200</var
-> through <var
-class="literal"
->43200</var
-></td
-></tr
-></tbody
-></table
->
 
 </body>
 

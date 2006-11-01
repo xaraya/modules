@@ -16,8 +16,8 @@
                              'title' => xarML('View-edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));</xar:set>
 <xar:set name="bbllink">array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
-                             'title' => xarML('View-edit spambot blocker log'),
-                             'label' => xarML('Manage Spam Log'));</xar:set>
+                             'title' => xarML('Manage access monitor log entries'),
+                             'label' => xarML('Manage Log Entries'));</xar:set>
 <xar:set name="hlplink">array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));</xar:set>
@@ -65,7 +65,7 @@
         default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
         <li><a href="#$bbllink.url#">#$bbllink.label#</a><xar:mlstring>: From this
         menu option, you can examine or delete entries in the log that is maintained by
-        Netquery's spambot blocker.</xar:mlstring></li>
+        Netquery's access monitor and spambot blocker.</xar:mlstring></li>
         </ul>
     </p>
     <h3>
@@ -73,6 +73,7 @@
     </h3>
     <p>
         <ul>
+            <li><xar:mlstring>Access Monitor</xar:mlstring></li>
             <li><xar:mlstring>Client Info</xar:mlstring></li>
             <li><xar:mlstring>Whois Domain</xar:mlstring></li>
             <li><xar:mlstring>Whois IP/AS</xar:mlstring></li>
@@ -83,7 +84,6 @@
             <li><xar:mlstring>HTTP Request</xar:mlstring></li>
             <li><xar:mlstring>Ping Host</xar:mlstring></li>
             <li><xar:mlstring>Traceroute</xar:mlstring></li>
-            <li><xar:mlstring>Spambot Blocker</xar:mlstring></li>
         </ul>
     </p>
     <h3>
@@ -100,6 +100,6 @@
         <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');">#$hlplink.label#</a><br />
     </p>
     <p class="xar-sub">
-      <strong>&nbsp;<xar:mlstring>Netquery Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 3.3.3&nbsp; 2006-05-08
+      <strong>&nbsp;<xar:mlstring>Netquery Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 4.0&nbsp; 2006-10-28
     </p>
 </div>

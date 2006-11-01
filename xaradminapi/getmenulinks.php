@@ -19,8 +19,8 @@ function netquery_adminapi_getmenulinks()
                              'title' => xarML('View-edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
-                             'title' => xarML('View-edit spambot blocker log'),
-                             'label' => xarML('Manage Spam Log'));
+                             'title' => xarML('Manage access monitor log entries'),
+                             'label' => xarML('Manage Log Entries'));
     }
     if (empty($menulinks)) $menulinks = '';
     return $menulinks;

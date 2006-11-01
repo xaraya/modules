@@ -59,30 +59,49 @@
       </span>
   </fieldset>
 
-  <fieldset><legend><xar:mlstring>Logging</xar:mlstring></legend>
-      <xar:if condition="xarModGetVar('netquery', 'capture_log_enabled')">
-        <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" checked="checked" />
+  <fieldset>
+      <xar:if condition="$bbsettings.running">
+          <legend><xar:mlstring>Access Monitor</xar:mlstring></legend>
       <xar:else />
-        <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" />
+          <legend><xar:mlstring>Access Monitor</xar:mlstring> [<a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>Not Loaded</xar:mlstring></a>]</legend>
       </xar:if>
-      <label for="capture_log_enabled"><xar:mlstring>Enable Netquery Log</xar:mlstring></label> 
-      <xar:if condition="xarModGetVar('netquery', 'capture_log_allowuser')">
-        ~ <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" checked="checked" />
+      <xar:if condition="$bbsettings.verbose">
+          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" checked="checked" />
       <xar:else />
-        ~ <input type="checkbox" name="capture_log_allowuser" id="capture_log_allowuser" value="1" />
+          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" />
       </xar:if>
-      <label for="capture_log_allowuser"><xar:mlstring>Allow User View</xar:mlstring></label>
-      <xar:if condition="!empty($loglink)">
-        ~ <a href="javascript:NQpopup('#$loglink.url#','console','400','600');">#$loglink.label#</a>
-        ~ <a href="#$clearlog.url#">#$clearlog.label#</a>
+      <xar:mlstring>Log All Access</xar:mlstring>
+      ~ <span class="help" title="#xarML('Zero is forever (manual clearing only)')#"><label for="bb_retention"><xar:mlstring>Self clear in</xar:mlstring></label></span>:
+      <input type="text" name="bb_retention" id="bb_retention" value="#$bb_retention#" size="2" maxlength="3" /> <xar:mlstring>days</xar:mlstring>
+      ~ <a href="#$bbllink.url#">#$bbllink.label#</a>
+      <br />
+      <xar:if condition="$bbsettings.enabled">
+          <input type="checkbox" name="bb_enabled" id="bb_enabled" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_enabled" id="bb_enabled" value="true" />
       </xar:if>
-      <br /><span class="nq-indent">
-      <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="capture_log_filepath"><xar:mlstring>At Filepath</xar:mlstring></label></span>:
-      <input type="text" name="capture_log_filepath" id="capture_log_filepath" value="#$capture_log_filepath#" size="30" maxlength="100" />
-      ~ <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime</xar:mlstring></label></span>:
-      <input type="text" name="capture_log_dtformat" id="capture_log_dtformat" value="#$capture_log_dtformat#" size="11" maxlength="100" />
-      </span>
+      <xar:mlstring>Run Spambot Blocker</xar:mlstring>
+      <xar:if condition="$bbsettings.strict">
+          &nbsp;~ <input type="checkbox" name="bb_strict" id="bb_strict" value="true" checked="checked" />
+      <xar:else />
+          &nbsp;~ <input type="checkbox" name="bb_strict" id="bb_strict" value="true" />
+      </xar:if>
+      <xar:mlstring>Strict mode (may block some people)</xar:mlstring>
+      <br />
+      <xar:if condition="$bbsettings.visible">
+          <input type="checkbox" name="bb_visible" id="bb_visible" value="true" checked="checked" />
+      <xar:else />
+          <input type="checkbox" name="bb_visible" id="bb_visible" value="true" />
+      </xar:if>
+      <xar:mlstring>Visible on user pages</xar:mlstring>
+      <xar:if condition="$bbsettings.display_stats">
+          &nbsp;~ <input type="checkbox" name="bb_display_stats" id="bb_display_stats" value="true" checked="checked" />
+      <xar:else />
+          &nbsp;~ <input type="checkbox" name="bb_display_stats" id="bb_display_stats" value="true" />
+      </xar:if>
+      <xar:mlstring>Show stats if visible</xar:mlstring>
   </fieldset>
+  
   <fieldset><legend><xar:mlstring>Client Info</xar:mlstring></legend>
       <xar:if condition="$clientinfo_enabled">
         <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" checked="checked" />
@@ -118,6 +137,7 @@
         </xar:if>
       </xar:foreach>
       </select>
+      ~ <a href="#$resetlink.url#" onclick="return confirm('#$resetlink.confirm#')">#$resetlink.label#</a>
       </span>
   </fieldset>
   <fieldset><legend><xar:mlstring>Whois</xar:mlstring></legend>
@@ -288,40 +308,6 @@
       </xar:if>
       <label for="looking_glass_enabled"><xar:mlstring>Enable Looking Glass</xar:mlstring></label>
       ~ <a href="#$lgvlink.url#">#$lgvlink.label#</a>
-  </fieldset>
-  <fieldset><legend><xar:mlstring>Spambot Blocker Options</xar:mlstring></legend>
-      <xar:if condition="$bbsettings.running">
-          <xar:mlstring>Spambot blocker is running</xar:mlstring>
-      <xar:else />
-          <xar:mlstring>Spambot blocker is NOT running</xar:mlstring>
-      </xar:if>
-      ~ <a href="#$bbllink.url#">#$bbllink.label#</a>
-      <br />
-      <xar:if condition="$bbsettings.visible">
-          <input type="checkbox" name="bb_visible" value="true" checked="checked" />
-      <xar:else />
-          <input type="checkbox" name="bb_visible" value="true" />
-      </xar:if>
-      <xar:mlstring>Visible on user pages</xar:mlstring>
-      <xar:if condition="$bbsettings.verbose">
-          <input type="checkbox" name="bb_verbose" value="true" checked="checked" />
-      <xar:else />
-          <input type="checkbox" name="bb_verbose" value="true" />
-      </xar:if>
-      <xar:mlstring>Verbose request logging (may slow down site)</xar:mlstring>
-      <br />
-      <xar:if condition="$bbsettings.display_stats">
-          <input type="checkbox" name="bb_display_stats" value="true" checked="checked" />
-      <xar:else />
-          <input type="checkbox" name="bb_display_stats" value="true" />
-      </xar:if>
-      <xar:mlstring>Show stats if visible</xar:mlstring>
-      <xar:if condition="$bbsettings.strict">
-          <input type="checkbox" name="bb_strict" value="true" checked="checked" />
-      <xar:else />
-          <input type="checkbox" name="bb_strict" value="true" />
-      </xar:if>
-      <xar:mlstring>Strict checking mode (may block some people)</xar:mlstring>
   </fieldset>
   <p>
       <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />

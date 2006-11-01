@@ -1,16 +1,19 @@
 <?php
 function netquery_adminapi_configapi()
 {
+    if (!defined('NQ4_CWD')) define('NQ4_CWD', substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), DIRECTORY_SEPARATOR)));
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
     $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
-    $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
-    $data['capture_log_allowuser'] = xarModGetVar('netquery', 'capture_log_allowuser');
-    $data['capture_log_filepath'] = xarModGetVar('netquery', 'capture_log_filepath');
-    $data['capture_log_dtformat'] = xarModGetVar('netquery', 'capture_log_dtformat');
+    $data['bb_enabled'] = xarModGetVar('netquery', 'bb_enabled');
+    $data['bb_retention'] = xarModGetVar('netquery', 'bb_retention');
+    $data['bb_verbose'] = xarModGetVar('netquery', 'bb_verbose');
+    $data['bb_strict'] = xarModGetVar('netquery', 'bb_strict');
+    $data['bb_visible'] = xarModGetVar('netquery', 'bb_visible');
+    $data['bb_display_stats'] = xarModGetVar('netquery', 'bb_display_stats');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
     $data['mapping_site'] = xarModGetVar('netquery', 'mapping_site');
     $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
@@ -39,11 +42,11 @@ function netquery_adminapi_configapi()
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
     $data['submitlabel'] = xarML('Submit');
     $data['cancellabel'] = xarML('Cancel');
+    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
+    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
     $data['links'] = xarModAPIFunc('netquery', 'user', 'getlinks');
     $data['cssfiles'] = xarModAPIFunc('netquery', 'admin', 'getcssfiles', './modules/netquery/xarstyles');
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
-    $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
-    $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
     $mappingsites = array();
       $mappingsites[] = array('name' => 'None', 'value' => 0);
       $mappingsites[] = array('name' => 'MapQuest', 'value' => 1);
@@ -74,6 +77,9 @@ function netquery_adminapi_configapi()
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
+    $data['resetlink'] = Array('url'     => xarModURL('netquery', 'admin', 'resettc'),
+                               'confirm' => xarML('Are you sure you want to reset counts to zero?'),
+                               'label'   => xarML('Reset'));
     if (file_exists('modules/netquery/xaradmin/xageoip.php'))
     {
         $data['xaglink'] = Array('url'   => xarModURL('netquery', 'admin', 'xageoip', array('step' => '1')),
@@ -99,8 +105,8 @@ function netquery_adminapi_configapi()
                              'title' => xarML('Edit services/exploits'),
                              'label' => xarML('Edit Port Services'));
     $data['bbllink'] = Array('url'   => xarModURL('netquery', 'admin', 'bblogedit'),
-                             'title' => xarML('Manage spambot blocker Log'),
-                             'label' => xarML('Manage Blocker Log'));
+                             'title' => xarML('Manage access log entries'),
+                             'label' => xarML('Manage Log Entries'));
     $data['p99link'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview', array('pflag' => '99')),
                              'title' => $data['portsubmits'].' '. xarML('New for Reflagging'),
                              'label' => xarML('None for Reflagging'));
@@ -119,20 +125,6 @@ function netquery_adminapi_configapi()
     $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
-    if (file_exists($data['capture_log_filepath']))
-    {
-        $data['loglink'] = Array('url'   => xarML($data['capture_log_filepath']),
-                                 'title' => xarML('View operations logfile'),
-                                 'label' => xarML('View Log'));
-        $data['clearlog'] = Array('url'  => xarModURL('netquery', 'admin', 'clearlog'),
-                                 'title' => xarML('Clear operations log data'),
-                                 'label' => xarML('Clear Log'));
-    }
-    else
-    {
-        $data['loglink'] = '';
-        $data['clearlog'] = '';
-    }
     return $data;
 }
 ?>

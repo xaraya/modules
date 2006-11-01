@@ -9,8 +9,9 @@ function netquery_adminapi_bb2_response($args)
         return;
     }
     $response = array('response' => 0, 'explanation' => '', 'log' => '');
-    $pdir = substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), DIRECTORY_SEPARATOR));
-    if (!defined('BB2_CORE')) define('BB2_CORE', $pdir.'/xarincludes/spamblocker');
+    if (!defined('NQ4_CWD')) define('NQ4_CWD', substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), DIRECTORY_SEPARATOR)));
+    if (!defined('BB2_CWD')) define('BB2_CWD', NQ4_CWD);
+    if (!defined('BB2_CORE')) define('BB2_CORE', NQ4_CWD.'/xarincludes/spamblocker');
     include_once(BB2_CORE . '/responses.inc.php');
     if (is_callable('bb2_get_response')) $response = bb2_get_response($key);
     if ($response['response'] == '200')

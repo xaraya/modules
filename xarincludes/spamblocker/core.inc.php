@@ -110,12 +110,7 @@ function bb2_start($settings)
     // We use these frequently. Keep a copy close at hand.
     $ip = $_SERVER['REMOTE_ADDR'];
     $request_method = $_SERVER['REQUEST_METHOD'];
-
-    if(!isset($_SERVER['REQUEST_URI'])) {
-        $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
-    } 
-
-    $request_uri = $_SERVER['REQUEST_URI'];
+    $request_uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'];
     $server_protocol = $_SERVER['SERVER_PROTOCOL'];
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -128,6 +123,11 @@ function bb2_start($settings)
     }
 
     $package = array('ip' => $ip, 'headers' => $headers, 'headers_mixed' => $headers_mixed, 'request_method' => $request_method, 'request_uri' => $request_uri, 'server_protocol' => $server_protocol, 'request_entity' => $request_entity, 'user_agent' => $user_agent, 'is_browser' => false);
+    if (!$settings['enabled'])
+    {
+        bb2_approved($settings, $package);
+        return $package;
+    }
 
     // Please proceed to the security checkpoint and have your
     // identification and boarding pass ready.
@@ -200,6 +200,6 @@ function bb2_start($settings)
 
     // And that's about it.
     bb2_approved($settings, $package);
-    return true;
+    return $package;
 }
 ?>
