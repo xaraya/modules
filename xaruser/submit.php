@@ -40,8 +40,10 @@ function itsp_user_submit($args)
  //   if (!xarVarFetch('useraction',  'str:1:', $useraction, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('newstatus',   'int:1:8', $newstatus, 0, XARVAR_NOT_REQUIRED)) return;
 
-    // Sanity checks
 
+    // Initialise data array
+    $data = array();
+    // Sanity checks
     if (($itspid < 1) || (empty($newstatus))) {
         return $data;
     }
@@ -56,10 +58,6 @@ function itsp_user_submit($args)
     if (!xarSecurityCheck('ReadITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
     }
-    /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
-    // Initialise data array
-    $data = array();
 
     $itsp = xarModApiFunc('itsp','user','get',array('itspid'=>$itspid));
     $data['itsp'] = $itsp;
@@ -87,6 +85,8 @@ function itsp_user_submit($args)
         case 3:
             break;
         case 4:
+            /* Confirm authorisation code. */
+            if (!xarSecConfirmAuthKey()) return;
             // User submits the ITSP
             if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
                 // todo: add error
@@ -206,11 +206,20 @@ function itsp_user_submit($args)
 
             break;
         case 5:
+            // Approved
             if (!xarSecurityCheck('DeleteITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
                 break;
             }
-            // Approved
-            if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus))) {
+            if (!xarVarFetch('dateappr', 'str::', $dateappr, $dateappr, XARVAR_NOT_REQUIRED)) return;
+            if (!isset($dateappr)) {
+                $data['newstatus'] = 5;
+                $data['itspid'] = $itspid;
+                $data['dateappr'] = 0;
+                $data['authid'] = xarSecGenAuthKey('itsp');
+                return $data;
+            }
+            if (!xarSecConfirmAuthKey('itsp')) return;
+            if (!xarModApiFunc('itsp','user','update',array('itspid'=>$itspid, 'newstatus' => $newstatus, 'dateappr' =>$dateappr))) {
                 // todo: add error
                 return $data;
             }

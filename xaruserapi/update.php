@@ -59,6 +59,37 @@ function itsp_userapi_update($args)
     */
     $datemodi = time();
     $modiby = xarUserGetVar('uid');
+    $bindvars = array($newstatus, $modiby, $datemodi);
+
+    switch($newstatus) {
+        case 1:
+
+        case 2:
+        case 3:
+        case 4:
+        $dateappr = $item['dateappr'];
+        case 5:
+        //Approve
+        if ($item['dateappr'] > 0) {
+            $bindvars[] = $item['dateappr'];
+            break;
+        }
+        // reformat the date to timestamp
+        if (isset($dateappr) && !is_numeric($dateappr)) {
+            $dateappr = strtotime($dateappr);
+        } elseif (($item['dateappr'] < 1) && ($dateappr <1)) {
+            $dateappr = 0;
+        } else {
+            $dateappr=$item['dateappr'];
+        }
+
+        break;
+        case 6:
+        $dateappr = $item['dateappr'];
+        break;
+    }
+    $bindvars[] = $dateappr;
+    $bindvars[] = $itspid;
     /* Get database setup
      */
     $dbconn =& xarDBGetConn();
@@ -72,9 +103,10 @@ function itsp_userapi_update($args)
     $query = "UPDATE $itsptable
             SET xar_itspstatus =?,
                 xar_modiby =?,
-                xar_datemodi =?
+                xar_datemodi =?,
+                xar_dateappr =?
             WHERE xar_itspid = ?";
-    $bindvars = array($newstatus, $modiby, $datemodi, $itspid);
+
     $result = &$dbconn->Execute($query,$bindvars);
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

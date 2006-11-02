@@ -120,9 +120,9 @@ function itsp_user_review($args)
             // Add read link
             if (xarSecurityCheck('ReadITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
                 $item['itsplink'] = xarModURL('itsp',
-                    'user',
-                    'itsp',
-                    array('itspid' => $itspid));
+                                'user',
+                                'itsp',
+                                array('itspid' => $itspid));
                 /* Security check 2 - else only display the item name (or whatever is
                  * appropriate for your module)
                  */
@@ -131,14 +131,18 @@ function itsp_user_review($args)
             }
 
             $item['rolelink'] = xarModURL('roles',
-                    'user',
-                    'display',
-                    array('uid' => $userid));
+                                'user',
+                                'display',
+                                array('uid' => $userid));
             $itspstatus = $item['itspstatus'];
             $item['statusname'] = xarVarPrepForDisplay($stati[$itspstatus]);
 
             // TODO: Total credits
             // TODO: all link to change status
+            $item['approvelink'] = xarModURL('itsp',
+                                    'user',
+                                    'submit',
+                                    array('itspid' => $itspid, 'newstatus' => 5, 'return_url' =>xarModURL('itsp', 'user','review')));
             $data['items'][] = $item;
         }
     }

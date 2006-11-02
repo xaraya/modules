@@ -5,7 +5,7 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>All ITSPs you can choose from</xar:mlstring></h2>
-    <form method="post" name="viewarticles" id="viewarticles" action="&xar-modurl-itsp-user-review;">
+    <form method="post" name="review" id="review" action="&xar-modurl-itsp-user-review;">
     <h3><xar:mlstring>Select</xar:mlstring></h3>
         <div class="xar-form-input-wrapper">
              <label for="username" class="xar-form-label" title="#xarML('Enter (part of) the name of the user')#">
@@ -43,12 +43,12 @@
             </select>
         </div>
     </form>
-
     <table>
         <tr>
             <th><xar:mlstring>ITSP Status</xar:mlstring></th>
             <th><xar:mlstring>User</xar:mlstring></th>
             <th><xar:mlstring>Last edit</xar:mlstring></th>
+            <th><xar:mlstring>Approved?</xar:mlstring></th>
         </tr>
         <xar:foreach in="$items" value="$item">
         <tr>
@@ -65,6 +65,15 @@
             <td>
                 #xarlocalegetformatteddate('medium',$item.datemodi)#
             </td>
+            <xar:if condition="$item['dateappr'] gt 0">
+                <td>
+                    #xarlocalegetformatteddate('medium',$item.dateappr)#
+                </td>
+            <xar:else />
+                <td>
+                    <a href="#$item.approvelink#"><xar:mlstring>Approve</xar:mlstring></a>
+                </td>
+            </xar:if>
         </tr>
         </xar:foreach>
     </table>
