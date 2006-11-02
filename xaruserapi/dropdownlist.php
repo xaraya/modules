@@ -22,6 +22,7 @@
  *
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
  * @param $args['field'] field to use in the dropdown list (default 'title')
+ * @param $args['showunpub'] (= 1) allow non-admin to see unpublished articles
  * @returns array
  * @return array of articles, or false on failure
  */
@@ -45,8 +46,9 @@ function articles_userapi_dropdownlist($args)
     if (!isset($args['sort'])) {
         $args['sort'] = $args['field'];
     }
-    // Don't let users see unpublished articles
-    if (xarSecurityCheck('AdminArticles',0)) {
+    // Don't let users see unpublished articles, unless $showunpub is 1
+    if ( xarSecurityCheck('AdminArticles',0) ||
+        (isset($args['showunpub']) && ($args['showunpub']=='1')) ) {
         $isadmin = true;
     } else {
         $isadmin = false;
