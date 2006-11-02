@@ -55,6 +55,11 @@ function magpie_userapi_process($args)
             } else {
                 $link = '';
             }
+            if (isset($item['date_timestamp'])){
+                $date = $item['date_timestamp'];
+            } else {
+                $date = '';
+            }
             if (!empty($uniqueid)) {
                 $params = array();
                 foreach ($uniqueid as $part) {
@@ -80,7 +85,7 @@ function magpie_userapi_process($args)
             } else {
                 $id = md5(serialize($newline));
             }
-            $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
+            $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description, 'date' => $date);
         }
     } else {
         $data['warning'] = true;
