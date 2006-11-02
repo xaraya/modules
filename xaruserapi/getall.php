@@ -42,6 +42,7 @@
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
  * @param $args['where'] additional where clauses (e.g. myfield gt 1234)
+ * @param $args['wheredd'] where clauses for hooked dd fields (e.g. myddfield gt 1234) [requires 'ptid' is defined]
  * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @return array Array of articles, or false on failure
  */
@@ -49,6 +50,21 @@ function articles_userapi_getall($args)
 {
     // Get arguments from argument array
     extract($args);
+
+    // do the wheredd bit first
+    if (isset($wheredd) && !empty($ptid) && xarModIsHooked('dynamicdata','articles',$ptid) ) {
+        // (is it possible to determine ptid(s) from the other args? not easily)
+        $dditems = xarModApiFunc('dynamicdata','user','getitems', array('module'=>'articles', 'itemtype'=>$ptid, 'where'=>$wheredd));
+        if (empty($dditems) || !count($dditems))
+            return array(); // get nothing, return nothing
+        $ddaids = array_keys($dditems);
+        if (!empty($aids))
+            $args['aids'] = array_intersect( $aids, $ddaids ); // allow filter on passed in aids
+        else
+            $args['aids'] = $ddaids;
+        unset($args['wheredd']);
+        return xarModApiFunc( 'articles', 'user', 'getall', $args );
+    }
 
     // Optional argument
     if (!isset($startnum)) {
