@@ -19,6 +19,7 @@ function articles_admin_delete()
     // Get parameters
     if (!xarVarFetch('aid', 'id', $aid)) return;
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Get article information
     $article = xarModAPIFunc('articles',
@@ -68,6 +69,8 @@ function articles_admin_delete()
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 
+        $data['return_url'] = $return_url;
+
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         $template = $pubtypes[$ptid]['name'];
 
@@ -89,6 +92,12 @@ function articles_admin_delete()
 
     // Success
     xarSessionSetVar('statusmsg', xarML('Article Deleted'));
+
+    // Return return_url
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
+        return true;
+    }
 
     // Return to the original admin view
     $lastview = xarSessionGetVar('Articles.LastView');

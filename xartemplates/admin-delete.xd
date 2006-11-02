@@ -19,6 +19,7 @@
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
                 <input type="hidden" name="aid" id="aid" value="#$aid#" />
+                <input type="hidden" name="return_url" value="#$return_url#" />
                 <input type="submit" value="#$confirmlabel#" />
             </div>
         </form>
