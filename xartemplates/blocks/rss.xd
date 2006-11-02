@@ -1,33 +1,36 @@
 <xar:if condition="empty($warning)">
-  <div>
-  <xar:if condition="$show_chantitle">
-    <xar:mlstring>Headlines from:</xar:mlstring>
-        <a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a>
-  </xar:if>
-  <xar:if condition="$show_chandesc">
-        <xar:if condition="!empty($chandesc)">
-        <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
+    <div>
+        <xar:if condition="$show_chantitle">
+            <xar:mlstring>Headlines from:</xar:mlstring>
+            <a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a>
         </xar:if>
-  </xar:if>
-  </div>
-  <xar:if condition="!empty($feedcontent)">
-    <ul>
-      <xar:loop name="$feedcontent">
-        <li >         
-          <xar:if condition="!empty($loop:item['link'])">
-              <a href="#xarVarPrepForDisplay($loop:item['link'])#">#$loop:item['title']#</a>
-          <xar:else />
-              <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
-          </xar:if>         
-          <xar:if condition="!empty($show_desc)">
-              <xar:if condition="!empty($loop:item['description'])">
-                <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
-              </xar:if>
-          </xar:if>
-        </li>
-      </xar:loop>
-    </ul>
-  </xar:if>
+        <xar:if condition="$show_chandesc">
+            <xar:if condition="!empty($chandesc)">
+                <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
+            </xar:if>
+        </xar:if>
+    </div>
+    <xar:if condition="!empty($feedcontent)">
+        <ul>
+            <xar:loop name="$feedcontent">
+                <li>
+                    <xar:if condition="!empty($loop:item.link)">
+                        <a href="#xarVarPrepForDisplay($loop:item.link)#">#$loop:item.title#</a>
+                    <xar:else />
+                        <strong>#xarVarPrepHTMLDisplay($loop:item.title)#</strong>
+                    </xar:if>
+                    <xar:if condition="!empty($loop:item.date)">
+                        #xarLocaleGetFormattedDate('long',$loop:item.date)#
+                    </xar:if>
+                    <xar:if condition="!empty($show_desc)">
+                        <xar:if condition="!empty($loop:item.description)">
+                            <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item.description)#</div>
+                        </xar:if>
+                    </xar:if>
+                </li>
+            </xar:loop>
+        </ul>
+    </xar:if>
 <xar:else />
-  <div>#xarVarPrepForDisplay($warning)#</div>
+    <div>#xarVarPrepForDisplay($warning)#</div>
 </xar:if>
