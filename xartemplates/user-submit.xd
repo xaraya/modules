@@ -1,0 +1,21 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>ITSP</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>ITSP approval</xar:mlstring></h2>
+
+    <form method="post" action="&xar-modurl-itsp-user-submit;">
+        <div class="xar-form-input-wrapper">
+             <label for="dateappr" class="xar-form-label" title="#xarML('The date of approval')#">
+                    <xar:mlstring>Date of approval:</xar:mlstring>
+             </label>
+             <xar:data-input name="dateappr" type="calendar" validation="date" value="$dateappr" />
+        </div>
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="itspid" id="itspid" value="#$itspid#" />
+        <input type="hidden" name="newstatus" id="newstatus" value="5" />
+        <input type="hidden" name="return_url" id="return_url" value="#xarModUrl('itsp','user','review')#" />
+        <input type="submit" value="#xarML('Approve this ITSP')#" />
+    </form>
+</div>
