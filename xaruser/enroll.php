@@ -93,6 +93,13 @@ function courses_user_enroll($args)
         }
         $data['planitem'] = $planitem;
         $data['confirm'] = $confirm;
+        // Change the title of the action according to type of action
+        if ($use_extreg) {
+            $confirmtitle = xarML('Yes, continue');
+        } else {
+            $confirmtitle = xarML('Yes, enroll');
+        }
+        $data['confirmtitle'] = $confirmtitle;
         $data['planningid'] = $planningid;
         $data['use_extreg'] = $use_extreg;
         $data['authid'] = xarSecGenAuthKey();

@@ -14,10 +14,14 @@
                 <xar:mlvar>#$regurl#</xar:mlvar>
             </xar:ml>
         <xar:else />
+            <xar:if condition="!($use_extreg)">
+                <h2><xar:mlstring>Enroll in this course?</xar:mlstring></h2>
 
-            <h2><xar:mlstring>Enroll in this course?</xar:mlstring></h2>
+                <h3><xar:mlstring>Please confirm</xar:mlstring></h3>
+            <xar:else />
+                <h2><xar:mlstring>Follow the link below to register at the course website</xar:mlstring></h2>
+            </xar:if>
 
-            <h3><xar:mlstring>Please confirm</xar:mlstring></h3>
             <fieldset>
                 <legend>
                     <xar:mlstring>Course</xar:mlstring>
@@ -49,7 +53,7 @@
 
                 <xar:if condition="$use_extreg">
                     <xar:ml>
-                    <xar:mlstring>You will be redirected to #(1) when you choose to enroll.</xar:mlstring>
+                    <xar:mlstring>You will be redirected to #(1) when you choose to continue.</xar:mlstring>
                     <xar:mlvar>#$planitem['regurl']#</xar:mlvar>
                     </xar:ml>
                 </xar:if>
@@ -64,7 +68,7 @@
                         <xar:if condition="$WaitingList">
                             <input type="submit" name="confirm" value=" #xarML('Put me on the waitinglist')# " />
                         <xar:else />
-                            <input type="submit" name="confirm" value=" #xarML('Yes, enroll')# " />
+                            <input type="submit" name="confirm" value=" #$confirmtitle# " />
                         </xar:if>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="submit" name="noconfirm" value="  #xarML('No, take me back')#  " />
