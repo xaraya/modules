@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.1.2
+INSTALLATION AND USE - XarTinyMCE Version 1.1.3
 
-UPGRADES to 1.1.2:
+UPGRADES to 1.1.3:
 IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -12,12 +12,10 @@ configuration options via a user interface in the admin configuration area for X
 There is also integration of a multipurpose Filebrowser allowing you to browse, upload, and link file, 
 or create and rename files and directories.
 
-This version sees new functionality with enhanced block formats, new layer
-and style plugins and better filebrowser integration.
 
 NOTE: Make sure you use the COMBINED CONFIGURATION FILE for
       filebrowser, ibrowser and imanager found in tinymce/xartemplates/includes directory.
-      The ibrowserconfig.inc and imanagerconfig.inc files are deprecated and no longer used.
+      [The ibrowserconfig.inc and imanagerconfig.inc files are deprecated as of 1.1.0 and no longer used].
 
 Image manager (imanager), along with IBrowser and a number of other custom xartinymce plugins are
 available for download separately at http://xaraya.com/~jojodee/
@@ -44,11 +42,16 @@ To INSTALL and get started:
    
 4. Clear your xaraya and also your browser cache before using.
 
+5. For filebrowsing with FileBrowser or image management with the ibrowser and imanager plugin,
+   copy the tinymceconfig.inc file in tinymce/xartemplates/includes/tinymceconfig.inc
+   to your installation var/tinymce/tinymceconfig.inc (create the directory if it doesn't exist)
+   Make sure you update the file paths and any other relevant variables.
+
 Please read the Overview Documentation in the TinyMCE administration area for more detail.
 
 ******************************
 
-To UPGRADE to Version 1.1.0:
+To UPGRADE to Version 1.1.2:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.

@@ -7,10 +7,11 @@
 
 function initCommonAttributes(elm) {
 	var formObj = document.forms[0];
+
 	// Setup form data for common element attributes
 	setFormValue('title', tinyMCE.getAttrib(elm, 'title'));
 	setFormValue('id', tinyMCE.getAttrib(elm, 'id'));
-	setFormValue('class', tinyMCE.getAttrib(elm, 'class'));
+	selectByValue(formObj, 'class', tinyMCE.getAttrib(elm, 'class'), true);
 	setFormValue('style', tinyMCE.getAttrib(elm, 'style'));
 	selectByValue(formObj, 'dir', tinyMCE.getAttrib(elm, 'dir'));
 	setFormValue('lang', tinyMCE.getAttrib(elm, 'lang'));
@@ -26,7 +27,6 @@ function initCommonAttributes(elm) {
 	setFormValue('onkeypress', tinyMCE.getAttrib(elm, 'onkeypress'));
 	setFormValue('onkeydown', tinyMCE.getAttrib(elm, 'onkeydown'));
 	setFormValue('onkeyup', tinyMCE.getAttrib(elm, 'onkeyup'));
-
 }
 
 function setFormValue(name, value) {
@@ -49,10 +49,6 @@ function getDateTime(d, fmt) {
 	fmt = fmt.replace("%S", "" + addZeros(d.getSeconds(), 2));
 	fmt = fmt.replace("%I", "" + ((d.getHours() + 11) % 12 + 1));
 	fmt = fmt.replace("%p", "" + (d.getHours() < 12 ? "AM" : "PM"));
-	fmt = fmt.replace("%B", "" + tinyMCE.getLang("lang_inserttime_months_long")[d.getMonth()]);
-	fmt = fmt.replace("%b", "" + tinyMCE.getLang("lang_inserttime_months_short")[d.getMonth()]);
-	fmt = fmt.replace("%A", "" + tinyMCE.getLang("lang_inserttime_day_long")[d.getDay()]);
-	fmt = fmt.replace("%a", "" + tinyMCE.getLang("lang_inserttime_day_short")[d.getDay()]);
 	fmt = fmt.replace("%%", "%");
 
 	return fmt;
@@ -155,6 +151,9 @@ SXE = {
 SXE.focusElement = SXE.inst.getFocusElement();
 
 SXE.initElementDialog = function(element_name) {
+	addClassesToList('class', 'xhtmlxtras_styles');
+	TinyMCE_EditableSelects.init();
+
 	element_name = element_name.toLowerCase();
 	var elm = tinyMCE.getParentElement(SXE.focusElement, element_name);
 	if (elm != null && elm.nodeName == element_name.toUpperCase()) {
@@ -165,28 +164,34 @@ SXE.initElementDialog = function(element_name) {
 		initCommonAttributes(elm);
 		SXE.updateElement = elm;
 	}
+
 	document.forms[0].insert.value = tinyMCE.getLang('lang_' + SXE.currentAction, 'Insert', true); 
 }
 
 SXE.insertElement = function(element_name) {
-	var elm = tinyMCE.getParentElement(SXE.focusElement, element_name), h;
-
-	element_name = element_name.toLowerCase();
+	var elm = tinyMCE.getParentElement(SXE.focusElement, element_name), h, tagName;
 
 	tinyMCEPopup.execCommand('mceBeginUndoLevel');
 	if (elm == null) {
 		var s = SXE.inst.selection.getSelectedHTML();
 		if(s.length > 0) {
-			if ((tinyMCE.isMSIE && !tinyMCE.isOpera) && element_name == 'abbr') {
-				element_name = 'span';
-				h = '<span id="#sxe_temp_' + element_name + '#" class="mceItemAbbr">' + s + '</span>';
-			} else
-				h = '<' + element_name + ' id="#sxe_temp_' + element_name + '#">' + s + '</' + element_name + '>';
+			tagName = element_name;
+
+			if (tinyMCE.isIE && !tinyMCE.isOpera && element_name.indexOf('html:') == 0)
+				element_name = element_name.substring(5).toLowerCase();
+
+			h = '<' + tagName + ' id="#sxe_temp_' + element_name + '#">' + s + '</' + tagName + '>';
 
 			tinyMCEPopup.execCommand('mceInsertContent', false, h);
+
 			var elementArray = tinyMCE.getElementsByAttributeValue(SXE.inst.getBody(), element_name, 'id', '#sxe_temp_' + element_name + '#');
 			for (var i=0; i<elementArray.length; i++) {
 				var elm = elementArray[i];
+
+				elm.id = '';
+				elm.setAttribute('id', '');
+				elm.removeAttribute('id');
+
 				setAllCommonAttribs(elm);
 			}
 		}

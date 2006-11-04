@@ -651,7 +651,7 @@
              <div class="xar-form-input-wrapper-after">
                     <p><xar:mlstring><strong>Available plugins (bundled):</strong> save, emotions, iespell (IE only), insertdatetime, preview, zoom,
                      advimage, advlink, flash, advhr, searchreplace, print, table, xarpagebreak, contextmenu, lorem, paste, 
-                     fullscreen, directionality, fullpage, liststyle, layer, style, spellchecker, media, visualchars, nonbreaking, xhtmlxtras</xar:mlstring></p>
+                     fullscreen, directionality, fullpage, liststyle, layer, style, spellchecker, media, visualchars, nonbreaking, xhtmlxtras, devkit</xar:mlstring></p>
              </div>
 
              <xar:if condition="$dateplug">

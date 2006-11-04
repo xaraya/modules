@@ -227,7 +227,7 @@ function tinymce_admin_updateconfig()
     }
    /* deprecated 1.0.1
     if (xarModGetVar('tinymce','tinynowrap')==1){
-        $jstext .='nowrap: "true",';
+        $jstext .='nowrap: true,';
     }
     */
     if (xarModGetVar('tinymce','tinytilemap')==1){
@@ -237,13 +237,13 @@ function tinymce_admin_updateconfig()
         $jstext .='cleanup: "false",';
     }
     //else{
-    // $jstext .='cleanup: "true",';
+    // $jstext .='cleanup: true,';
     //}
     // $jstext .=	'safari_warning: "false",'; now false by default
 
 
     if (xarModGetVar('tinymce','tinybr')==1){
-        //$jstext .='force_br_newlines: "true",';
+        //$jstext .='force_br_newlines: true,';
         $jstext .='convert_newlines_to_brs: "true",';
     }
 
@@ -283,8 +283,6 @@ function tinymce_admin_updateconfig()
             if (xarModGetVar('tinymce','tinyresizehorizontal')==1 ){
                 $jstext .='theme_advanced_resize_horizontal : "true", ';
             }
-
-
         }
 
 
@@ -322,7 +320,7 @@ function tinymce_admin_updateconfig()
         }
 
        /*  Uncomment to get a debug popup dialog showing paths used
-         $jstext .= 'debug : "true",';
+         $jstext .= 'debug : true,';
        */
        if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
            /* get rid of all white space first */

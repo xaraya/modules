@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -12,7 +12,7 @@ var TinyMCE_PreviewPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Preview',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_preview.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
@@ -53,9 +53,9 @@ var TinyMCE_PreviewPlugin = {
 					tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes", inline : "yes", content : tinyMCE.getContent(), content_css : tinyMCE.getParam("content_css")});
 				} else {
 					var win = window.open("", "mcePreview", "menubar=no,toolbar=no,scrollbars=yes,resizable=yes,left=20,top=20,width=" + previewWidth + ",height="  + previewHeight);
-					var html = "";
+					var html = "", i;
 					var c = tinyMCE.getContent();
-					var pos = c.indexOf('<body'), pos2;
+					var pos = c.indexOf('<body'), pos2, css = tinyMCE.getParam("content_css").split(',');
 
 					if (pos != -1) {
 						pos = c.indexOf('>', pos);
@@ -69,7 +69,10 @@ var TinyMCE_PreviewPlugin = {
 					html += '<title>' + tinyMCE.getLang('lang_preview_desc') + '</title>';
 					html += '<base href="' + tinyMCE.settings['base_href'] + '" />';
 					html += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-					html += '<link href="' + tinyMCE.getParam("content_css") + '" rel="stylesheet" type="text/css" />';
+
+					for (i=0; i<css.length; i++)
+						html += '<link href="' + css[i] + '" rel="stylesheet" type="text/css" />';
+
 					html += '<script type="text/javascript">';
 					html += 'window.opener.TinyMCE_PreviewPlugin._setDoc(document);';
 					html += 'window.opener.TinyMCE_PreviewPlugin._setWin(window);';

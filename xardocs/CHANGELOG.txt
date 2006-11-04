@@ -1,7 +1,15 @@
-* Version 1.1.2 xx Sept 2006
+* Version 1.1.3 x Nov 2006
+- Integrate post 2.0.8 fixes to 4 Nov
+- Updated compressor
+- Fix for full screen plugin
+- See full tinymce changelog for details
+
+* Version 1.1.2 27 Oct 2006
+- Integrates upstream tinymce 2.0.7 plus extra fixes
 - Fixes including fore and background colour (xar bug  5837)
 - Updated spellchecker plugin (requires Curl)
-- Three new plugins called visulachars, nonbreaking, xhtmlxtras
+- Four new plugins called visulachars, nonbreaking, xhtmlxtras,devkit
+- Lots of bug fixes and enhancements
 
 * Version 1.1.1 June 26
 - Add on/off switch for filebrowser in the tinymceconfig.inc file

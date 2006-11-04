@@ -51,8 +51,8 @@ var TinyMCE_DevKitPlugin = {
 		document.body.appendChild(ifr);
 
 		// Workaround for strange IE reload bug
-		if (tinyMCE.isMSIE && !tinyMCE.isOpera)
-			document.getElementById('devkit').outerHTML = document.getElementById('devkit').outerHTML;
+		//if (tinyMCE.isRealIE)
+		//	document.getElementById('devkit').outerHTML = document.getElementById('devkit').outerHTML;
 
 		tinyMCE.importCSS(document, tinyMCE.baseURL + '/plugins/devkit/css/devkit_ui.css');
 	},
@@ -145,9 +145,12 @@ var TinyMCE_DevKitPlugin = {
 	},
 
 	_debugEvent : function(e) {
-		e = e ? e : tinyMCE.selectedInstance.getWin().event;
+		var t;
 
-		tinyMCE.debug(e.type, e.target);
+		e = e ? e : tinyMCE.selectedInstance.getWin().event;
+		t = e.srcElement ? e.srcElement : e.target;
+
+		tinyMCE.debug(e.type, t ? t.nodeName : '');
 	},
 
 	_serialize : function(o) {
@@ -215,6 +218,12 @@ tinyMCE.debug = function() {
 
 tinyMCE.dump = function(o) {
 	tinyMCE.debug(TinyMCE_DevKitPlugin._serialize(o));
+};
+
+tinyMCE.sleep = function(t) {
+	var s = new Date().getTime(), b;
+
+	while (new Date().getTime() - s < t) b=1;
 };
 
 tinyMCE.__execCommand = tinyMCE.execCommand;

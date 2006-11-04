@@ -7,76 +7,76 @@
 <body>
 
 <div class="header">
-    <h1>Option: valid_elements</h1>
+	<h1>Option: valid_elements</h1>
 </div>
 
 <div class="content">
-    <p>
-        This option should contain a comma separated list element convertion chunks. Each chunk contains information about how one element and it's attributes should be treated. The default rule set for this option is specified below.
-    </p>
-    <p>
-        
-        <table border="1" cellspacing="0" cellpadding="4">
-             <thead><td colspan="2">Control characters:</td></thead>
-             <tbody>
-                 <tr><td><strong>,</strong></td><td>Separates element chunk definitions.</td></tr>
-                 <tr><td><strong>/</strong></td><td>Separates element synonymous. The first element is the one that will be outputted.</td></tr>
-                 <tr><td><strong>|</strong></td><td>Separates attribute definitions.</td></tr>
-                 <tr><td><strong>[</strong></td><td>Starts a new attribute list for a element definition.</td></tr>
-                 <tr><td><strong>]</strong></td><td>Ends a attribute list for a element definition.</td></tr>
-                 <tr><td><strong>=</strong></td><td>Makes the attribute to default to the specified value. For example &quot;target=_blank&quot;</td></tr>
-                 <tr><td><strong>:</strong></td><td>Makes the attribute to be forced to the specified value. For example &quot;border:0&quot;</td></tr>
-                 <tr><td><strong>&lt;</strong></td><td>Verifies the value of a attribute. For example &quot;target&lt;_blank?_self&quot;</td></tr>
-                 <tr><td><strong>?</strong></td><td>Separates attribute verification values, see above.</td></tr>
-                 <tr><td><strong>+</strong></td><td>Makes the element open if no child nodes exists. Example: +a.</td></tr>
-                 <tr><td><strong>-</strong></td><td>Enables removal of empty elements such as &lt;strong /&gt;. Example: -strong.</td></tr>
-                 <tr><td><strong>#</strong></td><td>Enables padding of empty elements, this will padd with &amp;nbsp; if they are empty. Example: #p.</td></tr>
-                 <tr><td><strong>!</strong></td><td>Makes attributes required. If non of the required attribures are set the element will be removed. Example: !href.</td></tr>
-            </tbody>
-        </table>
-        Wildcards such as *,+,? may be used in element or attribute name matching. 
-    </p>
-    <p>
-        Special variables:<br />
-        <strong>{$uid}</strong> Results in a unique ID. For example &quot;p[id:{$uid}]&quot;.<br />
-        <br />
-        Use *[*] to include all elements and all attributes this can be very useful when used with the <a href="option_invalid_elements.html">invalid_elements</a> option.
-    </p>
+	<p>
+		This option should contain a comma separated list element convertion chunks. Each chunk contains information about how one element and it's attributes should be treated. The default rule set for this option is specified below.
+	</p>
+	<p>
+		
+		<table border="1" cellspacing="0" cellpadding="4">
+			 <thead><td colspan="2">Control characters:</td></thead>
+			 <tbody>
+				 <tr><td><strong>,</strong></td><td>Separates element chunk definitions.</td></tr>
+				 <tr><td><strong>/</strong></td><td>Separates element synonymous. The first element is the one that will be outputted.</td></tr>
+				 <tr><td><strong>|</strong></td><td>Separates attribute definitions.</td></tr>
+				 <tr><td><strong>[</strong></td><td>Starts a new attribute list for a element definition.</td></tr>
+				 <tr><td><strong>]</strong></td><td>Ends a attribute list for a element definition.</td></tr>
+				 <tr><td><strong>=</strong></td><td>Makes the attribute to default to the specified value. For example &quot;target=_blank&quot;</td></tr>
+				 <tr><td><strong>:</strong></td><td>Makes the attribute to be forced to the specified value. For example &quot;border:0&quot;</td></tr>
+				 <tr><td><strong>&lt;</strong></td><td>Verifies the value of a attribute. For example &quot;target&lt;_blank?_self&quot;</td></tr>
+				 <tr><td><strong>?</strong></td><td>Separates attribute verification values, see above.</td></tr>
+				 <tr><td><strong>+</strong></td><td>Makes the element open if no child nodes exists. Example: +a.</td></tr>
+				 <tr><td><strong>-</strong></td><td>Enables removal of empty elements such as &lt;strong /&gt;. Example: -strong.</td></tr>
+				 <tr><td><strong>#</strong></td><td>Enables padding of empty elements, this will padd with &amp;nbsp; if they are empty. Example: #p.</td></tr>
+				 <tr><td><strong>!</strong></td><td>Makes attributes required. If non of the required attribures are set the element will be removed. Example: !href.</td></tr>
+			</tbody>
+		</table>
+		Wildcards such as *,+,? may be used in element or attribute name matching. 
+	</p>
+	<p>
+		Special variables:<br />
+		<strong>{$uid}</strong> Results in a unique ID. For example &quot;p[id:{$uid}]&quot;.<br />
+		<br />
+		Use *[*] to include all elements and all attributes this can be very useful when used with the <a href="option_invalid_elements.html">invalid_elements</a> option.
+	</p>
 
-    <div class="separator"></div>
+	<div class="separator"></div>
 
-    <h3>Example of usage of the valid_elements option:</h3>
-    <p>
-        This example string tells TinyMCE to remove all elements that are not a "a, strong, div or br" element, convert b elements to strong elements, default target to "_blank" and keep the href, target and align attributes of the elements.
-    </p>
-    <div class="example">
+	<h3>Example of usage of the valid_elements option:</h3>
+	<p>
+		This example string tells TinyMCE to remove all elements that are not a "a, strong, div or br" element, convert b elements to strong elements, default target to "_blank" and keep the href, target and align attributes of the elements.
+	</p>
+	<div class="example">
 <pre>
 tinyMCE.init({
-    ...
-    <strong>valid_elements : "a[href|target=_blank],strong/b,div[align],br"</strong>
+	...
+	<strong>valid_elements : "a[href|target=_blank],strong/b,div[align],br"</strong>
 });
 </pre>
-    </div>
+	</div>
 
-    <div class="separator"></div>
+	<div class="separator"></div>
 
-    <h3>Default rule set:</h3>
-    <p>
-        This is the default string used by TinyMCE to cleanup the HTML contents.
-    </p>
-    <div class="example">
+	<h3>Default rule set:</h3>
+	<p>
+		This is the default string used by TinyMCE to cleanup the HTML contents.
+	</p>
+	<div class="example">
 <pre>
 +a[id|style|rel|rev|charset|hreflang|dir|lang|tabindex|accesskey|type|name|href|target|title|class|onfocus|onblur|onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup],-strong/-b[class|style],-em/-i[class|style],-strike[class|style],-u[class|style],#p[id|style|dir|class|align],-ol[class|style],-ul[class|style],-li[class|style],br,img[id|dir|lang|longdesc|usemap|style|class|src|onmouseover|onmouseout|border|alt=|title|hspace|vspace|width|height|align],-sub[style|class],-sup[style|class],-blockquote[dir|style],-table[border=0|cellspacing|cellpadding|width|height|class|align|summary|style|dir|id|lang|bgcolor|background|bordercolor],-tr[id|lang|dir|class|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor],tbody[id|class],thead[id|class],tfoot[id|class],-td[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|bgcolor|background|bordercolor|scope],-th[id|lang|dir|class|colspan|rowspan|width|height|align|valign|style|scope],caption[id|lang|dir|class|style],-div[id|dir|class|align|style],-span[style|class|align],-pre[class|align|style],address[class|align|style],-h1[id|style|dir|class|align],-h2[id|style|dir|class|align],-h3[id|style|dir|class|align],-h4[id|style|dir|class|align],-h5[id|style|dir|class|align],-h6[id|style|dir|class|align],hr[class|style],-font[face|size|style|id|class|dir|color],dd[id|class|title|style|dir|lang],dl[id|class|title|style|dir|lang],dt[id|class|title|style|dir|lang]
 </pre>
-    </div>
+	</div>
 
-    <div class="separator"></div>
+	<div class="separator"></div>
 
-    <h3>Full XHTML rule set:</h3>
-    <p>
-        The following will validate that the page complies fully with the XHTML specification. 
-    </p>
-    <div class="example">
+	<h3>Full XHTML rule set:</h3>
+	<p>
+		The following will validate that the page complies fully with the XHTML specification. 
+	</p>
+	<div class="example">
 <pre>
 valid_elements : &quot;&quot;
 +&quot;a[accesskey|charset|class|coords|dir&lt;ltr?rtl|href|hreflang|id|lang|name&quot;
@@ -336,13 +336,13 @@ valid_elements : &quot;&quot;
   +&quot;|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style&quot;
   +&quot;|title]&quot;
 </pre>
-    </div>
+	</div>
 </div>
 
 <div class="footer">
-    <div class="helpindexlink"><a href="index.html">Index</a></div>
-    <div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
-    <br style="clear: both" />
+	<div class="helpindexlink"><a href="index.html">Index</a></div>
+	<div class="copyright">Copyright &copy; 2003-2006 <a href="http://www.moxiecode.com">Moxiecode Systems AB</a></div>
+	<br style="clear: both" />
 </div>
 
 </body>

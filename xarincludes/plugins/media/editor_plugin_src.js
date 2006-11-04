@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_plugin_src.js 126 2006-10-22 16:19:55Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -12,7 +12,7 @@ var TinyMCE_MediaPlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Media',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_media.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
@@ -60,11 +60,11 @@ var TinyMCE_MediaPlugin = {
 			case "insert_to_editor":
 				img = tinyMCE.getParam("theme_href") + '/images/spacer.gif';
 				content = content.replace(/<script[^>]*>\s*write(Flash|ShockWave|WindowsMedia|QuickTime|RealMedia)\(\{([^\)]*)\}\);\s*<\/script>/gi, '<img class="mceItem$1" title="$2" src="' + img + '" />');
-				content = content.replace(/<object([^>]*)>/gi, '<span class="mceItemObject" $1>');
-				content = content.replace(/<embed([^>]*)>/gi, '<span class="mceItemObjectEmbed" $1>');
-				content = content.replace(/<\/(object|embed)([^>]*)>/gi, '</span>');
-				content = content.replace(/<param([^>]*)>/gi, '<span $1 class="mceItemParam"></span>');
-				content = content.replace(new RegExp('\\/ class="mceItemParam"><\\/span>', 'gi'), 'class="mceItemParam"></span>');
+				content = content.replace(/<object([^>]*)>/gi, '<div class="mceItemObject" $1>');
+				content = content.replace(/<embed([^>]*)>/gi, '<div class="mceItemObjectEmbed" $1>');
+				content = content.replace(/<\/(object|embed)([^>]*)>/gi, '</div>');
+				content = content.replace(/<param([^>]*)>/gi, '<div $1 class="mceItemParam"></div>');
+				content = content.replace(new RegExp('\\/ class="mceItemParam"><\\/div>', 'gi'), 'class="mceItemParam"></div>');
 				break;
 
 			case "insert_to_editor_dom":
@@ -78,34 +78,32 @@ var TinyMCE_MediaPlugin = {
 					}
 				}
 
-				nl = tinyMCE.selectNodes(content, function (n) {return n.className == 'mceItemObject';});
+				nl = tinyMCE.selectElements(content, 'DIV', function (n) {return tinyMCE.hasCSSClass(n, 'mceItemObject');});
 				for (i=0; i<nl.length; i++) {
-					if (nl[i].className == 'mceItemObject') {
-						ci = tinyMCE.getAttrib(nl[i], "classid").toLowerCase().replace(/\s+/g, '');
+					ci = tinyMCE.getAttrib(nl[i], "classid").toLowerCase().replace(/\s+/g, '');
 
-						switch (ci) {
-							case 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000':
-								nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemFlash', d, nl[i]), nl[i]);
-								break;
+					switch (ci) {
+						case 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000':
+							nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemFlash', d, nl[i]), nl[i]);
+							break;
 
-							case 'clsid:166b1bca-3f9c-11cf-8075-444553540000':
-								nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemShockWave', d, nl[i]), nl[i]);
-								break;
+						case 'clsid:166b1bca-3f9c-11cf-8075-444553540000':
+							nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemShockWave', d, nl[i]), nl[i]);
+							break;
 
-							case 'clsid:6bf52a52-394a-11d3-b153-00c04f79faa6':
-								nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemWindowsMedia', d, nl[i]), nl[i]);
-								break;
+						case 'clsid:6bf52a52-394a-11d3-b153-00c04f79faa6':
+							nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemWindowsMedia', d, nl[i]), nl[i]);
+							break;
 
-							case 'clsid:02bf25d5-8c17-4b23-bc80-d3488abddc6b':
-								nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemQuickTime', d, nl[i]), nl[i]);
-								break;
+						case 'clsid:02bf25d5-8c17-4b23-bc80-d3488abddc6b':
+							nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemQuickTime', d, nl[i]), nl[i]);
+							break;
 
-							case 'clsid:cfcdaa03-8be4-11cf-b84b-0020afbbccfa':
-							case 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95':
-							case 'clsid:05589fa1-c356-11ce-bf01-00aa0055595a':
-								nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemRealMedia', d, nl[i]), nl[i]);
-								break;
-						}
+						case 'clsid:cfcdaa03-8be4-11cf-b84b-0020afbbccfa':
+						case 'clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95':
+						case 'clsid:05589fa1-c356-11ce-bf01-00aa0055595a':
+							nl[i].parentNode.replaceChild(TinyMCE_MediaPlugin._createImg('mceItemRealMedia', d, nl[i]), nl[i]);
+							break;
 					}
 				}
 
@@ -137,7 +135,7 @@ var TinyMCE_MediaPlugin = {
 				break;
 
 			case "get_from_editor":
-				var startPos = -1, endPos, attribs, chunkBefore, chunkAfter, embedHTML, at, pl, cb, mt;
+				var startPos = -1, endPos, attribs, chunkBefore, chunkAfter, embedHTML, at, pl, cb, mt, ex;
 
 				while ((startPos = content.indexOf('<img', startPos+1)) != -1) {
 					endPos = content.indexOf('/>', startPos);
@@ -151,9 +149,16 @@ var TinyMCE_MediaPlugin = {
 
 					// Parse attributes
 					at = attribs['title'];
-					at = at.replace(/&#39;/g, "'");
-					at = at.replace(/&#quot;/g, '"');
-					pl = eval('x={' + at + '};');
+					if (at) {
+						at = at.replace(/&#39;/g, "'");
+						at = at.replace(/&#quot;/g, '"');
+
+						try {
+							pl = eval('x={' + at + '};');
+						} catch (ex) {
+							pl = {};
+						}
+					}
 
 					// Use object/embed
 					if (!tinyMCE.getParam('media_use_script', false)) {
@@ -219,10 +224,10 @@ var TinyMCE_MediaPlugin = {
 						}
 
 						if (attribs.width)
-							at = at.replace(/width:[^0-9]?[0-9]+%?/g, "width:'" + attribs.width + "'");
+							at = at.replace(/width:[^0-9]?[0-9]+%?[^0-9]?/g, "width:'" + attribs.width + "'");
 
 						if (attribs.height)
-							at = at.replace(/height:[^0-9]?[0-9]+%?/g, "height:'" + attribs.height + "'");
+							at = at.replace(/height:[^0-9]?[0-9]+%?[^0-9]?/g, "height:'" + attribs.height + "'");
 
 						// Force absolute URL
 						if (!tinyMCE.getParam("relative_urls")) {
@@ -308,7 +313,7 @@ var TinyMCE_MediaPlugin = {
 		al.align = tinyMCE.getAttrib(n, 'align');
 		al.class_name = tinyMCE.getAttrib(n, 'mce_class');
 
-		nl = n.getElementsByTagName('span');
+		nl = n.getElementsByTagName('div');
 		for (i=0; i<nl.length; i++) {
 			av = tinyMCE.getAttrib(nl[i], 'value');
 			av = av.replace(new RegExp('\\\\', 'g'), '\\\\');
@@ -324,7 +329,7 @@ var TinyMCE_MediaPlugin = {
 		}
 
 		for (an in al) {
-			if (al[an] != null && al[an] != '')
+			if (al[an] != null && typeof(al[an]) != "function" && al[an] != '')
 				ti += an.toLowerCase() + ':\'' + al[an] + "',";
 		}
 
@@ -349,7 +354,7 @@ var TinyMCE_MediaPlugin = {
 		h += '>';
 
 		for (n in p) {
-			if (p[n]) {
+			if (p[n] && typeof(p[n]) != "function") {
 				h += '<param name="' + n + '" value="' + p[n] + '" />';
 
 				// Add extra url parameter if it's an absolute URL on WMP
@@ -361,6 +366,9 @@ var TinyMCE_MediaPlugin = {
 		h += '<embed type="' + mt + '"';
 
 		for (n in p) {
+			if (typeof(p[n]) == "function")
+				continue;
+
 			// Skip url parameter for embed tag on WMP
 			if (!(n == 'url' && mt == 'application/x-mplayer2'))
 				h += ' ' + n + '="' + p[n] + '"';

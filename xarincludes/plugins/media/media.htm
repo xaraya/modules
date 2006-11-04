@@ -58,7 +58,7 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td><input type="text" id="width" name="width" value="" class="size" onchange="generatePreview('width');" /> x <input type="text" id="height" name="height" value="" class="size"  onchange="generatePreview('height');" /></td>
-										<td>&nbsp;&nbsp;<input id="constrain" type="checkbox" name="constrain" class="checkbox" checked="checked" /></td>
+										<td>&nbsp;&nbsp;<input id="constrain" type="checkbox" name="constrain" class="checkbox" /></td>
 										<td><label id="constrainlabel" for="constrain">{$lang_media_constrain_proportions}</label></td>
 									</tr>
 								</table>
@@ -89,10 +89,10 @@
 							<td>
 								<select id="align" name="align" onchange="generatePreview();">
 									<option value="">{$lang_not_set}</option> 
-									<option>top</option>
-									<option>right</option>
-									<option>bottom</option>
-									<option>left</option>
+									<option value="top">top</option>
+									<option value="right">right</option>
+									<option value="bottom">bottom</option>
+									<option value="left">left</option>
 								</select>
 							</td>
 

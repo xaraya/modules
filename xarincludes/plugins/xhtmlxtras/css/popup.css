@@ -5,7 +5,7 @@ img {
 	border: 0;
 }
 
-input.field {
+input.field, select.field {
 	width: 200px;
 }
 
@@ -35,4 +35,12 @@ h1 {
 	background-image: url('../images/remove_button_bg.gif');
 	cursor: pointer;
 	margin-left: 3px;
+}
+
+.panel_wrapper div.current {
+	height: 160px;
+}
+
+#xhtmlxtrasdel .panel_wrapper div.current, #xhtmlxtrasins .panel_wrapper div.current {
+	height: 220px;
 }
