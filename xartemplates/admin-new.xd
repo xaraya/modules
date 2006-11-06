@@ -36,7 +36,7 @@
         </xar:set>
     </xar:if>
     <xar:if condition="!empty($ptid)">
-        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#" #$formhooks['formaction']#>
+        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#" #$formhooks['formaction']# >
             <xar:comment>Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.</xar:comment>
             <xar:comment>If you would like to preset certain fields via GET or POST parameters, you should set $field['definition']['preset'] = 'yes' before passing it to the xar:articles-field tag. You can also set the value directly in this template via $field['definition']['value']</xar:comment>
             <xar:foreach in="$fields" value="$field">
@@ -47,7 +47,7 @@
             </xar:foreach>
             <xar:if condition="!empty($formhooks['formdisplay'])">
                 <div class="xar-form-input-wrapper">
-                <label class="xar-form-label help" title="Form Controls as determined by hook selection.')#">
+                <label class="xar-form-label help" title="#xarML('Form Controls as determined by hook selection.')#">
                     <xar:mlstring>Form Controls</xar:mlstring>
                 </label>#$formhooks['formdisplay']#</div>
             </xar:if>
@@ -65,6 +65,7 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <xar:comment>The return_url can be set here to return to another page that the admin-view one</xar:comment>
                     <input type="hidden" name="return_url" value="#$return_url#" />
                     <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
                     <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')">
