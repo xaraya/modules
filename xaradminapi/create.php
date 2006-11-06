@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,10 +13,10 @@
  * @param  $args ['totalgained'] total kb gained in optimization
  * @returns int
  * @return sitetools item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sitetools_adminapi_create($args)
-{ 
+{
 extract($args);
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then set an appropriate error
@@ -45,7 +45,7 @@ extract($args);
 
     // Get next ID in table
     $nextId = $dbconn->GenId($sitetoolstable);
-    // Add item 
+    // Add item
 
     $query = "INSERT INTO $sitetoolstable (
               xar_stid,
@@ -55,7 +55,7 @@ extract($args);
     $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return; 
+    if (!$result) return;
     // Get the ID of the item that we inserted.
     $stid = $dbconn->PO_Insert_ID($sitetoolstable, 'xar_stid');
     // Let any hooks know that we have created a new item.
@@ -66,6 +66,6 @@ extract($args);
     xarModCallHooks('item', 'create', $stid, $item);
     // Return the id of the newly created item to the calling process
     return $stid;
-} 
+}
 
 ?>

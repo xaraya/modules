@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -50,7 +50,7 @@ class dbSiteTools_mysql extends dbSiteTools
         }
 
         if (!$resultat) {return false;}
-                                                                                           
+
         $rowinfo = array();
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
@@ -120,7 +120,7 @@ class dbSiteTools_mysql extends dbSiteTools
     }
 
     function _bkcountoverallrows($SelectedTables,$number_of_cols)
-    {  
+    {
        $overallrows=0;
        foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
@@ -139,7 +139,7 @@ class dbSiteTools_mysql extends dbSiteTools
         }
         return $overallrows;
     }
-    
+
     function _backup($bkvars)
     {
 
@@ -157,7 +157,7 @@ class dbSiteTools_mysql extends dbSiteTools
         $buffer_size=$bkvars['buffer_size'];
         $runningstatus=$bkvars['runningstatus'];
         $starttime=$bkvars['starttime'];
-        $screen=$bkvars['screen']; 
+        $screen=$bkvars['screen'];
 
         foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
@@ -310,8 +310,5 @@ class dbSiteTools_mysql extends dbSiteTools
 
     return $runningstatus;
     }
-
-
 }
-
 ?>

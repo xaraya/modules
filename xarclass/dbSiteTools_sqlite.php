@@ -52,7 +52,7 @@ class dbSiteTools_sqlite extends dbSiteTools
         }
         */
         if (!$resultat) {return false;}
-                                                                                           
+
         $rowinfo = array();
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
@@ -122,7 +122,7 @@ class dbSiteTools_sqlite extends dbSiteTools
     }
 
     function _bkcountoverallrows($SelectedTables,$number_of_cols)
-    {  
+    {
        $overallrows=0;
        foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
@@ -141,7 +141,7 @@ class dbSiteTools_sqlite extends dbSiteTools
         }
         return $overallrows;
     }
-    
+
     function _backup($bkvars)
     {
 
@@ -159,7 +159,7 @@ class dbSiteTools_sqlite extends dbSiteTools
         $buffer_size=$bkvars['buffer_size'];
         $runningstatus=$bkvars['runningstatus'];
         $starttime=$bkvars['starttime'];
-        $screen=$bkvars['screen']; 
+        $screen=$bkvars['screen'];
 
         foreach ($SelectedTables as $this->dbname => $value) {
             mysql_select_db($this->dbname);
@@ -312,8 +312,5 @@ class dbSiteTools_sqlite extends dbSiteTools
 
     return $runningstatus;
     }
-
-
 }
-
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -14,10 +14,10 @@
  * @author mikespub
  * @returns array
  * @return array of module titles and their link fields
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
 */
 function sitetools_adminapi_getlinkfields($args)
-{ 
+{
     extract($args);
 
     $modules = array();

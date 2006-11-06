@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -20,19 +20,19 @@
  * @param $args['where'] string optional where clause (e.g. 'xar_status <> 200')
  * @returns integer
  * @return number of items checked
- * @raise DATABASE_ERROR
+ * @throws DATABASE_ERROR
 */
 function sitetools_adminapi_checklinks($args)
-{ 
+{
     extract($args);
 
     if (!isset($skiplocal)) $skiplocal = false;
     if (!isset($method)) $method = 'HEAD';
     if (!isset($follow)) $follow = true;
-   
+
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $xartable =& xarDBGetTables();
 
     $linkstable = $xartable['sitetools_links'];
 
@@ -45,7 +45,7 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= $where;
     }
-    $result = $dbconn->Execute($query); 
+    $result = $dbconn->Execute($query);
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();
@@ -60,7 +60,7 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= $where;
     }
-    $result = $dbconn->Execute($update); 
+    $result = $dbconn->Execute($update);
     if (!$result) return;
 
     // check all distinct URLs
@@ -73,7 +73,7 @@ function sitetools_adminapi_checklinks($args)
     } elseif (!empty($where)) {
         $query .= 'WHERE xar_status=0';
     }
-    $result = $dbconn->Execute($query); 
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $count = 0;

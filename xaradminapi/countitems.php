@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -9,16 +9,15 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
-/*
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+/**
+ * @return int number of items held by this module
+ * @throws DATABASE_ERROR
 */
 function sitetools_adminapi_countitems()
-{ 
+{
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables(); 
+    $xartable =& xarDBGetTables();
 
     $sitetoolstable = $xartable['sitetools'];
 

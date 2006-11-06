@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -10,18 +10,18 @@
  */
 
 /**
- * @Backup tables in your database
+ * Backup tables in your database
  * @author jojodee
- * TODO: Add in multidatabase once multidatabase functionality and location decided
- * TODO: Remove all the commented out code once classes fully tidied and tested
+ * @return array
+ * @TODO: Add in multidatabase once multidatabase functionality and location decided
+ * @TODO: Remove all the commented out code once classes fully tidied and tested
  */
 function sitetools_adminapi_backupdb ($args)
-
 {
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802
     //if (!xarSecurityCheck('AdminSiteTools')) return;
- 
+
     $items=array();
     $items['startbackup']=$startbackup;
     $items['usegz']=$usegz;
@@ -29,7 +29,7 @@ function sitetools_adminapi_backupdb ($args)
     if (!isset($startbackup)) return;
 
     if ((($usegz==1) || !isset($usegz)) && (bool)(function_exists('gzopen'))) {
-         $GZ_enabled =true;
+       $GZ_enabled =true;
     } else {
        $GZ_enabled = false;
     }
@@ -53,7 +53,7 @@ function sitetools_adminapi_backupdb ($args)
     $lineterminator = xarModGetVar('sitetools','lineterm'); // not in use  --hard coded with \n for now
     $backupabsolutepath= xarModGetVar('sitetools','backuppath').'/';
     $items['warning']=0;
-    
+
     //Let's make dbname as a prefix configurable
     if ($usedbprefix==1) {
         $thedbprefix=$dbname.'.';
@@ -67,7 +67,7 @@ function sitetools_adminapi_backupdb ($args)
         $items['backuptimestamp'] = '';
     }
     //check directory exists and is writeable
-   $items['warningmessage']='<span class="xar-accent">'
+    $items['warningmessage']='<span class="xar-accent">'
                             .xarML('WARNING: directory does not exist or is not writeable: ').$backupabsolutepath.'</span><br /><br />'
                             .xarML(' Please ensure the backup directory exisits and is writeable');
 
@@ -86,7 +86,7 @@ function sitetools_adminapi_backupdb ($args)
     $runningstatus=array();
 
     if (!function_exists('getmicrotime')) {
-        function getmicrotime() 
+        function getmicrotime()
         {
             list($usec, $sec) = explode(' ', microtime());
             return ((float) $usec + (float) $sec);
@@ -209,7 +209,7 @@ function sitetools_adminapi_backupdb ($args)
 
         //Put this here for now - format output later
         $overallrows = 0;
-        $overallrows = $bkitems-> bkcountoverallrows($SelectedTables);        
+        $overallrows = $bkitems-> bkcountoverallrows($SelectedTables);
         //Count up the overall number of rows in the selected table list
         /* Move to classes
         foreach ($SelectedTables as $dbname => $value) {
@@ -429,7 +429,7 @@ end the backup that is moved to class
             $items['bkfilename']=$backupabsolutepath.$partbackupfilename;
             $items['bkname']=$partbackupfilename;
         }
-       $items['bkfilesize']=FileSizeNiceDisplay(filesize($items['bkfilename']), 2);
+        $items['bkfilesize']=FileSizeNiceDisplay(filesize($items['bkfilename']), 2);
         $items['completetime']= FormattedTimeRemaining(getmicrotime() - $starttime, 2);
         $items['deleteurl']="[Click to Delete]";
     } else {
@@ -443,7 +443,7 @@ end the backup that is moved to class
    return $items;
 }
  //A few formatting functions
- function FormattedTimeRemaining($seconds, $precision=1) 
+ function FormattedTimeRemaining($seconds, $precision=1)
  {
     if ($seconds > 86400) {
         return number_format($seconds / 86400, $precision).' days';
@@ -454,7 +454,7 @@ end the backup that is moved to class
     }
     return number_format($seconds, $precision).' seconds';
 }
-function FileSizeNiceDisplay($filesize, $precision=2) 
+function FileSizeNiceDisplay($filesize, $precision=2)
 {
     if ($filesize < 1000) {
         $sizeunit  = 'bytes';

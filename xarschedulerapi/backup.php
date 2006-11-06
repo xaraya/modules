@@ -12,9 +12,10 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
- * take a backup of the database(s) (executed by the scheduler module)
- * 
+ * Take a backup of the database(s) (executed by the scheduler module)
+ *
  * @author jojodee <http://xaraya.athomeandabout.com >
+ * @return bool true on success
  * @access private
  */
 function sitetools_schedulerapi_backup($args)

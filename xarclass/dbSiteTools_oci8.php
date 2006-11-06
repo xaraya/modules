@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -10,7 +10,7 @@
  */
 
 /**
- * SiteTools Database abstraction class extension 
+ * SiteTools Database abstraction class extension
  *
  * @author Richard Cave <rcave@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
@@ -26,7 +26,7 @@ class dbSiteTools_oci8 extends dbSiteTools
 
         // Do something
 
-        return $rowinfo; 
+        return $rowinfo;
     }
 
     function _backup()

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
@@ -13,13 +13,12 @@
  * Find links in fields from different modules/itemtypes
  * @author mikespub
  * @param $args['fields'] array of [module][itemtype] = fieldlist
- * @param $args['skiplocal'] bool optional flag to skip local links (default false)
- * @returns array
- * @return number of links found per module/itemtype
- * @raise DATABASE_ERROR
+ * @param $args['skiplocal'] bool optional flag to skip local links (default false) OPTIONAL
+ * @return array. An array with the number of links found per module/itemtype
+ * @throws DATABASE_ERROR
 */
 function sitetools_adminapi_findlinks($args)
-{ 
+{
     extract($args);
 
     if (!isset($skiplocal)) $skiplocal = false;
