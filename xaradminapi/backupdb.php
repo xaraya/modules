@@ -17,7 +17,7 @@
  * @TODO: Add in multidatabase once multidatabase functionality and location decided
  * @TODO: Remove all the commented out code once classes fully tidied and tested
  */
-function sitetools_adminapi_backupdb ($args)
+function sitetools_adminapi_backupdb($args)
 {
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802

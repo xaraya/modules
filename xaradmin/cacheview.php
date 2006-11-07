@@ -21,7 +21,7 @@ function sitetools_admin_cacheview($args)
 {
     /* Get parameters from whatever input we need. */
     if (!xarVarFetch('action', 'str:1', $action, false, XARVAR_NOT_REQUIRED)) return;
-     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hashn', 'str:1:', $hashn, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('templn', 'str:1:', $templn, false, XARVAR_NOT_REQUIRED)) return;
 
