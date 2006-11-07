@@ -13,18 +13,21 @@
  * Backup tables in your database
  *
  * @author MichelV <michelv@xaraya.com>
- * @return array ['bkfiletype']
+ * @since 7 Nov 2006
+ * @param array ['bkfiletype']
                  ['bkfilename']=$backupabsolutepath.$partbackupfilename;
                  ['bkname']
+ * @return bool True on successful FTP action, false on failure
  * @TODO: Add in multidatabase once multidatabase functionality and location decided
- * @TODO: Remove all the commented out code once classes fully tidied and tested
  */
 function sitetools_adminapi_ftpbackup($args)
 {
     extract($args);
     // Security check - allow scheduler api funcs to run as anon bug #2802
     //if (!xarSecurityCheck('AdminSiteTools')) return;
-
+    if (!extension_loaded('ftp')) {
+        return false;
+    }
     if(!isset($bkfilename) || empty($bkfilename)) {
         return false;
     }
