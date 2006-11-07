@@ -191,41 +191,43 @@
             <div class="xar-form-input-wrapper-after">
                 #$schedulingnote#
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="useftpbackup" class="xar-form-label" title="#$useftpbackuphelp#">
-                   #$useftpbackuplabel#
-                </label>
-                <xar:if condition="$useftpchecked">
-                  <input type="checkbox" name="useftpback" id="useftpbackup" value="1" checked="checked"/>
-                  <xar:else/>
-                  <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" />
-                </xar:if>
+            <xar:if condition="$ftpextension">
+                <div class="xar-form-input-wrapper">
+                    <label for="useftpbackup" class="xar-form-label" title="#$useftpbackuphelp#">
+                       #$useftpbackuplabel#
+                    </label>
+                    <xar:if condition="$useftpchecked">
+                      <input type="checkbox" name="useftpback" id="useftpbackup" value="1" checked="checked"/>
+                      <xar:else/>
+                      <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" />
+                    </xar:if>
 
-             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="ftpserver" class="xar-form-label" title="#$ftpservertitle#">
-                     #$ftpserverlabel#
-                </label>
-                <input type="text" name="ftpserver" id="ftpserver" size="40" maxlength="128" value="#$ftpserver#" />
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="ftpuser" class="xar-form-label" title="#$ftpusertitle#">
-                     #$ftpuserlabel#
-                </label>
-                <input type="text" name="ftpuser" id="ftpuser" size="40" maxlength="128" value="#$ftpuser#" />
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
-                     #$ftppwlabel#
-                </label>
-                <input type="password" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">
-                     #$ftpdirlabel#
-                </label>
-                <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
-            </div>
+                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="ftpserver" class="xar-form-label" title="#$ftpservertitle#">
+                         #$ftpserverlabel#
+                    </label>
+                    <input type="text" name="ftpserver" id="ftpserver" size="40" maxlength="128" value="#$ftpserver#" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="ftpuser" class="xar-form-label" title="#$ftpusertitle#">
+                         #$ftpuserlabel#
+                    </label>
+                    <input type="text" name="ftpuser" id="ftpuser" size="40" maxlength="128" value="#$ftpuser#" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
+                         #$ftppwlabel#
+                    </label>
+                    <input type="password" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">
+                         #$ftpdirlabel#
+                    </label>
+                    <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
+                </div>
+            </xar:if>
         <xar:else />
             <div class="xar-form-input-wrapper-after">
                 <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>

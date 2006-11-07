@@ -39,6 +39,7 @@ function sitetools_admin_modifyconfig()
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['usedbprefix']   = xarModGetVar('sitetools','usedbprefix');
 
+    $data['ftpextension']  = extension_loaded('ftp');
     $data['useftpchecked'] = xarModGetVar('sitetools','useftpbackup') ? true : false;
     $data['ftpserver']     = xarModGetVar('sitetools','ftpserver');
     $data['ftpuser']       = xarModGetVar('sitetools','ftpuser');
