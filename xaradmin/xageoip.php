@@ -42,10 +42,10 @@ function netquery_admin_xageoip()
             $result = $datadict->createTable($GeoipTable, $GeoipFields, $taboptarray);
             if (!$result) return;
             $GeoccItems = array(
-array(1, 'A0', 'Reserved Addr', '0.0000', '0.0000', 0),
-array(2, 'A1', 'Loopback Addr', '0.0000', '0.0000', 0),
+array(1, 'A0', 'Reserved Address', '0.0000', '0.0000', 0),
+array(2, 'A1', 'Anonymous Proxy', '0.0000', '0.0000', 0),
 array(3, 'A2', 'Satellite Provider', '0.0000', '0.0000', 0),
-array(4, 'A3', 'Private Addr', '0.0000', '0.0000', 0),
+array(4, 'A3', 'Private Address', '0.0000', '0.0000', 0),
 array(5, 'AC', 'Ascension Island', '-7.9500', '-14.3667', 0),
 array(6, 'AD', 'Andorra', '42.5000', '1.5000', 0),
 array(7, 'AE', 'United Arab Emirates', '24.0000', '54.0000', 0),
@@ -306,7 +306,7 @@ array(252, 'ZW', 'Zimbabwe', '-20.0000', '30.0000', 0));
             $GeoipItems = array(
 array(0, 16777215, 1),             # Reserved block 0/8
 array(167772160, 184549375, 4),    # Private address block 10/8 (Class A)
-array(2130706432, 2147483647, 2),  # Loopback address block 127/8
+array(2130706432, 2147483647, 4),  # Private address block 127/8 (Loopback)
 array(2147483648, 2147549183, 1),  # Reserved block 128.0/16
 array(2851995648, 2852061183, 4),  # Private address block 169.254/16 (Class B for DHCP)
 array(2886729728, 2887778303, 4),  # Private address blocks 172.16/12 (Class B x16 contiguous)

@@ -87,7 +87,7 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
         <td colspan="1">#$entry.user_agent#</td>
         <td colspan="3">#$entry.http_headers#</td>
         <td colspan="1">#$entry.request_entity#</td>
-        <td colspan="1">#$entry.key#</td>
+        <td colspan="1">#$entry.key#<br />#$entry.response#: #$entry.log#</td>
     </tr>
     <tr>
         <th colspan="6">&nbsp;

@@ -414,7 +414,23 @@ class nqSniff
             $this->_set_browser('version',$this->_browser_info['maj_ver'].$this->property('min_ver'));
         }
     }
-    function _get_ip ()
+    function _get_ip()
+    {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        elseif (isset($_SERVER['HTTP_CLIENT_IP']))
+        {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        else
+        {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+       $this->_set_browser('ip',$ip);
+    }
+    function _OLD_get_ip ()
     {   if (getenv('HTTP_CLIENT_IP')) {
             $ip = getenv('HTTP_CLIENT_IP');
         } else {
