@@ -218,7 +218,7 @@
                 <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
                      #$ftppwlabel#
                 </label>
-                <input type="text" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
+                <input type="password" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">

@@ -28,18 +28,18 @@ function sitetools_admin_modifyconfig()
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     /* Specify some labels and values for display */
-    $data['adopath']     = xarModGetVar('sitetools','adocachepath');
-    $data['rsspath']     = xarModGetVar('sitetools','rsscachepath');
-    $data['templpath']   = xarModGetVar('sitetools','templcachepath');
-    $data['backuppath']  = xarModGetVar('sitetools','backuppath');
-    $data['usetimestamp']= xarModGetVar('sitetools','timestamp');
-    $data['lineterm']    = xarModGetVar('sitetools','lineterm');
-    $data['colnumber']    = xarModGetVar('sitetools','colnumber');
+    $data['adopath']       = xarModGetVar('sitetools','adocachepath');
+    $data['rsspath']       = xarModGetVar('sitetools','rsscachepath');
+    $data['templpath']     = xarModGetVar('sitetools','templcachepath');
+    $data['backuppath']    = xarModGetVar('sitetools','backuppath');
+    $data['usetimestamp']  = xarModGetVar('sitetools','timestamp');
+    $data['lineterm']      = xarModGetVar('sitetools','lineterm');
+    $data['colnumber']     = xarModGetVar('sitetools','colnumber');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['usedbprefix']   = xarModGetVar('sitetools','usedbprefix');
 
-    $data['useftpchecked']    = xarModGetVar('sitetools','useftpbackup') ? true : false;
+    $data['useftpchecked'] = xarModGetVar('sitetools','useftpbackup') ? true : false;
     $data['ftpserver']     = xarModGetVar('sitetools','ftpserver');
     $data['ftpuser']       = xarModGetVar('sitetools','ftpuser');
     $data['ftppw']         = xarModGetVar('sitetools','ftppw');
