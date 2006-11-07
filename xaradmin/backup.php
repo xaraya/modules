@@ -20,11 +20,11 @@
  */
 function sitetools_admin_backup($args)
 {
-   if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('startbackup', 'str:2:', $startbackup, '', XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('dbname', 'str:1', $dbname,'' , XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('confirm',        'str:1:', $confirm,       '', XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('startbackup',    'str:2:', $startbackup,   '', XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('usegz',          'int:1',  $usegz,         0, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('screen',         'int:1',  $screen,        0, XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('dbname',         'str:1',  $dbname,        '' , XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) return;
    /* Security check */
     if (!xarSecurityCheck('AdminSiteTools')) return;
