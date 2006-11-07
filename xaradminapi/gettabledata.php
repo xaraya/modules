@@ -6,14 +6,16 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
+ * @link http://xaraya.com/index.php/release/887.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-/* @Get table information from a database for selection of tables for partial backup
+/**
+ * @Get table information from a database for selection of tables for partial backup
  * @author jojodee
  * @param database name, $dbname the physical database name (optional)
  * @param database type $dbtype (optional)
  * @return array $data - table id, table names, number of records
-*/
+ */
 function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
 {
     // Security check

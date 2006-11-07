@@ -6,6 +6,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
+ * @link http://xaraya.com/index.php/release/887.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
@@ -18,8 +19,7 @@
  * @param $args['status'] integer optional status of the links to check for
  * @param $args['notstatus'] integer optional status of the links NOT to check for
  * @param $args['where'] string optional where clause (e.g. 'xar_status <> 200')
- * @returns integer
- * @return number of items checked
+ * @return int number of items checked
  * @throws DATABASE_ERROR
 */
 function sitetools_adminapi_checklinks($args)

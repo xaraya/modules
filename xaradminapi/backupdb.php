@@ -6,11 +6,12 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
+ * @link http://xaraya.com/index.php/release/887.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-
 /**
  * Backup tables in your database
+ *
  * @author jojodee
  * @return array
  * @TODO: Add in multidatabase once multidatabase functionality and location decided

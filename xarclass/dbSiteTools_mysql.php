@@ -6,6 +6,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
+ * @link http://xaraya.com/index.php/release/887.html
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
