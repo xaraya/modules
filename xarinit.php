@@ -88,19 +88,21 @@ function foo_delete()
 #
 # Delete all DD objects created by this module
 #
-	try {
-		$dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
-		foreach ($dd_objects as $key => $value)
-			$result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
-	} catch (Exception $e) {}
+    try {
+        $dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
+        foreach ($dd_objects as $key => $value)
+            $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
+    } catch (Exception $e) {}
 
 # --------------------------------------------------------
 #
 # Remove the categories
 #
-    xarModAPIFunc('categories', 'admin', 'deletecat',
-                         array('cid' => xarModVars::get($this_module, 'basecategory'))
-						);
+    try {
+        xarModAPIFunc('categories', 'admin', 'deletecat',
+                             array('cid' => xarModVars::get($this_module, 'basecategory'))
+                            );
+    } catch (Exception $e) {}
 
 # --------------------------------------------------------
 #
