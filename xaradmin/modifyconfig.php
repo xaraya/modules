@@ -15,9 +15,10 @@
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
+ * @return array
  */
 function sitetools_admin_modifyconfig()
-{ 
+{
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration
      */
@@ -36,7 +37,13 @@ function sitetools_admin_modifyconfig()
     $data['colnumber']    = xarModGetVar('sitetools','colnumber');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
-    $data['usedbprefix']    = xarModGetVar('sitetools','usedbprefix');
+    $data['usedbprefix']   = xarModGetVar('sitetools','usedbprefix');
+
+    $data['useftpchecked']    = xarModGetVar('sitetools','useftpbackup') ? true : false;
+    $data['ftpserver']     = xarModGetVar('sitetools','ftpserver');
+    $data['ftpuser']       = xarModGetVar('sitetools','ftpuser');
+    $data['ftppw']         = xarModGetVar('sitetools','ftppw');
+    $data['ftpdir']        = xarModGetVar('sitetools','ftpdir');
 
     $data['defadopath']   = xarCoreGetVarDirPath()."/cache/adodb";
     $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
@@ -77,7 +84,7 @@ function sitetools_admin_modifyconfig()
         $data['hooks'] = join('', $hooks);
     } else {
         $data['hooks'] = $hooks;
-    } 
+    }
 
    /*Return the template variables defined in this function */
  return $data;

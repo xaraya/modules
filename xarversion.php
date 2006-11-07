@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'sitetools';
 $modversion['id']             = '887';
-$modversion['version']        = '0.2.0';
+$modversion['version']        = '0.2.1';
 $modversion['displayname']    = xarML('SiteTools');
 $modversion['description']    = 'Set of tools for site and database maintenance';
 $modversion['credits']        = 'xardocs/credits.txt';

@@ -9,7 +9,7 @@
 <xar:set name="lineopl"><xar:mlstring>Line termination type:</xar:mlstring></xar:set>
 <xar:set name="cacheoptions"><xar:mlstring>Cache Options</xar:mlstring></xar:set>
 <xar:set name="backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
-<xar:set name="updatenote"><xar:mlstring>The default cache paths are entered below. 
+<xar:set name="updatenote"><xar:mlstring>The default cache paths are entered below.
                 Change them only if you have changed default cache directory paths.
                 Note these should be full paths and there is no trailing slash in the path names.</xar:mlstring></xar:set>
 <xar:set name="backupnote"><xar:mlstring>Check the following carefully, and correct them if necessary.</xar:mlstring></xar:set>
@@ -35,6 +35,18 @@
 <xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
 <xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
+
+<xar:set name="useftpbackuplabel"><xar:mlstring>Should the scheduler FTP the created back-up file to another server?</xar:mlstring></xar:set>
+<xar:set name="useftpbackuphelp"><xar:mlstring>You will need to have an FTP server to place the file.</xar:mlstring></xar:set>
+<xar:set name="ftpserverlabel"><xar:mlstring>The FTP server</xar:mlstring></xar:set>
+<xar:set name="ftpservertitle"><xar:mlstring>Enter the full name of the server.</xar:mlstring></xar:set>
+
+<xar:set name="ftpuserlabel"><xar:mlstring>The username</xar:mlstring></xar:set>
+<xar:set name="ftpusertitle"><xar:mlstring>The unique user name for the FTP server.</xar:mlstring></xar:set>
+<xar:set name="ftppwlabel"><xar:mlstring>Password</xar:mlstring></xar:set>
+<xar:set name="ftppwtitle"><xar:mlstring>Enter the password for this user.</xar:mlstring></xar:set>
+<xar:set name="ftpdirlabel"><xar:mlstring>The path on the FTP server</xar:mlstring></xar:set>
+<xar:set name="ftpdirtitle"><xar:mlstring>Enter the full name of the path. Defaults to /</xar:mlstring></xar:set>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span>
@@ -178,6 +190,41 @@
              </xar:foreach>
             <div class="xar-form-input-wrapper-after">
                 #$schedulingnote#
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="useftpbackup" class="xar-form-label" title="#$useftpbackuphelp#">
+                   #$useftpbackuplabel#
+                </label>
+                <xar:if condition="$useftpchecked">
+                  <input type="checkbox" name="useftpback" id="useftpbackup" value="1" checked="checked"/>
+                  <xar:else/>
+                  <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" />
+                </xar:if>
+
+             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="ftpserver" class="xar-form-label" title="#$ftpservertitle#">
+                     #$ftpserverlabel#
+                </label>
+                <input type="text" name="ftpserver" id="ftpserver" size="40" maxlength="128" value="#$ftpserver#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="ftpuser" class="xar-form-label" title="#$ftpusertitle#">
+                     #$ftpuserlabel#
+                </label>
+                <input type="text" name="ftpuser" id="ftpuser" size="40" maxlength="128" value="#$ftpuser#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
+                     #$ftppwlabel#
+                </label>
+                <input type="text" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">
+                     #$ftpdirlabel#
+                </label>
+                <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
             </div>
         <xar:else />
             <div class="xar-form-input-wrapper-after">

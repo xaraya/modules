@@ -36,7 +36,7 @@ function sitetools_schedulerapi_backup($args)
     }
 
     if ((!isset($usegz)) && (bool)(function_exists('gzopen'))) {
-         $usegz =true;
+        $usegz =true;
     } else {
         $usegz = false;
     }
@@ -50,7 +50,12 @@ function sitetools_schedulerapi_backup($args)
                                       'SelectedTables' => $SelectedTables,
                                       'dbname'         => $dbname,
                                       'dbtype'         => $dbtype));
+    // $data holds an array with the backup data
 
+    $useftp = xarModGetVar('sitetools','useftpbackup') ? true : false;
+    if ($useftp) {
+        xarModAPIFunc('sitetools','admin','ftpbackup', $data);
+    }
 
  return true;
 }

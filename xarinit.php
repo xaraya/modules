@@ -131,7 +131,7 @@ function sitetools_init()
         $backupdir = dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/var/uploads/backup';
     } else {
         $backupdir = 'var/uploads/backup';
-    } 
+    }
     */
     $backupdir=xarCoreGetVarDirPath()."/uploads";
     xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
@@ -159,7 +159,7 @@ function sitetools_init()
     xarRegisterMask('DeleteSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminSiteTools', 'All', 'sitetools', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
-    return true;
+    return sitetools_upgrade('0.2.0');
 }
 
 /**
@@ -259,9 +259,13 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
         case '0.2':
-        case 1.0:
-
-        case 2.0:
+            xarModSetVar('sitetools','useftpbackup', false);
+            xarModSetVar('sitetools','ftpserver', '');
+            xarModSetVar('sitetools','ftpuser', '');
+            xarModSetVar('sitetools','ftppw', '');
+            xarModSetVar('sitetools','ftpdir', '');
+        case '0.2.1':
+        break;
     }
     /* Update successful */
         return true;
@@ -277,7 +281,7 @@ function sitetools_delete()
     /* Get datbase setup */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
- 
+
     xarDBLoadTableMaintenanceAPI();
     /* Generate the SQL to drop the table using the API */
     $query = xarDBDropTable($xartable['sitetools']);

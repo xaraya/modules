@@ -15,10 +15,11 @@
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
+ *
+ * @return bool true on success of update
  */
 function sitetools_admin_updateconfig()
 {
-
     if (!xarVarFetch('adopath', 'str:4:254', $adopath, '')) return;
     if (!xarVarFetch('rsspath', 'str:4:254', $rsspath, '')) return;
     if (!xarVarFetch('templpath', 'str:4:254', $templpath,'')) return;
@@ -30,6 +31,12 @@ function sitetools_admin_updateconfig()
     if (!xarVarFetch('colnumber', 'int:1:', $colnumber,3)) return;
     if (!xarVarFetch('confirm', 'str:4:254', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('ftpserver', 'str:4:254', $ftpserver, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ftpuser', 'str:2:254', $ftpuser, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ftpdir', 'str:1:254', $ftpdir, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ftppw', 'str:3:254', $ftppw, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useftpbackup', 'checkbox', $useftpbackup, false, XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.  Note that the default values are set in
      * xarVarFetch when recieving the incoming values, so no extra processing
@@ -39,7 +46,7 @@ function sitetools_admin_updateconfig()
                      'rsscachepath'   => $rsspath,
                      'templcachepath' => $templpath,
                      'backuppath'     => $backuppath);
-    
+
 
     foreach ($checkpath as $varname=>$pathname) {
         $pathname= trim(ereg_replace('\/$', '', $pathname));
@@ -85,6 +92,12 @@ function sitetools_admin_updateconfig()
     xarModSetVar('sitetools','usedbprefix', $usedbprefix);
     xarModSetVar('sitetools','colnumber',$colnumber);
     xarModSetVar('sitetools','defaultbktype',$defaultbktype);
+
+    xarModSetVar('sitetools','useftpbackup', $useftpbackup);
+    xarModSetVar('sitetools','ftpserver', $ftpserver);
+    xarModSetVar('sitetools','ftpuser', $ftpuser);
+    xarModSetVar('sitetools','ftppw', $ftppw);
+    xarModSetVar('sitetools','ftpdir', $ftpdir);
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) return;

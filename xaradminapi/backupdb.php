@@ -13,7 +13,9 @@
  * Backup tables in your database
  *
  * @author jojodee
- * @return array
+ * @return array ['bkfiletype']
+                 ['bkfilename']=$backupabsolutepath.$partbackupfilename;
+                 ['bkname']
  * @TODO: Add in multidatabase once multidatabase functionality and location decided
  * @TODO: Remove all the commented out code once classes fully tidied and tested
  */
@@ -422,7 +424,7 @@ end the backup that is moved to class
             $items['bkfilename']=$backupabsolutepath.$fullbackupfilename;
             $items['bkname']=$fullbackupfilename;
         } else {
-               if (file_exists($backupabsolutepath.$partbackupfilename)) {
+            if (file_exists($backupabsolutepath.$partbackupfilename)) {
                 unlink($backupabsolutepath.$partbackupfilename); // Windows won't allow overwriting via rename
             }
             rename($backupabsolutepath.$tempbackupfilename, $backupabsolutepath.$partbackupfilename);
