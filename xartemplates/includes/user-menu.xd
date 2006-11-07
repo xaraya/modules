@@ -1,0 +1,12 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from phplot_user_menu() -->
+<div>
+    <strong class="xar-margin-thickright">#$menutitle#</strong> |
+    <!-- a link to a particular menu item -->
+       <a href="#$menulink_view#" title="#$menulabel_view#" class="xar-margin-thicksides">#$menulabel_view#</a>
+
+    <!-- more menu items come here... remember to add some kind of
+      // separator between them
+    -->
+</div>

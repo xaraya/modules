@@ -1,0 +1,51 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>PHPlot Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+  <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
+  <xar:template type="module" module="phplot" file="admin-menu" />
+  <img src="#xarTplGetImage('qstart_fig4.png','phplot')#" class="xar-module-icon" alt="official icon" width="200" height="125" />
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>PHPlot is a wrapper for PHPlot.</xar:mlstring></em>
+    <xar:mlstring>The PHPlot class provides simple ways to create graphics</xar:mlstring>
+  </p>
+  <ol>
+    <li><xar:mlstring>Line graphics.</xar:mlstring></li>
+    <li><xar:mlstring>Bar graphs.</xar:mlstring></li>
+    <li><xar:mlstring>2D, 3D graphs.</xar:mlstring></li>
+  </ol>
+
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>This module is best described on the original page at http://www.phplot.com, or in the docs distributed with this module.</xar:mlstring>
+  </p>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>first</xar:mlstring></li>
+    <li><xar:mlstring>phplot</xar:mlstring></li>
+  </ul>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the PHPlot module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>PHPlot Extension page at</xar:mlstring> <a title="#xarML('PHPlot Module - Xaraya Extension 818')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on PHPlot found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/phplot/" title="#xarML('Related documentation on PHPlot')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-11-07
+  </p>
+</div>
+
