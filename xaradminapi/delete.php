@@ -1,10 +1,9 @@
 <?php
-/*
- *
+/**
  * Polls Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,8 +14,7 @@
 /**
  * delete a poll
  * @param $args['pid'] ID of poll
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  */
 function polls_adminapi_delete($args)
 {
