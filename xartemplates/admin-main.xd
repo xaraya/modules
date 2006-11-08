@@ -25,11 +25,17 @@
     <xar:mlstring>This module is best described on the original page at http://www.phplot.com, or in the docs distributed with this module.</xar:mlstring>
   </p>
 
-  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <h3><xar:mlstring>What can this module do for you?</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>first</xar:mlstring></li>
-    <li><xar:mlstring>phplot</xar:mlstring></li>
+    <li><xar:mlstring>Supply you with functions to create online graphics</xar:mlstring></li>
+    <li><xar:mlstring>Generate graphics that you can incorporate into your own template or module</xar:mlstring></li>
   </ul>
+  <p>
+  <xar:mlstring>You are adviced to first see if your system is configured correctly.</xar:mlstring>
+  <a href="/modules/phplot/xardocs/index.php"><xar:mlstring>See this page for example</xar:mlstring></a><br />
+  <a href="/modules/phplot/xardocs/examples/test_setup.php"><xar:mlstring>Follow this link to test your setup</xar:mlstring></a><br />
+  <a href="/modules/phplot/xardocs/quickstart.html"><xar:mlstring>Follow this link to a quickstart guide for the code</xar:mlstring></a>
+  </p>
 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
