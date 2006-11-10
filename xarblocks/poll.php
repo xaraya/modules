@@ -151,8 +151,9 @@ function polls_pollblock_modify($blockinfo)
                              'name' => xarML('Latest Poll'));
 
     foreach ($polls as $poll) {
-        $vars['polls'][] = array('pid' => xarVarPrepHTMLDisplay($poll['pid']),
-                                'name' => xarVarPrepHTMLDisplay($poll['title']));
+        $vars['polls'][] = array('pid' => $poll['pid'],
+                              //  'name' => xarVarPrepHTMLDisplay($poll['title']));
+                                'name' => $poll['title']);
     }
 
     $vars['blockid'] = $blockinfo['bid'];

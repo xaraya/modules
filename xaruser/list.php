@@ -61,7 +61,8 @@ function polls_user_list($args)
         } else {
             $poll['open'] = 0;
         }
-        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[pid]:$item[type]")) {
+
+        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[title]:$item[type]")) {
 
 
             $poll['canvote'] = xarModAPIFunc('polls',

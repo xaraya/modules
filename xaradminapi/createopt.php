@@ -38,7 +38,7 @@ function polls_adminapi_createopt($args)
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
         return;
     }
 
