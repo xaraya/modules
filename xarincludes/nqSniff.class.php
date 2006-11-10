@@ -33,6 +33,7 @@
  *  @access public
  *  @author Roger Raymond <epsilon7@users.sourceforge.net>
  */
+include_once("sanitize.inc.php");
 class nqSniff
 {
     var $_version = '2.1.4';
@@ -170,6 +171,7 @@ class nqSniff
             }
         }
         if (empty($UA)) return false;
+        $UA = sanitize($UA, SYSTEM);
         $this->_set_browser('ua',$UA);
         if ($run) $this->init();
     }
