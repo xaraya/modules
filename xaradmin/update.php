@@ -67,6 +67,8 @@ function polls_admin_update()
     }
     $options = $poll['options'];
 
+    $title = preg_replace("/:/", "&#58", $title);
+
     // Pass to API
     $updated = xarModAPIFunc('polls',
                       'admin',

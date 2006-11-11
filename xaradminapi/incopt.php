@@ -45,7 +45,7 @@ function polls_adminapi_incopt($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:All:$pid")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
         return;
     }
 

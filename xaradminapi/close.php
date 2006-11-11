@@ -34,7 +34,7 @@ function polls_adminapi_close($args)
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('AdminPolls',1,'All',"$poll[title]:All:$pid")) {
+    if (!xarSecurityCheck('AdminPolls',1,'All',"$poll[title]:$poll[type]")) {
         return;
     }
 

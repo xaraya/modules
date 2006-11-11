@@ -62,6 +62,8 @@ function polls_admin_create()
         $end_date -= xarMLS_userOffset() * 3600;
         }
 
+    $title = preg_replace("/:/", "&#58", $title);
+
     // Pass to API
     $pid = xarModAPIFunc('polls',
                         'admin',
