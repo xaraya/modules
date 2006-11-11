@@ -50,6 +50,7 @@ function sitetools_schedulerapi_backup($args)
                                       'SelectedTables' => $SelectedTables,
                                       'dbname'         => $dbname,
                                       'dbtype'         => $dbtype));
+
     // $data holds an array with the backup data
 
     $useftp = xarModGetVar('sitetools','useftpbackup') ? true : false;

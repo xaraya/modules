@@ -442,6 +442,9 @@ end the backup that is moved to class
     $items['backuptype']=$backuptype;
     $items['btype']=$btype;
 
+    // Log a message
+    xarLogMessage('SITETOOLS: Created backup');
+
    //Return data for display
    return $items;
 }

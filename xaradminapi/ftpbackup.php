@@ -56,6 +56,9 @@ function sitetools_adminapi_ftpbackup($args)
 
     ftp_quit($conn);
 
+    // Log a message
+    xarLogMessage('SITETOOLS: Excuted FTP of backup');
+
     return true;
 }
 ?>
