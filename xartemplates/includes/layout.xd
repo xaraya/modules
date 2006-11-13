@@ -1,0 +1,16 @@
+<div class="xar-form-input-wrapper">
+    <label for="windowwidth" title="#xarML('Width of the graph in pixels')#" class="xar-form-label">
+        <xar:mlstring>
+            Window Width:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="windowwidth" id="windowwidth" value="#xarModGetVar('jpgraph', 'windowwidth')#" class="xar-form-textmedium" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="windowheight" title="#xarML('Height of the graph in pixels')#" class="xar-form-label">
+        <xar:mlstring>
+            Window Height:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="windowheight" id="windowheight" value="#xarModGetVar('jpgraph', 'windowheight')#" class="xar-form-textmedium" />
+</div>

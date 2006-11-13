@@ -1,0 +1,26 @@
+<div class="xar-form-input-wrapper">
+    <label for="cachedirectory" title="#xarML('Where the image cache is located')#" class="xar-form-label">
+        <xar:mlstring>
+            Cache Directory:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="cachedirectory" id="cachedirectory" value="#xarModGetUserVar('jpgraph', 'cachedirectory')#" size="60" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="shorturls" title="#xarML('Write files to the cache')#" class="xar-form-label">
+        <xar:mlstring>
+            Use Cache
+        </xar:mlstring>
+    </label>
+    <xar:set name="checked">xarModGetVar('jpgraph', 'usecache')</xar:set>
+    <xar:data-input type="checkbox" name="usecache" id="usecache" checked="$checked" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="shorturls" title="#xarML('Read files from the cache')#" class="xar-form-label">
+        <xar:mlstring>
+            Read Cache
+        </xar:mlstring>
+    </label>
+    <xar:set name="checked">xarModGetVar('jpgraph', 'readcache')</xar:set>
+    <xar:data-input type="checkbox" name="readcache" id="readcache" checked="$checked" />
+</div>

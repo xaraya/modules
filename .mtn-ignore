@@ -1,0 +1,8 @@
+xarincludes\/jpgraph2\/\.*
+xarincludes\/ttf\/\.*
+xardocs\/html\/\.*
+xardocs\/ref\/\.*
+xardocs\/.*\.png$
+xardocs\/index.html$
+xardocs\/README$
+xardocs\/VERSION$

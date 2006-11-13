@@ -1,0 +1,9 @@
+<div class="xar-form-input-wrapper">
+    <label for="bar" title="#xarML('An example of a module-specific configuartion variable')#" class="xar-form-label">
+        <xar:mlstring>
+            Bar:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetVar('jpgraph', 'bar')</xar:set>
+    <input type="text" name="bar" id="bar" value="#$value#" />
+</div>
