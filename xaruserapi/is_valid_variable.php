@@ -1,7 +1,7 @@
 <?php
 /**
  * AuthLDAP User API
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -17,7 +17,7 @@
  * check whether a user variable is avaiable from this module (currently unused)
  * @public
  * @author Marco Canini
- * @returns boolean
+ * @return boolean true
  */
 function authldap_userapi_is_valid_variable($args)
 {

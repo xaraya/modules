@@ -1,7 +1,7 @@
 <?php
 /**
  * AuthLDAP User API
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -17,13 +17,12 @@
  * utility function pass individual menu items to the main menu
  * @public
  * @author Richard Cave
- * @returns array
- * @return array containing the menulinks for the main menu items.
+ * @return array Array containing the menulinks for the main menu items.
  */
 function authldap_userapi_getmenulinks()
 {
     // No menu links for users
-    $menulinks = '';
+    $menulinks = array();
     return $menulinks;
 }
 

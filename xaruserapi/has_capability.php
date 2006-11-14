@@ -1,7 +1,7 @@
 <?php
 /**
  * AuthLDAP User API
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -18,7 +18,7 @@
  * @public
  * @param args['capability'] the capability to check for
  * @author Marco Canini
- * @returns bool
+ * @return bool
  */
 function authldap_userapi_has_capability($args)
 {

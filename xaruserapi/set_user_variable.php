@@ -1,7 +1,7 @@
 <?php
 /**
  * AuthLDAP User API
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -20,7 +20,7 @@
  * @param args['uid'] user id
  * @param args['name'] variable name
  * @param args['value'] variable value
- * @returns bool
+ * @return bool true
  */
 function authldap_userapi_set_user_variable($args)
 {

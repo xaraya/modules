@@ -1,7 +1,7 @@
 <?php
 /**
  * AuthLDAP User API
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -12,16 +12,13 @@
  * @author Chris Dudley <miko@xaraya.com>
  * @author Richard Cave <rcave@xaraya.com>
 */
-
-
 /**
  * authenticate a user
  * @public
  * @author Richard Cave
  * @param args['uname'] user name of user
  * @param args['pass'] password of user
- * @returns int
- * @return uid on successful authentication, XARUSER_AUTH_FAILED otherwise
+ * @return int uid on successful authentication, XARUSER_AUTH_FAILED otherwise
  */
 function authldap_userapi_authenticate_user($args)
 {
@@ -37,7 +34,7 @@ function authldap_userapi_authenticate_user($args)
 
     // Include xarldap class
     include_once 'modules/xarldap/xarldap.php';
-    
+
     // Get module variables and set in array
     $ldapconfig = array();
     $ldapconfig['add_user'] = xarModGetVar('authldap','add_user');
@@ -92,7 +89,7 @@ function authldap_userapi_authenticate_user($args)
     if($userInfo['count']==0) {
         return XARUSER_AUTH_FAILED;
     }
-     
+
     // close LDAP connection
     $ldap->close();
 
@@ -116,7 +113,7 @@ function authldap_userapi_authenticate_user($args)
                 // get email from LDAP
                 $email = $ldap->get_attribute_value($userInfo, $ldapconfig['add_user_email']);
             }
-            
+
             // Check if we're going to store the user password
             if ($ldapconfig['store_user_password'] == 'true') {
                 $password = $pass;
@@ -128,9 +125,9 @@ function authldap_userapi_authenticate_user($args)
             // call role module to create new user role
             $now = time();
             $rid = xarModAPIFunc('roles', 'admin', 'create',
-                                 array('uname' => $uname, 
-                                       'realname' => $realname, 
-                                       'email' => $email, 
+                                 array('uname' => $uname,
+                                       'realname' => $realname,
+                                       'email' => $email,
                                        'pass' => $password,
                                        'date'     => $now,
                                        'valcode'  => 'createdbyldap',
@@ -150,7 +147,7 @@ function authldap_userapi_authenticate_user($args)
 
             // Insert the user into the default users group
             if (!xarMakeRoleMemberByID($rid, $role->getID()))
-               return XARUSER_AUTH_FAILED; 
+               return XARUSER_AUTH_FAILED;
 
         } else {
             $rid = XARUSER_AUTH_FAILED;
@@ -167,12 +164,12 @@ function authldap_userapi_authenticate_user($args)
             if (!$md5password) {
                 // Update Xaraya database with new password
                 $res = xarModAPIFunc('roles', 'admin', 'update',
-                                     array('uid' => $userRole['uid'],  
-                                           'name' => $userRole['name'], 
-                                           'uname' => $userRole['uname'], 
-                                           'email' => $userRole['email'], 
-                                           'state' => $userRole['state'], 
-                                           'valcode' => $userRole['valcode'], 
+                                     array('uid' => $userRole['uid'],
+                                           'name' => $userRole['name'],
+                                           'uname' => $userRole['uname'],
+                                           'email' => $userRole['email'],
+                                           'state' => $userRole['state'],
+                                           'valcode' => $userRole['valcode'],
                                            'pass' => $pass));
                 if (!$res)
                     return XARUSER_AUTH_FAILED;
@@ -192,14 +189,13 @@ function authldap_userapi_authenticate_user($args)
  * @author Richard Cave
  * @param args['uname'] user name of user
  * @param args['pass'] password of user
- * @returns int
- * @return uid on success, XARUSER_AUTH_FAILED or XARUSER_AUTH_DENIED on failure
+ * @return int uid on success, XARUSER_AUTH_FAILED or XARUSER_AUTH_DENIED on failure
  */
 function authldap_authentication_failover($uname, $pass)
 {
     // Check if failover requested
     $failover = xarModGetVar('authldap','failover');
-    
+
     if ($failover == 'true') {
         // Authenticate with Xaraya authsystem
         $uid = xarModAPIFunc('authsystem', 'user', 'authenticate_user',
@@ -222,7 +218,7 @@ function authldap_authentication_failover($uname, $pass)
         // Check the user's parents and see if one matches
         // the corresponding authldap generated parent group
         if ($userRole->isParent($groupRole)) {
-            // User is part of group, so return authentication denied 
+            // User is part of group, so return authentication denied
             return XARUSER_AUTH_DENIED;
         } else {
             // Return authentication failed so Xaraya can check
