@@ -12,9 +12,9 @@
 include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 include_once "modules/addressbook/xarglobal.php";
 
-/*
+/**
  * @author mikespub <mikespub@xaraya.com>
-*/
+ */
 class Dynamic_ContactList_Property extends Dynamic_Select_Property
 {
     var $options;
@@ -59,9 +59,9 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data['size'] = !empty($size) ? $size : 1;
 
         $data['multiple'] = !empty($multiple) ? $multiple : "";
-        
+
         if(!xarModAPILoad('addressbook', 'user')) return;
-        
+
         // get the option corresponding to this value
         if(strstr($data['value'], ",")) {
             // no default selected, remove all options from list instead
@@ -70,7 +70,7 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
 //            $data['valueexplodelist'] = substr($data['value'], 0, 1) == "," ? substr($data['value'], 1) : $data['value'];
         } elseif($data['value'] > 0) {
             $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $data['value']));
-        
+
             $displayName = '';
             if(!empty($item['company'])) {
                 $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
@@ -94,7 +94,7 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
             }
             $data['displayName'] = $displayName;
         } else {
-            $data['displayName'] = ""; 
+            $data['displayName'] = "";
         }
         if (!isset($item['company'])) {
             $data['company'] = "";
@@ -133,22 +133,22 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         } else {
             $data['id']= $id;
         }
-        
+
         $data['tabindex'] =!empty($tabindex) ? $tabindex : 0;
         $data['invalid']  =!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
         if(!empty($data['company'])) {
-            $data['contactselect'] = xarModFunc('addressbook', 
-                                                'user', 
-                                                'select', 
-                                                array('company' => $data['company'], 
-                                                    'fieldname' => $data['name'], 
+            $data['contactselect'] = xarModFunc('addressbook',
+                                                'user',
+                                                'select',
+                                                array('company' => $data['company'],
+                                                    'fieldname' => $data['name'],
                                                     'fieldid' => $data['id'],
-                                                    'value' => $data['value'], 
+                                                    'value' => $data['value'],
                                                     'size' => $data['size']));
         } else {
             $data['contactselect'] = "";
         }
-        
+
         return xarTplProperty('addressbook', 'contactlist', 'showinput', $data);
     }
 
@@ -192,15 +192,14 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         }
         $data['option'] = array('id' => $this->value,
                                 'name' => $result);
-                                
+
         return xarTplProperty('addressbook', 'contactlist', 'showoutput', $data);
     }
 
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array base information for this property
      **/
     function getBasePropertyInfo()
     {

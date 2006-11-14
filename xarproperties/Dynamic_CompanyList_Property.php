@@ -11,9 +11,9 @@
  */
 include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
-/*
+/**
  * @author mikespub <mikespub@xaraya.com>
-*/
+ */
 class Dynamic_CompanyList_Property extends Dynamic_Select_Property
 {
     var $options;
@@ -85,7 +85,7 @@ class Dynamic_CompanyList_Property extends Dynamic_Select_Property
 
         $data['tabindex'] =!empty($tabindex) ? $tabindex : 0;
         $data['invalid']  =!empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) : '';
-        
+
         return xarTplProperty('addressbook', 'companylist', 'showinput', $data);
         //return $out;
     }
@@ -106,15 +106,14 @@ class Dynamic_CompanyList_Property extends Dynamic_Select_Property
         }
         $data['option'] = array('id' => $this->value,
                                 'name' => $result);
-                                
+
         return xarTplProperty('addressbook', 'companylist', 'showoutput', $data);
     }
 
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array base information for this property
      **/
     function getBasePropertyInfo()
     {
