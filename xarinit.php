@@ -147,7 +147,7 @@ function categories_init()
     // Set up module variables
 //    xarModSetVar('categories', 'bold', 0);
     xarModSetVar('categories', 'catsperpage', 40);
-
+    xarModSetVar('categories', 'usename', false);
     // when a new module item is being specified
     if (!xarModRegisterHook('item', 'new', 'GUI',
                            'categories', 'admin', 'newhook')) {
@@ -205,6 +205,9 @@ function categories_init()
                       array(),
                       'categories_userapi_filtertag');
 
+    xarTplRegisterTag('categories', 'categories-getcatinfo ',
+                      array(),
+                      'categories_userapi_getcatinfotag');
     /*********************************************************************
     * Define instances for this module
     * Format is
@@ -446,9 +449,11 @@ function categories_upgrade($oldversion)
             // fall through to the next upgrade
 
         case '2.3.2':
-
+            xarTplRegisterTag('categories', 'categories-catinfo', array(),
+                      'categories_userapi_getcatinfotag');
             // fall through to the next upgrade
-
+        case '2.3.3':
+                    // fall through to the next upgrade
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;
@@ -514,7 +519,7 @@ function categories_delete()
 
     xarTplUnregisterTag('categories-navigation');
     xarTplUnregisterTag('categories-filter');
-
+    xarTplUnregisterTag('categories-catinfo');
     /**
      * Remove instances and masks
      */
