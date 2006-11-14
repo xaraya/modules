@@ -14,15 +14,21 @@
 /**
  * get the name and description of all publication types
  *
+ * @param $args['ptid'] publication type ID (optional)
+ * @param $args['name'] publication type name (optional)
  * @return array(id => array('name' => name, 'descr' => descr)), or false on
  *         failure
  */
 function articles_userapi_getpubtypes($args)
 {
-    static $pubtypes = array();
 
-    if (count($pubtypes) > 0) {
-        return $pubtypes;
+    //if we're doing a simple retrieval, use same results as last time
+    //otherwise we need to re-query the database
+    if (count($args) == 0) {
+        static $pubtypes = array();
+        if (count($pubtypes) > 0) {
+            return $pubtypes;
+        }
     }
 
     if (isset($args['sort'])) {
@@ -34,6 +40,14 @@ function articles_userapi_getpubtypes($args)
         $sort = 'id';
     }
 
+    //optional parameters to restrict results
+    if (isset($args['name']) && is_string($args['name'])) {
+        $name = $args['name'];
+    }
+    if (isset($args['ptid']) && is_string($args['ptid'])) {
+        $ptid = $args['ptid'];
+    }
+    
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -45,6 +59,15 @@ function articles_userapi_getpubtypes($args)
                    xar_pubtypedescr,
                    xar_pubtypeconfig
             FROM $pubtypestable";
+            
+    //WHERE clause begins
+    if(isset($name)) {
+        $query .= " WHERE xar_pubtypename = '$name' ";
+    } else if (isset($ptid)) {
+        $query .= " WHERE xar_pubtypeid = '$ptid' ";
+    }
+            
+    //different sort options
     switch ($sort) {
         case 'name':
             $query .= " ORDER BY xar_pubtypename ASC";
