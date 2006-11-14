@@ -37,8 +37,13 @@ function categories_userapi_countitems_deprecated($args)
         // Get number of links with those categories in cids
         // TODO: make sure this is SQL standard
         //$sql = "SELECT DISTINCT COUNT(xar_iid)
+        if($dbconn->databaseType == 'sqlite') {
+        $sql = "SELECT COUNT(*)
+                FROM (SELECT DISTINCT xar_iid  FROM $categorieslinkagetable "; //unbalanced
+        }else{
         $sql = "SELECT COUNT(DISTINCT xar_iid)
                 FROM $categorieslinkagetable ";
+        }
         if (isset($table) && isset($field) && isset($where)) {
             $sql .= "LEFT JOIN $table ON $field = xar_iid;";
         }
@@ -52,7 +57,8 @@ function categories_userapi_countitems_deprecated($args)
         if (isset($table) && isset($field) && isset($where)) {
             $sql .= " AND $where ";
         }
-
+        // Balance parentheses
+       if($dbconn->databaseType == 'sqlite') $sql .=')';
         $result = $dbconn->Execute($sql,$bindvars);
         if (!$result) return;
 
