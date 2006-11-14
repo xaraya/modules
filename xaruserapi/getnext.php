@@ -22,7 +22,6 @@
  * @param $args['status'] array of requested status(es) for the articles
  * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
- * @returns array
  * @return array of article fields, or false on failure
  */
 function articles_userapi_getnext($args)

@@ -20,8 +20,7 @@
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['groupcids'] the number of categories you want items grouped by
  * @param $args['reverse'] default is ptid => cid, reverse (1) is cid => ptid
- * @returns array
- * @return array( $ptid => array( $cid => $count) ),
+ * @return array array( $ptid => array( $cid => $count) ),
  *         or false on failure
  */
 function articles_userapi_getpubcatcount($args)

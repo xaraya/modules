@@ -17,8 +17,7 @@
  * @param $args['name'] name of the publication type
  * @param $args['descr'] description of the publication type
  * @param $args['config'] configuration of the publication type
- * @returns int
- * @return publication type ID on success, false on failure
+ * @return int publication type ID on success, false on failure
  */
 function articles_adminapi_createpubtype($args)
 {

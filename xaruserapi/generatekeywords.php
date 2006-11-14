@@ -15,7 +15,7 @@
  * create a keyword list from a given article
  *
  * @param $args array containing text from an article
- * @returns string
+ * @return string
  */
 function articles_userapi_generatekeywords($args)
 {

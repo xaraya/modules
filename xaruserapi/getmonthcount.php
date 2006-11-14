@@ -16,8 +16,7 @@
  * @param $args['cids'] not supported here (yet ?)
  * @param $args['ptid'] publication type ID we're interested in
  * @param $args['status'] array of requested status(es) for the articles
- * @returns array
- * @return array(month => count), or false on failure
+ * @return array array(month => count), or false on failure
  */
 function articles_userapi_getmonthcount($args)
 {

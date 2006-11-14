@@ -20,8 +20,7 @@
  * @param $args['showcid'] false (default) means skipping the parent cid
  * @param $args['count'] true (default) means counting the number of articles
  * @param $args['filter'] additional categories we're filtering on (= catid)
- * @returns array
-// TODO: specify return format
+ * @return array
  */
 function articles_userapi_getchildcats($args)
 {

@@ -25,8 +25,7 @@
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
- * @returns int
- * @return number of items
+ * @return int number of items
  */
 function articles_userapi_countitems($args)
 {

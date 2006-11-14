@@ -28,7 +28,6 @@
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  * @param string $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @param bool   $args['unique'] return unique results
- * @returns array
  * @return array of articles, or false on failure
  */
 function articles_userapi_getrandom($args)

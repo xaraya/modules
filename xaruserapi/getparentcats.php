@@ -20,7 +20,7 @@
  * @param $args['showcids'] true (default) means keeping a link for the cids
  * @param $args['sort'] currently used only to override default start view
  * @param $args['count'] true (default) means counting the number of articles
- * @returns array
+ * @return array
 // TODO: specify return format
  */
 function articles_userapi_getparentcats($args)

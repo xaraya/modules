@@ -14,8 +14,7 @@
 /**
  * get the number of articles per publication type
  * @param $args['status'] array of requested status(es) for the articles
- * @returns array
- * @return array(id => count), or false on failure
+ * @return array array(id => count), or false on failure
  */
 function articles_userapi_getpubcount($args)
 {
