@@ -14,14 +14,15 @@
 /**
  * get the name and description of all publication types
  *
- * @param $args['ptid'] publication type ID (optional)
- * @param $args['name'] publication type name (optional)
+ * @param $args['ptid'] int publication type ID (optional) OR
+ * @param $args['name'] string publication type name (optional)
  * @return array(id => array('name' => name, 'descr' => descr)), or false on
  *         failure
  */
 function articles_userapi_getpubtypes($args)
 {
-
+    $bindvars = array();
+    
     //if we're doing a simple retrieval, use same results as last time
     //otherwise we need to re-query the database
     if (count($args) == 0) {
@@ -44,7 +45,7 @@ function articles_userapi_getpubtypes($args)
     if (isset($args['name']) && is_string($args['name'])) {
         $name = $args['name'];
     }
-    if (isset($args['ptid']) && is_string($args['ptid'])) {
+    if (isset($args['ptid']) && is_numeric($args['ptid'])) {
         $ptid = $args['ptid'];
     }
     
@@ -62,9 +63,11 @@ function articles_userapi_getpubtypes($args)
             
     //WHERE clause begins
     if(isset($name)) {
-        $query .= " WHERE xar_pubtypename = '$name' ";
+        $query .= " WHERE xar_pubtypename = ? ";
+        $bindvars[] = $name;
     } else if (isset($ptid)) {
-        $query .= " WHERE xar_pubtypeid = '$ptid' ";
+        $query .= " WHERE xar_pubtypeid = ? ";
+        $bindvars[] = $ptid;
     }
             
     //different sort options
@@ -80,7 +83,7 @@ function articles_userapi_getpubtypes($args)
             $query .= " ORDER BY xar_pubtypeid ASC";
             break;
     }
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     if ($result->EOF) {
