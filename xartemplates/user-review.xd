@@ -69,9 +69,13 @@
                 <td>
                     #xarlocalegetformatteddate('medium',$item.dateappr)#
                 </td>
-            <xar:else />
+            <xar:elseif condition="!empty($item['approvelink'])" />
                 <td>
                     <a href="#$item.approvelink#"><xar:mlstring>Approve</xar:mlstring></a>
+                </td>
+            <xar:else />
+                <td>
+                    <xar:mlstring>Not Yet</xar:mlstring>
                 </td>
             </xar:if>
         </tr>

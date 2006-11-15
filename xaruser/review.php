@@ -139,10 +139,14 @@ function itsp_user_review($args)
 
             // TODO: Total credits
             // TODO: all link to change status
-            $item['approvelink'] = xarModURL('itsp',
-                                    'user',
-                                    'submit',
-                                    array('itspid' => $itspid, 'newstatus' => 5, 'return_url' =>xarModURL('itsp', 'user','review')));
+            if (xarSecurityCheck('DeleteITSP', 0, 'ITSP', "$itspid:$planid:$userid")) {
+                $item['approvelink'] = xarModURL('itsp',
+                                        'user',
+                                        'submit',
+                                        array('itspid' => $itspid, 'newstatus' => 5, 'return_url' =>xarModURL('itsp', 'user','review')));
+            } else {
+                $item['approvelink'] = '';
+            }
             $data['items'][] = $item;
         }
     }
