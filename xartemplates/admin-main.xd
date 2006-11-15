@@ -18,19 +18,17 @@
             <xar:mlstring>
             From the menu, you have two choices.  "Add Smilies", and "View Smiles".
             </xar:mlstring>
-            <ul>
-                <li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
-                <li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
-            </ul>
         </p>
+        <ul>
+            <li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
+            <li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
+        </ul>
         <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
-        <p>
-            <ul>
-                <li><xar:mlstring>smilies</xar:mlstring></li>
-            </ul>
-        </p>
+        <ul>
+            <li><xar:mlstring>smilies</xar:mlstring></li>
+        </ul>
         <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
         </h3>
@@ -53,4 +51,23 @@
   <p class="xar-sub">
     <strong>&nbsp;<xar:mlstring>Smilies Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-10
   </p>
+
+  <h3><xar:mlstring>Current Smilies</xar:mlstring></h3>
+  <xar:if condition="!empty($icons)">
+     <ul>
+        <xar:loop name="$icons">
+            <li>
+                <img src="#xarTplGetImage($loop:key, 'smilies')#" />
+                <ul>
+                    <xar:loop name="$loop:item">
+                        <li><strong style="width: 10em;">#xarVarPrepForDisplay($loop:item.code)#</strong> #xarVarPrepForDisplay($loop:item.emotion)#</li>
+                    </xar:loop>
+                </ul>
+            </li>
+        </xar:loop>
+     </ul>
+  <xar:else />
+      <p><xar:mlstring>None</xar:mlstring></p>
+  </xar:if>
+
 </div>

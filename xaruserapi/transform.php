@@ -65,14 +65,18 @@ function smilies_userapitransform($text)
             // themselves or other autolinks in step 2
             // $tmpsmiley['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmiley['icon']);
 
-            // Allow matches for smiles with < and > entities.
-            $tmpsmiley['code'] = preg_quote($tmpsmiley['code'], '/');
-            $tmpsmiley['code'] = str_replace(array('\>', '\<'), array('(?:&gt;|>)', '(?:&lt;|<)'), $tmpsmiley['code']);
+            // Escape any special characters in the smile code right from the start.
+            // It should not be necessary for the admin to put in preg escape codes.
+            $tmpsmiley_code = preg_quote($tmpsmiley['code'], '/');
+
+            // Allow matches for smiles with < and > entities (note > and < will have been escaped).
+            $tmpsmiley_code = str_replace(array('\>', '\<'), array('(?:&gt;|>)', '(?:&lt;|<)'), $tmpsmiley_code);
 
             // Note use of assertions here to only match specific words,
             // for instance ones that are not part of a hyphenated phrase
             // or (most) bits of an email address
-            $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmiley['code'] . ')(?![\w@:-])(?!\.\w)/i';
+            // Lookahead: not a letter, @, : or -, followed by not . and a letter
+            $alsearch[] = '/(?<![\w@.:-])(' . $tmpsmiley_code . ')(?![\w@:-])(?!\.\w)/i';
             $alreplace[] = '<img src="' . htmlspecialchars(xarTplGetImage($tmpsmiley['icon'], 'smilies')) .
                            '" alt="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
                            '" title="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .

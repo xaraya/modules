@@ -16,16 +16,23 @@
  */
 function smilies_admin_overview()
 {
-   /* Security Check */
+    // Security Check
     if (!xarSecurityCheck('AdminSmilies',0)) return;
 
-    $data=array();
+    $data = array();
 
-    /* if there is a separate overview function return data to it
-     * else just call the main function that displays the overview
-     */
+    // Get the current smilies for an overview.
+    $smilies = xarModAPIFunc('smilies', 'user', 'getall');
 
-    return xarTplModule('smilies', 'admin', 'main', $data,'main');
+    // Sort by icon
+    foreach($smilies as $smilie) {
+        $data['icons'][$smilie['icon']][] = $smilie;
+    }
+
+    // if there is a separate overview function return data to it
+    // else just call the main function that displays the overview
+
+    return xarTplModule('smilies', 'admin', 'main', $data, 'main');
 }
 
 ?>
