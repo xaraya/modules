@@ -27,7 +27,7 @@ function jpgraph_admin_modifyconfig()
     if (!xarVarFetch('cachedirectory',  'str::', $cachedirectory, xarModGetVar('jpgraph', 'cachedirectory'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ttfdirectory',  'str::', $ttfdirectory, xarModGetVar('jpgraph', 'ttfdirectory'), XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('csimcachedirectory',  'str::', $csimcachedirectory, xarModGetVar('jpgraph', 'ccsimcachedirectory'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('csimcachedirectory',  'str::', $csimcachedirectory, xarModGetVar('jpgraph', 'csimcachedirectory'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('csimcachehttpdirectory',  'str::', $csimcachehttpdirectory, xarModGetVar('jpgraph', 'csimcachehttpdirectory'), XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, xarModGetVar('jpgraph', 'itemsperpage'), XARVAR_NOT_REQUIRED)) return;
@@ -38,6 +38,8 @@ function jpgraph_admin_modifyconfig()
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('action',       'str:4:',   $action,       false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,  false,XARVAR_NOT_REQUIRED)) return;
+
+
 
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -87,6 +89,12 @@ function jpgraph_admin_modifyconfig()
     }
 
     if($action == 'update') {
+
+
+        if (!xarVarFetch('window_height', 'str:1:',   $window_height,    xarModGetVar('jpgraph', 'window_height'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('window_width', 'str:1:',   $window_width,    xarModGetVar('jpgraph', 'window_width'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('cachetimeout', 'int::',   $cachetimeout,    xarModGetVar('jpgraph', 'cachetimeout'), XARVAR_NOT_REQUIRED)) return;
+
         /* Confirm authorisation code. This checks that the form had a valid
          * authorisation code attached to it. If it did not then the function will
          * proceed no further as it is possible that this is an attempt at sending
@@ -110,12 +118,6 @@ function jpgraph_admin_modifyconfig()
         xarModSetVar('jpgraph', 'window_width', $window_width);
         xarModSetVar('jpgraph', 'window_height', $window_height);
 
-        xarModSetVar('jpgraph', 'cachetimeout', $cachetimeout);
-
-        xarModSetVar('jpgraph', 'usecache', $usecache);
-        xarModSetVar('jpgraph', 'readcache', $readcache);
-        xarModSetVar('jpgraph', 'window_width', $window_width);
-        xarModSetVar('jpgraph', 'window_height', $window_height);
 
         xarModSetVar('jpgraph', 'itemsperpage', $itemsperpage);
         xarModSetVar('jpgraph', 'SupportShortURLs', $shorturls);
