@@ -28,8 +28,11 @@ function smilies_userapi_getall($args)
     }
 
     $links = array();
+
     // Security Check
-    if(!xarSecurityCheck('OverviewSmilies')) {
+    // Do *not* return an error if there are insufficient privileges, as
+    // this function is called in a transform hook.
+    if (!xarSecurityCheck('OverviewSmilies', 0)) {
         return $links;
     }
 
