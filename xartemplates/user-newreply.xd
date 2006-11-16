@@ -132,11 +132,11 @@
                     <br />
                     <div class="xar-sub">
                         <xar:mlstring>HTML is</xar:mlstring>
-                        <xar:if condition="xarModIsHooked('html', 'xarbb', $fid)">
+                        <xar:if condition="!empty($allowhtml)">
                             <span style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </span>
-                            <xar:else />
+                        <xar:else />
                             <span style="color: red;">
                                 <xar:mlstring>Off</xar:mlstring>
                             </span>
@@ -155,10 +155,10 @@
                         <br />
                         <xar:mlstring>Smilies are</xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
-                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' =&gt; 'print'))#" onclick="xarbb_popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' =&gt; 'print'))#" onclick="xarbb_popUp(this.href,'elastic',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </a>
-                            <xar:else />
+                        <xar:else />
                             <span style="color: red;">
                                 <xar:mlstring>Off</xar:mlstring>
                             </span>

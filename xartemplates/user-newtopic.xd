@@ -146,27 +146,37 @@
                             FIXME: this construct also appears in other places = duplication
                         </xar:comment>
 
-                        <xar:mlstring>HTML is</xar:mlstring>&nbsp;
+                        <xar:mlstring>HTML is</xar:mlstring>
                         <xar:if condition="!empty($allowhtml)">
-                            <span style="color: green;">On</span>
+                            <span style="color: green;">
+                                <xar:mlstring>On</xar:mlstring>
+                            </span>
                         <xar:else />
-                            <span style="color: red;">Off</span>
+                            <span style="color: red;">
+                                <xar:mlstring>Off</xar:mlstring>
+                            </span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>BBCode is</xar:mlstring>&nbsp;
-                        <xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)">
-                            <span style="color: green;">On</span>
+                        <xar:mlstring>BBCode is</xar:mlstring>
+                        <xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
+                            <span style="color: green;">
+                                <xar:mlstring>On</xar:mlstring>
+                            </span>
                         <xar:else />
-                            <span style="color: red;">Off</span>
+                            <span style="color: red;">
+                                <xar:mlstring>Off</xar:mlstring>
+                            </span>
                         </xar:if>
                         <br />
-                        <xar:mlstring>Smilies are</xar:mlstring>&nbsp;
-                        <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
-                            <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="xarbb_popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                        <xar:mlstring>Smilies are</xar:mlstring>
+                        <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
+                            <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="xarbb_popUp(this.href,'elastic',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </a>
                         <xar:else />
-                            <span style="color: red;">Off</span>
+                            <span style="color: red;">
+                                <xar:mlstring>Off</xar:mlstring>
+                            </span>
                         </xar:if>
                     </div>
                 </td>
