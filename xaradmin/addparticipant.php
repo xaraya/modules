@@ -100,7 +100,7 @@ function courses_admin_addparticipant($args)
             $sendconfirm = xarModFunc('courses',
                                       'user',
                                       'sendconfirms',
-                                      array('userid'     => xarUserGetVar('uid'),
+                                      array('userid'     => $uid,
                                             'planningid' => $planningid,
                                             'studstatus' => $studstatus, // This will also pass the WaitingList status
                                             'regdate'    => $regdate,
