@@ -51,7 +51,7 @@ function courses_adminapi_getallparticipants($args)
     }
 
     $items = array();
-    if (!xarSecurityCheck('EditCourses', '1', 'Course', "All:$planningid:All")) return;
+//    if (!xarSecurityCheck('EditCourses', '1', 'Course', "All:$planningid:All")) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -73,13 +73,13 @@ function courses_adminapi_getallparticipants($args)
     // Put items into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $status, $regdate) = $result->fields;
-        if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
+  //      if (xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) {
             $items[] = array('sid'        => $sid,
                              'userid'     => $userid,
                              'planningid' => $planningid,
                              'status'     => $status,
                              'regdate'    => $regdate);
-        }
+  //      }
     }
     // Close result
     $result->Close();

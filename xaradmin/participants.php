@@ -35,12 +35,12 @@ function courses_admin_participants()
     $iscontact = xarModAPIFunc('courses',
         'admin',
         'check_contact',
-        array('userid' => xarUserGetVar('uid'),
-              'planningid' => $planningid
-              ));
-    // Security check
-    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All") && $iscontact == false) {
-        return;
+        array('planningid' => $planningid));
+    // Security check if user is not the contact
+    if ($iscontact == false) {
+        if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All")) {
+            return;
+        }
     }
     // Get the participants and their status. This can be 0, or higher.
     $items = xarModAPIFunc('courses',

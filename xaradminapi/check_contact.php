@@ -25,9 +25,9 @@
 function courses_adminapi_check_contact($args)
 {
     extract($args);
-    if (!xarVarFetch('courseid',   'id',     $courseid, 0,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('planningid', 'id',     $planningid, 0,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('userid',     'int:1:', $userid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('courseid',   'id',     $courseid, 0,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('planningid', 'id',     $planningid, 0,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',     'int::', $userid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED)) return;
 
     $items = array();
     // if (!xarSecurityCheck('EditPlanning')) return;
