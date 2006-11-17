@@ -3,7 +3,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from jpgraph_admin_menu() -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
+  <span class="xar-mod-title"><xar:mlstring>JpGraph Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
@@ -14,27 +14,19 @@
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>
-  <!-- the specific template for the current admin function comes here -->
-
-  <!-- Start form - note we do not use api functions to create the recipient URL of
-       this form, but entity instead. All URLs should be generated this way to ensure
-       compatibility with future versions of Xaraya.
-    -->
 
     <form method="post" id="post" action="&xar-modurl-jpgraph-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-
-    <!-- Use standard xaraya classes for form elements -->
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
       <div class="xar-form-input-wrapper">
-        <label for="bold" class="xar-form-label" title="#xarML('Use bold for jpgraph items.')#">
-          <xar:mlstring>Display Example Items In Bold?</xar:mlstring>
+        <label for="bold" class="xar-form-label" title="#xarML('Use the graphic error messages.')#">
+          <xar:mlstring>Use a graphic error message?</xar:mlstring>
         </label>
-        <xar:if condition="$boldchecked">
-          <input type="checkbox" name="bold" id="bold" value="1" checked="checked"/>
+        <xar:if condition="xarModGetVar('jpgraph', 'graphic_error')">
+          <input type="checkbox" name="graphic_error" id="graphic_error" value="1" checked="checked"/>
           <xar:else/>
-          <input type="checkbox" name="bold" id="bold" value="1" />
+          <input type="checkbox" name="graphic_error" id="graphic_error" value="1" />
         </xar:if>
       </div>
 

@@ -71,6 +71,9 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
             }
         }
 
+        if (empty($this->ydata)) {
+            $this->ydata = array(11,3,8,12,5,1,9,13,5,7);
+        }
         // Create the graph. These two calls are always required
        // var_dump($this->window_width);
         $this->graph = new Graph($this->window_width,300,"auto",xarModGetVar('jpgraph', 'cachetimeout'));
@@ -109,14 +112,11 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
 //      $this->graph->yaxis->SetTextLabelInterval(2);
 //      $this->graph->yaxis->SetLabelAngle(90);
 
-// Some data
-$ydata = array(11,3,8,12,5,1,9,13,5,7);
-
         switch ($this->graph_type) {
             case 'bar':
             default:
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_bar.php";
-                $plot=new BarPlot($ydata);
+                $plot=new BarPlot($this->ydata);
             break;
             case 'gantt':
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_gantt.php";
@@ -126,16 +126,16 @@ $ydata = array(11,3,8,12,5,1,9,13,5,7);
             break;
             case 'error':
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_error.php";
-                $plot=new ErrorPlot($ydata);
+                $plot=new ErrorPlot($this->ydata);
             break;
             case 'error':
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_error.php";
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_line.php";
-                $plot=new ErrorLinePlot($ydata);
+                $plot=new ErrorLinePlot($this->ydata);
             break;
             case 'line':
                 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph_line.php";
-                $plot=new LinePlot($ydata);
+                $plot=new LinePlot($this->ydata);
                 $plot->mark->SetType($this->mark_type);
                 $plot->SetStepStyle($this->plot_stepstyle);
                 $plot->SetStyle($this->plot_style);

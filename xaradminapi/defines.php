@@ -26,13 +26,17 @@ function jpgraph_adminapi_defines()
         DEFINE('TTF_DIR', xarModGetVar('jpgraph','ttfdirectory'));
     }
     if(!defined('CACHE_DIR')) {
-        DEFINE('CACHE_DIR',xarModGetVar('jpgraph','cachedirectory'));
+        $cachedir = xarModGetVar('jpgraph','cachedirectory');
+        DEFINE('CACHE_DIR', $cachedir);
     }
     if (!defined("USE_CACHE")) {
-        $usecache = xarModGetVar('jpgraph','cachedirectory') ? true : false;
+        $usecache = xarModGetVar('jpgraph','usecache') ? true : false;
         DEFINE("USE_CACHE",$usecache);
     }
-
+    if (!defined("USE_IMAGE_ERROR_HANDLER")) {
+        $graphicerror = xarModGetVar('jpgraph','graphic_error') ? true : false;
+        DEFINE("USE_IMAGE_ERROR_HANDLER",$graphicerror);
+    }
     /* Code that needs to be executed by this module on each
      * page view ( = ServerRequest ) goes here
      * This function can call any api function of this module

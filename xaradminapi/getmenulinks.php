@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/819.html
  * @author JpGraph Module Development Team
  */
-
 /**
  * Pass individual menu items to the admin  menu
  *
@@ -20,42 +19,15 @@
  */
 function jpgraph_adminapi_getmenulinks()
 {
-    /* First we need to do a security check to ensure that we only return menu items
-     * that we are suppose to see. It will be important to add for each menu item that
-     * you want to filter. No sense in someone seeing a menu link that they have no access
-     * to edit. Notice that we are checking to see that the user has permissions, and
-     * not that he/she doesn't.
-     * Security Check
-     */
-
-    /* The main menu will look for this  menulinks array and return it for a tree view of the module
-     * We are just looking for three items in the array, the url, which we need to use the
-     * xarModURL function, the title of the link, which will display a tool tip for the
-     * module url, in order to keep the label short, and finally the exact label for the
-     * function that we are displaying.
-     */
-
-    /* We usually display the menu links in a standard order
-     * An optional Overview link -
-     *  - overview shows by default immediately admin chooses the module with overviews switched on
-     *    but it is useful to have it show as a menu item also when overviews are switched off
-     *    so that it is still accessible without having to switch the overviews back on in Adminpanels
-     * Add items link
-     * View with edit/delete item link
-     * Modify Config Link usually comes last in the menu
-     */
-
     /* Show an overview menu option here if you like */
-
-
     if (xarSecurityCheck('AddJpGraph', 0)) {
 
         $menulinks[] = array('url' => xarModURL('jpgraph','admin','new'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
-            'title' => xarML('Adds a new item to system.'),
-            'label' => xarML('Add Item'));
+            'title' => xarML('See some plots on screen.'),
+            'label' => xarML('Test setup'));
     }
     /* Security Check */
     if (xarSecurityCheck('EditJpGraph', 0)) {

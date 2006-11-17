@@ -39,7 +39,7 @@ function jpgraph_admin_modifyconfig()
     if (!xarVarFetch('action',       'str:4:',   $action,       false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,  false,XARVAR_NOT_REQUIRED)) return;
 
-
+    if (!xarVarFetch('graphic_error',     'checkbox', $graphic_error,     true, XARVAR_NOT_REQUIRED)) return;
 
     /* Initialise the $data variable that will hold the data to be used in
      * the blocklayout template, and get the common menu configuration - it
@@ -60,7 +60,7 @@ function jpgraph_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
 
     /* Specify some values for display */
-    $data['boldchecked'] = xarModGetVar('jpgraph', 'bold') ? true : false;
+
     $data['itemsvalue'] = xarModGetVar('jpgraph', 'itemsperpage');
 
     /* Note : if you don't plan on providing encode/decode functions for
@@ -118,7 +118,7 @@ function jpgraph_admin_modifyconfig()
         xarModSetVar('jpgraph', 'window_width', $window_width);
         xarModSetVar('jpgraph', 'window_height', $window_height);
 
-
+        xarModSetVar('jpgraph', 'graphic_error', $graphic_error);
         xarModSetVar('jpgraph', 'itemsperpage', $itemsperpage);
         xarModSetVar('jpgraph', 'SupportShortURLs', $shorturls);
         if (isset($aliasname) && trim($aliasname)<>'') {

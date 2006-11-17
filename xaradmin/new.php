@@ -66,7 +66,7 @@ function jpgraph_admin_new($args)
     );
     $data['series'] = $series;
     $data['x_series'] = $x_series;
-
+    $data['y_series'] = array(11,3,8,12,5,1,9,13,5,7);
 
     if ($img == 1) {
         // Start up the graphing functions.

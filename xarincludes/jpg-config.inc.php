@@ -12,7 +12,8 @@
  * Modified for Xaraya 1
  * @author MichelV
  */
-
+//include ("modules/jpgraph/xaradminapi/defines.php");
+//$defines = jpgraph_adminapi_defines();
 //------------------------------------------------------------------------
 // Directories for cache and font directory.
 //
@@ -53,7 +54,8 @@
 // the image script is executed.
 // Note: The default setting is to create a subdirectory in the
 // directory from where the image script is executed and store all files
-// there. As ususal this directory must be writeable by the PHP process.
+// there. As usual this directory must be writeable by the PHP process.
+
 DEFINE("CSIMCACHE_DIR","csimcache/");
 DEFINE("CSIMCACHE_HTTP_DIR","csimcache/");
 
@@ -125,7 +127,7 @@ DEFINE('ASSUME_EUCJP_ENCODING',false);
 // default (Enable by setting USE_CACHE to true)
 //------------------------------------------------------------------------
 
-// Deafult locale for error messages.
+// Default locale for error messages.
 // This defaults to English = 'en'
 DEFINE('DEFAULT_ERR_LOCALE','en');
 
@@ -141,7 +143,7 @@ DEFINE("DEFAULT_GFORMAT","auto");
 // just not use it. By setting USE_CACHE=false no files will even
 // be generated in the cache directory.
 if (!defined("USE_CACHE")) {
-    DEFINE("USE_CACHE",false);
+    DEFINE("USE_CACHE",true);
 }
 
 
@@ -157,7 +159,9 @@ if (!defined("READ_CACHE")) {
 // Determine if the error handler should be image based or purely
 // text based. Image based makes it easier since the script will
 // always return an image even in case of errors.
-DEFINE("USE_IMAGE_ERROR_HANDLER",true);
+if (!defined("USE_IMAGE_ERROR_HANDLER")) {
+    DEFINE("USE_IMAGE_ERROR_HANDLER",true);
+}
 
 // Should the library examin the global php_errmsg string and convert
 // any error in it to a graphical representation. This is handy for the
