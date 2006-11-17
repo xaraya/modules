@@ -199,6 +199,28 @@ DEFINE("BRAND_TIMING",false);
 // What format should be used for the timing string?
 DEFINE("BRAND_TIME_FORMAT","(%01.3fs)");
 
+
+/* Use the following when you are using jpgraph 1 for PHP4
+
+// Should the image be a truecolor image?
+// Note 1: Has only effect with GD 2.0.1 and above.
+// Note 2: GD 2.0.1 + PHP 4.0.6 on Win32 crashes when trying to use
+// trucolor.
+// Note 3: MUST be enabled to get background images working with GD2
+DEFINE('USE_TRUECOLOR',true);
+
+// Specify what version of the GD library is installed.
+// If this is set to 'auto' the version will be automatically
+// determined.
+// However since determining the library takes ~1ms you can also
+// manually specify the version if you know what version you have.
+// This means that you should
+// set this define to true if you have GD 2.x installed to save 1ms.
+DEFINE("USE_LIBRARY_GD2",'auto');
+
+
+*/
+
 //------------------------------------------------------------------------
 // The following constants should rarely have to be changed !
 //------------------------------------------------------------------------
