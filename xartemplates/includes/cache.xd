@@ -12,8 +12,11 @@
             Use Cache
         </xar:mlstring>
     </label>
-    <xar:set name="checked">xarModGetVar('jpgraph', 'usecache')</xar:set>
-    <xar:data-input type="checkbox" name="usecache" id="usecache" checked="$checked" />
+    <xar:if condition="xarModGetVar('jpgraph', 'usecache')">
+    <input type="checkbox" name="usecache" id="usecache" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="usecache" id="usecache" />
+    </xar:if>
 </div>
 <div class="xar-form-input-wrapper">
     <label for="shorturls" title="#xarML('Read files from the cache')#" class="xar-form-label">

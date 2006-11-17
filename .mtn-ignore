@@ -1,4 +1,5 @@
-xarincludes\/jpgraph2\/\.*
+xarincludes\/jpgraph2\/Examples\/.*
+xarincludes\/jpgraph2\/lang\/.*
 xarincludes\/ttf\/\.*
 xardocs\/html\/\.*
 xardocs\/ref\/\.*

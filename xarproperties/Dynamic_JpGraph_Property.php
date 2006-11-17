@@ -15,11 +15,13 @@
  * @author MichelV <michelv@xaraya.com>
  * @author Marc Lutolf <mfl@netspan.ch>
  */
+$defines = xarModApiFunc('jpgraph','admin','defines');
 include_once "modules/base/xarproperties/Dynamic_Image_Property.php";
 include_once "modules/jpgraph/xarincludes/jpgraph2/jpgraph.php";
 
 class Dynamic_JpGraph_Property extends Dynamic_Image_Property
 {
+
     public $window_width = 300;
     public $window_height = 300;
 
@@ -32,6 +34,7 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
     function Dynamic_JpGraph_Property($args)
     {
         $this->Dynamic_Image_Property($args);
+
         $vars = array(
             'window_width',
             'window_height',

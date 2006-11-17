@@ -33,7 +33,7 @@ function jpgraph_admin_modifyconfig()
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, xarModGetVar('jpgraph', 'itemsperpage'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls,    false, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('usecache',     'checkbox', $usecache,    true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('usecache',     'checkbox', $usecache,     true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('readcache',    'checkbox', $readcache,    true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('action',       'str:4:',   $action,       false, XARVAR_NOT_REQUIRED)) return;
