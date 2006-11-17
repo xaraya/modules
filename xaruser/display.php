@@ -19,7 +19,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param  array $args an array of arguments (if called by other modules)
- * @param  int $args ['objectid'] a generic object id (if called by other modules)
+ * @param  int $args ['objectid'] a generic object id (if called by other modules) OPTIONAL
  * @param  int $args ['courseid'] the ID of the course
  * @return array
  */
@@ -85,7 +85,7 @@ function courses_user_display($args)
                                     array('userid' => $uid,
                                           'planningid' => $planningid));
             // With a result, the teacher can see the menu, or when there is an appropriate priv
-            if (count($check)!=0 || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
+            if (($check == true) || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
                 $items[$i]['participantsurl'] = xarModURL('courses',
                     'admin',
                     'participants',

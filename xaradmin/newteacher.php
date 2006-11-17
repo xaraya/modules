@@ -12,13 +12,14 @@
  */
 
 /**
- * Combine a teacher (Xar user) with a planned course and update database
+ * Combine a teacher (Xar user) with a planned course and redirect to view
  * @author Michel V.
  *
  * @param  $args an array of arguments (if called by other modules)
- * @param  $args an array of arguments (if called by other modules)
- * @param  $args ['userid'] the uid of the role to be treated as a teacher
- * @param  $args ['planningid'] the planned course ID that the teacher will get attached to
+ * @param int userid the uid of the role to be treated as a teacher
+ * @param int planningid the planned course ID that the teacher will get attached to
+ * @return bool true
+ * @todo Create automatic privilege?
  */
 function courses_admin_newteacher($args)
 {
@@ -34,7 +35,7 @@ function courses_admin_newteacher($args)
                            array('userid' => $userid,
                                  'planningid' => $planningid));
 
-    if (count($check)!=0) {
+    if (!$check) {
     $msg = xarML('This teacher has already been assigned to this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_TEACHER',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));

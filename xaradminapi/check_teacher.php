@@ -3,7 +3,7 @@
  * Check teacher
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,11 +12,13 @@
  * @author MichelV
  */
 /**
- * see if there is already a link between the current user and a planned course
+ * Check for the case that the user (entered with a userid) is already
+    registered as a teacher for the planned course
  * @author MichelV <michelv@xarayahosting.nl>
- * @param planningid
- * @param userid id of the user placed in as a teacher
- * @return array items of found courses
+ * @param int planningid
+ * @param int userid id of the user placed in as a teacher
+ * @return bool true if the combination is encountered, false if not.
+ * @todo use a privilege check in here?
  */
 function courses_adminapi_check_teacher($args)
 {
@@ -31,28 +33,27 @@ function courses_adminapi_check_teacher($args)
     $xartable =& xarDBGetTables();
     $teacherstable = $xartable['courses_teachers'];
 
-    $sql = "SELECT xar_userid, xar_planningid
+    $sql = "SELECT xar_tid
     FROM $teacherstable
     WHERE xar_userid = $userid
     AND xar_planningid = $planningid";
     $result = $dbconn->Execute($sql);
-    // Nothing found: return empty
-    $items=array();
-
+    // check for a result
     if (!$result) {
-        return;
-    } else {
-        for (; !$result->EOF; $result->MoveNext()) {
-            list($userid, $planningid) = $result->fields;
-            if (xarSecurityCheck('ViewCourses', 0, 'Course', "All:$planningid:All")) {
-                $items[] = array('userid' => $userid,
-                                 'planningid' => $planningid);
-            }
+        return false;
+    }
+    $tids = array();
+    // Get the courseid
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($tid) = $result->fields;
+        $tids[] = $tid;
     }
     $result->Close();
-    return $items;
+    if (count($tids) == 0) {
+        return false;
+    } else {
+        // this user is a teacher: return true
+        return true;
     }
-    // TODO: how to select by cat ids (automatically) when needed ???
-
 }
 ?>
