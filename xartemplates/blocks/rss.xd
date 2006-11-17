@@ -1,15 +1,16 @@
 <xar:if condition="empty($warning)">
-    <div>
-        <xar:if condition="$show_chantitle">
-            <xar:mlstring>Headlines from:</xar:mlstring>
-            <a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a>
-        </xar:if>
-        <xar:if condition="$show_chandesc">
-            <xar:if condition="!empty($chandesc)">
-                <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
+    <xar:if condition="!empty($show_chantitle) or ($show_chandesc and !empty($chandesc))">
+        <div>
+            <xar:if condition="$show_chantitle">
+                <h4><xar:mlstring>Headlines from:</xar:mlstring></h4>
+                <a href="#xarVarPrepForDisplay($chanlink)#">#xarVarPrepForDisplay($chantitle)#</a>
             </xar:if>
-        </xar:if>
-    </div>
+            <xar:if condition="$show_chandesc and !empty($chandesc)">
+                <p class="xar-sub">#xarVarPrepForDisplay($chandesc)#</p>
+            </xar:if>
+        </div>
+    </xar:if>
+
     <xar:if condition="!empty($feedcontent)">
         <ul>
             <xar:loop name="$feedcontent">
