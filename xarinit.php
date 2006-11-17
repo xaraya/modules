@@ -121,7 +121,7 @@ function jpgraph_upgrade($oldversion)
             xarModSetVar('jpgraph', 'ttfdirectory', 'modules/jpgraph/xarinclude/ttf/');
         case '0.2.0':
             xarModSetVar('jpgraph', 'graphic_error', true);
-
+            xarModSetVar('jpgraph', 'jpgraphversion', '2.1.4');
         case '0.3.0':
             break;
     }
