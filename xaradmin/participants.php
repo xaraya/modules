@@ -19,7 +19,7 @@
  * @author MichelV <michelv@xarayahosting.nl>
  * @access public
  * @param int planningid ID of the planned course
- * @param int startnum
+ * @param int startnum To start with which item to show
  * @return array
  */
 function courses_admin_participants()
@@ -31,16 +31,17 @@ function courses_admin_participants()
     // Initialise the variable that will hold the items, so that the template
     // doesn't need to be adapted in case of errors
     $data['items'] = array();
-
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('courses', 'user', 'countparticipants', array('planningid'=>$planningid)),
-        xarModURL('courses', 'admin', 'participants', array('startnum' => '%%', 'planningid'=>$planningid)),
-        xarModGetVar('courses', 'itemsperpage'));
-
+    // See if current user is the coursecontact
+    $iscontact = xarModAPIFunc('courses',
+        'admin',
+        'check_contact',
+        array('userid' => xarUserGetVar('uid'),
+              'planningid' => $planningid
+              ));
     // Security check
-    if (!xarSecurityCheck('EditCourses', 0, 'Course', "All:$planningid:All")) return;
+    if (!xarSecurityCheck('EditCourses', 1, 'Course', "All:$planningid:All") && $iscontact == false) {
+        return;
+    }
     // Get the participants and their status. This can be 0, or higher.
     $items = xarModAPIFunc('courses',
         'admin',
@@ -81,7 +82,12 @@ function courses_admin_participants()
 
     $data['status'] = xarModAPIFunc('courses', 'user', 'gets',
                                       array('itemtype' => 1004));
-
+    // Call the xarTPL helper function to produce a pager in case of there
+    // being many items to display.
+    $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('courses', 'user', 'countparticipants', array('planningid'=>$planningid)),
+        xarModURL('courses', 'admin', 'participants', array('startnum' => '%%', 'planningid'=>$planningid)),
+        xarModGetVar('courses', 'itemsperpage'));
     // Add the array of items to the template variables
     $data['items'] = $items;
     $data['planningid'] = $planningid;

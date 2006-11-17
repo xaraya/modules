@@ -19,9 +19,9 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param  array $args an array of arguments (if called by other modules)
- * @param  int $args ['objectid'] a generic object id (if called by other modules) OPTIONAL
- * @param  int $args ['courseid'] the ID of the course
- * @return array
+ * @param  int objectid A generic object id (if called by other modules) OPTIONAL
+ * @param  int courseid The ID of the course
+ * @return array with all data for the template
  */
 function courses_user_display($args)
 {
@@ -73,19 +73,24 @@ function courses_user_display($args)
     $allowregistration = xarModGetVar('courses','allowregi'.$item['coursetype']) ? true : false;
     $data['allowregistration'] = $allowregistration;
 
+    $iscontact = xarModAPIFunc('courses',
+                                   'admin',
+                                   'check_contact',
+                                    array('userid' => $uid,
+                                          'courseid' => $courseid));
     // Check individual permissions for Enroll/Edit/Viewstatus
     for ($i = 0; $i < count($items); $i++) {
         $planitem = $items[$i];
         $planningid = $planitem['planningid'];
         if ($allowregistration) {
             // Check to see if user is teacher
-            $check = xarModAPIFunc('courses',
+            $isteacher = xarModAPIFunc('courses',
                                    'admin',
                                    'check_teacher',
                                     array('userid' => $uid,
                                           'planningid' => $planningid));
             // With a result, the teacher can see the menu, or when there is an appropriate priv
-            if (($check == true) || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
+            if (($isteacher == true) || ($iscontact == true) || xarSecurityCheck('EditCourses', 0, 'Course', "$courseid:$planningid:All")) {
                 $items[$i]['participantsurl'] = xarModURL('courses',
                     'admin',
                     'participants',

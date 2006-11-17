@@ -31,6 +31,7 @@ function courses_userapi_getcourseid($args)
             new SystemException($msg));
         return;
     }
+    // See if we can see a hidden course
     if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
     } else {
