@@ -83,6 +83,12 @@ function html_userapitransformoutput($text)
         // just to make things a little easier, pad the end
   	    $text = $text . "\n";
 
+        // Create a few entities where required.
+        // TODO: transform < and > where they do not form part of a tag
+        // Convert a free-standing '&' into '&amp;'
+        $text = preg_replace('/&(?!#{0,1}[a-z0-9]+;)/i', "&amp;", $text);
+
+        // Normalise existing breaks into newlines.
         $text = preg_replace('|<br />\s*<br />|', "\n\n", $text);
 
         $text = preg_replace('!(<(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6])[^>]*>)!', "\n$1", $text);
