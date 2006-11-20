@@ -20,9 +20,7 @@
         <xar:set name="dummy">#xarSessionDelVar('statusmsg')#</xar:set>
     </xar:if>
 
-    <xar:comment>
-        Setup the watermark it maybe text or an image
-    </xar:comment>
+    <xar:template file="config-view" />
     <xar:set name="fltr">array()</xar:set>
     <xar:if condition="!empty($watermark['type'])">
         <xar:if condition="$watermark['type'] eq 'image' and !empty($watermark['filename'])">
@@ -30,9 +28,23 @@
             <xar:set name="fltr">array("wmi|$wmi")</xar:set>
         <xar:elseif condition="$main_watermark['type'] eq 'text'" />
             <xar:set name="wmt">"{$watermark['text']}|{$watermark['size']}|{$watermark['alignment']}|{$watermark['hex_color']}|{$watermark['ttf_font']}|{$watermark['opacity']}|{$watermark['margin']}|{$watermark['angle']}"</xar:set>
-            <xar:set name="fltr">array("wmt|$wmt")</xar:set>
+            <xar:set name="fltr">array("wmt|$wmt", "drop|100|5|121212")</xar:set>
         </xar:if>
     </xar:if>
+    <xar:set name="params">
+        array(
+            'w'      => $thumbnail_width
+            , 'h'    => $thumbnail_width+50
+            , 'q'    => $quality
+            , 'zc'   => true
+            /*, 'aoe'  => false
+            , 'iar'  => false
+            , 'far'  => false */
+            , 'fltr' => $fltr
+            , 'bc'   => '000000'
+        )
+    </xar:set>
+
 
     <xar:if condition="count($files) gt 0">
         <table class="xar-gallery-view xar-align-center">
@@ -42,21 +54,16 @@
             <tr>
                 <xar:set name="j">0</xar:set>
                 <xar:while condition="$j lt $album.settings.cols_per_page and ($file = array_shift($files)) ne null">
-                <xar:set name="params">
-                    array(
-                        'w'      => $thumbnail_width
-                        , 'q'    => $quality
-                        , 'far'  => true
-                        , 'fltr' => $fltr)
-                </xar:set>
-                <td class="xar-align-center">
-                    <xar:if condition="!empty($album.settings.show_date)">
-                    <a href="#$file.link#"><h3><xar:var name="$file.date" /></h3></a>
-                    </xar:if>
-                    <xar:set name="path">$files_path.$file['file']</xar:set>
-                    <a href="#$file.link#"><xar:image-resize src="$path" static="1" label="Media" params="$params" /></a>
-                </td>
-                <xar:set name="j">$j+1</xar:set>
+                    <td class="xar-align-center">
+                        <xar:set name="path">$files_path.$file['file']</xar:set>
+                        <a href="#$file.link#" class="xar-gallery-thumbnail">
+                            <xar:image-resize src="$path" static="1" label="Media" params="$params" />
+                        </a>
+                        <div class="xar-gallery-fileInfo">
+                            <xar:var name="file.name" />
+                        </div>
+                    </td>
+                    <xar:set name="j">$j+1</xar:set>
                 </xar:while>
             </tr>
             <xar:set name="i">$i+1</xar:set>

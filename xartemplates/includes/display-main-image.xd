@@ -24,7 +24,7 @@
 <xar:else />
     <xar:set name="quality">90</xar:set>
 </xar:if>
-<xar:set name="params">array('w' => 500,'q' => $quality, 'ace' => true, 'fltr' => $fltr)</xar:set>
+<xar:set name="params">array('w' => $width, 'h' => $height, 'q' => $quality, 'ace' => true, 'fltr' => $fltr)</xar:set>
 
 <xar:if condition="!empty($file.summary)">
     <xar:set name="label"><xar:var name="$file.summary" /></xar:set>

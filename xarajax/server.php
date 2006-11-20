@@ -13,7 +13,6 @@
 
 function gallery_ajax_server($args)
 {
-
     ob_end_clean();
 
     if( !xarVarFetch('action', 'str', $action, null, XARVAR_NOT_REQUIRED) ){ return false; }

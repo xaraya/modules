@@ -15,20 +15,34 @@ function gallery_user_display($args)
 {
     if( !xarVarFetch('album_id', 'int', $album_id, null, XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('file_id', 'int', $file_id, null) ){ return false; }
+    if( !xarVarFetch('image_size', 'str', $image_size, '') ){ return false; }
 
     if( !Security::check(SECURITY_READ, 'gallery', FILE_ITEMTYPE, $file_id) ){ return false; }
 
+    // Process params
     xarVarSetCached('modules.security', 'itemtype', FILE_ITEMTYPE);
     xarVarSetCached('modules.security', 'itemid', $file_id);
+
+    if( empty($image_size) ){
+        $session_image_size = xarSessionGetVar('modules.gallery.image_size');
+        if( !empty($session_image_size) ){
+            $image_size = $session_image_size;
+        } else {
+            $image_size = '600x480';
+        }
+    }
+    xarSessionSetVar('modules.gallery.image_size', $image_size);
+    list($width, $height) =@ split('x', $image_size);
 
     $album = xarModAPIFunc('gallery', 'user', 'get_album',
         array('album_id' => $album_id)
     );
 
-    if( isset($album['settings']['watermark_id']) )
+    if( isset($album['settings']['watermark_id']) ){
         $watermark_id = $album['settings']['watermark_id'];
-    else
+    } else {
         $watermark_id = null;
+    }
 
     $watermark = xarModAPIFunc('gallery', 'user', 'get_watermark',
         array('watermark_id' => $watermark_id)
@@ -61,9 +75,11 @@ function gallery_user_display($args)
         Gets the previous and next files
     */
     $sort = null;
-    if( isset($album['settings']['sort_order']) )
+    if( isset($album['settings']['sort_order']) ){
         $sort = $album['settings']['sort_order'];
-    else { $sort = xarModGetVar('gallery', 'sort'); }
+    } else {
+        $sort = xarModGetVar('gallery', 'sort');
+    }
     $prev = xarModAPIFunc('gallery', 'user', 'get_previous',
         array(
             'file_id'  => $file_id,
@@ -147,11 +163,18 @@ function gallery_user_display($args)
         )
     );
 
+    $data['width'] = $width;
+    $data['height'] = $height;
+    $data['image_size'] = $image_size;
+
     if( xarRequestGetVar('theme') == 'print' )
     {
         return xarTplModule('gallery', 'user', 'display', $data, 'standalone');
     }
 
-    return $data;
+    $data['sizes'] = array('600x480', '800x600', '1024x768');
+
+
+    return xarTplModule('gallery', 'user', 'display', $data);
 }
 ?>

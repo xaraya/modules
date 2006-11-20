@@ -3,7 +3,7 @@
 
 <a id="gallery-display"></a>
 <div class="xar-mod-head">
-    <span class="xar-mod-title">Gallery</span>
+    <span class="xar-mod-title" id="mod-title"><xar:var name="file.name" /></span>
 </div>
 
 <div class="xar-mod-body xar-gallery">
@@ -11,28 +11,34 @@
     <xar:if condition="!empty($album)">
         <h3 class="xar-align-center"><a href="#$back_link#"><xar:var name="album.display_name" /></a></h3>
     </xar:if>
-    <h4 class="xar-align-center"><xar:var name="file.name" /></h4>
 
     <table class="xar-gallery-display xar-align-center">
         <tr>
-            <td valign="top" class="xar-gallery-display-prev">
+            <td colspan="3"><xar:template file="display-main-image" /></td>
+        </tr>
+        <tr>
+            <td style="width: 33.3%;">
                 <xar:if condition="!empty($prev_link)">
-                    <a href="#$prev_link###gallery-display">
-                    <xar:set name="path">$files_path.$prev['file']</xar:set>
-                    <xar:set name="params">array('w' => 80,'q' => 90, 'ace' => true)</xar:set>
-                    <xar:image-resize src="$path" static="1" label="Previous" params="$params" />
-                    <p>&lt;&lt; <xar:mlstring>Previous</xar:mlstring></a></p>
+                    <a href="#$prev_link###gallery-display">&lt;&lt; <xar:mlstring>Previous</xar:mlstring></a>
                 </xar:if>
             </td>
-            <td><xar:template file="display-main-image" /></td>
-            <td valign="top" class="xar-gallery-display-next">
+            <td style="width: 33.4%;">
+                <form action="#xarModURL('gallery', 'user', 'display')#" id="size" name="size" method="POST">
+                    <select name="image_size" id="image-size" onchange="document.size.submit();">
+                        <xar:foreach in="$sizes" value="$value">
+                            <xar:if condition="$image_size eq $value">
+                                <option value="#$value#" selected="selected"><xar:var name="value" /></option>
+                            <xar:else />
+                                <option value="#$value#"><xar:var name="value" /></option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <input type="hidden" name="file_id" value="#$file.file_id#" />
+                </form>
+            </td>
+            <td style="width: 33.3%;">
                 <xar:if condition="!empty($next_link)">
-                    <a href="#$next_link###gallery-display">
-                    <xar:set name="path">$files_path.$next['file']</xar:set>
-                    <xar:set name="params">array('w' => 80,'q' => 90, 'ace' => true)</xar:set>
-                    <xar:image-resize src="$path" static="1" label="Previous" params="$params" />
-                    <p><xar:mlstring>Next</xar:mlstring> &gt;&gt;</p>
-                    </a>
+                    <a href="#$next_link###gallery-display"><xar:mlstring>Next</xar:mlstring>&gt;&gt; </a>
                 </xar:if>
             </td>
         </tr>
@@ -40,7 +46,7 @@
 
 </div>
 
-<div class="xar-clearboth">&nbsp;</div>
+<div class="xar-clearboth"></div>
 <xar:foreach in="$hooks" key="$module" value="$hook">
     <xar:var name="hook" />
 </xar:foreach>

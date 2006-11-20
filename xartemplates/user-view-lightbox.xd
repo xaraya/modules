@@ -38,15 +38,22 @@
     <xar:set name="params">
         array(
             'w'      => $thumbnail_width
+            , 'h'    => $thumbnail_width+50
             , 'q'    => $quality
-            , 'far'  => true
-            , 'fltr' => $fltr)
+            , 'zc'   => true
+            /*, 'aoe'  => false
+            , 'iar'  => false
+            , 'far'  => false */
+            , 'fltr' => $fltr
+            , 'bc'   => '000000'
+        )
     </xar:set>
     <xar:set name="lightbox_params">
         array(
-            'w'      => 500
+            'w'      => 800
+            , 'h'      => 600
             , 'q'    => $quality
-            , 'ace'  => true
+            , 'far'  => true
             , 'fltr' => $fltr)
     </xar:set>
     <xar:if condition="count($files) gt 0">
@@ -61,9 +68,14 @@
                     <xar:set name="path">$files_path.$file['file']</xar:set>
                     <xar:set name="lightbox_path">xarModAPIFunc('images', 'user', 'resize',
                         array('src' => $path, 'static' => true, 'params' => $lightbox_params, 'label' => 'none', 'returnpath' => true))</xar:set>
-                    <a href="#$lightbox_path#" rel="lightbox[page]">
+                    <xar:set name="caption">"&lt;a href=&quot;" . $file['link'] . "&quot;&gt;" . $file['name'] ."&lt;a&gt;"</xar:set>
+                    <a href="#$lightbox_path#" rel="lightbox[page]" title="#$caption#" >
                         <xar:image-resize src="$path" static="1" label="Media" params="$params" />
                     </a>
+                    <div class="xar-gallery-fileInfo">
+                        <a href="#$file.link#">[D]</a> :
+                        <xar:var name="file.name" />
+                    </div>
                 </td>
                 <xar:set name="j">$j+1</xar:set>
                 </xar:while>
@@ -85,7 +97,7 @@
     </xar:if>
 </div>
 
-<div class="xar-clearboth">&nbsp;</div>
+<div class="xar-clearboth"></div>
 <xar:foreach in="$hooks" value="$hook">
     <xar:var name="hook" />
 </xar:foreach>

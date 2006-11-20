@@ -13,6 +13,7 @@
 
 function gallery_user_view($args)
 {
+    ini_set('memory_limit', '64M');
     xarVarFetch('album_id', 'int', $album_id, null, XARVAR_NOT_REQUIRED);
     xarVarFetch('startnum', 'int', $startnum, null, XARVAR_NOT_REQUIRED);
     xarVarFetch('numitems', 'int', $numitems, null, XARVAR_NOT_REQUIRED);
@@ -169,11 +170,11 @@ function gallery_user_view($args)
     $data['files'] = $files;
     $data['num_cols'] = xarModGetVar('gallery', 'cols_per_page');
 
-    if( xarModGetVar('gallery', 'enable_lightbox') == true ){
+    //if( xarModGetVar('gallery', 'enable_lightbox') == true ){
         $template = 'lightbox';
-    } else {
+    /*} else {
         $template = null;
-    }
+    }*/
 
     return xarTplModule('gallery', 'user', 'view', $data, $template);
 }

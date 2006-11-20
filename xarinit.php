@@ -181,6 +181,7 @@ function gallery_db_get_fields()
             files_per_page     I NotNull DEFAULT 10,
             cols_per_page      I NotNull DEFAULT 2,
             file_width     c(10) NotNull DEFAULT '150px',
+            file_height    c(10) NotNull DEFAULT '150px',
             show_date       c(1) NotNull DEFAULT '',
             sort_order     c(20) NotNull DEFAULT 'file_id|ASC'
         ",
