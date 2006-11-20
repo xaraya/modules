@@ -17,7 +17,7 @@
 
   function commerce_userapi_get_customers_statuses() {
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

@@ -210,7 +210,7 @@ function commerce_admin_customer_status()
     echo '<td nowrap class="smallText" align="center">' . $customers_status['customers_status_shipping_unallowed'] . '</td>';
     echo "\n";
 ?>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($cInfo)) && ($customers_status['customers_status_id'] == $cInfo->customers_status_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CUSTOMERS_STATUS, 'page=' . $_GET['page'] . '&cID=' . $customers_status['customers_status_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($cInfo)) && ($customers_status['customers_status_id'] == $cInfo->customers_status_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CUSTOMERS_STATUS, 'page=' . $_GET['page'] . '&cID=' . $customers_status['customers_status_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
   }
@@ -244,7 +244,7 @@ function commerce_admin_customer_status()
       $customers_status_inputs_string = '';
       $languages = xtc_get_languages();
       for ($i=0; $i<sizeof($languages); $i++) {
-        $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'.$languages[$i]['directory'].'/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&nbsp;' . xtc_draw_input_field('customers_status_name[' . $languages[$i]['id'] . ']');
+        $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'.$languages[$i]['directory'].'/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&#160;' . xtc_draw_input_field('customers_status_name[' . $languages[$i]['id'] . ']');
       }
       $contents[] = array('text' => '<br>' . TEXT_INFO_CUSTOMERS_STATUS_NAME . $customers_status_inputs_string);
       $contents[] = array('text' => '<br>' . TEXT_INFO_CUSTOMERS_STATUS_IMAGE . '<br>' . xtc_draw_file_field('customers_status_image'));
@@ -272,7 +272,7 @@ function commerce_admin_customer_status()
       $customers_status_inputs_string = '';
       $languages = xtc_get_languages();
       for ($i=0; $i<sizeof($languages); $i++) {
-        $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'.$languages[$i]['directory'].'/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&nbsp;' . xtc_draw_input_field('customers_status_name[' . $languages[$i]['id'] . ']', xtc_get_customers_status_name($cInfo->customers_status_id, $languages[$i]['id']));
+        $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'.$languages[$i]['directory'].'/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&#160;' . xtc_draw_input_field('customers_status_name[' . $languages[$i]['id'] . ']', xtc_get_customers_status_name($cInfo->customers_status_id, $languages[$i]['id']));
       }
 
       $contents[] = array('text' => '<br>' . TEXT_INFO_CUSTOMERS_STATUS_NAME . $customers_status_inputs_string);
@@ -310,7 +310,7 @@ function commerce_admin_customer_status()
         $customers_status_inputs_string = '';
         $languages = xtc_get_languages();
         for ($i=0; $i<sizeof($languages); $i++) {
-          $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'. $languages[$i]['directory'] . '/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&nbsp;' . xtc_get_customers_status_name($cInfo->customers_status_id, $languages[$i]['id']);
+          $customers_status_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_CATALOG.'lang/'. $languages[$i]['directory'] . '/admin/images/' . $languages[$i]['image']), $languages[$i]['name']) . '&#160;' . xtc_get_customers_status_name($cInfo->customers_status_id, $languages[$i]['id']);
         }
         $contents[] = array('text' => $customers_status_inputs_string);
         $contents[] = array('text' => '<br>' . TEXT_INFO_CUSTOMERS_STATUS_DISCOUNT_PRICE_INTRO . '<br>' . TEXT_INFO_CUSTOMERS_STATUS_DISCOUNT_PRICE . ' ' . $cInfo->customers_status_discount . '%');

@@ -12,7 +12,7 @@
 
 function customers_userapi_count_customer_orders($args)
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     extract($args);
 

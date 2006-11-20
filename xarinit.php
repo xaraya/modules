@@ -1,6 +1,6 @@
 <?php
 
-include_once 'modules/xen/xarclasses/xenquery.php';
+sys::import('modules.xen.xarclasses.xenquery');
 //Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
 
@@ -146,19 +146,19 @@ function customers_init()
 # Set extensions
 #
 
-    $ice_objects = array('ice_customers','ice_customer_groups');
+    $dd_objects = array('ice_customers','ice_customer_groups');
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
-        if(in_array($objectinfo['name'], $ice_objects)) {
+        if(in_array($objectinfo['name'], $dd_objects)) {
             // KILL
             if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
         }
     }
 
-    $objects = unserialize(xarModVars::get('commerce','ice_objects'));
-    foreach($ice_objects as $ice_object) {
+    $objects = unserialize(xarModVars::get('commerce','dd_objects'));
+    foreach($dd_objects as $ice_object) {
         $def_file = 'modules/customers/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/customers/xardata/'.$ice_object.'-data.xml';
 
@@ -172,7 +172,7 @@ function customers_init()
         }
     }
 
-    xarModSetVar('commerce','ice_objects',serialize($objects));
+    xarModSetVar('commerce','dd_objects',serialize($objects));
 
     $role = xarFindRole('Customers');
     if (empty($role)) {

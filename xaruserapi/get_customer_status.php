@@ -10,18 +10,18 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_customer_status($args) 
+function commerce_userapi_get_customer_status($args)
 {
     extract($args);
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     $q = new xenQuery('SELECT',
                       $xartables['commerce_customers_status']
                      );
 
-    // Retrieve the current language 
+    // Retrieve the current language
     if (!isset($language_id)) {
         //$languages = xarModAPIFunc('commerce','user','get_languages');
         $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
@@ -29,7 +29,7 @@ function commerce_userapi_get_customer_status($args)
         $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $language));
         $language_id = $currentlang['id'];
     }
-    
+
     // Retrieve the customer id
     if (isset($customer_id)) {
         $q->addtable($xartables['commerce_customers']);
@@ -38,7 +38,7 @@ function commerce_userapi_get_customer_status($args)
     } elseif (isset($customer_status_id)) {
         $q->eq('customers_status_id',$customer_status_id);
     }
-    
+
 //    $q->qecho();
     if(!$q->run()) return;
     return $q->row();

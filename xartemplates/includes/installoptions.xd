@@ -10,17 +10,17 @@
 <fieldset>
     <legend>
         <xar:mlstring>
-            Default Data 
+            Default Data
         </xar:mlstring>
     </legend>
     <div class="xar-form-input-wrapper">
         <label for="shorturls" title="#xarML('Create a default customer')#" class="xar-form-label">
             <xar:mlstring>
-                Create a default customer 
+                Create a default customer
             </xar:mlstring>
         </label>
         <xar:data-input type="checkbox" name="createdefaultcustomer" id="createdefaultcustomer" checked="1" />
-        &nbsp;
+        &#160;
         <xar:mlstring>
             Name:
         </xar:mlstring>
