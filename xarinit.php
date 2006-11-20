@@ -84,19 +84,19 @@ function vendors_init()
 # Set extensions
 #
 
-    $ice_objects = array('ice_suppliers');
+    $dd_objects = array('ice_suppliers');
 
     // Treat destructive right now
     $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
     foreach($existing_objects as $objectid => $objectinfo) {
-        if(in_array($objectinfo['name'], $ice_objects)) {
+        if(in_array($objectinfo['name'], $dd_objects)) {
             // KILL
             if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
         }
     }
 
-    $objects = unserialize(xarModGetVar('commerce', 'ice_objects'));
-    foreach($ice_objects as $ice_object) {
+    $objects = unserialize(xarModGetVar('commerce', 'dd_objects'));
+    foreach($dd_objects as $ice_object) {
         $def_file = 'modules/vendors/xardata/'.$ice_object.'-def.xml';
         $dat_file = 'modules/vendors/xardata/'.$ice_object.'-data.xml';
 
@@ -110,7 +110,7 @@ function vendors_init()
         }
     }
 
-    xarModVars::set('commerce','ice_objects',serialize($objects));
+    xarModVars::set('commerce','dd_objects',serialize($objects));
 
     $parent = xarFindRole('CommerceRoles');
     if (empty($parent)) $parent = xarFindRole('Everybody');
@@ -154,11 +154,11 @@ function vendors_delete()
 #
 # Delete the DD objects created by this module
 #
-    $ice_objects = unserialize(xarModGetVar('commerce','ice_objects'));
-    if (isset($ice_objects['ice_suppliers']))
-        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_suppliers']));
-    if (isset($ice_objects['ice_manufacturers']))
-        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $ice_objects['ice_manufacturers']));
+    $dd_objects = unserialize(xarModGetVar('commerce','dd_objects'));
+    if (isset($dd_objects['ice_suppliers']))
+        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $dd_objects['ice_suppliers']));
+    if (isset($dd_objects['ice_manufacturers']))
+        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $dd_objects['ice_manufacturers']));
 
 # --------------------------------------------------------
 #

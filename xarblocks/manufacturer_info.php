@@ -71,8 +71,8 @@ function vendors_manufacturer_infoblock_display($blockinfo)
 
       $manufacturer_info_string = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
       if (xarModAPIFunc('vendors','user','not_null',array('arg' => $manufacturer['manufacturers_image']))) $manufacturer_info_string .= '<tr><td align="center" class="infoBoxContents" colspan="2">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . $manufacturer['manufacturers_image']), $manufacturer['manufacturers_name']) . '</td></tr>';
-      if (xarModAPIFunc('vendors','user','not_null',array('arg' => $manufacturer['manufacturers_url']))) $manufacturer_info_string .= '<tr><td valign="top" class="infoBoxContents">-&nbsp;</td><td valign="top" class="infoBoxContents"><a href="' . xarModURL('vendors','user','redirect',array('action' => 'manufacturer','manufacturers_id' => $manufacturer['manufacturers_id'])) . '" target="_blank">' . sprintf(BOX_MANUFACTURER_INFO_HOMEPAGE, $manufacturer['manufacturers_name']) . '</a></td></tr>';
-      $manufacturer_info_string .= '<tr><td valign="top" class="infoBoxContents">-&nbsp;</td><td valign="top" class="infoBoxContents"><a href="' . xarModURL('vendors','user','default', 'manufacturers_id=' . $manufacturer['manufacturers_id']) . '">' . BOX_MANUFACTURER_INFO_OTHER_PRODUCTS . '</a></td></tr>' .
+      if (xarModAPIFunc('vendors','user','not_null',array('arg' => $manufacturer['manufacturers_url']))) $manufacturer_info_string .= '<tr><td valign="top" class="infoBoxContents">-&#160;</td><td valign="top" class="infoBoxContents"><a href="' . xarModURL('vendors','user','redirect',array('action' => 'manufacturer','manufacturers_id' => $manufacturer['manufacturers_id'])) . '" target="_blank">' . sprintf(BOX_MANUFACTURER_INFO_HOMEPAGE, $manufacturer['manufacturers_name']) . '</a></td></tr>';
+      $manufacturer_info_string .= '<tr><td valign="top" class="infoBoxContents">-&#160;</td><td valign="top" class="infoBoxContents"><a href="' . xarModURL('vendors','user','default', 'manufacturers_id=' . $manufacturer['manufacturers_id']) . '">' . BOX_MANUFACTURER_INFO_OTHER_PRODUCTS . '</a></td></tr>' .
                                    '</table>';
 
 
