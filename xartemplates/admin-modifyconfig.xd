@@ -35,7 +35,7 @@
 <xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
 <xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
-
+<xar:comment>FTP options</xar:comment>
 <xar:set name="useftpbackuplabel"><xar:mlstring>Should the scheduler FTP the created back-up file to another server?</xar:mlstring></xar:set>
 <xar:set name="useftpbackuphelp"><xar:mlstring>You will need to have an FTP server to place the file.</xar:mlstring></xar:set>
 <xar:set name="ftpserverlabel"><xar:mlstring>The FTP server</xar:mlstring></xar:set>
@@ -47,6 +47,10 @@
 <xar:set name="ftppwtitle"><xar:mlstring>Enter the password for this user.</xar:mlstring></xar:set>
 <xar:set name="ftpdirlabel"><xar:mlstring>The path on the FTP server</xar:mlstring></xar:set>
 <xar:set name="ftpdirtitle"><xar:mlstring>Enter the full name of the path. Defaults to /</xar:mlstring></xar:set>
+<xar:comment>Secure FTP options</xar:comment>
+<xar:set name="usesftpbackuplabel"><xar:mlstring>Use Secure FTP?</xar:mlstring></xar:set>
+<xar:set name="usesftpbackuphelp"><xar:mlstring>You will need to have both the FTP and OpenSSL extension installed.</xar:mlstring></xar:set>
+
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span>
@@ -151,88 +155,102 @@
         <fieldset>
             <legend>#$schedulingoptions#</legend>
             <xar:if condition="xarModIsAvailable('scheduler')">
-            <div class="xar-form-input-wrapper">
-                <label for="defaultbktype" class="xar-form-label" title="#$bkdefaulthelp#">
-                        #$defaultbktypel#
-                </label>
-                <select name="defaultbktype" id="defaultbktype">
-                <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
-                    <option value="complete" selected="selected">#$bkoption1#</option>
-                    <option value="standard">#$bkoption2#</option>
-                    <option value="structure">#$bkoption3#</option>
-                <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'standard'" />
-                    <option value="complete">#$bkoption1#</option>
-                    <option value="standard" selected="selected">#$bkoption2#</option>
-                    <option value="structure">#$bkoption3#</option>
-                <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'structure'" />
-                    <option value="complete">#$bkoption1#</option>
-                    <option value="standard">#$bkoption2#</option>
-                    <option value="structure" selected="selected">#$bkoption3#</option>
-                </xar:if>
-                </select>
-            </div>
-             <xar:foreach in="$schedule" key="$what" value="$descr">
-             <div class="xar-form-input-wrapper">
-                 <label for="interval_#$what#" class="xar-form-label" title="#$schedulinghelp#">
-                    #$descr#
-                 </label>
-                 <select name="interval[#$what#]" id="interval_#$what#">
-                     <option value="">#$schedulingoff#</option>
-                     <xar:foreach in="$intervals" key="$name" value="$display">
-                         <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
-                            <option value="#$name#" selected="selected">#$display#</option>
-                         <xar:else/>
-                            <option value="#$name#">#$display#</option>
-                         </xar:if>
-                     </xar:foreach>
-                 </select>
-             </div>
-             </xar:foreach>
-            <div class="xar-form-input-wrapper-after">
-                #$schedulingnote#
-            </div>
-            <xar:if condition="$ftpextension">
                 <div class="xar-form-input-wrapper">
-                    <label for="useftpbackup" class="xar-form-label" title="#$useftpbackuphelp#">
-                       #$useftpbackuplabel#
+                    <label for="defaultbktype" class="xar-form-label" title="#$bkdefaulthelp#">
+                            #$defaultbktypel#
                     </label>
-                    <xar:if condition="$useftpchecked">
-                      <input type="checkbox" name="useftpback" id="useftpbackup" value="1" checked="checked"/>
-                      <xar:else/>
-                      <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" />
+                    <select name="defaultbktype" id="defaultbktype">
+                    <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
+                        <option value="complete" selected="selected">#$bkoption1#</option>
+                        <option value="standard">#$bkoption2#</option>
+                        <option value="structure">#$bkoption3#</option>
+                    <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'standard'" />
+                        <option value="complete">#$bkoption1#</option>
+                        <option value="standard" selected="selected">#$bkoption2#</option>
+                        <option value="structure">#$bkoption3#</option>
+                    <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'structure'" />
+                        <option value="complete">#$bkoption1#</option>
+                        <option value="standard">#$bkoption2#</option>
+                        <option value="structure" selected="selected">#$bkoption3#</option>
                     </xar:if>
+                    </select>
+                </div>
+                <xar:foreach in="$schedule" key="$what" value="$descr">
+                     <div class="xar-form-input-wrapper">
+                         <label for="interval_#$what#" class="xar-form-label" title="#$schedulinghelp#">
+                            #$descr#
+                         </label>
+                         <select name="interval[#$what#]" id="interval_#$what#">
+                             <option value="">#$schedulingoff#</option>
+                             <xar:foreach in="$intervals" key="$name" value="$display">
+                                 <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
+                                    <option value="#$name#" selected="selected">#$display#</option>
+                                 <xar:else/>
+                                    <option value="#$name#">#$display#</option>
+                                 </xar:if>
+                             </xar:foreach>
+                         </select>
+                     </div>
+                </xar:foreach>
+                <div class="xar-form-input-wrapper-after">
+                    #$schedulingnote#
+                </div>
+                <xar:if condition="$ftpextension">
+                    <div class="xar-form-input-wrapper">
+                        <label for="useftpbackup" class="xar-form-label" title="#$useftpbackuphelp#">
+                           #$useftpbackuplabel#
+                        </label>
+                        <xar:if condition="$useftpchecked">
+                          <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" checked="checked"/>
+                          <xar:else/>
+                          <input type="checkbox" name="useftpbackup" id="useftpbackup" value="1" />
+                        </xar:if>
 
-                 </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="ftpserver" class="xar-form-label" title="#$ftpservertitle#">
-                         #$ftpserverlabel#
-                    </label>
-                    <input type="text" name="ftpserver" id="ftpserver" size="40" maxlength="128" value="#$ftpserver#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="ftpuser" class="xar-form-label" title="#$ftpusertitle#">
-                         #$ftpuserlabel#
-                    </label>
-                    <input type="text" name="ftpuser" id="ftpuser" size="40" maxlength="128" value="#$ftpuser#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
-                         #$ftppwlabel#
-                    </label>
-                    <input type="password" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">
-                         #$ftpdirlabel#
-                    </label>
-                    <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
-                </div>
+                    </div>
+                    <xar:if condition="$sslextension">
+                        <div class="xar-form-input-wrapper">
+                            <label for="usesftpbackup" class="xar-form-label" title="#$usesftpbackuphelp#">
+                               #$usesftpbackuplabel#
+                            </label>
+                            <xar:if condition="$usesftpchecked">
+                              <input type="checkbox" name="usesftpbackup" id="usesftpbackup" value="1" checked="checked"/>
+                              <xar:else/>
+                              <input type="checkbox" name="usesftpbackup" id="usesftpbackup" value="1" />
+                            </xar:if>
+
+                         </div>
+                    </xar:if>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ftpserver" class="xar-form-label" title="#$ftpservertitle#">
+                             #$ftpserverlabel#
+                        </label>
+                        <input type="text" name="ftpserver" id="ftpserver" size="40" maxlength="128" value="#$ftpserver#" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ftpuser" class="xar-form-label" title="#$ftpusertitle#">
+                             #$ftpuserlabel#
+                        </label>
+                        <input type="text" name="ftpuser" id="ftpuser" size="40" maxlength="128" value="#$ftpuser#" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ftppw" class="xar-form-label" title="#$ftppwtitle#">
+                             #$ftppwlabel#
+                        </label>
+                        <input type="password" name="ftppw" id="ftppw" size="40" maxlength="128" value="#$ftppw#" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="ftpdir" class="xar-form-label" title="#$ftpdirtitle#">
+                             #$ftpdirlabel#
+                        </label>
+                        <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
+                    </div>
+
+                </xar:if>
+            <xar:else />
+                <div class="xar-form-input-wrapper-after">
+                    <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>
+               </div>
             </xar:if>
-        <xar:else />
-            <div class="xar-form-input-wrapper-after">
-                <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>
-           </div>
-        </xar:if>
         </fieldset>
         <fieldset>
             <div class="xar-form-input-wrapper-after">

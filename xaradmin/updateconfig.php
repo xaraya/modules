@@ -36,6 +36,7 @@ function sitetools_admin_updateconfig()
     if (!xarVarFetch('ftpdir', 'str:1:254', $ftpdir, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ftppw', 'str:3:254', $ftppw, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useftpbackup', 'checkbox', $useftpbackup, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('usesftpbackup', 'checkbox', $usesftpbackup, false, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
     /* Update module variables.  Note that the default values are set in
@@ -92,12 +93,14 @@ function sitetools_admin_updateconfig()
     xarModSetVar('sitetools','usedbprefix', $usedbprefix);
     xarModSetVar('sitetools','colnumber',$colnumber);
     xarModSetVar('sitetools','defaultbktype',$defaultbktype);
-
+    // FTP options
     xarModSetVar('sitetools','useftpbackup', $useftpbackup);
     xarModSetVar('sitetools','ftpserver', $ftpserver);
     xarModSetVar('sitetools','ftpuser', $ftpuser);
     xarModSetVar('sitetools','ftppw', $ftppw);
     xarModSetVar('sitetools','ftpdir', $ftpdir);
+    // Secure FTP?
+    xarModSetVar('sitetools','usesftpbackup', $usesftpbackup);
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) return;

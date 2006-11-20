@@ -38,9 +38,12 @@ function sitetools_admin_modifyconfig()
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
     $data['usedbprefix']   = xarModGetVar('sitetools','usedbprefix');
-
+    // Check for the FTP extension
     $data['ftpextension']  = extension_loaded('ftp');
     $data['useftpchecked'] = xarModGetVar('sitetools','useftpbackup') ? true : false;
+    // Check for the SSL extension
+    $data['sslextension']  = extension_loaded('openssl');
+    $data['usesftpchecked'] = xarModGetVar('sitetools','usesftpbackup') ? true : false;
     $data['ftpserver']     = xarModGetVar('sitetools','ftpserver');
     $data['ftpuser']       = xarModGetVar('sitetools','ftpuser');
     $data['ftppw']         = xarModGetVar('sitetools','ftppw');

@@ -36,10 +36,16 @@ function sitetools_adminapi_ftpbackup($args)
     $ftpuser   = xarModGetVar('sitetools','ftpuser');
     $ftppw     = xarModGetVar('sitetools','ftppw');
     $ftpdir    = xarModGetVar('sitetools','ftpdir');
-
-    // Connect
-    $conn = ftp_connect($ftpserver);
+    $usesftp   = xarModGetVar('sitetools','usesftpbackup');
+    // Connect and see if we use a secure connection
+    if (extension_loaded('openssl') && $usesftp) {
+        $conn = ftp_ssl_connect($ftpserver);
+    } else {
+        $conn = ftp_connect($ftpserver);
+    }
+    // Bail out if we cannot connect
     if(!$conn) {
+        xarLogMessage('SITETOOLS: FTP connect failed, backup not transferred');
        return false;
     }
     // Login

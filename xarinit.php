@@ -265,6 +265,7 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','ftppw', '');
             xarModSetVar('sitetools','ftpdir', '');
         case '0.2.1':
+            xarModSetVar('sitetools','usesftpbackup', false);
         break;
     }
     /* Update successful */
