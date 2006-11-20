@@ -54,7 +54,7 @@
         <div class="xar-form-input-wrapper">
             <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
                 <xar:mlstring>
-                    Location Name: 
+                    Location Name:
                 </xar:mlstring>
             </label>
             <input type="text" name="name" id="maps_name" value="" />
@@ -62,10 +62,10 @@
         <div class="xar-form-input-wrapper">
             <label for="maps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
                 <xar:mlstring>
-                    Coordinates: 
+                    Coordinates:
                 </xar:mlstring>
             </label>
-            <textarea name="maps_address" id="maps_address"></textarea>&nbsp;<input type="button" value="Place on Map" onClick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
+            <textarea name="maps_address" id="maps_address"></textarea>&#160;<input type="button" value="Place on Map" onClick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
         </div>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="Save this Location" />
@@ -80,7 +80,7 @@
         <div class="xar-form-input-wrapper">
             <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
                 <xar:mlstring>
-                    Saved in the database: 
+                    Saved in the database:
                 </xar:mlstring>
             </label>
             <xar:data-input type="maplocation" name="locations" id="maps_locations" />

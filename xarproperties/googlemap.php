@@ -27,7 +27,7 @@ class GoogleMapProperty extends DataProperty
         $this->filepath   = 'modules/maps/xarproperties';
     }
 
-    function showInput($data = array())
+    public function showInput(Array $data = array())
     {
         if (isset($data['module'])) {
             $this->regid = xarModGetIDFromName($data['module']);
@@ -46,7 +46,7 @@ class GoogleMapProperty extends DataProperty
         return parent::showInput($data);
     }
 
-    function showOutput($data = array())
+    public function showOutput(Array $data = array())
     {
         if (isset($data['module'])) {
             $this->regid = xarModGetIDFromName($data['module']);
