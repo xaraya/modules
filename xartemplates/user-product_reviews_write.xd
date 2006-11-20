@@ -13,7 +13,7 @@
         {$INPUT_TEXT}<br>
         <font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#text_note#}</font><br>
         <br>
-        <strong>{#text_rating#}&nbsp;<font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">{#text_bad#}</font></strong>{$INPUT_RATING}<font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#text_good#}</strong></font></p></td>
+        <strong>{#text_rating#}&#160;<font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">{#text_bad#}</font></strong>{$INPUT_RATING}<font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#text_good#}</strong></font></p></td>
   </tr>
 </table>
 <br>

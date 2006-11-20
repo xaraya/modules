@@ -50,7 +50,7 @@ function commerce_admin_configuration()
               <tr class="dataTableHeadingRow">
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_NUMBER; ?></td>
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
-                <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_VIEWED; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_VIEWED; ?>&#160;</td>
               </tr>
 <?php
   if ($_GET['page'] > 1) $rows = $_GET['page'] * MAX_DISPLAY_SEARCH_RESULTS - MAX_DISPLAY_SEARCH_RESULTS;
@@ -69,7 +69,7 @@ function commerce_admin_configuration()
               <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_VIEWED . '?page=' . $_GET['page'], 'NONSSL'); ?>'">
                 <td class="dataTableContent"><?php echo $rows; ?>.</td>
                 <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_VIEWED . '?page=' . $_GET['page'], 'NONSSL') . '">' . $products['product_name'] . '</a> (' . $products['name'] . ')'; ?></td>
-                <td class="dataTableContent" align="center"><?php echo $products['product_viewed']; ?>&nbsp;</td>
+                <td class="dataTableContent" align="center"><?php echo $products['product_viewed']; ?>&#160;</td>
               </tr>
 <?php
   }

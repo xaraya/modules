@@ -30,7 +30,7 @@ function commerce_admin_stats_product_purchased()
               <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_PURCHASED . '?page=' . $_GET['page'], 'NONSSL'); ?>'">
                 <td class="dataTableContent"><?php echo $rows; ?>.</td>
                 <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=new_product_preview&read=only&pID=' . $products['product_id'] . '&origin=' . FILENAME_STATS_product_PURCHASED . '?page=' . $_GET['page'], 'NONSSL') . '">' . $products['product_name'] . '</a>'; ?></td>
-                <td class="dataTableContent" align="center"><?php echo $products['product_ordered']; ?>&nbsp;</td>
+                <td class="dataTableContent" align="center"><?php echo $products['product_ordered']; ?>&#160;</td>
               </tr>
 <?php
   }

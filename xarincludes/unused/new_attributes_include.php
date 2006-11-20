@@ -101,10 +101,10 @@
             if ($optionTypeTextInstalled == '1' && $current_value_id == $optionTypeTextInstalledID) {
               $current_value_id_old = $current_value_id;
               $current_value_id = $tempTextID;
-              echo '<input type="checkbox" name="optionValuesText[]" value="' . $current_value_id . '"' . $CHECKED . '>&nbsp;&nbsp;' . $current_value_name . '&nbsp;&nbsp;';
+              echo '<input type="checkbox" name="optionValuesText[]" value="' . $current_value_id . '"' . $CHECKED . '>&#160;&#160;' . $current_value_name . '&#160;&#160;';
               echo '<input type="hidden" name="' . $current_value_id . '_options_id" value="' . $current_product_option_id . '">';
             } else {
-              echo "<input type=\"checkbox\" name=\"optionValues[]\" value=\"" . $current_value_id . "\"" . $CHECKED . ">&nbsp;&nbsp;" . $current_value_name . "&nbsp;&nbsp;";
+              echo "<input type=\"checkbox\" name=\"optionValues[]\" value=\"" . $current_value_id . "\"" . $CHECKED . ">&#160;&#160;" . $current_value_name . "&#160;&#160;";
             }
             echo "</TD>";
             echo "<TD class=\"main\" align=\"left\"><input type=\"text\" name=\"" . $current_value_id . "_model\" value=\"" . $attribute_value_model . "\" size=\"15\"></TD>";

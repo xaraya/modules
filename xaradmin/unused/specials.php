@@ -145,14 +145,14 @@ define ('PRICE_PRECISION','2');
 <input type="hidden" name="specials_id" value="#$_GET['sID']#">
         <td><br><table border="0" cellspacing="0" cellpadding="2">
           <tr>
-            <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; ?>&nbsp;</td>
+            <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; ?>&#160;</td>
             <td class="main"><?php echo ($sInfo->product_name) ? $sInfo->product_name . ' <small>(' . $currencies->format($sInfo->product_price) . ')</small>' : xtc_draw_product_pull_down('product_id', 'style="font-size:10px"', $specials_array);
 <input type="hidden" name="product_price" value="#$sInfo->product_price#">
 
             </td>
           </tr>
 
-                <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; echo ($sInfo->product_name) ? "" :  '('. TXT_NETTO .')'; ?>&nbsp;</td>
+                <td class="main"><?php echo TEXT_SPECIALS_PRODUCT; echo ($sInfo->product_name) ? "" :  '('. TXT_NETTO .')'; ?>&#160;</td>
        <?php
         $price=$sInfo->product_price;
         $new_price=$sInfo->specials_new_product_price;
@@ -176,11 +176,11 @@ define ('PRICE_PRECISION','2');
           ; ?></td>
       </tr>
           <tr>
-            <td class="main"><?php echo TEXT_SPECIALS_SPECIAL_PRICE; ?>&nbsp;</td>
+            <td class="main"><?php echo TEXT_SPECIALS_SPECIAL_PRICE; ?>&#160;</td>
             <td class="main"><?php echo xtc_draw_input_field('specials_price', $new_price); echo '  ' . TXT_NETTO . $new_price_netto; ?> </td>
           </tr>
           <tr>
-            <td class="main"><?php echo TEXT_SPECIALS_EXPIRES_DATE; ?>&nbsp;</td>
+            <td class="main"><?php echo TEXT_SPECIALS_EXPIRES_DATE; ?>&#160;</td>
             <td class="main"><?php echo xtc_draw_input_field('day', substr($sInfo->expires_date, 8, 2), 'size="2" maxlength="2" class="cal-TextBox"') . xtc_draw_input_field('month', substr($sInfo->expires_date, 5, 2), 'size="2" maxlength="2" class="cal-TextBox"') . xtc_draw_input_field('year', substr($sInfo->expires_date, 0, 4), 'size="4" maxlength="4" class="cal-TextBox"'); ?><a class="so-BtnLink" href="javascript:calClick();return false;" onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);" onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);" onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('new_special','dteWhen','BTN_date');return false;"><?php echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'cal_date_up.gif'), 'Calendar', '22', '17', 'align="absmiddle" name="BTN_date"'); ?></a></td>
           </tr>
         </table></td>
@@ -189,7 +189,7 @@ define ('PRICE_PRECISION','2');
         <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
           <tr>
             <td class="main"><br><?php echo TEXT_SPECIALS_PRICE_TIP; ?></td>
-            <td class="main" align="right" valign="top"><br><?php echo (($form_action == 'insert') ? <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> : <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>). '&nbsp;&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $_GET['sID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+            <td class="main" align="right" valign="top"><br><?php echo (($form_action == 'insert') ? <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> : <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>). '&#160;&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $_GET['sID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
           </tr>
         </table></td>
       </form></tr>
@@ -204,7 +204,7 @@ define ('PRICE_PRECISION','2');
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_product_PRICE; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_STATUS; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&#160;</td>
               </tr>
 <?php
     $specials_query_raw = "select p.product_id, pd.product_name, p.product_price, s.specials_id, s.specials_new_product_price, s.specials_date_added, s.specials_last_modified, s.expires_date, s.date_status_change, s.status from " . TABLE_PRODUCTS . " p, " . TABLE_SPECIALS . " s, " . TABLE_product_DESCRIPTION . " pd where p.product_id = pd.product_id and pd.language_id = '" . $_SESSION['languages_id'] . "' and p.product_id = s.product_id order by pd.product_name";
@@ -232,12 +232,12 @@ define ('PRICE_PRECISION','2');
                 <td  class="dataTableContent" align="right">
 <?php
       if ($specials['status'] == '1') {
-        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'action=setflag&flag=0&id=' . $specials['specials_id'], 'NONSSL') . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
+        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'action=setflag&flag=0&id=' . $specials['specials_id'], 'NONSSL') . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
       } else {
-        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'action=setflag&flag=1&id=' . $specials['specials_id'], 'NONSSL') . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif'), IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&nbsp;&nbsp;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif', IMAGE_ICON_STATUS_RED, 10, 10);
+        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'action=setflag&flag=1&id=' . $specials['specials_id'], 'NONSSL') . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif'), IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&#160;&#160;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif', IMAGE_ICON_STATUS_RED, 10, 10);
       }
 ?></td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($sInfo)) && ($specials['specials_id'] == $sInfo->specials_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $specials['specials_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($sInfo)) && ($specials['specials_id'] == $sInfo->specials_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $specials['specials_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
       </tr>
 <?php
     }
@@ -270,7 +270,7 @@ define ('PRICE_PRECISION','2');
       $contents = array('form' => xtc_draw_form('specials', FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id . '&action=deleteconfirm'));
       $contents[] = array('text' => TEXT_INFO_DELETE_INTRO);
       $contents[] = array('text' => '<br><b>' . $sInfo->product_name . '</b>');
-      $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . '&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+      $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . '&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_SPECIALS, 'page=' . $_GET['page'] . '&sID=' . $sInfo->specials_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
 
     default:

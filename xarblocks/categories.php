@@ -58,7 +58,7 @@ function commerce_categoriesblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
     if(!xarVarFetch('cPath',  'str',  $cPath, '', XARVAR_NOT_REQUIRED)) {return;}
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 

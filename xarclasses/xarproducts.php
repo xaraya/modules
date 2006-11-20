@@ -14,7 +14,7 @@
 */
 
 //the xenQuery class for queries
-include_once 'modules/xen/xarclasses/xenquery.php';
+sys::import('modules.xen.xarclasses.xenquery');
 
 /**
  * class xarProducts

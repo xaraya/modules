@@ -81,7 +81,7 @@ function commerce_admin_reviews()
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
       <tr>
-        <td class="main"><b><?php echo ENTRY_RATING; ?></b>&nbsp;<?php echo TEXT_BAD; ?>&nbsp;<?php for ($i=1; $i<=5; $i++) echo xtc_draw_radio_field('reviews_rating', $i, '', $rInfo->reviews_rating) . '&nbsp;'; echo TEXT_GOOD; ?></td>
+        <td class="main"><b><?php echo ENTRY_RATING; ?></b>&#160;<?php echo TEXT_BAD; ?>&#160;<?php for ($i=1; $i<=5; $i++) echo xtc_draw_radio_field('reviews_rating', $i, '', $rInfo->reviews_rating) . '&#160;'; echo TEXT_GOOD; ?></td>
       </tr>
       <tr>
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
@@ -139,7 +139,7 @@ function commerce_admin_reviews()
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
       <tr>
-        <td class="main"><b><?php echo ENTRY_RATING; ?></b>&nbsp;<?php echo xtc_image(xarTplGetImage(DIR_WS_CATALOG_IMAGES . 'stars_' . $rInfo->reviews_rating . '.gif'), sprintf(TEXT_OF_5_STARS, $rInfo->reviews_rating)); ?>&nbsp;<small>[<?php echo sprintf(TEXT_OF_5_STARS, $rInfo->reviews_rating); ?>]</small></td>
+        <td class="main"><b><?php echo ENTRY_RATING; ?></b>&#160;<?php echo xtc_image(xarTplGetImage(DIR_WS_CATALOG_IMAGES . 'stars_' . $rInfo->reviews_rating . '.gif'), sprintf(TEXT_OF_5_STARS, $rInfo->reviews_rating)); ?>&#160;<small>[<?php echo sprintf(TEXT_OF_5_STARS, $rInfo->reviews_rating); ?>]</small></td>
       </tr>
       <tr>
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
@@ -178,7 +178,7 @@ function commerce_admin_reviews()
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_RATING; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_DATE_ADDED; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&#160;</td>
               </tr>
 <?php
     $reviews_query_raw = "select reviews_id, product_id, date_added, last_modified, reviews_rating from " . TABLE_REVIEWS . " order by date_added DESC";
@@ -219,10 +219,10 @@ function commerce_admin_reviews()
         echo '              <tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" onclick="document.location.href=\'' . xarModURL('commerce','admin','reviews', 'page=' . $_GET['page'] . '&rID=' . $reviews['reviews_id']) . '\'">' . "\n";
       }
 ?>
-                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin','reviews', 'page=' . $_GET['page'] . '&rID=' . $reviews['reviews_id'] . '&action=preview') . '">' . xtc_image(xarTplGetImage('icons/preview.gif', ICON_PREVIEW) . '</a>&nbsp;' . xarModAPIFunc('commerce','user','get_product_name',array('id' =>$reviews['product_id'])); ?></td>
+                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin','reviews', 'page=' . $_GET['page'] . '&rID=' . $reviews['reviews_id'] . '&action=preview') . '">' . xtc_image(xarTplGetImage('icons/preview.gif', ICON_PREVIEW) . '</a>&#160;' . xarModAPIFunc('commerce','user','get_product_name',array('id' =>$reviews['product_id'])); ?></td>
                 <td class="dataTableContent" align="right"><?php echo xtc_image(xarTplGetImage(HTTP_CATALOG_SERVER . DIR_WS_CATALOG_IMAGES . 'stars_' . $reviews['reviews_rating'] . '.gif'); ?></td>
                 <td class="dataTableContent" align="right">#xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$reviews['date_added']))#</td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($rInfo)) && ($reviews['reviews_id'] == $rInfo->reviews_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'); } else { echo '<a href="' . xarModURL('commerce','admin','reviews', 'page=' . $_GET['page'] . '&rID=' . $reviews['reviews_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif', IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($rInfo)) && ($reviews['reviews_id'] == $rInfo->reviews_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'); } else { echo '<a href="' . xarModURL('commerce','admin','reviews', 'page=' . $_GET['page'] . '&rID=' . $reviews['reviews_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif', IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
     }

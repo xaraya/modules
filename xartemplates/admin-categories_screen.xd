@@ -25,7 +25,7 @@
         </td>
     </tr>
 </table>
-<xar:set name="$form_action">$cID ? 'update_category' : 'insert_category'</xar:set>
+<xar:set name="form_action">$cID ? 'update_category' : 'insert_category'</xar:set>
 <form action="#xarModURL('products','admin','categories_screen', array('cPath' => $cPath, 'cID' => $cID, 'action'=> $form_action))#" method="POST" enctype="multipart/form-data">
     <table width="100%"  border="0">
         <tr>
@@ -37,7 +37,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             <input type="file" name="categories_image">
                             <xar:if condition="$cID ne 0">
                                 <input type="hidden" name="categories_previous_image" value="#$cInfo.categories_image#">
@@ -55,7 +55,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'listing_template', 'values' => $producttemplatefiles, 'default' => $cInfo.product_template))#
                         </td>
                     </tr>
@@ -65,7 +65,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'categorie_template', 'values' => $categorytemplatefiles, 'default' => $cInfo.product_template))#
                         </td>
                     </tr>
@@ -75,7 +75,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'info_template', 'values' => $order_array, 'default' => $order_value))#
                         </td>
                     </tr>
@@ -85,8 +85,8 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
-                            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'product_sorting2', 'values' => $sort_array, 'default' => xarML('ASC')))#                                           
+                            &#160;
+                            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'product_sorting2', 'values' => $sort_array, 'default' => xarML('ASC')))#
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +95,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             <xar:if condition="$cID ne 0">
                                 <input type="text" name="sort_order" value="#$cInfo.sort_order#" size="4">
                             <xar:else />
@@ -121,7 +121,7 @@
                         <xar:data-output type="languageimage" value="$language['code_3']" />
                     </a>
                 </xar:if>
-            </div>  
+            </div>
         </xar:foreach>
     </div>
     <div style="border: 1px solid #ccc; border-top : none; padding-left: 5px;">
@@ -135,7 +135,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             <xar:if condition="$cID eq 0">
                                 <input type="text" name="categories_name[#$language['id']#]" value="">
                             <xar:else />
@@ -154,7 +154,7 @@
                         </td>
                         <td class="main">
                             <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                            &nbsp;
+                            &#160;
                             <xar:if condition="$cID eq 0">
                                 <input type="text" name="categories_heading_title[#$language['id']#]" value="">
                             <xar:else />
@@ -174,9 +174,9 @@
                         <td>
                             <table border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td class="main">                                                   
+                                    <td class="main">
                                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                                        &nbsp;
+                                        &#160;
                                         <textarea name="categories_description[#$language['id']#]" wrap="soft" rows="15" cols="70"><xar:if condition="$cID ne 0">#$cInfo.categories_description#</xar:if>
                                         </textarea>
                                     </td>
@@ -193,7 +193,7 @@
                                 <tr>
                                     <td class="main">
                                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                                        &nbsp;
+                                        &#160;
                                         <textarea name="categories_meta_title[#$language['id']#]" wrap="soft" rows="4" cols="70"><xar:if condition="$cID ne 0">#$cInfo.categories_meta_title#</xar:if>
                                         </textarea>
                                     </td>
@@ -215,7 +215,7 @@
                                 <tr>
                                     <td class="main">
                                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                                        &nbsp;
+                                        &#160;
                                         <textarea name="categories_meta_description[#$language['id']#]" wrap="soft" rows="4" cols="70"><xar:if condition="$cID ne 0">#$cInfo.categories_meta_description#</xar:if>
                                         </textarea>
                                     </td>
@@ -237,7 +237,7 @@
                                 <tr>
                                     <td class="main">
                                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
-                                        &nbsp;
+                                        &#160;
                                         <textarea name="categories_meta_keywords[#$language['id']#]" rows="4" cols="70"><xar:if condition="$cID ne 0">#$cInfo.categories_meta_keywords#</xar:if>
                                         </textarea>
                                     </td>
@@ -264,7 +264,7 @@
                             </xar:if>
                             <input type="hidden" name="parent_id" value="$cInfo.parent_id">
                             <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_save.gif','commerce')#" border="0" alt="#xarML('Save')#" style="cursor:hand" onClick="return confirm('#xarML("Save this Entry?")#')">.
-                            &nbsp;&nbsp;
+                            &#160;&#160;
                             <a href="#xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $cID))#">
                                 <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
                             </a>
@@ -273,5 +273,5 @@
                 </table>
             </xar:if>
         </xar:foreach>
-    </div>      
+    </div>
 </form>

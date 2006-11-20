@@ -15,12 +15,12 @@
 <!-- options //-->
                             <xar:if condition = "$action eq 'delete_product_option'">
                                 <tr>
-                                    <td class="pageHeading">&nbsp;
-                                        #$options_values['product_options_name']#&nbsp;
+                                    <td class="pageHeading">&#160;
+                                        #$options_values['product_options_name']#&#160;
                                     </td>
-                                    <td>&nbsp;
+                                    <td>&#160;
                                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="53">
-                                        &nbsp;
+                                        &#160;
                                     </td>
                                 </tr>
                                 <tr>
@@ -34,13 +34,13 @@
                                             <xar:if condition="count($products) gt 0">
                                                 <tr class="dataTableHeadingRow">
                                                     <td class="dataTableHeadingContent" align="center">
-                                                        &nbsp;<xar:mlstring>ID</xar:mlstring>&nbsp;
+                                                        &#160;<xar:mlstring>ID</xar:mlstring>&#160;
                                                     </td>
                                                     <td class="dataTableHeadingContent">
-                                                        &nbsp;<xar:mlstring>Product</xar:mlstring>&nbsp;
+                                                        &#160;<xar:mlstring>Product</xar:mlstring>&#160;
                                                     </td>
                                                     <td class="dataTableHeadingContent">
-                                                        &nbsp;<xar:mlstring>Option Value</xar:mlstring>&nbsp;
+                                                        &#160;<xar:mlstring>Option Value</xar:mlstring>&#160;
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -54,14 +54,14 @@
                                                     <xar:else />
                                                         <tr class="attributes-even">
                                                     </xar:if>
-                                                        <td align="center" class="smallText">&nbsp;
-                                                            $loop:item['product_id']&nbsp;
+                                                        <td align="center" class="smallText">&#160;
+                                                            $loop:item['product_id']&#160;
                                                         </td>
-                                                        <td class="smallText">&nbsp;
-                                                            $loop:item['product_name']&nbsp;
+                                                        <td class="smallText">&#160;
+                                                            $loop:item['product_name']&#160;
                                                         </td>
-                                                        <td class="smallText">&nbsp;
-                                                            $loop:item['product_options_values_name']&nbsp;
+                                                        <td class="smallText">&#160;
+                                                            $loop:item['product_options_values_name']&#160;
                                                         </td>
                                                     </tr>
                                                 </xar:loop>
@@ -71,7 +71,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" class="main">                                                           
+                                                    <td colspan="3" class="main">
                                                         <br>
                                                         <xar:mlstring>
                                                             This option has products and values linked to it - it is not safe to delete it.
@@ -83,7 +83,7 @@
                                                         <br>
                                                         <a href="#xarModURL('products','admin','product_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
                                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
-                                                        </a>&nbsp;
+                                                        </a>&#160;
                                                     </td>
                                                 </tr>
                                             <xar:else />
@@ -101,10 +101,10 @@
                                                         <a href="#xarModURL('products','admin','product_attributes', array('action' => 'delete_option', 'option_id' =>$option_id))#">
                                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
                                                         </a>
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        <a href="#xarModURL('products','admin','product_attributes', array('order_by' => 'order_by', 'page' =>$option_page))#">                                 
+                                                        &#160;&#160;&#160;
+                                                        <a href="#xarModURL('products','admin','product_attributes', array('order_by' => 'order_by', 'page' =>$option_page))#">
                                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
-                                                        </a>&nbsp;
+                                                        </a>&#160;
                                                     </td>
                                                 </tr>
                                             </xar:if>
@@ -112,10 +112,10 @@
                                     </td>
                                 </tr>
                             <xar:else />
-                                <xar:set name="$option_order_by">"product_options_id"</xar:set>
+                                <xar:set name="option_order_by">"product_options_id"</xar:set>
                                 <tr>
                                     <td colspan="2" class="pageHeading">
-                                        &nbsp;<xar:mlstring>Product Options</xar:mlstring>&nbsp;
+                                        &#160;<xar:mlstring>Product Options</xar:mlstring>&#160;
                                     </td>
                                     <td align="right">
                                         <br><form name="option_order_by" action="#xarModURL('products','admin','product_attributes')#">
@@ -124,7 +124,7 @@
                                                 <option value="product_options_id" SELECTED>
                                             <xar:else />
                                                 <option value="product_options_id">
-                                            </xar:if>                           
+                                            </xar:if>
                                             <xar:mlstring>Option ID</xar:mlstring>
                                             </option>
                                             <xar:if condition="$option_order_by eq 'product_options_id'">
@@ -145,18 +145,18 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <img src="#xarTplGetImage('pixel_black.gif')#" width="100%" height="1">               
+                                    <img src="#xarTplGetImage('pixel_black.gif')#" width="100%" height="1">
                                 </td>
                             </tr>
                             <tr class="dataTableHeadingRow">
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>ID</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>ID</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>Option Name</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Option Name</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent" align="center">
-                                    &nbsp;<xar:mlstring>Action</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Action</xar:mlstring>&#160;
                                 </td>
                             </tr>
                             <tr>
@@ -175,41 +175,41 @@
 
                                 <form name="option" action="#xarModURL('products','admin','product_attributes', array('action' => 'update_option_name'))#" method="POST">
                                     <td align="center" class="smallText">
-                                        &nbsp;#$loop:item['product_options_id']#
-                                        <input type="hidden" name="option_id" value="#$loop:item['product_options_id']#">&nbsp;
+                                        &#160;#$loop:item['product_options_id']#
+                                        <input type="hidden" name="option_id" value="#$loop:item['product_options_id']#">&#160;
                                     </td>
                                     <td class="smallText">
                                         <xar:loop name="$options_name">
-                                            #$loop:item['code']#&nbsp;
-                                            <input type="text" name="option_name[#$loop:item['language_id']#]" size="20" value="#$loop:item['product_options_name']#">&nbsp;<br>
+                                            #$loop:item['code']#&#160;
+                                            <input type="text" name="option_name[#$loop:item['language_id']#]" size="20" value="#$loop:item['product_options_name']#">&#160;<br>
                                         </xar:loop>
                                     </td>
-                                    <td align="center" class="smallText">&nbsp;
+                                    <td align="center" class="smallText">&#160;
                                         <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" alt="#xarML('Update')#">
-                                        &nbsp;
+                                        &#160;
                                         <a href="#xarModURL('products','admin','product_attributes')#">
                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
                                         </a>
-                                        &nbsp;
+                                        &#160;
                                     </td>
                                 </form>
                             <xar:else />
                                 <td align="center" class="smallText">
-                                    &nbsp;#$loop:item["product_options_id"]#&nbsp;
+                                    &#160;#$loop:item["product_options_id"]#&#160;
                                 </td>
                                 <td class="smallText">
-                                    &nbsp;#$loop:item["product_options_name"]#&nbsp;
+                                    &#160;#$loop:item["product_options_name"]#&#160;
                                 </td>
                                 <td align="center" class="smallText">
-                                    &nbsp;
+                                    &#160;
                                     <a href="#xarModURL('products','admin','product_attributes',array('action' => 'update_option', 'option_id' => $loop:item['product_options_id'], 'option_order_by' => $option_order_by, 'option_page' => $option_page))#">
                                         <img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Update')#">
                                     </a>
-                                    &nbsp;&nbsp;
+                                    &#160;&#160;
                                     <a href="#xarModURL('products','admin','product_attributes', array('action' => 'delete_product_option', 'option_id' =>$loop:item['product_options_id']))#">
                                         <img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
                                     </a>
-                                    &nbsp;
+                                    &#160;
                                 </td>
                             </xar:if>
                         </tr>
@@ -223,18 +223,18 @@
                     <form name="options" action=" #xarModURL('products','admin','product_attributes', array('action' => 'add_product_options', 'option_page' => $option_page))#"  method="POST">
                         <input type="hidden" name="product_options_id" value="#$next_id#">
                         <td align="center" class="smallText">
-                            &nbsp;#$next_id#&nbsp;
+                            &#160;#$next_id#&#160;
                         </td>
                         <td class="smallText">
                             <xar:loop id="B" name="$languages">
-                                #$loop:B:item['code']#:&nbsp;
-                                <input type="text" name="option_name[#$loop:B:item['id']#]" size="20">&nbsp;<br>
+                                #$loop:B:item['code']#:&#160;
+                                <input type="text" name="option_name[#$loop:B:item['id']#]" size="20">&#160;<br>
                             </xar:loop>
                         </td>
                         <td align="center" class="smallText">
-                            &nbsp;
+                            &#160;
                             <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" alt="#xarML('Insert')#">
-                            &nbsp;
+                            &#160;
                         </td>
                     </form>
                 </tr>
@@ -257,13 +257,13 @@
             <xar:if condition = "$action eq 'delete_option_value'">
               <tr>
                 <td colspan="3" class="pageHeading">
-                    &nbsp;
-                    #$delete_value['product_options_values_name']#&nbsp;
+                    &#160;
+                    #$delete_value['product_options_values_name']#&#160;
                 </td>
                 <td>
-                    &nbsp;
+                    &#160;
                     <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="53">
-                    &nbsp;
+                    &#160;
                 </td>
               </tr>
               <tr>
@@ -277,13 +277,13 @@
                         <xar:if condition="count($products) gt 0">
                               <tr class="dataTableHeadingRow">
                                 <td class="dataTableHeadingContent" align="center">
-                                    &nbsp;<xar:mlstring>ID</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>ID</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>Product</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Product</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>Option Value</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Option Value</xar:mlstring>&#160;
                                 </td>
                               </tr>
                               <tr>
@@ -298,13 +298,13 @@
                                     <tr class="attributes-even">
                                 </xar:if>
                                 <td align="center" class="smallText">
-                                    &nbsp;#$product_values['product_id']#&nbsp;
+                                    &#160;#$product_values['product_id']#&#160;
                                 </td>
                                 <td class="smallText">
-                                    &nbsp;#$product_values['product_name']#&nbsp;
+                                    &#160;#$product_values['product_name']#&#160;
                                 </td>
                                 <td class="smallText">
-                                    &nbsp;#$product_values['product_options_name']#&nbsp;
+                                    &#160;#$product_values['product_options_name']#&#160;
                                 </td>
                               </tr>
                             </xar:loop>
@@ -320,11 +320,11 @@
                               </tr>
                               <tr>
                                 <td class="main" align="right" colspan="3">
-                                    <br>                   
+                                    <br>
                                     <a href="#xarModURL('products','admin','product_attributes', array('value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
                                         <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
                                     </a>
-                                    &nbsp;
+                                    &#160;
                                 </td>
                               </tr>
                             <xar:else />
@@ -338,11 +338,11 @@
                                     <a href="#xarModURL('products','admin','product_attributes', array('action' => 'delete_value', 'value_id' =>$value_id))#">
                                         <img src="#xarTplGetImage($language . '/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
                                     </a>
-                                    &nbsp;&nbsp;&nbsp;
+                                    &#160;&#160;&#160;
                                     <a href="#xarModURL('products','admin','product_attributes', array('option_page'=> $option_page,'value_page'=> $value_page, 'attribute_page' => $attribute_page))#">
                                         <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
                                     </a>
-                                    &nbsp;
+                                    &#160;
                                 </td>
                               </tr>
                             </xar:if>
@@ -352,12 +352,12 @@
         <xar:else />
           <tr>
             <td colspan="3" class="pageHeading">
-                &nbsp;<xar:mlstring>Option Values</xar:mlstring>
+                &#160;<xar:mlstring>Option Values</xar:mlstring>
             </td>
             <td>
-                &nbsp;
+                &#160;
                 <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="53">
-                &nbsp;
+                &#160;
             </td>
           </tr>
           <tr>
@@ -372,16 +372,16 @@
                             </tr>
                             <tr class="dataTableHeadingRow">
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>ID</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>ID</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>Option Name</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Option Name</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent">
-                                    &nbsp;<xar:mlstring>Option Value</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Option Value</xar:mlstring>&#160;
                                 </td>
                                 <td class="dataTableHeadingContent" align="center">
-                                    &nbsp;<xar:mlstring>Action</xar:mlstring>&nbsp;
+                                    &#160;<xar:mlstring>Action</xar:mlstring>&#160;
                                 </td>
                             </tr>
                             <tr>
@@ -402,12 +402,12 @@
 
 </xar:comment>
                                         <td align="center" class="smallText">
-                                            &nbsp;
+                                            &#160;
                                             #$loop:item['product_options_values_id']#
                                             <input type="hidden" name="value_id" value="#$loop:item['product_options_values_id']#">
-                                            &nbsp;
+                                            &#160;
                                         </td>
-                                        <td align="center" class="smallText">&nbsp;
+                                        <td align="center" class="smallText">&#160;
                                             <select name="option_id">
                                                 <xar:loop name="$option_list">
                                                     <xar:if condition="$loop:item['product_options_id'] eq $option_id">
@@ -417,39 +417,39 @@
                                                     </xar:if>                           #$loop:item['product_options_name']#
                                                     </option>
                                                 </xar:loop>
-                                            </select>&nbsp;
+                                            </select>&#160;
                                         </td>
                                         <td class="smallText">
                                             <xar:loop name="$options_value_name">
-                                                #$loop:item['code']#:&nbsp;
-                                                <input type="text" name="value_name[#$loop:item['language_id']#]" size="20" value="#$loop:item['product_options_values_name']#">&nbsp;<br>
+                                                #$loop:item['code']#:&#160;
+                                                <input type="text" name="value_name[#$loop:item['language_id']#]" size="20" value="#$loop:item['product_options_values_name']#">&#160;<br>
                                             </xar:loop>
                                         </td>
-                                        <td align="center" class="smallText">&nbsp;
+                                        <td align="center" class="smallText">&#160;
                                             <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif','commerce')#" border="0" alt="#xarML('Edit')#">
-                                            &nbsp;
+                                            &#160;
                                             <a href="#xarModURL('products','admin','product_attributes')#">
                                                 <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif','commerce')#" alt="#xarML('Cancel')#">
                                             </a>
-                                            &nbsp;
+                                            &#160;
                                         </td>
                                     </form>
                                 <xar:else />
                                     <td align="center" class="smallText">
-                                        &nbsp;#$loop:item["product_options_values_id"]#&nbsp;
+                                        &#160;#$loop:item["product_options_values_id"]#&#160;
                                     </td>
                                     <td align="center" class="smallText">
-                                        &nbsp;#$option_name#&nbsp;
+                                        &#160;#$option_name#&#160;
                                     </td>
                                     <td class="smallText">
-                                        &nbsp;#$loop:item['product_options_values_name']#&nbsp;
+                                        &#160;#$loop:item['product_options_values_name']#&#160;
                                     </td>
                                     <td align="center" class="smallText">
-                                        &nbsp;
+                                        &#160;
                                         <a href="#xarModURL('products','admin','product_attributes',array('action' => 'update_option_value', 'value_id' => $loop:item['product_options_values_id'], 'value_page' => $value_page))#">
                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif','commerce')#" alt="#xarML('Update')#">
                                         </a>
-                                        &nbsp;&nbsp;
+                                        &#160;&#160;
                                         <a href="#xarModURL('products','admin','product_attributes', array('action' => 'delete_option_value', 'value_id' =>$loop:item['product_options_values_id']))#">
                                             <img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif','commerce')#" alt="#xarML('Delete')#">
                                         </a>
@@ -465,10 +465,10 @@
                         <xar:if condition = "$action ne 'update_option_value'">
                             <form name="values" action="#xarModURL('products','admin','product_attributes', array('action' => 'add_product_option_values', 'value_page' => $value_page))#" method="POST">
                                 <td align="center" class="smallText">
-                                    &nbsp;#$next_value_id#&nbsp;
+                                    &#160;#$next_value_id#&#160;
                                 </td>
                                 <td align="center" class="smallText">
-                                    &nbsp;
+                                    &#160;
                                     <select name="option_id">
                                         <xar:loop name="$option_list">
                                             <xar:if condition="$loop:item['product_options_id'] eq $option_id">
@@ -478,18 +478,18 @@
                                             </xar:if>                           #$loop:item['product_options_name']#
                                             </option>
                                         </xar:loop>
-                                    </select>&nbsp;
+                                    </select>&#160;
                                 </td>
                                 <td class="smallText">
                                     <input type="hidden" name="value_id" value="#$next_value_id#">
                                     <xar:loop name="$languages">
-                                        #$loop:item['code']#:&nbsp;
-                                        <input type="text" name="value_name[#$loop:item['id']#]" size="20">&nbsp;<br>
+                                        #$loop:item['code']#:&#160;
+                                        <input type="text" name="value_name[#$loop:item['id']#]" size="20">&#160;<br>
                                     </xar:loop>
                                 </td>
-                                <td align="center" class="smallText">&nbsp; 
+                                <td align="center" class="smallText">&#160;
                                     <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif','commerce')#" alt="#xarML('Insert')#">
-                                    &nbsp;
+                                    &#160;
                                 </td>
                             </form>
                         </tr>

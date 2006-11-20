@@ -21,7 +21,7 @@
  * Show products categories screen
  */
 
-include_once 'modules/xen/xarclasses/xenquery.php';
+sys::import('modules.xen.xarclasses.xenquery');
 
 function products_admin_categories_screen()
 {

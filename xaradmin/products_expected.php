@@ -33,7 +33,7 @@ function commerce_admin_product_expected()
 ?>
                 <td class="dataTableContent"><?php echo $products['product_name']; ?></td>
                 <td class="dataTableContent" align="center"><?php echo xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$products['product_date_available'])); ?></td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($pInfo)) && ($products['product_id'] == $pInfo->product_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_product_EXPECTED, 'page=' . $_GET['page'] . '&pID=' . $products['product_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($pInfo)) && ($products['product_id'] == $pInfo->product_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_product_EXPECTED, 'page=' . $_GET['page'] . '&pID=' . $products['product_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
   }

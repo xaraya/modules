@@ -13,7 +13,7 @@
 function commerce_adminapi_remove_category($args)
 {
 //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 

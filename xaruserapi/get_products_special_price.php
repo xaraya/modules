@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_products_special_price($product_id) {
+  function commerce_userapi_get_products_special_price($product_id)
+  {
     $product_query = new xenQuery("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . $product_id . "' and status");
       $q = new xenQuery();
       if(!$q->run()) return;

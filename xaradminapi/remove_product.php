@@ -10,9 +10,10 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_admin_remove_product($args) {
+function commerce_admin_remove_product($args)
+{
     //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 

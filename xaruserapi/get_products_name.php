@@ -13,16 +13,13 @@
 function commerce_userapi_get_products_name($args)
 {
     //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     extract($args);
     if(!isset($product_id)) {
         $msg = xarML('Wrong arguments to commerce_userapi_get_products_name');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,
-                    'BAD_PARAM',
-                     new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
     if(!isset($language_id)) {
         $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

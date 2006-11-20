@@ -18,7 +18,7 @@
 //  require_once(DIR_FS_INC . 'xtc_customer_greeting.inc.php');
 //  require_once(DIR_FS_INC . 'xtc_get_path.inc.php');
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     if(!xarVarFetch('manufacturers_id',   'int',  $manufacturers_id, 0, XARVAR_DONT_SET)) {return;}
@@ -118,7 +118,7 @@
           }
           $filterlist_query = new xenQuery($filterlist_sql);
           if ($filterlist_query->getrows() > 1) {
-            $manufacturer_dropdown= xtc_draw_form('filter', FILENAME_DEFAULT, 'GET') .'&nbsp;';
+            $manufacturer_dropdown= xtc_draw_form('filter', FILENAME_DEFAULT, 'GET') .'&#160;';
             if (isset($_GET['manufacturers_id'])) {
               $manufacturer_dropdown.= xtc_draw_hidden_field('manufacturers_id', $_GET['manufacturers_id']);
               $options = array(array('text' => TEXT_ALL_CATEGORIES));

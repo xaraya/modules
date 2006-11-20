@@ -15,7 +15,7 @@
 
 function products_admin_new_attributes()
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     if(!xarVarFetch('action', 'str',  $action, '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('copy_product_id',  'int',  $copy_product_id, 0, XARVAR_NOT_REQUIRED)) {return;}

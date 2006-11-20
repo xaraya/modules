@@ -20,7 +20,7 @@ function products_user_default()
     $main_content = '';
 
     xarModAPILoad('categories');
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     $configuration = xarModAPIFunc('products','admin','load_configuration');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
@@ -428,7 +428,7 @@ function products_user_default()
                 if(!$q->run()) return;
 
                 if ($q->getrows() > 1) {
-                    $manufacturer_dropdown= xtc_draw_form('filter', FILENAME_DEFAULT, 'GET') .'&nbsp;';
+                    $manufacturer_dropdown= xtc_draw_form('filter', FILENAME_DEFAULT, 'GET') .'&#160;';
                     if ($manufacturers_id != 0) {
                         $manufacturer_dropdown.= xtc_draw_hidden_field('manufacturers_id', $_GET['manufacturers_id']);
                         $options = array(array('text' => TEXT_ALL_CATEGORIES));

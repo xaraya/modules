@@ -12,7 +12,7 @@
 
   function products_user_start()
   {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
 //      include( 'includes/application_top.php');
