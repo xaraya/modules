@@ -1,0 +1,174 @@
+<?php
+/**
+ * Check a user variable
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html
+ */
+/**
+ * validate a user variable
+ * @access public
+ * @author Jonathan Linowes
+ * @author Damien Bonvillain
+ * @author Gregor J. Rothfuss
+ * @since 1.23 - 2002/02/01
+ * @param var - the variable to validate
+ * @param type - the type of the validation to perform
+ * possible type, value: 
+    'ip' (no var required), 
+    'email', email str
+    'username', username str
+    'realname', realname str
+    'agreetoterms', not empty (checkbox)
+    'pass1', password str
+    'pass2', password str
+ * @return empty string if the validation was successful, or invalid message otherwise
+ */
+function registration_userapi_checkvar($args)
+{
+    extract($args);
+
+    if (empty($type)) {
+        $type = 'email';
+    }
+
+    $invalid = "";
+    switch ($type) {
+        case 'ip':
+            // TODO: check behind proxies too ?
+            // check if the IP address is banned, and if so, throw an exception :)
+            if (!isset($var))
+                $ip = xarServerGetVar('REMOTE_ADDR');
+            else
+                $ip = $var;
+            $disallowedips = xarModGetVar('registration','disallowedips');
+            if (!empty($disallowedips)) {
+                $disallowedips = unserialize($disallowedips);
+                $disallowedips = explode("\r\n", $disallowedips);
+                if (in_array ($ip, $disallowedips)) {
+                    $invalid = xarML('Your IP is on the banned list');
+                }
+            }
+            break;
+            
+        case 'username':
+            $username = $var;
+            // check if the username is empty
+            if (empty($username)) {
+                $invalid = xarML('You must provide a preferred username to continue.');
+
+            // check for spaces in the username
+            } elseif (preg_match("/[[:space:]]/",$username)) {
+                $invalid = xarML('There is a space in the username');
+
+            // check the length of the username
+            } elseif (strlen($username) > 255) {
+                $invalid = xarML('Your username is too long.');
+
+            // check for spaces in the username (again ?)
+            } elseif (strrpos($username,' ') > 0) {
+                $invalid = xarML('There is a space in your username');
+
+            } else {
+                // check for duplicate usernames
+                $user = xarModAPIFunc('roles', 'user', 'get',
+                                array('uname' => $username));
+
+                if ($user != false) {
+                    unset($user);
+                    $invalid = xarML('That username is already taken.');
+
+                } else {
+                    // check for disallowed usernames
+                    $disallowednames = xarModGetVar('registration','disallowednames');
+                    if (!empty($disallowednames)) {
+                        $disallowednames = unserialize($disallowednames);
+                        $disallowednames = explode("\r\n", $disallowednames);
+                        if (in_array ($username, $disallowednames)) {
+                            $invalid = xarML('That username is either reserved or not allowed on this website');
+                        }
+                    }
+                }
+            }
+            break;
+            
+        case 'realname':
+            $realname = $var;
+            if (empty($realname)){
+                $invalid = xarML('You must provide your display name to continue.');
+
+            } else {
+                // TODO: add some other limitations ?
+            }
+            break;
+
+        case 'agreetoterms':
+            // kind of dumb, but for completeness
+            if (empty($var)){
+                $invalid = xarML('You must agree to the terms and conditions of this website to register an account.');
+            }
+            break;
+            
+        case 'pass1':
+            $minpasslength = xarModGetVar('registration', 'minpasslength');
+            if (strlen($var) < $minpasslength) {
+                $invalid = xarML('Your password must be #(1) characters long.', $minpasslength);
+            }
+            break;
+            
+        case 'pass2':
+            $pass1 = $var[0];
+            $pass2 = $var[1];
+            if ((empty($pass1)) || (empty($pass2))) {
+                $invalid = xarML('You must enter the same password twice');
+            } elseif ($pass1 != $pass2) {
+                $invalid = xarML('The passwords do not match');
+            }
+            break;
+            
+        case 'email':
+        default:
+            $email = $var;
+            if (empty($email)){
+                $invalid = xarML('You must provide a valid email address to continue.');
+            } else {
+                //user the roles validatevar function - no need to duplicate
+                $emailcheck = xarModAPIFunc('roles', 'user', 'validatevar',
+                                            array('var' => $email,
+                                                 'type' => 'email'));
+
+                if ($emailcheck == false) {
+                    $invalid = xarML('There is an error in your email address');
+                }
+
+                if(xarModGetVar('registration','uniqueemail')) {
+                    // check for duplicate email address
+                    $user = xarModAPIFunc('roles', 'user', 'get',
+                                   array('email' => $email));
+                    if ($user != false) {
+                        unset($user);
+                        $invalid = xarML('That email address is already registered.');
+                    }
+                }
+
+                // check for disallowed email addresses
+                $disallowedemails = xarModGetVar('registration','disallowedemails');
+                if (!empty($disallowedemails)) {
+                    $disallowedemails = unserialize($disallowedemails);
+                    $disallowedemails = explode("\r\n", $disallowedemails);
+                    if (in_array ($email, $disallowedemails)) {
+                        $invalid = xarML('That email address is either reserved or not allowed on this website');
+                    }
+                }
+            }
+            break;
+    }
+
+    return $invalid;
+}
+?>
