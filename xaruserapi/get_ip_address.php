@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_ip_address() {
+  function commerce_userapi_get_ip_address()
+  {
     if (isset($_SERVER)) {
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];

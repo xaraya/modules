@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_countries_with_iso_codes($countries_id) {
+  function commerce_userapi_get_countries_with_iso_codes($countries_id)
+  {
     return xtc_get_countries($countries_id, true);
   }
  ?>

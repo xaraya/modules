@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_rand($args) {
+function commerce_userapi_rand($args)
+{
     static $seeded;
 
     extract($args);

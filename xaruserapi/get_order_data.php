@@ -7,7 +7,8 @@
 //  (c) 2003 XT-Commerce
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_order_data($order_id) {
+function commerce_userapi_get_order_data($order_id)
+{
 $order_query = new xenQuery("SELECT
   customers_name,
   customers_company,

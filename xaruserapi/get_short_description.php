@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_short_description($product_id, $language = '') {
+  function commerce_userapi_get_short_description($product_id, $language = '')
+  {
 
     if (empty($language)) $language = $_SESSION['languages_id'];
 

@@ -16,7 +16,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-include_once 'modules/xen/xarclasses/xenquery.php';
+sys::import('modules.xen.xarclasses.xenquery');
 //Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
 
@@ -220,6 +220,9 @@ function carts_upgrade($oldversion)
  */
 function carts_delete()
 {
+    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'carts'));
+
+/*
 # --------------------------------------------------------
 #
 # Remove database tables
@@ -284,5 +287,5 @@ function carts_delete()
     return true;
 }
 # --------------------------------------------------------
-
+*/
 ?>

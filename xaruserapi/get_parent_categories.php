@@ -12,7 +12,8 @@
 
 // Recursively go through the categories and retreive all parent categories IDs
 // TABLES: categories
-  function commerce_userapi_get_parent_categories(&$categories, $categories_id) {
+  function commerce_userapi_get_parent_categories(&$categories, $categories_id)
+  {
     $parent_categories_query = new xenQuery("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . $categories_id . "'");
       $q = new xenQuery();
       if(!$q->run()) return;

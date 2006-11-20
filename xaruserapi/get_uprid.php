@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
 // Return a product ID with attributes
-  function commerce_userapi_get_uprid($prid, $params) {
+  function commerce_userapi_get_uprid($prid, $params)
+  {
     $uprid = $prid;
     if ( (is_array($params)) && (!strstr($prid, '{')) ) {
       while (list($option, $value) = each($params)) {

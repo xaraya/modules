@@ -17,10 +17,10 @@
   <tr>
     <td style="border-bottom: 1px solid; border-color: #cccccc;" align="left" class="boxText">
 
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     {foreach name=aussen item=products_data from=$products}
                     <tr>
-                      <td nowrap class="main" width="25"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$products_data.QTY}&nbsp;x&nbsp;</font></td>
+                      <td nowrap class="main" width="25"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$products_data.QTY}&#160;x&#160;</font></td>
     <td class="main" ><font size="1"><font face="Verdana, Arial, Helvetica, sans-serif">{$products_data.NAME|truncate:15:"...":true}</font></font></td>
   </tr>
 {/foreach}

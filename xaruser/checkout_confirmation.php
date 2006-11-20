@@ -158,7 +158,7 @@ $data_products = '<table width="100%" border="0" cellspacing="0" cellpadding="0"
       for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
         $data_products .= '<tr>
         <td class="main" align="left" valign="top">
-        <nobr><small>&nbsp;<i> - '
+        <nobr><small>&#160;<i> - '
         . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'] .'
         </i></small></td>
         <td class="main" align="right" valign="top"><i><small>'

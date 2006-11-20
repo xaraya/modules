@@ -18,7 +18,7 @@ function commerce_userapi_get_shipping_status()
     $data['currentlang'] = $currentlang;
 
     //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     $q = new xenQuery('SELECT',

@@ -15,7 +15,7 @@ function commerce_userapi_check_categories_status($args)
     extract($args);
     if (!isset($categories_id) || $categories_id == 0) return 0;
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['categories'],'xc');

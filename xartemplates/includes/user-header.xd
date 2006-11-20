@@ -1,29 +1,29 @@
 <style type="text/css">@import url(modules/commerce/xarstyles/userstylesheet.css);</style>
 <table border="0" width="100%" cellspacing="0" cellpadding="1">
-	<tr class="headerNavigation"> 
-		<td class="headerNavigation">&nbsp;<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Navigation : </font>
-		</td>
-		<td align="right" class="headerNavigation">					
-			<xar:if condition="xarUserIsLoggedIn()">
-				<a href="#xarModURL('authentication','user','logout')#">
-					<xar:mlstring>Logout</xar:mlstring>
-				</a>
+    <tr class="headerNavigation">
+        <td class="headerNavigation">&#160;<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Navigation : </font>
+        </td>
+        <td align="right" class="headerNavigation">
+            <xar:if condition="xarUserIsLoggedIn()">
+                <a href="#xarModURL('authentication','user','logout')#">
+                    <xar:mlstring>Logout</xar:mlstring>
+                </a>
             <xar:else />
                 <a href="#xarModURL('authentication','user','register')#">
-					<xar:mlstring>Login</xar:mlstring>
-				</a>
-			</xar:if> |
-			<xar:if condition="isset($account)">
-				<a href="#xarModURL('commerce','user','account')#">
-					<xar:mlstring>Your Account</xar:mlstring>
-				</a> |
-			</xar:if>
-			<a href="#xarModURL('carts','user',$shopping_cart)#">
-				<xar:mlstring>Shopping Cart</xar:mlstring>
-			</a> |
-			<a href="#xarModURL('commerce','user','checkout')#">
-				<xar:mlstring>Cash Register</xar:mlstring>
-			</a>
-		</td>
-	</tr>
+                    <xar:mlstring>Login</xar:mlstring>
+                </a>
+            </xar:if> |
+            <xar:if condition="isset($account)">
+                <a href="#xarModURL('commerce','user','account')#">
+                    <xar:mlstring>Your Account</xar:mlstring>
+                </a> |
+            </xar:if>
+            <a href="#xarModURL('carts','user',$shopping_cart)#">
+                <xar:mlstring>Shopping Cart</xar:mlstring>
+            </a> |
+            <a href="#xarModURL('commerce','user','checkout')#">
+                <xar:mlstring>Cash Register</xar:mlstring>
+            </a>
+        </td>
+    </tr>
 </table>

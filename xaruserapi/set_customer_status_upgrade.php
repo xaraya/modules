@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
 //set customer satus to new customer for upgrade account
-function commerce_userapi_set_customer_status_upgrade($customer_id){
+function commerce_userapi_set_customer_status_upgrade($customer_id)
+{
 
 if ( ($_SESSION['customer_status_value']['customers_status_id'] == "' . DEFAULT_CUSTOMERS_STATUS_ID_NEWSLETTER .'" ) AND ($_SESSION['customer_status_value']['customers_is_newsletter'] == 0 ) ) {
   new xenQuery("update " . TABLE_CUSTOMERS . " set customers_status = '" . DEFAULT_CUSTOMERS_STATUS_ID . "' where customers_id = '" . $_SESSION['customer_id'] . "'");

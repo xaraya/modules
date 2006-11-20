@@ -1,1 +1,1 @@
-<xar:set name="$PageParseStartTime">microtime()</xar:set>
+<xar:set name="PageParseStartTime">microtime()</xar:set>

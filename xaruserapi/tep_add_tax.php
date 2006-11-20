@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_add_tax($price, $tax) {
+  function commerce_userapi_add_tax($price, $tax)
+  {
     global $currencies;
 
     if ( (DISPLAY_PRICE_WITH_TAX == 'true') && ($tax > 0) ) {

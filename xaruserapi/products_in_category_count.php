@@ -12,7 +12,7 @@
 
 function commerce_userapi_products_in_category_count($args)
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     extract($args);
     if (!isset($include_deactivated)) $include_deactivated = false;

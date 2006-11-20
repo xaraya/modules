@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
 // Sets the status of a special product
-  function commerce_userapi_set_specials_status($specials_id, $status) {
+  function commerce_userapi_set_specials_status($specials_id, $status)
+  {
     return new xenQuery("update " . TABLE_SPECIALS . " set status = '" . $status . "', date_status_change = now() where specials_id = '" . $specials_id . "'");
   }
  ?>

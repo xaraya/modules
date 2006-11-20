@@ -12,7 +12,8 @@
 
   // This funstion validates a plain text password with an
   // encrpyted password
-  function commerce_userapi_validate_password($plain, $encrypted) {
+  function commerce_userapi_validate_password($plain, $encrypted)
+  {
     if (xarModAPIFunc('commerce','user','not_null',array('arg' =>$plain)) && xarModAPIFunc('commerce','user','not_null',array('arg' =>$encrypted))) {
       // split apart the hash / salt
       $stack = explode(':', $encrypted);

@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_is_leap_year($year) {
+  function commerce_userapi_is_leap_year($year)
+  {
     if ($year % 100 == 0) {
       if ($year % 400 == 0) return true;
     } else {

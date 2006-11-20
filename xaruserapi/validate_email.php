@@ -42,7 +42,8 @@
   //
   ////////////////////////////////////////////////////////////////////////////////////////////////
 
-  function commerce_userapi_validate_email($args) {
+  function commerce_userapi_validate_email($args)
+  {
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
     extract($args);

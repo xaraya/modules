@@ -13,7 +13,7 @@
 function commerce_userapi_get_category_tree($args)
 {
 //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 
@@ -55,7 +55,7 @@ function commerce_userapi_get_category_tree($args)
         if ($exclude != $categories['categories_id']) $category_tree_array[] = array('id' => $categories['categories_id'], 'text' => $spacing . $categories['categories_name']);
         $category_tree_array = xarModAPIFunc('commerce','user','get_category_tree', array(
                                     'parent_id' => $categories['categories_id'],
-                                    'spacing' => $spacing . '&nbsp;&nbsp;&nbsp;',
+                                    'spacing' => $spacing . '&#160;&#160;&#160;',
                                     'exclude' => $exclude,
                                     'category_tree_array' => $category_tree_array));
     }

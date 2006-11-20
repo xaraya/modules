@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
 // Return a product ID from a product ID with attributes
-  function commerce_userapi_get_prid($uprid) {
+  function commerce_userapi_get_prid($uprid)
+  {
     $pieces = split('[{]', $uprid, 2);
 
     return $pieces[0];

@@ -21,13 +21,13 @@ function commerce_userapi_show_category($args)
     if (!isset($categories_string)) $categories_string = '';
 
     // image for first level
-    $img_1='<img src="' . xarTplGetImage('icon_arrow.jpg', 'commerce') . '">&nbsp;';
+    $img_1='<img src="' . xarTplGetImage('icon_arrow.jpg', 'commerce') . '">&#160;';
 
     for ($a=0; $a<$foo[$counter]['level']; $a++) {
         if ($foo[$counter]['level'] == $a+1) {
-            $categories_string .= "&nbsp;-&nbsp;";
+            $categories_string .= "&#160;-&#160;";
         }
-        $categories_string .= "&nbsp;&nbsp;";
+        $categories_string .= "&#160;&#160;";
     }
     if ($foo[$counter]['level'] == 0) {
         if (strlen($categories_string)=='0') {
@@ -73,7 +73,7 @@ function commerce_userapi_show_category($args)
     if ($configuration['show_counts'] == 'true') {
         $products_in_category = xarModAPIFunc('commerce','user','count_products_in_category', array('cid' => $counter));
         if ($products_in_category > 0) {
-            $categories_string .= '&nbsp;(' . $products_in_category . ')';
+            $categories_string .= '&#160;(' . $products_in_category . ')';
         }
     }
 

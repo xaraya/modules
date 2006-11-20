@@ -10,7 +10,8 @@
 
   // Unlinks all subdirectories and files in $dir
   // Works only on one subdir level, will not recurse
-  function commerce_userapi_unlink_temp_dir($dir) {
+  function commerce_userapi_unlink_temp_dir($dir)
+  {
     $h1 = opendir($dir);
     while ($subdir = readdir($h1)) {
       // Ignore non directories

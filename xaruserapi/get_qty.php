@@ -7,7 +7,8 @@
 //  (c) 2003 XT-Commerce
 // ----------------------------------------------------------------------
 
-   function commerce_userapi_get_qty($products_id)  {
+   function commerce_userapi_get_qty($products_id)
+   {
 
      if (strpos($products_id,'{'))  {
     $act_id=substr($products_id,0,strpos($products_id,'{'));

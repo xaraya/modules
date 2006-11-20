@@ -9,7 +9,8 @@
 // ----------------------------------------------------------------------
 
 // safe download function, file get renamed bevor sending to browser!!
-function commerce_userapi_get_download($content_id) {
+function commerce_userapi_get_download($content_id)
+{
 
     $content_query=new xenQuery("SELECT
                     content_file,

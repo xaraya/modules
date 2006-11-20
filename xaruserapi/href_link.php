@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
 // The HTML href link wrapper function
-  function commerce_userapi_href_link($page = '', $parameters = '', $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true) {
+  function commerce_userapi_href_link($page = '', $parameters = '', $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true)
+  {
     global $request_type, $session_started, $http_domain, $https_domain;
 
     if (!xarModAPIFunc('commerce','user','not_null',array('arg' =>$page))) {

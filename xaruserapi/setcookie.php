@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_setcookie($name, $value = '', $expire = 0, $path = '/', $domain = '', $secure = 0) {
+  function commerce_userapi_setcookie($name, $value = '', $expire = 0, $path = '/', $domain = '', $secure = 0)
+  {
     setcookie($name, $value, $expire, $path, (xarModAPIFunc('commerce','user','not_null',array('arg' =>$domain)) ? $domain : ''), $secure);
   }
 ?>

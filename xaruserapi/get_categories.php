@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_categories($categories_array = '', $parent_id = '0', $indent = '') {
+  function commerce_userapi_get_categories($categories_array = '', $parent_id = '0', $indent = '')
+  {
 
     $parent_id = xtc_db_prepare_input($parent_id);
 
@@ -24,7 +25,7 @@
                                   'text' => $indent . $categories['categories_name']);
 
       if ($categories['categories_id'] != $parent_id) {
-        $categories_array = xtc_get_categories($categories_array, $categories['categories_id'], $indent . '&nbsp;&nbsp;');
+        $categories_array = xtc_get_categories($categories_array, $categories['categories_id'], $indent . '&#160;&#160;');
       }
     }
 

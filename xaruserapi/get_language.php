@@ -10,8 +10,9 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_language($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+function commerce_userapi_get_language($args)
+{
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 

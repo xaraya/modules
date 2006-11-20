@@ -10,8 +10,9 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_zone_name($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+  function commerce_userapi_get_zone_name($args)
+  {
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     extract($args);
     $q = new xenQuery("SELECT",$xartables['commerce_zones']);

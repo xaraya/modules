@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
  $level = compression level 0-9, 0=none, 9=max */
-  function commerce_userapi_gzip_output($level = 5) {
+  function commerce_userapi_gzip_output($level = 5)
+  {
     if ($encoding = xtc_check_gzip()) {
       $contents = ob_get_contents();
       ob_end_clean();

@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_not_null($args) {
+  function commerce_userapi_not_null($args)
+  {
     extract($args);
     if(!isset($arg)) return false;
     if (is_array($arg)) {

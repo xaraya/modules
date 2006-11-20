@@ -11,8 +11,9 @@
 // ----------------------------------------------------------------------
 
 // Sets the status of a categories
-function commerce_userapi_set_categories_status($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+function commerce_userapi_set_categories_status($args)
+{
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     extract($args);

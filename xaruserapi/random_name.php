@@ -11,7 +11,8 @@
   // Returns a random name, 16 to 20 characters long
   // There are more than 10^28 combinations
   // The directory is "hidden", i.e. starts with '.'
-  function commerce_userapi_random_name() {
+  function commerce_userapi_random_name()
+  {
     $letters = 'abcdefghijklmnopqrstuvwxyz';
     $dirname = '.';
     $length = floor(xarModAPIFunc('commerce','user','rand',array('min' =>16,'max' =>20)));

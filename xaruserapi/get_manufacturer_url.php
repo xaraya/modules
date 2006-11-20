@@ -13,7 +13,7 @@
 function commerce_userapi_get_manufacturer_url($args)
 {
     extract($args);
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     $q = new xenQuery('SELECT', $xartables['commerce_manufacturers_info'], array('manufacturers_url'));
     $q->eq('manufacturers_id', $manufacturers_id);

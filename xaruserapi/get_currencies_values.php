@@ -7,7 +7,8 @@
 //  (c) 2003 XT-Commerce
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_currencies_values($code) {
+function commerce_userapi_get_currencies_values($code)
+{
     $currency_values = new xenQuery("select * from " . TABLE_CURRENCIES . " where code = '" . $code . "'");
       $q = new xenQuery();
       if(!$q->run()) return;

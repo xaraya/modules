@@ -1,8 +1,8 @@
-<!--- FIXME
+<!-- FIXME
 <xar:if condition = "$messageStack->size > 0"
-	#$messageStack->output()#
+    #$messageStack->output()#
 </xar:if>
---->
+-->
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
         <td valign="bottom" align="right">
@@ -32,13 +32,13 @@
 
             <a href="#xarModURL('commerce','admin','FILENAME_LOGOUTNONSSL')#" class="headerLink">
                 <img src="#xarTplGetImage('adminimages/top_logout.gif')#" />
-            </a>    
+            </a>
 
             <img src="#xarTplGetImage('adminimages/img_spacer.jpg')#" />
 
-            <a href="#xarModURL('commerce','admin', 'FILENAME_CREDITSNONSSL')#" class="headerLink"> 
+            <a href="#xarModURL('commerce','admin', 'FILENAME_CREDITSNONSSL')#" class="headerLink">
                 <img src="#xarTplGetImage('adminimages/top_credits.gif')#" />
-            </a>    
+            </a>
 
             <img src="#xarTplGetImage('adminimages/img_line.jpg')#" />
         </td>

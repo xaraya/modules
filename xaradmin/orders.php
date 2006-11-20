@@ -243,12 +243,12 @@ require(DIR_WS_CLASSES . 'currencies.php');
 <?php
     for ($i = 0, $n = sizeof($order->products); $i < $n; $i++) {
       echo '          <tr class="dataTableRow">' . "\n" .
-           '            <td class="dataTableContent" valign="top" align="right">' . $order->products[$i]['qty'] . '&nbsp;x</td>' . "\n" .
+           '            <td class="dataTableContent" valign="top" align="right">' . $order->products[$i]['qty'] . '&#160;x</td>' . "\n" .
            '            <td class="dataTableContent" valign="top">' . $order->products[$i]['name'];
 
       if (sizeof($order->products[$i]['attributes']) > 0) {
         for ($j = 0, $k = sizeof($order->products[$i]['attributes']); $j < $k; $j++) {
-          echo '<br><nobr><small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
+          echo '<br><nobr><small>&#160;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
           if ($order->products[$i]['attributes'][$j]['price'] != '0')
           echo ' (' . $order->products[$i]['attributes'][$j]['prefix'];
           if ($order->products[$i]['allow_tax'] == 1) {
@@ -321,7 +321,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
           echo xtc_image(xarTplGetImage('icons/cross.gif', ICON_CROSS) . "</td>\n";
         }
         echo '            <td class="smallText">' . $orders_status_array[$orders_history['orders_status_id']] . '</td>' . "\n" .
-             '            <td class="smallText">' . nl2br(htmlspecialchars($orders_history['comments'])) . '&nbsp;</td>' . "\n" .
+             '            <td class="smallText">' . nl2br(htmlspecialchars($orders_history['comments'])) . '&#160;</td>' . "\n" .
              '          </tr>' . "\n";
       }
     } else {
@@ -412,7 +412,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ORDER_TOTAL; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_DATE_PURCHASED; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_STATUS; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&#160;</td>
               </tr>
 <?php
     if ($_GET['cID']) {
@@ -439,12 +439,12 @@ require(DIR_WS_CLASSES . 'currencies.php');
         echo '              <tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" onclick="document.location.href=\'' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID')) . 'oID=' . $orders['orders_id']) . '\'">' . "\n";
       }
 ?>
-                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID', 'action')) . 'oID=' . $orders['orders_id'] . '&action=edit') . '">' . xtc_image(xarTplGetImage('icons/preview.gif'), ICON_PREVIEW) . '</a>&nbsp;' . $orders['customers_name']; ?></td>
+                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID', 'action')) . 'oID=' . $orders['orders_id'] . '&action=edit') . '">' . xtc_image(xarTplGetImage('icons/preview.gif'), ICON_PREVIEW) . '</a>&#160;' . $orders['customers_name']; ?></td>
                 <td class="dataTableContent" align="right"><?php echo $orders['orders_id']; ?></td>
                 <td class="dataTableContent" align="right"><?php echo strip_tags($orders['order_total']); ?></td>
                 <td class="dataTableContent" align="center"><?php echo xtc_datetime_short($orders['date_purchased']); ?></td>
                 <td class="dataTableContent" align="right"><?php echo $orders['orders_status_name']; ?></td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($oInfo)) && ($orders['orders_id'] == $oInfo->orders_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID')) . 'oID=' . $orders['orders_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($oInfo)) && ($orders['orders_id'] == $oInfo->orders_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID')) . 'oID=' . $orders['orders_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
     }
@@ -472,7 +472,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
       break;
     default:
       if (is_object($oInfo)) {
-        $heading[] = array('text' => '<b>[' . $oInfo->orders_id . ']&nbsp;&nbsp;' . xtc_datetime_short($oInfo->date_purchased) . '</b>');
+        $heading[] = array('text' => '<b>[' . $oInfo->orders_id . ']&#160;&#160;' . xtc_datetime_short($oInfo->date_purchased) . '</b>');
 
         $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID', 'action')) . 'oID=' . $oInfo->orders_id . '&action=edit') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_ORDERS, xtc_get_all_get_params(array('oID', 'action')) . 'oID=' . $oInfo->orders_id . '&action=delete') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a>');
 
@@ -485,11 +485,11 @@ require(DIR_WS_CLASSES . 'currencies.php');
         $order = new order($oInfo->orders_id);
         $contents[] = array('text' => '<br><br>' . sizeof($order->products) . ' Products ' );
         for ($i=0; $i<sizeof($order->products); $i++) {
-          $contents[] = array('text' => $order->products[$i]['qty'] . '&nbsp;x' . $order->products[$i]['name']);
+          $contents[] = array('text' => $order->products[$i]['qty'] . '&#160;x' . $order->products[$i]['name']);
 
           if (sizeof($order->products[$i]['attributes']) > 0) {
             for ($j=0; $j<sizeof($order->products[$i]['attributes']); $j++) {
-              $contents[] = array('text' => '<small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'] . '</i></small></nobr>' );
+              $contents[] = array('text' => '<small>&#160;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'] . '</i></small></nobr>' );
             }
           }
         }

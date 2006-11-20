@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_customer_status_name() {
+function commerce_userapi_get_customer_status_name()
+{
     $row = xarModAPIFunc('commerce','user','get_customer_status');
     return $row['customers_status_name'];
 }

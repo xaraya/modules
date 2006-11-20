@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_round($number, $precision) {
+  function commerce_userapi_round($number, $precision)
+  {
     if (strpos($number, '.') && (strlen(substr($number, strpos($number, '.')+1)) > $precision)) {
       $number = substr($number, 0, strpos($number, '.') + 1 + $precision + 1);
 

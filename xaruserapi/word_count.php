@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
   // Get the number of times a word/character is present in a string
-  function commerce_userapi_word_count($string, $needle) {
+  function commerce_userapi_word_count($string, $needle)
+  {
     $temp_array = split($needle, $string);
 
     return sizeof($temp_array);

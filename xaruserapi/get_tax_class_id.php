@@ -7,7 +7,8 @@
 //  (c) 2003 XT-Commerce
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_tax_class_id($products_id) {
+  function commerce_userapi_get_tax_class_id($products_id)
+  {
 
 
     $tax_query = new xenQuery("SELECT

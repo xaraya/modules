@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_subcategories(&$subcategories_array, $parent_id = 0) {
+  function commerce_userapi_get_subcategories(&$subcategories_array, $parent_id = 0)
+  {
     $subcategories_query = new xenQuery("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . $parent_id . "'");
       $q = new xenQuery();
       if(!$q->run()) return;

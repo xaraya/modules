@@ -12,7 +12,8 @@
 
   // Sets timeout for the current script.
   // Can't be used in safe mode.
-  function commerce_userapi_set_time_limit($limit) {
+  function commerce_userapi_set_time_limit($limit)
+  {
     if (!get_cfg_var('safe_mode')) {
       set_time_limit($limit);
     }

@@ -10,11 +10,12 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_show_category_content($counter) {
+  function commerce_userapi_show_category_content($counter)
+  {
     global $foo, $categories_string, $id;
 
     for ($a=0; $a<$foo[$counter]['level']; $a++) {
-      $categories_string .= "&nbsp;&nbsp;";
+      $categories_string .= "&#160;&#160;";
     }
 
     $categories_string .= '<a href="';
@@ -48,7 +49,7 @@
     //if (SHOW_COUNTS == 'true') {
     //  $products_in_category = xtc_count_products_in_category($counter);
     //  if ($products_in_category > 0) {
-    //    $categories_string .= '&nbsp;(' . $products_in_category . ')';
+    //    $categories_string .= '&#160;(' . $products_in_category . ')';
     //  }
     //}
 

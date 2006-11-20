@@ -15,9 +15,10 @@
 // Return all customers statuses for a specified language_id and return an array(array())
 // Use it to make pull_down_menu, checkbox....
 
-  function commerce_userapi_get_customers_statuses() {
+  function commerce_userapi_get_customers_statuses()
+  {
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_get_top_level_domain($url) {
+function commerce_userapi_get_top_level_domain($url)
+{
     if (strpos($url, '://')) {
       $url = parse_url($url);
       $url = $url['host'];

@@ -11,7 +11,8 @@
 // ----------------------------------------------------------------------
 
   // Update the banner click statistics
-  function commerce_userapi_update_banner_click_count($banner_id) {
+  function commerce_userapi_update_banner_click_count($banner_id)
+  {
     new xenQuery("update " . TABLE_BANNERS_HISTORY . " set banners_clicked = banners_clicked + 1 where banners_id = '" . $banner_id . "' and date_format(banners_history_date, '%Y%m%d') = date_format(now(), '%Y%m%d')");
   }
 ?>
