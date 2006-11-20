@@ -12,7 +12,7 @@
 
 function commerce_userapi_childs_in_category_count($args)
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     extract($args);
     $q = new xenQuery('SELECT', $xartables['commerce_categories'], 'categories_id');

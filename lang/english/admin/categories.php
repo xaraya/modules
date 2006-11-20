@@ -10,7 +10,7 @@
    based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
    (c) 2002-2003 osCommerce(categories.php,v 1.22 2002/08/17); www.oscommerce.com
-   (c) 2003	 nextcommerce (categories.php,v 1.10 2003/08/14); www.nextcommerce.org
+   (c) 2003  nextcommerce (categories.php,v 1.10 2003/08/14); www.nextcommerce.org
 
    Released under the GNU General Public License
    --------------------------------------------------------------*/
@@ -39,7 +39,7 @@ define('TEXT_DATE_ADDED', 'Date Added:');
 define('TEXT_DATE_AVAILABLE', 'Date Available:');
 define('TEXT_LAST_MODIFIED', 'Last Modified:');
 define('TEXT_IMAGE_NONEXISTENT', 'IMAGE DOES NOT EXIST');
-define('TEXT_NO_CHILD_CATEGORIES_OR_PRODUCTS', 'Please insert a new category or product in <br>&nbsp;<br><b>%s</b>');
+define('TEXT_NO_CHILD_CATEGORIES_OR_PRODUCTS', 'Please insert a new category or product in <br>&#160;<br><b>%s</b>');
 define('TEXT_PRODUCT_MORE_INFORMATION', 'For more information, please visit this products <a href="http://%s" target="blank"><u>webpage</u></a>.');
 define('TEXT_PRODUCT_DATE_ADDED', 'This product was added to our catalog on %s.');
 define('TEXT_PRODUCT_DATE_AVAILABLE', 'This product will be in stock on %s.');

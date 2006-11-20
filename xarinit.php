@@ -16,7 +16,7 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-include_once 'modules/xen/xarclasses/xenquery.php';
+sys::import('modules.xen.xarclasses.xenquery');
 //Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
 
@@ -181,9 +181,12 @@ function commerce_init()
       Our list of objects
     */
 
-    $ice_objects = $defaultdata;
+    $module = 'commerce';
+    $objects = $defaultdata;
+
+    if(!xarModAPIFunc('xen','admin','install',array('module' => $module, 'objects' => $objects))) return;
     /*
-    $ice_objects = array(
+    $dd_objects = array(
                          'ice_countries',
 //                       'ice_currencies',
 //                       'ice_taxclasses',
@@ -192,44 +195,11 @@ function commerce_init()
 //                         'ice_taxzones',
 //                         'ice_taxzonemapping',
 //                         'ice_languages',
-                         'ice_addressformats',
+//                         'ice_addressformats',
                          'ice_configuration', 'ice_config_groups',
                          'ice_roles'
                          );
 */
-    // Treat destructive right now
-    $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    foreach($existing_objects as $objectid => $objectinfo) {
-        if(in_array($objectinfo['name'], $ice_objects)) {
-            // KILL
-            if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
-        }
-    }
-
-    // Most information will have a DD object presentation, some will be
-    // dynamic, others defined with a static datasource.
-    // These definitions and data are in the xardata directory in this module.
-    // and provide the definition and optionally  the initialisation
-    // data in XML files [ice-objectname]-def.xml an [ice-objectname]-data.xml
-
-    // TODO: This will bomb out if the object already exists
-    $objects = array();
-
-    foreach($ice_objects as $ice_object) {
-        $def_file = 'modules/commerce/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/commerce/xardata/'.$ice_object.'-dat.xml';
-
-        $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file, 'keepitemid' => true));
-        if (!$objectid) return;
-        else $objects[$ice_object] = $objectid;
-        // Let data import be allowed to be empty
-        if(file_exists($dat_file) && in_array($ice_object, $defaultdata)) {
-            // And allow it to fail for now
-            xarModAPIFunc('dynamicdata','util','import', array('file' => $dat_file,'keepitemid' => true));
-        }
-    }
-
-    xarModVars::set('commerce','ice_objects',serialize($objects));
 
     /** END ICE MODEL **/
 

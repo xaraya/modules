@@ -59,7 +59,7 @@ function commerce_specialsblock_display($blockinfo)
     $blockinfo = array();
 
     //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
 

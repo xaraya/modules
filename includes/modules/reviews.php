@@ -34,7 +34,7 @@
       if (($i+1) != $n) {
 ?>
   <tr>
-    <td colspan="2" class="main">&nbsp;</td>
+    <td colspan="2" class="main">&#160;</td>
   </tr>
 <?php
       }

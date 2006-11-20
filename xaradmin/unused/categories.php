@@ -17,7 +17,7 @@
 
 function commerce_admin_categories()
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     include_once 'modules/commerce/xarclasses/object_info.php';
     include_once 'modules/commerce/xarclasses/split_page_results.php';
     xarModAPILoad('categories');

@@ -45,10 +45,10 @@
               </tr>
               <tr>
                 <td class="main">{$addresses.ADDRESS}</td>
-                <td>&nbsp;</td>
+                <td>&#160;</td>
               </tr>
             </table>
-			{/foreach}
+            {/foreach}
 
 </td>
         </tr>

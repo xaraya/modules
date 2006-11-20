@@ -20,7 +20,7 @@
               <tr>
                 <td class="main" valign="top"><xar:mlstring>XT Configuration</xar:mlstring></td>
               </tr>
-        </table> 
+        </table>
         </td>
     </tr>
     <tr>
@@ -32,39 +32,39 @@
                             <tr class="dataTableHeadingRow">
                                 <td class="dataTableHeadingContent"><xar:mlstring>Title</xar:mlstring></td>
                                 <td class="dataTableHeadingContent"><xar:mlstring>Value</xar:mlstring></td>
-                                <td class="dataTableHeadingContent" align="right"><xar:mlstring>Action</xar:mlstring>&nbsp;</td>
+                                <td class="dataTableHeadingContent" align="right"><xar:mlstring>Action</xar:mlstring>&#160;</td>
                             </tr>
                             <xar:loop name="$configurations">
-                                <xar:set name="$key">#$loop:item['configuration_key']#</xar:set>
-                                <xar:set name="$value">#$loop:item['configuration_value']#</xar:set>
-                                <xar:set name="$test">is_array($cInfo)</xar:set>
+                                <xar:set name="key">#$loop:item['configuration_key']#</xar:set>
+                                <xar:set name="value">#$loop:item['configuration_value']#</xar:set>
+                                <xar:set name="test">is_array($cInfo)</xar:set>
                                 <xar:if condition="(is_array($cInfo) && ($loop:item['configuration_id'] eq ($cInfo['configuration_id'])))">
                                     <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$thisurl#&amp;cID=#$loop:item['configuration_id']#&amp;action=edit';">
                                 <xar:else />
                                     <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='#$thisurl#&amp;cID=#$loop:item['configuration_id']#';">
                                 </xar:if>
                                     <td class="dataTableContent">
-                                        <xar:set name="$key_display">strtoupper($key)</xar:set>
+                                        <xar:set name="key_display">strtoupper($key)</xar:set>
                                         #$key_display#
                                     </td>
                                     <td class="dataTableContent">
-                                        <xar:set name="$short_cfgValue">$value</xar:set>
+                                        <xar:set name="short_cfgValue">$value</xar:set>
                                         <xar:if condition="is_string($short_cfgValue) and strlen($short_cfgValue) gt 30">
-                                            <xar:set name="$short_cfgValue">substr($short_cfgValue,0,30)</xar:set>
+                                            <xar:set name="short_cfgValue">substr($short_cfgValue,0,30)</xar:set>
                                         </xar:if>
-                                        <xar:set name="$short_cfgValue">htmlspecialchars($short_cfgValue)</xar:set>
+                                        <xar:set name="short_cfgValue">htmlspecialchars($short_cfgValue)</xar:set>
                                         #$short_cfgValue#
                                     </td>
 
                                     <td class="dataTableContent" align="right">
-                                        <xar:if condition="(is_array($cInfo) && ($loop:item['configuration_id'] eq ($cInfo['configuration_id'])))">                 
+                                        <xar:if condition="(is_array($cInfo) && ($loop:item['configuration_id'] eq ($cInfo['configuration_id'])))">
                                             <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#" />
                                         <xar:else />
                                             <a href="#$thisurl#&amp;cID=#$loop:item['configuration_id']#">
                                                 <img src="#xarTplGetImage('adminimages/icon_info.gif')#" />
                                             </a>
                                         </xar:if>
-                                        &nbsp;
+                                        &#160;
                                     </td>
                                 </tr>
                             </xar:loop>
@@ -87,7 +87,7 @@
                                     <xar:if condition="$cInfo['set_function']">
                                         eval('$value_field = ' . $cInfo['set_function'] . '"' . htmlspecialchars($cInfo['configuration_value']) . '");');
                                     <xar:else />
-                                        <input type="text" name="configuration_value" value="#$cInfo['configuration_value']#">        
+                                        <input type="text" name="configuration_value" value="#$cInfo['configuration_value']#">
                                     </xar:if>
                                   <br />
                                   </td>
@@ -110,7 +110,7 @@
                                 </tr>
                                 <td>
                                 <br /><b>#$cInfo['configuration_key']#</b>
-                                <br /><br /><xar:mlstring>Date Added</xar:mlstring>: 
+                                <br /><br /><xar:mlstring>Date Added</xar:mlstring>:
                                 #xarLocaleGetFormattedDate('short',$cInfo['date_added'])#
                                 <xar:if condition="isset($cInfo['last_modified'])">
                                     <br /><xar:mlstring>Last Modified</xar:mlstring>: #xarLocaleGetFormattedDate('short',$cInfo['last_modified'])#

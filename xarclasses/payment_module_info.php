@@ -15,11 +15,13 @@
    Released under the GNU General Public License
    --------------------------------------------------------------*/
 
-  class paymentModuleInfo {
+  class paymentModuleInfo
+  {
     var $payment_code, $keys;
 
     // class constructor
-    function paymentModuleInfo($pmInfo_array) {
+    function paymentModuleInfo($pmInfo_array)
+    {
       $this->payment_code = $pmInfo_array['payment_code'];
 
       for ($i = 0, $n = sizeof($pmInfo_array) - 1; $i < $n; $i++) {

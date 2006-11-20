@@ -1,23 +1,23 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: german.php,v 1.4 2003/12/31 14:07:22 fanta2k Exp $   
+   $Id: german.php,v 1.4 2003/12/31 14:07:22 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(german.php,v 1.99 2003/05/28); www.oscommerce.com 
-   (c) 2003	 nextcommerce (german.php,v 1.24 2003/08/24); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(german.php,v 1.99 2003/05/28); www.oscommerce.com
+   (c) 2003  nextcommerce (german.php,v 1.24 2003/08/24); www.nextcommerce.org
 
    Released under the GNU General Public License
    --------------------------------------------------------------
    Third Party contributions:
    Customers Status v3.x (c) 2002-2003 Copyright Elari elari@free.fr | www.unlockgsm.com/dload-osc/ | CVS : http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/elari/?sortby=date#dirlist
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 
 // look in your $PATH_LOCALE/locale directory for available locales..
@@ -185,38 +185,38 @@ define('CATEGORY_COMPANY', 'Firma');
 define('CATEGORY_OPTIONS', 'Weitere Optionen');
 
 define('ENTRY_GENDER', 'Anrede:');
-define('ENTRY_GENDER_ERROR', '&nbsp;<span class="errorText">notwendige Eingabe</span>');
+define('ENTRY_GENDER_ERROR', '&#160;<span class="errorText">notwendige Eingabe</span>');
 define('ENTRY_FIRST_NAME', 'Vorname:');
-define('ENTRY_FIRST_NAME_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_FIRST_NAME_MIN_LENGTH . ' Buchstaben</span>');
+define('ENTRY_FIRST_NAME_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_FIRST_NAME_MIN_LENGTH . ' Buchstaben</span>');
 define('ENTRY_LAST_NAME', 'Nachname:');
-define('ENTRY_LAST_NAME_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_LAST_NAME_MIN_LENGTH . ' Buchstaben</span>');
+define('ENTRY_LAST_NAME_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_LAST_NAME_MIN_LENGTH . ' Buchstaben</span>');
 define('ENTRY_DATE_OF_BIRTH', 'Geburtsdatum:');
-define('ENTRY_DATE_OF_BIRTH_ERROR', '&nbsp;<span class="errorText">(z.B. 21.05.1970)</span>');
+define('ENTRY_DATE_OF_BIRTH_ERROR', '&#160;<span class="errorText">(z.B. 21.05.1970)</span>');
 define('ENTRY_EMAIL_ADDRESS', 'eMail Adresse:');
-define('ENTRY_EMAIL_ADDRESS_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_EMAIL_ADDRESS_MIN_LENGTH . ' Buchstaben</span>');
-define('ENTRY_EMAIL_ADDRESS_CHECK_ERROR', '&nbsp;<span class="errorText">ung&uuml;ltige eMail-Adresse!</span>');
-define('ENTRY_EMAIL_ADDRESS_ERROR_EXISTS', '&nbsp;<span class="errorText">Diese eMail-Adresse existiert schon!</span>');
+define('ENTRY_EMAIL_ADDRESS_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_EMAIL_ADDRESS_MIN_LENGTH . ' Buchstaben</span>');
+define('ENTRY_EMAIL_ADDRESS_CHECK_ERROR', '&#160;<span class="errorText">ung&uuml;ltige eMail-Adresse!</span>');
+define('ENTRY_EMAIL_ADDRESS_ERROR_EXISTS', '&#160;<span class="errorText">Diese eMail-Adresse existiert schon!</span>');
 define('ENTRY_COMPANY', 'Firmenname:');
 define('ENTRY_STREET_ADDRESS', 'Strasse:');
-define('ENTRY_STREET_ADDRESS_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_STREET_ADDRESS_MIN_LENGTH . ' Buchstaben</span>');
+define('ENTRY_STREET_ADDRESS_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_STREET_ADDRESS_MIN_LENGTH . ' Buchstaben</span>');
 define('ENTRY_SUBURB', 'weitere Anschrift:');
 define('ENTRY_POST_CODE', 'Postleitzahl:');
-define('ENTRY_POST_CODE_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_POSTCODE_MIN_LENGTH . ' Zahlen</span>');
+define('ENTRY_POST_CODE_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_POSTCODE_MIN_LENGTH . ' Zahlen</span>');
 define('ENTRY_CITY', 'Stadt:');
-define('ENTRY_CITY_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_CITY_MIN_LENGTH . ' Buchstaben</span>');
+define('ENTRY_CITY_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_CITY_MIN_LENGTH . ' Buchstaben</span>');
 define('ENTRY_STATE', 'Bundesland:');
-define('ENTRY_STATE_ERROR', '&nbsp;<span class="errorText">notwendige Eingabe</font></small>');
+define('ENTRY_STATE_ERROR', '&#160;<span class="errorText">notwendige Eingabe</font></small>');
 define('ENTRY_COUNTRY', 'Land:');
 define('ENTRY_TELEPHONE_NUMBER', 'Telefonnummer:');
-define('ENTRY_TELEPHONE_NUMBER_ERROR', '&nbsp;<span class="errorText">mindestens ' . ENTRY_TELEPHONE_MIN_LENGTH . ' Zahlen</span>');
+define('ENTRY_TELEPHONE_NUMBER_ERROR', '&#160;<span class="errorText">mindestens ' . ENTRY_TELEPHONE_MIN_LENGTH . ' Zahlen</span>');
 define('ENTRY_FAX_NUMBER', 'Telefaxnummer:');
 define('ENTRY_NEWSLETTER', 'Rundschreiben:');
 define('ENTRY_CUSTOMERS_STATUS', 'Kundengruppe:');
 define('ENTRY_NEWSLETTER_YES', 'abonniert');
 define('ENTRY_NEWSLETTER_NO', 'nicht abonniert');
-define('ENTRY_MAIL_ERROR','&nbsp;<span class="errorText">Bitte treffen sie eine Auswahl</span>');
+define('ENTRY_MAIL_ERROR','&#160;<span class="errorText">Bitte treffen sie eine Auswahl</span>');
 define('ENTRY_PASSWORD','Passwort (autom. erstellt)');
-define('ENTRY_PASSWORD_ERROR','&nbsp;<span class="errorText">Ihr Passwort muss aus mindestens ' . ENTRY_PASSWORD_MIN_LENGTH . ' Zeichen bestehen.</span>');
+define('ENTRY_PASSWORD_ERROR','&#160;<span class="errorText">Ihr Passwort muss aus mindestens ' . ENTRY_PASSWORD_MIN_LENGTH . ' Zeichen bestehen.</span>');
 define('ENTRY_MAIL_COMMENTS','Zusätzlicher Mailtext:');
 
 define('ENTRY_MAIL','eMail mit Passwort an Kunden versenden?');
@@ -325,7 +325,7 @@ define('PREVNEXT_BUTTON_NEXT', '&gt;&gt;');
 
 define('TEXT_DEFAULT', 'Standard');
 define('TEXT_SET_DEFAULT', 'als Standard definieren');
-define('TEXT_FIELD_REQUIRED', '&nbsp;<span class="fieldRequired">* erforderlich</span>');
+define('TEXT_FIELD_REQUIRED', '&#160;<span class="fieldRequired">* erforderlich</span>');
 
 define('ERROR_NO_DEFAULT_CURRENCY_DEFINED', 'Fehler: Es wurde keine Standardw&auml;hrung definiert. Bitte definieren Sie unter Adminstration -> Sprachen/W&auml;hrungen -> W&auml;hrungen eine Standardw&auml;hrung.');
 

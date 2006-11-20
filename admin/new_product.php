@@ -23,7 +23,8 @@
    Released under the GNU General Public License
    --------------------------------------------------------------*/
 
-   if ( ($_GET['pID']) && (!$_POST) ) {
+   if ( ($_GET['pID']) && (!$_POST) )
+   {
       $product_query = new xenQuery("select p.product_template,p.options_template,pd.products_name, pd.products_description,pd.products_short_description, pd.products_meta_title, pd.products_meta_description, pd.products_meta_keywords, pd.products_url, p.products_id, p.products_quantity, p.products_model, p.products_image, p.products_price, p.products_discount_allowed, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . $_GET['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
       if(!$q->run()) return;
@@ -83,20 +84,20 @@
     <td class="pageHeading"><?php echo sprintf(TEXT_NEW_PRODUCT, xtc_output_generated_category_path($current_category_id)); ?></td>
   </tr>
   <tr>
-    <td class="main" ><br> <?php echo TEXT_PRODUCTS_STATUS; ?> <?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . xtc_draw_radio_field('products_status', '1', $status) . '&nbsp;' . TEXT_PRODUCT_AVAILABLE . '&nbsp;' . xtc_draw_radio_field('products_status', '0', $out_status) . '&nbsp;' . TEXT_PRODUCT_NOT_AVAILABLE; ?></td>
+    <td class="main" ><br> <?php echo TEXT_PRODUCTS_STATUS; ?> <?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . xtc_draw_radio_field('products_status', '1', $status) . '&#160;' . TEXT_PRODUCT_AVAILABLE . '&#160;' . xtc_draw_radio_field('products_status', '0', $out_status) . '&#160;' . TEXT_PRODUCT_NOT_AVAILABLE; ?></td>
   </tr>
   <tr>
     <td class="main"><table width="100%" border="0">
         <tr>
           <td class="main" width="127"><?php echo TEXT_PRODUCTS_DATE_AVAILABLE; ?><br>
             <small>(YYYY-MM-DD)</small></td>
-          <td class="main" width="834"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;'; ?>
+          <td class="main" width="834"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;'; ?>
             <script language="javascript">dateAvailable.writeControl(); dateAvailable.dateFormat="yyyy-MM-dd";</script></td>
         </tr>
       </table></td>
   </tr>
   <tr>
-    <td class="main"><?php echo TEXT_PRODUCTS_MANUFACTURER; ?><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . commerce_userapi_draw_pull_down_menu('manufacturers_id', $manufacturers_array, $pInfo->manufacturers_id); ?></td>
+    <td class="main"><?php echo TEXT_PRODUCTS_MANUFACTURER; ?><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . commerce_userapi_draw_pull_down_menu('manufacturers_id', $manufacturers_array, $pInfo->manufacturers_id); ?></td>
   </tr>
   <tr>
    <td class="main">
@@ -166,10 +167,10 @@ echo commerce_userapi_draw_pull_down_menu('options_template',$files,$default_val
   <td bgcolor="000000" height="10"></td>
   </tr>
   <tr>
-    <td bgcolor="#FFCC33" valign="top" class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']); ?>&nbsp;<?php echo TEXT_PRODUCTS_NAME; ?><?php echo xtc_draw_input_field('products_name[' . $languages[$i]['id'] . ']', (($products_name[$languages[$i]['id']]) ? stripslashes($products_name[$languages[$i]['id']]) : xarModAPIFunc('commerce','user','get_products_name',array('id' =>$pInfo->products_id, $languages[$i]['id'])),'size=60')); ?></td>
+    <td bgcolor="#FFCC33" valign="top" class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']); ?>&#160;<?php echo TEXT_PRODUCTS_NAME; ?><?php echo xtc_draw_input_field('products_name[' . $languages[$i]['id'] . ']', (($products_name[$languages[$i]['id']]) ? stripslashes($products_name[$languages[$i]['id']]) : xarModAPIFunc('commerce','user','get_products_name',array('id' =>$pInfo->products_id, $languages[$i]['id'])),'size=60')); ?></td>
   </tr>
   <tr>
-    <td class="main"><?php echo TEXT_PRODUCTS_URL . '&nbsp;<small>' . TEXT_PRODUCTS_URL_WITHOUT_HTTP . '</small>'; ?><?php echo xtc_draw_input_field('products_url[' . $languages[$i]['id'] . ']', (($products_url[$languages[$i]['id']]) ? stripslashes($products_url[$languages[$i]['id']]) : xtc_get_products_url($pInfo->products_id, $languages[$i]['id'])),'size=60'); ?></td>
+    <td class="main"><?php echo TEXT_PRODUCTS_URL . '&#160;<small>' . TEXT_PRODUCTS_URL_WITHOUT_HTTP . '</small>'; ?><?php echo xtc_draw_input_field('products_url[' . $languages[$i]['id'] . ']', (($products_url[$languages[$i]['id']]) ? stripslashes($products_url[$languages[$i]['id']]) : xtc_get_products_url($pInfo->products_id, $languages[$i]['id'])),'size=60'); ?></td>
   </tr>
 </table>
 <table width="100%" border="0">
@@ -250,7 +251,7 @@ echo xtc_draw_textarea_field('products_short_description_' . $languages[$i]['id'
           <tr>
             <td class="main"><?php echo TEXT_PRODUCTS_IMAGE; ?><br>
             <?php echo  xtc_draw_file_field('products_image') . '<br>' .
-            xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . $pInfo->products_image .
+            xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . $pInfo->products_image .
 <input type="hidden" name="products_previous_image" value="#$pInfo->products_image#">
 
             </td>
@@ -278,5 +279,5 @@ echo xtc_draw_textarea_field('products_short_description_' . $languages[$i]['id'
 <input type="hidden" name="products_date_added" value="#(($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))#">
 
     <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onClick="return confirm(\''.SAVE_ENTRY.'\')">.
-      . '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $_GET['pID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+      . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $_GET['pID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
     </tr></form>

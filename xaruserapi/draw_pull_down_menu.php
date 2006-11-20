@@ -39,7 +39,7 @@ function commerce_userapi_draw_pull_down_menu($args)
     }
     $field .= '</select>';
 
-    if ($required == true) $field .= '&nbsp;<span class="fieldRequired">* Required</span>';
+    if ($required == true) $field .= '&#160;<span class="fieldRequired">* Required</span>';
 
     return $field;
 }

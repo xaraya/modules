@@ -16,11 +16,13 @@
    ---------------------------------------------------------------------------------------*/
 
 
-  class psigate {
+  class psigate
+  {
     var $code, $title, $description, $enabled;
 
 
-    function psigate() {
+    function psigate()
+    {
       global $order;
 
       $this->code = 'psigate';
@@ -39,7 +41,8 @@
     }
 
 
-    function update_status() {
+    function update_status()
+    {
       global $order;
 
       if ( ($this->enabled == true) && ((int)MODULE_PAYMENT_PSIGATE_ZONE > 0) ) {
@@ -63,7 +66,8 @@
       }
     }
 
-    function javascript_validation() {
+    function javascript_validation()
+    {
       if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
         $js = 'if (payment_value == "' . $this->code . '") {' . "\n" .
               '  var psigate_cc_number = document.checkout_payment.psigate_cc_number.value;' . "\n" .
@@ -79,7 +83,8 @@
       }
     }
 
-    function selection() {
+    function selection()
+    {
       global $order;
 
       if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
@@ -99,7 +104,7 @@
                                              array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_NUMBER,
                                                    'field' => xtc_draw_input_field('psigate_cc_number')),
                                              array('title' => MODULE_PAYMENT_PSIGATE_TEXT_CREDIT_CARD_EXPIRES,
-                                                   'field' => commerce_userapi_draw_pull_down_menu('psigate_cc_expires_month', $expires_month) . '&nbsp;' . commerce_userapi_draw_pull_down_menu('psigate_cc_expires_year', $expires_year))));
+                                                   'field' => commerce_userapi_draw_pull_down_menu('psigate_cc_expires_month', $expires_month) . '&#160;' . commerce_userapi_draw_pull_down_menu('psigate_cc_expires_year', $expires_year))));
       } else {
         $selection = array('id' => $this->code,
                            'module' => $this->title);
@@ -108,7 +113,8 @@
       return $selection;
     }
 
-    function pre_confirmation_check() {
+    function pre_confirmation_check()
+    {
 
       if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
         include(DIR_WS_CLASSES . 'cc_validation.php');
@@ -146,7 +152,8 @@
       }
     }
 
-    function confirmation() {
+    function confirmation()
+    {
       global $order;
 
       if (MODULE_PAYMENT_PSIGATE_INPUT_MODE == 'Local') {
@@ -164,7 +171,8 @@
       }
     }
 
-    function process_button() {
+    function process_button()
+    {
       global $order, $currencies;
 
       switch (MODULE_PAYMENT_PSIGATE_TRANSACTION_MODE) {
@@ -227,15 +235,18 @@
       return $data;
     }
 
-    function before_process() {
+    function before_process()
+    {
       return false;
     }
 
-    function after_process() {
+    function after_process()
+    {
       return false;
     }
 
-    function get_error() {
+    function get_error()
+    {
 
       if (isset($_GET['ErrMsg']) && (strlen($_GET['ErrMsg']) > 0)) {
         $error = stripslashes(urldecode($_GET['ErrMsg']));
@@ -249,7 +260,8 @@
                    'error' => $error);
     }
 
-    function check() {
+    function check()
+    {
       if (!isset($this->_check)) {
         $check_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_PAYMENT_PSIGATE_STATUS'");
         $this->_check = $check_query->getrows();
@@ -257,7 +269,8 @@
       return $this->_check;
     }
 
-    function install() {
+    function install()
+    {
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) values ('MODULE_PAYMENT_PSIGATE_STATUS', 'True','6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_PSIGATE_ALLOWED', '', '6', '0', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_PSIGATE_MERCHANT_ID', 'teststorewithcard', '6', '2', now())");
@@ -270,11 +283,13 @@
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PSIGATE_ORDER_STATUS_ID', '0', '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
     }
 
-    function remove() {
+    function remove()
+    {
       new xenQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
     }
 
-    function keys() {
+    function keys()
+    {
       return array('MODULE_PAYMENT_PSIGATE_STATUS','MODULE_PAYMENT_PSIGATE_ALLOWED', 'MODULE_PAYMENT_PSIGATE_MERCHANT_ID', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_MODE', 'MODULE_PAYMENT_PSIGATE_TRANSACTION_TYPE', 'MODULE_PAYMENT_PSIGATE_INPUT_MODE', 'MODULE_PAYMENT_PSIGATE_CURRENCY', 'MODULE_PAYMENT_PSIGATE_ZONE', 'MODULE_PAYMENT_PSIGATE_ORDER_STATUS_ID', 'MODULE_PAYMENT_PSIGATE_SORT_ORDER');
     }
   }

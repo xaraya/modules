@@ -46,14 +46,14 @@
         if ($num_pages > 1) {
             $display_links = '<FORM name= "pages" action="' . $this->url . '" method="POST">';
 
-            $previoustext = '[&lt;&lt;&nbsp;' . xarML('previous') . ']';
-            $nexttext = '[' . xarML('next') . '&nbsp;&gt;&gt;]';
+            $previoustext = '[&lt;&lt;&#160;' . xarML('previous') . ']';
+            $nexttext = '[' . xarML('next') . '&#160;&gt;&gt;]';
             if ($this->currentpage > 1) {
                 $display_links .= '<a href="' . $this->url .
                 '&page=' . $previouspage .
-                '" class="splitPageLink">' . $previoustext . '</a>&nbsp;&nbsp;';
+                '" class="splitPageLink">' . $previoustext . '</a>&#160;&#160;';
             } else {
-                $display_links .= $previoustext . '&nbsp;&nbsp;';
+                $display_links .= $previoustext . '&#160;&#160;';
             }
 
             $args = array(xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
@@ -71,11 +71,11 @@
             $display_links .= $string;
 
             if (($this->currentpage < $num_pages) && ($num_pages != 1)) {
-                $display_links .= '&nbsp;&nbsp;<a href="' . $this->url .
+                $display_links .= '&#160;&#160;<a href="' . $this->url .
                 '&page=' . $nextpage .
                 '" class="splitPageLink">' . $nexttext . '</a>';
             } else {
-                $display_links .= '&nbsp;&nbsp;' . $nexttext;
+                $display_links .= '&#160;&#160;' . $nexttext;
             }
 
 //            if (SID) $display_links .= xtc_draw_hidden_field(session_name(), session_id());

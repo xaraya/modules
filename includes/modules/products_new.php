@@ -38,7 +38,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
       if (($i+1) != $n) {
 ?>
   <tr>
-    <td colspan="3" class="main">&nbsp;</td>
+    <td colspan="3" class="main">&#160;</td>
   </tr>
 <?php
       }

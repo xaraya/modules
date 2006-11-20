@@ -10,7 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  class splitPageResults {
+  class splitPageResults
+  {
     var $sql_query, $number_of_rows, $current_page_number, $number_of_pages, $number_of_rows_per_page;
 
     // class constructor
@@ -71,7 +72,7 @@
       if (xarModAPIFunc('commerce','user','not_null',array('arg' => $parameters)) && (substr($parameters, -1) != '&')) $parameters .= '&';
 
       // previous button - not displayed on first page
-      if ($this->current_page_number > 1) $display_links_string .= '<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . ($this->current_page_number - 1), $request_type) . '" class="pageResults" title=" ' . PREVNEXT_TITLE_PREVIOUS_PAGE . ' "><u>' . PREVNEXT_BUTTON_PREV . '</u></a>&nbsp;&nbsp;';
+      if ($this->current_page_number > 1) $display_links_string .= '<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . ($this->current_page_number - 1), $request_type) . '" class="pageResults" title=" ' . PREVNEXT_TITLE_PREVIOUS_PAGE . ' "><u>' . PREVNEXT_BUTTON_PREV . '</u></a>&#160;&#160;';
 
       // check if number_of_pages > $max_page_links
       $cur_window_num = intval($this->current_page_number / $max_page_links);
@@ -86,17 +87,17 @@
       // page nn button
       for ($jump_to_page = 1 + (($cur_window_num - 1) * $max_page_links); ($jump_to_page <= ($cur_window_num * $max_page_links)) && ($jump_to_page <= $this->number_of_pages); $jump_to_page++) {
         if ($jump_to_page == $this->current_page_number) {
-          $display_links_string .= '&nbsp;<b>' . $jump_to_page . '</b>&nbsp;';
+          $display_links_string .= '&#160;<b>' . $jump_to_page . '</b>&#160;';
         } else {
-          $display_links_string .= '&nbsp;<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . $jump_to_page, $request_type) . '" class="pageResults" title=" ' . sprintf(PREVNEXT_TITLE_PAGE_NO, $jump_to_page) . ' "><u>' . $jump_to_page . '</u></a>&nbsp;';
+          $display_links_string .= '&#160;<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . $jump_to_page, $request_type) . '" class="pageResults" title=" ' . sprintf(PREVNEXT_TITLE_PAGE_NO, $jump_to_page) . ' "><u>' . $jump_to_page . '</u></a>&#160;';
         }
       }
 
       // next window of pages
-      if ($cur_window_num < $max_window_num) $display_links_string .= '<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . (($cur_window_num) * $max_page_links + 1), $request_type) . '" class="pageResults" title=" ' . sprintf(PREVNEXT_TITLE_NEXT_SET_OF_NO_PAGE, $max_page_links) . ' ">...</a>&nbsp;';
+      if ($cur_window_num < $max_window_num) $display_links_string .= '<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . (($cur_window_num) * $max_page_links + 1), $request_type) . '" class="pageResults" title=" ' . sprintf(PREVNEXT_TITLE_NEXT_SET_OF_NO_PAGE, $max_page_links) . ' ">...</a>&#160;';
 
        // next button
-      if (($this->current_page_number < $this->number_of_pages) && ($this->number_of_pages != 1)) $display_links_string .= '&nbsp;<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . ($this->current_page_number + 1), $request_type) . '" class="pageResults" title=" ' . PREVNEXT_TITLE_NEXT_PAGE . ' "><u>' . PREVNEXT_BUTTON_NEXT . '</u></a>&nbsp;';
+      if (($this->current_page_number < $this->number_of_pages) && ($this->number_of_pages != 1)) $display_links_string .= '&#160;<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), $parameters . 'page=' . ($this->current_page_number + 1), $request_type) . '" class="pageResults" title=" ' . PREVNEXT_TITLE_NEXT_PAGE . ' "><u>' . PREVNEXT_BUTTON_NEXT . '</u></a>&#160;';
 
       return $display_links_string;
     }

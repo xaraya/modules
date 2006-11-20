@@ -18,7 +18,8 @@
    Copyright Stephane Garin <sgarin@sgarin.com> (detect_language.php v0.1 04/02/2002)
    --------------------------------------------------------------*/
 
-  class language {
+  class language
+  {
     var $languages, $catalog_languages, $browser_languages, $language;
 
     function language($lng = '') {
@@ -87,7 +88,8 @@
       }
     }
 
-    function get_browser_language() {
+    function get_browser_language()
+    {
       $this->browser_languages = explode(',', getenv('HTTP_ACCEPT_LANGUAGE'));
 
       for ($i=0, $n=sizeof($this->browser_languages); $i<$n; $i++) {

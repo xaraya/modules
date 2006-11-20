@@ -1,18 +1,18 @@
 <?php
 /* -----------------------------------------------------------------------------------------
-   $Id: footer.php,v 1.3 2003/09/15 18:04:16 fanta2k Exp $   
+   $Id: footer.php,v 1.3 2003/09/15 18:04:16 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    -----------------------------------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(footer.php,v 1.26 2003/02/10); www.oscommerce.com 
-   (c) 2003	 nextcommerce (footer.php,v 1.14 2003/08/13); www.nextcommerce.org 
+   (c) 2002-2003 osCommerce(footer.php,v 1.26 2003/02/10); www.oscommerce.com
+   (c) 2003  nextcommerce (footer.php,v 1.14 2003/08/13); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    ---------------------------------------------------------------------------------------*/
 // include needed functions
 require_once('inc/xtc_banner_exists.inc.php');
@@ -23,8 +23,8 @@ require_once('inc/xtc_update_banner_display_count.inc.php');
 ?>
 <table border="0" width="100%" cellspacing="0" cellpadding="1">
   <tr class="footer">
-    <td class="footer">&nbsp;&nbsp;<?php echo strftime(DATE_FORMAT_LONG); ?>&nbsp;&nbsp;</td>
-    <td align="right" class="footer">&nbsp;&nbsp;<?php echo $counter_now . ' ' . FOOTER_TEXT_REQUESTS_SINCE . ' ' . $counter_startdate_formatted; ?>&nbsp;&nbsp;</td>
+    <td class="footer">&#160;&#160;<?php echo strftime(DATE_FORMAT_LONG); ?>&#160;&#160;</td>
+    <td align="right" class="footer">&#160;&#160;<?php echo $counter_now . ' ' . FOOTER_TEXT_REQUESTS_SINCE . ' ' . $counter_startdate_formatted; ?>&#160;&#160;</td>
   </tr>
 </table>
     </td>
@@ -52,7 +52,7 @@ require_once('inc/xtc_update_banner_display_count.inc.php');
 */
 ?>
 
-  
+
 <?php
 echo FOOTER_TEXT_BODY;
 
@@ -60,7 +60,7 @@ echo FOOTER_TEXT_BODY;
 ?>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
-  <tr> 
+  <tr>
     <td align="center"><?php echo xtc_display_banner('static', $banner); ?></td>
   </tr>
 </table>

@@ -20,7 +20,8 @@
    if ($messageStack->size('general') > 0) echo $messageStack->output('general');
    ---------------------------------------------------------------------------------------*/
 
-  class messageStack extends tableBox {
+  class messageStack extends tableBox
+  {
     // class constructor
     function messageStack() {
 
@@ -37,11 +38,11 @@
     // class methods
     function add($class, $message, $type = 'error') {
       if ($type == 'error') {
-        $this->messages[] = array('params' => 'class="messageStackError"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/error.gif'), ICON_ERROR) . '&nbsp;' . $message);
+        $this->messages[] = array('params' => 'class="messageStackError"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/error.gif'), ICON_ERROR) . '&#160;' . $message);
       } elseif ($type == 'warning') {
-        $this->messages[] = array('params' => 'class="messageStackWarning"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/warning.gif'), ICON_WARNING) . '&nbsp;' . $message);
+        $this->messages[] = array('params' => 'class="messageStackWarning"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/warning.gif'), ICON_WARNING) . '&#160;' . $message);
       } elseif ($type == 'success') {
-        $this->messages[] = array('params' => 'class="messageStackSuccess"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/success.gif'), ICON_SUCCESS) . '&nbsp;' . $message);
+        $this->messages[] = array('params' => 'class="messageStackSuccess"', 'class' => $class, 'text' => xtc_image(xarTplGetImage('icons/success.gif'), ICON_SUCCESS) . '&#160;' . $message);
       } else {
         $this->messages[] = array('params' => 'class="messageStackError"', 'class' => $class, 'text' => $message);
       }

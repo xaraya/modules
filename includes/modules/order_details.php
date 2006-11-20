@@ -159,7 +159,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
           }
         } else {
 // Keep price aligned with corresponding option
-          echo '<br><small><i>&nbsp;</i></small>';
+          echo '<br><small><i>&#160;</i></small>';
         }
       }
     }

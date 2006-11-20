@@ -21,12 +21,14 @@
    ---------------------------------------------------------------------------------------*/
 
 
-  class banktransfer {
+  class banktransfer
+  {
 
     var $code, $title, $description, $enabled;
 
 
-    function banktransfer() {
+    function banktransfer()
+    {
       global $order;
 
       $this->code = 'banktransfer';
@@ -45,7 +47,8 @@
     }
 
 
-    function update_status() {
+    function update_status()
+    {
       global $order;
 
       if ( ($this->enabled == true) && ((int)MODULE_PAYMENT_BANKTRANSFER_ZONE > 0) ) {
@@ -75,7 +78,8 @@
       }
     }
 
-    function javascript_validation() {
+    function javascript_validation()
+    {
       $js = 'if (payment_value == "' . $this->code . '") {' . "\n" .
             '  var banktransfer_blz = document.checkout_payment.banktransfer_blz.value;' . "\n" .
             '  var banktransfer_number = document.checkout_payment.banktransfer_number.value;' . "\n" .
@@ -99,7 +103,8 @@
       return $js;
     }
 
-    function selection() {
+    function selection()
+    {
       global $order;
 
 
@@ -131,7 +136,8 @@
       return $selection;
     }
 
-    function pre_confirmation_check(){
+    function pre_confirmation_check()
+    {
       global $banktransfer_number, $banktransfer_blz;
 
       if ($_POST['banktransfer_fax'] == false) {
@@ -187,7 +193,8 @@
       }
     }
 
-    function confirmation() {
+    function confirmation()
+    {
       global $banktransfer_val, $banktransfer_owner, $banktransfer_bankname, $banktransfer_blz, $banktransfer_number, $checkout_form_action, $checkout_form_submit;
 
       if (!$_POST['banktransfer_owner'] == '') {
@@ -209,7 +216,8 @@
       return $confirmation;
     }
 
-    function process_button() {
+    function process_button()
+    {
       global $_POST;
 
       $process_button_string = xtc_draw_hidden_field('banktransfer_blz', $this->banktransfer_blz) .
@@ -224,7 +232,8 @@
 
     }
 
-    function before_process() {
+    function before_process()
+    {
       return false;
     }
 
@@ -235,7 +244,8 @@
         new xenQuery("update banktransfer set banktransfer_fax = '" . $_POST['banktransfer_fax'] ."' where orders_id = '" . $insert_id . "'");
     }
 
-    function get_error() {
+    function get_error()
+    {
 
       $error = array('title' => MODULE_PAYMENT_BANKTRANSFER_TEXT_BANK_ERROR,
                      'error' => stripslashes(urldecode($_GET['error'])));
@@ -243,7 +253,8 @@
       return $error;
     }
 
-    function check() {
+    function check()
+    {
       if (!isset($this->_check)) {
         $check_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_PAYMENT_BANKTRANSFER_STATUS'");
         $this->_check = $check_query->getrows();
@@ -251,7 +262,8 @@
       return $this->_check;
     }
 
-    function install() {
+    function install()
+    {
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) values ('MODULE_PAYMENT_BANKTRANSFER_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, use_function, set_function, date_added) values ('MODULE_PAYMENT_BANKTRANSFER_ZONE', '0',  '6', '2', 'xtc_get_zone_class_title', 'xtc_cfg_pull_down_zone_classes(', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_BANKTRANSFER_ALLOWED', '', '6', '0', now())");
@@ -263,11 +275,13 @@
       new xenQuery("CREATE TABLE IF NOT EXISTS banktransfer (orders_id int(11) NOT NULL default '0', banktransfer_owner varchar(64) default NULL, banktransfer_number varchar(24) default NULL, banktransfer_bankname varchar(255) default NULL, banktransfer_blz varchar(8) default NULL, banktransfer_status int(11) default NULL, banktransfer_prz char(2) default NULL, banktransfer_fax char(2) default NULL, KEY orders_id(orders_id))");
     }
 
-    function remove() {
+    function remove()
+    {
       new xenQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
     }
 
-    function keys() {
+    function keys()
+    {
       return array('MODULE_PAYMENT_BANKTRANSFER_STATUS','MODULE_PAYMENT_BANKTRANSFER_ALLOWED', 'MODULE_PAYMENT_BANKTRANSFER_ZONE', 'MODULE_PAYMENT_BANKTRANSFER_ORDER_STATUS_ID', 'MODULE_PAYMENT_BANKTRANSFER_SORT_ORDER', 'MODULE_PAYMENT_BANKTRANSFER_DATABASE_BLZ', 'MODULE_PAYMENT_BANKTRANSFER_FAX_CONFIRMATION', 'MODULE_PAYMENT_BANKTRANSFER_URL_NOTE');
     }
   }

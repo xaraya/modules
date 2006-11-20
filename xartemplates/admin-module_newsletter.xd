@@ -473,7 +473,7 @@ if ($news_data[$i]['id']!='') {
 
   <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
   <?php
-  echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif'),'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&nbsp;&nbsp;';
+  echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif'),'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
   ?>
            <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=edit_products_content&coID='.$content_array[$ii]['id']); ?>">
 <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif'),'Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>

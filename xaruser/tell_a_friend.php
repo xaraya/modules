@@ -128,7 +128,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
         $your_email_address_prompt = $account_values['customers_email_address'];
       } else {
         $your_name_prompt = xtc_draw_input_field('yourname', (($fromname_error == true) ? $_POST['yourname'] : $_GET['yourname']));
-        if ($fromname_error == true) $your_name_prompt .= '&nbsp;' . TEXT_REQUIRED;
+        if ($fromname_error == true) $your_name_prompt .= '&#160;' . TEXT_REQUIRED;
         $your_email_address_prompt = xtc_draw_input_field('from', (($fromemail_error == true) ? $_POST['from'] : $_GET['from']));
         if ($fromemail_error == true) $your_email_address_prompt .= ENTRY_EMAIL_ADDRESS_CHECK_ERROR;
       }
@@ -139,7 +139,7 @@ $data['INPUT_EMAIL'] = $your_email_address_prompt;
 $data['INPUT_MESSAGE'] = xtc_draw_textarea_field('yourmessage', 'soft', 40, 8;
 
 $input_friendname= xtc_draw_input_field('friendname', (($friendname_error == true) ? $_POST['friendname'] : $_GET['friendname']));
- if ($friendname_error == true) $input_friendname.= '&nbsp;' . TEXT_REQUIRED;
+ if ($friendname_error == true) $input_friendname.= '&#160;' . TEXT_REQUIRED;
 
 $input_friendemail= xtc_draw_input_field('friendemail', (($friendemail_error == true) ? $_POST['friendemail'] : $_GET['send_to']));
 if ($friendemail_error == true) $input_friendemail.= ENTRY_EMAIL_ADDRESS_CHECK_ERROR;

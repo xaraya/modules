@@ -5,361 +5,361 @@
 <xar:template file="adminheader" type="module"/>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
-	<tr>
-		<td>
-			<table border="0" width="100%" cellspacing="0" cellpadding="0">
-				<tr>
-					<td valign="middle" class="pageHeading">
-						My Account Information
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-		</td>
-	</tr>
-	<form name="customers" action="#xarModURL('commerce','admin','create_account', array('action' => 'edit'))#" method="POST">
-	<tr>
-		<td class="formAreaTitle">
-			<xar:mlstring>Personal</xar:mlstring>
-		</td>
-	</tr>
-	<tr>
-		<td class="formArea">
-			<table border="0" cellspacing="2" cellpadding="2">
-  				<xar:if condition="$configuration.account_gender == 'true'">
-					<tr>
-						<td class="main">
-							<xar:mlstring>Gender</xar:mlstring>
-						</td>
-						<td class="main">
-							<xar:if condition="$customers_gender == 'm'">					
-								<input type="radio" name="customers_gender" value="m" CHECKED>
-							<xar:else />							
-								<input type="radio" name="customers_gender" value="m">
-							</xar:if>
-							&nbsp;&nbsp;
-							<xar:mlstring>Male</xar:mlstring>
-							&nbsp;&nbsp;
-							<xar:if condition="$customers_gender == 'f'">					
-								<input type="radio" name="customers_gender" value="f" CHECKED>
-							<xar:else />							
-								<input type="radio" name="customers_gender" value="f">
-							</xar:if>
-							&nbsp;&nbsp;
-							<xar:mlstring>Female</xar:mlstring>
-							<xar:if condition="$entry_gender_error == 'true'">					
-								&nbsp;<span class="errorText">
-										#xarML('required field')#
-								</span>
-							</xar:if>
-						</td>
-					</tr>
-  				</xar:if>
-				<tr>
-					<td class="main">
-						<xar:mlstring>First Name</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="customers_firstname" value = "#$customers_firstname#" maxlength="32">
-						<xar:if condition="$entry_firstname_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_first_name_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Last Name</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="customers_lastname" value = "#$customers_lastname#" maxlength="32">
-						<xar:if condition="$entry_lastname_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_last_name_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-  				<xar:if condition="$configuration.account_dob == 'true'">
-					<tr>
-						<td class="main">
-							<xar:mlstring>Date of Birth</xar:mlstring>
-						</td>
-						<td class="main">
-							<input type="input" name="customers_dob" value = "#$customers_dob#" maxlength="10">
-							<xar:if condition="$entry_date_of_birth_error == 'true'">					
-								&nbsp;<span class="errorText">
-										#xarML('min. chars (e.g. 05/21/1970)',$configuration.entry_dob_min_length)#
-								</span>
-							</xar:if>
-						</td>
-					</tr>
-  				</xar:if>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Email Address</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="customers_email_address" value = "#$customers_email_address#" maxlength="96">
-						<xar:if condition="$entry_email_address_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_email_address_min_length)#
-							</span>
-						<xar:elseif condition="$entry_email_address_check_error == 'true'" />					
-							&nbsp;<span class="errorText">
-									#xarML('invalid email address')#
-							</span>
-						<xar:elseif condition="$entry_email_address_exists == 'true'" />					
-							&nbsp;<span class="errorText">
-									#xarML('email address already exists')#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-		</td>
-	</tr>
-  	<xar:if condition="$configuration.account_company == 'true'">
-		<tr>
-			<td class="formAreaTitle">
-				<xar:mlstring>Company</xar:mlstring>
-			</td>
-		</tr>
-		<tr>
-			<td class="formArea">
-				<table border="0" cellspacing="2" cellpadding="2">
-					<tr>
-						<td class="main">
-							<xar:mlstring>Company Name</xar:mlstring>
-						</td>
-						<td class="main">
-							<input type="input" name="entry_company" value = "#$entry_company#" maxlength="32">
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-			</td>
-		</tr>
-  	</xar:if>
-	<tr>
-		<td class="formAreaTitle">
-			<xar:mlstring>Address</xar:mlstring>
-		</td>
-	</tr>
-	<tr>
-		<td class="formArea">
-			<table border="0" cellspacing="2" cellpadding="2">
-				<tr>
-					<td class="main">
-						<xar:mlstring>Street Address</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="entry_street_address" value = "#$entry_street_address#" maxlength="64">
-						<xar:if condition="$entry_street_address_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_street_address_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-  				<xar:if condition="$configuration.account_suburb == 'true'">
-					<tr>
-						<td class="main">
-							<xar:mlstring>Suburb</xar:mlstring>
-						</td>
-						<td class="main">
-							<input type="input" name="entry_suburb" value = "#$entry_suburb#" maxlength="32">
-						</td>
-					</tr>
-  				</xar:if>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Postal Code</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="entry_postcode" value = "#$entry_postcode#" maxlength="8">
-						<xar:if condition="$entry_post_code_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_postcode_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td class="main">
-						<xar:mlstring>City</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="entry_city" value = "#$entry_city#" maxlength="32">
-						<xar:if condition="$entry_city_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_city_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-  				<xar:if condition="$configuration.account_state == 'true'">
-					<tr>
-						<td class="main">
-							<xar:mlstring>State</xar:mlstring>
-						</td>
-						<td class="main">
-							<xar:if condition="$zones == ''">												
-								<input type="input" name="entry_state" value = "#$entry_state#" maxlength="32">
-								<xar:if condition="$entry_state_error == 'true'">					
-									&nbsp;<span class="errorText">
-											#xarML('required value')#
-									</span>
-								</xar:if>
-							<xar:else />
-								#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_zone_id', 'values' => $zones, 'default' => $entry_zone_id))#
-							</xar:if>
-						</td>
-					</tr>
-  				</xar:if>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Country</xar:mlstring>
-					</td>
-					<td class="main">
-						#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onChange="this.form.submit()"'))#
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-		</td>
-	</tr>
-	<tr>
-		<td class="formAreaTitle">
-			<xar:mlstring>Contact</xar:mlstring>
-		</td>
-	</tr>
-	<tr>
-		<td class="formArea">
-			<table border="0" cellspacing="2" cellpadding="2">
-				<tr>
-					<td class="main">
-						<xar:mlstring>Phone</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="customers_telephone" value = "#$customers_telephone#" maxlength="32">
-						<xar:if condition="$entry_telephone_error == 'true'">					
-							&nbsp;<span class="errorText">
-									#xarML('min. chars',$configuration.entry_telephone_min_length)#
-							</span>
-						</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Fax</xar:mlstring>
-					</td>
-					<td class="main">
-						<input type="input" name="customers_fax" value = "#$customers_fax#" maxlength="32">
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-		</td>
-	</tr>
-	<tr>
-		<td class="formAreaTitle">
-			<xar:mlstring>Options</xar:mlstring>
-		</td>
-	</tr>
-	<tr>
-		<td class="formArea">
-			<table border="0" cellspacing="2" cellpadding="2">
-				<tr>
-					<td class="main">
-						<xar:mlstring>Customer Group</xar:mlstring>
-					</td>
-					<td class="main">
-						#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'customers_status', 'values' => $customers_statuses_array, 'parameters' => 'onChange="this.form.submit()"'))#
-					</td>
-				</tr>
-				<tr>
-					<td class="main">
-						<xar:mlstring>Send email with password to customer?</xar:mlstring>
-					</td>
-					<td class="main">
-						<xar:if condition="$customers_send_mail == 'yes'">					
-							<input type="radio" name="customers_send_mail" value="yes" CHECKED>
-						<xar:else />							
-							<input type="radio" name="customers_send_mail" value="yes">
-						</xar:if>
-						&nbsp;&nbsp;
-						<xar:mlstring>yes</xar:mlstring>
-						&nbsp;&nbsp;
-						<xar:if condition="$customers_send_mail == 'no'">					
-							<input type="radio" name="customers_send_mail" value="no" CHECKED>
-						<xar:else />							
-							<input type="radio" name="customers_send_mail" value="no">
-						</xar:if>
-						&nbsp;&nbsp;
-						<xar:mlstring>no</xar:mlstring>
-							<xar:if condition="$entry_mail_error == 'true'">					
-								&nbsp;<span class="errorText">
-										#xarML('required field')#
-								</span>
-							</xar:if>
-					</td>
-				</tr>
-				<tr>
-					<td class="main" bgcolor="#FFCC33">
-						<xar:mlstring>Password (generated)</xar:mlstring>
-					</td>
-					<td class="main" bgcolor="#FFCC33">
-						<input type="password" name="customers_password" value = "#$customers_password#">
-					</td>
-				</tr>
-				<tr>
-					<td class="main" valign="top">
-						<xar:mlstring>Mail text</xar:mlstring>
-					</td>
-					<td class="main">
-						<textarea name="customers_mail_comments" wrap="soft" cols="60" rows="5"'>
-							#$customers_mail_comments#
-						</textarea>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
-		</td>
-	</tr>
-	<tr>
-		<td align="right" class="main">
-			<input type="image" src="#xarTplGetImage($language . '/admin/buttons/button_insert.gif')#" border="0" alt="Insert">	
-			<a href="#xarModURL('commerce','admin','customers')#">
-				<img src="#xarTplGetImage($language . '/admin/buttons/button_cancel.gif')#" border="0" alt="Cancel" title=" Cancel ">
-			</a>
-		</td>
-	</tr>
+    <tr>
+        <td>
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td valign="middle" class="pageHeading">
+                        My Account Information
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+        </td>
+    </tr>
+    <form name="customers" action="#xarModURL('commerce','admin','create_account', array('action' => 'edit'))#" method="POST">
+    <tr>
+        <td class="formAreaTitle">
+            <xar:mlstring>Personal</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td class="formArea">
+            <table border="0" cellspacing="2" cellpadding="2">
+                <xar:if condition="$configuration.account_gender == 'true'">
+                    <tr>
+                        <td class="main">
+                            <xar:mlstring>Gender</xar:mlstring>
+                        </td>
+                        <td class="main">
+                            <xar:if condition="$customers_gender == 'm'">
+                                <input type="radio" name="customers_gender" value="m" CHECKED>
+                            <xar:else />
+                                <input type="radio" name="customers_gender" value="m">
+                            </xar:if>
+                            &#160;&#160;
+                            <xar:mlstring>Male</xar:mlstring>
+                            &#160;&#160;
+                            <xar:if condition="$customers_gender == 'f'">
+                                <input type="radio" name="customers_gender" value="f" CHECKED>
+                            <xar:else />
+                                <input type="radio" name="customers_gender" value="f">
+                            </xar:if>
+                            &#160;&#160;
+                            <xar:mlstring>Female</xar:mlstring>
+                            <xar:if condition="$entry_gender_error == 'true'">
+                                &#160;<span class="errorText">
+                                        #xarML('required field')#
+                                </span>
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:if>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>First Name</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="customers_firstname" value = "#$customers_firstname#" maxlength="32">
+                        <xar:if condition="$entry_firstname_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_first_name_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Last Name</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="customers_lastname" value = "#$customers_lastname#" maxlength="32">
+                        <xar:if condition="$entry_lastname_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_last_name_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:if condition="$configuration.account_dob == 'true'">
+                    <tr>
+                        <td class="main">
+                            <xar:mlstring>Date of Birth</xar:mlstring>
+                        </td>
+                        <td class="main">
+                            <input type="input" name="customers_dob" value = "#$customers_dob#" maxlength="10">
+                            <xar:if condition="$entry_date_of_birth_error == 'true'">
+                                &#160;<span class="errorText">
+                                        #xarML('min. chars (e.g. 05/21/1970)',$configuration.entry_dob_min_length)#
+                                </span>
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:if>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Email Address</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="customers_email_address" value = "#$customers_email_address#" maxlength="96">
+                        <xar:if condition="$entry_email_address_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_email_address_min_length)#
+                            </span>
+                        <xar:elseif condition="$entry_email_address_check_error == 'true'" />
+                            &#160;<span class="errorText">
+                                    #xarML('invalid email address')#
+                            </span>
+                        <xar:elseif condition="$entry_email_address_exists == 'true'" />
+                            &#160;<span class="errorText">
+                                    #xarML('email address already exists')#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+        </td>
+    </tr>
+    <xar:if condition="$configuration.account_company == 'true'">
+        <tr>
+            <td class="formAreaTitle">
+                <xar:mlstring>Company</xar:mlstring>
+            </td>
+        </tr>
+        <tr>
+            <td class="formArea">
+                <table border="0" cellspacing="2" cellpadding="2">
+                    <tr>
+                        <td class="main">
+                            <xar:mlstring>Company Name</xar:mlstring>
+                        </td>
+                        <td class="main">
+                            <input type="input" name="entry_company" value = "#$entry_company#" maxlength="32">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+            </td>
+        </tr>
+    </xar:if>
+    <tr>
+        <td class="formAreaTitle">
+            <xar:mlstring>Address</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td class="formArea">
+            <table border="0" cellspacing="2" cellpadding="2">
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Street Address</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="entry_street_address" value = "#$entry_street_address#" maxlength="64">
+                        <xar:if condition="$entry_street_address_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_street_address_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:if condition="$configuration.account_suburb == 'true'">
+                    <tr>
+                        <td class="main">
+                            <xar:mlstring>Suburb</xar:mlstring>
+                        </td>
+                        <td class="main">
+                            <input type="input" name="entry_suburb" value = "#$entry_suburb#" maxlength="32">
+                        </td>
+                    </tr>
+                </xar:if>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Postal Code</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="entry_postcode" value = "#$entry_postcode#" maxlength="8">
+                        <xar:if condition="$entry_post_code_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_postcode_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>City</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="entry_city" value = "#$entry_city#" maxlength="32">
+                        <xar:if condition="$entry_city_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_city_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <xar:if condition="$configuration.account_state == 'true'">
+                    <tr>
+                        <td class="main">
+                            <xar:mlstring>State</xar:mlstring>
+                        </td>
+                        <td class="main">
+                            <xar:if condition="$zones == ''">
+                                <input type="input" name="entry_state" value = "#$entry_state#" maxlength="32">
+                                <xar:if condition="$entry_state_error == 'true'">
+                                    &#160;<span class="errorText">
+                                            #xarML('required value')#
+                                    </span>
+                                </xar:if>
+                            <xar:else />
+                                #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_zone_id', 'values' => $zones, 'default' => $entry_zone_id))#
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:if>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Country</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onChange="this.form.submit()"'))#
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+        </td>
+    </tr>
+    <tr>
+        <td class="formAreaTitle">
+            <xar:mlstring>Contact</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td class="formArea">
+            <table border="0" cellspacing="2" cellpadding="2">
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Phone</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="customers_telephone" value = "#$customers_telephone#" maxlength="32">
+                        <xar:if condition="$entry_telephone_error == 'true'">
+                            &#160;<span class="errorText">
+                                    #xarML('min. chars',$configuration.entry_telephone_min_length)#
+                            </span>
+                        </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Fax</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <input type="input" name="customers_fax" value = "#$customers_fax#" maxlength="32">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+        </td>
+    </tr>
+    <tr>
+        <td class="formAreaTitle">
+            <xar:mlstring>Options</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td class="formArea">
+            <table border="0" cellspacing="2" cellpadding="2">
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Customer Group</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'customers_status', 'values' => $customers_statuses_array, 'parameters' => 'onChange="this.form.submit()"'))#
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main">
+                        <xar:mlstring>Send email with password to customer?</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <xar:if condition="$customers_send_mail == 'yes'">
+                            <input type="radio" name="customers_send_mail" value="yes" CHECKED>
+                        <xar:else />
+                            <input type="radio" name="customers_send_mail" value="yes">
+                        </xar:if>
+                        &#160;&#160;
+                        <xar:mlstring>yes</xar:mlstring>
+                        &#160;&#160;
+                        <xar:if condition="$customers_send_mail == 'no'">
+                            <input type="radio" name="customers_send_mail" value="no" CHECKED>
+                        <xar:else />
+                            <input type="radio" name="customers_send_mail" value="no">
+                        </xar:if>
+                        &#160;&#160;
+                        <xar:mlstring>no</xar:mlstring>
+                            <xar:if condition="$entry_mail_error == 'true'">
+                                &#160;<span class="errorText">
+                                        #xarML('required field')#
+                                </span>
+                            </xar:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main" bgcolor="#FFCC33">
+                        <xar:mlstring>Password (generated)</xar:mlstring>
+                    </td>
+                    <td class="main" bgcolor="#FFCC33">
+                        <input type="password" name="customers_password" value = "#$customers_password#">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main" valign="top">
+                        <xar:mlstring>Mail text</xar:mlstring>
+                    </td>
+                    <td class="main">
+                        <textarea name="customers_mail_comments" wrap="soft" cols="60" rows="5"'>
+                            #$customers_mail_comments#
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="1" height="10">
+        </td>
+    </tr>
+    <tr>
+        <td align="right" class="main">
+            <input type="image" src="#xarTplGetImage($language . '/admin/buttons/button_insert.gif')#" border="0" alt="Insert">
+            <a href="#xarModURL('commerce','admin','customers')#">
+                <img src="#xarTplGetImage($language . '/admin/buttons/button_cancel.gif')#" border="0" alt="Cancel" title=" Cancel ">
+            </a>
+        </td>
+    </tr>
       </form>
 </table>

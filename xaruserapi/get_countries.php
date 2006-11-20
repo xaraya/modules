@@ -13,35 +13,35 @@
 function commerce_userapi_get_countries($args)
 {
     extract($args);
-    
+
     //FIXME: create an API function for this stuff
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     //xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
-    
+
     // Get the object info
     $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_countries'));
-    
+
     $condition = ''; $fieldlist = array('id', 'name');
     if(!isset($value)) {
         $condition .= "id = '$value'";
     }
-    
+
     // Isocodes requested?
     if(!isset($with_iso_codes)) $with_iso_codes = false;
     if($with_iso_codes) {
         $field_list[]='iso_code_2';
         $field_list[]='iso_code_3';
     }
-    
+
     $items = xarModApiFunc('dynamicdata','user','getitems', array (
                                 'modid'     => $objectInfo['moduleid'],
                                 'itemtype'  => $objectInfo['itemtype'],
                                 'fieldlist' => $fieldlist,
-                                'where'     => $condition 
+                                'where'     => $condition
                             ));
     return $items;
-    
+
     $countries_array = array();
     if (xarModAPIFunc('commerce','user','not_null',array('arg' => $countries_id))) {
         $q = new xenQuery('SELECT',

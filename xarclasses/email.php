@@ -1,29 +1,30 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: email.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $   
+   $Id: email.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(email.php,v 1.7 2003/05/29); www.oscommerce.com 
-   (c) 2003	 nextcommerce (zemail.php,v 1.6 2003/08/18); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(email.php,v 1.7 2003/05/29); www.oscommerce.com
+   (c) 2003  nextcommerce (zemail.php,v 1.6 2003/08/18); www.nextcommerce.org
 
-   Released under the GNU General Public License 
-   
+   Released under the GNU General Public License
+
    mail.php - a class to assist in building mime-HTML eMails
-  
+
    The original class was made by Richard Heyes <richard@phpguru.org>
    and can be found here: http://www.phpguru.org
-  
-   Renamed and Modified by Jan Wildeboer for osCommerce   
+
+   Renamed and Modified by Jan Wildeboer for osCommerce
    --------------------------------------------------------------
 */
 
-  class email{
+  class email
+  {
     var $html;
     var $text;
     var $output;
@@ -39,7 +40,8 @@
      ** if supplied.
      ***************************************/
 
-    function email($headers = array()){
+    function email($headers = array())
+    {
       /***************************************
        ** Initialise some variables.
        ***************************************/
@@ -99,7 +101,8 @@
      ** argument of the the functions
      ** add_html_image() or add_attachment().
      ***************************************/
-    function get_file($filename){
+    function get_file($filename)
+    {
       $return = '';
       if($fp = fopen($filename, 'rb')){
         while(!feof($fp)){
@@ -123,7 +126,8 @@
      **
      ** Function contributed by Dan Allen
      ***************************************/
-    function find_html_images($images_dir) {
+    function find_html_images($images_dir)
+    {
       // Build the list of image extensions
       while(list($key,) = each($this->image_types))
         $extensions[] = $key;
@@ -155,7 +159,8 @@
      ** Adds plain text. Use this function
      ** when NOT sending html email
      ***************************************/
-    function add_text($text = ''){
+    function add_text($text = '')
+    {
       $this->text = xtc_convert_linefeeds(array("\r\n", "\n", "\r"), $this->lf, $text);
     }
 
@@ -164,7 +169,8 @@
      ** Also replaces image names with
      ** content-id's.
      ***************************************/
-    function add_html($html, $text = NULL, $images_dir = NULL){
+    function add_html($html, $text = NULL, $images_dir = NULL)
+    {
       $this->html = xtc_convert_linefeeds(array("\r\n", "\n", "\r"), '<br>', $html);
       $this->html_text = xtc_convert_linefeeds(array("\r\n", "\n", "\r"), $this->lf, $text);
 
@@ -176,7 +182,8 @@
      ** Adds an image to the list of embedded
      ** images.
      ***************************************/
-    function add_html_image($file, $name = '', $c_type='application/octet-stream'){
+    function add_html_image($file, $name = '', $c_type='application/octet-stream')
+    {
       $this->html_images[] = array(
         'body'   => $file,
         'name'   => $name,
@@ -188,7 +195,8 @@
     /***************************************
      ** Adds a file to the list of attachments.
      ***************************************/
-    function add_attachment($file, $name = '', $c_type='application/octet-stream', $encoding = 'base64'){
+    function add_attachment($file, $name = '', $c_type='application/octet-stream', $encoding = 'base64')
+    {
       $this->attachments[] = array(
         'body'    => $file,
         'name'    => $name,
@@ -200,7 +208,8 @@
     /***************************************
      ** Adds a text subpart to a mime_part object
      ***************************************/
-    function &add_text_part(&$obj, $text){
+    function &add_text_part(&$obj, $text)
+    {
       $params['content_type'] = 'text/plain';
       $params['encoding']     = $this->build_params['text_encoding'];
       $params['charset']      = $this->build_params['text_charset'];
@@ -214,7 +223,8 @@
     /***************************************
     ** Adds a html subpart to a mime_part object
     ***************************************/
-    function &add_html_part(&$obj) {
+    function &add_html_part(&$obj)
+    {
       $params['content_type'] = 'text/html';
       $params['encoding']     = $this->build_params['html_encoding'];
       $params['charset']      = $this->build_params['html_charset'];
@@ -228,7 +238,8 @@
     /***************************************
      ** Starts a message with a mixed part
      ***************************************/
-    function &add_mixed_part() {
+    function &add_mixed_part()
+    {
       $params['content_type'] = 'multipart/mixed';
       return new mime('', $params);
     }
@@ -236,7 +247,8 @@
     /***************************************
      ** Adds an alternative part to a mime_part object
      ***************************************/
-    function &add_alternative_part(&$obj) {
+    function &add_alternative_part(&$obj)
+    {
       $params['content_type'] = 'multipart/alternative';
       if(is_object($obj)){
         return $obj->addSubpart('', $params);
@@ -248,7 +260,8 @@
     /***************************************
      ** Adds a html subpart to a mime_part object
      ***************************************/
-    function &add_related_part(&$obj) {
+    function &add_related_part(&$obj)
+    {
       $params['content_type'] = 'multipart/related';
       if(is_object($obj)){
         return $obj->addSubpart('', $params);
@@ -260,7 +273,8 @@
     /***************************************
      ** Adds an html image subpart to a mime_part object
      ***************************************/
-    function &add_html_image_part(&$obj, $value) {
+    function &add_html_image_part(&$obj, $value)
+    {
       $params['content_type'] = $value['c_type'];
       $params['encoding']     = 'base64';
       $params['disposition']  = 'inline';
@@ -272,7 +286,8 @@
     /***************************************
      ** Adds an attachment subpart to a mime_part object
      ***************************************/
-    function &add_attachment_part(&$obj, $value) {
+    function &add_attachment_part(&$obj, $value)
+    {
       $params['content_type'] = $value['c_type'];
       $params['encoding']     = $value['encoding'];
       $params['disposition']  = 'attachment';
@@ -300,7 +315,8 @@
 **                          - Default is iso-8859-1
 ***************************************/
 
-  function build_message($params = array()){
+  function build_message($params = array())
+  {
     if(count($params) > 0)
       while(list($key, $value) = each($params))
         $this->build_params[$key] = $value;
@@ -408,7 +424,8 @@
 ** Sends the mail.
 ***************************************/
 
-  function send($to_name, $to_addr, $from_name, $from_addr, $subject = '', $headers = ''){
+  function send($to_name, $to_addr, $from_name, $from_addr, $subject = '', $headers = '')
+  {
 
     $to    = ($to_name != '')   ? '"'.$to_name.'" <'.$to_addr.'>' : $to_addr;
     $from  = ($from_name != '') ? '"'.$from_name.'" <'.$from_addr.'>' : $from_addr;
@@ -447,7 +464,8 @@
     **       [string Subject,
     **        string Extra headers])
     ***************************************/
-    function get_rfc822($to_name, $to_addr, $from_name, $from_addr, $subject = '', $headers = ''){
+    function get_rfc822($to_name, $to_addr, $from_name, $from_addr, $subject = '', $headers = '')
+    {
       // Make up the date header as according to RFC822
       $date = 'Date: '.date('D, d M y H:i:s');
 

@@ -34,7 +34,7 @@
           <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$address_label_shipping}</font></td>
         </tr>
       </table>
-      <p>&nbsp;</p></td>
+      <p>&#160;</p></td>
   </tr>
 </table>
 <table style="border-bottom:1px solid;" width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -43,11 +43,11 @@
   </tr>
   <tr>
     <td>
-	<table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="f1f1f1">
+    <table width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="f1f1f1">
         <tr>
           <td colspan="2" style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#head_units#}</font></strong></div></td>
           <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#head_products#}</font></strong></td>
-		  <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#head_artnr#}</font></strong></td>
+          <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#head_artnr#}</font></strong></td>
           <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;" width="150"><div align="right"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#head_price#}</font></strong></div></td>
         </tr>
         {foreach name=aussen item=order_values from=$order_data}
@@ -55,11 +55,11 @@
           <td width="20" style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$order_values.PRODUCTS_QTY}</font></div></td>
           <td width="20" style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">x</font></div></td>
           <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{$order_values.PRODUCTS_NAME}</strong><em>{$order_values.PRODUCTS_ATTRIBUTES}</em></font></td>
-		  <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$order_values.PRODUCTS_MODEL}<em>{$order_values.PRODUCTS_ATTRIBUTES_MODEL}</em></font></td>
+          <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$order_values.PRODUCTS_MODEL}<em>{$order_values.PRODUCTS_ATTRIBUTES_MODEL}</em></font></td>
           <td style="border-right: 2px solid; border-bottom: 2px solid; border-color: #ffffff;" width="150"><div align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$order_values.PRODUCTS_PRICE}</font></div></td>
         </tr>
         {/foreach} </table>
-	</td>
+    </td>
   </tr>
 </table>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

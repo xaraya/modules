@@ -330,13 +330,13 @@
             <td class="main"><?php
     if ($error == true) {
       if ($entry_gender_error == true) {
-        echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&nbsp;&nbsp;' . FEMALE . '&nbsp;' . ENTRY_GENDER_ERROR;
+        echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&#160;&#160;' . MALE . '&#160;&#160;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&#160;&#160;' . FEMALE . '&#160;' . ENTRY_GENDER_ERROR;
       } else {
         echo ($customers_gender == 'm') ? MALE : FEMALE;
-        echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&nbsp;&nbsp;' . FEMALE;
+        echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&#160;&#160;' . MALE . '&#160;&#160;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&#160;&#160;' . FEMALE;
       }
     } else {
-      echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&nbsp;&nbsp;' . FEMALE;
+      echo xtc_draw_radio_field('customers_gender', 'm', false, $customers_gender) . '&#160;&#160;' . MALE . '&#160;&#160;' . xtc_draw_radio_field('customers_gender', 'f', false, $customers_gender) . '&#160;&#160;' . FEMALE;
     }
 ?></td>
           </tr>
@@ -348,7 +348,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_firstname_error == true) {
-      echo xtc_draw_input_field('customers_firstname', $customers_firstname, 'maxlength="32"') . '&nbsp;' . ENTRY_FIRST_NAME_ERROR;
+      echo xtc_draw_input_field('customers_firstname', $customers_firstname, 'maxlength="32"') . '&#160;' . ENTRY_FIRST_NAME_ERROR;
     } else {
       echo xtc_draw_input_field('customers_firstname', $customers_firstname, 'maxlength="32"');
     }
@@ -362,7 +362,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_lastname_error == true) {
-      echo xtc_draw_input_field('customers_lastname', $customers_lastname, 'maxlength="32"') . '&nbsp;' . ENTRY_LAST_NAME_ERROR;
+      echo xtc_draw_input_field('customers_lastname', $customers_lastname, 'maxlength="32"') . '&#160;' . ENTRY_LAST_NAME_ERROR;
     } else {
       echo xtc_draw_input_field('customers_lastname', $customers_lastname, 'maxlength="32"');
     }
@@ -379,7 +379,7 @@
             <td class="main"><?php
     if ($error == true) {
       if ($entry_date_of_birth_error == true) {
-        echo xtc_draw_input_field('customers_dob', xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$customers_dob)), 'maxlength="10"') . '&nbsp;' . ENTRY_DATE_OF_BIRTH_ERROR;
+        echo xtc_draw_input_field('customers_dob', xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$customers_dob)), 'maxlength="10"') . '&#160;' . ENTRY_DATE_OF_BIRTH_ERROR;
       } else {
         echo xtc_draw_input_field('customers_dob', xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$customers_dob)), 'maxlength="10"');
       }
@@ -396,11 +396,11 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_email_address_error == true) {
-      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR;
+      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&#160;' . ENTRY_EMAIL_ADDRESS_ERROR;
     } elseif ($entry_email_address_check_error == true) {
-      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_CHECK_ERROR;
+      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&#160;' . ENTRY_EMAIL_ADDRESS_CHECK_ERROR;
     } elseif ($entry_email_address_exists == true) {
-      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR_EXISTS;
+      echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"') . '&#160;' . ENTRY_EMAIL_ADDRESS_ERROR_EXISTS;
     } else {
       echo xtc_draw_input_field('customers_email_address', $customers_email_address, 'maxlength="96"');
     }
@@ -427,7 +427,7 @@
             <td class="main"><?php
     if ($error == true) {
       if ($entry_company_error == true) {
-        echo xtc_draw_input_field('entry_company', $entry_company, 'maxlength="32"') . '&nbsp;' . ENTRY_COMPANY_ERROR;
+        echo xtc_draw_input_field('entry_company', $entry_company, 'maxlength="32"') . '&#160;' . ENTRY_COMPANY_ERROR;
       } else {
         echo xtc_draw_input_field('entry_company', $entry_company, 'maxlength="32"');
       }
@@ -454,7 +454,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_street_address_error == true) {
-      echo xtc_draw_input_field('entry_street_address', $entry_street_address, 'maxlength="64"') . '&nbsp;' . ENTRY_STREET_ADDRESS_ERROR;
+      echo xtc_draw_input_field('entry_street_address', $entry_street_address, 'maxlength="64"') . '&#160;' . ENTRY_STREET_ADDRESS_ERROR;
     } else {
       echo xtc_draw_input_field('entry_street_address', $entry_street_address, 'maxlength="64"');
     }
@@ -471,7 +471,7 @@
             <td class="main"><?php
     if ($error == true) {
       if ($entry_suburb_error == true) {
-        echo xtc_draw_input_field('suburb', $entry_suburb, 'maxlength="32"') . '&nbsp;' . ENTRY_SUBURB_ERROR;
+        echo xtc_draw_input_field('suburb', $entry_suburb, 'maxlength="32"') . '&#160;' . ENTRY_SUBURB_ERROR;
       } else {
         echo xtc_draw_input_field('entry_suburb', $entry_suburb, 'maxlength="32"');
       }
@@ -488,7 +488,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_post_code_error == true) {
-      echo xtc_draw_input_field('entry_postcode', $entry_postcode, 'maxlength="8"') . '&nbsp;' . ENTRY_POST_CODE_ERROR;
+      echo xtc_draw_input_field('entry_postcode', $entry_postcode, 'maxlength="8"') . '&#160;' . ENTRY_POST_CODE_ERROR;
     } else {
       echo xtc_draw_input_field('entry_postcode', $entry_postcode, 'maxlength="8"');
     }
@@ -502,7 +502,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_city_error == true) {
-      echo xtc_draw_input_field('entry_city', $entry_city, 'maxlength="32"') . '&nbsp;' . ENTRY_CITY_ERROR;
+      echo xtc_draw_input_field('entry_city', $entry_city, 'maxlength="32"') . '&#160;' . ENTRY_CITY_ERROR;
     } else {
       echo xtc_draw_input_field('entry_city', $entry_city, 'maxlength="32"');
     }
@@ -528,9 +528,9 @@
           while ($zones_values = $q->output()) {
             $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
           }
-          echo commerce_userapi_draw_pull_down_menu('entry_state', $zones_array) . '&nbsp;' . ENTRY_STATE_ERROR;
+          echo commerce_userapi_draw_pull_down_menu('entry_state', $zones_array) . '&#160;' . ENTRY_STATE_ERROR;
         } else {
-          echo xtc_draw_input_field('entry_state', xtc_get_zone_name($entry_country_id, $entry_zone_id, $entry_state)) . '&nbsp;' . ENTRY_STATE_ERROR;
+          echo xtc_draw_input_field('entry_state', xtc_get_zone_name($entry_country_id, $entry_zone_id, $entry_state)) . '&#160;' . ENTRY_STATE_ERROR;
         }
       } else {
         echo xtc_draw_input_field('entry_state', xtc_get_zone_name($entry_country_id, $entry_zone_id, $entry_state));
@@ -548,7 +548,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_country_error == true) {
-      echo commerce_userapi_draw_pull_down_menu('entry_country_id', xtc_get_countries(xarModAPIFunc('commerce','user','get_country_name',array('country_id' =>STORE_COUNTRY))), $entry_country_id) . '&nbsp;' . ENTRY_COUNTRY_ERROR;
+      echo commerce_userapi_draw_pull_down_menu('entry_country_id', xtc_get_countries(xarModAPIFunc('commerce','user','get_country_name',array('country_id' =>STORE_COUNTRY))), $entry_country_id) . '&#160;' . ENTRY_COUNTRY_ERROR;
     } else {
       echo commerce_userapi_draw_pull_down_menu('entry_country_id', xtc_get_countries(xarModAPIFunc('commerce','user','get_country_name',array('country_id' =>STORE_COUNTRY))), $entry_country_id);
     }
@@ -572,7 +572,7 @@
             <td class="main"><?php
   if ($error == true) {
     if ($entry_telephone_error == true) {
-      echo xtc_draw_input_field('customers_telephone',$customers_telephone) . '&nbsp;' . ENTRY_TELEPHONE_NUMBER_ERROR;
+      echo xtc_draw_input_field('customers_telephone',$customers_telephone) . '&#160;' . ENTRY_TELEPHONE_NUMBER_ERROR;
     } else {
       echo xtc_draw_input_field('customers_telephone', $customers_telephone);
     }
@@ -611,13 +611,13 @@
 <?php
   if ($error == true) {
     if ($entry_mail_error == true) {
-      echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&nbsp;&nbsp;' . YES . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&nbsp;&nbsp;' . NO . '&nbsp;' . ENTRY_MAIL_ERROR;
+      echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&#160;&#160;' . YES . '&#160;&#160;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&#160;&#160;' . NO . '&#160;' . ENTRY_MAIL_ERROR;
     } else {
       echo ($customers_gender == 'm') ? YES : NO;
-      echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&nbsp;&nbsp;' . YES . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&nbsp;&nbsp;' . NO;
+      echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&#160;&#160;' . YES . '&#160;&#160;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&#160;&#160;' . NO;
     }
   } else {
-    echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&nbsp;&nbsp;' . YES . '&nbsp;&nbsp;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&nbsp;&nbsp;' . NO;
+    echo xtc_draw_radio_field('customers_mail', 'yes', true, $customers_send_mail) . '&#160;&#160;' . YES . '&#160;&#160;' . xtc_draw_radio_field('customers_mail', 'no', false, $customers_send_mail) . '&#160;&#160;' . NO;
   }
 ?></td>
           </tr>
@@ -625,7 +625,7 @@
             <td class="main" bgcolor="#FFCC33"><?php
   if ($error == true) {
     if ($entry_password_error == true) {
-      echo xtc_draw_password_field('entry_password', $customers_password) . '&nbsp;' . ENTRY_PASSWORD_ERROR;
+      echo xtc_draw_password_field('entry_password', $customers_password) . '&#160;' . ENTRY_PASSWORD_ERROR;
     } else {
       echo xtc_draw_password_field('entry_password', $customers_password);
     }

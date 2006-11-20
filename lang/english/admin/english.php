@@ -1,23 +1,23 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: english.php,v 1.2 2003/12/31 14:08:16 fanta2k Exp $   
+   $Id: english.php,v 1.2 2003/12/31 14:08:16 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(german.php,v 1.99 2003/05/28); www.oscommerce.com 
-   (c) 2003	 nextcommerce (german.php,v 1.24 2003/08/24); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(german.php,v 1.99 2003/05/28); www.oscommerce.com
+   (c) 2003  nextcommerce (german.php,v 1.24 2003/08/24); www.nextcommerce.org
 
    Released under the GNU General Public License
    --------------------------------------------------------------
    Third Party contributions:
    Customers Status v3.x (c) 2002-2003 Copyright Elari elari@free.fr | www.unlockgsm.com/dload-osc/ | CVS : http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/elari/?sortby=date#dirlist
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 
 // look in your $PATH_LOCALE/locale directory for available locales..
@@ -133,7 +133,7 @@ define('BOX_LANGUAGES', 'Languages');
 define('BOX_ORDERS_STATUS', 'Order Status');
 define('BOX_ATTRIBUTES_MANAGER','Attribute Manager');
 define('BOX_PRODUCTS_ATTRIBUTES','Option-Groups');
-define('BOX_MODULE_NEWSLETTER','Newsletter'); 
+define('BOX_MODULE_NEWSLETTER','Newsletter');
 
 //Dividers text for menu
 
@@ -185,38 +185,38 @@ define('CATEGORY_COMPANY', 'Company');
 define('CATEGORY_OPTIONS', 'More Options');
 
 define('ENTRY_GENDER', 'Gender:');
-define('ENTRY_GENDER_ERROR', '&nbsp;<span class="errorText">required</span>');
+define('ENTRY_GENDER_ERROR', '&#160;<span class="errorText">required</span>');
 define('ENTRY_FIRST_NAME', 'First Name:');
-define('ENTRY_FIRST_NAME_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_FIRST_NAME_MIN_LENGTH . ' chars</span>');
+define('ENTRY_FIRST_NAME_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_FIRST_NAME_MIN_LENGTH . ' chars</span>');
 define('ENTRY_LAST_NAME', 'Last Name:');
-define('ENTRY_LAST_NAME_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_LAST_NAME_MIN_LENGTH . ' chars</span>');
+define('ENTRY_LAST_NAME_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_LAST_NAME_MIN_LENGTH . ' chars</span>');
 define('ENTRY_DATE_OF_BIRTH', 'Date of Birth:');
-define('ENTRY_DATE_OF_BIRTH_ERROR', '&nbsp;<span class="errorText">(e.g. 05/21/1970)</span>');
+define('ENTRY_DATE_OF_BIRTH_ERROR', '&#160;<span class="errorText">(e.g. 05/21/1970)</span>');
 define('ENTRY_EMAIL_ADDRESS', 'eMail Adress:');
-define('ENTRY_EMAIL_ADDRESS_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_EMAIL_ADDRESS_MIN_LENGTH . ' chars</span>');
-define('ENTRY_EMAIL_ADDRESS_CHECK_ERROR', '&nbsp;<span class="errorText">Invalid eMail-Adress!</span>');
-define('ENTRY_EMAIL_ADDRESS_ERROR_EXISTS', '&nbsp;<span class="errorText">This eMail-Adress already exists!</span>');
+define('ENTRY_EMAIL_ADDRESS_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_EMAIL_ADDRESS_MIN_LENGTH . ' chars</span>');
+define('ENTRY_EMAIL_ADDRESS_CHECK_ERROR', '&#160;<span class="errorText">Invalid eMail-Adress!</span>');
+define('ENTRY_EMAIL_ADDRESS_ERROR_EXISTS', '&#160;<span class="errorText">This eMail-Adress already exists!</span>');
 define('ENTRY_COMPANY', 'Company name:');
 define('ENTRY_STREET_ADDRESS', 'Street Adress:');
-define('ENTRY_STREET_ADDRESS_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_STREET_ADDRESS_MIN_LENGTH . ' Chars</span>');
+define('ENTRY_STREET_ADDRESS_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_STREET_ADDRESS_MIN_LENGTH . ' Chars</span>');
 define('ENTRY_SUBURB', 'Suburb:');
 define('ENTRY_POST_CODE', 'Post Code:');
-define('ENTRY_POST_CODE_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_POSTCODE_MIN_LENGTH . ' chars</span>');
+define('ENTRY_POST_CODE_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_POSTCODE_MIN_LENGTH . ' chars</span>');
 define('ENTRY_CITY', 'City:');
-define('ENTRY_CITY_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_CITY_MIN_LENGTH . ' chars</span>');
+define('ENTRY_CITY_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_CITY_MIN_LENGTH . ' chars</span>');
 define('ENTRY_STATE', 'State:');
-define('ENTRY_STATE_ERROR', '&nbsp;<span class="errorText">required</font></small>');
+define('ENTRY_STATE_ERROR', '&#160;<span class="errorText">required</font></small>');
 define('ENTRY_COUNTRY', 'County:');
 define('ENTRY_TELEPHONE_NUMBER', 'Telephone Number:');
-define('ENTRY_TELEPHONE_NUMBER_ERROR', '&nbsp;<span class="errorText">min. ' . ENTRY_TELEPHONE_MIN_LENGTH . ' chars</span>');
+define('ENTRY_TELEPHONE_NUMBER_ERROR', '&#160;<span class="errorText">min. ' . ENTRY_TELEPHONE_MIN_LENGTH . ' chars</span>');
 define('ENTRY_FAX_NUMBER', 'Fax Number:');
 define('ENTRY_NEWSLETTER', 'Newsletter:');
 define('ENTRY_CUSTOMERS_STATUS', 'Customers status:');
 define('ENTRY_NEWSLETTER_YES', 'Subscribed');
 define('ENTRY_NEWSLETTER_NO', 'Unsubscribed');
-define('ENTRY_MAIL_ERROR','&nbsp;<span class="errorText">Please choose an option</span>');
+define('ENTRY_MAIL_ERROR','&#160;<span class="errorText">Please choose an option</span>');
 define('ENTRY_PASSWORD','Password (generated)');
-define('ENTRY_PASSWORD_ERROR','&nbsp;<span class="errorText">min. ' . ENTRY_PASSWORD_MIN_LENGTH . ' chars</span>');
+define('ENTRY_PASSWORD_ERROR','&#160;<span class="errorText">min. ' . ENTRY_PASSWORD_MIN_LENGTH . ' chars</span>');
 define('ENTRY_MAIL_COMMENTS','Mailtext:');
 
 define('ENTRY_MAIL','Send eMail with password to customer?');
@@ -321,7 +321,7 @@ define('PREVNEXT_BUTTON_NEXT', '&gt;&gt;');
 
 define('TEXT_DEFAULT', 'default');
 define('TEXT_SET_DEFAULT', 'Set as default');
-define('TEXT_FIELD_REQUIRED', '&nbsp;<span class="fieldRequired">* Required</span>');
+define('TEXT_FIELD_REQUIRED', '&#160;<span class="fieldRequired">* Required</span>');
 
 define('ERROR_NO_DEFAULT_CURRENCY_DEFINED', 'Error: There is currently no default currency set. Please set one at: Administration Tool -> Localization -> Currencies');
 
@@ -343,5 +343,5 @@ define('DELETE_ENTRY','Delete entry?');
 define('TEXT_PAYMENT_ERROR','<b>WARNING:</b><br>Please activate a Payment Module!');
 define('TEXT_SHIPPING_ERROR','<b>WARNING:</b><br>Please activate a Shipping Module!');
 
-define('TEXT_NETTO','no tax: ');   
+define('TEXT_NETTO','no tax: ');
 ?>

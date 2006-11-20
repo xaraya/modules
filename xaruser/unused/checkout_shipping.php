@@ -185,7 +185,7 @@ $shipping_block .='
                 <td colspan="2" width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
                     <td width="10">'. xtc_draw_separator('pixel_trans.gif', '10', '1').'</td>
-                    <td class="main" colspan="3"><b>'. FREE_SHIPPING_TITLE.'</b>&nbsp;'. $quotes[$i]['icon'].'</td>
+                    <td class="main" colspan="3"><b>'. FREE_SHIPPING_TITLE.'</b>&#160;'. $quotes[$i]['icon'].'</td>
                     <td width="10">'. xtc_draw_separator('pixel_trans.gif', '10', '1').'</td>
                   </tr>
                   <tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, 0)">
@@ -207,7 +207,7 @@ $shipping_block .='
                 <td colspan="2"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
                     <td width="10">'. xtc_draw_separator('pixel_trans.gif', '10', '1').'</td>
-                    <td class="main" colspan="3"><b>'. $quotes[$i]['module'].'</b>&nbsp;'. $quotes[$i]['icon'].'</td>
+                    <td class="main" colspan="3"><b>'. $quotes[$i]['module'].'</b>&#160;'. $quotes[$i]['icon'].'</td>
                     <td width="10">'. xtc_draw_separator('pixel_trans.gif', '10', '1').'</td>
                   </tr>';
 

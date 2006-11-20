@@ -55,7 +55,7 @@
                 <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_STATUS; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_PRICE; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo '% max'; ?></td>
-                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&#160;</td>
               </tr>
 <?php
     $categories_count = 0;
@@ -89,21 +89,21 @@
 
       }
 ?>
-                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, xtc_get_path($categories['categories_id'])) . '">' . xtc_image(xarTplGetImage('icons/folder.gif'), ICON_FOLDER) . '<a>&nbsp;<b><a href="'.xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $categories['categories_id']) .'">' . $categories['categories_name'] . '</a></b>'; ?></td>
+                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, xtc_get_path($categories['categories_id'])) . '">' . xtc_image(xarTplGetImage('icons/folder.gif'), ICON_FOLDER) . '<a>&#160;<b><a href="'.xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $categories['categories_id']) .'">' . $categories['categories_name'] . '</a></b>'; ?></td>
                 <td></td>
                 <td class="dataTableContent" align="center"><?php
       if ($categories['categories_status'] == '1') {
-        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=0&cID=' . $categories['categories_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
+        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=0&cID=' . $categories['categories_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
       } else {
-        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=1&cID=' . $categories['categories_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif', IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&nbsp;&nbsp;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif'), IMAGE_ICON_STATUS_RED, 10, 10);
+        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=1&cID=' . $categories['categories_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif', IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&#160;&#160;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif'), IMAGE_ICON_STATUS_RED, 10, 10);
       }
-?></td>         <td class="dataTableContent" align="center">&nbsp;</td>
-                <td class="dataTableContent" align="center">&nbsp;</td>
+?></td>         <td class="dataTableContent" align="center">&#160;</td>
+                <td class="dataTableContent" align="center">&#160;</td>
 
 
 
-                <td class="dataTableContent" align="right"><?php if ( (is_object($cInfo)) && ($categories['categories_id'] == $cInfo->categories_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif', ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $categories['categories_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
-                <td class="dataTableContent" align="center">&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($cInfo)) && ($categories['categories_id'] == $cInfo->categories_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif', ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $categories['categories_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
+                <td class="dataTableContent" align="center">&#160;</td>
 
               </tr>
 <?php
@@ -140,7 +140,7 @@
         echo '              <tr class="dataTableRow" onmouseover="this.className=\'dataTableRowOver\';this.style.cursor=\'hand\'" onmouseout="this.className=\'dataTableRow\'" >' . "\n";
       }
 ?>
-                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id'] ) . '">' . xtc_image(xarTplGetImage('icons/preview.gif'), ICON_PREVIEW) . '&nbsp;</a><a href="'.xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id']) .'">' . $products['products_name']; ?></a></td>
+                <td class="dataTableContent"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id'] ) . '">' . xtc_image(xarTplGetImage('icons/preview.gif'), ICON_PREVIEW) . '&#160;</a><a href="'.xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id']) .'">' . $products['products_name']; ?></a></td>
 <?php
       // check Produkt and attributes stock
       if ($_GET['cPath'] != '') {
@@ -149,9 +149,9 @@
 ?>
                 <td class="dataTableContent" align="center"><?php
       if ($products['products_status'] == '1') {
-        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=0&pID=' . $products['products_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
+        echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green.gif'), IMAGE_ICON_STATUS_GREEN, 10, 10) . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=0&pID=' . $products['products_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red_light.gif'), IMAGE_ICON_STATUS_RED_LIGHT, 10, 10) . '</a>';
       } else {
-        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=1&pID=' . $products['products_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif'), IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&nbsp;&nbsp;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif'), IMAGE_ICON_STATUS_RED, 10, 10);
+        echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'action=setflag&flag=1&pID=' . $products['products_id'] . '&cPath=' . $cPath) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_green_light.gif'), IMAGE_ICON_STATUS_GREEN_LIGHT, 10, 10) . '</a>&#160;&#160;' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_status_red.gif'), IMAGE_ICON_STATUS_RED, 10, 10);
       }
 ?></td>
 <td class="dataTableContent" align="center">
@@ -166,7 +166,7 @@
      echo $products['products_discount_allowed'] . '%';
      //  End Show Max Allowed discount
 ?></td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($pInfo)) && ($products['products_id'] == $pInfo->products_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($pInfo)) && ($products['products_id'] == $pInfo->products_id) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $products['products_id']) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
     }
@@ -186,10 +186,10 @@
               <tr>
                 <td colspan="3"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
-                    <td class="smallText"><?php echo TEXT_CATEGORIES . '&nbsp;' . $categories_count . '<br>' . TEXT_PRODUCTS . '&nbsp;' . $products_count; ?></td>
-                    <td align="right" class="smallText"><?php if ($cPath) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, $cPath_back . '&cID=' . $current_category_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>&nbsp;'; if (!$_GET['search']) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_category') . '">' .
+                    <td class="smallText"><?php echo TEXT_CATEGORIES . '&#160;' . $categories_count . '<br>' . TEXT_PRODUCTS . '&#160;' . $products_count; ?></td>
+                    <td align="right" class="smallText"><?php if ($cPath) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, $cPath_back . '&cID=' . $current_category_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>&#160;'; if (!$_GET['search']) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_category') . '">' .
          xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_category.gif'),'alt' => IMAGE_NEW_CATEGORY);
-                    </a>&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_product.gif'),'alt' => IMAGE_NEW_PRODUCT); . '</a>'; ?>&nbsp;</td>
+                    </a>&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_product.gif'),'alt' => IMAGE_NEW_PRODUCT); . '</a>'; ?>&#160;</td>
                   </tr>
                 </table></td>
               </tr>
@@ -207,7 +207,7 @@
         $category_inputs_string = '';
         $languages = xtc_get_languages();
         for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-          $category_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']) . '&nbsp;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']');
+          $category_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']) . '&#160;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']');
         }
 
         $contents[] = array('text' => '<br>' . TEXT_CATEGORIES_NAME . $category_inputs_string);
@@ -226,7 +226,7 @@
         $category_inputs_string = '';
         $languages = xtc_get_languages();
         for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-          $category_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']) . '&nbsp;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']', xtc_get_categories_name($cInfo->categories_id, $languages[$i]['id']));
+          $category_inputs_string .= '<br>' . xtc_image(xarTplGetImage(DIR_WS_LANGUAGES . $languages[$i]['directory'] .'/'. $languages[$i]['image']), $languages[$i]['name']) . '&#160;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']', xtc_get_categories_name($cInfo->categories_id, $languages[$i]['id']));
         }
 
         $contents[] = array('text' => '<br>' . TEXT_EDIT_CATEGORIES_NAME . $category_inputs_string);
@@ -274,10 +274,10 @@
         for ($i = 0, $n = sizeof($product_categories); $i < $n; $i++) {
           $category_path = '';
           for ($j = 0, $k = sizeof($product_categories[$i]); $j < $k; $j++) {
-            $category_path .= $product_categories[$i][$j]['text'] . '&nbsp;&gt;&nbsp;';
+            $category_path .= $product_categories[$i][$j]['text'] . '&#160;&gt;&#160;';
           }
           $category_path = substr($category_path, 0, -16);
-          $product_categories_string .= xtc_draw_checkbox_field('product_categories[]', $product_categories[$i][sizeof($product_categories[$i])-1]['id'], true) . '&nbsp;' . $category_path . '<br>';
+          $product_categories_string .= xtc_draw_checkbox_field('product_categories[]', $product_categories[$i][sizeof($product_categories[$i])-1]['id'], true) . '&#160;' . $category_path . '<br>';
         }
         $product_categories_string = substr($product_categories_string, 0, -4);
 

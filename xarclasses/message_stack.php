@@ -42,11 +42,11 @@
     function add($message, $type = 'error')
     {
       if ($type == 'error') {
-        $this->errors[] = array('params' => 'class="messageStackError"', 'text' => xtc_image(xarTplGetImage('icons/error.gif'), ICON_ERROR) . '&nbsp;' . $message);
+        $this->errors[] = array('params' => 'class="messageStackError"', 'text' => xtc_image(xarTplGetImage('icons/error.gif'), ICON_ERROR) . '&#160;' . $message);
       } elseif ($type == 'warning') {
-        $this->errors[] = array('params' => 'class="messageStackWarning"', 'text' => xtc_image(xarTplGetImage('icons/warning.gif'), ICON_WARNING) . '&nbsp;' . $message);
+        $this->errors[] = array('params' => 'class="messageStackWarning"', 'text' => xtc_image(xarTplGetImage('icons/warning.gif'), ICON_WARNING) . '&#160;' . $message);
       } elseif ($type == 'success') {
-        $this->errors[] = array('params' => 'class="messageStackSuccess"', 'text' => xtc_image(xarTplGetImage('icons/success.gif'), ICON_SUCCESS) . '&nbsp;' . $message);
+        $this->errors[] = array('params' => 'class="messageStackSuccess"', 'text' => xtc_image(xarTplGetImage('icons/success.gif'), ICON_SUCCESS) . '&#160;' . $message);
       } else {
         $this->errors[] = array('params' => 'class="messageStackError"', 'text' => $message);
       }

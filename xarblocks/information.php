@@ -56,7 +56,7 @@ function commerce_informationblock_display($blockinfo)
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

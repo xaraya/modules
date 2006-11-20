@@ -1,51 +1,51 @@
-<!---  require('includes/application_top.php');--->
+<!--  require('includes/application_top.php');-->
 
-<!--- echo HTML_PARAMS; --->
+<!-- echo HTML_PARAMS; -->
 
 <title>#$title</title>
 <style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
 <xar:template file="adminheader" type="module"/>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
-	<tr>
-		<td width="100%">
-			<table border="0" width="100%" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="80" rowspan="2">
-						<img src="#xarTplGetImage('icons/heading_modules.gif')"#>
-					</td>
-					<td class="pageHeading">
-						#$heading_title#
-					</td>
-				</tr>
-				<tr>
-					<td class="main" valign="top">
-						<xar:mlstring>XT Modules</xar:mlstring>
-					</td>
-				</tr>
-			</table> 
-		</td>
-	</tr>
-	<tr>
-	<td>
-		<table border="0" width="100%" cellspacing="0" cellpadding="0">
-			<tr>
-				<td valign="top">
-					<table border="0" width="100%" cellspacing="0" cellpadding="2">
-						<tr class="dataTableHeadingRow">
-							<td class="dataTableHeadingContent">
-								TABLE_HEADING_MODULES
-							</td>
-							<td class="dataTableHeadingContent">
-								TABLE_HEADING_FILENAME
-							</td>
-							<td class="dataTableHeadingContent" align="right">
-								TABLE_HEADING_SORT_ORDER
-							</td>
-							<td class="dataTableHeadingContent" align="right">
-								TABLE_HEADING_ACTION
-							</td>
-					  </tr>
+    <tr>
+        <td width="100%">
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="80" rowspan="2">
+                        <img src="#xarTplGetImage('icons/heading_modules.gif')"#>
+                    </td>
+                    <td class="pageHeading">
+                        #$heading_title#
+                    </td>
+                </tr>
+                <tr>
+                    <td class="main" valign="top">
+                        <xar:mlstring>XT Modules</xar:mlstring>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+    <td>
+        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td valign="top">
+                    <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                        <tr class="dataTableHeadingRow">
+                            <td class="dataTableHeadingContent">
+                                TABLE_HEADING_MODULES
+                            </td>
+                            <td class="dataTableHeadingContent">
+                                TABLE_HEADING_FILENAME
+                            </td>
+                            <td class="dataTableHeadingContent" align="right">
+                                TABLE_HEADING_SORT_ORDER
+                            </td>
+                            <td class="dataTableHeadingContent" align="right">
+                                TABLE_HEADING_ACTION
+                            </td>
+                      </tr>
 <xar:loop name="$modules">
 </xar:loop>
 
@@ -93,32 +93,32 @@
         $mInfo = new objectInfo($module_info);
       }
 
-			#$urlrow#
+            #$urlrow#
                 <td class="dataTableContent">
-	                <?php echo $module->title; ?>
+                    <?php echo $module->title; ?>
                 </td>
                 <td class="dataTableContent">
-	                <?php echo str_replace('.php','',$file); ?>
+                    <?php echo str_replace('.php','',$file); ?>
                 </td>
                 <td class="dataTableContent" align="right">
-	                <?php if (is_numeric($module->sort_order)) echo $module->sort_order; ?>
+                    <?php if (is_numeric($module->sort_order)) echo $module->sort_order; ?>
                 </td>
                 <td class="dataTableContent" align="right">
-	                <?php if ( (is_object($mInfo)) && ($class == $mInfo->code) ) { echo 
-	                <img src="#xarTplGetImage(adminimages/icon_arrow_right.gif')#"> 
-	                } else { 
-	                <a href="#xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class))#>
-	                	<img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML(Info)#">
-	                </a>&nbsp;
+                    <?php if ( (is_object($mInfo)) && ($class == $mInfo->code) ) { echo
+                    <img src="#xarTplGetImage(adminimages/icon_arrow_right.gif')#">
+                    } else {
+                    <a href="#xarModURL('commerce','admin','modules',array('set=' => $set,'module' => $class))#>
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML(Info)#">
+                    </a>&#160;
                 </td>
-			</tr>
-			<tr>
-				<td colspan="3" class="smallText">
-					<xar:mlstring>Module Directory</xar:mlstring> #$module_directory#
-				</td>
-			</tr>
-		</table>
-	</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="smallText">
+                    <xar:mlstring>Module Directory</xar:mlstring> #$module_directory#
+                </td>
+            </tr>
+        </table>
+    </td>
 <?php
   $heading = array();
   $contents = array();
@@ -217,7 +217,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 <!-- body_eof //-->
 
 <!-- footer //-->
-<!--- require(DIR_WS_INCLUDES . 'footer.php'); --->
+<!-- require(DIR_WS_INCLUDES . 'footer.php'); -->
 <!-- footer_eof //-->
 <br>
-<!--- require(DIR_WS_INCLUDES . 'application_bottom.php'); --->
+<!-- require(DIR_WS_INCLUDES . 'application_bottom.php'); -->

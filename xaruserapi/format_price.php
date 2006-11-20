@@ -14,7 +14,7 @@ require_once(DIR_FS_INC . 'xtc_precision.inc.php');
 
 function commerce_userapi_format_price ($args)
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
     extract($args);
 

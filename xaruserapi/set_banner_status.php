@@ -13,7 +13,7 @@
 // Sets the status of a banner
 function commerce_userapi_set_banner_status($args)
 {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     extract($args);

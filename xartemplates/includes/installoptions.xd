@@ -10,17 +10,17 @@
 <fieldset>
     <legend>
         <xar:mlstring>
-            Default Roles and Privileges 
+            Default Roles and Privileges
         </xar:mlstring>
     </legend>
     <div class="xar-form-input-wrapper">
         <label for="shorturls" title="#xarML('Create a default group for Commerce users')#" class="xar-form-label">
             <xar:mlstring>
-                Create a default group for Commerce users 
+                Create a default group for Commerce users
             </xar:mlstring>
         </label>
         <xar:data-input type="checkbox" name="createdefaultgroup" id="createdefaultgroup" checked="1" />
-        &nbsp;
+        &#160;
         <xar:mlstring>
             Name:
         </xar:mlstring>
@@ -29,16 +29,16 @@
     <div class="xar-form-input-wrapper">
         <label for="shorturls" title="#xarML('Create a default Commerce user')#" class="xar-form-label">
             <xar:mlstring>
-                Create a default Commerce user 
+                Create a default Commerce user
             </xar:mlstring>
         </label>
         <xar:data-input type="checkbox" name="createdefaultuser" id="createdefaultuser" checked="1" />
-        &nbsp;
+        &#160;
         <xar:mlstring>
             Name:
         </xar:mlstring>
         <input type="text" name="defaultusername" id="defaultusername" value="CommerceUser" />
-        &nbsp;
+        &#160;
         <xar:mlstring>
             Password:
         </xar:mlstring>
@@ -47,11 +47,11 @@
     <div class="xar-form-input-wrapper">
         <label for="shorturls" title="#xarML('Create default privileges for the Commerce users')#" class="xar-form-label">
             <xar:mlstring>
-                Create default privileges 
+                Create default privileges
             </xar:mlstring>
         </label>
         <xar:data-input type="checkbox" name="createdefaultprivileges" id="createdefaultprivileges" checked="1" />
-        &nbsp;
+        &#160;
         <xar:mlstring>
             The ViewCommerce privilege will be assigned to the default group, allowing its users to see the Commerce menu
         </xar:mlstring>
@@ -60,25 +60,26 @@
 <fieldset>
     <legend>
         <xar:mlstring>
-            Default Data 
+            Default Data
         </xar:mlstring>
     </legend>
     <div class="xar-form-input-wrapper">
         <label for="shorturls" title="#xarML('Create some default data for Commerce functionality')#" class="xar-form-label">
             <xar:mlstring>
-                Load default data 
+                Load default data
             </xar:mlstring>
         </label>
-        <xar:set name="$value">
+        <xar:set name="value">
             array(
                 'ice_addressformats',
             )
         </xar:set>
-        <xar:set name="$options">
+        <xar:set name="options">
             array(
                 array('id' =>'ice_addressformats', 'name' => 'Address Formats'),
             )
         </xar:set>
-        <xar:data-input type="checkboxlist" name="defaultdata" id="defaultdata" options="$options" value="$value" />
+        <!--<xar:data-input type="checkboxlist" name="defaultdata" id="defaultdata" options="$options" value="$value" /> -->
+        <xar:data-input type="checkboxlist" name="defaultdata" id="defaultdata" options="$options" value="0" />
     </div>
 </fieldset>

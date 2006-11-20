@@ -112,7 +112,7 @@ echo TEXT_NETTO . '<b>'.$currencies->format(xtc_round(get_group_price($group_dat
 ?>
               <tr>
                 <td width="20" class="main" style="border: 1px solid; border-color: #cccccc;"><?php echo $staffel_values['quantity']; ?></td>
-                <td width="5">&nbsp;</td>
+                <td width="5">&#160;</td>
                 <td nowrap width="142" class="main" style="border: 1px solid; border-color: #cccccc;">
 <?php
 if (PRICE_IS_BRUTTO=='true'){

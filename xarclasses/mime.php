@@ -1,28 +1,29 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: mime.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $   
+   $Id: mime.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(mime.php,v 1.3 2002/01/31); www.oscommerce.com 
-   (c) 2003	 nextcommerce (mime.php,v 1.4 2003/08/14); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(mime.php,v 1.3 2002/01/31); www.oscommerce.com
+   (c) 2003  nextcommerce (mime.php,v 1.4 2003/08/14); www.nextcommerce.org
 
-   Released under the GNU General Public License 
-   
+   Released under the GNU General Public License
+
    mime.php - a class to assist in building mime-HTML eMails
-  
+
    The original class was made by Richard Heyes <richard@phpguru.org>
    and can be found here: http://www.phpguru.org
 
    Renamed and Modified by Jan Wildeboer for osCommerce
    --------------------------------------------------------------*/
 
-  class mime{
+  class mime
+  {
     var $_encoding;
     var $_subparts;
     var $_encoded;
@@ -31,7 +32,7 @@
 
     /**
      * Constructor.
-     * 
+     *
      * Sets up the object.
      *
      * @param $body   - The body of the mime part if any.
@@ -44,7 +45,8 @@
      *                  description  - Content description
      * @access public
      */
-    function mime($body, $params = array()) {
+    function mime($body, $params = array())
+    {
       if (EMAIL_LINEFEED == 'CRLF') {
         $this->lf = "\r\n";
       } else {
@@ -98,7 +100,7 @@
 
     /**
      * encode()
-     * 
+     *
      * Encodes and returns the email. Also stores
      * it in the encoded member variable
      *
@@ -107,7 +109,8 @@
      *         an indexed array.
      * @access public
      */
-    function encode() {
+    function encode()
+    {
       $encoded =& $this->_encoded;
 
       if (!empty($this->_subparts)) {
@@ -138,7 +141,7 @@
 
     /**
      * &addSubPart()
-     * 
+     *
      * Adds a subpart to current mime part and returns
      * a reference to it
      *
@@ -151,14 +154,15 @@
      *         otherwise you will not be able to add further subparts.
      * @access public
      */
-    function &addSubPart($body, $params) {
+    function &addSubPart($body, $params)
+    {
       $this->_subparts[] = new mime($body, $params);
       return $this->_subparts[count($this->_subparts) - 1];
     }
 
     /**
      * _getEncodedData()
-     * 
+     *
      * Returns encoded data based upon encoding passed to it
      *
      * @param $data     The data to encode.
@@ -166,7 +170,8 @@
      *                  or quoted-printable.
      * @access private
      */
-    function _getEncodedData($data, $encoding) {
+    function _getEncodedData($data, $encoding)
+    {
       switch ($encoding) {
         case '7bit':
           return $data;
@@ -184,21 +189,22 @@
 
     /**
      * quoteadPrintableEncode()
-     * 
+     *
      * Encodes data to quoted-printable standard.
      *
      * @param $input    The data to encode
-     * @param $line_max Optional max line length. Should 
+     * @param $line_max Optional max line length. Should
      *                  not be more than 76 chars
      *
      * @access private
      */
-    function _quotedPrintableEncode($input , $line_max = 76) {
+    function _quotedPrintableEncode($input , $line_max = 76)
+    {
       $lines    = preg_split("/\r\n|\r|\n/", $input);
       $eol    = $this->lf;
       $escape    = '=';
       $output    = '';
-        
+
       while(list(, $line) = each($lines)){
         $linlen     = strlen($line);
         $newline = '';
@@ -213,7 +219,7 @@
           } elseif(($dec == 61) OR ($dec < 32 ) OR ($dec > 126)) {
             $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
           }
-    
+
           if ((strlen($newline) + strlen($char)) >= $line_max) {        // $this->lf is not counted
             $output  .= $newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
             $newline  = '';

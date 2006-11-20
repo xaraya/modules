@@ -16,11 +16,13 @@
    ---------------------------------------------------------------------------------------*/
 
 
-  class secpay {
+  class secpay
+  {
     var $code, $title, $description, $enabled;
 
 
-    function secpay() {
+    function secpay()
+    {
       global $order;
 
       $this->code = 'secpay';
@@ -39,7 +41,8 @@
     }
 
 
-    function update_status() {
+    function update_status()
+    {
       global $order;
 
       if ( ($this->enabled == true) && ((int)MODULE_PAYMENT_SECPAY_ZONE > 0) ) {
@@ -63,24 +66,29 @@
       }
     }
 
-    function javascript_validation() {
+    function javascript_validation()
+    {
       return false;
     }
 
-    function selection() {
+    function selection()
+    {
       return array('id' => $this->code,
                    'module' => $this->title);
     }
 
-    function pre_confirmation_check() {
+    function pre_confirmation_check()
+    {
       return false;
     }
 
-    function confirmation() {
+    function confirmation()
+    {
       return false;
     }
 
-    function process_button() {
+    function process_button()
+    {
       global $order, $currencies;
 
       switch (MODULE_PAYMENT_SECPAY_CURRENCY) {
@@ -134,7 +142,8 @@
       return $data;
     }
 
-    function before_process() {
+    function before_process()
+    {
 
       if ($_POST['valid'] == 'true') {
         if ($remote_host = getenv('REMOTE_HOST')) {
@@ -150,11 +159,13 @@
       }
     }
 
-    function after_process() {
+    function after_process()
+    {
       return false;
     }
 
-    function get_error() {
+    function get_error()
+    {
 
       if (isset($_GET['message']) && (strlen($_GET['message']) > 0)) {
         $error = stripslashes(urldecode($_GET['message']));
@@ -167,14 +178,16 @@
     }
 
     function check() {
-      if (!isset($this->_check)) {
+      if (!isset($this->_check))
+      {
         $check_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_PAYMENT_SECPAY_STATUS'");
         $this->_check = $check_query->getrows();
       }
       return $this->_check;
     }
 
-    function install() {
+    function install()
+    {
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) values ('MODULE_PAYMENT_SECPAY_STATUS', 'True', '6', '1', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_SECPAY_ALLOWED', '', '6', '0', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_SECPAY_MERCHANT_ID', 'secpay',  '6', '2', now())");
@@ -185,11 +198,13 @@
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value, configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_SECPAY_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
     }
 
-    function remove() {
+    function remove()
+    {
       new xenQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
     }
 
-    function keys() {
+    function keys()
+    {
       return array('MODULE_PAYMENT_SECPAY_STATUS','MODULE_PAYMENT_SECPAY_ALLOWED', 'MODULE_PAYMENT_SECPAY_MERCHANT_ID', 'MODULE_PAYMENT_SECPAY_CURRENCY', 'MODULE_PAYMENT_SECPAY_TEST_STATUS', 'MODULE_PAYMENT_SECPAY_ZONE', 'MODULE_PAYMENT_SECPAY_ORDER_STATUS_ID', 'MODULE_PAYMENT_SECPAY_SORT_ORDER');
     }
   }

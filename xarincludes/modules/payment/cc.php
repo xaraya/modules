@@ -16,11 +16,13 @@
    ---------------------------------------------------------------------------------------*/
 
 
-  class cc {
+  class cc
+  {
     var $code, $title, $description, $enabled;
 
 
-    function cc() {
+    function cc()
+    {
       global $order;
 
       $this->code = 'cc';
@@ -37,7 +39,8 @@
     }
 
 
-    function update_status() {
+    function update_status()
+    {
       global $order;
 
       if ( ($this->enabled == true) && ((int)MODULE_PAYMENT_CC_ZONE > 0) ) {
@@ -61,7 +64,8 @@
       }
     }
 
-    function javascript_validation() {
+    function javascript_validation()
+    {
       $js = '  if (payment_value == "' . $this->code . '") {' . "\n" .
             '    var cc_owner = document.checkout_payment.cc_owner.value;' . "\n" .
             '    var cc_number = document.checkout_payment.cc_number.value;' . "\n" .
@@ -78,7 +82,8 @@
       return $js;
     }
 
-    function selection() {
+    function selection()
+    {
       global $order;
 
       for ($i=1; $i<13; $i++) {
@@ -97,12 +102,13 @@
                                            array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_NUMBER,
                                                  'field' => xtc_draw_input_field('cc_number')),
                                            array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_EXPIRES,
-                                                 'field' => commerce_userapi_draw_pull_down_menu('cc_expires_month', $expires_month) . '&nbsp;' . commerce_userapi_draw_pull_down_menu('cc_expires_year', $expires_year))));
+                                                 'field' => commerce_userapi_draw_pull_down_menu('cc_expires_month', $expires_month) . '&#160;' . commerce_userapi_draw_pull_down_menu('cc_expires_year', $expires_year))));
 
       return $selection;
     }
 
-    function pre_confirmation_check() {
+    function pre_confirmation_check()
+    {
 
       include(DIR_WS_CLASSES . 'cc_validation.php');
 
@@ -134,7 +140,8 @@
       $this->cc_card_number = $cc_validation->cc_number;
     }
 
-    function confirmation() {
+    function confirmation()
+    {
 
       $confirmation = array('title' => $this->title . ': ' . $this->cc_card_type,
                             'fields' => array(array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_OWNER,
@@ -147,7 +154,8 @@
       return $confirmation;
     }
 
-    function process_button() {
+    function process_button()
+    {
 
       $data['hidden'][0] = array('name' =>cc_owner, 'value' =>$_POST['cc_owner']);
       $data['hidden'][1] = array('name' =>cc_expires, 'value' =>$_POST['cc_expires_month'] . $_POST['cc_expires_year']);
@@ -156,7 +164,8 @@
       rreturn $data;
     }
 
-    function before_process() {
+    function before_process()
+    {
       global $order;
 
       if ( (defined('MODULE_PAYMENT_CC_EMAIL')) && (xarModAPIFunc('commerce','user','validate_email',array('email' => MODULE_PAYMENT_CC_EMAIL))) ) {
@@ -167,7 +176,8 @@
       }
     }
 
-    function after_process() {
+    function after_process()
+    {
       global $insert_id;
 
       if ( (defined('MODULE_PAYMENT_CC_EMAIL')) && (xarModAPIFunc('commerce','user','validate_email',array('email' => MODULE_PAYMENT_CC_EMAIL))) ) {
@@ -177,7 +187,8 @@
       }
     }
 
-    function get_error() {
+    function get_error()
+    {
 
       $error = array('title' => MODULE_PAYMENT_CC_TEXT_ERROR,
                      'error' => stripslashes(urldecode($_GET['error'])));
@@ -185,7 +196,8 @@
       return $error;
     }
 
-    function check() {
+    function check()
+    {
       if (!isset($this->_check)) {
         $check_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_PAYMENT_CC_STATUS'");
         $this->_check = $check_query->getrows();
@@ -193,7 +205,8 @@
       return $this->_check;
     }
 
-    function install() {
+    function install()
+    {
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, set_function, date_added) values ('MODULE_PAYMENT_CC_STATUS', 'True',  '6', '0', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_CC_ALLOWED', '', '6', '0', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_CC_EMAIL', '','6', '0', now())");
@@ -202,11 +215,13 @@
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_CC_ORDER_STATUS_ID', '0', '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
     }
 
-    function remove() {
+    function remove()
+    {
       new xenQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
     }
 
-    function keys() {
+    function keys()
+    {
       return array('MODULE_PAYMENT_CC_STATUS','MODULE_PAYMENT_CC_ALLOWED', 'MODULE_PAYMENT_CC_EMAIL', 'MODULE_PAYMENT_CC_ZONE', 'MODULE_PAYMENT_CC_ORDER_STATUS_ID', 'MODULE_PAYMENT_CC_SORT_ORDER');
     }
   }

@@ -1,18 +1,18 @@
 <?php
 /* -----------------------------------------------------------------------------------------
-   $Id: german.php,v 1.1 2003/09/28 14:38:01 fanta2k Exp $   
+   $Id: german.php,v 1.1 2003/09/28 14:38:01 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    -----------------------------------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(german.php,v 1.119 2003/05/19); www.oscommerce.com 
-   (c) 2003	 nextcommerce (german.php,v 1.25 2003/08/25); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(german.php,v 1.119 2003/05/19); www.oscommerce.com
+   (c) 2003  nextcommerce (german.php,v 1.25 2003/08/25); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    ---------------------------------------------------------------------------------------*/
 
 // look in your $PATH_LOCALE/locale directory for available locales..
@@ -192,8 +192,8 @@ define('PREVNEXT_TITLE_PAGE_NO', 'Seite %d');
 define('PREVNEXT_TITLE_PREV_SET_OF_NO_PAGE', 'Vorhergehende %d Seiten');
 define('PREVNEXT_TITLE_NEXT_SET_OF_NO_PAGE', 'N&auml;chste %d Seiten');
 define('PREVNEXT_BUTTON_FIRST', '&lt;&lt;ERSTE');
-define('PREVNEXT_BUTTON_PREV', '[&lt;&lt;&nbsp;vorherige]');
-define('PREVNEXT_BUTTON_NEXT', '[n&auml;chste&nbsp;&gt;&gt;]');
+define('PREVNEXT_BUTTON_PREV', '[&lt;&lt;&#160;vorherige]');
+define('PREVNEXT_BUTTON_NEXT', '[n&auml;chste&#160;&gt;&gt;]');
 define('PREVNEXT_BUTTON_LAST', 'LETZTE&gt;&gt;');
 
 define('IMAGE_BUTTON_ADD_ADDRESS', 'Neue Adresse');
@@ -271,7 +271,7 @@ define('TEXT_CCVAL_ERROR_UNKNOWN_CARD', 'Die ersten 4 Ziffern Ihrer Kreditkarte 
 
   Please leave this comment intact together with the
   following copyright announcement.
-  
+
   Copyright announcement changed due to the permissions
   from LG Hamburg from 28th February 2003 / AZ 308 O 70/03
 */

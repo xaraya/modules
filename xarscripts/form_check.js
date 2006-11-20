@@ -1,4 +1,4 @@
-<!---
+<!--
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
 // Copyright (C) 2003 by the Xaraya Development Team.
@@ -13,7 +13,7 @@
 //  (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
---->
+-->
 
 <script language="javascript"><!--
 var form = "";
@@ -97,7 +97,7 @@ function check_password_new(field_name_1, field_name_2, field_name_3, field_size
   }
 }
 
-<!---
+<!--
 FIXME
 function check_form(form_name) {
   if (submitted == true) {
@@ -140,5 +140,5 @@ function check_form(form_name) {
     return true;
   }
 }
---->
+-->
 //--></script>

@@ -65,7 +65,7 @@
 <?php    for ($i=0; $i<sizeof($languages); $i++) { ?>
           <tr>
             <td class="main"><?php if ($i == 0) echo TEXT_EDIT_CATEGORIES_NAME; ?></td>
-            <td class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']) . '&nbsp;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']', (($categories_name[$languages[$i]['id']]) ? stripslashes($categories_name[$languages[$i]['id']]) : xtc_get_categories_name($cInfo->categories_id, $languages[$i]['id']))); ?></td>
+            <td class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']) . '&#160;' . xtc_draw_input_field('categories_name[' . $languages[$i]['id'] . ']', (($categories_name[$languages[$i]['id']]) ? stripslashes($categories_name[$languages[$i]['id']]) : xtc_get_categories_name($cInfo->categories_id, $languages[$i]['id']))); ?></td>
           </tr>
 <?php } ?>
 
@@ -74,7 +74,7 @@
 <?php    for ($i=0; $i<sizeof($languages); $i++) { ?>
           <tr>
             <td class="main"><?php if ($i == 0) echo TEXT_EDIT_CATEGORIES_HEADING_TITLE; ?></td>
-            <td class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']) . '&nbsp;' . xtc_draw_input_field('categories_heading_title[' . $languages[$i]['id'] . ']', (($categories_name[$languages[$i]['id']]) ? stripslashes($categories_name[$languages[$i]['id']]) : xtc_get_categories_heading_title($cInfo->categories_id, $languages[$i]['id']))); ?></td>
+            <td class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']) . '&#160;' . xtc_draw_input_field('categories_heading_title[' . $languages[$i]['id'] . ']', (($categories_name[$languages[$i]['id']]) ? stripslashes($categories_name[$languages[$i]['id']]) : xtc_get_categories_heading_title($cInfo->categories_id, $languages[$i]['id']))); ?></td>
           </tr>
 <?php } ?>
 
@@ -85,7 +85,7 @@
             <td class="main" valign="top"><?php  echo TEXT_EDIT_CATEGORIES_DESCRIPTION; ?></td>
             <td><table border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&nbsp;</td>
+                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&#160;</td>
                 <td class="main"><?php echo xtc_draw_textarea_field('categories_description[' . $languages[$i]['id'] . ']', 'soft', '70', '15', (($categories_description[$languages[$i]['id']]) ? stripslashes($categories_description[$languages[$i]['id']]) : xtc_get_categories_description($cInfo->categories_id, $languages[$i]['id']))); ?></td>
               </tr>
             </table></td>
@@ -94,7 +94,7 @@
             <td class="main" valign="top"><?php  echo TEXT_META_TITLE; ?></td>
             <td><table border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&nbsp;</td>
+                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&#160;</td>
                 <td class="main"><?php echo xtc_draw_textarea_field('categories_meta_title[' . $languages[$i]['id'] . ']', 'soft', '70', '2', (($categories_meta_title[$languages[$i]['id']]) ? stripslashes($categories_meta_title[$languages[$i]['id']]) : xtc_get_categories_meta_title($cInfo->categories_id, $languages[$i]['id']))); ?></td>
               </tr>
             </table></td>
@@ -106,7 +106,7 @@
             <td class="main" valign="top"><?php  echo TEXT_META_DESCRIPTION; ?></td>
             <td><table border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&nbsp;</td>
+                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&#160;</td>
                 <td class="main"><?php echo xtc_draw_textarea_field('categories_meta_description[' . $languages[$i]['id'] . ']', 'soft', '70', '3', (($categories_meta_description[$languages[$i]['id']]) ? stripslashes($categories_meta_description[$languages[$i]['id']]) : xtc_get_categories_meta_description($cInfo->categories_id, $languages[$i]['id']))); ?></td>
               </tr>
             </table></td>
@@ -118,7 +118,7 @@
             <td class="main" valign="top"><?php  echo TEXT_META_KEYWORDS; ?></td>
             <td><table border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&nbsp;</td>
+                <td class="main" valign="top"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']); ?>&#160;</td>
                 <td class="main"><?php echo xtc_draw_textarea_field('categories_meta_keywords[' . $languages[$i]['id'] . ']', 'soft', '70', '3', (($categories_meta_keywords[$languages[$i]['id']]) ? stripslashes($categories_meta_keywords[$languages[$i]['id']]) : xtc_get_categories_meta_keywords($cInfo->categories_id, $languages[$i]['id']))); ?></td>
               </tr>
             </table></td>
@@ -127,14 +127,14 @@
         <tr><td colspan="2"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td></tr>
           <tr>
             <td class="main"><?php echo TEXT_EDIT_CATEGORIES_IMAGE; ?></td>
-            <td class="main"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . xtc_draw_file_field('categories_image') . '<br>' . xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . $cInfo->categories_image .
+            <td class="main"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . xtc_draw_file_field('categories_image') . '<br>' . xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . $cInfo->categories_image .
 <input type="hidden" name="categories_previous_image" value="#$cInfo->categories_image#">
             </td>
           </tr>
           <tr><td colspan="2"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td></tr>
           <tr>
             <td class="main"><?php echo TEXT_EDIT_SORT_ORDER; ?></td>
-            <td class="main"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . xtc_draw_input_field('sort_order', $cInfo->sort_order, 'size="2"'); ?></td>
+            <td class="main"><?php echo xtc_draw_separator('pixel_trans.gif', '24', '15') . '&#160;' . xtc_draw_input_field('sort_order', $cInfo->sort_order, 'size="2"'); ?></td>
           </tr>
            <tr><td colspan="2"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td></tr>
         </table></td>
@@ -144,5 +144,5 @@
 <input type="hidden" name="categories_date_added" value="#(($cInfo->date_added) ? $cInfo->date_added : date('Y-m-d'))#">
 <input type="hidden" name="parent_id" value="#$cInfo->parent_id#">
     <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onClick="return confirm(\''.SAVE_ENTRY.'\')">.
-        . '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $_GET['cID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+        . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $_GET['cID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
       </form></tr>

@@ -30,23 +30,23 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
     $module_smarty->assign('INPUT_FEMALE',xtc_draw_radio_field('gender', 'f', $female)  . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_GENDER_TEXT)) ? '<span class="inputRequirement">' . ENTRY_GENDER_TEXT . '</span>': ''));
 
   }
-  $module_smarty->assign('INPUT_FIRSTNAME',xtc_draw_input_field('firstname') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_FIRST_NAME_TEXT)) ? '<span class="inputRequirement">' . ENTRY_FIRST_NAME_TEXT . '</span>': ''));
-  $module_smarty->assign('INPUT_LASTNAME',xtc_draw_input_field('lastname') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_LAST_NAME_TEXT)) ? '<span class="inputRequirement">' . ENTRY_LAST_NAME_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_FIRSTNAME',xtc_draw_input_field('firstname') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_FIRST_NAME_TEXT)) ? '<span class="inputRequirement">' . ENTRY_FIRST_NAME_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_LASTNAME',xtc_draw_input_field('lastname') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_LAST_NAME_TEXT)) ? '<span class="inputRequirement">' . ENTRY_LAST_NAME_TEXT . '</span>': ''));
 
   if (ACCOUNT_COMPANY == 'true') {
   $module_smarty->assign('company','1');
-  $module_smarty->assign('INPUT_COMPANY',xtc_draw_input_field('company') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_COMPANY_TEXT)) ? '<span class="inputRequirement">' . ENTRY_COMPANY_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_COMPANY',xtc_draw_input_field('company') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_COMPANY_TEXT)) ? '<span class="inputRequirement">' . ENTRY_COMPANY_TEXT . '</span>': ''));
 
   }
-  $module_smarty->assign('INPUT_STREET',xtc_draw_input_field('street_address') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_STREET_ADDRESS_TEXT)) ? '<span class="inputRequirement">' . ENTRY_STREET_ADDRESS_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_STREET',xtc_draw_input_field('street_address') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_STREET_ADDRESS_TEXT)) ? '<span class="inputRequirement">' . ENTRY_STREET_ADDRESS_TEXT . '</span>': ''));
 
   if (ACCOUNT_SUBURB == 'true') {
   $module_smarty->assign('suburb','1');
-  $module_smarty->assign('INPUT_SUBURB',xtc_draw_input_field('suburb') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_SUBURB_TEXT)) ? '<span class="inputRequirement">' . ENTRY_SUBURB_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_SUBURB',xtc_draw_input_field('suburb') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_SUBURB_TEXT)) ? '<span class="inputRequirement">' . ENTRY_SUBURB_TEXT . '</span>': ''));
 
   }
-  $module_smarty->assign('INPUT_CODE',xtc_draw_input_field('postcode') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_POST_CODE_TEXT)) ? '<span class="inputRequirement">' . ENTRY_POST_CODE_TEXT . '</span>': ''));
-  $module_smarty->assign('INPUT_CITY',xtc_draw_input_field('city') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_CITY_TEXT)) ? '<span class="inputRequirement">' . ENTRY_CITY_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_CODE',xtc_draw_input_field('postcode') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_POST_CODE_TEXT)) ? '<span class="inputRequirement">' . ENTRY_POST_CODE_TEXT . '</span>': ''));
+  $module_smarty->assign('INPUT_CITY',xtc_draw_input_field('city') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_CITY_TEXT)) ? '<span class="inputRequirement">' . ENTRY_CITY_TEXT . '</span>': ''));
 
   if (ACCOUNT_STATE == 'true') {
   $module_smarty->assign('state','1');
@@ -68,11 +68,11 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
       $entry_state =  xtc_draw_input_field('state');
     }
 
-    if (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_STATE_TEXT))) $entry_state.=  '&nbsp;<span class="inputRequirement">' . ENTRY_STATE_TEXT;
+    if (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_STATE_TEXT))) $entry_state.=  '&#160;<span class="inputRequirement">' . ENTRY_STATE_TEXT;
 
 $module_smarty->assign('INPUT_STATE',$entry_state);
   }
-  $module_smarty->assign('SELECT_COUNTRY',xtc_get_country_list('country') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_COUNTRY_TEXT))) ? '<span class="inputRequirement">' . ENTRY_COUNTRY_TEXT . '</span>': ''));
+  $module_smarty->assign('SELECT_COUNTRY',xtc_get_country_list('country') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_COUNTRY_TEXT))) ? '<span class="inputRequirement">' . ENTRY_COUNTRY_TEXT . '</span>': ''));
 
   $module_smarty->assign('language', $_SESSION['language']);
 

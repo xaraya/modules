@@ -1,21 +1,22 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: logger.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $   
+   $Id: logger.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(logger.php,v 1.2 2002/05/03); www.oscommerce.com 
-   (c) 2003	 nextcommerce (logger.php,v 1.5 2003/08/14); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(logger.php,v 1.2 2002/05/03); www.oscommerce.com
+   (c) 2003  nextcommerce (logger.php,v 1.5 2003/08/14); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 
-  class logger {
+  class logger
+  {
     var $timer_start, $timer_stop, $timer_total;
 
     // class constructor
@@ -31,7 +32,8 @@
       }
     }
 
-    function timer_stop($display = 'false') {
+    function timer_stop($display = 'false')
+    {
       $this->timer_stop = microtime();
 
       $time_start = explode(' ', $this->timer_start);
@@ -46,11 +48,13 @@
       }
     }
 
-    function timer_display() {
+    function timer_display()
+    {
       return '<span class="smallText">Parse Time: ' . $this->timer_total . 's</span>';
     }
 
-    function write($message, $type) {
+    function write($message, $type)
+    {
       error_log(strftime(STORE_PARSE_DATE_TIME_FORMAT) . ' [' . $type . '] ' . $message . "\n", 3, STORE_PAGE_PARSE_TIME_LOG);
     }
   }

@@ -61,9 +61,9 @@ function commerce_tell_a_friendblock_display($blockinfo)
     // include needed functions
     require_once(DIR_FS_INC . 'xtc_draw_input_field.inc.php');
 
-    $box_content = 
-        xtc_draw_form('tell_a_friend', xarModURL('commerce','user','tell_a_friend', '', 'NONSSL', false), 'get') . 
-        xtc_draw_input_field('send_to', '', 'size="10"') . '&nbsp;' .
+    $box_content =
+        xtc_draw_form('tell_a_friend', xarModURL('commerce','user','tell_a_friend', '', 'NONSSL', false), 'get') .
+        xtc_draw_input_field('send_to', '', 'size="10"') . '&#160;' .
         '<input type="image" src="#xarTplGetImage(\'buttons/\' . xarSessionGetVar(\'language\') . \'/\'.\'button_tell_a_friend.gif\')#" border="0" alt=BOX_HEADING_TELL_A_FRIEND>' .
         xtc_draw_hidden_field('products_id', $_GET['products_id']) .
         xtc_hide_session_id() . '<br>' . BOX_TELL_A_FRIEND_TEXT.'</form>';

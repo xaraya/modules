@@ -37,7 +37,8 @@ class currencies extends xenCommerceObject
     }
 
     // class methods
-    function format($number, $calculate_currency_value = true, $currency_type = DEFAULT_CURRENCY, $currency_value = '') {
+    function format($number, $calculate_currency_value = true, $currency_type = DEFAULT_CURRENCY, $currency_value = '')
+    {
       if ($calculate_currency_value) {
         $rate = ($currency_value) ? $currency_value : $this->currencies[$currency_type]['value'];
         $format_string = $this->currencies[$currency_type]['symbol_left'] . number_format($number * $rate, $this->currencies[$currency_type]['decimal_places'], $this->currencies[$currency_type]['decimal_point'], $this->currencies[$currency_type]['thousands_point']) . $this->currencies[$currency_type]['symbol_right'];
@@ -53,11 +54,13 @@ class currencies extends xenCommerceObject
       return $format_string;
     }
 
-    function get_value($code) {
+    function get_value($code)
+    {
       return $this->currencies[$code]['value'];
     }
 
-    function display_price($products_price, $products_tax, $quantity = 1) {
+    function display_price($products_price, $products_tax, $quantity = 1)
+    {
       return $this->format(xarModAPIFunc('commerce','user','add_tax',array('price' =>$products_price,'tax' =>$products_tax)) * $quantity);
     }
 }

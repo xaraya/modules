@@ -41,7 +41,7 @@ xtc_hide_session_id();
                  '    <td class="fieldValue">' . commerce_userapi_draw_pull_down_menu('categories_id', xtc_get_categories(array(array('id' => '', 'text' => TEXT_ALL_CATEGORIES)))) . '<br></td>' . "\n" .
                  '  </tr>' . "\n" .
                  '  <tr>' . "\n" .
-                 '    <td class="fieldKey">&nbsp;</td>' . "\n" .
+                 '    <td class="fieldKey">&#160;</td>' . "\n" .
                  '    <td class="smallText">' . xtc_draw_checkbox_field('inc_subcat', '1', true) . ' ' . ENTRY_INCLUDE_SUBCATEGORIES . '</td>' . "\n" .
                  '  </tr>' . "\n" .
                  '  <tr>' . "\n" .

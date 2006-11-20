@@ -1,20 +1,20 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 <xar:if condition="!empty($content)">
-	<xar:loop name="$content" id="id1">
-	  <ul class="xar-menu-section">
-		<li class="xar-menu-section">#$loop:item['heading']#
-		  <ul class="xar-menu-item">
-			<xar:loop name="$loop:item['lines']" id="id2">
-			  <xar:if condition="$loop:id2:item[0] eq $currenturl">
-				  <li class="xar-menu-subitem-current">#$loop:id2:item[2]# #$marker#</li>
-				<xar:else />
-				  <li class="xar-menu-subitem"><a href="#$loop:id2:item[1]#" title="#$loop:id2:item[3]#">#$loop:id2:item[2]#</a>
-				  </li>
-				</xar:if>
-			</xar:loop>
-		  </ul>
-		</li>
-	  </ul>
-	</xar:loop>
+    <xar:loop name="$content" id="id1">
+      <ul class="xar-menu-section">
+        <li class="xar-menu-section">#$loop:item['heading']#
+          <ul class="xar-menu-item">
+            <xar:loop name="$loop:item['lines']" id="id2">
+              <xar:if condition="$loop:id2:item[0] eq $currenturl">
+                  <li class="xar-menu-subitem-current">#$loop:id2:item[2]# #$marker#</li>
+                <xar:else />
+                  <li class="xar-menu-subitem"><a href="#$loop:id2:item[1]#" title="#$loop:id2:item[3]#">#$loop:id2:item[2]#</a>
+                  </li>
+                </xar:if>
+            </xar:loop>
+          </ul>
+        </li>
+      </ul>
+    </xar:loop>
 </xar:if>

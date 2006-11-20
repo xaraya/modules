@@ -16,11 +16,13 @@
    ---------------------------------------------------------------------------------------*/
 
 
-  class paypal {
+  class paypal
+  {
     var $code, $title, $description, $enabled;
 
 
-    function paypal() {
+    function paypal()
+    {
       global $order;
 
       $this->code = 'paypal';
@@ -39,7 +41,8 @@
     }
 
 
-    function update_status() {
+    function update_status()
+    {
       global $order;
 
       if ( ($this->enabled == true) && ((int)MODULE_PAYMENT_PAYPAL_ZONE > 0) ) {
@@ -63,24 +66,29 @@
       }
     }
 
-    function javascript_validation() {
+    function javascript_validation()
+    {
       return false;
     }
 
-    function selection() {
+    function selection()
+    {
       return array('id' => $this->code,
                    'module' => $this->title);
     }
 
-    function pre_confirmation_check() {
+    function pre_confirmation_check()
+    {
       return false;
     }
 
-    function confirmation() {
+    function confirmation()
+    {
       return false;
     }
 
-    function process_button() {
+    function process_button()
+    {
       global $order, $currencies;
 
       if (MODULE_PAYMENT_PAYPAL_CURRENCY == 'Selected Currency') {
@@ -102,19 +110,23 @@
       return $data;
     }
 
-    function before_process() {
+    function before_process()
+    {
       return false;
     }
 
-    function after_process() {
+    function after_process()
+    {
       return false;
     }
 
-    function output_error() {
+    function output_error()
+    {
       return false;
     }
 
-    function check() {
+    function check()
+    {
       if (!isset($this->_check)) {
         $check_query = new xenQuery("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_PAYMENT_PAYPAL_STATUS'");
         $this->_check = $check_query->getrows();
@@ -122,7 +134,8 @@
       return $this->_check;
     }
 
-    function install() {
+    function install()
+    {
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, set_function, date_added) values ('MODULE_PAYMENT_PAYPAL_STATUS', 'True', '6', '3', 'xtc_cfg_select_option(array(\'True\', \'False\'), ', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_PAYPAL_ALLOWED', '', '6', '0', now())");
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, date_added) values ('MODULE_PAYMENT_PAYPAL_ID', 'you@yourbusiness.com',  '6', '4', now())");
@@ -132,11 +145,13 @@
       new xenQuery("insert into " . TABLE_CONFIGURATION . " ( configuration_key, configuration_value,  configuration_group_id, sort_order, set_function, use_function, date_added) values ('MODULE_PAYMENT_PAYPAL_ORDER_STATUS_ID', '0',  '6', '0', 'xtc_cfg_pull_down_order_statuses(', 'xtc_get_order_status_name', now())");
     }
 
-    function remove() {
+    function remove()
+    {
       new xenQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
     }
 
-    function keys() {
+    function keys()
+    {
       return array('MODULE_PAYMENT_PAYPAL_STATUS','MODULE_PAYMENT_PAYPAL_ALLOWED', 'MODULE_PAYMENT_PAYPAL_ID', 'MODULE_PAYMENT_PAYPAL_CURRENCY', 'MODULE_PAYMENT_PAYPAL_ZONE', 'MODULE_PAYMENT_PAYPAL_ORDER_STATUS_ID', 'MODULE_PAYMENT_PAYPAL_SORT_ORDER');
     }
   }

@@ -21,7 +21,7 @@
       {$INPUT_KEYWORDS}</td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
+    <td>&#160;</td>
     <td class="main"><div align="right">{$CHECKBOX_DESCRIPTION} {#text_description#}</div></td>
   </tr>
 </table>

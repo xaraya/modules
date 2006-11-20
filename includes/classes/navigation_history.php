@@ -1,21 +1,22 @@
 <?php
 /* -----------------------------------------------------------------------------------------
-   $Id: navigation_history.php,v 1.1 2003/09/06 22:13:53 fanta2k Exp $   
+   $Id: navigation_history.php,v 1.1 2003/09/06 22:13:53 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    -----------------------------------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(navigation_history.php,v 1.5 2003/02/12); www.oscommerce.com 
-   (c) 2003	 nextcommerce (navigation_history.php,v 1.6 2003/08/13); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(navigation_history.php,v 1.5 2003/02/12); www.oscommerce.com
+   (c) 2003  nextcommerce (navigation_history.php,v 1.6 2003/08/13); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    ---------------------------------------------------------------------------------------*/
 
-  class navigationHistory {
+  class navigationHistory
+  {
     var $path, $snapshot;
 
     function navigationHistory() {
@@ -116,7 +117,7 @@
         if (sizeof($this->path[$i]['post']) > 0) {
           echo '<br>';
           while (list($key, $value) = each($this->path[$i]['post'])) {
-            echo '&nbsp;&nbsp;<b>' . $key . '=' . $value . '</b><br>';
+            echo '&#160;&#160;<b>' . $key . '=' . $value . '</b><br>';
           }
         }
         echo '<br>';

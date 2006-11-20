@@ -11,10 +11,12 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  class objectInfo {
+  class objectInfo
+  {
 
     // class constructor
-    function objectInfo($object_array) {
+    function objectInfo($object_array)
+    {
       reset($object_array);
       while (list($key, $value) = each($object_array)) {
         $this->$key = xarModAPIFunc('commerce','user','db_prepare_input',array('var' => $value));

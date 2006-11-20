@@ -74,7 +74,7 @@
       $q = new xenQuery();
       if(!$q->run()) return;
     while ($products_attributes_values = $q->output()) {
-      echo '<tr><td width="50%" class="dataTableContent">&nbsp;&nbsp;&nbsp;&nbsp;-' . $products_attributes_values['products_options_values_name'] . '</td><td width="50%" class="dataTableContent">';
+      echo '<tr><td width="50%" class="dataTableContent">&#160;&#160;&#160;&#160;-' . $products_attributes_values['products_options_values_name'] . '</td><td width="50%" class="dataTableContent">';
       if ($products_attributes_values['attributes_stock'] <= '0') {
         echo '<font color="ff0000"><b>' . $products_attributes_values['attributes_stock'] . '</b></font>';
       } else {

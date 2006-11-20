@@ -127,11 +127,11 @@
   for ($i = 0, $n = sizeof($order->products); $i < $n; $i++) {
 ?>
           <tr class="dataTableRow">
-            <td class="dataTableContent" valign="top" align="right"><?php echo $order->products[$i]['qty']; ?>&nbsp;x</td>
+            <td class="dataTableContent" valign="top" align="right"><?php echo $order->products[$i]['qty']; ?>&#160;x</td>
             <td class="dataTableContent" valign="top"><?php echo $order->products[$i]['name'];
     if (sizeof($order->products[$i]['attributes']) > 0) {
       for ($j = 0, $k = sizeof($order->products[$i]['attributes']); $j < $k; $j++) {
-?><br><nobr><small>&nbsp;<i> - <?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
+?><br><nobr><small>&#160;<i> - <?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
         if ($order->products[$i]['attributes'][$j]['price'] != '0') echo ' (' . $order->products[$i]['attributes'][$j]['prefix'] . $currencies->format($order->products[$i]['attributes'][$j]['price'] * $order->products[$i]['qty'], true, $order->info['currency'], $order->info['currency_value']) . ')';
         echo '</i></small></nobr>';
       }

@@ -13,7 +13,7 @@
 // ----------------------------------------------------------------------
 
 function commerce_userapi_findtitle($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
     $xartables = xarDBGetTables();
 

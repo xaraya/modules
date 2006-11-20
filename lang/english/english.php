@@ -192,8 +192,8 @@ define('PREVNEXT_TITLE_PAGE_NO', 'page %d');
 define('PREVNEXT_TITLE_PREV_SET_OF_NO_PAGE', 'Previous %d pages');
 define('PREVNEXT_TITLE_NEXT_SET_OF_NO_PAGE', 'Next %d pages');
 define('PREVNEXT_BUTTON_FIRST', '&lt;&lt;FIRST');
-define('PREVNEXT_BUTTON_PREV', '[&lt;&lt;&nbsp;previous]');
-define('PREVNEXT_BUTTON_NEXT', '[next&nbsp;&gt;&gt;]');
+define('PREVNEXT_BUTTON_PREV', '[&lt;&lt;&#160;previous]');
+define('PREVNEXT_BUTTON_NEXT', '[next&#160;&gt;&gt;]');
 define('PREVNEXT_BUTTON_LAST', 'LAST&gt;&gt;');
 
 define('IMAGE_BUTTON_ADD_ADDRESS', 'New address');

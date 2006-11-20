@@ -29,13 +29,15 @@
    --------------------------------------------------------------
 */
 
-  class box extends tableBlock {
+  class box extends tableBlock
+  {
     function box() {
       $this->heading = array();
       $this->contents = array();
     }
 
-    function infoBox($heading, $contents) {
+    function infoBox($heading, $contents)
+    {
       $this->table_row_parameters = 'class="infoBoxHeading"';
       $this->table_data_parameters = 'class="infoBoxHeading"';
       $this->heading = $this->tableBlock($heading);
@@ -47,13 +49,14 @@
       return $this->heading . $this->contents;
     }
 
-    function menuBox($heading, $contents) {
+    function menuBox($heading, $contents)
+    {
       $this->table_data_parameters = 'class="menuBoxHeading"';
       if ($heading[0]['link']) {
         $this->table_data_parameters .= ' onmouseover="this.style.cursor=\'hand\'" onclick="document.location.href=\'' . $heading[0]['link'] . '\'"';
-        $heading[0]['text'] = '&nbsp;<a href="' . $heading[0]['link'] . '" class="menuBoxHeadingLink">' . $heading[0]['text'] . '</a>&nbsp;';
+        $heading[0]['text'] = '&#160;<a href="' . $heading[0]['link'] . '" class="menuBoxHeadingLink">' . $heading[0]['text'] . '</a>&#160;';
       } else {
-        $heading[0]['text'] = '&nbsp;' . $heading[0]['text'] . '&nbsp;';
+        $heading[0]['text'] = '&#160;' . $heading[0]['text'] . '&#160;';
       }
       $this->heading = $this->tableBlock($heading);
 

@@ -1,18 +1,18 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: reviews.php,v 1.1 2003/09/28 14:38:01 fanta2k Exp $   
+   $Id: reviews.php,v 1.1 2003/09/28 14:38:01 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(reviews.php,v 1.6 2002/02/06); www.oscommerce.com 
-   (c) 2003	 nextcommerce (reviews.php,v 1.4 2003/08/14); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(reviews.php,v 1.6 2002/02/06); www.oscommerce.com
+   (c) 2003  nextcommerce (reviews.php,v 1.4 2003/08/14); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 
 define('HEADING_TITLE', 'Produktbewertungen');
@@ -26,7 +26,7 @@ define('ENTRY_PRODUCT', 'Artikel:');
 define('ENTRY_FROM', 'von:');
 define('ENTRY_DATE', 'Datum:');
 define('ENTRY_REVIEW', 'Bewertung:');
-define('ENTRY_REVIEW_TEXT', '<small><font color="#ff0000"><b>HINWEIS:</b></font></small>&nbsp;HTML wird nicht konvertiert!&nbsp;');
+define('ENTRY_REVIEW_TEXT', '<small><font color="#ff0000"><b>HINWEIS:</b></font></small>&#160;HTML wird nicht konvertiert!&#160;');
 define('ENTRY_RATING', 'Bewertung:');
 
 define('TEXT_INFO_DELETE_REVIEW_INTRO', 'Sind Sie sicher, dass Sie diese Bewertung l&ouml;schen m&ouml;chten?');

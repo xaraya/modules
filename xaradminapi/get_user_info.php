@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------
 
 function commerce_adminapi_get_user_info($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
     $xartables = xarDBGetTables();
     extract($args);

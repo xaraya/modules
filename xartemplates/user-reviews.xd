@@ -13,8 +13,8 @@
       <strong>{#text_rating#}</strong> {$module_data.RATING}</td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
   </tr>
   {/foreach}
 </table>

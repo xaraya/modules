@@ -1,21 +1,22 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: table_block.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $   
+   $Id: table_block.php,v 1.1 2003/09/06 22:05:29 fanta2k Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(table_block.php,v 1.5 2003/06/02); www.oscommerce.com 
-   (c) 2003	 nextcommerce (table_block.php,v 1.8 2003/08/18); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(table_block.php,v 1.5 2003/06/02); www.oscommerce.com
+   (c) 2003  nextcommerce (table_block.php,v 1.8 2003/08/18); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 
-  class tableBlock {
+  class tableBlock
+  {
     var $table_border = '0';
     var $table_width = '100%';
     var $table_cellspacing = '0';

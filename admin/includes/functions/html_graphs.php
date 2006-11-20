@@ -168,7 +168,7 @@
       if (ereg('^#', $bars[$i])) {
         $horizontal_graph_string .= '<table cellpadding="0" cellspacing="0" bgcolor="' . $bars[$i] . '" width="' . ($values[$i] * $vals['scale']) . '">' . "\n" .
                                     '  <tr>' . "\n" .
-                                    '    <td>&nbsp;</td>' . "\n" .
+                                    '    <td>&#160;</td>' . "\n" .
                                     '  </tr>' . "\n" .
                                     '</table>';
       } else {
@@ -268,7 +268,7 @@
       if (ereg('^#', $bars[$i])) {
         $double_horizontal_graph_string .= '<table align="left" cellpadding="0" cellspacing="0" bgcolor="' . $bars[$i] . '" width="' . ($values[$i] * $vals['scale']) . '">' . "\n" .
                                            '  <tr>' . "\n" .
-                                           '    <td>&nbsp;</td>' . "\n" .
+                                           '    <td>&#160;</td>' . "\n" .
                                            '  </tr>' . "\n" .
                                            '</table>';
       } else {

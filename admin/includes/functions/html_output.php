@@ -181,7 +181,7 @@
     }
     $field .= '>';
 
-    if ($required) $field .= '&nbsp;<span class="fieldRequired">* Required</span>';
+    if ($required) $field .= '&#160;<span class="fieldRequired">* Required</span>';
 
     return $field;
   }
@@ -198,7 +198,7 @@
     }
     $field .= '>';
 
-    if ($required) $field .= '&nbsp;<span class="fieldRequired">* Required</span>';
+    if ($required) $field .= '&#160;<span class="fieldRequired">* Required</span>';
 
     return $field;
   }
@@ -291,7 +291,7 @@
     }
     $field .= '</select>';
 
-    if ($required) $field .= '&nbsp;<span class="fieldRequired">* Required</span>';
+    if ($required) $field .= '&#160;<span class="fieldRequired">* Required</span>';
 
     return $field;
   }

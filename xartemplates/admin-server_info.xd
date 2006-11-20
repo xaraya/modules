@@ -32,19 +32,19 @@ function commerce_admin_configuration()
               <tr>
                 <td class="smallText"><b><?php echo TITLE_SERVER_HOST; ?></b></td>
                 <td class="smallText"><?php echo $system['host'] . ' (' . $system['ip'] . ')'; ?></td>
-                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE_HOST; ?></b></td>
+                <td class="smallText">&#160;&#160;&#160;&#160;&#160;<b><?php echo TITLE_DATABASE_HOST; ?></b></td>
                 <td class="smallText"><?php echo $system['db_server'] . ' (' . $system['db_ip'] . ')'; ?></td>
               </tr>
               <tr>
                 <td class="smallText"><b><?php echo TITLE_SERVER_OS; ?></b></td>
                 <td class="smallText"><?php echo $system['system'] . ' ' . $system['kernel']; ?></td>
-                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE; ?></b></td>
+                <td class="smallText">&#160;&#160;&#160;&#160;&#160;<b><?php echo TITLE_DATABASE; ?></b></td>
                 <td class="smallText"><?php echo $system['db_version']; ?></td>
               </tr>
               <tr>
                 <td class="smallText"><b><?php echo TITLE_SERVER_DATE; ?></b></td>
                 <td class="smallText"><?php echo $system['date']; ?></td>
-                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE_DATE; ?></b></td>
+                <td class="smallText">&#160;&#160;&#160;&#160;&#160;<b><?php echo TITLE_DATABASE_DATE; ?></b></td>
                 <td class="smallText"><?php echo $system['db_date']; ?></td>
               </tr>
               <tr>

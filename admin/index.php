@@ -107,7 +107,7 @@ A.sub:hover { color: #dddddd; text-decoration: underline; }
         <td><table border="0" width="600" height="440" cellspacing="0" cellpadding="0">
           <tr bgcolor="#ffffff" height="50">
             <td height="50"><?php echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'logo.gif'), 'neXTCommerce', '185', '95'); ?></td>
-            <td align="right" class="text" nowrap><?php echo '<a href="' . xarModURL('commerce','admin','default') . '">' . HEADER_TITLE_ADMINISTRATION . '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="' . xtc_catalog_href_link('default.php') . '">' . HEADER_TITLE_ONLINE_CATALOG . '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nextcommerce.org" target="_blank">' . HEADER_TITLE_SUPPORT_SITE . '</a>'; ?>&nbsp;&nbsp;</td>
+            <td align="right" class="text" nowrap><?php echo '<a href="' . xarModURL('commerce','admin','default') . '">' . HEADER_TITLE_ADMINISTRATION . '</a>&#160;&#160;|&#160;&#160;<a href="' . xtc_catalog_href_link('default.php') . '">' . HEADER_TITLE_ONLINE_CATALOG . '</a>&#160;&#160;|&#160;&#160;<a href="http://www.nextcommerce.org" target="_blank">' . HEADER_TITLE_SUPPORT_SITE . '</a>'; ?>&#160;&#160;</td>
           </tr>
           <tr bgcolor="#080381">
             <td colspan="2"><table border="0" width="460" height="390" cellspacing="0" cellpadding="2">

@@ -16,26 +16,26 @@
         <!-- We use the bubble to catch the onchange event of the inner control, only works in FF to my knowledge, doesnt hurt the others -->
         <div onchange="document.getElementById('ice_group_refresh').click();">
             <xar:data-input type="objectref" validation="ice_config_groups:group_title:group_id" value="$group_value" id="ice_group_selected_id"/>
-            <button id="ice_group_refresh" 
+            <button id="ice_group_refresh"
                     onclick="document.location='&xar-modurl-commerce-admin-modifyconfig;&amp;group_value=' + document.getElementById('ice_group_selected_id').value">
                     <xar:mlstring>Refresh</xar:mlstring>
             </button>
         </div>
-        <div style="clear: both;">&nbsp;</div>
+        <div style="clear: both;">&#160;</div>
     </xar:if>
-    
+
 
     <!-- The left side contains a list of items -->
     <div style="width: 48%; float: left;">
         <xar:if condition="!isset($where)"><xar:set name="where">""</xar:set></xar:if>
         <xar:data-view module="$moduleid" itemtype="$itemtype" fieldlist="$fieldlist" numitems="$itemsperpage" count="yes" tplmodule="$tplmodule" template="ice" extend="false" where="$where" />
     </div>
-    
+
     <!-- The right side contains detail on the current item -->
     <div style="width: auto; float: right;">
         <xar:data-display module="$moduleid" itemtype="$itemtype" itemid="$itemid" tplmodule="$tplmodule" template="ice" extend="false" />
     </div>
-    
+
     <!-- Make sure the fieldset encloses both, regardless of floating or other css trickery -->
-    <div style="clear: both;">&nbsp;</div>
+    <div style="clear: both;">&#160;</div>
 </fieldset>

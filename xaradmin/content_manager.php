@@ -235,17 +235,17 @@ for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
 
 ?>
 <br>
-<div class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']).'&nbsp;&nbsp;'.$languages[$i]['name']; ?></div>
+<div class="main"><?php echo xtc_image(xarTplGetImage(DIR_WS_LANGUAGES.$languages[$i]['directory'].'/admin/images/'.$languages[$i]['image']).'&#160;&#160;'.$languages[$i]['name']; ?></div>
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr class="dataTableHeadingRow">
                 <td class="dataTableHeadingContent" width="10" ><?php echo TABLE_HEADING_CONTENT_ID; ?></td>
-                <td class="dataTableHeadingContent" width="10" >&nbsp;</td>
+                <td class="dataTableHeadingContent" width="10" >&#160;</td>
                 <td class="dataTableHeadingContent" width="30%" align="left"><?php echo TABLE_HEADING_CONTENT_TITLE; ?></td>
                 <td class="dataTableHeadingContent" width="1%" align="middle"><?php echo TABLE_HEADING_CONTENT_GROUP; ?></td>
                 <td class="dataTableHeadingContent" width="25%"align="left"><?php echo TABLE_HEADING_CONTENT_FILE; ?></td>
                 <td class="dataTableHeadingContent" nowrap width="5%" align="left"><?php echo TABLE_HEADING_CONTENT_STATUS; ?></td>
                 <td class="dataTableHeadingContent" nowrap width="" align="middle"><?php echo TABLE_HEADING_CONTENT_BOX; ?></td>
-                <td class="dataTableHeadingContent" width="30%" align="middle"><?php echo TABLE_HEADING_CONTENT_ACTION; ?>&nbsp;</td>
+                <td class="dataTableHeadingContent" width="30%" align="middle"><?php echo TABLE_HEADING_CONTENT_ACTION; ?>&#160;</td>
               </tr>
  <?php
 for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
@@ -257,7 +257,7 @@ for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
  if ($content[$ii]['CONTENT_FILE']=='') $content[$ii]['CONTENT_FILE']='database';
  ?>
  <td class="dataTableContent" align="left"><?php echo $content[$ii]['CONTENT_ID']; ?></td>
- <td bgcolor="<?php echo substr((6543216554/$content[$ii]['CONTENT_GROUP']),0,6); ?>" class="dataTableContent" align="left">&nbsp;</td>
+ <td bgcolor="<?php echo substr((6543216554/$content[$ii]['CONTENT_GROUP']),0,6); ?>" class="dataTableContent" align="left">&#160;</td>
  <td class="dataTableContent" align="left"><?php echo $content[$ii]['CONTENT_TITLE']; ?>
  <?php
  if ($content[$ii]['CONTENT_DELETE']=='0'){
@@ -274,7 +274,7 @@ for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
  if ($content[$ii]['CONTENT_DELETE']=='1'){
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content[$ii]['CONTENT_ID']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
- <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&nbsp;&nbsp;';
+ <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 } // if content
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit&coID='.$content[$ii]['CONTENT_ID']); ?>">
@@ -282,7 +282,7 @@ for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
  <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content[$ii]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
- ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&nbsp;&nbsp;'.TEXT_PREVIEW.'</a>'; ?>
+ ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>
  </td>
  </tr>
 
@@ -340,7 +340,7 @@ if ($content_1[$a]!='') {
  if ($content_1[$a]['CONTENT_DELETE']=='1'){
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content_1[$a]['CONTENT_ID']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
- <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&nbsp;&nbsp;';
+ <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 } // if content
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit&coID='.$content_1[$a]['CONTENT_ID']); ?>">
@@ -348,7 +348,7 @@ if ($content_1[$a]!='') {
  <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content_1[$a]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
- ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&nbsp;&nbsp;'.TEXT_PREVIEW.'</a>'; ?>
+ ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>
  </td>
  </tr>
 
@@ -823,7 +823,7 @@ if ($_GET['pID']==$products_ids[$i]['id']){
  <table border="0" width="100%" cellspacing="0" cellpadding="2">
     <tr class="dataTableHeadingRow">
     <td class="dataTableHeadingContent" nowrap width="2%" ><?php echo TABLE_HEADING_PRODUCTS_CONTENT_ID; ?></td>
-    <td class="dataTableHeadingContent" nowrap width="2%" >&nbsp;</td>
+    <td class="dataTableHeadingContent" nowrap width="2%" >&#160;</td>
     <td class="dataTableHeadingContent" nowrap width="5%" ><?php echo TABLE_HEADING_LANGUAGE; ?></td>
     <td class="dataTableHeadingContent" nowrap width="15%" ><?php echo TABLE_HEADING_CONTENT_NAME; ?></td>
     <td class="dataTableHeadingContent" nowrap width="30%" ><?php echo TABLE_HEADING_CONTENT_FILE; ?></td>
@@ -870,14 +870,14 @@ for ($xx=0,$zz=sizeof($languages); $xx<$zz;$xx++){
  echo '<a href="'.$content_array[$ii]['link'].'" target="new">'.$content_array[$ii]['link'].'</a>';
 }
  ?>
-  &nbsp;</td>
+  &#160;</td>
  <td class="dataTableContent" align="left"><?php echo $content_array[$ii]['read']; ?></td>
  <td class="dataTableContent" align="left">
 
   <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete_product&coID='.$content_array[$ii]['id']).'&pID='.$products_ids[$i]['id']; ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
  <?php
 
- echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&nbsp;&nbsp;';
+ echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit_products_content&coID='.$content_array[$ii]['id']); ?>">
@@ -904,7 +904,7 @@ if (    eregi('.gif',$content_array[$ii]['file'])
  <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'pID=media&coID='.$content_array[$ii]['id']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
- ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&nbsp;&nbsp;'.TEXT_PREVIEW.'</a>'; ?>
+ ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>
 <?php
 }
 ?>

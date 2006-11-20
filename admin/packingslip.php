@@ -110,12 +110,12 @@
 <?php
     for ($i = 0, $n = sizeof($order->products); $i < $n; $i++) {
       echo '      <tr class="dataTableRow">' . "\n" .
-           '        <td class="dataTableContent" valign="top" align="right">' . $order->products[$i]['qty'] . '&nbsp;x</td>' . "\n" .
+           '        <td class="dataTableContent" valign="top" align="right">' . $order->products[$i]['qty'] . '&#160;x</td>' . "\n" .
            '        <td class="dataTableContent" valign="top">' . $order->products[$i]['name'];
 
       if (sizeof($order->products[$i]['attributes']) > 0) {
         for ($j = 0, $k = sizeof($order->products[$i]['attributes']); $j < $k; $j++) {
-          echo '<br><nobr><small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
+          echo '<br><nobr><small>&#160;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
           echo '</i></small></nobr>';
         }
       }

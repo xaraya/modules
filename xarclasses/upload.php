@@ -15,10 +15,12 @@
    Released under the GNU General Public License
    --------------------------------------------------------------*/
 
-  class upload {
+  class upload
+  {
     var $file, $filename, $destination, $permissions, $extensions, $tmp_filename;
 
-    function upload($file = '', $destination = '', $permissions = '777', $extensions = '') {
+    function upload($file = '', $destination = '', $permissions = '777', $extensions = '')
+    {
 
       $this->set_file($file);
       $this->set_destination($destination);
@@ -37,7 +39,8 @@
       }
     }
 
-    function parse() {
+    function parse()
+    {
       global $messageStack;
 
       if (isset($_FILES[$this->file])) {
@@ -79,7 +82,8 @@
       }
     }
 
-    function save() {
+    function save()
+    {
       global $messageStack;
 
       if (substr($this->destination, -1) != '/') $this->destination .= '/';
@@ -97,27 +101,33 @@
       }
     }
 
-    function set_file($file) {
+    function set_file($file)
+    {
       $this->file = $file;
     }
 
-    function set_destination($destination) {
+    function set_destination($destination)
+    {
       $this->destination = $destination;
     }
 
-    function set_permissions($permissions) {
+    function set_permissions($permissions)
+    {
       $this->permissions = octdec($permissions);
     }
 
-    function set_filename($filename) {
+    function set_filename($filename)
+    {
       $this->filename = $filename;
     }
 
-    function set_tmp_filename($filename) {
+    function set_tmp_filename($filename)
+    {
       $this->tmp_filename = $filename;
     }
 
-    function set_extensions($extensions) {
+    function set_extensions($extensions)
+    {
       if (xarModAPIFunc('commerce','user','not_null',array('arg' => $extensions))) {
         if (is_array($extensions)) {
           $this->extensions = $extensions;
@@ -129,7 +139,8 @@
       }
     }
 
-    function check_destination() {
+    function check_destination()
+    {
       global $messageStack;
 
       if (!is_writeable($this->destination)) {

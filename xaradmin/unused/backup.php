@@ -347,10 +347,10 @@ function commerce_admin_backup()
         $onclick_link = 'file=' . $entry;
       }
 ?>
-                <td class="dataTableContent" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_BACKUP, $onclick_link); ?>'"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=download&file=' . $entry) . '">' . xtc_image(xarTplGetImage('icons/file_download.gif'), ICON_FILE_DOWNLOAD) . '</a>&nbsp;' . $entry; ?></td>
+                <td class="dataTableContent" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_BACKUP, $onclick_link); ?>'"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=download&file=' . $entry) . '">' . xtc_image(xarTplGetImage('icons/file_download.gif'), ICON_FILE_DOWNLOAD) . '</a>&#160;' . $entry; ?></td>
                 <td class="dataTableContent" align="center" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_BACKUP, $onclick_link); ?>'"><?php echo date(PHP_DATE_TIME_FORMAT, filemtime(DIR_FS_BACKUP . $entry)); ?></td>
                 <td class="dataTableContent" align="right" onclick="document.location.href='<?php echo xarModURL('commerce','admin',(FILENAME_BACKUP, $onclick_link); ?>'"><?php echo number_format(filesize(DIR_FS_BACKUP . $entry)); ?> bytes</td>
-                <td class="dataTableContent" align="right"><?php if ( (is_object($buInfo)) && ($entry == $buInfo->file) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'file=' . $entry) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php if ( (is_object($buInfo)) && ($entry == $buInfo->file) ) { echo xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_arrow_right.gif'), ''); } else { echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'file=' . $entry) . '">' . xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'icon_info.gif'), IMAGE_ICON_INFO) . '</a>'; } ?>&#160;</td>
               </tr>
 <?php
     }
@@ -359,7 +359,7 @@ function commerce_admin_backup()
 ?>
               <tr>
                 <td class="smallText" colspan="3"><?php echo TEXT_BACKUP_DIRECTORY . ' ' . DIR_FS_BACKUP; ?></td>
-                <td align="right" class="smallText"><?php if ( ($_GET['action'] != 'backup') && ($dir) ) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=backup') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_backup.gif'),'alt' => IMAGE_BACKUP); . '</a>'; if ( ($_GET['action'] != 'restorelocal') && ($dir) ) echo '&nbsp;&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=restorelocal') . '">' .
+                <td align="right" class="smallText"><?php if ( ($_GET['action'] != 'backup') && ($dir) ) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=backup') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_backup.gif'),'alt' => IMAGE_BACKUP); . '</a>'; if ( ($_GET['action'] != 'restorelocal') && ($dir) ) echo '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'action=restorelocal') . '">' .
   xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_restore.gif'),'alt' => IMAGE_RESTORE);
                 </a>'; ?></td>
               </tr>
@@ -395,7 +395,7 @@ function commerce_admin_backup()
 
       $contents[] = array('align' => 'center', 'text' => '<br>' .
     <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_backup.gif')#" border="0" alt=IMAGE_BACKUP>
-      . '&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+      . '&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
     case 'restore':
       $heading[] = array('text' => '<b>' . $buInfo->date . '</b>');
@@ -403,7 +403,7 @@ function commerce_admin_backup()
       $contents[] = array('text' => xarModAPIFunc('commerce','user','break_string',array('string' => sprintf(TEXT_INFO_RESTORE, DIR_FS_BACKUP . (($buInfo->compression != TEXT_NO_EXTENSION) ? substr($buInfo->file, 0, strrpos($buInfo->file, '.')) : $buInfo->file), ($buInfo->compression != TEXT_NO_EXTENSION) ? TEXT_INFO_UNPACK : ''),'length' => 35));
       $contents[] = array('align' => 'center', 'text' => '<br><a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'file=' . $buInfo->file . '&action=restorenow') . '">' .
   xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_restore.gif'),'alt' => IMAGE_RESTORE);
-      </a>&nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'file=' . $buInfo->file) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+      </a>&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP, 'file=' . $buInfo->file) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
     case 'restorelocal':
       $heading[] = array('text' => '<b>' . TEXT_INFO_HEADING_RESTORE_LOCAL . '</b>');
@@ -414,7 +414,7 @@ function commerce_admin_backup()
       $contents[] = array('text' => TEXT_INFO_RESTORE_LOCAL_RAW_FILE);
       $contents[] = array('align' => 'center', 'text' => '<br>' .
     <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_restore.gif')#" border="0" alt=IMAGE_RESTORE>.
-      &nbsp;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+      &#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BACKUP) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
     case 'delete':
       $heading[] = array('text' => '<b>' . $buInfo->date . '</b>');

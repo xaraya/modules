@@ -4,11 +4,11 @@
     pager stuff automatically. Setting those variables in the parent template
     or providing them in the subdata attribute of the xar:template tag brings
     those variables automatically into scope.
-    
+
     REQUIRED:
     $count        - the total number of items in the set ( REQUIRED )
     $baseurl      - the baseurl to work from
-    
+
     OPTIONAL:
     $startnum     - at which item number do we start (default: from URL, otherwise 1)
     $itemsperpage - how many items should we show per pager page (default 10)
@@ -33,7 +33,7 @@
     <xar:if condition="!xarVarFetch('startnum', 'int', $startnum,  1, XARVAR_NOT_REQUIRED)"></xar:if>
     <xar:set name="nrofpages">(int) ceil( $count / $itemsperpage )</xar:set>
     <xar:set name="currentpage">floor($startnum/$itemsperpage)+1</xar:set>
-    
+
     <div>
         <div id="ice-pager-statusline">
             <xar:ml>
@@ -47,7 +47,7 @@
             </xar:ml>
         </div>
 
-        
+
         <!-- Determine how many pages are in the current set and which page we should be on -->
         <xar:if condition="$nrofpages lt $maxpages">
             <xar:set name="startpage">1</xar:set>
@@ -58,19 +58,19 @@
         </xar:if>
 
         <xar:if condition="$currentpage gt 1">
-            <a href="#$prevurl#" onclick="return loadContent(this.href, 'ice-objectview');">&lt;<xar:mlstring> Previous</xar:mlstring></a>&nbsp;&nbsp;
+            <a href="#$prevurl#" onclick="return loadContent(this.href, 'ice-objectview');">&lt;<xar:mlstring> Previous</xar:mlstring></a>&#160;&#160;
         </xar:if>
-        <xar:if condition="$startpage gt 1">&hellip;&nbsp;</xar:if>
+        <xar:if condition="$startpage gt 1">&hellip;&#160;</xar:if>
         <xar:for start="$page = $startpage" test="$page le $endpage" iter="$page++">
             <xar:set name="pagestart">($page-1)*($itemsperpage)+1</xar:set>
             <xar:if condition="$page != $currentpage">
-                <a href="#$baseurl#&amp;startnum=#$pagestart#" onclick="return loadContent(this.href, 'ice-objectview');">#$page#</a>&nbsp;
+                <a href="#$baseurl#&amp;startnum=#$pagestart#" onclick="return loadContent(this.href, 'ice-objectview');">#$page#</a>&#160;
             <xar:else/>
-                #$page#&nbsp;
+                #$page#&#160;
             </xar:if>
         </xar:for>
         <xar:if condition="$endpage lt $nrofpages">&hellip;</xar:if>
-        <xar:if condition="$currentpage lt $endpage">&nbsp;&nbsp;
+        <xar:if condition="$currentpage lt $endpage">&#160;&#160;
             <a href="#$nexturl#" onclick="return loadContent(this.href, 'ice-objectview');">
                 <xar:mlstring>Next </xar:mlstring>&gt;
             </a>

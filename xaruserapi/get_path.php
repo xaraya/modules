@@ -15,7 +15,7 @@ function commerce_userapi_get_path($args)
 {
     global $cPath_array;
 
-    include_once 'modules/xen/xarclasses/xenquery.php';
+    sys::import('modules.xen.xarclasses.xenquery');
     $xartables = xarDBGetTables();
 
     extract($args);

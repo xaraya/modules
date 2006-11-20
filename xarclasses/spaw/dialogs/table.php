@@ -26,17 +26,17 @@ $l->setBlock('table_prop');
 
 <html>
 <head>
-	<meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
   <title><?php echo $l->m('title')?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
   <script language="javascript" src="utils.js"></script>
-  
+
   <script language="javascript">
-  <!--  
+  <!--
   function showColorPicker(curcolor) {
-    var newcol = showModalDialog('colorpicker.php?theme=<?php echo $theme?>&lang=<?php echo $l->lang?>', curcolor, 
-      'dialogHeight:250px; dialogWidth:366px; resizable:no; status:no');  
+    var newcol = showModalDialog('colorpicker.php?theme=<?php echo $theme?>&lang=<?php echo $l->lang?>', curcolor,
+      'dialogHeight:250px; dialogWidth:366px; resizable:no; status:no');
     try {
       table_prop.tbgcolor.value = newcol;
       table_prop.color_sample.style.backgroundColor = table_prop.tbgcolor.value;
@@ -107,7 +107,7 @@ $l->setBlock('table_prop');
     }
     resizeDialogToContent();
   }
-  
+
   function validateParams()
   {
     // check whether rows and cols are integers
@@ -155,13 +155,13 @@ $l->setBlock('table_prop');
       table_prop.tcspc.focus();
       return false;
     }
-    
+
     return true;
   }
-  
+
   function okClick() {
     // validate paramters
-    if (validateParams())    
+    if (validateParams())
     {
       var newtable = {};
       newtable.width = (table_prop.twidth.value)?(table_prop.twidth.value + table_prop.twunits.value):'';
@@ -181,7 +181,7 @@ $l->setBlock('table_prop');
   function cancelClick() {
     window.close();
   }
-  
+
   function setSample()
   {
     try {
@@ -230,9 +230,9 @@ $l->setBlock('table_prop');
   <td><?php echo $l->m('cellspacing')?>:</td>
   <td><input type="text" name="tcspc" size="3" maxlenght="3" class="input_small"></td>
 </tr>
-  
+
 <tr>
-  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&nbsp;<input type="text" name="tbgcolor" size="7" maxlenght="7" class="input_color" onKeyUp="setSample()">&nbsp;
+  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&#160;<input type="text" name="tbgcolor" size="7" maxlenght="7" class="input_color" onKeyUp="setSample()">&#160;
   <img src="<?php echo $theme_path.'img/'?>tb_colorpicker.gif" border="0" onClick="showColorPicker(tbgcolor.value)" align="absbottom">
   </td>
 </tr>

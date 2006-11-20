@@ -24,7 +24,7 @@ $l = new SPAW_Lang(empty($HTTP_POST_VARS['lang'])?$HTTP_GET_VARS['lang']:$HTTP_P
 $l->setBlock('image_insert');
 ?>
 
-<?php 
+<?php
 $imglib = $HTTP_POST_VARS['lib'];
 if (empty($imglib)) $imglib = $HTTP_GET_VARS['lib'];
 
@@ -66,11 +66,11 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 <html>
 <head>
   <title><?php echo $l->m('title')?></title>
-	<meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
   <script language="javascript" src="utils.js"></script>
-  
+
   <script language="javascript">
   <!--
     function selectClick()
@@ -85,7 +85,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
         alert('<?php echo $l->m('error').': '.$l->m('error_no_image')?>');
       }
     }
-    
+
     function Init()
     {
       resizeDialogToContent();
@@ -108,7 +108,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 <table border="0" cellpadding="2" cellspacing="0">
 <tr>
   <td valign="top" align="left"><b><?php echo $l->m('library')?>:</b></td>
-  <td valign="top" align="left">&nbsp;</td>
+  <td valign="top" align="left">&#160;</td>
   <td valign="top" align="left"><b><?php echo $l->m('preview')?>:</b></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
     <?php echo $lib_options?>
   </select>
   </td>
-  <td valign="top" align="left" rowspan="3">&nbsp;</td>
+  <td valign="top" align="left" rowspan="3">&#160;</td>
   <td valign="top" align="left" rowspan="3">
   <iframe name="imgpreview" src="<?php echo $preview?>" style="width: 200px; height: 100%;" scrolling="Auto" marginheight="0" marginwidth="0" frameborder="0"></iframe>
   </td>
@@ -127,25 +127,25 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 </tr>
 <tr>
   <td valign="top" align="left">
-  <?php 
+  <?php
     if (!ereg('/$', $HTTP_SERVER_VARS['DOCUMENT_ROOT']))
       $_root = $HTTP_SERVER_VARS['DOCUMENT_ROOT'].'/';
     else
       $_root = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
-    
+
     $d = @dir($_root.$imglib);
   ?>
-  <select name="imglist" size="15" class="input" style="width: 150px;" 
+  <select name="imglist" size="15" class="input" style="width: 150px;"
     onchange="if (this.selectedIndex &gt;=0) imgpreview.location.href = '<?php echo $spaw_base_url.$imglib?>' + this.options[this.selectedIndex].value;" ondblclick="selectClick();">
-  <?php 
-    if ($d) 
+  <?php
+    if ($d)
     {
       while (false !== ($entry = $d->read())) {
         if (is_file($_root.$imglib.$entry))
         {
           ?>
           <option value="<?php echo $entry?>" <?php echo ($entry == $img)?'selected':''?>><?php echo $entry?></option>
-          <?php 
+          <?php
         }
       }
       $d->close();
@@ -162,7 +162,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 </tr>
 <tr>
   <td valign="top" align="left" colspan="3">
-  <input type="button" value="<?php echo $l->m('select')?>" class="bt" onclick="selectClick();">&nbsp;<input type="button" value="<?php echo $l->m('cancel')?>" class="bt" onclick="window.close();">
+  <input type="button" value="<?php echo $l->m('select')?>" class="bt" onclick="selectClick();">&#160;<input type="button" value="<?php echo $l->m('cancel')?>" class="bt" onclick="window.close();">
   </td>
 </tr>
 </table>
@@ -173,7 +173,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 <table border="0" cellpadding="2" cellspacing="0">
 <tr>
   <td valign="top" align="left">
-    <?php  
+    <?php
     if (!empty($errors))
     {
       echo '<span class="error">';
@@ -185,12 +185,12 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
     }
     ?>
 
-  <?php 
+  <?php
   if ($d) {
   ?>
     <b><?php echo $l->m('upload')?>:</b> <input type="file" name="img_file" class="input"><br>
     <input type="submit" name="btnupload" class="bt" value="<?php echo $l->m('upload_button')?>">
-  <?php 
+  <?php
   }
   ?>
   </td>
@@ -202,7 +202,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 </body>
 </html>
 
-<?php 
+<?php
 function liboptions($arr, $prefix = '', $sel = '')
 {
   $buf = '';
@@ -221,14 +221,14 @@ function uploadImg($img) {
   global $errors;
   global $l;
   global $spaw_upload_allowed;
-  
+
   if (!$spaw_upload_allowed) return false;
 
   if (!ereg('/$', $HTTP_SERVER_VARS['DOCUMENT_ROOT']))
     $_root = $HTTP_SERVER_VARS['DOCUMENT_ROOT'].'/';
   else
     $_root = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
-  
+
   if ($HTTP_POST_FILES[$img]['size']>0) {
     $data['type'] = $HTTP_POST_FILES[$img]['type'];
     $data['name'] = $HTTP_POST_FILES[$img]['name'];

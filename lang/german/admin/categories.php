@@ -1,18 +1,18 @@
 <?php
 /* --------------------------------------------------------------
-   $Id: categories.php,v 1.4 2003/12/15 19:52:43 gwinger Exp $   
+   $Id: categories.php,v 1.4 2003/12/15 19:52:43 gwinger Exp $
 
    XT-Commerce - community made shopping
    http://www.xt-commerce.com
 
    Copyright (c) 2003 XT-Commerce
    --------------------------------------------------------------
-   based on: 
+   based on:
    (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
-   (c) 2002-2003 osCommerce(categories.php,v 1.22 2002/08/17); www.oscommerce.com 
-   (c) 2003	 nextcommerce (categories.php,v 1.10 2003/08/14); www.nextcommerce.org
+   (c) 2002-2003 osCommerce(categories.php,v 1.22 2002/08/17); www.oscommerce.com
+   (c) 2003  nextcommerce (categories.php,v 1.10 2003/08/14); www.nextcommerce.org
 
-   Released under the GNU General Public License 
+   Released under the GNU General Public License
    --------------------------------------------------------------*/
 define('TEXT_EDIT_STATUS', 'Status');
 define('HEADING_TITLE', 'Kategorien / Artikel');
@@ -35,12 +35,12 @@ define('TEXT_PRODUCTS_PRICE_INFO', 'Preis:');
 define('TEXT_PRODUCTS_TAX_CLASS', 'Steuerklasse:');
 define('TEXT_PRODUCTS_AVERAGE_RATING', 'durchschnittl. Bewertung:');
 define('TEXT_PRODUCTS_QUANTITY_INFO', 'Anzahl:');
-define('TEXT_PRODUCTS_DISCOUNT_ALLOWED_INFO', 'Maximal erlaubter Discount:'); 
+define('TEXT_PRODUCTS_DISCOUNT_ALLOWED_INFO', 'Maximal erlaubter Discount:');
 define('TEXT_DATE_ADDED', 'hinzugef&uuml;gt am:');
 define('TEXT_DATE_AVAILABLE', 'Erscheinungsdatum:');
 define('TEXT_LAST_MODIFIED', 'letzte &Auml;nderung:');
 define('TEXT_IMAGE_NONEXISTENT', 'BILD EXISTIERT NICHT');
-define('TEXT_NO_CHILD_CATEGORIES_OR_PRODUCTS', 'Bitte f&uuml;gen Sie eine neue Kategorie oder einen Artikel in <br>&nbsp;<br><b>%s</b> ein.');
+define('TEXT_NO_CHILD_CATEGORIES_OR_PRODUCTS', 'Bitte f&uuml;gen Sie eine neue Kategorie oder einen Artikel in <br>&#160;<br><b>%s</b> ein.');
 define('TEXT_PRODUCT_MORE_INFORMATION', 'F&uuml;r weitere Informationen, besuchen Sie bitte die <a href="http://%s" target="blank"><u>Homepage</u></a> des Herstellers.');
 define('TEXT_PRODUCT_DATE_ADDED', 'Diesen Artikel haben wir am %s in unseren Katalog aufgenommen.');
 define('TEXT_PRODUCT_DATE_AVAILABLE', 'Dieser Artikel ist erh&auml;ltlich ab %s.');

@@ -76,9 +76,9 @@
   $data['error'] = $messageStack->output('account_password';
 
   }
-  $data['INPUT_ACTUAL'] = xtc_draw_password_field('password_current') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_CURRENT_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CURRENT_TEXT . '</span>': '');
-  $data['INPUT_NEW'] = xtc_draw_password_field('password_new') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_NEW_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_NEW_TEXT . '</span>': '');
-  $data['INPUT_CONFIRM'] = xtc_draw_password_field('password_confirmation') . '&nbsp;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_CONFIRMATION_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CONFIRMATION_TEXT . '</span>': '');
+  $data['INPUT_ACTUAL'] = xtc_draw_password_field('password_current') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_CURRENT_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CURRENT_TEXT . '</span>': '');
+  $data['INPUT_NEW'] = xtc_draw_password_field('password_new') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_NEW_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_NEW_TEXT . '</span>': '');
+  $data['INPUT_CONFIRM'] = xtc_draw_password_field('password_confirmation') . '&#160;' . (xarModAPIFunc('commerce','user','not_null',array('arg' => ENTRY_PASSWORD_CONFIRMATION_TEXT)) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CONFIRMATION_TEXT . '</span>': '');
 
  $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user',(FILENAME_ACCOUNT, '', 'SSL') . '">' .
  . '</a>';

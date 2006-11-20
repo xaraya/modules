@@ -13,7 +13,7 @@
  *             values     (required) - array
  *             options    (optional) - associative array
  *             checked    (optional) - array default not set
- *             separator  (optional) - ie <br> or &nbsp;
+ *             separator  (optional) - ie <br> or &#160;
  *             output     (optional) - without this one the buttons don't have names
  * Author:     Christopher Kvarme <christopher.kvarme@flashjab.com>
  * Credits:    Monte Ohrt <monte@ispi.net>
@@ -49,7 +49,7 @@ function smarty_function_html_checkboxes($params, &$smarty)
       case 'values':
       case 'output':
          $$_key = array_values((array)$_val);
-	 break;
+     break;
 
       case 'checked':
       case 'selected':

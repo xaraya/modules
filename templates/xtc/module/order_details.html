@@ -1,11 +1,11 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td width="1%" class="main" style="border-bottom: 1px solid; border-color: #cccccc;">&nbsp;</td>
+    <td width="1%" class="main" style="border-bottom: 1px solid; border-color: #cccccc;">&#160;</td>
     <td width="1%" class="main" style="border-bottom: 1px solid; border-color: #cccccc;"><div align="center"><strong>{#text_qty#}</strong></div></td>
-    <td nowrap width="70%" class="main" style="border-bottom: 1px solid; border-color: #cccccc;"><strong>&nbsp;&nbsp;{#text_article#}</strong></td>
+    <td nowrap width="70%" class="main" style="border-bottom: 1px solid; border-color: #cccccc;"><strong>&#160;&#160;{#text_article#}</strong></td>
     <td nowrap width="38%" bgcolor="f1f1f1" class="main" style="border-bottom: 1px solid; border-color: #cccccc;">
       <div align="right"><strong>{#text_total#}</strong></div></td>
-    <td width="1%" bgcolor="FEF8F8" class="main" style="border-bottom: 1px solid; border-color: #cccccc;"> <div align="center"><strong>&nbsp;{#text_remove#}&nbsp;</strong></div></td>
+    <td width="1%" bgcolor="FEF8F8" class="main" style="border-bottom: 1px solid; border-color: #cccccc;"> <div align="center"><strong>&#160;{#text_remove#}&#160;</strong></div></td>
   </tr>
   {foreach name=aussen item=module_data from=$module_content}
   <tr>
@@ -17,8 +17,8 @@
     <td valign="top" class="main"><strong><a href="{$module_data.PRODUCTS_LINK}">{$module_data.PRODUCTS_NAME}</a></strong>{$module_data.PRODUCTS_SINGLE_PRICE}<br>
 
 {if $module_data.ATTRIBUTES!=''}
-	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	  {foreach key=key_data item=item_data from=$module_data.ATTRIBUTES}
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      {foreach key=key_data item=item_data from=$module_data.ATTRIBUTES}
         <tr>
           <td width="1" class="main">{$item_data.NAME}:</td>
     <td class="main"><div align="left">{$item_data.VALUE_NAME}</div></td>
@@ -29,19 +29,19 @@
 <font size="1">{$module_data.PRODUCTS_SHORT_DESCRIPTION|truncate:150:"...":true}</font>
 {/if}
 
-	  </td>
+      </td>
     <td valign="top" nowrap bgcolor="f1f1f1" class="main" style="border-right: 1px solid; border-color: #cccccc;">
-      <div align="right">{$module_data.PRODUCTS_PRICE}&nbsp;</div>
-	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      	  {foreach key=key_data item=item_data from=$module_data.ATTRIBUTES}
+      <div align="right">{$module_data.PRODUCTS_PRICE}&#160;</div>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          {foreach key=key_data item=item_data from=$module_data.ATTRIBUTES}
         <tr>
-    <td class="main"><div align="right">{$item_data.PRICE}&nbsp;</div></td>
+    <td class="main"><div align="right">{$item_data.PRICE}&#160;</div></td>
   </tr>
   {/foreach}
   </table>
 
 
-	  </td>
+      </td>
     <td align="center" valign="middle" bgcolor="FEF8F8" class="main"> <div align="center">{$module_data.BOX_DELETE}</div></td>
   </tr>
   {/foreach}
@@ -50,7 +50,7 @@
   </tr>
   <tr>
     <td style="border-top: 1px solid; border-color: #cccccc;" colspan="4" class="main"><div align="right"><strong>{$TOTAL_CONTENT}</strong></div></td>
-    <td style="border-top: 1px solid; border-color: #cccccc;" align="center" valign="middle" class="main">&nbsp;</td>
+    <td style="border-top: 1px solid; border-color: #cccccc;" align="center" valign="middle" class="main">&#160;</td>
   </tr>
 </table>
 <br>
