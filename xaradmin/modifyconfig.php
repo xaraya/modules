@@ -36,7 +36,9 @@ function sitetools_admin_modifyconfig()
     $data['lineterm']      = xarModGetVar('sitetools','lineterm');
     $data['colnumber']     = xarModGetVar('sitetools','colnumber');
     $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
-    $data['defaultbktype'] = xarModGetVar('sitetools','defaultbktype');
+    if (!isset($data['defaultbktype']) || empty($data['defaultbktype'])) {
+        $data['defaultbktype'] = 'complete';
+    }
     $data['usedbprefix']   = xarModGetVar('sitetools','usedbprefix');
     // Check for the FTP extension
     $data['ftpextension']  = extension_loaded('ftp');

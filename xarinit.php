@@ -259,6 +259,7 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
         case '0.2':
+        case '0.2.0':        
             xarModSetVar('sitetools','useftpbackup', false);
             xarModSetVar('sitetools','ftpserver', '');
             xarModSetVar('sitetools','ftpuser', '');

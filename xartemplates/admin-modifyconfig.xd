@@ -5,7 +5,6 @@
 <xar:set name="backuppathl"><xar:mlstring>Backup Path:</xar:mlstring></xar:set>
 <xar:set name="timestampl"><xar:mlstring>Use timestamp in backup filename:</xar:mlstring></xar:set>
 <xar:set name="dbprefixl"><xar:mlstring>Use database prefix in backup table create sql:</xar:mlstring></xar:set>
-
 <xar:set name="lineopl"><xar:mlstring>Line termination type:</xar:mlstring></xar:set>
 <xar:set name="cacheoptions"><xar:mlstring>Cache Options</xar:mlstring></xar:set>
 <xar:set name="backupoptions"><xar:mlstring>Backup Options</xar:mlstring></xar:set>
@@ -157,18 +156,18 @@
             <xar:if condition="xarModIsAvailable('scheduler')">
                 <div class="xar-form-input-wrapper">
                     <label for="defaultbktype" class="xar-form-label" title="#$bkdefaulthelp#">
-                            #$defaultbktypel#
+                        #$defaultbktypel#
                     </label>
                     <select name="defaultbktype" id="defaultbktype">
-                    <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
+                    <xar:if condition="$defaultbktype eq 'complete'">
                         <option value="complete" selected="selected">#$bkoption1#</option>
                         <option value="standard">#$bkoption2#</option>
                         <option value="structure">#$bkoption3#</option>
-                    <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'standard'" />
+                    <xar:elseif condition="$defaultbktype eq 'standard'" />
                         <option value="complete">#$bkoption1#</option>
                         <option value="standard" selected="selected">#$bkoption2#</option>
                         <option value="structure">#$bkoption3#</option>
-                    <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'structure'" />
+                    <xar:elseif condition="$defaultbktype eq 'structure'" />
                         <option value="complete">#$bkoption1#</option>
                         <option value="standard">#$bkoption2#</option>
                         <option value="structure" selected="selected">#$bkoption3#</option>
@@ -176,21 +175,21 @@
                     </select>
                 </div>
                 <xar:foreach in="$schedule" key="$what" value="$descr">
-                     <div class="xar-form-input-wrapper">
-                         <label for="interval_#$what#" class="xar-form-label" title="#$schedulinghelp#">
+                    <div class="xar-form-input-wrapper">
+                        <label for="interval_#$what#" class="xar-form-label" title="#$schedulinghelp#">
                             #$descr#
-                         </label>
-                         <select name="interval[#$what#]" id="interval_#$what#">
-                             <option value="">#$schedulingoff#</option>
-                             <xar:foreach in="$intervals" key="$name" value="$display">
-                                 <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
+                        </label>
+                        <select name="interval[#$what#]" id="interval_#$what#">
+                            <option value="">#$schedulingoff#</option>
+                            <xar:foreach in="$intervals" key="$name" value="$display">
+                                <xar:if condition="!empty($interval[$what]) and $interval[$what] eq $name">
                                     <option value="#$name#" selected="selected">#$display#</option>
-                                 <xar:else/>
+                                <xar:else/>
                                     <option value="#$name#">#$display#</option>
-                                 </xar:if>
-                             </xar:foreach>
-                         </select>
-                     </div>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </div>
                 </xar:foreach>
                 <div class="xar-form-input-wrapper-after">
                     #$schedulingnote#
@@ -244,12 +243,11 @@
                         </label>
                         <input type="text" name="ftpdir" id="ftpdir" size="40" maxlength="128" value="#$ftpdir#" />
                     </div>
-
                 </xar:if>
             <xar:else />
                 <div class="xar-form-input-wrapper-after">
                     <xar:mlstring>Please install and activate the Scheduler module to enable scheduling.</xar:mlstring>
-               </div>
+                </div>
             </xar:if>
         </fieldset>
         <fieldset>
