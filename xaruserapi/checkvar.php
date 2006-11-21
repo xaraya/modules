@@ -145,17 +145,18 @@ function registration_userapi_checkvar($args)
                 if ($emailcheck == false) {
                     $invalid = xarML('There is an error in your email address');
                 }
-
-                if(xarModGetVar('registration','uniqueemail')) {
-                    // check for duplicate email address
-                    $user = xarModAPIFunc('roles', 'user', 'get',
-                                   array('email' => $email));
-                    if ($user != false) {
-                        unset($user);
-                        $invalid = xarML('That email address is already registered.');
-                    }
+            }
+            if (empty($invalid) && xarModGetVar('registration','uniqueemail')) {
+                // check for duplicate email address
+                $user = xarModAPIFunc('roles', 'user', 'get',
+                               array('email' => $email));
+                if ($user != false) {
+                    unset($user);
+                    $invalid = xarML('That email address is already registered.');
                 }
+            }
 
+            if (empty($invalid)) {
                 // check for disallowed email addresses
                 $disallowedemails = xarModGetVar('registration','disallowedemails');
                 if (!empty($disallowedemails)) {
