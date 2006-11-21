@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3><xar:mlstring>API specifications</xar:mlstring></h3>
 <xar:template file="contents"/>
 <p>
@@ -9,6 +10,7 @@
         <li><a href="http://phpbeans.com/index/spec_client_api">Client API specification</a></li>
     </ul>
 </p>
+<p>
 <h5>Compatibility issues</h5>
     Several changes were made to the original php code, mostly to make everything PHP 5
     compatible and take advantage of the newer Object model in PHP 5. 
@@ -35,3 +37,4 @@
         </li>
     </ul>
 </p>
+</xar:template>

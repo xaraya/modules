@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3><xar:mlstring>Server programming</xar:mlstring></h3>
 <xar:template file="contents"/>
 <p>
@@ -54,4 +55,6 @@
         taken from these lines in the doccomment. While optional, each XORBA object should specify them, so clients can 
         'autodiscover' what the signatures of the exposed methods are.
     </li>
+  </ul>  
 </p>
+</xar:template>

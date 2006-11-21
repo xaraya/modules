@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Server Object Discovery (aka "sod that!")</xar:mlstring></span>
@@ -45,7 +46,7 @@
                       <dd>
                               <ol>
                                   <xar:foreach in="$xorba_methodinfo.parameters" key="$name" value="$type">
-                                      <li><span style="font-weight: bold;">#$type#</span>&nbsp;<span>$#$name#</span></li>
+                                      <li><span style="font-weight: bold;">#$type#</span>&#160;<span>$#$name#</span></li>
                                   </xar:foreach>
                               </ol>
                       </dd>
@@ -75,6 +76,7 @@
                   </xar:if>
                   <pre>
   #$xorba_object#/#$xorba_method##$paramstring#
+                  </pre>
               </fieldset>
           </xar:if>
         <xar:else/>
@@ -83,8 +85,9 @@
             <p>
               While running the commands to (or on) the server and exception occurred.
             </p>
-            <pre>#$exception#</p>
+            <pre>#$exception#</pre>
           </fieldset>
       </xar:if>
     </form>
 </div>
+</xar:template>

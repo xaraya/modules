@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3><xar:mlstring>Client programming</xar:mlstring></h3>
 <xar:template file="contents"/>
 
@@ -41,4 +42,4 @@
   client. If you are using PHP as a programming language, the local object
   syntax is the preferred way.
 </p>
-
+</xar:template>

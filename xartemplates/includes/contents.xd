@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-norm-outline" style="float:right; padding: 5pt;">
   <div class="xar-block-head">
          <div class="xar-block-title">Contents</div>
@@ -26,3 +27,4 @@
     </ul>
   </div>
 </div>
+</xar:template>

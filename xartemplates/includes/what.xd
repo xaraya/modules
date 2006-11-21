@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3><xar:mlstring>What is it?</xar:mlstring></h3>
 <xar:template file="contents"/>
 <p>
@@ -20,6 +21,7 @@
   that it allows (authenticated) clients to use php Objects available to them from a remote location and use them as if they were local
     (syntax-wise) but the object methods will run at the remote location.
 </p>
+<p>
   The XORBA objects are persistent; the server stores them in an object store. They are then available for retrieval at any 
   later time, not directly limited by session or page request. Obviously the user requesting them should have the proper permissions 
     to access the object.
@@ -30,3 +32,4 @@
     be almost transparent in that situation, meaning that it is not directly apparent where the code would run, just by looking at the code. 
     For more details see the <a href="&xar-modurl-xorba-admin-main;&amp;section=how">Client usage</a> section.
 </p>
+</xar:template>

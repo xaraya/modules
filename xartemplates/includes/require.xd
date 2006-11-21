@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h3><xar:mlstring>Requirements</xar:mlstring></h3>
 <xar:template file="contents"/>
 <p>
@@ -30,3 +31,4 @@
       <code><a href="http://php.net/manual/en/ref.sockets.php">sockets</a></code> extensions available in your PHP installation</li>
     <li>The PEAR Net_Server classes. These are the base classes the daemon is based on </li>
 </ul>
+</xar:template>

@@ -1,6 +1,8 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
   <fieldset>
     <legend>Registered Xorba servers</legend>
-      <xar:data-list module="$objectinfo['moduleid']" itemtype="$objectinfo['itemtype']" numitems="20" />
+      <xar:data-view module="$objectinfo['moduleid']" itemtype="$objectinfo['itemtype']" numitems="20" />
   </fieldset>
 </div>
+</xar:template>
