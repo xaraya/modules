@@ -85,9 +85,9 @@
                 <xar:else/>
                   <input type="checkbox" name="usenameinstead" id="usenameinstead" value="1" />
                 </xar:if>
-                <label for="showtitle" title="#xarML('Use Category Name for display if description is empty?')#">
+                <label for="showtitle" title="#xarML('Use Category Name for display if Description is empty?')#">
                         <xar:mlstring>
-                            Use Category Name for display if description is empty?
+                            Use Category Name for display if Description is empty?
                         </xar:mlstring>
                 </label>
 
