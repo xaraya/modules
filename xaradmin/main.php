@@ -16,11 +16,11 @@
 function xarpages_admin_main()
 {
     // Need admin priv to view the info page.
-    if (!xarSecurityCheck('AdminXarpagesPage')) {
-        return;
-    }
+    if (!xarSecurityCheck('AdminXarpagesPage')) return;
 
-    return array();
+    // Redirect to the view page.
+    xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+    return true;
 }
 
 ?>

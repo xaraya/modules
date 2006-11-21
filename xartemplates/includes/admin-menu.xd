@@ -53,7 +53,7 @@
     <xar:sec mask="EditXarpagesPagetype" catch="false">
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
-      <a href="&xar-modurl-xarpages-admin-overview;" title="#xarML('View overview documenatation of xarPages')#">
+      <a href="&xar-modurl-xarpages-admin-overview;" title="#xarML('View overview page for xarpages')#">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>
