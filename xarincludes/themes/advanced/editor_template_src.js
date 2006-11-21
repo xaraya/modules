@@ -1,5 +1,5 @@
 /**
- * $Id: editor_template_src.js 129 2006-10-23 09:45:17Z spocke $
+ * $Id: editor_template_src.js 144 2006-11-14 21:42:06Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -782,10 +782,6 @@ var TinyMCE_AdvancedTheme = {
 			return false;
 		};
 
-		function getAttrib(elm, name) {
-			return elm.getAttribute(name) ? elm.getAttribute(name) : "";
-		};
-
 		// No node provided
 		if (node == null)
 			return;
@@ -839,7 +835,7 @@ var TinyMCE_AdvancedTheme = {
 					var st = tinyMCE.getAttrib(path[i], "style");
 					if (st != "") {
 						st = tinyMCE.serializeStyle(tinyMCE.parseStyle(st));
-						nodeData += "style: " + st + " ";
+						nodeData += "style: " + tinyMCE.xmlEncode(st) + " ";
 					}
 				}
 
@@ -849,18 +845,18 @@ var TinyMCE_AdvancedTheme = {
 
 					var face = tinyMCE.getAttrib(path[i], "face");
 					if (face != "")
-						nodeData += "font: " + face + " ";
+						nodeData += "font: " + tinyMCE.xmlEncode(face) + " ";
 
 					var size = tinyMCE.getAttrib(path[i], "size");
 					if (size != "")
-						nodeData += "size: " + size + " ";
+						nodeData += "size: " + tinyMCE.xmlEncode(size) + " ";
 
 					var color = tinyMCE.getAttrib(path[i], "color");
 					if (color != "")
-						nodeData += "color: " + color + " ";
+						nodeData += "color: " + tinyMCE.xmlEncode(color) + " ";
 				}
 
-				if (getAttrib(path[i], 'id') != "") {
+				if (tinyMCE.getAttrib(path[i], 'id') != "") {
 					nodeData += "id: " + path[i].getAttribute('id') + " ";
 				}
 
@@ -868,22 +864,22 @@ var TinyMCE_AdvancedTheme = {
 				if (className != "" && className.indexOf('mceItem') == -1)
 					nodeData += "class: " + className + " ";
 
-				if (getAttrib(path[i], 'src') != "") {
+				if (tinyMCE.getAttrib(path[i], 'src') != "") {
 					var src = tinyMCE.getAttrib(path[i], "mce_src");
 
 					if (src == "")
 						 src = tinyMCE.getAttrib(path[i], "src");
 
-					nodeData += "src: " + src + " ";
+					nodeData += "src: " + tinyMCE.xmlEncode(src) + " ";
 				}
 
-				if (path[i].nodeName == 'A' && getAttrib(path[i], 'href') != "") {
+				if (path[i].nodeName == 'A' && tinyMCE.getAttrib(path[i], 'href') != "") {
 					var href = tinyMCE.getAttrib(path[i], "mce_href");
 
 					if (href == "")
 						 href = tinyMCE.getAttrib(path[i], "href");
 
-					nodeData += "href: " + href + " ";
+					nodeData += "href: " + tinyMCE.xmlEncode(href) + " ";
 				}
 
 				className = tinyMCE.getAttrib(path[i], "class");
@@ -894,11 +890,11 @@ var TinyMCE_AdvancedTheme = {
 
 				if (nodeName == "a" && (anchor = tinyMCE.getAttrib(path[i], "name")) != "") {
 					nodeName = "a";
-					nodeName += "#" + anchor;
+					nodeName += "#" + tinyMCE.xmlEncode(anchor);
 					nodeData = "";
 				}
 
-				if (getAttrib(path[i], 'name').indexOf("mce_") != 0) {
+				if (tinyMCE.getAttrib(path[i], 'name').indexOf("mce_") != 0) {
 					var className = tinyMCE.getVisualAidClass(tinyMCE.getAttrib(path[i], "class"), false);
 					if (className != "" && className.indexOf('mceItem') == -1) {
 						nodeName += "." + className;
@@ -1124,7 +1120,7 @@ var TinyMCE_AdvancedTheme = {
 				break;
 
 				case "IMG":
-				if (getAttrib(node, 'name').indexOf('mce_') != 0 && tinyMCE.getAttrib(node, 'class').indexOf('mceItem') == -1) {
+				if (tinyMCE.getAttrib(node, 'name').indexOf('mce_') != 0 && tinyMCE.getAttrib(node, 'class').indexOf('mceItem') == -1) {
 					tinyMCE.switchClass(editor_id + '_image', 'mceButtonSelected');
 				}
 				break;

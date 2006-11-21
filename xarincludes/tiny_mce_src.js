@@ -1016,8 +1016,8 @@ TinyMCE_Engine.prototype = {
 
 	storeAwayURLs : function(s) {
 		// Remove all mce_src, mce_href and replace them with new ones
-	//	s = s.replace(new RegExp('mce_src\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
-	//	s = s.replace(new RegExp('mce_href\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
+		// s = s.replace(new RegExp('mce_src\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
+		// s = s.replace(new RegExp('mce_href\\s*=\\s*\"[^ >\"]*\"', 'gi'), '');
 
 		if (!s.match(/(mce_src|mce_href)/gi, s)) {
 			s = s.replace(new RegExp('src\\s*=\\s*\"([^ >\"]*)\"', 'gi'), 'src="$1" mce_src="$1"');
@@ -1755,6 +1755,8 @@ TinyMCE_Engine.prototype = {
 	openWindow : function(template, args) {
 		var html, width, height, x, y, resizable, scrollbars, url;
 
+		args = !args ? {} : args;
+
 		args['mce_template_file'] = template['file'];
 		args['mce_width'] = template['width'];
 		args['mce_height'] = template['height'];
@@ -2403,7 +2405,8 @@ function TinyMCE_Control(settings) {
 		indent : s.apply_source_formatting,
 		invalid_elements : s.invalid_elements,
 		verify_html : s.verify_html,
-		fix_content_duplication : s.fix_content_duplication
+		fix_content_duplication : s.fix_content_duplication,
+		convert_fonts_to_spans : s.convert_fonts_to_spans
 	});
 
 	// Wrap old theme
@@ -2844,15 +2847,15 @@ TinyMCE_Control.prototype = {
 				break;
 
 			case "FormatBlock":
-				if (!this.cleanup.isValid(value))
-					return true;
-
 				if (value == null || value == "") {
 					var elm = tinyMCE.getParentElement(this.getFocusElement(), "p,div,h1,h2,h3,h4,h5,h6,pre,address,blockquote,dt,dl,dd,samp");
 
 					if (elm)
 						this.execCommand("mceRemoveNode", false, elm);
 				} else {
+					if (!this.cleanup.isValid(value))
+						return true;
+
 					if (tinyMCE.isGecko && new RegExp('<(div|blockquote|code|dt|dd|dl|samp)>', 'gi').test(value))
 						value = value.replace(/[^a-z]/gi, '');
 
@@ -4039,12 +4042,12 @@ TinyMCE_Engine.prototype.convertHexToRGB = function(s) {
 TinyMCE_Engine.prototype.convertSpansToFonts = function(doc) {
 	var sizes = tinyMCE.getParam('font_size_style_values').replace(/\s+/, '').split(',');
 
-	var h = doc.body.innerHTML;
+	/*var h = doc.body.innerHTML;
 	h = h.replace(/<span/gi, '<font');
 	h = h.replace(/<\/span/gi, '</font');
-	tinyMCE.setInnerHTML(doc.body, h);
+	tinyMCE.setInnerHTML(doc.body, h);*/
 
-	var s = doc.getElementsByTagName("font");
+	var s = tinyMCE.selectElements(doc, 'span,font');
 	for (var i=0; i<s.length; i++) {
 		var size = tinyMCE.trim(s[i].style.fontSize).toLowerCase();
 		var fSize = 0;
@@ -4078,10 +4081,10 @@ TinyMCE_Engine.prototype.convertSpansToFonts = function(doc) {
 TinyMCE_Engine.prototype.convertFontsToSpans = function(doc) {
 	var sizes = tinyMCE.getParam('font_size_style_values').replace(/\s+/, '').split(',');
 
-	var h = doc.body.innerHTML;
+/*	var h = doc.body.innerHTML;
 	h = h.replace(/<font/gi, '<span');
 	h = h.replace(/<\/font/gi, '</span');
-	tinyMCE.setInnerHTML(doc.body, h);
+	tinyMCE.setInnerHTML(doc.body, h);*/
 
 	var fsClasses = tinyMCE.getParam('font_size_classes');
 	if (fsClasses != '')
@@ -4089,7 +4092,7 @@ TinyMCE_Engine.prototype.convertFontsToSpans = function(doc) {
 	else
 		fsClasses = null;
 
-	var s = doc.getElementsByTagName("span");
+	var s = tinyMCE.selectElements(doc, 'span,font');
 	for (var i=0; i<s.length; i++) {
 		var fSize, fFace, fColor;
 
@@ -4178,7 +4181,7 @@ TinyMCE_Engine.prototype._fixTables = function(d) {
 	for (i=0; i<nl.length; i++) {
 		n = nl[i];
 
-		if ((p = tinyMCE.getParentElement(n, 'p,div,h1,h2,h3,h4,h5,h6')) != null) {
+		if ((p = tinyMCE.getParentElement(n, 'p,h1,h2,h3,h4,h5,h6')) != null) {
 			np = p.cloneNode(false);
 			np.removeAttribute('id');
 
@@ -4649,7 +4652,7 @@ TinyMCE_Cleanup.prototype = {
 	},
 
 	serializeNodeAsHTML : function(n, inn) {
-		var en, no, h = '', i, l, t, st, r, cn, va = false, f = false, at, hc, cr;
+		var en, no, h = '', i, l, t, st, r, cn, va = false, f = false, at, hc, cr, nn;
 
 		this._setupRules(); // Will initialize cleanup rules
 
@@ -4677,21 +4680,34 @@ TinyMCE_Cleanup.prototype = {
 				if ((tinyMCE.isRealIE) && n.nodeName.indexOf('/') != -1)
 					break;
 
-				if (this.vElementsRe.test(n.nodeName) && (!this.iveRe || !this.iveRe.test(n.nodeName)) && !inn) {
+				nn = n.nodeName;
+
+				// Convert fonts to spans
+				if (this.settings.convert_fonts_to_spans) {
+					// On get content FONT -> SPAN
+					if (this.settings.on_save && nn == 'FONT')
+						nn = 'SPAN';
+
+					// On insert content SPAN -> FONT
+					if (!this.settings.on_save && nn == 'SPAN')
+						nn = 'FONT';
+				}
+
+				if (this.vElementsRe.test(nn) && (!this.iveRe || !this.iveRe.test(nn)) && !inn) {
 					va = true;
 
-					r = this.rules[n.nodeName];
+					r = this.rules[nn];
 					if (!r) {
 						at = this.rules;
 						for (no in at) {
-							if (at[no] && at[no].validRe.test(n.nodeName)) {
+							if (at[no] && at[no].validRe.test(nn)) {
 								r = at[no];
 								break;
 							}
 						}
 					}
 
-					en = r.isWild ? n.nodeName.toLowerCase() : r.oTagName;
+					en = r.isWild ? nn.toLowerCase() : r.oTagName;
 					f = r.fill;
 
 					if (r.removeEmpty && !hc)
@@ -4728,13 +4744,13 @@ TinyMCE_Cleanup.prototype = {
 						t = null;
 
 					// Close these
-					if (t != null && this.closeElementsRe.test(n.nodeName))
+					if (t != null && this.closeElementsRe.test(nn))
 						return t + ' />';
 
 					if (t != null)
 						h += t + '>';
 
-					if (this.isIE && this.codeElementsRe.test(n.nodeName))
+					if (this.isIE && this.codeElementsRe.test(nn))
 						h += n.innerHTML;
 				}
 			break;
@@ -4898,13 +4914,20 @@ TinyMCE_Cleanup.prototype = {
 	},
 
 	_getAttrib : function(e, n, d) {
+		var v, ex;
+
 		if (typeof(d) == "undefined")
 			d = "";
 
 		if (!e || e.nodeType != 1)
 			return d;
 
-		var v = e.getAttribute(n, 0);
+		try {
+			v = e.getAttribute(n, 0);
+		} catch (ex) {
+			// IE 7 may cast exception on invalid attributes
+			v = e.getAttribute(n, 2);
+		}
 
 		if (n == "class" && !v)
 			v = e.className;
@@ -5225,7 +5248,12 @@ TinyMCE_Engine.prototype.getAttrib = function(elm, name, dv) {
 	if (!elm || elm.nodeType != 1)
 		return dv;
 
-	v = elm.getAttribute(name);
+	try {
+		v = elm.getAttribute(name, 0);
+	} catch (ex) {
+		// IE 7 may cast exception on invalid attributes
+		v = elm.getAttribute(name, 2);
+	}
 
 	// Try className for class attrib
 	if (name == "class" && !v)
@@ -6047,8 +6075,8 @@ TinyMCE_Selection.prototype = {
 		h = tinyMCE._cleanupHTML(inst, inst.contentDocument, inst.settings, e, e, false, true, false);
 
 		// When editing always use fonts internaly
-		if (tinyMCE.getParam("convert_fonts_to_spans"))
-			tinyMCE.convertSpansToFonts(inst.getDoc());
+		//if (tinyMCE.getParam("convert_fonts_to_spans"))
+		//	tinyMCE.convertSpansToFonts(inst.getDoc());
 
 		return h;
 	},
@@ -7214,7 +7242,7 @@ TinyMCE_Menu.prototype = tinyMCE.extend(TinyMCE_Layer.prototype, {
 					break;
 
 				default:
-					h += '<tr><td><a href="#" onclick="return tinyMCE.cancelEvent(event);" onmousedown="return tinyMCE.cancelEvent(event);" onmouseup="' + tinyMCE.xmlEncode(m[i].js) + ';return tinyMCE.cancelEvent(event);"><span' + c +'>' + t + '</span></a>';
+					h += '<tr><td><a href="' + tinyMCE.xmlEncode(m[i].js) + '" onmousedown="' + tinyMCE.xmlEncode(m[i].js) + ';return tinyMCE.cancelEvent(event);" onclick="return tinyMCE.cancelEvent(event);" onmouseup="return tinyMCE.cancelEvent(event);"><span' + c +'>' + t + '</span></a>';
 			}
 
 			h += '</td></tr>';

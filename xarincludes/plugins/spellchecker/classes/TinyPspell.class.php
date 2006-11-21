@@ -6,8 +6,7 @@
  *
  */
 
-class TinyPSpell 
-{
+class TinyPSpell {
 	var $lang;
 	var $mode;
 	var $string;
@@ -18,8 +17,7 @@ class TinyPSpell
 	var $spelling;
 	var $encoding;
 
-	function TinyPSpell(&$config, $lang, $mode, $spelling, $jargon, $encoding) 
-    {
+	function TinyPSpell(&$config, $lang, $mode, $spelling, $jargon, $encoding) {
 		$this->lang = $lang;
 		$this->mode = $mode;
 		$this->plink = false;
@@ -34,8 +32,7 @@ class TinyPSpell
 	}
 
 	// Returns array with bad words or false if failed.
-	function checkWords($wordArray) 
-    {
+	function checkWords($wordArray) {
 		if (!$this->plink) {
 			$this->errorMsg[] = "No PSpell link found for checkWords.";
 			return array();
@@ -51,8 +48,7 @@ class TinyPSpell
 	}
 
 	// Returns array with suggestions or false if failed.
-	function getSuggestion($word) 
-    {
+	function getSuggestion($word) {
 		if (!$this->plink) {
 			$this->errorMsg[] = "No PSpell link found for getSuggestion.";
 			return array();

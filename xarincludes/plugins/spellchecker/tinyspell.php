@@ -63,8 +63,7 @@
 	if (empty($encoding))
 		$encoding = $defaultEncoding;
 
-	function sanitize($str, $type="strict") 
-    {
+	function sanitize($str, $type="strict") {
 		switch ($type) {
 			case "strict":
 				$str = preg_replace("/[^a-zA-Z0-9_\-]/i", "", $str);

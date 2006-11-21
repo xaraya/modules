@@ -4,7 +4,7 @@
     // Spellchecker class use
     // require_once("classes/TinyPspellShell.class.php"); // Command line pspell
     require_once("classes/TinyGoogleSpell.class.php"); // Google web service
-    // require_once("classes/TinyPspell.class.php"); // Internal PHP version
+     require_once("classes/TinyPspell.class.php"); // Internal PHP version
 
     // General settings
     $spellCheckerConfig['enabled'] = true;

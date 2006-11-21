@@ -1,7 +1,8 @@
 * Version 1.1.3 x Nov 2006
-- Integrate post 2.0.8 fixes to 4 Nov
+- Integrate post 2.0.8 fixes to 21 Nov
 - Updated compressor
 - Fix for full screen plugin
+- Fix for spellchecker for those without curl
 - See full tinymce changelog for details
 
 * Version 1.1.2 27 Oct 2006

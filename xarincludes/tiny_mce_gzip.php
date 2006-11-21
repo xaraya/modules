@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: tiny_mce_gzip.php 121 2006-10-20 12:08:03Z spocke $
+ * $Id: tiny_mce_gzip.php 150 2006-11-18 14:34:47Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2005-2006, Moxiecode Systems AB, All rights reserved.
@@ -17,7 +17,7 @@
     $diskCache = getParam("diskcache", "") == "true";
     $isJS = getParam("js", "") == "true";
     $compress = getParam("compress", "true") == "true";
-    $suffix = getParam("suffix", "") == "_src" ? "_src" : "";
+    $suffix = getParam("suffix", "_src") == "_src" ? "_src" : "";
 
     //Start Xaraya changes .. gee what can we do here
     if(isset($_SERVER['DOCUMENT_ROOT'])) {
@@ -45,7 +45,6 @@
 
     $expiresOffset = 3600 * 24 * 10; // Cache for 10 days in browser cache
     $content = "";
-
 
     // Custom extra javascripts to pack
     $custom = array(/*
@@ -155,16 +154,14 @@
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    function getParam($name, $def = false) 
-    {
+    function getParam($name, $def = false) {
         if (!isset($_GET[$name]))
             return $def;
 
         return preg_replace("/[^0-9a-z\-_,]+/i", "", $_GET[$name]); // Remove anything but 0-9,a-z,-_
     }
 
-    function getFileContents($path) 
-    {
+    function getFileContents($path) {
         $path = realpath($path);
 
         if (!$path)
@@ -186,10 +183,9 @@
         return $content;
     }
 
-    function putFileContents($path, $content) 
-    {
+    function putFileContents($path, $content) {
         if (function_exists("file_put_contents"))
-            return file_put_contents($path, $content);
+            return @file_put_contents($path, $content);
 
         $fp = @fopen($path, "wb");
         if ($fp) {

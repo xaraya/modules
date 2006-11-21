@@ -1,6 +1,6 @@
 var tinyMCE_GZ = {
 	settings : {
-		plugins : 'style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,lorem,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xarpagebreak,xhtmlxtras',
+		plugins : 'style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
 		themes : 'simple,advanced',
 		languages : 'en',
 		disk_cache : true,
@@ -55,7 +55,7 @@ var tinyMCE_GZ = {
 		v += '&themes=' + escape(s.themes);
 		v += '&languages=' + escape(s.languages);
 		v += '&diskcache=' + (s.disk_cache ? 'true' : 'false');
-		v += this.checkCompress() ? '' : '&compress=false';
+		//v += this.checkCompress() ? '' : '&compress=false';
 
 		this.loadFile(this.baseURL + v);
 	},
@@ -83,10 +83,27 @@ var tinyMCE_GZ = {
 	},
 
 	loadFile : function(u) {
+		var x, ex;
+
 		if (this.settings['debug'])
 			alert('JS: ' + u);
 
-		document.write('<script type="text/javascript" src="' + u + '"></script>');
+		if (this.isIE) {
+			// Synchronous AJAX load gzip JS file
+			try {
+				x = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (ex) {
+				x = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+
+			x.open("GET", u.replace(/%2C/g, ','), false);
+			x.send(null);
+
+			this.scriptData = x.responseText;
+
+			document.write('<script type="text/javascript">eval(tinyMCE_GZ.scriptData);</script>');
+		} else
+			document.write('<script type="text/javascript" src="' + u + '"></script>');
 	},
 
 	start : function() {

@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 38 2006-08-04 14:03:21Z spocke $
+ * $Id: editor_plugin_src.js 147 2006-11-18 14:09:39Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -240,7 +240,7 @@ var TinyMCE_SpellCheckerPlugin = {
 	},
 
 	execCommand : function(editor_id, element, command, user_interface, value) {
-		var inst = tinyMCE.getInstanceById(editor_id), self = TinyMCE_SpellCheckerPlugin, args = '', co, bb, mb, nl, i, e;
+		var inst = tinyMCE.getInstanceById(editor_id), self = TinyMCE_SpellCheckerPlugin, args = '', co, bb, mb, nl, i, e, mbs;
 
 		// Handle commands
 		switch (command) {
@@ -262,7 +262,14 @@ var TinyMCE_SpellCheckerPlugin = {
 					// Setup message box
 					mb = self._getMsgBoxLayer(inst);
 					e = mb.getElement();
-					e.innerHTML = '<span>' + tinyMCE.getLang('lang_spellchecker_swait', '', true) + '</span>';
+
+					if (e.childNodes[0])
+						e.removeChild(e.childNodes[0]);
+
+					mbs = document.createElement("span");
+					mbs.innerHTML = '<span>' + tinyMCE.getLang('lang_spellchecker_swait', '', true) + '</span>';
+					e.appendChild(mbs);
+
 					mb.show();
 					mb.moveRelativeTo(co, 'cc');
 

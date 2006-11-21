@@ -7,8 +7,7 @@
  */
 
 
-class TinyPspellShell 
-{
+class TinyPspellShell {
 	var $lang;
 	var $mode;
 	var $string;
@@ -22,8 +21,7 @@ class TinyPspellShell
 	var $spelling;
 	var $encoding;
 
-	function TinyPspellShell(&$config, $lang, $mode, $spelling, $jargon, $encoding) 
-    {
+	function TinyPspellShell(&$config, $lang, $mode, $spelling, $jargon, $encoding) {
 		$this->lang = $lang;
 		$this->mode = $mode;
 		$this->error = false;
@@ -38,8 +36,7 @@ class TinyPspellShell
 	}
 
 	// Returns array with bad words or false if failed.
-	function checkWords($wordArray) 
-    {
+	function checkWords($wordArray) {
 		if ($fh = fopen($this->tmpfile, "w")) {
 			fwrite($fh, "!\n");
 			foreach($wordArray as $key => $value)
@@ -73,8 +70,7 @@ class TinyPspellShell
 	}
 
 	// Returns array with suggestions or false if failed.
-	function getSuggestion($word) 
-    {
+	function getSuggestion($word) {
         if (function_exists("mb_convert_encoding"))
             $word = mb_convert_encoding($word, "ISO-8859-1", mb_detect_encoding($word, "UTF-8"));
         else
@@ -111,8 +107,7 @@ class TinyPspellShell
 		return $returnData;
 	}
 
-	function _debugData($data) 
-    {
+	function _debugData($data) {
 		$fh = @fopen("debug.log", 'a+');
 		@fwrite($fh, $data);
 		@fclose($fh);
