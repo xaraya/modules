@@ -35,9 +35,9 @@ class CustomerProperty extends SelectProperty
     public $categorylist = array();
     public $customerlist = array();
 
-    function __construct($args)
+    function __construct(ObjectDescriptor $descriptor)
     {
-        parent::__construct($args);
+        parent::__construct($descriptor);
         $this->filepath   = 'modules/customers/xarproperties';
 
         if (count($this->options) == 0) {
@@ -73,7 +73,7 @@ class CustomerProperty extends SelectProperty
         }
     }
 
-    function parseValidation($validation = '')
+    public function parseValidation($validation = '')
     {
         foreach(preg_split('/(?<!\\\);/', $this->validation) as $option) {
             // Semi-colons can be escaped with a '\' prefix.
