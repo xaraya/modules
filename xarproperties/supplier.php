@@ -35,9 +35,9 @@ class SupplierProperty extends SelectProperty
     public $categorylist = array();
     public $supplierlist = array();
 
-    function __construct($args)
+    function __construct(ObjectDescriptor $descriptor)
     {
-        parent::__construct($args);
+        parent::__construct($descriptor);
         $this->filepath   = 'modules/vendors/xarproperties';
 
         if (count($this->options) == 0) {
@@ -73,7 +73,7 @@ class SupplierProperty extends SelectProperty
         }
     }
 
-    function parseValidation($validation = '')
+    public function parseValidation($validation = '')
     {
         foreach(preg_split('/(?<!\\\);/', $this->validation) as $option) {
             // Semi-colons can be escaped with a '\' prefix.
