@@ -41,22 +41,22 @@ function sitecontact_user_main($args)
         $sctypename=trim($sctypename);
     }
     if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
-      $sctypename=trim($scform);
+        $sctypename=trim($scform);
     }
 
     //Have we got a form that is available and active?
     if (isset($sctypename) && trim($sctypename) !='') {
-       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
+        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
     }elseif (isset($scid) && is_int($scid)) {
-       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
 
     //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
-      //fallback to default form again
-      $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+        //fallback to default form again
+        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
 
@@ -100,27 +100,27 @@ function sitecontact_user_main($args)
     if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
     if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
 
-    $customtext = $formdata['customtext'];
-    $customtitle = $formdata['customtitle'];
-    $usehtmlemail= $formdata['usehtmlemail'];
-    $allowcopy = $formdata['allowcopy'];
+    $customtext   = $formdata['customtext'];
+    $customtitle  = $formdata['customtitle'];
+    $usehtmlemail = $formdata['usehtmlemail'];
+    $allowcopy    = $formdata['allowcopy'];
 
-    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
+    $data['customtitle'] = xarVarPrepHTMLDisplay($customtitle);
+    $data['customtext']  = xarVarPrepHTMLDisplay($customtext);
 
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy'] = $allowcopy;
 
     $optiontext = $formdata['optiontext'];
-    $optionset = array();
-    $selectitem=array();
-    $optionset=explode(',',$optiontext);
+    $optionset  = array();
+    $selectitem = array();
+    $optionset  = explode(',',$optiontext);
     $data['optionset']=$optionset;
-    $optionitems=array();
+    $optionitems = array();
     foreach ($optionset as $optionitem) {
-      $optionitems[]=explode(';',$optionitem);
+      $optionitems[] = explode(';',$optionitem);
     }
-    $data['optionitems']=$optionitems;
+    $data['optionitems'] = $optionitems;
     /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function
                 This could be removed at some time along with the hidden field in the form
           */
@@ -199,7 +199,7 @@ function sitecontact_user_main($args)
     $data['termslink']=trim($formdata['termslink']);
     if (!empty($data['sctypename'])){
         $template = 'main-' . $data['sctypename'];
-    } else {
+      } else {
         $template =  'main';
     }
     $data['scform']=$data['sctypename'];
