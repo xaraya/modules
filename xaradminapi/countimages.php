@@ -3,7 +3,7 @@
  * Count the number of server images
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * count the number of server images
  *
- * @author mikespub 
+ * @author mikespub
  * @param   string  $basedir   The directory where images are stored
  * @param   string  $baseurl   (optional) The corresponding base URL for the images
  * @param   string  $filetypes (optional) The list of file extensions to look for
@@ -71,7 +71,7 @@ function images_adminapi_countimages($args)
                         'filematch' => $filematch,
                         'filetype'  => $filetype,
                         'recursive' => $recursive);
-        
+
         $cachekey = md5(serialize($params));
         // get the number of images from temporary cache - see getimages()
         if (xarVarIsCached('Modules.Images','countimages.'.$cachekey)) {

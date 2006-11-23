@@ -3,7 +3,7 @@
  * Resizes an image to the given dimensions
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,8 +23,7 @@
  * @param   string  $thumbsdir     (optional) The directory where derivative images are stored
  * @param   string  $derivName     (optional) The name of the derivative image to be saved
  * @param   boolean $forceResize   (optional) Force resizing the image even if it already exists
- * @returns string
- * @return the location of the newly resized image
+ * @return  string the location of the newly resized image
  */
 
 function images_adminapi_resize_image($args)
@@ -32,17 +31,17 @@ function images_adminapi_resize_image($args)
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'resize_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
@@ -87,7 +86,7 @@ function images_adminapi_resize_image($args)
     $notSupported = FALSE;
 
     // if both arguments are specified, give priority to fileId
-    if (!empty($fileId)) {    
+    if (!empty($fileId)) {
         $fileInfo = end(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $fileId)));
         if (empty($fileInfo)) {
             return;

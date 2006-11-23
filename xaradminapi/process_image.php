@@ -3,7 +3,7 @@
  * Process an image using phpThumb
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -43,7 +43,7 @@ function images_adminapi_process_image($args)
     }
 
     if (empty($image) || empty($params)) {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                      '', 'process_image', 'images');
         if ($saveas == 3) {
             $phpThumb =& images_get_thumb();
@@ -159,7 +159,7 @@ function images_adminapi_process_image($args)
         // get the image data from the database
         $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $image['fileId']));
         if (empty($data)) {
-            $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+            $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                           'image', 'process_image', 'images');
             if ($saveas == 3) {
                 $phpThumb =& images_get_thumb();
@@ -181,7 +181,7 @@ function images_adminapi_process_image($args)
         $phpThumb->setSourceData($src);
 
     } else {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'image', 'process_image', 'images');
         if ($saveas == 3) {
             $phpThumb =& images_get_thumb();
@@ -233,7 +233,7 @@ function images_adminapi_process_image($args)
 
     // Save it to file
     if (empty($save)) {
-        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'save', 'process_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                     new SystemException($msg));

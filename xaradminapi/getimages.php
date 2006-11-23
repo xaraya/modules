@@ -3,7 +3,7 @@
  * Get the list of server images
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -72,7 +72,7 @@ function images_adminapi_getimages($args)
                         'filematch' => $filematch,
                         'filetype'  => $filetype,
                         'recursive' => $recursive);
-        
+
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
             $cacheinfo = xarModGetVar('images','file.cachelist.'.$cachekey);
