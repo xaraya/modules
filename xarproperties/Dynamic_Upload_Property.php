@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-
 /**
  * Dynamic Upload Property
  *
@@ -39,7 +38,10 @@ class Dynamic_Upload_Property extends Dynamic_Property
 
     // this is used by Dynamic_Property_Master::addProperty() to set the $object->upload flag
     var $upload = true;
-
+    /**
+     * Initiate the Upload property
+     * Constructor
+     */
     function Dynamic_Upload_Property($args)
     {
         $this->Dynamic_Property($args);
@@ -75,6 +77,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
             }
         }
     }
+    /**
+     * Check the input into the uploads property
+     */
     function checkInput($name='', $value = null)
     {
         if (empty($name)) {
@@ -87,6 +92,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
         }
         return $this->validateValue($value);
     }
+    /**
+     * Validate the value entered
+     */
     function validateValue($value = null)
     {
         // convert old Upload values if necessary
@@ -158,6 +166,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
     }
 
 //    function showInput($name = '', $value = null, $size = 0, $maxsize = 0, $id = '', $tabindex = '')
+    /**
+     * Show the input form
+     */
     function showInput($args = array())
     {
         extract($args);
@@ -197,7 +208,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
                                    'format' => 'upload',
                                    'invalid' => $this->invalid));
     }
-
+    /**
+     * Show the output: a link to the file
+     */
     function showOutput($args = array())
     {
         extract($args);
@@ -218,8 +231,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
      *
      * (keep this for compatibility with old Uploads values)
      *
-     * @returns mixed
-     * @return the value for the property
+     * @return mixed the value for the property
      */
     function getValue()
     {
@@ -259,8 +271,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
     /**
      * Get the base information for this property.
      *
-     * @returns array
-     * @return base information for this property
+     * @return array base information for this property
      **/
      function getBasePropertyInfo()
      {

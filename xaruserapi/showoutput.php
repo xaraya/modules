@@ -10,12 +10,12 @@
  * @subpackage Uploads Module
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
- *//**
+ */
+/**
  * show output for uploads module (used in DD properties)
  *
- * @param  $args ['value'] string the current value(s)
- * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload'
- * @returns string
+ * @param string $value The current value(s)
+ * @param string $format Format specifying 'fileupload', 'textupload' or 'upload'
  * @return string containing the uploads output
  */
 function uploads_userapi_showoutput($args)
