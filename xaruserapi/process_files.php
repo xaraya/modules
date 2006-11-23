@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-/** 
+/**
  *  Processes incoming files (uploades / imports)
  *
  *  @author  Carl P. Corliss (aka Rabbitt)
@@ -19,28 +19,28 @@
  *  @param   string     importFrom  The complete path to a (local) directory to import files from
  *  @param   array      override    Array containing override values for import/uplaod path/obfuscate
  *  @param   string     override.upload.path        Override the upload path with the specified value
- *  @param   string     override.upload.obfuscate   Override the upload filename obfuscation 
+ *  @param   string     override.upload.obfuscate   Override the upload filename obfuscation
  *  @param   integer    action        The action that is happening ;-)
  *  @returns array      list of files the files that were requested to be stored. If they had errors,
  *                      they will have 'error' index defined and will -not- have been added. otherwise,
  *                      they will have a fileId associated with them if they were added to the DB
  */
- 
+
 xarModAPILoad('uploads', 'user');
- 
-function uploads_userapi_process_files( $args ) 
+
+function uploads_userapi_process_files( $args )
 {
 
     extract($args);
 
     $storeList = array();
-    
+
     if (!isset($action)) {
         $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-        
+
     // If not store type defined, default to DB ENTRY AND FILESYSTEM STORE
     if (!isset($storeType)) {
         // this is the same as _UPLOADS_STORE_DB_ENTRY OR'd with _UPLOADS_STORE_FILESYSTEM
@@ -73,7 +73,7 @@ function uploads_userapi_process_files( $args )
     }
 
     switch ($action) {
-    
+
         case _UPLOADS_GET_UPLOAD:
             if (!isset($upload) || empty($upload)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'upload', 'process_files', 'uploads');
@@ -85,7 +85,7 @@ function uploads_userapi_process_files( $args )
             if (empty($allow_duplicate)) {
                 $allow_duplicate = 0;
             }
-            
+
             if (isset($upload['name']) && !empty($upload['name'])) {
                 // make sure we look in the right directory :-)
                 if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
@@ -125,16 +125,16 @@ function uploads_userapi_process_files( $args )
                     }
                 }
             }
-            
-            $fileList = xarModAPIFunc('uploads','user','prepare_uploads', 
+
+            $fileList = xarModAPIFunc('uploads','user','prepare_uploads',
                                        array('savePath'  => $upload_directory,
                                              'obfuscate' => $upload_obfuscate,
                                              'fileInfo'  => $upload));
             break;
         case _UPLOADS_GET_LOCAL:
-            
+
             $storeType = _UPLOADS_STORE_DB_ENTRY;
-            
+
             if (isset($getAll) && !empty($getAll)) {
                 // current working directory for the user, set by import_chdir() when using the get_files() GUI
                 $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
@@ -151,9 +151,9 @@ function uploads_userapi_process_files( $args )
                         unset($fileList[$location]);
                     }
                 }
-                
+
                 $fileList += $list;
-                
+
                 // files in the trusted directory are automatically approved
                 foreach ($fileList as $key => $fileInfo) {
                     $fileList[$key]['fileStatus'] = _UPLOADS_STATUS_APPROVED;
@@ -162,29 +162,29 @@ function uploads_userapi_process_files( $args )
             }
             break;
         case _UPLOADS_GET_EXTERNAL:
-        
+
             if (!isset($import)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'import', 'process_files', 'uploads');
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
             }
-            
+
             // Setup the uri structure so we have defaults if parse_url() doesn't create them
             $uri = parse_url($import);
-            
+
             if (!isset($uri['scheme']) || empty($uri['scheme'])) {
                 $uri['scheme'] = xarML('unknown');
             }
-            
+
             switch ($uri['scheme']) {
-                case 'ftp': 
+                case 'ftp':
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp',
                                               array('savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
                                                     'uri'       => $uri));
                     break;
                 case 'https':
-                case 'http': 
+                case 'http':
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http',
                                               array('savePath'  => $upload_directory,
                                                     'obfuscate' => $upload_obfuscate,
@@ -213,13 +213,13 @@ function uploads_userapi_process_files( $args )
             $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
-            
-    }    
+
+    }
 
     foreach ($fileList as $fileInfo) {
-        
+
         // If the file has errors, add the file to the storeList (with it's errors intact),
-        // and continue to the next file in the list. Note: it's up to the calling function 
+        // and continue to the next file in the list. Note: it's up to the calling function
         // to deal with the error (or not) - however, we won't be adding the file with errors :-)
         if (isset($fileInfo['errors'])) {
             $storeList[] = $fileInfo;

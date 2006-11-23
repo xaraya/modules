@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,11 +14,11 @@
 function uploads_user_download()
 {
     if (!xarSecurityCheck('ViewUploads')) return;
-    
+
     if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
 
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
-    
+
     if (empty($fileInfo) || !count($fileInfo)) {
         xarResponseRedirect('modules/uploads/xarimages/notapproved.gif');
         return TRUE;
@@ -26,15 +26,15 @@ function uploads_user_download()
     //    xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_ERR_NO_FILE', new SystemException($msg));
     //    return;
     }
-    
+
     // the file should be the first indice in the array
     $fileInfo = end($fileInfo);
-    
+
     $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
     $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
     $instance[2] = xarSessionGetVar('uid');
     $instance[3] = $fileId;
-    
+
     $instance = implode(':', $instance);
 
     // If you are an administrator OR the file is approved, continue
@@ -45,7 +45,7 @@ function uploads_user_download()
         // No access - so return the exception
         return;
     }
-        
+
     if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
             if (!file_exists($fileInfo['fileLocation'])) {
@@ -59,14 +59,14 @@ function uploads_user_download()
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
                 return;
             }
-        }        
-        
+        }
+
         $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
-        
+
         if (!$result || xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
             // now just return and let the error bubble up
             return FALSE;
-        } 
+        }
 
         // Let any hooked modules know that we've just pushed a file
         // the hitcount module in particular needs to know to save the fact
@@ -81,8 +81,8 @@ function uploads_user_download()
 
         // File has been pushed to the client, now shut down.
         exit();
-    
-    } else { 
+
+    } else {
         return FALSE;
     }
 }

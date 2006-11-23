@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,8 +15,8 @@ function uploads_admin_modifyconfig()
 {
 
     xarModAPILoad('uploads', 'user');
-    
-    // Security check 
+
+    // Security check
     if (!xarSecurityCheck('AdminUploads')) return;
 
     // Generate a one-time authorisation code for this operation
@@ -46,17 +46,17 @@ function uploads_admin_modifyconfig()
     $data['ddprop']['stored']               = xarModGetVar('uploads', 'dd.fileupload.stored');
     $data['ddprop']['upload']               = xarModGetVar('uploads', 'dd.fileupload.upload');
     $data['authid']                         = xarSecGenAuthKey();
-    
+
     $data['approveList']['noone']      = _UPLOADS_APPROVE_NOONE;
     $data['approveList']['admin']      = _UPLOADS_APPROVE_ADMIN;
     $data['approveList']['everyone']   = _UPLOADS_APPROVE_EVERYONE;
-    
-    if ($data['file']['auto-approve'] != _UPLOADS_APPROVE_NOONE && 
+
+    if ($data['file']['auto-approve'] != _UPLOADS_APPROVE_NOONE &&
         $data['file']['auto-approve'] != _UPLOADS_APPROVE_ADMIN &&
         $data['file']['auto-approve'] != _UPLOADS_APPROVE_EVERYONE) {
             $data['file']['auto-approve'] = _UPLOADS_APPROVE_NOONE;
     }
-    
+
     $hooks = xarModCallHooks('module', 'modifyconfig', 'uploads',
                              array('module'   => 'uploads',
                                    'itemtype' => 1)); // Files

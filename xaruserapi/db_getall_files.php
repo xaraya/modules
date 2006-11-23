@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 /**
  * Retrieve the metadata stored for all files in the database
- * 
+ *
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
@@ -24,25 +24,25 @@
  *
  * @returns array   All of the metadata stored for all files
  */
- 
-function uploads_userapi_db_getall_files( $args ) 
+
+function uploads_userapi_db_getall_files( $args )
 {
     extract($args);
 
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-        
+
     // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
 
-    $sql = "SELECT xar_fileEntry_id, 
-                   xar_user_id, 
-                   xar_filename, 
-                   xar_location, 
+    $sql = "SELECT xar_fileEntry_id,
+                   xar_user_id,
+                   xar_filename,
+                   xar_location,
                    xar_filesize,
-                   xar_status, 
-                   xar_store_type, 
+                   xar_status,
+                   xar_store_type,
                    xar_mime_type,
                    xar_extrainfo
               FROM $fileEntry_table ";
@@ -119,14 +119,14 @@ function uploads_userapi_db_getall_files( $args )
         return;
     }
 
-    // if no record found, return an empty array        
+    // if no record found, return an empty array
     if ($result->EOF) {
         return array();
     }
-    
+
     $importDir = xarModGetVar('uploads','path.imports-directory');
     $uploadDir = xarModGetVar('uploads','path.uploads-directory');
-    
+
     // remove the '/' at the end of the path
     $importDir = eregi_replace('/$', '', $importDir);
     $uploadDir = eregi_replace('/$', '', $uploadDir);
@@ -142,10 +142,10 @@ function uploads_userapi_db_getall_files( $args )
     $revcache = array();
     $imgcache = array();
     $usercache = array();
-        
+
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        
+
         $fileInfo['fileId']        = $row['xar_fileentry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
@@ -172,7 +172,7 @@ function uploads_userapi_db_getall_files( $args )
         if (!empty($fileInfo['fileLocation']) && file_exists($fileInfo['fileLocation'])) {
             $fileInfo['fileModified'] = @filemtime($fileInfo['fileLocation']);
         }
-        
+
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'imports', $fileInfo['fileLocation']));
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
@@ -183,18 +183,18 @@ function uploads_userapi_db_getall_files( $args )
             $fileInfo['fileDirectory'] = dirname($fileInfo['fileLocation']);
             $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         }
-        
+
         $fileInfo['fileHashName']     = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
         $fileInfo['fileHashRealName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileName'];
-        
+
         switch($fileInfo['fileStatus']) {
             case _UPLOADS_STATUS_REJECTED:
                 $fileInfo['fileStatusName'] = xarML('Rejected');
                 break;
-            case _UPLOADS_STATUS_APPROVED: 
+            case _UPLOADS_STATUS_APPROVED:
                 $fileInfo['fileStatusName'] = xarML('Approved');
                 break;
-            case _UPLOADS_STATUS_SUBMITTED: 
+            case _UPLOADS_STATUS_SUBMITTED:
                 $fileInfo['fileStatusName'] = xarML('Submitted');
                 break;
             default:
@@ -211,7 +211,7 @@ function uploads_userapi_db_getall_files( $args )
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
         $instance[2] = xarSessionGetVar('uid');
         $instance[3] = $fileInfo['fileId'];
-    
+
         $instance = implode(':', $instance);
 
         if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED ||
@@ -220,7 +220,7 @@ function uploads_userapi_db_getall_files( $args )
         }
         $result->MoveNext();
     }
-    
+
     $result->Close();
 
     return $fileList;

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,7 +25,7 @@
  *                   fileInfo['fileSize']   The size of the file (in bytes)
  *  @returns boolean            TRUE if it passed the checks, FALSE otherwise
  */
-function uploads_userapi_validate_file ( $args ) 
+function uploads_userapi_validate_file ( $args )
 {
 
     extract ($args);

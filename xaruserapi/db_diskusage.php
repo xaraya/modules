@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 /**
  *  Retrieve the total size of disk usage for selected files based on the filters passed in
- * 
+ *
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
@@ -22,23 +22,23 @@
  * @param  integer  fileStatus  (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
  * @param  integer  userId      (Optional) grab files uploaded by a particular user
  * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
- * @param  integer  fileType    (Optional) grab files with the specified mime type 
+ * @param  integer  fileType    (Optional) grab files with the specified mime type
  * @param  string   catid       (Optional) grab file(s) in the specified categories
  *
  * @returns integer             The total amount of diskspace used by the current set of selected files
  */
- 
-function uploads_userapi_db_diskusage( $args )  
+
+function uploads_userapi_db_diskusage( $args )
 {
-    
+
     extract($args);
-    
+
     $where = array();
-    
+
     if (!isset($inverse)) {
         $inverse = FALSE;
     }
-    
+
     if (isset($fileId)) {
         if (is_array($fileId)) {
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
@@ -46,7 +46,7 @@ function uploads_userapi_db_diskusage( $args )
             $where[] = "xar_fileEntry_id = $fileId";
         }
     }
-    
+
     if (isset($fileName) && !empty($fileName)) {
         $where[] = "(xar_filename LIKE '$fileName')";
     }
@@ -57,12 +57,12 @@ function uploads_userapi_db_diskusage( $args )
 
     if (isset($userId) && !empty($userId) && is_numeric($userId)) {
         $where[] = "(xar_user_id = $userId)";
-    } 
+    }
 
     if (isset($store_type) && !empty($store_type) && is_numeric($store_type)) {
         $where[] = "(xar_store_type = $store_type)";
     }
-    
+
     if (isseT($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
     }
@@ -86,10 +86,10 @@ function uploads_userapi_db_diskusage( $args )
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-        
+
     // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
-    
+
     $sql = "SELECT SUM(xar_filesize) AS disk_usage
               FROM $fileEntry_table ";
 
@@ -125,13 +125,13 @@ function uploads_userapi_db_diskusage( $args )
         return FALSE;
     }
 
-    // if no record found, return an empty array        
+    // if no record found, return an empty array
     if ($result->EOF) {
         return (integer) 0;
     }
-    
+
     $row = $result->GetRowAssoc(false);
-    
+
     return $row['disk_usage'];
 }
 

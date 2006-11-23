@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 /**
  *  Retrieve the total count of files in the database based on the filters passed in
- * 
+ *
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
@@ -30,18 +30,18 @@
  *
  * @returns array   All of the metadata stored for the particular file
  */
- 
-function uploads_userapi_db_count( $args )  
+
+function uploads_userapi_db_count( $args )
 {
-    
+
     extract($args);
-    
+
     $where = array();
-    
+
     if (!isset($inverse)) {
         $inverse = FALSE;
     }
-    
+
     if (isset($fileId)) {
         if (is_array($fileId)) {
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
@@ -49,7 +49,7 @@ function uploads_userapi_db_count( $args )
             $where[] = "xar_fileEntry_id = $fileId";
         }
     }
-    
+
     if (isset($fileName) && !empty($fileName)) {
         $where[] = "(xar_filename LIKE '$fileName')";
     }
@@ -60,12 +60,12 @@ function uploads_userapi_db_count( $args )
 
     if (isset($userId) && !empty($userId) && is_numeric($userId)) {
         $where[] = "(xar_user_id = $userId)";
-    } 
+    }
 
     if (isset($store_type) && !empty($store_type) && is_numeric($store_type)) {
         $where[] = "(xar_store_type = $store_type)";
     }
-    
+
     if (isseT($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
     }
@@ -85,7 +85,7 @@ function uploads_userapi_db_count( $args )
         } else {
             $where = 'WHERE ' . implode(' AND ', $where);
         }
-    } elseif (count($where) == 1) {        
+    } elseif (count($where) == 1) {
         if ($inverse) {
             $where = 'WHERE NOT (' . implode('', $where) . ')';
         } else {
@@ -94,14 +94,14 @@ function uploads_userapi_db_count( $args )
     } else {
         $where = '';
     }
-    
+
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-        
+
     // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
-    
+
     $sql = "SELECT COUNT(xar_fileEntry_id) AS total
               FROM $fileEntry_table ";
 
@@ -130,20 +130,20 @@ function uploads_userapi_db_count( $args )
     }
 
     $sql .= " $where";
-    
+
     $result = $dbconn->Execute($sql);
 
     if (!$result)  {
         return FALSE;
     }
 
-    // if no record found, return an empty array        
+    // if no record found, return an empty array
     if ($result->EOF) {
         return (integer) 0;
     }
-    
+
     $row = $result->GetRowAssoc(false);
-    
+
     return $row['total'];
 }
 

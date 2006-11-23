@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -120,8 +120,8 @@ function uploads_userapi_db_add_file( $args )
 
     $bindvars = array( $file_id,
                       (int) $userId,
-                      (string) $fileName, 
-                      (string) $fileLocation, 
+                      (string) $fileName,
+                      (string) $fileLocation,
                       (int) $fileStatus,
                       (int) $fileSize,
                       (int) $store_type,

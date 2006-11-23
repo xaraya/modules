@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,16 +21,16 @@
  *  @param   string  savePath   Complete path to directory in which we want to save this file
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
- 
-function uploads_userapi_import_external_http( $args ) 
+
+function uploads_userapi_import_external_http( $args )
 {
-         
+
     extract($args);
-    
+
     if (!isset($uri)) {
         return; // error
     }
-    
+
     /**
      *  Initial variable checking / setup
      */
@@ -52,32 +52,32 @@ function uploads_userapi_import_external_http( $args )
             $uri['port'] = 80;
         }
     }
-    
+
     if (!isset($uri['path'])) {
         $uri['path'] = '';
     }
-    
+
     if (!isset($uri['query'])) {
         $uri['query'] = '';
     }
-    
+
     if (!isset($uri['fragment'])) {
         $uri['fragment'] = '';
     }
     $total = 0;
     $maxSize = xarModGetVar('uploads', 'file.maxsize');
-    
+
     // create the URI in the event we don't have the http library
     $httpURI = "$uri[scheme]://$uri[host]:$uri[port]$uri[path]$uri[query]$uri[fragment]";
-    
+
     // Set the connection up to not terminate
     // the script if the user aborts
     ignore_user_abort(TRUE);
-    
-    // Create a temporary file for storing 
+
+    // Create a temporary file for storing
     // the contents of this new file
     $tmpName = tempnam(NULL, 'xarul');
-    
+
 // TODO: handle duplicates - cfr. prepare_uploads()
 
     // Set up the fileInfo array
@@ -88,20 +88,20 @@ function uploads_userapi_import_external_http( $args )
     $fileInfo['fileType']     = 'text/plain';
     $fileInfo['fileLocation'] = $tmpName;
     $fileInfo['fileSize']     = 0;
-    
+
     if (($httpId = fopen($httpURI, 'rb')) === FALSE) {
-        $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
+        $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
                     $uri['host'], $uri['port'], basename($uri['path']));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
     } else {
         if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
-            $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]', 
+            $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
                         $uri['host'], $uri['port'], basename($uri['path']));
             xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
         } else {
 
-            // Note that this is a -blocking- process - the connection will 
-            // NOT resume until the file transfer has finished - hence, the 
+            // Note that this is a -blocking- process - the connection will
+            // NOT resume until the file transfer has finished - hence, the
             // much needed  'ignore_user_abort()' up above
             do {
                 $data = fread($httpId, 65536);
@@ -126,26 +126,26 @@ function uploads_userapi_import_external_http( $args )
                 if (is_resource($tmpId)) {
                     @fclose($tmpId);
                 }
-                $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file', 
+                $fileInfo['fileType'] = xarModAPIFunc('mime', 'user', 'analyze_file',
                                                        array('fileName' => $fileInfo['fileLocation']));
-    
+
                 $fileInfo['fileSize'] = filesize($tmpName);
             }
         }
     }
-    
+
     if (is_resource($tmpId)) {
         @fclose($tmpId);
     }
-    
+
     if (is_resource($httpId)) {
         @fclose($httpId);
     }
-    
+
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
-    
+
         unlink($tmpName);
-        
+
         while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
             $errorObj = xarCurrentError();
@@ -167,7 +167,7 @@ function uploads_userapi_import_external_http( $args )
             // Clear the exception because we've handled it already
             xarErrorHandled();
 
-        }    
+        }
     } else {
         $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
 
@@ -175,15 +175,15 @@ function uploads_userapi_import_external_http( $args )
         $savePath = preg_replace('/\/$/', '', $savePath);
 
         if ($obfuscate_fileName) {
-            $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
+            $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name',
                                         array('fileName' => $fileInfo['fileName']));
             $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
         } else {
-            // if we're not obfuscating it, 
+            // if we're not obfuscating it,
             // just use the name of the uploaded file
             $fileInfo['fileDest'] = $savePath . '/' . xarVarPrepForOS($fileInfo['fileName']);
         }
-        $fileInfo['fileLocation'] = $fileInfo['fileDest'];    
+        $fileInfo['fileLocation'] = $fileInfo['fileDest'];
 
     }
     return array($fileInfo['fileLocation'] => $fileInfo);

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -82,8 +82,8 @@ function & uploads_userapi_transform ( $body )
                 $file = end($file);
                 $replacement = $file['fileName'];
                 break;
-            default:                                                                                                                                                                                
-                $body = xarML("The text '#(1)' is not a valid replacement placeholder","#$type:$id#");                                                                                              
+            default:
+                $body = xarML("The text '#(1)' is not a valid replacement placeholder","#$type:$id#");
                 return $body;
         }
 

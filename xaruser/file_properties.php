@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,22 +17,22 @@
  */
 xarModAPILoad('uploads','user');
 
-function uploads_user_file_properties( $args ) 
+function uploads_user_file_properties( $args )
 {
-    
+
     extract($args);
 
     if (!xarSecurityCheck('ViewUploads')) return;
     if (!xarVarFetch('fileId',   'int:1', $fileId)) return;
     if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
                      'fileId', 'file_properties', 'uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    
+
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
@@ -57,13 +57,13 @@ function uploads_user_file_properties( $args )
         }
 
         if (isset($fileName) && !empty($fileName)) {
-            
+
             if ($data['allowedit']) {
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
-                
+
                 if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
-                    $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)', 
+                    $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)',
                                   $fileInfo['fileName'], $fileInfo['fileId']);
                     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
                     return;
@@ -78,11 +78,11 @@ function uploads_user_file_properties( $args )
                 return;
             }
         }
-        
+
         if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
 
 
-            // we don't want the theme to show up, so 
+            // we don't want the theme to show up, so
             // get rid of everything in the buffer
             ob_end_clean();
 
@@ -118,13 +118,13 @@ function uploads_user_file_properties( $args )
                         if ($imageInfo['0'] > 100 || $imageInfo[1] > 400) {
                             $oWidth  = $imageInfo[0];
                             $oHeight = $imageInfo[1];
-    
+
                             $ratio = $oHeight / $oWidth;
-    
+
                             // MAX WIDTH is 200 for this preview.
                             $newWidth  = 100;
                             $newHeight = round($newWidth * $ratio, 0);
-    
+
                             $fileInfo['image']['height'] = $newHeight;
                             $fileInfo['image']['width']  = $newWidth;
                         } else {
@@ -160,7 +160,7 @@ function uploads_user_file_properties( $args )
             return;
         }
     }
-    
+
     return $data;
 
 }

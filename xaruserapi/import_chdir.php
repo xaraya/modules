@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +20,7 @@
  *  @returns string           The complete path to the new Current Working Directory within the sandbox
  */
 
-function uploads_userapi_import_chdir( $args ) 
+function uploads_userapi_import_chdir( $args )
 {
     extract ( $args );
 
@@ -53,7 +53,7 @@ function uploads_userapi_import_chdir( $args )
         $cwd = $importDir;
         xarModSetUserVar('uploads', 'path.imports-cwd', $importDir);
     }
-    
+
     return $cwd;
-} 
+}
 ?>

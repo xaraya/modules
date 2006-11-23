@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,59 +11,59 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-function uploads_userapi_process_filters( $args ) 
+function uploads_userapi_process_filters( $args )
 {
 
     extract ( $args );
     /**
      *  Set up the filter data for the template to use
      */
-     
+
     if (!isset($storeOptions)) {
         $storeOptions = TRUE;
     }
-    
+
     $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
-    
+
     $data      =  $options['data'];
-    $filter    =  $options['filter'];   
+    $filter    =  $options['filter'];
     $mimetypes =& $data['filters']['mimetypes'];
     $subtypes  =& $data['filters']['subtypes'];
     $statuses  =& $data['filters']['status'];
-    
+
     $data['filters']['inverse'] = isset($inverse) ? $inverse : FALSE;
     $filter['inverse']  = isset($inverse) ? $inverse : FALSE;
-    
+
     unset($options);
     /**
      *  Grab the mimetypes and setup the selected one
      */
     if (isset($mimetype) && $mimetype > 0) {
         $selected_mimetype = xarModAPIFunc('mime','user','get_type', array('typeId' => $mimetype));
-    } 
-    
-    // if selected mimetype isn't set, empty or has an array count of 
-    // zero, then we set 
+    }
+
+    // if selected mimetype isn't set, empty or has an array count of
+    // zero, then we set
     if (isset($selected_mimetype) && count($selected_mimetype)) {
         $mimetypes[$mimetype]['selected'] = TRUE;
     } else {
         $mimetypes[0]['selected'] = TRUE;
     }
-    
+
     /**
      *  Grab the subtypes (if necessary) and setup the selected subtype
      */
     if (isset($selected_mimetype)) {
         if (isset($subtype) && $subtype > 0) {
             $selected_subtype = xarModAPIFunc('mime','user','get_subtype', array('subtypeId' => $subtype));
-        } 
+        }
 
         // add the rest of the types to the array
         // array returns is in form of: array[typeId]{[subtypeId], [subtypeName]}
         $subtypes = $subtypes + xarModAPIFunc('mime','user','getall_subtypes', array('typeId' => $selected_mimetype['typeId']));
-        
-        // if selected subtype isn't set, empty or has an array count of 
-        // zero, then we set 
+
+        // if selected subtype isn't set, empty or has an array count of
+        // zero, then we set
         if (isset($selected_subtype['typeId']) && $selected_subtype['typeId'] == $selected_mimetype['typeId']) {
                 $subtypes[$subtype]['selected'] = TRUE;
         } else {
@@ -76,27 +76,27 @@ function uploads_userapi_process_filters( $args )
     unset($mimetypes);
 
     /**
-     *  Set up the actual filter that will be passed to the api get function 
+     *  Set up the actual filter that will be passed to the api get function
      */
-    
+
     if (isset($selected_mimetype)) {
         if (isset($selected_subtype)) {
             $filter['fileType'] = strtolower($selected_mimetype['typeName']) . '/' . strtolower($selected_subtype['subtypeName']);
         } else {
             $filter['fileType'] = strtolower($selected_mimetype['typeName']) . '/%';
-        }    
+        }
 
     } else {
         $filter['fileType'] = '%';
     }
-    
+
     if (!isset($status)) {
         $status = '';
     }
     /**
      *  Set up the MIME subtype filter
      */
-    
+
     switch($status) {
         case _UPLOADS_STATUS_REJECTED:
             $filter['fileStatus'] = _UPLOADS_STATUS_REJECTED;
@@ -118,18 +118,18 @@ function uploads_userapi_process_filters( $args )
             $filter['fileStatus'] = _UPLOADS_STATUS_SUBMITTED;
             $statuses[_UPLOADS_STATUS_SUBMITTED]['selected'] = TRUE;
             break;
-    }        
+    }
     unset($statuses);
     $data['catid'] = isset($catid) ? $catid : null;
     $filter['catid'] = isset($catid) ? $catid : null;
     $filterInfo = array('data' => $data, 'filter' => $filter);
-    
-    
+
+
     if ($storeOptions) {
         // Save the filter settings for later use
         xarModSetUserVar('uploads','view.filter', serialize($filterInfo));
     }
-    
+
     return $filterInfo;
 }
 

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -351,7 +351,7 @@ function uploads_userapi_db_get_file( $args )
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
         $instance[2] = xarSessionGetVar('uid');
         $instance[3] = $fileInfo['fileId'];
-    
+
         $instance = implode(':', $instance);
 
         if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED ||

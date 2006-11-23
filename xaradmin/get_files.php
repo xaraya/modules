@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,9 +14,9 @@
 // load defined constants
 xarModAPILoad('uploads', 'user');
 
-function uploads_admin_get_files() 
+function uploads_admin_get_files()
 {
-    
+
     if (!xarSecurityCheck('AddUploads')) return;
 
     $actionList[] = _UPLOADS_GET_UPLOAD;
@@ -26,12 +26,12 @@ function uploads_admin_get_files()
     $actionList = 'enum:' . implode(':', $actionList);
 
     if (!xarVarFetch('action',        $actionList, $action, '', XARVAR_NOT_REQUIRED)) return;
-    
+
     // StoreType can -only- be one of FSDB or DB_FULL
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
 
-    
+
     // now make sure someone hasn't tried to change our maxsize on us ;-)
     $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
 
@@ -57,7 +57,7 @@ function uploads_admin_get_files()
             if (!xarVarFetch('file_all', 'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('addbutton', 'str:1', $addbutton, '',  XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('delbutton', 'str:1', $delbutton, '',  XARVAR_NOT_REQUIRED)) return;
-            
+
             if (empty($addbutton) && empty($delbutton)) {
                 $msg = xarML('Unsure how to proceed - missing button action!');
                 xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -65,19 +65,19 @@ function uploads_admin_get_files()
             } else {
                 $args['bAction'] = (!empty($addbutton)) ? $addbutton : $delbutton;
             }
-            
+
             $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
             foreach ($fileList as $file) {
-                $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
+                $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
                                                                  array('fileLocation' => "$cwd/$file"));
             }
             $args['getAll'] = $file_all;
-        
+
             break;
         default:
         case _UPLOADS_GET_REFRESH_LOCAL:
             if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
-            
+
             $cwd = xarModAPIFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : NULL));
 
             $data['storeType']['DB_FULL']     = _UPLOADS_STORE_DB_FULL;
@@ -93,7 +93,7 @@ function uploads_admin_get_files()
             $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
             $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');
-            $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist', 
+            $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                array('fileLocation' => $cwd, 'onlyNew' => TRUE));
 
             $data['curDir'] = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '', $cwd);

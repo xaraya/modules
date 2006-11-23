@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,7 @@ function uploads_admin_updateconfig()
     if (!xarVarFetch('view',   'list:str:1:', $view,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ddprop', 'array:1:',    $ddprop, '', XARVAR_NOT_REQUIRED)) return;
 
-    // Confirm authorisation code.  
+    // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
     if (isset($file) && is_array($file)) {
@@ -28,16 +28,16 @@ function uploads_admin_updateconfig()
             if ($varname == 'maxsize') {
                 $value = str_replace(',', '', $value);
             }
-            // check to make sure that the value passed in is 
+            // check to make sure that the value passed in is
             // a real uploads module variable
             if (NULL !== xarModGetVar('uploads', 'file.'.$varname)) {
-                xarModSetVar('uploads', 'file.' . $varname, $value);    
+                xarModSetVar('uploads', 'file.' . $varname, $value);
             }
         }
     }
     if (isset($path) && is_array($path)) {
         foreach ($path as $varname => $value) {
-            // check to make sure that the value passed in is 
+            // check to make sure that the value passed in is
             // a real uploads module variable
             $value = trim(ereg_replace('\/$', '', $value));
             if (NULL !== xarModGetVar('uploads', 'path.' . $varname)) {
@@ -57,7 +57,7 @@ function uploads_admin_updateconfig()
     }
     if (isset($view) && is_array($view)) {
         foreach ($view as $varname => $value) {
-            // check to make sure that the value passed in is 
+            // check to make sure that the value passed in is
             // a real uploads module variable
 // TODO: add other view.* variables later ?
             if ($varname != 'itemsperpage') continue;
@@ -88,9 +88,9 @@ function uploads_admin_updateconfig()
     } else {
         xarModSetVar('uploads', 'dd.fileupload.upload', 0);
     }
-    
+
     // FIXME: change only if the imports-directory was changed? <rabbitt>
-    // Now update the 'current working imports directory' in case the 
+    // Now update the 'current working imports directory' in case the
     // imports directory was changed. We do this by first deleting the modvar
     // and then recreating it to ensure that the user's version is cleared
     // xarModDelVar('uploads', 'path.imports-cwd');

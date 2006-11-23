@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,8 +11,8 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-/** 
- *  Validates file based on criteria specified by hooked modules (well, that's the intended future 
+/**
+ *  Validates file based on criteria specified by hooked modules (well, that's the intended future
  *  functionality anyhow - which won't be available until the hooks system has been revamped......
  *
  *  @author  Carl P. Corliss
@@ -23,20 +23,20 @@
  *                   fileInfo['fileSrc']    The temporary file name (complete path) of the file
  *                   fileInfo['error']      Number representing any errors that were encountered during the upload (>= PHP 4.2.0)
  *                   fileInfo['fileSize']   The size of the file (in bytes)
- *  @returns boolean                      TRUE if checks pass, FALSE otherwise 
+ *  @returns boolean                      TRUE if checks pass, FALSE otherwise
  */
 
-function uploads_userapi_validate_upload( $args ) 
+function uploads_userapi_validate_upload( $args )
 {
 
     extract ($args);
-    
+
     if (!isset($fileInfo)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
                      'fileInfo','validate_upload','uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
-    }        
+    }
 
     switch ($fileInfo['error'])  {
 
@@ -63,16 +63,16 @@ function uploads_userapi_validate_upload( $args )
         case 0:  // no error
             break;
     }
-    
+
     $maxsize = xarModGetVar('uploads', 'file.maxsize');
     $maxsize = $maxsize > 0 ? $maxsize : 0;
-    
+
     if ($fileInfo['size'] > $maxsize) {
         $msg = xarML('File size exceeds the maximum allowable defined by the website administrator.');
         xarErrorSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_CONFIG_SIZE', new SystemException($msg));
         return FALSE;
-    }    
-    
+    }
+
     if (!is_uploaded_file($fileInfo['fileSrc'])) {
         $msg = xarML('Possible attempted malicious file upload.');
         xarErrorSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_MAL_ATTEMPT', new SystemException($msg));

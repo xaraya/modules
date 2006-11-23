@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,27 +17,27 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   string   fileLocation  The location of the file on in the filesystem
- *  @param   boolean  normalize     Whether or not to 
- *  @param   boolean  analyze       Whether or not to 
+ *  @param   boolean  normalize     Whether or not to
+ *  @param   boolean  analyze       Whether or not to
  *  @returns array                  array containing the inodeType, fileSize, fileType, fileLocation, fileName
  *
  */
- 
-function uploads_userapi_file_get_metadata( $args ) 
+
+function uploads_userapi_file_get_metadata( $args )
 {
- 
+
     extract($args);
 
     if (!isset($normalize)) {
         $normalize = FALSE;
     }
-        
+
     if (!isset($analyze)) {
         $analyze = TRUE;
     }
 
     if (isset($fileLocation) && !empty($fileLocation) && file_exists($fileLocation)) {
-        
+
         $file =& $fileLocation;
         if (is_dir($file)) {
             $type = _INODE_TYPE_DIRECTORY;
@@ -57,7 +57,7 @@ function uploads_userapi_file_get_metadata( $args )
             $mime = 'application/octet';
         }
 
-        $name = basename($file);    
+        $name = basename($file);
 
         if ($normalize) {
             $size = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $size);
@@ -65,7 +65,7 @@ function uploads_userapi_file_get_metadata( $args )
 
     // CHECKME: use 'imports' name like in db_get_file() ?
         $relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
-        
+
         $fileInfo = array('inodeType'    => $type,
                           'fileName'     => $name,
                           'fileLocation' => $file,
@@ -79,5 +79,5 @@ function uploads_userapi_file_get_metadata( $args )
         return FALSE;
     }
 }
- 
+
 ?>

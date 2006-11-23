@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,23 +19,23 @@
  *  @access  public
  *  @param   array      fileInfo                The metadata for the file being stored
  *  @param   string     fileInfo.fileType       The MIME type for the file
- *  @param   string     fileInfo.fileName       The file's basename 
+ *  @param   string     fileInfo.fileName       The file's basename
  *  @param   string     fileInfo.fileSrc        The source location for the file
  *  @param   string     fileInfo.fileDest       The (potential) destination for the file (filled in even if stored in the db and not filesystem)
  *  @param   integer    fileInfo.fileSize       The filesize of the file
- *  @returns array      returns the array passed into it modified with the extra attributes received through the storage 
+ *  @returns array      returns the array passed into it modified with the extra attributes received through the storage
  *                      process. If the file wasn't added successfully, fileInfo.errors is set appropriately
  */
 
 xarModAPILoad('uploads', 'user');
 
-function uploads_userapi_file_store( $args ) 
+function uploads_userapi_file_store( $args )
 {
 
     extract ( $args );
-    
+
     if (!isset($fileInfo)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
+        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileInfo','file_store','uploads');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
@@ -47,10 +47,10 @@ function uploads_userapi_file_store( $args )
     $instance[1] = $typeInfo['subtypeId'];
     $instance[2] = xarSessionGetVar('uid');
     $instance[3] = 'All';
-    
+
     $instance = implode(':', $instance);
-    
-    if ((isset($fileInfo['fileStatus']) && $fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED) || 
+
+    if ((isset($fileInfo['fileStatus']) && $fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED) ||
          xarSecurityCheck('AddUploads', 1, 'File', $instance)) {
 
         if (!isset($storeType)) {
@@ -63,7 +63,7 @@ function uploads_userapi_file_store( $args )
         } else {
             // first, make sure the file isn't already stored in the db/filesystem
             // if it is, then don't add it.
-            $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+            $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file',
                                    array('fileLocation' => $fileInfo['fileLocation'],
                                          'fileSize' => $fileInfo['fileSize']));
 
@@ -80,7 +80,7 @@ function uploads_userapi_file_store( $args )
         if ($storeType & _UPLOADS_STORE_TEXT) {
             $fileInfo['fileData'] = xarModAPIFunc('uploads','user','file_dump', $fileInfo);
         }
-        // If the store db_entry bit is set, then go ahead 
+        // If the store db_entry bit is set, then go ahead
         // and set up the database meta information for the file
         if ($storeType & _UPLOADS_STORE_DB_ENTRY) {
 
@@ -100,7 +100,7 @@ function uploads_userapi_file_store( $args )
                     $fileInfo['fileId'] = $fileId;
                 }
             }
-        } 
+        }
 
         if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
 
@@ -113,7 +113,7 @@ function uploads_userapi_file_store( $args )
             if ($result) {
                 $fileInfo['fileLocation'] =& $fileInfo['fileDest'];
             } else {
-                // if it wasn't moved successfully, then we should remove 
+                // if it wasn't moved successfully, then we should remove
                 // the database entry (if there is one) so that we don't have
                 // a corrupted file entry
                 if (isset($fileId) && !empty($fileId)) {
@@ -124,7 +124,7 @@ function uploads_userapi_file_store( $args )
                     if (isset($fileInfo['fileId'])) {
                         unset($fileInfo['fileId']);
                     }
-                } 
+                }
 
                 $fileInfo['fileLocation'] =& $fileInfo['fileSrc'];
             }
@@ -138,13 +138,13 @@ function uploads_userapi_file_store( $args )
                     xarModAPIFunc('uploads', 'user' ,'db_delete_file', array('fileId' => $fileId));
                 }
             } else {
-                // if it was successfully added, then change the stored fileLocation 
+                // if it was successfully added, then change the stored fileLocation
                 // to DATABASE instead of uploads/blahblahblah
                 xarModAPIFunc('uploads', 'user', 'db_modify_file', array('fileId' => $fileId, 'fileLocation' => xarML('DATABASE')));
             }
         }
     }
-    // If there were any errors generated while attempting to add this file, 
+    // If there were any errors generated while attempting to add this file,
     // we run through and grab them, adding them to this file
     while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
@@ -161,14 +161,14 @@ function uploads_userapi_file_store( $args )
         if (!isset($fileInfo['errors'])) {
             $fileInfo['errors'] = array();
         }
-        
+
         $fileInfo['errors'][] = $fileError;
-        
+
         // Clear the exception because we've handled it already
         xarErrorHandled();
-        
-    }    
-    
+
+    }
+
     return $fileInfo;
 }
 ?>

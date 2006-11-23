@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,20 +11,20 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-/** 
+/**
  *  Re-scan all file associations (possibly for a specific module, itemtype and itemid)
  *
  *  @author  mikespub
  *  @access  public
  *
  *  @param   integer modid     The id of module we are going to rescan
- *  @param   integer itemtype  The item type within the defined module 
+ *  @param   integer itemtype  The item type within the defined module
  *  @param   integer itemid    The id of the item types item
  *  @param   integer fileId    The id of the file we are going to rescan
  *  @returns mixed TRUE on success, void with exception on error
  */
 
-function uploads_adminapi_rescan_associations( $args ) 
+function uploads_adminapi_rescan_associations( $args )
 {
 
 // FIXME: don't use this as such in the uploads_guimods version, because you'd
