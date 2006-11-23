@@ -18,7 +18,7 @@
  * @access public
  * @param  integer  fileId     (Optional) grab file with the specified file id
  *
- * @returns array   All of the metadata stored for the particular file
+ * @return array   All of the metadata stored for the particular file
  */
 
 function uploads_userapi_db_get_filename( $args )

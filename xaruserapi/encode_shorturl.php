@@ -16,7 +16,7 @@
  *
  * @author the Example module development team
  * @param $args the function and arguments passed to xarModURL
- * @returns string
+ * @return string
  * @return path to be added to index.php for a short URL, or empty if failed
  */
 

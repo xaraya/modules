@@ -18,7 +18,7 @@
  * @author  Carl P. Corliss
  * @access  public
  * @param   array   fileList    List of files to delete containing complete fileName => fileInfo arrays
- * @returns boolean             true if successful, false otherwise
+ * @return boolean             true if successful, false otherwise
  */
 
 function uploads_userapi_purge_files( $args )

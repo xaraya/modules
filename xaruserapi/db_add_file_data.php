@@ -21,7 +21,7 @@
  *  @param   integer fileId     The ID of the file this data belongs to
  *  @param   string  fileData   A line of data from the file to be stored (no greater than 65535 bytes)
  *
- *  @returns integer The id of the fileData that was added, or FALSE on error
+ *  @return integer The id of the fileData that was added, or FALSE on error
  */
 
 function uploads_userapi_db_add_file_data( $args )

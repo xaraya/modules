@@ -19,7 +19,7 @@
  * @access public
  * @param  string  mime_type   (Optional) grab files with the specified mime type
  *
- * @returns array   All of the metadata stored for the particular file
+ * @return array   All of the metadata stored for the particular file
  */
 
 function uploads_userapi_db_get_users( $args )

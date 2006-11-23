@@ -25,7 +25,7 @@
  *  @param   integer store_type     The manner in which the file is to be stored (filesystem, database)
  *  @param   array   extrainfo      Extra information to be stored for this file (e.g. modified, width, height, ...)
  *
- *  @returns integer The id of the fileEntry that was added, or FALSE on error
+ *  @return integer The id of the fileEntry that was added, or FALSE on error
  */
 
 function uploads_userapi_db_add_file( $args )

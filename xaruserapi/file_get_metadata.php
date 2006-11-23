@@ -19,7 +19,7 @@
  *  @param   string   fileLocation  The location of the file on in the filesystem
  *  @param   boolean  normalize     Whether or not to
  *  @param   boolean  analyze       Whether or not to
- *  @returns array                  array containing the inodeType, fileSize, fileType, fileLocation, fileName
+ *  @return array                  array containing the inodeType, fileSize, fileType, fileLocation, fileName
  *
  */
 

@@ -21,7 +21,7 @@
  * @param   integer itemid    The id of the item types item
  * @param   integer fileId    The id of the file we are going to associate with an item
  *
- * @returns array   A list of associations, including the fileId -> (fileId + modid + itemtype + itemid)
+ * @return array   A list of associations, including the fileId -> (fileId + modid + itemtype + itemid)
  */
 
 function uploads_userapi_db_get_associations( $args )

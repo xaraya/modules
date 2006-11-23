@@ -17,7 +17,7 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   array  uri     the array containing the broken down url information
- *  @returns array          FALSE on error, otherwise an array containing the fileInformation
+ *  @return array          FALSE on error, otherwise an array containing the fileInformation
  */
 
 function uploads_userapi_import_external_file( $args )

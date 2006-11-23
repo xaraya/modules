@@ -17,7 +17,7 @@
  *
  * @author the Example module development team
  * @param $params array containing the different elements of the virtual path
- * @returns array
+ * @return array
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */

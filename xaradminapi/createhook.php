@@ -16,10 +16,9 @@
  * Note: this will only be called if uploads is hooked to that module (e.g.
  *       not for Upload properties)
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @return array $extrainfo
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function uploads_adminapi_createhook($args)

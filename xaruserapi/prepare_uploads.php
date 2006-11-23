@@ -27,7 +27,7 @@
  *  @access  public
  *  @param   boolean obfuscate            whether or not to obfuscate the filename
  *  @param   string  savePath             Complete path to directory in which we want to save this file
- *  @returns boolean                      TRUE on success, FALSE on failure
+ *  @return boolean                      TRUE on success, FALSE on failure
  */
 
 

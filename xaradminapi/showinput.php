@@ -20,7 +20,7 @@
  * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
  * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
  * @param  $args ['invalid'] string invalid error message
- * @returns string
+ * @return string
  * @return string containing the input fields
  */
 function uploads_adminapi_showinput($args)

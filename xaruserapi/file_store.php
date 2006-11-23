@@ -23,7 +23,7 @@
  *  @param   string     fileInfo.fileSrc        The source location for the file
  *  @param   string     fileInfo.fileDest       The (potential) destination for the file (filled in even if stored in the db and not filesystem)
  *  @param   integer    fileInfo.fileSize       The filesize of the file
- *  @returns array      returns the array passed into it modified with the extra attributes received through the storage
+ *  @return array      returns the array passed into it modified with the extra attributes received through the storage
  *                      process. If the file wasn't added successfully, fileInfo.errors is set appropriately
  */
 

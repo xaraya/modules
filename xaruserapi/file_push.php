@@ -22,7 +22,7 @@
  *  @param    string    fileLocation    The full path to the file
  *  @param    string    fileType        The mimetype of the file
  *  @param    long int  fileSize        The size of the file (in bytes)
- *  @returns  boolean                   This function will return true upon succes and, returns False and throws an exception otherwise
+ *  @return  boolean                   This function will return true upon succes and, returns False and throws an exception otherwise
  *  @throws   BAD_PARAM                 missing or invalid parameter
  *  @throws   UPLOADS_ERR_NO_READ       couldn't read from the specified file
  */

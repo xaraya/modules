@@ -28,7 +28,7 @@
  * @param  boolean  inverse      (Optional) inverse the selection
  * @param  string   catid        (Optional) grab file(s) in the specified categories
  *
- * @returns array   All of the metadata stored for the particular file
+ * @return array   All of the metadata stored for the particular file
  */
 
 function uploads_userapi_db_count( $args )

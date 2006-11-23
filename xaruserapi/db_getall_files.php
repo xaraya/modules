@@ -22,7 +22,7 @@
  * @param  integer  startnum     (Optional) starting file number
  * @param  string   sort         (Optional) sort order ('id','name','type','size','user','status','location',...)
  *
- * @returns array   All of the metadata stored for all files
+ * @return array   All of the metadata stored for all files
  */
 
 function uploads_userapi_db_getall_files( $args )

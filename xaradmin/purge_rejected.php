@@ -18,7 +18,7 @@
  *  @access  public
  *  @param   boolean    confirmation    whether or not to skip confirmation
  *  @param   string     authid          the authentication id
- *  @returns  void
+ *  @return  void
  *
  */
 

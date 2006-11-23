@@ -34,7 +34,7 @@
  * @param  mixed    getnext      (Optional) grab the next file after this one (file id or file name)
  * @param  mixed    getprev      (Optional) grab the previous file before this one (file id or file name)
  *
- * @returns array   All of the metadata stored for the particular file(s)
+ * @return array   All of the metadata stored for the particular file(s)
  */
 
 function uploads_userapi_db_get_file( $args )

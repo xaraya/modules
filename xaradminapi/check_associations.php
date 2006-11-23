@@ -17,7 +17,7 @@
  *  @author  mikespub
  *  @access  public
  *
- *  @returns mixed list of associations with missing files on success, void with exception on error
+ *  @return mixed list of associations with missing files on success, void with exception on error
  */
 
 function uploads_adminapi_check_associations( $args )

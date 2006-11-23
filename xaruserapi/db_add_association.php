@@ -21,7 +21,7 @@
  *  @param   integer itemtype  The item type within the defined module
  *  @param   integer itemid    The id of the item types item
  *
- *  @returns integer The id of the file that was associated, FALSE with exception on error
+ *  @return integer The id of the file that was associated, FALSE with exception on error
  */
 
 function uploads_userapi_db_add_association( $args )

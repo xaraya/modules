@@ -18,7 +18,7 @@
  * @author  Micheal Cortez
  * @access  public
  * @param   integer  fileId     (Optional) grab file with the specified file id
- * @returns integer             The total number of DATA Blocks stored for a particular file
+ * @return integer             The total number of DATA Blocks stored for a particular file
  */
 
 function uploads_userapi_db_count_data( $args )

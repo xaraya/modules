@@ -22,7 +22,7 @@
  * @access public
  * @param  integer  fileId     The ID of the file we are are retrieving
  *
- * @returns array   All the (4K) blocks stored for this file
+ * @return array   All the (4K) blocks stored for this file
  */
 
 function uploads_userapi_db_get_file_data( $args )

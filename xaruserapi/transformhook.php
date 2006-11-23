@@ -14,7 +14,7 @@
  * Primarily used by Articles as a transform hook to turn "upload tags" into various display formats
  *
  * @param  $args ['extrainfo']
- * @returns
+ * @return
  * @return
  */
 function & uploads_userapi_transformhook ( $args )

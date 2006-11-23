@@ -18,7 +18,7 @@
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
  * @param $args['itemtype'] item type
- * @returns output
+ * @return output
  * @return output with rating information
  */
 function uploads_user_display_attachments($args)

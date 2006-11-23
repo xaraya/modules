@@ -19,7 +19,7 @@
  *  @param   array  uri         the array containing the broken down url information
  *  @param   boolean obfuscate  whether or not to obfuscate the filename
  *  @param   string  savePath   Complete path to directory in which we want to save this file
- *  @returns array          FALSE on error, otherwise an array containing the fileInformation
+ *  @return array          FALSE on error, otherwise an array containing the fileInformation
  */
 
 function uploads_userapi_import_external_http( $args )

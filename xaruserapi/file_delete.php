@@ -18,7 +18,7 @@
  *  @access  public
  *  @param   string fileName    The complete path to the file being deleted
  *
- *  @returns TRUE on success, FALSE on error
+ *  @return TRUE on success, FALSE on error
  */
 
 function uploads_userapi_file_delete( $args )

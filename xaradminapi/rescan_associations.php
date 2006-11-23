@@ -21,7 +21,7 @@
  *  @param   integer itemtype  The item type within the defined module
  *  @param   integer itemid    The id of the item types item
  *  @param   integer fileId    The id of the file we are going to rescan
- *  @returns mixed TRUE on success, void with exception on error
+ *  @return mixed TRUE on success, void with exception on error
  */
 
 function uploads_adminapi_rescan_associations( $args )

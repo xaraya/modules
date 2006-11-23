@@ -23,7 +23,7 @@
  *                   fileInfo['fileSrc']    The temporary file name (complete path) of the file
  *                   fileInfo['error']      Number representing any errors that were encountered during the upload (>= PHP 4.2.0)
  *                   fileInfo['fileSize']   The size of the file (in bytes)
- *  @returns boolean                      TRUE if checks pass, FALSE otherwise
+ *  @return boolean                      TRUE if checks pass, FALSE otherwise
  */
 
 function uploads_userapi_validate_upload( $args )

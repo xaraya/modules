@@ -18,7 +18,7 @@
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @returns bool
+ * @return bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */

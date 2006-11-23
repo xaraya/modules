@@ -26,7 +26,7 @@
  *  @param   integer store_type (optional) The manner in which the file is to be stored (filesystem, database)
  *  @param   array   extrainfo  (optional) Extra information to be stored for this file (e.g. modified, width, height, ...)
  *
- *  @returns integer The number of affected rows on success, or FALSE on error
+ *  @return integer The number of affected rows on success, or FALSE on error
  */
 
 function uploads_userapi_db_modify_file( $args )

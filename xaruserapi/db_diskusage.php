@@ -25,7 +25,7 @@
  * @param  integer  fileType    (Optional) grab files with the specified mime type
  * @param  string   catid       (Optional) grab file(s) in the specified categories
  *
- * @returns integer             The total amount of diskspace used by the current set of selected files
+ * @return integer             The total amount of diskspace used by the current set of selected files
  */
 
 function uploads_userapi_db_diskusage( $args )

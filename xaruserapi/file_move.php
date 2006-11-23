@@ -22,7 +22,7 @@
  *  @param   boolean isUpload   Whether or not this file was uploaded (uses special checks on uploaded files)
  *  @param   boolean isLocal    Whether or not the file is a Local file or not (think: grabbing a web page)
  *
- *  @returns boolean TRUE on success, FALSE otherwise
+ *  @return boolean TRUE on success, FALSE otherwise
  */
 
 function uploads_userapi_file_move( $args )

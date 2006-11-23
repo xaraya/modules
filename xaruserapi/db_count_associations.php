@@ -21,7 +21,7 @@
  * @param   integer itemtype  The item type within the defined module
  * @param   integer itemid    The id of the item types item
 
- * @returns mixed             The total number of associations for particular file/module/itemtype/item combination
+ * @return mixed             The total number of associations for particular file/module/itemtype/item combination
  *                            or an array of fileId's and their number of associations
  */
 

@@ -11,6 +11,10 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
+/**
+ * Update the configuration
+ * @return bool
+ */
 function uploads_admin_updateconfig()
 {
     // Get parameters

@@ -17,7 +17,7 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   <type>
- *  @returns <type>
+ *  @return <type>
  */
 
 function uploads_userapi_file_rename( $args )

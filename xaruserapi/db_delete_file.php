@@ -21,7 +21,7 @@
  *  @access  public
  *  @param   integer file_id    The id of the file we are deleting
  *
- *  @returns integer The number of affected rows on success, or FALSE on error
+ *  @return integer The number of affected rows on success, or FALSE on error
  */
 
 function uploads_userapi_db_delete_file( $args )

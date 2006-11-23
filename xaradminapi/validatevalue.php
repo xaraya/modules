@@ -25,7 +25,7 @@
  * @param  $args ['moduleid'] integer optional module id for keeping file associations
  * @param  $args ['itemtype'] integer optional item type for keeping file associations
  * @param  $args ['itemid'] integer optional item id for keeping file associations
- * @returns array
+ * @return array
  * @return array of (result, value) with result true, false or NULL (= error)
  */
 function uploads_adminapi_validatevalue($args)

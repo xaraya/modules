@@ -24,7 +24,7 @@
  *  @param   integer  cacheExpire    Cache the result for a number of seconds (e.g. for DD Upload)
  *  @param   boolean  analyze        Analyze each file for mime type (default TRUE)
  *
- *  @returns array
+ *  @return array
  *  @return array of file information
  */
 

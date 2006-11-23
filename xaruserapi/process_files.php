@@ -21,7 +21,7 @@
  *  @param   string     override.upload.path        Override the upload path with the specified value
  *  @param   string     override.upload.obfuscate   Override the upload filename obfuscation
  *  @param   integer    action        The action that is happening ;-)
- *  @returns array      list of files the files that were requested to be stored. If they had errors,
+ *  @return array      list of files the files that were requested to be stored. If they had errors,
  *                      they will have 'error' index defined and will -not- have been added. otherwise,
  *                      they will have a fileId associated with them if they were added to the DB
  */

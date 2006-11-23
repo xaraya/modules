@@ -14,7 +14,7 @@
 /**
  * get the list of modules and itemtypes we're associating files with
  *
- * @returns array
+ * @return array
  * @return $array[$modid][$itemtype] = array('items' => $numitems,'files' => $numfiles,'links' => $numlinks);
  */
 function uploads_userapi_db_group_associations($args)

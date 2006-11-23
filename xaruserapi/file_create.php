@@ -25,7 +25,7 @@
  *  @param   string  mime_type      The mime content-type of the file
  *  @param   string  contents       The contents of the new file
  *
- *  @returns integer The fileId of the newly created file, or ZERO (FALSE) on error
+ *  @return integer The fileId of the newly created file, or ZERO (FALSE) on error
  */
 
 function uploads_userapi_file_create( $args )

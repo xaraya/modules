@@ -17,7 +17,7 @@
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   string     dirName  The name of the directory (within the import sandbox) to change to
- *  @returns string           The complete path to the new Current Working Directory within the sandbox
+ *  @return string           The complete path to the new Current Working Directory within the sandbox
  */
 
 function uploads_userapi_import_chdir( $args )
