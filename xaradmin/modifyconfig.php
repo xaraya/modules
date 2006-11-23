@@ -11,9 +11,11 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
+/**
+ * Modify the configuration for the Uploads module
+ */
 function uploads_admin_modifyconfig()
 {
-
     xarModAPILoad('uploads', 'user');
 
     // Security check
@@ -62,7 +64,7 @@ function uploads_admin_modifyconfig()
                                    'itemtype' => 1)); // Files
 
     if (empty($hooks)) {
-        $data['hooks'] = '';
+        $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
     }

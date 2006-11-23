@@ -12,7 +12,22 @@
  * @author Uploads Module Development Team
  */
 xarModAPILoad('uploads','user');
-
+/**
+ * The view function for the site admin
+ *
+ * @param int mimetype
+ * @param int subtype
+ * @param int status
+ * @param bool inverse
+ * @param int fileId
+ * @param string fileDo
+ * @param int action
+ * @param int startnum
+ * @param int numitems
+ * @param string sort
+ * @param string catid
+ * @return array
+ */
 function uploads_admin_view( )
 {
     //security check

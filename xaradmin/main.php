@@ -12,7 +12,9 @@
  * @author Uploads Module Development Team
  */
 /**
- * the main administration function
+ * The main administration function
+ * This function redirects the user to the view function
+ * @return bool true
  */
 function uploads_admin_main()
 {
