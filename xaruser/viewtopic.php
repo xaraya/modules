@@ -1,5 +1,4 @@
 <?php
-
 /**
  * View a forum topic and replies
  *
@@ -13,7 +12,14 @@
  * @author John Cox
  * @author Jo dalle Nogare
 */
-
+/**
+ * View one forum topic and the replies
+ * @param int startnum
+ * @param string post
+ * @param int tid
+ * @param string view
+ * @return array
+ */
 function xarbb_user_viewtopic($args)
 {
    // Get parameters from whatever input we need
@@ -92,7 +98,7 @@ function xarbb_user_viewtopic($args)
 
     //xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'f_' . $fid, 'value' => $now));
     //xarModAPIfunc('xarbb', 'admin', 'set_cookie', array('name' => 'lastvisit', 'value' => $now));
-    
+
     $forum = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $fid));
     $settings = $forum['settings'];
     $allowhtml = $settings['allowhtml'];
@@ -157,7 +163,7 @@ function xarbb_user_viewtopic($args)
         $postsortorder = 'ASC';
     }
 
-    // Note: 
+    // Note:
     // comments get_multiple() can only return comments in Celko order or reverse Celko order
     // at the moment. This is equivalent to sorting by cid or time here - other postsortby
     // options would require a lot more work, so I would forget about those for now...
