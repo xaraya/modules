@@ -6,7 +6,7 @@
     </p>
     <xar:set name="$showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
     <xar:if condition="empty($showoptions)">
-        <xar:if condition="xarModIsHooked('comments','roles', 0)">
+        <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
             <p class="xar-cm-note xar-sub">
                 <xar:mlstring>
                     Change Your Comments Rendering Settings 
