@@ -1,15 +1,25 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  *  Pushes an image to the client browser
  *
  *  @author   Carl P. Corliss
  *  @access   public
  *  @param    string    fileId          The id (from the uploads module) of the image to push
- *  @returns  boolean                   This function will exit upon succes and, returns False and throws an exception otherwise
+ *  @return   boolean                   This function will exit upon succes and, returns False and throws an exception otherwise
  *  @throws   BAD_PARAM                 missing or invalid parameter
  */
-
 function images_user_display( $args )
 {
 

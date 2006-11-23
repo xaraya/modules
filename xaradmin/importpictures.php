@@ -1,4 +1,16 @@
 <?php
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 function uploads_admin_importpictures( $args )
 {
     //global $dd_26;
@@ -15,7 +27,7 @@ function uploads_admin_importpictures( $args )
 
 
     echo "Import Pictures here<br/>";
-    
+
     // Kick mod available
     echo "Checking mod avaliable (dynamicdata): ";
     $avail = xarModIsAvailable("dynamicdata");
@@ -24,10 +36,10 @@ function uploads_admin_importpictures( $args )
     } else {
         echo "no<br/>";
     }
-    
-    // Get files to import 
+
+    // Get files to import
     $FilesInDir = getFileList( $image_import_dir );
-    
+
     // Prune out dupes, and ones already in the system
     $prunedFiles = pruneFiles( $FilesInDir, $image_import_dir );
 
@@ -40,7 +52,7 @@ function uploads_admin_importpictures( $args )
     $status  = 2;        //Default to approved
     $ptid    = $Picture_Publication_Type_ID;
     $cids = array();
-    
+
     $pubtypeid = $Picture_Publication_Type_ID;
     $authorid  = xarSessionGetVar('uid');
     $aid       = 0;
@@ -60,9 +72,9 @@ function uploads_admin_importpictures( $args )
                      );
 
     // Loop through files and import
-    foreach ($prunedFiles as $filename) 
+    foreach ($prunedFiles as $filename)
     {
-        
+
         $lastSlash = strlen($filename) - strpos( strrev( $filename ), '/' );
         $title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
 
@@ -72,7 +84,7 @@ function uploads_admin_importpictures( $args )
 
         // import file into Uploads
         $filepath = $image_import_dir.$filename;
-        
+
         if (is_file($filepath))
         {
             $data = array('ulfile'   => $shortname
@@ -83,18 +95,18 @@ function uploads_admin_importpictures( $args )
                          ,'filesize' => filesize($filepath)
                          ,'type'     => '');
 
-            echo "About to store<br/>";    
+            echo "About to store<br/>";
             $info = xarModAPIFunc('uploads','user','store',$data);
             echo '<pre>';
             print_r( $info );
             echo '</pre>';
-            echo "Stored<br/>";    
+            echo "Stored<br/>";
 
-        }        
-        
+        }
+
         // Setup file specific title
         $article['title'] = $title;
-        
+
         // Setup var to overide the uploads dd property when dd hook is called to place correct link
         $uploads_var_overide = $info['link'];
 //        $dd_26                  = $info['link'];
@@ -102,8 +114,8 @@ function uploads_admin_importpictures( $args )
         // Create Picture Article
         echo "Creating Article<br/>";
         $aid = xarModAPIFunc('articles','admin','create',$article);
-        
-    
+
+
         echo "Article Created :: ID :: $aid<br/>";
     }
     exit();
@@ -116,7 +128,7 @@ function getFileList( $import_directory )
     // Recurse through import directories, getting files
     $DirectoriesToScan = array($import_directory);
     $DirectoriesScanned = array();
-    while (count($DirectoriesToScan) > 0) 
+    while (count($DirectoriesToScan) > 0)
     {
      foreach ($DirectoriesToScan as $DirectoryKey => $startingdir) {
        if ($dir = @opendir($startingdir)) {
@@ -138,7 +150,7 @@ function getFileList( $import_directory )
       unset($DirectoriesToScan[$DirectoryKey]);
      }
     }
-    
+
     return $FilesInDir;
 }
 
@@ -146,21 +158,21 @@ function pruneFiles( $FilesInDir, $image_import_dir )
 {
     // Now check to see if any of those files are already in the system
     if( isset($FilesInDir) )
-    {    
-    
+    {
+
         // Get database setup
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
-            
+
         // table and column definitions
         $uploadstable = $xartable['uploads'];
-    
+
         // Remove dupes and sort
         $FilesInDir = array_unique($FilesInDir);
         sort($FilesInDir);
 
         $prunedFiles = array();
-        foreach ($FilesInDir as $filename) 
+        foreach ($FilesInDir as $filename)
         {
             // Get items
             $sql = "SELECT  xar_ulid,
@@ -173,15 +185,15 @@ function pruneFiles( $FilesInDir, $image_import_dir )
             if (!$result) return;
 
             // Check for no rows found, and if so, add file to pruned list
-            if ($result->EOF) 
+            if ($result->EOF)
             {
                 $insystem = 'No';
                 $prunedFiles[] = $filename;
-                
+
             }
             //close the result set
             $result->Close();
-        
+
         }
     }
     return $prunedFiles;

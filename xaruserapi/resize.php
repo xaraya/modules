@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * Resizes an image to the given dimensions and returns an img tag for the image
  *
@@ -14,8 +25,7 @@
  * @param   boolean $static     Use static link instead of dynamic one where possible (default FALSE)
  * @param   string  $baseurl    (optional) Base URL for the static links
  * @param   boolean $returnpath (optional) Flag to return the image path instead of the image tag
- * @returns string
- * @return an <img> tag for the newly resized image
+ * @return  string An <img> tag for the newly resized image
  */
 
 function images_userapi_resize($args)

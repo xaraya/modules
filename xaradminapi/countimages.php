@@ -22,8 +22,7 @@
  * @param   mixed   $fileId    (optional) The file id(s) of the image(s) we're looking for
  * @param   string  $fileName  (optional) The name of the image we're looking for
  * @param   string  $filematch (optional) Specific file match for images
- * @returns integer
- * @return the number of images
+ * @return  integer the number of images
  */
 function images_adminapi_countimages($args)
 {

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * Handle <xar:image-resize ... /> tags
  * Format : <xar:image-resize src="fileId | URL" width="[0-9]+(px|%)" [height="[0-9]+(px|%)" constrain="(yes|true|1|no|false|0)"] label="text" />
@@ -10,8 +21,7 @@
  *  <xar:image-resize src="32" params="$params" label="process an image with phpThumb parameters" />
  *
  * @param $args array containing the image that you want to resize and display
- * @returns string
- * @return the PHP code needed to invoke resize() in the BL template
+ * @return string the PHP code needed to invoke resize() in the BL template
  */
 
 function images_userapi_handle_image_tag($args)
@@ -32,16 +42,16 @@ function images_userapi_handle_image_tag($args)
         } else {
             $items[] = "'$key' => \"$value\"";
         }
-    } 
+    }
     $array = sprintf($format, implode(',', $items));
 
     $imgTag = sprintf("
-        \$tag = xarModAPIFunc('images', 'user', 'resize', %s); 
-        if (!\$tag) { 
-            return; 
-        } else { 
-            echo \$tag; 
-        }", $array);   
+        \$tag = xarModAPIFunc('images', 'user', 'resize', %s);
+        if (!\$tag) {
+            return;
+        } else {
+            echo \$tag;
+        }", $array);
     return $imgTag;
 }
 

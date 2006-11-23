@@ -1,6 +1,6 @@
 <?php
 /**
- * Initialization functions
+ * Images Module
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation

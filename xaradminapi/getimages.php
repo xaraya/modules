@@ -24,7 +24,6 @@
  * @param   string  $filematch (optional) Specific file match for images
  * @param   integer $cacheExpire (optional) Cache the result for a number of seconds
  * @param   boolean $cacheRefresh (optional) Force refresh of the cache
- * @returns array
  * @return array containing the list of images
  */
 function images_adminapi_getimages($args)

@@ -20,8 +20,7 @@
  * @param   string  $setting  The predefined setting to use, or
  * @param   array   $params   The phpThumb parameters to use
  * @param   boolean $iscached Check if the processed file already exists (default FALSE)
- * @returns string
- * @return the location of the newly processed image
+ * @return  string the location of the newly processed image
  */
 
 function images_adminapi_process_image($args)

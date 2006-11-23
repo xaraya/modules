@@ -13,13 +13,6 @@
 */
 
 /**
- * Images API
- * @package Xaraya
- * @subpackage Images_API
- */
-
-
-/**
  * initialise the images module
  * @return bool true on success
  */
@@ -54,7 +47,7 @@ function images_init()
          xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
-
+    // Register the tag
     $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
                              new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
@@ -68,6 +61,8 @@ function images_init()
 
 /**
  * upgrade the images module from an old version
+ * @param string oldversion
+ * @return bool true on success
  */
 function images_upgrade($oldversion)
 {
@@ -91,12 +86,6 @@ function images_upgrade($oldversion)
             // Fall through to next upgrade
 
         case '1.1.0':
-            // Code to upgrade from version 1.1.0 goes here
-
-            // Fall through to next upgrade
-
-        case '2.0.0':
-            // Code to upgrade from version 2.0.0 goes here
             break;
     }
 
@@ -105,22 +94,20 @@ function images_upgrade($oldversion)
 
 /**
  * delete the images module
+ * @param none
+ * @return bool
  */
 function images_delete()
 {
-    // Delete module variables
-    xarModDelVar('images', 'type.graphics-library');
-    xarModDelVar('images', 'path.derivative-store');
-    xarModDelVar('images', 'view.itemsperpage');
-    xarModDelVar('images', 'file.cache-expire');
-    xarModDelVar('images', 'file.imagemagick');
-
+    // Unregister template tag
     xarTplUnregisterTag('image-resize');
+    // Remove mask
     xarUnregisterMask('AdminImages');
+    // Unregister the hook
     xarModUnregisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook');
-
+    // Delete module variables
+    xarModDelAllVars('images');
     // Deletion successful
     return true;
 }
-
 ?>

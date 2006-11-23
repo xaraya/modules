@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * Get the size of an image (from file or database)
  *
@@ -7,25 +18,24 @@
  * @param   integer $fileId        The (uploads) file id of the image
  * @param   integer $fileType      The (uploads) mime type for the image
  * @param   integer $storeType     The (uploads) store type for the image
- * @returns array
- * @return an array containing the width, height and gd_info if available
+ * @return array Array containing the width, height and gd_info if available
  */
-function images_userapi_getimagesize( $args ) 
+function images_userapi_getimagesize( $args )
 {
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'getimagesize', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;

@@ -16,7 +16,7 @@
  *
  * @author mikespub
  * @param $args array containing the predefined settings for image processing
- * @returns void
+ * @return void
  */
 function images_adminapi_setsettings($args)
 {

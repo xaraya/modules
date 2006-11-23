@@ -14,7 +14,9 @@
 
 /**
  * This function is called internally by the core whenever the module is
- * loaded.  It adds in the information
+ * loaded.
+ * The Images module does not have any tables, this function returns an empty array.
+ * @return array
  */
 function images_xartables()
 {

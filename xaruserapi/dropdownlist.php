@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * get an array of images (id => field) for use in dropdown lists
  *
@@ -7,7 +18,6 @@
  *
  * @param $args['bid'] (optional) baseId for server images, otherwise uploads images
  * @param $args['field'] field to use in the dropdown list (default 'fileName')
- * @returns array
  * @return array of images, or false on failure
  */
 function images_userapi_dropdownlist($args = array())

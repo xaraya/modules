@@ -1,4 +1,16 @@
 <?php
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 function uploads_admin_importgallery( $args )
 {
     global $outputStuff;
@@ -43,7 +55,7 @@ function uploads_admin_importgallery( $args )
 
 
     $outputStuff .= "<h2>Importing Gallery</h2>";
-    
+
     // Kick mod available
     $outputStuff .= "Checking mod avaliable (dynamicdata): ";
     $avail = xarModIsAvailable("dynamicdata");
@@ -65,16 +77,16 @@ function uploads_admin_importgallery( $args )
 
 
     $outputStuff .= "<h2>Importing Albums</h2>";
-    
+
     $alumbs_lookup = array();
-        
+
     // Main Album Database file -- lists all albums
     $albumdb = $image_import_dir."/albumdb.dat";
 
     if( !file_exists( $albumdb ) )
     {
         $outputStuff .= "Can't find albumdb.dat file at $albumdb<br/>";
-        
+
         return array('outputStuff'=>$outputStuff);
     }
 
@@ -82,7 +94,7 @@ function uploads_admin_importgallery( $args )
 
     // Iterate over albums
     foreach( $x as $album )
-    {    
+    {
         //Check for individual album data files
         $albumdir = $image_import_dir."/".$album;
         if( is_dir( $albumdir ) )
@@ -95,7 +107,7 @@ function uploads_admin_importgallery( $args )
             // Get Current Album's information
             $album_title = $x->fields['title'];
             $album_desc  = $x->fields['description'];
-            
+
             // Determine ancestery
             $album_parent = $x->fields['parentAlbumName'];
             if( !$album_parent )
@@ -122,19 +134,19 @@ function uploads_admin_importgallery( $args )
                                            ,'cid'=>$album_cid
                                           );
 
-            // Get files to import 
+            // Get files to import
             $FilesInDir = galleryTraverse( $image_import_dir.'/'.$album );
-    
+
             // Prune out dupes, and ones already in the system
             $prunedFiles = pruneFiles( $FilesInDir, $image_import_dir.'/'.$album,$album );
-            
+
 
             // Loop through files and import
-            foreach ($prunedFiles as $file) 
+            foreach ($prunedFiles as $file)
             {
 //                $outputStuff .= "<i>Storing File: - </i> ".$file['filename'].' - ';
                 $filetitle = ucwords(str_replace( "_", " ", substr ($file['filename'], 1, strpos( $file['filename'], '.')-1 ) ));
-                
+
                 // import file into Uploads
                 $filepath = $image_import_dir.'/'.$album.$file['filename'];
 
@@ -147,16 +159,16 @@ function uploads_admin_importgallery( $args )
                                  ,'modid'    => 0
                                  ,'filesize' => filesize($filepath)
                                  ,'type'     => '');
-        
+
                     if( $actuallyImport )
                     {
                         $info = xarModAPIFunc('uploads','user','store',$data);
                     } else {
                         $info = array('link'=>''); //dummy for when not importing
                     }
-//                    $outputStuff .= "Stored<br/>";    
-                }        
-                
+//                    $outputStuff .= "Stored<br/>";
+                }
+
             //Setup Article with file specific values
             //***************************************
                 // Setup file specific title, Retreive caption from Gallery Photos Dat if available
@@ -174,27 +186,27 @@ function uploads_admin_importgallery( $args )
                 {
                     $article['summary'] = $file['fileinfo']['comments'];
                 }
-                
+
                 // Set Category ID
                 $article['cids'] = array($album_cid);
 
-                        
+
                 // Setup var to overide the uploads dd property when dd hook is called to place correct link
                 $uploads_var_overide = $info['link'];
-                
+
 //                $outputStuff .= "<i>Creating Article: - </i> ".$article['title']."<br/>";
-                
+
                 if( $actuallyImport )
                 {
                     $aid = xarModAPIFunc('articles','admin','create',$article);
                 } else {
                     $aid = "Mock run, Article not actually created.";
-                }    
-            
+                }
+
                 echo 'Article Created :: '.$aid.' :: '.$article['title'].' <br/>';
 
             }
-            
+
             $outputStuff .= "<br/><br/>";
         }
     }
@@ -218,11 +230,11 @@ function createCat( $Root_Cat_Name,$catpath,$description )
     $catpath = $Root_Cat_Name.$catpath;
 
     $outputStuff .= "<i>Looking up Category: ".$catpath.'</i><br/>';
-    
+
     $path = '';
     $lastCID = 0;
     $path_array = explode("/", $catpath);
-    foreach ($path_array as $cat_name) 
+    foreach ($path_array as $cat_name)
     {
         if( $path != '' )
         {
@@ -253,7 +265,7 @@ function createCat( $Root_Cat_Name,$catpath,$description )
 function getGalleryInfo( $photodat )
 {
 //    $outputStuff .= "<i>Processing dat file :: $photodat <br/></i>";
-    
+
     // get contents of a file into a string
     $filename = $photodat;
     $handle = fopen ($filename, "r");
@@ -262,16 +274,16 @@ function getGalleryInfo( $photodat )
 
     $x = unserialize($contents) ;
 
-/*    
-    
+/*
+
     $outputStuff .= "<pre>||";
     print_r( $x );
     $outputStuff .= "||</pre>";
-*/    
+*/
 //    echo $contents."<pre>";
     $fileinfo = array();
     foreach( $x as $item )
-    {    
+    {
         $filename = $item->image->name.'.'.$item->image->type;
         $fileinfo[$filename] = array( 'date'    => $item->uploadDate
                                      ,'caption' => $item->caption
@@ -286,7 +298,7 @@ function galleryTraverse( $import_directory )
     global $outputStuff;
 
     $FilesInDir = array();
-    if ($dir = @opendir($import_directory)) 
+    if ($dir = @opendir($import_directory))
     {
         // Check for Gallery data file.
         $photodat = $import_directory.'/photos.dat';
@@ -295,20 +307,20 @@ function galleryTraverse( $import_directory )
 //            $outputStuff .= "Found photo.dat<br/>";
             $fileinfo = getGalleryInfo( $photodat );
         }
-        while (($file = readdir($dir)) !== false) 
+        while (($file = readdir($dir)) !== false)
         {
             if (
-                ($file != '.') && ($file != '..') 
+                ($file != '.') && ($file != '..')
                 && (!strpos($file,'.dat'))             // Ignore dat files
                 && (!strpos($file,'.html'))         // Ignore empty directory html file
                 && (!strpos($file,'.sized.'))         // Ignore thumbs
                 && (!strpos($file,'.thumb.'))         // Ignore thumbs
                 && (!strpos($file,'.highlight.'))     // Ignore thumbs
-                
-               ) 
+
+               )
             {
                 $RealPathName = realpath($import_directory.'/'.$file);
-                if (is_file($RealPathName)) 
+                if (is_file($RealPathName))
                 {
                     $FilesInDir[] = array( 'filename' => substr($RealPathName,strlen($import_directory))
                                           ,'filepath' => $RealPathName
@@ -333,25 +345,25 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
 
     // Now check to see if any of those files are already in the system
     if( isset($FilesInDir) )
-    {    
-    
+    {
+
         // Get database setup
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
-            
+
         // table and column definitions
         $uploadstable = $xartable['uploads'];
-    
+
         // Remove dupes and sort
 //        $FilesInDir = array_unique($FilesInDir);
         sort($FilesInDir);
 
         $prunedFiles = array();
-        foreach ($FilesInDir as $file) 
+        foreach ($FilesInDir as $file)
         {
             $filename = $file['filename'];
 //            $outputStuff .= "Checking $filename - ";
-            
+
             // Get items
             $sql = "SELECT  xar_ulid,
                             xar_ulfile,
@@ -359,27 +371,27 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
                             xar_ulapp
                     FROM $uploadstable
                     WHERE xar_ulfile = '$filename' OR xar_ulfile = '$album$filename' OR xar_ulhash = '$filename' OR xar_ulhash = '$image_import_dir$filename';";
-                    
+
 //            $outputStuff .= "<hr><pre>";
 //            print_r($sql);
 //            $outputStuff .= "</pre></hr>";
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-    
+
             // Check for no rows found, and if so, add file to pruned list
-            if ($result->EOF) 
+            if ($result->EOF)
             {
                 $insystem = 'No';
                 $prunedFiles[] = $file;
-                
+
 //                $outputStuff .= "Added to import list.<br/>";
             } else {
                 $outputStuff .= "$filename - Already in system.<br/>";
             }
             //close the result set
             $result->Close();
-        
+
         }
     }
     return $prunedFiles;

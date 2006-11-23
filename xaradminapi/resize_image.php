@@ -25,7 +25,6 @@
  * @param   boolean $forceResize   (optional) Force resizing the image even if it already exists
  * @return  string the location of the newly resized image
  */
-
 function images_adminapi_resize_image($args)
 {
     extract($args);

@@ -20,8 +20,7 @@
  * @param   string  $height     The new height (in pixels or percent) ([0-9]+)(px|%)
  * @param   string  $width      The new width (in pixels or percent)  ([0-9]+)(px|%)
  * @param   boolean $constrain  if height XOR width, then constrain the missing value to the given one
- * @returns string
- * @return the location of the newly resized image
+ * @return  string the location of the newly resized image
  */
 
 function images_adminapi_replace_image($args)

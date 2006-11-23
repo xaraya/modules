@@ -1,30 +1,40 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * Load an image object for further manipulation
  *
  * @param   integer $fileId        The (uploads) file id of the image to load, or
  * @param   string  $fileLocation  The file location of the image to load
  * @param   string  $thumbsdir     (optional) The directory where derivative images are stored
- * @returns object
- * @return an Image_GD (or other) object
+ * @return object Image_GD (or other) object
  */
-function & images_userapi_load_image( $args ) 
+function & images_userapi_load_image( $args )
 {
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'load_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_string($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'load_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'load_image', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
@@ -56,7 +66,7 @@ function & images_userapi_load_image( $args )
             $location = $args;
 
         } else {
-            $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+            $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                           'fileLocation', 'load_image', 'images');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
             return;
@@ -71,7 +81,7 @@ function & images_userapi_load_image( $args )
     }
 
     include_once('modules/images/xarclass/image_properties.php');
-     
+
     switch(xarModGetVar('images', 'type.graphics-library')) {
         case _IMAGES_LIBRARY_IMAGEMAGICK:
             include_once('modules/images/xarclass/image_ImageMagick.php');

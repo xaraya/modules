@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Images Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Images Module
+ * @link http://xaraya.com/index.php/release/152.html
+ * @author Images Module Development Team
+ */
 /**
  * Get information about an image (from file or database)
  *
@@ -7,25 +18,24 @@
  * @param   string  $fileLocation  The file location of the image
  * @param   string  $basedir       (optional) The directory where images are stored
  * @param   string  $baseurl       (optional) The corresponding base URL for the images
- * @returns array
  * @return an array containing the image information if available
  */
-function images_userapi_getimageinfo( $args ) 
+function images_userapi_getimageinfo( $args )
 {
     extract($args);
 
     if (empty($fileId) && empty($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'getimageinfo', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'getimageinfo', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
-        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'", 
+        $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'getimageinfo', 'images');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
