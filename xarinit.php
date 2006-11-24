@@ -205,9 +205,9 @@ function categories_init()
                       array(),
                       'categories_userapi_filtertag');
 
-    xarTplRegisterTag('categories', 'categories-getcatinfo ',
-                      array(),
+        xarTplRegisterTag('categories', 'categories-catinfo', array(),
                       'categories_userapi_getcatinfotag');
+            // fall through to the next upgrade
     /*********************************************************************
     * Define instances for this module
     * Format is
