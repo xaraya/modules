@@ -13,6 +13,9 @@
  */
 /**
  * Manage definition of instances for privileges (unfinished)
+ *
+ * @param
+ * @return array
  */
 function uploads_admin_privileges($args)
 {
@@ -26,7 +29,7 @@ function uploads_admin_privileges($args)
     if (!xarVarFetch('userName',    'isset',  $userName,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',       'isset',  $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',      'isset',  $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname',     'isset',  $extname,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extname',     'isset',  $extname,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extrealm',    'isset',  $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extmodule',   'isset',  $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extcomponent','isset',  $extcomponent, NULL, XARVAR_DONT_SET)) {return;}

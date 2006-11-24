@@ -38,11 +38,11 @@
                         <xar:foreach in="$mimetypeList" key="$key" value="$type">
                             <xar:if condition="isset($type['selected'])">
                                 <option value="#$type['typeId']#" selected="selected">
-                                    #$type['typeName']# 
+                                    #$type['typeName']#
                                 </option>
                             <xar:else />
                                 <option value="#$type['typeId']#">
-                                    #$type['typeName']# 
+                                    #$type['typeName']#
                                 </option>
                             </xar:if>
                         </xar:foreach>
@@ -60,11 +60,11 @@
                         <xar:foreach in="$subtypeList" key="$key" value="$subtype">
                             <xar:if condition="isset($subtype['selected'])">
                                 <option value="#$subtype['subtypeId']#" selected="selected">
-                                    #$subtype['subtypeName']# 
+                                    #$subtype['subtypeName']#
                                 </option>
                             <xar:else />
                                 <option value="#$subtype['subtypeId']#">
-                                    #$subtype['subtypeName']# 
+                                    #$subtype['subtypeName']#
                                 </option>
                             </xar:if>
                         </xar:foreach>
@@ -82,11 +82,11 @@
                         <xar:foreach in="$userNameList" key="$userId" value="$user">
                             <xar:if condition="isset($user['selected'])">
                                 <option value="#$userId#" selected="selected">
-                                    #$user['userName']# 
+                                    #$user['userName']#
                                 </option>
                             <xar:else />
                                 <option value="#$userId#">
-                                    #$user['userName']# 
+                                    #$user['userName']#
                                 </option>
                             </xar:if>
                         </xar:foreach>
@@ -105,11 +105,11 @@
                         <xar:foreach in="$fileList" key="$fileId" value="$file">
                             <xar:if condition="isset($file['selected'])">
                                 <option value="#$fileId#" selected="selected">
-                                    #$file['fileName']# 
+                                    #$file['fileName']#
                                 </option>
                             <xar:else />
                                 <option value="#$fileId#">
-                                    #$file['fileName']# 
+                                    #$file['fileName']#
                                 </option>
                             </xar:if>
                         </xar:foreach>
@@ -126,37 +126,37 @@
                             <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
                         <xar:else />
                             <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 100">
                             <option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
                         <xar:else />
                             <option value="100"><xar:mlstring>Overview</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 200">
                             <option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
                         <xar:else />
                             <option value="200"><xar:mlstring>Read</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 300">
                             <option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
                         <xar:else />
                             <option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 500">
                             <option value="500" selected="selected"><xar:mlstring>Edit / Approve</xar:mlstring></option>
                         <xar:else />
                             <option value="500"><xar:mlstring>Edit / Approve</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 700">
                             <option value="700" selected="selected"><xar:mlstring>Delete</xar:mlstring></option>
                         <xar:else />
                             <option value="700"><xar:mlstring>Delete</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                         <xar:if condition="$extlevel eq 800">
                             <option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
                         <xar:else />
                             <option value="800"><xar:mlstring>Admin</xar:mlstring></option>
-                        </xar:if>                        
+                        </xar:if>
                     </select>
                 </td>
             </tr>
@@ -171,7 +171,7 @@
         <br />
         <xar:ml>
             <xar:mlstring>
-                There are #(1) articles matching these selection criteria at the moment
+                There are #(1) items matching these selection criteria at the moment
             </xar:mlstring>
             <xar:mlvar>
                 #$numitems#
