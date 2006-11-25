@@ -20,7 +20,7 @@
  * @param $args['numitems'] number of entries to retrieve (optional)
  * @param $args['startnum'] starting number (optional)
  * @return array of changes
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function changelog_adminapi_getchanges($args)
 {

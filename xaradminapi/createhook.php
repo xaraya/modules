@@ -20,9 +20,8 @@
  * @param $args['modname'] name of the calling module (not used in hook calls)
  * @param $args['itemtype'] optional item type for the item (not used in hook calls)
  * @param $args['item'] optional item info (not used in hook calls)
- * @returns array
- * @return extrainfo array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return array extrainfo array
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function changelog_adminapi_createhook($args)
 {
