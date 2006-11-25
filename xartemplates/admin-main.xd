@@ -5,10 +5,10 @@
 </div>
 <div class="xar-mod-body">
    <xar:template type="module" file="admin-menu" />
-  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
+   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
         <p><em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
@@ -18,57 +18,75 @@
             </ul>
         </p>
         <h2><xar:mlstring>How to use it?</xar:mlstring></h2>
+        <h3>
+            <xar:mlstring>External Imports and Uploads</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>
+                Files that are uploaded or imported from external locations can be saved in the database (DB)
+                or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
+                storage location for your file.
+            </xar:mlstring>
+        </p>
+        <p>
+            <xar:mlstring>
+                The import engine will try to make a best guess for the name of the file you are trying to import.
+                In the event that it cannot figure out what the file name is it will use the following methods:
+            </xar:mlstring>
+            <ul>
+                <li>
+                    <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
+                    <p>
+                        <xar:mlstring>
+                            In the event that the filename for an HTTP import can not be determined, the file will be
+                            named based on the host name of the server the file was imported from. For example, importing
+                            http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
+                        </xar:mlstring>
+                    </p>
+                </li>
+                <li>
+                    <strong>FTP</strong>
+                    <p>
+                        <xar:mlstring>
+                            Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
+                            on a system without providing a viable file name. In this case, no file name 'guessing' will be
+                            attempted and the import will fail.
+                        </xar:mlstring>
+                    </p>
+                </li>
+            </ul>
+        </p>
 
-            <h3>
-                <xar:mlstring>External Imports and Uploads</xar:mlstring>
-            </h3>
-            <p>
-                <xar:mlstring>
-                    Files that are uploaded or imported from external locations can be saved in the database (DB)
-                    or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
-                    storage location for your file.
-                </xar:mlstring>
-            </p>
-            <p>
-                <xar:mlstring>
-                    The import engine will try to make a best guess for the name of the file you are trying to import.
-                    In the event that it cannot figure out what the file name is it will use the following methods:
-                </xar:mlstring>
-                <ul>
-                    <li>
-                        <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
-                        <p>
-                            <xar:mlstring>
-                                In the event that the filename for an HTTP import can not be determined, the file will be
-                                named based on the host name of the server the file was imported from. For example, importing
-                                http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
-                            </xar:mlstring>
-                        </p>
-                    </li>
-                    <li>
-                        <strong>FTP</strong>
-                        <p>
-                            <xar:mlstring>
-                                Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
-                                on a system without providing a viable file name. In this case, no file name 'guessing' will be
-                                attempted and the import will fail.
-                            </xar:mlstring>
-                        </p>
-                    </li>
-                </ul>
-            </p>
-
-            <h3>
-                <xar:mlstring>Local Imports Sandbox</xar:mlstring>
-            </h3>
-            <p>
-                <xar:mlstring>
-                    Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
-                    add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
-                    sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
-                </xar:mlstring>
-            </p>
-
+        <h3>
+            <xar:mlstring>Local Imports Sandbox</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>
+                Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
+                add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
+                sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
+            </xar:mlstring>
+        </p>
+        <h3>
+            <xar:mlstring>Privileges</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>
+                Uploads has the following privilege levels:
+            </xar:mlstring>
+            <ul>
+                <li>ViewUploads with the READ level of access to a file</li>
+                <li>AddUploads with the ADD level of access to add files to the uploads system</li>
+                <li>EditUploads with the EDIT level to edit files that have been added to the uploads system</li>
+                <li>DeleteUploads with the Delete level to remove files from the uploads system.</li>
+                <li>AdminUploads for the admin access. Only site administrators need this level</li>
+            </ul>
+            <xar:mlstring>
+            A role needs the ViewUploads privilege to view a file that has been uploaded and approved by the admin/editor.
+            If the file has not been approved, but submitted, the Edit privilege is needed to access the file.
+            You can use the autoapprove option to automatically approve all files uploaded by a certain user.
+            </xar:mlstring>
+        </p>
         <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
         <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
         <br />
