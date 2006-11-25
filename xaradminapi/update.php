@@ -20,7 +20,7 @@
  * @param $args['extrainfo'] may contain itemtype
  * @param $args['hits'] (optional) hit count for the item
  * @return int The new hitcount for this item, or void on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function hitcount_adminapi_update($args)
 {
