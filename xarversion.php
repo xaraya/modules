@@ -1,5 +1,4 @@
 <?php
-
 /**
  * XarBB - A lightweight BB for Xaraya
  *

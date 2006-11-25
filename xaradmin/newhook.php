@@ -1,21 +1,23 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * XarBB - A lightweight BB for Xaraya
  *
- * @subpackage  xarbb Module
- * @author John Cox
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
+ * @author John Cox, Mikespub, Jo Dalle Nogare
 */
 /**
  * modify an entry for a module item - hook for ('item','new','GUI')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns string
- * @return hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return string hook output in HTML
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function xarbb_admin_newhook($args)
 {
@@ -75,9 +77,9 @@ function xarbb_admin_newhook($args)
     if (empty($xarbb_forum)) {
         $xarbb_forum = '';
     }
-    
+
     $default=$xarbb_forum;
-    
+
     return xarTplModule('xarbb','admin','newhook',
         array(
             'xarbb_forum' => $xarbb_forum,

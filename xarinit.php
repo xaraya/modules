@@ -1,13 +1,16 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * XarBB - A lightweight BB for Xaraya
+ *
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xarbb Module
- * @author John Cox
-*/
+ * @link http://xaraya.com/index.php/release/300.html
+ * @author John Cox, Mikespub, Jo Dalle Nogare
+ */
 
 include_once 'includes/xarDate.php';
 /* Load Table Maintainance API */
@@ -54,7 +57,7 @@ function xarbb_init()
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
- 
+
     // TID -- Topic ID
     // FID -- Forum ID the topic belongs to
     // TTITLE -- The title of the topic
@@ -124,7 +127,7 @@ function xarbb_init()
                    )
            );
     xarDefineInstance('xarbb', 'Forum', $instances);
-    
+
     // Register Block types
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -146,7 +149,7 @@ function xarbb_init()
 
      // Enable categories hooks for xarbb forums
     if (xarModIsAvailable('categories')) {
-        xarModAPIFunc('modules','admin','enablehooks', 
+        xarModAPIFunc('modules','admin','enablehooks',
                        array('callerModName' => 'xarbb', 'hookModName' => 'categories'));
     }
     // Enable hitcount hooks for xarbb forums
@@ -276,7 +279,7 @@ function xarbb_upgrade($oldversion)
                                     'default' => '1970-01-01 00:00'));
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
-            if (!$result) return; 
+            if (!$result) return;
 
             //Now let's update that field. The only data we have is either
             //ttime in the topic table - if there are no other post replies
@@ -352,7 +355,7 @@ function xarbb_upgrade($oldversion)
                                     'size'    => 'tiny'));
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
-            if (!$result) return; 
+            if (!$result) return;
             // fall through to next upgrade
 
         case '1.0.3':
@@ -386,7 +389,7 @@ function xarbb_upgrade($oldversion)
                 $settings['topicsperpage']      = 20;
                 $settings['forumsperpage']      = 20;
                 $settings['hottopic']           = 20;
-                $settings['editlink']           = 0;                
+                $settings['editlink']           = 0;
                 $settings['allowhtml']          = false;
                 $settings['allowbbcode']        = false;
                 $settings['showcats']           = false;
@@ -421,7 +424,7 @@ function xarbb_upgrade($oldversion)
             $oldcatno =xarModGetVar('xarbb','number_of_categories.1');
             if (isset($oldcatno) && !empty($oldcatno)) {
                 xarModSetVar('xarbb','number_of_categories',$oldcatno);
-            } 
+            }
             $oldbasecids= xarModGetVar('xarbb','mastercids.1');
             if (isset($oldbasecids) && !empty($oldbasecids)) {
                 xarModSetVar('xarbb','mastercids',$oldbasecids);
@@ -569,7 +572,7 @@ function xarbb_upgrade($oldversion)
             }
 
             // Fall through to next upgrade version.
-        
+
         case '1.2.1':
             // In this version (1.2.2) we introduce a new way to handle
             // last visit time. Some module variables need to be created
@@ -671,7 +674,7 @@ function xarbb_updatetopicstable()
                    $getfirstpost=xarModAPIFunc('comments','user','get_multiple',
                                          array('modid' => xarModGetIdFromName('xarbb'),
                                                'objectid' => $eachtopic['tid']));
-                   //Let's put this in the correct date format for tftime 
+                   //Let's put this in the correct date format for tftime
                    //Must be datetime type format from int(11) format direct conversion
                    $newpostdate=date("Y-m-d H:i:s",$getfirstpost[0]['xar_datetime']);
                    $query = "UPDATE $xbbtopicstable
@@ -699,7 +702,7 @@ function xarbb_copydates()
        $xartable =& xarDBGetTables();
        $xbbtopicstable = $xartable['xbbtopics'];
        $xbbforumstable = $xartable['xbbforums'];
-      
+
        $query= "SELECT COUNT(1)
                     FROM $xbbtopicstable";
        $result =& $dbconn->Execute($query);
@@ -738,7 +741,7 @@ function xarbb_copydates()
       // Pass to ADODB, and send exception if the result isn't valid.
        $result = &$dbconn->Execute($query);
        if (!$result) return;
-       
+
        //Drop the temp fields in forums table
        $query="ALTER TABLE $xbbforumstable DROP xar_nfpostid";
        // Pass to ADODB, and send exception if the result isn't valid.
@@ -777,7 +780,7 @@ function xarbb_convertdates()
           $anotherdate->DBtoTS($tftime);
           $newtftime=$anotherdate->timestamp;
           //Make sure fields aren't null - recent changes will cause error
-          
+
           if (!isset($newttime) || empty($newttime)) {
               $newttime=0;
           }

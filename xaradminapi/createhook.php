@@ -1,21 +1,23 @@
 <?php
 /**
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * XarBB - A lightweight BB for Xaraya
  *
- * @subpackage  xarbb Module
- * @author John Cox
+ * @package modules
+ * @copyright (C) 2003-2006 The Digital Development Foundation.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarbb Module
+ * @link http://xaraya.com/index.php/release/300.html
+ * @author John Cox, Mikespub, Jo Dalle Nogare
 */
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns array
- * @return extrainfo array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return array extrainfo array
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function xarbb_adminapi_createhook($args)
 {
