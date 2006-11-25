@@ -1,0 +1,5 @@
+# Keep people out of the compatibility tests and demos
+
+order allow,deny
+deny from all
+
