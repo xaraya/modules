@@ -17,7 +17,7 @@
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function categories_admin_modifyhook($args)
 {
