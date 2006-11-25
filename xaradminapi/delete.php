@@ -16,7 +16,7 @@
  *
  * @param int $args[itemid] ID of the item
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function window_adminapi_delete($args)
 {

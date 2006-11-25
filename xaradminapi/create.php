@@ -24,7 +24,7 @@
  * @param string $args[vsize]
  * @param string $args[hsize]
  * @return int item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function window_adminapi_create($args)
 {
@@ -55,7 +55,7 @@ function window_adminapi_create($args)
     if (!isset($auto_resize)) $auto_resize = xarModGetVar('window', 'auto_resize');
     if (!isset($vsize)) $vsize = xarModGetVar('window', 'vsize');
     if (!isset($hsize)) $hsize = xarModGetVar('window', 'hsize');
-    
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -64,14 +64,14 @@ function window_adminapi_create($args)
     $nextId = $dbconn->GenId($windowtable);
 
     $query = "INSERT INTO $windowtable
-                    (xar_id, 
-                     xar_name, 
-                     xar_alias, 
-                     xar_reg_user_only, 
-                     xar_open_direct, 
-                     xar_use_fixed_title, 
-                     xar_auto_resize, 
-                     xar_vsize, 
+                    (xar_id,
+                     xar_name,
+                     xar_alias,
+                     xar_reg_user_only,
+                     xar_open_direct,
+                     xar_use_fixed_title,
+                     xar_auto_resize,
+                     xar_vsize,
                      xar_hsize,
                      xar_status,
                      xar_label,

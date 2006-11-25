@@ -27,7 +27,7 @@
  * @param string $args[label]
  * @param string $args[description]
  * @return int item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function window_adminapi_update($args)
 {
@@ -70,7 +70,7 @@ function window_adminapi_update($args)
     if (!isset($vsize)) $vsize = xarModGetVar('window', 'vsize');
     if (!isset($hsize)) $hsize = xarModGetVar('window', 'hsize');
     if (!isset($status)) $status = 0;
-    
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
