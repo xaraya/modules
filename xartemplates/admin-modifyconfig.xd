@@ -1,37 +1,24 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Headlines Administration
-        </xar:mlstring>
-    </span>
+    <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset class="xar-norm">
-            <legend>
-                <strong>
-                    <xar:mlstring>
-                        Modify Configuration
-                    </xar:mlstring>
-                </strong>
-            </legend>
+            <legend><xar:mlstring>Modify Configuration</xar:mlstring></legend>
             <input type="hidden" name="authid" value="#$authid#" />
             <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
-                        <xar:mlstring>
-                            Items Per Page
-                        </xar:mlstring>
+                    <xar:mlstring>Items Per Page</xar:mlstring>
                 </label>
                 <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage', 1)#" />
             </div>
+
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$shorturlschecked">
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
@@ -39,62 +26,60 @@
                     <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
                 <label for="shorturls" title="#xarML('Show short urls for the headlines')#">
-                         <xar:mlstring>
-                            Support Short URLS
-                        </xar:mlstring>
+                    <xar:mlstring>Support Short URLS</xar:mlstring>
                 </label>
-
             </div>
+
             <xar:if condition="xarModIsAvailable('articles')">
             <div class="xar-form-input-wrapper">
                 <label for="importpubtype" class="xar-form-label" title="#xarML('Choose a publication type for import.')#">
-                        <xar:mlstring>
-                            Import to Publication Type
-                        </xar:mlstring>
+                        <xar:mlstring>Import to Publication Type</xar:mlstring>
                 </label>
                 <select name="importpubtype" id="importpubtype">
                     <option value="0"></option>
-                <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
-                    <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
-                        <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>
-                    <xar:else/>
-                        <option value="#$ptid#">#$pubtype['descr']#</option>
-                    </xar:if>
-                </xar:foreach>
+                    <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
+                        <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
+                            <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>
+                        <xar:else/>
+                            <option value="#$ptid#">#$pubtype['descr']#</option>
+                        </xar:if>
+                    </xar:foreach>
                 </select>
                 <p class="xar-form-container-after">
                     <xar:mlstring>
-                        Your publication type must already exist in the Articles module and have at least a title and summary field.
+                        Your publication type must already exist in the Articles module
+                        and have at least a title and summary field.
                     </xar:mlstring>
                 </p>
             </div>
+
             <div class="xar-form-input-wrapper">
                 <label for="uniqueid" class="xar-form-label" title="#xarML('Determine what makes a headline unique.')#">
-                        <xar:mlstring>
-                            Unique Identifier for Import
-                        </xar:mlstring>
+                    <xar:mlstring>Unique Identifier for Import</xar:mlstring>
                 </label>
                 <xar:set name="options">
-                array('feed;link' => xarML('Feed + Link'),
-                      'feed;title' => xarML('Feed + Title'),
-                      'feed;title;link' => xarML('Feed + Title + Link'),
-                      'feed;title;link;description' => xarML('Feed + Title + Link + Description'),
-                      'link' => xarML('Link across all feeds')
-                     )
+                    array('feed;link' => xarML('Feed + Link'),
+                        'feed;title' => xarML('Feed + Title'),
+                         'feed;title;link' => xarML('Feed + Title + Link'),
+                         'feed;title;link;description' => xarML('Feed + Title + Link + Description'),
+                         'link' => xarML('Link across all feeds')
+                    )
                 </xar:set>
                 <xar:set name="uniqueid">xarModGetVar('headlines','uniqueid')</xar:set>
                 <select name="uniqueid" id="uniqueid">
                     <option value=""></option>
-                <xar:foreach in="$options" key="$id" value="$val">
-                    <xar:if condition="!empty($uniqueid) and $uniqueid eq $id">
-                        <option value="#$id#" selected="selected">#$val#</option>
-                    <xar:else/>
-                        <option value="#$id#">#$val#</option>
-                    </xar:if>
-                </xar:foreach>
+                    <xar:foreach in="$options" key="$id" value="$val">
+                        <xar:if condition="!empty($uniqueid) and $uniqueid eq $id">
+                            <option value="#$id#" selected="selected">#$val#</option>
+                        <xar:else/>
+                            <option value="#$id#">#$val#</option>
+                        </xar:if>
+                    </xar:foreach>
                 </select>
             </div>
             </xar:if>
+
+            <xar:comment>
             <xar:if condition="xarModIsAvailable('magpie')">
             <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$magpiechecked">
@@ -103,27 +88,51 @@
                     <input type="checkbox" name="magpie" id="magpie" value="1" />
                 </xar:if>
                 <label for="magpie" title="#xarML('Use Magpie Module for Process of Feeds')#">
-                        <xar:mlstring>
-                            Use Magpie Module for Feeds
-                        </xar:mlstring>
+                    <xar:mlstring>Use Magpie Module for Feeds</xar:mlstring>
                 </label>
 
             </div>
             </xar:if>
+            </xar:comment>
+
+            <div class="xar-form-input-wrapper">
+                <label for="parser" class="xar-form-label" title="#xarML('Select the parser to use')#">
+                    <xar:mlstring>Parser</xar:mlstring>
+                </label>
+
+                <select name="parser" id="parser">
+                    <xar:if condition="$parser eq 'default'">
+                        <option value="default" selected="selected"><xar:mlstring>Default</xar:mlstring></option>
+                    <xar:else />
+                        <option value="default"><xar:mlstring>Default</xar:mlstring></option>
+                    </xar:if>
+
+                    <xar:if condition="xarModIsAvailable('magpie')">
+                    <xar:if condition="$parser eq 'magpie'">
+                        <option value="magpie" selected="selected"><xar:mlstring>Magpie</xar:mlstring></option>
+                    <xar:else />
+                        <option value="magpie"><xar:mlstring>Magpie</xar:mlstring></option>
+                    </xar:if>
+                    </xar:if>
+
+                    <xar:if condition="xarModIsAvailable('simplepie')">
+                    <xar:if condition="$parser eq 'simplepie'">
+                        <option value="simplepie" selected="selected"><xar:mlstring>SimplePie</xar:mlstring></option>
+                    <xar:else />
+                        <option value="simplepie"><xar:mlstring>SimplePie</xar:mlstring></option>
+                    </xar:if>
+                    </xar:if>
+                </select>
+            </div>
+
         </fieldset>
         <fieldset>
-            <legend>
-                <strong>
-                    <xar:mlstring>
-                        Configuration of Hooked Modules
-                    </xar:mlstring>
-                </strong>
-            </legend>
+            <legend><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></legend>
             #$hooks#
         </fieldset>
 
-         <div class="xar-form-input-wrapper-after">
-                <input type="submit" value="#xarML('Submit')#" />
+        <div class="xar-form-input-wrapper-after">
+            <input type="submit" value="#xarML('Submit')#" />
         </div>
 
     </form>

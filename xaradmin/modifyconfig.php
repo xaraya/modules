@@ -23,11 +23,17 @@ function headlines_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
     $data['shorturlslabel']     = xarML('Enable short URLs?');
-    $data['shorturlschecked']   = xarModGetVar('headlines', 'SupportShortURLs') ?   true : false;
-    $data['magpiechecked']      = xarModGetVar('headlines', 'magpie') ?   true : false;
+    $data['shorturlschecked']   = xarModGetVar('headlines', 'SupportShortURLs') ? true : false;
+
+    // Magpie modvar deprecated
+    $data['magpiechecked']      = xarModGetVar('headlines', 'magpie') ? true : false;
+
+    $data['parser']             = xarModGetVar('headlines', 'parser');
+    if (empty($data['parser'])) $data['parser'] = ($data['magpiechecked'] ? 'magpie' : 'default');
+
     $data['authid']             = xarSecGenAuthKey();
-    $data['pubtypes']           = xarModAPIFunc('articles','user','getpubtypes');
-    $data['importpubtype']      = xarModGetVar('headlines','importpubtype');
+    $data['pubtypes']           = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $data['importpubtype']      = xarModGetVar('headlines', 'importpubtype');
     return $data;
 }
 ?>

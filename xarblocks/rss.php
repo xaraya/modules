@@ -84,7 +84,14 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
     if (empty($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
 
-    if (xarModGetVar('headlines', 'magpie')){
+    if (xarModGetVar('headlines', 'parser') == 'simplepie') {
+        // Use the SimplePie parser
+        // CHECKME: is the cacheing for the block in seconds?
+        $data = xarModAPIFunc(
+            'simplepie', 'user', 'process',
+            array('feedfile' => $feedfile, 'cache_max_minutes' => round($vars['refresh'] / (2*60)))
+        );
+    } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
         // Set some globals to bring Magpie into line with
         // site and headlines settngs.
         if (!defined('MAGPIE_OUTPUT_ENCODING')) {
@@ -96,9 +103,7 @@ function headlines_rssblock_display($blockinfo)
         }
         $data = xarModAPIFunc('magpie', 'user', 'process', array('feedfile' => $feedfile));
     } else {
-        $data = xarModAPIFunc('headlines', 'user', 'process',
-            array('feedfile' => $feedfile, 'cache' => $vars['refresh'])
-        );
+        $data = xarModAPIFunc('headlines', 'user', 'process', array('feedfile' => $feedfile));
     }
 
     if (!empty($data['warning'])){

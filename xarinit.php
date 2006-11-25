@@ -186,7 +186,13 @@ function headlines_upgrade($oldVersion)
        case '1.0.0':
             // fall through to next upgrade
 
-       case '1.0.1': //current version
+       case '1.0.1': // To 1.1.0
+           // Replace the 'magpie' variable with a more general 'parser' variable.
+           $magpie = xarModGetVar('headlines', 'magpie');
+           xarModSetVar('headlines', 'parser', (!empty($magpie) ? $magpie : 'default'));
+           xarModDelVar('headlines', 'magpie');
+
+       case '1.1.0': // Current version
            break;
     }
     // Update successful

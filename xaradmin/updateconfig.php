@@ -14,19 +14,26 @@
 function headlines_admin_updateconfig()
 {
     if (!xarSecConfirmAuthKey()) return;
-    if(!xarSecurityCheck('AdminHeadlines')) return;
+    if (!xarSecurityCheck('AdminHeadlines')) return;
     if (!xarVarFetch('itemsperpage', 'str:1:', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('magpie', 'checkbox', $magpie, false, XARVAR_NOT_REQUIRED)) return;
+    //if (!xarVarFetch('magpie', 'checkbox', $magpie, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('parser', 'enum:default:magpie:simplepie', $parser, 'default', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('importpubtype', 'id', $importpubtype, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('uniqueid', 'str:1:', $uniqueid, '', XARVAR_NOT_REQUIRED)) return;
+
     xarModSetVar('headlines', 'itemsperpage', $itemsperpage);
     xarModSetVar('headlines', 'SupportShortURLs', $shorturls);
-    xarModSetVar('headlines', 'magpie', $magpie);
+
+    // The magpie var is no longer needed
+    if (xarModGetVar('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');
+
+    xarModSetVar('headlines', 'parser', $parser);
     xarModSetVar('headlines', 'importpubtype', $importpubtype);
     xarModSetVar('headlines', 'uniqueid', $uniqueid);
     xarModCallHooks('module','updateconfig','headlines', array('module' => 'headlines'));
     xarResponseRedirect(xarModURL('headlines', 'admin', 'modifyconfig'));
     return true;
 }
+
 ?>
