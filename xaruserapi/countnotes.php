@@ -1,7 +1,7 @@
 <?php
 /**
  * Utility function counts number of noteitems held by this module
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -14,14 +14,13 @@
  * utility function to count the number of items held by this module
  *
  * @author jojodee
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @return int number of items held by this module
+ * @throws DATABASE_ERROR
  */
 function release_userapi_countnotes($args)
 {
     extract($args);
-    
+
     if (empty($phase)){
      $phase='viewall';
     }
@@ -58,13 +57,13 @@ function release_userapi_countnotes($args)
     // the exception so we just return
     if (!$result) return;
     // Obtain the number of items
-    list($numitems) = $result->fields; 
+    list($numitems) = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
-    $result->Close(); 
+    $result->Close();
 
     // Return the number of items
     return $numitems;
-} 
+}
 
 ?>

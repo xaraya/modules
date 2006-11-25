@@ -1,7 +1,7 @@
 <?php
 /**
  * Utility function counts number of items held by this module
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -10,14 +10,12 @@
  * @subpackage Release Module
  * @link http://xaraya.com/index.php/release/773.html
  */
-
 /**
  * utility function to count the number of items held by this module
  *
  * @author jojodee
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @return int number of items held by this module
+ * @throws DATABASE_ERROR
  */
 function release_userapi_countitems($args)
 {
@@ -44,19 +42,19 @@ function release_userapi_countitems($args)
 
     $from ='';
     $where = array();
-    if (!empty($catid) && count(array($catid)) > 0) 
+    if (!empty($catid) && count(array($catid)) > 0)
     {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_eid';
 
-        if (!empty($categoriesdef['more'])) 
+        if (!empty($categoriesdef['more']))
         {
             //$from = ' ( ' . $from . ' ) ';
             $from .= $categoriesdef['more'];
         }
-        
+
         $where[] = $categoriesdef['where'];
         $query .= $from;
     }
@@ -90,14 +88,14 @@ function release_userapi_countitems($args)
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
-    if (!$result) return; 
+    if (!$result) return;
     // Obtain the number of items
-    list($numitems) = $result->fields; 
+    list($numitems) = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
-    $result->Close(); 
+    $result->Close();
     // Return the number of items
     return $numitems;
-} 
+}
 
 ?>
