@@ -19,7 +19,7 @@
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @return array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function uploads_adminapi_deletehook($args)
 {
