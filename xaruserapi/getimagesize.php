@@ -18,7 +18,8 @@
  * @param   integer $fileId        The (uploads) file id of the image
  * @param   integer $fileType      The (uploads) mime type for the image
  * @param   integer $storeType     The (uploads) store type for the image
- * @return array Array containing the width, height and gd_info if available
+ * @return  array Array containing the width, height and gd_info if available
+ * @throws  BAD_PARAM
  */
 function images_userapi_getimagesize( $args )
 {

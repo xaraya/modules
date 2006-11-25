@@ -17,18 +17,19 @@
  * @author mikespub
  * @param   integer $fileId        The (uploads) file id of the image to load, or
  * @param   string  $fileLocation  The file location of the image to load
- * @param   string  $height     The new height (in pixels or percent) ([0-9]+)(px|%)
- * @param   string  $width      The new width (in pixels or percent)  ([0-9]+)(px|%)
- * @param   boolean $constrain  if height XOR width, then constrain the missing value to the given one
+ * @param   string  $height        The new height (in pixels or percent) ([0-9]+)(px|%)
+ * @param   string  $width         The new width (in pixels or percent)  ([0-9]+)(px|%)
+ * @param   boolean $constrain     if height XOR width, then constrain the missing value to the given one
  * @param   string  $thumbsdir     (optional) The directory where derivative images are stored
  * @param   string  $derivName     (optional) The name of the derivative image to be saved
  * @param   boolean $forceResize   (optional) Force resizing the image even if it already exists
  * @return  string the location of the newly resized image
+ * @throws  BAD_PARAM
  */
 function images_adminapi_resize_image($args)
 {
     extract($args);
-
+    // Check the conditions
     if (empty($fileId) && empty($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'resize_image', 'images');
@@ -113,6 +114,7 @@ function images_adminapi_resize_image($args)
     } else {
         $notSupported = TRUE;
     }
+    // Raise a user error when the format is not supported
     if ($notSupported) {
         $msg = xarML('Image type for file: #(1) is not supported for resizing', $location);
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));

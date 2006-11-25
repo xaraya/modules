@@ -18,7 +18,8 @@
  * @param   string  $fileLocation  The file location of the image
  * @param   string  $basedir       (optional) The directory where images are stored
  * @param   string  $baseurl       (optional) The corresponding base URL for the images
- * @return an array containing the image information if available
+ * @return  array   An array containing the image information if available or false if not available
+ * @throws BAD_PARAM
  */
 function images_userapi_getimageinfo( $args )
 {
@@ -99,7 +100,6 @@ function images_userapi_getimageinfo( $args )
         return $imageInfo;
     }
 
-    return;
+    return false;
 }
-
 ?>
