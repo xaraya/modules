@@ -15,9 +15,10 @@
  * Utility function to count the number of items
  *
  * @author Richard Cave
- * @param nada
+ * @param void
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @todo MichelV: With no parameters to process, why have the $args in here?
  */
 function sniffer_userapi_countitems($args)
 {

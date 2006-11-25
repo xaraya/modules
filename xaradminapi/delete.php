@@ -18,7 +18,7 @@
  * @author Richard Cave
  * @param $args['id'] ID of the sniff
  * @return bool true on success, false on failure
- * @raise BAD_PARAM, MISSING_DATA
+ * @throws BAD_PARAM, MISSING_DATA
  */
 function sniffer_adminapi_delete($args)
 {

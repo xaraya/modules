@@ -23,9 +23,10 @@
  *
  * @public
  * @author Richard Cave
- * @param nada
+ * @param type
+ * @param title
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function sniffer_adminapi_drawchart($args)
 {

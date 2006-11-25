@@ -23,9 +23,9 @@
  *
  * @public
  * @author Richard Cave
- * @param nada
+ * @param string type
  * @return array of items, or false on failure
- * @raise FORBIDDEN_OPERATION
+ * @throws FORBIDDEN_OPERATION
  */
 function sniffer_admin_showchart()
 {

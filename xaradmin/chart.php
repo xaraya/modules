@@ -22,9 +22,9 @@
  * All Rights Reserved 2001.
  *
  * @author Richard Cave
- * @param nada
+ * @param void
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function sniffer_admin_chart()
 {

@@ -22,7 +22,8 @@
  * @param 'startnum' starting number to display
  * @param 'sortby' sort by agent, os, etc.
  * @return array, or false on failure
- * @raise BAD_PARAM
+ * @todo MichelV: add $args?
+ * @throws BAD_PARAM
  */
 function sniffer_admin_delete()
 {
