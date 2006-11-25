@@ -14,7 +14,7 @@
 /**
  *  Retrieve the DATA (contents) stored for a particular file based on
  *  the file id. This returns an array not unlike the php function
- *  'file()' wherby the contents of the file are in an ordered array.
+ *  'file()' whereby the contents of the file are in an ordered array.
  *  The contents can be put back together by doing: implode('',
  *
  * @author Carl P. Corliss
@@ -23,11 +23,11 @@
  * @param  integer  fileId     The ID of the file we are are retrieving
  *
  * @return array   All the (4K) blocks stored for this file
+ * @throws BAD_PARAM
  */
 
 function uploads_userapi_db_get_file_data( $args )
 {
-
     extract($args);
 
     if (!isset($fileId)) {
@@ -41,7 +41,7 @@ function uploads_userapi_db_get_file_data( $args )
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-        // table and column definitions
+    // table definition
     $fileData_table = $xartable['file_data'];
 
     $sql = "SELECT xar_fileEntry_id,
@@ -53,7 +53,7 @@ function uploads_userapi_db_get_file_data( $args )
 
     $result = $dbconn->Execute($sql);
 
-    if (!$result)  {
+    if (!$result) {
         return;
     }
 
@@ -64,13 +64,11 @@ function uploads_userapi_db_get_file_data( $args )
 
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $fileData[$row['xar_filedata_id']]       = base64_decode($row['xar_filedata']);
+        $fileData[$row['xar_filedata_id']] = base64_decode($row['xar_filedata']);
         $result->MoveNext();
     }
     $result->Close();
 
-
    return $fileData;
 }
-
 ?>

@@ -35,11 +35,11 @@
  * @param  mixed    getprev      (Optional) grab the previous file before this one (file id or file name)
  *
  * @return array   All of the metadata stored for the particular file(s)
+ * @throws BAD_PARAM
  */
 
 function uploads_userapi_db_get_file( $args )
 {
-
     extract($args);
 
     if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
@@ -173,7 +173,7 @@ function uploads_userapi_db_get_file( $args )
                    xar_mime_type,
                    xar_extrainfo
               FROM $fileEntry_table ";
-
+    // Put the category id to work
     if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
