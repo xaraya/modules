@@ -66,7 +66,11 @@
         <xar:mlstring>Privileges</xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>The Images module only has the Admin privilege to assign. You will need this level if you want to set the general settings for the Images module.</xar:mlstring>
+        <xar:mlstring>
+        The Images module only has the Admin privilege to assign. You will need this level if you want to set the general settings for the Images module.
+        The Images module interacts with the uploads module, so make sure you set appropriate levels for that module as well.
+        Take special note on the approval of files in the uploads module. Only files that have been approved will normally be accessible by standard users, or you need to assign them the EDIT privilege for the uploads.
+        </xar:mlstring>
     </p>
         <xar:if condition="xarModGetVar('images','upgrade-1.0.0')">
         <h3>
@@ -81,7 +85,7 @@
        <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Images Module - Xaraya Extension 152')#" href="http://www.xaraya.com/index.php/release/152.html">Xaraya Extension and Releases</a>.
        </p>
       <ul>
-          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+          <li><xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
           </li>
           <li><xar:mlstring>Related tutorials and documentation on Images found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/images/" title="#xarML('Related documentation on Images')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
           </li>
