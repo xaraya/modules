@@ -16,11 +16,10 @@
  * Create a new HTML tag
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['tagtype'] type of tag to create
- * @returns int
- * @return html ID on success, false on failure
- * @raise BAD_PARAM
+ * @return int html ID on success, false on failure
+ * @throws BAD_PARAM
  */
 function html_adminapi_createtype($args)
 {

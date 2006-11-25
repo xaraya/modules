@@ -16,12 +16,11 @@
  * Get a specific tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  * @param $args['cid'] id of tag to get
- * @returns array
- * @return link array, or false on failure
- * @raise BAD_PARAM
+ * @return array link array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_userapi_gettag($args)
 {
@@ -56,10 +55,10 @@ function html_userapi_gettag($args)
 
         $result =& $dbconn->Execute($query,array($cid));
     if (!$result) return;
-    list($cid, 
+    list($cid,
          $tid,
-         $type, 
-         $tag, 
+         $type,
+         $tag,
          $allowed) = $result->fields;
     $result->Close();
     $tag = array('cid'      => $cid,

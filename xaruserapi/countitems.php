@@ -14,14 +14,13 @@
 
 /**
  * Count the number of HTML tags in the database
- * 
+ *
  * @public
- * @author John Cox 
+ * @author John Cox
  * @author Richard Cave
  * @param none
- * @returns integer
- * @returns number of HTML tags in the database
- * @raise none
+ * @return int number of HTML tags in the database
+ * @throws none
  */
 function html_userapi_countitems()
 {

@@ -16,11 +16,11 @@
  * Update an html tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  * @param $args['cid'] the ID of the html tag
  * @param $args['allowed'] the flag for the html tag
- * @raise BAD_PARAM
+ * @throws BAD_PARAM
  */
 function html_adminapi_update($args)
 {

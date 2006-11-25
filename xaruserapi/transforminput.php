@@ -16,11 +16,10 @@
  * Transform text
  *
  * @public
- * @author John Cox 
+ * @author John Cox
  * @param $args['extrainfo'] string or array of text items
- * @returns string
- * @return string or array of transformed text items
- * @raise BAD_PARAM
+ * @return mixed string or array of transformed text items
+ * @throws BAD_PARAM
  */
 function html_userapi_transforminput($args)
 {
@@ -59,7 +58,7 @@ function html_userapi_transforminput($args)
  * Transform text api
  *
  * @private
- * @author John Cox 
+ * @author John Cox
  */
 function html_userapitransforminput($text)
 {

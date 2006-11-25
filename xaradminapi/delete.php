@@ -16,12 +16,11 @@
  * Delete an html tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  * @param $args['cid'] ID of the html
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, MISSING_DATA
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, MISSING_DATA
  */
 function html_adminapi_delete($args)
 {
@@ -44,7 +43,7 @@ function html_adminapi_delete($args)
     if ($html == false) {
         $msg = xarML('No Such HTML tag Present', 'html');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
@@ -65,7 +64,7 @@ function html_adminapi_delete($args)
                              'user',
                              'gettype',
                              array('id' => $html['tid']));
-    
+
     if ($tagtype['type'] == 'html') {
         $allowedhtml = array();
         // Get the current tags from config vars

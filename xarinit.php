@@ -19,8 +19,8 @@
  * @public
  * @author John Cox
  * @author Richard Cave
- * @return true on success, false on failure
- * @raise none
+ * @return bool true on success, false on failure
+ * @throws none
  */
 function html_init()
 {
@@ -63,7 +63,7 @@ function html_init()
     $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_tag',
                    'fields'    => array('xar_tid, xar_tag'),
                    'unique'    => TRUE);
-    
+
     // Create index
     $query = xarDBCreateIndex($htmltable, $index);
     $result =& $dbconn->Execute($query);
@@ -223,13 +223,13 @@ function html_init()
                         xar_allowed)
                     VALUES (?, ?, ?, ?)";
 
-        $bindvars = array( $nextid, 
+        $bindvars = array( $nextid,
                           (int) $htmltypeid,
                           (string) $htmltag,
                           (int) $allowed);
 
         $result =& $dbconn->Execute($query, $bindvars);
-    
+
         // Check for errors
         if (!$result) return;
     }
@@ -268,7 +268,7 @@ function html_init()
  * @author John Cox
  * @author Richard Cave
  * @return true on success, false on failure
- * @raise none
+ * @throws none
  */
 function html_upgrade($oldversion)
 {
@@ -323,7 +323,7 @@ function html_upgrade($oldversion)
             // fall through to the next upgrade
         case '1.2.0':
             // Code to upgrade from version 1.2 goes here
-            
+
             // Create htmltypes table
             /*****************************************************************
             * $query = "CREATE TABLE $htmltypestable (
@@ -386,19 +386,19 @@ function html_upgrade($oldversion)
             $query = xarDBDropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
             if (!$result) return;
-            
+
             // Set current html tags in xar_html to default type
-            $query = "UPDATE $htmltable 
+            $query = "UPDATE $htmltable
                       SET xar_tid = " . $htmltypeid;
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+
             // Create new index on xar_html table
             $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html',
                            'fields'    => array('xar_tid, xar_tag'),
                            'unique'    => TRUE);
-    
+
             // Create index
             $query = xarDBCreateIndex($htmltable, $index);
             $result =& $dbconn->Execute($query);
@@ -430,7 +430,7 @@ function html_upgrade($oldversion)
  * @author John Cox
  * @author Richard Cave
  * @return true on success, false on failure
- * @raise none
+ * @throws none
  */
 function html_delete()
 {

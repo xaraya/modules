@@ -16,12 +16,11 @@
  * Get a specific tag type
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['id'] id of tag type to get (optional)
  * @param $args['type'] tag type to get (optional)
- * @returns array
- * @return link array, or false on failure
- * @raise BAD_PARAM
+ * @return array link array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_userapi_gettype($args)
 {

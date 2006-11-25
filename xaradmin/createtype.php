@@ -16,9 +16,9 @@
  * Create a new HTML tag
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param 'tagtype' the type of tag to be created
- * @raise MISSING_DATA
+ * @throws MISSING_DATA
  */
 function html_admin_createtype($args)
 {

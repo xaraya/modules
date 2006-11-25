@@ -16,11 +16,10 @@
  * Get all tags
  *
  * @public
- * @author Richard Cave 
- * @param none 
- * @returns array
+ * @author Richard Cave
+ * @param none
  * @return array of HTML tags, or false on failure
- * @raise none
+ * @throws none
  */
 function html_userapi_getalltypes($args)
 {

@@ -16,11 +16,10 @@
  * Delete a tag type
  *
  * @public
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['id'] ID of the tag type
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, MISSING_DATA
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, MISSING_DATA
  */
 function html_adminapi_deletetype($args)
 {
@@ -43,7 +42,7 @@ function html_adminapi_deletetype($args)
     if ($type == false) {
         $msg = xarML('No Such tag type present');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check

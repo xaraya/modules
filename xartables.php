@@ -19,7 +19,7 @@
  * @author John Cox
  * @author Richard Cave
  * @return true on success, false on failure
- * @raise none
+ * @throws none
  */
 function html_xartables()
 {

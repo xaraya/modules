@@ -16,14 +16,13 @@
  * Create a new tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  * @param $args['tag'] tag to create
  * @param $args['type'] type of tag to create
  * @param $args['allowed'] state of tag on creation
- * @returns int
- * @return html ID on success, false on failure
- * @raise BAD_PARAM
+ * @return int html ID on success, false on failure
+ * @throws BAD_PARAM
  */
 function html_adminapi_create($args)
 {
@@ -52,7 +51,7 @@ function html_adminapi_create($args)
     // Security Check
     if(!xarSecurityCheck('AddHTML')) return;
 
-    // Trim input 
+    // Trim input
     $type = trim($type);
 
     // Get datbase setup
@@ -66,7 +65,7 @@ function html_adminapi_create($args)
     // Make sure type is lowercase
     $type = strtolower($type);
 
-    // Get ID of type 
+    // Get ID of type
     $tagtype = xarModAPIFunc('html',
                              'user',
                              'gettype',

@@ -16,12 +16,11 @@
  * Get all tags
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
+ * @author John Cox
+ * @author Richard Cave
  * @param $args['type'] (optional) type of the tag to get
- * @returns array
- * @return link array, or false on failure
- * @raise BAD_PARAM
+ * @return array link array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_userapi_getalltags($args)
 {
@@ -47,7 +46,7 @@ function html_userapi_getalltags($args)
     // Check if type was passed to function
     if (!empty($type)) {
         // Set WHERE clause to retrieve by tag type
-        // Get ID of type 
+        // Get ID of type
         $query = "SELECT xar_id
                   FROM $htmltypestable
                   WHERE xar_type = ?";

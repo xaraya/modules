@@ -16,12 +16,12 @@
  * Create a new HTML tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
- * @param 'tag' the tag to be created
- * @param 'tagtype' the type of tag to be created
- * @param 'allowed' the state of the tag to be created
- * @raise MISSING_DATA
+ * @author John Cox
+ * @author Richard Cave
+ * @param string 'tag' the tag to be created
+ * @param strng 'tagtype' the type of tag to be created
+ * @param int 'allowed' the state of the tag to be created
+ * @throws MISSING_DATA
  */
 function html_admin_create($args)
 {

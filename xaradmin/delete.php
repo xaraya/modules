@@ -11,15 +11,14 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
-/*
+/**
  * Delete a tag
  *
  * @public
- * @author John Cox 
- * @author Richard Cave 
- * @returns array, or false on failure
- * @raise BAD_PARAM
+ * @author John Cox
+ * @author Richard Cave
+ * @return mixed array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_admin_delete()
 {
@@ -30,7 +29,7 @@ function html_admin_delete()
     if (!xarVarFetch('cid', 'int:0:', $cid)) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
-    // Get the current html tag 
+    // Get the current html tag
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
@@ -49,7 +48,7 @@ function html_admin_delete()
         // Data to display in the template
         $data['tag'] = xarVarPrepForDisplay($html['tag']);
         $data['submitlabel'] = xarML('Confirm');
-        
+
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 

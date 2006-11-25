@@ -11,14 +11,13 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
-/*
+/**
  * Edit an HTML tag
  *
  * @public
  * @author Richard Cave
- * @returns array, or false on failure
- * @raise BAD_PARAM
+ * @return array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_admin_edit()
 {
@@ -30,7 +29,7 @@ function html_admin_edit()
     if (!xarVarFetch('tag', 'str:1:', $tag, '')) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
-    // Get the current html tag 
+    // Get the current html tag
     $html = xarModAPIFunc('html',
                           'user',
                           'gettag',
@@ -50,7 +49,7 @@ function html_admin_edit()
         $data['tag'] = xarVarPrepForDisplay($html['tag']);
         $data['allowed'] = $html['allowed'];
         $data['editbutton'] = xarML('Submit');
-        
+
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 

@@ -11,14 +11,13 @@
  * @link http://xaraya.com/index.php/release/779.html
  * @author John Cox
  */
-
-/*
+/**
  * Delete an tag type
  *
  * @public
- * @author Richard Cave 
- * @returns array, or false on failure
- * @raise BAD_PARAM
+ * @author Richard Cave
+ * @return array, or false on failure
+ * @throws BAD_PARAM
  */
 function html_admin_deletetype()
 {
@@ -29,7 +28,7 @@ function html_admin_deletetype()
     if (!xarVarFetch('id', 'int:0:', $id)) return;
     if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
 
-    // Get the current html tag 
+    // Get the current html tag
     $type = xarModAPIFunc('html',
                           'user',
                           'gettype',
@@ -48,7 +47,7 @@ function html_admin_deletetype()
         // Data to display in the template
         $data['type'] = xarVarPrepForDisplay($type['type']);
         $data['submitlabel'] = xarML('Confirm');
-        
+
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
 

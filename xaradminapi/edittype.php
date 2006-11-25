@@ -15,12 +15,11 @@
 /**
  * Edit a tag type
  *
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['id'] ID of the tag type to change
  * @param $args['tagtype'] the tag type
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, MISSING_DATA
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, MISSING_DATA
  */
 function html_adminapi_edittype($args)
 {
@@ -51,7 +50,7 @@ function html_adminapi_edittype($args)
     if ($type == false) {
         $msg = xarML('No such tag  type present.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check

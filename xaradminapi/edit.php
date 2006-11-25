@@ -15,12 +15,11 @@
 /**
  * Edit a tag
  *
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['cid'] ID of the tag
  * @param $args['tag'] the name of the tag
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, MISSING_DATA
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, MISSING_DATA
  */
 function html_adminapi_edit($args)
 {
@@ -52,7 +51,7 @@ function html_adminapi_edit($args)
     if ($html == false) {
         $msg = xarML('No such tag present');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
@@ -79,7 +78,7 @@ function html_adminapi_edit($args)
                              'user',
                              'gettype',
                              array('id' => $html['tid']));
-    
+
     if ($tagtype['type'] == 'html') {
         $allowedhtml = array();
         // Get the current html tags from config vars

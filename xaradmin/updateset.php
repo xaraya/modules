@@ -17,9 +17,9 @@
  *
  * @public
  * @author John Cox
- * @author Richard Cave 
+ * @author Richard Cave
  * @param $args['tags'] an array of the cids and allowed value of the html tags
- * @raise MISSING_DATA
+ * @throws MISSING_DATA
  */
 function html_admin_updateset()
 {
@@ -57,7 +57,7 @@ function html_admin_updateset()
                                    'admin',
                                    'update',
                                    array('cid' => $cid,
-                                         'allowed' => $allowed))) 
+                                         'allowed' => $allowed)))
                     return false;
             }
 
