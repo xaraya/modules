@@ -12,62 +12,62 @@
     <xar:mlstring>What is it?</xar:mlstring>
   </h3>
   <p>
-            <em><xar:mlstring>Images is a Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for basic image manipulation, including the following:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Resize Image files</xar:mlstring></li>
-                <li><xar:mlstring>Crop image files</xar:mlstring></li>
-                <li><xar:mlstring>Rotate image files</xar:mlstring></li>
-                <li><xar:mlstring>Add text to an image file (think buttons here...)</xar:mlstring></li>
-                <li>...</li>
-            </ul>
-        </p>
-        <h3>
-    <xar:mlstring>How to use it?</xar:mlstring>
-  </h3>
-  <p>
-            <h4>
-                <xar:mlstring>Image Tags</xar:mlstring>
-            </h4>
-            <p>
-                &lt;xar:image-resize src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /&gt;
-          </p>
-          <p>
-                <xar:mlstring>
-                    The IMAGE tag is useful for displaying (cached) images at different proportions. Images are resized according
-                    to the height/width values you specify with the resulting image cached for faster displaying later on. Note: Any other attribute
-                    not listed will be passed directly on to the resultant &lt;img&gt; tag.
-                </xar:mlstring>
-            </p>
-            <p>
-                <xar:mlstring>
-                    Examples:
-                    <p>
-                        Resize an image's width while keeping the proportions:<br />
-                        <br />
-                        &lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;
-                    </p>
-                </xar:mlstring>
-                <xar:mlstring>
-                    <p>
-                        Apply some pre-defined image processing (e.g. watermark):<br />
-                        <br />
-                        &lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;
-                    </p>
-                </xar:mlstring>
-            </p>
-        <h3>
-    <xar:mlstring>Included Blocks</xar:mlstring>
-  </h3>
-  <p>
-    <xar:mlstring>There are no included blocks.</xar:mlstring>
+  <em><xar:mlstring>Images is a Xaraya Utility Module.</xar:mlstring></em>
+  <xar:mlstring>It is currently responsible for basic image manipulation, including the following:</xar:mlstring>
+    <ul>
+        <li><xar:mlstring>Resize Image files</xar:mlstring></li>
+        <li><xar:mlstring>Crop image files</xar:mlstring></li>
+        <li><xar:mlstring>Rotate image files</xar:mlstring></li>
+        <li><xar:mlstring>Add text to an image file (think buttons here...)</xar:mlstring></li>
+        <li>...</li>
+    </ul>
   </p>
   <h3>
-    <xar:mlstring>Included Hooks</xar:mlstring>
+    <xar:mlstring>How to use it?</xar:mlstring>
   </h3>
-  <p>
-            .. To be filled in ..
-        </p>
+
+    <h4>
+        <xar:mlstring>Image Tags</xar:mlstring>
+    </h4>
+    <p>
+        &lt;xar:image-resize src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /&gt;
+    </p>
+    <p>
+        <xar:mlstring>
+            The IMAGE tag is useful for displaying (cached) images at different proportions. Images are resized according
+            to the height/width values you specify with the resulting image cached for faster displaying later on. Note: Any other attribute
+            not listed will be passed directly on to the resultant &lt;img&gt; tag.
+        </xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>
+            Examples:
+            <p>
+                Resize an image's width while keeping the proportions:<br />
+                <br />
+                &lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;
+            </p>
+        </xar:mlstring>
+        <xar:mlstring>
+            <p>
+                Apply some pre-defined image processing (e.g. watermark):<br />
+                <br />
+                &lt;xar:image-resize src="test/image.jpg" setting="JPEG 800 x 600" label="my image" /&gt;
+            </p>
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>There are no included blocks.</xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Privileges</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The Images module only has the Admin privilege to assign. You will need this level if you want to set the general settings for the Images module.</xar:mlstring>
+    </p>
         <xar:if condition="xarModGetVar('images','upgrade-1.0.0')">
         <h3>
         <xar:mlstring>Upgrade from version 1.0.0</xar:mlstring>
