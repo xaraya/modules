@@ -16,9 +16,8 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns string
- * @return hook output in HTML
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return string hook output in HTML
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_admin_modifyhook($args)
 {

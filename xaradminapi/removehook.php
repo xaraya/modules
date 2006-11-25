@@ -1,25 +1,23 @@
 <?php
-/*
+/**
+ * Polls module
  *
- * Polls Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls Module
+ * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-
 /**
  * delete all entries for a module - hook for ('module','remove','API')
  *
  * @param $args['objectid'] ID of the object (must be the module name here !!)
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_adminapi_removehook($args)
 {

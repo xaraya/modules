@@ -1,26 +1,24 @@
 <?php
-/*
+/**
+ * Polls module
  *
- * Polls Module
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage polls
+ * @subpackage Polls Module
+ * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-
 /**
  * update entry for a module item - hook for ('item','update','API')
  * Optional $extrainfo['poll'] from arguments, or 'poll' from input
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_adminapi_updatehook($args)
 {
