@@ -18,7 +18,7 @@
  * @param  $args['iid'] the ID
  * @param  $args['compiled_html'] the HTML
  * @param  $args['compiled_txt'] the text
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_adminapi_updateissue($args)
 {

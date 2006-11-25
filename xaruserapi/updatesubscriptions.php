@@ -15,7 +15,7 @@
  * Update subscription data
  *
  * @author the eBulletin module development team
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_userapi_updatesubscriptions($args)
 {

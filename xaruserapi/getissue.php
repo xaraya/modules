@@ -16,9 +16,8 @@
  *
  * @author the eBulletin module development team
  * @param  $args ['id'] id of ebulletin item to get
- * @returns array
- * @return item array, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @return array item array, or false on failure
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function ebulletin_userapi_getissue($args)
 {

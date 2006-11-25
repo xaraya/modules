@@ -15,9 +15,8 @@
  * Get list of available templates
  *
  * @author Curtis Farnham <curtis@farnham.com>
- * @returns array
- * @return item array, or false on failure
- * @raise BAD_PARAM, NO_PERMISSION
+ * @return array item array, or false on failure
+ * @throws BAD_PARAM, NO_PERMISSION
  */
 function ebulletin_userapi_gettemplates()
 {

@@ -16,9 +16,8 @@
  *
  * @author the eBulletin module development team
  * @param public
- * @returns array
  * @return array of items, or false on failure
- * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function ebulletin_userapi_getall($args)
 {

@@ -15,9 +15,8 @@
  * utility function to count the number of registered subscribers
  *
  * @author the ebulletin module development team
- * @returns integer
- * @return number of items held by this module
- * @raise DATABASE_ERROR
+ * @return int number of items held by this module
+ * @throws DATABASE_ERROR
  */
 function ebulletin_userapi_countsubscribers_reg($args)
 {

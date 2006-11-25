@@ -16,9 +16,8 @@
  *
  * @author the eBulletin module development team
  * @param  $args ['iid'] ID of the item
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return bool true on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_adminapi_deleteissue($args)
 {

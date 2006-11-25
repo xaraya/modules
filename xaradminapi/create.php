@@ -19,9 +19,8 @@
 
  * all the args here...
 
- * @returns int
- * @return ebulletin item ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return int ebulletin item ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_adminapi_create($args)
 {

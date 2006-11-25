@@ -23,7 +23,7 @@
  * @param  $args['subject'] the subject of the item to be created
  * @param  $args['body'] the body of the item to be created
  * @param  $args['range'] the range of the item to be created
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_adminapi_update($args)
 {

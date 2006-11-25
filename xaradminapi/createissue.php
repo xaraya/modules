@@ -19,9 +19,8 @@
  * @param  $args['pid'] the ID of the parent publication AND
  * @param  $args['issuedate'] the date the issue is to carry AND
  * @param  $args['range'] the range of dates to select articles from
- * @returns int
- * @return ebulletin issue ID on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @return int ebulletin issue ID on success, false on failure
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
 
 
 * @todo make each publication have the option of its own theme
