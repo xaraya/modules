@@ -64,7 +64,7 @@ function sitecontact_admin_view($args)
         return;
     } elseif (!xarSecurityCheck('EditSitecontact',0,'ContactForm',"$scid:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
-                     $thisform['scformtype']);
+                     $thisform['sctypename']);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                         new SystemException($msg));
         return;
