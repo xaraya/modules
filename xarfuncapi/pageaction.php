@@ -180,7 +180,7 @@ function xarpages_funcapi_pageaction($args)
             // else return
         }
     }
-    
+
     if ($isvalid) { // only not-valid if debugging so we can drop to bottom
         // save both in and out objects
         _pageform_setobject( $key, $pages[$form_pid]['name'], $in_object );
