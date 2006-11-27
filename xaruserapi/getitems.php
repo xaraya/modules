@@ -19,6 +19,7 @@
  * @param $args['itemtype'] item type of the items (only 1 type supported per call)
  * @param $args['itemids'] array of item IDs
  * @param $args['sort'] string sort by itemid (default) or numhits
+ * @param $args['sortorder'] string sort order DESC (default) or ASC
  * @param $args['numitems'] number of items to return
  * @param $args['startnum'] start at this number (1-based)
  * @returns array
@@ -28,7 +29,7 @@ function hitcount_userapi_getitems($args)
 {
     // Get arguments from argument array
     extract($args);
-
+    
     // Argument check
     if (!isset($modname) && !isset($modid)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
@@ -49,6 +50,9 @@ function hitcount_userapi_getitems($args)
     }
     if (empty($sort)) {
         $sort = 'itemid';
+    }
+    if (empty($sortorder)) {
+        $sortorder = 'DESC';
     }
     if (empty($startnum)) {
         $startnum = 1;
@@ -88,9 +92,9 @@ function hitcount_userapi_getitems($args)
         }
     }
     if ($sort == 'numhits') {
-        $query .= " ORDER BY xar_hits DESC, xar_itemid ASC";
+        $query .= " ORDER BY xar_hits $sortorder, xar_itemid DESC";
     } else {
-        $query .= " ORDER BY xar_itemid ASC";
+        $query .= " ORDER BY xar_itemid $sortorder";
     }
 
     if (!empty($numitems) && !empty($startnum)) {
