@@ -1,0 +1,53 @@
+<xar:comment>
+        
+</xar:comment>
+  <h1>Pageaction Debugging</h1>
+  <p>page name: #$current_page['name']#</p>
+  <p>key: #$pageaction['key']#</p>
+
+<xar:if condition="isset($current_page.dd.body)">
+    #$current_page.dd.body#
+</xar:if>
+
+<xar:if condition="!empty($message)">
+  <div style="margin:1em; font-weight:bold">
+    #$message#
+  </div>
+</xar:if>
+<xar:if condition="$pageaction['isvalid'] ne 1">
+    <h2>NOT VALID</h2>
+    [print any invalid messages here]
+</xar:if>
+<h2>pageaction.xt Input object: </h2>
+<p>name: #$pageaction['in']->name#</p>
+<p>itemtype: #$pageaction['in']->itemtype#</p>
+<p style="font-weight:bold">Fields:</p>
+<pre><xar:set name="asdf">print_r($pageaction['in']->getfieldvalues())</xar:set></pre>
+
+<h2>pageaction.xt Output object: </h2>
+<p>name: #$pageaction['out']->name#</p>
+<p>itemtype: #$pageaction['out']->itemtype#</p>
+<p style="font-weight:bold">Fields:</p>
+<pre><xar:set name="asdf">print_r($pageaction['out']->getfieldvalues())</xar:set></pre>
+
+<h2>pageaction.xt Validation function: </h2>
+<xar:if condition="!empty($pageaction['validation_func'])">
+<pre>#$pageaction['validation_func']#</pre>
+</xar:if>
+
+<h2>pageaction.xt Validation snippet: </h2>
+<xar:if condition="!empty($current_page.dd.validation_php)">
+<pre>#$current_page.dd.validation_php#</pre>
+</xar:if>
+
+<h2>pageaction.xt Processing function: </h2>
+<xar:if condition="!empty($pageaction['processing_func'])">
+<pre>#$pageaction['processing_func']#</pre>
+</xar:if>
+
+<h2>pageaction.xt Processing snippet: </h2>
+<xar:if condition="!empty($current_page.dd.processing_php)">
+<pre>#$current_page.dd.processing_php#</pre>
+</xar:if>
+  
+  
