@@ -34,9 +34,9 @@ class MapLocationProperty extends ObjectRefProperty
     public $store_prop   = 'id';   // Name of the property we want to use for storage
     public $display_prop = 'name';       // Name of the property we want to use for displaying.
 
-    function __construct($args)
+    function __construct(ObjectDescriptor $descriptor)
     {
-        parent::__construct($args);
+        parent::__construct($descriptor);
         $this->filepath   = 'modules/maps/xarproperties';
     }
 }

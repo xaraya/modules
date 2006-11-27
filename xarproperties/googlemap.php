@@ -14,15 +14,16 @@
 
 class GoogleMapProperty extends DataProperty
 {
+    private $regid = 30038;
+
     public $id         = 30040;
     public $name       = 'googlemap';
     public $desc       = 'Google Map';
     public $reqmodules = array('maps');
 
-    private $regid = 30038;
-    function __construct($args)
+    function __construct(ObjectDescriptor $descriptor)
     {
-        parent::__construct($args);
+        parent::__construct($descriptor);
         $this->tplmodule = 'maps';
         $this->filepath   = 'modules/maps/xarproperties';
     }
