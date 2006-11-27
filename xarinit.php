@@ -453,7 +453,7 @@ function categories_upgrade($oldversion)
                       'categories_userapi_getcatinfotag');
             // fall through to the next upgrade
         case '2.3.3':
-                    // fall through to the next upgrade
+            // fall through to the next upgrade
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;

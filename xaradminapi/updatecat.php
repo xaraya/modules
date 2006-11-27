@@ -198,7 +198,6 @@ function categories_adminapi_updatecat($args)
     $args['itemid'] = $cid;
     xarModCallHooks('item', 'update', $cid, $args);
 
-
     return true;
 }
 
