@@ -15,10 +15,10 @@
  * Send emails to confirm enrolling etc.
  *
  * Send an e-mail to the coordinator to notify about the enrollment
- * @param Takes parameters passed by user_sendtofriend to generate info used by email mod
+ * @param Takes parameters passed by the enroll function to generate info used by email mod
  * @author jojodee/MichelV.
  * @param int studstatus The ID of the status of the student
- * @param int userid The userid of the student
+ * @param int userid The userid of the student, which must be higher than 3
  * @param int planningid The ID of the planned course
  * @param int enrollid  The created ID for this enrollment the function sends emails for.
  * @return bool true on success
@@ -28,7 +28,7 @@ function courses_user_sendconfirms($args)
     // Get parameters
     extract ($args);
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus)) return;
-    if (!xarVarFetch('userid',     'str::',  $userid))     return;
+    if (!xarVarFetch('userid',     'int:3:',  $userid))     return;
     if (!xarVarFetch('planningid', 'id',     $planningid)) return;
     if (!xarVarFetch('enrollid',   'id',     $enrollid))   return;
     // Get planned course
@@ -140,12 +140,12 @@ function courses_user_sendconfirms($args)
             return;
         }
     }
-/**
- *
- * Send an e-mail to the user with course details
- * @TODO Move these to seperate functions and make them adjustable
- * @author MichelV.
- */
+    /**
+     *
+     * Send an e-mail to the user with course details
+     * @TODO Move these to seperate functions and make them adjustable
+     * @author MichelV.
+     */
     $studentmail = xarUserGetVar('email');
     if(isset($studentmail)) {
         $uid = xarUserGetVar('uid');
