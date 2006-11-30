@@ -28,7 +28,8 @@ function courses_user_sendconfirms($args)
     // Get parameters
     extract ($args);
     if (!xarVarFetch('studstatus', 'int:1:', $studstatus)) return;
-    if (!xarVarFetch('userid',     'int:3:',  $userid))     return;
+    // If we have passed a userid, use that. If not, the current user is that new student.
+    if (!xarVarFetch('userid',     'int:3:', $userid, xarUserGetVar('uid'), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('planningid', 'id',     $planningid)) return;
     if (!xarVarFetch('enrollid',   'id',     $enrollid))   return;
     // Get planned course
@@ -43,8 +44,8 @@ function courses_user_sendconfirms($args)
                             'get',
                             array('courseid' => $planitem['courseid']));
     if (!isset($course) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    // Check for Waiting List status, as that changes the texts
 
+    // Compare the student status to the Waiting List status, as that changes the texts
     $waitingid = xarModGetVar('courses','WaitingListID');
     if ($waitingid == $studstatus) {
         $waitinglist = true;
@@ -146,17 +147,17 @@ function courses_user_sendconfirms($args)
      * @TODO Move these to seperate functions and make them adjustable
      * @author MichelV.
      */
-    $studentmail = xarUserGetVar('email');
+    // Get the email address for the relevant user
+    $studentmail = xarUserGetVar('email', $userid);
     if(isset($studentmail)) {
-        $uid = xarUserGetVar('uid');
-        $studentname = xarUserGetVar('name');
+        $studentname = xarUserGetVar('name', $userid);
         $coordinators = $course['contactuid'];
         $fromname = xarUserGetVar('name', $coordinators);
         $fromemail = xarUserGetVar('email', $coordinators);
         $viewcourse = xarModUrl('courses', 'user', 'displayplanned', array('planningid' => $planningid));
         $viewaccount = xarModUrl('roles', 'user', 'account', array('moduleload' => 'courses'));
         // Check the coordinator name/e-mail; otherwise default to webmaster
-        if (!isset($course['contactuid']) || !is_numeric($course['contactuid'])) { //Or use contact address?
+        if (!isset($course['contactuid']) || !is_numeric($course['contactuid'])) { // Or use contact address?
             $fromname = xarML('Webmaster');
             $fromemail = xarUserGetVar('mail', 'adminmail');
         }
