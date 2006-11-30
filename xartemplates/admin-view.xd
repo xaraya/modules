@@ -87,18 +87,10 @@
         <table class="xar-fullwidth">
             <tr>
                 <th>
-                    <xar:if condition="empty($sortlink['itemid'])">
-                        <xar:mlstring>Item Id</xar:mlstring>
-                    <xar:else/>
-                        <a href="#$sortlink['itemid']#"><xar:mlstring>Item Id</xar:mlstring></a>
-                    </xar:if>
+                    <a href="#$sortlink['itemid']#"><xar:mlstring>Item Id</xar:mlstring></a>
                 </th>
                 <th>
-                    <xar:if condition="empty($sortlink['numhits'])">
-                        <xar:mlstring>Total Hits</xar:mlstring>
-                    <xar:else/>
-                        <a href="#$sortlink['numhits']#"><xar:mlstring>Total Hits</xar:mlstring></a>
-                    </xar:if>
+                    <a href="#$sortlink['numhits']#"><xar:mlstring>Total Hits</xar:mlstring></a>
                 </th>
                 <th>
                     <xar:mlstring>Action</xar:mlstring>

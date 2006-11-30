@@ -24,6 +24,7 @@ function hitcount_admin_view()
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('sortorder','isset', $sortorder,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startnum', 'isset', $startnum,     1, XARVAR_NOT_REQUIRED)) {return;}
 
     $data = array();
@@ -110,6 +111,7 @@ function hitcount_admin_view()
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
                                                             'sort' => $sort,
+                                                            'sortorder' => $sortorder,
                                                             'startnum' => '%%')),
                                             $numstats);
         } else {
@@ -121,7 +123,9 @@ function hitcount_admin_view()
                                         'itemtype' => $itemtype,
                                         'numitems' => $numstats,
                                         'startnum' => $startnum,
-                                        'sort' => $sort));
+                                        'sort' => $sort,
+                                        'sortorder' => $sortorder
+                                        ));
         $showtitle = xarModGetVar('hitcount','showtitle');
         if (!empty($showtitle)) {
            $itemids = array_keys($getitems);
@@ -151,21 +155,33 @@ function hitcount_admin_view()
                                     array('modid' => $modid,
                                           'itemtype' => $itemtype));
         $data['sortlink'] = array();
-        if (empty($sort) || $sort == 'itemid') {
-             $data['sortlink']['itemid'] = '';
+        if (empty($sortorder) || $sortorder=='ASC') {
+            $sortorder = 'DESC';
         } else {
+            $sortorder = 'ASC';
+        }
+//        if (empty($sort) || $sort == 'itemid') {
+//             $data['sortlink']['itemid'] = '';
+//
+//        } else {
              $data['sortlink']['itemid'] = xarModURL('hitcount','admin','view',
                                                      array('modid' => $modid,
-                                                           'itemtype' => $itemtype));
-        }
-        if (!empty($sort) && $sort == 'numhits') {
-             $data['sortlink']['numhits'] = '';
-        } else {
+                                                           'itemtype' => $itemtype,
+                                                           'sortorder' => $sortorder
+                                                           ));
+
+//        }
+ //       if (!empty($sort) && $sort == 'numhits') {
+ //            $data['sortlink']['numhits'] = '';
+ //       } else {
              $data['sortlink']['numhits'] = xarModURL('hitcount','admin','view',
                                                       array('modid' => $modid,
                                                             'itemtype' => $itemtype,
-                                                            'sort' => 'numhits'));
-        }
+                                                            'sort' => 'numhits',
+                                                           'sortorder' => $sortorder
+                                                            ));
+ //       }   
+ //       $data['sortorder'] = $sortorder;
     }
 
     return $data;
