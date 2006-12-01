@@ -13,8 +13,8 @@
  */
 /**
  * test function for DMOZ-style short URLs in xaruser.php
+ * @return string
  */
-
 function categories_userapi_cid2name ($args)
 {
     extract($args);

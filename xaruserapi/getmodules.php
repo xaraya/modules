@@ -14,8 +14,7 @@
 /**
  * get the list of modules and itemtypes for which we're categorising items
  *
- * @returns array
- * @return $array[$modid][$itemtype] = array('items' => $numitems,'cats' => $numcats,'links' => $numlinks);
+ * @return array $array[$modid][$itemtype] = array('items' => $numitems,'cats' => $numcats,'links' => $numlinks);
  */
 function categories_userapi_getmodules($args)
 {

@@ -19,8 +19,7 @@
  * @param $args['cid'] The ID of the category you are counting for (optional)
  * @param $args['left'] The left value for that category (optional)
  * @param $args['right'] The right value for that category (optional)
- * @returns int
- * @return number of categories
+ * @return int number of categories
  */
 function categories_userapi_countcats($args)
 {

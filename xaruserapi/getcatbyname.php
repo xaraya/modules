@@ -20,7 +20,6 @@
  * @param $args['return_itself'] =Boolean= return the cid itself (default true)
  * @param $args['getchildren'] =Boolean= get children of category (default false)
  * @param $args['getparents'] =Boolean= get parents of category (default false)
- * @returns array
  * @return array of category info arrays, false on failure
  */
 function categories_userapi_getcatbyname($args)

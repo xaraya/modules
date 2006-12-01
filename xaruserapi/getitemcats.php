@@ -13,19 +13,17 @@
  */
 /**
  * Get an array of assigned category details for a specific item, limiting by a base cid if required.
- * @param $args['basecid'] optional base cid under which the returned categories must lie
- * @param $args['basecids'] optional array of base cids under which the returned categories must lie
- * @param $args['module'] name of the module; or
- * @param $args['modid'] module ID
- * @param $args['itemtype'] item type
- * @param $args['itemid'] item ID
- * @returns int
- * @return number of items
- * TODO: allow ordering of the results by name, description etc.
+ * Get categories for an item, optionally limiting to just one category branch (to be expanded to allow base categories by name).
+ *
+ * @param int    $args['basecid'] optional base cid under which the returned categories must lie
+ * @param array  $args['basecids'] optional array of base cids under which the returned categories must lie
+ * @param string $args['module'] name of the module; or
+ * @param int    $args['modid'] module ID
+ * @param int    $args['itemtype'] item type
+ * @param int    $args['itemid'] item ID
+ * @return array Details for the categories found
+ * @TODO: allow ordering of the results by name, description etc.
  */
-
-// Get categories for an item, optionally limiting to just one category branch (to be expanded to allow base categories by name).
-
 function categories_userapi_getitemcats($args)
 {
     // Get arguments from argument array
@@ -68,7 +66,7 @@ function categories_userapi_getitemcats($args)
     // Initialise the result array.
     $result = array();
 
-    // Check whether we want to restrict the catergories by one or more base categories.
+    // Check whether we want to restrict the categories by one or more base categories.
     // TODO: when categories supports 'base' categories (category itemtypes?) then add
     // another (much simpler) section here.
     if (!empty($basecids)) {

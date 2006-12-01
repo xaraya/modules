@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/147.html
  * @author Categories module development team
  */
+/**
+ * @return int count
+ */
 function categories_userapi_countitems_deprecated($args)
 {
     // Get arguments from argument array

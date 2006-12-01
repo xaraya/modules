@@ -18,8 +18,7 @@
  * @param $args['left'] left number
  * @param $args['right'] right number
  * @param $args['parent'] parent id (optional)
- * @returns array
- * @return TODO
+ * @return array TODO
  */
 function categories_userapi_getneighbours($args)
 {

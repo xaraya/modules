@@ -17,8 +17,7 @@
  * @param $args['module'] the name of the module (will be optional)
  * @param $args['modid'] the ID of the module (will be optional)
  * @param $args['itemtype'] the ID of the itemtype (optional)
- * @returns int
- * @return number of categories
+ * @return int number of categories
  */
 function categories_userapi_countcatbases($args)
 {

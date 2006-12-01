@@ -19,8 +19,7 @@
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['groupcids'] the number of categories you want items grouped by
- * @returns array
- * @return number of items per category, or caterogies per item
+ * @return array number of items per category, or categories per item
  */
 function categories_userapi_deepcount($args)
 {

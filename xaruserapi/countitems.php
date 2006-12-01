@@ -17,8 +17,7 @@
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['modid'] module?s ID
  * @param $args['itemtype'] item type
- * @returns int
- * @return number of items
+ * @return int number of items
  */
 function categories_userapi_countitems($args)
 {

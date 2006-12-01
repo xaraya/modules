@@ -17,8 +17,7 @@
  * @param $args['itemtype'] item type (if any)
  * @param $args['numitems'] optional number of items to return
  * @param $args['startnum'] optional start at this number (1-based)
- * @returns array
- * @return item array, or false on failure
+ * @return array item array, or false on failure
  */
 function categories_userapi_getorphanlinks($args)
 {

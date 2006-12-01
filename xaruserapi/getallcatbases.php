@@ -25,9 +25,8 @@
  * @param $args['format'] return format: 'cids', 'tree' or 'flat' (default 'flat').
  * @param $args['order'] columns to order by (optional)
  * @return array Array with list of category bases
- */
-/**
- * NOTE:
+ *
+ * @todo:
  * This function is over-complicated at the moment as it uses module
  * variables to store its info. It will be greatly implified when the
  * data is moved to a table of its own.

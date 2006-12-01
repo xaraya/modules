@@ -14,16 +14,15 @@
 /**
  * Get a category base
  *
+ * NOTE:
+ * The modid and itemtype are only needed for the moment while
+ * base IDs are not unique across the system.
+ *
  * @param $args['bid'] base ID
  * @param $args['modid'] the id of the module (temporary)
  * @param $args['module'] the name of the module (temporary)
  * @param $args['itemtype'] the ID of the itemtype (temporary)
  * @return array details of a category base
- */
-/**
- * NOTE:
- * The modid and itemtype are only needed for the moment while
- * base IDs are not unique across the system.
  */
 function categories_userapi_getcatbase($args)
 {

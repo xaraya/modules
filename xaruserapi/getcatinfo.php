@@ -14,8 +14,8 @@
 /**
  * get info on a specific (list of) category
  *
- * @param $args['cid'] id of category to get info, or
- * @param $args['cids'] array of category ids to get info
+ * @param int   $args['cid'] id of category to get info, or
+ * @param array $args['cids'] array of category ids to get info
  * @return array Category info array, or array of cat info arrays, false on failure
  */
 function categories_userapi_getcatinfo($args)

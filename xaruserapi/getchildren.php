@@ -17,7 +17,6 @@
  * @param $args['cid'] id of category to get children for, or
  * @param $args['cids'] array of category ids to get children for
  * @param $args['return_itself'] =Boolean= return the cid itself (default false)
- * @returns array
  * @return array of category info arrays, false on failure
  */
 function categories_userapi_getchildren($args)
