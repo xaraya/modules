@@ -5,8 +5,7 @@
 <h3>
     #$title#
 </h3>
-<xar:if condition="!empty($editurl)">
-    [<a href="#$editurl#">#$edittitle#</a>]
+<xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
 </xar:if>
 <div class="xar-norm">
     <xar:mlstring>

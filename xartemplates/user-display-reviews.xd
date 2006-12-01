@@ -9,8 +9,7 @@
   </td>
   <td align="left">
     #$title#
-    <xar:if condition="!empty($editurl)">
-      [<a href="#$editurl#">#$edittitle#</a>]
+    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
     </xar:if>
     <br />
   </td>
