@@ -13,6 +13,9 @@
  */
 /**
  * Check category links for orphans
+ * @param modid
+ * @param itemtype
+ * @return array returns the data for the template
  */
 function categories_admin_checklinks()
 {

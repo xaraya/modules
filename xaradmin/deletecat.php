@@ -16,7 +16,8 @@
  *
  * This function also shows a count on the number of child categories of the current category
  * @param id cid
- * @param str confirm
+ * @param str confirm OPTIONAL
+ * @return bool
  */
 function categories_admin_deletecat()
 {

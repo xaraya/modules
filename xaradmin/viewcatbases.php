@@ -13,6 +13,7 @@
  */
 /**
  * create item from xarModFunc('categories','admin','viewcat')
+ * @return array
  */
 function categories_admin_viewcatbases()
 {

@@ -12,7 +12,8 @@
  * @author Categories module development team
  */
 /**
- * udpate the base category from categories_admin_modifycatbase
+ * update the base category from categories_admin_modifycatbase
+ * @return bool true
  */
 function categories_admin_updatecatbase()
 {
