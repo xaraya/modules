@@ -11,7 +11,7 @@
     </xar:if>
 
     <xar:foreach in="$albums" key="$album_id" value="$album">
-        <div class="xar-margin-thickends xar-clearboth">
+        <div class="xar-margin-thickends">
 
             <xar:if condition="!empty($album.settings.preview_file)">
                 <div class="xar-floatleft xar-margin-thicksides xar-margin-thickends">

@@ -30,6 +30,8 @@ function gallery_userapi_get_files($args)
         , 'name'
         , 'summary'
         , 'file'
+        , 'file_type'
+        , 'file_size'
         , 'created'
         , 'status'
         , 'uid'
@@ -189,6 +191,8 @@ function gallery_userapi_get_files($args)
                 , 'name'       => $name
                 , 'summary'    => $summary
                 , 'file'       => $file
+                , 'type'       => $file_type
+                , 'size'       => $file_size
                 , 'created'    => $created
                 , 'date'       => xarLocaleGetFormattedDate('long', $created)
                 , 'state'      => $status

@@ -30,6 +30,10 @@
             <label class="xar-form-label" title="#xarML('Use the lightbox library when possible.')#"><xar:mlstring>Enable Lightbox:</xar:mlstring></label>
             <input type="checkbox" id="enable_lightbox" name="enable_lightbox" value="1" class="xar-form-textshort" #$enable_lightbox# />
         </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label" title="#xarML('Allow users to download original files.')#"><xar:mlstring>Original File Downloads:</xar:mlstring></label>
+            <input type="checkbox" id="original_file_downloads" name="original_file_downloads" value="1" class="xar-form-textshort" #$original_file_downloads# />
+        </div>
 
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label"><xar:mlstring>Items Per Page:</xar:mlstring></label>

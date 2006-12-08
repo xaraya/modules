@@ -26,6 +26,7 @@ function gallery_init()
     xarModSetVar('gallery', 'SupportShortURLs', 0);
     xarModSetVar('gallery', 'obfuscate_file_name', true);
     xarModSetVar('gallery', 'enable_lightbox', false);
+    xarModSetVar('gallery', 'original_file_downloads', false);
     xarModSetVar('gallery', 'items_per_page', 10);
     xarModSetVar('gallery', 'files_per_page', 10);
     xarModSetVar('gallery', 'cols_per_page',  2);

@@ -30,6 +30,16 @@ function gallery_userapi_getmenulinks($args)
     */
     if( !empty($file_id) )
     {
+        if( xarModGetVar('gallery', 'original_file_downloads') ){
+            $url = xarModURL('gallery', 'user', 'download',
+                array('file_id' => $file_id)
+            );
+            $menulinks[] = array(
+                'label'   => xarML('Download Original')
+                , 'title' => xarML('Download Original')
+                , 'url'   => $url
+            );
+        }
         if( Security::check(SECURITY_WRITE, 'gallery', FILE_ITEMTYPE, $file_id, false) )
         {
             $url = xarModURL('gallery', 'user', 'modify',
