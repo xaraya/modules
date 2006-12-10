@@ -16,9 +16,7 @@
     <ul>
         <xar:foreach in="$courses" key="$courseid" value="$course">
             <li>
-                <a href="#xarModURL('courses', 'user', 'display', array('courseid' => $course['courseid']))#">
-                    #$course['name']#
-                </a>
+                #$course.number#: <a href="#xarModURL('courses', 'user', 'display', array('courseid' => $course['courseid']))#">#$course.name#</a>
             </li>
         </xar:foreach>
     </ul>
