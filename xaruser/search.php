@@ -9,13 +9,20 @@
  *
  * @subpackage Courses Module
  * @link http://xaraya.com/index.php/release/179.html
+ * @author Courses Development team
  */
-
 /**
  * Search for a course via content description
  *
  * @author Michel V.
  * original author Jim McDonalds, dracos, mikespub et al.
+ * @param string q The search token
+ * @param bool bool
+ * @param string sort The sort order
+ * @param int name Search for the name of the course
+ * @param int shortdesc Search for a part of the short course description
+ * @param int longdesc Search for a part of the long description
+ * @param int number Search in the course number
  * @return array with courses
  */
 function courses_user_search()

@@ -3,7 +3,7 @@
  * Standard function to create a new module item
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,6 +17,8 @@
  * This is a standard function that is called whenever an administrator
  * wishes to create a new module item
  *
+ * @param int itemtype The itemtype to create an item for
+ * @param string preview Create a preview, or not?
  * @return array
  */
 function courses_admin_new($args)
