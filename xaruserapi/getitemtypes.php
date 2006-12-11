@@ -24,7 +24,8 @@ function itsp_userapi_getitemtypes($args)
 
     $pitems = xarModApiFunc('itsp','user','getall_planitems');
 
-    foreach ($pitems as $id => $pitem) {
+    foreach ($pitems as $pitem) {
+        $id = $pitem['pitemid'];
         $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pitem['pitemname']),
                                 'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pitem['pitemname'])),
                                 'url'   => xarModURL('itsp','user','display',array('pitemid' => $id))

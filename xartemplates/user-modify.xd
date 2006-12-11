@@ -67,14 +67,7 @@
 
             <xar:template type="module" file="modify-$rule_source" />
 
-            <xar:if condition="!empty($hookoutput)">
-                <fieldset>
-                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hookoutput" key="$hookmodule">
-                           #$hookoutput[$hookmodule]#
-                        </xar:foreach>
-                </fieldset>
-            </xar:if>
+
         <xar:if condition="$canedit">
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
@@ -91,5 +84,14 @@
             </fieldset>
         </xar:if>
     </form>
+
+    <xar:if condition="!empty($hookoutput)">
+        <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                   #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+    </xar:if>
 </div>
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

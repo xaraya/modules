@@ -21,14 +21,14 @@
 
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p><xar:mlstring>You will need to create an education plan first. Work out the way the
-  students in your organisation obtain credits for items within a plan. 
+  students in your organisation obtain credits for items within a plan.
   The ITSP module will need this information and work out where to store information on parts
   of the personal education plan, and where to obtain related information from.</xar:mlstring><br />
   <xar:mlstring>The easiest location for educational information is the courses module</xar:mlstring>
   </p>
   <p>
     <xar:mlstring>Install the courses module.</xar:mlstring><br />
-    <xar:mlstring>Create an education plan. Decide on the parts it contains (planitems). 
+    <xar:mlstring>Create an education plan. Decide on the parts it contains (planitems).
     These planitems can be groups of courses, or activities
     eg, when a students needs to write an essay this can be considered a planitem that is not a course
     in the sense that it can be stored in the courses module and therefore will be an activity located in the ITSP module itself.</xar:mlstring><br />
@@ -38,30 +38,38 @@
     For this, you can add your own templates for each planitem. You will need to provide a template for each plan item in your theme/modules/itsp/includes</xar:mlstring><br />
 
     <xar:mlstring>The source for the items that will be stored for a planitem can be set. You can use courses from the courses module (use 'courses' as the source); use external as the standard
-    source for items that are defined as external courses (use 'external' as the source); or use the combination of the two: use 'mix_[yourname]' when both courses from the courses module and 
+    source for items that are defined as external courses (use 'external' as the source); or use the combination of the two: use 'mix_[yourname]' when both courses from the courses module and
     external courses can be used (use mix_yourname as the source).
     </xar:mlstring><br />
   </p>
-  
-  <p><xar:mlstring>The ITSP can have different statusses. When it is created, it is in the first, called Added<xar:mlstring><br />
+
+  <p><xar:mlstring>The ITSP can have different statusses. When it is created, it is in the first, called Added</xar:mlstring><br />
   <xar:mlstring>If the user has added enough credits, the ITSP can be submitted and be placed in that status</xar:mlstring><br />
-  <xar:mlstring>When the educational staff approves the ITSP, it will be put in the Approved status.<xar:mlstring>
+  <xar:mlstring>When the educational staff approves the ITSP, it will be put in the Approved status.</xar:mlstring>
   <xar:mlstring>Once approved, it can be updated by the user again. Now, it cannot be submitted again, but the user can request the certificate for it. When this
-  action is performed, the ITSP will go to the certificate requested status.<xar:mlstring>
+  action is performed, the ITSP will go to the certificate requested status.</xar:mlstring>
   </p>
-  <p><xar:mlstring>Create, or let users create, an ITSP via the user_new function. Choose the education plan you want to use and press the create button.</xar:mlstring><br />
-  Now, users can fill in the details for the planitems. This way, they will gather credits that will make up their planned credits. These credits are shown in the overview page. If 
+  <p><xar:mlstring>Create, or let users create, an ITSP via the user_new function. Choose the education plan you want to use and press the create button.
+  Now, users can fill in the details for the planitems. This way, they will gather credits that will make up their planned credits. These credits are shown in the overview page. If
   the planitem has a minimum number of credits assigned, the user will see if there are enough credits entered.</xar:mlstring><br />
   <xar:mlstring>If enough credits are entered, a user can choose to submit the ITSP for approval. The ITSP then goes to the next status: submitted.</xar:mlstring>
  </p>
+
+  <h3><xar:mlstring>Interaction with other modules</xar:mlstring></h3>
+  <p><xar:mlstring>You can add hooks to the planitems, or to full ITSPs or to Education plans.</xar:mlstring><br />
+  <xar:mlstring>The most usefull is to hook comments to the planitems you would like to extend, or add dyn data fields to the plan items.</xar:mlstring>
+  </p>
+
+
+
   <h3><xar:mlstring>Glossary: ITSP terminology</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Plan: an educational plan, eg "Bachelor in Biology"</xar:mlstring></li>
     <li><xar:mlstring>Planitem: a part of the educational plan. This part can be a combination of courses from the courses module,
     some other activities or hold free items.</xar:mlstring></li>
-    <li><xar:mlstring>Source: Where is the information coming from? The courses module can be used as a source, or the ITSP module can hold information about 
+    <li><xar:mlstring>Source: Where is the information coming from? The courses module can be used as a source, or the ITSP module can hold information about
     the items in a planitem</xar:mlstring></li>
-    <li><xar:mlstring>Rules: The rules for a planitem describe the way this planitem can be filled in. 
+    <li><xar:mlstring>Rules: The rules for a planitem describe the way this planitem can be filled in.
     The parts of the planitem rules should be explained at the templates for setting the rules</xar:mlstring></li>
   </ul>
 
