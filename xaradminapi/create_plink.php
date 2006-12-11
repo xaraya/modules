@@ -17,8 +17,8 @@
  * This is a standard adminapi function to create a module item
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param  $args ['name'] name of the item
- * @param  $args ['number'] number of the item
+ * @param  int planid The identifier for the plan
+ * @param  int pitemid The identifier for the planitem
  * @since 21 feb 2006
  * @return bool true on success. No id is generated
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -65,14 +65,14 @@ function itsp_adminapi_create_plink($args)
      */
     $bindvars = array($pitemid,$planid, $datemodi,$modiby);
     $result = &$dbconn->Execute($query,$bindvars);
-    /* // Hooks?
-    // Let any hooks know that we have created a new item.
-    $item = $args;
+    /* Let any hooks know that we have created a new link.
+    This is really a modification of a plan. */
+
+    $item = $bindvars;
     $item['module'] = 'itsp';
-    $item['itemtype'] = 3;
-    $item['itemid'] = $pitemid;
-    xarModCallHooks('item', 'create', $pitemid, $item);
-    */
+    $item['itemtype'] = 99998;
+    $item['itemid'] = $planid;
+    xarModCallHooks('item', 'update', $pitemid, $item);
 
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

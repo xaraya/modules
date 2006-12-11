@@ -15,9 +15,14 @@
  * Update an itsp plan
  *
  * @author the ITSP module development team
- * @param  $args ['planid'] the ID of the item
- * @param  $args ['planname'] the new name of the item
- * @param  $args ['plandesc'] the new description of the plan
+ * @param int planid the ID of the plan
+ * @param string planname the new name of the item
+ * @param string plandesc the new description of the plan
+ * @param string credits The credits for this plan
+ * @param string mincredits
+ * @param string planrules
+ * @param int dateopen
+ * @param int dateclose
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @return bool true on success
  */
@@ -86,14 +91,12 @@ function itsp_adminapi_update($args)
     if (!$result) return;
     /* Let any hooks know that we have updated an item.  As this is an
      * update hook we're passing the updated $item array as the extra info
-
+     */
+    $item = $bindvars;
     $item['module'] = 'itsp';
     $item['itemid'] = $planid;
-    $item['planname'] = $planname;
-    $item['credits'] = $credits;
-    $item['itemtype'] = 1;
+    $item['itemtype'] = 99998;
     xarModCallHooks('item', 'update', $planid, $item);
-     */
     /* Let the calling process know that we have finished successfully */
     return true;
 }

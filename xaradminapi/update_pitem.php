@@ -83,11 +83,9 @@ function itsp_adminapi_update_pitem($args)
     if (!$result) return;
     /* Let any hooks know that we have updated an item.  As this is an
      * update hook we're passing the updated $item array as the extra info
-
+    $item = $bindvars;
     $item['module'] = 'itsp';
     $item['itemid'] = $pitemid;
-    $item['pitemname'] = $pitemname;
-    $item['credits'] = $credits;
     $item['itemtype'] = 3;
     xarModCallHooks('item', 'update', $pitemid, $item);
      */

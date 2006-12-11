@@ -115,14 +115,15 @@ function itsp_adminapi_create_icourse($args)
 
     /* Get the ID of the item that we inserted. */
     $icourseid = $dbconn->PO_Insert_ID($icoursestable, 'xar_icourseid');
-    /*
-    // Let any hooks know that we have created a new item.
+
+    /* Let any hooks know that we have created a new icourse within a planitem
+       This is a modification of the planitem of id ITSPid
+    */
     $item = $bindvars;
     $item['module'] = 'itsp';
-    $item['itemtype'] = 5;
-    $item['itemid'] = $pitemid;
-    xarModCallHooks('item', 'create', $pitemid, $item);
-    */
+    $item['itemtype'] = $pitemid;
+    $item['itemid'] = $itspid;
+    xarModCallHooks('item', 'modify', $pitemid, $item);
 
     /* Return the id of the newly created item to the calling process */
     return $icourseid;

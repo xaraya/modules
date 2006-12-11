@@ -81,19 +81,14 @@ function itsp_userapi_create($args)
      */
     $itspid = $dbconn->PO_Insert_ID($itsptable, 'xar_itspid');
 
-    /* Let any hooks know that we have created a new item. As this is a
-     * create hook we're passing 'exid' as the extra info, which is the
-     * argument that all of the other functions use to reference this
-     * item
-     * TODO: evaluate
-     * xarModCallHooks('item', 'create', $exid, 'exid');
-
+    /* Let any hooks know that we have created a new itsp
+     */
     $item = $args;
     $item['module'] = 'itsp';
     $item['itemid'] = $itspid;
-    $item['itemtype'] = 2;
+    $item['itemtype'] = 99999;
     xarModCallHooks('item', 'create', $itspid, $item);
-     */
+
     /* Return the id of the newly created item to the calling process */
     return $itspid;
 }
