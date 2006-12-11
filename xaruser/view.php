@@ -18,6 +18,8 @@
  * catid=1-2 : category 1 OR 2   == cids[0]=1&cids[1]=2
  * catid=1+2 : category 1 AND 2  == cids[0]=1&cids[1]=2&andcids=1
  *
+ * @param template string Alternative default view-template name.
+ *
  */
 function articles_user_view($args)
 {
@@ -516,7 +518,7 @@ function articles_user_view($args)
             $template = $pubtypes[$ptid]['name'];
         } else {
             // TODO: allow templates per category ?
-            $template = null;
+            if (!isset($template)) $template = null;
         }
         return xarTplModule('articles', 'user', 'view', $data, $template);
     }
@@ -816,8 +818,8 @@ function articles_user_view($args)
         $data['titles'][$article['aid']] = $article['title'];
 
         // fill in the summary template for this article
-        $template = $pubtypes[$article['pubtypeid']]['name'];
-        $columns[$col][] = xarTplModule('articles', 'user', 'summary', $article, $template);
+        $summary_template = $pubtypes[$article['pubtypeid']]['name'];
+        $columns[$col][] = xarTplModule('articles', 'user', 'summary', $article, $summary_template);
         $number++;
     }
 
@@ -930,7 +932,7 @@ function articles_user_view($args)
         $template = $pubtypes[$ptid]['name'];
     } else {
         // TODO: allow templates per category ?
-        $template = null;
+        if (!isset($template)) $template = null;
     }
     return xarTplModule('articles', 'user', 'view', $data, $template);
 }
