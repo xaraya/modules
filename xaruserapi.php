@@ -15,10 +15,9 @@
  */
 /**
  * update an existing pubsub subscription
- * @param $args['pubsubid'] the ID of the item
- * @param $args['actionid'] the new action id for the item
- * @returns bool
- * @return true on success, false on failure
+ * @param int $args['pubsubid'] the ID of the item
+ * @param int $args['actionid'] the new action id for the item
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_updatesubscription($args)
@@ -64,8 +63,8 @@ function pubsub_userapi_updatesubscription($args)
 /**
  * delete a pubsub user's subscriptions
  * this needs to be done when a user unregisters from the site.
- * @param $args['userid'] ID of the user whose subscriptions to delete
- * @returns array
+ * @param int $args['userid'] ID of the user whose subscriptions to delete
+ * @return bool true on success of deletion
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_userapi_delsubscriptions($args)

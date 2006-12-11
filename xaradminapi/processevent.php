@@ -21,8 +21,7 @@
  * @param $args['extra'] some extra group criteria, and
  * @param $args['objectid'] the specific object in the module
  * @param $args['templateid'] the template id for the jobs
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_processevent($args)

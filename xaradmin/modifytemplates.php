@@ -18,8 +18,8 @@
  *
  * @author mikespub
  * @access public
- * @param no $ parameters
- * @return true on success or void on failure
+ * @param none $ parameters
+ * @return bool true on success or void on failure
  * @throws no exceptions
  */
 function pubsub_admin_modifytemplates()
