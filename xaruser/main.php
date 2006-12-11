@@ -18,10 +18,11 @@
  * @author Roger Raymond
  * @author Carl Corliss (help)
  * @author Jo dalle Nogare
- * @access  public
- * @param   startnum used for the pager
- * @param   catid when not on top level forum
- * @return  array
+ * @access public
+ * @param int startnum used for the pager
+ * @param int catid when not on top level forum
+ * @param isset read
+ * @return array
  */
 function xarbb_user_main()
 {
@@ -189,7 +190,7 @@ function xarbb_user_main()
  * Configure forums and categories for display
  *
  * @access  private
- * @param   args contains that catid of forums
+ * @param  array args contains that catid of forums
  * @return  array of forum information
 */
 function xarbb_user_main__getforuminfo($args)
