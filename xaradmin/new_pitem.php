@@ -54,20 +54,18 @@ function itsp_admin_new_pitem($args)
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
-
+    // Hooks?
     $item = array();
     $item['module'] = 'itsp';
-    $item['itemtype'] = 3;
+    $item['itemtype'] = '';
     $hooks = xarModCallHooks('item', 'new', '', $item);
-
+/* // Hooks?
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-         */
         $data['hookoutput'] = $hooks;
     }
+    */
     // Add the planid that this planitem can already be attached to
     $data['planid'] = $planid;
 

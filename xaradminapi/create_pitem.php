@@ -93,13 +93,14 @@ function itsp_adminapi_create_pitem($args)
 
     /* Get the ID of the item that we inserted. */
     $pitemid = $dbconn->PO_Insert_ID($planitemstable, 'xar_pitemid');
-
+/*
     // Let any hooks know that we have created a new item.
     $item = $args;
     $item['module'] = 'itsp';
     $item['itemtype'] = 3;
     $item['itemid'] = $pitemid;
     xarModCallHooks('item', 'create', $pitemid, $item);
+    */
     /* Return the id of the newly created item to the calling process */
     return $pitemid;
 }

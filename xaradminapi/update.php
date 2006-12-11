@@ -86,14 +86,14 @@ function itsp_adminapi_update($args)
     if (!$result) return;
     /* Let any hooks know that we have updated an item.  As this is an
      * update hook we're passing the updated $item array as the extra info
-     */
+
     $item['module'] = 'itsp';
     $item['itemid'] = $planid;
     $item['planname'] = $planname;
     $item['credits'] = $credits;
     $item['itemtype'] = 1;
     xarModCallHooks('item', 'update', $planid, $item);
-
+     */
     /* Let the calling process know that we have finished successfully */
     return true;
 }

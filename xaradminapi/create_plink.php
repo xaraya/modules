@@ -65,6 +65,14 @@ function itsp_adminapi_create_plink($args)
      */
     $bindvars = array($pitemid,$planid, $datemodi,$modiby);
     $result = &$dbconn->Execute($query,$bindvars);
+    /* // Hooks?
+    // Let any hooks know that we have created a new item.
+    $item = $args;
+    $item['module'] = 'itsp';
+    $item['itemtype'] = 3;
+    $item['itemid'] = $pitemid;
+    xarModCallHooks('item', 'create', $pitemid, $item);
+    */
 
     /* Check for an error with the database code, adodb has already raised
      * the exception so we just return

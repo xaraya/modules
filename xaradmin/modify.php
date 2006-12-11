@@ -55,14 +55,11 @@ function itsp_admin_modify($args)
     /* Check for exceptions */
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
 
-    /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation
-     * $menu = xarModAPIFunc('itsp','admin','menu','modify');
-     */
+    /* Hooks ?
     $item['module'] = 'itsp';
     $item['itemtype'] = 1;
     $hooks = xarModCallHooks('item', 'modify', $planid, $item);
-
+     */
     /* Return the template variables defined in this function */
     return array('authid'       => xarSecGenAuthKey(),
                  'planid'       => $planid,
@@ -74,7 +71,7 @@ function itsp_admin_modify($args)
                  'dateopen'     => $dateopen,
                  'dateclose'    => $dateclose,
                  'invalid'      => $invalid,
-                 'hookoutput'   => $hooks,
+              //   'hookoutput'   => $hooks,
                  'item'         => $item);
 }
 ?>

@@ -250,17 +250,17 @@ function itsp_user_modify($args)
     }
 
     $data['pitemid'] = $pitemid;
-
+/*
 
     // Call hooks
     $item['module'] = 'itsp';
     $item['itemtype'] = 2;
     $hooks = array();
     $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
-
+*/
     /* Return the template variables defined in this function */
     $data['authid']      = xarSecGenAuthKey('itsp.modify');
-    $data['hookoutput']  = $hooks;
+  //  $data['hookoutput']  = $hooks;
     $data['item']        = $item;
 
     xarTplSetPageTitle(xarVarPrepForDisplay($pitem['pitemname']));

@@ -101,12 +101,14 @@ function itsp_adminapi_create_courselink($args)
 
     /* Get the ID of the item that we inserted. */
     $courselinkid = $dbconn->PO_Insert_ID($courselinkstable, 'xar_courselinkid');
+  /* // Hooks?
     // Let any hooks know that we have created a new item.
     $item = $bindvars;
     $item['module'] = 'itsp';
     $item['itemtype'] = 4;
     $item['itemid'] = $pitemid;
     xarModCallHooks('item', 'create', $pitemid, $item);
+    */
 
     /* Return the id of the newly created item to the calling process */
     return $courselinkid;

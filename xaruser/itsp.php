@@ -193,6 +193,7 @@ function itsp_user_itsp($args)
     } else {
         $data['fullitems'] = array();
     }
+
     $item['itemtype'] = 2;
     // Add the ITSP to the array
     $data['item'] = $item;
@@ -210,6 +211,7 @@ function itsp_user_itsp($args)
         'user',
         'display',
        array('itspid' => $itspid));
+    /* // Hooks?
     $hooks = xarModCallHooks('item',
         'display',
         $itspid,
@@ -219,6 +221,7 @@ function itsp_user_itsp($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
+    */
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */

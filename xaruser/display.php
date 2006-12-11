@@ -55,7 +55,7 @@ function itsp_user_display($args)
      * You'll need to specify the item id, and an array containing the names of all
      * the pieces of text that you want to transform (e.g. for autolinks, wiki,
      * smilies, bbcode, ...).
-     */
+
     $item['itemtype'] = 1;
     $item['transform'] = array('name');
     $item = xarModCallHooks('item',
@@ -67,7 +67,7 @@ function itsp_user_display($args)
     // $data['number_value'] = $item['number'];
     $data['item'] = $item;
     $data['planid'] = $planid;
-
+     */
     // Get the planitems
 
     $planitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
@@ -109,6 +109,7 @@ function itsp_user_display($args)
         'user',
         'display',
        array('planid' => $planid));
+    /* //Hooks?
     $hooks = xarModCallHooks('item',
         'display',
         $planid,
@@ -118,6 +119,7 @@ function itsp_user_display($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
+    */
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */

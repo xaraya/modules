@@ -44,7 +44,7 @@ function itsp_admin_new($args)
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
     $data['invalid'] = $invalid;
-
+/* // Hooks?
     $item = array();
     $item['module'] = 'itsp';
     $item['itemtype'] = 1;
@@ -53,12 +53,10 @@ function itsp_admin_new($args)
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-         */
         $data['hookoutput'] = $hooks;
     }
     $data['hooks'] = '';
+    */
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      * If they are not set, then we need to set them empty to surpress errors
      */

@@ -114,12 +114,12 @@ function itsp_userapi_update($args)
     if (!$result) return;
     /* Let any hooks know that we have updated an item. As this is an
      * update hook we're passing the updated $item array as the extra info
-     */
+
     $item['module'] = 'itsp';
     $item['itemtype'] = 2;
     $item['itemid'] = $itspid;
     $item['itspstatus'] = $newstatus;
-
+     */
     xarModCallHooks('item', 'update', $itspid, $item);
 
     /* Let the calling process know that we have finished successfully */

@@ -93,13 +93,14 @@ function itsp_adminapi_create($args)
      */
     if (!$result) return;
     $planid = $dbconn->PO_Insert_ID($planstable, 'xar_planid');
-
-    // Let any hooks know that we have created a new item.
+/*
+    // Let any hooks know that we have created a new item ?
     $item = $args;
     $item['module'] = 'itsp';
     $item['itemtype'] = 1;
     $item['itemid'] = $planid;
     xarModCallHooks('item', 'create', $planid, $item);
+  */
     /* Return the id of the newly created item to the calling process */
     return $planid;
 }

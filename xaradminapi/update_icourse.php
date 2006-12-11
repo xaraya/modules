@@ -116,14 +116,14 @@ function itsp_adminapi_update_icourse($args)
      * the exception so we just return
      */
     if (!$result) return;
-
+/* // Hooks?
     // Let any hooks know that we have created a new item.
     $item = $bindvars;
     $item['module'] = 'itsp';
     $item['itemtype'] = 5;
     $item['itemid'] = $pitemid;
     xarModCallHooks('item', 'update', $pitemid, $item);
-
+*/
     /* Return the id of the newly created item to the calling process */
     return true;
 }

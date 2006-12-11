@@ -72,12 +72,12 @@ function itsp_adminapi_delete($args)
     /* Let any hooks know that we have deleted an item.  As this is a
      * delete hook we're not passing any extra info
      * xarModCallHooks('item', 'delete', $exid, '');
-     */
+
     $item['module'] = 'itsp';
     $item['itemtype'] = 1;
     $item['itemid'] = $planid;
     xarModCallHooks('item', 'delete', $planid, $item);
-
+     */
     /* Let the calling process know that we have finished successfully */
     return true;
 }

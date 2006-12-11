@@ -87,12 +87,13 @@ function itsp_userapi_create($args)
      * item
      * TODO: evaluate
      * xarModCallHooks('item', 'create', $exid, 'exid');
-     */
+
     $item = $args;
     $item['module'] = 'itsp';
     $item['itemid'] = $itspid;
     $item['itemtype'] = 2;
     xarModCallHooks('item', 'create', $itspid, $item);
+     */
     /* Return the id of the newly created item to the calling process */
     return $itspid;
 }
