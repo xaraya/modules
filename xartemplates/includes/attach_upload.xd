@@ -1,3 +1,4 @@
     <xar:mlstring>Attach File: </xar:mlstring><br />
-    <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
     <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#" />
+    <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
+
