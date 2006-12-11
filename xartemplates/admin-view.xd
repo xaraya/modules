@@ -4,7 +4,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-   <xar:template type="module" file="admin-menu" />
+    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Files</xar:mlstring></h2>
         <xar:if condition="isset($diskUsage)">
             <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
@@ -30,7 +30,6 @@
                     </td>
                 </tr>
             </table>
-
             <br />
         </xar:if>
         <xar:template file="filter_bar" type="module" />
@@ -38,114 +37,109 @@
         <xar:base-include-javascript filename="openDialog.js" />
         <xar:base-include-javascript module="base" filename="checkall.js" />
 
-        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
-            <tr>
-                <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
-                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
-                <th>&nbsp;</th>
-                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#"><xar:mlstring>File Size</xar:mlstring></a></th>
-                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
-                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
-                <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
-            </tr>
-            <xar:if condition="count($items)">
-                <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
-                    <xar:loop name="$items">
-                    <xar:if condition="(($loop:index + 1) % 2)">
-                        <tr>
-                            <td class="xar-norm xar-align-center" >
-                                <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
-                            </td>
-                            <td class="xar-norm" align="center">&nbsp;
-                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
-                                    #$loop:item['fileName']#
-                                </a>
-                            </td>
-                            <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
-                            <td class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']#</td>
-                            <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
-                            <td class="xar-norm" align="center">&nbsp;#$loop:item['userName']#</td>
-                            <td class="xar-norm" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
-                        </tr>
-                    <xar:else />
-                        <tr>
-                            <td class="xar-accent" align="center">
-                                <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
-                            </td>
-                            <td class="xar-accent" align="center">&nbsp;
-                                <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
-                                    #$loop:item['fileName']#
-                                </a>
-                               </td>
-                            <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
-                            <td class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
-                            <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
-                            <td class="xar-accent" align="center">&nbsp;#$loop:item['userName']#</td>
-                            <td class="xar-accent" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
-                        </tr>  
-                    </xar:if>
-                    </xar:loop>
-                    <tr>
-                    <td colspan="7" class="xar-norm" align="center">
+        <table summary="Files" border="0" class="xar-fullwidth xar-accent-outline">
+                <tr>
+                    <th><a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>Select</xar:mlstring></a></th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'name'))#"><xar:mlstring>File Name</xar:mlstring></a></th>
+                    <th>&nbsp;</th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'size'))#"><xar:mlstring>File Size</xar:mlstring></a></th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
+                </tr>
+        <xar:if condition="count($items)">
+            <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
+                <xar:loop name="$items">
+                <xar:if condition="(($loop:index + 1) % 2)">
+                <tr>    
+                    <td class="xar-norm xar-align-center" >
+                        <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
+                    </td>
+                    <td class="xar-norm" align="center">&nbsp;
+                        <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                            #$loop:item['fileName']#
+                        </a>
+                    </td>
+                    <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
+                    <td class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']#</td>
+                    <td class="xar-norm" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
+                    <td class="xar-norm" align="center">&nbsp;#$loop:item['userName']#</td>
+                    <td class="xar-norm" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
+                </tr>
+        <xar:else />
+                <tr>
+                    <td class="xar-accent" align="center">
+                        <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
+                    </td>
+                    <td class="xar-accent" align="center">&nbsp;
+                        <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                            #$loop:item['fileName']#
+                        </a>
+                    </td>
+                    <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($numassoc[$loop:item['fileId']])"><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $loop:item['fileId']))#">#$numassoc[$loop:item['fileId']]#</a></xar:if></td>
+                    <td class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
+                    <td class="xar-accent" align="center">&nbsp;<xar:if condition="!empty($loop:item['fileModified'])">#xarLocaleGetFormattedDate('medium',$loop:item['fileModified'])#</xar:if></td>
+                    <td class="xar-accent" align="center">&nbsp;#$loop:item['userName']#</td>
+                    <td class="xar-accent" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
+                </tr>  
+        </xar:if>
+        </xar:loop>
+                <tr>
+                    <td colspan="7" class="xar-norm xar-align-center" >
 <script type="text/javascript"><![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 ]]>
 </script>
-                        #$pager#
+             #$pager#
                     </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" >
+                </tr>
+                <tr>
+                    <td colspan="7" >
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
-                            <tr>
-                                <td width="100%">
-                                    Change selected files to:&nbsp;
-                                    <select name="action" id="action">
-                                        <xar:foreach in="$filters['status']" key="$key" value="$status">
-                                            <xar:if condition="$key eq '0'">
-                                                <xar:comment> skip </xar:comment>
-                                            <xar:else />
-                                                <option value="#$status['statusId']#">
-                                                    #$status['statusName']#
-                                                </option>
-                                            </xar:if>
-                                        </xar:foreach>
-                                    </select>
-                                    <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#"/>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td width="100%">
+                                Change selected files to:&nbsp;
+                                <select name="action" id="action">
+                                    <xar:foreach in="$filters['status']" key="$key" value="$status">
+                                        <xar:if condition="$key eq '0'">
+                                            <xar:comment> skip </xar:comment>
+                                        <xar:else />
+                                            <option value="#$status['statusId']#">
+                                                #$status['statusName']#
+                                            </option>
+                                        </xar:if>
+                                    </xar:foreach>
+                                </select>
+                                <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#"/>
+                            </td>
+                        </tr>
                         </table>
-                         </td>
-
-                        <td colspan="3">
-                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                        <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                                <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
-                                    <tr>
-                                        <td width="100%" align="right">
-                                            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-                                            <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
-                                        </td>
-                                    </tr>
-                                </table>
-                        </form>
-                   <xar:else />
-                       &nbsp;
-                    </xar:if>
                     </td>
-                     </tr>
-            <xar:else />
-                    <tr>
-                    <td class="xar-norm" colspan="6" align="center">
-                       <p>
+                </tr>
+            </form>
+            <tr>
+                <td colspan="7" style="text-align:right;">
+                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                    <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+                        <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
+                    </form>
+                    <xar:else />
+                        &nbsp;
+                    </xar:if>
+                </td>
+            </tr>
+        <xar:else />
+            <tr>
+                <td class="xar-norm" colspan="7" align="center">
+                    <p>
                         <xar:mlstring>
                             There are currently no files to view with the filter you have chosen.
                         </xar:mlstring>
-                        </p>
-                    </td>
-                   </tr>
-            </xar:if>
-            </form>
+                    </p>
+                </td>
+            </tr>
+        </xar:if>
         </table>
 </div>
