@@ -22,24 +22,24 @@ function itsp_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-    /*  do not use this if you only handle one type of items in your module */
-    $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
+    $pitems = xarModApiFunc('itsp','user','getall_planitems');
+
+    foreach ($pitems as $id => $pitem) {
+        $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pitem['pitemname']),
+                                'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pitem['pitemname'])),
+                                'url'   => xarModURL('itsp','user','display',array('pitemid' => $id))
+                               );
+    }
+
+    /*  Add the plans and the seperate ITSPs to the array */
+    $itemtypes[99998] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSP Plans')),
                       'url'   => xarModURL('itsp','user','view'));
 
-    $itemtypes[2] = array('label' => xarVarPrepForDisplay(xarML('ITSPs')),
+    $itemtypes[99999] = array('label' => xarVarPrepForDisplay(xarML('ITSPs')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSPs')),
                       'url'   => xarModURL('itsp','user','viewitsp'));
 
-    $itemtypes[3] = array('label' => xarVarPrepForDisplay(xarML('ITSP Planitems')),
-                      'title' => xarVarPrepForDisplay(xarML('View ITSP Planitems')),
-                      'url'   => xarModURL('itsp','user','view'));
-    $itemtypes[4] = array('label' => xarVarPrepForDisplay(xarML('Linked Courses')),
-                      'title' => xarVarPrepForDisplay(xarML('Linked courses')),
-                      'url'   => xarModURL('itsp','user','view'));
-    $itemtypes[5] = array('label' => xarVarPrepForDisplay(xarML('External courses')),
-                      'title' => xarVarPrepForDisplay(xarML('All externally linked courses')),
-                      'url'   => xarModURL('itsp','admin','external'));
     return $itemtypes;
 }
 ?>

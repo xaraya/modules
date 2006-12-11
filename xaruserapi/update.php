@@ -15,8 +15,9 @@
  * Update an itsp with a new status (and others maybe)
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param int $args ['itspid'] the ID of the item
- * @param int $args ['newstatus'] the new status of the item
+ * @param array args An argument array, if called by other modules OPTIONAL
+ * @param int itspid the ID of the item
+ * @param int newstatus the new status of the item
  * @since 22 May 2006
  * @return bool true on success of update
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -114,12 +115,12 @@ function itsp_userapi_update($args)
     if (!$result) return;
     /* Let any hooks know that we have updated an item. As this is an
      * update hook we're passing the updated $item array as the extra info
-
+     */
     $item['module'] = 'itsp';
-    $item['itemtype'] = 2;
+    $item['itemtype'] = 99999;
     $item['itemid'] = $itspid;
     $item['itspstatus'] = $newstatus;
-     */
+
     xarModCallHooks('item', 'update', $itspid, $item);
 
     /* Let the calling process know that we have finished successfully */

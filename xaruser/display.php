@@ -109,7 +109,8 @@ function itsp_user_display($args)
         'user',
         'display',
        array('planid' => $planid));
-    /* //Hooks?
+    $item['itemtype'] = 99998;
+    /* Call the hooks */
     $hooks = xarModCallHooks('item',
         'display',
         $planid,
@@ -119,7 +120,7 @@ function itsp_user_display($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    */
+
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */

@@ -211,7 +211,8 @@ function itsp_user_itsp($args)
         'user',
         'display',
        array('itspid' => $itspid));
-    /* // Hooks?
+    $item['itemtype'] = 99999;
+    /* Call hooks */
     $hooks = xarModCallHooks('item',
         'display',
         $itspid,
@@ -221,7 +222,7 @@ function itsp_user_itsp($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    */
+
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */
