@@ -253,9 +253,10 @@ function itsp_user_modify($args)
 
     // Call hooks
     $item['module'] = 'itsp';
+    $item['returnurl'] = xarModURL('itsp','user','modify',array('itspid' => $itspid,'pitemid'=>$pitemid));
     $item['itemtype'] = $pitemid;
     $hooks = array();
-    $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
+    $hooks = xarModCallHooks('item', 'display', $itspid, $item);
     /* Return the template variables defined in this function */
     $data['authid']      = xarSecGenAuthKey('itsp.modify');
     $data['hookoutput']  = $hooks;

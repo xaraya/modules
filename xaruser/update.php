@@ -18,8 +18,8 @@
  * form supplied by xarModFunc('itsp','user','modify') to update an itsp. It sorts out what
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param  int 'itspid' the id of the item to be updated
- * @param  int 'objectid' universal identifier OPTIONAL
+ * @param  int itspid the id of the item to be updated
+ * @param  int objectid universal identifier OPTIONAL
  * @param  int pitemid the number of the plan item to be updated
  * @param array invalid
  * @since 20 feb 2006

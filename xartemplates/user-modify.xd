@@ -67,11 +67,11 @@
 
             <xar:template type="module" file="modify-$rule_source" />
 
-            <xar:if condition="!empty($hooks)">
+            <xar:if condition="!empty($hookoutput)">
                 <fieldset>
                     <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hooks" key="$hookmodule">
-                           #$hooks[$hookmodule]#
+                        <xar:foreach in="$hookoutput" key="$hookmodule">
+                           #$hookoutput[$hookmodule]#
                         </xar:foreach>
                 </fieldset>
             </xar:if>

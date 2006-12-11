@@ -56,8 +56,8 @@ function itsp_user_new($args)
 
     $item = array();
     $item['module'] = 'itsp';
-    $item['itemtype'] = 2;
-   /* // Hooks?
+    $item['itemtype'] = 99999;
+    // Hooks?
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {
@@ -65,8 +65,7 @@ function itsp_user_new($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    $data['hooks'] = '';
-    */
+
     /* For E_ALL purposes, we need to check to make sure the vars are set.
      */
     if (empty($userid)) {
