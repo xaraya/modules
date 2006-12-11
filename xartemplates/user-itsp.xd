@@ -138,14 +138,7 @@
                     </table>
                 </div>
             </fieldset>
-            <!-- add the output from the different display hooks here -->
-            <xar:if condition="!empty($hookoutput)">
-            <fieldset>
-                <xar:foreach in="$hookoutput" key="$hookmodule">
-                    #$hookoutput[$hookmodule]#
-                </xar:foreach>
-            </fieldset>
-            </xar:if>
+
 
             <xar:if condition="$itspstatus lt 4">
                 <xar:if condition="($sumcreditsnow eq $plan.mincredit) OR ($sumcreditsnow gt $plan.mincredit)" >
@@ -179,6 +172,14 @@
                 <input type="submit" value="#xarML('Approve this ITSP')#" />
             </form>
         </xar:if>
+    </xar:if>
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+    <fieldset>
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </fieldset>
     </xar:if>
     <!-- if you want to extend this module with dynamic data, you can retrieve
     //   that data in the code via APIs, or use e.g. the following BL tags here.

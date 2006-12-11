@@ -209,7 +209,7 @@ function itsp_user_itsp($args)
      */
     $item['returnurl'] = xarModURL('itsp',
         'user',
-        'display',
+        'itsp',
        array('itspid' => $itspid));
     $item['itemtype'] = 99999;
     /* Call hooks */
