@@ -19,6 +19,10 @@
  * catid=1+2 : category 1 AND 2  == cids[0]=1&cids[1]=2&andcids=1
  *
  * @param template string Alternative default view-template name.
+ * @param showcatcount integer Show the number of articles for each category (0..1)
+ * @param showpubcount integer Show the number of articles for each publication type (0..1)
+ *
+ * @todo Provide a 'data only' mode that returns each item as data rather than through a rendered template
  *
  */
 function articles_user_view($args)
@@ -96,15 +100,6 @@ function articles_user_view($args)
                 $catid = substr($settings['defaultview'], 1);
             }
         }
-/*
-    // Note: 'sort' is used to override the default start view too
-        if (substr($settings['defaultview'],0,1) == 'c') {
-            if (!isset($sort)) {
-                $sort = 'date';
-            }
-            $isdefault = 1;
-        }
-*/
     } else {
         $string = xarModGetVar('articles', 'settings');
         if (!empty($string)) {
@@ -114,105 +109,27 @@ function articles_user_view($args)
         }
     }
 
-    if (!isset($showcategories)) {
-        if (empty($settings['showcategories'])) {
-            $showcategories = 0;
-        } else {
-            $showcategories = 1;
-        }
-    }
-    if (!isset($showprevnext)) {
-        if (empty($settings['showprevnext'])) {
-            $showprevnext = 0;
-        } else {
-            $showprevnext = 1;
-        }
+    // showpubcount is set on by default.
+    if (!isset($settings['showpubcount'])) $settings['showpubcount'] = 1;
+
+    // Set a number of flag defaults, if not over-ridden by the pubtype or user parameters.
+    $flag_names = array(
+        'showcategories', 'showprevnext', 'showcomments', 'showkeywords',
+        'showhitcounts', 'showratings', 'showarchives', 'showmap',
+        'showpublinks', 'showcatcount', 'showpubcount', 'dotransform',
+        'titletransform',
+    );
+    foreach($flag_names as $flag_name) {
+        if (!isset($$flag_name)) $$flag_name = (empty($settings[$flag_name]) ? 0 : 1);
     }
 
-    if (!isset($showcomments)) {
-        if (empty($settings['showcomments'])) {
-            $showcomments = 0;
-        } else {
-            $showcomments = 1;
-        }
-    }
-    if (!isset($showkeywords)) {
-        if (empty($settings['showkeywords'])) {
-            $showkeywords = 0;
-        } else {
-            $showkeywords = 1;
-        }
-    }
-    if (!isset($showhitcounts)) {
-        if (empty($settings['showhitcounts'])) {
-            $showhitcounts = 0;
-        } else {
-            $showhitcounts = 1;
-        }
-    }
-    if (!isset($showratings)) {
-        if (empty($settings['showratings'])) {
-            $showratings = 0;
-        } else {
-            $showratings = 1;
-        }
-    }
-    if (!isset($showarchives)) {
-        if (empty($settings['showarchives'])) {
-            $showarchives = 0;
-        } else {
-            $showarchives = 1;
-        }
-    }
-    if (!isset($showmap)) {
-        if (empty($settings['showmap'])) {
-            $showmap = 0;
-        } else {
-            $showmap = 1;
-        }
-    }
-    if (!isset($showpublinks)) {
-        if (empty($settings['showpublinks'])) {
-            $showpublinks = 0;
-        } else {
-            $showpublinks = 1;
-        }
-    }
-    if (!isset($dotransform)) {
-        if (empty($settings['dotransform'])) {
-            $dotransform = 0;
-        } else {
-            $dotransform = 1;
-        }
-        if (!isset($titletransform)) {
-            if (empty($settings['titletransform'])) {
-                $titletransform = 0;
-            } else {
-                $titletransform = 1;
-            }
-        }
-    }
+    // Do not transform titles if we are not transforming output at all.
+    if (!$dotransform) $titletransform = 0;
+
     // Page template for frontpage or depending on publication type (optional)
     // Note : this cannot be overridden in templates
     if (!empty($settings['page_template'])) {
         xarTplSetPageTemplateName($settings['page_template']);
-    }
-
-    // show the number of articles for each publication type
-    if (!isset($showpubcount)) {
-        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
-            $showpubcount = 1; // default yes
-        } else {
-            $showpubcount = 0;
-        }
-    }
-    // show the number of articles for each category
-    if (!isset($showcatcount)) {
-        if (empty($settings['showcatcount'])) {
-            $showcatcount = 0; // default no
-        } else {
-            $showcatcount = 1;
-        }
     }
 
     // TODO: make user-configurable too ?
@@ -281,9 +198,10 @@ function articles_user_view($args)
 
     // Get the users requested number of stories per page.
     // If user doesn't care, use the site default
-    if (xarUserIsLoggedIn())
-    {
-    // TODO: figure how to let users specify their settings
+    if (xarUserIsLoggedIn()) {
+        // TODO: figure how to let users specify their settings
+        // COMMENT: if the settings were split into separate module variables,
+        // then they could all be individually over-ridden by each user.
         //$numitems = xarModUserGetVar('itemsperpage');
     }
     if (empty($numitems)) {
