@@ -47,6 +47,12 @@ function itsp_user_update()
                           array('itspid' => $itspid));
     $planid = $itsp['planid'];
     $userid = $itsp['userid'];
+    // Set the former status id and see if we have an approved ITSP
+    $oldstatus = $itsp['itspstatus'];
+    $isapproved = false;
+    if ($itsp['dateappr'] >0) {
+        $isapproved = true;
+    }
     /* Security check */
     if (!xarSecurityCheck('EditITSP', 1, 'ITSP', "$itspid:$planid:$userid")) {
         return;
@@ -189,9 +195,18 @@ function itsp_user_update()
                 xarSessionSetVar('statusmsg', xarML('ITSP Item was successfully added!'));
             }
         }
-        // TODO: make related to previous status?
+
+        // 3 = updated 1=in progress
         // TODO: move this to later?
+        // Set the new status to updated one.
         $newstatus = 1;
+        if ($oldstatus == 5 && !$isapproved) {
+            $newstatus = 5;
+        } elseif ($oldstatus == 5 && $isapproved) {
+            $newstatus = 3;
+        } elseif ($oldstatus == 3 && $isapproved) {
+            $newstatus = 3;
+        }
         $updatestatus = xarModApiFunc('itsp','user','update',array('itspid' => $itspid, 'newstatus' => $newstatus));
         if (!$updatestatus) {
             xarSessionSetVar('statusmsg', xarML('The ITSP with id #(1) was NOT found!',$itspid));

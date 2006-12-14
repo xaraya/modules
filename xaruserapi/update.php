@@ -34,6 +34,11 @@ function itsp_userapi_update($args)
         $invalid[] = 'new status ID';
     }
 
+    // Date of approval
+    if (!isset($dateappr)) {
+        $dateappr = 0;
+    }
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'user', 'update', 'ITSP');
@@ -72,7 +77,7 @@ function itsp_userapi_update($args)
         case 5:
         //Approve
         if ($item['dateappr'] > 0) {
-            $bindvars[] = $item['dateappr'];
+            $dateappr = $item['dateappr'];
             break;
         }
         // reformat the date to timestamp

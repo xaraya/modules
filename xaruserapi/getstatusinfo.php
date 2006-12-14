@@ -24,7 +24,7 @@ function itsp_userapi_getstatusinfo()
         $statusoptions[0] = xarML('Added'); // Standard status
         $statusoptions[1] = xarML('In progress'); // After first change of student
         $statusoptions[2] = xarML('Supervisor requested'); // Supervisor should approve
-     //   $statusoptions[3] = xarML('Supervisor agreed'); // Supervisor approved
+        $statusoptions[3] = xarML('Updated'); // Updated after approval
         $statusoptions[4] = xarML('Submitted'); // Sent to the office, closed for editing
         $statusoptions[5] = xarML('Approved');
         $statusoptions[6] = xarML('Certificate Requested');
