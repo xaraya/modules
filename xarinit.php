@@ -17,7 +17,7 @@
  * module instance
  *
  * @author MichelV
- * @return bool true on success
+ * @return bool true on success of initialization
  */
 function itsp_init()
 {

@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Get a specific ITSP
+ * Get a full ITSP
  *
  * Standard function of a module to retrieve a specific item
  *
