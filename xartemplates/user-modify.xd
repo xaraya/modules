@@ -60,13 +60,13 @@
             </div>
         </fieldset>
 
-        <xar:comment>Include the template here that will add all fields
-        The template name begins with modify- and has a suffix of the source for the courses.
-        These included templates are located at /xartemplates/includes/
-        The template will only be included when the student can be changes.</xar:comment>
-
-            <xar:template type="module" file="modify-$rule_source" />
-
+        <xar:comment>
+            Include the template here that will add all fields
+            The template name begins with modify- and has a suffix of the source for the courses.
+            These included templates are located at /xartemplates/includes/
+            The template will only be included when the student can be changes.
+        </xar:comment>
+        <xar:template type="module" file="modify-$rule_source" />
 
         <xar:if condition="$canedit">
             <fieldset>
@@ -85,11 +85,11 @@
         </xar:if>
     </form>
 
-    <xar:if condition="!empty($hookoutput)">
+    <xar:if condition="!empty($displayhookoutput)">
         <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                <xar:foreach in="$hookoutput" key="$hookmodule">
-                   #$hookoutput[$hookmodule]#
+                <xar:foreach in="$displayhookoutput" key="$hookmodule">
+                   #$displayhookoutput[$hookmodule]#
                 </xar:foreach>
         </fieldset>
     </xar:if>

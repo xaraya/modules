@@ -27,8 +27,7 @@ function itsp_adminapi_getmenulinks()
              */
             'title' => xarML('Adds a new plan.'),
             'label' => xarML('Add Plan'));
-    }
-    if (xarSecurityCheck('AddITSPPlan', 0)) {
+
         $menulinks[] = Array('url' => xarModURL('itsp','admin','new_pitem'),
             'title' => xarML('Adds a new planitem.'),
             'label' => xarML('Add Plan Item'));
@@ -36,20 +35,12 @@ function itsp_adminapi_getmenulinks()
     /* Security Check */
     if (xarSecurityCheck('EditITSPPlan', 0)) {
         $menulinks[] = Array('url' => xarModURL('itsp','admin','view'),
-            /* In order to display the tool tips and label in any language,
-             * we must encapsulate the calls in the xarML in the API.
-             */
             'title' => xarML('View all itsp items that have been added.'),
-            'label' => xarML('View plans'));
-    }
-    /* Security Check */
-    if (xarSecurityCheck('EditITSPPlan', 0)) {
+            'label' => xarML('Plans'));
+
         $menulinks[] = Array('url' => xarModURL('itsp','admin','view_pitems'),
-            /* In order to display the tool tips and label in any language,
-             * we must encapsulate the calls in the xarML in the API.
-             */
             'title' => xarML('View all plan items that have been added.'),
-            'label' => xarML('View plan items'));
+            'label' => xarML('Plan items'));
     }
     /* Security Check */
     if (xarSecurityCheck('AdminITSP', 0)) {

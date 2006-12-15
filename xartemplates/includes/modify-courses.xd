@@ -45,6 +45,15 @@
         </div>
     </fieldset>
 </xar:if>
+<xar:comment>The modify hoooks</xar:comment>
+<xar:if condition="!empty($hookoutput)">
+    <fieldset>
+        <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+            <xar:foreach in="$hookoutput" key="$hookmodule">
+               #$hookoutput[$hookmodule]#
+            </xar:foreach>
+    </fieldset>
+</xar:if>
 <!-- if you want to extend this module with dynamic data, you can retrieve
 //   that data in the code via APIs, or use e.g. the following BL tags here.
 //   For the different options, see the overview of dynamicdata...

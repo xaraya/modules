@@ -255,11 +255,19 @@ function itsp_user_modify($args)
     $item['module'] = 'itsp';
     $item['returnurl'] = xarModURL('itsp','user','modify',array('itspid' => $itspid,'pitemid'=>$pitemid));
     $item['itemtype'] = $pitemid;
+
+    // Call the display hooks for comments etc.
+    $displayhooks = array();
+    $displayhooks = xarModCallHooks('item', 'display', $itspid, $item);
+    $data['displayhookoutput']  = $displayhooks;
+    // Call modify hooks for hooked modify content
+
     $hooks = array();
-    $hooks = xarModCallHooks('item', 'display', $itspid, $item);
+    $hooks = xarModCallHooks('item', 'modify', $itspid, $item);
+    $data['hookoutput'] = $hooks;
     /* Return the template variables defined in this function */
     $data['authid']      = xarSecGenAuthKey('itsp.modify');
-    $data['hookoutput']  = $hooks;
+
     $data['item']        = $item;
 
     xarTplSetPageTitle(xarVarPrepForDisplay($pitem['pitemname']));

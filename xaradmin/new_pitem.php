@@ -59,13 +59,13 @@ function itsp_admin_new_pitem($args)
     $item['module'] = 'itsp';
     $item['itemtype'] = '';
     $hooks = xarModCallHooks('item', 'new', '', $item);
-/* // Hooks?
+    // Hooks?
     if (empty($hooks)) {
         $data['hookoutput'] = array();
     } else {
         $data['hookoutput'] = $hooks;
     }
-    */
+
     // Add the planid that this planitem can already be attached to
     $data['planid'] = $planid;
 

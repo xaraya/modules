@@ -83,11 +83,12 @@ function itsp_admin_modify_pitem($args)
     $levels = xarModAPIFunc('courses', 'user', 'gets', array('itemtype' => 1003));
 
     $hooks =array();
-    /* Call hooks
-    $item['module'] = 'itsp';
-    $item['itemtype'] = 3;
-    $hooks = xarModCallHooks('item', 'modify', $pitemid, $item);
-    */
+    /* Call hooks with the modifyconfig option*/
+    // call modifyconfig hooks with module + itemtype
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'itsp',
+                             array('module'   => 'itsp',
+                                   'itemtype' => $pitemid));
+
     /* Return the template variables defined in this function */
     $data['item']         = $item;
     $data['authid']       = xarSecGenAuthKey();
@@ -100,7 +101,7 @@ function itsp_admin_modify_pitem($args)
     $data['dateopen']     = $dateopen;
     $data['dateclose']    = $dateclose;
     $data['invalid']      = $invalid;
-   // $data['hookoutput']   = $hooks;
+    $data['hookoutput']   = $hooks;
     $data['levels']       = $levels;
     return $data;
 }

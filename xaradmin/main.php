@@ -27,7 +27,7 @@
 function itsp_admin_main()
 {
     if (!xarSecurityCheck('EditITSP')) return;
-    xarResponseRedirect(xarModURL('itsp', 'admin', 'view'));
+    xarResponseRedirect(xarModURL('itsp', 'admin', 'view_pitems'));
     /* success so return true */
     return true;
 }
