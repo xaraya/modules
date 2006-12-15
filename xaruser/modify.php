@@ -259,6 +259,10 @@ function itsp_user_modify($args)
     // Call the display hooks for comments etc.
     $displayhooks = array();
     $displayhooks = xarModCallHooks('item', 'display', $itspid, $item);
+
+    if (count($displayhooks) ==0) {
+        $displayhooks = array();
+    }
     $data['displayhookoutput']  = $displayhooks;
     // Call modify hooks for hooked modify content
 
