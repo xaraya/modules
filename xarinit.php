@@ -553,6 +553,7 @@ function itsp_upgrade($oldversion)
             $result = $datadict->alterColumn($icoursestable, 'xar_icoursecredits   F         NotNull    DEFAULT 0');
             if (!$result) return;
         case '0.5.0':
+        case '0.5.1':
             break;
     }
     /* Update successful */
