@@ -14,7 +14,7 @@
         </xar:if>
     </h2>
 
-    <form action="#xarModURL('categories','admin','updatecat')#" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="#xarModURL('categories','admin','updatecat')#" id="post" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <xar:for iter="$i++" start="$i=0" test="$i lt $repeat">
             <fieldset class="xar-norm">
