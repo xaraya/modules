@@ -59,7 +59,15 @@ function recommend_user_send($args)
     $htmlmessage = preg_replace('/%%toname%%/',
                             $fname,
                             $htmlmessage);
+                            
+    $fromname=xarModGetvar('recommend','username');
+    $message = preg_replace('/%%name%%/',
+                            $fromname,
+                            $message);
 
+    $htmlmessage = preg_replace('/%%name%%/',
+                            $fromname,
+                            $htmlmessage);
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -69,7 +77,7 @@ function recommend_user_send($args)
                              'htmlmessage'  => $htmlmessage,
                              'message'      => $message,
                              'from'         => $useremail,
-                             'fromname'     => $username))) return;
+                             'fromname'     => $fromname))) return;
     
     /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('recommend', 'user', 'main', array('message' => '1')));
