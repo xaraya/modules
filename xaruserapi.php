@@ -30,11 +30,18 @@
 function wsModAPIFunc(&$request_data)
 {
     extract($request_data);
-    //see if the soap client sent and extra layer of an array 
+
+/*
+$data = print_r($request_data, true);
+$fd = fopen('modules/soapserver/logs/log.txt', 'a');
+fwrite($fd, $data . "\n");
+fclose($fd);
+*/
+
+    // If the soap client sent an extra layer in the array, then strip it out.
     if (isset($wsModApiFuncRequest) && is_array($wsModApiFuncRequest)) { 
         extract($wsModApiFuncRequest);
     }
-    
     if (isset($wsModApiFuncSimpleRequest) && is_array($wsModApiFuncSimpleRequest)) { 
         extract($wsModApiFuncSimpleRequest);
     }
@@ -66,15 +73,43 @@ function wsModAPIFunc(&$request_data)
     
     // Try to login
     if (!xarUserLogin($username,$password)) {
-        return new soap_fault('Server', 'Xaraya', "Invalid username or password for ($username) to access API methods"); 
+        return new soap_fault('Server', 'Xaraya',
+            "Invalid username or password for ($username) to access API methods"
+        ); 
     }
 
-    $out = xarModAPIFunc($module,$type,$func, $args);
+    // TODO: at this point, decide whether the user is actually allowed to cal
+    // up this API.
+
+    // Call the API
+    $result = xarModAPIFunc($module, $type, $func, $args);
     
-    if (empty($out)) {
-        return new soap_fault('Server', 'Xaraya', xarErrorRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-',$args), ''); 
+    if (empty($result)) {
+        return new soap_fault('Server', 'Xaraya',
+            xarErrorRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-', $args), ''
+        ); 
     } else {
-        return array('output' => $out);
+        // Determine how to encode the return value.
+        if (is_string($result)) {
+            $return_type = 'string';
+        } elseif (is_array($result)) {
+            // If all keys are numeric then it's an array, otherwise treat it as a struct
+            if (array_reduce(array_keys($result), create_function('$v,$w','return $v && is_numeric($w);'), true)) {
+                $return_type = 'array';
+            } else {
+                $return_type = 'struct';
+            }
+        } elseif (is_bool($result)) {
+            $return_type = 'boolean';
+        } elseif (is_object($result)) {
+            $return_type = 'struct';
+        } else {
+            // Default
+            $return_type = 'string';
+        }
+
+        $out = new soapval('output', 'struct', $result);
+        return $out->serialize();
     }
 
 }
@@ -87,4 +122,5 @@ function wsModApiSimpleFunc(&$request_data)
 function webservices_userapi_getmenulinks()
 {
 } 
+
 ?>
