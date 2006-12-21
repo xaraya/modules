@@ -82,6 +82,20 @@ fclose($fd);
     // TODO: at this point, decide whether the user is actually allowed to call this API.
     // A mapping of role groups against module/type/functions, with wildcard support, may be a way to go.
 
+    // Get a list of matching rows from the 'allowed.txt' list of APIs
+    $allowed_file = realpath('modules/soapserver/config/allowed.txt');
+    $lines = @file($allowed_file);
+    if (!empty($lines)) {
+        $preg_pattern = "/^($module|\*):($type|\*):($func|\*)(\s|$)/";
+        $api_matches = preg_grep($preg_pattern, $lines);
+
+        // If we have at least one match, then the API is allowed
+        // TODO: we then need to check the role groups for each line matched.
+        if (empty($api_matches)) {
+            return new soap_fault('Server', 'Xaraya', "Access to API '$module:$type:func' is not permitted"); 
+        }
+    }
+
     // Call the API
     $result = xarModAPIFunc($module, $type, $func, $args);
     
