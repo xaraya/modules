@@ -24,13 +24,25 @@ function soapserver_userapi_initsoapserver()
 {
     // include SOAP library
     require_once('modules/soapserver/lib/class.nusoap_base.php');
+
+    // Make sure any warnings are suppressed, since the soap server
+    // needs to control all output.
+    //error_reporting(0);
+    ini_set('display_errors', 0);
  
     // Create a new soap server
     $server =& new soap_server();
 
+    // Set the encoding type to the default for the site
+    $locale = explode('.', xarMLSGetSiteLocale());
+    if (!empty($locale[1])) {
+       $server->soap_defencoding = strtoupper($locale[1]);
+    }
+
     // Declare the entry point for use in the WSDL file
     $server->configureWSDL('xaraya', 'urn:xar', xarServerGetBaseURL() . '/ws.php?type=soap');
 
+    // Two functions to register.
     $server->register('wsModAPISimpleFunc',
         // input parameters - args is a polymorphic struct
         array(
@@ -74,12 +86,7 @@ function soapserver_userapi_initsoapserver()
     );
 
     if (!$server) {
-        //die("webservices_userapi_initSOAPServer: can't create server");
-        echo new soap_fault( 
-            'Server', '', 
-            'Unable to create server', '' 
-        ); 
-        return;
+        return new soap_fault('Server', '', 'Unable to create server', ''); 
     }
  
     return $server;

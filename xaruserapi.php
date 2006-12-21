@@ -12,6 +12,7 @@
 * @author Gregor J. Rothfuss
 * @author Marcel van der Boom
 * @author Michel Dalle
+* @author Jason Judge
 */
  
 /**
@@ -78,13 +79,15 @@ fclose($fd);
         ); 
     }
 
-    // TODO: at this point, decide whether the user is actually allowed to cal
-    // up this API.
+    // TODO: at this point, decide whether the user is actually allowed to call this API.
+    // A mapping of role groups against module/type/functions, with wildcard support, may be a way to go.
 
     // Call the API
     $result = xarModAPIFunc($module, $type, $func, $args);
     
-    if (empty($result)) {
+    // CHECKME: the result is largely irrelevent. It is the exception that tells us
+    // something went wrong. Remove the 'isset' check?
+    if (!isset($result) || xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return new soap_fault('Server', 'Xaraya',
             xarErrorRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-', $args), ''
         ); 
@@ -104,14 +107,15 @@ fclose($fd);
         } elseif (is_object($result)) {
             $return_type = 'struct';
         } else {
-            // Default
+            // Default (nil?)
             $return_type = 'string';
         }
 
-        $out = new soapval('output', 'struct', $result);
+        $out = new soapval('output', $return_type, $result);
+        // CHECK: not sure why this needs to be serialised here as the soap server
+        // ought to be able to work out how to serialize the soapval object.
         return $out->serialize();
     }
-
 }
 
 function wsModApiSimpleFunc(&$request_data) 
