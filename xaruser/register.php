@@ -53,7 +53,7 @@ function registration_user_register()
 
     xarTplSetPageTitle(xarML('New Account'));
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
-//echo "<pre>$phase</pre>";
+
 
     switch(strtolower($phase)) {
 
@@ -153,7 +153,6 @@ function registration_user_register()
                 return;
             }
 
-
             // current values (in case some field is invalid, we'll return to the previous template)
             // Pass back all values again so the user only has to type in incorrect values that are highlighted
             $values = array('username' => $username,
@@ -200,7 +199,7 @@ function registration_user_register()
                 if (empty($invalid['pass1'])) {
                     $invalid['pass2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
                 }
-                if (empty($invalid['pass1']) && empty($invalid['pass2']))   {       
+                if (empty($invalid['pass1']) && empty($invalid['pass2']))   {
                     $pass = $pass1;
                 }
             }
@@ -268,38 +267,98 @@ function registration_user_register()
             if (!xarVarFetch('ip',        'str:4:100', $ip,       '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('email',     'str:1:100', $email,    '', XARVAR_NOT_REQUIRED)) return;
 
+            //Set some general vars that we need in various registration options
+            $pending = xarModGetVar('registration', 'explicitapproval'); //Require admin approval for account
+            $requireValidation = xarModGetVar('registration', 'requirevalidation'); //require user validation of account by email
+
+            //Get the default auth module data
+            //this 'authmodule' was introduced previously (1.1 merge ?)
+            // - the column in roles re default auth module that this apparently used to refer to is redundant
+            $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
+            $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
+            $authmodule          = $defaultauthdata['defaultauthmodname'];
+
+            //jojo - should just use authsystem now as we used to pre 1.1 merge
+            $loginlink =xarModURL($defaultloginmodname,'user','main');
+
+            //variables required for display of correct validation template to users, depending on registration options
+            $tplvars = array();
+            $tplvars['loginlink'] = $loginlink;
+            $tplvars['pending']   = $pending;
+
+
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 
             // determine state of this create user
-            $state = xarModApiFunc('registration','user','createstate' );
-//echo "state [$state] ";           
+            $state = xarModAPIFunc('registration','user','createstate' );
+         
             // need a password
             if (empty($pass)){
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
             }
-            
-            // actually create the user
-            $uid = xarModApiFunc('registration','user','createuser',
-                array(  'username'  => $username,
-                        'realname'  => $realname,
-                        'email'     => $email,
-                        'pass'      => $pass,
-                        'state'     => $state ));
-            if (!$uid) return;
-        
-            // send out notifications
+
+            // Create confirmation code if required
+            if ($requireValidation) {
+                $confcode = xarModAPIFunc('roles', 'user', 'makepass');
+            } else {
+                $confcode ='';
+            }
+            //create user account creation time
+            $now = time();
+
+            //Create the user
+            $userdata = array('uname'  => $username,
+                              'realname' => $realname,
+                              'email'    => $email,
+                              'pass'     => $pass,
+                              'date'     => $now,
+                              'valcode'  => $confcode,
+                              'state'    => $state);
+
+            $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
+
+            if ($uid == 0) return;
+
+            //Make sure the user email setting is off unless the user sets it
+            xarModSetUserVar('roles','usersendemails', false, $uid);
+
+            /* Call hooks in here
+             * This might be double as the roles hook will also call the create,
+             * but the new hook wasn't called there, so no data is passed
+             */
+             $userdata['module'] = 'registration';
+             $userdata['itemid'] = $uid;
+             xarModCallHooks('item', 'create', $uid, $userdata);
+
+             // Option: If admin requires notification of a new user, and no validation required,
+             // send out an email to Admin
+
+             // Insert the user into the default users group
+             $userRole = xarModGetVar('roles', 'defaultgroup');
+
+             // Get the group id
+             $defaultRole = xarModAPIFunc('roles', 'user', 'get', array('name'  => $userRole,'type' => 1));
+
+             if (empty($defaultRole)) return;
+                // Make the user a member of the users role
+             if(!xarMakeRoleMemberByID($uid, $defaultRole['uid'])) return;
+             xarModSetVar('roles', 'lastuser', $uid);
+
+
+            // Let's finish by sending emails to those that require it based on options,
+            // and redirecting to appropriate pages that depend on user state and options set in the registration config
             // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
             $ret = xarModApiFunc('registration','user','createnotify',
                 array(  'username'  => $username,
                         'realname'  => $realname,
                         'email'     => $email,
-                        'pass'      => (xarModGetVar('registration', 'chooseownpassword')) ? '' : $pass, 
+                        'pass'      => (xarModGetVar('registration', 'chooseownpassword')) ? '' : $pass,
                         'uid'       => $uid,
                         'ip'        => $ip,
                         'state'     => $state));
             if (!$ret) return;
-            
+
             // go to appropriate page, based on state
             if ($state==ROLES_STATE_ACTIVE) {
                 // log in and redirect
@@ -309,28 +368,18 @@ function registration_user_register()
                             'rememberme' => 0));
                 $redirect=xarServerGetBaseURL();
                 xarResponseRedirect($redirect);
-            }
-            else if ($state==ROLES_STATE_PENDING) {
-                //Get the default auth module data
-                $defaultauthdata     = xarModAPIFunc('roles', 'user', 'getdefaultauthdata');
-                $defaultloginmodname = $defaultauthdata['defaultloginmodname'];
-                $authmodule          = $defaultauthdata['defaultauthmodname'];
 
-                $loginlink =xarModURL($defaultloginmodname,'user','main');
-
-                $tplvars = array();
-                $tplvars['loginlink'] = $loginlink;
-                $tplvars['pending']   = 1;
-                
+            } else if ($state==ROLES_STATE_PENDING) {
+                // If we are still waiting on admin to review pending accounts send the user to a page to notify them
+                // This page is for options of validation alone, validation and pending, and pending alone
                 $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
-            }
-            else { // $state==ROLES_STATE_NOTVALIDATED
+
+            } else { // $state==ROLES_STATE_NOTVALIDATED
                 $data = xarTplModule('registration','user', 'waitingconfirm');
             }
+
             break;
     }
-
     return $data;
 }
-
 ?>
