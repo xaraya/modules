@@ -99,7 +99,7 @@ function categories_adminapi_updatecat($args)
        }
 
        // Security check
-        if(!xarSecurityCheck('EditCategories',1,'All',"All:$cid")) return;
+        if(!xarSecurityCheck('EditCategories',1,'Category',"All:$cid")) return;
 
        // Find the needed variables for moving things...
        $point_of_insertion =

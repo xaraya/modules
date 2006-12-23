@@ -45,7 +45,7 @@ function categories_admin_modifycat()
         // Editing an existing category
 
         // Security check
-        if (!xarSecurityCheck('EditCategories',1,'All',"All:$cid")) return;
+        if (!xarSecurityCheck('EditCategories',1,'Category',"All:$cid")) return;
 
         // Setting up necessary data.
         $data['cid'] = $cid;
