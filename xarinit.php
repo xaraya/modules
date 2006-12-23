@@ -76,11 +76,12 @@ Linux';
     $disallowednames = serialize($names);
     xarModSetVar('registration', 'disallowednames', $disallowednames);
 
+/* This really has to be in roles as a user can modify their email after registration
     $emails = 'none@none.com
 president@whitehouse.gov';
     $disallowedemails = serialize($emails);
     xarModSetVar('registration', 'disallowedemails', $disallowedemails);
-
+*/
 /** ---------------------------------------------------------------
  * Set disallowed IPs
  */

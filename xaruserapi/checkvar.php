@@ -137,7 +137,7 @@ function registration_userapi_checkvar($args)
             if (empty($email)){
                 $invalid = xarML('You must provide a valid email address to continue.');
             } else {
-                //user the roles validatevar function - no need to duplicate
+                //use the roles validatevar function - no need to duplicate
                 $emailcheck = xarModAPIFunc('roles', 'user', 'validatevar',
                                             array('var' => $email,
                                                  'type' => 'email'));
@@ -145,25 +145,26 @@ function registration_userapi_checkvar($args)
                 if ($emailcheck == false) {
                     $invalid = xarML('There is an error in your email address');
                 }
-            }
-            if (empty($invalid) && xarModGetVar('registration','uniqueemail')) {
-                // check for duplicate email address
-                $user = xarModAPIFunc('roles', 'user', 'get',
-                               array('email' => $email));
-                if ($user != false) {
-                    unset($user);
-                    $invalid = xarML('That email address is already registered.');
-                }
-            }
 
-            if (empty($invalid)) {
-                // check for disallowed email addresses
-                $disallowedemails = xarModGetVar('registration','disallowedemails');
-                if (!empty($disallowedemails)) {
-                    $disallowedemails = unserialize($disallowedemails);
-                    $disallowedemails = explode("\r\n", $disallowedemails);
-                    if (in_array ($email, $disallowedemails)) {
-                        $invalid = xarML('That email address is either reserved or not allowed on this website');
+                if (empty($invalid) && xarModGetVar('registration','uniqueemail')) {
+                    // check for duplicate email address
+                    $user = xarModAPIFunc('roles', 'user', 'get',
+                               array('email' => $email));
+                    if ($user != false) {
+                        unset($user);
+                        $invalid = xarML('That email address is already registered.');
+                    }
+                }
+
+                if (empty($invalid)) {
+                    // check for disallowed email addresses
+                    $disallowedemails = xarModGetVar('roles','disallowedemails');
+                    if (!empty($disallowedemails)) {
+                        $disallowedemails = unserialize($disallowedemails);
+                        $disallowedemails = explode("\r\n", $disallowedemails);
+                        if (in_array ($email, $disallowedemails)) {
+                            $invalid = xarML('That email address is either reserved or not allowed on this website');
+                        }
                     }
                 }
             }

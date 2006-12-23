@@ -59,7 +59,7 @@ function registration_admin_modifyconfig()
                         xarModSetVar('registration', 'disallowedips', $ip);
                     }
                     $data['ips']    = unserialize(xarModGetVar('registration', 'disallowedips'));
-                    $data['emails'] = unserialize(xarModGetVar('registration', 'disallowedemails'));
+                    //$data['emails'] = unserialize(xarModGetVar('registration', 'disallowedemails'));
                     $data['names']  = unserialize(xarModGetVar('registration', 'disallowednames'));
                     break;
                 default:
@@ -111,13 +111,13 @@ function registration_admin_modifyconfig()
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                    if (!xarVarFetch('disallowedemails', 'str:1', $disallowedemails, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    //if (!xarVarFetch('disallowedemails', 'str:1', $disallowedemails, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('disallowedips',    'str:1', $disallowedips,    '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     $disallowednames = serialize($disallowednames);
                     xarModSetVar('registration', 'disallowednames', $disallowednames);
 
-                    $disallowedemails = serialize($disallowedemails);
-                    xarModSetVar('registration', 'disallowedemails', $disallowedemails);
+                    //$disallowedemails = serialize($disallowedemails);
+                    //xarModSetVar('registration', 'disallowedemails', $disallowedemails);
 
                     $disallowedips = serialize($disallowedips);
                     xarModSetVar('registration', 'disallowedips', $disallowedips);

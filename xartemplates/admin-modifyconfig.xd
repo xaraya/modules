@@ -361,6 +361,7 @@
                             </xar:mlstring>
                         </p>
                     </div>
+                    <!-- This really needs to be in Roles as we may disallow an email when a user changers their email address.
                     <div class="xar-form-input-wrapper">
                         <label for="disallowedemails" title="#xarML('Email addresses which cannot be used')#" class="xar-form-label">
                             <xar:mlstring>
@@ -375,7 +376,7 @@
                                 Note: Enter each name on a single line. Do not separate with comma, etc
                             </xar:mlstring>
                         </p>
-                    </div>
+                    </div>-->
                     <div class="xar-form-input-wrapper">
                         <label for="disallowedips" title="#xarML('Deny access the site from these IP addresses')#" class="xar-form-label">
                             <xar:mlstring>
