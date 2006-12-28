@@ -15,6 +15,7 @@
  * Format : <xar:recommend-sendtofriend /> or
  *          Typical usage is <xar:recommend-sendtofriend type="text" /> will display the link
  *          or <xar:recommend-sendtofriend type="icon" /> will display the mail icon.
+ *           or <xar:recommend-sendtofriend type="text"  text="sometext" /> will display the text provided
  *          The icon is displayed by default when no attributes provided.
  *          Placed in template  where you wish the 'send to friend' icon or text link to appear
  *
@@ -36,7 +37,11 @@ function recommend_userapi_rendersendtofriend($args)
     }
     if (empty($type)) {$type = 'icon';}
 
-    $linktext=xarML("Send to a friend");
+    if (isset($text) && !empty($text)) {
+        $linktext = $text;
+    } else {
+        $linktext=xarML("Send to a friend");
+    }
     $alttext = xarML('Send this article to a friend');
 
     $link=xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid'));
