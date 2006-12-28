@@ -83,6 +83,7 @@ function recommend_user_sendfriend()
                                           'articlelink' => $textdisplaylink,
                                           'usermessage'=> $usernote,
                                           'sitename'   => $sitename,
+                                          'aid'        => $aid,
                                           'siteurl'    => $siteurl),
                                     'text');
 
@@ -96,6 +97,7 @@ function recommend_user_sendfriend()
                                           'articlelink' => $htmldisplaylink,
                                           'usermessage'=> $htmlusernote,
                                           'sitename'   => $sitename,
+                                          'aid'        => $aid,                                          
                                           'siteurl'    => $siteurl),
                                     'html');
     /* let's send the email now */
