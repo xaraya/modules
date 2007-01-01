@@ -84,10 +84,10 @@
                 <legend><xar:mlstring>Display during translation</xar:mlstring></legend>
 
                 <p class="xar-form-input-wrapper-before">
-                    <xar:mlstring>While translating you will be confronted with a lot of information. The settings below allow you to configure what is displayed during translation.</xar:mlstring>
+                    <xar:mlstring>While translating you will be confronted with a lot of information. The settings below allow you to configure if references to the English string are added to the skeleton and how they are displayed during translation.</xar:mlstring>
                 </p>
 
-             <div class="xar-form-input-wrapper-after">
+              <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$showcontext">
                         <input id="showcontext" type="checkbox" name="showcontext" checked="checked"/>
                     <xar:else/>
@@ -102,11 +102,12 @@
                     <xar:mlstring>References per translation string</xar:mlstring>
                 </label>:
                 <input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3" />
+                <xar:mlstring><small> (0 generates no references.)</small></xar:mlstring>
             </div>
 
                 <div class="xar-form-input-wrapper">
-                <label for="maxcodelines" class="xar-form-label" title="#xarML('Number of lines to display in reference')#">
-                    <xar:mlstring>Number of lines to display in reference</xar:mlstring>
+                <label for="maxcodelines" class="xar-form-label" title="#xarML('Number of lines to display as context')#">
+                    <xar:mlstring>Number of lines around each </xar:mlstring>
                 </label>:
                 <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
             </div>

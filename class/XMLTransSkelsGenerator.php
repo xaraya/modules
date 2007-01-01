@@ -209,11 +209,13 @@ class XMLTranslationsSkelsGenerator
         fwrite($this->fp, "\t<entry>\n");
         fwrite($this->fp, "\t\t<string>".$string."</string>\n");
         fwrite($this->fp, "\t\t<translation>".$translation."</translation>\n");
-        fwrite($this->fp, "\t\t<references>\n");
-        foreach($references as $reference) {
-            fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+        if (xarModGetVar('translations', 'maxreferences')) {
+            fwrite($this->fp, "\t\t<references>\n");
+            foreach($references as $reference) {
+                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+            }
+            fwrite($this->fp, "\t\t</references>\n");
         }
-        fwrite($this->fp, "\t\t</references>\n");
         fwrite($this->fp, "\t</entry>\n");
     }
 
@@ -225,11 +227,13 @@ class XMLTranslationsSkelsGenerator
         fwrite($this->fp, "\t<keyEntry>\n");
         fwrite($this->fp, "\t\t<key>".$key."</key>\n");
         fwrite($this->fp, "\t\t<translation>".$translation."</translation>\n");
-        fwrite($this->fp, "\t\t<references>\n");
-        foreach($references as $reference) {
-            fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+        if (xarModGetVar('translations', 'maxreferences')) {
+            fwrite($this->fp, "\t\t<references>\n");
+            foreach($references as $reference) {
+                fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
+            }
+            fwrite($this->fp, "\t\t</references>\n");
         }
-        fwrite($this->fp, "\t\t</references>\n");
         fwrite($this->fp, "\t</keyEntry>\n");
     }
 
