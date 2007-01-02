@@ -4,214 +4,376 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
+<xar:comment>Vertical Page Tabs to protect vertical realestate</xar:comment>
+<xar:base-include-javascript position="body" module="xproject" filename="pagetabs.js" />
+<xar:style scope="module" file="pagetabs" />
+
 <xar:set name="id_list">array()</xar:set>
 <xar:set name="id_list[]">$projectid</xar:set>
 <xar:data-getitems name="$moreproperties" value="$values" module="xProject" itemtype="0" itemid="$id_list" />
 
+<xar:set name="currenturl">xarServerGetCurrentURL()</xar:set>
 
 <xar:set name="websiteprojecttype">xarModGetUserVar('xproject', 'websiteprojecttype')</xar:set>
-
+<a name="top"></a>
 <xar:template type="module" file="admin-menu" />
-<div class="xar-mod-body">
-    <h2 style="text-align: center;">#$project_name#</h2>
-    
-    <xar:if condition="!empty($status)">
 
+<xar:if condition="!empty($status)">
+    <div class="xar-mod-head">
+        <h2 style="text-align: center;">#$project_name# #$mode#</h2>
+    </div>
+    <div class="xar-mod-body">
         <h3>#$status#</h3>
-    <xar:else />
-        <xar:blockgroup name="toxarav" id="toxarav" />
-        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
-            <tr valign="top">
-                <td class="xar-title"><xar:data-label property="$properties['project_name']" /></td>
-                <td class="xar-norm" style="width: 70%;"><span style="float:left;"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /></span>
-                    <span style="float:right;">[&nbsp;<xar:if condition="empty($item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]
-                    </span>
-                </td>
-            </tr>
-            <xar:if condition="isset($values[$projectid])">
-                <xar:foreach in="$values[$projectid]" key="$field" value="$nextvalue" >
-                    <tr valign="top">
-                        <td class="xar-title"><xar:data-label property="$moreproperties[$field]" /></td>
-                        <td class="xar-norm"><xar:data-output property="$moreproperties[$field]" value="$values[$projectid][$field]" /></td>
-                    </tr>
-                </xar:foreach>
-            </xar:if>
-            <xar:if condition="!empty($item['reference'])">
-                <tr valign="top">
-                    <td class="xar-title"><xar:data-label property="$properties['reference']" /></td>
-                    <td class="xar-norm"><xar:data-output property="$properties['reference']" value="$item['reference']" /></td>
-                </tr>
-            </xar:if>
-            <tr>
-                <td class="xar-title"><xar:data-label property="$properties['clientid']" /></td>
-                <td class="xar-norm"><xar:data-output property="$properties['clientid']" value="$item['clientid']" /></td>
-            </tr>
-            <tr>
-                <td class="xar-title"><xar:data-label property="$properties['ownerid']" /></td>
-                <td class="xar-norm"><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
-            </tr>
-            <tr>
-                <td class="xar-title"><xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</td>
-                <td class="xar-norm">
-                    <xar:foreach in="$teamlist" value="$memberinfo" >
-                        <div>#$memberinfo.membername#
-                            <xar:if condition="!empty($memberinfo.projectrole)">
-                                - <em>#$memberinfo.projectrole#</em>
-                            </xar:if>
-                            - <a href="&xar-modurl-xproject-team-delete;&amp;projectid=#$projectid#&amp;memberid=#$memberinfo.memberid#">remove</a>
-                        </div>
-                    </xar:foreach>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td class="xar-title"><xar:data-label property="$properties['status']" /></td>
-                <td class="xar-norm"><xar:data-output property="$properties['status']" value="$item['status']" />
-                    <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['private']" /></span>
-                    <xar:data-output property="$properties['private']" value="$item['private']" />
-                </td>
-            </tr>
-            <tr valign="top">
-                <td class="xar-title"><xar:data-label property="$properties['priority']" /></td>
-                <td class="xar-norm"><xar:data-output property="$properties['priority']" value="$item['priority']" />
-                    <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['importance']" /></span>
-                    <xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
-            </tr>
-            <tr valign="top">
-                <td class="xar-title"><xar:data-label property="$properties['projecttype']" /></td>
-                <td class="xar-norm"><xar:data-output property="$properties['projecttype']" value="$item['projecttype']" /></td>
-            </tr>
-            <xar:if condition="!empty($item['date_approved'])">
-                <tr valign="top">
-                    <td class="xar-title"><xar:data-label property="$properties['date_approved']" /></td>
-                    <td class="xar-norm"><xar:data-output property="$properties['date_approved']" value="$item['date_approved']" /></td>
-                </tr>
-            </xar:if>
-            <tr valign="top">
-                <td class="xar-title"><xar:mlstring>Timeframe/Progress</xar:mlstring></td>
-                <td class="xar-norm">
-                    <div class="xar-sub">
-                        <xar:set name="planned_start_date">$item['planned_start_date']</xar:set>
-                        <xar:set name="planned_end_date">$item['planned_end_date']</xar:set>
-                        <xar:set name="actual_start_date">$item['actual_start_date']</xar:set>
-                        <xar:set name="actual_end_date">$item['actual_end_date']</xar:set>
-                        
-                        <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
-                            <div>
-                            <em><xar:mlstring>Planned Timeframe:</xar:mlstring></em>
-                            <xar:if condition="!empty($planned_start_date)">
-                                <xar:mlstring> from </xar:mlstring><strong><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></strong>
-                            </xar:if>
-                            <xar:if condition="!empty($planned_end_date)">
-                                <xar:mlstring> thru </xar:mlstring><strong><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></strong>
-                            </xar:if>
-                            </div>
-                        </xar:if>
-                        
-                        <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
-                            <div>
-                            <em><xar:mlstring>Actual Timeframe:</xar:mlstring></em>
-                            <xar:if condition="!empty($actual_start_date)">
-                                <xar:mlstring> from </xar:mlstring><strong><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></strong>
-                            </xar:if>
-                            <xar:if condition="!empty($actual_end_date)">
-                                <xar:mlstring> thru </xar:mlstring><strong><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></strong>
-                            </xar:if>
-                            </div>
-                        </xar:if>
-                        
-                        <xar:set name="hours_planned">$item['hours_planned']</xar:set>
-                        <xar:set name="hours_spent">$item['hours_spent']</xar:set>
-                        <xar:set name="hours_remaining">$item['hours_remaining']</xar:set>
-                        
-                        <xar:set name="ttlhours">$hours_planned + $hours_remaining</xar:set>
-                        <xar:if condition="$ttlhours gt 0">
-                            <xar:set name="pct_complete">sprintf("%.2f", 100 * $hours_spent / $ttlhours)</xar:set>
-                        <xar:else />
-                            <xar:set name="pct_complete">"0"</xar:set>
-                        </xar:if>
-                        <xar:if condition="$hours_planned gt 0">
-                            <xar:set name="pct_variance">sprintf("%.2f", 100 * ($hours_remaining + $hours_spent) / $hours_planned)</xar:set>
-                        <xar:else />
-                            <xar:set name="pct_variance">"0"</xar:set>
-                        </xar:if>
-                        <div>#$pct_complete#% Complete of #$ttlhours# Hours (#$pct_variance#% variance)</div>
-                    </div>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td class="xar-title"><xar:mlstring>Project Hours</xar:mlstring></td>
-                <td class="xar-norm"><div class="xar-sub">
-                    <span style="padding-right: 10px;"><xar:mlstring>Planned</xar:mlstring>: <xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" /></span>
-                    <span style="padding-right: 10px;"><xar:mlstring>Spent</xar:mlstring>: <xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" /></span>
-                    <span style="padding-right: 10px;"><xar:mlstring>Remaining</xar:mlstring>: <xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" /></span>
-                    </div>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td class="xar-title"><xar:mlstring>Budget</xar:mlstring></td>
-                <td class="xar-norm"><div class="xar-sub">
-                    <span style="padding-right: 10px;"><xar:mlstring>Estimated</xar:mlstring>: $<xar:data-output property="$properties['estimate']" value="$item['estimate']" /></span>
-                    <span style="padding-right: 10px;"><xar:mlstring>Budgeted</xar:mlstring>: $<xar:data-output property="$properties['budget']" value="$item['budget']" /></span>
-                    </div>
-                </td>
-            </tr>
-            <xar:if condition="!empty($item['description'])">
-                <tr valign="top">
-                    <td class="xar-title"><xar:data-label property="$properties['description']" /></td>
-                    <td class="xar-norm"><xar:data-output property="$properties['description']" value="$item['description']" /></td>
-                </tr>
-            </xar:if>
-            <xar:if condition="!empty($item['associated_sites'])">
-                <tr valign="top">
-                    <td class="xar-title"><xar:data-label property="$properties['associated_sites']" /></td>
-                    <td class="xar-norm"><xar:data-output property="$properties['associated_sites']" value="$item['associated_sites']" /></td>
-                </tr>
-            </xar:if>
-        </table>
-        
-        <xar:set name="featuresmode">"features"</xar:set>
-        <xar:if condition="$mode eq $featuresmode">
-            <xar:set name="features_style">"display: block;"</xar:set>
-        <xar:else />
-            <xar:set name="features_style">"display: none;"</xar:set>
-        </xar:if>
-        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Features</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_features'); return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_features');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
-        <div id="project_features" style="#$features_style#">
-            <div id="features_form"></div>
-            <xar:template type="module" file="features-view" />
-        </div>
-        
-        <xar:set name="websiteprojecttype">xarModGetVar('xproject', 'websiteprojecttype')</xar:set>
-        <xar:if condition="$websiteprojecttype eq $item.projecttype">
-            <xar:set name="pagesmode">"pages"</xar:set>
-            <xar:if condition="$mode eq 'pages'">
-                <xar:set name="pages_style">"display: block;"</xar:set>
-            <xar:else />
-                <xar:set name="pages_style">"display: none;"</xar:set>
-            </xar:if>
-            <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Project Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="twist_open('project_pages'); return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('project_pages');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
-            <div id="project_pages" style="#$pages_style#">
-                <div id="pages_form"></div>
-                <xar:template type="module" file="pages-view" />
-            </div>
-        </xar:if>
+    </div>
+    <div class="xar-mod-foot"></div>
+<xar:else />
+    <table style="border 0px; width: 100%; cell-spacing: 0px; cell-padding: 0px; background-color: transparent; border-collapse: collapse; margin: 0px; padding: 0px;">
+        <tr><th id="projectheader" colspan="2"><h2 style="text-align: center;">#$project_name# #$mode#</h2></th></tr>
+        <tr>
+            <td style="width: 100px; vertical-align: top; padding: 0px;">
+                <div id="pagetabs">
+
+                    <div style="background-color: white; font-weight: bold;"><xar:mlstring>Project Info</xar:mlstring></div>
+                
+                    <xar:set name="style_summary">""</xar:set>
+                    <xar:if condition="$mode eq 'summary' or empty($mode)">
+                        <xar:set name="style_summary">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="background-color: #FFFFFF; cursor: pointer; #$style_summary#" onclick="switchtabs('summary')" id="tab_summary">Summary</div> 
+
+                    <xar:set name="style_team">""</xar:set>
+                    <xar:if condition="$mode eq 'team'">
+                        <xar:set name="style_team">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_team#" onclick="switchtabs('team')" id="tab_team">Team</div> 
+
+                    <xar:set name="style_details">""</xar:set>
+                    <xar:if condition="$mode eq 'details'">
+                        <xar:set name="style_details">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_details#" onclick="switchtabs('details')" id="tab_details">Details</div> 
+
+                    <xar:set name="style_ddata">""</xar:set>
+                    <xar:if condition="$mode eq 'ddata'">
+                        <xar:set name="style_ddata">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_ddata#" onclick="switchtabs('ddata')" id="tab_ddata">Extra Data</div> 
+
+                    <xar:set name="style_features">""</xar:set>
+                    <xar:if condition="$mode eq 'features'">
+                        <xar:set name="style_features">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_features#" onclick="switchtabs('features')" id="tab_features">Features</div> 
+
+                    <xar:set name="style_pages">""</xar:set>
+                    <xar:if condition="$item['haspages']">
+                        <xar:set name="style_pages">"display: none;"</xar:set>
+                    <xar:elseif condition="$mode eq 'pages'" />
+                        <xar:set name="style_pages">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_pages#" onclick="switchtabs('pages')" id="tab_pages">Pages</div> 
                     
-        <xar:if condition="$mode eq 'logs'">
-            <xar:set name="logs_style">"display: block;"</xar:set>
-        <xar:else />
-            <xar:set name="logs_style">"display: none;"</xar:set>
-        </xar:if>
-        <div class="xar-mod-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Change Log</xar:mlstring></span><span style="float: right;"><a href="javascript: void twist('project_logs');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" id="spinnerimg_project_logs" /></a></span></div>
-        <div id="project_logs" style="#$logs_style#">
-            <xar:template type="module" file="log-view" />
-        </div>
-        
-        <xar:if condition="!empty($hooks)">
-            <xar:foreach in="$hooks" key="$hookmodule">
-                <div>#$hooks[$hookmodule]#</div>
-            </xar:foreach>
-        </xar:if>
-        
-    </xar:if>
-</div>
+                    <xar:set name="style_logs">""</xar:set>
+                    <xar:if condition="$mode eq 'logs'">
+                        <xar:set name="status_logs">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_logs#" onclick="switchtabs('logs')" id="tab_logs">Change Log</div> 
+
+                    <xar:set name="style_tasklist">""</xar:set>
+                    <xar:if condition="$mode eq 'tasks'">
+                        <xar:set name="style_tasklist">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_tasklist#" onclick="switchtabs('tasklist')" id="tab_tasklist">Task List</div> 
+
+                    <xar:set name="style_worklog">""</xar:set>
+                    <xar:if condition="$mode eq 'worklog'">
+                        <xar:set name="style_worklog">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_worklog#" onclick="switchtabs('worklog')" id="tab_worklog">Worklog</div> 
+
+                    <xar:set name="style_sites">""</xar:set>
+                    <xar:if condition="$mode eq 'sites'">
+                        <xar:set name="style_sites">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_sites#" onclick="switchtabs('sites')" id="tab_sites">Sites</div> 
+
+                    <xar:set name="style_hooks">""</xar:set>
+                    <xar:if condition="$mode eq 'hooks'">
+                        <xar:set name="style_hooks">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_hooks#" onclick="switchtabs('hooks')" id="tab_hooks">(more)</div> 
+                    <div style="cursor: pointer; #$style_hooks#" onclick="window.location='&xar-modurl-xproject-admin-displaylong;&amp;projectid=#$projectid#';" id="tab_hooks">(show all)</div>     
+                </div>
+            </td>
+            <td style="vertical-align: top; padding: 0px;">
+                <div id="project_info" style="width: auto; padding: 5px;">
+                
+                    <xar:set name="style_summary_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'summary' or empty($mode)">
+                        <xar:set name="style_summary_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_summary" style="width: auto; #$style_summary_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Summary</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-admin-modify;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'project_summary');"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;|&nbsp;<a href="&xar-modurl-xproject-admin-proposal;&amp;projectid=#$projectid#&amp;theme=print" target="proposal"><xar:mlstring>Proposal</xar:mlstring></a> ]</div>
+
+                        <xar:if condition="!empty($item['summary'])">
+                            <p style="text-align: center;"><em><xar:data-output property="$properties['summary']" value="$item['summary']" /></em></p>
+                        </xar:if>
+
+                        <table width="99%" border="0" cellspacing="1" cellpadding="2" class="xproject_info">
+                            <xar:if condition="!empty($item['reference'])">
+                                <tr valign="top">
+                                    <td class="xproject-display-label"><xar:data-label property="$properties['reference']" /></td>
+                                    <td class="xproject-display-data"><xar:data-output property="$properties['reference']" value="$item['reference']" /></td>
+                                </tr>
+                            </xar:if>
+                            <tr>
+                                <td class="xproject-display-label"><xar:data-label property="$properties['clientid']" /></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['clientid']" value="$item['clientid']" /></td>
+                            </tr>
+                            <tr>
+                                <td class="xproject-display-label"><xar:data-label property="$properties['ownerid']" /></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:data-label property="$properties['status']" /></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['status']" value="$item['status']" />
+                                    <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['private']" /></span>
+                                    <xar:data-output property="$properties['private']" value="$item['private']" />
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:data-label property="$properties['priority']" /></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['priority']" value="$item['priority']" />
+                                    <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$properties['importance']" /></span>
+                                    <xar:data-output property="$properties['importance']" value="$item['importance']" /></td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:data-label property="$properties['projecttype']" /></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['projecttype']" value="$item['projecttype']" /></td>
+                            </tr>
+                            <xar:if condition="!empty($item['date_approved'])">
+                                <tr valign="top">
+                                    <td class="xproject-display-label"><xar:data-label property="$properties['date_approved']" /></td>
+                                    <td class="xproject-display-data"><xar:data-output property="$properties['date_approved']" value="$item['date_approved']" /></td>
+                                </tr>
+                            </xar:if>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:mlstring>Timeframe/Progress</xar:mlstring></td>
+                                <td class="xproject-display-data">
+                                    <div class="xar-sub">
+                                        <xar:set name="planned_start_date">$item['planned_start_date']</xar:set>
+                                        <xar:set name="planned_end_date">$item['planned_end_date']</xar:set>
+                                        <xar:set name="actual_start_date">$item['actual_start_date']</xar:set>
+                                        <xar:set name="actual_end_date">$item['actual_end_date']</xar:set>
+                                        
+                                        <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
+                                            <div>
+                                            <em><xar:mlstring>Planned Timeframe:</xar:mlstring></em>
+                                            <xar:if condition="!empty($planned_start_date)">
+                                                <xar:mlstring> from </xar:mlstring><strong><xar:data-output property="$properties['planned_start_date']" value="$planned_start_date" dateformat="%a, %d %B %Y" /></strong>
+                                            </xar:if>
+                                            <xar:if condition="!empty($planned_end_date)">
+                                                <xar:mlstring> thru </xar:mlstring><strong><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%a, %d %B %Y" /></strong>
+                                            </xar:if>
+                                            </div>
+                                        </xar:if>
+                                        
+                                        <xar:if condition="!empty($actual_start_date) or !empty($actual_end_date)">
+                                            <div>
+                                            <em><xar:mlstring>Actual Timeframe:</xar:mlstring></em>
+                                            <xar:if condition="!empty($actual_start_date)">
+                                                <xar:mlstring> from </xar:mlstring><strong><xar:data-output property="$properties['actual_start_date']" value="$actual_start_date" dateformat="%a, %d %B %Y" /></strong>
+                                            </xar:if>
+                                            <xar:if condition="!empty($actual_end_date)">
+                                                <xar:mlstring> thru </xar:mlstring><strong><xar:data-output property="$properties['actual_end_date']" value="$actual_end_date" dateformat="%a, %d %B %Y" /></strong>
+                                            </xar:if>
+                                            </div>
+                                        </xar:if>
+                                        
+                                        <xar:set name="hours_planned">$item['hours_planned']</xar:set>
+                                        <xar:set name="hours_spent">$item['hours_spent']</xar:set>
+                                        <xar:set name="hours_remaining">$item['hours_remaining']</xar:set>
+                                        
+                                        <xar:set name="ttlhours">$hours_planned + $hours_remaining</xar:set>
+                                        <xar:if condition="$ttlhours gt 0">
+                                            <xar:set name="pct_complete">sprintf("%.2f", 100 * $hours_spent / $ttlhours)</xar:set>
+                                        <xar:else />
+                                            <xar:set name="pct_complete">"0"</xar:set>
+                                        </xar:if>
+                                        <xar:if condition="$hours_planned gt 0">
+                                            <xar:set name="pct_variance">sprintf("%.2f", 100 * ($hours_remaining + $hours_spent) / $hours_planned)</xar:set>
+                                        <xar:else />
+                                            <xar:set name="pct_variance">"0"</xar:set>
+                                        </xar:if>
+                                        <div>#$pct_complete#% Complete of #$ttlhours# Hours (#$pct_variance#% variance)</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:mlstring>Project Hours</xar:mlstring></td>
+                                <td class="xproject-display-data"><div class="xar-sub">
+                                    <span style="padding-right: 10px;"><xar:mlstring>Planned</xar:mlstring>: <xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" /></span>
+                                    <span style="padding-right: 10px;"><xar:mlstring>Spent</xar:mlstring>: <xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" /></span>
+                                    <span style="padding-right: 10px;"><xar:mlstring>Remaining</xar:mlstring>: <xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" /></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:mlstring>Budget</xar:mlstring></td>
+                                <td class="xproject-display-data"><div class="xar-sub">
+                                    <span style="padding-right: 10px;"><xar:mlstring>Estimated</xar:mlstring>: $<xar:data-output property="$properties['estimate']" value="$item['estimate']" />
+                                        &nbsp;[ <xar:data-output property="$properties['probability']" value="$item['probability']" />%&nbsp;]</span>
+                                    <span style="padding-right: 10px;"><xar:mlstring>Budgeted</xar:mlstring>: $<xar:data-output property="$properties['budget']" value="$item['budget']" /></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td class="xproject-display-label"><xar:mlstring>Summary</xar:mlstring></td>
+                                <td class="xproject-display-data"><xar:data-output property="$properties['summary']" value="$item['summary']" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <xar:set name="style_team_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'team'">
+                        <xar:set name="style_team_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_team" style="width: auto; overflow: hidden; #$style_team_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</div>
+                        <xar:foreach in="$teamlist" value="$memberinfo" >
+                            <div>#$memberinfo.membername#
+                                <xar:if condition="!empty($memberinfo.projectrole)">
+                                    - <em>#$memberinfo.projectrole#</em>
+                                </xar:if>
+                                - <a href="&xar-modurl-xproject-team-delete;&amp;projectid=#$projectid#&amp;memberid=#$memberinfo.memberid#">remove</a>
+                            </div>
+                        </xar:foreach>
+                    </div>
+                    
+                    <xar:set name="style_details_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'details'">
+                        <xar:set name="style_details_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_details" style="width: auto; overflow: hidden; #$style_details_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Details</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-admin-modify;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'project_summary');"><xar:mlstring>Edit</xar:mlstring></a> ]</div>
+                        <xar:if condition="!empty($item['formatted_desc'])">
+                            <xar:data-output property="$properties['description']" value="$item['formatted_desc']" />
+                        </xar:if>
+                    </div>
+                    
+                    <xar:set name="style_ddata_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'ddata'">
+                        <xar:set name="style_ddata_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_ddata" style="width: auto; #$style_ddata_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Data</xar:mlstring></div>
+                        <table width="99%" border="0" cellspacing="1" cellpadding="2" class="xproject_info">
+                            <xar:if condition="isset($values[$projectid])">
+                                <xar:foreach in="$values[$projectid]" key="$field" value="$nextvalue" >
+                                    <tr valign="top">
+                                        <td class="xproject-display-label"><xar:data-label property="$moreproperties[$field]" /></td>
+                                        <td class="xproject-display-data"><xar:data-output property="$moreproperties[$field]" value="$values[$projectid][$field]" /></td>
+                                    </tr>
+                                </xar:foreach>
+                            </xar:if>
+                        </table>
+                    </div>
+                    
+                    <xar:set name="style_features_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'features'">
+                        <xar:set name="style_features_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_features" style="width: auto; #$style_features_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Features</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-features-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'features_form');"><xar:mlstring>New Feature</xar:mlstring></a> ]</div>
+                        <div id="project_features" style="border: 0px; margin: 0px; padding: 0px;">
+                            <div id="features_form"></div>
+                            <xar:template type="module" file="features-view" />
+                        </div>
+                    </div>
+                    
+                    <xar:set name="style_pages_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'pages'">
+                        <xar:set name="style_pages_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_pages" style="width: auto; #$style_pages_content#">
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Pages</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-pages-new;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'pages_form')"><xar:mlstring>New Page</xar:mlstring></a> ]</div>
+                        <div id="project_pages">
+                            <div id="pages_form"></div>
+                            <xar:template type="module" file="pages-view" />
+                        </div>
+                    </div>
+                    
+                    <xar:set name="style_logs_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'logs'">
+                        <xar:set name="style_logs_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_logs" style="width: auto; #$style_logs_content#">
+                        <div class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></div>
+                        <xar:template type="module" file="log-view" />
+                    </div>
+                    
+                    <xar:set name="style_tasks_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'tasks'">
+                        <xar:set name="style_tasks_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_tasklist" style="width: auto; #$style_tasks_content#">
+                        <xar:if condition="!empty($hooks)">
+                            <xar:foreach in="$hooks" key="$hookmodule">
+                                <xar:if condition="$hookmodule eq 'xtasks'">
+                                    <div id="project_tasks">#$hooks[$hookmodule]#</div>
+                                </xar:if>
+                            </xar:foreach>
+                        </xar:if>
+                    </div>
+
+                    <xar:set name="worklog">xarModAPIFunc('xtasks', 'worklog', 'getall', array('projectid' => $projectid))</xar:set>
+                    <xar:set name="style_worklog_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'worklog'">
+                        <xar:set name="style_worklog_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_worklog" style="width: auto; #$style_worklog_content#">
+                        <xar:if condition="is_array($worklog)">
+                            <xar:template type="module" module="xtasks" file="project-worklog" subdata="array('worklog'=&gt;$worklog)" />
+                        </xar:if>
+                    </div>
+
+                    <xar:set name="style_sites_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'sites'">
+                        <xar:set name="style_sites_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_sites" style="width: auto; #$style_sites_content#">
+                        <div class="xar-mod-title"><xar:mlstring>Associated Sites</xar:mlstring></div>
+                        <table width="99%" border="0" cellspacing="1" cellpadding="2" class="xproject_info">
+                            <xar:if condition="!empty($item['associated_sites'])">
+                                <tr valign="top">
+                                    <td class="xproject-display-label"><xar:data-label property="$properties['associated_sites']" /></td>
+                                    <td class="xproject-display-data"><xar:data-output property="$properties['associated_sites']" value="$item['associated_sites']" /></td>
+                                </tr>
+                            </xar:if>
+                        </table>
+                    </div>
+                    
+                    <xar:set name="style_hooks_content">"display: none;"</xar:set>
+                    <xar:if condition="$mode eq 'hooks'">
+                        <xar:set name="style_hooks_content">"display: block;"</xar:set>
+                    </xar:if>
+                    <div id="project_hooks" style="width: auto; #$style_hooks_content#">
+                        <xar:if condition="!empty($hooks)">
+                            <xar:foreach in="$hooks" key="$hookmodule">
+                                <xar:if condition="$hookmodule ne 'xtasks'">
+                                    <div id="project_hooks">
+                                        <div>#$hooks[$hookmodule]#</div>
+                                    </div>
+                                </xar:if>
+                            </xar:foreach>
+                        </xar:if>
+                    </div>
+                    
+                    <br />
+                </div>
+            </td>
+        </tr>
+    </table>
+</xar:if>
 

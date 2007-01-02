@@ -5,7 +5,6 @@
 
 <xar:template type="module" file="admin-menu" />
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2><xar:mlstring>New Project</xar:mlstring></h2>
 
@@ -34,6 +33,10 @@
         <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$uid" /></td>
     </tr>
     <tr>
+        <td><xar:data-label property="$properties['summary']" /></td>
+        <td><xar:data-input property="$properties['summary']" name="description" /></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['description']" /></td>
         <td><xar:data-input property="$properties['description']" name="description" /></td>
     </tr>
@@ -41,7 +44,7 @@
         <td><xar:data-label property="$properties['status']" /></td>
         <td><xar:data-input property="$properties['status']" name="status" />
             <xar:data-label property="$properties['private']" />
-            <xar:data-input property="$properties['private']" name="private" /></td>
+            <xar:data-input property="$properties['private']" name="private" value="1" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['priority']" /></td>
@@ -51,7 +54,9 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['projecttype']" /></td>
-        <td><xar:data-input property="$properties['projecttype']" name="projecttype" /></td>
+        <td><xar:data-input property="$properties['projecttype']" name="projecttype" />
+            <xar:data-input property="$properties['haspages']" name="haspages" />
+            <xar:data-label property="$properties['haspages']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_approved']" /></td>
@@ -96,6 +101,7 @@
                 <div style="float: left; width: 250px; white-space: nowrap;">
                     <xar:data-input property="$properties['estimate']" name="estimate" />
                     <xar:mlstring>Estimated</xar:mlstring>
+                    &nbsp;[ <xar:data-input property="$properties['probability']" name="probability" />%&nbsp;]
                 </div>
                 <div style="float: left; width: 250px; white-space: nowrap;">
                     <xar:data-input property="$properties['budget']" name="budget" />

@@ -1,8 +1,10 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
-
+<xar:style scope="module" file="xproject" />
 <xar:if condition="$inline eq 1">
-    <xar:set name="dummy">xarTplSetPageTemplateName('module')</xar:set>
+    <!-- what is this? <xar:set name="dummy">xarTplSetPageTemplateName('module')</xar:set> -->
+<xar:else />
+    <xar:template type="module" file="admin-menu" />
 </xar:if>
 
 <xar:set name="urlargs">""</xar:set>
@@ -27,10 +29,31 @@
 <xar:if condition="isset($verbose)">
     <xar:set name="urlargs">$urlargs."&amp;verbose=".$verbose</xar:set>
 </xar:if>
+<xar:if condition="empty($sortby)">
+    <xar:set name="sortby">"importance"</xar:set>
+</xar:if>
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
 <div id="projectlist">
+
+    <xar:template
+        type="module" 
+        file="search-form" 
+        subdata="array('projecttype'=&gt;$projecttype,
+                        'sortby'=&gt;$sortby,
+                        'q'=&gt;$q,
+                        'verbose'=&gt;$verbose,
+                        'max_importance'=&gt;$max_importance,
+                        'max_priority'=&gt;$max_priority,
+                        'status'=&gt;$status,
+                        'memberid'=&gt;$memberid,
+                        'mymemberid'=&gt;$mymemberid,
+                        'teammembers'=&gt;$teammembers,
+                        'ttlactive'=&gt;$ttlactive,
+                        'ttldraft'=&gt;$ttldraft,
+                        'ttlarchive'=&gt;$ttlarchive,
+                        'ttlhold'=&gt;$ttlhold)" />
 
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project List</xar:mlstring></span></div>
     
@@ -43,83 +66,107 @@
         <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
             <tr>
         
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=project_name#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Project Name</xar:mlstring></a></th>
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=projecttype#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Type</xar:mlstring></a></th>
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=importance#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Importance</xar:mlstring></a></th>
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=priority#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Priority</xar:mlstring></a></th>
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=status#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Status</xar:mlstring></a></th>
-                <th><a href="&xar-modurl-xproject-admin-view;&amp;sortby=planned_end_date#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Date Due</xar:mlstring></a></th>
-                <th><xar:mlstring>Options</xar:mlstring></th>
+                <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=project_name#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Project Name</xar:mlstring></a></th>
+                <xar:if condition="$sortby ne 'projecttype'">
+                    <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=projecttype#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Type</xar:mlstring></a></th>
+                </xar:if>
+                <xar:if condition="$sortby ne 'importance'">
+                    <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=importance#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Importance</xar:mlstring></a></th>
+                </xar:if>
+                <xar:if condition="$sortby ne 'priority'">
+                    <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=priority#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Priority</xar:mlstring></a></th>
+                </xar:if>
+                <xar:if condition="$sortby ne 'status'">
+                    <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=status#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Status</xar:mlstring></a></th>
+                </xar:if>
+                <th class="xproject-list-header"><a href="&xar-modurl-xproject-admin-view;&amp;sortby=planned_end_date#$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:mlstring>Date Due</xar:mlstring></a></th>
+                <th class="xproject-list-header"><xar:mlstring>Options</xar:mlstring></th>
             </tr>
         
+            <xar:set name="$currentsortby">""</xar:set>
+        
             <xar:if condition="isset($items)">
-                <xar:loop name="$items">
-                    <tr><td class="xar-norm">
-                            <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$loop:item['projectid']#">#$loop:item['project_name']#</a>
+                <xar:foreach in="$items" value="$projectinfo">
+                
+                    <tr><td class="xproject-list-data">
+                            <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a>
                         </td>
                     
-                        <td class="xar-norm">
-                            #$loop:item['projecttype']#
-                        </td>
-                    
-                        <xar:set name="importance">$loop->item['importance']</xar:set>
-                        <td class="xar-norm" style="vertical-align: middle;">
-                            <div style="float: left; width: 65px;">
-                                <xar:data-output property="$properties['importance']" value="$importance" />
-                            </div>
-                            <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
-                                <div style="height: 7px;">
-                                    <xar:if condition="$importance gt 1">
-                                        <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$loop:item['projectid']#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top" /></a>
-                                    </xar:if>
-                                </div>
-                                <div style="height: 8px;">
-                                    <xar:if condition="$importance lt 9">
-                                        <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$loop:item['projectid']#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/down.gif" align="top" /></a>
-                                    </xar:if>
-                                </div>
-                            </div>
-                            <div style="clear: both;"></div>
+                        <xar:if condition="$sortby ne 'projecttype'">
+                            <td class="xproject-list-data">
+                                #$projectinfo['projecttype']#
+                            </td>
+                        </xar:if>
                         
+                        <xar:if condition="$sortby ne 'importance'">
+                            <td class="xproject-list-data" width="75">
+                                <div style="float: left; width: 65px;" class="xproject-list-data">
+                                    <xar:data-output property="$properties['importance']" value="$projectinfo['importance']" />
+                                </div>
+                                <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em; font-size: 1pt;">
+                                    <div style="height: 7px;">
+                                        <xar:if condition="$projectinfo['importance'] gt 1">
+                                            <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$projectinfo['projectid']#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top" /></a>
+                                        <xar:else />
+                                            <img src="modules/xproject/xarimages/spacer.gif" width="7" height="7" />
+                                        </xar:if>
+                                    </div>
+                                    <div style="height: 8px;">
+                                        <xar:if condition="$projectinfo['importance'] lt 9">
+                                            <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$projectinfo['projectid']#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/down.gif" align="top" /></a>
+                                        <xar:else />
+                                            <img src="modules/xproject/xarimages/spacer.gif" width="7" height="7" />
+                                        </xar:if>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </td>
+                        </xar:if>
+                                            
+                        <xar:if condition="$sortby ne 'priority'">
+                            <td class="xproject-list-data" width="35">
+                                <div style="float: left; width: 20px; text-align: right;" class="xproject-list-data">#$projectinfo['priority']#</div>
+                                <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em; font-size: 1pt;">
+                                    <div style="height: 7px;">
+                                        <xar:if condition="$projectinfo.priority gt 1">
+                                            <a href="&xar-modurl-xproject-admin-reprioritize;&amp;projectid=#$projectinfo.projectid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top" /></a>
+                                        <xar:else />
+                                            <img src="modules/xproject/xarimages/spacer.gif" width="7" height="7" />
+                                        </xar:if>
+                                    </div>
+                                    <div style="height: 8px;">
+                                        <xar:if condition="$projectinfo.priority lt 9">
+                                            <a href="&xar-modurl-xproject-admin-reprioritize;&amp;projectid=#$projectinfo.projectid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/down.gif" align="top" /></a>
+                                        <xar:else />
+                                            <img src="modules/xproject/xarimages/spacer.gif" width="7" height="7" />
+                                        </xar:if>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </td>
+                        </xar:if>
+                                            
+                        <xar:if condition="$sortby ne 'status'">
+                            <td class="xproject-list-data"><a href="&xar-modurl-xproject-admin-view;&amp;status=#$projectinfo['status']#">#$projectinfo['status']#</a></td>
+                        </xar:if>
                         
-                        </td>
+                        <xar:set name="planned_end_date">$projectinfo['planned_end_date']</xar:set>
+                        <td class="xproject-list-data"><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%b %d [%a]" /></td>
                     
-                        <td class="xar-norm">
-                            <div style="float: left; width: 20px; text-align: right;">#$loop:item['priority']#</div>
-                            <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
-                                <div style="height: 7px;">
-                                    <xar:if condition="$loop:item.priority gt 1">
-                                        <a href="&xar-modurl-xproject-admin-reprioritize;&amp;projectid=#$loop:item.projectid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/up.gif" align="top" /></a>
-                                    </xar:if>
-                                </div>
-                                <div style="height: 8px;">
-                                    <xar:if condition="$loop:item.priority lt 9">
-                                        <a href="&xar-modurl-xproject-admin-reprioritize;&amp;projectid=#$loop:item.projectid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'projectlist')"><img src="modules/xproject/xarimages/down.gif" align="top" /></a>
-                                    </xar:if>
-                                </div>
-                            </div>
-                            <div style="clear: both;"></div>
-                        </td>
-                    
-                        <td class="xar-norm"><a href="&xar-modurl-xproject-admin-view;&amp;status=#$loop:item['status']#">#$loop:item['status']#</a></td>
-                    
-                        <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
-                        <td class="xar-norm"><xar:data-output property="$properties['planned_end_date']" value="$planned_end_date" dateformat="%b %d, %Y [%A]" /></td>
-                    
-                        <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-admin-modify;&amp;projectid=#$loop:item['projectid']#"><img src="modules/xproject/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xproject-admin-delete;&amp;projectid=#$loop:item['projectid']#"><img src="modules/xproject/xarimages/button.delete.gif" border="0" /></a>
-                            <input type="checkbox" name="projectlist[#$loop->item['projectid']#]" style="vertical-align: top;" />    
-                        </td>
+                        <td class="xproject-list-data" style="text-align: center; width: 70px; vertical-align: top;"><div><a href="&xar-modurl-xproject-admin-modify;&amp;projectid=#$projectinfo['projectid']#"><img src="modules/xproject/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a href="&xar-modurl-xproject-admin-delete;&amp;projectid=#$projectinfo['projectid']#"><img src="modules/xproject/xarimages/button.delete.gif" align="top" border="0" /></a>
+                            <input type="checkbox" name="projectlist[#$projectinfo['projectid']#]" style="vertical-align: top; display: inline;" />    
+                        </div></td>
                 
                     </tr>
                     <xar:if condition="$verbose ge 1">
-                        <xar:set name="planned_start_date">$loop->item['planned_start_date']</xar:set>
-                        <xar:set name="actual_start_date">$loop->item['actual_start_date']</xar:set>
-                        <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
-                        <xar:set name="actual_end_date">$loop->item['actual_end_date']</xar:set>
-                        <xar:set name="this_clientid">$loop->item['clientid']</xar:set>
+                        <xar:set name="planned_start_date">$projectinfo['planned_start_date']</xar:set>
+                        <xar:set name="actual_start_date">$projectinfo['actual_start_date']</xar:set>
+                        <xar:set name="planned_end_date">$projectinfo['planned_end_date']</xar:set>
+                        <xar:set name="actual_end_date">$projectinfo['actual_end_date']</xar:set>
+                        <xar:set name="this_clientid">$projectinfo['clientid']</xar:set>
                         
-                        <tr><td class="xar-norm" colspan="5" style="padding-left: 25px;">
-                            <div class="xar-sub">
+                        <tr><td class="xproject-list-data" colspan="5" style="padding-left: 25px;">
+                            <div class="xar-sub" style="max-height: 200px; overflow: auto;">
                                 <div>
                                     <xar:if condition="$this_clientid ne $clientid">
                                         <a class="xar-norm" href="&xar-modurl-xproject-admin-view;&amp;clientid=#$this_clientid##$urlargs#" onclick="return loadContent(this.href,'projectlist')"><xar:data-output property="$properties['clientid']" value="$this_clientid" /></a>
@@ -128,7 +175,7 @@
                                     </xar:if>
                                 </div>
                                 <div>
-                                    #$loop:item['description']#
+                                    #$projectinfo['formatted_desc']#
                                 </div>
                                 <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
                                     <div>
@@ -155,22 +202,22 @@
                             </div>
                         </td></tr>
                     </xar:if>
-                </xar:loop>
+                </xar:foreach>
             </xar:if>
         </table>
         
-        <div style="text-align: right;"><em><xar:mlstring>Set status of selected projects</xar:mlstring></em>: <xar:data-input property="$properties['status']" name="newstatus" /><input type="submit" value="Go" /></div>
+        <div style="text-align: right;" class="xproject-gui"><xar:mlstring>Set status of selected projects</xar:mlstring>: <xar:data-input property="$properties['status']" name="newstatus" /><input type="submit" value="Go" /></div>
     
         </form>
 
+        <xar:if condition="isset($pager)">
+            <div class="xproject-gui" style="text-align: center;">
+                #$pager#
+            </div>
+        </xar:if>
+        
+        <div class="xproject-notes" style="text-align: center;"><xar:mlstring>Project importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</xar:mlstring></div>
     </div>
-    
-    <xar:if condition="isset($pager)">
-        <div class="xar-mod-foot" style="text-align: center;">
-            #$pager#
-        </div>
-    </xar:if>
-    
-    <div style="text-align: center;"><em><xar:mlstring>Project importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</xar:mlstring></em></div>
+    <div class="xar-mod-foot"></div>
 </div>
 

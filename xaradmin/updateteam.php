@@ -57,20 +57,24 @@ function xproject_admin_updateteam($args)
         }
     }
     
-    foreach($newmemberlist as $newmemberid) {
-        if(!in_array($newmemberid, $existingmembers)) {
-            // ADD TEAM MEMBER
-            if (!xarModAPIFunc('xproject',
-                                'team',
-                                'create',
-                                array('projectid'   => $projectid,
-                                    'memberid'      => $newmemberid,
-                                    'projectrole'   => "Team Member"))) {
-                return;
+    if(count($newmemberlist) > 0) {
+        foreach($newmemberlist as $newmemberid) {
+            if($newmemberid) {
+                if(!in_array($newmemberid, $existingmembers)) {
+                    // ADD TEAM MEMBER
+                    if (!xarModAPIFunc('xproject',
+                                        'team',
+                                        'create',
+                                        array('projectid'   => $projectid,
+                                            'memberid'      => $newmemberid,
+                                            'projectrole'   => "Team Member"))) {
+                        return;
+                    }
+                }
             }
         }
     }
-
+    
     xarSessionSetVar('statusmsg', xarML('Project Team Updated'));
 
     xarResponseRedirect($returnurl);

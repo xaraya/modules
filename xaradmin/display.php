@@ -15,7 +15,7 @@ function xproject_admin_display($args)
 {
     extract($args);
     if (!xarVarFetch('projectid', 'id', $projectid)) return;
-    if (!xarVarFetch('mode', 'str', $mode, $mode, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mode', 'str', $mode, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
 
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');

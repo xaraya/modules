@@ -30,7 +30,7 @@ function xproject_features_update($args)
 
     xarSessionSetVar('statusmsg', xarML('Feature Updated'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "features")));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "features")) ."#features");
 
     return true;
 }

@@ -14,7 +14,7 @@
 
 $modversion['name']         = 'xproject';
 $modversion['id']           = '665';
-$modversion['version']      = '3.4';
+$modversion['version']      = '4.1';
 $modversion['displayname']  = xarML('xProject');
 $modversion['description']  = 'Project Manager';
 $modversion['credits']      = 'docs/credits.txt';

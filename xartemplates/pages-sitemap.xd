@@ -9,7 +9,7 @@
 <xar:set name="bg_color">"#".$m_hex.$m_hex.$m_hex.$m_hex.$m_hex.$m_hex</xar:set>
 <xar:set name="textpct">(int)( ($m / 16) * 100 )</xar:set>
 
-<div class="xar-mod-body" id="pages_view" style="text-align: left; background-color: #$bg_color#; ">
+<div id="pages_view" style="text-align: left; background-color: #$bg_color#; ">
     <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
         <tr>
             <th><xar:mlstring>Page Hierarchy</xar:mlstring></th>

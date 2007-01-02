@@ -1,6 +1,8 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
+<xar:template type="module" file="admin-menu" />
+
 <div id="tasklist">
 
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Project Dashboard</xar:mlstring></span></div>
@@ -12,25 +14,25 @@
             <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
                 <tr>
             
-                    <th><xar:mlstring>Project</xar:mlstring></th>
-                    <th><xar:mlstring>Client</xar:mlstring></th>
-                    <th><xar:mlstring>Budget</xar:mlstring></th>
-                    <th><xar:mlstring>Target Date</xar:mlstring></th>
+                    <th class="xproject-list-header"><xar:mlstring>Project</xar:mlstring></th>
+                    <th class="xproject-list-header"><xar:mlstring>Client</xar:mlstring></th>
+                    <th class="xproject-list-header"><xar:mlstring>Budget</xar:mlstring></th>
+                    <th class="xproject-list-header"><xar:mlstring>Target Date</xar:mlstring></th>
                 </tr>
             
                 <xar:if condition="isset($activeprojects)">
                     <xar:foreach in="$top_projects" value="$projectinfo">
-                        <tr><td class="xar-norm">
+                        <tr><td class="xproject-list-data">
                                 <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a>
                             </td>
                             
-                            <td class="xar-norm">
+                            <td class="xproject-list-data">
                                 <a class="xar-norm" href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$properties['clientid']" value="$projectinfo['clientid']" /></a>
                             </td>
                         
-                            <td class="xar-norm">$#$projectinfo['budget']#</td>
+                            <td class="xproject-list-data" style="text-align: right;">$ #$projectinfo['formatted_budget']#</td>
                         
-                            <td class="xar-norm"><xar:data-output property="$properties['planned_end_date']" value="$projectinfo['planned_end_date']" dateformat="%d-%b-%Y" /></td>
+                            <td class="xproject-list-data" style="text-align: right;"><xar:data-output property="$properties['planned_end_date']" value="$projectinfo['planned_end_date']" dateformat="%d-%b-%Y" /></td>
                         
                         </tr>
                     </xar:foreach>
@@ -61,7 +63,7 @@
                     <xar:loop name="$activeprojects">
                         <xar:set name="planned_end_date">$loop->item['planned_end_date']</xar:set>
                         <xar:set name="ownerid">$loop->item['ownerid']</xar:set>
-                        <xar:set name="budget">$loop->item['budget']</xar:set>
+                        <xar:set name="budget">$loop->item['formatted_budget']</xar:set>
                         <xar:set name="this_clientid">$loop->item['clientid']</xar:set>
                             
                         <tr>
@@ -122,7 +124,7 @@
                                         <ol>
                                             <xar:foreach in="$ownerprojects" value="$projectinfo">
                                                 <li><xar:if condition="$projectinfo['clientid'] gt 0"><div><a class="xar-norm" href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$properties['clientid']" value="$projectinfo['clientid']" /></a></div></xar:if>
-                                                    <div><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a> ($<xar:data-output property="$properties['estimate']" value="$projectinfo['estimate']" />)</div>
+                                                    <div><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a> - $<xar:data-output property="$properties['estimate']" value="$projectinfo['formatted_estimate']" /></div>
                                                     <xar:set name="projectid">$projectinfo['projectid']</xar:set>
                                                     <xar:set name="estimatetotal">$estimatetotal + $projectinfo['estimate']</xar:set>
                                             </xar:foreach>

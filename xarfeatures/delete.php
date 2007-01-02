@@ -70,7 +70,7 @@ function xproject_features_delete($args)
     }
     xarSessionSetVar('statusmsg', xarML('Feature Deleted'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "features")));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "features")) ."#features");
 
     return true;
 }

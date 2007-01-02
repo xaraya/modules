@@ -1,8 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
+<xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
 <xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+<xar:style scope="module" file="xproject" />
 
 <xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
 <xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
@@ -14,44 +16,53 @@
     
         <tr><th align="center" colspan="2">#$menutitle#</th></tr>
         <tr>
-            <td width="65" rowspan="2"><img src="modules/xproject/xarimages/admin.jpg" /></td>
+            <td width="65" rowspan="2"><a href="&xar-modurl-xproject-user-main;"><img src="modules/xproject/xarimages/admin.jpg" style="border: 0px;" /></a></td>
             <td>
             <table border="0" width="100%">
             <tr align="center" valign="middle">
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
-                                        and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
-                                        and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )">
-                        <strong><xar:mlstring>Published Projects</xar:mlstring></strong>
+                                        and $currentmodtype eq 'admin'
+                                        and $currentmodfunc eq 'overview'">
+                        <strong><xar:mlstring>Overview</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-user-main;"><xar:mlstring>Published Projects</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-admin-overview;" class="xproject-menu-link"><xar:mlstring>Overview</xar:mlstring></a>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
+                    <xar:if condition="$currentmodname eq 'xproject' 
+                                        and $currentmodtype eq 'admin'
+                                        and $currentmodfunc eq 'dashboard'">
+                        <strong><xar:mlstring>Dashboard</xar:mlstring></strong>
+                    <xar:else />
+                        <a href="&xar-modurl-xproject-admin-dashboard;" class="xproject-menu-link"><xar:mlstring>Dashboard</xar:mlstring></a>
+                    </xar:if>
+                </td>
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin'
                                         and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )">
                         <strong><xar:mlstring>Search Projects</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-admin-main;"><xar:mlstring>Search Projects</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-admin-main;" class="xproject-menu-link"><xar:mlstring>Search Projects</xar:mlstring></a>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin'
                                         and $currentmodfunc eq 'new'">
                         <strong><xar:mlstring>New Project</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-admin-new;"><xar:mlstring>New Project</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-admin-new;" class="xproject-menu-link"><xar:mlstring>New Project</xar:mlstring></a>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
                                         and $currentmodfunc eq 'settings'">
                         <strong><xar:mlstring>My Settings</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-user-settings;"><xar:mlstring>My Settings</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-user-settings;" class="xproject-menu-link"><xar:mlstring>My Settings</xar:mlstring></a>
                     </xar:if>
                 </td>
             
@@ -60,7 +71,16 @@
         <tr><td>
             <table border="0" width="100%">
             <tr align="center" valign="middle">
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
+                    <xar:if condition="$currentmodname eq 'xproject' 
+                                        and $currentmodtype eq 'admin' 
+                                        and $currentmodfunc eq 'agenda'">
+                        <strong><xar:mlstring>Agenda</xar:mlstring></strong>
+                    <xar:else />
+                        <a href="&xar-modurl-xproject-admin-agenda;" class="xproject-menu-link"><xar:mlstring>Agenda</xar:mlstring></a>
+                    </xar:if>
+                </td>
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin' 
                                         and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )
@@ -68,10 +88,10 @@
                                         and $status eq $draftstatus">
                         <strong><xar:mlstring>My Drafts</xar:mlstring></strong>
                     <xar:else />
-                        <xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$draftstatus#&amp;sortby=priority&amp;memberid=#$mymemberid#"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if>
+                        <xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$draftstatus#&amp;sortby=priority&amp;memberid=#$mymemberid#" class="xproject-menu-link"><xar:mlstring>My Drafts</xar:mlstring></a></xar:if>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin'
                                         and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )
@@ -79,26 +99,26 @@
                                         and $status eq $activestatus">
                         <strong><xar:mlstring>My Active Projects</xar:mlstring></strong>
                     <xar:else />
-                        <xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$activestatus#&amp;sortby=priority&amp;memberid=#$mymemberid#"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if>
+                        <xar:if condition="$mymemberid gt 0"><a href="&xar-modurl-xproject-admin-main;&amp;status=#$activestatus#&amp;sortby=priority&amp;memberid=#$mymemberid#" class="xproject-menu-link"><xar:mlstring>My Active Projects</xar:mlstring></a></xar:if>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin' 
                                         and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )
                                         and $status eq $archivestatus">
                         <strong><xar:mlstring>Archive</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-admin-main;&amp;status=#$archivestatus#"><xar:mlstring>Archive</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-admin-main;&amp;status=#$archivestatus#" class="xproject-menu-link"><xar:mlstring>Archive</xar:mlstring></a>
                     </xar:if>
                 </td>
-                <td width="25%">
+                <td width="20%" class="xproject-menu-item">
                     <xar:if condition="$currentmodname eq 'xproject' 
                                         and $currentmodtype eq 'admin'
                                         and $currentmodfunc eq 'modifyconfig'">
                         <strong><xar:mlstring>Configuration</xar:mlstring></strong>
                     <xar:else />
-                        <a href="&xar-modurl-xproject-admin-modifyconfig;"><xar:mlstring>Configuration</xar:mlstring></a>
+                        <a href="&xar-modurl-xproject-admin-modifyconfig;" class="xproject-menu-link"><xar:mlstring>Configuration</xar:mlstring></a>
                     </xar:if>
                 </td>
             
@@ -108,58 +128,6 @@
         <xar:if condition="!isset($q)">
             <xar:set name="q">""</xar:set>
         </xar:if>
-        
-        <style>
-            .xar-sub select, .xar-sub input {
-                font-size: 100%;
-                }
-        </style>
-    
-        <xar:if condition="!empty($showsearch)">
-            <tr><td colspan="3" align="center" class="xar-sub">
-                <xar:if condition="!isset($showajax)">
-                    <xar:set name="action">"javascript:loadContent('".xarModURL('xproject','admin','view')."','projectlist','POST','searchprojects');"</xar:set>
-                <xar:else />
-                    <xar:set name="action">"&xar-modurl-xproject-admin-view;"</xar:set>
-                </xar:if>
-                <form method="post" action="#$action#" name="searchprojects" id="searchprojects" >
-                
-                <input type="hidden" name="sortby" value="#$sortby#" />
-                
-                <div style="margin: 2px;">
-                    <xar:mlstring>Search: </xar:mlstring><input type="text" name="q" value="#$q#" size="10" />
-                    <xar:data-input property="$properties['projecttype']" name="projecttype" value="$projecttype" />
-                    <xar:mlstring>Min Importance: </xar:mlstring><xar:data-input property="$properties['importance']" name="max_importance" value="$max_importance" />
-                    <xar:mlstring>Min Priority: </xar:mlstring><xar:data-input property="$properties['priority']" name="max_priority" value="$max_priority" />
-                </div>
-                
-                <div style="margin: 2px;">
-                    <xar:mlstring>Status: </xar:mlstring><xar:data-input property="$properties['status']" name="status" value="$status" />
-                    <xar:if condition="count($teammembers) gt 0">
-                        <select name="memberid">
-                            <option value=""><xar:mlstring>Filter by Project Member</xar:mlstring></option>
-                            <xar:foreach in="$teammembers" value="$memberinfo">
-                                <xar:set name="member_id">$memberinfo['memberid']</xar:set>
-                                <xar:if condition="$member_id eq $memberid" >
-                                    <option value="#$memberinfo.memberid#" selected="selected">#$memberinfo.membername#</option>
-                                <xar:else />
-                                    <option value="#$memberinfo.memberid#">#$memberinfo.membername#</option>
-                                </xar:if>
-                            </xar:foreach>
-                        </select>
-                    </xar:if>
-                    <input type="submit" value="Go"/>
-                    <xar:data-input type="checkbox" name="verbose" value="$verbose" />&nbsp;<xar:mlstring>Details</xar:mlstring>
-                </div>
-                
-                </form>
-            </td></tr>
-        </xar:if>    
-    
-        <xar:if condition="!empty($statusmsg)">
-            <tr><td colspan="3" align="center"><strong>#$statusmsg#</strong></td></tr>
-        </xar:if>
     
     </table>
-    <br />
 </xar:if>

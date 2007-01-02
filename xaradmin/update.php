@@ -20,6 +20,7 @@ function xproject_admin_update($args)
     if (!xarVarFetch('project_name', 'str:1:', $project_name, $project_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cached_private', 'str:1:', $cached_private, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('summary', 'str::', $summary, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid', 'id', $clientid, $clientid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ownerid', 'id', $ownerid, $ownerid, XARVAR_NOT_REQUIRED)) return;
@@ -32,6 +33,7 @@ function xproject_admin_update($args)
     if (!xarVarFetch('importance', 'str::', $importance, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cached_importance', 'str::', $cached_importance, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projecttype', 'str::', $projecttype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('haspages', 'checkbox::', $haspages, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('thumbnail', 'str::', $thumbnail, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('previewimage', 'str::', $previewimage, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('previewurl', 'str::', $previewurl, '', XARVAR_NOT_REQUIRED)) return;
@@ -43,15 +45,15 @@ function xproject_admin_update($args)
     if (!xarVarFetch('actual_start_date', 'str::', $actual_start_date, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('actual_end_date', 'str::', $actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cached_actual_end_date', 'str::', $cached_actual_end_date, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cached_hours_planned', 'str::', $cached_hours_planned, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cached_hours_spent', 'str::', $cached_hours_spent, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cached_hours_remaining', 'str::', $cached_hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('estimate', 'str::', $estimate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('probability', 'str::', $probability, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('budget', 'str::', $budget, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'float::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cached_hours_planned', 'float::', $cached_hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'float::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cached_hours_spent', 'float::', $cached_hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'float::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cached_hours_remaining', 'float::', $cached_hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('estimate', 'float::', $estimate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('probability', 'int::', $probability, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('budget', 'float::', $budget, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('associated_sites', 'array::', $associated_sites, $associated_sites, XARVAR_NOT_REQUIRED)) return;
 
@@ -173,6 +175,7 @@ function xproject_admin_update($args)
                         'project_name'      => $project_name,
                         'reference'         => $reference,
                         'private'           => $private,
+                        'summary'           => $summary,
                         'description'       => $description,
                         'clientid'          => $clientid,
                         'ownerid'           => $ownerid,

@@ -21,6 +21,7 @@ function xproject_userapi_get($args)
                   reference,
                   project_name,
                   private,
+                  summary,
                   description,
                   clientid,
                   ownerid,
@@ -28,6 +29,7 @@ function xproject_userapi_get($args)
                   priority,
                   importance,
                   projecttype,
+                  haspages,
                   thumbnail,
                   previewimage,
                   previewurl,
@@ -61,6 +63,7 @@ function xproject_userapi_get($args)
           $reference,
           $project_name,
           $private,
+          $summary,
           $description,
           $clientid,
           $ownerid,
@@ -68,6 +71,7 @@ function xproject_userapi_get($args)
           $priority,
           $importance,
           $projecttype,
+          $haspages,
           $thumbnail,
           $previewimage,
           $previewurl,
@@ -92,18 +96,27 @@ function xproject_userapi_get($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
+    
+    if(preg_match("/<br\\s*?\/??>/i", $description)) {
+        $formatted_desc = $description;
+    } else {
+        $formatted_desc = nl2br($description);
+    }
 
     $item = array('projectid'           => $projectid,
                   'reference'           => $reference,
                   'project_name'        => $project_name,
                   'private'             => $private,
+                  'summary'             => $summary,
                   'description'         => $description,
+                  'formatted_desc'      => $formatted_desc,
                   'clientid'            => $clientid,
                   'ownerid'             => $ownerid,
                   'status'              => $status,
                   'priority'            => $priority,
                   'importance'          => $importance,
                   'projecttype'         => $projecttype,
+                  'haspages'            => $haspages,
                   'thumbnail'           => $thumbnail,
                   'previewimage'        => $previewimage,
                   'previewurl'          => $previewurl,

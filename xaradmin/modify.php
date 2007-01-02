@@ -5,6 +5,7 @@ function xproject_admin_modify($args)
     extract($args);
 
     if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('inline',     'str::',     $inline,     "",     XARVAR_NOT_REQUIRED)) return;
 
     if(!xarModLoad('addressbook', 'user')) return;
 
@@ -27,7 +28,13 @@ function xproject_admin_modify($args)
                             'getall',
                             array('projectid' => $projectid));
 
-    $data = array();
+    if($inline) {
+        $data = array();
+    } else {
+        $data = xarModAPIFunc('xproject', 'admin', 'menu');
+    }
+    
+    $data['inline'] = $inline;
 
     $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 

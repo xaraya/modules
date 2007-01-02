@@ -1,0 +1,188 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head"><span style="xar-mod-title"><xar:mlstring>An Introduction to xProject and xTasks</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <p>The Project is the fundamental unit of measuring progress towards specific goals. It can be a project to 
+    develop open source modules that run on a GPL protected CMS platform like Xaraya or Postnuke. It could be
+    a project to organize a new management structure for an organization in change. A project is what we, in
+    the web development field, call an "arbitrary term", like a widget, for you business minded folks out
+    there. It could be a party to plan, or a quest to complete, or a self-help program to follow. Whatever it
+    is, your project shares in common the same elements as most others. Because of this, xProject can help you
+    organize your project, and turn it from an inspirational brainchild to a plan of attack.</p>
+    
+    <p>Let's say that your project is "Defeat Boss Morgphragam". The first question you want to ask yourself is
+    "Why?". Why do you want to defeat big ole Morg? Are you doing it for yourself or for someone else? Did he
+    kill your family or did the princess promise her hand as part of a bargain?</p>
+    
+    <h3>The Project Owner / Client</h3>
+    
+    <p>Your Project's most important aspect is the Client. Often, you may find yourself as your own client. If you
+    do so, it means that you are learning how to be your own best client as well. Otherwise, the Client will be
+    a contact of yours that has commissioned you for the project in some fashion. If you have questions about
+    the project or need approval for some aspect of the project (or need to know who to give Morg's head), the
+    Client will either be the person you need to talk to, or know the person that you need to talk to.</p>
+    
+    <h3>The Project Team</h3>
+    
+    <p>Additional contacts can be added to each project as team members. Maybe there is a pirate and a ninja that
+    are willing to help you defeat Morg. Additional client contacts can be added as team members as well. Maybe
+    princess has a few friends that are also willing to lend a hand or some advise.</p>
+    
+    <h3>Types of Projects</h3>
+    
+    <p>The second most import aspect of a project is the TYPE of project. This is where you get to differentiate a
+    project from a quest and a website from a print design. Later, when you've got more than one or two different
+    projects that you are working on, it becomes helpful to separate your college chemistry projects from your
+    Warcraft character's quest list.</p>
+    
+    <h3>Project Description</h3>
+    
+    <p>If a project begins with some sort of document (like an RFP...) the contents of that document should be
+    copied to the project's description field. This field has it's own tab in the compact display and scrolls
+    inside a shorter area to conserve display in the "show all" view.</p>
+    
+    <h3>Deadlines and Due Dates</h3>
+    
+    <p>What will often be the most important part of every project is it's deadline. In xProject, we call this
+    your "Planned End Date". If you know what day you want to get started, you can also give your project a
+    "Planned Start Date". The "Actual" date fields can be modified, but will be triggered by the first Worklog
+    entry for any task in the project. The Actual End Date will set when the project is closed.</p>
+    
+    <h3>Project Hours</h3>
+    
+    <p>Next most important will be how much actual time do you plan on spending on this project? Think "man-hours".
+    After the project begins and it's associated tasks are created and completed, the xTasks worklog will
+    continually update the projects spent and remaining hours accordingly. Once completed, the hours planned can
+    be compared against the hours spent to determine the accuracy of your project estimates. If you plan four
+    hours for every new quest and they start taking six, it's good to know, so that you can adjust your plan
+    accordingly.</p>
+    
+    <h3>Custom Project Fields</h3>
+    
+    <p>Everyone loves to use their own custom variables to track information about projects, and xProject provides
+    for that with Xaraya's DynamicData component. New fields of virtually any type can be added that (optionally)
+    can be connected to other data components for optional field values. Some more popular ideas are using some
+    combination of uploads properties (or try the Uploads module) to provide ways to publish access to project
+    documents, such as comps, screenshots, contracts, etc. All of this data can be conveniently accessed from the
+    Extra Data tab of the compact display.</p>
+    
+    <h3>Project Features</h3>
+    
+    <p>Most projects have something about them that makes them stand apart. Maybe there is a spear and magic helmet
+    as the quest reward. Maybe the new computer program organizes mp3s by genre and detailed listener demographic
+    information. Maybe your client wants RSS capabilities. Maybe your Flash animation lets the user dogfight with
+    Santa's reindeer. In xProject, we call these "Features". We put the "Bugs" in xTasks. (it's a bug, it's a
+    feature? nevermind...). You can set a features importance to reflect the client's priorities. Each feature
+    can also indicate the date that it became approved as part of the project, as well as the date that it was
+    eventually made available, such as in a staged release on larger projects.</p>
+    
+    <h3>Project Pages</h3>
+    
+    <p>Some projects, like websites and multimedia, involve specific pages of information that are required. They
+    may even be required in a hierarchy, such as a sitemap. Each page can be explicitly listed in the project,
+    including details and/or client directives, as well as it's association with a selected parent page. The
+    sitemap view is available to display the hierarchy in a more readable format.</p>
+    
+    <h3>Directly Associated Websites</h3>
+    
+    <p>The capacity exists to use the accessmethods module for it's associated sites property. This allows the
+    potential to display links to each page in a project for each site that displays them; a handy reference 
+    for both the project team and clients.</p>
+    
+    <h3>The Change Log</h3>
+    
+    <p>Every time that a project (or associated page or feature, but not yet tasks) is modified, the action is 
+    recorded in the change log, so that users maintain responsibility for their actions. Log entries cannot
+    be modified or deleted.</p>
+    
+    <h3>Working with xTasks</h3>
+    
+    <p>The xTasks module will allow you to prioritize individual tasks across projects. It works like most standard
+    ToDo list type applications, even allowing you to create new master tasks for stuff like your grocery list,
+    should you so choose. Most of the same fields exist for a task that exist for a project. It should have a
+    deadline, in the Planned End Date. You could specify whether it is more or less important in the long-term
+    and more or less of a priority today or this week. It is more important that the task get completed than
+    that it get recorded accurately. At least if it gets recorded, even as just a brief note, you have a place
+    to indicate that it is completed.</p>
+    
+    <h3>Tasklist Display Options</h3>
+    
+    <p>Looking in the task worklist for a project will also provide the "options" link. This link will allow you
+    to control which columns are displayed in the tasklist. I don't display the dates, age, percent, description
+    or priority for mine. It's a personal preference. Find your own, if you like. That's what the options are
+    there for.</p>
+    
+    <h3>Documenting Work Performed</h3>
+    
+    <p>Inside of a task, there is yet more to explore. The Tasks hours can be changed manually, but they will also 
+    automatically be updated by entries to the Worklog, listed below the task. Previous worklog entries for the
+    task will also be shown. When you have performed a task, or a significant part of it (or are just clocking
+    out for the day), you click "Document Work Performed". Always document your work. It can be your best asset
+    if you are ever faced with justifying your position or the hours spent on a project.</p>
+    
+    <p>When you document new work, note the amount of time, in hours that you put in on it, if any. Entries of zero
+    hours can be used to indicate when relevant information was received and/or where to find it.</p>
+    
+    <h3>Working with Sub-Tasks</h3>
+    
+    <p>Any time that a given task starts to grow in complexity, it is wise to continue breaking it down into 
+    manageable parts as sub-tasks, taking as little as a day to complete, or being depended on for the
+    completion of the parent task overall. These subtasks will record hours worked in the same way as a primary
+    task, also pushing updates to the parent task before they are passed to the project itself. Closing the last
+    non-Closed task in a sub-task list will automatically direct the user to a form for closing the parent task
+    itself, allowing it to be treated as a milestone.</p>
+    
+    <h3>The Worklog</h3>
+    
+    <p>The projects Worklog tab will display all of the worklog entries made under tasks for that project. This
+    serves as a rolling review of current progress on the project, or where you last left off, if it's been
+    awhile.</p>
+    
+    <h3>Possibilities</h3>
+    
+    <p>Pages can additionally be set up to display a summarized statement of services by project, including the
+    total hours worked (for each day of the project, or for each task, optionally), if needed. </p>
+    
+    
+    
+    
+    
+    
+    
+    
+    <h4>Project Roles:</h4>
+    <ul>
+    <li>Site Admin [backend setup and configuration]
+    <li>Project Management Coordinator [access to all non-draft projects]
+    <li>Project Manager [access to modify project details]
+    <li>Project Team [access to view limited project data, financials exluded, work on tasks and perform associated data rollups to the project]
+    <li>Client [access to view limited project data, estimate financials excluded, and any assigned tasks]
+    </ul>
+    <br /><br />
+    <h4>Project Pipeline:</h4>
+    <ol>
+    <li>Draft - a new project is created with whatever minimal information is at hand. the new project can later be modified to update the level of importance, priority, and a host of other details.
+    <li>Prospecting - (move to CRM) 
+    <li>Qualification - the prospects ability to finance the project is considered
+    <li>Needs Analysis - the project concept is compared against the prospects needs
+    <li>Value Proposition - the project concept is refined
+    <li>ID Decision Makers - the project approvers are identified and added to the project team list so that they can later be assigned to approve items
+    <li>Perception Analysis - the priorities and stakes of all stakeholders are used to define the importance of key tasks
+    <li>Proposal / Price Quote - project workscope is submitted with an estimate 
+    <li>Negotiation / Review - the estimate is compared with the project scope by stakeholders and contractors, potentially reducing or even increasing the number of tasks involved to fill out missed items or to massage the workscope in order to fit proposed budgets 
+    <li>Closed Won - the project is confirmed, pending receipt of any initial payment indicated in the contract
+    <li>Closed Lost - the project is no longer being planned and all associated tasks must be closed or deleted as well
+    <li>R &amp; D - project feasibility must sometimes be determined before active development can begin
+    <li>Hold - clients that wish to postpone discussion of active development will have their projects identified so that they do not become a priority
+    <li>Active - when work on a project begins, it becomes active, and remains so until all required tasks are completed (and any postmortem is established, as well as final payment received) 
+    <li>Archive - unless/until a project begins a second phase of development, it is archived for reference
+    </ol>
+
+
+    Being on a Project Team...
+
+</div>
+<div class="xar-mod-foot"></div>

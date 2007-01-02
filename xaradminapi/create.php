@@ -49,6 +49,7 @@ function xproject_adminapi_create($args)
                   project_name,
                   reference,
                   private,
+                  summary,
                   description,
                   clientid,
                   ownerid,
@@ -71,13 +72,14 @@ function xproject_adminapi_create($args)
                   probability,
                   budget,
                   associated_sites)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array(
               $nextId,
               $project_name,
               $reference,
               $private ? $private : "",
+              $summary,
               $description,
               $clientid,
               $ownerid,
@@ -105,7 +107,21 @@ function xproject_adminapi_create($args)
     if (!$result) return;
 
     $projectid = $dbconn->PO_Insert_ID($xprojecttable, 'xar_projectid');
-
+    
+    
+    // ADD TEAM MEMBER
+    $newmemberid = xarModGetUserVar('xproject', 'mymemberid');
+    if($newmemberid) {
+        if (!xarModAPIFunc('xproject',
+                            'team',
+                            'create',
+                            array('projectid'   => $projectid,
+                                'memberid'      => $newmemberid,
+                                'projectrole'   => "Team Member"))) {
+            return;
+        }
+    }
+        
     $logdetails = "Project created.";
     $logid = xarModAPIFunc('xproject',
                         'log',

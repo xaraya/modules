@@ -56,7 +56,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>5</order>
-      <validation></validation>
+      <validation>:25</validation>
     </property>
     <property name="tech_notes">
       <id>20</id>
@@ -66,7 +66,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>6</order>
-      <validation></validation>
+      <validation>:25</validation>
     </property>
     <property name="date_approved">
       <id>21</id>

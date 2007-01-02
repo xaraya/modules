@@ -64,6 +64,7 @@ function xproject_adminapi_update($args)
               SET project_name =?,
                   reference =?,
                   private = ?,
+                  summary = ?,
                   description = ?,
                   clientid = ?,
                   ownerid = ?,
@@ -92,6 +93,7 @@ function xproject_adminapi_update($args)
               $project_name,
               $reference,
               $private,
+              $summary,
               $description,
               $clientid,
               $ownerid,
@@ -115,7 +117,7 @@ function xproject_adminapi_update($args)
               $budget,
               $associated_sites,
               $projectid);
-
+              
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

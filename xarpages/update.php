@@ -30,7 +30,7 @@ function xproject_pages_update($args)
 
     xarSessionSetVar('statusmsg', xarML('Page Updated'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "pages")));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "pages")) ."#pages");
 
     return true;
 }

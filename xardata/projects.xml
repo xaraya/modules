@@ -38,139 +38,139 @@
       <order>3</order>
       <validation></validation>
     </property>
-    <property name="description">
+    <property name="summary">
       <id>4</id>
-      <label>Description</label>
+      <label>Summary</label>
       <type>textarea_medium</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>4</order>
-      <validation></validation>
+      <validation>:25</validation>
     </property>
-    <property name="clientid">
+    <property name="description">
       <id>5</id>
-      <label>Client</label>
-      <type>contactlist</type>
+      <label>Description</label>
+      <type>textarea_medium</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>5</order>
-      <validation></validation>
+      <validation>:25</validation>
     </property>
-    <property name="ownerid">
+    <property name="clientid">
       <id>6</id>
-      <label>Bus Dev Rep</label>
-      <type>userlist</type>
+      <label>Client</label>
+      <type>contactlist</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>6</order>
       <validation></validation>
     </property>
-    <property name="status">
+    <property name="ownerid">
       <id>7</id>
+      <label>Account Executive</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>8</id>
       <label>Project Pipeline</label>
       <type>dropdown</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>7</order>
+      <order>8</order>
       <validation>;Draft;Prospecting;Qualification;Needs Analysis;Value Proposition;ID Decision Makers;Perception Analysis;Proposal/Price Quote;Negotiation/Review;Closed Won;Closed Lost;R & D;Hold;Active;Archive</validation>
     </property>
     <property name="priority">
-      <id>8</id>
+      <id>9</id>
       <label>Priority</label>
       <type>dropdown</type>
       <default>4</default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>8</order>
+      <order>9</order>
       <validation>1;2;3;4;5;6;7;8;9</validation>
     </property>
     <property name="importance">
-      <id>9</id>
+      <id>10</id>
       <label>Importance</label>
       <type>dropdown</type>
       <default>4</default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>9</order>
+      <order>10</order>
       <validation>1,Essential;3,Rather;5,Somewhat;7,Not Very;9,None</validation>
     </property>
     <property name="projecttype">
-      <id>10</id>
+      <id>11</id>
       <label>Project Type</label>
       <type>dropdown</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
-      <order>10</order>
+      <order>11</order>
+      <validation>;Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
+    </property>
+    <property name="haspages">
+      <id>12</id>
+      <label>Project Pages</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>12</order>
       <validation>;Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
     </property>
     <property name="thumbnail">
-      <id>11</id>
+      <id>13</id>
       <label>Thumbnail</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>3</status>
-      <order>11</order>
+      <order>13</order>
       <validation></validation>
     </property>
     <property name="previewimage">
-      <id>12</id>
+      <id>14</id>
       <label>Preview</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>3</status>
-      <order>12</order>
+      <order>14</order>
       <validation></validation>
     </property>
     <property name="previewurl">
-      <id>13</id>
+      <id>15</id>
       <label>Project URL</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
-      <order>13</order>
+      <order>15</order>
       <validation></validation>
     </property>
     <property name="private">
-      <id>14</id>
+      <id>16</id>
       <label>Private</label>
       <type>checkbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
-      <order>14</order>
+      <order>16</order>
       <validation></validation>
     </property>
     <property name="date_approved">
-      <id>15</id>
-      <label>Date Approved</label>
-      <type>calendar</type>
-      <default></default>
-      <source>dynamic_data</source>
-      <status>1</status>
-      <order>15</order>
-      <validation>date</validation>
-    </property>
-    <property name="planned_start_date">
-      <id>16</id>
-      <label>Planned Start Date</label>
-      <type>calendar</type>
-      <default></default>
-      <source>dynamic_data</source>
-      <status>1</status>
-      <order>16</order>
-      <validation>date</validation>
-    </property>
-    <property name="planned_end_date">
       <id>17</id>
-      <label>Planned End Date</label>
+      <label>Date Approved</label>
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
@@ -178,9 +178,9 @@
       <order>17</order>
       <validation>date</validation>
     </property>
-    <property name="actual_start_date">
+    <property name="planned_start_date">
       <id>18</id>
-      <label>Actual Start Date</label>
+      <label>Planned Start Date</label>
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
@@ -188,9 +188,9 @@
       <order>18</order>
       <validation>date</validation>
     </property>
-    <property name="actual_end_date">
+    <property name="planned_end_date">
       <id>19</id>
-      <label>Actual End Date</label>
+      <label>Planned End Date</label>
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
@@ -198,29 +198,29 @@
       <order>19</order>
       <validation>date</validation>
     </property>
-    <property name="hours_planned">
+    <property name="actual_start_date">
       <id>20</id>
-      <label>Hours Planned</label>
-      <type>textbox</type>
+      <label>Actual Start Date</label>
+      <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>20</order>
-      <validation>:8</validation>
+      <validation>date</validation>
     </property>
-    <property name="hours_spent">
+    <property name="actual_end_date">
       <id>21</id>
-      <label>Hours Spent</label>
-      <type>textbox</type>
+      <label>Actual End Date</label>
+      <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>21</order>
-      <validation>:8</validation>
+      <validation>date</validation>
     </property>
-    <property name="hours_remaining">
+    <property name="hours_planned">
       <id>22</id>
-      <label>Hours Remaining</label>
+      <label>Hours Planned</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -228,27 +228,27 @@
       <order>22</order>
       <validation>:8</validation>
     </property>
-    <property name="estimate">
+    <property name="hours_spent">
       <id>23</id>
-      <label>Hours Remaining</label>
+      <label>Hours Spent</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>23</order>
-      <validation>:12</validation>
+      <validation>:8</validation>
     </property>
-    <property name="probability">
+    <property name="hours_remaining">
       <id>24</id>
-      <label>Probability</label>
+      <label>Hours Remaining</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>24</order>
-      <validation>:3</validation>
+      <validation>:8</validation>
     </property>
-    <property name="budget">
+    <property name="estimate">
       <id>25</id>
       <label>Hours Remaining</label>
       <type>textbox</type>
@@ -256,16 +256,36 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>25</order>
-      <validation>:12</validation>
+      <validation>:8</validation>
+    </property>
+    <property name="probability">
+      <id>26</id>
+      <label>Probability</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>26</order>
+      <validation>:3</validation>
+    </property>
+    <property name="budget">
+      <id>27</id>
+      <label>Hours Remaining</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>27</order>
+      <validation>:8</validation>
     </property>
     <property name="associated_sites">
-      <id>26</id>
+      <id>287</id>
       <label>Associated Sites</label>
       <type>multiselect</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
-      <order>26</order>
+      <order>28</order>
       <validation></validation>
     </property>
   </properties>

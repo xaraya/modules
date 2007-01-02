@@ -3,6 +3,10 @@
 function xproject_userapi_countmemberprojects($args)
 {
     extract($args);
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     if (!isset($private)) {
         $private = "";
@@ -15,6 +19,12 @@ function xproject_userapi_countmemberprojects($args)
     }
     if (!isset($clientid) || !is_numeric($clientid)) {
         $clientid = 0;
+    }
+    if (!isset($memberid) || !is_numeric($memberid)) {
+        $memberid = 0;
+    }
+    if ($memberid == 0 && isset($mymemberid)) {
+        $memberid = $mymemberid;
     }
     if (!isset($projecttype)) {
         $projecttype = "";
@@ -38,7 +48,15 @@ function xproject_userapi_countmemberprojects($args)
             AND b.memberid = $memberid";
 
     if($private == "public") $sql .= " AND private != '1'";
-    if(!empty($status)) $sql .= " AND status = '".$status."'";
+    if($status == "New") {
+        $sql .= " AND status NOT IN ('".$draftstatus."','Closed Won','Closed Lost', 'R & D','Hold','".$activestatus."','".$archivestatus."')";
+    } elseif($status == "Hold") {
+        $sql .= " AND status NOT IN ('".$draftstatus."','".$activestatus."','".$archivestatus."')";
+    } elseif(!empty($status)) {
+        $sql .= " AND status = '".$status."'";
+    } else {
+        $sql .= " AND status != '".$archivestatus."'";
+    }
     if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
     if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
     if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";

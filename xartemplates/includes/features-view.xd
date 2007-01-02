@@ -3,7 +3,7 @@
 <xar:set name="features_objectid">xarModGetVar('xproject','features_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="2" itemid="$features_objectid" />
 
-<div class="xar-mod-body">
+<div>
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
@@ -53,7 +53,5 @@
 
 
 </table>
-
-<br />
 
 </div>

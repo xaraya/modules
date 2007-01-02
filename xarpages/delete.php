@@ -71,7 +71,7 @@ function xproject_pages_delete($args)
     }
     xarSessionSetVar('statusmsg', xarML('Page Deleted'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "pages")));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $item['projectid'], 'mode' => "pages")) ."#pages");
 
     return true;
 }

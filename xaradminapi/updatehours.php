@@ -17,15 +17,15 @@ function xproject_adminapi_updatehours($args)
     // ALL HOURS_SPENT ARE ASSUMED NEW HOURS, NOT UPDATES TO EXISTING HOURS. MODIFY THE TASK TO UPDATE THE HOURS EXPLICITLY
     extract($args);
     
-    if(!isset($hours_spent) || !is_float($hours_spent)) {
+    if(!isset($hours_spent_delta) || !is_float($hours_spent_delta)) {
         $hours_spent = 0.00;
     }
     
-    if(!isset($hours_remaining) || !is_float($hours_remaining)) {
+    if(!isset($hours_remaining_delta) || !is_float($hours_remaining_delta)) {
         $hours_remaining = 0.00;
     }
     
-    if(!isset($hours_planned) || !is_float($hours_planned)) {
+    if(!isset($hours_planned_delta) || !is_float($hours_planned_delta)) {
         $hours_planned = 0.00;
     }
 
@@ -53,14 +53,10 @@ function xproject_adminapi_updatehours($args)
     }
     
     // we are adding hours planned/spent, and comparing hours remaining, not comparing hours planned/spent
-    $hours_planned_delta = $hours_planned; //  - $taskinfo['hours_planned'];
     $hours_planned = $projectinfo['hours_planned'] + $hours_planned_delta;
-    
-    $hours_spent_delta = $hours_spent; //  - $projectinfo['hours_spent'];
     $hours_spent = $projectinfo['hours_spent'] + $hours_spent_delta;
+    $hours_remaining = $projectinfo['hours_remaining'] + $hours_remaining_delta;
     
-    $hours_remaining_delta = $hours_remaining - $projectinfo['hours_remaining'];
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 

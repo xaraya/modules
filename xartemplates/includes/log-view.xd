@@ -3,7 +3,7 @@
 <xar:set name="log_objectid">xarModGetVar('xproject','log_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="4" itemid="$log_objectid" />
 
-<div class="xar-mod-body">
+<div>
     
     <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     
@@ -12,7 +12,7 @@
             <xar:set name="createdate">$loop->item['createdate']</xar:set>
             <xar:set name="userid">$loop->item['userid']</xar:set>
             <xar:set name="details">$loop->item['details']</xar:set>
-            <tr><td class="xar-norm"><strong><xar:data-output property="$properties['changetype']" value="$changetype" />
+            <tr><td class="xar-sub"><strong><xar:data-output property="$properties['changetype']" value="$changetype" />
                     &nbsp;by <xar:data-output property="$properties['userid']" value="$userid" />
                     on <xar:data-output property="$properties['createdate']" value="$createdate" /></strong>
                     <br><em><xar:data-output property="$properties['details']" value="$details" /></em></td>

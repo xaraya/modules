@@ -42,7 +42,7 @@ function xproject_features_create($args)
 
     xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "features")));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid, 'mode' => "features")) ."#features");
 
     return true;
 }

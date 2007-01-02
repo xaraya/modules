@@ -3,7 +3,8 @@
 <xar:set name="team_objectid">xarModGetVar('xproject','team_objectid')</xar:set>
 <xar:data-getitem name="$team_properties" module="xProject" itemtype="5" itemid="$team_objectid" />
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
+<xar:template type="module" file="admin-menu" />
+
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify Project</xar:mlstring></h2>
 
@@ -46,16 +47,6 @@
     <tr>
         <td><xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</td>
         <td>
-            <!--<div>
-                <div style="width: 100px; float: left;">
-                    <xar:mlstring>Add Member</xar:mlstring>:
-                </div>
-                <div style="width: 350px; float: left;">
-                    <xar:data-input type="contactlist" name="memberid" />
-                </div>
-                <div style="clear: both;"></div>
-            </div>
-            <xar:mlstring>Project Role</xar:mlstring><xar:data-input property="$team_properties['projectrole']" name="projectrole" size="24" />-->
             <xar:foreach in="$teamlist" value="$memberinfo" >
                 <div>#$memberinfo.membername#
                     <xar:if condition="!empty($memberinfo.projectrole)">
@@ -65,6 +56,10 @@
                 </div>
             </xar:foreach>
         </td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['summary']" /></td>
+        <td><xar:data-input property="$properties['summary']" name="summary" value="$item['summary']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['description']" /></td>
@@ -77,6 +72,10 @@
             <xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
     </tr>
     <tr>
+        <td><xar:mlstring>Probability</xar:mlstring></td>
+        <td><xar:data-input property="$properties['probability']" name="probability" value="$item['probability']" /><xar:mlstring>%</xar:mlstring></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['priority']" /></td>
         <td><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" />
             <xar:data-label property="$properties['importance']" />
@@ -84,7 +83,9 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['projecttype']" /></td>
-        <td><xar:data-input property="$properties['projecttype']" name="projecttype" value="$item['projecttype']" /></td>
+        <td><xar:data-input property="$properties['projecttype']" name="projecttype" value="$item['projecttype']" />
+            <xar:data-input property="$properties['haspages']" name="haspages" />
+            <xar:data-label property="$properties['haspages']" value="$item['haspages']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['date_approved']" /></td>
@@ -129,6 +130,7 @@
                 <div style="float: left; width: 250px; white-space: nowrap;">
                     <xar:data-input property="$properties['estimate']" name="estimate" value="$item['estimate']" />
                     <xar:mlstring>Estimated</xar:mlstring>
+                    &nbsp;[ <xar:data-input property="$properties['probability']" name="probability" value="$item['probability']" />%&nbsp;] 
                 </div>
                 <div style="float: left; width: 250px; white-space: nowrap;">
                     <xar:data-input property="$properties['budget']" name="budget" value="$item['budget']" />

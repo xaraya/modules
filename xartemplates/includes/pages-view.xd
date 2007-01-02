@@ -3,7 +3,7 @@
 <xar:set name="pages_objectid">xarModGetVar('xproject','pages_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="3" itemid="$pages_objectid" />
 
-<div class="xar-mod-body" id="pages_view">
+<div id="pages_view">
     <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
         <tr>
     
@@ -41,7 +41,7 @@
         
             <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
         
-            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" onClick="#$pages_formclick#"><img src="modules/xproject/xarimages/button.delete.gif" border="0" /></a></td>
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xproject-pages-modify;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" #$pages_formclick#><img src="modules/xproject/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xproject-pages-delete;&amp;pageid=#$loop:item['pageid']#&amp;inline=1" #$pages_formclick#><img src="modules/xproject/xarimages/button.delete.gif" border="0" /></a></td>
         
           </tr>
           <xar:template type="module" file="childpages" subdata="array('parentid' =&gt; $loop:item['pageid'],'pages_formclick' =&gt; $pages_formclick)" />

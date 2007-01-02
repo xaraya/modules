@@ -14,6 +14,10 @@
 function xproject_userapi_getmemberprojects($args)
 {
     extract($args);
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     $invalid = array();
     if (!isset($private)) {
@@ -103,7 +107,15 @@ function xproject_userapi_getmemberprojects($args)
 //    $sql .= " WHERE $taskcolumn[parentid] = $parentid";
 //    $sql .= " AND $taskcolumn[projectid] = $projectid";
     if($private == "public") $sql .= " AND private != '1'";
-    if(!empty($status)) $sql .= " AND status = '".$status."'";
+    if($status == "New") {
+        $sql .= " AND status NOT IN ('".$draftstatus."','Closed Won','Closed Lost', 'R & D','Hold','".$activestatus."','".$archivestatus."')";
+    } elseif($status == "Hold") {
+        $sql .= " AND status NOT IN ('".$draftstatus."','".$activestatus."','".$archivestatus."')";
+    } elseif(!empty($status)) {
+        $sql .= " AND status = '".$status."'";
+    } else {
+        $sql .= " AND status != '".$archivestatus."'";
+    }
     if(!empty($projecttype)) $sql .= " AND projecttype = '".$projecttype."'";
     if($clientid > 0) $sql .= " AND clientid = '".$clientid."'";
     if($max_priority > 0) $sql .= " AND priority <= '".$max_priority."'";
@@ -113,23 +125,27 @@ function xproject_userapi_getmemberprojects($args)
                     OR description LIKE '%".$q."%')";
     }
     switch($sortby) {
-        case "importance":
-            $sql .= " ORDER BY importance";
-            break;
-        case "priority":
-            $sql .= " ORDER BY priority";
-            break;
         case "status":
-            $sql .= " ORDER BY status";
+            $sql .= " ORDER BY status, importance, priority, project_name";
+            break;
+        case "projecttype":
+            $sql .= " ORDER BY projecttype, status, importance, priority";
             break;
         case "planned_end_date":
-            $sql .= " ORDER BY planned_end_date DESC";
+            $sql .= " ORDER BY planned_end_date DESC, project_name";
             break;
         case "project_name":
-        default:
             $sql .= " ORDER BY project_name";
+            break;
+        case "priority":
+            $sql .= " ORDER BY priority, importance, project_name";
+            break;
+        case "importance":
+        default:
+            $sql .= " ORDER BY importance, priority, project_name";
+            break;
     }
-
+    
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) return;
@@ -164,11 +180,17 @@ function xproject_userapi_getmemberprojects($args)
               $budget,
               $associated_sites) = $result->fields;
         if (xarSecurityCheck('ReadXProject', 0, 'Item', "$project_name:All:$projectid")) {
+            if(preg_match("/<br\\s*?\/??>/i", $description)) {
+                $formatted_desc = $description;
+            } else {
+                $formatted_desc = nl2br($description);
+            }
             $projects[] = array('projectid'         => $projectid,
                               'reference'           => $reference,
                               'project_name'        => $project_name,
                               'private'             => $private,
                               'description'         => $description,
+                              'formatted_desc'      => $formatted_desc,
                               'clientid'            => $clientid,
                               'ownerid'             => $ownerid,
                               'status'              => $status,

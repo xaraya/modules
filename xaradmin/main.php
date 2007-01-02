@@ -14,6 +14,10 @@
 function xproject_admin_main($args)
 {
     extract($args);
+    
+    $draftstatus = xarModGetVar('xproject', 'draftstatus');
+    $activestatus = xarModGetVar('xproject', 'activestatus');
+    $archivestatus = xarModGetVar('xproject', 'archivestatus');
 
     if (!xarVarFetch('verbose', 'checkbox', $verbose, $verbose, XARVAR_GET_OR_POST)) return;
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
@@ -24,20 +28,18 @@ function xproject_admin_main($args)
     if (!xarVarFetch('memberid', 'int', $memberid, $memberid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_priority', 'int', $max_priority, $max_priority, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_importance', 'int', $max_importance, $max_importance, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projecttype', 'str', $projecttype, $projecttype, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarSecurityCheck('ViewXProject', 1, 'Item', "All:All:All")) {
+        return;
+    }
 
     $uid = xarUserGetVar('uid');
+    
+    $data = xarModAPIFunc('xproject', 'admin', 'menu');
 
-    $args['verbose'] = $verbose;
-    $args['status'] = $status;
-    $args['sortby'] = $sortby;
-    $args['q'] = $q;
-    $args['clientid'] = $clientid;
-    $args['memberid'] = $memberid;
-    $args['max_priority'] = $max_priority;
-    $args['max_importance'] = $max_importance;
-
-    $data = xarModAPIFunc('xproject', 'admin', 'menu', array('showsearch' => true));
-
+    $args = array_merge($args, $data);
+    
     $data['showsearch'] = 1;
 
     if(!$memberid) {
@@ -64,7 +66,56 @@ function xproject_admin_main($args)
     }
 
     $args['items'] = $items;
-
+    
+    if($memberid > 0) {
+        
+        if(!empty($draftstatus)) {
+            $args['ttldraft'] = xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                                                array('status' => $draftstatus,
+                                                      'memberid' => $memberid));
+        }
+        
+        if(!empty($activestatus)) {
+            $args['ttlactive'] = xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                                                array('status' => $activestatus,
+                                                      'memberid' => $memberid));
+        }
+        
+        if(!empty($archivestatus)) {
+            $args['ttlarchive'] = xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                                                array('status' => $archivestatus,
+                                                      'memberid' => $memberid));
+        }
+        
+        $args['ttlhold'] = xarModAPIFunc('xproject', 'user', 'countmemberprojects',
+                                            array('status' => "Hold",
+                                                  'memberid' => $memberid));
+    } else {
+        $args['ttldraft'] = 0;
+        $args['ttlactive'] = 0;
+        $args['ttlarchive'] = 0;
+        $args['ttlhold'] = 0;
+        
+        if(!empty($draftstatus)) {
+            $args['ttldraft'] = xarModAPIFunc('xproject', 'user', 'countitems',
+                                                array('status' => $draftstatus));
+        }
+        
+        if(!empty($activestatus)) {
+            $args['ttlactive'] = xarModAPIFunc('xproject', 'user', 'countitems',
+                                                array('status' => $activestatus));
+        }
+        
+        if(!empty($archivestatus)) {
+            $args['ttlarchive'] = xarModAPIFunc('xproject', 'user', 'countitems',
+                                                array('status' => $archivestatus));
+        }
+        
+        $args['ttlhold'] = xarModAPIFunc('xproject', 'user', 'countitems',
+                                            array('status' => "Hold"));
+    
+    }
+        
     $args['returnurl'] = xarModURL('xproject',
                                 'admin',
                                 'view',
@@ -74,10 +125,13 @@ function xproject_admin_main($args)
                                       'clientid' => $clientid,
                                       'max_priority' => $max_priority,
                                       'max_importance' => $max_importance,
+                                      'projecttype' => $projecttype,
+                                      'memberid' => $memberid,
+                                      'mymemberid' => $data['mymemberid'],
                                       'q' => $q));
 
     $args['authid'] = xarSecGenAuthKey();
-    $args['inline'] = 0;
+    $args['inline'] = 1;
 
     if(!$memberid) {
         $args['pager'] = xarTplGetPager($startnum,
@@ -87,6 +141,7 @@ function xproject_admin_main($args)
                               'clientid' => $clientid,
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
+                              'projecttype' => $projecttype,
                               'q' => $q)),
             xarModURL('xproject', 'admin', 'view', array('startnum' => '%%'))
             ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
@@ -98,8 +153,10 @@ function xproject_admin_main($args)
                               'sortby' => $sortby,
                               'clientid' => $clientid,
                               'memberid' => $memberid,
+                              'mymemberid' => $data['mymemberid'],
                               'max_priority' => $max_priority,
                               'max_importance' => $max_importance,
+                              'projecttype' => $projecttype,
                               'q' => $q)),
             xarModURL('xproject',
                     'admin',
@@ -109,8 +166,10 @@ function xproject_admin_main($args)
                           'sortby' => $sortby,
                           'clientid' => $clientid,
                           'memberid' => $memberid,
+                          'mymemberid' => $data['mymemberid'],
                           'max_priority' => $max_priority,
                           'max_importance' => $max_importance,
+                          'projecttype' => $projecttype,
                           'q' => $q))
             ."\" onClick=\"return loadContent(this.href,'projectlist')\"",
             xarModGetUserVar('xproject', 'itemsperpage', $uid));

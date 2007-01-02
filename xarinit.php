@@ -27,6 +27,7 @@ function xproject_init()
     $xProjects_fields = array('projectid'           =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
                                 'project_name'      =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
                                 'reference'         =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'summary'           =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'description'       =>  array('type'=>'text','null'=>FALSE,'default'=>''),
                                 'ownerid'           =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
                                 'clientid'          =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
@@ -35,6 +36,7 @@ function xproject_init()
                                 'priority'          =>  array('type'=>'integer','size'=>1,'null'=>FALSE,'default'=>'0'),
                                 'private'           =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
                                 'projecttype'       =>  array('type'=>'char','size'=>64,'null'=>FALSE,'default'=>''),
+                                'haspages'          =>  array('type'=>'char','size'=>1,'null'=>FALSE,'default'=>''),
                                 'thumbnail'         =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
                                 'previewimage'      =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
                                 'previewurl'        =>  array('type'=>'char','size'=>255,'null'=>FALSE,'default'=>''),
@@ -143,7 +145,7 @@ function xproject_init()
     if (!$result) return;
 
     $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_teamid',
-                   'fields'    => array('projectid', 'roleid'),
+                   'fields'    => array('projectid', 'memberid'),
                    'unique'    => TRUE);
     $query = xarDBCreateIndex($team_table,$index);
     $result =& $dbconn->Execute($query);
@@ -292,7 +294,32 @@ function xproject_upgrade($oldversion)
 
     $ddata_is_available = xarModIsAvailable('dynamicdata');
     if (!isset($ddata_is_available)) return;
-
+            
+    /* preserve importance, status and project type lists during ddata rewrite */
+    $projects_objectid = xarModGetVar('xproject','projects_objectid');
+    $prop_data_cached = xarSessionGetVar('prop_data_cached');
+    if($projects_objectid && !$prop_data_cached) {
+        $fields = xarModAPIFunc('dynamicdata','user','getprop',
+                                array('objectid' => $projects_objectid));
+        if($fields) {
+            foreach ($fields as $name => $info) {
+                if($name == "importance") {
+                    $oldprop_importance = $info;
+                    xarSessionSetVar('oldprop_importance', $info);
+                }
+                if($name == "status") {
+                    $oldprop_status = $info;
+                    xarSessionSetVar('oldprop_status', $info);
+                }
+                if($name == "projecttype") {
+                    $oldprop_projecttype = $info;
+                    xarSessionSetVar('oldprop_projecttype', $info);
+                }
+            }
+            xarSessionSetVar('prop_data_cached', 1);
+        }
+    }
+    
     switch($oldversion) {
         case '0.2.0':
         case '1.0':
@@ -554,7 +581,7 @@ function xproject_upgrade($oldversion)
             $pages_table = $xarTables['xProject_pages'];
             $result = $datadict->ChangeTable($pages_table, 'parentid I NotNull Default 0');
             if (!$result) return;
-
+            
         case '3.2':
             $team_objectid = xarModGetVar('xproject','team_objectid');
             if (!empty($team_objectid)) {
@@ -562,7 +589,7 @@ function xproject_upgrade($oldversion)
             }
             $team_objectid = xarModAPIFunc('dynamicdata','util','import',
                                       array('file' => 'modules/xproject/xardata/team.xml'));
-            if (empty($team_objectid)) return;
+            if (empty($team_objectid)) xarErrorFree();
             xarModSetVar('xproject','team_objectid',$team_objectid);
 
         case '3.3':
@@ -579,7 +606,7 @@ function xproject_upgrade($oldversion)
             
             $projects_table = $xarTables['xProjects'];
             $result = $datadict->addColumn($projects_table, 'thumbnail C(255) NotNull');
-            if (!$result) return;
+            if (!$result) xarErrorFree();
             $result = $datadict->addColumn($projects_table, 'previewimage C(255) NotNull');
             if (!$result) return;
             $result = $datadict->addColumn($projects_table, 'previewurl C(255) NotNull');
@@ -588,10 +615,118 @@ function xproject_upgrade($oldversion)
             if (!$result) return;
             
         case '3.4':
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+            
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->addColumn($projects_table, 'summary X');
+            if (!$result) return;
+            
+        case '3.5':
+        case '3.6':            
+        case '3.7':
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->dropColumn($projects_table, 'summary');
+            if (!$result) return;
+            $result = $datadict->addColumn($projects_table, 'summary X');
+            if (!$result) return;
+        case '3.8':
+        
+            $projects_table = $xarTables['xProjects'];
+            $result = $datadict->addColumn($projects_table, 'haspages c(1) NotNull');
+            //if (!$result) 
+            xarErrorFree(); // return;
+            
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+            
+        case '3.9':
+        
+        case '3.10':
+        case '3.11':
+            
+            $projects_objectid = xarModGetVar('xproject','projects_objectid');
+            
+            if (!empty($projects_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $projects_objectid));
+            }
+            $projects_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/projects.xml'));
+            if (empty($projects_objectid)) return;
+            xarModSetVar('xproject','projects_objectid',$projects_objectid);
+        
+        case '4.0':
+        case '4.1':
+                
+            /* restore importance, status, and project type lists */
+            if($prop_data_cached) {
+                $fields = xarModAPIFunc('dynamicdata','user','getprop',
+                                        array('objectid' => $projects_objectid));
+                foreach ($fields as $name => $info) {
+                    if($name == "importance") {
+                        $newprop_importance = $info;
+                    }
+                    if($name == "status") {
+                        $newprop_status = $info;
+                    }
+                    if($name == "projecttype") {
+                        $newprop_projecttype = $info;
+                    }
+                }
+                
+                $oldprop_status = xarSessionGetVar('oldprop_status');
+                $oldprop_importance = xarSessionGetVar('oldprop_importance');
+                $oldprop_projecttype = xarSessionGetVar('oldprop_projecttype');
+                
+                
+                if (!xarModAPIFunc('dynamicdata','admin','updateprop',
+                                  array('prop_id' => $newprop_status['id'],
+                                        'label' => $oldprop_status['label'],
+                                        'type' => $oldprop_status['type'],
+                                        'default' => $oldprop_status['default'],
+                                        'status' => $oldprop_status['status'],
+                                        'validation' => $oldprop_status['validation']))) {
+                    return;
+                }
+                
+                if (!xarModAPIFunc('dynamicdata','admin','updateprop',
+                                  array('prop_id' => $newprop_importance['id'],
+                                        'label' => $oldprop_importance['label'],
+                                        'type' => $oldprop_importance['type'],
+                                        'default' => $oldprop_importance['default'],
+                                        'status' => $oldprop_importance['status'],
+                                        'validation' => $oldprop_importance['validation']))) {
+                    return;
+                }
+                
+                if (!xarModAPIFunc('dynamicdata','admin','updateprop',
+                                  array('prop_id' => $newprop_projecttype['id'],
+                                        'label' => $oldprop_projecttype['label'],
+                                        'type' => $oldprop_projecttype['type'],
+                                        'default' => $oldprop_projecttype['default'],
+                                        'status' => $oldprop_projecttype['status'],
+                                        'validation' => $oldprop_projecttype['validation']))) {
+                    return;
+                }
+                xarSessionDelVar('prop_data_cached');
+            }
             break;
-
+            
     }
-
+    
     return true;
 }
 /**

@@ -4,17 +4,24 @@ function xproject_admin_dashboard($args)
 {
     extract($args);
 
-    $data = array();
-
+    $data = xarModAPIFunc('xproject', 'admin', 'menu');
+    
+    $data['inline'] = 0;
+ 
 //    $data['projects_objectid'] = xarModGetVar('xproject', 'projects_objectid');
 //    xarModAPILoad('xprojects', 'user');
     $targetdate = date("Y-m-d", mktime(0, 0, 0, date("m"), date("t"), date("Y")));
     $min_planned_end_date = date("Y-m-d", mktime(0, 0, 0, date("m")-1, date("t"), date("Y")));
     $activeprojects = xarModAPIFunc('xproject', 'user', 'getall',
                             array('sortby' => "planned_end_date",
+                                'status' => "Active"));
+/*
+    $activeprojects = xarModAPIFunc('xproject', 'user', 'getall',
+                            array('sortby' => "planned_end_date",
                                 'status' => "Active",
                                 'planned_end_date' => $targetdate,
                                 'min_planned_end_date' => $min_planned_end_date));
+*/
 
     if (!isset($activeprojects) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
