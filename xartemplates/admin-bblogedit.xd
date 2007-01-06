@@ -151,7 +151,7 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
     </form>
 </xar:if>
 
-<p align="center"><xar:mlstring>Spambot blocker module for Xaraya based on</xar:mlstring> Bad Behavior v2.0.6<br />
+<p align="center"><xar:mlstring>Spambot blocker module for Xaraya based on</xar:mlstring> Bad Behavior #$bbsettings.version#<br />
 <xar:mlstring>For more information please visit the</xar:mlstring> <a href="http://www.homelandstupidity.us/software/bad-behavior/">Bad Behavior</a> <xar:mlstring>homepage</xar:mlstring>.</p>
 
 </div>

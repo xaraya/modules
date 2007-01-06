@@ -35,8 +35,8 @@ function netquery_admin_xageoip()
             if (!$result) return;
             $GeoipTable = $xartable['netquery_geoip'];
             $GeoipFields = "
-                ipstart           I8         NOTNULL     DEFAULT 0       UNSIGNED,
-                ipend             I8         NOTNULL     DEFAULT 0       UNSIGNED,
+                ipstart           I          NOTNULL     DEFAULT 0       UNSIGNED,
+                ipend             I          NOTNULL     DEFAULT 0       UNSIGNED,
                 ci                I1         NOTNULL     DEFAULT 0       UNSIGNED
             ";
             $result = $datadict->createTable($GeoipTable, $GeoipFields, $taboptarray);

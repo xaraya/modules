@@ -53,7 +53,8 @@ function netquery_adminapi_configapi()
       $mappingsites[] = array('name' => 'MultiMap', 'value' => 2);
     $data['mappingsites'] = $mappingsites;
     $topcountries = array();
-      $topcountries[] = array('name' => '5', 'value' => 5);
+      $topcountries[] = array('name' => '00', 'value' => 0);
+      $topcountries[] = array('name' => '05', 'value' => 5);
       $topcountries[] = array('name' => '10', 'value' => 10);
       $topcountries[] = array('name' => '15', 'value' => 15);
       $topcountries[] = array('name' => '20', 'value' => 20);

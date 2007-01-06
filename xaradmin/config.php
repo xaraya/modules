@@ -21,7 +21,7 @@ function netquery_admin_config()
             if (!xarVarFetch('bb_enabled', 'checkbox', $bb_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('bb_retention', 'int:1:100000', $bb_retention, '7', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('bb_visible', 'checkbox', $bb_visible, '0', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('bb_display_stats', 'checkbox', $bb_display_stats, '0', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('bb_display_stats', 'str:1:', $bb_display_stats, 'sessions', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('bb_verbose', 'checkbox', $bb_verbose, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('bb_strict', 'checkbox', $bb_strict, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('clientinfo_enabled', 'checkbox', $clientinfo_enabled, '0', XARVAR_NOT_REQUIRED)) return;

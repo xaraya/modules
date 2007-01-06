@@ -1,6 +1,6 @@
 <?php if (!defined('BB2_CORE')) die('I said no cheating!');
 
-function bb2_blacklist($package) 
+function bb2_blacklist($package)
 {
 
     // Blacklisted user agents
@@ -19,6 +19,7 @@ function bb2_blacklist($package)
         "EmailSiphon",        // spam harvester
         "grub crawler",        // misc comment/email spam
         "HttpProxy",        // misc comment/email spam
+        "Internet Explorer",    // XMLRPC exploits seen
         "Jakarta Commons",    // custommised spambots
         "Java 1.",        // definitely a spammer
         "Java/1.",        // definitely a spammer
@@ -29,6 +30,7 @@ function bb2_blacklist($package)
         "Movable Type",        // customised spambots
         "Mozilla ",        // malicious software
         "Mozilla/4.0(",        // from honeypot
+        "Mozilla/4.0+(",    // suspicious harvester
         "MSIE",            // malicious software
         "OmniExplorer",        // spam harvester
         "PussyCat ",        // misc comment spam
@@ -42,6 +44,7 @@ function bb2_blacklist($package)
 
     // These user agent strings occur anywhere within the line.
     $bb2_spambots = array(
+        "\r",      // A really dumb bot
         "; Widows ",        // misc comment/email spam
         "a href=",        // referrer spam
         "Bad Behavior Test",    // Add this to your user-agent to test BB
@@ -52,6 +55,7 @@ function bb2_blacklist($package)
         "grub-client",        // search engine ignores robots.txt
         "hanzoweb",        // very badly behaved crawler
         "Indy Library",        // misc comment/email spam
+        "larbin@unspecified",    // stealth harvesters
         "Murzillo compatible",    // comment spam bot
         ".NET CLR 1)",        // free poker, etc.
         "POE-Component-Client",    // free poker, etc.
@@ -59,6 +63,7 @@ function bb2_blacklist($package)
         "WISEbot",        // spam harvester
         "WISEnutbot",        // spam harvester
         "Windows NT 4.0;)",    // wikispam bot
+        "Windows NT 5.0;)",    // wikispam bot
         "Windows NT 5.1;)",    // wikispam bot
         "Windows XP 5",        // spam harvester
         "\\\\)",        // spam harvester
@@ -69,8 +74,8 @@ function bb2_blacklist($package)
         "/^[A-Z]{10}$/",    // misc email spam
         "/^Mozilla...0$/i",    // fake user agent/email spam
         "/[bcdfghjklmnpqrstvwxyz ]{8,}/",
-        "/;\){1,2}$/",        // misc spammers/harvesters
-//        "/MSIE.*Windows XP/",    // misc comment spam
+//      "/(;\){1,2}$/",        // misc spammers/harvesters
+//      "/MSIE.*Windows XP/",    // misc comment spam
     );
 
     // Do not edit below this line.

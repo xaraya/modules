@@ -55,7 +55,7 @@
     <label class="nq-column2" for="whois_tld_1">#$extlabel#</label>
     <xar:while condition="(++$j le $whois_max_limit)">
       <br />
-      <input class="nq-column11" type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="50" />
+      <input class="nq-column11" type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="50" onfocus="this.value=''" />
       <span class="nq-spacer">.</span>
       <select class="nq-column2" name="whois_tld_#$j#" id="whois_tld_#$j#">
         <xar:foreach in="$links" value="$link">
@@ -381,25 +381,6 @@
   </div>
 </xar:if>
 
-<xar:if condition="$clientinfo_enabled">
-    <p>
-    <xar:mlstring>Client Info</xar:mlstring> -
-    <xar:if condition="!empty($geoip.cn)">
-      <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" alt="" /></xar:if>
-      <xar:if condition="$mapping_site eq 1">
-          <a href="javascript:NQpopup('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a> - 
-      <xar:elseif condition="$mapping_site eq 2" />
-          <a href="javascript:NQpopup('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a> - 
-      <xar:else />
-          #$geoip.cn#
-      </xar:if>
-    </xar:if>
-    <xar:mlstring>IP</xar:mlstring>: #$client->property("ip")# -
-    <xar:mlstring>OS</xar:mlstring>: #$client->property("platform")# #$client->property("os")# -
-    <xar:mlstring>Browser</xar:mlstring> : #$client->property("browser")# #$client->property("version")#
-    </p>
-</xar:if>
-
 <xar:if condition="$bbsettings.visible">
     <p>
     <xar:if condition="$bbsettings.running">
@@ -416,9 +397,26 @@
     <xar:else />
         <xar:mlstring>Access monitor is NOT running</xar:mlstring>
     </xar:if>
-    <xar:if condition="$bbsettings.display_stats">
-       <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
+    <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
+    </p>
+</xar:if>
+
+<xar:if condition="$clientinfo_enabled">
+    <p>
+    <xar:mlstring>Client Info</xar:mlstring> -
+    <xar:if condition="!empty($geoip.cn)">
+      <xar:if condition="!empty($geoip.geoflag)"><img class="geoflag" src="#$geoip.geoflag#" alt="" /></xar:if>
+      <xar:if condition="$mapping_site eq 1">
+          <a href="javascript:NQpopup('http://www.mapquest.com/maps/map.adp?latlongtype=decimal&amp;latitude=#$geoip.lat#&amp;longitude=#$geoip.lon#&amp;zoom=0');">#$geoip.cn#</a> - 
+      <xar:elseif condition="$mapping_site eq 2" />
+          <a href="javascript:NQpopup('http://www.multimap.com/map/browse.cgi?lat=#$geoip.lat#&amp;lon=#$geoip.lon#&amp;scale=40000000&amp;icon=x');">#$geoip.cn#</a> - 
+      <xar:else />
+          #$geoip.cn#
+      </xar:if>
     </xar:if>
+    <xar:mlstring>IP</xar:mlstring>: #$client->property("ip")# -
+    <xar:mlstring>OS</xar:mlstring>: #$client->property("platform")# #$client->property("os")# -
+    <xar:mlstring>Browser</xar:mlstring> : #$client->property("browser")# #$client->property("version")#
     </p>
 </xar:if>
 

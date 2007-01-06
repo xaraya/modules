@@ -28,6 +28,15 @@ function bb2_misc_headers($settings, $package)
         return "f9f2b8b9";
     }
 
+    // Broken spambots send URLs with various invalid characters
+    if (strpos($package['request_uri'], "#") !== FALSE) {
+        return "dfd9b1ad";
+    }
+    // Not compatible with Xaraya module admin page use of # character
+//  if (!empty($package['headers_mixed']['Referer']) && strpos($package['headers_mixed']['Referer'], "#") !== FALSE) {
+//      return "dfd9b1ad";
+//  }
+
     // Range: field exists and begins with 0
     // Real user-agents do not start ranges at 0
     // NOTE: this blocks the whois.sc bot. No big loss.
@@ -56,8 +65,9 @@ function bb2_misc_headers($settings, $package)
 
     // TE: if present must have Connection: TE
     // RFC 2616 14.39
-    // Opera 8.01 has a bug which causes it to be blocked. Use 8.02 or later.
-    if (array_key_exists('Te', $package['headers_mixed'])) {
+    // Blocks Microsoft ISA Server 2004 in strict mode. Contact Microsoft
+    // to obtain a hotfix.
+    if ($settings['strict'] && array_key_exists('Te', $package['headers_mixed'])) {
         if (!preg_match('/\bTE\b/', $package['headers_mixed']['Connection'])) {
             return "582ec5e4";
         }
@@ -77,7 +87,7 @@ function bb2_misc_headers($settings, $package)
             return "a52f0448";
         }
     }
-    
+
 
     // Headers which are not seen from normal user agents; only malicious bots
     if (array_key_exists('X-Aaaaaaaaaaaa', $package['headers_mixed']) || array_key_exists('X-Aaaaaaaaaa', $package['headers_mixed'])) {
@@ -86,8 +96,21 @@ function bb2_misc_headers($settings, $package)
     if (array_key_exists('Proxy-Connection', $package['headers_mixed'])) {
         return "b7830251";
     }
-    
+
+    if (array_key_exists('Referer', $package['headers_mixed'])) {
+        // Referer, if it exists, must not be blank
+        if (empty($package['headers_mixed'])) {
+            return "69920ee5";
+        }
+
+        // Referer, if it exists, must contain a :
+        // While a relative URL is technically valid in Referer, all known
+        // legit user-agents send an absolute URL
+        if (strpos($package['headers_mixed']['Referer'], ":") === FALSE) {
+            return "45b35e30";
+        }
+    }
+
     return false;
 }
-
 ?>

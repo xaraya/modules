@@ -15,7 +15,8 @@ function bb2_whitelist($package)
         "10.0.0.0/8",
         "172.16.0.0/12",
         "192.168.0.0/16",
-//        "127.0.0.1",
+//      "127.0.0.1",
+//      "208.54.95.129",
     );
 
     // DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER!

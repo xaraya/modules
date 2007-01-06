@@ -321,8 +321,8 @@ function create_geoiptable()
     $idxoptarray = array('UNIQUE');
     $GeoipTable = $xartable['netquery_geoip'];
     $GeoipFields = "
-        ipstart           I8         NOTNULL     DEFAULT 0       UNSIGNED,
-        ipend             I8         NOTNULL     DEFAULT 0       UNSIGNED,
+        ipstart           I          NOTNULL     DEFAULT 0       UNSIGNED,
+        ipend             I          NOTNULL     DEFAULT 0       UNSIGNED,
         ci                I1         NOTNULL     DEFAULT 0       UNSIGNED
     ";
     $result = $datadict->changeTable($GeoipTable, $GeoipFields);

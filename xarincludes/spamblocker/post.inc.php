@@ -22,8 +22,11 @@ function bb2_post($settings, $package)
     }
 
     // Catch a few completely broken spambots
-    if (isset($request_entity['	document.write(Math.round (']) || isset($request_entity['	document.write('])) {
-        return "dfd9b1ad";
+    foreach ($request_entity as $key => $value) {
+    $pos = strpos($key, "	document.write");
+        if ($pos !== FAlSE) {
+            return "dfd9b1ad";
+        }
     }
 
     // Screen by cookie/JavaScript form add

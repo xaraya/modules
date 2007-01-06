@@ -20,7 +20,7 @@ function netquery_init()
     xarModSetVar('netquery', 'bb_enabled', 1);
     xarModSetVar('netquery', 'bb_retention', 7);
     xarModSetVar('netquery', 'bb_visible', 1);
-    xarModSetVar('netquery', 'bb_display_stats', 1);
+    xarModSetVar('netquery', 'bb_display_stats', 'session');
     xarModSetVar('netquery', 'bb_strict', 0);
     xarModSetVar('netquery', 'bb_verbose', 0);
     xarModSetVar('netquery', 'clientinfo_enabled', 1);
@@ -149,7 +149,7 @@ function netquery_upgrade($oldversion)
             return netquery_upgrade('3.3.3');
         case '3.3.3':
             xarModSetVar('netquery', 'bb_visible', 1);
-            xarModSetVar('netquery', 'bb_display_stats', 1);
+            xarModSetVar('netquery', 'bb_display_stats', 'session');
             xarModSetVar('netquery', 'bb_strict', 0);
             xarModSetVar('netquery', 'bb_verbose', 0);
             create_spamblockertable();
@@ -164,6 +164,9 @@ function netquery_upgrade($oldversion)
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'))) return;
             return netquery_upgrade('4.0.5');
         case '4.0.5':
+            xarModSetVar('netquery', 'bb_display_stats', 'session');
+            return netquery_upgrade('4.1.0');
+        case '4.1.0':
         default:
             break;
     }

@@ -71,3 +71,11 @@ Version 3.33 2006-05-08
 Version 4.0 2006-10-24
    - Added spambot blocker based on 'Bad Behavior' utility
    - Integrated access monitoring, client info and logging
+Version 4.05 2006-11-10
+   - Patch for client sniffer output vulnerability
+Version 4.10 2007-01-04
+   - Spambot blocker updated based on Bad Behavior v2.0.8
+   - Access monitoring made independent of CMS block type
+   - Sessions/pagehits counting option for "top countries"
+   - Pseudo-flag images added for IANA reserved address blocks
+   - Admin interface updated for new monitoring/display options

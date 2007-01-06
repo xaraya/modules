@@ -1,6 +1,6 @@
 <?php if (!defined('BB2_CORE')) die('I said no cheating!');
 
-function bb2_admin_pages() 
+function bb2_admin_pages()
 {
     if (function_exists('current_user_can')) {
         // The new 2.x way

@@ -1,19 +1,19 @@
-!!! IMPORTANT NOTE FOR UPGRADES FROM NETQUERY VERSION 3.3 & EARLIER !!!
+!!! IMPORTANT NOTE FOR UPGRADES FROM EARLIER NETQUERY VERSIONS !!!
 
-Because this version of Netquery uses a revised Whois data table structure, you
-may get a lot of confusing error messages if you don't use the correct upgrade
-procedural sequence.  (Although no real harm is done, Xaraya gets especially
-upset if older Netquery blocks are left active during the process.) So, to avoid
-scaring yourself to death, please proceed as follows:
+Because this version of Netquery relocates some CMS block functions (and uses
+a Whois data table structure that differs from version 3.3 or earlier), it is
+very important to follow the correct upgrade procedural sequence.
 
-1) For all CMS editions (Postnuke, Xaraya and Xoops) any Netquery side blocks
-should be disbled and the module deactivated BEFORE the new files are uploaded
-to the server.  For the Xoops edition, the existing module version must be
-uninstalled completely so the data table can be upgraded by the new version.
+1) For all CMS editions (E107, phpFusion, Postnuke, Xaraya and Xoops) all
+Netquery side blocks must be disbled and the deleted BEFORE the new version
+files are uploaded to the server.  For the Xoops edition, this requires that
+the module be uninstalled completely so the data table can be upgraded by the
+new version.  Where applicable, the CMS template cache should also be cleared.
 
 2) Upload the new files to your server, or upload the Netquery ZIP or GZ package
 and extract the files on the server.  It is always safer to delete all of the
-old version files first, rather than relying on overwrites.
+old version files first, rather than relying on overwrites.  In any case, be sure
+to delete the nqmonitor.php file if one exists in the Netquery blocks subfolder.
 
 3) For the standalone edition, just let nqsetup run as usual and it will upgrade
 data tables as required.  For the Postnuke and Xaraya editions, run the normal

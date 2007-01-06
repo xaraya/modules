@@ -1,6 +1,7 @@
 <?php
 function netquery_user_main()
 {
+    if (!xarSecurityCheck('OverviewNetquery')) return;
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
     if ($data['querytype'] == 'none') return $data;
@@ -339,7 +340,7 @@ function netquery_user_main()
             else
               $msg .= $country['cn']."\n";
             $msg .= "</td><td>\n";
-            $msg .= "<img class=\"geoflag\" src=\"".$country['geoflag']."\" alt=\"\" />\n";
+            if (!empty($country['geoflag'])) $msg .= "<img class=\"geoflag\" src=\"".$country['geoflag']."\" alt=\"\" />\n";
             $msg .= "</td><td>";
             $msg .= $country['lat']."\n";
             $msg .= "</td><td>";

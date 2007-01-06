@@ -177,7 +177,7 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">2. Install and Activate</td>
         <td class="item-desc">From the CMS's admin menu, install and activate the new Netquery module as usual.
-        The access monitor also requires loading and activation of its CMS block.</td>
+        Access monitoring and/or logging requires loading and activation of at least one CMS block.</td>
     </tr>
     <tr>
         <td class="item">3. Choose Your Options</td>
@@ -187,18 +187,14 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr><td class="item-heading" colspan="2">Netquery Options Configuration</td></tr>
     <tr>
-        <td class="item">Execution &amp; Startup Page</td>
-        <td class="item-desc">Enable execution timer and select the default query type for startup.</td>
+        <td class="item">Main User Interface</td>
+        <td class="item-desc">Select the stylesheet, the default query type for startup and interface options to
+        display monitor status, client info and/or query execution times.</td>
     </tr>
     <tr>
-        <td class="item">Access Monitor</td>
-        <td class="item-desc">Options for monitoring, screening and logging user access. Only blocked spambot access
-        attempts are logged unless the Log All Access option is checked. For CMS editions, the NQ monitor block must
-        be loaded and activated.</td>
-    </tr>
-    <tr>
-        <td class="item">Enable Client Info</td>
-        <td class="item-desc">Display client info in main user interface and select number of "top countries".</td>
+        <td class="item">Netquery Access Monitor</td>
+        <td class="item-desc">Options for user access screening and logging and for the geoIP and "top countries"
+        addon option.  Only blocked spambot access attempts are logged unless the Log All Access option is checked.</td>
     </tr>
     <tr>
         <td class="item">Enable Whois Search</td>
@@ -316,14 +312,15 @@ reconfigured to suit your needs and preferences.</p>
     <tr><td class="item-heading" colspan="2">Important Notes</td></tr>
     <tr>
         <td class="help-desc" colspan="2">
+        - Access monitoring, screening and logging for CMS editions requires loading and activation of at least one of
+          Netquery's CMS block types.<br />
         - Netquery's local ping and traceroute options and the use of Windows nslookup for email
           validation require read/execute permission for your server OS executables.<br />
         - The GeoIP and ports data tables are not installed automatically. Select the "Install Data" options as indicated.<br />
         - Port services flag #99 is reserved for user submissions pending admin reflagging.<br />
         - Looking glass default settings, except disabled items, may be overridden by individual
           router settings.<br />
-        - Individual looking glass daemon port passwords take precedence over the default user password.<br />
-        - Access monitoring, screening and logging for CMS editions requires loading and activation of its CMS block.
+        - Individual looking glass daemon port passwords take precedence over the default user password.
         </td>
     </tr>
 </table>

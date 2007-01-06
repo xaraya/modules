@@ -15,7 +15,7 @@ function bb2_screener_javascript($settings, $package, $cookie_name, $cookie_valu
     // FIXME: do something
     $bb2_javascript = "<script type=\"text/javascript\">
 <!--
-function bb2_addLoadEvent(func) 
+function bb2_addLoadEvent(func)
 {
     var oldonload = window.onload;
     if (typeof window.onload != 'function') {
@@ -28,7 +28,8 @@ function bb2_addLoadEvent(func)
     }
 }
 
-bb2_addLoadEvent(function() {
+bb2_addLoadEvent(function()
+{
     for ( i=0; i < document.forms.length; i++ ) {
         if (document.forms[i].method == 'post') {
             var myElement = document.createElement('input');

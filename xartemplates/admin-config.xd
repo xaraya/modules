@@ -17,20 +17,13 @@
     <a href="javascript:NQpopup('#$hlplink.url#','console','400','600');"><img class="gobutton" src="#$buttondir#/btn_help.gif" alt="#$hlplink.label#" /></a>
 </h2>
 <form class="nqadmin" action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
-      <input type="hidden" name="authid" id="authid" value="#$authid#" />
-      <input type="hidden" name="phase" id="phase" value="update" />
-      <fieldset>
+  <input type="hidden" name="authid" id="authid" value="#$authid#" />
+  <input type="hidden" name="phase" id="phase" value="update" />
+  <fieldset>
       <legend>
-          <xar:mlstring>Options</xar:mlstring>
+          <xar:mlstring>User Interface</xar:mlstring>
       </legend>
-      <xar:if condition="$exec_timer_enabled">
-        <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" />
-      </xar:if>
-
-      <label for="exec_timer_enabled"><xar:mlstring>Enable Execution Timer</xar:mlstring></label>
-      ~ <label for="querytype_default"><xar:mlstring>Default Query Type</xar:mlstring></label>:
+      <label for="querytype_default"><xar:mlstring>Default Query</xar:mlstring></label>:
       <select name="querytype_default" id="querytype_default">
         <xar:foreach in="$startoptions" value="$startoption">
           <xar:if condition="!empty($startoption.value)">
@@ -42,9 +35,7 @@
           </xar:if>
         </xar:foreach>
       </select>
-      <br />
-      <span class="nq-indent">
-      <span class="help" title="#xarML('CSS file for interface style elements')#"><label for="stylesheet"><xar:mlstring>Stylesheet</xar:mlstring></label></span>:
+      ~ <span class="help" title="#xarML('CSS file for interface style elements')#"><label for="stylesheet"><xar:mlstring>Stylesheet</xar:mlstring></label></span>:
       <select name="stylesheet" id="stylesheet">
         <xar:foreach in="$cssfiles" value="$cssfile">
           <xar:if condition="!empty($cssfile)">
@@ -56,31 +47,39 @@
           </xar:if>
         </xar:foreach>
       </select>
-      </span>
+      <br />
+      <xar:mlstring>Display Options</xar:mlstring>:
+      <xar:if condition="$bbsettings.visible">
+        <input type="checkbox" name="bb_visible" id="bb_visible" value="true" checked="checked" />
+      <xar:else />
+        <input type="checkbox" name="bb_visible" id="bb_visible" value="true" />
+      </xar:if>
+      <label for="bb_visible"><xar:mlstring>Monitor Status</xar:mlstring></label>
+      <xar:if condition="$clientinfo_enabled">
+        ~ <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" checked="checked" />
+      <xar:else />
+        ~ <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
+      </xar:if>
+      <label for="clientinfo_enabled"><xar:mlstring>Client Info</xar:mlstring></label>
+      <xar:if condition="$exec_timer_enabled">
+        ~ <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" checked="checked" />
+      <xar:else />
+        ~ <input type="checkbox" name="exec_timer_enabled" id="exec_timer_enabled" value="1" />
+      </xar:if>
+      <label for="exec_timer_enabled"><xar:mlstring>Execution Timer</xar:mlstring></label>
   </fieldset>
-
   <fieldset>
       <xar:if condition="$bbsettings.running">
           <legend><xar:mlstring>Access Monitor</xar:mlstring></legend>
       <xar:else />
           <legend><xar:mlstring>Access Monitor</xar:mlstring> [<a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>Not Loaded</xar:mlstring></a>]</legend>
       </xar:if>
-      <xar:if condition="$bbsettings.verbose">
-          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" checked="checked" />
-      <xar:else />
-          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" />
-      </xar:if>
-      <xar:mlstring>Log All Access</xar:mlstring>
-      ~ <span class="help" title="#xarML('Zero is forever (manual clearing only)')#"><label for="bb_retention"><xar:mlstring>Self clear in</xar:mlstring></label></span>:
-      <input type="text" name="bb_retention" id="bb_retention" value="#$bb_retention#" size="2" maxlength="3" /> <xar:mlstring>days</xar:mlstring>
-      ~ <a href="#$bbllink.url#">#$bbllink.label#</a>
-      <br />
       <xar:if condition="$bbsettings.enabled">
           <input type="checkbox" name="bb_enabled" id="bb_enabled" value="true" checked="checked" />
       <xar:else />
           <input type="checkbox" name="bb_enabled" id="bb_enabled" value="true" />
       </xar:if>
-      <xar:mlstring>Run Spambot Blocker</xar:mlstring>
+      <xar:mlstring>Spambot Screening</xar:mlstring>
       <xar:if condition="$bbsettings.strict">
           &nbsp;~ <input type="checkbox" name="bb_strict" id="bb_strict" value="true" checked="checked" />
       <xar:else />
@@ -88,44 +87,17 @@
       </xar:if>
       <xar:mlstring>Strict mode (may block some people)</xar:mlstring>
       <br />
-      <xar:if condition="$bbsettings.visible">
-          <input type="checkbox" name="bb_visible" id="bb_visible" value="true" checked="checked" />
+      <xar:if condition="$bbsettings.verbose">
+          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" checked="checked" />
       <xar:else />
-          <input type="checkbox" name="bb_visible" id="bb_visible" value="true" />
+          <input type="checkbox" name="bb_verbose" id="bb_verbose" value="true" />
       </xar:if>
-      <xar:mlstring>Visible on user pages</xar:mlstring>
-      <xar:if condition="$bbsettings.display_stats">
-          &nbsp;~ <input type="checkbox" name="bb_display_stats" id="bb_display_stats" value="true" checked="checked" />
-      <xar:else />
-          &nbsp;~ <input type="checkbox" name="bb_display_stats" id="bb_display_stats" value="true" />
-      </xar:if>
-      <xar:mlstring>Show stats if visible</xar:mlstring>
-  </fieldset>
-  
-  <fieldset><legend><xar:mlstring>Client Info</xar:mlstring></legend>
-      <xar:if condition="$clientinfo_enabled">
-        <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
-      </xar:if>
-      <label for="clientinfo_enabled"><xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring></label>
-      <xar:if condition="!empty($xaglink)">
-        ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
-      </xar:if>
-      <br /><span class="nq-indent">
-      <span class="help" title="#xarML('Site to use for GeoIP mapping')#"><label for="mapping_site"><xar:mlstring>Mapping Site</xar:mlstring></label></span>:
-      <select name="mapping_site" id="mapping_site">
-      <xar:foreach in="$mappingsites" value="$mappingsite">
-        <xar:if condition="!empty($mappingsite.name)">
-          <xar:if condition="$mappingsite.value eq $mapping_site">
-            <option selected="selected" value="#$mappingsite.value#">#$mappingsite.name#</option>
-          <xar:else />
-            <option value="#$mappingsite.value#">#$mappingsite.name#</option>
-          </xar:if>
-        </xar:if>
-      </xar:foreach>
-      </select>
-      ~ <span class="help" title="#xarML('Maximum top countries to display')#"><label for="topcountries_limit"><xar:mlstring>Top Countries</xar:mlstring></label></span>:
+      <xar:mlstring>Log All Access</xar:mlstring>
+      ~ <span class="help" title="#xarML('Zero is forever (manual clearing only)')#"><label for="bb_retention"><xar:mlstring>Self clear in</xar:mlstring></label></span>
+      <input type="text" name="bb_retention" id="bb_retention" value="#$bb_retention#" size="2" maxlength="3" /> <xar:mlstring>days</xar:mlstring>
+      ~ <a href="#$bbllink.url#">#$bbllink.label#</a>
+      <br />
+      <span class="help" title="#xarML('Maximum top countries to display')#"><label for="topcountries_limit"><xar:mlstring>Top Countries</xar:mlstring></label></span>:
       <select name="topcountries_limit" id="topcountries_limit">
       <xar:foreach in="$topcountries" value="$topcountry">
         <xar:if condition="!empty($topcountry.value)">
@@ -137,8 +109,35 @@
         </xar:if>
       </xar:foreach>
       </select>
+      ~ <xar:mlstring>Count</xar:mlstring>:
+      <xar:if condition="$bbsettings.display_stats  eq 'pagehits'">
+          <input type="radio" name="bb_display_stats" id="bb_display_stats" value="sessions" />
+          <xar:mlstring>User Sessions</xar:mlstring>
+          <input type="radio" name="bb_display_stats" id="bb_display_stats" value="pagehits" checked="checked" />
+          <xar:mlstring>Page Hits</xar:mlstring>
+      <xar:else />
+          <input type="radio" name="bb_display_stats" id="bb_display_stats" value="sessions" checked="checked" />
+          <xar:mlstring>User Sessions</xar:mlstring>
+          <input type="radio" name="bb_display_stats" id="bb_display_stats" value="pagehits" />
+          <xar:mlstring>Page Hits</xar:mlstring>
+      </xar:if>
       ~ <a href="#$resetlink.url#" onclick="return confirm('#$resetlink.confirm#')">#$resetlink.label#</a>
-      </span>
+      <br />
+      <span class="help" title="#xarML('Site to use for GeoIP mapping')#"><label for="mapping_site"><xar:mlstring>GeoIP Mapping</xar:mlstring></label></span>:
+      <select name="mapping_site" id="mapping_site">
+      <xar:foreach in="$mappingsites" value="$mappingsite">
+        <xar:if condition="!empty($mappingsite.name)">
+          <xar:if condition="$mappingsite.value eq $mapping_site">
+            <option selected="selected" value="#$mappingsite.value#">#$mappingsite.name#</option>
+          <xar:else />
+            <option value="#$mappingsite.value#">#$mappingsite.name#</option>
+          </xar:if>
+        </xar:if>
+      </xar:foreach>
+      </select>
+      <xar:if condition="!empty($xaglink)">
+        ~ <a href="#$xaglink.url#">#$xaglink.label#</a>
+      </xar:if>
   </fieldset>
   <fieldset><legend><xar:mlstring>Whois</xar:mlstring></legend>
       <xar:if condition="$whois_enabled">
@@ -310,8 +309,8 @@
       ~ <a href="#$lgvlink.url#">#$lgvlink.label#</a>
   </fieldset>
   <p>
-      <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
-      <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+    <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+    <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
   </p>
 </form>
 

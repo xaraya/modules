@@ -5,25 +5,34 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Query Type</xar:mlstring>
+    <xar:mlstring>Block Option</xar:mlstring>
   </span>
   <span style="float: right; width: 78%; text-align: left;">
     <select name="blockquery">
+      <xar:if condition="$blockquery eq 'nqmonitor'">
+        <option value="nqmonitor" selected="nqmonitor">
+          <xar:mlstring>Monitor Status</xar:mlstring>
+        </option>
+      <xar:else/>
+        <option value="nqmonitor">
+          <xar:mlstring>Monitor Status</xar:mlstring>
+        </option>
+      </xar:if>
       <xar:if condition="$blockquery eq 'clientinfo'">
         <option value="clientinfo" selected="selected">
           <xar:mlstring>Client Info</xar:mlstring>
         </option>
-        <xar:else/>
+      <xar:else/>
         <option value="clientinfo">
           <xar:mlstring>Client Info</xar:mlstring>
         </option>
       </xar:if>
-      <xar:if condition="$blockquery eq 'topcountries'">
-        <option value="topcountries" selected="selected">
+      <xar:if condition="$blockquery eq 'countries'">
+        <option value="countries" selected="selected">
           <xar:mlstring>Top Countries</xar:mlstring>
         </option>
-        <xar:else/>
-        <option value="topcountries">
+      <xar:else/>
+        <option value="countries">
           <xar:mlstring>Top Countries</xar:mlstring>
         </option>
       </xar:if>
@@ -32,7 +41,7 @@
           <option value="whois" selected="selected">
             <xar:mlstring>Whois Domain</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="whois">
             <xar:mlstring>Whois Domain</xar:mlstring>
           </option>
@@ -43,7 +52,7 @@
           <option value="whoisip" selected="selected">
             <xar:mlstring>Whois IP/AS</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="whoisip">
             <xar:mlstring>Whois IP/AS</xar:mlstring>
           </option>
@@ -54,7 +63,7 @@
           <option value="lookup" selected="selected">
             <xar:mlstring>DNS Lookup</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
             <option value="lookup">
               <xar:mlstring>DNS Lookup</xar:mlstring>
             </option>
@@ -65,7 +74,7 @@
           <option value="dig" selected="selected">
             <xar:mlstring>DNS Dig</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
             <option value="dig">
               <xar:mlstring>DNS Dig</xar:mlstring>
             </option>
@@ -76,7 +85,7 @@
           <option value="email" selected="selected">
             <xar:mlstring>Validate Email</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="email">
             <xar:mlstring>Validate Email</xar:mlstring>
           </option>
@@ -87,7 +96,7 @@
           <option value="port" selected="selected">
             <xar:mlstring>Port Services</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="port">
             <xar:mlstring>Port Services</xar:mlstring>
           </option>
@@ -98,7 +107,7 @@
           <option value="http" selected="selected">
             <xar:mlstring>HTTP Request</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="http">
             <xar:mlstring>HTTP Request</xar:mlstring>
           </option>
@@ -109,7 +118,7 @@
           <option value="ping" selected="selected">
             <xar:mlstring>Ping Host</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="ping">
             <xar:mlstring>Ping Host</xar:mlstring>
           </option>
@@ -120,7 +129,7 @@
           <option value="trace" selected="selected">
             <xar:mlstring>Traceroute</xar:mlstring>
           </option>
-          <xar:else/>
+        <xar:else/>
           <option value="trace">
             <xar:mlstring>Traceroute</xar:mlstring>
           </option>
