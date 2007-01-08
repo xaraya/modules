@@ -3,7 +3,7 @@
  * Question type 'default'
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -34,7 +34,8 @@
  * @deprecated Deprecated [release version here]             [AS REQUIRED]
  */
 
-function surveys_questionsapi_default($args) {
+function surveys_questionsapi_default($args)
+{
     return true;
 }
 
@@ -91,7 +92,8 @@ class surveys_questionsapi_default
     // question: the question details
     // response: the current response details (response can be an element of question)
     // TODO: what happens here if we don't have a question object or even a question ID?
-    function surveys_questionsapi_default(&$args) {
+    function surveys_questionsapi_default(&$args)
+    {
         if (isset($args['question'])) {
             $this->dbquestion = $args['question'];
         }
@@ -155,7 +157,8 @@ class surveys_questionsapi_default
 
     // Render the question and current response.
     // This stub just handles the default parameters and stores them in the properties.
-    function render($args) {
+    function render($args)
+    {
         extract($args);
 
         // Various flags can be over-ridden when rendering.
@@ -168,7 +171,8 @@ class surveys_questionsapi_default
 
     // Standard render parameters that are passed to every question template
     // in every render mode (i.e. every render target).
-    function default_render_params() {
+    function default_render_params()
+    {
         return array (
             'qid' => $this->dbquestion['qid'],
             'question_name' => $this->dbquestion['question_name'],
@@ -187,12 +191,14 @@ class surveys_questionsapi_default
 
 
     // Validate the choice(s).
-    function validate() {
+    function validate()
+    {
         return true;
     }
 
     // Read the submitted response from the page.
-    function submit() {
+    function submit()
+    {
         return true;
     }
 
@@ -200,7 +206,8 @@ class surveys_questionsapi_default
     // A question type may override this if basic validation is required.
     // TODO: handle importing DD values here for question types that need more than
     // the standard value1 to value3.
-    function import($args) {
+    function import($args)
+    {
         for($i = 1; $i <= 3; $i++) {
             if (isset($args['value'.$i])) {
                 $this->response['value'.$i] = $args['value'.$i];
@@ -210,7 +217,8 @@ class surveys_questionsapi_default
     }
 
     // Initialise the question type (used when installing the question type).
-    function init_question_type() {
+    function init_question_type()
+    {
         return true;
     }
 
@@ -220,7 +228,8 @@ class surveys_questionsapi_default
     // Return the database question type array for this question type.
     // If types have not been set up, then set them up here.
     // The question and response type names can be passed in, or left to default.
-    function _get_create_question_types($args = array()) {
+    function _get_create_question_types($args = array())
+    {
         extract($args);
 
         // Get the question type.
@@ -264,7 +273,8 @@ class surveys_questionsapi_default
 
     // Fetch the DD object for a question type.
     // Create the object if it does not exist.
-    function _get_create_dd_object($args) {
+    function _get_create_dd_object($args)
+    {
         // Args required are: name, label, itemtype, type
         extract($args);
 
@@ -303,7 +313,8 @@ class surveys_questionsapi_default
 
     // Create the properties for a DD object.
     // Takes two parameters: object and properties
-    function _create_dd_properties(& $object, $propertydefs) {
+    function _create_dd_properties(& $object, $propertydefs)
+    {
         // If no properties to create, then nothing to do.
         if (empty($propertydefs)) {return true;}
 
@@ -358,7 +369,8 @@ class surveys_questionsapi_default
     // TODO: allow store of DD fields in the response too.
     // TODO: set a flag if details have been stored, so we can tell later
     // that changes have been made in the database.
-    function store() {
+    function store()
+    {
         // If not response-capable, then there is nothing to store.
         if (!$this->response_capable) {return true;}
         //echo "STORE"; var_dump($this->response);
