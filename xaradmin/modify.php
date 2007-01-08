@@ -3,7 +3,7 @@
  * Standard function to modify a dynamic item in Maxercalls
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
