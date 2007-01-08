@@ -24,7 +24,7 @@ function sigmapersonnel_init()
     $xartable = xarDBGetTables();
     $sigmapersonneltable = $xartable['sigmapersonnel_person'];
 
-    xarDBLoadTableMaintenanceAPI();
+xarDBLoadTableMaintenanceAPI();
 
 // Rewrite
     /* Get a data dictionary object with all the item create methods in it */

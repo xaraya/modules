@@ -3,7 +3,7 @@
  * SIGMAPersonnel menu for admin
  *
  * @package modules
- * @copyright (C) 2005-2006 The Digital Development Foundation
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,9 +36,6 @@ function sigmapersonnel_admin_menu()
             $data['menulinks'][] = $object;
         }
     }
-    // Needed?
-    xarTplAddStyleLink('base',    'navtabs', $fileExt = 'css');
-   // xarTplAddStyleLink('courses', 'xarform', $fileExt = 'css');
 
     return xarTplModule('sigmapersonnel', 'admin', 'menu', $data);
 }
