@@ -65,9 +65,10 @@ function itsp_user_display($args)
     // Fill in the details of the item.
     $data['name_value'] = $item['planname'];
     // $data['number_value'] = $item['number'];
+     */
     $data['item'] = $item;
     $data['planid'] = $planid;
-     */
+
     // Get the planitems
 
     $planitems = xarModApiFunc('itsp','user','get_planitems',array('planid'=>$planid));
