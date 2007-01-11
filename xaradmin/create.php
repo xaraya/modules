@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/36.html
  * @author Example Module Development Team
  */
-
 /**
  * Create a new item
  *
@@ -26,7 +25,7 @@
 function example_admin_create($args)
 {
     /* Admin functions of this type can be called by other modules. If this
-     *  happens then the calling module will be able to pass in arguments to
+     * happens then the calling module will be able to pass in arguments to
      * this function through the $args parameter. Hence we extract these
      * arguments *before* we have obtained any form-based input through
      * xarVarFetch().
