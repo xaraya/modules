@@ -1,6 +1,6 @@
 <?php
 /**
- * Add new item
+ * Add new education plan
  *
  * @package modules
  * @copyright (C) 2005-2007 The Digital Development Foundation
@@ -18,6 +18,13 @@
  * wishes to create a new module item
  *
  * @author MichelV <michelv@xarayahosting.nl>
+ * @param planname
+ * @param plandesc
+ * @param planrules
+ * @param credits
+ * @param mincredit
+ * @param dateopen
+ * @param dateclose
  * @return array
  */
 function itsp_admin_new($args)
