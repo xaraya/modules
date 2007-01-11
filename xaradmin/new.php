@@ -18,13 +18,13 @@
  * wishes to create a new module item
  *
  * @author MichelV <michelv@xarayahosting.nl>
- * @param planname
- * @param plandesc
- * @param planrules
- * @param credits
- * @param mincredit
- * @param dateopen
- * @param dateclose
+ * @param string planname
+ * @param string plandesc
+ * @param string planrules
+ * @param int credits
+ * @param int mincredit
+ * @param int dateopen
+ * @param int dateclose
  * @return array
  */
 function itsp_admin_new($args)
