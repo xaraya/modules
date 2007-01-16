@@ -20,6 +20,8 @@ function xarbb_admin_new()
 
     // Get parameters
     // TODO: define these defaults in ONE place only.
+    // linoj: now also in xaradminapi/new.php
+    // (TODO: move most of these into the case 'form')
     if (!xarVarFetch('fstatus','int', $data['fstatus'], 0)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
@@ -118,8 +120,8 @@ function xarbb_admin_new()
 
             $tposter = xarUserGetVar('uid');
 
-            // The API function is called
-            $newfid= xarModAPIFunc('xarbb', 'admin', 'create',
+            // API does create plus other setup
+            $newfid = xarModApiFunc('xarbb', 'admin', 'new',
                 array(
                     'fname'    => $data['fname'],
                     'fdesc'    => $data['fdesc'],
@@ -127,91 +129,12 @@ function xarbb_admin_new()
                     'fposter'  => $tposter,
                     'ftopics'  => 1,
                     'fposts'   => 1,
-                    'fstatus'  => $data['fstatus']
+                    'fstatus'  => $data['fstatus'],
+                    'allowbbcode' => $allowbbcode,
+                    'allowhtml' => $allowhtml
                 )
             );
 
-            if (!$newfid) return; 
-
-            // Get New Forum ID
-            $forum = xarModAPIFunc('xarbb', 'user', 'getforum', array('fid' => $newfid));
-
-            // Recovery procedure in case the forum is no longer assigned to any category
-            if (empty($forum['fid'])) {
-                $forums = xarModAPIFunc('xarbb', 'user', 'getallforums');
-                foreach ($forums as $info) {
-                    if ($info['fid'] == $newfid) {
-                        $forum = $info;
-                        break;
-                    }
-                }
-                if (empty($forum['fid'])) {
-                    $msg = xarML('Invalid Parameter Count');
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                    return;
-                }
-            }
-
-            // Need to create a topic so we don't get the nasty empty error when viewing the forum.
-            $ttitle = xarML('Welcome to #(1)', $forum['fname']);
-            $tpost = xarML('This is the first topic for #(1)', $forum['fname']);
-
-            $tid = xarModAPIFunc('xarbb', 'user', 'createtopic',
-                array(
-                    'fid'      => $forum['fid'],
-                    'ttitle'   => $ttitle,
-                    'tpost'    => $tpost,
-                    'tposter'  => $tposter
-                )
-            );
-            if (!$tid) return;
-
-            // Enable bbcode hooks for new xarbb forum
-            if (xarModIsAvailable('bbcode')) {
-                if ($allowbbcode) {
-                    xarModAPIFunc('modules', 'admin', 'enablehooks',
-                            array('callerModName'    => 'xarbb',
-                                  'callerItemType'   => $forum['fid'],
-                                  'hookModName'      => 'bbcode'));
-                } else {
-                    xarModAPIFunc('modules', 'admin', 'disablehooks',
-                            array('callerModName'    => 'xarbb',
-                                  'callerItemType'   => $forum['fid'],
-                                  'hookModName'      => 'bbcode'));
-                }
-            }
-
-            // FIXME: *allowing* HTML and *transforming* text to HTML are two different things;
-            // remove this hook dependancy here. This has already been done for modified forums.
-            // Enable html hooks for xarbb forum
-            if (xarModIsAvailable('html')) {
-                if ($allowhtml) {
-                    xarModAPIFunc('modules','admin','enablehooks',
-                            array('callerModName'    => 'xarbb',
-                                  'callerItemType'   => $forum['fid'],
-                                  'hookModName'      => 'html'));
-                } else {
-                    xarModAPIFunc('modules','admin','disablehooks',
-                            array('callerModName'    => 'xarbb',
-                                  'callerItemType'   => $forum['fid'],
-                                  'hookModName'      => 'html'));
-                }
-            }
-
-            $settings = array();
-            $settings['postsperpage']       = $postsperpage;
-            $settings['postsortorder']      = $postsortorder;
-            $settings['topicsperpage']      = $topicsperpage;
-            $settings['topicsortby']        = $topicsortby;
-            $settings['topicsortorder']     = $topicsortorder;
-            $settings['hottopic']           = $hottopic;
-            $settings['allowhtml']          = $allowhtml;
-            $settings['allowbbcode']        = $allowbbcode;
-            $settings['editstamp']          = $editstamp;            
-            $settings['showcats']           = $showcats;
-            $settings['nntp']               = $nntp;
-
-            xarModSetVar('xarbb', 'settings.' . $forum['fid'], serialize($settings));
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
             break;
     }
