@@ -52,6 +52,13 @@ function articles_userapi_getall($args)
     extract($args);
 
     // do the wheredd bit first
+    //
+    // A note just so you know what is actually happening here:
+    // All article IDs that match the DD where-clause are fetched and put into an array.
+    // This getall function is then called up again with the array passed in as a parameter.
+    // If the number of matching articles is large (and there really is no limit to this) then
+    // the second call to getall would result in an extremely long query string. It is not really
+    // scaleable and should probably be discouraged.
     if (isset($wheredd) && !empty($ptid) && xarModIsHooked('dynamicdata','articles',$ptid) ) {
         // (is it possible to determine ptid(s) from the other args? not easily)
         $dditems = xarModApiFunc('dynamicdata','user','getitems', array('module'=>'articles', 'itemtype'=>$ptid, 'where'=>$wheredd));
