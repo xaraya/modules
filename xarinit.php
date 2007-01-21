@@ -41,7 +41,8 @@ Site URL: %%siteurl%%';
         'recommend_userapi_rendersendtofriend'
     );
 
-    return true;
+    /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
+    return example_upgrade('1.0.1');
 }
 
 /**
@@ -85,6 +86,10 @@ function recommend_upgrade($oldversion)
             $newdate = strtotime($olddate);
             xarModSetVar('recommend', 'date', $newdate);
             
+            case '1.0.1':
+            xarRegisterMask('ReadRecommend','All','recommend','All','All','ACCESS_READ');
+      
+            case '1.0.2': //current version
             break;
     }
 
