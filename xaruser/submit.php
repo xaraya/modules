@@ -16,8 +16,11 @@
  *
  * When a user submits the ITSP, it is sent to the education office for approval
  * Copies are sent to the student and to the supervisor.
- * Other updates to the status can be done from this function as well
+ * Other updates to the status are done from this function as well
+ *
  * When the ITSP is approved, a similar action is performed
+ * The approval action is performed only after showing an entry form for a date.
+    When none is set in there, the current datetime is used.
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @param int itspid
