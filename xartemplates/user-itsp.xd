@@ -140,7 +140,7 @@
             </fieldset>
 
 
-            <xar:if condition="$itspstatus lt 4">
+            <xar:if condition="$itspstatus lt 2">
                 <xar:if condition="($sumcreditsnow eq $plan.mincredit) OR ($sumcreditsnow gt $plan.mincredit)" >
                     <p><xar:mlstring>Currently, your ITSP has not been submitted yet to the Education Desk. Submitting your ITSP means that it will be sent to the
                     Education Desk and be reviewed for approval. You cannot make any changes to it during this review stage.</xar:mlstring><br />
@@ -161,6 +161,8 @@
                 </xar:if>
             <xar:elseif condition="$itspstatus eq 4" />
                 <p><xar:mlstring> You have submitted your ITSP. You can not make changes to it untill it has been approved.</xar:mlstring></p>
+            <xar:elseif condition="$itspstatus eq 5 OR $itspstatus eq 3" />
+                <p><xar:mlstring> Your ITSP is approved. You can edit it untill you request your certificate</xar:mlstring></p>
             </xar:if>
         </form>
         <xar:if condition="$itspstatus eq 4 AND $canapprove" >

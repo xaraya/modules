@@ -12,7 +12,7 @@
  * @author ITSP Module Development Team
  */
 /**
- * Utility function pass individual menu items to the main menu
+ * Utility function to pass individual menu items to the main menu
  *
  * @author the ITSP module development team
  * @return array containing the menulinks for the main menu items.

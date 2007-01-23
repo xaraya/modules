@@ -20,8 +20,8 @@
  * @param  array $args an array of arguments (if called by other modules)
  * @param  int $objectid a generic object id (if called by other modules)
  * @param  int $itspid the item id used for this itsp module
- * @param int showdetails
- * @param int pitemid The id of the planitem to show
+ * @param  int showdetails. Works together with a session variable to have a full view of details, or the short overview
+ * @param  int pitemid The id of the planitem to show
  * @return array
  */
 function itsp_user_itsp($args)

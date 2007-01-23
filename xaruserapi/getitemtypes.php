@@ -14,7 +14,11 @@
 /**
  * Utility function to retrieve the list of item types of this module (if any)
  *
+ * Itemtypes are the planitems with their ids.
+ * To allow for hooks to full ITSPs and Plans we have added the itemtype 99998 and 99999.
+ *
  * @author MichelV <michelv@xarayahosting.nl>
+ *
  * @return array containing the item types and their description
  * @todo MichelV <1> decide on the setup in here
  */
