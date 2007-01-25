@@ -1,66 +1,94 @@
 <?php
 /**
- * Pass item links
+ * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <potion@xaraya.com>
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
  */
 /**
  * utility function to pass individual item links to whoever
  *
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item ids to get
- * @param $args['field'] field to return as label in the list (default 'name' - adapt as needed for your objects)
- * @returns array
- * @return array containing the itemlink(s) for the item(s).
+ * @param $args['field'] field to return as label in the list (default 'title')
+ * @return array Array containing the itemlink(s) for the item(s).
  */
-function shop_userapi_getitemlinks($args)
+function articles_userapi_getitemlinks($args)
 {
     extract($args);
 
     $itemlinks = array();
     if (empty($itemtype)) {
-        $itemtype = 0;
+        $itemtype = null;
     }
+    // get cids for security check in getall
+    $fields = array('aid','title','pubtypeid','cids');
+
+    // make sure we have the title field we want here
     if (empty($field)) {
-        $field = 'name'; // adapt as needed for your own objects
+        $field = 'title';
+    } elseif (!in_array($field,$fields)) {
+        $fields[] = $field;
     }
-    // Get all the items
-    $items = xarMod::apiFunc('dynamicdata','user','getitems',
-                           array('module'    => 'shop',
-                                 'itemtype'  => $itemtype,
-                                 'itemids'   => $itemids,
-                                 'fieldlist' => array($field)));
-    if (empty($items)) {
-        // if none are found, we pass an empty array. This will prevent errors in the calling modules
-        return array();
+    if (empty($sort)) {
+        $sort = null;
     }
 
-    // if we didn't have a list of itemids, return all the ids of the items we found
+    if (xarSecurityCheck('AdminArticles',0)) {
+        // get all articles for admins (not editors)
+        $status = null;
+    } else {
+// CHECKME: make sure we don't need other statuses somewhere
+        // get approved and frontpage articles only
+        $status = array(2, 3);
+    }
+    $articles = xarModAPIFunc('articles','user','getall',
+                             array('aids' => $itemids,
+                                   'ptid' => $itemtype,
+                                   'fields' => $fields,
+                                   'status' => $status,
+                                   'sort' => $sort,
+                                  )
+                            );
+    if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
+       return $itemlinks;
+    }
+
+    // if we didn't have a list of itemids, return all the articles we found
     if (empty($itemids)) {
-        $itemids = array_keys($items);
+        foreach ($articles as $article) {
+            $itemid = $article['aid'];
+            if (!isset($article[$field])) continue;
+            $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
+                                                             array('ptid' => $article['pubtypeid'],
+                                                                   'aid' => $article['aid'])),
+                                        'title' => xarML('Display Article'),
+                                        'label' => xarVarPrepForDisplay($article[$field]));
+        }
+        return $itemlinks;
     }
 
-    foreach ($itemids as $itemid) {
-        if (isset($items[$itemid][$field])) {
-            $label = xarVarPrepForDisplay($items[$itemid][$field]);
-        } else {
-            $label = xarML('Item #(1)',$itemid);
-        }
-        // Set the link to this specific item
-        $itemlinks[$itemid] = array('url'   => xarModURL('shop', 'user', 'display',
-                                                         array('itemtype' => empty($itemtype) ? null : $itemtype,
-                                                               'itemid' => $itemid)),
-                                    'title' => xarML('Display Item'),
-                                    'label' => $label);
+    // if we had a list of itemids, return only those articles
+    $itemid2key = array();
+    foreach ($articles as $key => $article) {
+        $itemid2key[$article['aid']] = $key;
     }
-    // Return all the links we have created
+    foreach ($itemids as $itemid) {
+        if (!isset($itemid2key[$itemid])) continue;
+        $article = $articles[$itemid2key[$itemid]];
+        if (!isset($article[$field])) continue;
+        $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
+                                                                 array('ptid' => $article['pubtypeid'],
+                                                                       'aid' => $article['aid'])),
+                                            'title' => xarML('Display Article'),
+                                            'label' => xarVarPrepForDisplay($article[$field]));
+    }
     return $itemlinks;
 }
 

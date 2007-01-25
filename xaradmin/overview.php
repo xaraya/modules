@@ -1,22 +1,31 @@
 <?php
-  /**
+/**
+ * Articles module Overview
+ *
  * @package modules
- * @copyright (C) 2002-2010 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
  */
 /**
- *  Admin overview
+ * Overview displays standard Overview page
  */
-function shop_admin_overview()
+function articles_admin_overview()
 {
+   /* Security Check */
+    if (!xarSecurityCheck('EditArticles',0)) return;
 
-     return xarTplModule('shop','admin','overview');
-   
+    $data=array();
+    
+    /* if there is a separate overview function return data to it
+     * else just call the main function that usually displays the overview 
+     */
+
+    return xarTplModule('articles', 'admin', 'main', $data,'main');
 }
 
 ?>

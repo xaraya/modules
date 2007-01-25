@@ -1,316 +1,557 @@
 <?php
 /**
- *  Module Initialisation Function
- *  @version $Id: xarinit.php,v 1.7 2003/06/24 20:08:10 roger Exp $
- *  @author Roger Raymond, Andrea Moro
- *  @todo determine DB Table schema
- *  @todo determine all module vars
- *  @todo determine permissions masks
- *  @todo determine blocklayout tags
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
  */
-function calendar_init()
+/**
+ * initialise the articles module
+ */
+function articles_init()
 {
-# --------------------------------------------------------
-#
-# Set up tables
-#
-    sys::import('xaraya.structures.query');
-    $q = new Query();
-    $prefix = xarDB::getPrefix();
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_calendar";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_calendar_calendar (
-      id          integer unsigned NOT NULL auto_increment,
-      name        varchar(60) default '' NOT NULL,
-      description text,
-      module_id       integer unsigned default null,
-      itemtype    integer unsigned default null,
-      item_id      integer unsigned default null,
-    PRIMARY KEY  (id)
-    ) TYPE=MyISAM";
-    if (!$q->run($query)) return;
+    //Not needed anymore with the dependency checks.
+    if(!xarModIsAvailable('categories')) {
+        $msg=xarML('The categories module should be activated first');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+                        new SystemException($msg));
+        return;
+    }
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_event";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_calendar_event (
-      id                   integer unsigned NOT NULL auto_increment,
-      name                 varchar(64) NULL,
-      description          text,
-      start_time           integer NULL,
-      duration             integer NULL,
-      end_time             integer NULL,
-      recurring_code       integer unsigned NULL,
-      recurring_span       integer unsigned NULL,
-      start_location       varchar(254) NULL,
-      end_location         varchar(254) NULL,
-      object_id            integer unsigned NULL,
-      module_id            integer unsigned NULL,
-      itemtype             integer unsigned NULL,
-      item_id              integer unsigned NULL,
-      role_id              integer unsigned NULL,
-      return_link          varchar(254) NULL,
-      state                tinyint unsigned default 0 NOT NULL,
-      timestamp            integer default 0 NOT NULL,
-      PRIMARY KEY (id),
-      KEY i_start (start_time),
-      KEY i_end   (end_time)
-    ) TYPE=MyISAM";
-    if (!$q->run($query)) return;
+    // Get database information
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-/*    $query = "DROP TABLE IF EXISTS " . $prefix . "_bookings_repeat";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_bookings_repeat (
-      id          integer unsigned NOT NULL auto_increment,
-      start_time  int DEFAULT '0' NOT NULL,
-      end_time    int DEFAULT '0' NOT NULL,
-      rep_type    int DEFAULT '0' NOT NULL,
-      end_date    int DEFAULT '0' NOT NULL,
-      rep_opt     varchar(32) DEFAULT '' NOT NULL,
-      objectid     int DEFAULT '1' NOT NULL,
-      timestamp integer default 0 NOT NULL,
-      owner integer default 0 NOT NULL,
-      name        varchar(80) DEFAULT '' NOT NULL,
-      status integer default 0 NOT NULL,
-      description text,
-      rep_num_weeks smallint NULL,
+    //Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
 
-      PRIMARY KEY (id)
-    ) TYPE=MyISAM";
-    if (!$q->run($query)) return;
+// TODO: Somewhere in the future, status should be managed by a workflow module
+
+    // Create tables
+    $articlestable = $xartable['articles'];
+/*
+    $query = "CREATE TABLE $articlestable (
+            xar_aid INT(10) NOT NULL AUTO_INCREMENT,
+            xar_title VARCHAR(255) NOT NULL DEFAULT '',
+            xar_summary TEXT,
+            xar_body TEXT,
+            xar_notes TEXT,
+            xar_status TINYINT(2) NOT NULL DEFAULT '0',
+            xar_authorid INT(11) NOT NULL,
+            xar_pubdate INT UNSIGNED NOT NULL,
+            xar_pubtypeid INT(4) NOT NULL DEFAULT '1',
+            xar_pages INT UNSIGNED NOT NULL,
+            xar_language VARCHAR(30) NOT NULL DEFAULT '',
+            PRIMARY KEY(xar_aid),
+            KEY xar_authorid (xar_authorid),
+            KEY xar_pubtypeid (xar_pubtypeid),
+            KEY xar_pubdate (xar_pubdate),
+            KEY xar_status (xar_status)
+            )";
 */
-
-# --------------------------------------------------------
-#
-# Set up masks
-#
-    xarRegisterMask('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCalendar','All','calendar','All','All','ACCESS_READ');
-    xarRegisterMask('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
-
-# --------------------------------------------------------
-#
-# Set up privileges
-#
-    xarRegisterPrivilege('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadCalendar','All','calendar','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
-
-# --------------------------------------------------------
-#
-# Set up modvars
-#
-
-    // Location of the PEAR Calendar Classes
-    // Use the PHP Include path for now
-    xarModVars::set('calendar','pearcalendar_root',sys::code() . 'modules/calendar/pear/Calendar/');
-
-    // get list of calendar ics files
-    $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
-    xarModVars::set('calendar','default_cal',serialize($data['icsfiles']));
-
-    // Other variables from phpIcalendar config.inc.php
-//    xarModVars::set('calendar','default_view'           , 'week');
-    xarModVars::set('calendar','minical_view'           , 'week');
-//    xarModVars::set('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
-//    xarModVars::set('calendar','day_start'              , '0700');
-//    xarModVars::set('calendar','day_end'                , '2300');
-//    xarModVars::set('calendar','gridLength'             , 15);
-    xarModVars::set('calendar','num_years'              , 1);
-    xarModVars::set('calendar','month_event_lines'      , 1);
-    xarModVars::set('calendar','tomorrows_events_lines' , 1);
-    xarModVars::set('calendar','allday_week_lines'      , 1);
-    xarModVars::set('calendar','week_events_lines'      , 1);
-    xarModVars::set('calendar','second_offset'          , 0);
-    xarModVars::set('calendar','bleed_time'             , 0);
-    xarModVars::set('calendar','display_custom_goto'    , 0);
-    xarModVars::set('calendar','display_ical_list'      , 1);
-    xarModVars::set('calendar','allow_webcals'          , 0);
-    xarModVars::set('calendar','this_months_events'     , 1);
-    xarModVars::set('calendar','use_color_cals'         , 1);
-    xarModVars::set('calendar','daysofweek_dayview'     , 0);
-    xarModVars::set('calendar','enable_rss'             , 1);
-    xarModVars::set('calendar','show_search'            , 1);
-    xarModVars::set('calendar','allow_preferences'      , 1);
-    xarModVars::set('calendar','printview_default'      , 0);
-    xarModVars::set('calendar','show_todos'             , 1);
-    xarModVars::set('calendar','show_completed'         , 0);
-    xarModVars::set('calendar','allow_login'            , 0);
-
-    // Regulate display in day view
-    xarModVars::set('calendar','windowwidth', 902);
-    xarModVars::set('calendar','minutesperunit', 15);
-    xarModVars::set('calendar','unitheight', 12);
-
-    xarModVars::set('calendar','default_view', 'week');
-    xarModVars::set('calendar','event_duration', 60*60);
-    xarModVars::set('calendar','cal_sdow', 0);
-    xarModVars::set('calendar','day_start', 25200);
-    xarModVars::set('calendar','day_end', 82800);
-
-//TODO::Register the Module Variables
-    //
-    //xarModVars::set('calendar','allowUserCalendars',false);
-    //xarModVars::set('calendar','eventsOpenNewWindow',false);
-    //xarModVars::set('calendar','adminNotify',false);
-    //xarModVars::set('calendar','adminEmail','none@none.org');
-
-# --------------------------------------------------------
-#  Register block types
-#
-    xarMod::apiFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'calnav'));
-    xarMod::apiFunc('blocks', 'admin','register_block_type', array('modName' => 'calendar','blockType' => 'month'));
-
-//TODO::Register our blocklayout tags to allow using Objects in the templates
-//<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI"/>
-//<xar:calendar-build object="$Month"/>
-//<xar:set name="Month">& $Year->fetch()</xar:set>
-
-    xarModVars::set('calendar', 'SupportShortURLs', true);
-
-/*    xarTplRegisterTag(
-        'calendar', 'calendar-decorator', array(),
-        'calendar_userapi_handledecoratortag'
+    $fields = array(
+        'xar_aid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
+        'xar_summary'=>array('type'=>'text'),
+        'xar_body'=>array('type'=>'text'),
+        'xar_notes'=>array('type'=>'text'),
+        'xar_status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'xar_authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'xar_pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'xar_pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'xar_pages'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'1'),
+        'xar_language'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>'')
     );
-    */
 
-# --------------------------------------------------------
-#
-# Set up hooks
-#
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($articlestable,$fields);
+    if (empty($query)) return; // throw back
 
-    xarModRegisterHook('item', 'create', 'API','calendar', 'admin', 'hookcreate');
-    xarModRegisterHook('item', 'update', 'API','calendar', 'admin', 'hookupdate');
-//    xarModRegisterHook('item', 'delete', 'API','calendar', 'admin', 'hookdelete');
+    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-# --------------------------------------------------------
-#
-# Create DD objects
-#
-    $module = 'calendar';
-    $objects = array(
-                   'calendar_calendar',
-                   'calendar_event',
-                     );
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_authorid',
+        'fields'    => array('xar_authorid'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubtypeid',
+        'fields'    => array('xar_pubtypeid'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubdate',
+        'fields'    => array('xar_pubdate'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_status',
+        'fields'    => array('xar_status'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+        'fields'    => array('xar_language'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($articlestable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Create tables
+    $pubtypestable = $xartable['publication_types'];
+/*
+    $query = "CREATE TABLE $pubtypestable (
+            xar_pubtypeid INT(4) NOT NULL AUTO_INCREMENT,
+            xar_pubtypename VARCHAR(30) NOT NULL,
+            xar_pubtypedescr VARCHAR(255) NOT NULL DEFAULT '',
+            xar_pubtypeconfig TEXT,
+            PRIMARY KEY(xar_pubtypeid))";
+*/
+    $fields = array(
+        'xar_pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
+        'xar_pubtypedescr'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
+        'xar_pubtypeconfig'=>array('type'=>'text')
+    );
+
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($pubtypestable,$fields);
+    if (empty($query)) return; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+// TODO: load configuration from file(s) ?
+
+    // Load the initial setup of the publication types
+    if (file_exists('modules/articles/xarsetup.php')) {
+        include 'modules/articles/xarsetup.php';
+    } else {
+        // TODO: add some defaults here
+        $pubtypes = array();
+        $categories = array();
+        $settings = array();
+        $defaultpubtype = 0;
+    }
+
+    // Save publication types
+    $pubid = array();
+    foreach ($pubtypes as $pubtype) {
+        list($id,$name,$descr,$config) = $pubtype;
+        $nextId = $dbconn->GenId($pubtypestable);
+        $query = "INSERT INTO $pubtypestable
+                (xar_pubtypeid, xar_pubtypename, xar_pubtypedescr,
+                 xar_pubtypeconfig)
+                VALUES (?,?,?,?)";
+        $bindvars = array($nextId, $name, $descr, $config);
+        $result =& $dbconn->Execute($query,$bindvars);
+        if (!$result) return;
+        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'xar_pubtypeid');
+        $pubid[$id] = $ptid;
+    }
+
+    // Create articles categories
+    $cids = array();
+    foreach ($categories as $category) {
+        $cid[$category['name']] = xarModAPIFunc('categories',
+                                               'admin',
+                                               'create',
+                        Array('name' => $category['name'],
+                              'description' => $category['description'],
+                              'parent_id' => 0));
+        foreach ($category['children'] as $child) {
+            $cid[$child] = xarModAPIFunc('categories',
+                                        'admin',
+                                        'create',
+                        Array('name' => $child,
+                              'description' => $child,
+                              'parent_id' => $cid[$category['name']]));
+        }
+    }
+
+    // Set up module variables
+    xarModSetVar('articles', 'SupportShortURLs', 1);
+
+    // Save articles settings for each publication type
+    foreach ($settings as $id => $values) {
+        if (isset($pubid[$id])) {
+            $id = $pubid[$id];
+        }
+        // replace category names with cids
+        if (isset($values['categories'])) {
+            $cidlist = array();
+            foreach ($values['categories'] as $catname) {
+                if (isset($cid[$catname])) {
+                    $cidlist[] = $cid[$catname];
+                }
+            }
+            unset($values['categories']);
+            if (!empty($id)) {
+                xarModSetVar('articles', 'number_of_categories.'.$id, count($cidlist));
+                xarModSetVar('articles', 'mastercids.'.$id, join(';',$cidlist));
+            } else {
+                xarModSetVar('articles', 'number_of_categories', count($cidlist));
+                xarModSetVar('articles', 'mastercids', join(';',$cidlist));
+            }
+        } elseif (!empty($id)) {
+            xarModSetVar('articles', 'number_of_categories.'.$id, 0);
+            xarModSetVar('articles', 'mastercids.'.$id, '');
+        } else {
+            xarModSetVar('articles', 'number_of_categories', 0);
+            xarModSetVar('articles', 'mastercids', '');
+        }
+        if (isset($values['defaultview']) && !is_numeric($values['defaultview'])) {
+            if (isset($cid[$values['defaultview']])) {
+                $values['defaultview'] = 'c' . $cid[$values['defaultview']];
+            } else {
+                $values['defaultview'] = 1;
+            }
+        }
+        if (!empty($id)) {
+            xarModSetVar('articles', 'settings.'.$id,serialize($values));
+        } else {
+            xarModSetVar('articles', 'settings',serialize($values));
+        }
+    }
+
+    // Set default publication type
+    xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
+
+    // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
+    xarModSetVar('articles', 'fulltextsearch', '');
+
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'related'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'topitems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'featureditems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'random'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'glossary'))) return;
+
+    if (!xarModRegisterHook('item', 'search', 'GUI',
+                           'articles', 'user', 'search')) {
+        return false;
+    }
+
+    if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+                           'articles', 'admin', 'waitingcontent')) {
+        return false;
+    }
+
+// TODO: move this to some common place in Xaraya (base module ?)
+    // Register BL tags
+    xarTplRegisterTag('articles', 'articles-field',
+                      //array(new xarTemplateAttribute('bid', XAR_TPL_STRING|XAR_TPL_REQUIRED)),
+                      array(),
+                      'articles_userapi_handleFieldTag');
+
+    // Enable articles hooks for search
+    if (xarModIsAvailable('search')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'search', 'hookModName' => 'articles'));
+    }
+
+    // Enable categories hooks for articles
+/*    xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'articles', 'hookModName' => 'categories'));
+*/
+    // Enable comments hooks for articles
+    if (xarModIsAvailable('comments')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'comments'));
+    }
+    // Enable hitcount hooks for articles
+    if (xarModIsAvailable('hitcount')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'hitcount'));
+    }
+    // Enable ratings hooks for articles
+    if (xarModIsAvailable('ratings')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'ratings'));
+    }
+
+    /*********************************************************************
+    * Define instances for the core modules
+    * Format is
+    * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+    *********************************************************************/
+    $info = xarMod::getBaseInfo('articles');
+    $sysid = $info['systemid'];
+    $xartable =& xarDBGetTables();
+    $instances = array(
+                       array('header' => 'external', // this keyword indicates an external "wizard"
+                             'query'  => xarModURL('articles', 'admin', 'privileges'),
+                             'limit'  => 0
+                            )
+                    );
+    xarDefineInstance('articles', 'Article', $instances);
+
+    $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_modid = $sysid";
+    $instances = array(
+                        array('header' => 'Article Block Title:',
+                                'query' => $query,
+                                'limit' => 20
+                            )
+                    );
+    xarDefineInstance('articles','Block',$instances);
+
+// TODO: pubtype ?
+
+    /*********************************************************************
+    * Register the module components that are privileges objects
+    * Format is
+    * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+    *********************************************************************/
+
+    xarRegisterMask('ViewArticles','All','articles','Article','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadArticles','All','articles','Article','All','ACCESS_READ');
+    xarRegisterMask('SubmitArticles','All','articles','Article','All','ACCESS_COMMENT');
+// No special meaning here at the moment
+//    xarRegisterMask('ModerateArticles','All','articles','Article','All','ACCESS_MODERATE');
+    xarRegisterMask('EditArticles','All','articles','Article','All','ACCESS_EDIT');
+// Submitting articles only requires COMMENT privileges, not ADD privileges
+//    xarRegisterMask('AddArticles','All','articles','Article','All','ACCESS_ADD');
+    xarRegisterMask('DeleteArticles','All','articles','Article','All','ACCESS_DELETE');
+    xarRegisterMask('AdminArticles','All','articles','Article','All','ACCESS_ADMIN');
+
+
+    xarRegisterMask('ReadArticlesBlock','All','articles','Block','All','ACCESS_READ');
+
+    // Initialisation successful
     return true;
 }
 
 /**
- *  Module Upgrade Function
+ * upgrade the articles module from an old version
  */
-function calendar_upgrade($oldversion)
+function articles_upgrade($oldversion)
 {
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case '1.4':
+            // Get current publication types
+            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            // Get configurable fields for articles
+            $pubfields = xarModAPIFunc('articles','user','getpubfields');
+            // Update the configuration of each publication type
+            foreach ($pubtypes as $ptid => $pubtype) {
+                // Map the (bodytext + bodyfile) fields to a single body field
+                // + use the textupload format if relevant
+                $pubtype['config']['body'] = $pubtype['config']['bodytext'];
+                if (!empty($pubtype['config']['bodyfile']['label'])) {
+                    $pubtype['config']['body']['format'] = 'textupload';
+                    if (empty($pubtype['config']['body']['label'])) {
+                        $pubtype['config']['body']['label'] = $pubtype['config']['bodyfile']['label'];
+                    }
+                }
+                $config = array();
+                foreach (array_keys($pubfields) as $field) {
+                    $config[$field] = $pubtype['config'][$field];
+                }
+                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                                   array('ptid' => $ptid,
+                                   //      'name' => $name, /* not allowed here */
+                                         'descr' => $pubtype['descr'],
+                                         'config' => $config))) {
+                    return false;
+                }
+            }
 
-    switch ($oldversion) {
-        case '0.1.0':
-            // Start creating the tables
+        // no upgrade for random block here - you can register it via blocks admin
+        case '1.5':
+        case '1.5.0':
+            // Upgrade the glossary block - we'll be kind :-)
+            if (!xarModAPIFunc(
+                'blocks', 'admin', 'register_block_type',
+                array(
+                    'modName'  => 'articles',
+                    'blockType'=> 'glossary'
+                )
+            )) {return;}
 
-            $dbconn = xarDB::getConn();
-            $xartable = xarDB::getTables();
-            $calfilestable = $xartable['calendars_files'];
-            sys::import('xaraya.tableddl');
-            $fields = array(
-                'xar_calendars_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true),
-                'xar_files_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true)
-                );
-            $query = xarDBCreateTable($calfilestable, $fields);
-            if (empty($query)) return;
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
+        case '1.5.1':
+            // Code to upgrade from version 1.5.1 goes here
 
-            $filestable = $xartable['calfiles'];
-            sys::import('xaraya.tableddl');
-            $fields = array(
-                'xar_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-                'xar_path' => array('type' => 'varchar', 'size' => '255', 'null' => true)
-                );
-            $query = xarDBCreateTable($filestable, $fields);
-            if (empty($query)) return;
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
+            // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
+            xarModSetVar('articles', 'fulltextsearch', '');
+
+/* skip for now...
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            //Load Table Maintainance API
+            xarDBLoadTableMaintenanceAPI();
+
+            $articlestable = $xartable['articles'];
 
             $index = array(
-                'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_calendars_id',
-                'fields'    => array('xar_calendars_id'),
+                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+                'fields'    => array('xar_language'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($calfilestable,$index);
+            $query = xarDBCreateIndex($articlestable,$index);
             $result =& $dbconn->Execute($query);
             if (!$result) return;
+*/
 
-            $index = array(
-                'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_files_id',
-                'fields'    => array('xar_files_id'),
-                'unique'    => false
-            );
-            $query = xarDBCreateIndex($calfilestable,$index);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
+        case '1.5.2':
+            // Code to upgrade from version 1.5.2 goes here
 
-            return calendar_upgrade('0.1.1');
+        case '2.0.0':
+            // Code to upgrade from version 2.0 goes here
+
+        case '2.5.0':
+            // Code to upgrade from version 2.5 goes here
+            break;
     }
     return true;
 }
 
 /**
- *  Module Delete Function
+ * delete the articles module
  */
-function calendar_delete()
+function articles_delete()
 {
+    // Get database information
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-    # --------------------------------------------------------
-    #
-    # Remove block types
-    #
-        if (!xarMod::apiFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) return;
+    //Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
 
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
-/*
-    // Remove all tables (see example module for comments)
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-    sys::import('xaraya.tableddl');
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['articles']);
+    if (empty($query)) return; // throw back
 
-    $query = xarDBDropTable($xartable['calendars']);
-    if (empty($query)) return;
+    // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['calendars_files']);
-    if (empty($query)) return;
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['publication_types']);
+    if (empty($query)) return; // throw back
+
+    // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBDropTable($xartable['calfiles']);
-    if (empty($query)) return;
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+// TODO: remove entries from categories_linkage !
 
-    // remove all module vars
-    xarModVars::delete_all('calendar');
+    // Delete module variables
+
+    //FIXME: This is breaking the removal of the module...
+    xarModDelVar('articles', 'itemsperpage');
+
+    xarModDelVar('articles', 'SupportShortURLs');
+
+    xarModDelVar('articles', 'number_of_categories');
+    xarModDelVar('articles', 'mastercids');
+
+// TODO: remove all current pubtypes
+
+    xarModDelVar('articles', 'settings.1');
+    xarModDelVar('articles', 'settings.2');
+    xarModDelVar('articles', 'settings.3');
+    xarModDelVar('articles', 'settings.4');
+    xarModDelVar('articles', 'settings.5');
+    xarModDelVar('articles', 'settings.6');
+
+    xarModDelVar('articles', 'defaultpubtype');
+
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'related'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'topitems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'featureditems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'glossary'))) return;
+
+// TODO: move this to some common place in Xaraya (base module ?)
+    // Unregister BL tags
+    xarTplUnregisterTag('articles-field');
+
+    /**
+     * Remove instances
+     */
 
     // Remove Masks and Instances
-    xarRemoveMasks('calendar');
-    xarRemoveInstances('calendar');
+    xarRemoveMasks('articles');
+    xarRemoveInstances('articles');
 
-    // remove registered template tags
-//    xarTplUnregisterTag('calendar-decorator');
 
+    // Deletion successful
     return true;
-    */
 }
 
 ?>

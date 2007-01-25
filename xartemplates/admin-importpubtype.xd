@@ -1,0 +1,38 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Articles Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Publication Types</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:mlstring>Import Definition of Publication Type</xar:mlstring>
+    </h3>
+    <strong>#$warning#</strong>
+    <br />
+    <form method="post" action="#xarModURL('articles','admin','importpubtype')#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <xar:mlstring>Filter</xar:mlstring>:
+        <strong>modules/articles/*.xml</strong>
+        <br />
+        <br />
+        <xar:mlstring>File</xar:mlstring>:
+        <select name="import" id="import">
+            <xar:foreach in="$options" value="$option">
+                <option value="#$option['id']#">#$option['name']#</option>
+            </xar:foreach>
+        </select>
+        <br />
+        <br />
+        <input type="submit" value="#xarML('Import Definition')#" />
+        <br />
+        <br />
+        <xar:mlstring>Select a file in the list above, or paste the definition in here</xar:mlstring>:
+        <br />
+        <textarea name="xml" id="xml" rows="30" cols="80"></textarea>
+    </form>
+</div>

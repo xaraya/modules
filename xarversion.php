@@ -1,33 +1,38 @@
 <?php
-//$Id: xarversion.php,v 1.4 2003/06/24 16:31:36 roger Exp $
-
-$modversion['name']           = 'calendar';
-$modversion['id']             = '7';
-$modversion['version']        = '0.2.0';
-$modversion['displayname']    = xarML('Calendar');
-$modversion['description']    = 'Calendar System';
-$modversion['credits']        = 'credits.txt';
-$modversion['help']           = 'help.txt';
-$modversion['changelog']      = 'changelog.txt';
-$modversion['license']        = 'license.txt';
-$modversion['official']       = 0;
-$modversion['author']         = 'Roger Raymond and Xaraya calendar team';
-$modversion['contact']        = 'http://xaraya.simiansynapse.com/';
-$modversion['admin']          = 1;
-$modversion['user']           = 1;
-$modversion['class']          = 'Complete';
-$modversion['category']       = 'Content';
-$modversion['dependency']     = array(
-//                                        8,
-                                     ); // we need the icalendar module installed
-$modversion['dependencyinfo'] = array(
-//                                    8 => 'icalendar',
-                                     );
-$modversion['securityschema'] = array('calendar::event'     => 'Event Title::Event ID',
-                                      'calendar::category'  => 'Category Name::Category ID',
-                                      'calendar::topic'     => 'Topic Name::Topic ID',
-                                      'calendar::user'      => 'User Name::User ID',
-                                      'calendar::sharing'   => 'User Name::User ID',
-                                      'calendar::'          => '::');
-
+/**
+ * Articles Initialization
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
+/* WARNING
+ * Modification of this file is not supported.
+ * Any modification is at your own risk and
+ * may lead to inablity of the system to process
+ * the file correctly, resulting in unexpected results.
+ */
+$modversion['name']         = 'articles';
+$modversion['id']           = '151';
+$modversion['version']      = '1.5.1';
+$modversion['displayname']  = xarML('Articles');
+$modversion['description']  = xarML('Display articles');
+$modversion['credits']      = '';
+$modversion['help']         = '';
+$modversion['changelog']    = '';
+$modversion['license']      = '';
+$modversion['official']     = 1;
+$modversion['author']       = 'mikespub';
+$modversion['contact']      = 'http://www.xaraya.com/';
+$modversion['admin']        = 1;
+$modversion['user']         = 1;
+$modversion['class']        = 'Complete';
+$modversion['category']     = 'Content';
+// this module depends on the categories module
+$modversion['dependency']   = array(147);
 ?>

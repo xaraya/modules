@@ -1,33 +1,87 @@
 <?php
-function calendar_adminapi_getmenulinks()
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
+/**
+ * utility function pass individual menu items to the main menu
+ *
+ * @author the Articles module development team
+ * @return array containing the menulinks for the main menu items.
+ */
+function articles_adminapi_getmenulinks()
 {
     $menulinks = array();
-    if (xarSecurityCheck('AdminCalendar',0)) {
-        $menulinks[] = array('url'   => xarModURL('calendar',
-                                                  'admin',
-                                                  'view'),
-                              'title' => xarML('Manage the Master Tables  of this module'),
-                              'label' => xarML('Master Tables'));
-        $menulinks[] = array('url'   => xarModURL('calendar',
+
+// Security Check
+    if (xarSecurityCheck('EditArticles',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'view'),
+                              'title' => xarML('View and edit all articles'),
+                              'label' => xarML('View Articles'));
+    }
+
+// Security Check
+    if (xarSecurityCheck('SubmitArticles',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'new'),
+                              'title' => xarML('Add a new article'),
+                              'label' => xarML('Add Article'));
+    }
+
+
+// Security Check
+    if (xarSecurityCheck('AdminArticles',0)) {
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'stats'),
+                              'title' => xarML('View statistics'),
+                              'label' => xarML('View Statistics'));
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'importpictures'),
+                              'title' => xarML('Create a simple picture gallery with articles'),
+                              'label' => xarML('Import Pictures'));
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'importpages'),
+                              'title' => xarML('Import existing HTML pages'),
+                              'label' => xarML('Import Webpages'));
+
+        $menulinks[] = Array('url'   => xarModURL('articles',
+                                                   'admin',
+                                                   'pubtypes'),
+                              'title' => xarML('View and edit publication types'),
+                              'label' => xarML('Publication Types'));
+
+    // TODO: differentiate security check according to pubtype ?
+        $menulinks[] = Array('url'   => xarModURL('articles',
                                                   'admin',
                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration settings'),
+                              'title' => xarML('Modify the articles module configuration'),
                               'label' => xarML('Modify Config'));
+    }
 
-    /*
-        $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','add_event'),
-            'title'=>xarML('Add a new calendar event'),
-            'label'=>xarML('Add event')
-            );
-        $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','view'),
-            'title'=>xarML('View queued events'),
-            'label'=>xarML('View Queue')
-            );
-        */
+    if (empty($menulinks)){
+        $menulinks = '';
     }
 
     return $menulinks;
 }
+
 ?>

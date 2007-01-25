@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template file="publinks" type="module" />
+<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+<div class="xar-error">
+    <p>
+        <xar:mlstring>
+            <strong>Note:</strong> when you create a new publication type,
+            the articles module will automatically use the templates
+            <em>user-display-[publicationtype].xd</em>
+            and <em>user-summary-[publicationtype].xd</em>.
+            If those templates do not exist when you try to preview or display a new article,
+            you'll get this warning :-)
+        </xar:mlstring>
+        <xar:mlstring>
+            Please place your own templates in themes/<em>yourtheme</em>/modules/articles . The templates will get the extension .xt there.
+        </xar:mlstring>
+    </p>
+</div>
+<div class="xar-norm xar-standard-box-padding">
+    <h1><strong><xar:mlstring>Title</xar:mlstring>:</strong>&#160;#$title#</h1>
+    <xar:if condition="isset($author)">
+    <p><strong><xar:mlstring>Author</xar:mlstring>:</strong>&#160;#$author#</p>
+    </xar:if>
+    <xar:if condition="isset($pubdate)">
+    <p>
+        <xar:ml>
+            <xar:mlstring><strong>Date:</strong> #(1) #(2) or #(3)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long',$pubdate)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime('long',$pubdate)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$pubdate)#</xar:mlvar>
+        </xar:ml>
+    </p>
+    </xar:if>
+    <xar:if condition="isset($summary)">
+    <p><strong><xar:mlstring>Summary</xar:mlstring>:</strong>&#160;#$summary#</p>
+    </xar:if>
+    <xar:if condition="isset($body)">
+    <p><strong><xar:mlstring>Body</xar:mlstring>:</strong>&#160;#$body#</p>
+    </xar:if>
+    <xar:if condition="isset($notes)">
+    <p><strong><xar:mlstring>Notes</xar:mlstring>:</strong>&#160;#$notes#</p>
+    </xar:if>
+    <xar:if condition="!empty($previous) and !empty($next)">
+    <p>#$pager#</p>
+    </xar:if>
+    <p><em><xar:mlstring>More fields may be available via dynamicdata ..</xar:mlstring></em></p>
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+        <p>#$hooks[$hookmodule]#</p>
+        </xar:foreach>
+    </xar:if>
+</div>

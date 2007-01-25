@@ -1,170 +1,288 @@
 <?php
-function calendar_admin_modifyconfig()
+/**
+ * Articles module
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
+ */
+/**
+ * Modify configuration
+ */
+function articles_admin_modifyconfig()
 {
-    $data = xarMod::apiFunc('calendar', 'admin', 'menu');
-    $data = array_merge($data,xarMod::apiFunc('calendar', 'admin', 'get_calendars'));
-    if (!xarSecurityCheck('AdminCalendar')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'calendar_general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'calendar', XARVAR_NOT_REQUIRED)) return;
-    $hooks = xarModCallHooks('module', 'getconfig', 'calendar');
-    if (!empty($hooks) && isset($hooks['tabs'])) {
-        foreach ($hooks['tabs'] as $key => $row) {
-            $configarea[$key]  = $row['configarea'];
-            $configtitle[$key] = $row['configtitle'];
-            $configcontent[$key] = $row['configcontent'];
-        }
-        array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+    // Get parameters
+    if(!xarVarFetch('ptid', 'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+
+    // Security check
+    if (empty($ptid)) {
+        $ptid = '';
+        if (!xarSecurityCheck('AdminArticles')) return;
     } else {
-        $hooks['tabs'] = array();
+        if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
     }
 
-    switch (strtolower($phase)) {
-        case 'modify':
-        default:
-            switch ($data['tab']) {
-                case 'calendar_general':
-                    sys::import('modules.calendar.pear.Calendar.Util.Textual');
-                    $data['weekdays'] = Calendar_Util_Textual::weekdayNames();
-                    break;
-            }
-
-            break;
-
-        case 'update':
-            // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
-            if (!xarVarFetch('items_per_page', 'str:1:4:', $items_per_page, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('calendar', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('windowwidth', 'int:1', $windowwidth, xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('minutesperunit', 'int:1', $minutesperunit, xarModVars::get('calendar', 'minutesperunit'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('unitheight', 'int:1', $unitheight, xarModVars::get('calendar', 'unitheight'), XARVAR_NOT_REQUIRED)) return;
-
-            if (!xarVarFetch('default_view', 'str:1', $default_view, xarModVars::get('calendar', 'default_view'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cal_sdow', 'str:1', $cal_sdow, xarModVars::get('calendar', 'cal_sdow'), XARVAR_NOT_REQUIRED)) return;
-
-            sys::import('modules.dynamicdata.class.properties.master');
-            $timeproperty = DataPropertyMaster::getProperty(array('type' => 'formattedtime'));
-            $day_start = $timeproperty->checkInput('day_start') ? $timeproperty->getValue() : xarModVars::get('calendar','day_start');
-            $day_end = $timeproperty->checkInput('day_end') ? $timeproperty->getValue() : xarModVars::get('calendar','day_end');
-
-            if ($data['tab'] == 'calendar_general') {
-                xarModVars::set('calendar', 'items_per_page', $items_per_page);
-                xarModVars::set('calendar', 'supportshorturls', $shorturls);
-                xarModVars::set('calendar', 'useModuleAlias', $useModuleAlias);
-                xarModVars::set('calendar', 'aliasname', $aliasname);
-                xarModVars::set('calendar', 'windowwidth', $windowwidth);
-                xarModVars::set('calendar', 'minutesperunit', $minutesperunit);
-                xarModVars::set('calendar', 'unitheight', $unitheight);
-
-                xarModVars::set('calendar', 'default_view', $default_view);
-                xarModVars::set('calendar', 'cal_sdow', $cal_sdow);
-                xarModVars::set('calendar', 'day_start', $day_start);
-                xarModVars::set('calendar', 'day_end', $day_end);
-            }
-            $regid = xarMod::getRegID($tabmodule);
-            xarModItemVars::set('calendar', 'windowwidth', $windowwidth, $regid);
-            xarModItemVars::set('calendar', 'minutesperunit', $minutesperunit, $regid);
-            xarModItemVars::set('calendar', 'unitheight', $unitheight, $regid);
-
-            xarModItemVars::set('calendar', 'default_view', $default_view, $regid);
-            xarModItemVars::set('calendar', 'cal_sdow', $cal_sdow, $regid);
-            xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
-            xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
-
-            xarController::redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
-            return true;
-            break;
+    // Get the article settings for this publication type
+    //Sometimes $settings can be set but $string can return empty eg importing a pubtype
+    //Let's make provision for this
+    $string=''; //initialize
+    if (!empty($ptid)) {
+        $string = xarModGetVar('articles', 'settings.'.$ptid);
+    } else {
+        $string = xarModGetVar('articles', 'settings');
 
     }
+    if (!empty($string)) {
+        $settings = unserialize($string);
+    }
+    $data = array();
+    $data['ptid'] = $ptid;
 
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
-    // Variables from phpIcalendar config.inc.php
-    $data['default_view'] = xarModVars::get('calendar', 'default_view');
-    $data['minical_view'] = xarModVars::get('calendar', 'minical_view');
-    $data['default_cal'] = unserialize(xarModVars::get('calendar', 'default_cal'));
-    $data['cal_sdow']         = xarModVars::get('calendar', 'cal_sdow');
-    $data['week_start_day']         = xarModVars::get('calendar','week_start_day'         );
-    $data['day_start']              = xarModVars::get('calendar','day_start'              );
-    $data['day_end']                = xarModVars::get('calendar','day_end'                );
-    $data['gridLength']             = xarModVars::get('calendar','gridLength'             );
-    $data['num_years']              = xarModVars::get('calendar','num_years'              );
-    $data['month_event_lines']      = xarModVars::get('calendar','month_event_lines'      );
-    $data['tomorrows_events_lines'] = xarModVars::get('calendar','tomorrows_events_lines' );
-    $data['allday_week_lines']      = xarModVars::get('calendar','allday_week_lines'      );
-    $data['week_events_lines']      = xarModVars::get('calendar','week_events_lines'      );
-    $data['second_offset']          = xarModVars::get('calendar','second_offset'          );
-    $data['bleed_time']             = xarModVars::get('calendar','bleed_time'             );
+    if (isset($settings) && is_array($settings)) {
+        $data['itemsperpage']           = empty($settings['itemsperpage']) ? 20 : $settings['itemsperpage'];
+        $data['adminitemsperpage']      = empty($settings['adminitemsperpage']) ? 20 : $settings['adminitemsperpage'];
+        $data['numcols']                = empty($settings['number_of_columns']) ? 1 : $settings['number_of_columns'];
+        $data['defaultview']            = $settings['defaultview'];
+        // Note: the current template uses the variables both for testing and the value attribute for the tag, dont use true/false to be sure
+        $data['showcategories']         = !empty($settings['showcategories']) ? 1 : 0;
+        $data['showkeywords']           = !empty($settings['showkeywords']) ? 1 : 0;
+        $data['showcatcount']           = !empty($settings['showcatcount']) ? 1 : 0;
+        $data['showprevnext']           = !empty($settings['showprevnext']) ? 1 : 0;
+        $data['showcomments']           = !empty($settings['showcomments']) ? 1 : 0;
+        $data['showhitcounts']          = !empty($settings['showhitcounts']) ? 1 : 0;
+        $data['showratings']            = !empty($settings['showratings']) ? 1 : 0;
+        $data['showarchives']           = !empty($settings['showarchives']) ? 1 : 0;
+        $data['showmap']                = !empty($settings['showmap']) ? 1 : 0;
+        $data['showpublinks']           = !empty($settings['showpublinks']) ? 1 : 0;
+        $data['showpubcount']           = (isset($settings['showpubcount']) && empty($settings['showpubcount'])) ? 0 : 1;
+        $data['dotransform']            = !empty($settings['dotransform']) ? 1 : 0;
+        $data['titletransform']         = !empty($settings['titletransform']) ? 1 : 0;
+        $data['prevnextart']            = !empty($settings['prevnextart']) ? 1 : 0;
+        $data['page_template']          = isset($settings['page_template']) ? $settings['page_template'] : '';
+        $data['defaultstatus']          = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
+        $data['defaultsort']            = !empty($settings['defaultsort']) ? $settings['defaultsort'] : 'date';
+        $data['usetitleforurl']         = !empty($settings['usetitleforurl']) ? $settings['usetitleforurl'] : 0;
+    }
+    if (!isset($data['itemsperpage'])) {
+        $data['itemsperpage'] = 20;
+    }
+    if (!isset($data['adminitemsperpage'])) {
+        $data['adminitemsperpage'] = 20;
+    }
+    if (!isset($data['numcols'])) {
+        $data['numcols'] = 0;
+    }
+    if (!isset($data['defaultview'])) {
+        $data['defaultview'] = 1;
+    }
+    if (!isset($data['showcategories'])) {
+        $data['showcategories'] = 0;
+    }
+    if (!isset($data['showkeywords'])) {
+        $data['showkeywords'] = 0;
+    }
+    if (!isset($data['showcatcount'])) {
+        $data['showcatcount'] = 0;
+    }
+    if (!isset($data['showprevnext'])) {
+        $data['showprevnext'] = 0;
+    }
+    if (!isset($data['showcomments'])) {
+        $data['showcomments'] = 1;
+    }
+    if (!isset($data['showhitcounts'])) {
+        $data['showhitcounts'] = 1;
+    }
+    if (!isset($data['showratings'])) {
+        $data['showratings'] = 0;
+    }
+    if (!isset($data['showarchives'])) {
+        $data['showarchives'] = 1;
+    }
+    if (!isset($data['showmap'])) {
+        $data['showmap'] = 1;
+    }
+    if (!isset($data['showpublinks'])) {
+        $data['showpublinks'] = 0;
+    }
+    if (!isset($data['showpubcount'])) {
+        $data['showpubcount'] = 1;
+    }
+    if (!isset($data['dotransform'])) {
+        $data['dotransform'] = 0;
+    }
+    if (!isset($data['titletransform'])) {
+        $data['titletransform'] = 0;
+    }
+    if (!isset($data['prevnextart'])) {
+        $data['prevnextart'] = 0;
+    }
+    if (!isset($data['page_template'])) {
+        $data['page_template'] = '';
+    }
+    if (!isset($data['defaultstatus'])) {
+        if (empty($ptid)) {
+            $data['defaultstatus'] = 2;
+        } elseif (!isset($pubtypes[$ptid])) {
+            $data['defaultstatus'] = 2;
+        } else {
+            if (empty($pubtypes[$ptid]['config']['status']['label'])) {
+                $data['defaultstatus'] = 2;
+            } else {
+                $data['defaultstatus'] = 0;
+            }
+        }
+    }
+    if (empty($ptid) || empty($pubtypes[$ptid]['config']['status']['label'])) {
+        $data['withstatus'] = 0;
+    } else {
+        $data['withstatus'] = 1;
+    }
+    if (!isset($data['usetitleforurl'])) {
+        $data['usetitleforurl'] = 0;
+    }
+    if (!isset($data['defaultsort'])) {
+        $data['defaultsort'] = 'date';
+    }
 
-    $data['display_custom_goto']    = xarModVars::get('calendar','display_custom_goto'    );
-    $data['display_custom_gotochecked'] = xarModVars::get('calendar', 'display_custom_goto') ? 'checked' : '';
-    $data['display_ical_list']      = xarModVars::get('calendar','display_ical_list'      );
-    $data['display_ical_listchecked'] = xarModVars::get('calendar', 'display_ical_list') ? 'checked' : '';
-    $data['allow_webcals']          = xarModVars::get('calendar','allow_webcals'          );
-    $data['allow_webcalschecked'] = xarModVars::get('calendar', 'allow_webcals') ? 'checked' : '';
-    $data['this_months_events']     = xarModVars::get('calendar','this_months_events'     );
-    $data['this_months_eventschecked'] = xarModVars::get('calendar', 'this_months_events') ? 'checked' : '';
-    $data['use_color_cals']         = xarModVars::get('calendar','use_color_cals'         );
-    $data['use_color_calschecked'] = xarModVars::get('calendar', 'use_color_cals') ? 'checked' : '';
-    $data['daysofweek_dayview']     = xarModVars::get('calendar','daysofweek_dayview'     );
-    $data['daysofweek_dayviewchecked'] = xarModVars::get('calendar', 'daysofweek_dayview') ? 'checked' : '';
-    $data['enable_rss']             = xarModVars::get('calendar','enable_rss'             );
-    $data['enable_rsschecked'] = xarModVars::get('calendar', 'enable_rss') ? 'checked' : '';
-    $data['show_search']            = xarModVars::get('calendar','show_search'            );
-    $data['show_searchchecked'] = xarModVars::get('calendar', 'show_search') ? 'checked' : '';
-    $data['allow_preferences']      = xarModVars::get('calendar','allow_preferences'      );
-    $data['allow_preferenceschecked'] = xarModVars::get('calendar', 'allow_preferences') ? 'checked' : '';
-    $data['printview_default']      = xarModVars::get('calendar','printview_default'      );
-    $data['printview_defaultchecked'] = xarModVars::get('calendar', 'printview_default') ? 'checked' : '';
-    $data['show_todos']             = xarModVars::get('calendar','show_todos'             );
-    $data['show_todoschecked'] = xarModVars::get('calendar', 'show_todos') ? 'checked' : '';
-    $data['show_completed']         = xarModVars::get('calendar','show_completed'         );
-    $data['show_completedchecked'] = xarModVars::get('calendar', 'show_completed') ? 'checked' : '';
-    $data['allow_login']            = xarModVars::get('calendar','allow_login'            );
-    $data['allow_loginchecked'] = xarModVars::get('calendar', 'allow_login') ? 'checked' : '';
+    // call modifyconfig hooks with module + itemtype
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'articles',
+                             array('module'   => 'articles',
+                                   'itemtype' => $ptid));
 
-    /*
-    //  list of options from config.inc.php not included
-    $style_sheet            = 'silver';         // Themes support - silver, red, green, orange, grey, tan
-    $language               = 'English';        // Language support - 'English', 'Polish', 'German', 'French', 'Dutch', 'Danish', 'Italian', 'Japanese', 'Norwegian', 'Spanish', 'Swedish', 'Portuguese', 'Catalan', 'Traditional_Chinese', 'Esperanto', 'Korean'
-    $calendar_path          = '';               // Leave this blank on most installs, place your full path to calendars if they are outside the phpicalendar folder.
-    $tmp_dir                = '/tmp';           // The temporary directory on your system (/tmp is fine for UNIXes including Mac OS X)
-    $cookie_uri             = '';               // The HTTP URL to the PHP iCalendar directory, ie. http://www.example.com/phpicalendar -- AUTO SETTING -- Only set if you are having cookie issues.
-    $download_uri           = '';               // The HTTP URL to your calendars directory, ie. http://www.example.com/phpicalendar/calendars -- AUTO SETTING -- Only set if you are having subscribe issues.
-    $default_path           = 'http://www.example.com/phpicalendar';                        // The HTTP URL to the PHP iCalendar directory, ie. http://www.example.com/phpicalendar
-    $timezone               = '';               // Set timezone. Read TIMEZONES file for more information
-    $save_parsed_cals       = 'yes';            // Recommended 'yes'. Saves a copy of the cal in /tmp after it's been parsed. Improves performence.
-    */
-
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
-    // Note : if you don't plan on providing encode/decode functions for
-    // short URLs (see xaruserapi.php), you should remove these from your
-    // admin-modifyconfig.xard template !
-    $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModVars::get('calendar', 'SupportShortURLs') ?
-    'checked' : '';
-
-
-/*    //TODO: should I include this stuff? --amoro
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
-        array('module' => 'calendar'));
     if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('', $hooks);
+        $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for articles...'));
     } else {
         $data['hooks'] = $hooks;
     }
-*/
-    $data['hooks'] = $hooks;
-    $data['tabmodule'] = $tabmodule;
+
+    $data['updatelabel'] = xarML('Update Configuration');
+
+    // Get the list of current hooks for item displays
+    $hooklist = xarModGetHookList('articles','item','display',$ptid);
+    $seenhook = array();
+    foreach ($hooklist as $hook) {
+        $seenhook[$hook['module']] = 1;
+    }
+
+    if (!empty($seenhook['comments'])) {
+        $data['showcommentsoptions'] = true;
+    }
+    else {
+        $data['showcommentsoptions'] = false;
+    }
+
+    if (!empty($seenhook['hitcount'])) {
+        $data['showhitcountsoptions'] = true;
+    }
+    else {
+        $data['showhitcountsoptions'] = false;
+    }
+    if (!empty($seenhook['ratings'])) {
+        $data['showratingsoptions'] = true;
+    }
+    else {
+        $data['showratingsoptions'] = false;
+    }
+    if (!empty($seenhook['keywords'])) {
+        $data['showkeywordsoptions'] = true;
+    }
+    else {
+        $data['showkeywordsoptions'] = false;
+    }
+
+    $viewoptions = array();
+    $viewoptions[] = array('value' => 1, 'label' => xarML('Latest Items'));
+
+    // get root categories for this publication type
+    if (!empty($ptid)) {
+        $catlinks = xarModAPIFunc('articles',
+                                 'user',
+                                 'getrootcats',
+                                 array('ptid' => $ptid));
+    // Note: if you want to use a *combination* of categories here, you'll
+    //       need to use something like 'c15+32'
+        foreach ($catlinks as $catlink) {
+            $viewoptions[] = array('value' => 'c' . $catlink['catid'],
+                                   'label' => xarML('Browse in') . ' ' .
+                                              $catlink['cattitle']);
+        }
+    }
+    $data['viewoptions'] = $viewoptions;
+
+    // Create a link for each publication type
+    $pubfilters = array();
+
+    // Link to default settings
+    $pubitem = array();
+    $pubitem['ptitle'] = xarML('Defaults');
+    if (empty($ptid)) {
+        $pubitem['plink'] = '';
+    } else {
+        $pubitem['plink'] = xarModURL('articles','admin','modifyconfig');
+    }
+    $pubitem['pid'] = '';
+    $pubfilters[] = $pubitem;
+
+    // Links to settings per publication type
+    foreach ($pubtypes as $id => $pubtype) {
+        if (!xarSecurityCheck('AdminArticles',0,'Article',"$id:All:All:All")) {
+            continue;
+        }
+        $pubitem = array();
+        if ($id == $ptid) {
+            $pubitem['plink'] = '';
+        } else {
+            $pubitem['plink'] = xarModURL('articles','admin','modifyconfig',
+                                         array('ptid' => $id));
+        }
+        $pubitem['ptitle'] = $pubtype['descr'];
+        $pubitem['pid'] = $id;
+        $pubfilters[] = $pubitem;
+    }
+    $data['pubfilters'] = $pubfilters;
+
+    if (empty($ptid)) {
+        $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? true : false;
+
+        $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
+        if (empty($data['defaultpubtype'])) {
+            $data['defaultpubtype'] = '';
+        }
+        $data['sortpubtypes'] = xarModGetVar('articles', 'sortpubtypes');
+        if (empty($data['sortpubtypes'])) {
+            $data['sortpubtypes'] = 'id';
+            xarModSetVar('articles','sortpubtypes','id');
+        }
+    }
+
+    $data['statusoptions'] = array();
+    $states = xarModAPIFunc('articles','user','getstates');
+    foreach ($states as $id => $name) {
+        $data['statusoptions'][] = array('value' => $id, 'label' => $name);
+    }
+
+    // Module alias for short URLs
+    if (!empty($ptid)) {
+        $data['alias'] = $pubtypes[$ptid]['name'];
+    } else {
+        $data['alias'] = 'frontpage';
+    }
+    $modname = xarModGetAlias($data['alias']);
+    if ($modname == 'articles') {
+        $data['usealias'] = true;
+    } else {
+        $data['usealias'] = false;
+    }
     $data['authid'] = xarSecGenAuthKey();
+    // Return the template variables defined in this function
     return $data;
 }
 ?>

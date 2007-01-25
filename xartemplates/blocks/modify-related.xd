@@ -1,0 +1,19 @@
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems_#$bid#"> 
+        <xar:mlstring>
+            Number of items 
+        </xar:mlstring>
+    </label><input type="text" name="numitems" id="numitems_#$bid#" value="#$numitems#" size="5" maxlength="5" /> 
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition="empty($showvalue)">
+        <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" /> 
+        <xar:else />
+        <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" checked="checked" /> 
+    </xar:if>
+    <label class="help" title="#xarML('Check this box to show the number of articles.')#" for="showvalue#$bid#"> 
+        <xar:mlstring>
+            Show number of articles 
+        </xar:mlstring>
+    </label> 
+</div>

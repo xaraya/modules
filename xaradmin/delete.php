@@ -1,63 +1,123 @@
 <?php
- /**
+/**
+ * Articles module
+ *
  * @package modules
- * @copyright (C) 2002-2010 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
+ * @subpackage Articles Module
+ * @link http://xaraya.com/index.php/release/151.html
+ * @author mikespub
  */
 /**
- *  Delete an item
+ * delete item
  */
-function shop_admin_delete()
+function articles_admin_delete()
 {
-    // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch(), getting them
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
-    if (!xarVarFetch('name',    'str',   $name, false,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    // Get parameters
+    if (!xarVarFetch('aid', 'id', $aid)) return;
+    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    // Show an error when the itemid is still not set
-    if (empty($data['itemid'])) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'delete', 'dyn_example');
-        throw new Exception($msg);
+    // Get article information
+    $article = xarModAPIFunc('articles',
+                             'user',
+                             'get',
+                             array('aid' => $aid,
+                                   'withcids' => true));
+    if (!isset($article) || $article == false) {
+        $msg = xarML('Unable to find #(1) item #(2)',
+                     'Article', xarVarPrepForDisplay($aid));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                        new SystemException($msg));
+        return;
     }
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing.  However,
-    // in this case we had to wait until we could obtain the item name to
-    // complete the instance information so this is the first chance we get to
-    // do the check
-    if (!xarSecurityCheck('Deleteshop',1,'Item',$data['itemid'])) return;
+    $ptid = $article['pubtypeid'];
 
-    // Load the DD master object class. This line will likely disappear in future versions
-    sys::import('modules.dynamicdata.class.objects.master');
-    // Get the object we'll be working with
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
-    
-    if ($data['confirm']) {
+    // Security check
+    $input = array();
+    $input['article'] = $article;
+    $input['mask'] = 'DeleteArticles';
+    if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $msg = xarML('You have no permission to delete #(1) item #(2)',
+                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
+    }
 
-        // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
-            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
-        }        
+    // Check for confirmation
+    if (!$confirm) {
+        $data = array();
 
-        $item = $data['object']->deleteItem();
+        // Specify for which item you want confirmation
+        $data['aid'] = $aid;
 
-        $viewfunc = str_replace('shop_','',$name);
-        
-        // Jump to the next page
-        xarResponse::redirect(xarModURL('shop','admin',$viewfunc));
+        // Use articles user GUI function (not API) for preview
+        if (!xarModLoad('articles','user')) return;
+        $data['preview'] = xarModFunc('articles', 'user', 'display',
+                                      array('preview' => true, 'article' => $article));
+
+        // Add some other data you'll want to display in the template
+        $data['confirmtext'] = xarML('Confirm deleting this article');
+        $data['confirmlabel'] = xarML('Confirm');
+
+        // Generate a one-time authorisation code for this operation
+        $data['authid'] = xarSecGenAuthKey();
+
+        $data['return_url'] = $return_url;
+
+        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $template = $pubtypes[$ptid]['name'];
+
+        // Return the template variables defined in this function
+        return xarTplModule('articles', 'admin', 'delete', $data, $template);
+    }
+
+    // Confirmation present
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Pass to API
+    if (!xarModAPIFunc('articles',
+                     'admin',
+                     'delete',
+                     array('aid' => $aid,
+                           'ptid' => $ptid))) {
+        return;
+    }
+
+    // Success
+    xarSessionSetVar('statusmsg', xarML('Article Deleted'));
+
+    // Return return_url
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
         return true;
     }
-    return $data;
+
+    // Return to the original admin view
+    $lastview = xarSessionGetVar('Articles.LastView');
+    if (isset($lastview)) {
+        $lastviewarray = unserialize($lastview);
+        if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
+            extract($lastviewarray);
+            xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+                                          array('ptid' => $ptid,
+                                                'catid' => $catid,
+                                                'status' => $status,
+                                                'startnum' => $startnum)));
+            return true;
+        }
+    }
+
+    xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+                                  array('ptid' => $ptid)));
+
+    return true;
 }
 
 ?>
