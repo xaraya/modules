@@ -1,0 +1,34 @@
+<xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
+    <xar:style scope="module" module="base" file="navtabs" />
+    <dl class="xar-tabs">
+        <dt class="help">
+            <xar:mlstring>
+                Options 
+            </xar:mlstring>
+            : 
+        </dt>
+        <xar:if condition="!empty($maplink)">
+            <dd>
+                <a href="#$maplink#">
+                    #$maplabel# 
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="!empty($submitlink)">
+            <dd>
+                <a href="#$submitlink#" title="Submit Article">
+                    <xar:mlstring>
+                        Contribute 
+                    </xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+        <xar:if condition="!empty($archivelink)">
+            <dd>
+                <a href="#$archivelink#">
+                    #$archivelabel# 
+                </a>
+            </dd>
+        </xar:if>
+    </dl>
+</xar:if>

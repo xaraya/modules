@@ -1,0 +1,204 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Articles Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>
+           Utilities
+        </xar:mlstring>
+    </h2>
+      <xar:template type="module" file="util-menu" />
+    <h3><xar:mlstring>Import Web Pages</xar:mlstring></h3>
+    <div class="xar-align-center">
+        <xar:if condition="!empty($logfile)">#$logfile#
+        <br />
+        <br /></xar:if>
+        <form method="post" action="&xar-modurl-articles-admin-importpages;">
+            <table width="100%" border="0" cellpadding="2" cellspacing="1">
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="basedir">
+                            <xar:mlstring>Base Directory</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="submit" name="refresh" id="refresh" value="Refresh" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="filelist[]">
+                            <xar:mlstring>Available HTML Pages</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <select name="filelist[]" id="filelist[]" multiple="multiple">
+                            <option value=""></option>
+                            <xar:foreach in="$filelist" value="$file">
+                                <xar:if condition="!empty($selected[$file])">
+                                    <option value="#$file#" selected="selected">#$file#</option>
+                                    <xar:else />
+                                    <option value="#$file#">#$file#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="ptid">
+                            <xar:mlstring>Publication Type</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <select name="ptid" id="ptid" onchange="javascript:this.form.submit();">
+                            <option value=""></option>
+                            <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+                                <xar:if condition="!empty($ptid) and $pubid eq $ptid">
+                                    <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+                                    <xar:else />
+                                    <option value="#$pubid#">#$pubtype['descr']#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+                <xar:if condition="count($fields) gt 0">
+                    <tr>
+                        <td class="xar-align-left">
+                            <label for="content">
+                                <xar:mlstring>Insert Page Title into Field</xar:mlstring>
+                            </label>
+                        </td>
+                        <td class="xar-align-left">
+                            <select name="title" id="title">
+                                <option value=""></option>
+                                <xar:foreach in="$fields" key="$field" value="$label">
+                                    <xar:if condition="!empty($title) and $title eq $field">
+                                        <option value="#$field#" selected="selected">#$label#</option>
+                                        <xar:else />
+                                        <option value="#$field#">#$label#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="xar-align-left">
+                            <label for="content">
+                                <xar:mlstring>Insert Content into Field</xar:mlstring>
+                            </label>
+                        </td>
+                        <td class="xar-align-left">
+                            <select name="content" id="content">
+                                <option value=""></option>
+                                <xar:foreach in="$fields" key="$field" value="$label">
+                                    <xar:if condition="!empty($content) and $content eq $field">
+                                        <option value="#$field#" selected="selected">#$label#</option>
+                                        <xar:else />
+                                        <option value="#$field#">#$label#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
+                        </td>
+                    </tr>
+                </xar:if>
+                <xar:if condition="count($cats) gt 0">
+                    <tr>
+                        <td class="xar-align-left">
+                            <label for="ptid">
+                                <xar:mlstring>Initial Categories</xar:mlstring>
+                            </label>
+                        </td>
+                        <td class="xar-align-left">
+                            <xar:foreach in="$cats" key="$catid">#$cats[$catid]#</xar:foreach>
+                        </td>
+                    </tr>
+                </xar:if>
+                <tr>
+                    <td class="xar-align-center" colspan="2">&#160;</td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="filterhead">
+                            <xar:mlstring>Filter Start of Page</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <input type="text" name="filterhead" id="filterhead" value="#$filterhead#" size="30" maxlength="100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="filtertail">
+                            <xar:mlstring>Filter End of Page</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <input type="text" name="filtertail" id="filtertail" value="#$filtertail#" size="30" maxlength="100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="findtitle">
+                            <xar:mlstring>Find Page Title</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <input type="text" name="findtitle" id="findtitle" value="#$findtitle#" size="30" maxlength="100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-left">
+                        <label for="filtertail">
+                            <xar:mlstring>Replacement Rules</xar:mlstring>
+                        </label>
+                    </td>
+                    <td class="xar-align-left">
+                        <!-- not used the first time you hit this page -->
+                        <input type="hidden" name="numrules" value="3" />
+                        <table border="0" cellpadding="5">
+                            <tr>
+                                <td>
+                                    <xar:mlstring>Search for</xar:mlstring>
+                                </td>
+                                <td>
+                                    <xar:mlstring>Replace with</xar:mlstring>
+                                </td>
+                            </tr>
+                            <xar:foreach in="$search" key="$id">
+                                <tr>
+                                    <td>
+                                        <input type="text" name="search[#$id#]" id="search[#$id#]" value="#$search[$id]#" size="20" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="replace[#$id#]" id="replace[#$id#]" value="#$replace[$id]#" size="20" />
+                                    </td>
+                                </tr>
+                            </xar:foreach>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-center" colspan="2">
+                    <input type="submit" name="test" id="test" value="Test Import" />&#160;&#160;&#160;&#160;
+                    <input type="submit" name="import" id="import" value="Import Webpages" /></td>
+                </tr>
+            </table>
+        </form>
+        <xar:if condition="!empty($preview)">
+            <div class="xar-fullwidth xar-standard-box-padding">
+            <hr />
+            <strong>
+                <xar:mlstring>Preview of the first webpage</xar:mlstring>
+            </strong>
+            <hr />#$preview#</div>
+        </xar:if>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template file="publinks" type="module" />
+<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+
+<table border="0" cellpadding="3" cellspacing="0">
+<tr>
+  <td align="right">
+    <xar:mlstring>Title:</xar:mlstring>
+  </td>
+  <td align="left">
+    #$title#
+    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
+    </xar:if>
+    <br />
+  </td>
+</tr>
+<xar:if condition="!empty($notes)">
+<tr>
+  <td align="right" valign="top">
+    <xar:mlstring>Image:</xar:mlstring>
+  </td>
+  <td align="center">
+    <img src="#$notes#" border="0" alt="#$title#" />
+    &#160;
+  </td>
+</tr>
+</xar:if>
+<tr>
+  <td align="right" valign="top">
+    <xar:mlstring>Review:</xar:mlstring>
+  </td>
+  <td align="left">
+    #$summary#
+  </td>
+</tr>
+<tr>
+  <td align="right">
+    <xar:mlstring>Added on:</xar:mlstring>
+  </td>
+  <td align="left">
+    #xarLocaleGetFormattedDate('long',$pubdate)#
+    #xarLocaleGetFormattedTime('long',$pubdate)#
+  </td>
+</tr>
+<tr>
+  <td align="right">
+    <xar:mlstring>By:</xar:mlstring>
+  </td>
+  <td align="left">
+    <xar:if condition="!empty($profile)">
+      <a href="#$profile#">#$author#</a>
+    <xar:else />
+      #$author#
+    </xar:if>
+  </td>
+</tr>
+<xar:if condition="!empty($body) or !empty($redirect)">
+<tr>
+  <td align="right">
+    <xar:mlstring>Related Link:</xar:mlstring>
+  </td>
+  <td align="left">
+    <xar:if condition="!empty($redirect)">
+        <a href="#$redirect#">#$body#</a>
+    <xar:else/>
+        #$body#
+    </xar:if>
+    &#160;
+  </td>
+</tr>
+</xar:if>
+<xar:if condition="!empty($rating)">
+<tr>
+  <td align="right">
+    <xar:mlstring>Rating:</xar:mlstring>
+  </td>
+  <td align="left">
+    #$rating#
+  </td>
+</tr>
+</xar:if>
+<xar:if condition="!empty($counter)">
+<tr>
+  <td align="right">
+    <xar:mlstring>Reads:</xar:mlstring>
+  </td>
+  <td align="left">
+    #$counter#
+  </td>
+</tr>
+</xar:if>
+</table>
+
+<xar:if condition="!empty($prevart) || !empty($nextart)">
+<br />
+<table border="0" width="95%">
+<tr>
+    <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&#160;</td>
+    <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
+</tr>
+</table>
+</xar:if>
+
+<xar:if condition="!empty($hooks)">
+<br />
+<xar:foreach in="$hooks" key="$hookmodule">
+#$hooks[$hookmodule]#
+</xar:foreach>
+</xar:if>
+
+<xar:template file="navtabs-user" type="module" />

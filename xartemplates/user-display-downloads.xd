@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template file="publinks" type="module" />
+<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" />
+
+<div class="article-view">
+    <h3><span>#$title#</span></h3>
+        <xar:if condition="!empty($categories) and count($categories) gt 0">
+            [ <xar:foreach in="$categories" value="$cat">
+                #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+            </xar:foreach> ]
+        </xar:if>
+    <h5><xar:mlstring>Summary</xar:mlstring>:</h5>
+    <p>#$summary#</p>
+    <h5><xar:mlstring>Download</xar:mlstring>:</h5>
+    <xar:if condition="empty($notes)">
+    <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
+    <xar:comment>
+        If you hook the uploads module to articles, then file upload fields will contain
+        a comma-separated list of file ids, and you will need to call an API function to
+        retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
+        directly to access the file information.
+    </xar:comment>
+        <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
+        <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
+            <p><a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a></p>
+        </xar:foreach>
+    <xar:elseif condition="file_exists('var/uploads/'.$notes)" />
+        <p><a href="var/uploads/#$notes#" title="#$notes#">#$notes#</a></p>
+    <xar:else />
+        <p>#$notes#</p>
+    </xar:if>
+</div>
+
+<xar:if condition="!empty($prevart) || !empty($nextart)">
+<br />
+<table border="0" width="95%">
+<tr>
+    <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&#160;</td>
+    <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
+</tr>
+</table>
+</xar:if>
+
+<xar:if condition="!empty($hooks)">
+<br />
+<xar:foreach in="$hooks" key="$hookmodule">
+#$hooks[$hookmodule]#
+</xar:foreach>
+</xar:if>
+
+<xar:template file="navtabs-user" type="module" />
+

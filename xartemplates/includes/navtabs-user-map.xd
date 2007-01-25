@@ -1,0 +1,39 @@
+<xar:style scope="module" module="base" file="navtabs" />
+<dl class="xar-tabs">
+    <dt class="help" title="#xarML('Click on a tab to explore further')#">
+        <xar:mlstring>
+            Options 
+        </xar:mlstring>
+        : 
+    </dt>
+    <dd>
+        <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#">
+            <xar:mlstring>
+                Article Map by Category 
+            </xar:mlstring>
+        </a>
+    </dd>
+    <dd>
+        <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
+            <xar:mlstring>
+                Article Map by Publication Type 
+            </xar:mlstring>
+        </a>
+    </dd>
+    <xar:if condition="!empty($viewlink)">
+        <dd>
+            <a href="#$viewlink#">
+                #$viewlabel# 
+            </a>
+        </dd>
+    </xar:if>
+    <xar:if condition="!empty($archivelink)">
+        <xar:if condition="!empty($archivelink)">
+            <dd>
+                <a href="#$archivelink#">
+                    #$archivelabel# 
+                </a>
+            </dd>
+        </xar:if>
+    </xar:if>
+</dl>

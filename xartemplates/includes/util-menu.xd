@@ -1,0 +1,34 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="activetype">$_bl_module_type</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Utility:</xar:mlstring>
+    </dt>
+    <xar:sec mask="AdminArticles" catch="false">
+        <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-articles-admin-stats;">
+            <xar:mlstring>Statistics</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='importpictures'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-articles-admin-importpictures;">
+            <xar:mlstring>Import Pictures</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='importpages'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-articles-admin-importpages;">
+            <xar:mlstring>Import Pages</xar:mlstring>
+          </a>
+        </dd>
+        <xar:set name="tabclass">$activetab=='pubtypes'?'active':''</xar:set>
+    </xar:sec>
+  </dl>
+</div>
