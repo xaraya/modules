@@ -796,7 +796,7 @@
                     </xar:mlstring>
                 </strong>
             </legend>
-            <xar:data-input type="categorypicker" name="basecid" itemtype="$ptid" />
+            <xar:data-input type="categorypicker" name="basecid"  module="articles" itemtype="$ptid" />
         </fieldset>
         <xar:if condition="!empty($hooks)">
             <fieldset class="xar-norm">
