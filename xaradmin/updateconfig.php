@@ -143,16 +143,9 @@ function articles_admin_updateconfig()
                         array('module' => 'articles'));
     }
 
-    if (!xarVarFetch('numberofbasecats', 'int', $data['numberofbasecats'], 0, XARVAR_NOT_REQUIRED)) return;
-    $count = $data['numberofbasecats'];
-    $basecids = array();
-    if (!xarVarFetch('basecid', 'array', $basecid, '', XARVAR_DONT_REUSE)) return;
-    for($i=0;$i<$count;$i++) $basecids[] = isset($basecid[$i]) ? $basecid[$i] : 0;
-    if (!empty($ptid)) {
-        xarModSetUserVar('articles','basecids',serialize($basecids),$ptid);
-    } else {
-        xarModSetVar('articles','basecids',serialize($basecids));
-    }
+    sys::import('modules.dynamicdata.class.properties.master');
+    $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
+    $picker->checkInput('basecid');
 
     if (empty($ptid)) {
         $ptid = null;
