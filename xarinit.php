@@ -50,7 +50,6 @@ function netquery_init()
     xarModSetVar('netquery', 'traceexec_remote_t', 'target');
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
-    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'))) return;
     xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
     xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
@@ -161,10 +160,11 @@ function netquery_upgrade($oldversion)
             xarModDelVar('netquery', 'capture_log_dtformat');
             xarModSetVar('netquery', 'bb_enabled', 1);
             xarModSetVar('netquery', 'bb_retention', 7);
-            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'))) return;
+            xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
             return netquery_upgrade('4.0.5');
         case '4.0.5':
             xarModSetVar('netquery', 'bb_display_stats', 'session');
+            xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
             return netquery_upgrade('4.1.0');
         case '4.1.0':
         default:
@@ -176,7 +176,6 @@ function netquery_delete()
 {
     xarModDelAllVars('netquery');
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'))) return;
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
     drop_netquery_tables();
