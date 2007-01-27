@@ -172,12 +172,13 @@ function articles_userapi_getall($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
+        $info = xarMod::getBaseInfo('articles');
+        $sysid = $info['systemid'];
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' =>
-                                              xarModGetIDFromName('articles')));
+                                            'modid' => sysid));
         if (empty($categoriesdef)) return;
     }
 
