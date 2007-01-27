@@ -178,7 +178,7 @@ function articles_userapi_getall($args)
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' => sysid));
+                                            'modid' => $sysid));
         if (empty($categoriesdef)) return;
     }
 
