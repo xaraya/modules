@@ -166,20 +166,9 @@ function articles_adminapi_create($args)
         $cids = array();
     }
 
-    if (!xarVarFetch('categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
-    if (count($categories) == 0) {
-        $result = xarModAPIFunc('categories', 'admin', 'unlink',
-                          array('iid' => $aid,
-                                'itemtype' => $ptid,
-                                'modid' => 151));
-    } else {
-        $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                            array('cids'  => $categories,
-                                  'iids'  => array($aid),
-                                  'itemtype' => $ptid,
-                                  'modid' => 151,
-                                  'clean_first' => true));
-    }
+    sys::import('modules.dynamicdata.class.properties.master');
+    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $categories->checkInput('categories',$aid);
 
     // Call create hooks for categories, hitcount etc.
     $args['aid'] = $aid;
