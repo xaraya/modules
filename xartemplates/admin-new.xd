@@ -51,12 +51,14 @@
                     <xar:mlstring>Form Controls</xar:mlstring>
                 </label>#$formhooks['formdisplay']#</div>
             </xar:if>
+            <!--
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
                     <xar:mlstring>Categories</xar:mlstring>
                 </label>
                 <xar:data-input type="categories" name="categories" itemtype="$ptid" returnitself="true" />
             </div>
+            -->
             <xar:comment>put the hooks in, each hook should be a block level element thus keeping the form valid</xar:comment>
             <xar:if condition="!empty($hooks)">
                 <xar:foreach in="$hooks" key="$hookmodule">#$hooks[$hookmodule]#</xar:foreach>

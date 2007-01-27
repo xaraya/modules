@@ -788,16 +788,6 @@
                 </xar:if>
             </div>
         </fieldset>
-        <fieldset class="xar-norm">
-            <legend>
-                <strong>
-                    <xar:mlstring>
-                        Categories
-                    </xar:mlstring>
-                </strong>
-            </legend>
-            <xar:data-input type="categorypicker" name="basecid"  module="articles" itemtype="$ptid" />
-        </fieldset>
         <xar:if condition="!empty($hooks)">
             <fieldset class="xar-norm">
                 <legend>

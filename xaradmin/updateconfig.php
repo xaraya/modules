@@ -143,10 +143,6 @@ function articles_admin_updateconfig()
                         array('module' => 'articles'));
     }
 
-    sys::import('modules.dynamicdata.class.properties.master');
-    $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
-    $picker->checkInput('basecid');
-
     if (empty($ptid)) {
         $ptid = null;
     }
