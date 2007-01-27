@@ -133,21 +133,6 @@ function articles_admin_update()
         $article['language'] = xarMLSGetCurrentLocale();
     }
 
-    if (!xarVarFetch('categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
-    if (count($categories) == 0) {
-        $result = xarModAPIFunc('categories', 'admin', 'unlink',
-                          array('iid' => $aid,
-                                'itemtype' => $ptid,
-                                'modid' => 151));
-    } else {
-        $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                            array('cids'  => $categories,
-                                  'iids'  => array($aid),
-                                  'itemtype' => $ptid,
-                                  'modid' => 151,
-                                  'clean_first' => true));
-    }
-
     if (!empty($cids) && count($cids) > 0) {
         $article['cids'] = array_values(preg_grep('/\d+/',$cids));
     } else {

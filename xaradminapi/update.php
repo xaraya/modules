@@ -139,6 +139,10 @@ function articles_adminapi_update($args)
         $args['statusflag'] = true; // legacy support for old method - remove later on
     }
 
+    sys::import('modules.dynamicdata.class.properties.master');
+    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $categories->checkInput('categories',$aid);
+
     $args['module'] = 'articles';
     if (isset($ptid)) {
         $args['itemtype'] = $ptid;
