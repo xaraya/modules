@@ -3,7 +3,11 @@
 <xar:style scope="module" />
 <div class="xar-mod-body">
     <h2>#$menutitle#</h2>
-    <xar:mlstring>The participants enrolled in the planned course</xar:mlstring>&nbsp;"#$coursename#"<br>
+    <xar:ml>
+    <xar:mlstring>The participants enrolled in the planned course "#(1)"</xar:mlstring>
+    <xar:mlvar>#$coursename#</xar:mlvar>
+    </xar:ml>
+    <br>
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
