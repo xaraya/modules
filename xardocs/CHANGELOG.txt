@@ -1,4 +1,10 @@
-* Version 1.1.3 x Nov 2006
+* Version 1.1.4 31 Jan 2007
+- Integrate post 2.0.9 fixes to 31 Jan
+- Updated compressor and colourpicker and spellchecker
+- Fix for full screen plugin - use new window option for the plugin to return to older behaviour
+- See full tinymce changelog for details
+
+* Version 1.1.3 21 Nov 2006
 - Integrate post 2.0.8 fixes to 21 Nov
 - Updated compressor
 - Fix for full screen plugin

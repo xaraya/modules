@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: tiny_mce_gzip.php 150 2006-11-18 14:34:47Z spocke $
+ * $Id: tiny_mce_gzip.php 158 2006-12-21 14:32:19Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2005-2006, Moxiecode Systems AB, All rights reserved.
@@ -10,6 +10,9 @@
  * Notice: This script defaults the button_tile_map option to true for extra performance.
  */
 
+    // Set the error reporting to minimal.
+    //@error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
     // Get input
     $plugins = explode(',', getParam("plugins", ""));
     $languages = explode(',', getParam("languages", ""));
@@ -18,6 +21,7 @@
     $isJS = getParam("js", "") == "true";
     $compress = getParam("compress", "true") == "true";
     $suffix = getParam("suffix", "_src") == "_src" ? "_src" : "";
+    
 
     //Start Xaraya changes .. gee what can we do here
     if(isset($_SERVER['DOCUMENT_ROOT'])) {
@@ -42,9 +46,12 @@
     $cachePath = $realpath.'/var/cache/templates';  //ToDo: we need to set this for tinymce
     //realpath("."); // Cache path, this is where the .gz files will be stored
     //finish Xaraya changes
-
     $expiresOffset = 3600 * 24 * 10; // Cache for 10 days in browser cache
     $content = "";
+    $encodings = array();
+    $supportsGzip = false;
+    $enc = "";
+    $cacheKey = "";
 
     // Custom extra javascripts to pack
     $custom = array(/*
@@ -164,14 +171,14 @@
     function getFileContents($path) {
         $path = realpath($path);
 
-        if (!$path)
+        if (!$path || !@is_file($path))
             return "";
 
         if (function_exists("file_get_contents"))
-            return file_get_contents($path);
+            return @file_get_contents($path);
 
         $content = "";
-        $fp = fopen($path, "r");
+        $fp = @fopen($path, "r");
         if (!$fp)
             return "";
 

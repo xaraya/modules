@@ -226,11 +226,13 @@ function setAttrib(elm, attrib, value) {
 		if (attrib == "width") {
 			attrib = "style.width";
 			value = value + "px";
+			value = value.replace(/%px/g, 'px');
 		}
 
 		if (attrib == "height") {
 			attrib = "style.height";
 			value = value + "px";
+			value = value.replace(/%px/g, 'px');
 		}
 
 		if (attrib == "class")
@@ -436,7 +438,7 @@ function changeHeight() {
 	if (formObj.width.value == "" || formObj.height.value == "")
 		return;
 
-	var temp = (formObj.width.value / preloadImg.width) * preloadImg.height;
+	var temp = (parseInt(formObj.width.value) / parseInt(preloadImg.width)) * preloadImg.height;
 	formObj.height.value = temp.toFixed(0);
 	updateStyle();
 }
@@ -452,7 +454,7 @@ function changeWidth() {
 	if (formObj.width.value == "" || formObj.height.value == "")
 		return;
 
-	var temp = (formObj.height.value / preloadImg.height) * preloadImg.width;
+	var temp = (parseInt(formObj.height.value) / parseInt(preloadImg.height)) * preloadImg.width;
 	formObj.width.value = temp.toFixed(0);
 	updateStyle();
 }
@@ -486,7 +488,8 @@ function showPreviewImage(src, start) {
 
 function updateImageData() {
 	var formObj = document.forms[0];
-	var preloadImg = document.getElementById('previewImg');
+
+	preloadImg = document.getElementById('previewImg');
 
 	if (formObj.width.value == "")
 		formObj.width.value = preloadImg.width;

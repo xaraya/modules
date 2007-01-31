@@ -203,7 +203,7 @@
       </fieldset>
        <fieldset>
            <div class="xar-form-input-wrapper-after">
-                <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xarincludes/docs/index.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
+                <xar:mlstring>See the detailed </xar:mlstring><a href ="http://wiki.moxiecode.com/index.php/TinyMCE:Index"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
            </div>
            <div class="xar-form-input-wrapper-after">
             <input type="submit" value="#$updatebutton#" />
@@ -407,7 +407,7 @@
             </xar:foreach>
             </select>
             <p class="xar-form-input-wrapper-after">
-               <xar:mlstring>Supplied in UTF-8 format only. See </xar:mlstring><a href="modules/tinymce/xarincludes/docs/customization_language_packs.html"><xar:mlstring>Creating a Language Pack</xar:mlstring></a> 
+               <xar:mlstring>Supplied in UTF-8 format only. See </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Creating_Language"><xar:mlstring>Creating a Language Pack</xar:mlstring></a> 
                <xar:mlstring>if you wish to edit or contribute a language pack. Further language packs for this version can 
                be downloaded at </xar:mlstring><a href="http://tinymce.moxiecode.com/language.php">Moxiecode Downloads</a>
             </p>
@@ -462,7 +462,7 @@
                 </select>
                                <xar:mlstring>Default is Raw (none).</xar:mlstring>
                 <p class="xar-form-input-wrapper-after">
-                    <xar:mlstring>If 'named' a </xar:mlstring><a href="modules/tinymce/xarincludes/docs/option_entities.html"><xar:mlstring>default string</xar:mlstring></a> <xar:mlstring>of named entities is used.</xar:mlstring>
+                    <xar:mlstring>If 'named' a </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Configuration/entities"><xar:mlstring>default string</xar:mlstring></a> <xar:mlstring>of named entities is used.</xar:mlstring>
                 </p>
 
            </div>
@@ -506,7 +506,7 @@
             </div>
               <div class="xar-form-input-wrapper-after">
                <xar:mlstring>Additional regex for allowed tags and attributes. </xar:mlstring>
-               <a href="modules/tinymce/xarincludes/docs/option_valid_elements.html"><xar:mlstring>Check the Defaults</xar:mlstring></a>
+               <a href="http://wiki.moxiecode.com/index.php/TinyMCE:Configuration/valid_elements#Default_rule_set:"><xar:mlstring>Check the Defaults</xar:mlstring></a>
                <xar:mlstring> before adding new allowed tags and attributes here.  Any added elements here are are added to the default with the <strong>extended_valid_elements</strong>
                config option. Separate each tag with a comma. *[*] allows all tags and attributes. If you have HTML module installed, its settings will override and
                prevent tags being rendered (but not filter out individual tags, or specific attributes).</xar:mlstring>
@@ -637,7 +637,7 @@
             </legend>
 
             <p>
-            <xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xarincludes/docs/reference_plugins.html"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on each plugin.</xar:mlstring>
+            <xar:mlstring>See the detailed </xar:mlstring><a href ="http://wiki.moxiecode.com/index.php/TinyMCE:Plugins"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on each plugin.</xar:mlstring>
             </p>
             <div class="xar-form-input-wrapper-before xar-padding-medium">
                 <label for="tinyplugins" class="xar-form-label" title="#xarML('Add names of any extra plugins you wish to load here.')#">
@@ -835,7 +835,7 @@
             </legend>
             <p class="xar-padding-medium">
               <xar:mlstring>This option allows you to add additional custom configuration options that are added to the DEFAULT tinymce configuration string. </xar:mlstring>
-                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="modules/tinymce/xarincludes/docs/index.html"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
+                <xar:mlstring>Please refer to the TinyMCE </xar:mlstring><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Index"><xar:mlstring>Usage Documentation</xar:mlstring></a>.
 
             </p>
             <p class="xar-padding-medium"><xar:mlstring>Each option should be on a separate line, ending in a comma, in the format</xar:mlstring>: <code>option : "value",</code>

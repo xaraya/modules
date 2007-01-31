@@ -1,8 +1,8 @@
 /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: editor_plugin_src.js 166 2007-01-05 10:31:50Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
@@ -50,6 +50,15 @@ var TinyMCE_TemplatePlugin = {
 
 		// Register custom keyboard shortcut
 		inst.addShortcut('ctrl', 't', 'lang_template_desc', 'mceTemplate');
+	},
+
+	/**
+	 * Gets executed when a TinyMCE editor instance is removed.
+	 *
+	 * @param {TinyMCE_Control} Removed TinyMCE editor control instance. 
+	 */
+	removeInstance : function(inst) {
+		// Cleanup instance resources
 	},
 
 	/**

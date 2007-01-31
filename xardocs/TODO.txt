@@ -1,0 +1,6 @@
+TODO:
+
+* Update multiple configs so each can have any of the settings
+* Make a specific config allocatable to a specific role
+* Selectable plugins from a checkbox list
+  - need to determine how options will be adjusted too

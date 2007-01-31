@@ -5,8 +5,7 @@
  * Copyright © 2006 Moxiecode Systems AB
  */
 
-class TinyGoogleSpell 
-{
+class TinyGoogleSpell {
 	var $lang;
 
 	function TinyGoogleSpell(&$config, $lang, $mode, $spelling, $jargon, $encoding) {
@@ -14,8 +13,7 @@ class TinyGoogleSpell
 	}
 
 	// Returns array with bad words or false if failed.
-	function checkWords($word_array) 
-    {
+	function checkWords($word_array) {
 		$words = array();
 		$wordstr = implode(' ', $word_array);
 
@@ -27,8 +25,7 @@ class TinyGoogleSpell
 		return $words;
 	}
 
-	function unhtmlentities($string) 
-    {
+	function unhtmlentities($string) {
 		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
 		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
 
@@ -39,8 +36,7 @@ class TinyGoogleSpell
 	}
 
 	// Returns array with suggestions or false if failed.
-	function getSuggestion($word) 
-    {
+	function getSuggestion($word) {
 		$sug = array();
 
 		$matches = $this->_getMatches($word);
@@ -51,8 +47,7 @@ class TinyGoogleSpell
 		return $sug;
 	}
 
-	function _xmlChars($string) 
-    {
+	function _xmlChars($string) {
 	   $trans = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
 	
 	   foreach ($trans as $k => $v)
@@ -61,8 +56,7 @@ class TinyGoogleSpell
 	   return strtr($string, $trans);
 	}
 
-	function _getMatches($word_list) 
-    {
+	function _getMatches($word_list) {
         $server = "www.google.com";
         $port = 443;
         $path = "/tbproxy/spell?lang=" . $this->lang . "&hl=en";
@@ -115,8 +109,7 @@ class TinyGoogleSpell
 		return $matches;
 	}
 
-	function _debugData($data) 
-    {
+	function _debugData($data) {
 		$fh = @fopen("debug.log", 'a+');
 		@fwrite($fh, $data);
 		@fclose($fh);

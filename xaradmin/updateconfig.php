@@ -122,7 +122,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyadvresize','checkbox',$tinyadvresize,true,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usefilebrowser','checkbox',$usefilebrowser,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyresizehorizontal','checkbox',$tinyresizehorizontal,false,XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinyenablepath','str:1:',$tinyenablepath,1,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyenablepath','checkbox',$tinyenablepath,true,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyplugins','str:1:',$tinyplugins,'',XARVAR_NOT_REQUIRED)) return;
@@ -142,7 +142,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinyshowpath', $tinyshowpath);
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
                xarModSetVar('tinymce','tinyadvresize', ($tinyadvresize?1:0));
-               xarModSetVar('tinymce','tinyenablepath', $tinyenablepath);
+               xarModSetVar('tinymce','tinyenablepath', ($tinyenablepath?1:0));
                xarModSetVar('tinymce','tinyresizehorizontal', ($tinyresizehorizontal?1:0));
                xarModSetVar('tinymce','usefilebrowser',($usefilebrowser?1:0));
            break;
