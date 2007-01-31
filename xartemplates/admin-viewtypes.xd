@@ -4,7 +4,10 @@
 
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>View Page Types</xar:mlstring></h2>
+    <xar:if condition="empty($types)">
+         <xar:mlstring>NO PAGES DEFINED</xar:mlstring>
+    <xar:else />
+        <h2><xar:mlstring>View Page Types</xar:mlstring></h2>
 
         <div><a href="#xarModURL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a></div>
 
@@ -40,5 +43,5 @@
                 </xar:if>
             </xar:loop>
         </table>
-
+    </xar:if>
 </div>

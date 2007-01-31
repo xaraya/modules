@@ -23,10 +23,7 @@ function xarpages_admin_viewtypes()
         array('key' => 'index', 'dd_flag' => false)
     );
 
-    if (empty($types)) {
-        // TODO: pass to template.
-        return 'NO PAGES TYPES DEFINED';
-    }
+    if (empty($types)) $types = array();
 
     return array('types' => $types);
 }
