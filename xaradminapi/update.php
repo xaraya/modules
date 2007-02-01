@@ -15,8 +15,8 @@
  * update an maxercalls item
  *
  * @author the Example module development team
- * @param  $args ['exid'] the ID of the item
- * @param  $args ['name'] the new name of the item
+ * @param  int callid the ID of the item
+ * @param  string remarks The new name of the item
  * @param  $args ['number'] the new number of the item
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
