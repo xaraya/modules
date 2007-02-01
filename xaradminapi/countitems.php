@@ -15,8 +15,7 @@
  * utility function to count the number of items held by this module
  *
  * @author the Maxercalls module development team
- * @returns integer
- * @return number of items held by this module
+ * @return integer number of items held by this module
  * @throws DATABASE_ERROR
  * @TODO Deprecate?
  */
