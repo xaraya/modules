@@ -17,7 +17,7 @@
  * @author the Example module development team
  * @param  int callid the ID of the item
  * @param  string remarks The new name of the item
- * @param  $args ['number'] the new number of the item
+ * @param  int owner The new owner OPTIONAL
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_update($args)
