@@ -15,9 +15,8 @@
  * delete a maxercall
  *
  * @author the Maxercalls module development team
- * @param  $args ['callid'] ID of the item
- * @returns bool
- * @return true on success, false on failure
+ * @param  int callid ID of the item to delete
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function maxercalls_adminapi_deletecall($args)
