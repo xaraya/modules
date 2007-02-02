@@ -33,6 +33,7 @@ function xarpages_menublock_modify($blockinfo)
     if (!isset($vars['current_source'])) {$vars['current_source'] = 'AUTO';}
     if (!isset($vars['default_pid'])) {$vars['default_pid'] = 'AUTO';}
     if (!isset($vars['max_level'])) {$vars['max_level'] = 0;}
+    if (!isset($vars['start_level'])) {$vars['start_level'] = 0;}
     if (!isset($vars['root_pids'])) {$vars['root_pids'] = array();}
     if (!isset($vars['prune_pids'])) {$vars['prune_pids'] = array();}
 
@@ -154,6 +155,12 @@ function xarpages_menublock_update($blockinfo)
     // templates to make its own decision on how to truncate the menu.
     if (xarVarFetch('max_level', 'int:0:999', $max_lavel, 0, XARVAR_NOT_REQUIRED)) {
         $vars['max_level'] = $max_lavel;
+    }
+
+    // The start level.
+    // Hide the menu if the current page is below this level.
+    if (xarVarFetch('start_level', 'int:0:999', $start_lavel, 0, XARVAR_NOT_REQUIRED)) {
+        $vars['start_level'] = $start_lavel;
     }
 
     return $blockinfo;

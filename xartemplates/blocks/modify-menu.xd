@@ -88,6 +88,15 @@
         </xar:if>
     </div>
 
+    <div>
+        <label for="start_level_#$bid#"><xar:mlstring>Hide menu below this level</xar:mlstring></label>
+        <xar:if condition="empty($start_level)">
+            <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="" />
+        <xar:else />
+            <input type="text" name="start_level" id="start_level_#$bid#" size="10" maxlength="3" value="#$start_level#" />
+        </xar:if>
+    </div>
+
     <fieldset>
         <legend><xar:mlstring>Pruning Pages</xar:mlstring></legend>
         <p>

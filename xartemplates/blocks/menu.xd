@@ -10,6 +10,7 @@
     a single-homed menu. This can also be forced with the 'multi_homed' option.
 
     Menu titles can be set with a DD field on each page called 'menu_title'.
+<xar:set name="dummy">var_dump($root_page)</xar:set>
 </xar:comment>
 
 <xar:if condition="empty($max_level)">

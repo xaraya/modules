@@ -25,7 +25,8 @@ function xarpages_menublock_init()
         'default_pid' => 0, // 0 == 'None'
         'root_pids' => array(),
         'prune_pids' => array(),
-        'max_level' => 0
+        'max_level' => 0,
+        'start_level' => 0,
     );
 }
 
@@ -138,7 +139,7 @@ function xarpages_menublock_display($blockinfo)
 
     // If there is no pid, then we have no page or tree to display.
     if (empty($pid)) {return;}
-    
+
     // If necessary, check whether the current page is under one of the
     // of the allowed root pids.
     if (!empty($root_pids)) {
@@ -178,6 +179,37 @@ function xarpages_menublock_display($blockinfo)
         // pages we could need in that tree.
         if (!xarVarIsCached('Blocks.xarpages', 'pagedata')) {
             xarVarSetCached('Blocks.xarpages', 'pagedata', $pagedata);
+        }
+    }
+
+
+    // If the user has set a 'start level' then make sure the page sits at that level or above.
+    // TODO: take into account the options that allow default pages to be displayed when 
+    // the current page does not fit into the specified range.
+    // If the start level is greater than 0, then work back through ancestors to find
+    // the implied root page.
+    if (!empty($vars['start_level'])) {
+        // FIXME: '+1' only needed if the root page is being hidden. Maybe.
+        if ($pagedata['pages'][$pid]['depth'] + (!empty($vars['multi_homed']) ? 1 : 0) < $vars['start_level']) {
+            // We are outside the start level.
+            // Hide the block if there is no default page to set.
+            return;
+        } else {
+            // We are within a start level.
+            // Scan through ancestors, and find the one with the specified level,
+            // and add it to the root pids list.
+            $scan_pid = $pid;
+            while (true) {
+                if (empty($pagedata['pages'][$scan_pid]['parent_pid'])) break;
+                if ($pagedata['pages'][$scan_pid]['depth'] < $vars['start_level']) {
+                    $root_pids[] = $scan_pid;
+                    break;
+                }
+                $scan_pid = $pagedata['pages'][$scan_pid]['parent_pid'];
+            }
+
+            // If the root pid has no children, we should hide the block.
+            if (!empty($vars['multi_homed']) && empty($pagedata['pages'][$scan_pid]['child_keys'])) return;
         }
     }
 
