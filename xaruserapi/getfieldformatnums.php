@@ -25,7 +25,7 @@ function articles_userapi_getfieldformatnums($args)
     $fieldnames= array(
         'static'          => 1,
         'textbox'         => 2,
-        'textarea_small'  => 3,
+        'textarea'        => 3,
         'textarea_medium' => 4,
         'textarea_large'  => 5,
         'dropdown'        => 6,

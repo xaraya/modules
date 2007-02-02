@@ -204,7 +204,7 @@
                         <tr>
                             <td class="xar-align-left">
                             <xar:comment>Add validation link here - for those fields that already have it plus allowable textarea fields</xar:comment>
-                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea_small' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
+                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
                                 <xar:set name="editvalidation">
                                     xarML('Edit validation for property "#(1)"',$field['name'])
                                 </xar:set>

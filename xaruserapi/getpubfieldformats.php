@@ -26,7 +26,7 @@ function articles_userapi_getpubfieldformats($args)
     $fieldlist=array(
         'static'          => xarML('Static Text'),
         'textbox'         => xarML('Text Box'),
-        'textarea_small'  => xarML('Small Text Area'),
+        'textarea'  => xarML('Small Text Area'),
         'textarea_medium' => xarML('Medium Text Area'),
         'textarea_large'  => xarML('Large Text Area'),
         'dropdown'        => xarML('Dropdown List'),
