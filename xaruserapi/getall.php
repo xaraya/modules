@@ -167,13 +167,14 @@ function articles_userapi_getall($args)
         if (empty($usersdef)) return;
     }
 
+    $info = xarMod::getBaseInfo('articles');
+    $sysid = $info['systemid'];
+
     if (!empty($required['cids'])) {
         // Load API
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $info = xarMod::getBaseInfo('articles');
-        $sysid = $info['systemid'];
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
@@ -188,8 +189,7 @@ function articles_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $hitcountdef = xarModAPIFunc('hitcount','user','leftjoin',
-                                    array('modid' =>
-                                            xarModGetIDFromName('articles'),
+                                    array('modid' => $sysid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -199,8 +199,7 @@ function articles_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
         $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
-                                    array('modid' =>
-                                            xarModGetIDFromName('articles'),
+                                    array('modid' => $sysid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -421,7 +420,7 @@ function articles_userapi_getall($args)
                              array('iids' => $aids,
                                    'reverse' => 1,
                                // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
-                                   'modid' => xarModGetIDFromName('articles')));
+                                   'modid' => $sysid));
 
         // Inserting the corresponding Category ID in the Article Description
         $delete = array();
