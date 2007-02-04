@@ -178,13 +178,14 @@ function articles_userapi_checksecurity($args)
     }
 
     // Loop over all categories and check the different combinations
+    $result = false;
     foreach (array_keys($jointcids) as $cid) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
-        if (!xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
-            return false;
+        if (xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
+            $result = true;
         }
     }
-    return true;
+    return $result;
 }
 
 ?>
