@@ -81,21 +81,15 @@ function articles_admin_view($args)
         if (!xarSecurityCheck('EditArticles',0,'Article',"All:All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
                          'Articles');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                            new SystemException($msg));
-            return;
+        throw new ForbiddenOperationException(null, $msg);
         }
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
                      $pubtypes[$ptid]['descr']);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                        new SystemException($msg));
-        return;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     if (!empty($ptid)) {

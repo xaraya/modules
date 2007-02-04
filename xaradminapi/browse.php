@@ -23,9 +23,7 @@ function articles_adminapi_browse($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'base directory', 'admin', 'browse',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     $filelist = array();

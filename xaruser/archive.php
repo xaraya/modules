@@ -232,8 +232,7 @@ function articles_user_archive($args)
                                 );
         if (!is_array($articles)) {
             $msg = xarML('Failed to retrieve articles in #(3)_#(1)_#(2).php', 'user', 'getall', 'articles');
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
+            throw new DataNotFoundException(null, $msg);
         }
     } else {
         $articles = array();
