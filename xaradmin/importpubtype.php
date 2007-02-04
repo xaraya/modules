@@ -52,9 +52,7 @@ function articles_admin_importpubtype($args)
             }
             if (empty($found) || !file_exists($basedir . '/' . $file)) {
                 $msg = xarML('File not found');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                               new SystemException($msg));
-                return;
+                throw new BadParameterException(null,$msg);
             }
             $ptid = xarModAPIFunc('articles','admin','importpubtype',
                                   array('file' => $basedir . '/' . $file));

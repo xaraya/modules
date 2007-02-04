@@ -36,9 +36,7 @@ function articles_adminapi_create($args)
     if (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'create', 'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
 // Note : we use empty() here because we don't care whether it's set to ''
@@ -50,9 +48,7 @@ function articles_adminapi_create($args)
         if (empty($ptid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'ptid', 'admin', 'create', 'Articles');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
-            return false;
+            throw new BadParameterException(null,$msg);
         }
         // for security check below
         $args['ptid'] = $ptid;
@@ -84,9 +80,7 @@ function articles_adminapi_create($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to add #(1) items',
                     'Article');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return false;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     // Default publication date is now

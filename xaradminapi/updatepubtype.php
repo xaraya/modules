@@ -48,9 +48,7 @@ function articles_adminapi_updatepubtype($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'admin', 'updatepubtype','Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security check - we require ADMIN rights here
@@ -65,9 +63,7 @@ function articles_adminapi_updatepubtype($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'updatepubtype',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // Make sure we have all the configuration fields we need

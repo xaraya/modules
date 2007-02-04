@@ -46,9 +46,7 @@ function articles_userapi_get($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'user', 'get',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // allow ptid instead of pubtypeid, like getall and other api's (if both specified, ptid wins)

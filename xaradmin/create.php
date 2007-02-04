@@ -38,9 +38,7 @@ function articles_admin_create()
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'admin', 'create',
                     'Articles');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
 // TODO: switch to DD object style

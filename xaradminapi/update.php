@@ -38,16 +38,12 @@ function articles_adminapi_update($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'update',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     } elseif (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'update',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
 // Note : this will take care of checking against the current article values
@@ -60,9 +56,7 @@ function articles_adminapi_update($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to update #(1) items',
                     'Article');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return false;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     // Get database setup

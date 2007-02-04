@@ -28,9 +28,7 @@ function articles_admin_exportpubtype($args)
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',
                      xarVarPrepForDisplay($ptid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
     $pubtype = $pubtypes[$ptid];
 
