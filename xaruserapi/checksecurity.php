@@ -106,13 +106,13 @@ function articles_userapi_checksecurity($args)
 
     // Get root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
     } else {
         $ptid = null;
     }
     if (!isset($rootcids)) {
     // TODO: handle cross-pubtype views better
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
     }
 
     // Get category information for this article
