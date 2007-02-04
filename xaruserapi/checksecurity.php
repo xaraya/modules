@@ -118,13 +118,14 @@ function articles_userapi_checksecurity($args)
     // Get category information for this article
     if (!isset($article['cids']) && !empty($aid)) {
         if (!xarModAPILoad('categories', 'user')) return;
+        $info = xarMod::getBaseInfo('articles');
+        $sysid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),
                                           'itemtype' => $ptid,
-                                          'modid' =>
-                                               xarModGetIDFromName('articles'),
+                                          'modid' => $sysid,
                                           'reverse' => 0
                                          )
                                    );
