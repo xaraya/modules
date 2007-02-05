@@ -124,6 +124,7 @@ function articles_admin_view($args)
                                    'cids'     => $cids,
                                    'sort'     => $sort,
                                    'andcids'  => $andcids,
+                                   'extra'  => array('cids'),
                                    'status'   => $status));
 
     // Save the current admin view, so that we can return to it after update
@@ -171,6 +172,11 @@ function articles_admin_view($args)
             $item['title'] = $article['title'];
             $item['summary'] = $article['summary'];
             $item['aid'] = $article['aid'];
+            if (!empty($article['cids'])) {
+                 $item['cids'] = $article['cids'];
+            } else {
+                 $item['cids'] = array();
+            }
 
             if ($showdate) {
                 $item['pubdate'] = $article['pubdate']; //strftime('%x %X %z', $article['pubdate']);
