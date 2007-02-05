@@ -22,6 +22,7 @@ function articles_admin_view($args)
     if(!xarVarFetch('status',   'isset', $status,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -54,8 +55,12 @@ function articles_admin_view($args)
     if (empty($ptid)) {
         $ptid = null;
     }
+    if (empty($sort)) {
+        $sort = 'date';
+    }
     $data = array();
     $data['ptid'] = $ptid;
+    $data['sort'] = $sort;
     $data['authorid'] = $authorid;
     $data['language'] = $lang;
     $data['pubdate'] = $pubdate;
@@ -117,6 +122,7 @@ function articles_admin_view($args)
                                    'language' => $lang,
                                    'pubdate'  => $pubdate,
                                    'cids'     => $cids,
+                                   'sort'     => $sort,
                                    'andcids'  => $andcids,
                                    'status'   => $status));
 
@@ -163,6 +169,7 @@ function articles_admin_view($args)
 // TODO: adapt according to pubtype configuration
             // Title and pubdate
             $item['title'] = $article['title'];
+            $item['summary'] = $article['summary'];
             $item['aid'] = $article['aid'];
 
             if ($showdate) {
