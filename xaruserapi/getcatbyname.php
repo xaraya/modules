@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,10 +16,10 @@
  * get category by name
  * @author Michel Dalle <mikespub@xaraya.com>
  *
- * @param $args['name'] name of the category to retrieve
- * @param $args['return_itself'] =Boolean= return the cid itself (default true)
- * @param $args['getchildren'] =Boolean= get children of category (default false)
- * @param $args['getparents'] =Boolean= get parents of category (default false)
+ * @param string $args['name'] name of the category to retrieve
+ * @param bool $args['return_itself'] return the cid itself (default true)
+ * @param bool $args['getchildren'] get children of category (default false)
+ * @param bool $args['getparents']  get parents of category (default false)
  * @return array of category info arrays, false on failure
  */
 function categories_userapi_getcatbyname($args)

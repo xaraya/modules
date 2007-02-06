@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,10 +18,10 @@
  * The modid and itemtype are only needed for the moment while
  * base IDs are not unique across the system.
  *
- * @param $args['bid'] base ID
- * @param $args['modid'] the id of the module (temporary)
- * @param $args['module'] the name of the module (temporary)
- * @param $args['itemtype'] the ID of the itemtype (temporary)
+ * @param int $args['bid'] base ID
+ * @param int $args['modid'] the id of the module (temporary)
+ * @param string $args['module'] the name of the module (temporary)
+ * @param int $args['itemtype'] the ID of the itemtype (temporary)
  * @return array details of a category base
  */
 function categories_userapi_getcatbase($args)
