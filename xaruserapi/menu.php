@@ -31,25 +31,26 @@ function itsp_userapi_menu()
     /* Specify the menu title to be used in your blocklayout template */
     $menu['menutitle'] = xarML('Individual Training and Supervision Plan');
 
-    $userid = xarUserGetVar('uid');
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $itsptable = $xartable['itsp_itsp'];
+
     // If there is no itspid specified, then assume we want to see the current user's ITSP
     if (empty($itspid)) {
+        $userid = xarUserGetVar('uid');
+        $select = 'xar_itspid, xar_planid';
         $where = "xar_userid = $userid";
     } else {
+        $select = 'xar_itspid, xar_planid, xar_userid';
         $where = "xar_itspid = $itspid";
     }
     //Get ITSP
     //Better ignore error
     //$itsp = xarModApiFunc('itsp','user','get',array('userid'=>$userid));
 
-    // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $itsptable = $xartable['itsp_itsp'];
-    // Get item by userid
-    // TODO: move to own api?
-    $query = "SELECT xar_itspid,
-                     xar_planid
+    // Get the ITSP
+    $query = "SELECT $select
               FROM $itsptable
               WHERE $where";
 
@@ -58,9 +59,12 @@ function itsp_userapi_menu()
      * the exception so we just return
      */
     if (!$result) return $menu;
-
     /* Obtain the item information from the result set */
-    list($itspid, $planid) = $result->fields;
+    if (empty($itspid)) {
+        list($itspid, $planid) = $result->fields;
+    } else {
+        list($itspid, $planid, $userid) = $result->fields;
+    }
     $result->Close();
 
     if(!empty($itspid)) {
