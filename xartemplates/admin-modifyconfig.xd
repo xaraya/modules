@@ -335,7 +335,7 @@
             </fieldset>
         </form>
         <xar:comment>
-            ----------------- Begin Filtering Options -------------------
+            Begin Filtering Options
         </xar:comment>
         <xar:elseif condition="$tab eq 'filtering'" />
         <xar:if condition="xarModGetVar('registration', 'allowregistration')">
