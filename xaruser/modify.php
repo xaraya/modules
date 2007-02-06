@@ -243,7 +243,7 @@ function itsp_user_modify($args)
                 }
 
 
-                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => xarUserGetVar('uid'), 'pitemid' => $pitemid,'itspid'=>$itspid));
+                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('pitemid' => $pitemid,'itspid'=>$itspid));
         }
         $data['pitem'] = $pitem;
         $data['creditsnow'] = $creditsnow;
