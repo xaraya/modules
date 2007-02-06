@@ -100,7 +100,7 @@
                                                <td style="border: 0px">#$course.number# #$course.title# </td>
                                                <td style="border: 0px">&nbsp;</td>
                                                <td style="border: 0px">#$course.credits#</td>
-                                               <td style="border: 0px">&nbsp;</td>
+                                               <td style="border: 0px">#$course.obtained#</td>
                                             </tr>
                                         </xar:foreach>
                                         <tr>
@@ -113,7 +113,7 @@
                                      <strong>#$item.creditsnow#</strong>
                                 </td>
                                 <td >
-                                &nbsp;
+                                    <strong>#$item.obtained#</strong>
                                 </td>
                             </tr>
                         </xar:foreach>
@@ -132,7 +132,7 @@
                             </xar:if>
                             </td>
                             <td>
-                            &nbsp;
+                                <strong>#$sumobtained#</strong>
                             </td>
                         </tr>
                     </table>

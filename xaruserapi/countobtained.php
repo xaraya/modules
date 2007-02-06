@@ -16,7 +16,7 @@
  *
  * @author MichelV <michelv@xarayahosting.nl>
  * @since 06 Feb 2007
- * @param int pitemid The plan item ID
+ * @param int pitemid The plan item ID; needed when a total is required OPTIONAL
  * @param int itspid The ITSP ID OPTIONAL
  * @param int userid The user ID of the ITSP
  * @param int lcourseid OPTIONAL
@@ -27,27 +27,21 @@
 function itsp_userapi_countobtained($args)
 {
     extract ($args);
-    if (!isset($pitemid) || !is_numeric($pitemid)) {
+    if ((!isset($pitemid) || !is_numeric($pitemid)) && (!isset($itspid))) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'plan item ID', 'user', 'countobtained', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
-    if (!isset($userid) || !is_numeric($userid)) {
+    if (!isset($userid) && !isset($itspid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'user ID', 'user', 'countobtained', 'ITSP');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
-    if (!isset($lcourseid) && !isset($icourseid)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-            'item ID', 'user', 'countobtained', 'ITSP');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
+    // Set to zero, so we always return an integer
     $credits = 0;
     // See where we will get the credits from: this is deducted from the source
 
@@ -64,31 +58,42 @@ function itsp_userapi_countobtained($args)
             }
         }
     }
+
+    /* Get database setup */
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    // we can only count directly in our own courses table
+    $table = $xartable['itsp_itsp_courses'];
+    $now = time();
     if (isset($icourseid) && is_numeric($icourseid)) {
 
-        /* Get database setup */
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
-        // we can only count directly in our own courses table
-        $table = $xartable['itsp_itsp_courses'];
-        $now = time();
-        $query = "SELECT SUM(xar_icoursecredits)
+        $query = "SELECT xar_icoursecredits
                   FROM $table
                   WHERE xar_icourseid = ?
                   AND   xar_dateappr > ?
-                  AND   xar_icoursedate > ?";
-        $result = &$dbconn->Execute($query,array($icourseid, 0, $now));
-        /* Check for an error with the database code, adodb has already raised
-         * the exception so we just return
-         */
-        if (!$result) return;
-        /* Obtain the number of items */
-        list($icredits) = $result->fields;
-        /* All successful database queries produce a result set, and that result
-         * set should be closed when it has been finished with
-         */
-        $result->Close();
+                  AND   xar_icoursedate < ?";
+        $bindvars = array($icourseid, 0, $now);
+    } else {
+        $query = "SELECT SUM(xar_icoursecredits)
+                  FROM $table
+                  WHERE xar_pitemid = ?
+                  AND   xar_itspid = ?
+                  AND   xar_dateappr > ?
+                  AND   xar_icoursedate < ?";
+        $bindvars = array($pitemid, $itspid, 0,$now);
     }
+    $result = &$dbconn->Execute($query,$bindvars);
+    /* Check for an error with the database code, adodb has already raised
+     * the exception so we just return
+     */
+    if (!$result) return;
+    /* Obtain the number of items */
+    list($icredits) = $result->fields;
+    /* All successful database queries produce a result set, and that result
+     * set should be closed when it has been finished with
+     */
+    $result->Close();
+
     // We do not want to return an empty value
     if (empty($icredits)) {
         $credits = $credits;
