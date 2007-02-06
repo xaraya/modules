@@ -72,6 +72,7 @@ function itsp_userapi_getmodifycourses($args)
         // Add a delete link
         $lcourse['deletelink'] = xarModURL('itsp','admin','delete_courselink',array('courselinkid' => $lcourse['courselinkid'], 'authid' => xarSecGenAuthKey('itsp'), 'pitemid' => $pitemid, 'itspid' => $itspid));
         $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
+        // This will cause trouble later as students will cancel courses and then enroll again
         if (!empty($enrollstatus[0])  && is_numeric($enrollstatus[0]['studstatus'])){
             $lcourse['studstatus'] = xarModAPIFunc('courses', 'user', 'getstatus',
                   array('status' => $enrollstatus[0]['studstatus']));
