@@ -1,9 +1,9 @@
 <?php
 /**
- * Get all courses for one student
+ * Check the status of a student in one specific course
  *
  * @package modules
- * @copyright (C) 2006 The Digital Development Foundation
+ * @copyright (C) 2006-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *

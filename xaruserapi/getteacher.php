@@ -3,7 +3,7 @@
  * Get a specific teacher
  *
  * @package modules
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,8 +15,8 @@
  * get a teacher of a planned course
  *
  * @author the Courses module development team
- * @param tid $ the ID of the teacher to get
- * @return array of items, or false on failure
+ * @param int tid the ID of the teacher to get
+ * @return array The details for one teacher, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function courses_userapi_getteacher($args)
@@ -61,7 +61,7 @@ function courses_userapi_getteacher($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($sid, $userid, $planningid, $type) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:$planningid:All")) { //TODO: check this privilege
-            $item = array('tid' 	   => $tid,
+            $item = array('tid'        => $tid,
                           'userid'     => $userid,
                           'planningid' => $planningid,
                           'type'       => $type);
@@ -72,5 +72,4 @@ function courses_userapi_getteacher($args)
     // Return the items
     return $item;
 }
-
 ?>
