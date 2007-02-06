@@ -59,7 +59,7 @@ function itsp_userapi_countobtained($args)
         $statusid = xarModGetVar('itsp','PassedStatus');
         // get the credits for the courses
         foreach($lcourses as $lcourse) {
-            if ($lcourse['status'] == $statusid) {
+            if ($lcourse['studstatus'] == $statusid) {
                 $credits = $lcourse['credits'];
             }
         }
@@ -77,7 +77,7 @@ function itsp_userapi_countobtained($args)
                   WHERE xar_icourseid = ?
                   AND   xar_dateappr > ?
                   AND   xar_icoursedate > ?";
-        $result = &$dbconn->Execute($query,array($icourseid, $now, $now));
+        $result = &$dbconn->Execute($query,array($icourseid, 0, $now));
         /* Check for an error with the database code, adodb has already raised
          * the exception so we just return
          */

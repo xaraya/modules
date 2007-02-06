@@ -63,10 +63,10 @@ function itsp_adminapi_create_icourse($args)
         $modiby = xarUserGetVar('uid');
     }
 
-    if (!isset($dateappr) && is_string($dateappr)) {
+    if (isset($dateappr) && is_string($dateappr)) {
         $dateappr = strtotime($dateappr);
     }
-    if (!isset($icoursedate) && is_string($icoursedate)) {
+    if (isset($icoursedate) && is_string($icoursedate)) {
         $icoursedate = strtotime($icoursedate);
     }
     // Get database setup

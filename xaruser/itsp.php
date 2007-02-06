@@ -137,6 +137,8 @@ function itsp_user_itsp($args)
                         $course['title'] = xarVarPrepForDisplay($realcourse['name']);
                         $course['credits'] = xarVarPrepForDisplay($realcourse['intendedcredits']);
                         $course['number'] = xarVarPrepForDisplay($realcourse['number']);
+                        // See if there are any obtained credits
+                        $course['obtained'] = xarModApiFunc('itsp','user','countobtained', array('lcourseid'=>$courseid, 'pitemid' => $pitemid, 'userid' =>$userid));
 
                         $enrollstatus = xarModApiFunc('courses','user','check_enrollstatus', array('userid' => $userid, 'courseid'=>$courseid));
                         // TODO: this returns an array. We now assume to take the first item, but this may not be correct.
@@ -182,6 +184,7 @@ function itsp_user_itsp($args)
                         $course['title'] = xarVarPrepForDisplay($course['icoursetitle']);
                         $course['credits'] = $course['icoursecredits'];
                         $course['number'] = '';
+                        $course['obtained'] = xarModApiFunc('itsp','user','countobtained',array('icourseid' => $courseid,'userid'=>$userid,'pitemid'=>$pitemid));
                         /* Add this item to the list of items to be displayed */
                         $fullitem['courses'][] = $course;
                     }
