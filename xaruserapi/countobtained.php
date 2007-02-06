@@ -45,14 +45,38 @@ function itsp_userapi_countobtained($args)
     $credits = 0;
     // See where we will get the credits from: this is deducted from the source
 
+    if (isset($pitemid)) {
+        $pitem = xarModApiFunc('itsp','user','splitrules',array('pitemid' => $pitemid));
+        switch ($pitem['rule_source']) {
+            case 'mix':
+            case 'courses':
+                $lcourses = xarModApiFunc('itsp','user','getall_courselinks',array('itspid'=>$itspid,'pitemid'=>$pitemid));
+                $obtained = 0;
+                foreach($lcourses as $lcourse) {
+                    // Get all planned course that a student has been enrolled in
+                    $plannedcourses = xarModApiFunc('courses','user','check_enrollstatus',array('courseid' => $lcourse['lcourseid'], 'userid' => $userid));
+                    // Get the standard status for passed
+                    $statusid = xarModGetVar('itsp','PassedStatus');
+                    // get the credits for the courses
+                    foreach($plannedcourses as $lcourse) {
+                        if ($lcourse['studstatus'] == $statusid) {
+                            $obtained = $lcourse['credits'];
+                        }
+                    }
+                    $credits = $credits + $obtained;
+                }
+            break;
+        }
+    }
+
     if (isset($lcourseid) && is_numeric($lcourseid)) {
         // Linked course: get info for passed status
         // Get all planned course that a student has been enrolled in
-        $lcourses = xarModApiFunc('courses','user','check_enrollstatus',array('courseid' => $lcourseid, 'userid' => $userid));
+        $plannedcourses = xarModApiFunc('courses','user','check_enrollstatus',array('courseid' => $lcourseid, 'userid' => $userid));
         // Get the standard status for passed
         $statusid = xarModGetVar('itsp','PassedStatus');
         // get the credits for the courses
-        foreach($lcourses as $lcourse) {
+        foreach($plannedcourses as $lcourse) {
             if ($lcourse['studstatus'] == $statusid) {
                 $credits = $lcourse['credits'];
             }

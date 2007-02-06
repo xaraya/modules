@@ -97,7 +97,7 @@ function itsp_userapi_menu()
                 $creditsnow = xarModApiFunc('itsp','user','countcredits',array('uid' => $userid, 'pitemid' => $pitemid, 'itspid' => $itspid));
                 $item['creditsnow'] = $creditsnow;
                 // Add the obtained credits
-                $item['obtained'] = xarModApiFunc('itsp','user','countobtained',array('itspid' => $itspid, 'pitemid' => $pitemid));
+                $item['obtained'] = xarModApiFunc('itsp','user','countobtained',array('itspid' => $itspid, 'pitemid' => $pitemid, 'userid' =>$userid));
                 // Sum the credits
                 $sumcreditsnow = $sumcreditsnow + $creditsnow;
                 $sumobtained = $sumobtained + $item['obtained'];
