@@ -11,9 +11,8 @@
  * @link http://xaraya.com/index.php/release/572.html
  * @author ITSP Module Development Team
  */
-
 /**
- * Modify module's configuration
+ * Modify the configuration of the ITSP module.
  *
  * This is a standard function to modify the configuration parameters of the
  * module
@@ -45,6 +44,12 @@ function itsp_admin_modifyconfig()
      * admin-modifyconfig.xd template.
      */
     $data['shorturlschecked'] = xarModGetVar('itsp', 'SupportShortURLs') ? true : false;
+    // Set the name for the passed status in courses
+    $passedstatus = xarModGetVar('itsp','PassedStatus');
+    if (empty($passedstatus)) {
+        $passedstatus = 3;
+    }
+    $data['passedstatusname']= xarModApiFunc('courses','user','getstatus', array('status'=>$passedstatus));
 
     /* If you plan to use alias names for you module then you should use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.

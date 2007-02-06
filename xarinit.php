@@ -17,7 +17,7 @@
  * module instance
  *
  * @author MichelV
- * @return bool true on success of initialization
+ * @return void This function returns the upgrade function
  */
 function itsp_init()
 {
@@ -381,8 +381,8 @@ This table deals with the free courses. So: how to add the custom courses/items 
     xarRegisterMask('DeleteITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminITSPPlan', 'All', 'itsp', 'Plan', 'All:All', 'ACCESS_ADMIN');
 
-    /* Initialisation successful so return true */
-    return true;
+    /* Initialisation successful so return to the upgrade and see if we need actions in there */
+    return itsp_upgrade('0.5.1');
 }
 
 /**
@@ -554,6 +554,8 @@ function itsp_upgrade($oldversion)
             if (!$result) return;
         case '0.5.0':
         case '0.5.1':
+            xarModSetVar('itsp', 'PassedStatus', 3);
+        case '0.5.2':
             break;
     }
     /* Update successful */

@@ -14,7 +14,6 @@
     <p>#xarSessionGetVar('statusmsg')#</p>
   </xar:if>
     <form method="post" id="post" action="&xar-modurl-itsp-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-    <!-- Use standard xaraya classes for form elements -->
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
 
@@ -43,6 +42,19 @@
         <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('itsp', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
       </div>
     </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>Interactions</xar:mlstring></legend>
+
+      <div class="xar-form-input-wrapper">
+        <label for="passedstatus" class="xar-form-label" title="#xarML('The status in courses that means that the student has obtained the credits.')#">
+          <xar:mlstring>
+            Passed status ID
+          </xar:mlstring>
+        </label>
+        <input type="text" name="passedstatus" id="passedstatus" value="#xarModGetVar('itsp', 'PassedStatus')#" size="5" maxlength="2" />#$passedstatusname#
+      </div>
+    </fieldset>
+
     <fieldset>
       <legend><xar:mlstring>System Options</xar:mlstring></legend>
       <div class="xar-form-input-wrapper">

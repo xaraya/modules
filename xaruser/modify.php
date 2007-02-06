@@ -231,7 +231,6 @@ function itsp_user_modify($args)
                         $icourse['editlink'] = '';
                     }
 
-
                     /* Clean up the item text before display */
                     $icourse['title'] = xarVarPrepForDisplay($icourse['icoursetitle']);
                     $icourse['credits'] = $icourse['icoursecredits'];
@@ -241,9 +240,7 @@ function itsp_user_modify($args)
                     /* Add this item to the list of items to be displayed */
                     $data['icourses'][] = $icourse;
                 }
-
-
-                $creditsnow = xarModApiFunc('itsp','user','countcredits',array('pitemid' => $pitemid,'itspid'=>$itspid));
+            $creditsnow = xarModApiFunc('itsp','user','countcredits',array('pitemid' => $pitemid,'itspid'=>$itspid));
         }
         $data['pitem'] = $pitem;
         $data['creditsnow'] = $creditsnow;
