@@ -1,26 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-<!-- common admin menu for this module - remove link to the current function -->
-
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>JpGraph Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>JpGraph Examples with direct calls to the JpGraph functions</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
- <!-- xar:template type="module" file="admin-menu" / -->
-
-
-
     <xar:data-output type="JpGraph" plot_legend="xar 2 legend" ydata="$y_series" graph_xtitle="my own xxx" /> <!-- -->
     <xar:data-output type="JpGraph" ydata="$y_series" graph_type="bar" />
-    <!--
-        // Start form - note we do not use xarModURL() to create the recipient URL of
-        // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
-        // compatibility with future versions of Xaraya
-   -->
-        <div id="example_edit_or_add">
- <!--  --><div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/barformatcallbackex1.php" alt="" height="300" width="400" /></div>
-<img src="#xarServerGetCurrentURL(array('img'=&gt;'1'))#" alt="" height="200" width="300" />
-<div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/alphabarex1.php" alt="" height="" width="" /></div>
-
-        </div>
+    <div id="example_edit_or_add">
+        <div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/barformatcallbackex1.php" alt="" height="300" width="400" /></div>
+        <img src="#xarServerGetCurrentURL(array('img'=&gt;'1'))#" alt="" height="200" width="300" />
+        <div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/alphabarex1.php" alt="" height="" width="" /></div>
+    </div>
 </div>

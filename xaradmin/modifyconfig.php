@@ -42,9 +42,7 @@ function jpgraph_admin_modifyconfig()
     if (!xarVarFetch('graphic_error',     'checkbox', $graphic_error,     true, XARVAR_NOT_REQUIRED)) return;
 
     /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
+     * the blocklayout template
      */
     $data = array();
 
@@ -90,22 +88,14 @@ function jpgraph_admin_modifyconfig()
 
     if($action == 'update') {
 
+        if (!xarVarFetch('window_height', 'str:1:', $window_height, xarModGetVar('jpgraph', 'window_height'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('window_width',  'str:1:', $window_width,  xarModGetVar('jpgraph', 'window_width'),  XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('cachetimeout',  'int::',  $cachetimeout,  xarModGetVar('jpgraph', 'cachetimeout'),  XARVAR_NOT_REQUIRED)) return;
 
-        if (!xarVarFetch('window_height', 'str:1:',   $window_height,    xarModGetVar('jpgraph', 'window_height'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('window_width', 'str:1:',   $window_width,    xarModGetVar('jpgraph', 'window_width'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('cachetimeout', 'int::',   $cachetimeout,    xarModGetVar('jpgraph', 'cachetimeout'), XARVAR_NOT_REQUIRED)) return;
-
-        /* Confirm authorisation code. This checks that the form had a valid
-         * authorisation code attached to it. If it did not then the function will
-         * proceed no further as it is possible that this is an attempt at sending
-         * in false data to the system
-         */
+        /* Confirm authorisation code. */
 
         if (!xarSecConfirmAuthKey()) return;
-        /* Update module variables. Note that the default values are set in
-         * xarVarFetch when recieving the incoming values, so no extra processing
-         * is needed when setting the variables here.
-         */
+        /* Update module variables. */
         xarModSetVar('jpgraph', 'cachedirectory', $cachedirectory);
         xarModSetVar('jpgraph', 'csimcachedirectory', $csimcachedirectory);
         xarModSetVar('jpgraph', 'csimcachehttpdirectory', $csimcachehttpdirectory);

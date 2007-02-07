@@ -40,6 +40,12 @@
 //   MBTTF_DIR $SERVER_SYSTEMROOT/fonts/
 //
 //------------------------------------------------------------------------
+
+/**
+ * You will probably want to change the settings below here.
+ * At present, the settings in modifyconfig might not stick.
+ * Set the appropriate values in here
+ */
 // DEFINE("CACHE_DIR","/tmp/jpgraph_cache/");
 // DEFINE("TTF_DIR","/usr/X11R6/lib/X11/fonts/truetype/");
 // DEFINE("MBTTF_DIR","/usr/share/fonts/ja/TrueType/");
