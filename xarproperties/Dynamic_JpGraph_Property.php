@@ -29,7 +29,7 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
     /**
      * Set the property; constructor
      *
-     * @return
+     * @return mixed
      **/
     function Dynamic_JpGraph_Property($args)
     {
@@ -160,11 +160,11 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
     }
     /**
      * Show the actual output of the graph-plot generated
+     * @todo MichelV: generate the graph in the browser, not as a cached file
      */
 
     function showOutput($data = array())
     {
-        //TODO: is there a better way? We should send directly to the browser rather than to a file
 
         $data['value'] = 'var/cache/jpgraph/imageoutput'.microtime().'.png';
         $image = $this->graph->Stroke($data['value']);
@@ -182,17 +182,16 @@ class Dynamic_JpGraph_Property extends Dynamic_Image_Property
      {
          $args = array();
          $baseInfo = array(
-                              'id'         => 191,
-                              'name'       => 'JpGraph',
-                              'label'      => 'JpGraph property',
-                              'format'     => '191',
-                              'validation' => '',
-                              'source'     => '',
-                              'dependancies' => '',
-                              'requiresmodule' => 'jpgraph',
-                              'aliases' => '',
-                              'args'       => serialize( $args ),
-                            /* ... */
+                              'id'              => 191,
+                              'name'            => 'JpGraph',
+                              'label'           => 'JpGraph property',
+                              'format'          => '191',
+                              'validation'      => '',
+                              'source'          => '',
+                              'dependancies'    => '',
+                              'requiresmodule'  => 'jpgraph',
+                              'aliases'         => '',
+                              'args'            => serialize( $args ),
                            );
         return $baseInfo;
     }

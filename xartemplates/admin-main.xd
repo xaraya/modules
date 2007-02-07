@@ -33,7 +33,7 @@
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
   <xar:mlstring>Get the JpGraph library from the website at</xar:mlstring> <a href="http://www.aditus.nu/jpgraph/jpdownload.php">http://www.aditus.nu/jpgraph/jpdownload.php</a><br />
-  <xar:mlstring>Unzip the files. Copy the files from /src to /xarincludes/jpgraph2/ and the files from /docs to /xardocs/. The, copy the config file from xarincludes over to the jpgraph2 directory.</xar:mlstring>
+  <xar:mlstring>Unzip the files. Copy the files from /src to /xarincludes/jpgraph2/ and the files from /docs to /xardocs/. Then, copy the config file (jpg-config.inc.php) from xarincludes over to the jpgraph2 directory.</xar:mlstring>
   <br />
   <xar:mlstring>Run the test suit to see what goes ok on your system. Set any options in modifyconfig and optionally the others in the jpg-config.inc.php file in xarincludes/jpgraph2.</xar:mlstring>
   </p>
@@ -58,14 +58,14 @@
     <xar:mlstring>Further information on the JpGraph module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>JpGraph Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>JpGraph Extension page at</xar:mlstring> <a title="#xarML('JpGraph Module - Xaraya Extension 819')#" href="http://www.xaraya.com/index.php/release/819.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
     <li><xar:mlstring>Related tutorials and documentation on JpGraph found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/jpgraph/" title="#xarML('Related documentation on JpGraph')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>JpGraph Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-11-17
+    <strong>&nbsp;<xar:mlstring>JpGraph Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2007-02-07
   </p>
 </div>
 

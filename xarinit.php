@@ -35,7 +35,7 @@ function jpgraph_init()
 
     /* Set up the version number for jpgraph
      */
-    xarModSetVar('jpgraph', 'jpgraphversion', '2.1.3');
+    xarModSetVar('jpgraph', 'jpgraphversion', '2.1.4');
     xarModSetVar('jpgraph', 'cachedirectory', '/var/jpgraph/jpgraph_cache/');
 
     xarModSetVar('jpgraph', 'csimcachedirectory', '/var/jpgraph/csimcache/');
@@ -94,7 +94,7 @@ function jpgraph_init()
     xarRegisterMask('AdminJpGraph',  'All', 'jpgraph', 'Item', 'All', 'ACCESS_ADMIN');
 
     /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
-    return jpgraph_upgrade('1.0');
+    return jpgraph_upgrade('0.3.1');
 }
 
 /**

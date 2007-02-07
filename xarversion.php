@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'jpgraph'; /* lowercase, no spaces or special chars */
 $modversion['id']             = '819';
-$modversion['version']        = '0.3.0'; /* three point version number */
+$modversion['version']        = '0.3.1'; /* three point version number */
 $modversion['displayname']    = xarML('JpGraph');
 $modversion['description']    = 'Wrapper for the JpGraph library';
 $modversion['credits']        = 'xardocs/credits.txt';

@@ -153,7 +153,6 @@ function jpgraph_admin_modifyconfig()
 
     }
 
-
     /* Return the template variables defined in this function */
     return $data;
 }
