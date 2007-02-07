@@ -1,6 +1,6 @@
 <?php
 /**
- * Get a specific ITSP
+ * Get a specific ITSP and add all items to it with all details
  *
  * @package modules
  * @copyright (C) 2006-2007 The Digital Development Foundation
@@ -18,9 +18,12 @@
  *
  * @author the ITSP module development team
  * @since 26 Oct 2006
- * @param int $args ['itspid'] id of itsp item to get
+ * @param int $itspid id of itsp item to get
  * @return array with item, or false on failure
  * @throws BAD_PARAM, NO_PERMISSION
+ * @todo MichelV: add obtained credits
+ * @todo MichelV: move this to object
+ * @todo MichelV: How to interact with the template?
  */
 function itsp_userapi_getfullitsp($args)
 {
