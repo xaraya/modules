@@ -15,10 +15,8 @@
  * The main user function
  *
  * This function is the default function, and is called whenever the module is
- * initiated without defining arguments. As such it can be used for a number
- * of things, but most commonly it either just shows the module menu and
- * returns or calls whatever the module designer feels should be the default
- * function (often this is the view() function)
+ * initiated without defining arguments. It will show a text telling that this module
+ * has no user interface, but only an admin interface.
  *
  * @author the JpGraph module development team
  * @return array $data An array with the data for the template

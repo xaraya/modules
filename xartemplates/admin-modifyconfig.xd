@@ -32,7 +32,7 @@
 
       <div class="xar-form-input-wrapper">
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of jpgraph items per page')#">
-          <xar:mlstring>Example Items Per Page:</xar:mlstring>
+          <xar:mlstring>Items Per Page:</xar:mlstring>
         </label>
         <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsvalue#" maxlength="3" class="xar-form-textshort" />
       </div>
@@ -40,14 +40,21 @@
     <fieldset>
       <legend><xar:mlstring>System Options</xar:mlstring></legend>
       <div class="xar-form-input-wrapper">
-        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-          <xar:mlstring>Enable short URLs?</xar:mlstring>
-        </label>
-        <xar:if condition="$shorturlschecked">
-          <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-          <xar:else/>
-          <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-        </xar:if>
+          <label for="version" class="xar-form-label" title="#xarML('Choose one of the major versions: 2 or 1')#">
+          <xar:mlstring>Use version:</xar:mlstring>
+            </label>
+          <select name="mainversion" id="mainversion">
+              <xar:if condition="$mainversion eq 1">
+                <option value="1" selected="selected">1</option>
+              <xar:else/>
+                <option value="1">1</option>
+              </xar:if>
+              <xar:if condition="$mainversion eq 2">
+                <option value="2" selected="selected">2</option>
+              <xar:else/>
+                <option value="2">2</option>
+              </xar:if>
+          </select>
       </div>
 
       <div class="xar-form-input-wrapper">

@@ -72,6 +72,7 @@ function jpgraph_admin_modifyconfig()
      */
     $data['useAliasName'] = xarModGetVar('jpgraph', 'useModuleAlias');
     $data['aliasname '] = xarModGetVar('jpgraph','aliasname');
+    $data['mainversion'] = xarModGetVar('jpgraph', 'mainversion');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'jpgraph',
                        array('module' => 'jpgraph'));
@@ -91,7 +92,7 @@ function jpgraph_admin_modifyconfig()
         if (!xarVarFetch('window_height', 'str:1:', $window_height, xarModGetVar('jpgraph', 'window_height'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('window_width',  'str:1:', $window_width,  xarModGetVar('jpgraph', 'window_width'),  XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('cachetimeout',  'int::',  $cachetimeout,  xarModGetVar('jpgraph', 'cachetimeout'),  XARVAR_NOT_REQUIRED)) return;
-
+        if (!xarVarFetch('mainversion',       'int:1:',  $mainversion,      xarModGetVar('jpgraph', 'mainversion'),       XARVAR_NOT_REQUIRED)) return;
         /* Confirm authorisation code. */
 
         if (!xarSecConfirmAuthKey()) return;
@@ -111,6 +112,7 @@ function jpgraph_admin_modifyconfig()
         xarModSetVar('jpgraph', 'graphic_error', $graphic_error);
         xarModSetVar('jpgraph', 'itemsperpage', $itemsperpage);
         xarModSetVar('jpgraph', 'SupportShortURLs', $shorturls);
+        xarModSetVar('jpgraph', 'mainversion', $mainversion);
         if (isset($aliasname) && trim($aliasname)<>'') {
             xarModSetVar('jpgraph', 'useModuleAlias', $modulealias);
         } else{

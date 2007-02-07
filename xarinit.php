@@ -123,6 +123,8 @@ function jpgraph_upgrade($oldversion)
             xarModSetVar('jpgraph', 'graphic_error', true);
             xarModSetVar('jpgraph', 'jpgraphversion', '2.1.4');
         case '0.3.0':
+            xarModSetVar('jpgraph', 'mainversion', 2);
+        case '0.3.1':
             break;
     }
     /* Update successful */
@@ -157,14 +159,6 @@ function jpgraph_delete()
      * from the database. This is not strictly necessary, but it's good housekeeping.
      */
     xarRemoveMasks('jpgraph');
-
-    /* Category deletion?
-     *
-     * Categories can be used in more than one module.
-     * The categories originally created for this module could also have been used
-     * for other modules. If we delete the categories then we must be sure that
-     * no other modules are currently using them.
-     */
 
     /* Deletion successful*/
     return true;
