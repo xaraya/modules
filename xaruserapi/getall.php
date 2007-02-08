@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * get overview of all articles
+ * Get a selection of all articles
  * Note : the following parameters are all optional
  *
  * @param $args['numitems'] number of articles to get

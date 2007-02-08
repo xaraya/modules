@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,10 +13,11 @@
  */
 /**
  * initialise the articles module
+ * @param void
+ * @return bool true
  */
 function articles_init()
 {
-
     //Not needed anymore with the dependency checks.
     if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
@@ -374,6 +375,8 @@ function articles_init()
 
 /**
  * upgrade the articles module from an old version
+ * @param string $oldversion The former version number to upgrade from
+ * @return bool
  */
 function articles_upgrade($oldversion)
 {
