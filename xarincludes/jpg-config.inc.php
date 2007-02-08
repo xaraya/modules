@@ -46,8 +46,13 @@
  * At present, the settings in modifyconfig might not stick.
  * Set the appropriate values in here
  */
-// DEFINE("CACHE_DIR","/tmp/jpgraph_cache/");
-// DEFINE("TTF_DIR","/usr/X11R6/lib/X11/fonts/truetype/");
+//if (!defined("CACHE_DIR")) {
+//      DEFINE("CACHE_DIR","/tmp/jpgraph_cache/");
+//}
+//if (!defined("TTF_DIR")) {
+//    DEFINE("TTF_DIR","/usr/X11R6/lib/X11/fonts/TTF/");
+//}
+
 // DEFINE("MBTTF_DIR","/usr/share/fonts/ja/TrueType/");
 
 //-------------------------------------------------------------------------

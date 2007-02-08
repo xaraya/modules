@@ -3,11 +3,14 @@
     <span class="xar-mod-title"><xar:mlstring>JpGraph Examples with direct calls to the JpGraph functions</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
-    <xar:data-output type="JpGraph" plot_legend="xar 2 legend" ydata="$y_series" graph_xtitle="my own xxx" /> <!-- -->
-    <xar:data-output type="JpGraph" ydata="$y_series" graph_type="bar" />
-    <div id="example_edit_or_add">
-        <div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/barformatcallbackex1.php" alt="" height="300" width="400" /></div>
+    <h3>one</h3>
+        <xar:data-output type="JpGraph" plot_legend="xar 2 legend" ydata="$y_series" graph_xtitle="my own xxx" />
+    <h3>Two</h3>
+        <xar:data-output type="JpGraph" ydata="$y_series" graph_type="bar" />
+    <h3>Three</h3>
+        <img src="modules/jpgraph/xarincludes/jpgraph2/Examples/barformatcallbackex1.php" alt="" height="300" width="400" />
+    <h3>Four</h3>
         <img src="#xarServerGetCurrentURL(array('img'=&gt;'1'))#" alt="" height="200" width="300" />
-        <div><img src="modules/jpgraph/xarincludes/jpgraph2/Examples/alphabarex1.php" alt="" height="" width="" /></div>
-    </div>
+    <h3>Five</h3>
+        <img src="modules/jpgraph/xarincludes/jpgraph2/Examples/alphabarex1.php" alt="" height="" width="" />
 </div>
