@@ -38,12 +38,13 @@ function highlight_init()
 }
 
 /**
-* Upgrade the module from an old version
-*
-* This function can be called multiple times.
-*
-* @param string $oldVersion Version to upgrade from
-*/
+ * Upgrade the module from an old version
+ *
+ * This function can be called multiple times.
+ *
+ * @param string $oldVersion Version to upgrade from
+ * @return bool true on success for upgrade
+ */
 function highlight_upgrade($oldversion)
 {
     // success
@@ -51,11 +52,12 @@ function highlight_upgrade($oldversion)
 }
 
 /**
-* Delete the module
-*
-* This function is only ever called once during the lifetime of a particular
-* module instance.
-*/
+ * Delete the module
+ *
+ * This function is only ever called once during the lifetime of a particular
+ * module instance.
+ * @return bool true on success of deletion
+ */
 function highlight_delete()
 {
     // remove hooks

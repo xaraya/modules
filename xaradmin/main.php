@@ -23,7 +23,7 @@ function highlight_admin_main()
     // Initialise array
     xarResponseRedirect(xarModURL('highlight', 'admin', 'modifyconfig'));
     // success
-    return true
+    return true;
 }
 
 ?>

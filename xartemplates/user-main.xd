@@ -1,8 +1,12 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Syntax Highlighting</xar:mlstring></h2>
-<div style="margin: auto;"><xar:template file="user-menu" type="module" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Syntax Highlighting</xar:mlstring></h2>
+
+    <xar:template file="user-menu" type="module" />
 
     <img src="#xarTplGetImage('admin.gif')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
 
@@ -21,7 +25,7 @@
     </xar:ml>
     </p>
 
-   <pre>#$htmlsample#</pre>
+    <pre>#$htmlsample#</pre>
 
        <p>
               <xar:mlstring>When processed, your content will be rendered like:</xar:mlstring>
@@ -36,32 +40,27 @@
     <p><xar:mlstring>The language can be any of those listed under "Attribute Value" below.</xar:mlstring></p>
 
     <table>
-    <tr><td>
+        <tr><td>
 
-        <table class="xar-border-thin">
-            <tr>
-                <th><xar:mlstring>Language</xar:mlstring></th>
-                <th><xar:mlstring>Attribute Value</xar:mlstring></th>
-            </tr>
-        <xar:loop name="$languages">
-            <tr><td>#$loop:item#</td><td>#$loop:key#</td></tr>
+            <table class="xar-border-thin">
+                <tr>
+                    <th><xar:mlstring>Language</xar:mlstring></th>
+                    <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+                </tr>
+            <xar:loop name="$languages">
+                <tr><td>#$loop:item#</td><td>#$loop:key#</td></tr>
 
-            <xar:if condition="($loop:index+1) lt count($languages) and ($loop:index+1) % $rowpercol eq 0">
-                    </table>
-                </td><td>
-                    <table class="xar-border-thin">
-                        <tr>
-                            <th><xar:mlstring>Language</xar:mlstring></th>
-                            <th><xar:mlstring>Attribute Value</xar:mlstring></th>
-                        </tr>
-            </xar:if>
-        </xar:loop>
-        </table>
-    </td></tr>
+                <xar:if condition="($loop:index+1) lt count($languages) and ($loop:index+1) % $rowpercol eq 0">
+                        </table>
+                    </td><td>
+                        <table class="xar-border-thin">
+                            <tr>
+                                <th><xar:mlstring>Language</xar:mlstring></th>
+                                <th><xar:mlstring>Attribute Value</xar:mlstring></th>
+                            </tr>
+                </xar:if>
+            </xar:loop>
+            </table>
+        </td></tr>
     </table>
-
-
-
-
-
 </div>
