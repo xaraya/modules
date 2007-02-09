@@ -3,7 +3,7 @@
 * Highlight - versatile syntax highlighting
 *
 * @package unassigned
-* @copyright (C) 2002-2005 by The Digital Development Foundation
+* @copyright (C) 2002-2007 The Digital Development Foundation
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.xaraya.com
 *
@@ -13,7 +13,7 @@
 */
 $modversion['name']           = 'highlight';
 $modversion['id']             = '559';
-$modversion['version']        = '0.4.1';
+$modversion['version']        = '0.9.0';
 $modversion['displayname']    = xarML('Highlight');
 $modversion['description']    = 'Transform Hook to highlight your programming code';
 $modversion['credits']        = 'xardocs/credits.txt';

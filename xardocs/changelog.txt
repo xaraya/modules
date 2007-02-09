@@ -1,3 +1,8 @@
+Version 1.0.0
+9 Feb 2007
+- Upgraded to current version of Geshi (1.0.7.17).
+
+
 Version 0.4.0 2005-11-26
     - API documentation
     - Short URLs

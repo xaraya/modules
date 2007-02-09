@@ -2,12 +2,12 @@
 /*************************************************************************************
  * sql.php
  * -------
- * Author: Nigel McNie (oracle.shinoda@gmail.com)
+ * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.4
- * CVS Revision Version: $Revision: 1.1.1.1 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 2004/06/04
- * Last Modified: $Date: 2005/11/28 18:55:35 $
+ * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * SQL language file for GeSHi.
  *
@@ -97,7 +97,8 @@ $language_data = array (
 			),
 		'COMMENTS' => array(
 			1 => 'color: #808080; font-style: italic;',
-			2 => 'color: #808080; font-style: italic;'
+			2 => 'color: #808080; font-style: italic;',
+            'MULTI' => 'color: #808080; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'

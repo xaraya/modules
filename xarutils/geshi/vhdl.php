@@ -4,10 +4,10 @@
  * --------
  * Author: Alexander 'E-Razor' Krause (admin@erazor-zone.de)
  * Copyright: (c) 2005 Alexander Krause
- * Release Version: 1.0.7.4
- * CVS Revision Version: $Revision: 1.1.1.1 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 2005/06/15
- * Last Modified: $Date: 2005/11/28 18:55:35 $
+ * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  * 
  * VHDL (VHSICADL, very high speed integrated circuit HDL) language file for GeSHi.
  *
@@ -40,7 +40,7 @@
  ************************************************************************************/
  
 $language_data = array (
-    'LANG_NAME' => 'vhdl',
+    'LANG_NAME' => 'VHDL',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

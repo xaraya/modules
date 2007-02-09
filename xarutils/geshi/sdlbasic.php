@@ -4,10 +4,10 @@
  * ------------
  * Author: Roberto Rossi 
  * Copyright: (c) 2005 Roberto Rossi (http://rsoftware.altervista.org)
- * Release Version: 1.0.7.4
- * CVS Revision Version: $Revision: 1.1.1.1 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 2005/08/19
- * Date Modified: $Date: 2005/11/28 18:55:35 $
+ * Date Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * sdlBasic (http://sdlbasic.sf.net) language file for GeSHi.
  *
@@ -36,7 +36,7 @@
  *
  ************************************************************************************/
  $language_data = array (
-	'LANG_NAME' => 'Visual Basic',
+	'LANG_NAME' => 'sdlBasic',
 	'COMMENT_SINGLE' => array(1 => "'", 2 => "rem", 3 => "!", 4 => "#"),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,

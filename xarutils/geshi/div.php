@@ -4,10 +4,10 @@
  * ---------------------------------
  * Author: Gabriel Lorenzo (ermakina@gmail.com)
  * Copyright: (c) 2005 Gabriel Lorenzo (http://ermakina.gazpachito.net)
- * Release Version: 1.0.7.4
- * CVS Revision Version: $Revision: 1.1.1.1 $
+ * Release Version: 1.0.7.17
+ * CVS Revision Version: $Revision: 866 $
  * Date Started: 2005/06/19
- * Last Modified: $Date: 2005/11/28 18:55:35 $
+ * Last Modified: $Date: 2006-11-26 21:40:26 +1300 (Sun, 26 Nov 2006) $
  *
  * DIV language file for GeSHi.
  *
