@@ -1,19 +1,20 @@
 <?php
-/* * Xaraya Smilies
+/**
+ * Xaraya HighLight
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link http://www.xaraya.org
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
- * @subpackage Smilies Module
- * @author Jim McDonald, Mikespub, John Cox
-*/
-
+ * @subpackage highlight
+ * @link http://xaraya.com/index.php/release/559.html
+ * @author Curtis Farnham <curtis@farnham.com>
+ */
 /**
  * Add a standard screen upon entry to the module.
- * @returns output
- * @return output with smilies Menu information
+ *
+ * @return array output for the template with examples
  */
 function highlight_user_main()
 {

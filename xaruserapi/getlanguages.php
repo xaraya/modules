@@ -2,7 +2,7 @@
 /**
 * Get languages
 *
-* @package unassigned
+* @package modules
 * @copyright (C) 2002-2007 The Digital Development Foundation
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.xaraya.com
@@ -18,8 +18,7 @@
 *
 * @author  Curtis Farnham <curtis@farnham.com>
 * @access  public
-* @return  array
-* @returns list of possible languages
+* @return array list of possible languages
 */
 function highlight_userapi_getlanguages($args)
 {

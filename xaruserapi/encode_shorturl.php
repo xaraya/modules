@@ -2,7 +2,7 @@
 /**
 * Encode Short URL's
 *
-* @package unassigned
+* @package modules
 * @copyright (C) 2002-2007 The Digital Development Foundation
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.xaraya.com
@@ -19,8 +19,7 @@
 * @author Curtis Farnham <curtis@farnham.com>
 * @access  public
 * @param  $args the function and arguments passed to xarModURL
-* @return  string
-* @returns path to be added to index.php for a short URL, or empty if failed
+* @return string path to be added to index.php for a short URL, or empty if failed
 */
 function highlight_userapi_encode_shorturl($args)
 {

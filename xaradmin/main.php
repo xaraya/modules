@@ -2,7 +2,7 @@
 /**
 * main admin function
 *
-* @package unassigned
+* @package modules
 * @copyright (C) 2002-2007 The Digital Development Foundation
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.xaraya.com
@@ -12,18 +12,18 @@
 * @author Curtis Farnham <curtis@farnham.com>
 */
 /**
-* main administration function
-*/
+* main administration function: redirect to modifyconfig
+ * @return bool true on succes of redirect
+ */
 function highlight_admin_main()
 {
     // security check
     if (!xarSecurityCheck('AdminHighlight')) return;
 
     // Initialise array
-    $data = xarModAPIFunc('highlight', 'admin', 'menu');
-
+    xarResponseRedirect(xarModURL('highlight', 'admin', 'modifyconfig'));
     // success
-    return $data;
+    return true
 }
 
 ?>

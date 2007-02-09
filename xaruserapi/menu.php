@@ -2,7 +2,7 @@
 /**
 * Get user menu vars
 *
-* @package unassigned
+* @package modules
 * @copyright (C) 2002-2007 The Digital Development Foundation
 * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
 * @link http://www.xaraya.com
@@ -19,8 +19,7 @@
 *
 * @author  Curtis Farnham <curtis@farnham.com>
 * @access  public
-* @return  array
-* @returns list of menu parameters
+* @return array list of menu parameters
 */
 function highlight_userapi_menu()
 {
