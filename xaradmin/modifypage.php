@@ -13,8 +13,10 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_modifypage()
+function xarpages_admin_modifypage($args)
 {
+    extract($args);
+
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_DONT_SET)) {return;}
@@ -254,8 +256,14 @@ function xarpages_admin_modifypage()
 
     $data['statuses'] = xarModAPIfunc('xarpages', 'user', 'getstatuses');
 
-    // Return output
-    return $data;
+    // Return output (allows a different admin page per page type)
+    if (!empty($data['page']['pagetype']['name'])) {
+        $pagetype = $data['page']['pagetype']['name'];
+    } else {
+        $pagetype = NULL;
+    }
+
+    return xarTplModule('xarpages', 'admin', 'modifypage', $data, $pagetype);
 }
 
 ?>
