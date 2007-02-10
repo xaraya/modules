@@ -79,7 +79,7 @@ function commerce_admin_geo_zones()
 
   if ($_GET['zID']  && (($_GET['saction'] == 'edit') || ($_GET['saction'] == 'new'))) {
 ?>
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 function resetZoneSelected(theForm) {
   if (theForm.state.value != '') {
     theForm.zone_id.selectedIndex = '0';

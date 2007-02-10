@@ -146,7 +146,7 @@ class SPAW_Wysiwyg {
       echo "var spaw_active_toolbar = ".($spaw_active_toolbar?"true":"false").";\n";
       echo "//-->\n";
       echo "</script>\n";
-      echo '<script language="JavaScript" src="'.$spaw_dir.'spaw_script.js.php"></script>'."\n\n";
+      echo '<script type="text/javascript" src="'.$spaw_dir.'spaw_script.js.php"></script>'."\n\n";
     }
   }
 
@@ -206,7 +206,7 @@ class SPAW_Wysiwyg {
         $this->getCssScript();
       }
       // theme based css file and javascript
-      $buf.= '<script language="JavaScript" src="'.$spaw_dir.'lib/themes/'.$this->theme.'/js/toolbar.js.php"></script>';
+      $buf.= '<script type="text/javascript" src="'.$spaw_dir.'lib/themes/'.$this->theme.'/js/toolbar.js.php"></script>';
       $buf.= '<link rel="stylesheet" type="text/css" href="'.$spaw_dir.'lib/themes/'.$this->theme.'/css/toolbar.css">';
 
       $buf.= '<table border="0" cellspacing="0" cellpadding="0" width="'.$this->getWidth().'">';

@@ -30,8 +30,8 @@ $l->setBlock('table_cell_prop');
   <title><?php echo $l->m('title')?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
-  <script language="javascript" src="utils.js"></script>
-  <script language="javascript">
+  <script type="text/javascript" src="utils.js"></script>
+  <script type="text/javascript">
   <!--
   function showColorPicker(curcolor) {
     var newcol = showModalDialog('colorpicker.php?theme=<?php echo $theme?>&lang=<?php echo $l->lang?>', curcolor,

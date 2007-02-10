@@ -86,7 +86,7 @@ define ('PRICE_PRECISION','2');
   if ( ($_GET['action'] == 'new') || ($_GET['action'] == 'edit') ) {
 ?>
 <link rel="stylesheet" type="text/css" href="includes/javascript/calendar.css">
-<script language="JavaScript" src="includes/javascript/calendarcode.js"></script>
+<script type="text/javascript" src="includes/javascript/calendarcode.js"></script>
 <?php
   }
 ?>

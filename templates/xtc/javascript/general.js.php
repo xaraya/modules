@@ -14,7 +14,7 @@
    // this javascriptfile get includes at every template page in shop, you can add your template specific
    // js scripts here
 ?>
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 
 
 

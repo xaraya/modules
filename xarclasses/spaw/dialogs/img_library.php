@@ -69,9 +69,9 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
     <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
-  <script language="javascript" src="utils.js"></script>
+  <script type="text/javascript" src="utils.js"></script>
 
-  <script language="javascript">
+  <script type="text/javascript">
   <!--
     function selectClick()
     {
@@ -95,7 +95,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 </head>
 
 <body onLoad="Init()" dir="<?php echo $l->getDir();?>">
-  <script language="javascript">
+  <script type="text/javascript">
   <!--
     window.name = 'imglibrary';
   //-->

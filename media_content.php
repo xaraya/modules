@@ -39,7 +39,7 @@ require('includes/application_top.php');
 <head>
 <title><?php echo $content_data['content_name']; ?></title>
 <link rel="stylesheet" type="text/css" href="includes/stylesheet.css">
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 var i=0;
 function resize() {
   if (navigator.appName == 'Netscape') i=40;

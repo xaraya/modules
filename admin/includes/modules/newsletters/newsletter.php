@@ -40,7 +40,7 @@
 //                                  'text' => $products['products_name']);
 //      }
 
-$choose_audience_string = '<script language="javascript"><!--
+$choose_audience_string = '<script type="text/javascript"><!--
 function mover(move) {
   if (move == \'remove\') {
     for (x=0; x<(document.notifications.cstatuses.length); x++) {

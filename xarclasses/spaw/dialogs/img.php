@@ -29,10 +29,10 @@ $l->setBlock('image_prop');
   <title><?php echo $l->m('title')?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
-  <script language="javascript" src="utils.js"></script>
-  
-  <script language="javascript">
-  <!--  
+  <script type="text/javascript" src="utils.js"></script>
+
+  <script type="text/javascript">
+  <!--
   function Init() {
     var iProps = window.dialogArguments;
     if (iProps)
@@ -44,9 +44,9 @@ $l->setBlock('image_prop');
       if (iProps.height) {
         img_prop.cheight.value = iProps.height;
       }
-      
+
       setAlign(iProps.align);
-      
+
       if (iProps.src) {
         img_prop.csrc.value = iProps.src;
       }
@@ -65,7 +65,7 @@ $l->setBlock('image_prop');
     }
     resizeDialogToContent();
   }
-  
+
   function validateParams()
   {
     // check width and height
@@ -99,13 +99,13 @@ $l->setBlock('image_prop');
       img_prop.cvspace.focus();
       return false;
     }
-    
+
     return true;
   }
-  
+
   function okClick() {
     // validate paramters
-    if (validateParams())    
+    if (validateParams())
     {
       var iProps = {};
       iProps.align = (img_prop.calign.value)?(img_prop.calign.value):'';
@@ -125,11 +125,11 @@ $l->setBlock('image_prop');
   function cancelClick() {
     window.close();
   }
-  
-  
+
+
   function setAlign(alignment)
   {
-    for (i=0; i<img_prop.calign.options.length; i++)  
+    for (i=0; i<img_prop.calign.options.length; i++)
     {
       al = img_prop.calign.options.item(i);
       if (al.value == alignment.toLowerCase()) {

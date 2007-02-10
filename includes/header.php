@@ -2,7 +2,7 @@
 <?php include(DIR_WS_MODULES.FILENAME_METATAGS); ?>
 <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo 'templates/'.CURRENT_TEMPLATE.'/stylesheet.css'; ?>">
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 var selected;
 
 function popupWindow(url) {
@@ -73,7 +73,7 @@ if (strstr($PHP_SELF, FILENAME_ADDRESS_BOOK_PROCES )) {
 if (strstr($PHP_SELF, FILENAME_CHECKOUT_SHIPPING_ADDRESS )or strstr($PHP_SELF,FILENAME_CHECKOUT_PAYMENT_ADDRESS)) {
 require('includes/form_check.js.php');
 ?>
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 function check_form_optional(form_name) {
   var form = form_name;
 
@@ -95,8 +95,8 @@ function check_form_optional(form_name) {
 <?php
 if (strstr($PHP_SELF, FILENAME_ADVANCED_SEARCH )) {
 ?>
-<script language="javascript" src="includes/general.js"></script>
-<script language="javascript"><!--
+<script type="text/javascript" src="includes/general.js"></script>
+<script type="text/javascript"><!--
 function check_form() {
   var error_message = "<?php echo JS_ERROR; ?>";
   var error_found = false;
@@ -191,7 +191,7 @@ if (strstr($PHP_SELF, FILENAME_PRODUCT_REVIEWS_WRITE )) {
 ?>
 
 
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 function checkForm() {
   var error = 0;
   var error_message = "<?php echo JS_ERROR; ?>";
@@ -222,7 +222,7 @@ function checkForm() {
 if (strstr($PHP_SELF, FILENAME_POPUP_IMAGE )) {
 ?>
 
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 var i=0;
 function resize() {
   if (navigator.appName == 'Netscape') i=40;

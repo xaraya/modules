@@ -26,14 +26,14 @@ $l->setBlock('colorpicker');
 
 <html>
 <head>
-	<meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
   <title><?php echo $l->m('title')?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $l->getCharset()?>">
   <link rel="stylesheet" type="text/css" href="<?php echo $theme_path.'css/'?>dialog.css">
-  <script language="javascript" src="utils.js"></script>
-  
-  <script language="javascript">
-  <!--  
+  <script type="text/javascript" src="utils.js"></script>
+
+  <script type="text/javascript">
+  <!--
   var cur_color; // passed color
   function Init() {
     cur_color = window.dialogArguments;
@@ -44,7 +44,7 @@ $l->setBlock('colorpicker');
     }
     resizeDialogToContent();
   }
-  
+
   function okClick() {
     window.returnValue = colorpicker.color.value;
     window.close();
@@ -54,7 +54,7 @@ $l->setBlock('colorpicker');
     window.returnValue = cur_color;
     window.close();
   }
-  
+
   function imgOn(imgid)
   {
     imgid.className = 'img_pick_over';

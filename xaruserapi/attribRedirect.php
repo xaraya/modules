@@ -13,7 +13,7 @@
 // ----------------------------------------------------------------------
 
   function commerce_userapi_attribRedirect($c_Path) {
-    return '<SCRIPT LANGUAGE="JavaScript"> window.location="./configure.php?cPath=' . $c_Path . '"; </script>';
+    return '<SCRIPT type="text/javascript"> window.location="./configure.php?cPath=' . $c_Path . '"; </script>';
   }
 
 ?>
