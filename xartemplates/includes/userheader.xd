@@ -1,7 +1,7 @@
 <style type="text/css">@import url(modules/commerce/xarstyles/userstylesheet.css);</style>
 <script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
 
-<script language="javascript"><!--
+<script type="text/javascript"><!--
 var selected;
 
 function popupWindow(url) {
@@ -81,7 +81,7 @@ nnn
 </xar:if>
 <xar:if condition="strstr($PHP_SELF, 'checkout_shipping_address.php') or strstr($PHP_SELF,'checkout_payment_address.php')">
     <script type="text/javascript" src="modules/commerce/xartemplates/form_check.js"></script>
-    <script language="javascript"><!--
+    <script type="text/javascript"><!--
     function check_form_optional(form_name) {
       var form = form_name;
 
@@ -100,7 +100,7 @@ nnn
 nnn
 <xar:if condition="strstr($PHP_SELF, 'advanced_search.php')">
     <script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
-    <script language="javascript"><!--
+    <script type="text/javascript"><!--
     function check_form() {
       var error_message = "<?php echo JS_ERROR; ?>";
       var error_found = false;
@@ -191,7 +191,7 @@ nnn
 </xar:if>
 
 <xar:if condition="strstr($PHP_SELF, 'product_reviews_write.php')">
-    <script language="javascript"><!--
+    <script type="text/javascript"><!--
     function checkForm() {
       var error = 0;
       var error_message = "<?php echo JS_ERROR; ?>";
@@ -220,7 +220,7 @@ nnn
 </xar:if>
 
 <xar:if condition="strstr($PHP_SELF, 'popup_image.php')">
-    <script language="javascript"><!--
+    <script type="text/javascript"><!--
     var i=0;
     function resize() {
       if (navigator.appName == 'Netscape') i=40;
