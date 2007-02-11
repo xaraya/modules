@@ -18,11 +18,11 @@
  * @param int    $args['basecid'] optional base cid under which the returned categories must lie
  * @param array  $args['basecids'] optional array of base cids under which the returned categories must lie
  * @param string $args['module'] name of the module; or
- * @param int    $args['modid'] module ID
+ * @param int    $args['modid'] module ID. If not given, the calling module will be used OPTIONAL
  * @param int    $args['itemtype'] item type
  * @param int    $args['itemid'] item ID
- * @return array Details for the categories found
- * @TODO: allow ordering of the results by name, description etc.
+ * @return array Details for the categories found supplied by the function 'getcatinfo'.
+ * @TODO allow ordering of the results by name, description etc.
  */
 function categories_userapi_getitemcats($args)
 {
