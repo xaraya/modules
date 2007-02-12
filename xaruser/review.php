@@ -33,48 +33,16 @@ function itsp_user_review($args)
     if(!xarSecurityCheck('ViewITSP')) return;
     extract($args);
 
-    if (!xarVarFetch('itspid',   'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pitemid',  'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('userid',   'id', $userid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itspid',      'id', $itspid,   NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pitemid',     'id', $pitemid,  NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid',    'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userid',      'id', $userid,   NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fulldetails', 'checkbox', $fulldetails, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('statusselect', 'int:0:', $statusselect, 4, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('username', 'str:1:', $getname, '', XARVAR_NOT_REQUIRED)) return;
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier.
-     */    /*
-    if (!empty($objectid)) {
-        $itspid = $objectid;
-    }
+    if (!xarVarFetch('startnum',    'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('statusselect', 'isset', $statusselect, 4, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('username',    'str:1:', $getname, '', XARVAR_NOT_REQUIRED)) return;
 
-    // We have a valid ITSP?
-    if (!empty($userid)) {
-        $item = xarModAPIFunc('itsp',
-                          'user',
-                          'get_itspid',
-                          array('userid' => $userid));
-        if (!empty($item)) {
-            xarResponseRedirect(xarModURL('itsp', 'user', 'itsp', array('itpsid'=>$item['itspid'], 'pitemid'=> $pitemid)));
-        }
-    } elseif (!empty($itspid)) {
-        // The user API function is called to get the ITSP
-        $item = xarModAPIFunc('itsp',
-                              'user',
-                              'get',
-                              array('itspid' => $itspid));
-        if (!empty($item)) {
-            xarResponseRedirect(xarModURL('itsp', 'user', 'itsp', array('itpsid'=>$itspid, 'pitemid'=> $pitemid)));
-        }
-    }*/
-/*
-    if (empty($item)) {
-        xarTplSetPageTitle(xarML('Individual Training and Supervision Plan'));
-        $data = xarModAPIFunc('itsp', 'user', 'menu');
-        return $data;
-    }
-    */
-
+    // Initialise the data array
     $data = array();
     $uid = xarUserGetVar('uid');
     // Get all the ITSPs and set their status
