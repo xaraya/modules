@@ -9,7 +9,7 @@
     <h3><xar:mlstring>Select</xar:mlstring></h3>
         <div class="xar-form-input-wrapper">
              <label for="username" class="xar-form-label" title="#xarML('Enter (part of) the name of the user')#">
-                  <xar:mlstring>User name</xar:mlstring>
+                  <xar:mlstring>Name of student</xar:mlstring>
              </label>
              <input type="text" name="username" id="username" value="#$username#" maxlength="32" class="xar-form-textmedium" />
         </div>
