@@ -1,15 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>ITSP</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Review and approve an ITSP</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>All ITSPs you can choose from</xar:mlstring></h2>
+    <h2><xar:mlstring>Choose or search for an ITSP</xar:mlstring></h2>
     <form method="post" name="review" id="review" action="&xar-modurl-itsp-user-review;">
-    <h3><xar:mlstring>Select</xar:mlstring></h3>
+    <p><xar:mlstring>Select the ITSP by clicking on the status of the ITSP, or go to the user's profile by clicking on its name.</xar:mlstring></p>
         <div class="xar-form-input-wrapper">
              <label for="username" class="xar-form-label" title="#xarML('Enter (part of) the name of the user')#">
-                  <xar:mlstring>Name of student</xar:mlstring>
+             <xar:mlstring>Search for student:</xar:mlstring>
              </label>
              <input type="text" name="username" id="username" value="#$username#" maxlength="32" class="xar-form-textmedium" />
         </div>
@@ -46,7 +46,7 @@
     <table>
         <tr>
             <th><xar:mlstring>ITSP Status</xar:mlstring></th>
-            <th><xar:mlstring>User</xar:mlstring></th>
+            <th><xar:mlstring>Student</xar:mlstring></th>
             <th><xar:mlstring>Last edit</xar:mlstring></th>
             <th><xar:mlstring>Approved?</xar:mlstring></th>
         </tr>
@@ -83,7 +83,6 @@
     </table>
 
     <div class="xar-align-center xar-padding-thick">
-        <!-- add the pager here -->
         #$pager#
     </div>
 </div>

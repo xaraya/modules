@@ -52,7 +52,7 @@
             <xar:if condition="$fulldetails eq 0 ">
               <input type="hidden" name="showdetails" id="showdetails" value="1" />
               <input type="submit" value="#xarML('Show details')#" />
-              <xar:else/>
+            <xar:else/>
               <input type="hidden" name="showdetails" id="showdetails" value="0" />
               <input type="submit" value="#xarML('Show summary')#" />
             </xar:if>
@@ -138,8 +138,6 @@
                     </table>
                 </div>
             </fieldset>
-
-
             <xar:if condition="$itspstatus lt 2">
                 <xar:if condition="($sumcreditsnow eq $plan.mincredit) OR ($sumcreditsnow gt $plan.mincredit)" >
                     <p><xar:mlstring>Currently, your ITSP has not been submitted yet to the Education Desk. Submitting your ITSP means that it will be sent to the
@@ -183,14 +181,9 @@
         </xar:foreach>
     </fieldset>
     </xar:if>
-    <!-- if you want to extend this module with dynamic data, you can retrieve
-    //   that data in the code via APIs, or use e.g. the following BL tags here.
-    //   For the different options, see the overview of dynamicdata...
-    -->
+    <xar:comment>Optional hooked dynamic data</xar:comment>
     <xar:if condition="xarModIsHooked('dynamicdata')">
-        <!-- 1. retrieve any dynamic properties defined for this object -->
         <xar:data-getitem name="$properties" module="itsp" itemid="$itspid" />
-        <!-- 2. for each property, display its label and value in output format -->
         <xar:if condition="isset($properties) and count($properties) gt 0">
             <xar:foreach in="$properties" key="$name">
                       <xar:data-label property="$properties[$name]" />:
