@@ -1,4 +1,5 @@
- <form  action="#$formaction#" method="post">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<form  action="#$formaction#" method="post">
      <fieldset>
          <legend>
              <xar:ml>
@@ -9,7 +10,7 @@
 
          <!-- However we do stuff, the search form needs an input field to enter the keywords to search on -->
          <label for="searchterms"><xar:mlstring>Search for</xar:mlstring>:</label>
-    
+
          <!-- Retrieve the remembered search terms, if any -->
          <xar:set name="$searchterms"><xar:var name="searchterms" scope="session"/></xar:set>
          <input id="searchterms" size="26" type="text" name="searchterms" value="#$searchterms#" /><br/>
@@ -17,16 +18,16 @@
          <!-- For which module are we displaying a search form -->
          <input type="hidden" name="formodule" value="#$callingmodule#"/>
          <input type="hidden" name="object_id" value="#$object_id#"/>
-         
+
          <!-- Retrieve the remembered checked item types -->
          <xar:set name="$checked_itemtypes"><xar:var name="checked_itemtypes" scope="session"/></xar:set>
          <xar:if condition="empty($checked_itemtypes)">
-             <xar:set name="$checked_itemtypes[1]">1</xar:set>   
+             <xar:set name="$checked_itemtypes[1]">1</xar:set>
          </xar:if>
          <!-- Depending how the hook was enabled several itemtypes need searching -->
          <xar:if condition="!empty($itemtypes)">
              <label><xar:mlstring>Search in</xar:mlstring>:</label><br/>
-             
+
              <xar:loop name="$itemtypes">
                  <xar:if condition="in_array($loop:key,$checked_itemtypes)">
                      <input type="checkbox" name="itemtypes[#$loop:item['label']#]" value="#$loop:key#" checked="checked"/>

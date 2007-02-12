@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div style="text-align: right"><small><a href="#xarModURL('search','user','main')#"><xar:mlstring>Advanced Search</xar:mlstring></a></small></div>
 <form action="#xarModURL('search','user','main')#" method="get">
     <div>
