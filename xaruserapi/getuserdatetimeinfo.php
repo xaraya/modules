@@ -11,7 +11,6 @@
  * @link http://xaraya.com/index.php/release/319.html
  * @author Julian development Team
  */
-
 /**
  * Format a date for users
  *
@@ -20,7 +19,7 @@
  * @author  Julian Development Team, MichelV. <michelv@xarayahosting.nl>
  * @access  public
  * @deprec  date since deprecated <insert this if function is deprecated>
- * @param   the date
+ * @param   string cal_date the date to use
  * @return  array $bl_data
  * @todo    MichelV. <#> Deprecate
  */

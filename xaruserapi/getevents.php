@@ -120,12 +120,12 @@ function julian_userapi_getevents($args)
                      $event_table.contact,
                      $event_table.organizer,
                      $event_table.dtstart,
-                     if($event_table.recur_until LIKE '0000%','',DATE_FORMAT($event_table.recur_until,'%Y:%m %d')),
+                     $event_table.recur_until,
                      $event_table.duration,
                      $event_table.rrule,
                      $event_table.isallday,
                      $event_table.fee";
-
+//if($event_table.recur_until LIKE '0000%','',DATE_FORMAT($event_table.recur_until,'%Y:%m %d')),
     // Select on categories
     if (xarModIsHooked('categories','julian') && !empty($catid)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
@@ -142,7 +142,7 @@ function julian_userapi_getevents($args)
         $query .= " FROM $event_table ";
     }
 
-    if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate))) {
+    if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate)) && (!empty($catid))) {
         $query .= " AND ";
     } elseif ((!xarModIsHooked('categories','julian') || empty($catid)) && (!empty($startdate))&& (!empty($enddate))) {
         $query .= " WHERE ";
@@ -212,6 +212,7 @@ function julian_userapi_getevents($args)
           // Security check
           if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
               // Change date formats from UNIX timestamp to something readable.
+              // TODO: why do we need all this display stuff in here?
               if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
                   $eStart['mon'] = "";
                   $eStart['day'] = "";
@@ -255,10 +256,10 @@ function julian_userapi_getevents($args)
           }
     }
     // Close first result set
-  $result->Close();
+    $result->Close();
 
-    // TODO: include linked events
     // Get the linked events
+    $condition = '';
     if(strcmp($enddate,"")) {
         $enddate=date('Y-m-d',strtotime($enddate));
         $condition=" AND ((DATE_FORMAT(dtstart,'%Y-%m-%d')>='" . $startdate . "' AND DATE_FORMAT(dtstart,'%Y-%m-%d') <='" . $enddate . "') OR recur_freq>0) ";

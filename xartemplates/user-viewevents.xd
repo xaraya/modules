@@ -1,5 +1,4 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!--- The Julian Module - User Event List Page. --->
   <div class="xar-julian xar-julian-user-viewevents">
     <xar:template file="header" />
       <div class="xar-julian-contents">
@@ -9,10 +8,8 @@
           </xar:mlstring>
         </h2>
         <xar:comment>
-        ********** Hide the Date Range selection until time is available to work on it. **********
-        <!--
-        <div class="xar-alt-outline">
-          <!-- Display the Option to select a date range. -->
+        Hide the Date Range selection until time is available to work on it.
+        </xar:comment>
           <p style="font-weight: bold; text-align: center;">
             The Events View "Date Range" defaults to one year from Today
           </p>
@@ -42,7 +39,7 @@
                   <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
                 </xar:for>
               </select>
-              <select name="start_day"style="width: 3em;" >
+              <select name="start_day" style="width: 3em;" >
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 31" iter="$i++">
                   <xar:if condition="$i lt 10">
@@ -88,7 +85,7 @@
                   <option value="#$currEndMonth#" #$monthEndSelected#>#$currEndMonth_long#</option>
                 </xar:for>
               </select>
-              <select name="end_day"style="width: 3em;" >
+              <select name="end_day" style="width: 3em;" >
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 31" iter="$i++">
                   <xar:if condition="$i lt 10">
@@ -117,11 +114,8 @@
               </select>
             </div>
           </form>
-        </div>
+
         <br />
-        -->
-        ********** End of the Hide the Date Range selection process. **********
-        </xar:comment>
 
         <xar:comment> Add the category browser to play with</xar:comment>
         <xar:if condition="xarModIsHooked('categories','julian')">

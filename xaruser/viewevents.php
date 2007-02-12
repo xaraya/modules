@@ -19,7 +19,7 @@
  * @link http://www.metrostat.net
  *
  * @author Roger Raymond
- * @TODO MichelV: include the linked events here
+ * @TODO Start with a smarter array of events.
  */
 
 function julian_user_viewevents($args)
@@ -55,7 +55,9 @@ function julian_user_viewevents($args)
 
     if (empty($startday)) {
         // Set the start day to the first month and day of the selected year.
-        $startdate=$bl_data['selected_year']."-01-01";
+        //$startdate=$bl_data['selected_year']."-01-01";
+        //Use today
+        $startdate = date("Y").'-01-01';
     }
     if (empty($enddate)) {
         // Set the end date to the last month and last day of the selected year.
@@ -74,10 +76,12 @@ function julian_user_viewevents($args)
     if ($caldate != '') {
         $startdate = $caldate;
     } else {
-        $startdate = ($startyear . $startmonth . $startday);
+        $bl_data['startdate'] = ($startyear . $startmonth . $startday);
+        $startdate = date("Y").'-01-01';
     }
+
     $enddate = ($endyear . $endmonth . $endday);
-    $bl_data['startdate'] = $startdate;
+    //$bl_data['startdate'] = $startdate;
     $bl_data['enddate'] = $enddate;
 
     // If sorting by Event date, then sort in descending order,
@@ -94,8 +98,8 @@ function julian_user_viewevents($args)
                                   'numitems'  => xarModGetVar('julian','itemsperpage'),
                                   'sortby'    => $sortby,
                                   'orderby'   => $orderby,
-                                  'startdate' => $startdate,
-                                  'enddate'   => $enddate,
+                                  //'startdate' => $startdate,
+                                  //'enddate'   => $enddate,
                                   'catid'     => $catid));
 
     // Check for exceptions.
