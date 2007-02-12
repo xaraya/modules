@@ -3,7 +3,7 @@
  * Review the ITSPs
  *
  * @package modules
- * @copyright (C) 2006 The Digital Development Foundation
+ * @copyright (C) 2006-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,8 @@
  * @param int $args['userid'] optional
  * @param int $args['fulldetails'] optional
  * @param int $args['startnum'] The startnumber, default to 1
- * @param string $args['statusselect'] A string to search for in the name of the user OPTIONAL
+ * @param mixed statusselect The id of the status to select,or when empty: ALL stati OPTIONAL
+ * @param string username A string to search for in the name of the user OPTIONAL
  * @since 1 Sept 2006
  * @return array $data with the data for the template.
  */
