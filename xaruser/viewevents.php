@@ -27,7 +27,7 @@ function julian_user_viewevents($args)
     // Extract args
     extract ($args);
 
-    // Get parameters from the input.
+    // Get parameters from the input. These come from the date selection tool
     if (!xarVarFetch('startnum',    'int:0:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',      'str:1:', $sortby,      'eventDate', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby',     'str:1:', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
@@ -52,16 +52,20 @@ function julian_user_viewevents($args)
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
     $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
-
+    // Create the date stretch to get events for.
+    // We start with listing from today on.
+    
+    // First see if we are given a time stretch
     if (empty($startday)) {
         // Set the start day to the first month and day of the selected year.
         //$startdate=$bl_data['selected_year']."-01-01";
         //Use today
-        $startdate = date("Y").'-01-01';
+        $startdate = date("Ymd");
     }
-    if (empty($enddate)) {
+    if (empty($endday)) {
         // Set the end date to the last month and last day of the selected year.
-        $enddate=$bl_data['selected_year']."-12-31";
+        $nextmonth = date("Ymd",(mktime(0, 0, 0, date("m")+5, date("d"),  date("Y"))));
+        $enddate=$nextmonth;
     }
     // Bullet style
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
@@ -74,15 +78,14 @@ function julian_user_viewevents($args)
 
     // Define the Start and End Dates.
     if ($caldate != '') {
-        $startdate = $caldate;
+        $startdate_chooser = $caldate;
     } else {
         $bl_data['startdate'] = ($startyear . $startmonth . $startday);
-        $startdate = date("Y").'-01-01';
     }
 
-    $enddate = ($endyear . $endmonth . $endday);
+    $enddate_chooser = ($endyear . $endmonth . $endday);
     //$bl_data['startdate'] = $startdate;
-    $bl_data['enddate'] = $enddate;
+    $bl_data['enddate'] = $enddate_chooser;
 
     // If sorting by Event date, then sort in descending order,
     // so that the latest Event is first.
@@ -98,8 +101,8 @@ function julian_user_viewevents($args)
                                   'numitems'  => xarModGetVar('julian','itemsperpage'),
                                   'sortby'    => $sortby,
                                   'orderby'   => $orderby,
-                                  //'startdate' => $startdate,
-                                  //'enddate'   => $enddate,
+                                  'startdate' => $startdate,
+                                  'enddate'   => $enddate,
                                   'catid'     => $catid));
 
     // Check for exceptions.

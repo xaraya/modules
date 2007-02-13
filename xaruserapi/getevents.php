@@ -61,12 +61,12 @@ function julian_userapi_getevents($args)
     if (!isset($startdate)) {
         $startdate = date('Ymd');
     }
-
+/*
     if (!isset($enddate)) {
         $yearend = (date('Y') + 1);
         $enddate = $yearend . date('md');
     }
-
+*/
     // Argument check.
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
@@ -141,16 +141,19 @@ function julian_userapi_getevents($args)
     } else {
         $query .= " FROM $event_table ";
     }
-
+    /*
     if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate)) && (!empty($catid))) {
         $query .= " AND ";
     } elseif ((!xarModIsHooked('categories','julian') || empty($catid)) && (!empty($startdate))&& (!empty($enddate))) {
         $query .= " WHERE ";
     }
     // TODO: move date_format from here
+
     if ((!empty($startdate))&& (!empty($enddate))) {
-        $query .= " DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
+     //   $query .= " DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
+     $query .= " $event_table.dtstart >= $startdate AND $event_table.dtstart <= $enddate";
     }
+    */
     // This is double now, as the array is being sorted anyway
     if (isset($sortby)) {
         switch ($sortby) {
@@ -259,6 +262,7 @@ function julian_userapi_getevents($args)
     $result->Close();
 
     // Get the linked events
+    /*
     $condition = '';
     if(strcmp($enddate,"")) {
         $enddate=date('Y-m-d',strtotime($enddate));
@@ -268,6 +272,7 @@ function julian_userapi_getevents($args)
         // set the end date to the start date for recurring events
         $enddate=$startdate;
     }
+    */
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
@@ -287,7 +292,9 @@ function julian_userapi_getevents($args)
                  FROM $event_linkage_table";
 
     if ((!empty($startdate))&& (!empty($enddate))){
-        $query_linked .= " WHERE DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') <= $enddate";
+        //$query_linked .= " WHERE DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') <= $enddate";
+        $query_linked .= " WHERE dtstart BETWEEN $startdate AND $enddate";
+       // $condition = " AND ( (dtstart BETWEEN '" . $startdate . "' AND '" . $enddatesql . "' ) OR recur_freq > 0 ) ";
     }
 
     if (isset($sortby)) {
