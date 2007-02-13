@@ -28,3 +28,8 @@ Version 0.7.0
 Added option to have external registration
 Many templates upgrades
 Compatible with Xaraya 1.1
+
+Version 0.8.0
+Improved interactions via hooks
+Added waiting list
+
