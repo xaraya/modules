@@ -1,27 +1,15 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-  <div class="xar-julian xar-julian-user-viewevents">
+<div class="xar-julian xar-julian-user-viewevents">
     <xar:template file="header" />
-      <div class="xar-julian-contents">
+    <div class="xar-julian-contents">
         <h2>
           <xar:mlstring>
             List of Events
           </xar:mlstring>
         </h2>
-        <xar:comment>
-        Hide the Date Range selection until time is available to work on it.
-        </xar:comment>
-          <p style="font-weight: bold; text-align: center;">
-            The Events View "Date Range" defaults to one year from Today
-          </p>
-          <p>
-            &nbsp;&nbsp;If you wish, select a Date Range across which you wish to view Calendar Events.
-          </p>
           <form name="date_range" method="post" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
             <div>
-              &nbsp;&nbsp;
-              <input type="submit" name="submit" value="Set Date Range" />
-              &nbsp;&nbsp;
-              <span style="font-weight: bold;">Start Date:</span>
+              <H3><xar:mlstring>Show events from:</xar:mlstring></H3><br />
               <select name="start_month" onchange="populateSelect(this, this.form.start_day, this.form.start_year)" style="width: 7.5em;" >
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
@@ -30,9 +18,8 @@
                   <xar:else />
                     <xar:set name="$currMonth">#$i#</xar:set>
                   </xar:if>
-                  <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
+                  <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2005))</xar:set>
                   <xar:set name="$monthSelected">""</xar:set>
-                  <xar:set name="$start_month">date("m");</xar:set>
                   <xar:if condition="$start_month eq $currMonth">
                     <xar:set name="$monthSelected">'selected="selected"'</xar:set>
                   </xar:if>
@@ -48,7 +35,6 @@
                     <xar:set name="$currDay">#$i#</xar:set>
                   </xar:if>
                   <xar:set name="$daySelected">""</xar:set>
-                  <xar:set name="$start_day">date("d");</xar:set>
                   <xar:if condition="$start_day eq $currDay">
                     <xar:set name="$daySelected">'selected="selected"'</xar:set>
                   </xar:if>
@@ -59,15 +45,14 @@
                 <option value=""></option>
                 <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                   <xar:set name="$yearSelected">""</xar:set>
-                  <xar:set name="$start_year">date("Y");</xar:set>
                   <xar:if condition="$start_year eq $i">
                     <xar:set name="$yearSelected">'selected="selected"'</xar:set>
                   </xar:if>
                   <option value="#$i#" #$yearSelected#>#$i#</option>
                 </xar:for>
               </select>
-              &nbsp;&nbsp;
-              <span style="font-weight: bold;">End Date:</span>
+
+              <strong><xar:mlstring>to</xar:mlstring></strong>
               <select name="end_month" onchange="populateSelect(this, this.form.end_day, this.form.end_year)" style="width: 7.5em;" >
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
@@ -76,9 +61,8 @@
                   <xar:else />
                     <xar:set name="$currEndMonth">#$i#</xar:set>
                   </xar:if>
-                  <xar:set name="$currEndMonth_long">date("F",mktime(0,0,0,$currEndMonth,1,2000))</xar:set>
+                  <xar:set name="$currEndMonth_long">date("F",mktime(0,0,0,$currEndMonth,1,2005))</xar:set>
                   <xar:set name="$monthEndSelected">""</xar:set>
-                  <xar:set name="$end_month">date("m");</xar:set>
                   <xar:if condition="$end_month eq $currEndMonth">
                     <xar:set name="$monthEndSelected">'selected="selected"'</xar:set>
                   </xar:if>
@@ -94,7 +78,6 @@
                     <xar:set name="$currEndDay">#$i#</xar:set>
                   </xar:if>
                   <xar:set name="$dayEndSelected">""</xar:set>
-                  <xar:set name="$end_day">date("d");</xar:set>
                   <xar:if condition="$end_day eq $currEndDay">
                     <xar:set name="$dayEndSelected">'selected="selected"'</xar:set>
                   </xar:if>
@@ -105,7 +88,6 @@
                 <option value=""></option>
                 <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                   <xar:set name="$yearEndSelected">""</xar:set>
-                  <xar:set name="$end_year">date("Y") +1;</xar:set>
                   <xar:if condition="$end_year eq $i">
                     <xar:set name="$yearEndSelected">'selected="selected"'</xar:set>
                   </xar:if>
@@ -113,16 +95,16 @@
                 </xar:for>
               </select>
             </div>
+            
+              <input type="submit" name="submit" value="Set Date Range" /><br />
           </form>
-
+        
         <br />
-
+        
         <xar:comment> Add the category browser to play with</xar:comment>
         <xar:if condition="xarModIsHooked('categories','julian')">
-            <xar:categories-navigation layout="trails" showchildren="1"
-            module="julian" catid="$catid" func="viewevents" sortby="$sortby"/>
+            <xar:categories-navigation layout="trails" showchildren="1" module="julian" catid="$catid" func="viewevents" sortby="$sortby"/>
         </xar:if>
-
         <table>
         <thead>
           <tr>
@@ -243,5 +225,5 @@
             </xar:loop>
           </xar:if>
         </table>
-  </div>
+    </div>
 </div>

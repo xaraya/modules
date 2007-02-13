@@ -31,12 +31,12 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('startnum',    'int:0:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',      'str:1:', $sortby,      'eventDate', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby',     'str:1:', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startmonth',  'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startday',    'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startyear',   'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('endmonth',    'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('endday',      'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('endyear',     'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_month',  'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_day',    'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_year',   'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_month',    'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_day',      'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_year',     'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
     if (!xarVarFetch('catid',       'int:1:', $catid,       0, XARVAR_NOT_REQUIRED)) return;
 
@@ -61,11 +61,30 @@ function julian_user_viewevents($args)
         //$startdate=$bl_data['selected_year']."-01-01";
         //Use today
         $startdate = date("Ymd");
+        $bl_data['start_year']=date("Y");
+        $bl_data['start_month']=date("m");
+        $bl_data['start_day']=date("d");
+    } else {
+        $startdate = $startyear.$startmonth.$startday;
+        $bl_data['start_year']=$startyear;
+        $bl_data['start_month']=$startmonth;
+        $bl_data['start_day']=$startday;
+        //echo "$startdate <br />";
     }
     if (empty($endday)) {
         // Set the end date to the last month and last day of the selected year.
-        $nextmonth = date("Ymd",(mktime(0, 0, 0, date("m")+5, date("d"),  date("Y"))));
+        $nextmonth = date("Ymd",(mktime(0, 0, 0, date("m")+1, date("d"),  date("Y"))));
         $enddate=$nextmonth;
+
+        $bl_data['end_year']=date("Y")+1;
+        $bl_data['end_month']=date("m");
+        $bl_data['end_day']=date("d");
+    } else {
+        $enddate = $endyear.$endmonth.$endday;
+        $bl_data['end_year']=$endyear;
+        $bl_data['end_month']=$endmonth;
+        $bl_data['end_day']=$endday;
+        //echo $enddate;
     }
     // Bullet style
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
