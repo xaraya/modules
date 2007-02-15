@@ -1,17 +1,15 @@
 <?php
-/*
- *
+/**
  * Mime Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
-
  /**
   *  Get details for mime subtypes
   *
@@ -25,11 +23,11 @@
   *  @param  string     mimeName the full two-part mime name
   *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
   */
-  
+
 function mime_userapi_getall_subtypes($args)
 {
     extract($args);
-    
+
     $where = array();
     $bind = array();
 
@@ -65,11 +63,11 @@ function mime_userapi_getall_subtypes($args)
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
-    
+
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
     $type_table =& $xartable['mime_type'];
-    
+
     $sql = 'SELECT subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_id,'
         . ' subtype_tab.xar_mime_subtype_name, subtype_tab.xar_mime_subtype_desc,'
         . ' type_tab.xar_mime_type_name'
@@ -82,7 +80,7 @@ function mime_userapi_getall_subtypes($args)
 
     // Return NULL in the event of an error.
     if (!$result) {return;}
-    
+
     $subtypeInfo = array();
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
@@ -98,6 +96,6 @@ function mime_userapi_getall_subtypes($args)
     $result->Close();
 
     return $subtypeInfo;
-}    
+}
 
 ?>

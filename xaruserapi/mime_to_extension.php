@@ -1,21 +1,19 @@
 <?php
-/*
- *
+/**
  * Mime Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
-
 /**
  * Attempt to convert a MIME type to a file extension.
  * If we cannot map the type to a file extension, we return false.
- * 
+ *
  * Code originally based on hordes Magic class (www.horde.org)
  *
  * @author  Carl P. Corliss
@@ -23,7 +21,7 @@
  * @param   string      $mime_type MIME type to be mapped to a file extension.
  * @return  string      The file extension of the MIME type.
  */
-function mime_userapi_mime_to_extension( $args ) 
+function mime_userapi_mime_to_extension( $args )
 {
 
     extract($args);
@@ -40,7 +38,7 @@ function mime_userapi_mime_to_extension( $args )
         if (isset($mime_list[$mime_type]['extension_list']) && is_array($mime_list[$mime_type]['extension_list'])) {
             // return the first extension we find for this mime_type
             return $mime_list[$mime_type]['extension_list'][0];
-        } else { 
+        } else {
             return FALSE;
         }
     } else {

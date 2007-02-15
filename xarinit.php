@@ -1,24 +1,15 @@
 <?php
-
 /**
- * File: $Id
- *
  * MIME initialization functions
  *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage mime
- * @author Carl P. Corliss <rabbitt@xaraya.com>
-*/
-
-/**
- * MIME API
- * @package Xaraya
- * @subpackage MIME_API
+ * @author Carl P. Corliss
  */
-
 /**
  * initialise the mime module
  * This function is only ever called once during the lifetime of a particular

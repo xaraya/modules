@@ -1,13 +1,13 @@
 <?php
 /**
- * File: $Id
+ * Mime Module
  *
- * MIME version information
- *
- * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage MIME
+ *
+ * @subpackage mime
  * @author Carl P. Corliss
  */
 $modversion['name']           = 'MIME API';
@@ -24,7 +24,6 @@ $modversion['author']         = 'Carl P. Corliss <carl.corliss@xaraya.com>';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 0;
 $modversion['user']           = 0;
-$modversion['securityschema'] = array();
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
 ?>
