@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,13 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
+/**
+ * Import a file
+ * @param string importFrom
+ * @return mixed
+ */
 function uploads_user_upload()
 {
-
     if (!xarSecurityCheck('AddUploads')) return;
 
     xarVarFetch('importFrom', 'str:1:', $importFrom, NULL, XARVAR_NOT_REQUIRED);
