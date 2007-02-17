@@ -93,7 +93,8 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('showdynamic',       'checkbox', $showdynamic,       false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendwelcomeemail',  'checkbox', $sendwelcomeemail,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('minpasslength',     'int:1',    $minpasslength,     5, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('uniqueemail',       'checkbox', $uniqueemail,       xarModGetVar('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
+                    //jojodee - the following is better kept in roles - reduces unwanted dependencies of core on noncore modules among other reasons
+                    //if (!xarVarFetch('uniqueemail',       'checkbox', $uniqueemail,       xarModGetVar('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModGetVar('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
              
                     xarModSetVar('registration', 'chooseownpassword', $chooseownpassword);
@@ -107,7 +108,7 @@ function registration_admin_modifyconfig()
                     xarModSetVar('registration', 'showdynamic', $showdynamic);
                     xarModSetVar('registration', 'sendwelcomeemail', $sendwelcomeemail);
                     xarModSetVar('registration', 'minpasslength', $minpasslength);
-                    xarModSetVar('registration', 'uniqueemail', $uniqueemail);
+                    //xarModSetVar('registration', 'uniqueemail', $uniqueemail);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

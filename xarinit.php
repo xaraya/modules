@@ -42,8 +42,8 @@ function registration_init()
  */
     xarModSetVar('registration', 'allowregistration', true);
     xarModSetVar('registration', 'requirevalidation', true);
-    xarModSetVar('registration', 'uniqueemail', true);
-    xarModSetVar('registration', 'askwelcomeemail', true); // not in reg atm, leave in roles?
+    xarModSetVar('registration', 'uniqueemail', true); //move back to roles - better there
+    xarModSetVar('registration', 'askwelcomeemail', true); 
     xarModSetVar('registration', 'askvalidationemail', true); // not in reg atm, leave in roles?
     xarModSetVar('registration', 'askdeactivationemail', true);// not in reg atm, leave in roles?
     xarModSetVar('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
