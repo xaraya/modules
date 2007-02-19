@@ -13,6 +13,7 @@
 /** 
  * @access public
  * @author Jonathan Linowes
+ * @author jojodee
  * @author Damien Bonvillain
  * @author Gregor J. Rothfuss
  * @since 1.23 - 2002/02/01
@@ -47,8 +48,8 @@ function registration_userapi_createnotify($args)
     }
 
     if ($state==ROLES_STATE_PENDING || $state==ROLES_STATE_ACTIVE) {
-        // Send an e-mail to the admin if notification is required,
-        // same updated to the getvalidation users in Roles module - need to review that
+        // Send an e-mail to the admin if notification of new user registration is required,
+        // Same  email is added to the 'getvalidation' new users in Roles module
 
         if (xarModGetVar('registration', 'sendnotice')) {
             $terms= '';
@@ -72,14 +73,14 @@ function registration_userapi_createnotify($args)
             }
         }
     }
-    
+
     if ($state==ROLES_STATE_ACTIVE) {
-         // send welcome email (option)
-         // MichelV Should this be moved to registration, or stay in roles?
+         // send welcome email to user(option)
+         // This template is used in options for user validation, user validation and user pending, and user pending alone
         if (xarModGetVar('registration', 'sendwelcomeemail')) {
-            $emailargs = array( 
-                            'uid'           => array($uid => '1'),
-                            'mailtype'      => 'welcome' );
+            $emailargs = array(
+                            'uid'      => array($uid => '1'),
+                            'mailtype' => 'welcome' );
 
             if (!xarModAPIFunc('roles',  'admin', 'senduseremail', $emailargs)) {
                 $msg = xarML('Problem sending welcome email');

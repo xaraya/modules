@@ -14,18 +14,7 @@
     <form method="post" id="post" action="&xar-modurl-registration-user-register;" enctype="#$enc_type#">
         <fieldset>
         <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
-            <!-- Removed  - no USERTYPE or property defined in this scenario
-            <div class="xar-form-input-wrapper">
-                <label for="itemtype" class="xar-form-label" title="#xarML('Choose the type of registration')#">
-                       <xar:mlstring>Register as a:</xar:mlstring>:
-                </label>
-                <xar:set name="usertype">ROLES_USERTYPE</xar:set>
-                <xar:data-input type="moduleitemtype" name="itemtype" id="itemtype" value="" modid="27" basetype="$usertype" />
-                <xar:if condition="!empty($invalid['itemtype'])">
-                    <span class="xar-error">#$invalid['itemtype']#</span>
-                </xar:if>
-            </div>
-            -->
+  
             <div class="xar-form-input-wrapper">
                 <label for="username" class="xar-form-label" title="#xarML('Select a unique login name - no spaces')#">
                        <xar:mlstring>Login name</xar:mlstring>:

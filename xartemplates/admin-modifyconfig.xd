@@ -284,6 +284,7 @@
                             </xar:mlstring>
                         </label>
                     </div>
+                    <xar:comment> Moved back to Roles to reduce core dependencies on noncore mods, and other reasons
                     <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModGetVar('registration', 'uniqueemail')">
                             <input type="checkbox" name="uniqueemail" id="uniqueemail" value="1" checked="checked" />
@@ -296,6 +297,7 @@
                             </xar:mlstring>
                         </label>
                     </div>
+                    </xar:comment>
                     <xar:comment>
                         <div class="xar-form-input-wrapper-after">
                             <xar:if condition="xarModGetVar('registration', 'allowinvisible')">

@@ -346,7 +346,7 @@ function registration_user_register()
              xarModSetVar('roles', 'lastuser', $uid);
 
 
-            // Let's finish by sending emails to those that require it based on options,
+            // Let's finish by sending emails to those that require it based on options - the user or the admin
             // and redirecting to appropriate pages that depend on user state and options set in the registration config
             // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
             $ret = xarModApiFunc('registration','user','createnotify',
