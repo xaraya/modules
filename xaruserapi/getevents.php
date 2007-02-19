@@ -251,6 +251,7 @@ function julian_userapi_getevents($args)
                               'eContact' => $eContact,
                               'eOrganizer' => $eOrganizer,
                               'eStart' => $eStart,
+                              'i_DateTime' => strtotime($eStart['timestamp']),
                               'eRecur' => $eRecur,
                               'eDuration' => $eDuration,
                               'eRrule' => $eRrule,
@@ -377,6 +378,7 @@ function julian_userapi_getevents($args)
                               'eContact' => '',
                               'eOrganizer' => '',
                               'eStart' => $eStart,
+                              'i_DateTime' => strtotime($eStart['timestamp']),
                               'eRecur' => $eRecur,
                               'eDuration' => $eDuration,
                               'eRrule' => $eRrule,
@@ -410,7 +412,7 @@ function datecompare($x, $y)
 
     switch ($sortby) {
         case 'eventDate':
-            $sort = 'eStart';
+            $sort = 'i_DateTime';
             break;
         case 'eventName':
             $sort = 'eName';
