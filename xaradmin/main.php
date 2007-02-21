@@ -10,7 +10,13 @@
  * @subpackage Ajax Library Module
  * @author Brian McGilligan <brian@mcgilligan.us>
  */
-function ajax_admin_main($args)
+/**
+ * main function for admin
+ * Does nothing really ;)
+ *
+ * @return array
+ */
+function ajax_admin_main()
 {
     return array();
 }

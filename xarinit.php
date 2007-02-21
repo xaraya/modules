@@ -12,8 +12,8 @@
  */
 
 /**
-    Initialize the module
-*/
+ *    Initialize the module
+ */
 function ajax_init()
 {
     xarTplRegisterTag(
@@ -27,6 +27,7 @@ function ajax_init()
 
 /**
  * Upgrade the module from an old version
+ * @return bool
  */
 function ajax_upgrade($oldversion)
 {

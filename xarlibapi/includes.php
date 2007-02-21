@@ -10,6 +10,11 @@
  * @subpackage Ajax Library Module
  * @author Brian McGilligan <brian@mcgilligan.us>
  */
+/**
+ * Include function
+ * @param string name
+ * @return void
+ */
 function ajax_libapi_includes($args)
 {
     extract($args);
