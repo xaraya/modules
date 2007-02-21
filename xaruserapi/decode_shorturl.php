@@ -269,7 +269,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     $searchArgs['search'] = $decodedTitle;
     $searchArgs['searchfields'] = array('title');
     $searchArgs['searchtype'] = 'equal whole string';
-
+    // Get the articles via a search
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) ) {

@@ -14,26 +14,26 @@
 /**
  * get a specific article by aid, or by a combination of other fields
  *
- * @param id $args['aid'] id of article to get, or
- * @param id $args['pubtypeid'] pubtype id of article to get, and optional
+ * @param id     $args['aid'] id of article to get, or
+ * @param id     $args['pubtypeid'] pubtype id of article to get, and optional
  * @param string $args['title'] title of article to get, and optional
  * @param string $args['summary'] summary of article to get, and optional
  * @param string $args['body'] body of article to get, and optional
- * @param int $args['authorid'] id of the author of article to get, and optional
- * @param $args['pubdate'] pubdate of article to get, and optional
+ * @param int    $args['authorid'] id of the author of article to get, and optional
+ * @param        $args['pubdate'] pubdate of article to get, and optional
  * @param string $args['notes'] notes of article to get, and optional
- * @param int $args['status'] status of article to get, and optional
+ * @param int    $args['status'] status of article to get, and optional
  * @param string $args['language'] language of article to get
- * @param bool $args['withcids'] (optional) if we want the cids too (default false)
- * @param array $args['fields'] array with all the fields to return per article
+ * @param bool   $args['withcids'] (optional) if we want the cids too (default false)
+ * @param array  $args['fields'] array with all the fields to return per article
  *                        Default list is : 'aid','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
- * @param array $args['extra'] array with extra fields to return per article (in addition
+ * @param array  $args['extra'] array with extra fields to return per article (in addition
  *                       to the default list). So you can EITHER specify *all* the
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
- * @param id $args['ptid'] same as 'pubtypeid'
+ * @param id     $args['ptid'] same as 'pubtypeid'
  * @return array article array, or false on failure
  */
 function articles_userapi_get($args)
