@@ -3,7 +3,7 @@
  * Security - Provides unix style privileges to xaraya items.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -27,16 +27,16 @@ function security_init()
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $sec_fields = "
-		modid      I NotNull PRIMARY DEFAULT 0,
-		itemtype   I NotNull PRIMARY DEFAULT 0,
-		itemid     I NotNull PRIMARY DEFAULT 0,
-		uid        I NotNull PRIMARY DEFAULT 0,
-		xoverview  I1 NotNull DEFAULT 0,
-		xread      I1 NotNull DEFAULT 0,
-		xcomment   I1 NotNull DEFAULT 0,
-		xwrite     I1 NotNull DEFAULT 0,
-		xmanage    I1 NotNull DEFAULT 0,
-		xadmin     I1 NotNull DEFAULT 0
+        modid      I NotNull PRIMARY DEFAULT 0,
+        itemtype   I NotNull PRIMARY DEFAULT 0,
+        itemid     I NotNull PRIMARY DEFAULT 0,
+        uid        I NotNull PRIMARY DEFAULT 0,
+        xoverview  I1 NotNull DEFAULT 0,
+        xread      I1 NotNull DEFAULT 0,
+        xcomment   I1 NotNull DEFAULT 0,
+        xwrite     I1 NotNull DEFAULT 0,
+        xmanage    I1 NotNull DEFAULT 0,
+        xadmin     I1 NotNull DEFAULT 0
     ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($xartable['security_roles'], $sec_fields);
@@ -95,16 +95,16 @@ function security_upgrade($oldversion)
             $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
             $sec_fields = "
-        		modid      I NotNull PRIMARY DEFAULT 0,
-        		itemtype   I NotNull PRIMARY DEFAULT 0,
-        		itemid     I NotNull PRIMARY DEFAULT 0,
-        		uid        I NotNull PRIMARY DEFAULT 0,
-        		xoverview  I1 NotNull DEFAULT 0,
-        		xread      I1 NotNull DEFAULT 0,
-        		xcomment   I1 NotNull DEFAULT 0,
-        		xwrite     I1 NotNull DEFAULT 0,
-        		xmanage    I1 NotNull DEFAULT 0,
-        		xadmin     I1 NotNull DEFAULT 0
+                modid      I NotNull PRIMARY DEFAULT 0,
+                itemtype   I NotNull PRIMARY DEFAULT 0,
+                itemid     I NotNull PRIMARY DEFAULT 0,
+                uid        I NotNull PRIMARY DEFAULT 0,
+                xoverview  I1 NotNull DEFAULT 0,
+                xread      I1 NotNull DEFAULT 0,
+                xcomment   I1 NotNull DEFAULT 0,
+                xwrite     I1 NotNull DEFAULT 0,
+                xmanage    I1 NotNull DEFAULT 0,
+                xadmin     I1 NotNull DEFAULT 0
             ";
             /* Create or alter the table as necessary */
             $result = $datadict->changeTable($xartable['security_roles'], $sec_fields);

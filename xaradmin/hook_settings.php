@@ -3,7 +3,7 @@
  * Security - Provides unix style privileges to xaraya items.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,10 @@
     Allows for creating default security settings for xaraya modules
 
     @author Brian McGilligan <brian@mcgilligan.us>
-
+ * @param string reload
+ * @param string submit_button
+ * @param string mod_itemtype
+ * @param string owner_table
     @return String  Contains module output
 */
 function security_admin_hook_settings($args)

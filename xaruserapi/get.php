@@ -3,7 +3,7 @@
  * Security - Provides unix style privileges to xaraya items.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -87,18 +87,18 @@ function security_userapi_get($args)
     $level = array();
     $security = new SecurityLevels($modid, $itemtype, $itemid);
     while( (list($uid, $overview, $read,
-    	$comment, $write, $manage, $admin, $username) = $result->fields) != null )
+        $comment, $write, $manage, $admin, $username) = $result->fields) != null )
     {
         if( $username == null ){ $username = 'All Users'; }
         $security->add(
             new SecurityLevel(
                 array(
-                	'overview' => $overview,
-                	'read' 	   => $read,
-                	'comment'  => $comment,
-                	'write'    => $write,
-                	'manage'   => $manage,
-                	'admin'    => $admin
+                    'overview' => $overview,
+                    'read'     => $read,
+                    'comment'  => $comment,
+                    'write'    => $write,
+                    'manage'   => $manage,
+                    'admin'    => $admin
                 )
             )
             , $uid

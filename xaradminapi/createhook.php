@@ -3,7 +3,7 @@
  * Security - Provides unix style privileges to xaraya items.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -107,7 +107,7 @@ function security_adminapi_createhook($args)
     }
 
     $result = Security::create($security,$modid, $itemtype, $itemid);
-	if( !$result ){ return false; }
+    if( !$result ){ return false; }
 
     return $extrainfo;
 }
