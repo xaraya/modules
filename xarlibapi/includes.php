@@ -3,7 +3,7 @@
  * Ajax Library - A Prototype library collection.
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license   New BSD License
  * @link http://www.xaraya.com
  *
