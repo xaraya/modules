@@ -23,7 +23,7 @@
  * @param int    $args['ptid'] publication type ID (for news, sections, reviews, ...)
  * @param array  $args['status'] array of requested status(es) for the articles
  * @param string $args['search'] search parameter(s)
- * @param array  $args['searchfields'] array of fields to search in
+ * @param array  $args['searchfields'] array of fields to search in (TODO)
  * @param string $args['searchtype'] start, end, like, eq, gt, ... (TODO)
  * @param array  $args['cids'] array of category IDs for which to get articles (OR/AND)
  *                      (for all categories don?t set it)
