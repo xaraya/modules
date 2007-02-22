@@ -9,7 +9,7 @@
         </h2>
           <form name="date_range" method="post" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
             <div>
-              <H3><xar:mlstring>Show events from:</xar:mlstring></H3><br />
+              <h3><xar:mlstring>Show events from:</xar:mlstring></h3>
               <select name="start_month" onchange="populateSelect(this, this.form.start_day, this.form.start_year)" style="width: 7.5em;" >
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
@@ -21,9 +21,11 @@
                   <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2005))</xar:set>
                   <xar:set name="$monthSelected">""</xar:set>
                   <xar:if condition="$start_month eq $currMonth">
-                    <xar:set name="$monthSelected">'selected="selected"'</xar:set>
+                    <option value="#$currMonth#" selected="selected">#$currMonth_long#</option>
+                  <xar:else />
+                    <option value="#$currMonth#">#$currMonth_long#</option>
                   </xar:if>
-                  <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                  
                 </xar:for>
               </select>
               <select name="start_day" style="width: 3em;" >
@@ -36,9 +38,11 @@
                   </xar:if>
                   <xar:set name="$daySelected">""</xar:set>
                   <xar:if condition="$start_day eq $currDay">
-                    <xar:set name="$daySelected">'selected="selected"'</xar:set>
+                    <option value="#$currDay#" selected="selected">#$currDay#</option>
+                  <xar:else />
+                    <option value="#$currDay#">#$currDay#</option>
                   </xar:if>
-                  <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                  
                 </xar:for>
               </select>
               <select name="start_year" onchange="populateSelect(this.form.start_month, this.form.start_day, this)"style="width: 4.2em;" >
@@ -46,9 +50,11 @@
                 <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                   <xar:set name="$yearSelected">""</xar:set>
                   <xar:if condition="$start_year eq $i">
-                    <xar:set name="$yearSelected">'selected="selected"'</xar:set>
+                    <option value="#$i#" selected="selected">#$i#</option>
+                  <xar:else />
+                    <option value="#$i#">#$i#</option>
                   </xar:if>
-                  <option value="#$i#" #$yearSelected#>#$i#</option>
+                  
                 </xar:for>
               </select>
 
@@ -64,9 +70,11 @@
                   <xar:set name="$currEndMonth_long">date("F",mktime(0,0,0,$currEndMonth,1,2005))</xar:set>
                   <xar:set name="$monthEndSelected">""</xar:set>
                   <xar:if condition="$end_month eq $currEndMonth">
-                    <xar:set name="$monthEndSelected">'selected="selected"'</xar:set>
+                    <option value="#$currEndMonth#" selected="selected">#$currEndMonth_long#</option>
+                  <xar:else />
+                    <option value="#$currEndMonth#">#$currEndMonth_long#</option>
                   </xar:if>
-                  <option value="#$currEndMonth#" #$monthEndSelected#>#$currEndMonth_long#</option>
+                  
                 </xar:for>
               </select>
               <select name="end_day" style="width: 3em;" >
@@ -79,9 +87,11 @@
                   </xar:if>
                   <xar:set name="$dayEndSelected">""</xar:set>
                   <xar:if condition="$end_day eq $currEndDay">
-                    <xar:set name="$dayEndSelected">'selected="selected"'</xar:set>
+                    <option value="#$currEndDay#" selected="selected">#$currEndDay#</option>
+                  <xar:else />
+                    <option value="#$currEndDay#">#$currEndDay#</option>
                   </xar:if>
-                  <option value="#$currEndDay#" #$dayEndSelected#>#$currEndDay#</option>
+                  
                 </xar:for>
               </select>
               <select name="end_year" onchange="populateSelect(this.form.end_month, this.form.end_day, this)"style="width: 4.2em;" >
@@ -89,9 +99,11 @@
                 <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                   <xar:set name="$yearEndSelected">""</xar:set>
                   <xar:if condition="$end_year eq $i">
-                    <xar:set name="$yearEndSelected">'selected="selected"'</xar:set>
+                    <option value="#$i#" selected="selected">#$i#</option>
+                  <xar:else />
+                    <option value="#$i#">#$i#</option>
                   </xar:if>
-                  <option value="#$i#" #$yearEndSelected#>#$i#</option>
+                  
                 </xar:for>
               </select>
             </div>
@@ -144,79 +156,79 @@
             <xar:loop name="$events">
               <tr class="xar-julian-calendar-day xar-julian-days-event">
                 <td>
-                  <xar:if condition="($loop:item['eRrule'] gt 0) AND (!empty($loop:item['eStart']['viewdate']))">
+                  <xar:if condition="($loop:item.eRrule gt 0) AND (!empty($loop:item.eStart.viewdate))">
                   <xar:ml>
                     <xar:mlstring>From #(1) to #(2)</xar:mlstring>
-                    <xar:mlvar>#$loop:item['eStart']['viewdate']#</xar:mlvar>
-                    <xar:mlvar>#$loop:item['eRecur']['viewdate']#</xar:mlvar>
+                    <xar:mlvar>#$loop:item.eStart.viewdate#</xar:mlvar>
+                    <xar:mlvar>#$loop:item.eRecur.viewdate#</xar:mlvar>
                   </xar:ml>
-                  <xar:elseif condition="!empty($loop:item['eStart']['viewdate'])" />
-                    #$loop:item['eStart']['viewdate']#
+                  <xar:elseif condition="!empty($loop:item.eStart.viewdate)" />
+                    #$loop:item.eStart.viewdate#
                   <xar:else />
                     <xar:mlstring>N/A</xar:mlstring>
                   </xar:if>
                 </td>
                 <td style="width: 15%;">
-                  <xar:set name="$linkdate">#$loop:item['eStart']['linkdate']#</xar:set>
-                  <xar:set name="$evid">#$loop:item['eID']#</xar:set>
-                  <xar:set name="$ename">#$loop:item['eName']#</xar:set>
+                  <xar:set name="$linkdate">#$loop:item.eStart.linkdate#</xar:set>
+                  <xar:set name="$evid">#$loop:item.eID#</xar:set>
+                  <xar:set name="$ename">#$loop:item.eName#</xar:set>
                   <xar:set name="$NameUrl">
                     xarModURL('julian','user','viewevent',array('cal_date'=>$linkdate,'event_id'=>$evid))
                   </xar:set>
                   <a href="#$NameUrl#" class="xar-julian-event-day">
-                    #$loop:item['eName']#
+                    #$loop:item.eName#
                   </a>
                 </td>
-                <td>#$loop:item['eDescription']#</td>
+                <td>#$loop:item.eDescription#</td>
                 <td>
-                  <xar:if condition="$loop:item['eLocation'] != ''">
-                    #$loop:item['eLocation']#
+                  <xar:if condition="$loop:item.eLocation ne ''">
+                    #$loop:item.eLocation#
                   </xar:if>
-                  <xar:if condition="$loop:item['eStreet1'] != ''">
-                    #$loop:item['eStreet1']#<br />
+                  <xar:if condition="$loop:item.eStreet1 ne ''">
+                    #$loop:item.eStreet1#<br />
                   </xar:if>
-                  <xar:if condition="$loop:item['eStreet2'] != ''">
-                    #$loop:item['eStreet2']#<br />
+                  <xar:if condition="$loop:item.eStreet2 ne ''">
+                    #$loop:item.eStreet2#<br />
                   </xar:if>
-                  <xar:if condition="$loop:item['eCity'] != ''">
-                    #$loop:item['eCity']#
+                  <xar:if condition="$loop:item.eCity ne ''">
+                    #$loop:item.eCity#
                   </xar:if>
-                  <xar:if condition="($loop:item['eCity'] != '') && ($loop:item['eState'] != '')">
+                  <xar:if condition="($loop:item.eCity ne '') and ($loop:item.eState ne '')">
                     ,&nbsp;
                   </xar:if>
-                  <xar:if condition="$loop:item['eState'] != ''">
-                    #$loop:item['eState']#
+                  <xar:if condition="$loop:item.eState ne ''">
+                    #$loop:item.eState#
                   </xar:if>
-                  <xar:if condition="$loop:item['eZip'] != ''">
-                    &nbsp;&nbsp;#$loop:item['eZip']#
+                  <xar:if condition="$loop:item.eZip ne ''">
+                    &nbsp;&nbsp;#$loop:item.eZip#
                   </xar:if>
-                  <xar:if condition="($loop:item['eCity'] == '') || ($loop:item['eState'] == '')|| ($loop:item['eZip'] == '')">
+                  <xar:if condition="($loop:item.eCity eq '') or ($loop:item.eState eq '') or ($loop:item.eZip eq '')">
                     City, State/Province, Zip/Post Code Unknown
                   </xar:if>
-                  <xar:if condition="($loop:item['eLocation'] == '') && ($loop:item['eStreet1'] == '') && ($loop:item['eStreet2'] == '') && ($loop:item['eCity'] == '') && ($loop:item['eState'] == '')&& ($loop:item['eZip'] == '')">
+                  <xar:if condition="($loop:item.eLocation eq '') and ($loop:item.eStreet1 eq '') and ($loop:item.eStreet2 eq '') and ($loop:item.eCity == '') && ($loop:item['eState'] == '')&& ($loop:item['eZip'] eq '')">
                     Location not Listed
                   </xar:if>
                 </td>
                 <td>
-                  <xar:if condition="$loop:item['eContact'] != ''">
-                    #$loop:item['eContact']#<br />
+                  <xar:if condition="$loop:item.eContact ne ''">
+                    #$loop:item.eContact#<br />
                   </xar:if>
-                  <xar:if condition="$loop:item['ePhone'] != ''">
-                    #$loop:item['ePhone']#<br />
+                  <xar:if condition="$loop:item.ePhone ne ''">
+                    #$loop:item.ePhone#<br />
                   </xar:if>
-                  <xar:if condition="$loop:item['eEmail'] != ''">
-                    <a href="mailto:#$loop:item['eEmail']#">#$loop:item['eEmail']#</a><br />
+                  <xar:if condition="$loop:item.eEmail ne ''">
+                    <a href="mailto:#$loop:item.eEmail#">#$loop:item.eEmail#</a><br />
                   </xar:if>
-                  <xar:if condition="$loop:item['eUrl'] != ''">
-                    <a href="#$loop:item['eUrl']#">#$loop:item['eUrl']#</a><br />
+                  <xar:if condition="$loop:item.eUrl ne ''">
+                    <a href="#$loop:item.eUrl#">#$loop:item.eUrl#</a><br />
                   </xar:if>
-                  <xar:if condition="($loop:item['eContact'] == '') && ($loop:item['ePhone'] == '') && ($loop:item['eEmail'] == '') && ($loop:item['eUrl'] == '')">
+                  <xar:if condition="($loop:item.eContact eq '') and ($loop:item.ePhone eq '') and ($loop:item.eEmail eq '') and ($loop:item.eUrl eq '')">
                     Contact not Listed
                   </xar:if>
                 </td>
-                <xar:if condition="($loop:item['eFee'] != '') && ($loop:item['eFee'] != 0)">
+                <xar:if condition="($loop:item.eFee ne '') and ($loop:item.eFee ne 0)">
                   <td>#$loop:item['eFee']#</td>
-                <xar:elseif condition="($loop:item['eFee'] != '') && ($loop:item['eFee'] == 0)" />
+                <xar:elseif condition="($loop:item.eFee ne '') and ($loop:item.eFee eq 0)" />
                   <td><xar:mlstring>Free Event</xar:mlstring></td>
                 <xar:else />
                   <td><xar:mlstring>Price Not Listed</xar:mlstring></td>

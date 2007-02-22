@@ -20,6 +20,10 @@
  *
  * @author Roger Raymond
  * @TODO Start with a smarter array of events.
+ * @TODO Support start/end dates as single parameters (YYYYMMDD, YYYYMM and YYYY)
+ * @TODO Support multiple categories and AND/OR selection
+ * @TODO Use proper validation on input parameters
+ * @TOOD Support variable numitems as a parameter
  */
 
 function julian_user_viewevents($args)
@@ -31,12 +35,12 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('startnum',    'int:0:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby',      'str:1:', $sortby,      'eventDate', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby',     'str:1:', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_month',  'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_day',    'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_year',   'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_month',    'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_day',      'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_year',     'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_month', 'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_day',   'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_year',  'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_month',   'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_day',     'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_year',    'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
     if (!xarVarFetch('catid',       'int:1:', $catid,       0, XARVAR_NOT_REQUIRED)) return;
 
@@ -113,16 +117,17 @@ function julian_user_viewevents($args)
     }
 
     // The user API Function is called: get all events for these selectors
-    $events = xarModAPIFunc('julian',
-                            'user',
-                            'getevents',
-                            array('startnum'  => $startnum,
-                                  'numitems'  => xarModGetVar('julian','itemsperpage'),
-                                  'sortby'    => $sortby,
-                                  'orderby'   => $orderby,
-                                  'startdate' => $startdate,
-                                  'enddate'   => $enddate,
-                                  'catid'     => $catid));
+    $events = xarModAPIFunc('julian', 'user', 'getevents',
+        array(
+            'startnum'  => $startnum,
+            'numitems'  => xarModGetVar('julian','itemsperpage'),
+            'sortby'    => $sortby,
+            'orderby'   => $orderby,
+            'startdate' => $startdate,
+            'enddate'   => $enddate,
+            'catid'     => $catid
+        )
+    );
 
     // Check for exceptions.
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
@@ -134,86 +139,68 @@ function julian_user_viewevents($args)
 
     // Create sort by URLs.
     if ($sortby != 'eventDate' ) {
-        $bl_data['eventdateurl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventDate',
-                                                 'catid' => $catid));
+        $bl_data['eventdateurl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventDate', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventdateurl'] = '';
     }
 
     if ($sortby != 'eventName' ) {
-        $bl_data['eventnameurl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventName',
-                                                 'catid' => $catid));
+        $bl_data['eventnameurl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventName', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventnameurl'] = '';
     }
 
     if ($sortby != 'eventDesc' ) {
-        $bl_data['eventdescurl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventDesc',
-                                                 'catid' => $catid));
+        $bl_data['eventdescurl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventDesc', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventdescurl'] = '';
     }
 
     if ($sortby != 'eventLocn' ) {
-        $bl_data['eventlocnurl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventLocn',
-                                                 'catid' => $catid));
+        $bl_data['eventlocnurl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventLocn', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventlocnurl'] = '';
     }
 
     if ($sortby != 'eventCont' ) {
-        $bl_data['eventconturl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventCont',
-                                                 'catid' => $catid));
+        $bl_data['eventconturl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventCont', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventconturl'] = '';
     }
 
     if ($sortby != 'eventFee' ) {
-        $bl_data['eventfeeurl'] = xarModURL('julian',
-                                           'user',
-                                           'viewevents',
-                                           array('startnum' => 1,
-                                                 'sortby' => 'eventFee',
-                                                 'catid' => $catid));
+        $bl_data['eventfeeurl'] = xarModURL('julian', 'user', 'viewevents',
+            array('startnum' => 1, 'sortby' => 'eventFee', 'catid' => $catid)
+        );
     } else {
         $bl_data['eventfeeurl'] = '';
     }
 
     // Create Pagination.
     $bl_data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('julian',
-                                                  'user',
-                                                  'countevents',
-                                                  array('catid' => $catid)),
-                                    xarModURL('julian',
-                                              'user',
-                                              'viewevents',
-                                              array('startnum' => '%%',
-                                                    'sortby'   => $sortby,
-                                                    'catid'    => $catid,
-                                                    'orderby'  => $orderby)),
-                                    xarModGetVar('julian', 'itemsperpage'));
+        xarModAPIFunc('julian', 'user', 'countevents', array('catid' => $catid)),
+        xarModURL('julian', 'user', 'viewevents',
+            array(
+                'startnum' => '%%', 
+                'sortby'   => $sortby,
+                'catid'    => $catid,
+                'orderby'  => $orderby
+            )
+        ), xarModGetVar('julian', 'itemsperpage')
+    );
+
     $bl_data['catid'] = $catid;
+
     // Return the template variables defined in this function.
     return $bl_data;
 }

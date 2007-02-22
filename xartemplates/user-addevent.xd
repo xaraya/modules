@@ -146,7 +146,7 @@
               enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <legend>
-                        <strong><xar:mlstring>Add Event</xar:mlstring></strong>
+                        <xar:mlstring>Add Event</xar:mlstring>
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="title" class="required xar-form-label">
@@ -184,9 +184,11 @@
                             <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
                             <xar:set name="$monthSelected">""</xar:set>
                             <xar:if condition="$todays_month eq $currMonth">
-                                <xar:set name="$monthSelected">'selected="selected"'</xar:set>
+                                <option value="#$currMonth#" selected="selected">#$currMonth_long#</option>
+                            <xar:else />
+                                <option value="#$currMonth#">#$currMonth_long#</option>
                             </xar:if>
-                            <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                           
                         </xar:for>
                         </select>
                         <select name="event_day" title="#xarML('Event Date: Day')#" onchange="populateSelect(this.form.event_month, this, this.form.event_year)">
@@ -199,9 +201,11 @@
                             </xar:if>
                             <xar:set name="$daySelected">""</xar:set>
                             <xar:if condition="$todays_day eq $currDay">
-                                <xar:set name="$daySelected">'selected="selected"'</xar:set>
+                                <option value="#$currDay#" selected="selected">#$currDay#</option>
+                            <xar:else />
+                                <option value="#$currDay#">#$currDay#</option>
                             </xar:if>
-                            <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                            
                         </xar:for>
                         </select>
                         <select name="event_year" title="#xarML('Event Date: Year')#" onchange="populateSelect(this.form.event_month, this.form.event_day, this)">
@@ -209,9 +213,11 @@
                         <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                             <xar:set name="$yearSelected">""</xar:set>
                             <xar:if condition="$todays_year eq $i">
-                                <xar:set name="$yearSelected">'selected="selected"'</xar:set>
+                                <xar:set name="$yearSelected">''</xar:set>
+                                <option value="#$i#" selected="selected">#$i#</option>
+                            <xar:else />
+                                <option value="#$i#">#$i#</option>
                             </xar:if>
-                            <option value="#$i#" #$yearSelected#>#$i#</option>
                         </xar:for>
                         </select>
                     </div>
@@ -316,7 +322,7 @@
                         <input type="radio" name="event_repeat" id="event_repeat2" value="1"
                                onclick="processEventRepeat(this.form,this); document.getElementById('p_event_recurend').style.visibility='visible';" />
                         <xar:mlstring>Every (period)</xar:mlstring>
-                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
+                        <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility: hidden;">
                             <input type="text" name="event_repeat_freq" size="4" onkeyup="checkNumericy(this);" onfocus="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])" />
                             <select name="event_repeat_freq_type" onchange="document.cal_submit.event_repeat[1].checked = 'true';processEventRepeat(this.form,document.cal_submit.event_repeat[1])">
                                 <option value="0"></option>
@@ -372,8 +378,7 @@
                                     <xar:set name="$currMonth">#$i#</xar:set>
                                 </xar:if>
                                 <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
-                                <xar:set name="$monthSelected">""</xar:set>
-                                <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
+                                <option value="#$currMonth#">#$currMonth_long#</option>
                             </xar:for>
                             </select>
                             <select name="event_endday" disabled="disabled" onchange="document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endday.value == ''){document.cal_submit.event_endmonth.value == ''; document.cal_submit.event_endyear.value == ''}">
@@ -384,15 +389,13 @@
                                 <xar:else />
                                     <xar:set name="$currDay">#$i#</xar:set>
                                 </xar:if>
-                                <xar:set name="$daySelected">""</xar:set>
-                                <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                                <option value="#$currDay#">#$currDay#</option>
                             </xar:for>
                             </select>
                             <select name="event_endyear" disabled="disabled" onchange="populateSelect(this.form.event_endmonth, this.form.event_endday, this);document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endyear.value == ''){document.cal_submit.event_endyear.value == ''; document.cal_submit.event_endday.value == ''}">
                                 <option value=""></option>
                             <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
-                                <xar:set name="$yearSelected">""</xar:set>
-                                <option value="#$i#" #$yearSelected#>#$i#</option>
+                                <option value="#$i#">#$i#</option>
                             </xar:for>
                             </select>
                         </div>
@@ -445,7 +448,7 @@
                                 <xar:mlstring>Street:</xar:mlstring>
                             </span>
                         </label>
-                            <input type="text" name="street1" id="street1" maxlength="255" class="xar-form-textmedium" /><br />
+                        <input type="text" name="street1" id="street1" maxlength="255" class="xar-form-textmedium" /><br />
                         <div class="xar-form-input-wrapper-after">
                             <input type="text" name="street2" id="street2" maxlength="255" class="xar-form-textmedium" />
                         </div>

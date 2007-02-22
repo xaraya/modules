@@ -18,7 +18,7 @@
         </div>
         <h2>#$summary#</h2>
 
-        <div style="color:#$color#;display:inline">
+        <div style="color:#$color#; display:inline;">
             <div class="icons" style="clear:none;vertical-align:middle">#$Bullet#
                 <xar:if condition="xarModGetVar('julian','ical_links')">
                     <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
@@ -34,9 +34,9 @@
         </div>
 
         <div id="table" style="margin-left:20px;">
-            <div style="clear:both">
+            <div style="clear:both;">
                 <div style="vertical-align:top;float:left;width:30%">
-                    <xar:if condition="!empty($location) || !empty($street1) || !empty($street2) || !empty($state) || !empty($zip)">
+                    <xar:if condition="!empty($location) or !empty($street1) or !empty($street2) or !empty($state) or !empty($zip)">
                         <strong><xar:mlstring>Location:</xar:mlstring></strong><br />
                         <xar:if condition="!empty($location)">
                             #$location#<br />
@@ -48,7 +48,7 @@
                             #$street2#<br />
                         </xar:if>
                             #$city#
-                        <xar:if condition="strcmp($state,'')&&strcmp($city,'')">
+                        <xar:if condition="strcmp($state,'') and strcmp($city,'')">
                              ,&nbsp;
                         </xar:if>
                         <xar:if condition="strcmp($state,'')">
@@ -63,7 +63,7 @@
                         <xar:mlstring>Unknown</xar:mlstring>
                     </xar:comment>
                     </xar:if>
-                    <xar:if condition="!empty($contact) || !empty($phone) || !empty($email) | !empty($URL)" >
+                    <xar:if condition="!empty($contact) or !empty($phone) or !empty($email) or !empty($URL)" >
                         <strong><xar:mlstring>Contact Information:</xar:mlstring></strong><br />
                         <xar:if condition="strcmp($contact,'')">
                              #$contact#<br />
@@ -91,8 +91,9 @@
                     </xar:comment>
                     </xar:if>
                 </div>
-                <div style="width:60%;valign:top;float:right">
-                    <strong><xar:mlstring>Description:</xar:mlstring></strong><br />#$description#
+                <div style="width:60%; valign:top; float:right;">
+                    <strong><xar:mlstring>Description:</xar:mlstring></strong>
+                    <br />#$description#
                 </div>
                 </div>
                 <div style="clear:both">
