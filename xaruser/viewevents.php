@@ -32,29 +32,36 @@ function julian_user_viewevents($args)
     extract ($args);
 
     // Get parameters from the input. These come from the date selection tool
-    if (!xarVarFetch('startnum',    'int:0:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby',      'str:1:', $sortby,      'eventDate', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('orderby',     'str:1:', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum',    'int:1:', $startnum,    1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems',    'int:1:200', $numitems, xarModGetVar('julian', 'itemsperpage'), XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('sortby', 'enum:eventDate:eventName:eventDesc:eventLocn:eventCont:eventFee', $sortby, 'eventDate', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('orderby',     'enum:ASC:DESC', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('start_month', 'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('start_day',   'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('start_year',  'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('end_month',   'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('end_day',     'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('end_year',    'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
-    if (!xarVarFetch('catid',       'int:1:', $catid,       0, XARVAR_NOT_REQUIRED)) return;
 
-   // Security check
-   if (!xarSecurityCheck('ReadJulian', 1)) {
-       return;
-   }
+    if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
+    if (!xarVarFetch('catid',       'id',     $catid,       0, XARVAR_NOT_REQUIRED)) return;
+
+    // Security check
+    if (!xarSecurityCheck('ReadJulian', 1)) return;
+
     // Get the Start Day Of Week value.
-    $cal_sdow = xarModGetVar('julian','startDayOfWeek');
+    $cal_sdow = xarModGetVar('julian', 'startDayOfWeek');
+
     // Load the calendar class
-    $c = xarModAPIFunc('julian','user','factory','calendar');
+    $c = xarModAPIFunc('julian', 'user', 'factory', 'calendar');
+
     $bl_data = array();
+
     // Set the selected date parts,timestamp, and cal_date in the data array.
-    $bl_data = xarModAPIFunc('julian','user','getUserDateTimeInfo');
+    $bl_data = xarModAPIFunc('julian', 'user', 'getUserDateTimeInfo');
     $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
     // Create the date stretch to get events for.
     // We start with listing from today on.
@@ -65,42 +72,42 @@ function julian_user_viewevents($args)
         //$startdate=$bl_data['selected_year']."-01-01";
         //Use today
         $startdate = date("Ymd");
-        $bl_data['start_year']=date("Y");
-        $bl_data['start_month']=date("m");
-        $bl_data['start_day']=date("d");
+        $bl_data['start_year'] = date("Y");
+        $bl_data['start_month'] = date("m");
+        $bl_data['start_day'] = date("d");
     } else {
         $startdate = $startyear.$startmonth.$startday;
-        $bl_data['start_year']=$startyear;
-        $bl_data['start_month']=$startmonth;
-        $bl_data['start_day']=$startday;
-        //echo "$startdate <br />";
+        $bl_data['start_year'] = $startyear;
+        $bl_data['start_month'] = $startmonth;
+        $bl_data['start_day'] = $startday;
     }
+
     if (empty($endday)) {
         // Set the end date to the last month and last day of the selected year.
         $nextmonth = date("Ymd",(mktime(0, 0, 0, date("m")+1, date("d"),  date("Y"))));
         $enddate=$nextmonth;
 
-        $bl_data['end_year']=date("Y")+1;
-        $bl_data['end_month']=date("m");
-        $bl_data['end_day']=date("d");
+        $bl_data['end_year'] = date("Y")+1;
+        $bl_data['end_month'] = date("m");
+        $bl_data['end_day'] = date("d");
     } else {
         $enddate = $endyear.$endmonth.$endday;
-        $bl_data['end_year']=$endyear;
-        $bl_data['end_month']=$endmonth;
-        $bl_data['end_day']=$endday;
-        //echo $enddate;
+        $bl_data['end_year'] = $endyear;
+        $bl_data['end_month'] = $endmonth;
+        $bl_data['end_day'] = $endday;
     }
+
     // Bullet style
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
     // Prepare the array variables that will hold all items for display.
-    $bl_data['reloadlabel'] = xarVarPrepForDisplay(xarML('Reload'));
     $bl_data['events'] = array();
     $bl_data['startnum'] = $startnum;
     $bl_data['sortby'] = $sortby;
 
     // Define the Start and End Dates.
     if ($caldate != '') {
+        // FIXME: this isn't used. Remove it or fix it?
         $startdate_chooser = $caldate;
     } else {
         $bl_data['startdate'] = ($startyear . $startmonth . $startday);
@@ -112,15 +119,13 @@ function julian_user_viewevents($args)
 
     // If sorting by Event date, then sort in descending order,
     // so that the latest Event is first.
-    if ($sortby == 'eventDate') {
-        $orderby = 'DESC';
-    }
+    if ($sortby == 'eventDate') $orderby = 'DESC';
 
     // The user API Function is called: get all events for these selectors
     $events = xarModAPIFunc('julian', 'user', 'getevents',
         array(
             'startnum'  => $startnum,
-            'numitems'  => xarModGetVar('julian','itemsperpage'),
+            'numitems'  => $numitems,
             'sortby'    => $sortby,
             'orderby'   => $orderby,
             'startdate' => $startdate,
@@ -137,7 +142,7 @@ function julian_user_viewevents($args)
     // Add the array of Events to the template variables.
     $bl_data['events'] = $events;
 
-    // Create sort by URLs.
+    // Create sort-by URLs.
     if ($sortby != 'eventDate' ) {
         $bl_data['eventdateurl'] = xarModURL('julian', 'user', 'viewevents',
             array('startnum' => 1, 'sortby' => 'eventDate', 'catid' => $catid)
@@ -204,4 +209,5 @@ function julian_user_viewevents($args)
     // Return the template variables defined in this function.
     return $bl_data;
 }
+
 ?>

@@ -94,7 +94,7 @@
                   
                 </xar:for>
               </select>
-              <select name="end_year" onchange="populateSelect(this.form.end_month, this.form.end_day, this)"style="width: 4.2em;" >
+              <select name="end_year" onchange="populateSelect(this.form.end_month, this.form.end_day, this)" style="width: 4.2em;">
                 <option value=""></option>
                 <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
                   <xar:set name="$yearEndSelected">""</xar:set>
@@ -108,7 +108,7 @@
               </select>
             </div>
             
-              <input type="submit" name="submit" value="Set Date Range" /><br />
+              <input type="submit" name="submit" value="#xarML('Set Date Range')" /><br />
           </form>
         
         <br />
@@ -125,26 +125,31 @@
             <xar:else />
               <th><xar:mlstring>Event Date</xar:mlstring></th>
             </xar:if>
+
             <xar:if condition="$eventnameurl != ''">
               <th><a href="#$eventnameurl#"><xar:mlstring>Event Name</xar:mlstring></a></th>
             <xar:else />
               <th><xar:mlstring>Event Name</xar:mlstring></th>
             </xar:if>
+
             <xar:if condition="$eventdescurl != ''">
               <th><a href="#$eventdescurl#"><xar:mlstring>Description</xar:mlstring></a></th>
             <xar:else />
               <th><xar:mlstring>Description</xar:mlstring></th>
             </xar:if>
+
             <xar:if condition="$eventlocnurl != ''">
               <th><a href="#$eventlocnurl#"><xar:mlstring>Event Location</xar:mlstring></a></th>
             <xar:else />
               <th><xar:mlstring>Event Location</xar:mlstring></th>
             </xar:if>
+
             <xar:if condition="$eventconturl != ''">
               <th><a href="#$eventconturl#"><xar:mlstring>Event Contact</xar:mlstring></a></th>
             <xar:else />
               <th><xar:mlstring>Event Contact</xar:mlstring></th>
             </xar:if>
+
             <xar:if condition="$eventfeeurl != ''">
               <th><a href="#$eventfeeurl#"><xar:mlstring>Ticket Prices</xar:mlstring></a></th>
             <xar:else />
@@ -213,26 +218,32 @@
                   <xar:if condition="$loop:item.eContact ne ''">
                     #$loop:item.eContact#<br />
                   </xar:if>
+
                   <xar:if condition="$loop:item.ePhone ne ''">
                     #$loop:item.ePhone#<br />
                   </xar:if>
+
                   <xar:if condition="$loop:item.eEmail ne ''">
                     <a href="mailto:#$loop:item.eEmail#">#$loop:item.eEmail#</a><br />
                   </xar:if>
+
                   <xar:if condition="$loop:item.eUrl ne ''">
                     <a href="#$loop:item.eUrl#">#$loop:item.eUrl#</a><br />
                   </xar:if>
+
                   <xar:if condition="($loop:item.eContact eq '') and ($loop:item.ePhone eq '') and ($loop:item.eEmail eq '') and ($loop:item.eUrl eq '')">
                     Contact not Listed
                   </xar:if>
                 </td>
+
                 <xar:if condition="($loop:item.eFee ne '') and ($loop:item.eFee ne 0)">
-                  <td>#$loop:item['eFee']#</td>
+                  <td>#$loop:item.eFee#</td>
                 <xar:elseif condition="($loop:item.eFee ne '') and ($loop:item.eFee eq 0)" />
                   <td><xar:mlstring>Free Event</xar:mlstring></td>
                 <xar:else />
                   <td><xar:mlstring>Price Not Listed</xar:mlstring></td>
                 </xar:if>
+
               </tr>
             </xar:loop>
           </xar:if>
