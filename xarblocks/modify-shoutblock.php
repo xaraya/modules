@@ -39,18 +39,19 @@ function shouter_shoutblockblock_modify($blockinfo)
 /**
  * update block settings
  * @return array
+ * @todo set defaults for xarVarFetch with $vars
  */
 function shouter_shoutblockblock_update($blockinfo)
 {
     $vars = array();
-    if (!xarVarFetch('numitems', 'int:1:', $vars['numitems'], 10, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('anonymouspost','checkbox', $vars['anonymouspost'], false,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shoutblockrefresh', 'int', $vars['shoutblockrefresh'], 60, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shoutblockrefresh', 'int', $vars['shoutblockrefresh'], 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowsmilies','checkbox', $vars['allowsmilies'], false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('lightrow','str:1:', $vars['lightrow'], 'FFFFFF',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('darkrow','str:1:', $vars['darkrow'], 'E0E0E0',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('blockwidth','str:1:', $vars['blockwidth'], 180,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('blockwrap','str:1:', $vars['blockwrap'], 19,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('blockwidth','int:1:', $vars['blockwidth'], 180,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('blockwrap','int:1:', $vars['blockwrap'], 19,XARVAR_NOT_REQUIRED)) return;
 
     // begin to turn off smilies--- TEST CODE ---
     if (!$vars['allowsmilies']) {

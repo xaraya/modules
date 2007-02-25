@@ -119,9 +119,8 @@ function shouter_shoutblockblock_display($blockinfo)
 
     /**
      * Don't refresh inside of blocks admin
-     * @todo: need a better way to do this
+     * @todo: need a better way to handle whether to load the onLoad event for the timer
      */
-     debug($requestinfo);
     if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
         $data['refresh'] = false;
     }
