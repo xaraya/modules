@@ -21,11 +21,6 @@ function shouter_adminapi_getmenulinks()
             'title' => xarML('Delete Some or All Shouts'),
             'label' => xarML('Moderate Shouts'));
     }
-    if (xarSecurityCheck('AdminShouter', 0)) {
-        $menulinks[] = array('url' => xarModURL('shouter', 'admin', 'modifyconfig'),
-            'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Modify Config'));
-    }
     return $menulinks;
 }
 ?>
