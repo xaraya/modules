@@ -1,0 +1,25 @@
+<div><xar:mlstring>Change the information contained in the text boxes, and click the button.</xar:mlstring></div>
+<form method="post" action="#xarModUrl('shouter', 'admin', 'update')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="name">#$namelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="name" id="name" size="32" maxlength="32" value="#$item['name']#" />
+    </span>
+    </div>
+   <div style="clear: both; padding-top: 10px;">
+     <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="shout">#$shoutlabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <textarea name="shout" id="shout" cols="50">#$item['shout']#</textarea>
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <input type="hidden" name="shoutid" id="shoutid" value="#$item['shoutid']#" />
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+    </div>
+</form>

@@ -1,0 +1,62 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<fieldset>
+        <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="numitems#$blockid#" class="xar-form-label" title="#xarML('Number of items per page')#">
+                <xar:mlstring>Shouts to Display:</xar:mlstring>
+            </label>
+            <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" maxlength="3" class="xar-form-textshort" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="blockwidth#$blockid#" class="xar-form-label" title="#xarML('Block Width (in pixels)')#">
+                <xar:mlstring>Block Width (in pixels):</xar:mlstring>
+            </label>
+            <input type="text" name="blockwidth" id="blockwidth#$blockid#" value="#$blockwidth#" maxlength="3" class="xar-form-textshort" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="blockwrap#$blockid#" class="xar-form-label" title="#xarML('Number of characters to wrap after (1 to 99)')#">
+                <xar:mlstring>Number of characters to wrap after (1 to 99):</xar:mlstring>
+            </label>
+            <input type="text" name="blockwrap" id="blockwrap#$blockid#" value="#$blockwrap#" maxlength="2" class="xar-form-textshort" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="lightrow#$blockid#" class="xar-form-label" title="#xarML('Light Row (add in hexadecimal format ex. F0F0F0)')#">
+                <xar:mlstring>Light Row (add in hexadecimal format ex. F0F0F0):</xar:mlstring>
+            </label>
+            <input type="text" name="lightrow" id="lightrow#$blockid#" value="#$lightrow#" maxlength="6" class="xar-form-textshort" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="darkrow#$blockid#" class="xar-form-label" title="#xarML('Dark Row (add in hexadecimal format ex. F0F0F0)')#">
+                <xar:mlstring>Dark Row (add in hexadecimal format ex. F0F0F0):</xar:mlstring>
+            </label>
+            <input type="text" name="darkrow" id="darkrow#$blockid#" value="#$darkrow#" maxlength="6" class="xar-form-textshort" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="allowsmilies#$blockid#" class="xar-form-label" title="#xarML('Allow Smilies?')#">
+                <xar:mlstring>Allow Smilies?</xar:mlstring>
+            </label>
+            <xar:if condition="xarModIsAvailable('smilies')">
+                <xar:data-input type="checkbox" name="allowsmilies" id="allowsmilies#$blockid#" value="$allowsmilies" />
+            <xar:else />
+                <span style="xar-error;">
+                    <xar:mlstring>Smilies Module is not available.</xar:mlstring>
+                </span>
+            </xar:if>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend><xar:mlstring>Other Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="anonymouspost#$blockid#" class="xar-form-label" title="#xarML('You wanna let anonymous post??')#">
+                <xar:mlstring>You wanna let anonymous post??</xar:mlstring>
+           </label>
+           <xar:data-input type="checkbox" name="anonymouspost" id="anonymouspost#$blockid#" value="$anonymouspost" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="shoutblockrefresh#$blockid#" class="xar-form-label" title="#xarML('Shout Block Refresh Time (in seconds)')#">
+                <xar:mlstring>Shout Block Refresh Time (in seconds):</xar:mlstring>
+            </label>
+            <input type="text" name="shoutblockrefresh" id="shoutblockrefresh#$blockid#" value="#$shoutblockrefresh#" maxlength="3" class="xar-form-textshort" />
+        </div>
+    </fieldset>
+

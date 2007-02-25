@@ -1,0 +1,84 @@
+<xar:style scope="module" module="shouter" file="shouter" />
+<xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="head"/>
+<script type="text/javascript">
+function formCheck(el){
+    if(el.value == ''){
+        alert('Please Enter Something to Post!');
+        el.focus();
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function formPost() {
+    document.getElementById('redirect').value = '';
+    loadContent('#$shouturl#', 'response', 'POST', 'shoutform');
+    replaceContent();
+    // empty the input box
+    document.getElementById('shout').value = '';
+    return false;
+}
+function replaceContent(){
+    // replace the block content area
+    loadContent('#$blockurl#','shoutupdate');
+}
+
+function startTimer() {
+    timer = window.setInterval("replaceContent();", "#$shoutblockrefresh#");
+}
+
+<xar:if condition="$refresh">
+window.onLoad = startTimer();
+</xar:if>
+</script>
+
+<xar:comment >begin shoutblock wrapper div (for setting width)</xar:comment>
+<div style="#$blockwidth#">
+<div class="shoutblockwrapper" id="shoutupdate">
+    <xar:if condition="count($items) ge 1">
+        <xar:foreach in="$items" value="$item" key="$key">
+          <xar:if condition="(($key+1) % 2)">
+                <xar:set name="mycolor">
+                    $lightrow
+                </xar:set>
+                <xar:else />
+                <xar:set name="mycolor">
+                    $darkrow
+                </xar:set>
+            </xar:if>
+            <div style="#$mycolor# padding: 3px;">
+                <span class="shoutblockusername" >#$item['name']#</span>
+                <br />
+                <span class="shoutblockpostinfo">(#xarLocaleGetFormattedDate('medium', $item['date'])# #xarLocaleGetFormattedTime('short', $item['date'])#)</span>
+                <br />
+                <span class="shoutblockcontent">#$item['shout']#</span>
+                <br />
+            </div>
+        </xar:foreach>
+    <xar:else/>
+        <xar:mlstring>Be the first to shout here!</xar:mlstring>
+    </xar:if>
+</div>
+<xar:comment >end the shout body </xar:comment>
+
+<xar:if condition="$anonymouspost or (xarUserIsLoggedIn())">
+
+    <div class="shoutblockpostformcontainer">
+        <form method="post" id="shoutform" action="#$shouturl#" onsubmit="formCheck(document.getElementById('shout')); return formPost();">
+            <p><input style="font-size:10px;" type="text" id="shout" name="shout" size="20" /></p>
+            <input type="hidden" id="redirect" name="redirect" value="#xarServerGetCurrentURL()#" />
+            <p><input class="shoutblockbutton" type="submit" name="submit" value="#xarML('Shout!')#" /></p>
+        </form>
+    </div>
+
+<xar:else />
+    <div class="shoutblock_notloggedin_warning">
+        <xar:mlstring>
+            You must be logged-in to post a shout.
+        </xar:mlstring>
+    </div>
+</xar:if>
+<!-- XMLHTTPRequest response goes here -->
+<div id="response"></div>
+</div>

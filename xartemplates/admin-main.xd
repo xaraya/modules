@@ -1,0 +1,63 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Shouter</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/shouter/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Shouter is a shoutblock module for Xaraya. What does a shoutblock do?</xar:mlstring>
+
+            <ul>
+                <li><xar:mlstring>Allows users to post comments directly into a block for the whole world to see</xar:mlstring></li>
+                <li><xar:mlstring>Creates a spot on a website for quick messages to be posted</xar:mlstring></li>
+                <li><xar:mlstring>And is just plain fun to have overall</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Well, you activated the module... so you can probably figure out the rest pretty easily. But if you REALLY need some 'spainin... here goes...</xar:mlstring>
+
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>shoutblock</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Future Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>smileys</xar:mlstring></li>
+                <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
+                <li><xar:mlstring>userpoints</xar:mlstring></li>
+                <li><xar:mlstring>BBCode</xar:mlstring></li>
+                <li><xar:mlstring>....and who knows what else</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. <a href="http://zwiggybo.com">zwiggybo.com</a></xar:mlstring>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,357 @@
+--------------------------------------
+SHOUTER MODULE FOR XARAYA
+--------------------------------------
+
+THIS CHANGELOG IS FOR THE SHOUTER MODULE DEVELOPMENT ONLY. I WILL CREATE NEW CHANGELOG AFTER THE MODULE IS RELEASED, WHICH WILL BE BASED ON POST-RELEASE CHANGES, AND INCREASED FUNCTIONALITY ONLY.
+
+0.8.6 minor fix to increase the default post view number to 5000. Also removed redundant ';' from shoutblock.xd line #32.
+
+0.8.5.d (27 Sep 05): Commented out the folowing from line #26 of xarinit.php
+----------------------
+      'xar_total'   => array('type' => 'integer', 'null' => FALSE),
+----------------------     
+removed line #47 of xaruserapi/getall.php: xar_total,
+----------------------
+removed line #66 of xaruserapi/getall.php: 'xar_total'  => $xar_total,
+----------------------
+removed THE FOLLOWING FROM line #61 of xaruserapi/getall.php: $xar_total,
+----------------------
+
+
+0.8.5 (18 Sep 05): Removed inline styles and added them to the module style-sheet. Changed the style-sheet link method to the new method employed by Xaraya:
+-----------------------
+<xar:style scope="module" module="shouter" file="shouter" /><xar:additional-styles />
+-----------------------
+
+
+0.8.4 (15 Sep 05): Finally, prevented the posting of empty posts when a person types in a space. Changed xaradmin/create.php to do this. Also uncommented the validation stuff. So, things are pretty much squared away. 
+
+All that is left to do are minor tweaks overall, and the big block refresh modifications.
+
+-------
+0.8.3 -- did some stuff, but lost those changes.
+-------
+0.8.2 (30 Apr 05): Modified shoutblock.xd template a bit to decrease font size of input boxes, and limit length
+so things don't look as crappy in IE.
+
+0.8.1 (31 Mar 05): in order to prevent html from being input into posts, added the following to shoutblock.php, line #53:
+------------------------------------------------------------------
+$items[$i]['xar_shout'] = wordwrap(xarVarPrepForDisplay($item['xar_shout']), $blockwrap, "\n", 1); 
+------------------------------------------------------------------
+
+0.8.0 (30 Mar 05): Wordwrap is fully functional, and configurable via Shouter admin panel.
+
+0.7.9 (30 Mar 05):Now wordwrap works. Achieved this by adding the following to shoutblock.php around line #47:
+------------------------------------------------------------------
+$totitems=count($items);
+for ($i = 0; $i < $totitems; $i++) {
+    $item = $items[$i];
+        $items[$i]['xar_shout'] = wordwrap($item['xar_shout'], 20, "\n", 1);
+} 
+------------------------------------------------------------------
+
+0.7.2 (30 Mar 05): Added <div> around shoutblock in xartemplates/blocks/shoutblock.xd, in order to be able to set width. Modified shoutblock.xd, admin-modifyconfig.xd, shoutblock.php, admin/modifyconfig.php, admin/updateconfig.php to use the #$blockwidth# setting.
+
+0.7.1 (21 Mar 05): simply modified line #27 in xartemplates/admin-modifyconfig.xd to follow the format of the one used in headlines block refresh. Actually, that line is commented out, and I have a similar one below it without the #$blockid# as part of the 'id' because that caused an error.
+
+<input type="text" name="shoutblockrefresh" id="shoutblockrefresh#$blockid#" size="5" maxlength="5" value="#$shoutblockrefresh#" />
+------------------------------------------------------------------
+
+also changed line #27 in xaradmin\modifyconfig.php to reflect the name change for the value in the template:
+------------------------------------------------------------------
+$data['shoutblockrefresh'] = xarModGetVar('shouter', 'shoutblockrefresh');
+------------------------------------------------------------------
+Commented out line #33,34 in xaradmin\modifyconfig.php to get rid of turning on/off line colors, since they can be set.
+
+Commented out line #11,32 from xaradmin\update.config.php
+Commented out lines #56-63 in xartemplates\admin-modifyconfig.xd
+
+
+0.7 (10 Mar 05): Thanks Dracos for this one! Preventing empty shouts from being posted by doing the following:
+adding the following in shoutblock.php:
+------------------------------------------------------------------
+<script type="text/javascript">
+   function formCheck(el){
+  if(el.value == ''){
+     alert('Enter a Shout');
+        el.focus();
+           return false;
+      } else {
+            return true;
+            }
+      }
+</script>
+------------------------------------------------------------------
+....and
+------------------------------------------------------------------
+<form method="post"  action="#xarModUrl('shouter', 'admin', 'create')#" onsubmit="return formCheck(document.getElementById('shout'));">
+------------------------------------------------------------------
+
+
+0.6 (23 Feb 05): got the anonymous switch to work in the shoutblock.xd template by using <xar:if condition="$anonymouspost or (xarUserIsLoggedIn())"> in line #35.
+
+0.5.3 - 0.5.9 (16 Feb 05): made changes to allow for setting anonymous posting, or prohibiting it:
+in shoutblock.php:
+    $data['anonymouspost'] = xarModGetVar('shouter','anonymouspost');
+in admin-modifyconfig.xd made changes, and in modifyconfig.php, and updateconfig.php. 
+*NOTE:Although the configuration seems to 'stick'in the admin checkbox, nothing happens when the box is checked.
+
+0.5.2 (13 Feb 05): new version just because I'm getting ready to really mess around with this thing...
+0.5.1 (11 Feb 04): added some stuff for anonymouspost into admin-modifyconfig.xd, and modifyconfig.php
+
+0.5 (24 Jan 05): Jojo made a few serious changes to allow me to have alternating row colors that are configurable via the admin panel.
+Included in those changes (in conjuction with the ones I was already pursuing) were:
+------------------------------------------------------------------
+1. modifyconfig.xd template
+Put in your variable values instead of hardcoded ones in field value.
+
+2. shoutblock.php
+No need for xarVarFetch on mod vars. Just grab them with xarModGetVar like
+you do further down. Commented out the xarVarFetch.
+
+3. shoutblock.xd
+<xar:set name="mycolor">
+                   $lightrow
+               </xar:set>
+Note that we are now using a variable $lightrow. We are not used a constant
+like 'xar-alt' so we don't need to quote what we are setting the name as.
+
+4.  <div style="#$mycolor#">
+We have already defined the actual full style with the 'background' text in
+it for $lightrow and $darkrow. So $mycolor already has the full style
+expression in it. So here we don't have to input 'background' again - just
+use #$mycolor#.
+------------------------------------------------------------------
+
+0.3.2 (23 Jan 05): Added alternating row colors to shoutblock.xd -- next project is to make them turn on/off etc.
+I added the following to xaradmin\create.php
+------------------------------------------------------------------
+    $data['rowcolorslabel'] = xarVarPrepForDisplay(xarML('Alternating Row Colors:'));
+    $data['rowcolors'] = xarModGetVar('shouter', 'rowcolors') ? true : false;    
+------------------------------------------------------------------
+...and added the following to xaradmin\updateconfig.php:
+------------------------------------------------------------------
+    if (!xarVarFetch('rowcolors','checkbox', $rowcolors, false,XARVAR_NOT_REQUIRED)) return;
+------------------------------------------------------------------
+also added to updateconfig.php (which is incorrect as noted below)...
+------------------------------------------------------------------
+        if ($rowcolors === true) {
+            array( $item[$lightrow],
+                        $item[$darkrow]);
+                    }
+------------------------------------------------------------------
+---  I KNOW THIS IS INCORRECT, BUT WANTED TO START SOMEWHERE... Next I think I 
+will need to replace the 'xar-accent', and 'xar-alt' in shoutblock.xd with the $lightrow, and $darkrow vars...
+but first I need to ensure row colors are alternating properly, as of this moment they are NOT.
+They alternate colors every 23 rows.... :(
+
+
+
+
+0.3.1 (22 Jan 05): Modified admin stuff so smilies can be turned on/off via the admin modify config--- all by myself. NEED 
+SOMEONE TO TAKE A LOOK AT THE CHANGES TO MAKE SURE THEY WERE PROPER... the following changes were made to accomplish this:
+
+In xaradmin\modifyconfig.php, I added at line #23:
+------------------------------------------------------------------
+// allow smilies....
+    $data['smilieslabel'] = xarVarPrepForDisplay(xarML('Allow Smilies?'));
+    $data['allowsmilies'] = xarModGetVar('shouter', 'allowsmilies') ? true : false;
+// end allow smilies... 
+------------------------------------------------------------------
+
+then in xaradmin\updateconfig.php, I added at line #10:
+------------------------------------------------------------------
+    if (!xarVarFetch('allowsmilies','checkbox', $allowsmilies, false,XARVAR_NOT_REQUIRED)) return;
+------------------------------------------------------------------
+then added in the same file (xaradmin\updateconfig.php), added at line #12 :
+------------------------------------------------------------------
+// begin to turn off smilies--- TEST CODE ---
+        if ($allowsmilies === false) {
+                xarModAPIFunc('modules', 'admin', 'disablehooks',
+                        array('callerModName' => 'shouter', 'hookModName' => 'smilies'));   
+            }                  
+            else {
+                xarModAPIFunc('modules', 'admin', 'enablehooks',
+                        array('callerModName' => 'shouter', 'hookModName' => 'smilies'));
+              
+            }                                
+ // end to turn off smilies--- TEST CODE ---     
+------------------------------------------------------------------
+then in the same file (xaradmin\updateconfig.php), added at line #28 :
+------------------------------------------------------------------
+    xarModSetVar('shouter', 'allowsmilies', $allowsmilies);
+------------------------------------------------------------------
+Finally, in the template admin-modifyconfig.xd, I made a few changes.... I won't note them here.
+
+
+
+0.3 (22 Jan 05): Added dummy admin options to the admin-modifyconfig.xd template, in anticipation of making them all work at some point.
+
+0.2.9 (22 Jan 05): redirect fixed. There was one friggin space after the closing ?> tag in xartables.php..... gawd!!!
+2 weeks spent on this because of a stupid space..... *whacks head on desk!!!*
+
+
+(22 Jan 05): changed $oldurl to oldurl in shoutblock.xd within the xarset tag.
+
+0.2.8 (20 Jan 05): changed extension on shouter\xaruserapi\decode_shorturl.php, and encode_shorturl.php to .bak as I don need no stinkin shorturls for a shoutblock. 
+Just wanted to make sure this wouldn't screw anything up before I delete these files.
+Also, I need to consider deleting the following from the xaruserapi folder (getitemlinks.php, getitemtypes.php, getmenulinks.php, 
+menu.php) and the appropriate files from the xaruser folder as I don't need any user menu items for this block. The ONLY caveat is that I may want to preserve the functionality-- just in case...
+
+-- I also need to look at shouter\xaradmin updatecongif.php etc, for adding admin options...
+
+-- Typecast the bindvars in the following files in folder xaradminapi: create.php, update.php ---- didn't see it anywhere else.
+-- Ensured that all php files are using xarML in functions.
+-- ensured <xar:mlstring>text goes here</xar:mlstring> is used for all text!
+
+
+0.2.7b (16 Jan 05): reformatted the date/time in the shoutblock.xd template to conform better.
+------------------------------------------------------------------
+(#xarLocaleGetFormattedDate('medium', $item['xar_date'])# #xarLocaleGetFormattedTime('short', $item['xar_date'])#)
+------------------------------------------------------------------
+
+0.2.7a (16 Jan 05): removed the preg_replace from shoutblock.xd-- but still no success.
+
+0.2.7 (15 Jan 05): Modified the code (again!!) in shouter\xarblocks\shoutblock.php. Now, I am almost 100% certain, it is dealing with smilies properly.
+Here are the changes. First, I added some code below the security check:
+------------------------------------------------------------------
+        xarVarFetch('xar_exid', 'int:1:', $xar_exid, XARVAR_PREP_FOR_DISPLAY);
+------------------------------------------------------------------
+
+then I changed the hook stuff as follows:
+------------------------------------------------------------------
+        // Transform Hook for smilies
+    $data['items'] = array();
+    if (is_array($items)) {
+        foreach ($items as $item) {
+    $item['module'] = 'shouter';
+    $item['itemtype'] = 0;
+    $item['itemid'] = $xar_exid;
+    $item['transform'] = array('xar_shout');
+    // transform item
+    $item = xarModCallHooks('item', 'transform', $xar_exid, $item);
+    // Display the content
+     $data['items'][] = $item;
+    }
+}
+// End the transform hook stuff...
+------------------------------------------------------------------
+
+0.2.6 (15 Jan 05): Changed the code in shouter\xarblocks\shoutblock.php so it properly calls the smilies hook. The code is as follows:
+------------------------------------------------------------------
+        // Transform Hook for smilies
+    $data['items'] = array();
+    if (is_array($items)) {
+        foreach ($items as $item) {
+    $item['module'] = 'shouter';
+    $item['itemtype'] = $itemtype;
+    $item['transform'] = array('xar_shout');
+    // transform item
+    $item = xarModCallHooks('item', 'transform', $xar_exid, $item);
+    // Display the content
+     $data['items'][] = $item;
+    }
+}
+// End the transform hook stuff...
+------------------------------------------------------------------
+
+0.2.5 (14 Jan 05): Just a few little changes...
+
+0.2.4 (13 Jan 05): Added the following code to shouter\xarinit.php at line #41, without error on initialization or deinstallation,
+and without successfully transforming stuff into smileys after hooking the smileys modules to the shouter module.
+------------------------------------------------------------------
+// Register hook to to this module from the Smileys Module
+    if (xarModIsAvailable('smilies')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'shouter', 'hookModName' => 'smilies'));
+                      }
+// End enable hooks to this module from the Smileys Module
+------------------------------------------------------------------
+and added the following code to remove the hook upon deactivation of the module at line #102:
+------------------------------------------------------------------
+// Remove module hooks below this line
+  xarModAPIFunc('modules', 'admin', 'disablehooks',
+                array('callerModName' => 'shouter', 'hookModName' => 'smilies'));  
+------------------------------------------------------------------              
+
+0.2.3 (12 Jan 05): Removed a lot of extra comments that were residue from the Examples Module.
+
+0.2.2 (12 Jan 05): David helped me get the modify shouts to work. Changes were made to xaradminapi\update.php, and admin-modify.xd.
+
+0.2.1 (10 Jan 05): removed the 'hook' for smileys from xarinit.php, since I don't understand it... and it didn't work. 
+
+0.2 (10 Jan 05): Fixed the deleteall shouts problem. Now I can delete all shouts, or a single shout... I still need to fix modify shouts. NOTE: Need to have someone check the line 75 of xaradmin\view.php--- I know it needs to be changed, but it works...
+
+0.1.3.5 (10 Jan 05): Added deleteall.php files to xaradmin, and xaradminapi folders (which I got from the referrers module, since it has a function that deletes all referrers). Also added mask to xarinit.php as follows:
+--------------------------------------------
+ xarRegisterMask('DeleteAllShouter', 'All', 'shouter','All','All:All:All', 'ACCESS_DELETE');
+--------------------------------------------
+
+
+ Additionally, in xaradmin\view.php I added the following at line 75:
+-----------------------------------------------------------------------------------------------
+// now I will add my delete all sec check
+ if (xarSecurityCheck('DeleteAllShouter', 0, 'All', "$item[xar_name]:All:$item[xar_exid]")) {
+            $items[$i]['deleteallurl'] = xarModURL('shouter',
+                'admin',
+                'deleteall');
+        } else {
+            $items[$i]['deleteallurl'] = '';
+        } 
+        $items[$i]['deletealltitle'] = xarML('Delete All');
+ //end the delete all sec check
+-----------------------------------------------------------------------------------------------
+
+The 'delete All' button in admin-view.xd points to this function but I get the following error:
+
+"The operation you are attempting is not allowed in the current circumstances."
+
+
+
+0.1.3.4 (9 Jan 05): changed field size for the modify shout page- still need to get it to work though!
+
+0.1.3.3 (9 Jan 05): fixed the modify-shoutblock.xd template so the number of posts displayed is correctly displayed in the textbox.
+
+0.1.3.2 (9 Jan 05): redirect is now working...
+
+0.1.3.1 (9 Jan 05): added filenames to all the files, so I know what I am looking at after I have printed them. Preparing to mess with security stuff...
+
+0.1.3 (9 Jan 05): Working with the modify shout... no errors, but the info is not getting to the db.
+
+0.1.2.9 (9 Jan 05) started adding file names in the top of the code so I don't get lost. Also trying to get the modify shout to work...just wanted to create a version before I totally screw things up!
+But for what it's worth, I made the modify bit work... sort of. Now if you change the shout... the name becomes the date....lol!!!!
+
+0.1.2.8 (9 Jan 05) Name/Anonymous stores in db, and recalls properly. Also formatted time/date correctly in shoutblock.xd.
+
+0.1.2.7 (8 Jan 05) Modified things so the date gets stored into the db, and is displayed properly. 
+
+0.1.2.6 (1 Jan 05): Added username to the template, so now we see username, and the shout. Still need to fix security check so anonymous etc. can see the block. Also need to add the date to the post.
+
+0.1.2.5 (31 Dec 04): Added overflow: auto to shoutblock.xd template to allows shouts to be contained within the block. 
+
+
+0.1.2.4 (30 Dec 04): LionKMP helped a lot on these changes. Basically went through and eliminated a lot of the code referring to the example module in xaradmin.create.php, xaradminapi/create.php, and getall.php. We also made some changes to the shoutblock.xd template, and the admin-modifyconfig.xd template.
+
+Now, the block displays posts, and accepts posts. 
+
+
+
+30 Dec: I modified xaradminapi/create.php to have the xar_name.. and it seems to do something right. Now I have an error in 
+------------------------------
+shouter\xaruserapi\validateitem.php (Line: 43) Undefined variable: name
+------------------------------
+
+and after fixing that I get the following error:
+
+------------------------------
+At: C:\apachefriends\xampp\htdocs\xaraya\includes\xarMLS.php (Line: 1075) Array to string conversion
+------------------------------
+
+so maybe I need to look at all similar things?? ie. changing name to xar_name...
+
+
+
+0.1.2.3 (29 Dec 04): Have the ability to output data from the database, in no worthwhile order. The block shows the output, and I have created an textbox and button for input-- no code to make it work yet :)
+
+
+0.1.2.2 (27 Dec 04): got the shoutblock.php file working with it stripped down to the minimum. Now I can look at the shoutblock.xd template which is generating an error.

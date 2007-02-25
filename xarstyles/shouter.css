@@ -1,0 +1,39 @@
+.lightrow { background: #fff; }
+.darkrow { background: #e0e0e0; }
+.shoutblockusername {
+    font-size: 11px; 
+    color: red; 
+    font-weight: bold;
+    }/* for the username in the post */
+
+.shoutblockwrapper {
+    margin-top: 3px; 
+    background: #f0f0f0; 
+    height: 200px; 
+    border: solid 1px #000; 
+    overflow: auto;
+    } /* the container for the posts (ie. the whole block) */
+
+.shoutblockpostinfo {
+    font-size: 9px;
+    } /* the date/time of the post */
+    
+.shoutblockcontent {
+    color:#6633CC; 
+    font-size: 10px;   
+   } /* the actual post text */
+   
+.shoutblockpostformcontainer {
+    margin-top: 3px; 
+    text-align: center; 
+    font-size: 10px;
+} /* the container around the input form */
+
+.shoutblockbutton {
+    margin-top: 5px; 
+    font-size: 10px;
+} /* position and style the button */
+.shoutblock_notloggedin_warning {
+    padding:3px; 
+    margin-bottom: 3px;
+}

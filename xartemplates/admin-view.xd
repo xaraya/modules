@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Shouter Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <fieldset>
+        <legend><xar:mlstring>View Shouts</xar:mlstring></legend>
+
+      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+          <p>#xarSessionGetVar('statusmsg')#</p>
+      </xar:if>
+
+      <table class="xar-fullwidth">
+          <tr>
+              <th>
+                  <xar:mlstring>User Name</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Shout Text</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Options</xar:mlstring>
+              </th>
+          </tr>
+          <xar:foreach in="$items" value="$item">
+          <tr>
+              <td>
+                  #$item.name#
+              </td>
+              <td>
+                  #$item.shout#
+              </td>
+              <td class="xar-align-center">
+                 <xar:if condition="empty($item['editurl'])">
+                     <xar:mlstring>Edit</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.editurl#" onclick="return loadContent(this.href,'shouter_edit_or_add');"><xar:mlstring>Edit</xar:mlstring></a>
+                 </xar:if>
+                 |
+                 <xar:if condition="empty($item['deleteurl'])">
+                     <xar:mlstring>Delete</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'shouter_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
+                 </xar:if>
+              </td>
+          </tr>
+          </xar:foreach>
+      </table>
+      <div class="xar-align-center xar-padding-thick">
+          <!-- add the pager here -->
+          #$pager#
+      </div>
+    </fieldset>
+
+    <form method="post" name="deleteall" id="post" action="#xarModURL('shouter', 'admin', 'deleteall')#">
+        <input style="margin-top: 5px;" type="submit" name="deleteall" value="#xarML('Delete all Shouts')#" />
+    </form>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

@@ -1,0 +1,19 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Shouter Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+    <div style="margin: auto;">
+
+    <div align="center">
+        <xar:mlstring>Click the button to delete the shout</xar:mlstring>
+        <form method="post" action="&xar-modurl-shouter-admin-delete;">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <input type="hidden" name="shoutid" id="shoutid" value="#$shoutid#" />
+            <input type="submit" value="#xarML('Confirm')#" />
+        </form>
+    </div>
+    </div>
+</div>

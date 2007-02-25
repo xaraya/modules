@@ -1,0 +1,12 @@
+1. Add to the modules directory via FTP, or whatever.
+2. Go to Admin Panel -> Modules -> View All.
+3. Scroll down until you see 'Shouter'.
+4. Hover over the 'Install' link.
+5. Click the 'Enter', or 'return' key on your keyboard.
+
+Dial 911 if you injure yourself during installation. 
+
+:)
+
+
+---enjoy!
