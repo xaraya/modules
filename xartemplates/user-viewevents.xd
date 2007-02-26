@@ -108,7 +108,7 @@
               </select>
             </div>
             
-              <input type="submit" name="submit" value="#xarML('Set Date Range')" /><br />
+              <input type="submit" name="submit" value="#xarML('Set Date Range')#" /><br />
           </form>
         
         <br />
