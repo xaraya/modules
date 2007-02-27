@@ -13,7 +13,7 @@ include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 include_once "modules/addressbook/xarglobal.php";
 
 /**
- * @author mikespub <mikespub@xaraya.com>
+ * @author ckraeft <ckraeft@xaraya.com>
  */
 class Dynamic_ContactList_Property extends Dynamic_Select_Property
 {
