@@ -1,18 +1,20 @@
 <?php
 /**
- * Dynamic Select property
+ * AddressBook Dynamic Companylist
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Base module
+ * @subpackage AddressBook Module
+ * @author Garrett Hunter <garrett@blacktower.com>
+ * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 /**
- * @author mikespub <mikespub@xaraya.com>
+ * @author ckraeft <ckraeft@xaraya.com>
  */
 class Dynamic_CompanyList_Property extends Dynamic_Select_Property
 {

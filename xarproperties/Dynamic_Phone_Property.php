@@ -1,27 +1,18 @@
 <?php
 /**
- * Extended Date property
+ * AddressBook Dynamic Phone property
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @license GPL {http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Base module
- * @link http://xaraya.com/index.php/release/68.html
+ * @subpackage AddressBook Module
+ * @author Garrett Hunter <garrett@blacktower.com>
+ * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-/*
- * @author Roger Keays <roger.keays@ninthave.net>
- */
-
 /**
- * The extended date property converts the value provided by the javascript
- * calendar into a universal YYYY-MM-DD format for storage in most databases
- * supporting the 'date' type. 
- *
- * The problem with the normal Calendar property is that it converts
- * everything into a UNIX timestamp, and for most C librarys this does not
- * include dates before 1970. (see Xaraya bugs 2013 and 1428)
+ * @author ckraeft <ckraeft@xaraya.com>
  */
 class Dynamic_Phone_Property extends Dynamic_Property
 {
