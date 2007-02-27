@@ -164,13 +164,12 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data['value'] = $this->value;
         // get the option corresponding to this value
         $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
-        $displayName = '';
+        $displayCompany = '';
         if(!empty($item['company'])) {
-            $displayName .= xarVarPrepHTMLDisplay($item['company'])." - ";
+            $displayCompany = xarVarPrepHTMLDisplay($item['company']);
         }
-
-        if ((!empty($item['fname']) && !empty($item['lname'])) ||
-            (!empty($item['fname']) || !empty($item['lname']))) {
+        $displayName ='';
+        if ((!empty($item['fname']) && !empty($item['lname'])) || (!empty($item['fname']) || !empty($item['lname']))) {
             if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
                 if (!empty($prefixes) && $item['prefix'] > 0) {
                     $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
@@ -193,7 +192,8 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
             $result = xarVarPrepHTMLDisplay($result);
         }
         $data['option'] = array('id' => $this->value,
-                                'name' => $result);
+                                'name' => $result,
+                                'company' => $displayCompany);
 
         return xarTplProperty('addressbook', 'contactlist', 'showoutput', $data);
     }
