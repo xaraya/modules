@@ -43,14 +43,16 @@ function itsp_userapi_getitemlinks($args)
                 'title' => xarML('Display ITSP Item'),
                 'label' => xarVarPrepForDisplay($item['name']));
         } else {
-            $item = xarModAPIFunc('itsp', 'user', 'get_planitem',
-                array('pitemid' => $itemid));
+            $item = xarModAPIFunc('itsp', 'user', 'get',
+                array('itspid' => $itemid));
 
             if (!isset($item)) return;
-            $itemlinks[$itemid] = array('url' => xarModURL('itsp', 'admin', 'modify_pitem',
-                    array('pitemid' => $itemid)),
-                'title' => xarML('Modify Plan Item'),
-                'label' => xarVarPrepForDisplay($item['pitemname']));
+            $itemlinks[$itemid] = array('url' => xarModURL('itsp', 'user', 'modify',
+                    array('pitemid' => $itemtype,
+                          'itspid'  => $itemid)),
+                          'title' => xarML('Modify ITSP'),
+                          'label' => xarVarPrepForDisplay(xarML('ITSP with ID #(1)', $itemid))
+                          );
         }
     }
     return $itemlinks;
