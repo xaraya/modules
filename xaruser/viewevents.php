@@ -119,6 +119,7 @@ function julian_user_viewevents($args)
 
     // If sorting by Event date, then sort in descending order,
     // so that the latest Event is first.
+    // CHECKME: why? Isn't this under user control?
     if ($sortby == 'eventDate') $orderby = 'DESC';
 
     // The user API Function is called: get all events for these selectors
@@ -135,6 +136,7 @@ function julian_user_viewevents($args)
     );
 
     // Check for exceptions.
+    // FIXME: errors should be indicated some other way, such as a NULL return.
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
         return; // throw back
     }
@@ -192,6 +194,8 @@ function julian_user_viewevents($args)
     }
 
     // Create Pagination.
+    // FIXME: the count does not take dates into account; suggest modifying getevents to return a count based on main selection
+    // FIXME: the pager URL does not take other selection criteria into account; suggest trying xarServerGetCurrentURL()
     $bl_data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('julian', 'user', 'countevents', array('catid' => $catid)),
         xarModURL('julian', 'user', 'viewevents',
@@ -201,7 +205,7 @@ function julian_user_viewevents($args)
                 'catid'    => $catid,
                 'orderby'  => $orderby
             )
-        ), xarModGetVar('julian', 'itemsperpage')
+        ), $numitems
     );
 
     $bl_data['catid'] = $catid;

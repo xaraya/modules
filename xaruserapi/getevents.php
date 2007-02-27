@@ -23,15 +23,18 @@
  * @link http://www.metrostat.net
  * @author Jodie Razdrh/John Kevlin/David St.Clair
  * @param array  $args an array of arguments
- * @param int    $args['startnum'] start with this item number (default 1)
- * @param int    $args['numitems'] the number of items to retrieve (default -1 = all)
- * @param string $args['sortby'] sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
- * @param int    $args['external'] retrieve events marked external (1=true, 0=false) - ToDo:
- * @param string $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
- * @param int    $args['catid'] Category ID
+ * @param int    startnum start with this item number (default 1)
+ * @param int    numitems the number of items to retrieve (default -1 = all)
+ * @param string sortby sort by 'date', 'eventName', 'eventCat', 'eventLocn', 'eventCont' or 'eventFee'
+ * @param int    external retrieve events marked external (1=true, 0=false) - ToDo:
+ * @param string orderby order by 'ASC' or 'DESC' (default = ASC)
+ * @param int    catid Category ID
+ * @param string startdate Start date in (Ymd) YYYYMMDD format; default: current day
+ * @param string enddate End date in (Ymd) YYYYMMDD format
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: rewrite some queries for pgsql
+ * @todo Combine getevents and getall APIs - they are just too similar to warrent being separate
  */
 function julian_userapi_getevents($args)
 {
@@ -42,31 +45,14 @@ function julian_userapi_getevents($args)
     extract($args);
 
     // Optional arguments.
-    if(!isset($startnum)) {
-        $startnum = 1;
-    }
+    if (!isset($startnum)) $startnum = 1;
+    if (!isset($numitems)) $numitems = -1;
+    if (!isset($sortby)) $sortby = 'eventDate';
+    if (!isset($orderby)) $orderby = 'ASC';
 
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
+    // Default the start date to today.
+    if (!isset($startdate)) $startdate = date('Ymd');
 
-    if (!isset($sortby)) {
-        $sortby = 'eventDate';
-    }
-
-    if (!isset($orderby)) {
-        $orderby = 'ASC';
-    }
-
-    if (!isset($startdate)) {
-        $startdate = date('Ymd');
-    }
-/*
-    if (!isset($enddate)) {
-        $yearend = (date('Y') + 1);
-        $enddate = $yearend . date('md');
-    }
-*/
     // Argument check.
     $invalid = array();
     if (!isset($startnum) || !is_numeric($startnum)) {
@@ -77,16 +63,16 @@ function julian_userapi_getevents($args)
     }
 
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'userapi', 'getevents', 'julian');
+        $msg = xarML('Invalid #(1)', join(', ',$invalid));
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        return false;
     }
 
+    // Items to return.
     $items = array();
 
     // Make an admin adjustable time format
-    $dateformat=xarModGetVar('julian', 'dateformat');
+    $dateformat = xarModGetVar('julian', 'dateformat');
 
     // Load categories API.
     // Needed?
@@ -98,86 +84,73 @@ function julian_userapi_getevents($args)
 
     // Get database setup.
     $dbconn =& xarDBGetConn();
+
     // Get database tables.
     $xartable =& xarDBGetTables();
+
     // Set Events Table and Column definitions.
     $event_table = $xartable['julian_events'];
 
     // Get items.
-    $query = "SELECT DISTINCT $event_table.event_id,
-                     $event_table.calendar_id,
-                     $event_table.summary,
-                     $event_table.description,
-                     $event_table.street1,
-                     $event_table.street2,
-                     $event_table.city,
-                     $event_table.state,
-                     $event_table.zip,
-                     $event_table.email,
-                     $event_table.phone,
-                     $event_table.location,
-                     $event_table.url,
-                     $event_table.contact,
-                     $event_table.organizer,
-                     $event_table.dtstart,
-                     $event_table.recur_until,
-                     $event_table.duration,
-                     $event_table.rrule,
-                     $event_table.isallday,
-                     $event_table.fee";
-//if($event_table.recur_until LIKE '0000%','',DATE_FORMAT($event_table.recur_until,'%Y:%m %d')),
-    // Select on categories
-    if (xarModIsHooked('categories','julian') && !empty($catid)) {
-        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                       array('modid' =>
-                                              xarModGetIDFromName('julian'),
-                                             'catid' => $catid));
-        $query .= " FROM ( $event_table
-                  LEFT JOIN $categoriesdef[table]
-                  ON $categoriesdef[field] = event_id )
-                  $categoriesdef[more]
-                  WHERE $categoriesdef[where] ";
-    } else {
-        $query .= " FROM $event_table ";
-    }
-    /*
-    if (xarModIsHooked('categories','julian') && (!empty($startdate))&& (!empty($enddate)) && (!empty($catid))) {
-        $query .= " AND ";
-    } elseif ((!xarModIsHooked('categories','julian') || empty($catid)) && (!empty($startdate))&& (!empty($enddate))) {
-        $query .= " WHERE ";
-    }
-    // TODO: move date_format from here
+    $query = 'SELECT DISTINCT ev.event_id,'
+        . ' ev.calendar_id, ev.summary, ev.description,'
+        . ' ev.street1, ev.street2, ev.city, ev.state, ev.zip,'
+        . ' ev.email, ev.phone, ev.location, ev.url,'
+        . ' ev.contact, ev.organizer,'
+        . ' ev.dtstart, ev.recur_until, ev.duration,'
+        . ' ev.rrule, ev.isallday, ev.fee';
 
-    if ((!empty($startdate))&& (!empty($enddate))) {
-     //   $query .= " DATE_FORMAT($event_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_table.dtstart,'%Y%m%d') <= $enddate";
-     $query .= " $event_table.dtstart >= $startdate AND $event_table.dtstart <= $enddate";
+    // Select on categories
+    if (xarModIsHooked('categories', 'julian') && !empty($catid)) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
+            array('modid' => xarModGetIDFromName('julian'), 'catid' => $catid)
+        );
+
+        $query .= ' FROM (' . $event_table. ' AS ev'
+            . ' LEFT JOIN ' . $categoriesdef['table']
+            . ' ON ' . $categoriesdef['field'] . ' = event_id)'
+            . $categoriesdef['more']
+            . ' WHERE ' . $categoriesdef['where'];
+    } else {
+        $query .= ' FROM ' . $event_table . ' AS ev';
     }
-    */
+
+    // FIXME: date formats should be validated
+    // The dtstart column is a datetime type, and takes the format 'YYYYMMDDHHMMSS'
+    if ((!empty($startdate)) && (!empty($enddate))) {
+        $query .= " WHERE ev.dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
+    } elseif (!empty($startdate)) {
+        $query .= " WHERE ev.dtstart >= '${startdate}000000'";
+    } elseif (!empty($enddate)) {
+        $query .= " WHERE ev.dtstart <= '${enddate}235959'";
+    }
+
     // This is double now, as the array is being sorted anyway
     if (isset($sortby)) {
         switch ($sortby) {
             case 'eventDate':
-                $query .= " ORDER BY $event_table.dtstart $orderby";
+                $query .= " ORDER BY ev.dtstart $orderby";
                 break;
             case 'eventName':
-                $query .= " ORDER BY $event_table.summary $orderby";
+                $query .= " ORDER BY ev.summary $orderby";
                 break;
             case 'eventDesc':
-                $query .= " ORDER BY $event_table.description $orderby";
+                $query .= " ORDER BY ev.description $orderby";
                 break;
             case 'eventLocn':
-                $query .= " ORDER BY $event_table.location $orderby";
+                $query .= " ORDER BY ev.location $orderby";
                 break;
             case 'eventCont':
-                $query .= " ORDER BY $event_table.contact $orderby";
+                $query .= " ORDER BY ev.contact $orderby";
                 break;
             case 'eventFee':
-                $query .= " ORDER BY $event_table.fee $orderby";
+                $query .= " ORDER BY ev.fee $orderby";
                 break;
         }
     }
 
+    // FIXME: this query does not restrict on start and end dates.
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
 
     // Check for an error.
@@ -186,128 +159,104 @@ function julian_userapi_getevents($args)
     // Check for no rows found.
     if ($result->EOF) {
         $result->Close();
-        return;
+        return $items;
     }
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($eID,
-             $eCalendarID,
-             $eName,
-             $eDescription,
-             $eStreet1,
-             $eStreet2,
-             $eCity,
-             $eState,
-             $eZip,
-             $eEmail,
-             $ePhone,
-             $eLocation,
-             $eUrl,
-             $eContact,
-             $eOrganizer,
-             $eStart['timestamp'],
-             $eRecur['timestamp'],
-             $eDuration,
-             $eRrule,
-             $eIsallday,
-             $eFee) = $result->fields;
-          // Security check
-          if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
-              // Change date formats from UNIX timestamp to something readable.
-              // TODO: why do we need all this display stuff in here?
-              if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
-                  $eStart['mon'] = "";
-                  $eStart['day'] = "";
-                  $eStart['year'] = "";
-                  $eStart['linkdate'] = '';
-                  $eStart['viewdate'] = '';
-              } else {
-                  $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-                  $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
-              }
-              if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
-                  $eRecur['mon'] = "";
-                  $eRecur['day'] = "";
-                  $eRecur['year'] = "";
-                  $eRecur['linkdate'] = '';
-                  $eRecur['viewdate'] = '';
-              } else {
-                  $eRecur['linkdate'] = date("Ymd",strtotime($eRecur['timestamp']));
-                  $eRecur['viewdate'] = date("$dateformat",strtotime($eRecur['timestamp']));
-              }
-             $items[] = array('eID' => $eID,
-                              'eName' => $eName,
-                              'eDescription' => $eDescription,
-                              'eStreet1' => $eStreet1,
-                              'eStreet2' => $eStreet2,
-                              'eCity' => $eCity,
-                              'eState' => $eState,
-                              'eZip' => $eZip,
-                              'eEmail' => $eEmail,
-                              'ePhone' => $ePhone,
-                              'eLocation' => $eLocation,
-                              'eUrl' => $eUrl,
-                              'eContact' => $eContact,
-                              'eOrganizer' => $eOrganizer,
-                              'eStart' => $eStart,
-                              'i_moduleid' => '',
-                              'i_itemtype' => '',
-                              'i_itemid' => '',
-                              'i_DateTime' => strtotime($eStart['timestamp']),
-                              'eRecur' => $eRecur,
-                              'eDuration' => $eDuration,
-                              'eRrule' => $eRrule,
-                              'eIsallday' => $eIsallday,
-                              'eFee' => $eFee);
-          }
+            $eCalendarID, $eName, $eDescription,
+            $eStreet1, $eStreet2, $eCity, $eState, $eZip,
+            $eEmail, $ePhone, $eLocation, $eUrl,
+            $eContact, $eOrganizer,
+            $eStart['timestamp'], $eRecur['timestamp'], $eDuration,
+            $eRrule, $eIsallday, $eFee
+        ) = $result->fields;
+
+        // Security check
+        if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
+            // Change date formats from UNIX timestamp to something readable.
+            // TODO: why do we need all this display stuff in here?
+            if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
+                $eStart['mon'] = "";
+                $eStart['day'] = "";
+                $eStart['year'] = "";
+                $eStart['linkdate'] = '';
+                $eStart['viewdate'] = '';
+            } else {
+                $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
+                $eStart['viewdate'] = date("$dateformat", strtotime($eStart['timestamp']));
+            }
+
+            if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
+                $eRecur['mon'] = "";
+                $eRecur['day'] = "";
+                $eRecur['year'] = "";
+                $eRecur['linkdate'] = '';
+                $eRecur['viewdate'] = '';
+            } else {
+                $eRecur['linkdate'] = date("Ymd", strtotime($eRecur['timestamp']));
+                $eRecur['viewdate'] = date("$dateformat", strtotime($eRecur['timestamp']));
+            }
+
+            $items[] = array(
+                'eID' => $eID,
+                'eName' => $eName,
+                'eDescription' => $eDescription,
+                'eStreet1' => $eStreet1,
+                'eStreet2' => $eStreet2,
+                'eCity' => $eCity,
+                'eState' => $eState,
+                'eZip' => $eZip,
+                'eEmail' => $eEmail,
+                'ePhone' => $ePhone,
+                'eLocation' => $eLocation,
+                'eUrl' => $eUrl,
+                'eContact' => $eContact,
+                'eOrganizer' => $eOrganizer,
+                'eStart' => $eStart,
+                'i_moduleid' => '',
+                'i_itemtype' => '',
+                'i_itemid' => '',
+                'i_DateTime' => strtotime($eStart['timestamp']),
+                'eRecur' => $eRecur,
+                'eDuration' => $eDuration,
+                'eRrule' => $eRrule,
+                'eIsallday' => $eIsallday,
+                'eFee' => $eFee
+            );
+        }
     }
+
     // Close first result set
     $result->Close();
 
     // Get the linked events
-    /*
-    $condition = '';
-    if(strcmp($enddate,"")) {
-        $enddate=date('Y-m-d',strtotime($enddate));
-        $condition=" AND ((DATE_FORMAT(dtstart,'%Y-%m-%d')>='" . $startdate . "' AND DATE_FORMAT(dtstart,'%Y-%m-%d') <='" . $enddate . "') OR recur_freq>0) ";
-    } else {
-        $condition = " AND (DATE_FORMAT(dtstart,'%Y-%m-%d') ='". $startdate  ."' OR recur_freq>0)";
-        // set the end date to the start date for recurring events
-        $enddate=$startdate;
-    }
-    */
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
     $event_linkage_table = $xartable['julian_events_linkage'];
-    $query_linked = "SELECT DISTINCT event_id,
-                         hook_modid,
-                         hook_itemtype,
-                         hook_iid,
-                         summary,
-                         dtstart,
-                         duration,
-                         isallday,
-                         rrule,
-                         recur_freq,
-                         recur_count,
-                         recur_until,
-                         recur_interval
-                 FROM $event_linkage_table";
+    $query_linked = 'SELECT DISTINCT event_id,'
+        . ' hook_modid, hook_itemtype, hook_iid,'
+        . ' summary, dtstart, duration, isallday,'
+        . ' rrule, recur_freq, recur_count, recur_until, recur_interval'
+        . ' FROM ' . $event_linkage_table . ' AS el';
 
-    if ((!empty($startdate))&& (!empty($enddate))){
-        //$query_linked .= " WHERE DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') >= $startdate AND DATE_FORMAT($event_linkage_table.dtstart,'%Y%m%d') <= $enddate";
-        $query_linked .= " WHERE dtstart BETWEEN $startdate AND $enddate";
-       // $condition = " AND ( (dtstart BETWEEN '" . $startdate . "' AND '" . $enddatesql . "' ) OR recur_freq > 0 ) ";
+    if ((!empty($startdate)) && (!empty($enddate))) {
+        // FIXME: dates should be quoted at least; check and validate formats
+        // FIXME: allow for unset enddate
+        $query_linked .= " WHERE dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
+    } elseif (!empty($startdate)) {
+        $query_linked .= " WHERE dtstart >= '${startdate}000000'";
+    } elseif (!empty($enddate)) {
+        $query_linked .= " WHERE dtstart <= '${enddate}235959'";
     }
 
+    // TODO: include all the other ordering options
     if (isset($sortby)) {
         switch ($sortby) {
             case 'eventDate':
-                $query_linked .= " ORDER BY $event_linkage_table.dtstart $orderby";
+                $query_linked .= " ORDER BY el.dtstart $orderby";
                 break;
             case 'eventName':
-                $query_linked .= " ORDER BY $event_linkage_table.summary $orderby";
+                $query_linked .= " ORDER BY el.summary $orderby";
                 break;
         }
     }
@@ -324,80 +273,82 @@ function julian_userapi_getevents($args)
     // Put items into result array
     for (; !$result_linked->EOF; $result_linked->MoveNext()) {
         list($eID,
-             $hook_modid,
-             $hook_itemtype,
-             $hook_iid,
-             $eSummary,
-             $eStart['timestamp'],
-             $eDuration,
-             $eIsallday,
-             $eRrule,
-             $eRecurFreq,
-             $eRecurCount,
-             $eRecurUntil['timestamp'],
-             $recur_interval
-             ) = $result_linked->fields;
+            $hook_modid,
+            $hook_itemtype,
+            $hook_iid,
+            $eSummary,
+            $eStart['timestamp'],
+            $eDuration,
+            $eIsallday,
+            $eRrule,
+            $eRecurFreq,
+            $eRecurCount,
+            $eRecurUntil['timestamp'],
+            $recur_interval
+        ) = $result_linked->fields;
 
         $itemlinks = xarModAPIFunc('julian', 'user', 'geteventinfo',
-                         array('iid'     => $hook_iid,
-                               'itemtype'=> $hook_itemtype,
-                               'modid'   => $hook_modid));
+            array('iid' => $hook_iid, 'itemtype'=> $hook_itemtype, 'modid'   => $hook_modid)
+        );
 
         if (!empty($itemlinks['description'])) {
-              // Change date formats to configured types
-              if ($eStart['timestamp'] == '0000-00-00 00:00:00') {
-                  $eStart['mon'] = "";
-                  $eStart['day'] = "";
-                  $eStart['year'] = "";
-                  $eStart['linkdate'] = '';
-                  $eStart['viewdate'] = '';
-              } else {
-                  $eStart['linkdate'] = date("Ymd",strtotime($eStart['timestamp']));
-                  $eStart['viewdate'] = date("$dateformat",strtotime($eStart['timestamp']));
-              }
-              if ($eRrule ==0) {//$eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
-                  $eRecur['mon'] = "";
-                  $eRecur['day'] = "";
-                  $eRecur['year'] = "";
-                  $eRecur['linkdate'] = '';
-                  $eRecur['viewdate'] = '';
-              } else {
-                  $eRecur['linkdate'] = date("Ymd",strtotime($eRecurUntil['timestamp']));
-                  $eRecur['viewdate'] = date("$dateformat",strtotime($eRecurUntil['timestamp']));
-              }
+            // Change date formats to configured types
+            if ($eStart['timestamp'] == '0000-00-00 00:00:00') {
+                $eStart['mon'] = "";
+                $eStart['day'] = "";
+                $eStart['year'] = "";
+                $eStart['linkdate'] = '';
+                $eStart['viewdate'] = '';
+            } else {
+                $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
+                $eStart['viewdate'] = date("$dateformat", strtotime($eStart['timestamp']));
+            }
 
-             $items[] = array('eID' => $eID.'_link',
-                              'eName' => $eSummary,
-                              'eDescription' => $itemlinks['description'],
-                              'eStreet1' => '',
-                              'eStreet2' => '',
-                              'eCity' => '',
-                              'eState' => '',
-                              'eZip' => '',
-                              'eEmail' => '',
-                              'ePhone' => '',
-                              'eLocation' => '',
-                              'eUrl' => '',
-                              'eContact' => '',
-                              'eOrganizer' => '',
-                              'i_moduleid' =>  $hook_modid,
-                              'i_itemtype' => $hook_itemtype,
-                              'i_itemid' => $hook_iid,
-                              'eStart' => $eStart,
-                              'i_DateTime' => strtotime($eStart['timestamp']),
-                              'eRecur' => $eRecur,
-                              'eDuration' => $eDuration,
-                              'eRrule' => $eRrule,
-                              'eIsallday' => $eIsallday,
-                              'eFee' => ''
-                              );
+            if ($eRrule ==0) {//$eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
+                $eRecur['mon'] = "";
+                $eRecur['day'] = "";
+                $eRecur['year'] = "";
+                $eRecur['linkdate'] = '';
+                $eRecur['viewdate'] = '';
+            } else {
+                $eRecur['linkdate'] = date("Ymd", strtotime($eRecurUntil['timestamp']));
+                $eRecur['viewdate'] = date("$dateformat", strtotime($eRecurUntil['timestamp']));
+            }
+
+            $items[] = array(
+                'eID' => $eID.'_link',
+                'eName' => $eSummary,
+                'eDescription' => $itemlinks['description'],
+                'eStreet1' => '',
+                'eStreet2' => '',
+                'eCity' => '',
+                'eState' => '',
+                'eZip' => '',
+                'eEmail' => '',
+                'ePhone' => '',
+                'eLocation' => '',
+                'eUrl' => '',
+                'eContact' => '',
+                'eOrganizer' => '',
+                'i_moduleid' =>  $hook_modid,
+                'i_itemtype' => $hook_itemtype,
+                'i_itemid' => $hook_iid,
+                'eStart' => $eStart,
+                'i_DateTime' => strtotime($eStart['timestamp']),
+                'eRecur' => $eRecur,
+                'eDuration' => $eDuration,
+                'eRrule' => $eRrule,
+                'eIsallday' => $eIsallday,
+                'eFee' => ''
+            );
         }
     }
+
     // Close linked result set
     $result_linked->Close();
 
     // Sort all items
-    usort($items, 'datecompare');
+    usort($items, 'julian_userapi_getevents_datecompare');
 
     // Return the items
     return $items;
@@ -411,7 +362,7 @@ function julian_userapi_getevents($args)
  * @return int 0, -1 or 1 depending of the sort needed
  * @since 23 April 2006
  */
-function datecompare($x, $y)
+function julian_userapi_getevents_datecompare($x, $y)
 {
     if (!xarVarFetch('sortby',  'str:1:', $sortby,  'eventDate', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby', 'str:1:', $orderby, 'DESC',      XARVAR_NOT_REQUIRED)) return;
@@ -436,6 +387,7 @@ function datecompare($x, $y)
             $sort = 'eFee';
             break;
     }
+
     switch ($orderby) {
         case 'DESC':
             $first = -1;
@@ -446,14 +398,14 @@ function datecompare($x, $y)
             $sec   =-1;
             break;
     }
-    if ( $x[$sort] == $y[$sort] ) {
+
+    if ($x[$sort] == $y[$sort]) {
         return 0;
-    }
-    else if ( $x[$sort] < $y[$sort] ) {
+    } else if ($x[$sort] < $y[$sort]) {
         return $first;
-    }
-    else {
+    } else {
         return $sec;
     }
 }
+
 ?>
