@@ -51,6 +51,15 @@ function registration_user_register()
         return;
     }
 
+    //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
+     $lockvars = unserialize(xarModGetVar('roles','lockdata'));
+     if ($lockvars['locked'] ==1) {
+        xarErrorSet(XAR_SYSTEM_MESSAGE,
+       'SITE_LOCKED',
+        new SystemMessage($lockvars['message']));
+        return;     
+     }
+    
     xarTplSetPageTitle(xarML('New Account'));
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
