@@ -38,16 +38,20 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('sortby', 'enum:eventDate:eventName:eventDesc:eventLocn:eventCont:eventFee', $sortby, 'eventDate', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby',     'enum:ASC:DESC', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('start_month', 'str::',  $startmonth,  '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_day',   'str::',  $startday,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('start_year',  'str::',  $startyear,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_year',  'int:0:9999',  $startyear,   0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_month', 'int:0:12',  $startmonth,  0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start_day',   'int:0:31',  $startday,    0, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('end_month',   'str::',  $endmonth,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_day',     'str::',  $endday,      '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('end_year',    'str::',  $endyear,     '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_year',    'int:0:9999',  $endyear,     0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_month',   'int:0:12',  $endmonth,    0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end_day',     'int:0:31',  $endday,      0, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
     if (!xarVarFetch('catid',       'id',     $catid,       0, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datetype', 'pre:lower:passthru:enum:day:days:week:weeks:month:months:year:years', $datetype, '', XARVAR_NOT_REQUIRED)) return;
+
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1)) return;
@@ -63,38 +67,52 @@ function julian_user_viewevents($args)
     // Set the selected date parts,timestamp, and cal_date in the data array.
     $bl_data = xarModAPIFunc('julian', 'user', 'getUserDateTimeInfo');
     $bl_data['year'] = $c->getCalendarYear($bl_data['selected_year']);
+
     // Create the date stretch to get events for.
-    // We start with listing from today on.
+    // We need to find 'start' and 'end', which can be derived from a number of places.
+
+    // Start by defaulting the start and end dates. We can override the defaults later.
+    // We will keep all dates in string format YYYYMMDD
+    // Today:
+    $startdate = date('Ymd');
+    // One month from today:
+    $enddate = date('Ymd', strtotime('+1 month'));
     
-    // First see if we are given a time stretch
-    if (empty($startday)) {
-        // Set the start day to the first month and day of the selected year.
-        //$startdate=$bl_data['selected_year']."-01-01";
-        //Use today
-        $startdate = date("Ymd");
-        $bl_data['start_year'] = date("Y");
-        $bl_data['start_month'] = date("m");
-        $bl_data['start_day'] = date("d");
-    } else {
-        $startdate = $startyear.$startmonth.$startday;
-        $bl_data['start_year'] = $startyear;
-        $bl_data['start_month'] = $startmonth;
-        $bl_data['start_day'] = $startday;
+    // Check the start date components
+    if (!empty($startyear)) {
+        if (!empty($startmonth)) {
+            if (!empty($startday)) {
+                // Year month and day
+                $startdate = date('Ymd', strtotime("$startyear-$startmonth-$startday"));
+            } else {
+                // Just year and month (pick first day of the month)
+                $startdate = date('Ymd', strtotime("$startyear-$startmonth-01"));
+            }
+        } else {
+            // Just the year (pick first day of the year)
+            $startdate = date('Ymd', strtotime("$startyear-01-01"));
+        }
     }
 
-    if (empty($endday)) {
-        // Set the end date to the last month and last day of the selected year.
-        $nextmonth = date("Ymd",(mktime(0, 0, 0, date("m")+1, date("d"),  date("Y"))));
-        $enddate=$nextmonth;
+    // Check the end date components
+    if (!empty($endyear)) {
+        if (!empty($endmonth)) {
+            if (!empty($endday)) {
+                // Year month and day
+                $enddate = date('Ymd', strtotime("$endyear-$endmonth-$endday"));
+            } else {
+                // Just year and month (pick last day of the month)
+                $enddate = date('Ymd', strtotime("$endyear-$endmonth-" . date('d', mktime(0, 0, 0, ($endmonth + 1), 0, $endyear))));
+            }
+        } else {
+            // Just the year (pick last day of the year)
+            $enddate = date('Ymd', strtotime("$endyear-12-31"));
+        }
+    }
 
-        $bl_data['end_year'] = date("Y")+1;
-        $bl_data['end_month'] = date("m");
-        $bl_data['end_day'] = date("d");
-    } else {
-        $enddate = $endyear.$endmonth.$endday;
-        $bl_data['end_year'] = $endyear;
-        $bl_data['end_month'] = $endmonth;
-        $bl_data['end_day'] = $endday;
+    if (!empty($datenumber) && !empty($datetype)) {
+        // Set the end date to the start date plus any number of days, weeks, months or years.
+        $enddate = date('Ymd', strtotime("+$datenumber $datetype", strtotime($startdate)));
     }
 
     // Bullet style
@@ -192,6 +210,15 @@ function julian_user_viewevents($args)
     } else {
         $bl_data['eventfeeurl'] = '';
     }
+
+    // Start and end date components to pass back to the template.
+    $bl_data['start_year'] = date("Y", strtotime($startdate));
+    $bl_data['start_month'] = date("m", strtotime($startdate));
+    $bl_data['start_day'] = date("d", strtotime($startdate));
+
+    $bl_data['end_year'] = date("Y", strtotime($enddate));
+    $bl_data['end_month'] = date("m", strtotime($enddate));
+    $bl_data['end_day'] = date("d", strtotime($enddate));
 
     // Create Pagination.
     // FIXME: the count does not take dates into account; suggest modifying getevents to return a count based on main selection
