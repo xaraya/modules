@@ -35,7 +35,6 @@
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: rewrite some queries for pgsql
  * @todo Combine getevents and getall APIs - they are just too similar to warrent being separate
- * @todo Strictly the format of DATETIME MySQL column is 'Y-m-d H:i:s', not the 'YmdHis' used at present
  */
 function julian_userapi_getevents($args)
 {
@@ -110,22 +109,21 @@ function julian_userapi_getevents($args)
 
         $query .= ' FROM (' . $event_table. ' AS ev'
             . ' LEFT JOIN ' . $categoriesdef['table']
-            . ' ON ' . $categoriesdef['field'] . ' = event_id)'
+            . ' ON ' . $categoriesdef['field'] . ' = ev.event_id)'
             . $categoriesdef['more']
             . ' WHERE ' . $categoriesdef['where'];
     } else {
-        $query .= ' FROM ' . $event_table . ' AS ev';
+        $query .= ' FROM ' . $event_table . ' AS ev WHERE 1 = 1';
     }
 
     // FIXME: date formats should be validated
-    // FIXME: use the script format for the date.
     // The dtstart column is a datetime type, and takes the format 'YYYYMMDDHHMMSS'
     if ((!empty($startdate)) && (!empty($enddate))) {
-        $query .= " WHERE ev.dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
+        $query .= " AND ev.dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
     } elseif (!empty($startdate)) {
-        $query .= " WHERE ev.dtstart >= '${startdate}000000'";
+        $query .= " AND ev.dtstart >= '${startdate}000000'";
     } elseif (!empty($enddate)) {
-        $query .= " WHERE ev.dtstart <= '${enddate}235959'";
+        $query .= " AND ev.dtstart <= '${enddate}235959'";
     }
 
     // This is double now, as the array is being sorted anyway
@@ -180,9 +178,9 @@ function julian_userapi_getevents($args)
             // Change date formats from UNIX timestamp to something readable.
             // TODO: why do we need all this display stuff in here?
             if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
-                $eStart['mon'] = '';
-                $eStart['day'] = '';
-                $eStart['year'] = '';
+                $eStart['mon'] = "";
+                $eStart['day'] = "";
+                $eStart['year'] = "";
                 $eStart['linkdate'] = '';
                 $eStart['viewdate'] = '';
             } else {
@@ -191,9 +189,9 @@ function julian_userapi_getevents($args)
             }
 
             if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
-                $eRecur['mon'] = '';
-                $eRecur['day'] = '';
-                $eRecur['year'] = '';
+                $eRecur['mon'] = "";
+                $eRecur['day'] = "";
+                $eRecur['year'] = "";
                 $eRecur['linkdate'] = '';
                 $eRecur['viewdate'] = '';
             } else {
@@ -242,8 +240,8 @@ function julian_userapi_getevents($args)
         . ' FROM ' . $event_linkage_table . ' AS el';
 
     if ((!empty($startdate)) && (!empty($enddate))) {
-        // FIXME: check and validate formats.
-        // FIXME: use the script format for the date.
+        // FIXME: dates should be quoted at least; check and validate formats
+        // FIXME: allow for unset enddate
         $query_linked .= " WHERE dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
     } elseif (!empty($startdate)) {
         $query_linked .= " WHERE dtstart >= '${startdate}000000'";
@@ -397,7 +395,7 @@ function julian_userapi_getevents_datecompare($x, $y)
             break;
         case 'ASC':
             $first = 1;
-            $sec   = -1;
+            $sec   =-1;
             break;
     }
 
