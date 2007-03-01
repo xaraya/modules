@@ -157,12 +157,12 @@ function dyn_example_init()
      */
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/xardata/modulesettings.xml'));
+                              array('file' => 'modules/dyn_example/xardata/modulesettings-def.xml'));
     if (empty($objectid)) return;
     xarModSetVar('dyn_example','modulesettings',$objectid);
 
     $objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/dyn_example/xardata/usersettings.xml'));
+                              array('file' => 'modules/dyn_example/xardata/usersettings-def.xml'));
     if (empty($objectid)) return;
     xarModSetVar('dyn_example','usersettings',$objectid);
 
