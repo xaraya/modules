@@ -16,7 +16,7 @@
                 <xar:mlstring>Allowed</xar:mlstring>
             </th>
             <th>
-                <xar:mlstring>Allowed With Parameters</xar:mlstring>
+                <xar:mlstring>Allowed With Attributes</xar:mlstring>
             </th>
             <th>
                 <xar:mlstring>Options</xar:mlstring>

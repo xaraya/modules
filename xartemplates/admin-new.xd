@@ -46,7 +46,7 @@
                    &nbsp;&nbsp;<xar:mlstring>Allowed</xar:mlstring>
                    <br />
                    <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked" />
-                   &nbsp;&nbsp;<xar:mlstring>Allowed with Parameters</xar:mlstring>
+                   &nbsp;&nbsp;<xar:mlstring>Allowed with Attributes</xar:mlstring>
             </p>
          </div>
         </fieldset>

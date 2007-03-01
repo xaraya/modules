@@ -121,7 +121,7 @@ function html_init()
     // The default values of the HTML tags are:
     //   0 = Not allowed
     //   1 = Allowed
-    //   2 = Allowed with parameters
+    //   2 = Allowed with attributes
     $htmltags = array('!--' =>      2,
                       'a' =>        2,
                       'abbr' =>     0,
