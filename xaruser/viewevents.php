@@ -36,7 +36,7 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('numitems',    'int:1:200', $numitems, xarModGetVar('julian', 'itemsperpage'), XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('sortby', 'enum:eventDate:eventName:eventDesc:eventLocn:eventCont:eventFee', $sortby, 'eventDate', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('orderby',     'enum:ASC:DESC', $orderby,     'DESC', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('orderby',     'enum:ASC:DESC', $orderby,     'ASC', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('start_year',  'int:0:9999',  $startyear,   0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('start_month', 'int:0:12',  $startmonth,  0, XARVAR_NOT_REQUIRED)) return;
@@ -50,7 +50,7 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('catid',       'id',     $catid,       0, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('datetype', 'pre:lower:passthru:enum:day:days:week:weeks:month:months:year:years', $datetype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED)) return;
 
 
     // Security check
@@ -134,11 +134,6 @@ function julian_user_viewevents($args)
     $enddate_chooser = ($endyear . $endmonth . $endday);
     //$bl_data['startdate'] = $startdate;
     $bl_data['enddate'] = $enddate_chooser;
-
-    // If sorting by Event date, then sort in descending order,
-    // so that the latest Event is first.
-    // CHECKME: why? Isn't this under user control?
-    if ($sortby == 'eventDate') $orderby = 'DESC';
 
     // The user API Function is called: get all events for these selectors
     $events = xarModAPIFunc('julian', 'user', 'getevents',
