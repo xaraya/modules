@@ -220,6 +220,40 @@ function julian_user_viewevents($args)
     $bl_data['end_month'] = date("m", strtotime($enddate));
     $bl_data['end_day'] = date("d", strtotime($enddate));
 
+    // Pass the datenumber and datetype to the template
+    if (empty($datanumber)) {
+        // Make up a new set, based on the actual start and end dates.
+        // It will be an approximation, but hopefully a useful one.
+        $period_days = round((strtotime($enddate) - strtotime($startdate)) / (60  * 60 * 24));
+        if ($period_days <= 28) {
+            if ($period_days % 7 == 0) {
+                $datenumber = $period_days / 7;
+                $datetype = 'weeks';
+            } else {
+                $datenumber = $period_days;
+                $datetype = 'days';
+            }
+        } elseif ($period_days <= 365) {
+            // If period is divisible by 30, plus or minus a few days
+            if (($period_days + 30 - 4) % 30 <= 8){
+                $datenumber = round($period_days / 30);
+                $datetype = 'months';
+            } elseif ($period_days % 7 == 0) {
+                $datenumber = $period_days / 7;
+                $datetype = 'weeks';
+            } else {
+                $datenumber = $period_days;
+                $datetype = 'days';
+            }
+        } else {
+            $datenumber = round($period_days / 365);
+            $datetype = 'years';
+        }
+    }
+
+    $bl_data['datenumber'] = $datenumber;
+    $bl_data['datetype'] = $datetype;
+
     // Create Pagination.
     // FIXME: the count does not take dates into account; suggest modifying getevents to return a count based on main selection
     // FIXME: the pager URL does not take other selection criteria into account; suggest trying xarServerGetCurrentURL()

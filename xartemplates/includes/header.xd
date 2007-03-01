@@ -72,6 +72,22 @@ being set to blank.
     <form method="post" action="#xarModURL('julian','user','jump')#" onsubmit="return validate(this)">
         <div>
             <input type="submit" name="submit" value="#xarML('Jump to')#" />
+            <select name="jump_day">
+                <option value=""></option>
+                <xar:for start="$i = 1" test="$i le 31" iter="$i++">
+                    <xar:if condition="$i lt 10">
+                        <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                    <xar:else />
+                        <xar:set name="$currDay">#$i#</xar:set>
+                    </xar:if>
+                    <xar:set name="$daySelected">""</xar:set>
+                    <xar:set name="$todays_day">date("d");</xar:set>
+                    <xar:if condition="$todays_day eq $currDay">
+                        <xar:set name="$daySelected">'selected="selected"'</xar:set>
+                    </xar:if>
+                    <option value="#$currDay#" #$daySelected#>#$currDay#</option>
+                </xar:for>
+            </select>
             <select name="jump_month" onchange="populateSelect(this, this.form.jump_day, this.form.jump_year)">
                 <option value=""></option>
                 <xar:for start="$i = 1" test="$i le 12" iter="$i++">
@@ -87,22 +103,6 @@ being set to blank.
                         <xar:set name="$monthSelected">'selected="selected"'</xar:set>
                     </xar:if>
                     <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
-                </xar:for>
-            </select>
-            <select name="jump_day">
-                <option value=""></option>
-                <xar:for start="$i = 1" test="$i le 31" iter="$i++">
-                    <xar:if condition="$i lt 10">
-                        <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
-                    <xar:else />
-                        <xar:set name="$currDay">#$i#</xar:set>
-                    </xar:if>
-                    <xar:set name="$daySelected">""</xar:set>
-                    <xar:set name="$todays_day">date("d");</xar:set>
-                    <xar:if condition="$todays_day eq $currDay">
-                        <xar:set name="$daySelected">'selected="selected"'</xar:set>
-                    </xar:if>
-                    <option value="#$currDay#" #$daySelected#>#$currDay#</option>
                 </xar:for>
             </select>
             <select name="jump_year" onchange="populateSelect(this.form.jump_month, this.form.jump_day, this)">
