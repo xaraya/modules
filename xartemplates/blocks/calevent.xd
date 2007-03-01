@@ -1,7 +1,7 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
 <xar:style module="julian" scope="block" file="julian" /> -->
- <link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/style.css" />
+<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/style.css" />
 
 <div class="xar-julian xar-julian-block-calevent">
     <div class="xar-julian-calevent-today">
@@ -11,15 +11,15 @@
         <xar:foreach in="$todaysevents" key="$key" value="$val">
             <xar:foreach in="$todaysevents[$key]" key="$key2" value="$val2">
                <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-               <font size="3" color="#$val2['color']#">#$Bullet#</font>
-               <li style="color: #$val2['color']#;">
+               <span style="font-size: 3;" color="#$val2.color#">#$Bullet#</span>
+               <li style="color: #$val2.color#;">
                    <div class="li-content">
                    <xar:if condition="$val2['isallday'] lt 1">
-                       <span class="xar-sub">#$val2['time']#</span>
+                       <span class="xar-sub">#$val2.time#</span>
                    <xar:else /><span class="xar-sub"><xar:mlstring>All day</xar:mlstring></span>
                    </xar:if>
                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
-                           #$val2['summary']#
+                           #$val2.summary#
                        </a>
                    </div>
                </li>
@@ -37,8 +37,8 @@
             <strong>
                <xar:mlstring>Upcoming Events </xar:mlstring>
                <xar:ml>
-               <xar:mlstring>for the next #(1) days</xar:mlstring>
-               <xar:mlvar>#$EventBlockDays#</xar:mlvar>
+                 <xar:mlstring>for the next #(1) days</xar:mlstring>
+                 <xar:mlvar>#$EventBlockDays#</xar:mlvar>
                </xar:ml>
             </strong>
             <xar:set name="$hasevent2">0</xar:set>
@@ -48,10 +48,10 @@
                     <li style="color: #$val2['color']#;">
                         <div class="li-content">
                             <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                            <font size="3" color="#$val2['color']#">#$Bullet#</font>
-                            <span class="xar-sub">#$val2['Fstartdate']# #$val2['Ftime']#</span>
-                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2['linkdate'],'event_id'=>$val2['event_id']))#" class="xar-julian-event">
-                                #$val2['summary']#
+                            <span style="font-size: 3;" color="#$val2.color#">#$Bullet#</font>
+                            <span class="xar-sub">#$val2.Fstartdate# #$val2.Ftime#</span>
+                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$val2.linkdate,'event_id'=>$val2.event_id))#" class="xar-julian-event">
+                                #$val2.summary#
                             </a>
                         </div>
                     </li>
