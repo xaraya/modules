@@ -127,24 +127,24 @@
                 </select></xar:comment>
                 <select name="datetype">
                     <xar:if condition="$datetype eq 'days'">
-                        <option value="day" selected="selected">Day(s)</option>
+                        <option value="days" selected="selected">Day(s)</option>
                     <xar:else />
-                        <option value="day">Day(s)</option>
+                        <option value="days">Day(s)</option>
                     </xar:if>
                     <xar:if condition="$datetype eq 'weeks'">
-                        <option value="week" selected="selected">Week(s)</option>
+                        <option value="weeks" selected="selected">Week(s)</option>
                     <xar:else />
-                        <option value="week">Week(s)</option>
+                        <option value="weeks">Week(s)</option>
                     </xar:if>
                     <xar:if condition="$datetype eq 'months'">
-                        <option value="month" selected="selected">Month(s)</option>
+                        <option value="months" selected="selected">Month(s)</option>
                     <xar:else />
-                        <option value="month">Month(s)</option>
+                        <option value="months">Month(s)</option>
                     </xar:if>
                     <xar:if condition="$datetype eq 'years'">
-                        <option value="year" selected="selected">Year(s)</option>
+                        <option value="years" selected="selected">Year(s)</option>
                     <xar:else />
-                        <option value="year">Year(s)</option>
+                        <option value="years">Year(s)</option>
                     </xar:if>
                 </select>
                 <input type="submit" name="submit" value="Get Events" />

@@ -116,7 +116,7 @@ function julian_user_viewevents($args)
     }
 
     // Bullet style
-    $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+    $bl_data['Bullet'] = '&' . xarModGetVar('julian', 'BulletForm') . ';';
 
     // Prepare the array variables that will hold all items for display.
     $bl_data['events'] = array();
@@ -216,7 +216,7 @@ function julian_user_viewevents($args)
     $bl_data['end_day'] = date("d", strtotime($enddate));
 
     // Pass the datenumber and datetype to the template
-    if (empty($datanumber)) {
+    if (empty($datenumber)) {
         // Make up a new set, based on the actual start and end dates.
         // It will be an approximation, but hopefully a useful one.
         $period_days = round((strtotime($enddate) - strtotime($startdate)) / (60  * 60 * 24));
