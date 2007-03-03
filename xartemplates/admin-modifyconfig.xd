@@ -1,5 +1,5 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
@@ -14,21 +14,21 @@
 <div class="xar-mod-body">
     <h2>
         <xar:mlstring>
-            Modify Configuration 
+            Modify Configuration
         </xar:mlstring>
     </h2>
     <div>
         <dl class="xar-tabs">
             <dt class="help">
                 <xar:mlstring>
-                    Actions: 
+                    Actions:
                 </xar:mlstring>
             </dt>
             <xar:if condition="$tab eq 'general'">
                 <dd class="active">
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
-                            General 
+                            General
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -36,7 +36,7 @@
                 <dd>
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
-                            General 
+                            General
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -45,7 +45,7 @@
                 <dd class="active">
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
                         <xar:mlstring>
-                            Tab2 
+                            Tab2
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -53,7 +53,7 @@
                 <dd>
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
                         <xar:mlstring>
-                            Tab2 
+                            Tab2
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -62,7 +62,7 @@
                 <dd class="active">
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
                         <xar:mlstring>
-                            Tab3 
+                            Tab3
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -70,7 +70,7 @@
                 <dd>
                     <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
                         <xar:mlstring>
-                            Tab3 
+                            Tab3
                         </xar:mlstring>
                     </a>
                 </dd>
@@ -78,25 +78,25 @@
         </dl>
     </div>
     <xar:comment>
-         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
+         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-foo-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <h3>
                 <xar:mlstring>
-                    General Options 
+                    General Options
                 </xar:mlstring>
             </h3>
             <fieldset>
                 <legend>
                     <xar:mlstring>
-                        Page Layout 
+                        Page Layout
                     </xar:mlstring>
                 </legend>
                 <div class="xar-form-input-wrapper">
                     <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
                         <xar:mlstring>
-                            Items Per Page: 
+                            Items Per Page:
                         </xar:mlstring>
                     </label>
                     <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('foo', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
@@ -109,7 +109,7 @@
                     </xar:if>
                     <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
                         <xar:mlstring>
-                            Enable Short URLs 
+                            Enable Short URLs
                         </xar:mlstring>
                     </label>
                 </div>
@@ -120,7 +120,7 @@
                         </xar:mlstring>
                     </label>
                     <xar:set name="checked">xarModGetVar('foo','useModuleAlias')</xar:set>
-                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" value="1" checked="$checked" />
+                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
@@ -141,7 +141,7 @@
             </fieldset>
         </form>
         <xar:comment>
-             - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - - 
+             - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
         </xar:comment>
         <xar:elseif condition="$tab eq 'tab2'" />
         <xar:comment>
