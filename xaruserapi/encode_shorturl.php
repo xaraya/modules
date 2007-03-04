@@ -1,104 +1,95 @@
 <?php
-/**
- * Encode Short URLS
- *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
- */
-/**
- * return the path for a short URL to xarModURL for this module
- *
- * @author the Example module development team
- * @param $args the function and arguments passed to xarModURL
- * @returns string
- * @return path to be added to index.php for a short URL, or empty if failed
- */
-function shop_userapi_encode_shorturl($args)
+//$Id: encode_shorturl.php,v 1.2 2003/06/20 17:31:56 roger Exp $
+
+function calendar_userapi_encode_shorturl(&$params)
 {
     // Get arguments from argument array
-    extract($args);
-
-    // Check if we have something to work with
-    if (!isset($func)) {
-        return;
-    }
-
-    // Note : make sure you don't pass the following variables as arguments in
-    // your module too - adapt here if necessary
-
+    //extract($args); unset($args);
+    // check if we have something to work with
+    if (!isset($params['func'])) { return; }
+    $day = $month = $year = null;
     // default path is empty -> no short URL
     $path = '';
-    // if we want to add some common arguments as URL parameters below
-    $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
-    $module = 'shop';
+    $extra = '';
+    // we can't rely on xarModGetName() here (yet) !
+    $module = 'calendar';
+    if(isset($params['cal_date']) && !empty($params['cal_date'])) {
+        $year = substr($params['cal_date'],0,4);
+        $month = substr($params['cal_date'],4,2);
+        $day = substr($params['cal_date'],6,2);
+    }
+    if(empty($year))  $year  = xarLocaleFormatDate('%Y');
+    if(empty($month)) $month = xarLocaleFormatDate('%m');
+    if(empty($day))   $day   = xarLocaleFormatDate('%d');
+
 
     // specify some short URLs relevant to your module
-    if ($func == 'main') {
-        $path = '/' . $module . '/';
+    switch($params['func']) {
+        case 'main':
+            $path = "/$module/";
+            break;
 
-        // Note : if your main function calls some other function by default,
-        // you should set the path to directly to that other function
+        case 'day':
+            $path = "/$module/$year$month$day/";
+            break;
 
-    } elseif ($func == 'view') {
+        case 'week': // it would be nice if this could be shorter, but probably not
+            $path = "/$module/week/$year$month$day/";
+            break;
 
-		if (isset($name)) {
-			$path = '/' . $module . '/' . $name;
-		}
+        case 'month':
+            $path = "/$module/$year$month/";
+            break;
 
-        // we'll add the optional $startnum parameter below, as a regular
-        // URL parameter
+        case 'year':
+            $path = "/$module/$year/";
+            break;
 
-    } elseif ($func == 'display') {
-        // check for required parameters
-        if (isset($name) && isset($itemid) && is_numeric($itemid)) {
-            $path = '/' . $module . '/' . $name . '/' . $itemid;
+        case 'modifyconfig':
+            $path = "/$module/modifyconfig/";
+            break;
 
-            // you might have some additional parameter that you want to use to
-            // create different virtual paths here - for example a category name
-            // See above for an example...
+        /*
+        case 'submit':
+            $path = "/$module/submit/$year$month$day/";
+            break;
 
-        } else {
-            // we don't know how to handle that -> don't create a path here
-
-            // Note : this generally means that someone tried to create a
-            // link to your module, but used invalid parameters for xarModURL
-            // -> you might want to provide a default path to return to
-            // $path = '/' . $module . '/list.html';
-        }
-
-    } else {
-        // anything else that you haven't defined a short URL equivalent for
-        // -> don't create a path here
-    }
-
-    // add some other module arguments as standard URL parameters
-    if (!empty($path)) {
-        if (isset($startnum)) {
-            $path .= $join . 'startnum=' . $startnum;
-            $join = '&';
-        }
-        if (!empty($catid)) {
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
-        } elseif (!empty($cids) && count($cids) > 0) {
-            if (!empty($andcids)) {
-                $catid = join('+',$cids);
-            } else {
-                $catid = join('-',$cids);
+        case 'edit':
+            $path = "/$module/edit/";
+            if(isset($params['cal_eid']) && !empty($params['cal_eid'])) {
+                $path .= xarVarPrepForDisplay($params['cal_eid']).'.html/';
             }
-            $path .= $join . 'catid=' . $catid;
-            $join = '&';
-        }
+            break;
+
+        case 'publish':
+            $path = "/$module/publish/";
+            if(isset($params['calname']) && !empty($params['calname'])) {
+                $path .= xarVarPrepForDisplay($params['calname']).'.ics';
+            }
+            break;
+        */
     }
 
-    return $path;
+    /*
+    if(!empty($path) && isset($params['cal_sdow'])) {
+        $join = empty($extra) ? '?' : '&amp;';
+        $extra .= $join . 'cal_sdow=' . $params['cal_sdow'];
+    }
+    */
+
+    if(!empty($path) && isset($params['cal_category'])) {
+        $join = empty($extra) ? '?' : '&amp;';
+        $extra .= $join . 'cal_category=' . $params['cal_category'];
+    }
+
+    if(!empty($path) && isset($params['cal_topic'])) {
+        $join = empty($extra) ? '?' : '&amp;';
+        $extra .= $join . 'cal_topic=' . $params['cal_topic'];
+    }
+
+
+    return $path.$extra;
+
 }
 
 ?>

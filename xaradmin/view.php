@@ -1,45 +1,9 @@
 <?php
-/**
- * Mailer Module
- *
- * @package modules
- * @subpackage mailer module
- * @copyright (C) 2010 Netspan AG
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
- */
-/**
- * View items of the mailer object
- *
- */
-    function mailer_admin_view($args)
+    function calendar_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageMailer')) return;
-
-        $modulename = 'mailer';
-
-        // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
-        if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
-
-        // Set a return url
-        xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServer::getCurrentURL()));
-        
-        $userrealmid = 0;
-        
-        if (xarModIsAvailable('realms')) {
-            $userrealmid = xarModAPIFunc('realms', 'admin', 'getrealmid');
-        }
-
-        // Get the available dropdown options
-        $object = DataObjectMaster::getObjectList(array('objectid' => 1));
-        $data['objectname'] = xarModUserVars::get($modulename,'defaultmastertable');
-        $items = $object->getItems();
-        $options = array();
-        foreach ($items as $item)
-            if (strpos($item['name'],$modulename) !== false)
-                $options[] = array('id' => $item['name'], 'name' => $item['name']);
-        $data['options'] = $options;
+        if (!xarSecurityCheck('EditCalendar')) return;
+        $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'calendar_calendar'));
+        $data['object']->getItems();
         return $data;
     }
 ?>

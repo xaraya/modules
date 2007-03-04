@@ -1,0 +1,45 @@
+<xar:template file="navheader" />
+<xar:style scope="module" module="calendar" file="user-month" />
+<!--
+<xar:comment>
+    Define our navigation elements.
+    TODO: Make a nice API Function for creating the valid URLS
+    <xar:set name="prevYearURL">#xarModURL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))#</xar:set>
+
+</xar:comment>
+-->
+<xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYearURL">#$DayURI->prev('year')#</xar:set>
+
+<xar:set name="prevDayTitle"><xar:mlstring>Previous Day</xar:mlstring></xar:set>
+<xar:set name="prevDayURL">#$DayURI->prev('day')#</xar:set>
+
+<xar:set name="nextDayTitle"><xar:mlstring>Next Day</xar:mlstring></xar:set>
+<xar:set name="nextDayURL">#$DayURI->next('day')#</xar:set>
+
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYearURL">#$DayURI->next('year')#</xar:set>
+
+<table id="cal-calendar">
+    <tr>
+        <th class="cal-navigation">
+            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
+            <a href="#$prevDayURL#" title="#$prevDayTitle#">&lt;</a>
+            #xarLocaleFormatDate('%B %d %Y',$Day->getTimeStamp())#
+            <a href="#$nextDayURL#" title="#$nextDayTitle#">&gt;</a>
+            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+        </th>
+    </tr>
+    <!-- START :: LOOP THROUGH HOURS FOR THIS DAY -->
+    <tr>
+        <td>
+            &nbsp;
+        </td>
+    </tr>
+</table>
+
+<xar:comment> include the calendar footer </xar:comment>
+<xar:template file="todayfooter" />
+</div>

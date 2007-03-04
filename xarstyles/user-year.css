@@ -1,0 +1,67 @@
+#cal-calendar {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+}
+
+#cal-calendar .cal-container {
+    vertical-align: top;
+    padding: 5px;
+}
+
+#cal-calendar .cal-navigation {
+    font-weight: bold;
+    font-size: 1.6em;
+    text-decoration: none;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+#cal-calendar .cal-navigation a {
+    text-decoration: none;
+    /*margin: 0 15px 0 15px;*/
+}
+
+#cal-calendar .cal-week-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    padding-right: 5px;
+}
+
+#cal-calendar .cal-day-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    width: 13%;
+    text-align: center;
+}
+
+#cal-calendar .cal-week {
+    border-right: 2px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding-right: 5px;
+}
+
+#cal-calendar .cal-week a {
+    text-decoration: none;
+
+}
+
+#cal-calendar .cal-day {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#cal-calendar .cal-day a {
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#cal-calendar .cal-day a:hover {
+    text-decoration: none;
+}

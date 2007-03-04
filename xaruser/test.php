@@ -1,42 +1,34 @@
 <?php
-/**
- * Mailer Module
- *
- * @package modules
- * @subpackage mailer module
- * @copyright (C) 2010 Netspan AG
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
- */
-/**
- * Test function
- *
- */
 
-    function mailer_user_test()
-    {
-        // Security Check
-        if (!xarSecurityCheck('ReadMailer')) return;
+function calendar_user_test()
+{
+// some timing for now to see how fast|slow the parser is
+include_once('Benchmark/Timer.php');
+$t =& new Benchmark_Timer;
+$t->start();
+    $ical = xarModAPIFunc('icalendar','user','factory','ical_parser');
+$t->setMarker('Class Instantiated');
+    xarVarFetch('file','str::',$file);
+$t->setMarker('File Var Fetched');
+    //$ical->setFile('modules/timezone/zoneinfo/America/Phoenix.ics');
+    $ical->setFile($file);
+$t->setMarker('File Set');
+    $ical->parse();
+$t->setMarker('Parsing Complete');
 
-        if (!xarVarFetch('phase', 'str:1:100', $phase, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('message_id', 'int', $data['message_id'], 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('locale', 'str:1:100', $data['locale'], 'en_US.utf-8', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('recipientaddress', 'str:1:100', $data['recipientaddress'], '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+$t->stop();
 
-        if ($phase == 'submit') {
-            if (!xarSecConfirmAuthKey()) return;
-            if (!empty($data['message_id'])) {
-                $data['result'] = xarModAPIFunc('mailer','user','send',
-                                array(
-                                    'id'               => $data['message_id'],
-                                    'locale'           => $data['locale'],
-                                    'recipientname'    => xarModVars::get('mailer','defaultsendername'),
-                                    'recipientaddress' => $data['recipientaddress'],
-                                )
-                            );
-            }
-        }
-        return $data;
-    }
+    ob_start();
+        print_r($ical);
+        $ical_out = ob_get_contents();
+    ob_end_clean();
+
+    $data = array(
+        'ical'=>$ical_out,
+        'profile'=>$t->getOutput()
+    );
+
+    return $data;
+}
 
 ?>

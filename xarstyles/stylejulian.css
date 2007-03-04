@@ -1,0 +1,329 @@
+/*There's a bug with IE on the date border where border-bottom doesn't display.
+    It has something to do with the height of the weekend, which we can't take out
+    or the calendar looks "squished".
+    Tooltips: Gary Sedgwick
+    */
+/**
+ * This is the new version of the stylesheet for Julian
+ * From 12 March 2006 onwards, this new style.css replaces the julian.css
+ * and uses shortened names for classes.
+ */
+div.xar-julian a {
+    text-decoration: none;
+    clear:left;
+}
+div.xar-julian li {
+    list-style-type: none;
+}
+div.xar-julian a:hover {
+
+}
+
+div.xar-julian-header {
+}
+
+div.xar-julian-footer {
+    margin-top: 10px;
+    text-align: center;
+}
+
+div.xar-julian-footer a {
+    text-decoration: underline;
+}
+
+div.xar-julian-contents {
+    margin-top: 10px;
+    padding: 5px;
+    clear: bottom;
+}
+
+div.xar-julian-contents h1 {
+    font-size: 1.5em;
+}
+
+div.xar-julian-contents h2 {
+    font-size: 1.2em;
+}
+
+div.xar-julian-contents-icons {
+    float: right;
+}
+
+div.xar-julian-cal {
+    margin-top: 10px;
+}
+
+div.xar-julian-cal a {
+    font-size:10px;
+}
+
+div.xar-julian-cal-nav {
+    padding: 2px;
+    border-bottom: 1px solid gray;
+}
+
+div.xar-julian-cal-nav-prev {
+    float: left;
+}
+
+div.xar-julian-cal-nav-prev a {
+
+}
+
+div.xar-julian-cal-nav-next {
+    float: right;
+}
+
+div.xar-julian-cal-nav-next a {
+}
+
+div.xar-julian-cal-nav-current {
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+}
+/* Arrow in month to direct to week */
+.xar-julian tr.week a.arrow {
+    color: #000000;
+}
+
+.xar-julian tr.week a:hover.arrow {
+    color: #ff00ff;
+}
+
+div.xar-julian div.tables {
+    clear: both;
+}
+/*
+ The visual effect is made out of a table with cells per day */
+.xar-julian table {
+    width: 100%;
+
+}
+.xar-julian table.month {
+    border-collapse: collapse;
+}
+.xar-julian table.month td {
+    border-color: #a0a0a0;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+}
+
+.xar-julian table.month th {
+    border-color: #a0a0a0;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+}
+
+th.xar-julian-cal-title {
+    text-align: center;
+    background-color: #a6bacd;
+}
+
+th.xar-julian-cal-title a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.xar-julian tr.daynames th {
+    text-align: center;
+    background-color: #888;
+    border-color: #888;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+}
+
+td.xar-julian-cal-weeknumber {
+    width: 2%;
+    vertical-align: top;
+    text-align: center;
+}
+
+.xar-julian td.day {
+    width: 14%;
+    height: 50px;
+    vertical-align: top;
+    padding: 3px;
+}
+.xar-julian-cal div.date {
+    width: 15px;
+    float: left;
+    border-right: 1px solid #a0a0a0;
+    border-bottom: 1px solid #a0a0a0;
+    font-size: x-small;
+}
+
+.xar-julian-cal div.date a{
+    padding-left:1px;
+}
+
+.xar-julian div.cal-icons {
+    width: 15px;
+    float: right;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.xar-julian-sub {
+    font-size:x-small;
+    clear:both;
+}
+
+div.xar-julian td.weekend {
+    background-color: #e9e9e9;
+}
+
+td.weekday {
+    background-color: #f9f9f9;
+}
+
+td.currentday {
+    background-color: #FFFFFF;
+    color: #0066ff;
+}
+
+td.currentday a {
+    color: #990000;
+    font-weight: 900;
+}
+
+td.currentday .date {
+    border-right: 2px solid #990000;
+    border-bottom: 2px solid #990000;
+}
+
+td.currentday .date a {
+    color: #990000;
+    font-weight: 900;
+}
+
+div.xar-julian td.empty {
+    background-color: #bbb;
+}
+/*
+ The block: eventlist */
+.xar-julian ul.eventlist li,
+.xar-julian ul.xar-julian-catlist li {
+    clear: both;
+    display:block;
+}
+
+.xar-julian ul.eventlist li {
+    margin-left: -10px;
+    text-align: left;
+    clear:left;
+}
+
+/* The iCal export icon*/
+.xar-julian .icons {
+    display: block;
+    float: left;
+    padding-right: 2px;
+    padding-top: 3px;
+
+}
+
+.xar-julian-list-bull {
+    font-size: 1.2em;
+}
+
+/* block element inside li to overrule color */
+div.li-content a.xar-julian-event {
+    color:#000000;
+}
+
+div.xar-julian-block-calevent div.li-content a.xar-julian-event {
+    text-decoration: underline;
+}
+
+div.xar-julian-block-calevent div.li-content a:hover.xar-julian-event {
+    color: #FF00FF;
+}
+
+/* hyperlink to event with a tooltip */
+a.xar-julian-event {
+    position: relative;
+}
+
+/* color the day in the month block that has an event */
+.xar-julian-block-calmonth table.month a.xar-julian-event,
+.xar-julian-user-year table.month a.xar-julian-event{
+    color:#FF0000;
+    text-decoration: none;
+}
+/* Create the tooltip from here */
+a.xar-julian-event span.tt {
+    display: none;
+}
+
+.xar-julian table.month a.xar-julian-event:hover {
+    text-decoration: underline;
+}
+
+a.xar-julian-event:hover {
+    z-index: 1;
+}
+/*
+* Set width and location of your tooltip here.
+* The width might be interfering with display, as well as the left location
+*/
+a.xar-julian-event:hover span.tt {
+    top:0px;
+    left: -30px;            /* Location to the left */
+    text-decoration: none;
+    display:block;
+    position:absolute;
+    width:178px;            /* Size of the tooltip */
+    font-weight:bold;
+    background:#fff;
+    color:#000;
+    padding: 5px;
+    border: 1px solid #aaa;
+}
+
+a.xar-julian-event:hover span.tt span {
+    display:block;
+    position: relative;
+    top:0;
+    left:0;
+    padding:0;
+    z-index: 99999;
+}
+
+/* specify some classes apart per page */
+.xar-julian-block-calmonth td.day,
+.xar-julian-user-year td.day {
+    height: 20px;
+}
+
+.xar-julian-user-year .xar-julian-cal-weeknumber .arrow {
+    font-size: 10px;
+}
+
+.xar-julian-block-calevent ul.eventlist li {
+    margin-left: 0.5em;
+}
+
+.xar-julian .eventlist .xar-sub a {
+    margin-left:0.5em;
+}
+
+div.xar-julian-calevent-today-header {
+    background-color: #0066FF;
+    width:100%;
+}
+
+div.xar-julian-calevent-upcoming-header {
+    background-color: #0066FF;
+    width:100%;
+}
+
+div.xar-julian-view-header {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+/*
+ Needed for IE type of browsers*/
+div.xar-julian a:hover span {
+    filter: alpha(opacity=100);
+}

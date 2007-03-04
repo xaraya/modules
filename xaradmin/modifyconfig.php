@@ -1,110 +1,95 @@
 <?php
-/**
- * Mailer Module
- *
- * @package modules
- * @subpackage mailer module
- * @copyright (C) 2010 Netspan AG
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
- */
-/**
- * Main configuration page for the mailer object
- *
- */
+function calendar_admin_modifyconfig()
+{
+    // Initialise the $data variable that will hold the data to be used in
+    // the blocklayout template, and get the common menu configuration - it
+    // helps if all of the module pages have a standard menu at the top to
+    // support easy navigation
+    $data = xarModAPIFunc('calendar', 'admin', 'menu'); 
+    $data = array_merge($data,xarModAPIFunc('calendar', 'admin', 'get_calendars')); 
+    // Security check - important to do this as early as possible to avoid
+    // potential security holes or just too much wasted processing
+    if (!xarSecurityCheck('Admincalendar')) return; 
+    // Generate a one-time authorisation code for this operation
+    $data['authid'] = xarSecGenAuthKey(); 
 
-// Use this version of the modifyconfig file when creating utility modules
+    // Variables from phpIcalendar config.inc.php    
+    $data['default_view'] = xarModGetVar('calendar', 'default_view');
+    $data['minical_view'] = xarModGetVar('calendar', 'minical_view');
+    $data['default_cal'] = unserialize(xarModGetVar('calendar', 'default_cal'));
+    $data['cal_sdow']         = xarModGetVar('calendar', 'cal_sdow');     
+    $data['week_start_day']         = xarModGetVar('calendar','week_start_day'         ); 
+    $data['day_start']              = xarModGetVar('calendar','day_start'              ); 
+    $data['day_end']                = xarModGetVar('calendar','day_end'                ); 
+    $data['gridLength']             = xarModGetVar('calendar','gridLength'             ); 
+    $data['num_years']              = xarModGetVar('calendar','num_years'              ); 
+    $data['month_event_lines']      = xarModGetVar('calendar','month_event_lines'      ); 
+    $data['tomorrows_events_lines'] = xarModGetVar('calendar','tomorrows_events_lines' ); 
+    $data['allday_week_lines']      = xarModGetVar('calendar','allday_week_lines'      ); 
+    $data['week_events_lines']      = xarModGetVar('calendar','week_events_lines'      ); 
+    $data['second_offset']          = xarModGetVar('calendar','second_offset'          ); 
+    $data['bleed_time']             = xarModGetVar('calendar','bleed_time'             ); 
+    
+    $data['display_custom_goto']    = xarModGetVar('calendar','display_custom_goto'    ); 
+    $data['display_custom_gotochecked'] = xarModGetVar('calendar', 'display_custom_goto') ? 'checked' : '';
+    $data['display_ical_list']      = xarModGetVar('calendar','display_ical_list'      ); 
+    $data['display_ical_listchecked'] = xarModGetVar('calendar', 'display_ical_list') ? 'checked' : '';
+    $data['allow_webcals']          = xarModGetVar('calendar','allow_webcals'          ); 
+    $data['allow_webcalschecked'] = xarModGetVar('calendar', 'allow_webcals') ? 'checked' : '';
+    $data['this_months_events']     = xarModGetVar('calendar','this_months_events'     ); 
+    $data['this_months_eventschecked'] = xarModGetVar('calendar', 'this_months_events') ? 'checked' : '';
+    $data['use_color_cals']         = xarModGetVar('calendar','use_color_cals'         ); 
+    $data['use_color_calschecked'] = xarModGetVar('calendar', 'use_color_cals') ? 'checked' : '';
+    $data['daysofweek_dayview']     = xarModGetVar('calendar','daysofweek_dayview'     ); 
+    $data['daysofweek_dayviewchecked'] = xarModGetVar('calendar', 'daysofweek_dayview') ? 'checked' : '';
+    $data['enable_rss']             = xarModGetVar('calendar','enable_rss'             ); 
+    $data['enable_rsschecked'] = xarModGetVar('calendar', 'enable_rss') ? 'checked' : '';
+    $data['show_search']            = xarModGetVar('calendar','show_search'            ); 
+    $data['show_searchchecked'] = xarModGetVar('calendar', 'show_search') ? 'checked' : '';
+    $data['allow_preferences']      = xarModGetVar('calendar','allow_preferences'      );
+    $data['allow_preferenceschecked'] = xarModGetVar('calendar', 'allow_preferences') ? 'checked' : '';
+    $data['printview_default']      = xarModGetVar('calendar','printview_default'      ); 
+    $data['printview_defaultchecked'] = xarModGetVar('calendar', 'printview_default') ? 'checked' : '';
+    $data['show_todos']             = xarModGetVar('calendar','show_todos'             ); 
+    $data['show_todoschecked'] = xarModGetVar('calendar', 'show_todos') ? 'checked' : '';
+    $data['show_completed']         = xarModGetVar('calendar','show_completed'         ); 
+    $data['show_completedchecked'] = xarModGetVar('calendar', 'show_completed') ? 'checked' : '';
+    $data['allow_login']            = xarModGetVar('calendar','allow_login'            ); 
+    $data['allow_loginchecked'] = xarModGetVar('calendar', 'allow_login') ? 'checked' : '';
 
-    function mailer_admin_modifyconfig()
-    {
-        // Security Check
-        if (!xarSecurityCheck('AdminMailer')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'mailer_general', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'mailer', XARVAR_NOT_REQUIRED)) return;
-        $hooks = xarModCallHooks('module', 'getconfig', 'mailer');
-        if (!empty($hooks) && isset($hooks['tabs'])) {
-            foreach ($hooks['tabs'] as $key => $row) {
-                $configarea[$key]  = $row['configarea'];
-                $configtitle[$key] = $row['configtitle'];
-                $configcontent[$key] = $row['configcontent'];
-            }
-            array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
-        } else {
-            $hooks['tabs'] = array();
-        }
+    /*
+    //  list of options from config.inc.php not included
+    $style_sheet            = 'silver';         // Themes support - silver, red, green, orange, grey, tan
+    $language               = 'English';        // Language support - 'English', 'Polish', 'German', 'French', 'Dutch', 'Danish', 'Italian', 'Japanese', 'Norwegian', 'Spanish', 'Swedish', 'Portuguese', 'Catalan', 'Traditional_Chinese', 'Esperanto', 'Korean'
+    $calendar_path          = '';               // Leave this blank on most installs, place your full path to calendars if they are outside the phpicalendar folder.
+    $tmp_dir                = '/tmp';           // The temporary directory on your system (/tmp is fine for UNIXes including Mac OS X)
+    $cookie_uri             = '';               // The HTTP URL to the PHP iCalendar directory, ie. http://www.example.com/phpicalendar -- AUTO SETTING -- Only set if you are having cookie issues.
+    $download_uri           = '';               // The HTTP URL to your calendars directory, ie. http://www.example.com/phpicalendar/calendars -- AUTO SETTING -- Only set if you are having subscribe issues.
+    $default_path           = 'http://www.example.com/phpicalendar';                        // The HTTP URL to the PHP iCalendar directory, ie. http://www.example.com/phpicalendar
+    $timezone               = '';               // Set timezone. Read TIMEZONES file for more information
+    $save_parsed_cals       = 'yes';            // Recommended 'yes'. Saves a copy of the cal in /tmp after it's been parsed. Improves performence.
+    */
 
-        $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mailer'));
-        $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls');
-        $data['module_settings']->getItem();
+    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration')); 
+    // Note : if you don't plan on providing encode/decode functions for
+    // short URLs (see xaruserapi.php), you should remove these from your
+    // admin-modifyconfig.xard template !
+    $data['shorturlslabel'] = xarML('Enable short URLs?');
+    $data['shorturlschecked'] = xarModGetVar('calendar', 'SupportShortURLs') ?
+    'checked' : '';
 
-        $regid = xarMod::getRegID($tabmodule);
-        switch (strtolower($phase)) {
-            case 'modify':
-            default:
-                switch ($data['tab']) {
-                    case 'mailer_general':
-                        break;
-                    case 'tab2':
-                        break;
-                    case 'tab3':
-                        break;
-                    default:
-                        break;
-                }
 
-                break;
-
-            case 'update':
-                // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
-                if (!xarVarFetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('mailer', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultuserobject',    'str',      $defaultuserobject, xarModVars::get('mailer', 'defaultuserobject'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultmailobject',    'str',      $defaultmailobject, xarModVars::get('mailer', 'defaultmailobject'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultrecipientname',    'str',      $defaultrecipientname, xarModVars::get('mailer', 'defaultrecipientname'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultsendername',    'str',      $defaultsendername, xarModVars::get('mailer', 'defaultsendername'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultsenderaddress',    'str',      $defaultsenderaddress, xarModVars::get('mailer', 'defaultsenderaddress'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultlocale',    'str',      $defaultlocale, xarModVars::get('mailer', 'defaultlocale'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultredirect',    'checkbox',      $defaultredirect, xarModVars::get('mailer', 'defaultredirect'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultredirectaddress',    'str',      $defaultredirectaddress, xarModVars::get('mailer', 'defaultredirectaddress'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('savetodb',    'checkbox',      $savetodb, xarModVars::get('mailer', 'savetodb'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('defaultheader_x_mailer', 'str', $defaultheader_x_mailer,  xarModVars::get('mailer', 'defaultheader_x_mailer'), XARVAR_NOT_REQUIRED)) return;
-                
-                $isvalid = $data['module_settings']->checkInput();
-                if (!$isvalid) {
-                    return xarTplModule('dynamicdata','admin','modifyconfig', $data);
-                } else {
-                    $itemid = $data['module_settings']->updateItem();
-                }
-
-                $modvars = array(
-                                'defaultmastertable',
-                                'defaultuserobject',
-                                'defaultmailobject',
-                                'defaultrecipientname',
-                                'defaultsendername',
-                                'defaultsenderaddress',
-                                'defaultlocale',
-                                'defaultredirect',
-                                'defaultredirectaddress',
-                                'savetodb',
-                                'defaultheader_x_mailer'
-                                );
-
-                if ($data['tab'] == 'mailer_general') {
-                    foreach ($modvars as $var) if (isset($$var)) xarModVars::set('mailer', $var, $$var);
-                }
-                foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('mailer', $var, $$var, $regid);
-
-                xarController::redirect(xarModURL('mailer', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
-                // Return
-                return true;
-                break;
-
-        }
+    //TODO: should I include this stuff? --amoro    
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
+        array('module' => 'calendar'));
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('', $hooks);
+    } else {
         $data['hooks'] = $hooks;
-        $data['tabmodule'] = $tabmodule;
-        $data['authid'] = xarSecGenAuthKey();
-        return $data;
-    }
+    } 
+    // Return the template variables defined in this function
+    return $data;
+}
 ?>

@@ -1,0 +1,19 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('calendar','useModuleAlias')">
+            #xarModGetVar('calendar','aliasname')#
+        <xar:else />
+            <xar:mlstring>View Items</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+<p style="text-align: right; margin: 15px 0 0 0;">
+<xar:if condition="xarModIsAvailable('export')">
+    <a href="#xarModURL('calendar','user','export')#" ><b>Download Items</b></a>
+</xar:if>
+</p>
+    <div class="xar-alt-outline" style="margin:2em; text-align:center; padding: 0 5px 0 5px;">
+        <xar:data-view tplmodule="$tplmodule" layout="$layout" module="$modid" itemtype="$itemtype" join="$join" table="$table" param="$urlparam" numitems="$numitems" startnum="$startnum" catid="$catid" sort="$sort" />
+    </div>
+</div>

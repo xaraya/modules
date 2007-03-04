@@ -1,36 +1,32 @@
 <?php
-/**
- * Mailer Module
- *
- * @package modules
- * @subpackage mailer module
- * @copyright (C) 2010 Netspan AG
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
- */
-/**
- * Return the options for the user menu
- *
- */
-
-function mailer_userapi_getmenulinks()
+function calendar_userapi_getmenulinks()
 {
-    $menulinks = array();
+    xarVarFetch('cal_sdow','int::',$cal_sdow,xarModGetUserVar('calendar','cal_sdow'));
+    xarVarFetch('cal_date','int::',$cal_date,xarLocaleFormatDate('%Y%m%d'));
 
-    if (xarSecurityCheck('ViewMailer',0)) {
-        $menulinks[] = array('url'   => xarModURL('mailer',
-                                                  'user',
-                                                  'main'),
-                              'title' => xarML(''),
-                              'label' => xarML(''));
-        $menulinks[] = array('url'   => xarModURL('mailer',
-                                                  'user',
-                                                  'test'),
-                              'title' => xarML('Send a test message'),
-                              'label' => xarML('Test Message'));
+    $menulinks[] = array('url'   => xarModURL('calendar','user','day',array('cal_date'=>$cal_date)),
+                         'title' => xarML('Day'),
+                         'label' => xarML('Day'));
+
+    $menulinks[] = array('url'   => xarModURL('calendar','user','week',array('cal_date'=>$cal_date)),
+                         'title' => xarML('Week'),
+                         'label' => xarML('Week'));
+
+    $menulinks[] = array('url'   => xarModURL('calendar','user','month',array('cal_date'=>$cal_date)),
+                         'title' => xarML('Month'),
+                         'label' => xarML('Month'));
+
+    $menulinks[] = array('url'   => xarModURL('calendar','user','year',array('cal_date'=>$cal_date)),
+                         'title' => xarML('Year'),
+                         'label' => xarML('Year'));
+
+    if(xarUserIsLoggedIn()) {
+        $menulinks[] = array('url' => xarModURL('calendar','user','modifyconfig'),
+                             'title' => xarML('Modify Config'),
+                             'label' => xarML('Modify Config'));
     }
 
     return $menulinks;
-}
 
+}
 ?>

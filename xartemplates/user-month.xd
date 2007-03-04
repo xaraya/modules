@@ -1,0 +1,85 @@
+<xar:style scope="module" module="calendar" file="user-month" />
+
+<xar:template file="navheader" />
+<xar:comment>
+    Define our navigation elements.
+    TODO: Make a nice API Function for creating the valid URLS
+</xar:comment>
+
+<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI" />
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYearURL">#$MonthURI->prev('year')#</xar:set>
+
+<xar:set name="prevMonthTitle"><xar:mlstring>Previous Month</xar:mlstring></xar:set>
+<xar:set name="prevMonthURL">#$MonthURI->prev('month')#</xar:set>
+
+<xar:set name="nextMonthTitle"><xar:mlstring>Next Month</xar:mlstring></xar:set>
+<xar:set name="nextMonthURL">#$MonthURI->next('month')#</xar:set>
+
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYearURL">#$MonthURI->next('year')#</xar:set>
+
+<table id="cal-calendar">
+    <tr>
+        <th class="cal-navigation" colspan="8">
+            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
+            <a href="#$prevMonthURL#" title="#$prevMonthTitle#">&lt;</a>
+            #xarLocaleFormatDate('%B %Y',$Month->getTimeStamp())#
+            <a href="#$nextMonthURL#" title="#$nextMonthTitle#">&gt;</a>
+            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+        </th>
+    </tr>
+
+<xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
+<xar:calendar-decorator object="$Month" decorator="Textual" name="$MonthText"/>
+
+    <tr>
+        <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
+        <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>
+        <xar:foreach in="$weekdays" value="$dayName">
+        <th class="cal-day-title">#$dayName#</th>
+        </xar:foreach>
+    </tr>
+    <xar:set name="Day">$Month->fetch()</xar:set>
+    <xar:while condition="$Day">
+        <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
+        <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+
+        <xar:if condition="xarModAPIFunc('calendar','user','isFirst',$Day)">
+        <xar:comment> Start a new row </xar:comment>
+
+        <xar:comment>
+            Week URLs are more difficult to set up than regular URLs for the Calendar.
+            Below is currently the best way to set up a Week URL for the Calendar
+        </xar:comment>
+        <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+        <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
+        <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
+        <tr>
+            <th class="cal-week"><a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a></th>
+        </xar:if>
+        <xar:comment> populate the day </xar:comment>
+        <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
+        <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+        <xar:if condition="$today eq $thisday">
+            <td class="xar-accent cal-day">
+        <xar:else />
+            <td class="cal-day">
+        </xar:if>
+        <xar:if condition="!xarModAPIFunc('calendar','user','isEmpty',$Day)">
+            <xar:comment> Display the date for this day </xar:comment>
+            <a class="xar-accent" href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
+        <xar:else />
+            <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
+            &nbsp;
+        </xar:if>
+        </td>
+        <xar:if condition="xarModAPIFunc('calendar','user','isLast',$Day)">
+        <xar:comment> close out the row </xar:comment>
+        </tr>
+        </xar:if>
+        <xar:set name="Day">$Month->fetch()</xar:set>
+    </xar:while>
+</table>
+<xar:comment> include the calendar footer </xar:comment>
+<xar:template file="todayfooter" />

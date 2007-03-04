@@ -1,0 +1,63 @@
+<object name="calendar_calendar">
+  <objectid>14</objectid>
+  <label>Calendar</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>106</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_calendar_calendar.id</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="itemid">
+      <id>107</id>
+      <label>ItemID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_calendar_calendar.itemid</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="modid">
+      <id>108</id>
+      <label>Module</label>
+      <type>module</type>
+      <default></default>
+      <source>xar_calendar_calendar.modid</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="itemtype">
+      <id>109</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_calendar_calendar.itemtype</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>110</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_calendar_calendar.name</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

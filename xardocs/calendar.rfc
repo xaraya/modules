@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="rfc2629.xsl"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc editing="yes"?>
+
+<rfc number="0015" category="info">
+    <front>
+        <title>Calendar</title>
+        <author initials="R.R." surname="Raymond" fullname="Roger Raymond">
+            <organization>Calendar Development Team</organization>
+            <address>
+                <email>roger@postcalendar.tv</email>
+                <uri>http://www.postcalendar.tv</uri>
+            </address>
+        </author>
+        <date month="June" year="2003"/>
+        <!-- Initiating team for this RFC -->
+        <workgroup>Calendar Development Team</workgroup>
+        <!-- List keywords for the RFC here -->
+        <keyword>rfc</keyword>
+        <keyword>calendar</keyword>
+        <keyword>events</keyword>
+        <!-- The abstract summarizes in one or two paragraphs the content of the RFC -->
+        <abstract>
+            <t>The Calendar module will provide a method for storing Events.  Current we will be focusing on
+               the gregorian calendar.</t>
+        </abstract>
+    </front>
+    <!-- The middle section is used for the actual content of the RFC -->
+    <middle>
+        <!-- Introduction is mandatory -->
+        <section title="Introduction">
+            <t>
+                The Calendar module will provide a robust API for the scheduling and sharing of events.  
+                An event is only a set of data the explains when an event occurs, how long it runs for 
+                and if/when it recurrs.
+            </t>
+        </section>
+        <section title="Requirements">
+            <t>
+                Xaraya
+            </t>
+        </section>
+        <section title="Basic Event Data">
+            <t>
+                An event is required to hold the following basic information.
+                <list style="symbols">
+                    <t>Start Date (YYYYMMDD - UTC)</t>
+                    <t>Start Time (HHMMSS - UTC)</t>
+                    <t>Duration
+                        <list style="symbols">
+                            <t>Timed Duration
+                                <list style="symbols">
+                                    <t>Number of Days</t>
+                                    <t>Number of Hours</t>
+                                    <t>Number of Minutes</t>
+                                </list>    
+                            </t>
+                            <t>All Day</t>
+                        </list>
+                    </t>
+                    <t>End Date
+                        <list style="empty">
+                            <t>Used to mark end of recurrence only</t>
+                        </list>
+                    </t>
+                 </list>
+            </t>
+        </section>
+        <section title="Recurrence Patterns">
+            <t>
+                Events can recurr in a multitude of ways.  The ones supported by this applicaton currently are:
+                <list style="symbols">
+                    <t>Event does not repeat</t>
+                    <t>Event repeats every N Days|Months|Years</t>
+                    <t>Event repeats every N Weeks on Sat|Sun|Mon|Tue|Wed|Thu|Fri</t>
+                    <t>Event repeats on 1st|2nd|3rd|4th|Last Sat|Sun|Mon|Tue|Wed|Thu|Fri of the month every N months</t>
+                    <t>Event repeats on specific dates only - no pattern</t>
+                </list>
+            </t>
+        </section>
+        <section title="Recurrence Exceptions">
+            <t>
+                Recurrence Exceptions are those dates for which an event will not occur during it's 
+                defined recurrence pattern.  It DOES NOT refer to the Xaraya Exceptions system which is
+                used to catch system errors.
+            </t>
+        </section>
+        <section title="Event Sharing">
+            <t>
+                Sharing of events must be handled on many levels.  Some scenarios are:
+                <list style="symbols">
+                    <t>Event is viewable by everyone</t>
+                    <t>Event is viewable only by its owner</t>
+                    <t>Event is viewable only by select user(s) or group(s)</t>
+                    <t>Event is viewable but only to show the owner as busy</t>
+                </list>
+            </t>
+        </section>
+        <section title="Multiple Calendar Types">
+            <t>
+                There will be at least two different types of calendars available.
+                <list style="symbols">
+                    <t>Site Wide Calendar
+                        <list style="empty">
+                            <t>
+                                A Site Wide Calendar will be available to all users on the site.  It will be
+                                the calendar that is viewable by all visitors to the site.  Usually, this calendar
+                                will be administered only by the site admins.  It will contain events that pertain to
+                                the site's content.  This is the default operation of the calendar.
+                            </t>
+                        </list>
+                    </t>
+                    <t>User Calendar
+                        <list style="empty">
+                            <t>
+                                The User Calendar will be available for each user.  A user to the site can then
+                                enter their own events and set the sharing for each event as described in the 
+                                Event Sharing section.  User calendars will not be published directly to the site
+                                and must be specifically called by the visiting user.  A logged in user will be able
+                                to see their calendar on the site.  This calendar would be best suited for community
+                                oriented sites where the site members could share their calendars with family and friends.
+                            </t>
+                        </list>
+                    </t>
+                </list>
+            </t>
+        </section>
+        <section title="Event Data">
+            <t>
+                Event Data will be handled by the Dynamic Data module.  It will have to be noted that iCalendar
+                standards should be followed.  There will need to be a way to designate what type of iCalendar
+                object the data is for import/export purposes.
+            </t>   
+            <t>
+                Some iCalendar fields include, ORGANIZER, ATTENDEE, CATEGORIES
+            </t>
+        </section>
+        <section title="Event Subscriptions">
+            <t>
+                Event Subscriptions will be handled by the PubSub module.
+            </t>
+        </section>
+    </middle>
+</rfc>

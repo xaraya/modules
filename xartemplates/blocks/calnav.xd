@@ -1,0 +1,49 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:calendar-decorator object="$Calendar" decorator="Textual" name="$CalText"/>
+<xar:set name="months">array()</xar:set>
+<xar:set name="montharray">$CalText->monthNames()</xar:set>
+<xar:foreach in="$montharray" key="$key" value="$value">
+    <xar:set name="foo">1;$months[] = array('id' => $key, 'name' => $value . " " . date('Y'));
+    </xar:set>
+</xar:foreach>
+<xar:set name="onchange">"window.location=(this.options[this.selectedIndex].value);"</xar:set>
+<table width="170" border="0" cellpadding="0" cellspacing="0" class="calborder">
+    <tr>
+        <td align="center" class="sideback"><div style="height: 17px; margin-top: 3px;" class="G10BOLD">Jump To</div></td>
+    </tr>
+    <tr>
+        <td bgcolor="#FFFFFF" align="left">
+            <div style="padding: 5px;">
+                <form style="margin-bottom:0;" action="{CURRENT_VIEW}.php" method="get">
+                    <xar:data-input type="dropdown" name="action" options="$months" onchange="$onchange" style="width: 150px" />
+                    <select name="action" class="query_style" onchange="window.location=(this.options[this.selectedIndex].value);">{LIST_ICALS}</select><br />
+                    <select name="action" class="query_style" onchange="window.location=(this.options[this.selectedIndex].value);">{LIST_YEARS}</select><br />
+                    <select name="action" class="query_style" onchange="window.location=(this.options[this.selectedIndex].value);">{LIST_MONTHS}</select><br />
+                    <select name="action" class="query_style" onchange="window.location=(this.options[this.selectedIndex].value);">{LIST_WEEKS}</select><br />
+                    <input type="hidden" name="cpath" value="{CPATH}"/>
+
+                </form>
+                <!-- switch show_search on -->
+                Search
+                <!-- switch show_search off -->
+                <!-- switch show_goto on -->
+                <form style="margin-bottom:0;" action="day.php" method="get">
+                    <input type="hidden" name="cal" value="{URL_CAL}">
+                    <input type="text" style="width:160px; font-size:10px" name="jumpto_day">
+                    <input type="submit" value="Go"/>
+                </form>
+                <!-- switch show_goto off -->
+                <hr />
+                <div class = 'G10BOLD'>Choose Calendars:</div>
+                <form style="margin-bottom:0;" action="{CURRENT_VIEW}.php" method="get">
+                    <input type="hidden" name="cpath" value="{CPATH}"/>
+                    <input type="hidden" name="getdate" value="{GETDATE}"/>
+                    <select name="cal[]" class="query_style" size="5" multiple="multiple">{LIST_ICALS_PICK}</select><br />
+                    <input type="submit" value="Go"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+</xar:template>

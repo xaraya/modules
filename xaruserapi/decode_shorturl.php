@@ -1,78 +1,44 @@
 <?php
-/**
- * Extract function and arguments from short URLS
- *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
- */
-/**
- * extract function and arguments from short URLs for this module, and pass
- * them back to xarGetRequestInfo()
- *
- * @author the Example module development team
- * @param $params array containing the different elements of the virtual path
- * @returns array
- * @return array containing func the function to be called and args the query
- *         string arguments, or empty if it failed
- */
-function shop_userapi_decode_shorturl($params)
+
+// /calendar/{function}/Ymd/
+
+function calendar_userapi_decode_shorturl(&$params)
 {
-    // Initialise the argument list we will return
     $args = array();
-
-    // Analyse the different parts of the virtual path
-    // $params[1] contains the first part after index.php/shop
-
-    if (empty($params[1])) {
-        // nothing specified -> we'll go to the main function
-        return array('view', $args);
-
-    } elseif (preg_match('/^index/i',$params[1])) {
-        // some search engine/someone tried using index.html (or similar)
-        // -> we'll go to the main function
-        return array('main', $args);
-
-    } elseif (preg_match('/^list$/i',$params[1])) {
-        // something that starts with 'list' is probably for the view function
-        // Note : make sure your encoding/decoding is consistent ! :-)
-        return array('view', $args);
-
-    } elseif (preg_match('/^(\w+)$/',$params[1], $matches)) {
-        
-		$args['name'] = $matches[0];
-		$func = 'view';
-
-		if (!empty($params[2]) && preg_match('/^(\d+)$/', $params[2], $matches)) {
-
-			$args['itemid'] = $matches[0];
-			$func = 'display';
-
-		} else {
-
-			foreach ($params as $key=>$param) {
-				if ($key > 1) {
-					$path_array[] = $param;
-				}
-			}
-
-			$args['path'] = implode('/',$path_array);
-			$func = 'display_path';
-
-		}
-		
-        return array($func, $args);
-
-    } else {
-
+    $func = NULL;
+    // the function is based on the date
+    if(isset($params[1]) && preg_match('/(^[\d]{4,8})$/',$params[1])) {
+        if(strlen($params[1]) == 8) $func = 'day';
+        elseif(strlen($params[1]) == 6) $func = 'month';
+        elseif(strlen($params[1]) == 4) $func = 'year';
+        $args['cal_date'] = $params[1];
+    } elseif(isset($params[1])) {
+        $func = $params[1];
     }
 
-    // default : return nothing -> no short URL decoded
+    // if we don't have a function, call the default view
+    if(!isset($func)) {
+        return array('main', $args);
+    } elseif ($func == 'publish') {
+        if (!empty($params[2]) && preg_match('/^([\w -]+)\.ics$/',$params[2],$matches)) {
+            $args['calname'] = $matches[1];
+        }
+        return array('publish',$args);
+    }
+
+    // check out the next set of parameters (
+    for($i=2,$max=count($params); $i<$max; $i++) {
+        if(preg_match('/(^[\d]{4,8})$/',$params[$i],$matches)) {
+            // this is a date of some sort (YYYYMMDD)
+            $args['cal_date'] = $matches[1];
+        } elseif(preg_match('/([\w]+)/i',$params[$i],$matches)) {
+            // this should be a username
+            $args['cal_user'] = $matches[1];
+        }
+    }
+
+    // return the decoded information
+    return array($func,$args);
 }
 
 ?>

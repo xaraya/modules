@@ -1,0 +1,122 @@
+<xar:style scope="module" module="calendar" file="user-year" />
+<xar:template file="navheader" />
+
+<xar:comment>
+    Define our navigation elements.
+    TODO: Make a nice API Function for creating the valid URLS
+
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYear">#xarLocaleFormatDate('%Y'.$Year->thisYear(),$Year->prevYear('timestamp'))#</xar:set>
+<xar:set name="prevYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))#</xar:set>
+
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYear">#xarLocaleFormatDate('%Y%m%d',$Year->nextYear('timestamp'))#</xar:set>
+<xar:set name="nextYearURL">#xarModURL('calendar','user','year',array('cal_sdow'=>$cal_sdow,'cal_date'=>$nextYear))#</xar:set>
+</xar:comment>
+<xar:calendar-decorator object="$Year" decorator="Xaraya" name="$YearURI" />
+<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+<xar:set name="prevYearURL">#$YearURI->prev('year')#</xar:set>
+
+<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+<xar:set name="nextYearURL">#$YearURI->next('year')#</xar:set>
+
+<table id="cal-calendar">
+    <tr>
+        <th class="cal-navigation">
+            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;</a>
+            #xarLocaleFormatDate('%Y',$Year->getTimeStamp())#
+            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;</a>
+        </th>
+    </tr>
+</table>
+
+<xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
+
+<xar:set name="i">0</xar:set>
+<xar:set name="Month">$Year->fetch()</xar:set>
+<table id="cal-calendar">
+    <tr>
+    <xar:while condition="$Month">
+        <xar:comment>
+            we want to create a new Year object with Xaraya specifics
+            TODO::Turn this into a new BL tag to avoid the ugly syntax
+            TODO::or find a way to do this automagically
+
+        </xar:comment>
+        <xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI" />
+        <xar:calendar-decorator object="$Month" decorator="Textual" name="$MonthText" />
+
+        <xar:comment> make a new row for when necessary </xar:comment>
+        <xar:if condition="!($i % 2) and $i ne 0">
+            </tr><tr>
+        </xar:if>
+                <td class="cal-container">
+                    <table id="cal-calendar">
+                    <tr>
+                        <th class="cal-navigation" colspan="8">
+                            <a href="#$MonthURI->current('month')#">#xarLocaleFormatDate('%B',$Month->getTimeStamp())#</a>
+                        </th>
+                    </tr>
+                    <!-- blocklayout tag to allow building an object -->
+                    <xar:comment>#$Year->build()#</xar:comment>
+                    <xar:comment>xar:calendar-build object="$Year" /</xar:comment>
+                    <xar:set name="dummy">$Month->build()</xar:set>
+                    <tr>
+                        <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
+                        <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>
+                        <xar:foreach in="$weekdays" value="$dayName">
+                            <th class="cal-day-title">#$dayName#</th>
+                        </xar:foreach>
+                    </tr>
+                    <xar:set name="Day">$Month->fetch()</xar:set>
+                    <xar:while condition="$Day">
+                        <xar:comment>
+                            we want to create a new Year object with Xaraya specifics
+                            TODO::Turn this into a new BL tag to avoid the ugly syntax
+                            TODO::or find a way to do this automagically
+                        </xar:comment>
+                        <xar:if condition="xarModAPIFunc('calendar','user','isFirst',$Day)">
+                            <xar:comment> Start a new row </xar:comment>
+                            <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
+                            <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
+                            <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
+                            <tr>
+                                <td>
+                                    <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>
+                                </td>
+                        </xar:if>
+                        <xar:comment> populate the day </xar:comment>
+                        <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
+                        <xar:if condition="$today eq $thisday">
+                            <td class="xar-accent cal-day">
+                        <xar:else />
+                            <td class="cal-day">
+                        </xar:if>
+                        <xar:set name="isEmpty">xarModAPIFunc('calendar','user','isEmpty',$Day)</xar:set>
+                        <xar:set name="DayUrl">xarModURL('calendar','user','day',array('cal_date'=>$thisday))</xar:set>
+                        <xar:if condition="!$isEmpty">
+                            <xar:comment> Display the date for this day </xar:comment>
+                            <a href="#$DayUrl#">#$Day->thisDay()#</a>
+                        <xar:else />
+                            <xar:comment> Hide this day because it's not part of the Year we are viewing </xar:comment>
+                            &nbsp;
+                        </xar:if>
+                        </td>
+                        <xar:set name="isLast">xarModAPIFunc('calendar','user','isLast',$Day)</xar:set>
+                        <xar:if condition="(bool)$isLast">
+                        <xar:comment> close out the row </xar:comment>
+                        </tr>
+                        </xar:if>
+                        <xar:set name="Day">$Month->fetch()</xar:set>
+                    </xar:while>
+                    </table>
+                </td>
+        <xar:set name="i">$i + 1</xar:set>
+        <xar:set name="Month">$Year->fetch()</xar:set>
+        <xar:comment> check for this being the last Year to close out the table row </xar:comment>
+    </xar:while>
+    </tr>
+</table>
+
+<xar:comment> END :: LOOP THROUGH EACH Year OF THE YEAR </xar:comment>
+<xar:template file="todayfooter" />
