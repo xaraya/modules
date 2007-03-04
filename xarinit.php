@@ -24,32 +24,27 @@ function calendar_init()
       itemid int(11) unsigned default null,
       itemtype int(11) unsigned default null,
       modid int(11) unsigned default null,
-      name varchar(35) default '' NOT NULL,
-      description varchar(60),
+      name varchar(60) default '' NOT NULL,
+      description text,
     PRIMARY KEY  (id)
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
 
-    // Create tables
-    // TODO: I assume this is ok -amoro
-//    calendar_upgrade('0.1.0');
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_event";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_event (
-      id          int NOT NULL auto_increment,
-      name        varchar(80) DEFAULT '' NOT NULL,
-      start_time  int DEFAULT '0' NOT NULL,
-      end_time    int DEFAULT '0' NOT NULL,
-      start_location  varchar(20) DEFAULT '' NOT NULL,
-      end_location    varchar(20) DEFAULT '' NOT NULL,
-      entry_type  int DEFAULT '0' NOT NULL,
-      repeat_id   int DEFAULT '0' NOT NULL,
-      objectid     int DEFAULT '1' NOT NULL,
-      timestamp int(11) default 0 NOT NULL,
-      owner int(11) default 0 NOT NULL,
-      status int(11) default 0 NOT NULL,
-      description text,
+      id              int NOT NULL auto_increment,
+      itemtype        int(4) NULL,
+      name            varchar(80) DEFAULT '' NOT NULL,
+      description     text,
+      start_time      int(11) NULL,
+      end_time        int(11) NULL,
+      start_location  varchar(20) NULL,
+      end_location    varchar(20) NULL,
+      objectid        int(4) NULL,
+      owner           int(11) NULL,
+      status          int(4) default 0 NOT NULL,
+      timestamp       int(11) default 0 NOT NULL,
 
       PRIMARY KEY (id),
       KEY i_start_time (start_time),
@@ -57,7 +52,7 @@ function calendar_init()
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
 
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_bookings_repeat";
+/*    $query = "DROP TABLE IF EXISTS " . $prefix . "_bookings_repeat";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_bookings_repeat (
       id          int NOT NULL auto_increment,
@@ -77,6 +72,7 @@ function calendar_init()
       PRIMARY KEY (id)
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
+*/
 
 # --------------------------------------------------------
 #
@@ -184,6 +180,16 @@ function calendar_init()
         'calendar_userapi_handledecoratortag'
     );
 
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'calendar';
+    $objects = array(
+                   'calendar_calendar',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     return true;
 }

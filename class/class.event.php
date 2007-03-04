@@ -1,10 +1,14 @@
 <?php
 
+include_once CALENDAR_ROOT.'Day.php';
+include_once CALENDAR_ROOT.'Hour.php';
+include_once CALENDAR_ROOT.'Decorator.php';
+
 /**
- *  xarEvent
+ *  Event
  *  container class for event information
  */
-class Event
+class Event extends Calendar_Decorator
 {
     var $author;            // event author
     var $startdate;         // (YYYYMMDD) event start date
@@ -18,9 +22,34 @@ class Event
     var $repeatonnum;       // repeat on 1st,2nd,3rd,4th,Last
     var $repeatonday;       //
 
-    function __construct()
+    public $entry   = array();
+    public $entries = array();
+
+    function __construct(Calendar $calendar)
     {   // set the author
         //$this->author = xarUserGetVar('uid');
+        Calendar_Decorator::Calendar_Decorator($calendar);
+    }
+
+    function setEntry($entry) {
+        $this->entry = $entry;
+    }
+    function getEntry() {
+        return $this->entry;
+    }
+
+    function addEntry1($entry) {
+        $this->entries[] = $entry;
+    }
+
+    function getEntry1() {
+        $entry = each($this->entries);
+        if ($entry) {
+            return $entry['value'];
+        } else {
+            reset($this->entries);
+            return false;
+        }
     }
 
     function buildEvent(&$id)
