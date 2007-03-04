@@ -1,0 +1,133 @@
+<object name="calendar_event">
+  <objectid>48</objectid>
+  <label>Calendar Events</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>21</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>331</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_calendar_event.id</source>
+      <status>33</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="type">
+      <id>332</id>
+      <label>Type</label>
+      <type>itemtype</type>
+      <default></default>
+      <source>xar_calendar_event.itemtype</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>333</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_calendar_event.name</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>334</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_calendar_event.description</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="start_time">
+      <id>335</id>
+      <label>Start Time</label>
+      <type>jscalendardate</type>
+      <default></default>
+      <source>xar_calendar_event.start_time</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="end_time">
+      <id>336</id>
+      <label>End Time</label>
+      <type>jscalendardate</type>
+      <default></default>
+      <source>xar_calendar_event.end_time</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="start_location">
+      <id>337</id>
+      <label>Start Location</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_calendar_event.start_location</source>
+      <status>34</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="end_location">
+      <id>338</id>
+      <label>End Location</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_calendar_event.end_location</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="object">
+      <id>339</id>
+      <label>Object</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_calendar_event.objectid</source>
+      <status>34</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="owner">
+      <id>340</id>
+      <label>Owner</label>
+      <type>username</type>
+      <default></default>
+      <source>xar_calendar_event.owner</source>
+      <status>34</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>341</id>
+      <label>Status</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_calendar_event.status</source>
+      <status>33</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="timestamp">
+      <id>342</id>
+      <label>Timestamp</label>
+      <type>jscalendardate</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
