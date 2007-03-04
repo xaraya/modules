@@ -1,0 +1,14 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('foo','useModuleAlias')">
+            #xarModGetVar('foo','aliasname')#
+        <xar:else />
+            <xar:mlstring>View Items</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <div class="xar-alt-outline" style="margin:2em; text-align:center; padding: 0 5px 0 5px;">
+        <xar:data-list object="$object" tplmodule="foo" />
+    </div>
+</div>

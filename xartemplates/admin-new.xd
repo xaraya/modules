@@ -1,0 +1,40 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('foo','useModuleAlias')">
+            #xarModGetVar('foo','aliasname')#
+        <xar:else />
+            <xar:mlstring>Create Item</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Create New Item in #(1)</xar:mlstring>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+    </h2>
+
+    <form method="post" action="&xar-modurl-dynamicdata-admin-create;">
+      <fieldset>
+        <legend><xar:mlstring>Item details</xar:mlstring></legend>
+        <xar:data-form object="$object" />
+      </fieldset>
+      <fieldset>
+        <div class="xar-align-center">
+          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
+          <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
+          <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+          <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+          <xar:if condition="!empty($return_url)">
+            <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+          </xar:if>
+          <input type="submit" value="#xarML('Create')#" class="xar-margin-thickleft" />
+        </div>
+      </fieldset>
+    </form>
+</div>
+</xar:template>
