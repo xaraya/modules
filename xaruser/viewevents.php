@@ -22,8 +22,7 @@
  * @TODO Start with a smarter array of events.
  * @TODO Support start/end dates as single parameters (YYYYMMDD, YYYYMM and YYYY)
  * @TODO Support multiple categories and AND/OR selection
- * @TODO Use proper validation on input parameters
- * @TOOD Support variable numitems as a parameter
+ * @TODO Eventually merge getall, getitems and countitems into one consistent function
  */
 
 function julian_user_viewevents($args)
@@ -52,6 +51,7 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year', $group, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1)) return;
@@ -115,25 +115,22 @@ function julian_user_viewevents($args)
         $enddate = date('Ymd', strtotime("+$datenumber $datetype", strtotime($startdate)));
     }
 
+    // Now we have a start and end date, we should make sure they are the right way around.
+    if (strtotime($enddate) < strtotime($startdate)) {
+        // End date is earlier, so default it to startdate plus one month.
+        $enddate = date('Ymd', strtotime('+1 month', strtotime($startdate)));
+    }
+
     // Bullet style
     $bl_data['Bullet'] = '&' . xarModGetVar('julian', 'BulletForm') . ';';
 
     // Prepare the array variables that will hold all items for display.
-    $bl_data['events'] = array();
     $bl_data['startnum'] = $startnum;
     $bl_data['sortby'] = $sortby;
 
-    // Define the Start and End Dates.
-    if ($caldate != '') {
-        // FIXME: this isn't used. Remove it or fix it?
-        $startdate_chooser = $caldate;
-    } else {
-        $bl_data['startdate'] = ($startyear . $startmonth . $startday);
-    }
-
-    $enddate_chooser = ($endyear . $endmonth . $endday);
-    //$bl_data['startdate'] = $startdate;
-    $bl_data['enddate'] = $enddate_chooser;
+    // Pass the start and end dates (Ymd) into the template.
+    $bl_data['startdate'] = $startdate;
+    $bl_data['enddate'] = $enddate;
 
     // The user API Function is called: get all events for these selectors
     $events = xarModAPIFunc('julian', 'user', 'getevents',
@@ -150,12 +147,34 @@ function julian_user_viewevents($args)
 
     // Check for exceptions.
     // FIXME: errors should be indicated some other way, such as a NULL return.
-    if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-        return; // throw back
-    }
+    if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // Add the array of Events to the template variables.
     $bl_data['events'] = $events;
+
+    // Now create a reference array of these event IDs, allowing events to be grouped.
+    // Loop though each event to put them into a group (day, week, month or year), if required.
+    if (!empty($group)) {
+        $groups = array();
+        foreach($events as $eventkey => $event) {
+            list($periodtype, $periodnumber, $period1start, $periodstart, $periodend) =
+                julian_user_viewevents_get_period($startdate, $event['eStart']['timestamp'], $group);
+            if (!isset($group[$periodnumber])) {
+                // This group has not been encountered yet; create an array element for it.
+                $groups[$periodnumber] = array();
+                $groups[$periodnumber]['periodtype'] = array($periodtype);
+                $groups[$periodnumber]['events'] = array($eventkey);
+                $groups[$periodnumber]['period1start'] = $period1start;
+                $groups[$periodnumber]['periodstart'] = $periodstart;
+                $groups[$periodnumber]['periodend'] = $periodend;
+            } else {
+                // Already know about this period; add this event key to the list.
+                $groups[$periodnumber]['events'][] = $eventkey;
+            }
+        }
+        // Pass this data to the template so it can be used for grouping the displayed events.
+        $bl_date['groups'] = $groups;
+    }
 
     // Create sort-by URLs.
     if ($sortby != 'eventDate' ) {
@@ -268,6 +287,79 @@ function julian_user_viewevents($args)
 
     // Return the template variables defined in this function.
     return $bl_data;
+}
+
+/**
+ * @param startdate at date that is located in period 1 (Ymd)
+ * @param eventdate the date to determine the period for (Ymd)
+ * @param periodtype the type of the period (day, week, month, year)
+ */
+
+function julian_user_viewevents_get_period($startdate, $eventdate, $periodtype = 'week')
+{
+    // Validate and default the group type.
+    $periodtype = strtolower($periodtype);
+    if (!xarVarValidate('enum:day:week:month:year', $periodtype, true)) $periodtype = 'week';
+
+    // Get everything into unix timestamps for simplicity
+    if (is_string($startdate)) $startdate = strtotime($startdate);
+    if (is_string($eventdate)) $eventdate = strtotime($eventdate);
+
+    switch ($periodtype) {
+    case 'week':
+    default:
+        $startdayofweek = xarModGetVar('julian', 'startDayOfWeek');
+        $startdateday = date('w', $startdate);
+	    $daystostartperiod = $startdateday - $startdayofweek;
+        if ($daystostartperiod < 0) $daystostartperiod += 7;
+
+        // Get the period start date (unix timestamp) by counting back the appropriate number of days
+        $period1start = strtotime("-$daystostartperiod days", $startdate);
+
+        // Calculate the week number (integer blocks of seven days)
+        $periodnumber = floor(($eventdate - $period1start) / (60  * 60 * 24) / 7) + 1;
+
+        // Get the start and end dates for the period, just for info.
+        $periodstart = strtotime('+' . ($periodnumber-1) . ' weeks', $period1start);
+        $periodend = strtotime('+6 days', $periodstart);
+        $periodtype = 'week';
+
+        break;
+
+    case 'day':
+        // This is an easy one: the startdate is day 1; count the days
+        $period1start = $startdate;
+        $periodnumber = floor(($eventdate - $period1start) / (60  * 60 * 24)) + 1;
+        $periodstart = $eventdate;
+        $periodend = $eventdate;
+        break;
+
+    case 'month':
+        // Count the months between the two dates.
+        $period1start = strtotime(date('Ym', $startdate) . '01');
+        $periodnumber = (12 * date('Y', $eventdate) + date('m', $eventdate)) - (12 * date('Y', $startdate) + date('m', $startdate)) + 1;
+        $periodstart = strtotime('+' . ($periodnumber - 1) . ' months', $period1start);
+        $periodend = strtotime('-1 day', strtotime('+1 month', $periodstart));
+        break;
+
+    case 'year':
+        $period1start = strtotime(date('Y', $startdate) . '0101');
+        $periodnumber = date('Y', $eventdate) - date('Y', $startdate) + 1;
+        $periodstart = strtotime('+' . ($periodnumber - 1) . ' years', $period1start);
+        $periodend = strtotime('-1 day', strtotime('+1 year', $periodstart));
+        break;
+    }
+
+    //echo "period=$periodtype periodnumber=$periodnumber periodstart=" . date('Y-m-d', $periodstart) . " periodend=" . date('Y-m-d', $periodend) . " period1start=" . date('Y-m-d', $period1start) . "<br/>";
+
+    // Numeric array elements, so list() can be used. Don't change the order!
+    return array(
+        $periodtype,
+        $periodnumber,
+        $period1start,
+        $periodstart,
+        $periodend,
+    );
 }
 
 ?>
