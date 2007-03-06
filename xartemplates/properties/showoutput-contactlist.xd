@@ -7,3 +7,19 @@
 <xar:if condition="!empty($option['company'])" >
     #$option['company']#
 </xar:if>
+<br />
+<xar:if condition="!empty($option['address_1'])" >
+    #$option['address_1']#
+</xar:if>
+<br />
+<xar:if condition="!empty($option['address_2'])" >
+    #$option['address_2']#
+</xar:if>
+<br />
+<xar:if condition="!empty($option['zip'])" >
+    #$option['zip']#
+</xar:if>
+<br />
+<xar:if condition="!empty($option['city'])" >
+    #$option['city']#
+</xar:if>

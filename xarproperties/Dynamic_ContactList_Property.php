@@ -191,9 +191,15 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         if (!empty($result) && is_string($result)) {
             $result = xarVarPrepHTMLDisplay($result);
         }
+
         $data['option'] = array('id' => $this->value,
                                 'name' => $result,
-                                'company' => $displayCompany);
+                                'company' => $displayCompany,
+                                'address_1' => xarVarPrepForDisplay($item['address_1']),
+                                'address_2' => xarVarPrepForDisplay($item['address_2']),
+                                'zip' => xarVarPrepForDisplay($item['zip']),
+                                'city' => xarVarPrepForDisplay($item['city'])
+                                );
 
         return xarTplProperty('addressbook', 'contactlist', 'showoutput', $data);
     }
