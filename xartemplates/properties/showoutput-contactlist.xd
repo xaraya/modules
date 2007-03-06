@@ -3,23 +3,23 @@
 <xar:if condition="!empty($option['name'])" >
     #$option['name']#
 </xar:if>
-<br />
 <xar:if condition="!empty($option['company'])" >
+    <br />
     #$option['company']#
 </xar:if>
-<br />
 <xar:if condition="!empty($option['address_1'])" >
+    <br />
     #$option['address_1']#
 </xar:if>
-<br />
 <xar:if condition="!empty($option['address_2'])" >
+    <br />
     #$option['address_2']#
 </xar:if>
-<br />
 <xar:if condition="!empty($option['zip'])" >
+    <br />
     #$option['zip']#
 </xar:if>
-<br />
 <xar:if condition="!empty($option['city'])" >
+    <br />
     #$option['city']#
 </xar:if>
