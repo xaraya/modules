@@ -46,8 +46,13 @@
     </div>
 </xar:if>
 
+<xar:comment>Add an edit link if required. The crumbtrails block may also provide an edit link.</xar:comment>
+<xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+</xar:if>
+
 <xar:if condition="isset($current_page.dd.body)">
-    <div style="margin: 1em; padding: 1em; border: 1px solid #aaaaaa;">#$current_page.dd.body#</div>
+    <div style="padding: 1em; border: 1px solid #aaaaaa;">#$current_page.dd.body#</div>
 <xar:else />
     <div class="xar-error"><xar:mlstring>Please create a Dynamic Data item 'body' to hold your HTML</xar:mlstring></div>
 </xar:if>

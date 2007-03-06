@@ -259,6 +259,9 @@
                         <input type="submit" value="#xarML('Add')#" />
                         <input type="hidden" name="creating" id="creating" value="true"/>
                     </xar:if>
+                    <xar:if condition="!empty($return_url)">
+                        <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
+                    </xar:if>
                 </div>
 
                 <xar:if condition="$func eq 'create'">
