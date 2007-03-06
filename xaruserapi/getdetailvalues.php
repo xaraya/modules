@@ -17,13 +17,11 @@
  *
  * @param int $id of the target record
  * @return array $detailValues
+ * @todo MichelV Add security checks on single records?
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function addressbook_userapi_getDetailValues($args)
 {
-
-    $detailValues = FALSE;
-
     /**
      * Security check
      */
