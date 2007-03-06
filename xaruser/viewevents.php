@@ -159,7 +159,7 @@ function julian_user_viewevents($args)
         foreach($events as $eventkey => $event) {
             list($periodtype, $periodnumber, $period1start, $periodstart, $periodend) =
                 julian_user_viewevents_get_period($startdate, $event['eStart']['timestamp'], $group);
-            if (!isset($group[$periodnumber])) {
+            if (!isset($groups[$periodnumber])) {
                 // This group has not been encountered yet; create an array element for it.
                 $groups[$periodnumber] = array();
                 $groups[$periodnumber]['periodtype'] = array($periodtype);
