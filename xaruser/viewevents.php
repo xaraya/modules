@@ -173,7 +173,7 @@ function julian_user_viewevents($args)
             }
         }
         // Pass this data to the template so it can be used for grouping the displayed events.
-        $bl_date['groups'] = $groups;
+        $bl_data['groups'] = $groups;
     }
 
     // Create sort-by URLs.
