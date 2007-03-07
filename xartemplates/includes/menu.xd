@@ -78,7 +78,12 @@
                                 #$page.name#
                             </xar:if>
                         <xar:else />
-                            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVarPrepForDisplay($page.desc)#">
+                            <xar:if condition="!empty($page.dd.url) and $page.pagetype.name eq 'redirect'">
+                                <xar:set name="gourl">#xarVarPrepForDisplay($page.dd.url)#</xar:set>
+                            <xar:else />
+                                <xar:set name="gourl">#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#</xar:set>
+                            </xar:if>
+                            <a class="#$class#" href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#">
                                 <xar:if condition="!empty($page.dd.menu_title)">
                                     #xarVarPrepForDisplay($page.dd.menu_title)#
                                 <xar:else />
