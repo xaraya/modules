@@ -175,17 +175,26 @@ function julian_userapi_getevents($args)
 
         // Security check
         if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
+            $eEnd = array();
+            
             // Change date formats from UNIX timestamp to something readable.
             // TODO: why do we need all this display stuff in here?
+            // TOOD: the time format should be configurable, to allow the use of 24-hour clock format.
             if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
                 $eStart['mon'] = "";
                 $eStart['day'] = "";
                 $eStart['year'] = "";
                 $eStart['linkdate'] = '';
                 $eStart['viewdate'] = '';
+				$eStart['displaytime'] =  '';
             } else {
-                $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
-                $eStart['viewdate'] = date("$dateformat", strtotime($eStart['timestamp']));
+                $eStart['linkdate'] = date('Ymd', strtotime($eStart['timestamp']));
+                $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
+				$eStart['displaytime'] = date('H:i A', strtotime($eStart['timestamp']));
+
+                // CHECKME: can eDuration ever be invalid?
+                $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+' . $eDuration . ' hours'));
+                $eEnd['displaytime'] = date('H:i A', strtotime($eStart['timestamp'] . '+' . $eDuration . ' hours'));
             }
 
             if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
@@ -215,6 +224,7 @@ function julian_userapi_getevents($args)
                 'eContact' => $eContact,
                 'eOrganizer' => $eOrganizer,
                 'eStart' => $eStart,
+                'eEnd' => $eEnd,
                 'i_moduleid' => '',
                 'i_itemtype' => '',
                 'i_itemid' => '',
@@ -292,6 +302,8 @@ function julian_userapi_getevents($args)
         );
 
         if (!empty($itemlinks['description'])) {
+            $eEnd = array();
+
             // Change date formats to configured types
             if ($eStart['timestamp'] == '0000-00-00 00:00:00') {
                 $eStart['mon'] = "";
@@ -299,9 +311,14 @@ function julian_userapi_getevents($args)
                 $eStart['year'] = "";
                 $eStart['linkdate'] = '';
                 $eStart['viewdate'] = '';
+				$eStart['displaytime'] = '';
             } else {
                 $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
-                $eStart['viewdate'] = date("$dateformat", strtotime($eStart['timestamp']));
+                $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
+				$eStart['displaytime'] = date('H:i A', strtotime($eStart['timestamp']));
+
+                $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+5 hours'));
+                $eEnd['displaytime'] = date('H:i A', strtotime($eStart['timestamp'] . '+5 hours'));
             }
 
             if ($eRrule ==0) {//$eRecurUntil['timestamp'] == '0000-00-00 00:00:00') {
@@ -334,6 +351,7 @@ function julian_userapi_getevents($args)
                 'i_itemtype' => $hook_itemtype,
                 'i_itemid' => $hook_iid,
                 'eStart' => $eStart,
+                'eEnd' => $eEnd,
                 'i_DateTime' => strtotime($eStart['timestamp']),
                 'eRecur' => $eRecur,
                 'eDuration' => $eDuration,

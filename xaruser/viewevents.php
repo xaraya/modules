@@ -45,16 +45,27 @@ function julian_user_viewevents($args)
     if (!xarVarFetch('end_month',   'int:0:12',  $endmonth,    0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('end_day',     'int:0:31',  $endday,      0, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('cal_date',    'str::',  $caldate,     '')) return;
-    if (!xarVarFetch('catid',       'id',     $catid,       0, XARVAR_NOT_REQUIRED)) return;
+    // Start by defaulting the start and end dates. We can override the defaults later, through alternative parameters.
+    // We will keep all dates in string format YYYYMMDD
+    if (!xarVarFetch('startdate', 'pre:num:passthru:str:8:8', $startdate, date('Ymd'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'pre:num:passthru:str:8:8', $enddate, date('Ymd', strtotime('+1 month')), XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('cal_date', 'str::', $caldate, '')) return;
+    if (!xarVarFetch('catid', 'id', $catid, 0, XARVAR_NOT_REQUIRED)) return;
+
+    // These two parameters handle "next N days/weeks/months/years" date selection.
     if (!xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year', $group, '', XARVAR_NOT_REQUIRED)) return;
+    // Grouping of listed items.
+    // TODO: make the default grouping configurable (with no grouping - '' - being an option)
+    if (!xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year', $group, 'week', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1)) return;
+
+    // If grouping by date ranges, then must also order by date.
+    if (!empty($group)) $sortby = 'eventDate';
 
     // Get the Start Day Of Week value.
     $cal_sdow = xarModGetVar('julian', 'startDayOfWeek');
@@ -71,12 +82,9 @@ function julian_user_viewevents($args)
     // Create the date stretch to get events for.
     // We need to find 'start' and 'end', which can be derived from a number of places.
 
-    // Start by defaulting the start and end dates. We can override the defaults later.
-    // We will keep all dates in string format YYYYMMDD
-    // Today:
-    $startdate = date('Ymd');
-    // One month from today:
-    $enddate = date('Ymd', strtotime('+1 month'));
+    // Validate the start and end date, and default if not valid.
+    if (!checkdate(substr($startdate,2,2), substr($startdate,4,2), substr($startdate,0,4))) $startdate = date('Ymd');
+    if (!checkdate(substr($enddate,2,2), substr($enddate,4,2), substr($enddate,0,4))) $enddate = date('Ymd', strtotime('+1 month'));
     
     // Check the start date components
     if (!empty($startyear)) {
@@ -162,7 +170,7 @@ function julian_user_viewevents($args)
             if (!isset($groups[$periodnumber])) {
                 // This group has not been encountered yet; create an array element for it.
                 $groups[$periodnumber] = array();
-                $groups[$periodnumber]['periodtype'] = array($periodtype);
+                $groups[$periodnumber]['periodtype'] = $periodtype;
                 $groups[$periodnumber]['events'] = array($eventkey);
                 $groups[$periodnumber]['period1start'] = $period1start;
                 $groups[$periodnumber]['periodstart'] = $periodstart;
@@ -172,11 +180,18 @@ function julian_user_viewevents($args)
                 $groups[$periodnumber]['events'][] = $eventkey;
             }
         }
+
+        // Sort the array keys, just to make sure (since the events themselves
+        // may not be sorted by date).
+
         // Pass this data to the template so it can be used for grouping the displayed events.
         $bl_data['groups'] = $groups;
     }
+    $bl_data['group'] = $group;
 
     // Create sort-by URLs.
+    // FIXME: these don't include all the possible parameters there could be.
+    // Good use of xarServerGetCurrentURL() should do the job
     if ($sortby != 'eventDate' ) {
         $bl_data['eventdateurl'] = xarModURL('julian', 'user', 'viewevents',
             array('startnum' => 1, 'sortby' => 'eventDate', 'catid' => $catid)
@@ -288,6 +303,7 @@ function julian_user_viewevents($args)
     // Return the template variables defined in this function.
     return $bl_data;
 }
+
 
 /**
  * @param startdate at date that is located in period 1 (Ymd)
