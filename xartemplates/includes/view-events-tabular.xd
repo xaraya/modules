@@ -1,0 +1,135 @@
+<xar:comment>Table Format</xar:comment>
+<table>
+    <thead>
+      <tr>
+        <xar:if condition="$eventdateurl != ''">
+          <th><a href="#$eventdateurl#"><xar:mlstring>Event Date</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Event Date</xar:mlstring></th>
+        </xar:if>
+
+        <xar:if condition="$eventnameurl != ''">
+          <th><a href="#$eventnameurl#"><xar:mlstring>Event Name</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Event Name</xar:mlstring></th>
+        </xar:if>
+
+        <xar:if condition="$eventdescurl != ''">
+          <th><a href="#$eventdescurl#"><xar:mlstring>Description</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Description</xar:mlstring></th>
+        </xar:if>
+
+        <xar:if condition="$eventlocnurl != ''">
+          <th><a href="#$eventlocnurl#"><xar:mlstring>Event Location</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Event Location</xar:mlstring></th>
+        </xar:if>
+
+        <xar:if condition="$eventconturl != ''">
+          <th><a href="#$eventconturl#"><xar:mlstring>Event Contact</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Event Contact</xar:mlstring></th>
+        </xar:if>
+
+        <xar:if condition="$eventfeeurl != ''">
+          <th><a href="#$eventfeeurl#"><xar:mlstring>Ticket Prices</xar:mlstring></a></th>
+        <xar:else />
+          <th><xar:mlstring>Ticket Prices</xar:mlstring></th>
+        </xar:if>
+      </tr>
+    </thead>
+
+    <xar:if condition="!empty($events)">
+      <tbody>
+        <xar:loop name="$events">
+          <tr class="xar-julian-calendar-day xar-julian-days-event">
+            <td>
+              <xar:if condition="($loop:item.eRrule gt 0) AND (!empty($loop:item.eStart.viewdate))">
+              <xar:ml>
+                <xar:mlstring>From #(1) to #(2)</xar:mlstring>
+                <xar:mlvar>#$loop:item.eStart.viewdate#</xar:mlvar>
+                <xar:mlvar>#$loop:item.eRecur.viewdate#</xar:mlvar>
+              </xar:ml>
+              <xar:elseif condition="!empty($loop:item.eStart.viewdate)" />
+                #$loop:item.eStart.viewdate#
+              <xar:else />
+                <xar:mlstring>N/A</xar:mlstring>
+              </xar:if>
+            </td>
+            <td style="width: 15%;">
+              <xar:set name="$linkdate">#$loop:item.eStart.linkdate#</xar:set>
+              <xar:set name="$evid">#$loop:item.eID#</xar:set>
+              <xar:set name="$ename">#$loop:item.eName#</xar:set>
+              <xar:set name="$NameUrl">
+                xarModURL('julian','user','viewevent',array('cal_date'=>$linkdate,'event_id'=>$evid))
+              </xar:set>
+              <a href="#$NameUrl#" class="xar-julian-event-day">
+                #$loop:item.eName#
+              </a>
+            </td>
+            <td>#$loop:item.eDescription#</td>
+            <td>
+              <xar:if condition="$loop:item.eLocation ne ''">
+                #$loop:item.eLocation#
+              </xar:if>
+              <xar:if condition="$loop:item.eStreet1 ne ''">
+                #$loop:item.eStreet1#<br />
+              </xar:if>
+              <xar:if condition="$loop:item.eStreet2 ne ''">
+                #$loop:item.eStreet2#<br />
+              </xar:if>
+              <xar:if condition="$loop:item.eCity ne ''">
+                #$loop:item.eCity#
+              </xar:if>
+              <xar:if condition="($loop:item.eCity ne '') and ($loop:item.eState ne '')">
+                ,&nbsp;
+              </xar:if>
+              <xar:if condition="$loop:item.eState ne ''">
+                #$loop:item.eState#
+              </xar:if>
+              <xar:if condition="$loop:item.eZip ne ''">
+                &nbsp;&nbsp;#$loop:item.eZip#
+              </xar:if>
+              <xar:if condition="($loop:item.eCity eq '') or ($loop:item.eState eq '') or ($loop:item.eZip eq '')">
+                City, State/Province, Zip/Post Code Unknown
+              </xar:if>
+              <xar:if condition="($loop:item.eLocation eq '') and ($loop:item.eStreet1 eq '') and ($loop:item.eStreet2 eq '') and ($loop:item.eCity == '') && ($loop:item['eState'] == '')&& ($loop:item['eZip'] eq '')">
+                Location not Listed
+              </xar:if>
+            </td>
+            <td>
+              <xar:if condition="$loop:item.eContact ne ''">
+                #$loop:item.eContact#<br />
+              </xar:if>
+
+              <xar:if condition="$loop:item.ePhone ne ''">
+                #$loop:item.ePhone#<br />
+              </xar:if>
+
+              <xar:if condition="$loop:item.eEmail ne ''">
+                <a href="mailto:#$loop:item.eEmail#">#$loop:item.eEmail#</a><br />
+              </xar:if>
+
+              <xar:if condition="$loop:item.eUrl ne ''">
+                <a href="#$loop:item.eUrl#">#$loop:item.eUrl#</a><br />
+              </xar:if>
+
+              <xar:if condition="($loop:item.eContact eq '') and ($loop:item.ePhone eq '') and ($loop:item.eEmail eq '') and ($loop:item.eUrl eq '')">
+                Contact not Listed
+              </xar:if>
+            </td>
+
+            <xar:if condition="($loop:item.eFee ne '') and ($loop:item.eFee ne 0)">
+              <td>#$loop:item.eFee#</td>
+            <xar:elseif condition="($loop:item.eFee ne '') and ($loop:item.eFee eq 0)" />
+              <td><xar:mlstring>Free Event</xar:mlstring></td>
+            <xar:else />
+              <td><xar:mlstring>Price Not Listed</xar:mlstring></td>
+            </xar:if>
+
+          </tr>
+        </xar:loop>
+      </tbody>
+    </xar:if>
+</table>
