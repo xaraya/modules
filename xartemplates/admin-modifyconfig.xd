@@ -10,22 +10,13 @@
 //-->
 </script>
 
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Julian Administration
-        </xar:mlstring>
-    </span>
-</div>
+<h1><xar:mlstring>Julian Administration</xar:mlstring></h1>
+
 <div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
-    </h2>
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 
     <xar:set name="$statusmsg">xarSessionGetVar('statusmsg')</xar:set>
-    <center><font style=color:green>#$statusmsg#</font></center>
+    <div style="text-align: center;"><font style=color:green>#$statusmsg#</font></div>
     <xar:set name="$statusmsg">xarSessionSetVar('statusmsg','')</xar:set>
 
     <form action="&xar-modurl-julian-admin-updateconfig;"
@@ -34,15 +25,11 @@
           enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <fieldset>
-            <legend>
-                <strong><xar:mlstring>Display options for the calendar</xar:mlstring></strong>
-            </legend>
+            <legend><xar:mlstring>Display options for the calendar</xar:mlstring></legend>
             <div class="xar-form-input-wrapper">
                 <label for="ical_links" class="xar-form-label">
                     <span class="help" title="#xarML('Check box to show iCalendar icon.')#">
-                        <xar:mlstring>
-                            Show iCalendar icon:
-                        </xar:mlstring>
+                        <xar:mlstring>Show iCalendar icon:</xar:mlstring>
                         <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
                     </span>
                 </label>
@@ -70,43 +57,38 @@
                     </xar:if>
                 </select>
             </div>
+
             <div class="xar-form-input-wrapper">
-                    <label for="numitems"  class="xar-form-label required">
-                        <span class="help" title="#xarML('Number of items per page.')#">
-                        <xar:mlstring>
-                            Number of items per page (in eventslist):
-                        </xar:mlstring>
-                        </span>
-                    </label>
-                    <xar:data-input name="numitems" type="15" value="$numitems" />
-                </div>
+                <label for="numitems"  class="xar-form-label required">
+                    <span class="help" title="#xarML('Number of items per page.')#">
+                        <xar:mlstring>Number of items per page (in eventslist):</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="numitems" type="15" value="$numitems" />
+            </div>
+
             <div class="xar-form-input-wrapper">
                 <label for="dateformat" class="xar-form-label">
                     <span class="help" title="#xarML('Choose the date format.')#">
-                        <xar:mlstring>
-                            Date format:
-                        </xar:mlstring>
+                        <xar:mlstring>Date format:</xar:mlstring>
                     </span>
                 </label>
-                <select name="dateformat" id="dateformat" size="1">
-                    <xar:if condition="$dateformat eq 'd/m/Y'">
-                        <option label="d/m/Y" value="d/m/Y" selected="selected">d/m/Y</option>
-                    <xar:else />
-                        <option label="d/m/Y" value="d/m/Y">d/m/Y</option>
-                    </xar:if>
-                    <xar:if condition="$dateformat eq 'm/d/Y'">
-                        <option label="m/d/Y" value="m/d/Y" selected="selected">m/d/Y</option>
-                    <xar:else />
-                        <option label="m/d/Y" value="m/d/Y">m/d/Y</option>
-                    </xar:if>
-                </select>
+                <xar:data-input name="dateformat" id="dateformat" type="6" validation="d/m/Y,DD/MM/YYYY;m/d/Y,MM/DD/YYYY" value="$dateformat" />
             </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="timeformat" class="xar-form-label">
+                    <span class="help" title="#xarML('Choose the time format.')#">
+                        <xar:mlstring>Time format:</xar:mlstring>
+                    </span>
+                </label>
+                <xar:data-input name="timeformat" id="timeformat" type="6" validation="h:i a,HH:MM AM;H:i,HH:MM (24 hour)" value="$timeformat" />
+            </div>
+
             <div class="xar-form-input-wrapper">
                 <label for="BulletForm" class="xar-form-label">
                     <span class="help" title="#xarML('Choose the bullet that will be used to mark the category of the event')#">
-                        <xar:mlstring>
-                            Bullet style:
-                        </xar:mlstring>
+                        <xar:mlstring>Bullet style:</xar:mlstring>
                     </span>
                 </label>
                 <select name="BulletForm" id="BulletForm">
@@ -133,6 +115,7 @@
                     </xar:if>
                 </select>
             </div>
+
             <div class="xar-form-input-wrapper">
                 <label for="StartMinInterval" class="xar-form-label">
                     <span class="help" title="#xarML('Choose the interval that will be used for the minutes in the starttime')#">

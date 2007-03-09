@@ -34,21 +34,28 @@ function julian_admin_modifyconfig()
     $data=array();
     $data['share_group'] = xarModGetVar('julian','share_group');
     $data['dateformat']  = xarModGetVar('julian','dateformat');
-    //$data['timeform']  = xarModGetVar('julian','timeform');
+    $data['timeformat']  = xarModGetVar('julian','timeformat');
+
     // The form of the bullet in lists
     $data['BulletForm'] = xarModGetVar('julian', 'BulletForm');
     $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+
     // Number of items per page
     $data['numitems']   = xarModGetVar('julian','numitems');
+
     // Standards
     $data['from_name']  = xarModGetVar('julian','from_name');
     $data['from_email'] = xarModGetVar('julian','from_email');
+
     // Duration minute interval
     $data['DurMinInterval'] = xarModGetVar('julian', 'DurMinInterval');
+
     // Starttime minute interval
     $data['StartMinInterval'] = xarModGetVar('julian', 'StartMinInterval');
+
     // short URLs
     $data['shorturlschecked'] = xarModGetVar('julian', 'SupportShortURLs') ? true : false;
+
     /* If you plan to use alias names for you module then you should use the next two alias vars
      * You must also use short URLS for aliases, and provide appropriate encode/decode functions.
      */

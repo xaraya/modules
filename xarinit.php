@@ -340,9 +340,9 @@ function julian_upgrade($oldversion)
 
         case '0.1.6':
             //Set number of days for event list
-            xarModSetVar('julian','dateformat','m/d/Y');
+            xarModSetVar('julian', 'dateformat', 'm/d/Y');
             //Set the format for the time to display
-            xarModSetVar('julian','timeformat','h:i a');
+            xarModSetVar('julian', 'timeformat', 'h:i a');
             return julian_upgrade('0.1.7');
 
         case '0.1.7':
@@ -355,9 +355,7 @@ function julian_upgrade($oldversion)
 
             // Create the master category for Julian (in the categories module that will be hooked)
             $mastercid = xarModAPIFunc('categories', 'admin', 'create',
-                                        array('name' => 'Julian',
-                                                         'description' => 'Main Julian Calendar categories',
-                                                         'parent_id' => 0));
+                array('name' => 'Julian', 'description' => 'Main Julian Calendar categories', 'parent_id' => 0));
 
             // Store info on the master category in the Julian module.
             xarModSetVar('julian', 'number_of_categories', 1);
@@ -373,11 +371,11 @@ function julian_upgrade($oldversion)
             // Create new table for category-to-color linkage
             $category_properties_table = $xartable['julian_category_properties'];
             $category_properties_fields = array(
-                      // The category id (conforming to the 'categories' module.
-                      'cid'=>array('type'=>'integer','null'=>false),
+              // The category id (conforming to the 'categories' module.
+              'cid'=>array('type'=>'integer','null'=>false),
 
-                      //The category color for giving a visual to the user of the type of event
-                      'color'=>array('type'=>'varchar','size'=>'15','null'=>false,'default'=>''),
+              //The category color for giving a visual to the user of the type of event
+              'color'=>array('type'=>'varchar','size'=>'15','null'=>false,'default'=>''),
             );
             $sql = xarDBCreateTable($category_properties_table,$category_properties_fields);
             if (empty($sql)) return; // throw back
@@ -400,9 +398,8 @@ function julian_upgrade($oldversion)
 
                 // Create new category as child of master category.
                 $newcid = xarModAPIFunc('categories', 'admin', 'create',
-                                          array('name' => $cat_name,
-                                                'description' => $cat_name,
-                                                'parent_id' => $mastercid));
+                    array('name' => $cat_name, 'description' => $cat_name, 'parent_id' => $mastercid)
+                );
 
                 // Link existing color to newly migrated category.
                 $query = "INSERT INTO $category_properties_table ( cid , color ) VALUES ($newcid,'$color')";
@@ -423,19 +420,19 @@ function julian_upgrade($oldversion)
                       $item['cids'] = array($newcid);
                       $hooks = xarModCallHooks('item', 'create', $result_events->fields[0], $item);
                       $result_events->MoveNext();
-                              }
-                      $result_events->Close();
-
-                      // Move to next category.
-                      $result->MoveNext();
                 }
+                $result_events->Close();
 
-                $result->Close();
+                // Move to next category.
+                $result->MoveNext();
+            }
 
-                // Drop superfluous categories table.
-                $query = xarDBDropTable($xartable['julian_categories']);
-                if(empty($query)) return; //throw back
-                if(!$dbconn->Execute($query)) return;
+            $result->Close();
+
+            // Drop superfluous categories table.
+            $query = xarDBDropTable($xartable['julian_categories']);
+            if(empty($query)) return; //throw back
+            if(!$dbconn->Execute($query)) return;
 
             return julian_upgrade('0.2.0');
 
@@ -457,6 +454,7 @@ function julian_upgrade($oldversion)
             xarModDelVar('julian','EventBlockDays');
 
             return julian_upgrade('0.2.1');
+
          case '0.2.1':
             //Set the standard symbol for event categories
             xarModSetVar('julian','BulletForm','bull');
@@ -496,6 +494,7 @@ function julian_upgrade($oldversion)
              if (!$dbconn->Execute($sql)) return;
 
             return julian_upgrade('0.2.2');
+
         case '0.2.2':
             //default number of items per page
             xarModSetVar('julian','numitems','10');
@@ -515,6 +514,7 @@ function julian_upgrade($oldversion)
             $result = $datadict->alterColumn($juliantable, 'state C(50) Null');
             if (!$result) return;
             return julian_upgrade('0.2.4');
+
         case '0.2.4':
             /* Nothing yet
              * Remove masks and make new ones...?

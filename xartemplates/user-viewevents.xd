@@ -9,8 +9,18 @@
         <xar:comment>This selection allows the user to choose a specific date range. Comment out if not required.</xar:comment>
 
         <div>
-          <form name="date_range" method="post" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
+          <form name="date_range" method="get" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
             <div>
+              <xar:comment>
+                If not using short URLs, then use hidden values for form submission.
+                This is to fix a problem in the way browsers handle GET parameters.
+              </xar:comment>
+              <xar:if condition="!xarModGetVar('julian', 'SupportShortURLs')">
+                <input type="hidden" name="module" value="julian" />
+                <input type="hidden" name="type" value="user" />
+                <input type="hidden" name="func" value="viewevents" />
+              </xar:if>
+
               <label><xar:mlstring>Show events from:</xar:mlstring></label>
 
               <select name="start_day" style="width: 3em;">
@@ -119,8 +129,14 @@
         <xar:comment>This selection allows the user to choose the next N days/weeks/months/years. Comment out if not required.</xar:comment>
 
         <div>
-            <form method="post" action="#xarModURL('julian','user','viewevents')#">
+            <form method="get" action="#xarModURL('julian','user','viewevents')#">
                 <div>
+                    <xar:if condition="!xarModGetVar('julian', 'SupportShortURLs')">
+                        <input type="hidden" name="module" value="julian" />
+                        <input type="hidden" name="type" value="user" />
+                        <input type="hidden" name="func" value="viewevents" />
+                    </xar:if>
+
                     <label for="datenumber"><xar:mlstring>Events for the next:</xar:mlstring></label>
                     <input type="text" name="datenumber" id="datenumber" value="#$datenumber#" style="width: 3em;" />
 
@@ -143,8 +159,14 @@
         <xar:else/>
             <xar:comment>List Format</xar:comment>
             <div>
-                <form method="post" action="#xarModURL('julian','user','viewevents')#">
+                <form method="get" action="#xarModURL('julian','user','viewevents')#">
                     <div>
+                        <xar:if condition="!xarModGetVar('julian', 'SupportShortURLs')">
+                            <input type="hidden" name="module" value="julian" />
+                            <input type="hidden" name="type" value="user" />
+                            <input type="hidden" name="func" value="viewevents" />
+                        </xar:if>
+
                         <label for="group"><xar:mlstring>Group by:</xar:mlstring> </label>
                         <xar:set name="grouplist">array('day'=>xarML('Day'), 'week'=>xarML('Week'), 'month'=>xarML('Month'), 'year'=>xarML('Year'))</xar:set>
                         <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
@@ -165,8 +187,8 @@
                             <xar:ml>
                                 <xar:mlstring>Week #(1): #(2) to #(3)</xar:mlstring>
                                 <xar:mlvar>#$loop:key#</xar:mlvar>
-                                <xar:mlvar>#xarLocaleGetFormattedDate('short',$loop:item.periodstart)#</xar:mlvar>
-                                <xar:mlvar>#xarLocaleGetFormattedDate('short',$loop:item.periodend)#</xar:mlvar>
+                                <xar:mlvar>#xarLocaleGetFormattedDate('long',$loop:item.periodstart)#</xar:mlvar>
+                                <xar:mlvar>#xarLocaleGetFormattedDate('long',$loop:item.periodend)#</xar:mlvar>
                             </xar:ml>
                         </h2>
 
@@ -177,60 +199,94 @@
                                 <th><xar:mlstring>Name</xar:mlstring></th>
                             </thead>
                             <xar:loop name="$loop:item.events">
+                                <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
                                     <td>#$events[$loop:item].eStart.viewdate#</td>
                                     <td>
-                                        <xar:if condition="!empty($events[$loop:item].eIsallday)">
-                                            <xar:comment>FIXME: cannot do comparisons against *display* formats, as they may change. This could be 24-hour clock at some time soon.</xar:comment>
-                                            <xar:if condition="$events[$loop:item].eStart.displaytime eq '00:00 AM'">
-                                                <xar:mlstring>All day event</xar:mlstring>
-                                            <xar:else />
-                                                <xar:ml>
-                                                    <xar:mlstring>All day starts #(1)</xar:mlstring>
-                                                    <xar:mlvar>#$events[$loop:item].eStart.displaytime#</xar:mlvar>
-                                                </xar:ml>
-                                            </xar:if>
-                                        <xar:else />
-                                            <xar:ml>
-                                                <xar:mlstring>#(1) - #(2)</xar:mlstring>
-                                                <xar:mlvar>#$events[$loop:item].eStart.displaytime#</xar:mlvar>
-                                                <xar:mlvar>#$events[$loop:item].eEnd.displaytime#</xar:mlvar>
-                                            </xar:ml>
-                                        </xar:if>
+                                        <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
 
-                                    <td>#$events[$loop:item].eName#</td>
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                        #xarVarPrepForDisplay($event.eName)#
+                                    </a></td>
                                 </tr>
                             </xar:loop>
                         </table>
                     </xar:loop>
                 </xar:if>
 
-                <xar:comment>TODO: these to finish of like for 'week' above</xar:comment>
                 <xar:if condition="$group eq 'day'">
                     <xar:loop name="$groups">
-                        <h2 style="margin-top:2em;"><xar:mlstring>Day</xar:mlstring> #$loop:key# :: #xarLocaleGetFormattedDate('long',$loop:item.periodstart)#</h2>
-                        <xar:loop name="$loop:item.events">
-                            <p>#$events[$loop:item].eName#</p>
-                        </xar:loop>
+                        <h2>
+                            <xar:ml>
+                                <xar:mlstring>#(1)</xar:mlstring>
+                                <xar:mlvar>#xarLocaleGetFormattedDate('long', $loop:item.periodstart)#</xar:mlvar>
+                            </xar:ml>
+                        </h2>
+                        <table>
+                            <xar:loop name="$loop:item.events">
+                                <xar:set name="event">#$events[$loop:item]#</xar:set>
+                                <tr>
+                                    <td><xar:template file="event-time" subdata="array('event'=&gt;$event)" /></td>
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                        #xarVarPrepForDisplay($event.eName)#
+                                    </a></td>
+                                </tr>
+                            </xar:loop>
+                        </table>
                     </xar:loop>
                 </xar:if>
 
-                <xar:if condition="($loop:item.periodtype eq 'month')">
+                <xar:if condition="$group eq 'month'">
                     <xar:loop name="$groups">
-                        <h2 style="margin-top:2em;"><xar:mlstring>Month</xar:mlstring> #$loop:key# :: #xarLocaleGetFormattedDate('long',$loop:item.periodstart)#</h2>
-                        <xar:loop name="$loop:item.events">
-                            <p>#$events[$loop:item].eName#</p>
-                        </xar:loop>
+                        <h2>
+                            <xar:ml>
+                                <xar:mlstring>#(1) #(2)</xar:mlstring>
+                                <xar:mlvar>#xarLocaleFormatDate('%B', ($loop:item.periodstart))#</xar:mlvar>
+                                <xar:mlvar>#xarLocaleFormatDate('%Y', ($loop:item.periodstart))#</xar:mlvar>
+                            </xar:ml>
+                        </h2>
+                        <table>
+                            <xar:loop name="$loop:item.events">
+                                <xar:set name="event">#$events[$loop:item]#</xar:set>
+                                <tr>
+                                    <td>#$events[$loop:item].eStart.viewdate#</td>
+                                    <td>
+                                        <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
+                                    </td>
+
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                        #xarVarPrepForDisplay($event.eName)#
+                                    </a></td>
+                                </tr>
+                            </xar:loop>
+                        </table>
                     </xar:loop>
                 </xar:if>
 
-                <xar:if condition="($loop:item.periodtype eq 'year')">
+                <xar:if condition="$group eq 'year'">
                     <xar:loop name="$groups">
-                        <h2 style="margin-top:2em;"><xar:mlstring>Year</xar:mlstring> #$loop:key# :: #xarLocaleGetFormattedDate('long',$loop:item.periodstart)#</h2>
-                        <xar:loop name="$loop:item.events">
-                            <p>#$events[$loop:item].eName#</p>
-                        </xar:loop>
+                        <h2>
+                            <xar:ml>
+                                <xar:mlstring>Year #(1)</xar:mlstring>
+                                <xar:mlvar>#xarLocaleFormatDate('%Y', ($loop:item.periodstart))#</xar:mlvar>
+                            </xar:ml>
+                        </h2>
+                        <table>
+                            <xar:loop name="$loop:item.events">
+                                <xar:set name="event">#$events[$loop:item]#</xar:set>
+                                <tr>
+                                    <td>#$events[$loop:item].eStart.viewdate#</td>
+                                    <td>
+                                        <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
+                                    </td>
+
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                        #xarVarPrepForDisplay($event.eName)#
+                                    </a></td>
+                                </tr>
+                            </xar:loop>
+                        </table>
                     </xar:loop>
                 </xar:if>
 
