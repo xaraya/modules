@@ -205,8 +205,7 @@
                                     <td>
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
-
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
@@ -228,7 +227,7 @@
                                 <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
                                     <td><xar:template file="event-time" subdata="array('event'=&gt;$event)" /></td>
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
@@ -255,7 +254,7 @@
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
 
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
@@ -281,7 +280,7 @@
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
 
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.linkdate,'event_id'=>$event.eID))#">
+                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
