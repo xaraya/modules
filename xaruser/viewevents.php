@@ -59,7 +59,7 @@ function julian_user_viewevents($args)
 
     // Grouping of listed items.
     // TODO: make the default grouping configurable (with no grouping - '' - being an option)
-    if (!xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year', $group, 'week', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year:', $group, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1)) return;

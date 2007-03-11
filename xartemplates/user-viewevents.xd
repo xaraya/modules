@@ -154,11 +154,30 @@
             <xar:categories-navigation layout="trails" showchildren="1" module="julian" catid="$catid" func="viewevents" sortby="$sortby" />
         </xar:if>
 
+        <xar:comment>TODO: there must be a way to get these tabs into a DD property or widget?
+        Or at least some easy way to map the if-then-else condition onto a range of classes.
+        It just seems so clumsy and wasteful, where-ever tabs are used.</xar:comment>
+        <dl class="xar-tabs">
+            <dt class="help"><xar:mlstring>Group by:</xar:mlstring></dt>
+            <xar:if condition="empty($group)"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;null,'startnum'=&gt;1))#"><xar:mlstring>None</xar:mlstring></a></dd>
+            <xar:if condition="$group eq 'day'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'day','startnum'=&gt;1))#"><xar:mlstring>Day</xar:mlstring></a></dd>
+            <xar:if condition="$group eq 'week'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'week','startnum'=&gt;1))#"><xar:mlstring>Week</xar:mlstring></a></dd>
+            <xar:if condition="$group eq 'month'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'month','startnum'=&gt;1))#"><xar:mlstring>Month</xar:mlstring></a></dd>
+            <xar:if condition="$group eq 'year'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'year','startnum'=&gt;1))#"><xar:mlstring>Year</xar:mlstring></a></dd>
+        </dl>
+
         <xar:if condition="!isset($groups)">
             <xar:comment>The original format, with no grouping</xar:comment>
             <xar:template file="view-events-tabular" />
         <xar:else/>
-            <xar:comment>List grouping form - allow user to decide the grouping</xar:comment>
+            <xar:comment>List grouping form - allow user to decide the grouping.
+            Replaced by a set of tabs now, but the code here in case it is useful.</xar:comment>
+            <xar:comment>
             <div>
                 <form method="get" action="#xarModURL('julian','user','viewevents')#">
                     <div>
@@ -179,6 +198,7 @@
                     </div>
                 </form>
             </div>
+            </xar:comment>
 
             <div class="xar-julian-grouped-list">
                 <xar:comment>TODO: Each grouping section to be split into a separate template</xar:comment>
