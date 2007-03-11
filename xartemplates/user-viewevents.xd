@@ -155,9 +155,10 @@
         </xar:if>
 
         <xar:if condition="!isset($groups)">
+            <xar:comment>The original format, with no grouping</xar:comment>
             <xar:template file="view-events-tabular" />
         <xar:else/>
-            <xar:comment>List Format</xar:comment>
+            <xar:comment>List grouping form - allow user to decide the grouping</xar:comment>
             <div>
                 <form method="get" action="#xarModURL('julian','user','viewevents')#">
                     <div>
@@ -179,9 +180,10 @@
                 </form>
             </div>
 
-            <div>
+            <div class="xar-julian-grouped-list">
+                <xar:comment>TODO: Each grouping section to be split into a separate template</xar:comment>
+
                 <xar:if condition="$group eq 'week'">
-                    <xar:comment>Each grouping section to be split into a separate template</xar:comment>
                     <xar:loop name="$groups">
                         <h2>
                             <xar:ml>
@@ -192,22 +194,26 @@
                             </xar:ml>
                         </h2>
 
-                        <table>
+                        <table class="xar-julian-grouped-week">
                             <thead>
-                                <th><xar:mlstring>Date</xar:mlstring></th>
-                                <th><xar:mlstring>Time</xar:mlstring></th>
-                                <th><xar:mlstring>Name</xar:mlstring></th>
+                                <tr>
+                                    <th class="date"><xar:mlstring>Date</xar:mlstring></th>
+                                    <th class="time"><xar:mlstring>Time</xar:mlstring></th>
+                                    <th class="name"><xar:mlstring>Name</xar:mlstring></th>
+                                </tr>
                             </thead>
                             <xar:loop name="$loop:item.events">
                                 <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
-                                    <td>#$events[$loop:item].eStart.viewdate#</td>
-                                    <td>
+                                    <td class="date">#$events[$loop:item].eStart.viewdate#</td>
+                                    <td class="time">
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
+                                    <td class="name">
+                                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
-                                    </a></td>
+                                        </a>
+                                    </td>
                                 </tr>
                             </xar:loop>
                         </table>
@@ -222,12 +228,12 @@
                                 <xar:mlvar>#xarLocaleGetFormattedDate('long', $loop:item.periodstart)#</xar:mlvar>
                             </xar:ml>
                         </h2>
-                        <table>
+                        <table class="xar-julian-grouped-day">
                             <xar:loop name="$loop:item.events">
                                 <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
-                                    <td><xar:template file="event-time" subdata="array('event'=&gt;$event)" /></td>
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
+                                    <td class="date"><xar:template file="event-time" subdata="array('event'=&gt;$event)" /></td>
+                                    <td class="name"><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
@@ -245,16 +251,16 @@
                                 <xar:mlvar>#xarLocaleFormatDate('%Y', ($loop:item.periodstart))#</xar:mlvar>
                             </xar:ml>
                         </h2>
-                        <table>
+                        <table class="xar-julian-grouped-month">
                             <xar:loop name="$loop:item.events">
                                 <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
-                                    <td>#$events[$loop:item].eStart.viewdate#</td>
-                                    <td>
+                                    <td class="date">#$events[$loop:item].eStart.viewdate#</td>
+                                    <td class="time">
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
 
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
+                                    <td class="name"><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>
@@ -271,16 +277,16 @@
                                 <xar:mlvar>#xarLocaleFormatDate('%Y', ($loop:item.periodstart))#</xar:mlvar>
                             </xar:ml>
                         </h2>
-                        <table>
+                        <table class="xar-julian-grouped-year">
                             <xar:loop name="$loop:item.events">
                                 <xar:set name="event">#$events[$loop:item]#</xar:set>
                                 <tr>
-                                    <td>#$events[$loop:item].eStart.viewdate#</td>
-                                    <td>
+                                    <td class="date">#$events[$loop:item].eStart.viewdate#</td>
+                                    <td class="time">
                                         <xar:template file="event-time" subdata="array('event'=&gt;$event)" />
                                     </td>
 
-                                    <td><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
+                                    <td class="name"><a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$event.eStart.linkdate,'event_id'=>$event.eID))#">
                                         #xarVarPrepForDisplay($event.eName)#
                                     </a></td>
                                 </tr>

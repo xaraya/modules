@@ -327,3 +327,19 @@ div.xar-julian-view-header {
 div.xar-julian a:hover span {
     filter: alpha(opacity=100);
 }
+
+
+/* Grouped listings in the eventlist screen */
+
+div.xar-julian-grouped-list td {
+	vertical-align: top;
+}
+div.xar-julian-grouped-list th.date,
+div.xar-julian-grouped-list td.date {
+	width: 7em;
+}
+div.xar-julian-grouped-list th.time,
+div.xar-julian-grouped-list td.time {
+	width: 11em;
+}
+

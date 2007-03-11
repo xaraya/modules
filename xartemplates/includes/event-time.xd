@@ -3,18 +3,25 @@
 
 <xar:if condition="!empty($event.eIsallday)">
     <xar:if condition="$event.eStart.starthours eq 0">
-        <xar:mlstring>All day event</xar:mlstring>
+        <xar:mlstring>All day</xar:mlstring>
     <xar:else />
         <xar:ml>
-            <xar:mlstring>All day starts #(1)</xar:mlstring>
+            <xar:mlstring>All day; starts #(1)</xar:mlstring>
             <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
         </xar:ml>
     </xar:if>
 <xar:else />
-    <xar:ml>
-        <xar:mlstring>#(1) - #(2) (#(3) hours)</xar:mlstring>
-        <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
-        <xar:mlvar>#$event.eEnd.displaytime#</xar:mlvar>
-        <xar:mlvar>#$event.eDurationHours#</xar:mlvar>
-    </xar:ml>
+    <xar:if condition="$event.eDurationHours gt 0">
+        <xar:ml>
+            <xar:mlstring>#(1) - #(2) (#(3) hours)</xar:mlstring>
+            <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
+            <xar:mlvar>#$event.eEnd.displaytime#</xar:mlvar>
+            <xar:mlvar>#$event.eDurationHours#</xar:mlvar>
+        </xar:ml>
+    <xar:else />
+        <xar:ml>
+            <xar:mlstring>#(1)</xar:mlstring>
+            <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
+        </xar:ml>
+    </xar:if>
 </xar:if>
