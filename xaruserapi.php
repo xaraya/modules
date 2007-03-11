@@ -44,39 +44,6 @@ if (!defined('CALENDAR_MODULE_INCLUDES')) {
 }
 
 /**
- *  Calendar object wrapper for templates
- */
-function &calendar_userapi_isLast(&$object)
-{
-    $obj = $object->isLast();
-    return $obj;
-}
-
-/**
- *  Calendar object wrapper for templates
- */function &calendar_userapi_isFirst(&$object)
-{
-    $obj = $object->isFirst();
-    return $obj;
-}
-
-/**
- *  Calendar object wrapper for templates
- */function &calendar_userapi_isEmpty(&$object)
-{
-    $obj = $object->isEmpty();
-    return $obj;
-}
-
-/**
- *  Calendar object wrapper for templates
- */
-function calendar_userapi_build(&$object)
-{
-    $object->build();
-}
-
-/**
  *  Used to get the current view the calendar is in (Day, Week, Month, Year)
  */
 function calendar_userapi_currentView()

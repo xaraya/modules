@@ -20,11 +20,11 @@ function calendar_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_calendar";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_calendar (
-      id int(10) unsigned NOT NULL auto_increment,
-      itemid int(11) unsigned default null,
-      itemtype int(11) unsigned default null,
-      modid int(11) unsigned default null,
-      name varchar(60) default '' NOT NULL,
+      id          int(10) unsigned NOT NULL auto_increment,
+      itemid      int(11) unsigned default null,
+      itemtype    int(11) unsigned default null,
+      modid       int(11) unsigned default null,
+      name        varchar(60) default '' NOT NULL,
       description text,
     PRIMARY KEY  (id)
     ) TYPE=MyISAM";

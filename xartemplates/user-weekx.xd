@@ -146,7 +146,7 @@
         <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
         <xar:calendar-decorator object="$Day" decorator="Weekday" name="$Weekday" />
 
-        <xar:if condition="xarModAPIFunc('calendar','user','isFirst',$Day)">
+        <xar:if condition="$Day:isFirst()">
         <xar:comment> Start a new row </xar:comment>
         <tr><td>&nbsp;<xar:comment> week info goes here </xar:comment></td>
         </xar:if>
@@ -160,7 +160,7 @@
             <xar:set name="$daycolor">"weekday"</xar:set>
         </xar:if>
         <td width=60 class="day #$daycolor#">
-            <xar:if condition="!xarModAPIFunc('calendar','user','isEmpty',$Day)">
+            <xar:if condition="!$Day:isEmpty()">
                 <xar:comment> Display the date for this day </xar:comment>
                     <a href="#$DayURI:current('day')#">#$Day:thisDay()#</a>
             <xar:else />
@@ -217,7 +217,7 @@
                 -->
 
         </td>
-        <xar:if condition="xarModAPIFunc('calendar','user','isLast',$Day)">
+        <xar:if condition="$Day:isLast()">
         <xar:comment> close out the row </xar:comment>
         </tr>
         </xar:if>

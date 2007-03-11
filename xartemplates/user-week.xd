@@ -38,7 +38,7 @@
         <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
         <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
 
-        <xar:if condition="xarModAPIFunc('calendar','user','isFirst',$Day)">
+        <xar:if condition="$Day:isFirst()">
         <xar:comment> Start a new row </xar:comment>
         <tr><td>&nbsp;<xar:comment> week info goes here </xar:comment></td>
         </xar:if>
@@ -50,7 +50,7 @@
         <xar:else />
             <td class="cal-day">
         </xar:if>
-        <xar:if condition="!xarModAPIFunc('calendar','user','isEmpty',$Day)">
+        <xar:if condition="!$Day:isEmpty()">
             <xar:comment> Display the date for this day </xar:comment>
             <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
         <xar:else />
@@ -58,7 +58,7 @@
             &nbsp;
         </xar:if>
         </td>
-        <xar:if condition="xarModAPIFunc('calendar','user','isLast',$Day)">
+        <xar:if condition="$Day:isLast()">
         <xar:comment> close out the row </xar:comment>
         </tr>
         </xar:if>

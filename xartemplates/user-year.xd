@@ -75,7 +75,7 @@
                             TODO::Turn this into a new BL tag to avoid the ugly syntax
                             TODO::or find a way to do this automagically
                         </xar:comment>
-                        <xar:if condition="xarModAPIFunc('calendar','user','isFirst',$Day)">
+                        <xar:if condition="$Day:isFirst()">
                             <xar:comment> Start a new row </xar:comment>
                             <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
                             <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
@@ -92,9 +92,8 @@
                         <xar:else />
                             <td class="cal-day">
                         </xar:if>
-                        <xar:set name="isEmpty">xarModAPIFunc('calendar','user','isEmpty',$Day)</xar:set>
                         <xar:set name="DayUrl">xarModURL('calendar','user','day',array('cal_date'=>$thisday))</xar:set>
-                        <xar:if condition="!$isEmpty">
+                        <xar:if condition="!$Day:isEmpty()">
                             <xar:comment> Display the date for this day </xar:comment>
                             <a href="#$DayUrl#">#$Day->thisDay()#</a>
                         <xar:else />
@@ -102,8 +101,7 @@
                             &nbsp;
                         </xar:if>
                         </td>
-                        <xar:set name="isLast">xarModAPIFunc('calendar','user','isLast',$Day)</xar:set>
-                        <xar:if condition="(bool)$isLast">
+                        <xar:if condition="$Day:isLast()">
                         <xar:comment> close out the row </xar:comment>
                         </tr>
                         </xar:if>
