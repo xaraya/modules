@@ -38,12 +38,12 @@ function shouter_init()
     /*
     xarModSetVar('shouter', 'anonymouspost', false);
     xarModSetVar('shouter', 'shoutblockrefresh', 5);
-    xarModSetVar('shouter', 'lightrow', 'FFFFFF');
-    xarModSetVar('shouter', 'darkrow', 'E0E0E0');
-    xarModSetVar('shouter', 'blockwidth', 180);
+//    xarModSetVar('shouter', 'lightrow', 'FFFFFF');
+//    xarModSetVar('shouter', 'darkrow', 'E0E0E0');
+//    xarModSetVar('shouter', 'blockwidth', 180);
     xarModSetVar('shouter', 'itemsperpage', 10);
     xarModSetVar('shouter', 'allowsmilies', true);
-    xarModSetVar('shouter', 'blockwrap', 19);
+//    xarModSetVar('shouter', 'blockwrap', 19);
 
     */
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',

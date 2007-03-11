@@ -1,6 +1,6 @@
 <xar:style scope="module" module="shouter" file="shouter" />
-<xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="head"/>
 <script type="text/javascript">
+// <![CDATA[
 function formCheck(el){
     if(el.value == ''){
         alert('Please Enter Something to Post!');
@@ -11,64 +11,66 @@ function formCheck(el){
     }
 }
 
-function formPost() {
-    document.getElementById('redirect').value = '';
-    loadContent('#$shouturl#', 'response', 'POST', 'shoutform');
-    replaceContent();
+function formPost(bid) {
+    document.getElementById('redirect_' + bid).value = '';
+    loadContent('#$rawshouturl#', 'response_' + bid, 'POST', 'shoutform_' + bid);
+    replaceContent(bid);
     // empty the input box
-    document.getElementById('shout').value = '';
+    document.getElementById('shout_' + bid).value = '';
     return false;
 }
-function replaceContent(){
+function replaceContent(bid){
     // replace the block content area
-    loadContent('#$blockurl#','shoutupdate');
+    loadContent('#$blockurl#','shoutupdate_' + bid);
 }
 
-function startTimer() {
-    timer = window.setInterval("replaceContent();", "#$shoutblockrefresh#");
+function startTimer(bid) {
+    var timer_#$bid# = window.setInterval("replaceContent(" + bid + ");", "#$shoutblockrefresh#");
 }
 
 <xar:if condition="$refresh">
-window.onLoad = startTimer();
+window.onLoad = startTimer(#$bid#);
 </xar:if>
+// ]]>
 </script>
 
 <xar:comment >begin shoutblock wrapper div (for setting width)</xar:comment>
-<div style="#$blockwidth#">
-<div class="shoutblockwrapper" id="shoutupdate">
+<div>
+<div class="shoutblockwrapper" id="shoutupdate_#$bid#">
     <xar:if condition="count($items) ge 1">
         <xar:foreach in="$items" value="$item" key="$key">
           <xar:if condition="(($key+1) % 2)">
-                <xar:set name="mycolor">
-                    $lightrow
+                <xar:set name="myclass">
+                    'xar-norm'
                 </xar:set>
                 <xar:else />
-                <xar:set name="mycolor">
-                    $darkrow
+                <xar:set name="myclass">
+                    'xar-alt'
                 </xar:set>
             </xar:if>
-            <div style="#$mycolor# padding: 3px;">
-                <span class="shoutblockusername" >#$item['name']#</span>
-                <br />
-                <span class="shoutblockpostinfo">(#xarLocaleGetFormattedDate('medium', $item['date'])# #xarLocaleGetFormattedTime('short', $item['date'])#)</span>
-                <br />
-                <span class="shoutblockcontent">#$item['shout']#</span>
-                <br />
+            <div class="#$myclass# xar-margin-thick">
+                <div class="shoutblockusername" >#$item['name']#</div>
+                <div class="shoutblockpostinfo">(#xarLocaleGetFormattedDate('medium', $item['date'])# #xarLocaleGetFormattedTime('short', $item['date'])#)</div>
+                <div class="shoutblockcontent">#$item['shout']#</div>
             </div>
         </xar:foreach>
     <xar:else/>
         <xar:mlstring>Be the first to shout here!</xar:mlstring>
     </xar:if>
 </div>
-<xar:comment >end the shout body </xar:comment>
+<xar:comment>end the shout body </xar:comment>
 
 <xar:if condition="$anonymouspost or (xarUserIsLoggedIn())">
 
     <div class="shoutblockpostformcontainer">
-        <form method="post" id="shoutform" action="#$shouturl#" onsubmit="formCheck(document.getElementById('shout')); return formPost();">
-            <p><input style="font-size:10px;" type="text" id="shout" name="shout" size="20" /></p>
-            <input type="hidden" id="redirect" name="redirect" value="#xarServerGetCurrentURL()#" />
-            <p><input class="shoutblockbutton" type="submit" name="submit" value="#xarML('Shout!')#" /></p>
+        <form method="post" id="shoutform_#$bid#" action="#$shouturl#" onsubmit="formCheck(document.getElementById('shout_' + #$bid#)); return formPost(#$bid#);">
+            <div>
+                <input type="text" id="shout_#$bid#" name="shout" size="20" />
+                <input type="hidden" id="redirect_#$bid#" name="redirect" value="#xarServerGetCurrentURL()#" />
+                <div style="margin: 1em 0;" class="xar-align-center">
+                    <input class="shoutblockbutton" type="submit" name="submit" value="#xarML('Shout!')#" />
+                </div>
+            </div>
         </form>
     </div>
 
@@ -80,5 +82,5 @@ window.onLoad = startTimer();
     </div>
 </xar:if>
 <!-- XMLHTTPRequest response goes here -->
-<div id="response"></div>
+<div id="response_#$bid#"></div>
 </div>

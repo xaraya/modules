@@ -7,6 +7,7 @@
             </label>
             <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" maxlength="3" class="xar-form-textshort" />
         </div>
+<xar:comment>
         <div class="xar-form-input-wrapper">
             <label for="blockwidth#$blockid#" class="xar-form-label" title="#xarML('Block Width (in pixels)')#">
                 <xar:mlstring>Block Width (in pixels):</xar:mlstring>
@@ -31,6 +32,7 @@
             </label>
             <input type="text" name="darkrow" id="darkrow#$blockid#" value="#$darkrow#" maxlength="6" class="xar-form-textshort" />
         </div>
+</xar:comment>
         <div class="xar-form-input-wrapper">
             <label for="allowsmilies#$blockid#" class="xar-form-label" title="#xarML('Allow Smilies?')#">
                 <xar:mlstring>Allow Smilies?</xar:mlstring>

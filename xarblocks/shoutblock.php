@@ -19,11 +19,11 @@ function shouter_shoutblockblock_init()
 {
     return array(
         'numitems'          => 5,
-        'blockwidth'        => 180,
-        'blockwrap'         => 19,
+//        'blockwidth'        => 180,
+//        'blockwrap'         => 19,
         'allowsmilies'      => true,
-        'lightrow'          => 'FFFFFF',
-        'darkrow'           => 'E0E0E0',
+//        'lightrow'          => 'FFFFFF',
+//        'darkrow'           => 'E0E0E0',
         'shoutblockrefresh' => 0,
         'anonymouspost'     => false,
     );
@@ -73,23 +73,31 @@ function shouter_shoutblockblock_display($blockinfo)
     $totitems = count($items);
     for ($i = 0; $i < $totitems; $i++) {
         $item = $items[$i];
-        $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $vars['blockwrap'], "\n", 1);
+        $items[$i]['shout'] = xarVarPrepForDisplay($item['shout']);
+//        $items[$i]['shout'] = wordwrap(xarVarPrepForDisplay($item['shout']), $vars['blockwrap'], "\n", 1);
     }
 
-
-
-    $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);
+    $data['shouturl'] = xarModURL('shouter', 'admin', 'create',array());
+    $data['rawshouturl'] = xarModURL('shouter', 'admin', 'create',array(),false);
     $data['anonymouspost'] = $vars['anonymouspost'];
 
-    $lightrow = xarModGetVar('shouter','lightrow');
-    $data['lightrow'] = "background:#".$vars['lightrow'].";";
+//    $lightrow = xarModGetVar('shouter','lightrow');
+//    $data['lightrow'] = "background:#".$vars['lightrow'].";";
 
-    $darkrow = xarModGetVar('shouter','darkrow');
-    $data['darkrow'] = "background:#".$vars['darkrow'].";";
+//    $darkrow = xarModGetVar('shouter','darkrow');
+//    $data['darkrow'] = "background:#".$vars['darkrow'].";";
 
 
-    $blockwidth = xarModGetVar('shouter','blockwidth');
-    $data['blockwidth'] = "width:".$vars['blockwidth']."px;";
+//    $blockwidth = xarModGetVar('shouter','blockwidth');
+//    $data['blockwidth'] = "width:".$vars['blockwidth']."px;";
+
+    // JS won't load in the head directly from a block template
+    // unless the shouter block or a blockgroup containing it
+    // is called before <xar:base-render-javascript />
+    // so, we stick xmlhttprequest.js in the body instead
+    xarModAPIFunc('base','javascript','modulefile', array('module' => 'base', 'filename' => 'xmlhttprequest.js', 'position' => 'body'));
+
+
 
     $data['refresh'] = true;
 
@@ -113,6 +121,7 @@ function shouter_shoutblockblock_display($blockinfo)
     }
 
     $data['blockurl'] = xarModURL('blocks', 'user', 'display',array('name' => $blockinfo['name']),false);
+    $data['bid'] = $blockinfo['bid'];
 
     $requestinfo = xarRequestGetInfo();
 
@@ -121,7 +130,7 @@ function shouter_shoutblockblock_display($blockinfo)
      * Don't refresh inside of blocks admin
      * @todo: need a better way to handle whether to load the onLoad event for the timer
      */
-    if ($requestinfo[0] == 'blocks' && $requestinfo[1] == 'admin') {
+    if (xarRequestGetVar('module') == 'blocks' && xarRequestGetVar('type') == 'admin') {
         $data['refresh'] = false;
     }
     $blockinfo['content'] = $data;
