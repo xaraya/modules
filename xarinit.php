@@ -35,17 +35,6 @@ function shouter_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    /*
-    xarModSetVar('shouter', 'anonymouspost', false);
-    xarModSetVar('shouter', 'shoutblockrefresh', 5);
-    xarModSetVar('shouter', 'lightrow', 'FFFFFF');
-    xarModSetVar('shouter', 'darkrow', 'E0E0E0');
-    xarModSetVar('shouter', 'blockwidth', 180);
-    xarModSetVar('shouter', 'itemsperpage', 10);
-    xarModSetVar('shouter', 'allowsmilies', true);
-    xarModSetVar('shouter', 'blockwrap', 19);
-
-    */
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                  array('modName' => 'shouter',
                        'blockType' => 'shoutblock'))) return;
@@ -79,6 +68,27 @@ function shouter_init()
     return true;
 }
 
+/**
+ * upgrade the module from an old version
+ * @param string $oldversion The former version number to upgrade from
+ * @return bool
+ */
+function shouter_upgrade($oldversion)
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case '0.8.6':
+
+
+
+            break;
+
+
+    }
+    return true;
+}
 /**
  * Delete the module
  */
