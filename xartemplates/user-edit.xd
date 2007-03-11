@@ -7,143 +7,163 @@
 
     <div class="xar-julian-contents">
 
-        <form name="cal_submit"
+        <form name="cal_submit" method="post"
               action="&xar-modurl-julian-user-updateevent;"
               onsubmit="if (!isCancel){return validate2(this)}"
-              method="post"
               enctype="application/x-www-form-urlencoded">
-                <fieldset>
-                    <legend>
-                        <strong><xar:mlstring>Edit Event</xar:mlstring></strong>
-                    </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="title" class="required xar-form-label" title="#xarML('Each event requires a title')#">
-                            <xar:mlstring>Event Title:</xar:mlstring>
-                        </label>
-                        <input type="text" name="title" id="title" maxlength="80" value="#$title#" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="event_desc" class="required xar-form-label" title="#xarML('The full event description')#">
-                            <xar:mlstring>Event Description:</xar:mlstring>
-                        </label>
-                        <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40">#$event_desc#</textarea>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        #$hookoutput['categories']#
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="access" class="xar-form-label" title="#xarML('Share you event (only) with:')#">
-                            <xar:mlstring>Access:</xar:mlstring> &nbsp;
-                        </label>
-                        <input type="radio" name="class" id="class1" value="0" #$class[0]# onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
-                        <xar:mlstring>Public</xar:mlstring>
-                        <input type="radio" name="class" id="class2" value="1" #$class[1]# onclick="document.getElementById('share').style.visibility='visible';">
-                        <xar:mlstring>Private</xar:mlstring>
-                    </div>
-                    <xar:if condition="$class[1] eq 'checked '">
-                        <xar:set name="$showshare">'visible'</xar:set>
+            <fieldset>
+                <legend><xar:mlstring>Edit Event</xar:mlstring></legend>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="title" class="required xar-form-label" title="#xarML('Each event requires a title')#">
+                        <xar:mlstring>Event Title:</xar:mlstring>
+                    </label>
+                    <input type="text" name="title" id="title" maxlength="80" value="#$title#" />
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label for="event_desc" class="required xar-form-label" title="#xarML('The full event description')#">
+                        <xar:mlstring>Event Description:</xar:mlstring>
+                    </label>
+                    <textarea name="event_desc" id="event_desc" wrap="virtual" rows="15" cols="40">#$event_desc#</textarea>
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    #$hookoutput.categories#
+                </div>
+
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" title="#xarML('Share your event (only) with:')#">
+                        <xar:mlstring>Access:</xar:mlstring>&nbsp;
+                    </label>
+
+                    <xar:if condition="$item.class eq 0">
+                        <input type="radio" name="class" id="class1" value="0" checked="checked" onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
                     <xar:else />
-                        <xar:set name="$showshare">'hidden'</xar:set>
+                        <input type="radio" name="class" id="class1" value="0" onclick="document.getElementById('share').style.visibility='hidden';document.cal_submit.elements['share_uids[]'].selectedIndex=0;">
                     </xar:if>
-                    <div class="xar-form-input-wrapper" id="share" style="visibility:#$showshare#;">
-                        <label for="share_uids" class="xar-form-label" title="#xarML('Choose user to share this event with.')#">
-                              <xar:mlstring>Share with:</xar:mlstring>
-                        </label>
-                        <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$group_validation" />
+                    <label for="class1"><xar:mlstring>Public</xar:mlstring></label>
+                    
+                    <xar:if condition="$item.class eq 1">
+                        <input type="radio" name="class" id="class2" value="1" checked="checked" onclick="document.getElementById('share').style.visibility='visible';">
+                    <xar:else />
+                        <input type="radio" name="class" id="class2" value="1" onclick="document.getElementById('share').style.visibility='visible';">
+                    </xar:if>
+                    <label for="class2"><xar:mlstring>Private</xar:mlstring></label>
+
+                    <xar:comment>
+                    <xar:set name="classradio">array(0=>xarML('Public'),1=>xarML('Private'))</xar:set>
+                    <xar:data-input name="class" id="class" type="34" validation="$classradio" value="$item['class']" />
+                    </xar:comment>
+                </div>
+
+                <xar:if condition="$item.class eq 1">
+                    <xar:set name="$showshare">'visible'</xar:set>
+                <xar:else />
+                    <xar:set name="$showshare">'hidden'</xar:set>
+                </xar:if>
+
+                <div class="xar-form-input-wrapper" id="share" style="visibility: #$showshare#;">
+                    <label for="share_uids" class="xar-form-label" title="#xarML('Choose user to share this event with.')#">
+                          <xar:mlstring>Share with:</xar:mlstring>
+                    </label>
+                    <xar:data-input name="share_uids[]" id="share_uids" type="userlist" value="$share_uids" validation="$group_validation" />
+                </div>
+            </fieldset>
+
+            <xar:template file="modify-datetime" />
+
+            <fieldset>
+                <legend><xar:mlstring>Extra Event Information</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="location" class="xar-form-label" title="#xarML('Enter the location of the event')#">
+                        <xar:mlstring>Event Location:</xar:mlstring>
+                    </label>
+                    <input type="text" name="location" id="location" maxlength="255" value="#$location#" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="street1" class="xar-form-label">
+                        <xar:mlstring>Street:</xar:mlstring>
+                    </label>
+                        <input type="text" name="street1" id="street1" maxlength="255" value="#$street1#" class="xar-form-textmedium" /><br />
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="text" name="street2" id="street2" maxlength="255" value="#$street2#" class="xar-form-textmedium" />
                     </div>
-                </fieldset>
-                <xar:template file="modify-datetime" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="city" class="xar-form-label" title="#xarML('City or town')#">
+                        <xar:mlstring>City:</xar:mlstring>
+                    </label>
+                    <input type="text" name="city" id="city" maxlength="255" value="#$city#" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="state" class="xar-form-label" title="#xarML('State.')#">
+                        <xar:mlstring>State:</xar:mlstring>
+                    </label>
+                    <input type="text" name="state" id="state" maxlength="255" value="#$state#" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="postal" class="xar-form-label" title="#xarML('Postal/Providence.')#">
+                        <xar:mlstring>Postal/Providence:</xar:mlstring>
+                    </label>
+                    <input type="text" name="postal" id="postal" maxlength="255" value="#$postal#" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="contact" class="xar-form-label" title="#xarML('Contact.')#">
+                        <xar:mlstring>Contact:</xar:mlstring>
+                    </label>
+                    <input type="text" name="contact" id="contact" maxlength="255" value="#$contact#" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="phone1" class="xar-form-label" title="#xarML('Phone.')#">
+                        <xar:mlstring>Phone:</xar:mlstring>
+                    </label>
+                    <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
+                       <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                       <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
+                       <input type="text" name="phone3" id="phone3" value="#$phone3#" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
+                    <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EU'"/>
+                       <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
+                       <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
+                       <input type="text" name="phone3" id="phone3" value="#$phone3#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
+                    <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EUC'"/>
+                       <input type="text" name="phone1" id="phone1" value="#$phone1#" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> -
+                       <input type="text" name="phone2" id="phone2" value="#$phone2#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
+                    <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
+                       <input type="text" name="phone1" id="phone1" value="#$phone1#" size="25" maxlength="25" />
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="email" class="xar-form-label" title="#xarML('Email address that can serve as a contact')#">
+                        <xar:mlstring>Email:</xar:mlstring>
+                    </label>
+                    <input type="text" name="email" id="email" value="#$email#" maxlength="255" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="website" class="xar-form-label" title="#xarML('Event Website or URL')#">
+                        <xar:mlstring>Event Website:</xar:mlstring>
+                    </label>
+                    <input type="text" name="website" id="website" value="#$website#" maxlength="255" class="xar-form-textmedium" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="fee" class="xar-form-label" title="#xarML('Event Fee that will be announced on this website')#">
+                        <xar:mlstring>Event Fee:</xar:mlstring>
+                    </label>
+                    <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
+                </div>
+            </fieldset>
+
+            <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
                 <fieldset>
-                    <legend>
-                        <strong><xar:mlstring>Extra Event Information</xar:mlstring></strong>
-                    </legend>
-                    <div class="xar-form-input-wrapper">
-                        <label for="location" class="xar-form-label" title="#xarML('Enter the location of the event')#">
-                            <xar:mlstring>Event Location:</xar:mlstring>
-                        </label>
-                        <input type="text" name="location" id="location" maxlength="255" value="#$location#" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="street1" class="xar-form-label" title="#xarML('Street.')#">
-                            <xar:mlstring>Street:</xar:mlstring>
-                        </label>
-                            <input type="text" name="street1" id="street1" maxlength="255" value="#$street1#" class="xar-form-textmedium" /><br />
-                        <div class="xar-form-input-wrapper-after">
-                            <input type="text" name="street2" id="street2" maxlength="255" value="#$street2#" class="xar-form-textmedium" />
-                        </div>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="city" class="xar-form-label" title="#xarML('City or town')#">
-                            <xar:mlstring>City:</xar:mlstring>
-                        </label>
-                        <input type="text" name="city" id="city" maxlength="255" value="#$city#" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="state" class="xar-form-label" title="#xarML('State.')#">
-                            <xar:mlstring>State:</xar:mlstring>
-                        </label>
-                        <input type="text" name="state" id="state" maxlength="255" value="#$state#" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="postal" class="xar-form-label" title="#xarML('Postal/Providence.')#">
-                            <xar:mlstring>Postal/Providence:</xar:mlstring>
-                        </label>
-                        <input type="text" name="postal" id="postal" maxlength="255" value="#$postal#" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="contact" class="xar-form-label" title="#xarML('Contact.')#">
-                            <xar:mlstring>Contact:</xar:mlstring>
-                        </label>
-                        <input type="text" name="contact" id="contact" maxlength="255" value="#$contact#" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="phone1" class="xar-form-label" title="#xarML('Phone.')#">
-                            <xar:mlstring>Phone:</xar:mlstring>
-                        </label>
-                        <xar:if condition="xarModGetVar('Julian','TelFieldType') eq 'US'">
-                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
-                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
-                           <input type="text" name="phone3" id="phone3" value="#$phone3#" size="4" maxlength="4" onkeyup="checkNumericy(this)" />
-                        <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EU'"/>
-                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone2)" /> -
-                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="3" maxlength="3" onkeyup="checkNumericy(this);checkNumberLen(this,3,this.form.phone3)" /> -
-                           <input type="text" name="phone3" id="phone3" value="#$phone3#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
-                        <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'EUC'"/>
-                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="4" maxlength="4" onkeyup="checkNumericy(this);checkNumberLen(this,4,this.form.phone2)" /> -
-                           <input type="text" name="phone2" id="phone2" value="#$phone2#" size="10" maxlength="10" onkeyup="checkNumericy(this)" />
-                        <xar:elseif condition="xarModGetVar('Julian','TelFieldType') eq 'OPEN'"/>
-                           <input type="text" name="phone1" id="phone1" value="#$phone1#" size="25" maxlength="25" />
-                        </xar:if>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="email" class="xar-form-label" title="#xarML('Email address that can serve as a contact')#">
-                            <xar:mlstring>Email:</xar:mlstring>
-                        </label>
-                        <input type="text" name="email" id="email" value="#$email#" maxlength="255" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="website" class="xar-form-label" title="#xarML('Event Website.')#">
-                            <xar:mlstring>Event Website:</xar:mlstring>
-                        </label>
-                        <input type="text" name="website" id="website" value="#$website#" maxlength="255" class="xar-form-textmedium" />
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="fee" class="xar-form-label" title="#xarML('Event Fee that will be announced on this website')#">
-                            <xar:mlstring>Event Fee:</xar:mlstring>
-                        </label>
-                        <input type="text" name="fee" id="fee" value="#$fee#" onkeyup="checkNumericy(this);" maxlength="255" class="xar-form-textmedium" />
-                    </div>
-                </fieldset>
-                <xar:if condition="!empty($hookoutput) AND (count($hookoutput) gt 1)">
-                 <fieldset>
                     <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                         <xar:foreach in="$hookoutput" key="$hookmodule">
-                        <xar:if condition="$hookmodule ne 'categories'">
-                        #$hookoutput[$hookmodule]#
-                        </xar:if>
+                            <xar:if condition="$hookmodule ne 'categories'">
+                                #$hookoutput[$hookmodule]#
+                            </xar:if>
                         </xar:foreach>
                 </fieldset>
-                </xar:if>
+            </xar:if>
+
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="is_update" value="1" />
                 <input type="hidden" name="id" value="#$event_id#" />

@@ -54,10 +54,13 @@ function julian_user_edit()
        list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
     }
     $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
-    //Date time from item
-    //setting start date time variables
-    $hour = date("h",strtotime($item['dtstart'])); //12 hour format
-    $ampm = !strcmp(date("a",strtotime($item['dtstart'])),"am")?0:1;
+
+    // TODO: The time format needs to take into account whether we are using 12- or 24-hour clock.
+    // The US is the main user of 12 hour, while 24-hour is used over much of the rest of the world.
+    // Date time from item
+    // setting start date time variables
+    $hour = date("h", strtotime($item['dtstart'])); //12 hour format
+    $ampm = !strcmp(date("a",strtotime($item['dtstart'])),"am") ? 0:1;
     $minute = date("i",strtotime($item['dtstart']));
     list($year,$month,$day) = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
     //set the start date parts in the data array
@@ -91,6 +94,8 @@ function julian_user_edit()
     } else if ($event_repeat == 2) {// event repeats on
       $data['event_repeat_on_freq'] = $item['recur_freq'];
     }
+
+    $data['item'] = $item;
 
     $data['event_id'] = $item['event_id'];
     $data['title'] = xarVarPrepForDisplay($item['summary']);
@@ -265,40 +270,43 @@ function julian_user_edit()
      $data['freq_type_selected']['rrule'] = 'selected';
    }
 
-   //Setting repeat on num selection
-   for ($i = 1; $i < 6; $i++) {
-     $data['repeat_on_num_selected'][$i] = '';
-     if ($item['recur_interval'] == $i) {
-         $data['repeat_on_num_selected'][$i] = 'selected';
-     }
-   }
+    //Setting repeat on num selection
+    for ($i = 1; $i < 6; $i++) {
+        $data['repeat_on_num_selected'][$i] = '';
+        if ($item['recur_interval'] == $i) {
+            $data['repeat_on_num_selected'][$i] = 'selected';
+        }
+    }
 
-   //Setting repeat on day selection
-   for ($i = 1; $i < 8; $i++) {
-     $data['repeat_on_day_selection'][$i] = '';
-     if ($item['recur_count'] == $i) {
-         $data['repeat_on_day_selection'][$i] = 'selected';
-     }
-   }
+    //Setting repeat on day selection
+    for ($i = 1; $i < 8; $i++) {
+        $data['repeat_on_day_selection'][$i] = '';
+        if ($item['recur_count'] == $i) {
+            $data['repeat_on_day_selection'][$i] = 'selected';
+        }
+    }
 
-   //Setting allday checked
-   $data['allday_checked'][0] = '';
-   $data['allday_checked'][1] = 'checked';
-   $data['timeddisabled'] = '';
-   if ($item['isallday'] == 1) {
-     $data['allday_checked'][0] = 'checked';
-     $data['allday_checked'][1] = '';
-     $data['timeddisabled'] = 'disabled';
-   }
-   // 0 = CAL_CLASS_PUBLIC
-   // 1 = CAL_CLASS_PRIVATE
-   //determine if this is a public or private event
-   $data['class'][0] = 'checked ';
-   $data['class'][1] = '';
-   if ($item['class'] == 1) {
-     $data['class'][0] = '';
-     $data['class'][1] = 'checked ';
-   }
+    // DEPRECATED - tag attributes are set in the template
+    // Setting allday checked
+    $data['allday_checked'][0] = '';
+    $data['allday_checked'][1] = 'checked';
+    $data['timeddisabled'] = '';
+    if ($item['isallday'] == 1) {
+        $data['allday_checked'][0] = 'checked';
+        $data['allday_checked'][1] = '';
+        $data['timeddisabled'] = 'disabled';
+    }
+
+    // DEPRECATED - tag attributes are set in the template
+    // 0 = CAL_CLASS_PUBLIC
+    // 1 = CAL_CLASS_PRIVATE
+    //determine if this is a public or private event
+    $data['class'][0] = 'checked ';
+    $data['class'][1] = '';
+    if ($item['class'] == 1) {
+        $data['class'][0] = '';
+        $data['class'][1] = 'checked ';
+    }
 
     // Get hook information for the event that we will edit.
     // Build description for the item we want the hooks (i.e. category) for.

@@ -334,7 +334,7 @@ function julian_user_updateevent()
 
     }
     //Go back to the view of the event
-    xarResponseRedirect(xarModURL('julian', 'user', 'viewevent',array('cal_date'=>$cal_date,'event_id' => $id)));
+    xarResponseRedirect(xarModURL('julian', 'user', 'viewevent', array('cal_date'=>$cal_date, 'event_id' => $id)));
 }
 
 ?>

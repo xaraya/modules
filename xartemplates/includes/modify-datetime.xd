@@ -1,4 +1,5 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>FIXME: *loads* of non-XML stuff in this template</xar:comment>
 <!--
   // Template for date and time options
   -->
@@ -10,91 +11,113 @@
         <label for="event_month" class="required xar-form-label" title="#xarML('Date the event starts.')#">
             <xar:mlstring>Start Date:</xar:mlstring>
         </label>
+
         <select name="event_month" title="#xarML('Event Date:Month')#" onchange="populateSelect(this, this.form.day, this.form.event_year)">
             <option value=""></option>
-        <xar:for start="$i = 1" test="$i le 12" iter="$i++">
-            <xar:if condition="$i lt 10">
-                <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
-            <xar:else />
-                <xar:set name="$currMonth">#$i#</xar:set>
-            </xar:if>
-            <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
-            <xar:set name="$monthSelected">""</xar:set>
-            <xar:if condition="$event_month eq $currMonth">
-                <xar:set name="$monthSelected">'selected="selected"'</xar:set>
-            </xar:if>
-            <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
-        </xar:for>
+            <xar:for start="$i = 1" test="$i le 12" iter="$i++">
+                <xar:if condition="$i lt 10">
+                    <xar:set name="$currMonth">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                <xar:else />
+                    <xar:set name="$currMonth">#$i#</xar:set>
+                </xar:if>
+                <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
+                <xar:if condition="$event_month eq $currMonth">
+                    <option value="#$currMonth#" selected='selected'>#$currMonth_long#</option>
+                <xar:else />
+                    <option value="#$currMonth#">#$currMonth_long#</option>
+                </xar:if>
+            </xar:for>
         </select>
+
         <select name="event_day" title="#xarML('Event Date:Day')#">
             <option value=""></option>
-        <xar:for start="$i = 1" test="$i le 31" iter="$i++">
-            <xar:if condition="$i lt 10">
-                <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
-            <xar:else />
-                <xar:set name="$currDay">#$i#</xar:set>
-            </xar:if>
-            <xar:set name="$daySelected">""</xar:set>
-            <xar:if condition="$event_day eq $currDay">
-                <xar:set name="$daySelected">'selected="selected"'</xar:set>
-            </xar:if>
-            <option value="#$currDay#" #$daySelected#>#$currDay#</option>
-        </xar:for>
+            <xar:for start="$i = 1" test="$i le 31" iter="$i++">
+                <xar:if condition="$i lt 10">
+                    <xar:set name="$currDay">str_pad($i,2,'0',STR_PAD_LEFT)</xar:set>
+                <xar:else />
+                    <xar:set name="$currDay">#$i#</xar:set>
+                </xar:if>
+                <xar:if condition="$event_day eq $currDay">
+                    <option value="#$currDay#" selected="selected">#$currDay#</option>
+                <xar:else />
+                    <option value="#$currDay#">#$currDay#</option>
+                </xar:if>
+            </xar:for>
         </select>
+
         <select name="event_year" title="#xarML('Event Date:Year')#" onchange="populateSelect(this.form.month, this.form.day, this)">
-            <option value=""></option>
-        <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
-            <xar:set name="$yearSelected">""</xar:set>
-            <xar:if condition="$event_year eq $i">
-                <xar:set name="$yearSelected">'selected="selected"'</xar:set>
-            </xar:if>
-            <option value="#$i#" #$yearSelected#>#$i#</option>
-        </xar:for>
+            <option value=""><xar:mlstring>-- None --</xar:mlstring></option>
+            <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
+                <xar:if condition="$event_year eq $i">
+                    <option value="#$i#" selected="selected">#$i#</option>
+                <xar:else />
+                    <option value="#$i#">#$i#</option>
+                </xar:if>
+            </xar:for>
         </select>
     </div>
 
-    <div class="xar-form-input-wrapper">
-        <label class="required xar-form-label" title="#xarML('Duration of event: all day or partial.')#">
-            <xar:mlstring>Event Duration</xar:mlstring>
-        </label>
-        <xar:mlstring>All day event</xar:mlstring>
-        <input type="radio" name="event_allday" value="1" #$allday_checked[0]# onClick="processEventTimed(this.form,this,'button');" />
-        <xar:mlstring>Timed event</xar:mlstring>
-        <input type="radio" name="event_allday" value="0" #$allday_checked[1]# onClick="processEventTimed(this.form,this,'button');" />
-    </div>
     <div id="p_event_startdur">
-        <div class="xar-form-input-wrapper" #$timeddisabled#>
+        <div class="xar-form-input-wrapper">
             <label for="event_starttimeh" class="xar-form-label" title="#xarML('The time this event starts')#">
                 <xar:mlstring>Start Time:</xar:mlstring>
             </label>
-            <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7" #$timeddisabled#>
+            <select name="event_starttimeh" id="event_starttimeh" size="1" tabindex="7">
                 #$start_hour_options#
             </select>
-            <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8" #$timeddisabled#>
+            <select name="event_starttimem" id="event_starttimem" size="1" tabindex="8">
                 #$start_minute_options#
             </select>
-            <select name="event_startampm" id="event_startampm" size="1" tabindex="9" #$timeddisabled#>
+            <select name="event_startampm" id="event_startampm" size="1" tabindex="9">
                 <xar:if condition="$event_startampm">
                     <option value="1" >AM</option>
-                    <option value="2" selected>PM</option>
+                    <option value="2" selected="selected">PM</option>
                 <xar:else />
-                    <option value="1" selected>AM</option>
+                    <option value="1" selected="selected">AM</option>
                     <option value="2" >PM</option>
               </xar:if>
             </select>
         </div>
+
+        <xar:comment>
+            TODO: give the user a choice between selecting a duration and selecting an end time.
+            The end time is more intuitive, and does not involve a feat of mental arithmetic to work it out.
+        </xar:comment>
+
         <div class="xar-form-input-wrapper">
-                <label for="event_dur_hours" class="xar-form-label" title="#xarML('The duration of this event')#">
-                    <xar:mlstring>Duration:</xar:mlstring>
-                </label>
-                <select name="event_dur_hours" id="event_dur_hours" #$timeddisabled#>
-                    #$dur_hour_options#
-                </select>
+            <label class="required xar-form-label" title="#xarML('Duration of event: all day or partial.')#">
+                <xar:mlstring>Event Duration</xar:mlstring>
+            </label>
+
+            <xar:if condition="$item.isallday eq 1">
+                <input type="radio" id="event_allday_1" name="event_allday" value="1" checked="checked" onClick="processEventTimed(this.form,this,'button');" />
+            <xar:else />
+                <input type="radio" id="event_allday_1" name="event_allday" value="1" onClick="processEventTimed(this.form,this,'button');" />
+            </xar:if>
+            <label for="event_allday_1"><xar:mlstring>All day event</xar:mlstring></label>
+            <xar:if condition="$item.isallday eq 0">
+                <input type="radio" id="event_allday_0" name="event_allday" value="0" checked="checked" onClick="processEventTimed(this.form,this,'button');" />
+            <xar:else />
+                <input type="radio" id="event_allday_0" name="event_allday" value="0" onClick="processEventTimed(this.form,this,'button');" />
+            </xar:if>
+            <label for="event_allday_0"><xar:mlstring>Timed event</xar:mlstring></label>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="event_dur_hours" class="xar-form-label" title="#xarML('The duration of this event')#">
+                <xar:mlstring>Duration:</xar:mlstring>
+            </label>
+            <xar:if condition="$item.isallday">
+                <select name="event_dur_hours" id="event_dur_hours" disabled="disabled">#$dur_hour_options#</select>
                 <xar:mlstring>Hours</xar:mlstring>
-                <select name="event_dur_minutes" id="event_dur_minutes" #$timeddisabled#>
-                    #$dur_minute_options#
-                </select>
+                <select name="event_dur_minutes" id="event_dur_minutes" disabled="disabled">#$dur_minute_options#</select>
                 <xar:mlstring>Minutes</xar:mlstring>
+            <xar:else />
+                <select name="event_dur_hours" id="event_dur_hours">#$dur_hour_options#</select>
+                <xar:mlstring>Hours</xar:mlstring>
+                <select name="event_dur_minutes" id="event_dur_minutes">#$dur_minute_options#</select>
+                <xar:mlstring>Minutes</xar:mlstring>
+            </xar:if>
         </div>
     </div>
 
@@ -149,6 +172,7 @@
             <xar:mlstring>month(s)</xar:mlstring>.
          </div>
     </div>
+
     <div id="p_event_recurend">
         <div class="xar-form-input-wrapper">
             <label for="enddate" class="xar-form-label" title="#xarML('When the even has a recurring end date, then enter it here')#">
@@ -164,12 +188,12 @@
                     <xar:set name="$currMonth">#$i#</xar:set>
                 </xar:if>
                 <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$currMonth,1,2000))</xar:set>
-                <xar:set name="$monthSelected">""</xar:set>
                 <xar:if condition="$event_endmonth eq $currMonth">
                     <xar:set name="$currMonth_long">date("F",mktime(0,0,0,$event_endmonth,1,2000))</xar:set>
-                    <xar:set name="$monthSelected">"SELECTED"</xar:set>
+                    <option value="#$currMonth#" selected="selected">#$currMonth_long#</option>
+                <xar:else />
+                    <option value="#$currMonth#">#$currMonth_long#</option>
                 </xar:if>
-                <option value="#$currMonth#" #$monthSelected#>#$currMonth_long#</option>
             </xar:for>
             </select>
             <select name="event_endday" #$enddatedisabled# onchange="document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endday.value == ''){document.cal_submit.event_endmonth.value == ''; document.cal_submit.event_endyear.value == ''}">
@@ -180,23 +204,21 @@
                 <xar:else />
                     <xar:set name="$currDay">#$i#</xar:set>
                 </xar:if>
-                <xar:set name="$daySelected">""</xar:set>
                 <xar:if condition="$event_endday eq $i">
-                   <xar:set name="$daySelected">$event_endday</xar:set>
-                   <xar:set name="$daySelected">"SELECTED"</xar:set>
+                    <option value="#$currDay#" selected="selected">#$currDay#</option>
+                <xar:else />
+                    <option value="#$currDay#">#$currDay#</option>
                 </xar:if>
-                <option value="#$currDay#" #$daySelected#>#$currDay#</option>
             </xar:for>
             </select>
             <select name="event_endyear" #$enddatedisabled# onchange="populateSelect(this.form.event_endmonth, this.form.event_endday, this);document.cal_submit.event_endtype[0].checked = true;if(document.cal_submit.event_endyear.value == ''){document.cal_submit.event_endyear.value == ''; document.cal_submit.event_endday.value == ''}">
                 <option value=""></option>
             <xar:for start="$i = date('Y')+10" test="$i ge date('Y')-10" iter="$i--">
-                <xar:set name="$yearSelected">""</xar:set>
                 <xar:if condition="$event_endyear eq $i">
-                   <xar:set name="$yearSelected">$event_endyear</xar:set>
-                   <xar:set name="$yearSelected">"SELECTED"</xar:set>
+                    <option value="#$i#" selected="selected">#$i#</option>
+                <xar:else />
+                    <option value="#$i#">#$i#</option>
                 </xar:if>
-                <option value="#$i#" #$yearSelected#>#$i#</option>
             </xar:for>
             </select>
         </div>

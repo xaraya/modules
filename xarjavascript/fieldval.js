@@ -140,9 +140,10 @@ function processEventRepeat(f,obj,callingobj)
 function processEventTimed(f,obj,callingobj)
 {
         //initialize the disabled fields to false
-        f.event_starttimeh.disabled = false
-        f.event_starttimem.disabled = false
-        f.event_startampm.disabled = false
+		// JJ 11-MAR-07: even all-day events can have a start time. They just don't have a duration.
+        //f.event_starttimeh.disabled = false
+        //f.event_starttimem.disabled = false
+        //f.event_startampm.disabled = false
         f.event_dur_hours.disabled = false
         f.event_dur_minutes.disabled = false;
 
@@ -152,9 +153,9 @@ function processEventTimed(f,obj,callingobj)
         if (buttonArray[0].checked)
         {
              //disable the end date section of the repeating events area
-             f.event_starttimeh.disabled = true
-             f.event_starttimem.disabled = true
-             f.event_startampm.disabled = true
+             //f.event_starttimeh.disabled = true
+             //f.event_starttimem.disabled = true
+             //f.event_startampm.disabled = true
              f.event_dur_hours.disabled = true
              f.event_dur_minutes.disabled = true;
         }
