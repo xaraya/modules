@@ -10,11 +10,11 @@
     function calendar_user_month()
     {
         $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
-        $Month = new Calendar_Month_Weekdays(
+/*        $Month = new Calendar_Month_Weekdays(
             $data['cal_year'],
             $data['cal_month'],
             CALENDAR_FIRST_DAY_OF_WEEK);
-
+*/
         $events = xarModAPIFunc('icalendar','user','getevents',array());
 
         $MonthEvents = new Calendar_Month_Weekdays(

@@ -122,7 +122,7 @@ class Calendar_Day extends Calendar
                 $key = (int)$sDate->thisHour();
                 if (isset($this->children[$key])) {
                     $sDate->setSelected();
-                    $this->children[$key] = $sDate;
+                    $this->children[$key]->addEntry1($sDate);
                 }
             }
         }
