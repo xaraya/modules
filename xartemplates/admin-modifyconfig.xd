@@ -1,3 +1,110 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('calendar','useModuleAlias')">
+            #xarModGetVar('calendar','aliasname')#
+        <xar:else />
+            <xar:mlstring>Calendar Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <div>
+        <xar:template file="headerconfig" type="module"/>
+    </div>
+
+    <xar:comment> Begin General Options
+    </xar:comment>
+
+    <form method="post" action="&xar-modurl-calendar-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="$tab eq 'calendar_general'">
+            <h3>
+                <xar:mlstring>
+                    General Options
+                </xar:mlstring>
+            </h3>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Page Layout
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Items Per Page:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('calendar','itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('calendar', 'supportshorturls')">
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                    </xar:if>
+                    <label for="shorturls" title="#xarML('Enable short URLs for Calendar module')#">
+                        <xar:mlstring>
+                            Enable Short URLs
+                        </xar:mlstring>
+                    </label>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                        <xar:mlstring>
+                            Use a module alias
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="checked">xarModGetVar('calendar','useModuleAlias')</xar:set>
+                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                            <xar:mlstring>
+                                Module Alias Name
+                            </xar:mlstring>
+                    </label>
+                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('calendar', 'aliasname')#" size="32" maxlength="100" />
+                </div>
+            </fieldset>
+        <xar:else />
+            <h3>
+                <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                <xar:ml>
+                    <xar:mlstring>
+                        Module Defaults for #(1)
+                    </xar:mlstring>
+                    <xar:mlvar>#$ucname#</xar:mlvar>
+                </xar:ml>
+            </h3>
+        </xar:if>
+        <fieldset>
+            <legend>
+                <xar:mlstring>
+                    Display Settings
+                </xar:mlstring>
+            </legend>
+            <xar:template file="display" />
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                <input type="submit" value="#xarML('Update Configuration')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common admin menu for this module - remove link to the current function -->
 <!-- the variables used in this menu come from example_admin_menu() -->

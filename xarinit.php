@@ -122,12 +122,12 @@ function calendar_init()
     xarModSetVar('calendar','default_cal',serialize($data['icsfiles']));
 
     // Other variables from phpIcalendar config.inc.php
-    xarModSetVar('calendar','default_view'           , 'week');
+//    xarModSetVar('calendar','default_view'           , 'week');
     xarModSetVar('calendar','minical_view'           , 'week');
-    xarModSetVar('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
-    xarModSetVar('calendar','day_start'              , '0700');
-    xarModSetVar('calendar','day_end'                , '2300');
-    xarModSetVar('calendar','gridLength'             , 15);
+//    xarModSetVar('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
+//    xarModSetVar('calendar','day_start'              , '0700');
+//    xarModSetVar('calendar','day_end'                , '2300');
+//    xarModSetVar('calendar','gridLength'             , 15);
     xarModSetVar('calendar','num_years'              , 1);
     xarModSetVar('calendar','month_event_lines'      , 1);
     xarModSetVar('calendar','tomorrows_events_lines' , 1);
@@ -148,6 +148,16 @@ function calendar_init()
     xarModSetVar('calendar','show_todos'             , 1);
     xarModSetVar('calendar','show_completed'         , 0);
     xarModSetVar('calendar','allow_login'            , 0);
+
+    // Regulate display in day view
+    xarModVars::set('calendar','windowwidth', 902);
+    xarModVars::set('calendar','minutesperunit', 15);
+    xarModVars::set('calendar','unitheight', 12);
+
+    xarModVars::set('calendar','default_view', 'week');
+    xarModVars::set('calendar','cal_sdow', 0);
+    xarModVars::set('calendar','day_start', 25200);
+    xarModVars::set('calendar','day_end', 82800);
 
 //TODO::Register the Module Variables
     //

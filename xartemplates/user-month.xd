@@ -72,7 +72,7 @@
             <xar:set name="entries">$Day->getEntries()</xar:set>
             <ul style="margin: 2px 2px 2px 2px">
                 <xar:foreach in="$entries" value="$entry">
-                    <li>#$entry['desc']#</li>
+                    <li>#$entry['name']#</li>
                 </xar:foreach>
             </ul>
         <xar:else />

@@ -1,17 +1,89 @@
 <?php
 function calendar_admin_modifyconfig()
 {
+    $data = xarModAPIFunc('calendar', 'admin', 'menu');
+    $data = array_merge($data,xarModAPIFunc('calendar', 'admin', 'get_calendars'));
+    if (!xarSecurityCheck('AdminCalendar')) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'calendar_general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'calendar', XARVAR_NOT_REQUIRED)) return;
+    $hooks = xarModCallHooks('module', 'getconfig', 'calendar');
+    if (!empty($hooks) && isset($hooks['tabs'])) {
+        foreach ($hooks['tabs'] as $key => $row) {
+            $configarea[$key]  = $row['configarea'];
+            $configtitle[$key] = $row['configtitle'];
+            $configcontent[$key] = $row['configcontent'];
+        }
+        array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+    } else {
+        $hooks['tabs'] = array();
+    }
+
+    switch (strtolower($phase)) {
+        case 'modify':
+        default:
+            switch ($data['tab']) {
+                case 'calendar_general':
+                    sys::import('modules.calendar.pear.Calendar.Util.Textual');
+                    $data['weekdays'] = Calendar_Util_Textual::weekdayNames();
+                    break;
+            }
+
+            break;
+
+        case 'update':
+            // Confirm authorisation code
+            if (!xarSecConfirmAuthKey()) return;
+            if (!xarVarFetch('itemsperpage', 'str:1:4:', $itemsperpage, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('calendar', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('windowwidth', 'int:1', $windowwidth, xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('minutesperunit', 'int:1', $minutesperunit, xarModVars::get('calendar', 'minutesperunit'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('unitheight', 'int:1', $unitheight, xarModVars::get('calendar', 'unitheight'), XARVAR_NOT_REQUIRED)) return;
+
+            if (!xarVarFetch('default_view', 'str:1', $default_view, xarModVars::get('calendar', 'default_view'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cal_sdow', 'str:1', $cal_sdow, xarModVars::get('calendar', 'cal_sdow'), XARVAR_NOT_REQUIRED)) return;
+
+            sys::import('modules.dynamicdata.class.properties.master');
+            $timeproperty = DataPropertyMaster::getProperty(array('type' => 'formattedtime'));
+            $day_start = $timeproperty->checkInput('day_start') ? $timeproperty->getValue() : xarModVars::get('calendar','day_start');
+            $day_end = $timeproperty->checkInput('day_end') ? $timeproperty->getValue() : xarModVars::get('calendar','day_end');
+
+            if ($data['tab'] == 'calendar_general') {
+                xarModVars::set('calendar', 'itemsperpage', $itemsperpage);
+                xarModVars::set('calendar', 'supportshorturls', $shorturls);
+                xarModVars::set('calendar', 'useModuleAlias', $useModuleAlias);
+                xarModVars::set('calendar', 'aliasname', $aliasname);
+                xarModVars::set('calendar', 'windowwidth', $windowwidth);
+                xarModVars::set('calendar', 'minutesperunit', $minutesperunit);
+                xarModVars::set('calendar', 'unitheight', $unitheight);
+
+                xarModVars::set('calendar', 'default_view', $default_view);
+                xarModVars::set('calendar', 'cal_sdow', $cal_sdow);
+                xarModVars::set('calendar', 'day_start', $day_start);
+                xarModVars::set('calendar', 'day_end', $day_end);
+            }
+            $regid = xarModGetIDFromName($tabmodule);
+            xarModSetUserVar('calendar', 'windowwidth', $windowwidth, $regid);
+            xarModSetUserVar('calendar', 'minutesperunit', $minutesperunit, $regid);
+            xarModSetUserVar('calendar', 'unitheight', $unitheight, $regid);
+
+            xarModSetUserVar('calendar', 'default_view', $default_view, $regid);
+            xarModSetUserVar('calendar', 'cal_sdow', $cal_sdow, $regid);
+            xarModSetUserVar('calendar', 'day_start', $day_start, $regid);
+            xarModSetUserVar('calendar', 'day_end', $day_end, $regid);
+
+            xarResponseRedirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            return true;
+            break;
+
+    }
+
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
     // helps if all of the module pages have a standard menu at the top to
     // support easy navigation
-    $data = xarModAPIFunc('calendar', 'admin', 'menu');
-    $data = array_merge($data,xarModAPIFunc('calendar', 'admin', 'get_calendars'));
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('Admincalendar')) return;
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
 
     // Variables from phpIcalendar config.inc.php
     $data['default_view'] = xarModGetVar('calendar', 'default_view');
@@ -79,7 +151,7 @@ function calendar_admin_modifyconfig()
     'checked' : '';
 
 
-    //TODO: should I include this stuff? --amoro
+/*    //TODO: should I include this stuff? --amoro
     $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
         array('module' => 'calendar'));
     if (empty($hooks)) {
@@ -89,7 +161,10 @@ function calendar_admin_modifyconfig()
     } else {
         $data['hooks'] = $hooks;
     }
-    // Return the template variables defined in this function
+*/
+    $data['hooks'] = $hooks;
+    $data['tabmodule'] = $tabmodule;
+    $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 ?>

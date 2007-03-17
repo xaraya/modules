@@ -3,16 +3,16 @@
 <dl class="xar-tabs">
     <dt class="help">
         <xar:mlstring>
-            Actions: 
+            Actions:
         </xar:mlstring>
     </dt>
-    <xar:if condition="$tab eq 'dataserve_general'">
+    <xar:if condition="$tab eq 'calendar_general'">
         <xar:set name="class">"active"</xar:set>
-    <xar:else/>    
+    <xar:else/>
         <xar:set name="class">""</xar:set>
     </xar:if>
     <dd class="#$class#">
-        <a href="#xarModURL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => 'dataserve', 'tab' => 'dataserve_general'))#">
+        <a href="#xarModURL('calendar', 'admin', 'modifyconfig', array('tabmodule' => 'calendar', 'tab' => 'calendar_general'))#">
         <xar:mlstring>General</xar:mlstring></a>
     </dd>
     <xar:set name="tabs">$hooks['tabs']</xar:set>
@@ -20,11 +20,11 @@
         <xar:set name="configtab">$thistab['module'] . "_" . $thistab['configarea']</xar:set>
         <xar:if condition="$tab eq $configtab">
             <xar:set name="class">"active"</xar:set>
-        <xar:else/>    
+        <xar:else/>
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
-            <a href="#xarModURL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
+            <a href="#xarModURL('calendar', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
                 #$thistab['configtitle']#
             </a>
         </dd>

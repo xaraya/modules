@@ -1,4 +1,4 @@
-<xar:comment>
+<!--
 
 <xar:set name="navDayUrl">#xarModURL('calendar','user','day',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
 <xar:set name="navWeekUrl">#xarModURL('calendar','user','week',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
@@ -32,4 +32,4 @@
         <li><a href="#$navYearUrl#">Year</a></li>
     </xar:if>
 </ul>
-</xar:comment>
+-->

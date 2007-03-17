@@ -36,7 +36,7 @@ if (!defined('CALENDAR_ROOT')) {
 /**
  * Load Calendar decorator base class
  */
-require_once CALENDAR_ROOT.'Decorator.php';
+sys::import('modules.calendar.pear.Calendar.Decorator');
 
 /**
  * Static utlities to help with fetching textual representations of months and

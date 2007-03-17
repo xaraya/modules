@@ -20,12 +20,11 @@
         $MonthEvents = new Calendar_Month_Weekdays(
             $data['cal_year'],
             $data['cal_month'],
-            CALENDAR_FIRST_DAY_OF_WEEK);
+            xarModVars::get('calendar', 'cal_sdow'));
 
         $MonthDecorator = new MonthEvent_Decorator($MonthEvents);
         $MonthDecorator->build($events);
         $data['Month'] =& $MonthDecorator;
-        $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
         return $data;
     }
 
