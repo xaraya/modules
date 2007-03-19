@@ -8,11 +8,12 @@
  * @link http://www.xaraya.com
  *
  * @subpackage xarpages
- * @author Jason Judge 
+ * @author Jason Judge
  */
 
 /**
- * Initialise the module
+ * Initialise the xarpages module
+ * @return bool
  */
 function xarpages_init()
 {
@@ -66,7 +67,7 @@ function xarpages_init()
     ";
 
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($pagestable, $fields);    
+    $result = $datadict->changeTable($pagestable, $fields);
     if (!$result) {return;}
 
     // Create indexes.
@@ -99,7 +100,7 @@ function xarpages_init()
           PRIMARY KEY  (`xar_ptid`)
         ) ;
     */
-    
+
     $fields = "
         xar_ptid            I           AUTO    PRIMARY,
         xar_name            C(100)      NotNull DEFAULT '',
@@ -107,7 +108,7 @@ function xarpages_init()
     ";
 
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($typestable, $fields);    
+    $result = $datadict->changeTable($typestable, $fields);
     if (!$result) {return;}
 
     // The page type name must be unique.
@@ -270,7 +271,10 @@ function xarpages_init()
 }
 
 /**
- * Upgrade the example module from an old version.
+ * Upgrade the xarpages module from an old version.
+ *
+ * @param string oldversion
+ * @return bool true on success
  */
 function xarpages_upgrade($oldversion)
 {
@@ -288,7 +292,7 @@ function xarpages_upgrade($oldversion)
     switch ($oldversion) {
         case '0.1.0':
             // Upgrading from 0.1.0
-            // Check these indexes exist before attempting to 
+            // Check these indexes exist before attempting to
             // drop and/or create them.
 
             // Get a list of indexes for the pages table.
@@ -409,7 +413,8 @@ function xarpages_upgrade($oldversion)
 }
 
 /**
- * Delete (remove) the module.
+ * Delete (remove) the xarpages module.
+ * @return bool true on success
  */
 function xarpages_delete()
 {
