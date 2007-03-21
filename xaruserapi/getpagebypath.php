@@ -16,6 +16,10 @@
 //  the-org
 // In addition, if 'about' is a module alias, the following will match:
 //  /about/the-org
+// It is also possible to include fragments and URLs in the path:
+//  /about/the-org?param=value#fragment
+// This does not affect the matched page, but the 'url' element returned
+// will contain these elements (ie parameters and fragment).
 
 function xarpages_userapi_getpagebypath($args)
 {
@@ -24,6 +28,37 @@ function xarpages_userapi_getpagebypath($args)
     if (!isset($path)) {
         return;
     }
+
+    // If any extra parameters or fragments have been passed then, then
+    // strip them off now for adding again later.
+    // e.g. page/name?p1=v1#fragment
+    if (preg_match('/#/', $path)) {
+        // A fragment was included. This will be on the end of the URL
+        $fragment = preg_replace('/.*#/', '', $path);
+        $path = preg_replace('/#.*/', '', $path);
+    } else {
+        $fragment = NULL;
+    }
+
+    if (preg_match('/\?/', $path)) {
+        // Parameters have been supplied. This will be on the end of the URL
+        $params = preg_replace('/.*\?/', '', $path);
+        $path = preg_replace('/\?.*/', '', $path);
+
+        // Expand the params into an array we can merge in later.
+        $params = explode('&', $params);
+        $params2 = array();
+        foreach($params as $param) {
+            list($p, $v) = explode('=', $param);
+            if (!empty($p) && isset($v)) {
+                $params2[$p] = $v;
+            }
+        }
+        $params = $params2;
+    } else {
+        $params = array();
+    }
+
 
     // The page is the top part.
     $pagename = basename($path);
@@ -99,12 +134,18 @@ function xarpages_userapi_getpagebypath($args)
     }
 
     if ($page_id > 0) {
+        $page =& $pages[$page_id];
         // A page was found.
         // If DD data is needed for the matched page, then fetch it.
         if (!empty($dd_flag)) {
             $dd_data = xarModAPIfunc('xarpages', 'user', 'getpagedd', array('pages' => array($page_id => $page)));
-            $pages[$page_id]['dd'] = $dd_data[$page_id];
+            $page['dd'] = $dd_data[$page_id];
         }
+
+        // Create the URL for this page.
+        // XML encoding is left at its default setting.
+        $params['pid'] = $page_id;
+        $page['url'] = xarModURL('xarpages', 'user', 'display', $params, NULL, $fragment);
 
         return $pages[$page_id];
     } else {
