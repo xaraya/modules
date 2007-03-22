@@ -26,25 +26,30 @@ function headlines_admin_create($args)
       }
 
     // The API function is called
-    $hid = xarModAPIFunc('headlines',
-                         'admin',
-                         'create',
-                         array('url' => $url));
+    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url));
 
     if ($hid == false) return;
 
     // Lets Create the Cache Right now to save processing later.
 
-    if (xarModGetVar('headlines', 'magpie')){
-        $data = xarModAPIFunc('magpie',
-                              'user',
-                              'process',
-                              array('feedfile' => $url));
+    // TODO: This check is done in several places now. It should be hidden in an API.
+    // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
+    if (xarModGetVar('headlines', 'parser') == 'simplepie') {
+        // Use the SimplePie parser
+        $data = xarModAPIFunc(
+            'simplepie', 'user', 'process',
+            array('feedfile' => $url)
+        );
+    } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
+        $data = xarModAPIFunc(
+            'magpie', 'user', 'process',
+            array('feedfile' => $url)
+        );
     } else {
-        $data = xarModAPIFunc('headlines',
-                              'user',
-                              'process',
-                              array('feedfile' => $url));
+        $data = xarModAPIFunc(
+            'headlines', 'user', 'process',
+            array('feedfile' => $url)
+        );
     }
 
     if (!empty($data['warning'])){
@@ -54,6 +59,7 @@ function headlines_admin_create($args)
     }
 
     xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
+
     // Return
     return true;
 }

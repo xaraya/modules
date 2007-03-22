@@ -18,10 +18,7 @@ function headlines_user_view()
     if (!xarVarFetch('hid', 'id', $hid)) return;
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines',
-                          'user',
-                          'get',
-                          array('hid' => $hid));
+    $links = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $hid));
     if (empty($links)) return;
 
     // Check and see if a feed has been supplied to us.
@@ -30,16 +27,24 @@ function headlines_user_view()
         return true;
     }
     $feedfile = $links['url'];
-    if (xarModGetVar('headlines', 'magpie')){
-        $data = xarModAPIFunc('magpie',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+
+    // TODO: This check is done in several places now. It should be hidden in an API.
+    // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
+    if (xarModGetVar('headlines', 'parser') == 'simplepie') {
+        $data = xarModAPIFunc(
+            'simplepie', 'user', 'process',
+            array('feedfile' => $feedfile)
+        );
+    } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
+        $data = xarModAPIFunc(
+            'magpie', 'user', 'process',
+            array('feedfile' => $feedfile)
+        );
     } else {
-        $data = xarModAPIFunc('headlines',
-                              'user',
-                              'process',
-                              array('feedfile' => $feedfile));
+        $data = xarModAPIFunc(
+            'headlines', 'user', 'process',
+            array('feedfile' => $feedfile)
+        );
     }
 
     if (!empty($data['warning'])){
@@ -59,11 +64,9 @@ function headlines_user_view()
     $data['module'] = 'headlines';
     $data['itemtype'] = 0;
     $data['itemid'] = $hid;
-    $data['returnurl'] = xarModURL('headlines',
-                                   'user',
-                                   'view',
-                                   array('hid' => $hid));
+    $data['returnurl'] = xarModURL('headlines', 'user', 'view', array('hid' => $hid));
     $hooks = xarModCallHooks('item', 'display', $hid, $data);
+
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -71,6 +74,7 @@ function headlines_user_view()
     } else {
         $data['hooks'] = $hooks;
     }
+
     // only generate authid when the user is allowed to import
     $importpubtype = xarModGetVar('headlines','importpubtype');
     if (!empty($importpubtype) && xarSecurityCheck('EditHeadlines', 0)) {
@@ -78,6 +82,8 @@ function headlines_user_view()
     } else {
         $data['authid'] = '';
     }
+
     return $data;
 }
+
 ?>

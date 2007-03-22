@@ -20,12 +20,13 @@ function headlines_user_main()
     if(!xarSecurityCheck('OverviewHeadlines')) return;
 
     // The user API function is called
-    $links = xarModAPIFunc('headlines',
-                           'user',
-                           'getall',
-                            array('catid' => $data['catid'],
-                                  'startnum' => $startnum,
-                                  'numitems' => xarModGetVar('headlines', 'itemsperpage')));
+    $links = xarModAPIFunc('headlines', 'user', 'getall',
+        array(
+            'catid' => $data['catid'],
+            'startnum' => $startnum,
+            'numitems' => xarModGetVar('headlines', 'itemsperpage')
+        )
+    );
 
     //if (empty($links)) return
     // Check individual permissions for Edit / Delete
@@ -38,16 +39,23 @@ function headlines_user_main()
         }
         $feedfile = $link['url'];
 
-        if (xarModGetVar('headlines', 'magpie')){
-            $links[$i] = xarModAPIFunc('magpie',
-                                  'user',
-                                  'process',
-                                  array('feedfile' => $feedfile));
+        // TODO: This check is done in several places now. It should be hidden in an API.
+        // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
+        if (xarModGetVar('headlines', 'parser') == 'simplepie') {
+            $links[$i] = xarModAPIFunc(
+                'simplepie', 'user', 'process',
+                array('feedfile' => $feedfile)
+            );
+        } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
+            $links[$i] = xarModAPIFunc(
+                'magpie', 'user', 'process',
+                array('feedfile' => $feedfile)
+            );
         } else {
-            $links[$i] = xarModAPIFunc('headlines',
-                                  'user',
-                                  'process',
-                                  array('feedfile' => $feedfile));
+            $links[$i] = xarModAPIFunc(
+                'headlines', 'user', 'process',
+                array('feedfile' => $feedfile)
+            );
         }
 
         if (!isset($links[$i])) {
