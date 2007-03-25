@@ -7,7 +7,7 @@
 <div class="xar-mod-body">
     <xar:template type="module" module="ratings" file="admin-menu" />
     <h2><xar:mlstring>Delete Ratings</xar:mlstring></h2>
-    <formname="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
+    <form name="post" id="post" action="&xar-modurl-ratings-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
     <fieldset>
         <legend>
             <xar:mlstring>Delete Confirmation</xar:mlstring>
