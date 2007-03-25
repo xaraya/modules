@@ -3,7 +3,7 @@
  * Ratings Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,14 +24,13 @@
  * @param $args['modname'] name of the module you want items from, or
  * @param $args['itemtype'] item type (optional) or array of itemtypes
  * @param $args['itemids'] optional array of itemids that we are selecting on
- * @returns array
- * @return array('table' => 'nuke_ratings',
- *               'field' => 'nuke_ratings.xar_itemid',
- *               'where' => "nuke_ratings.xar_itemid IN (...)
- *                           AND nuke_ratings.xar_moduleid = 123",
- *               'moduleid'  => 'nuke_ratings.xar_moduleid',
+ * @return array('table' => '[SitePrefix]_ratings',
+ *               'field' => '[SitePrefix]_ratings.xar_itemid',
+ *               'where' => "[SitePrefix]_ratings.xar_itemid IN (...)
+ *                           AND [SitePrefix]_ratings.xar_moduleid = 123",
+ *               'moduleid'  => '[SitePrefix]_ratings.xar_moduleid',
  *               ...
- *               'rating'  => 'nuke_ratings.xar_rating')
+ *               'rating'  => '[SitePrefix]_ratings.xar_rating')
  */
 function ratings_userapi_leftjoin($args)
 {
