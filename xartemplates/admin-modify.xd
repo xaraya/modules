@@ -1,0 +1,51 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('vendors','useModuleAlias')">
+            #xarModGetVar('vendors','aliasname')#
+        <xar:else />
+            <xar:mlstring>Modify Vendor</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Modify Item #(1) in #(2)</xar:mlstring>
+            <xar:mlvar>#$object:itemid#</xar:mlvar>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+    </h2>
+
+    <xar:if condition="isset($preview)">
+        <fieldset>
+            <legend><xar:mlstring>Preview</xar:mlstring></legend>
+            <xar:data-display object="$object" />
+        </fieldset>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
+      <fieldset>
+        <legend><xar:mlstring>Modify item details</xar:mlstring></legend>
+
+        <!-- this does most of the hard work :) -->
+        <xar:data-form object="$object" tplmodule="$tplmodule" />
+
+      </fieldset>
+      <fieldset>
+        <div class="xar-align-center">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+            <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+            <xar:if condition="!empty($return_url)">
+              <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+            </xar:if>
+            <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL($tplmodule,'admin','view',array('objectname' => $object->name))#" />
+            <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
+        </div>
+      </fieldset>
+    </form>
+</div>
+</xar:template>

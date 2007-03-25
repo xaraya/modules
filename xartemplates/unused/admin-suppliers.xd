@@ -5,7 +5,7 @@
     <fieldset>
         <legend>
             <xar:mlstring>
-                Suppliers List 
+                Suppliers List
             </xar:mlstring>
         </legend>
         <xar:if condition="!empty($message)">

@@ -3,18 +3,67 @@
 function vendors_init()
 {
 
+sys::import('modules.xen.xarclasses.xenquery');
+
+# --------------------------------------------------------
+#
+# Set up tables
+#
+    $q = new xenQuery();
+    $prefix = xarDBGetSiteTablePrefix();
+
+$query = "DROP TABLE IF EXISTS " . $prefix . "_vendors_vendors";
+if (!$q->run($query)) return;
+$query = "CREATE TABLE " . $prefix . "_vendors_vendors (
+  id int(10) unsigned NOT NULL auto_increment,
+  name varchar(80) default 0 NOT NULL,
+  address int(10) default NULL,
+  contact varchar(35) default NULL,
+  phone varchar(20) default NULL,
+  fax varchar(20) default NULL,
+  email varchar(100) default 0 NOT NULL,
+  description text,
+  notes text,
+  terms int(10) default 0,
+  taxincluded varchar(1) default NULL,
+  externalcode char(35) default NULL,
+  currencycode char(4) default NULL,
+  state int(11) default 1,
+  PRIMARY KEY  (id)
+) TYPE=MyISAM";
+if (!$q->run($query)) return;
+
+
 # --------------------------------------------------------
 #
 # Set up masks
 #
     xarRegisterMask('ViewVendors','All','vendors','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadVendors','All','vendors','All','All','ACCESS_READ');
+    xarRegisterMask('CommentVendors','All','vendors','All','All','ACCESS_COMMENT');
+    xarRegisterMask('EditVendors','All','vendors','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddVendors','All','vendors','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteVendors','All','vendors','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminVendors','All','vendors','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
+    xarRegisterPrivilege('ViewVendors','All','vendors','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadVendors','All','vendors','All','All','ACCESS_READ');
+    xarRegisterPrivilege('CommentVendors','All','vendors','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('EditVendors','All','vendors','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddVendors','All','vendors','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('DeleteVendors','All','vendors','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminVendors','All','vendors','All','All','ACCESS_ADMIN');
+    xarMakePrivilegeRoot('ViewVendors');
+    xarMakePrivilegeRoot('ReadVendors');
+    xarMakePrivilegeRoot('EditVendors');
+    xarMakePrivilegeRoot('CommentVendors');
+    xarMakePrivilegeRoot('AddVendors');
+    xarMakePrivilegeRoot('DeleteVendors');
+    xarMakePrivilegeRoot('AdminVendors');
 
 # --------------------------------------------------------
 #
@@ -81,55 +130,28 @@ function vendors_init()
 */
 # --------------------------------------------------------
 #
-# Set extensions
+# Create objects
 #
 
-    $dd_objects = array('ice_suppliers');
+    $module = 'vendors';
+    $objects = array('vendors_vendors');
 
-    // Treat destructive right now
-    $existing_objects  = xarModApiFunc('dynamicdata','user','getobjects');
-    foreach($existing_objects as $objectid => $objectinfo) {
-        if(in_array($objectinfo['name'], $dd_objects)) {
-            // KILL
-            if(!xarModApiFunc('dynamicdata','admin','deleteobject', array('objectid' => $objectid))) return;
-        }
-    }
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
-    $objects = unserialize(xarModGetVar('commerce', 'dd_objects'));
-    foreach($dd_objects as $ice_object) {
-        $def_file = 'modules/vendors/xardata/'.$ice_object.'-def.xml';
-        $dat_file = 'modules/vendors/xardata/'.$ice_object.'-data.xml';
-
-        $objectid = xarModAPIFunc('dynamicdata','util','import', array('file' => $def_file));
-        if (!$objectid) continue;
-        else $objects[$ice_object] = $objectid;
-        // Let data import be allowed to be empty
-        if(file_exists($dat_file)) {
-            // And allow it to fail for now
-            xarModAPIFunc('dynamicdata','util','import', array('file' => $dat_file,'keepitemid' => true));
-        }
-    }
-
-    xarModVars::set('commerce','dd_objects',serialize($objects));
-
-    $parent = xarFindRole('CommerceRoles');
-    if (empty($parent)) $parent = xarFindRole('Everybody');
-    $role = xarFindRole('Suppliers');
+# --------------------------------------------------------
+#
+# Create roles
+#
+    $role = xarFindRole('VendorGroup');
     if (empty($role)) {
-        $new = array('name' => 'Suppliers',
+        $parent = xarFindRole('Everybody');
+        $new = array('name' => 'VendorGroup',
                      'itemtype' => ROLES_GROUPTYPE,
                      'parentid' => $parent->getID(),
                     );
-        $uid1 = xarModAPIFunc('roles','admin','create',$new);
+        $uid = xarModAPIFunc('roles','admin','create',$new);
     }
-    $role = xarFindRole('Manufacturers');
-    if (empty($role)) {
-        $new = array('name' => 'Manufacturers',
-                     'itemtype' => ROLES_GROUPTYPE,
-                     'parentid' => $parent->getID(),
-                    );
-        $uid1 = xarModAPIFunc('roles','admin','create',$new);
-    }
+    xarModVars::set('vendors','defaultgroup',$uid);
 
 # --------------------------------------------------------
 #
@@ -152,25 +174,9 @@ function vendors_delete()
 {
 # --------------------------------------------------------
 #
-# Delete the DD objects created by this module
-#
-    $dd_objects = unserialize(xarModGetVar('commerce','dd_objects'));
-    if (isset($dd_objects['ice_suppliers']))
-        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $dd_objects['ice_suppliers']));
-    if (isset($dd_objects['ice_manufacturers']))
-        $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $dd_objects['ice_manufacturers']));
-
-# --------------------------------------------------------
-#
 # Purge all the roles created by this module
 #
-    $role = xarFindRole('Suppliers');
-    $descendants = $role->getDescendants();
-    foreach ($descendants as $item)
-        if (!$item->purge()) return;
-    if (!$role->purge()) return;
-
-    $role = xarFindRole('Manufacturers');
+    $role = xarRoles::getRole(xarModVars::get('vendors','defaultgroup'));
     $descendants = $role->getDescendants();
     foreach ($descendants as $item)
         if (!$item->purge()) return;
@@ -180,11 +186,7 @@ function vendors_delete()
 #
 # Remove this module from the list of commerce modules
 #
-    $modules = unserialize(xarModGetVar('commerce', 'ice_modules'));
-    unset($modules['vendors']);
-    $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
-
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'vendors'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'vendors'));
 }
 
 ?>

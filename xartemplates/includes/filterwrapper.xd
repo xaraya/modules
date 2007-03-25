@@ -1,0 +1,60 @@
+<xar:set name="lang_search">
+    <xar:mlstring>
+        Start Search
+    </xar:mlstring>
+</xar:set>
+<div class="tabswrapper">
+    <br />
+    <form method="post" action="#$action_search#">
+        <div class="row">
+            <b>#$title#</b>
+        </div>
+        <div class="row">
+            <div class="left">
+                <xar:mlstring>
+                    To search for all items, leave fields blank
+                </xar:mlstring>
+            </div>
+            <div class="right" style="width: 200px; text-align: right;">
+            <!--
+                <font color="red"><b>#$err#</b></font>-->
+            </div>
+        </div>
+        <table class="fullwidth">
+            <tr>
+                <th style="width: 140px; text-align: right; padding: 0px 5px;">
+                    <xar:mlstring>Search:</xar:mlstring>
+                </th>
+                <th style="width: 190px; text-align: center; padding: 0px 5px;">
+                    <xar:mlstring>Value</xar:mlstring>
+                </th>
+                <th style="text-align: center; padding: 0px 5px;">
+                <xar:mlstring>Note</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$properties" value="$property">
+                <xar:if condition="$property:getDisplayStatus() ne DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE">
+                    <xar:continue />
+                </xar:if>
+                <tr>
+                    <td style="width: 140px; text-align: right; padding: 0px 5px;">
+                        <xar:data-label property="$property" />
+                    </td>
+                    <td style="text-align: center; padding: 0px 5px;">
+                        <xar:data-input property="$property" />
+                    </td>
+
+                    <td style="text-align: left; padding: 0px 5px; width: 200px;">
+                        &#160;<!--#$loop:item['note']#-->
+                    </td>
+                </tr>
+            </xar:foreach>
+        </table>
+        <br />
+        <div class="row">
+            <div >
+                <input type="submit" name="search" value="#xarML('Search')#" style="position: relative; left: 170px;" />
+            </div>
+        </div>
+    </form>
+</div>

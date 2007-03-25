@@ -7,7 +7,7 @@ function vendors_admin_main()
     if (xarModGetVar('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarResponseRedirect(xarModURL('vendors', 'admin', 'suppliers'));
+        xarResponseRedirect(xarModURL('vendors', 'admin', 'view'));
     }
     // success
     return true;

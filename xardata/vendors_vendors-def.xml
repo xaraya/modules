@@ -1,0 +1,193 @@
+<object name="vendors_vendors">
+  <objectid>16</objectid>
+  <label>Suppliers</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>7</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>151</id>
+      <label>ID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.id</source>
+      <status>67</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="code">
+      <id>152</id>
+      <label>Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.externalcode</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>153</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.name</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="address">
+      <id>154</id>
+      <label>Address</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_vendors_vendors.addr1</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="contact">
+      <id>155</id>
+      <label>Contact</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.contact</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="phone">
+      <id>156</id>
+      <label>Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.phone</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="fax">
+      <id>157</id>
+      <label>Fax</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.fax</source>
+      <status>34</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="email">
+      <id>158</id>
+      <label>Email</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.email</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="terms">
+      <id>159</id>
+      <label>Terms</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_vendors_vendors.terms</source>
+      <status>34</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="taxincluded">
+      <id>160</id>
+      <label>Taxincluded</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.taxincluded</source>
+      <status>34</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="notes">
+      <id>161</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_vendors_vendors.notes</source>
+      <status>34</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>162</id>
+      <label>Description</label>
+      <type>textarea_large</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="keywords">
+      <id>163</id>
+      <label>Keywords</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="currency_code">
+      <id>164</id>
+      <label>Currency Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_vendors_vendors.currencycode</source>
+      <status>34</status>
+      <order>14</order>
+      <validation></validation>
+    </property>
+    <property name="state">
+      <id>165</id>
+      <label>State</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="url">
+      <id>166</id>
+      <label>URL</label>
+      <type>url</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="url_clicks">
+      <id>167</id>
+      <label>URL Clicks</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>17</order>
+      <validation></validation>
+    </property>
+    <property name="last_clicked">
+      <id>168</id>
+      <label>Last Clicked</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>66</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

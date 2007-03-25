@@ -3,7 +3,7 @@
 function vendors_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminVendors',0)) {
-        $menulinks[] = Array('url'   => xarModURL('vendors', 'admin', 'suppliers'),
+        $menulinks[] = Array('url'   => xarModURL('vendors', 'admin', 'view', array('objectname' => 'vendors_vendors')),
                               'title' => xarML('Add, edit, delete vendors'),
                               'label' => xarML('Manage Vendors'));
         $menulinks[] = Array('url'   => xarModURL('vendors', 'admin', 'modifyconfig'),

@@ -1,0 +1,25 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('vendors','useModuleAlias')">
+            #xarModGetVar('vendors','aliasname')#
+        <xar:else />
+            <xar:mlstring>Search</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<br />
+<div id="tabnav">
+    <div style="float: left; text-align: left;">
+        <a href="#xarModURL('vendor','user','vendoradd')#">
+            <xar:mlstring>Add New Vendor</xar:mlstring>
+        </a>
+    </div>
+</div>
+<xar:set name="title">
+    <xar:mlstring>
+        Search among existing vendors:
+    </xar:mlstring>
+</xar:set>
+<xar:template file="filterwrapper" type="module" />
+</xar:template>
