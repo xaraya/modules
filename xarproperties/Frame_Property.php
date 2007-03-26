@@ -17,20 +17,20 @@ include_once "modules/dynamicdata/class/properties.php";
 
 class Frame_Property extends Dynamic_Property
 {
-    public $hsize;
-    public $vsize;
-    public $page = "index.php?module=window";
-    public $title = "Xaraya Window";
-    public $auto_resize;
-    public $allow_local_only;
-    public $use_buffering;
-    public $reg_user_only;
-    public $no_user_entry;
-    public $open_direct;
-    public $use_fixed_title;
-    public $security;
-    public $use_iframe;
-    public $use_object;
+    var $hsize;
+    var $vsize;
+    var $page = "index.php?module=window";
+    var $title = "Xaraya Window";
+    var $auto_resize;
+    var $allow_local_only;
+    var $use_buffering;
+    var $reg_user_only;
+    var $no_user_entry;
+    var $open_direct;
+    var $use_fixed_title;
+    var $security;
+    var $use_iframe;
+    var $use_object;
 
     function Frame_Property($args)
     {
@@ -93,7 +93,7 @@ class Frame_Property extends Dynamic_Property
         }
     }
 */
-    static function getRegistrationInfo()
+    function getRegistrationInfo()
     {
         $info = new PropertyRegistration();
         $info->reqmodules = array('window');
