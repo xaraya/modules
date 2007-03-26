@@ -83,7 +83,8 @@
                             <xar:else />
                                 <xar:set name="gourl">#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#</xar:set>
                             </xar:if>
-                            <a class="#$class#" href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#">
+                            <!-- <a class="#$class#" href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#"> -->
+                            <a href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#">
                                 <xar:if condition="!empty($page.dd.menu_title)">
                                     #xarVarPrepForDisplay($page.dd.menu_title)#
                                 <xar:else />
