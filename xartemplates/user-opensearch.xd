@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>#xarModGetVar('themes', 'SiteName', 1)#</ShortName>
+  <Description>Search on this website</Description>
+  <Tags>opensearch</Tags>
+  <Url type="text/html" template="&xar-modurl-search;&amp;q={searchTerms}"/>
+</OpenSearchDescription>
