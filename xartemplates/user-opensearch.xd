@@ -1,3 +1,10 @@
+<xar:comment>
+  An implementation of http://www.opensearch.org/Specifications/OpenSearch/1.1
+  Pitfalls:
+  - the tags are case sensitive! (doh!)
+  - the xmlns needs to be there
+  Obviously we can extend this a lot.
+</xar:comment>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>#xarModGetVar('themes', 'SiteName', 1)#</ShortName>
   <Description>Search on this website</Description>
