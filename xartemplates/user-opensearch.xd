@@ -3,5 +3,5 @@
   <ShortName>#xarModGetVar('themes', 'SiteName', 1)#</ShortName>
   <Description>Search on this website</Description>
   <Tags>opensearch</Tags>
-  <Url type="text/html" template="&xar-modurl-search;&amp;q={searchTerms}"/>
+  <Url type="text/html" template="&xar-modurl-search-user-main;&amp;q={searchTerms}"/>
 </OpenSearchDescription>
