@@ -220,7 +220,7 @@ function carts_upgrade($oldversion)
  */
 function carts_delete()
 {
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'carts'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'carts'));
 
 /*
 # --------------------------------------------------------
