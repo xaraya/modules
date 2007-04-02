@@ -1,0 +1,47 @@
+<!-- Include xmlhttp stuff -->
+<xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+
+<div>
+    <xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
+        <xar:template file="catnavigation"/>
+    </xar:if>
+
+    <div id="ice-objectview">
+        <!-- Construct the fieldlist attribute -->
+        <xar:set name="columns">join(',',$fieldlist)</xar:set>
+            <table>
+                <tr>
+                    <xar:foreach in="$properties" key="$name">
+                        <th><xar:data-label property="$properties[$name]" /></th>
+                    </xar:foreach>
+                </tr>
+                <xar:foreach in="$items" key="$itemid" value="$fields">
+                    <xar:set name="args">
+                        array(
+                            'object' => 'ice_configuration',
+                            'itemtype' => $itemtype,
+                            'itemid' => $itemid,
+                            'tplmodule' => 'commerce',
+                            'method' => 'showdisplay',                            
+                            'template' => 'ice',
+                        )
+                    </xar:set>
+                    <tr class="ice-itemselector" 
+                        onclick="return loadContent('#xarModURL('dynamicdata','object','runmethod',$args)#', 'ice-objectdisplay');" >
+                        <!-- Display a row of data -->
+                        <xar:data-display module="$modname" itemtype="$itemtype" itemid="$itemid" fieldlist="$columns" tplmodule="$tplmodule" extend="true" layout="tablerow" template="ice" />
+                    </tr>
+                </xar:foreach>
+            </table>
+
+            <!-- Pager part, set some params first for it-->
+            <xar:set name="baseurl">$sorturl</xar:set>
+            <xar:set name="maxpages">7</xar:set>
+            <xar:template file="ice-pager"/> 
+
+        <!-- New action -->
+        <a href="#xarModURL('dynamicdata','admin','new',$args)#" onclick="return loadContent(this.href,'ice-objectdisplay');">
+            <button type="button"><xar:mlstring>New</xar:mlstring></button>
+        </a>
+    </div>
+</div>

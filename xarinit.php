@@ -949,7 +949,7 @@ function commerce_delete()
 #
 # Purge all the roles created by this module
 #
-    $role = xarFindRole('CommerceGroup');
+/*    $role = xarFindRole('CommerceGroup');
     if (!empty($role)) {
         $descendants = $role->getDescendants();
         foreach ($descendants as $item)
@@ -974,10 +974,10 @@ function commerce_delete()
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }
-
+*/
     // The modules module will take care of all the other blocks
 
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'commerce'));
+    return xarModAPIFunc('standard','admin','standarddeinstall',array('module' => 'commerce'));
 }
 
 ?>

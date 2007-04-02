@@ -1,0 +1,2326 @@
+<items>
+  <ice_configuration itemid="1">
+    <id>1</id>
+    <key>STORE_NAME</key>
+    <value>XT-Commerce</value>
+    <group_id>1</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="2">
+    <id>2</id>
+    <key>STORE_OWNER</key>
+    <value>XT-Commerce</value>
+    <group_id>1</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="3">
+    <id>3</id>
+    <key>STORE_OWNER_EMAIL_ADDRESS</key>
+    <value>owner@your-shop.com</value>
+    <group_id>1</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="4">
+    <id>4</id>
+    <key>EMAIL_FROM</key>
+    <value>XT-Commerce &lt;owner@your-shop.com&gt;</value>
+    <group_id>1</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="5">
+    <id>5</id>
+    <key>STORE_COUNTRY</key>
+    <value>81</value>
+    <group_id>1</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_country_name</function>
+    <function_1>commerce_adminapi_pull_down_country_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="6">
+    <id>6</id>
+    <key>STORE_ZONE</key>
+    <value></value>
+    <group_id>1</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_zone_name</function>
+    <function_1>commerce_adminapi_pull_down_zone_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="7">
+    <id>7</id>
+    <key>EXPECTED_PRODUCTS_SORT</key>
+    <value>desc</value>
+    <group_id>1</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('asc', 'desc'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="8">
+    <id>8</id>
+    <key>EXPECTED_PRODUCTS_FIELD</key>
+    <value>date_expected</value>
+    <group_id>1</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('products_name', 'date_expected'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="9">
+    <id>9</id>
+    <key>USE_DEFAULT_LANGUAGE_CURRENCY</key>
+    <value>false</value>
+    <group_id>1</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="10">
+    <id>10</id>
+    <key>SEARCH_ENGINE_FRIENDLY_URLS</key>
+    <value>false</value>
+    <group_id>16</group_id>
+    <order>12</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="11">
+    <id>11</id>
+    <key>DISPLAY_CART</key>
+    <value>true</value>
+    <group_id>1</group_id>
+    <order>13</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="12">
+    <id>12</id>
+    <key>ALLOW_GUEST_TO_TELL_A_FRIEND</key>
+    <value>false</value>
+    <group_id>1</group_id>
+    <order>14</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="13">
+    <id>13</id>
+    <key>ADVANCED_SEARCH_DEFAULT_OPERATOR</key>
+    <value>and</value>
+    <group_id>1</group_id>
+    <order>15</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('and', 'or'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="14">
+    <id>14</id>
+    <key>STORE_NAME_ADDRESS</key>
+    <value>Store Name
+Address
+Country
+Phone</value>
+    <group_id>1</group_id>
+    <order>16</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_textarea(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="15">
+    <id>15</id>
+    <key>SHOW_COUNTS</key>
+    <value>true</value>
+    <group_id>1</group_id>
+    <order>17</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="16">
+    <id>16</id>
+    <key>DEFAULT_CUSTOMERS_STATUS_ID_ADMIN</key>
+    <value>0</value>
+    <group_id>1</group_id>
+    <order>20</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_customer_status_name</function>
+    <function_1>commerce_adminapi_pull_down_customers_status_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="17">
+    <id>17</id>
+    <key>DEFAULT_CUSTOMERS_STATUS_ID_GUEST</key>
+    <value>1</value>
+    <group_id>1</group_id>
+    <order>21</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_customer_status_name</function>
+    <function_1>commerce_adminapi_pull_down_customers_status_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="18">
+    <id>18</id>
+    <key>DEFAULT_CUSTOMERS_STATUS_ID</key>
+    <value>2</value>
+    <group_id>1</group_id>
+    <order>23</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_customer_status_name</function>
+    <function_1>commerce_adminapi_pull_down_customers_status_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="19">
+    <id>19</id>
+    <key>ALLOW_ADD_TO_CART</key>
+    <value>false</value>
+    <group_id>1</group_id>
+    <order>24</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="20">
+    <id>20</id>
+    <key>ALLOW_CATEGORY_DESCRIPTIONS</key>
+    <value>true</value>
+    <group_id>1</group_id>
+    <order>25</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="21">
+    <id>21</id>
+    <key>CURRENT_TEMPLATE</key>
+    <value>xtc</value>
+    <group_id>1</group_id>
+    <order>26</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_pull_down_template_sets(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="22">
+    <id>22</id>
+    <key>PRICE_IS_BRUTTO</key>
+    <value>false</value>
+    <group_id>1</group_id>
+    <order>27</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="23">
+    <id>23</id>
+    <key>PRICE_PRECISION</key>
+    <value>2</value>
+    <group_id>1</group_id>
+    <order>28</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="24">
+    <id>24</id>
+    <key>USE_SPAW</key>
+    <value>true</value>
+    <group_id>1</group_id>
+    <order>29</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="25">
+    <id>25</id>
+    <key>ENTRY_FIRST_NAME_MIN_LENGTH</key>
+    <value>2</value>
+    <group_id>2</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="26">
+    <id>26</id>
+    <key>ENTRY_LAST_NAME_MIN_LENGTH</key>
+    <value>2</value>
+    <group_id>2</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="27">
+    <id>27</id>
+    <key>ENTRY_DOB_MIN_LENGTH</key>
+    <value>10</value>
+    <group_id>2</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="28">
+    <id>28</id>
+    <key>ENTRY_EMAIL_ADDRESS_MIN_LENGTH</key>
+    <value>6</value>
+    <group_id>2</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="29">
+    <id>29</id>
+    <key>ENTRY_STREET_ADDRESS_MIN_LENGTH</key>
+    <value>5</value>
+    <group_id>2</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="30">
+    <id>30</id>
+    <key>ENTRY_COMPANY_MIN_LENGTH</key>
+    <value>2</value>
+    <group_id>2</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="31">
+    <id>31</id>
+    <key>ENTRY_POSTCODE_MIN_LENGTH</key>
+    <value>4</value>
+    <group_id>2</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="32">
+    <id>32</id>
+    <key>ENTRY_CITY_MIN_LENGTH</key>
+    <value>3</value>
+    <group_id>2</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="33">
+    <id>33</id>
+    <key>ENTRY_STATE_MIN_LENGTH</key>
+    <value>2</value>
+    <group_id>2</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="34">
+    <id>34</id>
+    <key>ENTRY_TELEPHONE_MIN_LENGTH</key>
+    <value>3</value>
+    <group_id>2</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="35">
+    <id>35</id>
+    <key>ENTRY_PASSWORD_MIN_LENGTH</key>
+    <value>5</value>
+    <group_id>2</group_id>
+    <order>11</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="36">
+    <id>36</id>
+    <key>CC_OWNER_MIN_LENGTH</key>
+    <value>3</value>
+    <group_id>2</group_id>
+    <order>12</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="37">
+    <id>37</id>
+    <key>CC_NUMBER_MIN_LENGTH</key>
+    <value>10</value>
+    <group_id>2</group_id>
+    <order>13</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="38">
+    <id>38</id>
+    <key>REVIEW_TEXT_MIN_LENGTH</key>
+    <value>50</value>
+    <group_id>2</group_id>
+    <order>14</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="39">
+    <id>39</id>
+    <key>MIN_DISPLAY_BESTSELLERS</key>
+    <value>1</value>
+    <group_id>2</group_id>
+    <order>15</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="40">
+    <id>40</id>
+    <key>MIN_DISPLAY_ALSO_PURCHASED</key>
+    <value>1</value>
+    <group_id>2</group_id>
+    <order>16</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="41">
+    <id>41</id>
+    <key>MAX_ADDRESS_BOOK_ENTRIES</key>
+    <value>5</value>
+    <group_id>3</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="42">
+    <id>42</id>
+    <key>MAX_DISPLAY_SEARCH_RESULTS</key>
+    <value>20</value>
+    <group_id>3</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="43">
+    <id>43</id>
+    <key>MAX_DISPLAY_PAGE_LINKS</key>
+    <value>5</value>
+    <group_id>3</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="44">
+    <id>44</id>
+    <key>MAX_DISPLAY_SPECIAL_PRODUCTS</key>
+    <value>9</value>
+    <group_id>3</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="45">
+    <id>45</id>
+    <key>MAX_DISPLAY_NEW_PRODUCTS</key>
+    <value>9</value>
+    <group_id>3</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="46">
+    <id>46</id>
+    <key>MAX_DISPLAY_UPCOMING_PRODUCTS</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="47">
+    <id>47</id>
+    <key>MAX_DISPLAY_MANUFACTURERS_IN_A_LIST</key>
+    <value>0</value>
+    <group_id>3</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="48">
+    <id>48</id>
+    <key>MAX_MANUFACTURERS_LIST</key>
+    <value>1</value>
+    <group_id>3</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="49">
+    <id>49</id>
+    <key>MAX_DISPLAY_MANUFACTURER_NAME_LEN</key>
+    <value>15</value>
+    <group_id>3</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="50">
+    <id>50</id>
+    <key>MAX_DISPLAY_NEW_REVIEWS</key>
+    <value>6</value>
+    <group_id>3</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="51">
+    <id>51</id>
+    <key>MAX_RANDOM_SELECT_REVIEWS</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="52">
+    <id>52</id>
+    <key>MAX_RANDOM_SELECT_NEW</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>11</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="53">
+    <id>53</id>
+    <key>MAX_RANDOM_SELECT_SPECIALS</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>12</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="54">
+    <id>54</id>
+    <key>MAX_DISPLAY_CATEGORIES_PER_ROW</key>
+    <value>3</value>
+    <group_id>3</group_id>
+    <order>13</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="55">
+    <id>55</id>
+    <key>MAX_DISPLAY_PRODUCTS_NEW</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>14</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="56">
+    <id>56</id>
+    <key>MAX_DISPLAY_BESTSELLERS</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>15</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="57">
+    <id>57</id>
+    <key>MAX_DISPLAY_ALSO_PURCHASED</key>
+    <value>6</value>
+    <group_id>3</group_id>
+    <order>16</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="58">
+    <id>58</id>
+    <key>MAX_DISPLAY_PRODUCTS_IN_ORDER_HISTORY_BOX</key>
+    <value>6</value>
+    <group_id>3</group_id>
+    <order>17</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="59">
+    <id>59</id>
+    <key>MAX_DISPLAY_ORDER_HISTORY</key>
+    <value>10</value>
+    <group_id>3</group_id>
+    <order>18</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="60">
+    <id>60</id>
+    <key>PRODUCT_REVIEWS_VIEW</key>
+    <value>5</value>
+    <group_id>3</group_id>
+    <order>19</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="61">
+    <id>61</id>
+    <key>CONFIG_CALCULATE_IMAGE_SIZE</key>
+    <value>true</value>
+    <group_id>4</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="62">
+    <id>62</id>
+    <key>IMAGE_REQUIRED</key>
+    <value>true</value>
+    <group_id>4</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="63">
+    <id>63</id>
+    <key>HEADING_IMAGE_WIDTH</key>
+    <value>70</value>
+    <group_id>4</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="64">
+    <id>64</id>
+    <key>HEADING_IMAGE_HEIGHT</key>
+    <value>50</value>
+    <group_id>4</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="65">
+    <id>65</id>
+    <key>SUBCATEGORY_IMAGE_WIDTH</key>
+    <value>100</value>
+    <group_id>4</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="66">
+    <id>66</id>
+    <key>SUBCATEGORY_IMAGE_HEIGHT</key>
+    <value>57</value>
+    <group_id>4</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="67">
+    <id>67</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_WIDTH</key>
+    <value>120</value>
+    <group_id>4</group_id>
+    <order>7</order>
+    <modified>2003-12-15 12:10:45</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="68">
+    <id>68</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_HEIGHT</key>
+    <value>80</value>
+    <group_id>4</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="69">
+    <id>69</id>
+    <key>PRODUCT_IMAGE_INFO_WIDTH</key>
+    <value>200</value>
+    <group_id>4</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="70">
+    <id>70</id>
+    <key>PRODUCT_IMAGE_INFO_HEIGHT</key>
+    <value>160</value>
+    <group_id>4</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="71">
+    <id>71</id>
+    <key>PRODUCT_IMAGE_POPUP_WIDTH</key>
+    <value>300</value>
+    <group_id>4</group_id>
+    <order>11</order>
+    <modified>2003-12-15 12:11:00</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="72">
+    <id>72</id>
+    <key>PRODUCT_IMAGE_POPUP_HEIGHT</key>
+    <value>240</value>
+    <group_id>4</group_id>
+    <order>12</order>
+    <modified>2003-12-15 12:11:09</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="73">
+    <id>73</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_BEVEL</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>13</order>
+    <modified>2003-12-15 13:14:39</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="74">
+    <id>74</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_GREYSCALE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>14</order>
+    <modified>2003-12-15 13:13:37</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="75">
+    <id>75</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_ELLIPSE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>15</order>
+    <modified>2003-12-15 13:14:57</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="76">
+    <id>76</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_ROUND_EDGES</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>16</order>
+    <modified>2003-12-15 13:19:45</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="77">
+    <id>77</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_MERGE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>17</order>
+    <modified>2003-12-15 12:01:43</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="78">
+    <id>78</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_FRAME</key>
+    <value>(FFFFFF,000000,3,EEEEEE)</value>
+    <group_id>4</group_id>
+    <order>18</order>
+    <modified>2003-12-15 13:19:37</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="79">
+    <id>79</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_DROP_SHADDOW</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>19</order>
+    <modified>2003-12-15 13:15:14</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="80">
+    <id>80</id>
+    <key>PRODUCT_IMAGE_THUMBNAIL_MOTION_BLUR</key>
+    <value>(4,FFFFFF)</value>
+    <group_id>4</group_id>
+    <order>20</order>
+    <modified>2003-12-15 12:02:19</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="81">
+    <id>81</id>
+    <key>PRODUCT_IMAGE_INFO_BEVEL</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>21</order>
+    <modified>2003-12-15 13:42:09</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="82">
+    <id>82</id>
+    <key>PRODUCT_IMAGE_INFO_GREYSCALE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>22</order>
+    <modified>2003-12-15 13:18:00</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="83">
+    <id>83</id>
+    <key>PRODUCT_IMAGE_INFO_ELLIPSE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>23</order>
+    <modified>2003-12-15 13:41:53</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="84">
+    <id>84</id>
+    <key>PRODUCT_IMAGE_INFO_ROUND_EDGES</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>24</order>
+    <modified>2003-12-15 13:21:55</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="85">
+    <id>85</id>
+    <key>PRODUCT_IMAGE_INFO_MERGE</key>
+    <value>(overlay.gif,10,-50,60,FF0000)</value>
+    <group_id>4</group_id>
+    <order>25</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="86">
+    <id>86</id>
+    <key>PRODUCT_IMAGE_INFO_FRAME</key>
+    <value>(FFFFFF,000000,3,EEEEEE)</value>
+    <group_id>4</group_id>
+    <order>26</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="87">
+    <id>87</id>
+    <key>PRODUCT_IMAGE_INFO_DROP_SHADDOW</key>
+    <value>(3,333333,FFFFFF)</value>
+    <group_id>4</group_id>
+    <order>27</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="88">
+    <id>88</id>
+    <key>PRODUCT_IMAGE_INFO_MOTION_BLUR</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>28</order>
+    <modified>2003-12-15 13:21:18</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="89">
+    <id>89</id>
+    <key>PRODUCT_IMAGE_POPUP_BEVEL</key>
+    <value>(8,FFCCCC,330000)</value>
+    <group_id>4</group_id>
+    <order>29</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="90">
+    <id>90</id>
+    <key>PRODUCT_IMAGE_POPUP_GREYSCALE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>30</order>
+    <modified>2003-12-15 13:22:58</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="91">
+    <id>91</id>
+    <key>PRODUCT_IMAGE_POPUP_ELLIPSE</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>31</order>
+    <modified>2003-12-15 13:22:51</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="92">
+    <id>92</id>
+    <key>PRODUCT_IMAGE_POPUP_ROUND_EDGES</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>32</order>
+    <modified>2003-12-15 13:23:17</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="93">
+    <id>93</id>
+    <key>PRODUCT_IMAGE_POPUP_MERGE</key>
+    <value>(overlay.gif,10,-50,60,FF0000)</value>
+    <group_id>4</group_id>
+    <order>33</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="94">
+    <id>94</id>
+    <key>PRODUCT_IMAGE_POPUP_FRAME</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>34</order>
+    <modified>2003-12-15 13:22:43</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="95">
+    <id>95</id>
+    <key>PRODUCT_IMAGE_POPUP_DROP_SHADDOW</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>35</order>
+    <modified>2003-12-15 13:22:26</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="96">
+    <id>96</id>
+    <key>PRODUCT_IMAGE_POPUP_MOTION_BLUR</key>
+    <value></value>
+    <group_id>4</group_id>
+    <order>36</order>
+    <modified>2003-12-15 13:22:32</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="97">
+    <id>97</id>
+    <key>ACCOUNT_GENDER</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="98">
+    <id>98</id>
+    <key>ACCOUNT_DOB</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="99">
+    <id>99</id>
+    <key>ACCOUNT_COMPANY</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="100">
+    <id>100</id>
+    <key>ACCOUNT_SUBURB</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="101">
+    <id>101</id>
+    <key>ACCOUNT_STATE</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="102">
+    <id>102</id>
+    <key>ACCOUNT_OPTIONS</key>
+    <value>account</value>
+    <group_id>5</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('account', 'guest', 'both'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="103">
+    <id>103</id>
+    <key>DELETE_GUEST_ACCOUNT</key>
+    <value>true</value>
+    <group_id>5</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="104">
+    <id>104</id>
+    <key>MODULE_PAYMENT_INSTALLED</key>
+    <value></value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="105">
+    <id>105</id>
+    <key>MODULE_ORDER_TOTAL_INSTALLED</key>
+    <value>ot_subtotal.php;ot_shipping.php;ot_tax.php;ot_total.php</value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified>2003-07-18 03:31:55</modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="106">
+    <id>106</id>
+    <key>MODULE_SHIPPING_INSTALLED</key>
+    <value></value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="107">
+    <id>107</id>
+    <key>DEFAULT_CURRENCY</key>
+    <value>EUR</value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="108">
+    <id>108</id>
+    <key>DEFAULT_LANGUAGE</key>
+    <value>de</value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="109">
+    <id>109</id>
+    <key>DEFAULT_ORDERS_STATUS_ID</key>
+    <value>1</value>
+    <group_id>6</group_id>
+    <order>0</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="110">
+    <id>110</id>
+    <key>MODULE_ORDER_TOTAL_SHIPPING_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="111">
+    <id>111</id>
+    <key>MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER</key>
+    <value>3</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="112">
+    <id>112</id>
+    <key>MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING</key>
+    <value>false</value>
+    <group_id>6</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="113">
+    <id>113</id>
+    <key>MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER</key>
+    <value>50</value>
+    <group_id>6</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>currencies-&gt;format</function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="114">
+    <id>114</id>
+    <key>MODULE_ORDER_TOTAL_SHIPPING_DESTINATION</key>
+    <value>national</value>
+    <group_id>6</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('national', 'international', 'both'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="115">
+    <id>115</id>
+    <key>MODULE_ORDER_TOTAL_SUBTOTAL_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="116">
+    <id>116</id>
+    <key>MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER</key>
+    <value>1</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="117">
+    <id>117</id>
+    <key>MODULE_ORDER_TOTAL_TAX_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="118">
+    <id>118</id>
+    <key>MODULE_ORDER_TOTAL_TAX_SORT_ORDER</key>
+    <value>5</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="119">
+    <id>119</id>
+    <key>MODULE_ORDER_TOTAL_TOTAL_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="120">
+    <id>120</id>
+    <key>MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER</key>
+    <value>6</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="121">
+    <id>121</id>
+    <key>MODULE_ORDER_TOTAL_DISCOUNT_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="122">
+    <id>122</id>
+    <key>MODULE_ORDER_TOTAL_DISCOUNT_SORT_ORDER</key>
+    <value>2</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="123">
+    <id>123</id>
+    <key>MODULE_ORDER_TOTAL_SUBTOTAL_NO_TAX_STATUS</key>
+    <value>true</value>
+    <group_id>6</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="124">
+    <id>124</id>
+    <key>MODULE_ORDER_TOTAL_SUBTOTAL_NO_TAX_SORT_ORDER</key>
+    <value>4</value>
+    <group_id>6</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="125">
+    <id>125</id>
+    <key>SHIPPING_ORIGIN_COUNTRY</key>
+    <value>81</value>
+    <group_id>7</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function>commerce_userapi_get_country_name</function>
+    <function_1>commerce_adminapi_pull_down_country_list(</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="126">
+    <id>126</id>
+    <key>SHIPPING_ORIGIN_ZIP</key>
+    <value></value>
+    <group_id>7</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="127">
+    <id>127</id>
+    <key>SHIPPING_MAX_WEIGHT</key>
+    <value>50</value>
+    <group_id>7</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="128">
+    <id>128</id>
+    <key>SHIPPING_BOX_WEIGHT</key>
+    <value>3</value>
+    <group_id>7</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="129">
+    <id>129</id>
+    <key>SHIPPING_BOX_PADDING</key>
+    <value>10</value>
+    <group_id>7</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="130">
+    <id>130</id>
+    <key>PRODUCT_LIST_FILTER</key>
+    <value>1</value>
+    <group_id>8</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="131">
+    <id>131</id>
+    <key>STOCK_CHECK</key>
+    <value>true</value>
+    <group_id>9</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="132">
+    <id>132</id>
+    <key>ATTRIBUTE_STOCK_CHECK</key>
+    <value>true</value>
+    <group_id>9</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="133">
+    <id>133</id>
+    <key>STOCK_LIMITED</key>
+    <value>true</value>
+    <group_id>9</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="134">
+    <id>134</id>
+    <key>STOCK_ALLOW_CHECKOUT</key>
+    <value>true</value>
+    <group_id>9</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="135">
+    <id>135</id>
+    <key>STOCK_MARK_PRODUCT_OUT_OF_STOCK</key>
+    <value>***</value>
+    <group_id>9</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="136">
+    <id>136</id>
+    <key>STOCK_REORDER_LEVEL</key>
+    <value>5</value>
+    <group_id>9</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="137">
+    <id>137</id>
+    <key>STORE_PAGE_PARSE_TIME</key>
+    <value>false</value>
+    <group_id>10</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="138">
+    <id>138</id>
+    <key>STORE_PAGE_PARSE_TIME_LOG</key>
+    <value>/var/log/www/tep/page_parse_time.log</value>
+    <group_id>10</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="139">
+    <id>139</id>
+    <key>STORE_PARSE_DATE_TIME_FORMAT</key>
+    <value>%d/%m/%Y %H:%M:%S</value>
+    <group_id>10</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="140">
+    <id>140</id>
+    <key>DISPLAY_PAGE_PARSE_TIME</key>
+    <value>true</value>
+    <group_id>10</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="141">
+    <id>141</id>
+    <key>STORE_DB_TRANSACTIONS</key>
+    <value>false</value>
+    <group_id>10</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="142">
+    <id>142</id>
+    <key>USE_CACHE</key>
+    <value>false</value>
+    <group_id>11</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="143">
+    <id>143</id>
+    <key>DIR_FS_CACHE</key>
+    <value>cache</value>
+    <group_id>11</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="144">
+    <id>144</id>
+    <key>CACHE_LIFETIME</key>
+    <value>3600</value>
+    <group_id>11</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="145">
+    <id>145</id>
+    <key>CACHE_CHECK</key>
+    <value>true</value>
+    <group_id>11</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="146">
+    <id>146</id>
+    <key>EMAIL_TRANSPORT</key>
+    <value>sendmail</value>
+    <group_id>12</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('sendmail', 'smtp', 'mail'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="147">
+    <id>147</id>
+    <key>SENDMAIL_PATH</key>
+    <value>/usr/sbin/sendmail</value>
+    <group_id>12</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="148">
+    <id>148</id>
+    <key>SMTP_MAIN_SERVER</key>
+    <value>localhost</value>
+    <group_id>12</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="149">
+    <id>149</id>
+    <key>SMTP_Backup_Server</key>
+    <value>localhost</value>
+    <group_id>12</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="150">
+    <id>150</id>
+    <key>SMTP_PORT</key>
+    <value>25</value>
+    <group_id>12</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="151">
+    <id>151</id>
+    <key>SMTP_USERNAME</key>
+    <value>Please Enter</value>
+    <group_id>12</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="152">
+    <id>152</id>
+    <key>SMTP_PASSWORD</key>
+    <value>Please Enter</value>
+    <group_id>12</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="153">
+    <id>153</id>
+    <key>SMTP_AUTH</key>
+    <value>false</value>
+    <group_id>12</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="154">
+    <id>154</id>
+    <key>EMAIL_LINEFEED</key>
+    <value>LF</value>
+    <group_id>12</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('LF', 'CRLF'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="155">
+    <id>155</id>
+    <key>EMAIL_USE_HTML</key>
+    <value>false</value>
+    <group_id>12</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="156">
+    <id>156</id>
+    <key>ENTRY_EMAIL_ADDRESS_CHECK</key>
+    <value>false</value>
+    <group_id>12</group_id>
+    <order>11</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="157">
+    <id>157</id>
+    <key>SEND_EMAILS</key>
+    <value>true</value>
+    <group_id>12</group_id>
+    <order>12</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="158">
+    <id>158</id>
+    <key>CONTACT_US_EMAIL_ADDRESS</key>
+    <value>contact@your-shop.com</value>
+    <group_id>12</group_id>
+    <order>20</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="159">
+    <id>159</id>
+    <key>CONTACT_US_NAME</key>
+    <value>Mail send by Contact_us Form</value>
+    <group_id>12</group_id>
+    <order>21</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="160">
+    <id>160</id>
+    <key>CONTACT_US_REPLY_ADDRESS</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>22</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="161">
+    <id>161</id>
+    <key>CONTACT_US_REPLY_ADDRESS_NAME</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>23</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="162">
+    <id>162</id>
+    <key>CONTACT_US_EMAIL_SUBJECT</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>24</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="163">
+    <id>163</id>
+    <key>CONTACT_US_FORWARDING_STRING</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>25</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="164">
+    <id>164</id>
+    <key>EMAIL_SUPPORT_ADDRESS</key>
+    <value>support@your-shop.com</value>
+    <group_id>12</group_id>
+    <order>26</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="165">
+    <id>165</id>
+    <key>EMAIL_SUPPORT_NAME</key>
+    <value>Mail send by support systems</value>
+    <group_id>12</group_id>
+    <order>27</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="166">
+    <id>166</id>
+    <key>EMAIL_SUPPORT_REPLY_ADDRESS</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>28</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="167">
+    <id>167</id>
+    <key>EMAIL_SUPPORT_REPLY_ADDRESS_NAME</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>29</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="168">
+    <id>168</id>
+    <key>EMAIL_SUPPORT_SUBJECT</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>30</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="169">
+    <id>169</id>
+    <key>EMAIL_SUPPORT_FORWARDING_STRING</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>31</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="170">
+    <id>170</id>
+    <key>EMAIL_BILLING_ADDRESS</key>
+    <value>billing@your-shop.com</value>
+    <group_id>12</group_id>
+    <order>32</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="171">
+    <id>171</id>
+    <key>EMAIL_BILLING_NAME</key>
+    <value>Mail send by billing systems</value>
+    <group_id>12</group_id>
+    <order>33</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="172">
+    <id>172</id>
+    <key>EMAIL_BILLING_REPLY_ADDRESS</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>34</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="173">
+    <id>173</id>
+    <key>EMAIL_BILLING_REPLY_ADDRESS_NAME</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>35</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="174">
+    <id>174</id>
+    <key>EMAIL_BILLING_SUBJECT</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>36</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="175">
+    <id>175</id>
+    <key>EMAIL_BILLING_FORWARDING_STRING</key>
+    <value></value>
+    <group_id>12</group_id>
+    <order>37</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="176">
+    <id>176</id>
+    <key>EMAIL_BILLING_SUBJECT_ORDER</key>
+    <value>Your order Nr:{$nr} / {$date}</value>
+    <group_id>12</group_id>
+    <order>38</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="177">
+    <id>177</id>
+    <key>DOWNLOAD_ENABLED</key>
+    <value>false</value>
+    <group_id>13</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="178">
+    <id>178</id>
+    <key>DOWNLOAD_BY_REDIRECT</key>
+    <value>false</value>
+    <group_id>13</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="179">
+    <id>179</id>
+    <key>DOWNLOAD_MAX_DAYS</key>
+    <value>7</value>
+    <group_id>13</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="180">
+    <id>180</id>
+    <key>DOWNLOAD_MAX_COUNT</key>
+    <value>5</value>
+    <group_id>13</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="181">
+    <id>181</id>
+    <key>GZIP_COMPRESSION</key>
+    <value>false</value>
+    <group_id>14</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="182">
+    <id>182</id>
+    <key>GZIP_LEVEL</key>
+    <value>5</value>
+    <group_id>14</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="183">
+    <id>183</id>
+    <key>SESSION_WRITE_DIRECTORY</key>
+    <value>/tmp</value>
+    <group_id>15</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="184">
+    <id>184</id>
+    <key>SESSION_FORCE_COOKIE_USE</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="185">
+    <id>185</id>
+    <key>SESSION_CHECK_SSL_SESSION_ID</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="186">
+    <id>186</id>
+    <key>SESSION_CHECK_USER_AGENT</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="187">
+    <id>187</id>
+    <key>SESSION_CHECK_IP_ADDRESS</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="188">
+    <id>188</id>
+    <key>SESSION_BLOCK_SPIDERS</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="189">
+    <id>189</id>
+    <key>SESSION_RECREATE</key>
+    <value>False</value>
+    <group_id>15</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('True', 'False'),</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="190">
+    <id>190</id>
+    <key>DISPLAY_CONDITIONS_ON_CHECKOUT</key>
+    <value>true</value>
+    <group_id>16</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="191">
+    <id>191</id>
+    <key>META_MIN_KEYWORD_LENGTH</key>
+    <value>6</value>
+    <group_id>16</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="192">
+    <id>192</id>
+    <key>META_KEYWORDS_NUMBER</key>
+    <value>5</value>
+    <group_id>16</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="193">
+    <id>193</id>
+    <key>META_AUTHOR</key>
+    <value></value>
+    <group_id>16</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="194">
+    <id>194</id>
+    <key>META_PUBLISHER</key>
+    <value></value>
+    <group_id>16</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="195">
+    <id>195</id>
+    <key>META_COMPANY</key>
+    <value></value>
+    <group_id>16</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="196">
+    <id>196</id>
+    <key>META_TOPIC</key>
+    <value>shopping</value>
+    <group_id>16</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="197">
+    <id>197</id>
+    <key>META_REPLY_TO</key>
+    <value>xx@xx.com</value>
+    <group_id>16</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="198">
+    <id>198</id>
+    <key>META_REVISIT_AFTER</key>
+    <value>14</value>
+    <group_id>16</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="199">
+    <id>199</id>
+    <key>META_ROBOTS</key>
+    <value>index,follow</value>
+    <group_id>16</group_id>
+    <order>10</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="200">
+    <id>200</id>
+    <key>META_DESCRIPTION</key>
+    <value></value>
+    <group_id>16</group_id>
+    <order>11</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="201">
+    <id>201</id>
+    <key>META_KEYWORDS</key>
+    <value></value>
+    <group_id>16</group_id>
+    <order>12</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="202">
+    <id>202</id>
+    <key>USE_SPAW</key>
+    <value>true</value>
+    <group_id>17</group_id>
+    <order>1</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="203">
+    <id>203</id>
+    <key>ACTIVATE_GIFT_SYSTEM</key>
+    <value>false</value>
+    <group_id>17</group_id>
+    <order>2</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="204">
+    <id>204</id>
+    <key>SECURITY_CODE_LENGTH</key>
+    <value>10</value>
+    <group_id>17</group_id>
+    <order>3</order>
+    <modified></modified>
+    <added>2003-12-05 05:01:41</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="205">
+    <id>205</id>
+    <key>NEW_SIGNUP_GIFT_VOUCHER_AMOUNT</key>
+    <value>0</value>
+    <group_id>17</group_id>
+    <order>4</order>
+    <modified></modified>
+    <added>2003-12-05 05:01:41</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="206">
+    <id>206</id>
+    <key>NEW_SIGNUP_DISCOUNT_COUPON</key>
+    <value></value>
+    <group_id>17</group_id>
+    <order>5</order>
+    <modified></modified>
+    <added>2003-12-05 05:01:41</added>
+    <function></function>
+    <function_1></function_1>
+  </ice_configuration>
+  <ice_configuration itemid="207">
+    <id>207</id>
+    <key>ACTIVATE_SHIPPING_STATUS</key>
+    <value>true</value>
+    <group_id>17</group_id>
+    <order>6</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="208">
+    <id>208</id>
+    <key>DISPLAY_CONDITIONS_ON_CHECKOUT</key>
+    <value>true</value>
+    <group_id>17</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="209">
+    <id>209</id>
+    <key>CHECK_CLIENT_AGENT</key>
+    <value>false</value>
+    <group_id>17</group_id>
+    <order>7</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="210">
+    <id>210</id>
+    <key>SHOW_IP_LOG</key>
+    <value>false</value>
+    <group_id>17</group_id>
+    <order>8</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+  <ice_configuration itemid="211">
+    <id>211</id>
+    <key>GROUP_CHECK</key>
+    <value>false</value>
+    <group_id>17</group_id>
+    <order>9</order>
+    <modified></modified>
+    <added>0000-00-00 00:00:00</added>
+    <function></function>
+    <function_1>commerce_adminapi_select_option(array('true', 'false'))</function_1>
+  </ice_configuration>
+</items>

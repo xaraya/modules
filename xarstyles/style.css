@@ -1,0 +1,44 @@
+/* van marcel uit Xaraya Classic */
+.ice-itemselector:after {
+    content: url('/themes/Xaraya_Classic/images/icon_info.gif');
+}
+
+.ice-itemselected:after {
+    content: url('/themes/Xaraya_Classic/images/icon_arrow_right.gif');
+}
+
+.ice-itemselector:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.ice-itemselected {
+    background-color: red;
+}
+
+.ice-pager {
+    text-align: center;
+}
+
+#ice-pager-statusline  {
+    font-size: 0.8em;
+}
+
+/* Specific css for things inside div.ice-menu */
+.ice-menu ul {
+    float: left; /* Makes for a horizontal organisation */
+    cursor: pointer;
+}
+
+.ice-menu ul > li {
+    color: blue;
+}
+
+.ice-menu li { background-image: none;}
+.ice-menu li ul {display: none;} 
+.ice-menu li:hover > ul {
+    display: block; 
+    position: absolute;
+    background-color: white;
+    border: thin solid black;
+}    

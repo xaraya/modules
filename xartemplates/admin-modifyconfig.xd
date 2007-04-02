@@ -1,0 +1,22 @@
+<xar:template file="application_top" type="module"/>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Commerce Administration</xar:mlstring>
+    </span>
+</div>
+<xar:style scope="module" module="commerce" file="tabs" />
+<xar:template file="headerconfig" type="module"/>
+<div class="tabswrapper">
+    <form action="#xarModURL('commerce', 'admin', 'updateconfig', array('tab' => $tab))#" method="post" enctype="application/x-www-form-urlencoded" >
+        <xar:set name="configarea">explode('_',$tab)</xar:set>
+        <xar:module main="false" module="$configarea[0]" type="admin" func="modifyconfig_$configarea[1]" args="$args" />
+        <xar:if condition="empty($hidesubmit)">
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="submit" name="update" value="#xarML('Update Configuration')#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                </div>
+            </fieldset>
+        </xar:if>
+    </form>
+</div>
