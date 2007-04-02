@@ -134,7 +134,9 @@ if (!$q->run($query)) return;
 #
 
     $module = 'vendors';
-    $objects = array('vendors_vendors');
+    $objects = array(
+                    'vendors_vendors'
+                    );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 

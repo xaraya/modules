@@ -1,18 +1,18 @@
 <object name="vendors_vendors">
-  <objectid>16</objectid>
+  <objectid>142</objectid>
   <label>Suppliers</label>
   <parent>objects</parent>
   <moduleid>182</moduleid>
-  <itemtype>7</itemtype>
+  <itemtype>23</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>151</id>
+      <id>1160</id>
       <label>ID</label>
-      <type>integerbox</type>
+      <type>itemid</type>
       <default></default>
       <source>xar_vendors_vendors.id</source>
       <status>67</status>
@@ -20,7 +20,7 @@
       <validation></validation>
     </property>
     <property name="code">
-      <id>152</id>
+      <id>1161</id>
       <label>Code</label>
       <type>textbox</type>
       <default></default>
@@ -30,7 +30,7 @@
       <validation></validation>
     </property>
     <property name="name">
-      <id>153</id>
+      <id>1162</id>
       <label>Name</label>
       <type>textbox</type>
       <default></default>
@@ -40,17 +40,17 @@
       <validation></validation>
     </property>
     <property name="address">
-      <id>154</id>
+      <id>1163</id>
       <label>Address</label>
       <type>static</type>
       <default></default>
-      <source>xar_vendors_vendors.addr1</source>
+      <source>xar_vendors_vendors.address</source>
       <status>34</status>
       <order>4</order>
       <validation></validation>
     </property>
     <property name="contact">
-      <id>155</id>
+      <id>1164</id>
       <label>Contact</label>
       <type>textbox</type>
       <default></default>
@@ -60,7 +60,7 @@
       <validation></validation>
     </property>
     <property name="phone">
-      <id>156</id>
+      <id>1165</id>
       <label>Phone</label>
       <type>textbox</type>
       <default></default>
@@ -70,7 +70,7 @@
       <validation></validation>
     </property>
     <property name="fax">
-      <id>157</id>
+      <id>1166</id>
       <label>Fax</label>
       <type>textbox</type>
       <default></default>
@@ -80,7 +80,7 @@
       <validation></validation>
     </property>
     <property name="email">
-      <id>158</id>
+      <id>1167</id>
       <label>Email</label>
       <type>textbox</type>
       <default></default>
@@ -90,7 +90,7 @@
       <validation></validation>
     </property>
     <property name="terms">
-      <id>159</id>
+      <id>1168</id>
       <label>Terms</label>
       <type>static</type>
       <default></default>
@@ -100,7 +100,7 @@
       <validation></validation>
     </property>
     <property name="taxincluded">
-      <id>160</id>
+      <id>1169</id>
       <label>Taxincluded</label>
       <type>textbox</type>
       <default></default>
@@ -110,7 +110,7 @@
       <validation></validation>
     </property>
     <property name="notes">
-      <id>161</id>
+      <id>1170</id>
       <label>Notes</label>
       <type>textarea_medium</type>
       <default></default>
@@ -120,7 +120,7 @@
       <validation></validation>
     </property>
     <property name="description">
-      <id>162</id>
+      <id>1171</id>
       <label>Description</label>
       <type>textarea_large</type>
       <default></default>
@@ -130,7 +130,7 @@
       <validation></validation>
     </property>
     <property name="keywords">
-      <id>163</id>
+      <id>1172</id>
       <label>Keywords</label>
       <type>textarea_medium</type>
       <default></default>
@@ -140,7 +140,7 @@
       <validation></validation>
     </property>
     <property name="currency_code">
-      <id>164</id>
+      <id>1173</id>
       <label>Currency Code</label>
       <type>textbox</type>
       <default></default>
@@ -150,7 +150,7 @@
       <validation></validation>
     </property>
     <property name="state">
-      <id>165</id>
+      <id>1174</id>
       <label>State</label>
       <type>integerbox</type>
       <default></default>
@@ -160,7 +160,7 @@
       <validation></validation>
     </property>
     <property name="url">
-      <id>166</id>
+      <id>1175</id>
       <label>URL</label>
       <type>url</type>
       <default></default>
@@ -170,7 +170,7 @@
       <validation></validation>
     </property>
     <property name="url_clicks">
-      <id>167</id>
+      <id>1176</id>
       <label>URL Clicks</label>
       <type>integerbox</type>
       <default></default>
@@ -180,13 +180,23 @@
       <validation></validation>
     </property>
     <property name="last_clicked">
-      <id>168</id>
+      <id>1177</id>
       <label>Last Clicked</label>
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>
       <status>66</status>
       <order>18</order>
+      <validation></validation>
+    </property>
+    <property name="roles_id">
+      <id>1307</id>
+      <label>Roles_ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_roles.id</source>
+      <status>65</status>
+      <order>19</order>
       <validation></validation>
     </property>
   </properties>
