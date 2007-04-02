@@ -1,0 +1,73 @@
+<object name="products_category_details">
+  <objectid>36</objectid>
+  <label>Product Category Details</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>16</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>307</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_products_product_description.product_id</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="language_id">
+      <id>308</id>
+      <label>Language ID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_product_description.language_id</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>309</id>
+      <label>Name</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_product_description.product_name</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="short_description">
+      <id>310</id>
+      <label>Short Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_products_product_description.product_short_description</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>311</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_products_product_description.product_description</source>
+      <status>34</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="parent_id">
+      <id>324</id>
+      <label>Parent ID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_categories_description.category_id</source>
+      <status>67</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -31,35 +31,34 @@ function products_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_categories";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_categories (
-      categories_id int NOT NULL auto_increment,
-      categories_image varchar(64),
-      parent_id int DEFAULT '0' NOT NULL,
-      categories_status TINYint (1)  UNSIGNED DEFAULT '1' NOT NULL,
-      categories_template varchar(64),
+      id int NOT NULL,
+      status TINYint (1)  UNSIGNED DEFAULT '1' NOT NULL,
+      category_template varchar(64),
       group_ids TEXT,
       listing_template varchar(64),
       sort_order int(3),
       product_sorting varchar(32),
       product_sorting2 varchar(32),
+      detail_description int(10) UNSIGNED,
       date_added int(10) UNSIGNED,
       last_modified int(10) UNSIGNED,
-      PRIMARY KEY (categories_id),
-      KEY idx_categories_parent_id (parent_id)
+      PRIMARY KEY (id)
     )";
     if (!$q->run($query)) return;
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_categories_description";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_products_categories_description (
-      categories_id int DEFAULT '0' NOT NULL,
+      id int DEFAULT '0' NOT NULL,
+      category_id int DEFAULT '0' NOT NULL,
       language_id int DEFAULT '1' NOT NULL,
       categories_name varchar(32) NOT NULL,
       categories_heading_title varchar(255) NOT NULL,
       categories_description varchar(255) NOT NULL,
-      categories_meta_title varchar(100) NOT NULL,
-      categories_meta_description varchar(255) NOT NULL,
-      categories_meta_keywords varchar(255) NOT NULL,
-      PRIMARY KEY (categories_id, language_id),
+      categories_display_title varchar(100) NOT NULL,
+      categories_display_description varchar(255) NOT NULL,
+      categories_display_keywords varchar(255) NOT NULL,
+      PRIMARY KEY (id, language_id),
       KEY idx_categories_name (categories_name)
     )";
     if (!$q->run($query)) return;
@@ -480,6 +479,17 @@ function products_init()
     $modules[$info['name']] = $info['regid'];
     $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
+# --------------------------------------------------------
+#
+# Create objects
+#
+
+    $module = 'products';
+    $defaultdata[] = 'products_categories';
+    $objects = $defaultdata;
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
 // Initialisation successful
     return true;
 }
@@ -543,7 +553,7 @@ function products_delete()
     unset($modules['products']);
     $result = xarModVars::set('commerce', 'ice_modules', serialize($modules));
 
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'products'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'products'));
 }
 # --------------------------------------------------------
 

@@ -1,0 +1,157 @@
+<b><xar:mlstring>Price options</xar:mlstring></b>
+<table width="100%" border="0" bgcolor="f3f3f3" style="border: 1px solid; border-color: #cccccc;">
+    <tr>
+        <td width="50%" class="main">
+            <xar:mlstring>Product Price</xar:mlstring>
+        </td>
+        <td width="50%" class="main">
+            <input type="text" name="products_price" value="#$products_price#">
+            <xar:if condition="$configuration['price_is_brutto']">
+                <xar:mlstring>Net</xar:mlstring>:
+                <b>#xarLocaleFormatCurrency($pInfo['product_price'])#</b>
+            </xar:if>
+        </td>
+    </tr>
+
+
+
+<xar:loop name="$group_data">
+    <xar:if condition="$loop:item['status_name'] ne ''">
+        <tr>
+            <td style="border-top: 1px solid; border-color: #cccccc;" valign="top" class="main">
+                #$loop:item['status_name']#
+            </td>
+
+<xar:comment> ------------------------------------ Assemble some vars ----------- </xar:comment>
+
+            <xar:set name="group_id">
+                #$loop:item['status_id']#
+            </xar:set>
+            <xar:set name="product_id">
+                $pInfo->products_id
+            </xar:set>
+            <xar:set name="group_price">
+                xarModAPIFunc('commerce','admin','get_group_price', array('group_id' => $group_id, 'product_id' => $product_id));
+            </xar:set>
+
+<xar:comment> ------------------------------------ Display price ---------------- </xar:comment>
+
+            <xar:if condition="$configuration['price_is_brutto']">
+                <xar:set name="tax_rate">
+                    xarModAPIFunc('commerce','user','get_tax_rate', array('class_id' => $pInfo->products_tax_class_id));
+                </xar:set>
+                <xar:set name="products_price">
+                     round($group_price * ((100 + $tax_rate)/100),$configuration['price_precision']);
+                </xar:set>
+            <xar:else />
+                <xar:set name="products_price">
+                    round($group_price ,$configuration['price_precision']);
+                </xar:set>
+            </xar:if>
+
+            <td style="border-top: 1px solid; border-color: #cccccc;" class="main">
+                <input type="text" name="products_price_#$loop:item['status_id']#" value="#$products_price#">
+
+            <xar:if condition="$configuration['price_is_brutto'] and $group_price ne 0">
+                <xar:mlstring>Net</xar:mlstring>:
+                <b>#xarLocaleFormatCurrency(round($group_price,$configuration['price_precision']))#</b>
+            </xar:if>
+
+
+<xar:if condition="$pID ne 0">
+        <xar:mlstring>Graduated Price</xar:mlstring>; <img onMouseOver="this.style.cursor='hand'" src="images/arrow_down.gif" height="12" width="12" onClick="toggleBox('staffel_echo $loop:item['status_id']; ');">
+<div id="staffel_ echo $loop:item['status_id'] " class="longDescription"><br>
+
+      // ok, lets check if there is already a staffelpreis
+      $staffel_query = new xenQuery("SELECT
+                                         products_id,
+                                         quantity,
+                                         personal_offer
+                                     FROM
+                                         personal_offers_by_customers_status_" . $loop:item['status_id'] . "
+                                     WHERE
+                                         products_id = '" . $pInfo->products_id . "' AND quantity != 1
+                                     ORDER BY quantity ASC");
+    </xar:if>
+
+<table width="247" border="0" cellpadding="0" cellspacing="0">
+      $q = new xenQuery();
+      if(!$q->run()) return;
+      while ($staffel_values = $q->output()) {
+      // load data into array
+
+<tr>
+    <td width="20" class="main" style="border: 1px solid; border-color: #cccccc;">
+         echo $staffel_values['quantity']
+    </td>
+    <td width="5">
+        &#160;
+    </td>
+    <td nowrap width="142" class="main" style="border: 1px solid; border-color: #cccccc;">
+
+    <xar:if condition="$configuration['price_is_brutto']">
+$tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo->products_tax_class_id . "' ");
+      $q = new xenQuery();
+      if(!$q->run()) return;
+$tax = $q->output();
+
+$products_price = round($staffel_values['personal_offer']*((100+$tax['tax_rate'])/100),$configuration['price_precision']);
+
+    <xar:else />
+$products_price = round($staffel_values['personal_offer'],PRICE_PRECISION);
+    </xar:if>
+
+ echo $products_price;
+    <xar:if condition="$configuration['price_is_brutto']">
+echo ' <br>'.TEXT_NETTO .'<b>'. $currencies->format(round($staffel_values['personal_offer'],$configuration['price_precision'])).'</b>  ';
+    </xar:if>
+
+                    </td>
+                    <td width="80" align="left">
+                        <img src="#xarTplGetImage('pixel_trans.gif')#" width="10" height="1">
+                    <a href=" echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&function=delete&quantity=' . $staffel_values['quantity'] . '&statusID=' . $loop:item['status_id'] . '&action=new_product&pID=' . $_GET['pID']); "> echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?>
+                    </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="5">
+                    </td>
+                </tr>
+
+      }
+
+                </table>
+          <xar:mlstring>Stk</xar:mlstring>:
+          <input type="text" name="products_quantity_staffel_#$loop:item['status_id']#" value="0" size="3">
+          <xar:mlstring>a</xar:mlstring>:
+          <input type="text" name="products_price_staffel#$loop:item['status_id']#" value="0">
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="10" height="10">
+            <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt="#xarML('Insert')#">;
+                <br>
+            </td>
+        </tr>
+        </xar:if>
+</xar:loop>
+    </div>
+    <tr>
+        <td style="border-top: 1px solid; border-color: #cccccc;" class="main">
+             <xar:mlstring>Discount allowed</xar:mlstring>:
+        </td>
+        <td style="border-top: 1px solid; border-color: #cccccc;" class="main">
+             <input type="text" name="products_discount_allowed" value="#$pInfo['products_discount_allowed']#">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <img src="#xarTplGetImage('pixel_trans.gif')#" width="10" height="1">
+        </td>
+    </tr>
+    <tr>
+        <td class="main">
+             <xar:mlstring>Tax Class</xar:mlstring>:
+        </td>
+        <td class="main">
+            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'products_tax_class_id', 'values' => $tax_class_array, 'default' =>$pInfo.product_tax_class_id))#
+        </td>
+    </tr>
+</table>

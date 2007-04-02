@@ -1,0 +1,133 @@
+<object name="products_categories">
+  <objectid>37</objectid>
+  <label>Product Categories</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>17</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>312</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_categories.xar_cid</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>313</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_categories.xar_name</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>314</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_categories.xar_description</source>
+      <status>34</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="image">
+      <id>315</id>
+      <label>Image</label>
+      <type>image</type>
+      <default></default>
+      <source>xar_categories.xar_image</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="parent">
+      <id>316</id>
+      <label>Parent</label>
+      <type>categories</type>
+      <default></default>
+      <source>xar_categories.xar_parent</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="product_category_id">
+      <id>317</id>
+      <label>Product_Category_ID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_categories.id</source>
+      <status>67</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>318</id>
+      <label>Status</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_categories.status</source>
+      <status>65</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="category_template">
+      <id>319</id>
+      <label>Category Template</label>
+      <type>filepicker</type>
+      <default></default>
+      <source>xar_products_categories.category_template</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="product_listing">
+      <id>320</id>
+      <label>Product Listing</label>
+      <type>filepicker</type>
+      <default></default>
+      <source>xar_products_categories.listing_template</source>
+      <status>34</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="date_added">
+      <id>321</id>
+      <label>Date Added</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_categories.date_added</source>
+      <status>66</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="last_modified">
+      <id>322</id>
+      <label>Last Modified</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_products_categories.last_modified</source>
+      <status>66</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="detail_description">
+      <id>323</id>
+      <label>Detail Description</label>
+      <type>subform</type>
+      <default></default>
+      <source>xar_products_categories.detail_description</source>
+      <status>34</status>
+      <order>12</order>
+      <validation>a:7:{s:10:&quot;objectname&quot;;s:25:&quot;products_category_details&quot;;s:5:&quot;style&quot;;s:8:&quot;parentid&quot;;s:5:&quot;title&quot;;s:1:&quot;1&quot;;s:4:&quot;link&quot;;s:2:&quot;id&quot;;s:5:&quot;input&quot;;s:1:&quot;1&quot;;s:9:&quot;fieldlist&quot;;a:6:{i:0;s:2:&quot;id&quot;;i:1;s:11:&quot;language_id&quot;;i:2;s:4:&quot;name&quot;;i:3;s:17:&quot;short_description&quot;;i:4;s:11:&quot;description&quot;;i:5;s:9:&quot;parent_id&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;1&quot;;}</validation>
+    </property>
+  </properties>
+</object>
