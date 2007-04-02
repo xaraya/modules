@@ -222,7 +222,7 @@ function customers_delete()
     unset($modules['customers']);
     $result = xarModSetVar('commerce', 'ice_modules', serialize($modules));
 
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'customers'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'customers'));
 }
 
 ?>

@@ -18,18 +18,18 @@ function customers_userapi_getall($args)
 
     $xartable =& xarDBGetTables();
     if (isset($conditions)) {
-    	$conditions->addtable($xartable['roles'],'r');
-    	$q = $conditions;
+        $conditions->addtable($xartable['roles'],'r');
+        $q = $conditions;
     } else {
-		$q = new xenQuery('SELECT',$xartable['roles'],'r');
-	}
-	$q->addfield('r.xar_uid');
-	$q->addfield('r.xar_name');
-	$q->setorder('r.xar_name');
-	$q->addtable($xartable['rolemembers'],'rm');
-	$q->join('r.xar_uid','rm.xar_uid');
-	$parent = xarFindRole('Customers');
-	$q->eq('rm.xar_parentid',$parent->getID());
+        $q = new xenQuery('SELECT',$xartable['roles'],'r');
+    }
+    $q->addfield('r.id');
+    $q->addfield('r.name');
+    $q->setorder('r.name');
+    $q->addtable($xartable['rolemembers'],'rm');
+    $q->join('r.id','rm.id');
+    $parent = xarFindRole('Customers');
+    $q->eq('rm.parentid',$parent->getID());
     if (!$q->run()) return;
     return $q->output();
 }
