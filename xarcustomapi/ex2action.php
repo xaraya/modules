@@ -27,8 +27,8 @@ function xarpages_customapi_ex2action( $args )
 function pageform_ex2action_validate( &$inobj )
 {
     // extract object fields into local arrays
-    formaction_obj2arrays( $inobj, $values, $invalids );
-    
+    pageform_obj2arrays( $inobj, $values, $invalids );
+
     // CHECK NEW USER ARGS
     $isvalid = true;
     
@@ -54,7 +54,7 @@ function pageform_ex2action_validate( &$inobj )
     }
 
     // put local values back into object for return
-    $isvalid = formaction_arrays2obj( $values, $invalids, $inobj );
+    $isvalid = pageform_arrays2obj( $values, $invalids, $inobj );
     
     return $isvalid;
 }
@@ -74,8 +74,8 @@ function pageform_ex2action_validate( &$inobj )
 function pageform_ex2action_process( &$inobj, &$outobj )
 {
     // extract object fields into local arrays
-    formaction_obj2arrays( $inobj, $values, $invalids );
-    formaction_obj2arrays( $outobj, $outvalues, $outinvalids );
+    pageform_obj2arrays( $inobj, $values, $invalids );
+    pageform_obj2arrays( $outobj, $outvalues, $outinvalids );
     
     // CREATE USER
     // determine state of this create user
@@ -122,8 +122,8 @@ function pageform_ex2action_process( &$inobj, &$outobj )
     }
 
     // put local values back into objects for return
-    formaction_arrays2obj( $values, $invalids, $inobj );
-    formaction_arrays2obj( $outvalues, $outinvalids, $outobj );
+    pageform_arrays2obj( $values, $invalids, $inobj );
+    pageform_arrays2obj( $outvalues, $outinvalids, $outobj );
     
     return true;
 }

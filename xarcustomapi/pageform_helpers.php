@@ -4,21 +4,29 @@
  * author: jonathan linowes
 */
 
+// Initialisation function, so we can include this file using xarModAPIfunc()
+function xarpages_customapi_pageform_helpers($args)
+{
+    return true;
+}
+
 /* retrieve object from session cache
  * args:
- * $key - unique session key it was saved under
+ * $pf - unique session key it was saved under
  * $pagename - name of page containing the object
  * returns:
  * $object - retrieved object, or null if not found
 */  
-function _pageform_getobject( $key, $pagename )
+function _pageform_getobject( $pf, $pagename )
 {
-    $var = xarSessionGetVar( $key );
+    $var = xarSessionGetVar( $pf );
+
     if (empty($var) || empty($var[$pagename])) {
         return;
     }
-    $itemtype = $var[$pagename . '_itemtype'];
-    $object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+    $objectid = $var[$pagename . '_objectid'];
+    //$object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+	$object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
     $ser = $var[$pagename];
     $vals = unserialize( $ser );
     $object->checkInput($vals); // really just want to do a set value, not validate, oh well TODO:write a loop instead
@@ -29,15 +37,15 @@ function _pageform_getobject( $key, $pagename )
 }
 
 /* save an object into session cache
- * just saves the itemtype, values, and invalids
+ * just saves the objectid, values, and invalids
  * args:
- * $key - unique session key to saved under
+ * $pf - unique session key to saved under
  * $pagename - name of page containing the object
  * $object - object to save
  * returns:
- * $key - same as passed in
+ * $pf - same as passed in
 */  
-function _pageform_setobject( $key, $pagename, $object )
+function _pageform_setobject( $pf, $pagename, $object )
 {
     $vals = $object->getfieldvalues();
     $ser = serialize( $vals );
@@ -45,14 +53,29 @@ function _pageform_setobject( $key, $pagename, $object )
     $invals = _pageform_getinvalids( $object ); // should be ->getInvalids()
     $serinvals = serialize( $invals );
     
-    $var = xarSessionGetVar( $key );
+    $var = xarSessionGetVar( $pf );
+	
     $var[$pagename] = $ser;
-    $var[$pagename . '_itemtype'] = $object->itemtype;
+    $var[$pagename . '_objectid'] = $object->objectid;
     $var[$pagename . '_invalids'] = $serinvals;
 
-    xarSessionSetVar( $key, $var );
+    xarSessionSetVar( $pf, $var );
     
-    return $key;
+    return $pf;
+}
+
+/* unset an object
+ * $pf - unique session key to clear
+*/
+function _pageform_unsetobject( $pf, $pagename )
+{
+    $var = xarSessionGetVar( $pf );
+	if (empty($var)) return;
+    unset($var[$pagename]);
+    unset($var[$pagename . '_objectid']);
+    unset($var[$pagename . '_invalids']);
+    xarSessionSetVar( $pf, $var );
+	return;
 }
 
 /* extract array of 'invalid' strings from object properties
@@ -103,12 +126,12 @@ function _pageform_resetinvalids( & $object )
  * args:
  * none
  * returns:
- * $key
+ * $pf
 */
 function _pageform_newkey( )
 {
-    $key = rand();
-    return $key;
+    $pf = rand();
+    return $pf;
 }
 
 /*
@@ -116,7 +139,7 @@ function _pageform_newkey( )
  * assumes pages are alternating form, action, form, action, etc.
  * args:
  * $args - standard xarpages args array given to customapi function (with 'pages', 'pid', etc) 
- * $sesskey - pageform session key
+ * $pf - pageform session key
  * $isaction - type of page, either 0=form, 1=action
  * returns:
  * $nav - array of :
@@ -133,7 +156,7 @@ function _pageform_newkey( )
  *
  * TODO: skip page inactive and empty pages
 */
-function _pageform_getnav( $args, $sesskey, $isaction = 0 )
+function _pageform_getnav( $args, $pf, $isaction = 0 )
 {
     $pages = $args['pages']; 
     $currentpid = $args['pid'];
@@ -156,7 +179,7 @@ function _pageform_getnav( $args, $sesskey, $isaction = 0 )
         $firsttype = $pages[$nav['cancel_pid']]['pagetype']['name'];
         if ($firsttype != 'pageform') {
             $nav['nextform_pid'] = $keys[1];
-            $nav['nextform_url'] = _pageform_url( $nav['nextform_pid'], $sesskey);
+            $nav['nextform_url'] = _pageform_url( $nav['nextform_pid'], $pf);
             return $nav;
         }
     }
@@ -166,43 +189,43 @@ function _pageform_getnav( $args, $sesskey, $isaction = 0 )
         $nav['form_pid'] = $keys[ $indexes[$currentpid] - 1 ];
     else
         $nav['form_pid'] = $currentpid;
-    $nav['form_url'] = _pageform_url( $nav['form_pid'], $sesskey);
+    $nav['form_url'] = _pageform_url( $nav['form_pid'], $pf);
     
     // action is the next page (or current if we're on the action)
     if ($isaction)
         $nav['action_pid'] = $currentpid;
     else
         $nav['action_pid'] = $keys[ $indexes[$currentpid] + 1 ];
-    $nav['action_url'] = _pageform_url( $nav['action_pid'], $sesskey);
+    $nav['action_url'] = _pageform_url( $nav['action_pid'], $pf);
 
     // back is the previous form (or cancel if none)
     $idx = $indexes[ $nav['form_pid'] ] - 2;
     if ($idx < 0)
         $idx = 0;
     $nav['back_pid'] = $keys[$idx];
-    $nav['back_url'] = _pageform_url( $nav['back_pid'], $sesskey);
+    $nav['back_url'] = _pageform_url( $nav['back_pid'], $pf);
     
     // nextform (skip) is the next form (null if none)
     $idx = $indexes[ $nav['form_pid'] ] + 2;
     if (!empty($keys[$idx])) {
         $nav['nextform_pid'] = $keys[$idx];
-        $nav['nextform_url'] = _pageform_url( $nav['nextform_pid'], $sesskey);
+        $nav['nextform_url'] = _pageform_url( $nav['nextform_pid'], $pf);
     }
 
     return $nav;
 }
 
-/* generate a url for pid and key
+/* generate a url for pid and pf
  * args:
  * $pid - pid of page
- * $sesskey - session key (or null)
+ * $pf - session key (or null)
  * returns:
  * url
 */
-function _pageform_url( $pid, $sesskey = NULL)
+function _pageform_url( $pid, $pf = NULL)
 {
-    if (!empty($sesskey))
-        $url = xarModUrl('xarpages','user','display',array('pid'=>$pid, 'key'=>$sesskey));
+    if (!empty($pf))
+        $url = xarModUrl('xarpages','user','display',array('pid'=>$pid, 'pf'=>$pf));
     else
         $url = xarModUrl('xarpages','user','display',array('pid'=>$pid));
     return $url;
@@ -217,7 +240,7 @@ function _pageform_url( $pid, $sesskey = NULL)
  * return:
  * $isvalid - 0 if any fields are invalid, else 1
 */
-function formaction_obj2arrays( &$obj, &$values, &$invalids )
+function pageform_obj2arrays( &$obj, &$values, &$invalids )
 {
     $isvalid = 1;
     $values = array();
@@ -239,7 +262,7 @@ function formaction_obj2arrays( &$obj, &$values, &$invalids )
 * return:
 * $isvalid - 0 if any fields are invalid, else 1
 */
-function formaction_arrays2obj( &$values, &$invalids, &$obj )
+function pageform_arrays2obj( &$values, &$invalids, &$obj )
 {
     $isvalid = 1;
     foreach ($obj->properties as $prop) {
@@ -249,7 +272,5 @@ function formaction_arrays2obj( &$values, &$invalids, &$obj )
     }
     return $isvalid;
 }
-
-
 
 ?>

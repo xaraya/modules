@@ -27,43 +27,56 @@ if you add these additional fields, they'll be used in the template:
     <xar:set name="ttl">#$current_page.desc#</xar:set>
 </xar:if>
 
+<div style="padding:1em">
 <xar:if condition="isset($current_page.dd.body)">
-  <xar:comment><h1>#$ttl#</h1> this can be left out if you put header in the body</xar:comment>
-    #$current_page.dd.body#
+        <xar:comment><h1>#$ttl#</h1> this can be left out if you put header in the body</xar:comment>
+        #$current_page.dd.body#
 </xar:if>
 
 
 
 <xar:if condition="!empty($pageform)">
-  <form method="post" name="post" id="post" action="#$pageform['action_url']#" enctype='application/x-www-form-urlencoded'>
-      <xar:if condition="!empty($current_page.dd.formlayout)">
-        <xar:data-form object="$pageform['object']" layout="$current_page['dd']['formlayout']" />
-      <xar:else />
-        <xar:data-form object="$pageform['object']" />
-    </xar:if>
-    <input type="hidden" name="key" value="#$pageform['key']#" />
-    <div style="text-align:center; padding:1em"><input type="submit" value="send" /></div>
-  </form>
+    <xar:comment> could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVarGetCached('Hooks.dynamicdata','withupload')  </xar:comment>
+    <form method="post" name="post" id="post" action="#$pageform['action_url']#" enctype='multipart/form-data'>
+        <xar:if condition="!empty($current_page.dd.formlayout)">
+            <xar:data-form object="$pageform['object']" layout="$current_page['dd']['formlayout']" />
+        <xar:else />
+            <xar:data-form object="$pageform['object']" />
+        </xar:if>
+		<xar:if condition="!empty($pageform['pf'])">
+		    <input type="hidden" name="pf" value="#$pageform['pf']#" />
+		</xar:if>
+        <xar:set name="submitlabel">"Submit"</xar:set>
+        <xar:if condition="!empty($current_page.dd.submit_label)">
+            <xar:set name="submitlabel">$current_page['dd']['submit_label']</xar:set>
+        </xar:if>
+        <div style="text-align:center; padding:1em"><input type="submit" value="#$submitlabel#" /></div>
+    </form>
 
-<div style="text-align:center">
-  <xar:if condition="!empty($pageform['cancel_url'])">
-    <p><a href="#$pageform['cancel_url']#">Cancel</a></p>
-  </xar:if>
-  <xar:if condition="!empty($pageform['back_url'])">
-    <p><a href="#$pageform['back_url']#">Back</a></p>
-  </xar:if>
-  <xar:if condition="!empty($pageform['nextform_url'])">
-    <p><a href="#$pageform['nextform_url']#">Skip</a></p>
-  </xar:if>
-</div>
+    <div style="text-align:center">
+        <xar:if condition="(empty($current_page.dd.hide_cancel) or ($current_page.dd.hide_cancel eq 0)) and
+                        !empty($pageform['cancel_url'])">
+            <p><a href="#$pageform['cancel_url']#">Cancel</a></p>
+        </xar:if>
+        <xar:if condition="(empty($current_page.dd.hide_back) or ($current_page.dd.hide_back eq 0)) and
+                        !empty($pageform['back_url'])">
+            <p><a href="#$pageform['back_url']#">Back</a></p>
+        </xar:if>
+        <xar:if condition="(empty($current_page.dd.hide_skip) or ($current_page.dd.hide_skip eq 0)) and
+                        !empty($pageform['nextform_url'])">
+            <p><a href="#$pageform['nextform_url']#">Skip</a></p>
+        </xar:if>
+    </div>
 </xar:if>
 
 
- <xar:if condition="xarModAPIFunc('roles','user','checkprivilege', array('uid' =&gt; xarSessionGetVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
+<xar:if condition="xarModAPIFunc('roles','user','checkprivilege', array('uid' =&gt; xarSessionGetVar('uid'), 'privilege' =&gt; 'grpEditorFlag'))">
     <div style="margin: 3em 1em 1em 1em">
         <span  style="background-color:#ccc; padding: 0 1em">Editors Options: <a href="#xarModURL('xarpages','admin','modifypage',array('pid' => $pid))#">Edit this page</a></span>
     </div>
 </xar:if>
+
+</div>
 
 <xar:comment> set title last in case another module tried to set it, above </xar:comment>
 <xar:if condition="!empty($ttl)">
