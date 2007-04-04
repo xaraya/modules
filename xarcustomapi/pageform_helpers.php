@@ -239,17 +239,20 @@ function _pageform_url( $pid, $pf = NULL)
  * $invalids - array containing fieldname => invalid (array will be initialized)
  * return:
  * $isvalid - 0 if any fields are invalid, else 1
+ * 04.04.07 JDJ: $obj is an in-only variable.
 */
-function pageform_obj2arrays( &$obj, &$values, &$invalids )
+function pageform_obj2arrays($obj, &$values, &$invalids)
 {
     $isvalid = 1;
     $values = array();
     $invalids = array();
+
     foreach ($obj->properties as $prop) {
         $values[$prop->name] = $prop->value;
         $invalids[$prop->name] = $prop->invalid;
         if (!empty($invalids[$prop->name])) $isvalid = 0;
     }
+
     return $isvalid;
 }
 
@@ -261,15 +264,18 @@ function pageform_obj2arrays( &$obj, &$values, &$invalids )
 * $obj - object with properties set (passed by reference)
 * return:
 * $isvalid - 0 if any fields are invalid, else 1
+ * 04.04.07 JDJ: $values and $invalids are in-only variables.
 */
-function pageform_arrays2obj( &$values, &$invalids, &$obj )
+function pageform_arrays2obj($values, $invalids, &$obj)
 {
     $isvalid = 1;
+
     foreach ($obj->properties as $prop) {
         $obj->properties[$prop->name]->value = $values[$prop->name];
         $obj->properties[$prop->name]->invalid = $invalids[$prop->name];
         if (!empty($invalids[$prop->name])) $isvalid = 0;
     }
+
     return $isvalid;
 }
 
