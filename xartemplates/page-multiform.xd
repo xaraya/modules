@@ -1,0 +1,111 @@
+
+<xar:comment>
+    This is a very simple example of a template for the 'html' page type.
+    The HTML body of the page is placed into a dynamicdata field called
+    'body'.
+</xar:comment>
+
+<xar:comment>
+    Set the page title to the description of the page.
+    You could instead create a DD property called 'title' and refererence
+    it as $current_page.dd.title, reserving the description field for
+    administration notes.
+</xar:comment>
+<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+
+<div>
+    <xar:mlstring>You are here:</xar:mlstring>
+    <xar:loop name="$ancestors">
+        <xar:if condition="$loop:item.pid eq $pid">
+            &gt;&gt; <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
+        <xar:else />
+            &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
+        </xar:if>
+    </xar:loop>
+</div>
+
+<xar:if condition="!empty($siblings)">
+    <div>
+        <xar:mlstring>Pages in this section:</xar:mlstring>
+        <xar:loop name="$siblings">
+            <xar:if condition="$loop:item.pid eq $pid">
+                <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
+            <xar:else />
+                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
+            </xar:if>
+        </xar:loop>
+    </div>
+</xar:if>
+
+<xar:if condition="!empty($children)">
+    <div>
+        <xar:mlstring>Sub-pages:</xar:mlstring>
+        <xar:loop name="$children">
+            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
+        </xar:loop>
+    </div>
+</xar:if>
+
+<xar:comment>Add an edit link if required. The crumbtrails block may also provide an edit link.</xar:comment>
+<xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+</xar:if>
+
+<xar:if condition="!empty($multiform.history)">
+    <div>
+        <xar:mlstring>History:</xar:mlstring>
+        <xar:loop name="$multiform.history">
+            <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
+                <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
+            <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
+                <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
+            <xar:else />
+                <xar:set name="page_name"><xar:ml><xar:mlstring>Page #(1)</xar:mlstring><xar:mlvar>#$loop:index + 1#</xar:mlvar></xar:ml></xar:set>
+            </xar:if>
+            &gt;
+            <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
+                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:key,'multiform_key'=&gt;$multiform.multiform_key))#">#xarVarPrepForDisplay($page_name)#</a>
+            <xar:else />
+                <span>#xarVarPrepForDisplay($page_name)#</span>
+            </xar:if>
+        </xar:loop>
+    </div>
+</xar:if>
+
+<xar:if condition="isset($current_page.dd.body)">
+    <div>#$current_page.dd.body#</div>
+</xar:if>
+
+<form method="post" name="post" id="post" action="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid))#" enctype='multipart/form-data'>
+    <div>
+        <xar:if condition="!empty($current_page.dd.formlayout)">
+            <xar:data-form object="$multiform['formobject']" layout="$current_page['dd']['formlayout']" />
+        <xar:else />
+            <xar:data-form object="$multiform['formobject']" />
+        </xar:if>
+
+        <xar:if condition="!empty($multiform.multiform_key)">
+		    <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
+		</xar:if>
+        <div style="clear: both;"></div>
+    </div>
+    <div>
+        <xar:if condition="!empty($multiform.prev_page_pid)">
+            <input type="submit" name="multiform_submit_prev" value="&lt; #xarML('Previous')#" />
+        </xar:if>
+        <input type="submit" name="multiform_submit_cont" value="#xarML('Save')#" />
+        <input type="submit" name="multiform_submit_next" value="#xarML('Next')# &gt;" />
+        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#"><xar:mlstring>Cancel</xar:mlstring></a>
+    </div>
+</form>
+
+
+
+
+<xar:if condition="!empty($hooks)">
+    <xar:foreach in="$hooks" key="$hookmodule">
+    <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+    <div>#$hooks[$hookmodule]#</div>
+    </xar:if>
+    </xar:foreach>
+</xar:if>
