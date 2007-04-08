@@ -499,6 +499,7 @@ function articles_user_display($args)
         $data['hooks'] = xarModCallHooks('item', 'display', $aid,
                                          array('module'    => 'articles',
                                                'itemtype'  => $pubtypeid,
+											   'title'     => $title,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',
