@@ -1,0 +1,17 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="dummy">xarTplAddStyleLink('webshare','webshare')</xar:set>
+<xar:mlstring>Share:</xar:mlstring>
+<xar:if condition="sizeof($websites) ge 1">
+  <ul class="webshare">
+  <xar:foreach in="$websites" key="$key" value="$website">
+    <li>
+	  <a href="#$website['submiturl']#" 
+	     title="xarML('submit to) #$website['title']#"
+      ><img src="#$website['image']#" 
+	        title="#$website['title']#" 
+			alt="#$website['title']#" 
+	  /></a>
+	</li>
+  </xar:foreach>
+  </ul>
+</xar:if>
