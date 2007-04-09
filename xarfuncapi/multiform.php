@@ -18,9 +18,13 @@
  * TODO: a timeout if the sequence is not touched within a certain period (a timer set in the session)
  * TODO: allow the timeout to be selectable in the master page (and perhaps in the validation class?)
  * TODO: secure pages (can this be done by chaining functions?)
- * TODO: define an error page (for unexpected errors)
+ * TODO: define an error page (for unexpected errors, or perhaps just as a general exception page)
  * TODO: define a timeout page (could be the same as the error page)
- * TODO: define a cancel page
+ * TODO: define a cancel page (could be the same as the error page)
+ * TODO: Perhaps use the master page as the exception page...two birds...?
+ * TODO: put in some debug stuff
+ * TODO: write a guide!
+ * TODO: test out the custom format stuff, including custom properties
  *
  * Notes on user navigation (the basic concepts):
  * - the sequence can be cancelled from any page (the user can always bail out)
@@ -44,6 +48,31 @@ function xarpages_funcapi_multiform($args)
     // Get the master page for the current page.
     // TODO: Without a master page, things get very difficult, so raise an error.
     $master_page = xarModAPIfunc('xarpages', 'multiform', 'getmasterpage', $args);
+
+    // Get some global settings.
+
+    // Debug setting. If set, then additional debug information should be displayed.
+    if (!empty($master_page['dd']['debug'])) {
+        $debug = true;
+    } else {
+        $debug = false;
+    }
+
+    // Exception page for errors, timeouts and user-cancellations.
+    // TODO: decide on what kind of page this will be, and how the details to be
+    // displayed will be passed to it. Perhaps a dedicated 'multiform_exception' page type?
+    if (!empty($master_page['dd']['exception_page']) && xarVarValidate('id', $master_page['dd']['exception_page'])) {
+        $exception_page = $master_page['dd']['exception_page'];
+    } else {
+        $exception_page = 0;
+    }
+
+    // Inactivity timeout.
+    if (!empty($master_page['dd']['timeout_seconds']) && xarVarValidate('int:30', $master_page['dd']['timeout_seconds'])) {
+        $timeout_seconds = $master_page['dd']['timeout_seconds'];
+    } else {
+        $timeout_seconds = 300;
+    }
 
     // Find the entry point page. The entry point will be the first ACTIVE descendant
     // of the master page.
@@ -517,16 +546,18 @@ function xarpages_funcapi_multiform($args)
         }
     }
 
+    // Other optional data for the template.
+    if (!empty($dd['formlayout'])) $multiform['formlayout'] = $dd['formlayout'];
     if (!empty($formobject)) $multiform['formobject'] = $formobject;
     if (!empty($formobject)) $multiform['multiform_key'] = $session_key;
-    $multiform['multiform_key_name'] = $multiform_key_name;
     if (!empty($session_vars['history'])) $multiform['history'] = $session_vars['history'];
     if (!empty($session_vars['formdata'])) $multiform['formdata'] = $session_vars['formdata'];
     if (!empty($session_vars['workdata'])) $multiform['workdata'] = $session_vars['workdata'];
 
+    // Other always-set data for the template.
+    $multiform['multiform_key_name'] = $multiform_key_name;
     $multiform['prev_page_pid'] = $prev_page_pid;
     $multiform['next_page_pid'] = $next_page_pid;
-
     $multiform['submit_labels'] = $submit_labels;
 
     $args['multiform'] = $multiform;
