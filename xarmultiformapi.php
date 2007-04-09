@@ -44,7 +44,7 @@ function xarpages_multiformapi_getmasterpage($args)
         $master_page = $args['pages'][$masterpage_pid];
         // TODO: interpret a few of the parameters the page holds, and provide
         // some defaults, then add those parameters to the page data.
-        // Parameters include: timeout, debug, timeoutpage, errorpage, cancelpage, showhistory, direction
+        // Parameters include: timeout, debug, timeoutpage, errorpage, cancelpage, showhistory
         //
         // 'showhistory' determines the sequence. If set, then earlier pages can be re-accessed in random order.
         // If not set, then order is strictly along the history line, one page at a time. The 'direction' flag
@@ -56,7 +56,9 @@ function xarpages_multiformapi_getmasterpage($args)
         $page_sequence = array();
         foreach($args['pages'] as $pid => $page) {
             if ($page['left'] > $master_page['right']) break;
-            if ($page['left'] > $master_page['left'] && $page['status'] == 'ACTIVE') $page_sequence[] = $pid;
+            if ($page['left'] > $master_page['left'] && $page['status'] == 'ACTIVE' && $page['pagetype']['name'] != 'multiform_exception') {
+                $page_sequence[] = $pid;
+            }
         }
         $master_page['page_sequence'] = $page_sequence;
         $master_page['first_pid'] = array_shift($page_sequence);

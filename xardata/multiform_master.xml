@@ -1,0 +1,42 @@
+<object name="xarpages_multiform_master">
+  <objectid></objectid>
+  <label>Xarpages_Multiform_Master</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="debug">
+      <id>60</id>
+      <label>Debug</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="timeout_seconds">
+      <id>61</id>
+      <label>Timeout Seconds</label>
+      <type>textbox</type>
+      <default>300</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>int</validation>
+    </property>
+    <property name="exception_page">
+      <id>62</id>
+      <label>Exception Page</label>
+      <type>textbox</type>
+      <default>0</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>int:0</validation>
+    </property>
+  </properties>
+</object>
