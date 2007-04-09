@@ -48,28 +48,32 @@ function webshare_user_display($args)
 
     $args['active']=1;
     // Run API function
-    $websites = xarModAPIFunc('webshare', 'user', 'get',$args);
+    if ($websites = xarModAPIFunc('webshare', 'user', 'get',$args)) {
 
     if (isset($websites)) {
 	// Set the cached variable if requested
 	    if (xarVarIsCached('Hooks.webshare','save') &&
 	     	xarVarGetCached('Hooks.webshare','save') == true) {
 			xarVarSetCached('Hooks.webshare','value',$websites);
-      } 
-    }
-    foreach($websites as $key=>$website) {
-		$submiturl = $website['submiturl'];
-		$submiturl = preg_replace('/#URL#/',$data['returnurl'],$submiturl);
-		$submiturl = preg_replace('/#TITLE#/',$data['title'],$submiturl);
-		$websites[$key]['submiturl']=$submiturl;
-	}
+        } 
     
+        foreach($websites as $key=>$website) {
+    		$submiturl = $website['submiturl'];
+    		$submiturl = preg_replace('/#URL#/',$data['returnurl'],$submiturl);
+    		$submiturl = preg_replace('/#TITLE#/',$data['title'],$submiturl);
+    		$websites[$key]['submiturl']=$submiturl;
+    	}
+    }    
+    }    
 
     // set an authid, but only if the current user can rate the item
-    if (xarSecurityCheck('ReadWebshare', 0, 'Item', "All")) {
+    if (xarSecurityCheck('ReadWebshareWeb', 0, 'All', "All")) {
 	    $data['websites'] = $websites;
+    }  else {
+	    $data['websites'] = array();
     }
 
+    $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 

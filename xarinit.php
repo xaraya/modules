@@ -83,8 +83,9 @@ function webshare_init()
      * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
      */
 
-    xarRegisterMask('ReadWebshare', 'All', 'ratings', 'All', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('AdminWebshare', 'All', 'ratings', 'All', 'All', 'ACCESS_ADMIN');
+    xarRegisterMask('ReadWebshareWeb', 'All', 'webshare', 'Web', 'All', 'ACCESS_READ');
+    xarRegisterMask('ReadWebshareMail', 'All', 'webshare', 'Mail', 'All', 'ACCESS_READ');
+    xarRegisterMask('AdminWebshare', 'All', 'webshare', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -99,6 +100,17 @@ function webshare_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
+	    case '0.9':
+		    $oldversion = '0.911';
+		case '0.91':
+		    $oldversion = '0.911';
+        case '0.912':
+		    xarUnregisterMask('Readwebshare');
+		    xarUnregisterMask('Adminwebshare');
+            xarRegisterMask('ReadWebshareWeb', 'All', 'webshare', 'Web', 'All', 'ACCESS_READ');
+            xarRegisterMask('ReadWebshareMail', 'All', 'webshare', 'Mail', 'All', 'ACCESS_READ');
+            xarRegisterMask('AdminWebshare', 'All', 'webshare', 'All', 'All', 'ACCESS_ADMIN');
+
     }
     return true;
 }

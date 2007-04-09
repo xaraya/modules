@@ -20,7 +20,9 @@ function webshare_userapi_get($args)
 {
 
     // Security Check
-    if(!xarSecurityCheck('ReadWebshare')) return;
+    if(!xarSecurityCheck('ReadWebshareWeb',0)) {
+	    return;
+	}
 	
 	extract($args);
 	if (!isset($active)) $active = 0;

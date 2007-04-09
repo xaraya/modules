@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Webshare';
 $modversion['id']             = '883';
-$modversion['version']        = '0.9';
+$modversion['version']        = '0.913';
 $modversion['displayname']    = xarML('Webshare');
 $modversion['description']    = 'Share Xaraya items in web2.0 sites';
 $modversion['changelog']      = 'xardocs/changelog.txt';
