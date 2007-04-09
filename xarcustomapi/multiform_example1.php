@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Validation and processing class for the 'ex1master' multiform sequence.
+ * Validation and processing class for the 'example1' multiform sequence.
  * This example is very much work in progress, and will be replaced soon.
  */
 
-function xarpages_customapi_multiform_ex1master($args)
+function xarpages_customapi_multiform_example1($args)
 {
-    return new xarpages_customapi_multiform_ex1master($args);
+    return new xarpages_customapi_multiform_example1($args);
 }
 
 // CHECKME: Should classes go in a folder of their own?
 // There are no simple methods for loading classes at the moment.
 
-class xarpages_customapi_multiform_ex1master extends xarpages_customapi_multiform_master
+class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform_master
 {
-    // Constructor for form set 'ex1master'
-    function xarpages_customapi_multiform_ex1master($args)
+    // Constructor for form set 'example1'
+    function xarpages_customapi_multiform_example1($args)
     {
         // Call the parent constructor.
         parent::xarpages_customapi_multiform_master($args);

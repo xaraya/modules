@@ -15,14 +15,34 @@
  * a request is posted back to the current page, and rules from there determine
  * where the user is taken next.
  *
- * TODO: a timeout if the sequence is not touch within a certain period (a timer set in the session)
+ * TODO: a timeout if the sequence is not touched within a certain period (a timer set in the session)
+ * TODO: allow the timeout to be selectable in the master page (and perhaps in the validation class?)
  * TODO: secure pages (can this be done by chaining functions?)
+ * TODO: define an error page (for unexpected errors)
+ * TODO: define a timeout page (could be the same as the error page)
+ * TODO: define a cancel page
+ *
+ * Notes on user navigation (the basic concepts):
+ * - the sequence can be cancelled from any page (the user can always bail out)
+ * - there is no page skipping (the system may skip a page, but the user never will)
+ * - there will always be a back button, unless a page is flagged as a 'miletone page'
+ * - a 'miletone page' effectively inserts a block to backwards navigation at that page
+ *
+ * Notes on the custom initialisation/validation/processing functions:
+ * - a page sequence consists of pages under a single 'master page'
+ * - the functions for all pages in a sequence are methods in a single class
+ * - every page can have its own (optional) init/validation/processing page
+ * - the initialisation function is called before any form is presented to the user
+ * - the validation function is called after any form is submitted
+ * - the processing function is called only if validation is successful
+ * - the processing function is called only when moving to the next page (not the previous)
+ * - the processing function of a milestone page can be executed only once, so it is ideal for online payments, e-mails etc.
  */
 
 function xarpages_funcapi_multiform($args)
 {
     // Get the master page for the current page.
-    // TODO: without a master page, things get very difficult, so raise an error.
+    // TODO: Without a master page, things get very difficult, so raise an error.
     $master_page = xarModAPIfunc('xarpages', 'multiform', 'getmasterpage', $args);
 
     // Find the entry point page. The entry point will be the first ACTIVE descendant
@@ -32,7 +52,11 @@ function xarpages_funcapi_multiform($args)
     $page_sequence = $master_page['page_sequence'];
     $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
     $current_page = $args['current_page'];
+    $dd = $current_page['dd'];
+
     // The name of the key that follows a session (through every URL and form POST).
+    // It can be set to whatever you like, just make sure it does not clash with any
+    // form properties.
     $multiform_key_name = 'mk';
 
     // Find the next and previous pages in the sequence.
@@ -58,7 +82,7 @@ function xarpages_funcapi_multiform($args)
         end($history);
         while (key($history)) {
             if (key($history) == $current_page['pid']) {
-                // Jump back one more page
+                // Look back one more page
                 prev($history);
                 $hist_prev_page = current($history);
 
@@ -70,10 +94,6 @@ function xarpages_funcapi_multiform($args)
             prev($history);
         }
     }
-
-    // Some helper variables and decoded options for the page.
-    $current_page = $args['current_page'];
-    $dd = $current_page['dd'];
 
     // List of required fields
     if (!empty($dd['required_fields'])) {
@@ -483,6 +503,20 @@ function xarpages_funcapi_multiform($args)
     // All form data is placed in the 'multiform' array.
     $multiform = array();
 
+    // Check for customised submit labels.
+    // They consist of three comma-separated strings in the order: previous,save,next
+    $submit_labels = array(
+        'prev' => xarML('<< Previous'),
+        'save' => xarML('Save'),
+        'next' => xarML('Next >>'),
+    );
+    if (!empty($dd['submit_labels']) && xarVarValidate('strlist:,:pre:trim:str', $dd['submit_labels'])) {
+        $custom_labels = explode(',', $dd['submit_labels']);
+        foreach(array('prev', 'save', 'next') as $key => $value) {
+            if (isset($custom_labels[$key]) && $custom_labels[$key] != '') $submit_labels[$value] = $custom_labels[$key];
+        }
+    }
+
     if (!empty($formobject)) $multiform['formobject'] = $formobject;
     if (!empty($formobject)) $multiform['multiform_key'] = $session_key;
     $multiform['multiform_key_name'] = $multiform_key_name;
@@ -492,6 +526,8 @@ function xarpages_funcapi_multiform($args)
 
     $multiform['prev_page_pid'] = $prev_page_pid;
     $multiform['next_page_pid'] = $next_page_pid;
+
+    $multiform['submit_labels'] = $submit_labels;
 
     $args['multiform'] = $multiform;
 

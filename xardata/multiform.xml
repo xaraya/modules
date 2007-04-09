@@ -1,0 +1,82 @@
+<object name="xarpages_multiform">
+  <objectid></objectid>
+  <label>Xarpages_Multiform</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="body">
+      <id>49</id>
+      <label>Body</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="formobject">
+      <id>50</id>
+      <label>Form Object</label>
+      <type>objectref</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>objects:name:objectid</validation>
+    </property>
+    <property name="formlayout">
+      <id>51</id>
+      <label>Form Layout</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="required_fields">
+      <id>52</id>
+      <label>Required Fields</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="milestone_page">
+      <id>53</id>
+      <label>Milestone Page</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="menu_title">
+      <id>54</id>
+      <label>Menu Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="submit_labels">
+      <id>55</id>
+      <label>Submit Labels</label>
+      <type>textbox</type>
+      <default>&lt;&lt; Previous,Save,Next &gt;&gt;</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
