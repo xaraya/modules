@@ -7,7 +7,10 @@
 
 <xar:comment>Add an edit link if required. The crumbtrails block may also provide an edit link.</xar:comment>
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit page</a>]
+    <xar:if condition="!empty($multiform.formobject-&gt;objectid)">
+        [<a href="#xarModURL('dynamicdata', 'admin', 'modifyprop', array('itemid'=&gt;$multiform.formobject-&gt;objectid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit form</a>]
+    </xar:if>
 </xar:if>
 
 <xar:if condition="empty($multiform)">
