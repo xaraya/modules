@@ -130,6 +130,11 @@ class Base extends Observable {
         }
         return $this->db->qstr($string,$quoted);
     }
+    
+    static function tbl($tbl)
+    {
+        return ' `'.GALAXIA_TABLE_PREFIX.$tbl.'` ';
+    }
 
 } //end of class
 

@@ -1,12 +1,21 @@
-<xar:template file="user_bar" type="module"/>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <xar:template file="user_bar" type="module"/>
   <div class="xar-mod-body">
-    <h3><xar:mlstring>Activity Completed</xar:mlstring></h3>
+    <h3>
+      <xar:mlstring>Activity Completed</xar:mlstring>
+    </h3>
     <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
       <table style="border-collapse: separate;">
         <tr>
-          <th><xar:mlstring>Process</xar:mlstring></th>
-          <th><xar:mlstring>Version</xar:mlstring></th>
-          <th><xar:mlstring>Activity</xar:mlstring></th>
+          <th>
+            <xar:mlstring>Process</xar:mlstring>
+          </th>
+          <th>
+            <xar:mlstring>Version</xar:mlstring>
+          </th>
+          <th>
+            <xar:mlstring>Activity</xar:mlstring>
+          </th>
         </tr>
         <tr>
           <td>#$procname#</td>
@@ -15,7 +24,6 @@
         </tr>
       </table>
     </div>
-    
     <xar:template file="galaxfooter"/>
   </div>
-
+</xar:template>

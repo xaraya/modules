@@ -18,7 +18,7 @@ class Process extends Base {
   Loads a process form the database
   */
   function getProcess($pId) {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."processes` where `pId`=?";
+    $query = "select * from ".self::tbl('processes')."where `pId`=?";
     $result = $this->query($query,array($pId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
@@ -59,7 +59,7 @@ class Process extends Base {
   */
   function getActivityByName($actname) {
     // Get the activity data
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=? and `name`=?";
+    $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
     $pId = $this->pId;
     $result = $this->query($query,array($pId,$actname));
     if(!$result->numRows()) return false;

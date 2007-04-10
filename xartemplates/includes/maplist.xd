@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
   <fieldset>
     <legend><xar:mlstring>List of mappings</xar:mlstring></legend>
@@ -54,7 +55,7 @@
               <td>
                   <xar:if condition="isset($mapitems[$ix]['roleId'])">
                       <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />
-                  </xar:if>&nbsp;
+                  </xar:if>&#160;
                 #$mapitems[$ix]['name']#
               </td>
               <td>
@@ -79,3 +80,6 @@
   <!-- Show the pager -->
   <xar:template file="pager"/>
 </div>
+
+
+</xar:template>

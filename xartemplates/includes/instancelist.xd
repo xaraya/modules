@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <form action="&xar-modurl-workflow-user-instances;" method="post">
     <xar:if condition="!isset($offset)"><xar:set name="offset">0</xar:set></xar:if>
     <input type="hidden" name="offset" value="#$offset#" />
@@ -69,23 +70,8 @@
               <td>#$item['instanceId']#</td>
               <td>#$item['owner']#</td>
               <td>
-                <xar:if condition="$item['type'] eq 'start'">
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'end'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'activity'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'switch'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'standalone'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'split'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:elseif condition="$item['type'] eq 'join'"/>
-                  <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$item['type']#" title="#$item['type']#" />
-                  <xar:else/>
-                  #$item['type']# 
-                </xar:if>
+                <!-- Get an image for the activity -->
+                <xar:template file="activity_image" subdata="$item"/>
                 #$item['name']#
               </td>
               <td>#$item['user']#</td>
@@ -138,3 +124,5 @@
       </xar:if>
     </table>
   </form>
+
+</xar:template>

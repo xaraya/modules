@@ -1,10 +1,11 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <xar:if condition="!empty($items) and count($items) gt 0">
     <table style="border-collapse: separate; width: 99%">
       <tr>
         <th><xar:mlstring>Process</xar:mlstring></th>
         <th><xar:mlstring>Version</xar:mlstring></th>
         <th><xar:mlstring>Start</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>  
+        <th><xar:mlstring>Status</xar:mlstring></th>
         <th><xar:mlstring>Current Activity</xar:mlstring></th>
         <th><xar:mlstring>Assigned To</xar:mlstring></th>
         <th><xar:mlstring>Run</xar:mlstring></th>
@@ -34,23 +35,8 @@
               </xar:if>
             </td>
             <td>
-              <xar:if condition="$item['type'] eq 'start'">
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'end'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'activity'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'switch'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'standalone'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'split'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:elseif condition="$item['type'] eq 'join'"/>
-                <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
-              <xar:else/>
-                #$item['type']# 
-              </xar:if>
+              <!-- Get an image for the activity -->
+              <xar:template file="activity_image" subdata="$item"/>
               #$item['name']#
             </td>
             <td>#$item['user']#</td>
@@ -97,4 +83,7 @@
     <xar:else/>
     <xar:mlstring>No workflows found</xar:mlstring>
   </xar:if>
-  
+
+
+
+</xar:template>

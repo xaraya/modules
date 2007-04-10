@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Workflow Module</xar:mlstring>
@@ -19,7 +20,7 @@
       <table>
         <tr>
           <td><small><xar:mlstring>description</xar:mlstring></small></td>
-          <td>&nbsp;</td>    
+          <td>&#160;</td>    
         </tr>
         <tr>
           <td><input size="8" type="text" name="find" value="#$find#" /></td>
@@ -70,3 +71,6 @@
   <xar:template file="galaxfooter"/>
 </div>
 </div>
+
+
+</xar:template>

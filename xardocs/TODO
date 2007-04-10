@@ -8,7 +8,7 @@ Generic:
   with workitems. 
   Detection of these loops is a known NP complete problem unless we 
   specifically implement a detector (the looping as such can be
-  intented within the same instance, so it's not enough to detect on
+  intended within the same instance, so it's not enough to detect on
   instance) Perhaps a detector that for each activity a 'trace' can be
   checked with a list of activities that has been run since the last
   time we were at that specific activity. The check could then be to

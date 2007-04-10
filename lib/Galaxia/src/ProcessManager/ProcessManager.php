@@ -17,7 +17,7 @@ class ProcessManager extends BaseManager {
   */
   function activate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive=? where pId=?";
+    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
     $this->query($query,array('y',$pId));  
     $msg = sprintf(tra('Process %d has been activated'),$pId);
     $this->notify_all(3,$msg);
@@ -28,7 +28,7 @@ class ProcessManager extends BaseManager {
   */
   function deactivate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive=? where pId=?";
+    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
     $this->query($query,array('n',$pId));  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
@@ -58,7 +58,7 @@ class ProcessManager extends BaseManager {
     fclose($fp);
     $out.= '  ]]></sharedCode>'."\n";
     // Now loop over activities
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId= ?";
+    $query = "select * from ".self::tbl('activities')."where pId= ?";
     $result = $this->query($query,array($pId));
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
@@ -304,7 +304,7 @@ class ProcessManager extends BaseManager {
     if(!$proc_info) return false;
     // Now update the version
     $version = $this->_new_version($proc_info['version'],$minor);
-    while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where name=? and version=?",array($name,$version))) {
+    while($this->getOne("select count(*) from ".self::tbl('processes')." where name=? and version=?",array($name,$version))) {
       $version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
@@ -314,7 +314,7 @@ class ProcessManager extends BaseManager {
     $pid = $this->replace_process(0, $proc_info, false);
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=?";
+    $query = "select * from ".self::tbl('activities')." where pId=?";
     $result = $this->query($query,array($oldpid));
     $newaid = array();
     while($res = $result->fetchRow()) {    
@@ -322,7 +322,7 @@ class ProcessManager extends BaseManager {
       $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
     // create transitions
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where pId=?";
+    $query = "select * from ".self::tbl('transitions')." where pId=?";
     $result = $this->query($query,array($oldpid));
     while($res = $result->fetchRow()) {    
       if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
@@ -332,7 +332,7 @@ class ProcessManager extends BaseManager {
     }
     // create roles
     $rm = new RoleManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId=?";
+    $query = "select * from ".self::tbl('roles')."where pId=?";
     $result = $this->query($query,array($oldpid));
     $newrid = array();
     while($res = $result->fetchRow()) {
@@ -345,7 +345,7 @@ class ProcessManager extends BaseManager {
     }
     // map users to roles
     if (count($newrid) > 0) {
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."user_roles where pId=?";
+      $query = "select * from ".self::tbl('user_roles')."where pId=?";
       $result = $this->query($query,array($oldpid));
       while($res = $result->fetchRow()) {
         if (empty($newrid[$res['roleId']])) {
@@ -357,7 +357,7 @@ class ProcessManager extends BaseManager {
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
         $bindMarkers = '?' . str_repeat(', ?',count($newid) -1);
-        $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in ($bindMarkers)";
+        $query = "select * from ".self::tbl('activity_roles')." where activityId in ($bindMarkers)";
       $result = $this->query($query,array_keys($newaid));
       while($res = $result->fetchRow()) {
         if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
@@ -387,7 +387,7 @@ class ProcessManager extends BaseManager {
   function process_name_exists($name,$version)
   {
     $name = $this->_normalize_name($name,$version);
-    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where normalized_name=?",array($name));
+    return $this->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?",array($name));
   }
   
   
@@ -396,7 +396,7 @@ class ProcessManager extends BaseManager {
   */
   function get_process($pId)
   {
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes where pId=?";
+    $query = "select * from ".self::tbl('processes')." where pId=?";
     $result = $this->query($query,array($pId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
@@ -424,8 +424,8 @@ class ProcessManager extends BaseManager {
         $mid.= " where ($where) ";
       }
     }
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes $mid order by $sort_mode";
-    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."processes $mid";
+    $query = "select * from ".self::tbl('processes')." $mid order by $sort_mode";
+    $query_cant = "select count(*) from ".self::tbl('processes')." $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
@@ -443,7 +443,7 @@ class ProcessManager extends BaseManager {
   */
   function invalidate_process($pid)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isValid=? where pId=?";
+    $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
     $this->query($query,array('n',$pid));
   }
   
@@ -456,16 +456,16 @@ class ProcessManager extends BaseManager {
     $name = $this->_get_normalized_name($pId);
     $aM = new ActivityManager($this->db);
     // Remove process activities
-    $query = "select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=?";
+    $query = "select activityId from ".self::tbl('activities')." where pId=?";
     $result = $this->query($query,array($pId));
     while($res = $result->fetchRow()) {
       $aM->remove_activity($pId,$res['activityId']);
     }
 
     // Remove process roles
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where pId=?";
+    $query = "delete from ".self::tbl('roles')." where pId=?";
     $this->query($query,array($pId));
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where pId=?";
+    $query = "delete from ".self::tbl('user_roles')." where pId=?";
     $this->query($query,array($pId));
     
     // Remove the directory structure
@@ -476,7 +476,7 @@ class ProcessManager extends BaseManager {
       $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
     }
     // And finally remove the proc
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."processes where pId=?";
+    $query = "delete from ".self::tbl('processes')." where pId=?";
     $this->query($query,array($pId));
     $msg = sprintf(tra('Process %s removed'),$name);
     $this->notify_all(5,$msg);
@@ -491,7 +491,7 @@ class ProcessManager extends BaseManager {
   */
   function replace_process($pId, $vars, $create = true)
   {
-    $TABLE_NAME = GALAXIA_TABLE_PREFIX."processes";
+    $TABLE_NAME = self::tbl('processes');
     $now = date("U");
     $vars['lastModif']=$now;
     $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        

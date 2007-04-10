@@ -1,6 +1,7 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <script type="text/javascript">
-
+<![CDATA[
 function setSomeElement(elemID, toInsert) {
    var elem = document.getElementById(elemID);
 
@@ -24,7 +25,7 @@ function keypresshandler(elemID,event)
     }
     return true;
 }
-
+]]>
 </script>
 <div class="xar-mod-body">
     <xar:template module="workflow" type="module" file="admin-menu" />
@@ -62,7 +63,7 @@ function keypresshandler(elemID,event)
           <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
             <input type="submit" name='save' value="#xarML('Switch to code')#" />
           </xar:if>
-          &nbsp;
+          &#160;
         </div>
          <div class="xar-form-input-wrapper-before">
            <!--
@@ -77,17 +78,17 @@ function keypresshandler(elemID,event)
                <p>
                 <strong><xar:mlstring>Function wizard: </xar:mlstring></strong>
                 <xar:if condition="$template != 'y'">
-                  <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a> &nbsp;
-                  <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a>&nbsp;
-                  <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a>&nbsp;
+                  <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a> &#160;
+                  <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a>&#160;
+                  <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a>&#160;
                   <xar:if condition="$act_info['isInteractive'] eq 'y'">
-                    <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a>&nbsp;
-                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&nbsp;
+                    <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&#160;
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a>&nbsp;
-                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&nbsp;
-                    <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&nbsp;
+                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&#160;
                   </xar:if>
                 </xar:if>
                 </p>
@@ -103,3 +104,6 @@ function keypresshandler(elemID,event)
   <!-- Show a courtesy footer -->
   <xar:template file="galaxfooter"/>
 </div>
+
+
+</xar:template>

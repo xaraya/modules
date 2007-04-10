@@ -1,15 +1,15 @@
-<div class="mini">
-  <div align="center">
-    <xar:if condition="$prev_offset ge 0">
-      [<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' => $prev_offset))#">#xarML('prev')#</a>]&nbsp;
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="mini">
+    <div align="center"><xar:if condition="$prev_offset ge 0">
+      [<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' =&gt; $prev_offset))#">#xarML('prev')#</a>]&#xA0;
     </xar:if>
     #xarML('Page')#: #$actual_page#/#$cant_pages#
     <xar:if condition="$next_offset ge 0">
-      &nbsp;[<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' => $next_offset))#">#xarML('next')#</a>]
+      &#xA0;[<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' =&gt; $next_offset))#">#xarML('next')#</a>]
     </xar:if>
-    <xar:if condition="$direct_pagination eq 'y'">
-      <br/>
+    <xar:if condition="$direct_pagination eq 'y'"><br/>
       #$pager#
     </xar:if>
   </div>
-</div>
+  </div>
+</xar:template>

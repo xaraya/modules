@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- Determine whether we are adding a new process -->
 <xar:if condition="$pid gt 0">
   <xar:set name="formtitle"><xar:mlstring>Process details</xar:mlstring></xar:set>
@@ -66,3 +67,5 @@
     </form>
   </fieldset>
 </xar:if>
+
+</xar:template>

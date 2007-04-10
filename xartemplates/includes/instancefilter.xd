@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <form action="&xar-modurl-workflow-user-instances;" method="post">
   <input type="hidden" name="offset" value="#$offset#" />
   <input type="hidden" name="sort_mode" value="#$sort_mode#" />
@@ -7,9 +8,9 @@
       <td><small><xar:mlstring>status</xar:mlstring></small></td>
       <td><small><xar:mlstring>user</xar:mlstring></small></td>
       <td><small><xar:mlstring>description</xar:mlstring></small></td>
-      <td >&nbsp;</td>  
+      <td >&#160;</td>
     </tr>
-    
+
     <tr>
       <td>
         <select name="filter_process">
@@ -20,9 +21,9 @@
           </xar:if>
           <xar:foreach in="$all_procs" key="$ix">
             <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-              <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&nbsp;#$all_procs[$ix]['version']#</option>
+              <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
               <xar:else/>
-              <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&nbsp;#$all_procs[$ix]['version']#</option>
+              <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['procname']#&#160;#$all_procs[$ix]['version']#</option>
             </xar:if>
           </xar:foreach>
         </select>
@@ -65,5 +66,8 @@
       <td><input size="8" type="text" name="find" value="#$find#" /></td>
       <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
     </tr>
-  </table>  
+  </table>
 </form>
+
+
+</xar:template>

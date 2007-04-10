@@ -1,34 +1,30 @@
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Workflow Module</xar:mlstring>
-  </span>
-</div>
-<div class="xar-mod-body">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      <xar:mlstring>Workflow Module</xar:mlstring>
+    </span>
+  </div>
+  <div class="xar-mod-body">
 <!-- This is the default template for the user instances function
-     it's parts are also used as the default layout parts for the 
+     it's parts are also used as the default layout parts for the
      xar:workflow-instances custom tag.
      See the file user-showinstances.xd file for the template for that tag.
 -->
-     
 <!-- Show the user navigation bar -->
-<xar:template file="user_bar"/>
-
-<!-- Show some help if enabled -->  
-<xar:template file="help"/>
-   
+    <xar:template file="user_bar"/>
+<!-- Show some help if enabled -->
+    <xar:template file="help"/>
 <!-- Construct the list of instances for this user -->
-<fieldset>
-  <legend><xar:mlstring>List of instances</xar:mlstring> (#$cant#)</legend>
-  <!-- Show a filter on the instances -->
-  <xar:template file="instancefilter"/>
-
-  <!-- Show the actual list -->
-  <xar:template file="instancelist"/>
-  
-  <!-- Show a page on the list -->
-  <xar:template file="pager"/>
-</fieldset>
-
+    <fieldset>
+      <legend><xar:mlstring>List of instances</xar:mlstring> (#$cant#)</legend>
+<!-- Show a filter on the instances -->
+      <xar:template file="instancefilter"/>
+<!-- Show the actual list -->
+      <xar:template file="instancelist"/>
+<!-- Show a page on the list -->
+      <xar:template file="pager"/>
+    </fieldset>
 <!-- Show a courtesy footer -->
-<xar:template file="galaxfooter"/>
-</div>
+    <xar:template file="galaxfooter"/>
+  </div>
+</xar:template>

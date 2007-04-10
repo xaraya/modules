@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
   <fieldset>
     <legend><xar:mlstring>Map groups to roles</xar:mlstring></legend>
@@ -10,9 +11,9 @@
       <input type="hidden" name="find" value="#$find#" />
       <table class="xar-halfwidth">
         <tr>
-          <th><xar:mlstring>Operation</xar:mlstring></td>
-          <th><xar:mlstring>Group</xar:mlstring></td>
-          <th><xar:mlstring>Role</xar:mlstring></td>
+          <th><xar:mlstring>Operation</xar:mlstring></th>
+          <th><xar:mlstring>Group</xar:mlstring></th>
+          <th><xar:mlstring>Role</xar:mlstring></th>
         </tr>
         <tr>
           <td>
@@ -33,7 +34,7 @@
               <xar:foreach in="$roles" key="$ix">
                 <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
               </xar:foreach>
-            </select>              
+            </select>
           </td>
         </tr>
         <tr>
@@ -45,3 +46,6 @@
     </form>
   </fieldset>
 </div>
+
+
+</xar:template>

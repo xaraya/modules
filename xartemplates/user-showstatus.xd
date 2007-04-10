@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- This is the template which will be shown when there is
      a xar:workflow-status tag somewhere in the code
      The ideas is to use a layout attribute in the tag to select the proper layout
@@ -16,3 +17,6 @@
   <xar:mlstring>Not implemented yet</xar:mlstring>
   <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
 </xar:if>
+
+
+</xar:template>

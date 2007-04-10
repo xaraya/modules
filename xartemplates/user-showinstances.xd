@@ -1,17 +1,20 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- This is the template which will be shown when there is
      a xar:workflow-instances tag somewhere in the code
      The ideas is to use a layout attribute in tag tag to select the proper layout
 -->
-<xar:if condition="empty($layout) or $layout eq 'default'">
-  <fieldset>
-    <legend><xar:mlstring>My Current Task List</xar:mlstring></legend>
-    <!-- Produce the list of instances -->
-    <xar:template file="instancelist"/>
-  </fieldset>
-<xar:else/>
-  <!-- Layout apparently had a value -->
-  <xar:mlstring>Trying to use layout : </xar:mlstring>#$layout#
-  <xar:mlstring>Not implemented yet</xar:mlstring>
-  <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
-</xar:if>
-
+  <xar:if condition="empty($layout) or $layout eq 'default'">
+    <fieldset>
+      <legend>
+        <xar:mlstring>My Current Task List</xar:mlstring>
+      </legend>
+      <!-- Produce the list of instances -->
+      <xar:template file="instancelist"/>
+    </fieldset>
+  <xar:else/>
+    <!-- Layout apparently had a value -->
+    <xar:mlstring>Trying to use layout : </xar:mlstring>#$layout#
+    <xar:mlstring>Not implemented yet</xar:mlstring>
+    <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showinstances.xd</xar:mlstring>
+  </xar:if>
+</xar:template>

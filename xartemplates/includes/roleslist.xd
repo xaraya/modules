@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
   <fieldset>
     <legend><xar:mlstring>Process roles</xar:mlstring></legend>
@@ -44,10 +45,10 @@
             <xar:if condition="$ix % 2">
               <xar:set name="rowclass">'xar-alt'</xar:set>
             </xar:if>
-            
+
             <tr class="#$rowclass#">
               <td>
-                <input type="checkbox" name="role[#$items[$ix]['roleId']#]" />&nbsp;
+                <input type="checkbox" name="role[#$items[$ix]['roleId']#]" />&#160;
                 <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;offset=#$offset#&amp;find=#$find#&amp;pid=#$pid#&amp;sort_mode2=#$sort_mode2#&amp;roleId=#$items[$ix]['roleId']#">#$items[$ix]['name']#</a>
               </td>
               <td>
@@ -58,9 +59,12 @@
           <tr><td colspan="2"><input type="submit" name="delete" value="#xarML('Delete selected')# " /></td></tr>
           <xar:else/>
           <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
-          </tr>    
+          </tr>
         </xar:if>
       </table>
     </form>
   </fieldset>
 </div>
+
+
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-container">
   <fieldset>
     <legend>
@@ -87,7 +88,7 @@
         <label class="xar-form-label">
           <xar:mlstring>Add transitions</xar:mlstring>
         </label>
-        
+
         <table>
           <tr>
             <th><xar:mlstring>From:</xar:mlstring></th>
@@ -119,7 +120,7 @@
           </tr>
         </table>
       </div>
-        
+
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label"><xar:mlstring>Roles</xar:mlstring></label>
         <xar:if condition="!empty($roles) and count($roles) gt 0">
@@ -157,11 +158,14 @@
       </div>
       <div class="xar-form-input-wrapper-after">
         <xar:if condition="$activityId gt 0">
-          <input type="submit" name="save_act" value="#xarML('Save')#" /> 
+          <input type="submit" name="save_act" value="#xarML('Save')#" />
           <xar:else/>
-          <input type="submit" name="save_act" value="#xarML('Update')#" /> 
+          <input type="submit" name="save_act" value="#xarML('Update')#" />
         </xar:if>
       </div>
     </form>
   </fieldset>
 </div>
+
+
+</xar:template>

@@ -1,45 +1,59 @@
-<div class="xar-mod-body">
-  <xar:template module="workflow" type="module" file="admin-menu" />
-  <xar:template file="monitor_bar" type="module"/>
-  
-  <xar:template file="help"/>
-
-  <fieldset>
-    <legend><xar:mlstring>Workitem information</xar:mlstring></legend>
-    <table style="border-collapse:separate; width: 99%">
-      <tr>
-        <th>Id</th><th>Number</th><th>Process</th><th>Activity</th><th>User</th><th>Started</th><th>Duration</th>
-      </tr>
-      <tr>
-        <td>#$wi['itemId']#</td>
-        <td>#$wi['orderId']#</td>
-        <td>#$wi['procname']#&nbsp;#$wi['version']#</td>
-        <td>#$wi['type']#&nbsp;#$wi['name']#</td>
-        <td>#$wi['user']#</td>
-        <td>#xarLocaleGetFormattedDate('long',$wi['started'])#&nbsp;#xarLocaleGetFormattedTime('long',$wi['started'])#</td>
-        <td>#$wi['duration']#</td>
-      </tr>
-    </table>
-  </fieldset>
-
-  <fieldset>
-    <legend><xar:mlstring>Properties</xar:mlstring></legend>
-    <table style="border-collapse: separate;">
-      <tr>
-        <th><xar:mlstring>Property</xar:mlstring></th>
-        <th><xar:mlstring>Value</xar:mlstring></th>
-      </tr>
-      <xar:loop name="$wi['properties']">
-        <xar:set name="rowclass">'xar-norm'</xar:set>
-        <xar:if condition="$loop:index % 2">
-          <xar:set name="rowclass">'xar-alt'</xar:set>
-        </xar:if>
-        <tr class="#$rowclass#"><td>#$loop:key#</td><td>#$loop:item#</td></tr>
-      </xar:loop>
-    </table>
-  </fieldset>
-  
-  <xar:template file="monitor_stats"/>
-  <xar:template file="galaxfooter"/>
-</div>
-  
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu"/>
+    <xar:template file="monitor_bar" type="module"/>
+    <xar:template file="help"/>
+    <fieldset>
+      <legend>
+        <xar:mlstring>Workitem information</xar:mlstring>
+      </legend>
+      <table style="border-collapse:separate; width: 99%">
+        <tr>
+          <th>Id</th>
+          <th>Number</th>
+          <th>Process</th>
+          <th>Activity</th>
+          <th>User</th>
+          <th>Started</th>
+          <th>Duration</th>
+        </tr>
+        <tr>
+          <td>#$wi['itemId']#</td>
+          <td>#$wi['orderId']#</td>
+          <td>#$wi['procname']#&#xA0;#$wi['version']#</td>
+          <td>#$wi['type']#&#xA0;#$wi['name']#</td>
+          <td>#$wi['user']#</td>
+          <td>#xarLocaleGetFormattedDate('long',$wi['started'])#&#xA0;#xarLocaleGetFormattedTime('long',$wi['started'])#</td>
+          <td>#$wi['duration']#</td>
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>
+        <xar:mlstring>Properties</xar:mlstring>
+      </legend>
+      <table style="border-collapse: separate;">
+        <tr>
+          <th>
+            <xar:mlstring>Property</xar:mlstring>
+          </th>
+          <th>
+            <xar:mlstring>Value</xar:mlstring>
+          </th>
+        </tr>
+        <xar:loop name="$wi['properties']">
+          <xar:set name="rowclass">'xar-norm'</xar:set>
+          <xar:if condition="$loop:index % 2">
+            <xar:set name="rowclass">'xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$rowclass#">
+            <td>#$loop:key#</td>
+            <td>#$loop:item#</td>
+          </tr>
+        </xar:loop>
+      </table>
+    </fieldset>
+    <xar:template file="monitor_stats"/>
+    <xar:template file="galaxfooter"/>
+  </div>
+</xar:template>

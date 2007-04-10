@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Workflow Administration</xar:mlstring>
@@ -14,7 +15,7 @@
       <legend>
         <xar:mlstring>List of workitems</xar:mlstring> (#$cant#)
       </legend>
-      
+
       <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_workitems;" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
@@ -26,9 +27,9 @@
             <td><small><xar:mlstring>activity</xar:mlstring></small></td>
             <td><small><xar:mlstring>user</xar:mlstring></small></td>
             <td><small><xar:mlstring>properties</xar:mlstring></small></td>
-            <td>&nbsp;</td>    
+            <td>&#160;</td>
           </tr>
-          
+
           <tr>
             <td>
               <select name="filter_process">
@@ -84,13 +85,13 @@
             <td>
               <input size="8" type="text" name="find" value="#$find#" />
             </td>
-            <td>    
+            <td>
               <input type="submit" name="filter" value="#xarML('filter')#" />
             </td>
           </tr>
-        </table>    
+        </table>
       </form>
-      
+
       <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_workitems;" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
@@ -110,18 +111,18 @@
             </tr>
             <xar:foreach in="$items" key="$ix">
               <tr>
-                <td style="text-align:left;">  
+                <td style="text-align:left;">
                   <a href="&xar-modurl-workflow-admin-workitem;&amp;itemId=#$items[$ix]['itemId']#" class="link">#$items[$ix]['itemId']#</a>
                 </td>
-                
+
                 <td style="text-align:left;">#$items[$ix]['procname']# #$items[$ix]['version']#</td>
-                
+
                 <td>
                   <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
                 </td>
-                
+
                 <td>#$items[$ix]['orderId']#</td>
-                
+
                 <td style="text-align:left;">
                   <xar:if condition="$items[$ix]['type'] eq 'start'">
                     <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
@@ -138,15 +139,15 @@
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
                     <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:else/>
-                    #$items[$ix]['type']# 
+                    #$items[$ix]['type']#
                   </xar:if>
-                  #$items[$ix]['actname']# 
+                  #$items[$ix]['actname']#
                 </td>
-                
+
                 <td>#$items[$ix]['user']#</td>
-                
+
                 <td>#$items[$ix]['started']#</td>
-                
+
                 <td style="text-align:left;">
                   <xar:if condition="!empty($items[$ix]['duration'])">
                     <xar:if condition="!empty($items[$ix]['timescale'])"><img src="modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#" /></xar:if>
@@ -156,13 +157,16 @@
               </tr>
             </xar:foreach>
             <xar:else/>
-            <tr><td colspan="9"><xar:mlstring>No workitems found</xar:mlstring></td></tr>    
+            <tr><td colspan="9"><xar:mlstring>No workitems found</xar:mlstring></td></tr>
           </xar:if>
         </table>
       </form>
-    </fieldset>    
+    </fieldset>
     <xar:template file="pager"/>
     <xar:template file="monitor_stats" type="module"/>
     <xar:template file="galaxfooter"/>
   </div>
 </div>
+
+
+</xar:template>

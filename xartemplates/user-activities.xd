@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Workflow Module</xar:mlstring>
@@ -19,7 +20,7 @@
           <tr>
             <td><small><xar:mlstring>process</xar:mlstring></small></td>
             <td><small><xar:mlstring>description</xar:mlstring></small></td>
-            <td>&nbsp;</td>    
+            <td>&#160;</td>    
           </tr>
           
           <tr>
@@ -140,3 +141,6 @@
 </div>
   
   
+
+
+</xar:template>

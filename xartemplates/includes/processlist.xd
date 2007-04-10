@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
   <fieldset>
     <legend>
@@ -89,7 +90,7 @@
 
               <tr class="#$rowclass#">
                 <td valign="top">
-                  <input type="checkbox" name="process[#$items[$ix]['pId']#]" />&nbsp;
+                  <input type="checkbox" name="process[#$items[$ix]['pId']#]" />&#160;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;pid=#$items[$ix]['pId']#">#$items[$ix]['name']#</a>
                 </td>
                 <td class="xar-align-right">#$items[$ix]['version']#</td>
@@ -97,7 +98,7 @@
                   <xar:if condition="$items[$ix]['isActive'] eq 'y'">
                     <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#" />
                   <xar:else/>
-                    &nbsp;
+                    &#160;
                   </xar:if>
                 </td>
                 <td class="xar-align-center">
@@ -135,7 +136,7 @@
             </xar:foreach>
             <tr>
               <td><input type="submit" name="delete" value="#xarML('Delete selected')#" /></td>
-              <td colspan="14">&nbsp;</td>
+              <td colspan="14">&#160;</td>
             </tr>
             <xar:else/>
             <tr>
@@ -147,3 +148,6 @@
       </div>
   </fieldset>
 </div>
+
+
+</xar:template>

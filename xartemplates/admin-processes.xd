@@ -1,26 +1,24 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-  <xar:template module="workflow" type="module" file="admin-menu" />
-
-  <!-- Show the navigation bar -->
-  <xar:template file="proc_bar"/>
-
-  <!-- Show some help if we enabled that feature -->
-  <xar:template file="help"/>
-
-
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      <xar:mlstring>Workflow Administration</xar:mlstring>
+    </span>
+  </div>
+  <div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu"/>
+<!-- Show the navigation bar -->
+    <xar:template file="proc_bar"/>
+<!-- Show some help if we enabled that feature -->
+    <xar:template file="help"/>
     <xar:if condition="$pid eq 0">
-      <!-- Show the list of processes -->
+<!-- Show the list of processes -->
       <xar:template file="processlist"/>
-      
-      <!-- Show the pager -->
+<!-- Show the pager -->
       <xar:template file="pager"/>
     </xar:if>
-    
-    <!-- Show the form for a process -->
+<!-- Show the form for a process -->
     <xar:template file="processform"/>
-    
-    <!-- Show a courtesy footer -->
+<!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
-
-</div>
+  </div>
+</xar:template>

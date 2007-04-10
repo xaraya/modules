@@ -1,10 +1,13 @@
-<xar:template file="user_bar" type="module"/>
-<div class="xar-mod-body">
-    <h3><xar:mlstring>Workflow Error</xar:mlstring></h3>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <xar:template file="user_bar" type="module"/>
+  <div class="xar-mod-body">
+    <h3>
+      <xar:mlstring>Workflow Error</xar:mlstring>
+    </h3>
     <div class="xar-norm-outline" style="padding: 0.5 em 1em 0.5em;">
       <p>#$msg#</p>
     </div>
-    
-    <!-- Show a courtesy footer -->
+<!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
-</div>
+  </div>
+</xar:template>

@@ -34,7 +34,7 @@ class BaseActivity extends Base {
   */
   function getActivity($activityId) 
   {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?";
+    $query = "select * from ".self::tbl('activities')." where `activityId`=?";
     $result = $this->query($query,array($activityId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
@@ -78,7 +78,7 @@ class BaseActivity extends Base {
     //Now get backward transitions
     
     //Now get roles
-    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
+    $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
     $result=$this->query($query,array($res['activityId']));
     while($res = $result->fetchRow()) {
       $this->roles[] = $res['roleId'];
@@ -89,7 +89,7 @@ class BaseActivity extends Base {
   
   /*! Returns an Array of roleIds for the given user */
   function getUserRoles($user) {
-    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=?";
+    $query = "select `roleId` from ".self::tbl('user_roles')." where `user`=?";
     $result=$this->query($query,array($user));
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -102,7 +102,7 @@ class BaseActivity extends Base {
   for the given user */  
   function getActivityRoleNames() {
     $aid = $this->activityId;
-    $query = "select gr.`roleId`, `name` from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
+    $query = "select gr.`roleId`, `name` from ".self::tbl('activity_roles')." gar, ".self::tbl('roles')." gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
     $result=$this->query($query,array($aid));
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -206,7 +206,7 @@ class BaseActivity extends Base {
       e.g. $isadmin = $activity->checkUserRole($user,'admin'); */
   function checkUserRole($user,$rolename) {
     $aid = $this->activityId;
-    return $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."user_roles` gur, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
+    return $this->getOne("select count(*) from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
   }
 
 }

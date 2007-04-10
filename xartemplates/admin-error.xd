@@ -1,8 +1,13 @@
-<div class="xar-mod-body">
-  <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-body">
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">
+        <xar:mlstring>Workflow Administration</xar:mlstring>
+      </span>
+    </div>
+    <h2>
+      <xar:mlstring>Workflow Error</xar:mlstring>
+    </h2>
+    <xar:template file="galaxfooter"/>
   </div>
-  <h2><xar:mlstring>Workflow Error</xar:mlstring></h2>
-  
-  <xar:template file="galaxfooter"/>
-</div>
+</xar:template>

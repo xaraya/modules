@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <fieldset>
       <legend><xar:mlstring>Process Transitions</xar:mlstring></legend>
@@ -29,7 +30,7 @@
         </div>
       </form>
       <!-- End filter form -->
-    
+
       <form action="&xar-modurl-workflow-admin-activities;" method="post">
         <input type="hidden" name="pid" value="#$pid#" />
         <input type="hidden" name="activityId" value="#$info['activityId']#" />
@@ -51,7 +52,7 @@
                 <a href="#$baselink#&amp;sort_mode=actFromName_desc"><xar:mlstring>Origin</xar:mlstring></a>
               </xar:if>
             </th>
-            <th>&nbsp;</th>
+            <th>&#160;</th>
             <th>
               <xar:if condition="$sort_mode eq 'actToName_desc'">
                 <a href="#$baselink#&amp;sort_mode=actToName_asc"><xar:mlstring>To</xar:mlstring></a>
@@ -69,7 +70,7 @@
 
               <tr class="#$rowclass#">
                 <td>
-                  <input type="checkbox" name="transition[#$transitions[$ix]['actFromId']#_#$transitions[$ix]['actToId']#]" />&nbsp;
+                  <input type="checkbox" name="transition[#$transitions[$ix]['actFromId']#_#$transitions[$ix]['actToId']#]" />&#160;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$transitions[$ix]['actFromId']#">#$transitions[$ix]['actFromName']#</a>
                 </td>
                 <td>
@@ -110,3 +111,6 @@
       </form>
     </fieldset>
 </div>
+
+
+</xar:template>

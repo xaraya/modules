@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div>
     <fieldset>
       <legend><xar:mlstring>Process activities</xar:mlstring></legend>
@@ -13,7 +14,7 @@
             <td><xar:mlstring>Type</xar:mlstring></td>
             <td><xar:mlstring>Int</xar:mlstring></td>
             <td><xar:mlstring>Routing</xar:mlstring></td>
-            <td>&nbsp;</td>
+            <td>&#160;</td>
           </tr>
           <tr>
             <td>
@@ -106,30 +107,15 @@
                   #$items[$ix]['flowNum']#
                 </td>
                 <td style="text-align:left;">
-                  <input type="checkbox" name="activity[#$items[$ix]['activityId']#]" />&nbsp;
+                  <input type="checkbox" name="activity[#$items[$ix]['activityId']#]" />&#160;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                   <xar:if condition="$items[$ix]['roles'] lt 1">
                     <small><xar:mlstring>(no roles)</xar:mlstring></small>
                   </xar:if>
                 </td>
                 <td style="text-align:center;">
-                  <xar:if condition="$items[$ix]['type'] eq 'start'">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"  />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
-                    <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
-                    <xar:else/>
-                    #$items[$ix]['type']#
-                  </xar:if>
+                  <!-- Get an image for the activity -->
+                  <xar:template file="activity_image" subdata="$items[$ix]"/>
                 </td>
                 <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
@@ -157,7 +143,7 @@
                       <img src="modules/workflow/lib/Galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#" />
                     </a>
                   <xar:else/>
-                    &nbsp;
+                    &#160;
                   </xar:if>
                 </td>
               </tr>
@@ -179,3 +165,6 @@
       </form>
     </fieldset>
   </div>
+
+
+</xar:template>

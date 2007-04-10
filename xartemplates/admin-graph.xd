@@ -1,22 +1,23 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-  <xar:template module="workflow" type="module" file="admin-menu" />
-  
-  <!-- Show the navigation bar -->
-  <xar:template file="proc_bar"/>
-
-  <!-- Show some help if we enabled that feature -->
-  <xar:template file="help"/>
-
-
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      <xar:mlstring>Workflow Administration</xar:mlstring>
+    </span>
+  </div>
+  <div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu"/>
+<!-- Show the navigation bar -->
+    <xar:template file="proc_bar"/>
+<!-- Show some help if we enabled that feature -->
+    <xar:template file="help"/>
     <xar:if condition="!empty($info['graph'])">
       <xar:if condition="!empty($info['map'])">
-        <img src="#$info['graph']#" alt="#$info['name']#" border="0" usemap="#procmap" />
+        <img src="#$info['graph']#" alt="#$info['name']#" border="0" usemap="#procmap"/>
         <map name="procmap">
           #$info['map']#
         </map>
         <xar:else/>
-        <img src="#$info['graph']#" alt="#$info['name']#" border="0" />
+        <img src="#$info['graph']#" alt="#$info['name']#" border="0"/>
       </xar:if>
       <xar:else/>
       <p>
@@ -24,21 +25,18 @@
         <xar:mlstring>No process graph is available.</xar:mlstring>
         <xar:ml>
           <xar:mlstring>
-            Either the process still contains errors, or #(1) is not properly installed. 
+            Either the process still contains errors, or #(1) is not properly installed.
             Or if it is installed, you may need to adapt GRAPHVIZ_DIR in the modules/workflow/tiki-setup.php file...
           </xar:mlstring>
           <xar:mlvar>#$graphvizlink#</xar:mlvar>
         </xar:ml>
       </p>
     </xar:if>
-
-    <!-- Show the process list -->
+<!-- Show the process list -->
     <xar:template file="processlist"/>
-
-    <!-- Show the pager -->
+<!-- Show the pager -->
     <xar:template file="pager"/>
-
-    <!-- Show a courtesy footer -->
+<!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
-
-</div>
+  </div>
+</xar:template>
