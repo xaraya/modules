@@ -94,6 +94,7 @@ function &xarpages_multiformapi_sessionvar($args = array())
         // This is important for the history 
         $session_var = array(
             'session_key' => '',
+            'expires' => 0,
             'history' => array(), // History of pages visited
             'formdata' => array(), // Collected form data from (and shared between) all pages
             'workdata' => array(), // Working data for the process functions; used to pass data between pages

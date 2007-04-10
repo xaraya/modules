@@ -15,13 +15,7 @@
  * a request is posted back to the current page, and rules from there determine
  * where the user is taken next.
  *
- * TODO: a timeout if the sequence is not touched within a certain period (a timer set in the session)
- * TODO: allow the timeout to be selectable in the master page (and perhaps in the validation class?)
  * TODO: secure pages (can this be done by chaining functions?)
- * TODO: define an error page (for unexpected errors, or perhaps just as a general exception page)
- * TODO: define a timeout page (could be the same as the error page)
- * TODO: define a cancel page (could be the same as the error page)
- * TODO: Perhaps use the master page as the exception page...two birds...? [DONE]
  * TODO: put in some debug stuff
  * TODO: write a guide!
  * TODO: test out the custom format stuff, including custom properties
@@ -121,59 +115,70 @@ function xarpages_funcapi_multiform($args)
         if (!empty($submit_button_value)) $user_action_requested = $check_submit_button;
     }
 
+    // The previous page is actually the previous page in the *history* not
+    // in the linear sequence (because the linear sequence may not actually be followed).
+    // There will be a back-page if we are not at the first page, and the previous page
+    // has the 'revisit' flag set (allowing a revisit).
+    $history = $session_vars['history'];
+    if (count($history) > 1) {
+        end($history);
+        while (key($history)) {
+            if (key($history) == $current_page['pid']) {
+                // Look back one more page
+                prev($history);
+                $hist_prev_page = current($history);
+
+                // If the revisit flag is set, then we can go back there.
+                if (!empty($hist_prev_page) && !empty($hist_prev_page['revisit'])) $prev_page_pid = $hist_prev_page['pid'];
+                break;
+            }
+            prev($history);
+        } // while
+    }
+
+    // (applies to non-multiform pages too)
+    // The whole sequence can be cancelled at any time.
+    // The parameter 'multiform_cancel' will trigger this - just put it into the current page URL.
+    xarVarFetch('multiform_cancel', 'str::100', $multiform_cancel, '', XARVAR_NOT_REQUIRED);
+    if (!empty($multiform_cancel)) {
+        // Clear the session - removes any session data we have collected so far.
+        // CHECK: can we just set $last_page_flag instead?
+        xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
+        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+
+        // TODO: Allow the redirect to go to any other page or URL we like.
+        //$redirect_pid = $entry_page_pid;
+        $redirect_pid = $master_page['pid'];
+        $redirect_reason = 'cancel';
+    }
+
+    // Check the expiry
+    if (!empty($session_vars['expires']) && $session_vars['expires'] <= time()) {
+        // We have expired.
+
+        // CHECK: can we just set $last_page_flag instead?
+        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
+        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+
+        $redirect_pid = $master_page['pid'];
+        $redirect_reason = 'timeout';
+    }
+
     //
     // Processing will vary depending on what type of page we are on.
     //
 
-    if ($current_page['pagetype']['name'] == 'multiform') {
+    if (!empty($redirect_pid)) {
+        // Skip everything if we are already redirecting.
+    } elseif ($current_page['pagetype']['name'] == 'multiform') {
         // Most processing happens on the 'multiform' page type.
         // Find the next and previous pages in the sequence.
-
-        // The previous page is actually the previous page in the *history* not
-        // in the linear sequence (because the linear sequence may not actually be followed).
-        // There will be a back-page if we are not at the first page, and the previous page
-        // has the 'revisit' flag set (allowing a revisit).
-        $history = $session_vars['history'];
-        if (count($history) > 1) {
-            end($history);
-            while (key($history)) {
-                if (key($history) == $current_page['pid']) {
-                    // Look back one more page
-                    prev($history);
-                    $hist_prev_page = current($history);
-
-                    // If the revisit flag is set, then we can go back there.
-                    if (!empty($hist_prev_page) && !empty($hist_prev_page['revisit'])) $prev_page_pid = $hist_prev_page['pid'];
-                    break;
-                }
-
-                prev($history);
-            }
-        }
 
         // List of required fields
         if (!empty($dd['required_fields'])) {
             xarVarValidate('strlist:,; :pre:trim:ftoken', $dd['required_fields']);
             $required_fields = explode(',', $dd['required_fields']);
         }
-
-        // The whole sequence can be cancelled at any time.
-        // The parameter 'multiform_cancel' will trigger this.
-        // TODO: For now a cancel will take us back to the start of the sequence, but using
-        // a config option in the master page, it could take us anywhere.
-        xarVarFetch('multiform_cancel', 'str::100', $multiform_cancel, '', XARVAR_NOT_REQUIRED);
-        if (!empty($multiform_cancel)) {
-            // Clear the session - removes any session data we have collected so far.
-            // CHECK: can we just set $last_page_flag instead?
-            xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-            $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-
-            // TODO: Allow the redirect to go to any other page or URL we like.
-            //$redirect_pid = $entry_page_pid;
-            $redirect_pid = $master_page['pid'];
-            $redirect_reason = 'cancel';
-        }
-
 
         // There may not be a form object, in which case the page just looks like a html page with
         // submit buttons. i.e. not every page has to have a form.
@@ -226,7 +231,7 @@ function xarpages_funcapi_multiform($args)
                 $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
 
                 $redirect_pid = $master_page['pid'];
-                // TODO: provide the error reason.
+                // TODO: provide the error reason (i.e. this session has already been completed).
                 $redirect_reason = 'error';
             } else {
                 // The session key matches. We can now process the submitted form.
@@ -259,7 +264,8 @@ function xarpages_funcapi_multiform($args)
                 $history = $session_vars['history'];
 
                 if (!isset($history[$current_page['pid']]) || (isset($history[$current_page['pid']]['revisit']) && !$history[$current_page['pid']]['revisit'])) {
-                    // We should not be on this page. It is likely that the user clicked their browser back-button.
+                    // We should not be on this page. It is likely that the user clicked their browser
+                    // back-button in the wrong place.
                     $last_history_page = end($history);
                     if (!empty($last_history_page['revisit'])) {
                         // If there is a valid sequence in operation, we just jump to the last
@@ -267,11 +273,13 @@ function xarpages_funcapi_multiform($args)
                         // trying to use the browser forward/back-buttons, which should not be a punishable offence.
                         $redirect_pid = $last_history_page['pid'];
                     } else {
-                        // TODO: Clear the session and raise an error (redirect to the error page).
-                        // (for now, just clear the session and jump to the start of the sequence)
-                        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('set' => true));
+                        // Clear the session and raise an error (redirect to the error page).
+                        // TODO: can we just set $last_page_flag?
+                        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
                         $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-                        $redirect_pid = $entry_page_pid;
+                        // TODO: give a reason for the error (i.e. cannot return to this page once submitted).
+                        $redirect_pid = $master_page['pid']; //$entry_page_pid;
+                        $redirect_reason = 'error';
                     }
                 } elseif ($user_action_requested == 'none') {
                     // The user is not submitting anything, but just jumping to this page
@@ -434,7 +442,7 @@ function xarpages_funcapi_multiform($args)
                                         $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
 
                                         $redirect_pid = $master_page['pid'];
-                                        // TODO: provide the error reason.
+                                        // TODO: provide the error reason (i.e. processing failed for some unexpected reason - with reason given).
                                         $redirect_reason = 'error';
                                     }
                                 }
@@ -444,11 +452,15 @@ function xarpages_funcapi_multiform($args)
                                 // The processing function may have set the next page ID.
                                 if (!empty($processing_object->next_page_pid)) $next_page_pid = $processing_object->next_page_pid;
 
-                                // The processing function may have set a redirect url.
+                                // The processing function may have set a redirect URL (to anywhere).
                                 if (!empty($processing_object->redirect_url)) $redirect_url = $processing_object->redirect_url;
 
                                 // The processing function may have set the 'last page' flag.
-                                // This indicates the session should be cleared before going to the last page.
+                                // This indicates the session should be cleared before going to the final landing page.
+                                // FIXME: this means the very last landing page cannot be a 'multiform' type and cannot
+                                // display any of the form data collected, since it is all deleted before getting to that
+                                // page. It would be nice to be able to display "thankyou, your transaction number is XXX"
+                                // on a page where we know the session has already been deleted.
                                 if (!empty($processing_object->last_page)) $last_page_flag = true;
                             }
 
@@ -476,7 +488,8 @@ function xarpages_funcapi_multiform($args)
                         );
 
                         if (!empty($dd['milestone_page'])) {
-                            // This is a milestone page, which means we can never come back to it.
+                            // This is a milestone page, which means we can never come back to it once
+                            // it has been successfuly processed.
                             // It is important to ensure the last page in a sequence is not a milestone
                             // page otherwise the user will be sent back to the beginning again when it
                             // is submitted.
@@ -520,53 +533,6 @@ function xarpages_funcapi_multiform($args)
 
             $redirect_pid = $entry_page_pid;
         }
-
-
-        // If redirect data has been set up, then deal with that.
-        if (!empty($redirect_pid) && empty($redirect_url)) {
-            // A page ID has been set somewhere above.
-            // We must include the session key if it is set, otherwise the page
-            // at the other end will fail its session check.
-            $redirect_args = array('pid' => $redirect_pid);
-            if (!empty($session_key)) $redirect_args[$multiform_key_name] = $session_key;
-            if (!empty($redirect_reason)) $redirect_args['reason'] = $redirect_reason;
-
-            // Strictly, when we do a redirect, we should not be encoding the URL (so we don't).
-            $redirect_url = xarModURL('xarpages', 'user', 'display', $redirect_args, false);
-
-            // Put an entry onto the end of the history, so we are allowed to come into that page.
-            // This is a simple entry, more a stub, ready to hold the full page details when we get to it.
-            if (!isset($session_vars['history'][$redirect_pid])) {
-                $session_vars['history'][$redirect_pid] = array('revisit' => true, 'pid' => $redirect_pid);
-            }
-        }
-
-        // Write the session vars back to the session.
-        xarModAPIfunc('xarpages', 'multiform', 'sessionvar', $session_vars);
-
-        // Do the redirect, if there is one.
-        if (!empty($redirect_url)) {
-            // If the 'last page' flag has been set, then clear out the session as the last
-            // thing we do before the final redirect (likely to a non-multiform page).
-            // If the use presses the browser 'back' button on the 'thankyou' page, they will
-            // end up back at the start of the sequence again.
-            if (!empty($last_page_flag)) {
-                xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-            }
-
-            // Set the redirect URL.
-            xarResponseRedirect($redirect_url);
-
-            // Returning 'false' indicates that we are doing a redirect, so no more xarpages
-            // display handling is necessary.
-            return false;
-        }
-
-        // We are not redirecting, so data can be set up for the template.
-
-        // Other optional data for the template.
-        if (!empty($dd['formlayout'])) $multiform['formlayout'] = $dd['formlayout'];
-        if (!empty($formobject)) $multiform['formobject'] = $formobject;
     } elseif ($current_page['pagetype']['name'] == 'multiform_master') {
         // We are on a master page.
         // We have either come here as a springboard (starting point) or have been
@@ -584,15 +550,69 @@ function xarpages_funcapi_multiform($args)
         // previous pages, and ensure the session key is followed through.
         // It is up to the developer setting this up to ensure they have a
         // template that uses the supplied parameters.
+        // For example, a html page with a custom template can be used to
+        // display the results of previous form data, as a confirmation page.
+        // Since no processing happens in these pages, they will never be
+        // 'milestone' pages.
 
         // TODO: update the history with this page, plus the next page (if required, same functionality as for the 'multiform' type).
         // TODO: handle 'next' and 'previous' submissions on this page (no validation or processing; just navigation).
         if ($user_action_requested == 'next') {
-            // TODO
+            // TODO: add to the history, set next pid
         } elseif ($user_action_requested == 'prev') {
-            // TODO
+            // TODO: check we can go back, remove current page from history, set previous pid
         }
     }
+
+    // If redirect data has been set up, then deal with that.
+    if (!empty($redirect_pid) && empty($redirect_url)) {
+        // A page ID has been set somewhere above.
+        // We must include the session key if it is set, otherwise the page
+        // at the other end will fail its session check.
+        $redirect_args = array('pid' => $redirect_pid);
+        if (!empty($session_key)) $redirect_args[$multiform_key_name] = $session_key;
+        if (!empty($redirect_reason)) $redirect_args['reason'] = $redirect_reason;
+
+        // Strictly, when we do a redirect, we should not be encoding the URL (so we don't).
+        $redirect_url = xarModURL('xarpages', 'user', 'display', $redirect_args, false);
+
+        // Put an entry onto the end of the history, so we are allowed to come into that page.
+        // This is a simple entry, more a stub, ready to hold the full page details when we get to it.
+        if (!isset($session_vars['history'][$redirect_pid])) {
+            $session_vars['history'][$redirect_pid] = array('revisit' => true, 'pid' => $redirect_pid);
+        }
+    }
+
+    // Update the expiry time.
+    // Doing it here resets the clock each time a form is presented to the user.
+    if (isset($session_vars['expires'])) $session_vars['expires'] = time() + $timeout_seconds;
+
+    // Write the session vars back to the session.
+    xarModAPIfunc('xarpages', 'multiform', 'sessionvar', $session_vars);
+
+    // Do the redirect, if there is one.
+    if (!empty($redirect_url)) {
+        // If the 'last page' flag has been set, then clear out the session as the last
+        // thing we do before the final redirect (likely to a non-multiform page).
+        // If the use presses the browser 'back' button on the 'thankyou' page, they will
+        // end up back at the start of the sequence again.
+        if (!empty($last_page_flag)) {
+            xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
+        }
+
+        // Set the redirect URL.
+        xarResponseRedirect($redirect_url);
+
+        // Returning 'false' indicates that we are doing a redirect, so no more xarpages
+        // display handling is necessary.
+        return false;
+    }
+
+    // We are not redirecting, so data can be set up for the template.
+
+    // Other optional data for the template.
+    if (!empty($dd['formlayout'])) $multiform['formlayout'] = $dd['formlayout'];
+    if (!empty($formobject)) $multiform['formobject'] = $formobject;
 
     // Check for customised submit labels.
     // They consist of three comma-separated strings in the order: previous,save,next

@@ -7,8 +7,8 @@
 </xar:if>
 
 <xar:if condition="empty($multiform)">
-    <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
-    Please add the page function and try again.</p>
+    <p class="xar-error"><xar:mlstring>Configuration error: This page is missing the 'multiform' custom page function.
+    Please add the page function and try again.</xar:mlstring></p>
 <xar:else />
     <xar:if condition="$multiform.reason eq 'cancel'">
         <h1><xar:mlstring>Cancelled</xar:mlstring></h1>
