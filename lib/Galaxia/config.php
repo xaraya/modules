@@ -56,22 +56,11 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 
 // Database handler
 if (!isset($GLOBALS['dbGalaxia'])) {
-    // Set the fetch mode to assoc by default (needed by lib/Galaxia)
-    if(defined('ADODB_FETCH_ASSOC')) {
-        $GLOBALS['dbGalaxia'] = xarDBNewConn();
-        
-        // Adodb can set fetch mode on the whole connection, so lets do that in any case
-        $oldmode = $GLOBALS['dbGalaxia']->SetFetchMode(ADODB_FETCH_ASSOC);
-        define('GALAXIA_FETCHMODE',ADODB_FETCH_ASSOC);
-    } elseif(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
+    if(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
         $GLOBALS['dbGalaxia'] =& xarDBGetConn();
 
         // This means we're in the 2 series of Xaraya
-        // To prevent parse errors in php 4, we can not use the class constant here, even if this code doesnt
-        // actually run, because php errors out with a parse error.
-        // ResultSet::FETCHMODE_ASSOC has the value 1
-        $ResultSet__FETCHMODE_ASSOC=1;
-        define('GALAXIA_FETCHMODE',$ResultSet__FETCHMODE_ASSOC);
+        define('GALAXIA_FETCHMODE',ResultSet::FETCHMODE_ASSOC);
     } else {
         // Hope that everything works out :-)
     }

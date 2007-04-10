@@ -19,10 +19,11 @@ Generic:
   interface and use a 'php-edit' component and a 'template-edit'
   component, which both would be useful in the grander scheme of
   things for Xaraya as well.
-* the dependency on GraphViz is a bit problematic
+* the dependency on GraphViz is a bit problematic, consider adding SVG generation 
 
 Xaraya specific:
 * this module is a dream for ajax fans, let them loose on it :-)
 * do the export as a Blocklayout formulation
+* ditto for SVG graph generation.
 * current itemtypes: active processes. Think about this for a bit.
-*
+* 
