@@ -84,7 +84,9 @@ if ($actinfo) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[<h3>Listing CDs</h3>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<h3>Listing CDs</h3>
 <table class="normal">
   <tr>
     <td class="heading">Title</td>
@@ -117,7 +119,8 @@ if ($actinfo) {
   </tr>
 </xar:foreach>
 </xar:if>
-</table>      ]]></template>    </activity>
+</table>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>Request CD</name>
       <type>start</type>
@@ -154,7 +157,8 @@ $tplData['cdId'] = isset($_REQUEST['cdId']) ? $_REQUEST['cdId'] : '';
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[<h3>Request a CD</h3>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Request a CD</h3>
 <form method="post" action="&xar-modurl-workflow-user-run_activity;">
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
@@ -173,7 +177,8 @@ CD to request:
 <xar:else/>
 There are no CDs available at the moment...
 </xar:if>
-</form>      ]]></template>    </activity>
+</form>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>Approve CD Request</name>
       <type>switch</type>
@@ -223,7 +228,8 @@ if(isset($_REQUEST['rejected'])) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[<h3>Approve or reject CD loan</h3>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
 CD: #$info['title']# <br/>
 Requested by: #$requestedby# <br/>
 Status: #$info['status']# <br/>
@@ -235,7 +241,8 @@ Status: #$info['status']# <br/>
 <br/><br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />
-</form>      ]]></template>    </activity>
+</form>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>Approve CD</name>
       <type>activity</type>
@@ -323,7 +330,8 @@ $tplData['escalated'] = $instance->get('escalated');
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[<h3>Loan result</h3>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Loan result</h3>
 Your request for #$title# was #$status#
 <xar:if condition="!empty($reason)">
 <p>Reason: #$reason#</p>
@@ -336,7 +344,8 @@ Your request for #$title# was #$status#
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <input type="submit" name="ack" value="OK" />
-</form>      ]]></template>    </activity>
+</form>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>Handle Escalated Request</name>
       <type>switch</type>
@@ -392,7 +401,8 @@ if(isset($_REQUEST['rejected'])) {
 
 // Note: current activityId, iid and return_url are automatically available in the template
 
-?>      ]]></code>      <template><![CDATA[<h3>Approve or reject CD loan</h3>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout"><h3>Approve or reject CD loan</h3>
 <p><span class="xar-error">It's about time you got here :-)</span></p>
 CD: #$info['title']# <br/>
 Requested by: #$requestedby# <br/>
@@ -406,7 +416,8 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <br/><br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />
-</form>      ]]></template>    </activity>
+</form>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>Escalate</name>
       <type>standalone</type>

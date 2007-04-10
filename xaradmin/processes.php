@@ -29,15 +29,21 @@ function workflow_admin_processes()
     // Adapted from tiki-g-admin_processes.php
     include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
+    // Initialize
+    $data['proc_info'] = array(
+        'name'          => '',
+        'description'   => '',
+        'version'       => '1.0',
+        'isActive'      => 'n',
+        'pId'           => 0);
+
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.
     if (!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
-    if ($_REQUEST["pid"]) {
+    if ($_REQUEST['pid']) {
         $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
+
         $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
-    } else {
-        $data['proc_info'] = array('name' => '', 'description' => '',
-                      'version' => '1.0','isActive' => 'n','pId' => 0);
     }
     $data['pid'] =  $_REQUEST['pid'];
 
@@ -111,7 +117,7 @@ function workflow_admin_processes()
         if (!$valid) $processManager->deactivate_process($pid);
 
         // Reget the process info for the UI
-        $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
+        $data['proc_info'] = $processManager->get_process($pid);
         $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
     }
 

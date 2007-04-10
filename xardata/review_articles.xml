@@ -125,7 +125,9 @@ if (!empty($edit)) {
     $tplData['preview'] = xarModFunc('articles', 'user', 'display',
                                   array('preview' => true, 'article' => $article));
 }
-?>      ]]></code>      <template><![CDATA[<div class="xar-mod-body"><h2><xar:mlstring>Review Article</xar:mlstring></h2>
+?>      ]]></code>      <template><![CDATA[
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-body"><h2><xar:mlstring>Review Article</xar:mlstring></h2>
 <div style="margin: auto;">
 <xar:ml><xar:mlstring>Article submitted by #(1) on #(2)</xar:mlstring><xar:mlvar>#$user#</xar:mlvar><xar:mlvar>#$date#</xar:mlvar></xar:ml>
 
@@ -151,7 +153,8 @@ if (!empty($edit)) {
     <xar:mlstring>No preview available...</xar:mlstring>
 </xar:if>
 </div>
-</div>      ]]></template>    </activity>
+</div>
+</xar:template>      ]]></template>    </activity>
     <activity>
       <name>end</name>
       <type>end</type>
