@@ -1,0 +1,46 @@
+
+<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+
+<xar:comment>Add an edit link if required.</xar:comment>
+<xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit page</a>]
+</xar:if>
+
+<xar:if condition="empty($multiform)">
+    <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
+    Please add the page function and try again.</p>
+<xar:else />
+    <xar:if condition="$multiform.reason eq 'cancel'">
+        <h1><xar:mlstring>Cancelled</xar:mlstring></h1>
+        <p><xar:mlstring>You have chosen to cancel the process.</xar:mlstring></p>
+    <xar:elseif condition="$multiform.reason eq 'error'" />
+        <h1><xar:mlstring>Error</xar:mlstring></h1>
+        <p><xar:mlstring>An unexpected error occured.</xar:mlstring></p>
+    <xar:elseif condition="$multiform.reason eq 'timeout'" />
+        <h1><xar:mlstring>Timeout</xar:mlstring></h1>
+        <p><xar:mlstring>Due to a period of inactivity, the form entry has been cancelled.</xar:mlstring></p>
+    <xar:else />
+        <xar:comment>Display body content for the page.</xar:comment>
+        <xar:if condition="isset($current_page.dd.body)">
+            <div>#$current_page.dd.body#</div>
+        </xar:if>
+
+        <xar:if condition="!empty($multiform.next_page_pid)">
+            <p>
+                <xar:ml>
+                    <xar:mlstring>To start, click <a href="#(1)">here</a></xar:mlstring>
+                    <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
+                </xar:ml>
+            </p>
+        </xar:if>
+    </xar:if>
+
+    <xar:if condition="!empty($multiform.next_page_pid) and !empty($multiform.reason)">
+        <p>
+            <xar:ml>
+                <xar:mlstring>To start again, <a href="#(1)">click here</a></xar:mlstring>
+                <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
+            </xar:ml>
+        </p>
+    </xar:if>
+</xar:if>

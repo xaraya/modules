@@ -101,8 +101,6 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
         // or $this->set_next_page_name('pagename') can be used to send the user to some
         // other page altogether (e.g. a 'thankyou' page).
         return $this->finish();
-
-        return true;
     }
 }
 

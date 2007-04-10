@@ -25,6 +25,7 @@ function xarpages_multiformapi_getmasterpage($args)
 
     // We need to walk up through the ancestors to find a page of type 'multiform_master'
     // We start at the end of the pidpath array
+    // TODO: only do this if we are not already on the master page.
 
     $masterpage_pid = 0;
 
@@ -42,14 +43,6 @@ function xarpages_multiformapi_getmasterpage($args)
     if (!empty($masterpage_pid)) {
         // Found one.
         $master_page = $args['pages'][$masterpage_pid];
-        // TODO: interpret a few of the parameters the page holds, and provide
-        // some defaults, then add those parameters to the page data.
-        // Parameters include: timeout, debug, timeoutpage, errorpage, cancelpage, showhistory
-        //
-        // 'showhistory' determines the sequence. If set, then earlier pages can be re-accessed in random order.
-        // If not set, then order is strictly along the history line, one page at a time. The 'direction' flag
-        // tells us whether the direction is one way, or whether the user can go back and amend earlier forms.
-        // 'showhistory' is more than just a crumb-trail display - it is used to ensure the right sequence is adhered to.
 
         // Get a list of descendant pages that make up the form sequence.
         // This is a linearised list of descendants of the master page, arranged left-to-right.
@@ -128,6 +121,9 @@ function xarpages_multiformapi_sessionkey($args)
     // If 'set' is set, then create a new key.
     // If 'reset' is set, then completely remove the key.
     if (!empty($args['set'])) {
+        // If we are setting a new session key, then clear out the old session first.
+        $session_vars = xarpages_multiformapi_sessionvar(array('reset'=>true));
+        
         // Create a new random key then store it in the session
         $session_key = md5(rand(1, getrandmax()) . time());
         $session_vars['session_key'] = $session_key;
