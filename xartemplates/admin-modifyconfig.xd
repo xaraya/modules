@@ -8,11 +8,7 @@
     <fieldset>
       <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
       <div class="xar-form-input-wrapper-after">
-        <xar:if condition="!empty($isalias)">
-          <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
-          <xar:else/>
-          <input type="checkbox" name="isalias" id="isalias" value="1" />
-        </xar:if>
+        <xar:data-input type="checkbox" name="isalias" checked="$isalias" />
         <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
         [<xar:mlstring>Not currently implemented</xar:mlstring>]
       </div>

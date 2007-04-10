@@ -18,7 +18,7 @@ function workflow_admin_updateconfig()
 {
     // Get parameters
     xarVarFetch('settings','isset',$settings,'', XARVAR_DONT_SET);
-    xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
+    xarVarFetch('isalias','checkbox',$isalias, xarModGetVar('workflow','itemsperpage'), XARVAR_DONT_SET);
     xarVarFetch('numitems','isset',$numitems,20, XARVAR_DONT_SET);
 
     // Confirm authorisation code
