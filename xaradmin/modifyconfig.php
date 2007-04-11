@@ -93,11 +93,6 @@ function workflow_admin_modifyconfig()
             }
         }
     }
-    $data['isalias'] = xarModGetVar('workflow','SupportShortURLs');
-    $data['numitems'] = xarModGetVar('workflow','itemsperpage');
-    if (empty($data['numitems'])) {
-        $data['numitems'] = 20;
-    }
 
 // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
