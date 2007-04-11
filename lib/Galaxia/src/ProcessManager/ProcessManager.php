@@ -11,29 +11,29 @@ class ProcessManager extends BaseManager {
   public $tree;
   public $current;
   public $buffer = '';
-  
+
   /*!
     Sets a process as active
   */
   function activate_process($pId)
   {
     $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('y',$pId));  
+    $this->query($query,array('y',$pId));
     $msg = sprintf(tra('Process %d has been activated'),$pId);
     $this->notify_all(3,$msg);
   }
-  
+
   /*!
     De-activates a process
   */
   function deactivate_process($pId)
   {
     $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('n',$pId));  
+    $this->query($query,array('n',$pId));
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
   }
-  
+
   /*!
     Creates an XML representation of a process.
   */
@@ -62,7 +62,7 @@ class ProcessManager extends BaseManager {
     $result = $this->query($query,array($pId));
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
-    while($res = $result->fetchRow()) {      
+    while($res = $result->fetchRow()) {
       $name = $res['normalized_name'];
       $out.='    <activity>'."\n";
       $out.='      <name>'.htmlspecialchars($res['name']).'</name>'."\n";
@@ -76,7 +76,7 @@ class ProcessManager extends BaseManager {
       $roles = $am->get_activity_roles($res['activityId']);
       foreach($roles as $role) {
         $out.='        <role>'.htmlspecialchars($role['name']).'</role>'."\n";
-      }  
+      }
       $out.='      </roles>'."\n";
       $out.='      <code><![CDATA[';
       $fp=fopen(GALAXIA_PROCESSES."/$procname/code/activities/$name.php","r");
@@ -96,7 +96,7 @@ class ProcessManager extends BaseManager {
         fclose($fp);
         $out.='      ]]></template>';
       }
-      $out.='    </activity>'."\n";    
+      $out.='    </activity>'."\n";
     }
     $out.='  </activities>'."\n";
     $out.='  <transitions>'."\n";
@@ -106,7 +106,7 @@ class ProcessManager extends BaseManager {
       $out.='       <from>'.htmlspecialchars($tran['actFromName']).'</from>'."\n";
       $out.='       <to>'.htmlspecialchars($tran['actToName']).'</to>'."\n";
       $out.='     </transition>'."\n";
-    }     
+    }
     $out.='  </transitions>'."\n";
     $out.= '</process>'."\n";
     //$fp = fopen(GALAXIA_PROCESSES."/$procname/$procname.xml","w");
@@ -114,21 +114,21 @@ class ProcessManager extends BaseManager {
     //fclose($fp);
     return $out;
   }
-  
+
   /*!
-    Creates  a process PHP data structure from its XML 
+    Creates  a process PHP data structure from its XML
     representation
   */
-  function unserialize_process($xml) 
+  function unserialize_process($xml)
   {
     // Create SAX parser assign this object as base for handlers
     // handlers are private methods defined below.
     // keep contexts and parse
-    $this->parser = xml_parser_create(); 
+    $this->parser = xml_parser_create();
     xml_parser_set_option($this->parser,XML_OPTION_CASE_FOLDING,0);
     xml_set_object($this->parser, $this);
     xml_set_element_handler($this->parser, "_start_element_handler", "_end_element_handler");
-    xml_set_character_data_handler($this->parser, "_data_handler"); 
+    xml_set_character_data_handler($this->parser, "_data_handler");
     $aux=Array(
       'name'=>'root',
       'children'=>Array(),
@@ -143,7 +143,7 @@ class ProcessManager extends BaseManager {
                     xml_get_current_line_number($this->parser));
        trigger_error($error,E_USER_WARNING);
     }
-    xml_parser_free($this->parser);   
+    xml_parser_free($this->parser);
     // Now that we have the tree we can do interesting things
     //print_r($this->tree);
     $process=Array();
@@ -169,7 +169,7 @@ class ProcessManager extends BaseManager {
                   $name = trim($this->tree[$z4]['name']);
                   $data = trim($this->tree[$z4]['data']);
                   $roles[]=$data;
-                }                
+                }
               } else {
                 $aux[$name]=$value;
                 //print("$name:$value<br />");
@@ -207,7 +207,7 @@ class ProcessManager extends BaseManager {
   }
 
   /*!
-   Creates a process from the process data structure, if you want to 
+   Creates a process from the process data structure, if you want to
    convert an XML to a process then use first unserialize_process
    and then this method.
   */
@@ -226,7 +226,7 @@ class ProcessManager extends BaseManager {
       'isValid' => $data['isValid']
     );
     $pid = $this->replace_process(0,$vars,false);
-    //Put the shared code 
+    //Put the shared code
     $proc_info = $this->get_process($pid);
     $procname = $proc_info['normalized_name'];
     $fp = fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","w");
@@ -242,9 +242,9 @@ class ProcessManager extends BaseManager {
         'lastModif' => $activity['lastModif'],
         'isInteractive' => $activity['isInteractive'],
         'isAutoRouted' => $activity['isAutoRouted']
-      );    
+      );
       $actname=$am->_normalize_name($activity['name']);
-      
+
       $actid = $am->replace_activity($pid,0,$vars);
       $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php',"w");
       fwrite($fp,$activity['code']);
@@ -275,7 +275,7 @@ class ProcessManager extends BaseManager {
       }
     }
     foreach($data['transitions'] as $tran) {
-      $am->add_transition($pid,$actids[$tran['from']],$actids[$tran['to']]);  
+      $am->add_transition($pid,$actids[$tran['from']],$actids[$tran['to']]);
     }
     // FIXME: recompile activities seems to be needed here
     foreach ($actids as $name => $actid) {
@@ -295,7 +295,7 @@ class ProcessManager extends BaseManager {
    is created as an unactive process and the version is
    by default a minor version of the process.
    */
-  ///\todo copy process activities and so     
+  ///\todo copy process activities and so
   function new_process_version($pId, $minor=true)
   {
     $oldpid = $pId;
@@ -317,14 +317,14 @@ class ProcessManager extends BaseManager {
     $query = "select * from ".self::tbl('activities')." where pId=?";
     $result = $this->query($query,array($oldpid));
     $newaid = array();
-    while($res = $result->fetchRow()) {    
+    while($res = $result->fetchRow()) {
       $oldaid = $res['activityId'];
       $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
     // create transitions
     $query = "select * from ".self::tbl('transitions')." where pId=?";
     $result = $this->query($query,array($oldpid));
-    while($res = $result->fetchRow()) {    
+    while($res = $result->fetchRow()) {
       if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
         continue;
       }
@@ -356,7 +356,7 @@ class ProcessManager extends BaseManager {
     }
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
-        $bindMarkers = '?' . str_repeat(', ?',count($newid) -1);
+        $bindMarkers = '?' . str_repeat(', ?',count($newaid) -1);
         $query = "select * from ".self::tbl('activity_roles')." where activityId in ($bindMarkers)";
       $result = $this->query($query,array_keys($newaid));
       while($res = $result->fetchRow()) {
@@ -377,7 +377,7 @@ class ProcessManager extends BaseManager {
     $am->build_process_graph($pid);
     return $pid;
   }
-  
+
   /*!
    This function can be used to check if a process name exists, note that
    this is NOT used by replace_process since that function can be used to
@@ -389,8 +389,8 @@ class ProcessManager extends BaseManager {
     $name = $this->_normalize_name($name,$version);
     return $this->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?",array($name));
   }
-  
-  
+
+
   /*!
     Gets a process by pId. Fields are returned as an asociative array
   */
@@ -402,7 +402,7 @@ class ProcessManager extends BaseManager {
     $res = $result->fetchRow();
     return $res;
   }
-  
+
   /*!
    Lists processes (all processes)
   */
@@ -437,7 +437,7 @@ class ProcessManager extends BaseManager {
     $retval["cant"] = $cant;
     return $retval;
   }
-  
+
   /*!
    Marks a process as an invalid process
   */
@@ -446,8 +446,8 @@ class ProcessManager extends BaseManager {
     $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
     $this->query($query,array('n',$pid));
   }
-  
-  /*! 
+
+  /*!
     Removes a process by pId
   */
   function remove_process($pId)
@@ -467,7 +467,7 @@ class ProcessManager extends BaseManager {
     $this->query($query,array($pId));
     $query = "delete from ".self::tbl('user_roles')." where pId=?";
     $this->query($query,array($pId));
-    
+
     // Remove the directory structure
     if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
       $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);
@@ -480,10 +480,10 @@ class ProcessManager extends BaseManager {
     $this->query($query,array($pId));
     $msg = sprintf(tra('Process %s removed'),$name);
     $this->notify_all(5,$msg);
-    
+
     return true;
   }
-  
+
   /*!
     Updates or inserts a new process in the database, $vars is an asociative
     array containing the fields to update or to insert as needed.
@@ -494,8 +494,8 @@ class ProcessManager extends BaseManager {
     $TABLE_NAME = self::tbl('processes');
     $now = date("U");
     $vars['lastModif']=$now;
-    $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        
-  
+    $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);
+
     if($pId) {
       // update mode
       $old_proc = $this->get_process($pId);
@@ -518,7 +518,7 @@ class ProcessManager extends BaseManager {
       if ($newname != $oldname) {
           rename(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
       }
-      $msg = sprintf(tra('Process %s has been updated'),$vars['name']);     
+      $msg = sprintf(tra('Process %s has been updated'),$vars['name']);
       $this->notify_all(3,$msg);
     } else {
       unset($vars['pId']);
@@ -528,23 +528,23 @@ class ProcessManager extends BaseManager {
       $first = true;
       $query = "insert into $TABLE_NAME(";
       foreach(array_keys($vars) as $key) {
-        if(!$first) $query.= ','; 
+        if(!$first) $query.= ',';
         $query.= "$key";
         $first = false;
-      } 
+      }
       $query .=") values(";
       $first = true;
       $bindvars = array();
       foreach(array_values($vars) as $value) {
-        if(!$first) $query.= ','; 
+        if(!$first) $query.= ',';
         $query.= "?";
         $bindvars[] = $value;
         $first = false;
-      } 
+      }
       $query .=")";
       $this->query($query,$bindvars);
-      $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=?",array($now)); 
-      // Now automatically add a start and end activity 
+      $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=?",array($now));
+      // Now automatically add a start and end activity
       // unless importing ($create = false)
       if($create) {
         $aM= new ActivityManager($this->db);
@@ -562,17 +562,17 @@ class ProcessManager extends BaseManager {
           'isInteractive' => 'n',
           'isAutoRouted' => 'y'
         );
-  
+
         $aM->replace_activity($pId,0,$vars1);
         $aM->replace_activity($pId,0,$vars2);
       }
-    $msg = sprintf(tra('Process %s has been created'),$vars['name']);     
+    $msg = sprintf(tra('Process %s has been created'),$vars['name']);
     $this->notify_all(4,$msg);
     }
     // Get the id
     return $pId;
   }
-   
+
   /*!
    \private
    Gets the normalized name of a process by pid
@@ -582,7 +582,7 @@ class ProcessManager extends BaseManager {
     $info = $this->get_process($pId);
     return $info['normalized_name'];
   }
-   
+
   /*!
    \private
    Normalizes a process name
@@ -594,7 +594,7 @@ class ProcessManager extends BaseManager {
     $name = preg_replace("/[^0-9A-Za-z\_]/",'',$name);
     return $name;
   }
-   
+
   /*!
    \private
    Generates a new minor version number
@@ -612,7 +612,7 @@ class ProcessManager extends BaseManager {
     }
     return implode('.',$parts);
   }
-   
+
   /*!
    \private
    Creates directory structure for process
@@ -634,7 +634,7 @@ class ProcessManager extends BaseManager {
     fwrite($fp,'<'.'?'.'php'."\n".'?'.'>');
     fclose($fp);
   }
-   
+
   /*!
    \private
    Removes a directory recursively
@@ -653,7 +653,7 @@ class ProcessManager extends BaseManager {
         }
       }
     }
-    closedir($h);   
+    closedir($h);
     @rmdir($dir);
     @unlink($dir);
   }
@@ -671,7 +671,7 @@ class ProcessManager extends BaseManager {
         }
       }
     }
-    closedir($h);   
+    closedir($h);
   }
 
   function _start_element_handler($parser,$element,$attribs)
@@ -680,7 +680,7 @@ class ProcessManager extends BaseManager {
                'data'=>'',
                'parent' => $this->current,
                'children'=>Array());
-    $i = count($this->tree);           
+    $i = count($this->tree);
     $this->tree[$i] = $aux;
 
     $this->tree[$this->current]['children'][]=$i;
@@ -691,7 +691,7 @@ class ProcessManager extends BaseManager {
   function _end_element_handler($parser,$element)
   {
     //when a tag ends put text
-    $this->tree[$this->current]['data']=$this->buffer;           
+    $this->tree[$this->current]['data']=$this->buffer;
     $this->buffer='';
     $this->current=$this->tree[$this->current]['parent'];
   }
