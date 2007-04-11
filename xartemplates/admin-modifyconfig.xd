@@ -84,72 +84,13 @@
 
     <fieldset>
       <legend><xar:mlstring>Configuration of Scheduled Activities</xar:mlstring></legend>
-      <p><xar:mlstring><b>Description:</b> in order to execute time-based activities (e.g. escalation in the workflow process, status change after a certain time, ...), you need to install the 'scheduler' module first.
-          Then you can specify here which workflow activities should be executed, and how often. Only non-interactive stand-alone activities can be used here...</xar:mlstring></p>
-      <table border="0" cellpadding="4" cellspacing="0">
-        <tr>
-          <th><xar:mlstring>Activity</xar:mlstring></th>
-          <th><xar:mlstring>Interval</xar:mlstring></th>
-          <th><xar:mlstring>Last Run</xar:mlstring></th>
-          <th><xar:mlstring>Result</xar:mlstring></th>
-        </tr>
-        <xar:foreach in="$jobs" key="$id" value="$job">
-          <tr>
-            <td>
-              <select name="jobs[#$id#][activity]">
-                <option value=""></option>
-                <xar:foreach in="$standalone" key="$activity" value="$name">
-                  <xar:if condition="!empty($job['activity']) and $job['activity'] eq $activity">
-                    <option value="#$activity#" selected="selected">#$name#</option>
-                    <xar:else/>
-                    <option value="#$activity#">#$name#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <select name="jobs[#$id#][interval]">
-                <option value=""></option>
-                <xar:foreach in="$intervals" key="$name" value="$display">
-                  <xar:if condition="!empty($job['interval']) and $job['interval'] eq $name">
-                    <option value="#$name#" selected="selected">#$display#</option>
-                    <xar:else/>
-                    <option value="#$name#">#$display#</option>
-                  </xar:if>
-                </xar:foreach>
-              </select>
-            </td>
-            <td>
-              <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
-              <xar:if condition="!empty($job['lastrun'])">
-                #xarLocaleFormatDate('%x %X %z',$job['lastrun'])#
-              </xar:if>
-            </td>
-            <td>
-              <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
-              #$job['result']#
-            </td>
-          </tr>
-        </xar:foreach>
-      </table>
-      <p><xar:mlstring>The scheduler module will run one job to execute all the scheduled workflow activities.
-          You should therefore choose an interval for it that is at least as small as the ones you specify for your activities, so that each scheduled workflow activity can be executed on time.</xar:mlstring></p>
-      <label for="interval"><xar:mlstring>Run Scheduler Job : </xar:mlstring></label>
-      <select name="interval" id="interval">
-        <option value=""><xar:mlstring>disabled</xar:mlstring></option>
-        <xar:foreach in="$intervals" key="$id" value="$name">
-          <xar:if condition="!empty($interval) and $interval eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
-            <xar:else/>
-            <option value="#$id#">#$name#</option>
-          </xar:if>
-        </xar:foreach>
-      </select>
-      <p>
-        <xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, scheduled workflow activities will not be executed.</xar:mlstring>
-      </p>
-
+      <xar:if condition="xarModIsAvailable('scheduler')" >
+        <xar:template file="scheduled" />
+      <xar:else />
+        The scheduler module is not installed
+      </xar:if>
     </fieldset>
+
     <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="submit" value="Update Workflow Configuration" />
