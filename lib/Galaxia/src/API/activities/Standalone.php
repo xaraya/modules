@@ -5,12 +5,8 @@ include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 /*!
 This class handles activities of type 'standalone'
 */
-class Standalone extends BaseActivity {
-
-	function __construct($db)
-	{
-        parent::__construct($db);
-        $this->type='standalone';
-	}
+class Standalone extends BaseActivity
+{
+    protected $type = 'standalone';
 }
 ?>
