@@ -69,10 +69,10 @@ function xtasks_adminapi_updateassign($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($item['owner']) && $item['owner'] != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $item['owner'], 'taskid' => $taskid, 'action' => "ASSIGN"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $item['owner'], 'taskid' => $taskid, 'action' => "ASSIGN"));
     }
     if(!empty($owner) && $owner != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $owner, 'taskid' => $taskid, 'action' => "ASSIGN"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $owner, 'taskid' => $taskid, 'action' => "ASSIGN"));
     }
 
     return true;

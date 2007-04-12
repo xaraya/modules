@@ -69,10 +69,7 @@ function xtasks_adminapi_update($args)
                   date_start_planned = ?,
                   date_start_actual = ?,
                   date_end_planned = ?,
-                  date_end_actual = ?,
-                  hours_planned = ?,
-                  hours_spent = ?,
-                  hours_remaining = ?
+                  date_end_actual = ?
             WHERE taskid = ?";
 
     $bindvars = array(
@@ -90,15 +87,31 @@ function xtasks_adminapi_update($args)
                     $date_start_actual ? $date_start_actual : NULL,
                     $date_end_planned ? $date_end_planned : NULL,
                     $date_end_actual ? $date_end_actual : NULL,
-                    $hours_planned,
-                    $hours_spent,
-                    $hours_remaining,
                     $taskid);
               
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 
+    if($hours_planned != $item['hours_planned']
+        || $hours_spent != $item['hours_spent']
+        || $hours_remaining != $item['hours_remaining']) {
+        xarModAPIFunc('xtasks', 'admin', 'updatehours',
+                    array('taskid' => $item['taskid'],
+                        'hours_planned_delta' => $hours_planned - $item['hours_planned'],
+                        'hours_spent_delta' => $hours_spent - $item['hours_spent'],
+                        'hours_remaining_delta' => $hours_remaining - $item['hours_remaining']));
+    }
+    /*
+    if($item['parentid'] > 0 && false) {
+        xarModAPIFunc('xtasks', 'admin', 'updatetimeframes',
+                    array('taskid' => $item['parentid'],
+                        'date_start_planned' => $item['date_start_planned'],
+                        'date_start_actual' => $item['date_start_actual'],
+                        'date_end_planned' => $item['date_end_planned'],
+                        'date_end_actual' => $item['date_end_actual']));
+    }
+    */
     $item['module'] = 'xtasks';
     $item['itemid'] = $taskid;
     $item['name'] = $task_name;
@@ -106,7 +119,7 @@ function xtasks_adminapi_update($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($item['owner']) && $item['owner'] != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $item['owner'], 'taskid' => $taskid, 'action' => "UPDATE"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $item['owner'], 'taskid' => $taskid, 'action' => "UPDATE"));
     }
 
     return true;

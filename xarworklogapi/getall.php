@@ -3,6 +3,23 @@
 function xtasks_worklogapi_getall($args)
 {
     extract($args);
+    
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
+    if (empty($startnum)) {
+        $startnum = 1;
+    }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    }
+    $invalid = array();
+    if (!isset($startnum) || !is_numeric($startnum)) {
+        $invalid[] = 'startnum';
+    }
+    if (!isset($numitems) || !is_numeric($numitems)) {
+        $invalid[] = 'numitems';
+    }
 
     $invalid = array();
     if (count($invalid) > 0) {
@@ -58,14 +75,19 @@ function xtasks_worklogapi_getall($args)
     }
     if(!empty($mindate)) {
         $whereclause[] = "a.eventdate > '".$mindate."'";
+    } elseif(isset($ttldays) && $ttldays > 0) {
+        $whereclause[] = "a.eventdate > '".date("Y-m-d", (time() - ($ttldays * 24 * 3600) ) )."'";
+    }
+    if(!empty($projectid)) {
+        $whereclause[] = "b.projectid = '".$projectid."'";
     }
     if(count($whereclause) > 0) {
-        $sql .= " WHERE ".implode(" AND ", $whereclause);
+        $sql .= " AND ".implode(" AND ", $whereclause);
     }
     
     $sql .= " ORDER BY a.eventdate DESC";
-
-    $result = $dbconn->Execute($sql);
+//die("sql: ".$sql);
+    $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if (!$result) return;
     
@@ -82,6 +104,16 @@ function xtasks_worklogapi_getall($args)
               $eventdate,
               $hours,
               $notes) = $result->fields;
+    
+        if(preg_match("/<br\\s*?\/??>/i", $notes)) {
+            $formatted_notes = $notes;
+        } else {
+            $formatted_notes = nl2br($notes);
+        }
+        
+        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
+                 
         $items[] = array('worklogid'        => $worklogid,
                           'taskid'          => $taskid,
                           'taskname'        => $taskname,
@@ -91,7 +123,8 @@ function xtasks_worklogapi_getall($args)
                           'ownerid'         => $ownerid,
                           'eventdate'       => $eventdate,
                           'hours'           => $hours,
-                          'notes'           => $notes);
+                          'notes'           => $notes,
+                          'formatted_notes' => $formatted_notes);
     }
 
     $result->Close();

@@ -16,7 +16,7 @@ function xtasks_admin_modifyconfig()
     //xarModLoad('xtasks','user');
     $data = xarModAPIFunc('xtasks','admin','menu');
 
-    if (!xarSecurityCheck('AdminXTask', 0)) {
+    if (!xarSecurityCheck('AdminXTask', 0, 'Item', "All:All:All")) {
         return;
     }
 

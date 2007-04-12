@@ -4,7 +4,10 @@ function xtasks_admin_new($args)
 {
     extract($args);
     
-    if (!xarVarFetch('inline', 'str', $inline, $inline, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showajax', 'str', $showajax, $showajax, XARVAR_NOT_REQUIRED)) return;
+    if($showajax) {
+        $projectid = 0;
+    }
     if (!xarVarFetch('parentid', 'int', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'int', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modid', 'int', $modid, $modid, XARVAR_NOT_REQUIRED)) return;
@@ -26,10 +29,14 @@ function xtasks_admin_new($args)
     } else {
         $data['returnurl'] = xarModURL('xtasks','admin','view');
     }
-    $data['returnurl'] = $data['returnurl']."&amp;mode=tasks#tasklist";
+    
+    
+    if(!strpos($data['returnurl'], "mode")) {
+        $data['returnurl'] = $data['returnurl']."&amp;mode=tasks#tasklist";
+    }
 
     $data['authid'] = xarSecGenAuthKey();
-    $data['inline'] = $inline;
+    $data['showajax'] = $showajax;
     $data['modid'] = $modid;
     $data['itemtype'] = $itemtype;
     $data['objectid'] = $objectid;

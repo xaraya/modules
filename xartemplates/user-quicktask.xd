@@ -1,0 +1,41 @@
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
+
+<xar:if condition="$projectid gt 0">
+    <div>
+        <div style="float: left; width: 200px;">
+            <strong><xar:mlstring>Task</xar:mlstring></strong>
+        </div>
+        <div style="float: left; width: 300px;">
+            <xar:if condition="!isset($showajax)">
+                <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quickworklog')."','quickworklog','POST','searchtasks');"</xar:set>
+            <xar:else />
+                <xar:set name="action">"&xar-modurl-xtasks-worklog-new;"</xar:set>
+            </xar:if>
+            
+            <xar:if condition="count($tasklist) gt 0">
+                <form method="post" action="#$action#" name="searchtasks" id="searchtasks" style="display: inline;" >
+        
+                <select name="taskid" onChange="#$action#">
+                    <option value=""><xar:mlstring> - select a task - </xar:mlstring></option>
+                <xar:foreach in="$tasklist" value="$taskinfo">
+                    <option value="#$taskinfo['taskid']#">#$taskinfo['task_name']#</option>
+                </xar:foreach>
+                </select>
+                
+                <a href="&xar-modurl-xtasks-admin-new;&amp;projectid=#$projectid#"><xar:mlstring>Create Task</xar:mlstring></a>   
+                
+                </form>
+            <xar:else />
+                <xar:mlstring>No tasks exist for this project.</xar:mlstring>
+                <br />
+                <a href="&xar-modurl-xtasks-admin-new;&amp;projectid=#$projectid#"><xar:mlstring>Create Task</xar:mlstring></a>    
+            </xar:if>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    </form>
+    
+    <div id="quickworklog" name="quickworklog"></div>
+</xar:if>

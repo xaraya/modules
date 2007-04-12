@@ -5,19 +5,19 @@
 <xar:template type="module" file="admin-menu" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recent Task Archive</xar:mlstring></span></div>
-<div class="xar-mod-body">
+<div class="xar-mod-body xtasks">
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-        <th><xar:mlstring>Client / Project</xar:mlstring></th>
-        <th><xar:mlstring>Task Name</xar:mlstring></th>
-        <th><xar:mlstring>Assigned To</xar:mlstring></th>
-        <th><xar:mlstring>Date Completed</xar:mlstring></th>
-        <th><xar:mlstring>Hours</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Client / Project</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Task Name</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Assigned To</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Date Completed</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Hours</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Status</xar:mlstring></th>
+        <th class="xtasks-tasklist-header"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
 
     <xar:foreach in="$items" value="$taskinfo">
@@ -28,35 +28,35 @@
         <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
 
         <tr>
-            <td class="xar-norm">
-                <xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a></xar:if>
+            <td class="xtasks-tasklist-data">
+                <xar:if condition="isset($taskinfo['projectinfo']['clientid'])"><em><a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a></em></xar:if>
                 <xar:if condition="isset($taskinfo['projectinfo']['project_name'])"><div><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#">#$taskinfo['projectinfo']['project_name']#</a></div></xar:if>
             </td>
             
-            <td class="xar-norm">
+            <td class="xtasks-tasklist-data">
                 <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$taskinfo['taskid']#">#$taskinfo['task_name']#</a>
             </td>
                 
             <xar:set name="owner">$taskinfo['owner']</xar:set>
-            <td class="xar-norm"><xar:data-output property="$properties['owner']" value="$owner" /></td>
+            <td class="xtasks-tasklist-data"><xar:data-output property="$properties['owner']" value="$owner" /></td>
             
             <xar:set name="dayslate">0</xar:set>
             <xar:if condition="$date_end_planned gt 0">
                 <xar:set name="dayslate">(int)((strtotime($date_end_planned) - time() ) / (3600 * 24))</xar:set>
             </xar:if>
             <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
-            <td class="xar-norm"><xar:data-output property="$properties['date_end_actual']" value="$date_end_actual" dateformat="%a, %d %B %Y" />
+            <td class="xtasks-tasklist-data"><xar:data-output property="$properties['date_end_actual']" value="$date_end_actual" dateformat="%a, %d %B %Y" />
                 <xar:if condition="$dayslate gt 0"> (#$dayslate# days)
                 <xar:elseif condition="$dayslate lt 0" /> <strong>(#$dayslate# days late)</strong>
                     <xar:set name="dayslate">-$dayslate</xar:set>
                 </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: center;">#$taskinfo['hours_spent']#</td>
+            <td class="xtasks-tasklist-data" style="text-align: center;">#$taskinfo['hours_spent']#</td>
         
-            <td class="xar-norm" style="text-align: center;">#$taskinfo['status']#</td>
+            <td class="xtasks-tasklist-data" style="text-align: center;">#$taskinfo['status']#</td>
         
-            <td class="xar-norm" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
+            <td class="xtasks-tasklist-data" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
         
         </tr>
 

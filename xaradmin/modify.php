@@ -5,6 +5,7 @@ function xtasks_admin_modify($args)
     extract($args);
     
     if (!xarVarFetch('taskid',     'id',     $taskid,     $taskid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('inline',     'str::',     $inline,     '',     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl',     'str::',     $returnurl,     '',     XARVAR_NOT_REQUIRED)) return;
     
     if (!empty($objectid)) {
@@ -24,7 +25,7 @@ function xtasks_admin_modify($args)
         return;
     }
     
-    $data = array();
+    $data = xarModAPIFunc('xtasks', 'admin', 'menu');
 
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
     
@@ -32,9 +33,13 @@ function xtasks_admin_modify($args)
     
     $data['returnurl'] = $returnurl;
     
+    $data['inline'] = $inline;
+    
     $data['authid'] = xarSecGenAuthKey();
     
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
+    
+    $data['cancelbutton'] = xarVarPrepForDisplay(xarML('Cancel'));
 
     $item['module'] = 'xtasks';
 

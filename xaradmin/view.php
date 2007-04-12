@@ -16,10 +16,11 @@ function xtasks_admin_view($args)
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
     
     $data['orderby'] = $orderby;
-//    xarModAPILoad('xtaskss', 'user');
+//    xarModAPILoad('xtasks', 'user');
     $items = xarModAPIFunc('xtasks', 'user', 'getall',
                             array('mymemberid' => $mymemberid,
                                 'memberid' => $memberid,
+                                'mode' => "Open",
                                 'statusfilter' => $statusfilter,
                                 'orderby' => $orderby,
                                 'startnum' => $startnum,

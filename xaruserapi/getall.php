@@ -89,14 +89,16 @@ function xtasks_userapi_getall($args)
                    a.modid,
                    a.itemtype,
                    a.parentid,
+                   a.dependentid,
                    a.projectid,
                    a.task_name,
                    a.status,
                    CASE 
                         WHEN a.status = 'Active' THEN 1
-                        WHEN a.status = 'R & D' THEN 2
-                        WHEN a.status = 'Draft' THEN 3
+                        WHEN a.status = 'Pending Approval' THEN 2
+                        WHEN a.status = 'Draft' THEN 4
                         WHEN a.status = 'Closed' THEN 999
+                        ELSE 3
                     END AS statusid,
                    a.priority,
                    a.importance,
@@ -124,15 +126,19 @@ function xtasks_userapi_getall($args)
     $whereclause = array();
             
     if(isset($memberid) && $memberid > 0) {
-        $whereclause[] = "a.owner=".$memberid;
+        $whereclause[] = "a.owner = ".$memberid;
+    }
+            
+    if(isset($owner) && $owner > 0) {
+        $whereclause[] = "a.owner = ".$owner;
     }
             
     if(isset($creator) && $creator > 0) {
-        $whereclause[] = "a.owner=".$creator;
+        $whereclause[] = "a.creator = ".$creator;
     }
             
     if(isset($assigner) && $assigner > 0) {
-        $whereclause[] = "a.owner=".$assigner;
+        $whereclause[] = "a.assigner = ".$assigner;
     }
             
     if (!empty($modid) 
@@ -165,9 +171,7 @@ function xtasks_userapi_getall($args)
             
     if ($mode == "Open") {
         $whereclause[] = "a.status != 'Closed'";
-    }
-            
-    if (!empty($statusfilter)) {
+    } elseif (!empty($statusfilter)) {
         $whereclause[] = "a.status='".$statusfilter."'";
     } else {
         $statusfilter = "";
@@ -177,6 +181,7 @@ function xtasks_userapi_getall($args)
     if(!empty($status)) $whereclause[] = "a.status = '".$status."'";
 //    if($clientid > 0) $whereclause[] = "clientid = '".$clientid."'";
     if($max_priority > 0) $whereclause[] = "a.priority <= '".$max_priority."'";
+    if(isset($dependentid)) $whereclause[] = "a.dependentid = '".$dependentid."'";
     if($max_importance > 0) $whereclause[] = "a.importance <= '".$max_importance."'";
     if(!empty($q)) {
         $whereclause[] = "(a.task_name LIKE '%".$q."%' OR a.description LIKE '%".$q."%')";
@@ -194,21 +199,21 @@ function xtasks_userapi_getall($args)
             $sql .= " ORDER BY statusid, a.task_name";
             break;
         case "importance":
-            $sql .= " ORDER BY statusid, a.importance";
+            $sql .= " ORDER BY statusid, a.importance, a.task_name";
             break;
         case "priority":
-            $sql .= " ORDER BY statusid, a.priority";
+            $sql .= " ORDER BY statusid, a.priority, a.task_name";
             break;
         case "status":
-            $sql .= " ORDER BY statusid, a.status";
+            $sql .= " ORDER BY statusid, a.status, a.task_name";
             break;
         default:
             if(isset($mymemberid)) {
-                $sql .= " ORDER BY statusid, a.priority, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.priority, a.task_name ";
             } elseif(isset($memberid)) {
-                $sql .= " ORDER BY statusid, a.importance, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.importance, a.task_name ";
             } else {//if($statusfilter == "Closed") {
-                $sql .= " ORDER BY statusid, a.status, a.date_end_actual DESC, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.task_name ";
             }
     }
 /*
@@ -252,6 +257,7 @@ function xtasks_userapi_getall($args)
              $modid,
              $itemtype,
              $parentid,
+             $dependentid,
              $projectid,
              $task_name,
              $status,
@@ -292,18 +298,29 @@ function xtasks_userapi_getall($args)
             if(($show_project || $show_client) && $projectid > 0) {
                 $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
             }
+    
+            if(preg_match("/<br\\s*?\/??>/i", $description)) {
+                $formatted_desc = $description;
+            } else {
+                $formatted_desc = nl2br($description);
+            }
+            
+            $formatted_desc = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+                     "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_desc);
             
             $tasks[] = array('taskid' => $taskid,
                             'objectid' => $objectid,
                             'modid' => $modid,
                             'itemtype' => $itemtype,
                             'parentid' => $parentid,
+                            'dependentid' => $dependentid,
                             'projectid' => $projectid,
                             'task_name' => $task_name,
                             'status' => $status,
                             'priority' => $priority,
                             'importance' => $importance,
                             'description' => $description,
+                            'formatted_desc' => $formatted_desc,
                             'private' => $private,
                             'creator' => $creator,
                             'owner' => $owner,

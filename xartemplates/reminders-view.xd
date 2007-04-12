@@ -27,7 +27,7 @@
                 <div style="clear: both;"></div>
             </div>
             <xar:if condition="!empty($workdetails['notes'])">
-                <div class="xar-tiny" style="margin-left: 50px;"><em><xar:data-output property="$properties['notes']" value="$workdetails['notes']" /></em></div>
+                <div class="xar-tiny" style="margin-left: 50px;"><pre><em><xar:data-output property="$properties['notes']" value="$workdetails['notes']" /></em></pre></div>
             </xar:if>
         </xar:foreach>
     </div>

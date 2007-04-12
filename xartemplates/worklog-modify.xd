@@ -1,5 +1,9 @@
 <xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="2" itemid="$worklog_objectid" />
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$taskproperties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:template type="module" file="admin-menu" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Audit Work Record</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -11,27 +15,35 @@
     
     <table width="100%" border="0" cellspacing="0" cellpadding="2">
         <tr>
-            <td><xar:mlstring>Task Name</xar:mlstring></td>
-            <td><strong>#$taskinfo['task_name']#</strong></td>
+            <td class="xtasks-display-label"><xar:mlstring>Task Name</xar:mlstring></td>
+            <td class="xtasks-display-input"><strong>#$taskinfo['task_name']#</strong></td>
         </tr>
         <tr>
-            <td><xar:mlstring>Work Performed By</xar:mlstring></td>
-            <td><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
+            <td class="xtasks-display-label"><xar:mlstring>Work Performed By</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
         </tr>
         <tr>
-            <td><xar:mlstring>Work Date</xar:mlstring></td>
-            <td><xar:data-input property="$properties['eventdate']" name="eventdate" value="$item['eventdate']" /></td>
+            <td class="xtasks-display-label"><xar:mlstring>Work Date</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['eventdate']" name="eventdate" value="$item['eventdate']" /></td>
         </tr>
         <tr>
-            <td><xar:mlstring>Hours Worked</xar:mlstring></td>
-            <td><xar:data-input property="$properties['hours']" name="hours" value="$item['hours']" /></td>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Planned</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-output property="$taskproperties['hours_planned']" value="$taskinfo['hours_planned']" />
         </tr>
         <tr>
-            <td><xar:mlstring>Notes</xar:mlstring></td>
-            <td><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Worked</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['hours']" name="hours" value="$item['hours']" /></td>
         </tr>
         <tr>
-            <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Remaining</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$taskproperties['hours_remaining']" name="hours_remaining" value="$taskinfo['hours_remaining']" />
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Notes</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+        </tr>
+        <tr>
+            <td colspan=2 align="center" class="xtasks-display-input"><br /><input type="submit" value="#$updatebutton#"></td>
         </tr>
     </table>
     

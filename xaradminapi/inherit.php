@@ -37,17 +37,19 @@ function xtasks_adminapi_inherit($args)
         return;
     }
 
-    $parentinfo = xarModAPIFunc('xtasks',
-                            'user',
-                            'get',
-                            array('taskid' => $parentid));
+    if($parentid > 0) {
+        $parentinfo = xarModAPIFunc('xtasks',
+                                'user',
+                                'get',
+                                array('taskid' => $parentid));
+    
+        if (!isset($parentinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!isset($taskinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-
-    if (!xarSecurityCheck('EditXTask', 1, 'Item', "$parentinfo[task_name]:All:$parentid")) {
-        return;
+        if (!xarSecurityCheck('EditXTask', 1, 'Item', "$parentinfo[task_name]:All:$parentid")) {
+            return;
+        }
     }
-
+    
     $taskinfo = xarModAPIFunc('xtasks',
                             'user',
                             'get',
@@ -58,20 +60,75 @@ function xtasks_adminapi_inherit($args)
     if (!xarSecurityCheck('EditXTask', 1, 'Item', "$taskinfo[task_name]:All:$taskid")) {
         return;
     }
+    
+    // TASK IS ALREADY ASSIGNED CORRECTLY
+    if($taskinfo['parentid'] == $parentid) {
+        return true;
+    }
+    
+    // MUST ENSURE THAT PARENT IS NOT PRESENT IN THE TASK LINEAGE, THUS CREATING A LOOP
+    if($parentinfo['parentid'] == $taskinfo['taskid']) {
+        $msg = xarML('Cannot move a parent task under its own children!');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg));
+        return;
+    }
+
+    while($parentinfo['parentid'] > 0) {
+        if($taskinfo['taskid'] == $parentinfo['parentid']) {
+            $msg = xarML('Cannot move a parent task under its own children!');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                new SystemException($msg));
+            return;
+        }
+        $parentinfo = xarModAPIFunc('xtasks',
+                                'user',
+                                'get',
+                                array('taskid' => $parentinfo['parentid']));
+    }
+    
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $xtasktable = $xartable['xtasks'];
 
-    $query = "UPDATE $xtasktable
-            SET parentid = ?
-            WHERE taskid = ?";
+    if($parentid > 0) {
+        $query = "UPDATE $xtasktable
+                SET parentid = ?,
+                    modid = ?,
+                    itemtype = ?,
+                    objectid = ?
+                WHERE taskid = ?";
+    
+        $bindvars = array(
+                        $parentid ? $parentid : 0,
+                        0,
+                        0,
+                        0,
+                        $taskid);
+    } else {
+        $query = "UPDATE $xtasktable
+                SET parentid = ?,
+                    modid = ?,
+                    itemtype = ?,
+                    objectid = ?
+                WHERE taskid = ?";
+    
+        $bindvars = array(
+                        0,
+                        isset($modid) ? $modid : 0,
+                        isset($itemtype) ? $itemtype : 0,
+                        isset($objectid) ? $objectid : 0,
+                        $taskid);
 
-    $bindvars = array(
-                    $parentid ? $parentid : 0,
-                    $taskid);
-              
+//echo "<pre>";
+//print_r($args);
+//die("</pre>");
+    }
+
+
+
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;

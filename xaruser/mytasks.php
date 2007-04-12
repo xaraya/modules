@@ -33,7 +33,7 @@ function xtasks_user_mytasks($args)
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
 //    xarModAPILoad('xtaskss', 'user');
     $items = xarModAPIFunc('xtasks', 'user', 'getall',
-                            array('mymemberid' => $mymemberid,
+                            array('owner' => $mymemberid,
                                   'startnum' => $startnum,
                                   'orderby' => $orderby,
                                   'mode' => "Open",

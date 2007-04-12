@@ -2,7 +2,7 @@
 <xar:set name="itemids">array($uid)</xar:set>
 <xar:data-getitems name="$properties" value="$values" module="roles" itemtype="704" itemids="$itemids" />
 
-<div class="xar-mod-body">
+<div class="xar-mod-body xtasks">
 
     <h2><xar:mlstring>My Settings for xTasks</xar:mlstring></h2>
     
@@ -19,7 +19,7 @@
               <input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
               <input type="hidden" name="itemtype" value="#xarModGetIDFromName('xtasks')#" />
               <input type="hidden" name="itemid" value="#$uid#" />
-              <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
+              <input type="hidden" name="return_url" value="#$returnurl#" />
               <input type="submit" value="#$submitlabel#" />
             </div>
         

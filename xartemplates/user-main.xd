@@ -2,5 +2,31 @@
 
 <xar:template type="module" file="admin-menu" />
 
-<div align="center"><strong> #$welcome# </strong></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xTasks Overview</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <strong>Anatomy of a Task</strong>
+    
+    <ul>
+        <li><strong>Name and Description</strong> - Each task is required to have a descriptive name for the task. Further details can be placed in the Description, but the task name should be a summarized version that can be used to quickly recognize it.
+        <li><strong>Task ID</strong> - Each task has an ID that is used by the system to identify it. This ID can be referenced as the Parent ID of a child task.
+        <li><strong>Status</strong> - Tasks that are still being specified are Draft status. While waiting for approval, they are in Pending status, after which they become Active. Once completed, they are placed in a Closed status.
+        <li><strong>Importance</strong> - A task is of relative importance to the overall project, ranging from None through Rather up to Essential. This represents overall (or macro) importance.
+        <li><strong>Priority</strong> - Priorities constantly changes and this field exists to allow that. Tasks are completed in order of priority, with a Pri:1 being the most important and a Pri:9 being of marginal importance. The My Tasks page shows the user a list of tasks organized by priority with arrow provided to increase or decrease the priority so that the most important items always filter to the top. 
+        <li><strong>Ownership</strong> - Each task records who created it, who it is assigned to (ie: the owner) and who assigned it to them. 
+        <li><strong>Planned Timeframe</strong> - The planned start date always defaults to the current date. The planned end date is when the task must be completed by, if required. 
+        <li><strong>Actual Timeframe</strong> - The actual date that work began and when it ended will frequently be different from what was planned. 
+        <li><strong>Hours Worked</strong> - Each task can track the amount of time estimate to complete it, how much time has already been spent and how much time remains to be spent. The time spent plus the time remaining can be compared to the time planned in order to find the variance to estimated hours.  
+    </ul>
+
+    <strong>Task Lifecycle</strong>
+    <ol>
+        <li><strong></strong> - 
+        <li><strong></strong> - 
+        <li><strong></strong> - 
+        <li><strong></strong> - 
+
+
+
+</div>
 

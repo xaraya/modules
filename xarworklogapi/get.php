@@ -52,13 +52,23 @@ function xtasks_worklogapi_get($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
+    
+    if(preg_match("/<br\\s*?\/??>/i", $notes)) {
+        $formatted_notes = $notes;
+    } else {
+        $formatted_notes = nl2br($notes);
+    }
+    
+    $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+             "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
 
-    $item = array('worklogid'     => $worklogid,
-                  'taskid'        => $taskid,
-                  'ownerid'       => $ownerid,
-                  'eventdate'     => $eventdate,
-                  'hours'         => $hours,
-                  'notes'         => $notes);
+    $item = array('worklogid'       => $worklogid,
+                  'taskid'          => $taskid,
+                  'ownerid'         => $ownerid,
+                  'eventdate'       => $eventdate,
+                  'hours'           => $hours,
+                  'notes'           => $notes,
+                  'formatted_notes' => $formatted_notes);
 
     return $item;
 }

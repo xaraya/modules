@@ -6,7 +6,7 @@ function xtasks_worklog_update($args)
     
     if (!xarVarFetch('worklogid', 'id', $worklogid)) return;
     if (!xarVarFetch('eventdate', 'str:1:', $eventdate, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours', 'int::', $hours, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours', 'float::', $hours, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
                                         
     if (!xarSecConfirmAuthKey()) return;

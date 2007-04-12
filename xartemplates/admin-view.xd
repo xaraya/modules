@@ -1,42 +1,96 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
 
+<xar:set name="dummy">xarModAPILoad('xproject', 'user')</xar:set>
+
 <xar:template type="module" file="admin-menu" />
+
+<xar:set name="urlargs">""</xar:set>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Task List</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
-        <th><xar:mlstring>Task Name</xar:mlstring></th>
-        <th><xar:mlstring>Importance</xar:mlstring></th>
-        <th><xar:mlstring>Priority</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <th class="xtasks-list-header"><xar:mlstring>Task Name</xar:mlstring> / <a href="&xar-modurl-xtasks-admin-view;&amp;orderby=project#$urlargs#" onclick="return loadContent(this.href,'tasklist')">Project</a></th>
+        <xar:if condition="$orderby ne 'importance'">
+            <th class="xtasks-list-header"><a href="&xar-modurl-xtasks-admin-view;&amp;orderby=importance#$urlargs#" onclick="return loadContent(this.href,'tasklist')"><xar:mlstring>Importance</xar:mlstring></a></th>
+        </xar:if>
+        <xar:if condition="$orderby ne 'priority'">
+            <th class="xtasks-list-header"><a href="&xar-modurl-xtasks-admin-view;&amp;orderby=priority#$urlargs#" onclick="return loadContent(this.href,'tasklist')"><xar:mlstring>Priority</xar:mlstring></a></th>
+        </xar:if>
+        <xar:if condition="$orderby ne 'status'">
+            <th class="xtasks-list-header"><a href="&xar-modurl-xtasks-admin-view;&amp;orderby=status#$urlargs#" onclick="return loadContent(this.href,'tasklist')"><xar:mlstring>Status</xar:mlstring></a></th>
+        </xar:if>
+        <th class="xtasks-list-header"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
+    
+    <xar:set name="$currentorderby">""</xar:set>
 
-    <xar:loop name="$items">
-        <tr><td class="xar-norm">
-                <xar:if condition="empty($loop:item['link'])">#$loop:item['task_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['task_name']#</a></xar:if>
+    <xar:foreach in="$items" value="$taskinfo">
+        <xar:if condition="$orderby eq 'project'">
+            <xar:if condition="$taskinfo['projectid'] ne $currentorderby">
+                <xar:if condition="$taskinfo['projectid'] gt 0">
+                    <xar:set name="projectinfo">xarModAPIFunc('xproject','user','get',array('projectid'=>$taskinfo['projectid']))</xar:set>
+                    <div>#$projectinfo['project_name']#</div>
+                <xar:else />
+                    <div><xar:mlstring>No Associated Projects</xar:mlstring></div>                    
+                </xar:if>
+                <tr><td colspan="5" class="xtasks-list-orderby"><xar:mlstring>Project</xar:mlstring>: <xar:data-output property="$properties['projectid']" value="$taskinfo['projectid']" /></td></tr>
+            </xar:if>
+            <xar:set name="$currentorderby">$taskinfo['projectid']</xar:set>
+        <xar:elseif condition="$orderby eq 'importance'" />
+            <xar:if condition="$taskinfo['importance'] ne $currentorderby">
+                <tr><td colspan="5" class="xtasks-list-orderby"><xar:mlstring>Importance</xar:mlstring>: <xar:data-output property="$properties['importance']" value="$taskinfo['importance']" /></td></tr>
+            </xar:if>
+            <xar:set name="$currentorderby">$taskinfo['importance']</xar:set>
+        <xar:elseif condition="$orderby eq 'priority'" />
+            <xar:if condition="$taskinfo['priority'] ne $currentorderby">
+                <tr><td colspan="5" class="xtasks-list-orderby"><xar:mlstring>Priority</xar:mlstring>: <xar:data-output property="$properties['priority']" value="$taskinfo['priority']" /></td></tr>
+            </xar:if>
+            <xar:set name="$currentorderby">$taskinfo['priority']</xar:set>
+        <xar:elseif condition="$orderby eq 'status'" />
+            <xar:if condition="$taskinfo['status'] ne $currentorderby">
+                <tr><td colspan="5" class="xtasks-list-orderby"><xar:mlstring>Status</xar:mlstring>: <xar:data-output property="$properties['status']" value="$taskinfo['status']" /></td></tr>
+            </xar:if>
+            <xar:set name="$currentorderby">$taskinfo['status']</xar:set>
+        </xar:if>
+                    
+        <tr><td class="xtasks-tasklist-data">
+                <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
+            
+                <xar:if condition="$orderby ne 'project'">
+                    <xar:if condition="$taskinfo['projectid'] gt 0">
+                        <xar:set name="projectinfo">xarModAPIFunc('xproject','user','get',array('projectid'=>$taskinfo['projectid']))</xar:set>
+                        <div>#$projectinfo['project_name']#</div>
+                    <xar:else />
+                        <div><xar:mlstring>No Associated Projects</xar:mlstring></div>                    
+                    </xar:if>
+                </xar:if>
             </td>
             
-            <xar:set name="importance">$loop->item['importance']</xar:set>
-            <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$importance" /></td>
+            <xar:if condition="$orderby ne 'importance'">
+                <td class="xtasks-tasklist-data" style="text-align: center;"><xar:data-output property="$properties['importance']" value="$taskinfo['importance']" /></td>
+            </xar:if>
+            
+            <xar:if condition="$orderby ne 'priority'">
+                <td class="xtasks-tasklist-data" style="text-align: center;">#$taskinfo['priority']#</td>
+            </xar:if>
         
-            <td class="xar-norm" style="text-align: center;">#$loop:item['priority']#</td>
+            <xar:if condition="$orderby ne 'status'">
+                <td class="xtasks-tasklist-data" style="text-align: center;">#$taskinfo['status']#</td>
+            </xar:if>
         
-            <td class="xar-norm" style="text-align: center;">#$loop:item['status']#</td>
-        
-            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$loop:item['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
+            <td class="xtasks-tasklist-data" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
         
         </tr>
     
-        <xar:set name="date_start_planned">$loop->item['date_start_planned']</xar:set>
-        <xar:set name="date_start_actual">$loop->item['date_start_actual']</xar:set>
-        <xar:set name="date_end_planned">$loop->item['date_end_planned']</xar:set>
-        <xar:set name="date_end_actual">$loop->item['date_end_actual']</xar:set>
+        <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
+        <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
+        <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+        <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
             
-        <tr><td class="xar-norm" colspan="4" style="padding-left: 25px;">#$loop:item['description']#
+        <tr><td class="xtasks-tasklist-data" colspan="4" style="padding-left: 25px;">#$taskinfo['formatted_desc']#
         <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
             <br /><xar:mlstring>Planned Timeframe:</xar:mlstring>
             <xar:if condition="!empty($planned_start_date)">
@@ -57,7 +111,7 @@
         </xar:if>
         </td></tr>
 
-    </xar:loop>
+    </xar:foreach>
 
 
 

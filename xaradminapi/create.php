@@ -61,6 +61,7 @@ function xtasks_adminapi_create($args)
                   modid,
                   itemtype,
                   parentid,
+                  dependentid,
                   projectid,
                   task_name,
                   status,
@@ -82,7 +83,7 @@ function xtasks_adminapi_create($args)
                   hours_planned,
                   hours_spent,
                   hours_remaining)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),NULL,NOW(),?,?,?,?,?,?,?)";
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),NULL,NOW(),?,?,?,?,?,?,?)";
             
     $bindvars = array(
                     $nextId,
@@ -90,10 +91,11 @@ function xtasks_adminapi_create($args)
                     $modid ? $modid : 0,
                     $itemtype ? $itemtype : 0,
                     $parentid ? $parentid : 0,
+                    $dependentid ? $dependentid : 0,
                     $projectid ? $projectid : 0,
                     $task_name,
                     $status,
-                    $priority,
+                    $priority ? $priority : 9,
                     $importance,
                     $description,
                     $private ? $private : 0,
@@ -127,9 +129,9 @@ function xtasks_adminapi_create($args)
         
         xarModAPIFunc('xtasks', 'admin', 'updatehours',
                     array('taskid' => $parentinfo['taskid'],
-                        'hours_planned' => $hours_planned,
-                        'hours_spent' => $hours_spent,
-                        'hours_remaining' => $hours_remaining));
+                        'hours_planned_delta' => $hours_planned,
+                        'hours_spent_delta' => $hours_spent,
+                        'hours_remaining_delta' => $hours_remaining));
     }
         
     $item = $args;

@@ -12,12 +12,13 @@
 
 <div class="xar-mod-body">
     <h2><xar:mlstring>Log Work Performed</xar:mlstring></h2>
-    <div align="center">
+    <div>
     
         <form method="post" action="&xar-modurl-xtasks-worklog-create;">
         
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="taskid" value="#$taskid#" />
+            <input type="hidden" name="returnurl" value="#$returnurl#" />
             
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
@@ -25,12 +26,16 @@
                     <td><xar:data-input property="$properties['eventdate']" name="eventdate" value="$currentdate" /></td>
                 </tr>
                 <tr>
+                    <td><xar:mlstring>Assigned To</xar:mlstring></td>
+                    <td><xar:data-input property="$taskproperties['owner']" name="taskownerid" value="$taskinfo['owner']" /></td>
+                </tr>
+                <tr>
                     <td><xar:mlstring>Performed By</xar:mlstring></td>
                     <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$uid" /></td>
                 </tr>
                 <tr>
                     <td><xar:mlstring>Hours Worked</xar:mlstring></td>
-                    <td><xar:data-input property="$properties['hours']" name="hours" /></td>
+                    <td><input type="text" name="hours" id="hours"  /></td><!-- onBlur="update_hours_remaining()" -->
                 </tr>
                 <tr>
                     <td><xar:mlstring>Hours Remaining</xar:mlstring></td>

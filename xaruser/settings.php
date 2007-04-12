@@ -3,6 +3,8 @@
 function xtasks_user_settings()
 {
     $data = xarModAPIFunc('xtasks','admin','menu');
+    
+    if (!xarVarFetch('returnurl',     'str::',     $returnurl,     '',     XARVAR_NOT_REQUIRED)) return;
 
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('My Settings')));
     xarModSetVar('xtasks', 'emailtaskupdates', false);
@@ -16,9 +18,11 @@ function xtasks_user_settings()
     xarModSetVar('xtasks', 'show_planned_dates', false);
     xarModSetVar('xtasks', 'show_actual_dates', false);
     xarModSetVar('xtasks', 'show_hours', false);
+    xarModSetVar('xtasks', 'verbose', false);
 
     $data['submitlabel'] = xarML('Submit');
     $data['uid'] = xarUserGetVar('uid');
+    $data['returnurl'] = $returnurl;
     return $data;
 }
 

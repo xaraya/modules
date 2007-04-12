@@ -48,10 +48,16 @@ function xtasks_admin_display($args)
         $item['editurl'] = '';
     }
     if (xarSecurityCheck('DeleteXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
-        $item['deleteurl'] = xarModURL('xtasks',
-            'admin',
-            'delete',
-            array('taskid' => $item['taskid']));
+        if($item['projectid'] > 0) {
+            $item['deleteurl'] = xarModURL('xtasks', 'admin', 'delete',
+                        array('taskid' => $item['taskid'],
+                            'returnurl' => xarModURL('xproject', 'admin', 'display', 
+                                                    array('projectid' => $item['projectid']))));
+        } else {
+            $item['deleteurl'] = xarModURL('xtasks', 'admin', 'delete',
+                        array('taskid' => $item['taskid']));
+        }
+
     } else {
         $item['deleteurl'] = '';
     }

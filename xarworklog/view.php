@@ -18,6 +18,7 @@ function xtasks_worklog_view($args)
     if (!xarVarFetch('ownerid',   'int', $ownerid,   0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid',   'int', $projectid,   0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('clientid',   'int', $clientid,   0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('mindate',   'str::', $mindate,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxdate',   'str::', $maxdate,   '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ttldays',   'int::', $ttldays,   7, XARVAR_NOT_REQUIRED)) return;
     
@@ -35,12 +36,17 @@ function xtasks_worklog_view($args)
                           array('ownerid' => $ownerid,
                                 'projectid' => $projectid,
                                 'clientid' => $clientid,
+                                'mindate' => $mindate,
                                 'maxdate' => $maxdate,
                                 'ttldays' => $ttldays));
 
     if (!isset($worklog) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     $data['worklog'] = $worklog;
+    $data['mindate'] = $mindate;
+    $data['maxdate'] = $maxdate;
+    $data['ttldays'] = $ttldays;
+    $data['ownerid'] = $ownerid;
     $data['pager'] = '';
     return $data;
 }

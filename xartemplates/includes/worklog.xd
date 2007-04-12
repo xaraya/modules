@@ -2,15 +2,19 @@
 
 <xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xtasks" itemtype="2" itemid="$worklog_objectid" />
-<div style="width: auto;">
-    <xar:foreach in="$worklog" value="$workdetails">
-        <div>
-            <div class="xar-norm" style="float: left; width: 250px;"><xar:data-output property="$properties['eventdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" /></div>
-            <div class="xar-norm" style="float: left; width: 200px;"><xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" /></div>
-            <div class="xar-norm" style="float: left; width: 50px;"><xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs</div>
-            <div class="xar-norm" style="float: right; width: 50px;"><a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></div>
-            <div style="clear: both;"></div>
-        </div>
-        <div class="xar-tiny" style="margin-left: 50px;"><xar:data-output property="$properties['notes']" value="$workdetails['notes']" /></div>
-    </xar:foreach>
+<div style="width: auto; text-align: left; background-color: #A0A080;">
+    <xar:if condition="count($worklog) gt 0">
+        <xar:foreach in="$worklog" value="$workdetails">
+            <div>
+                <div class="xar-norm" style="float: left; width: 150px; background-color: #A0A080; font-weight: bold; font-size: 110%;"><xar:data-output property="$properties['eventdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" /></div>
+                <div class="xar-norm" style="float: left; width: 150px; background-color: #A0A080; text-align: center;"><xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" /></div>
+                <div class="xar-norm" style="float: left; width: 100px; background-color: #A0A080;"><xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs</div>
+                <div class="xar-norm" style="float: right; width: 50px; background-color: #A0A080;"><a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="xar-tiny" style="margin-left: 0px; overflow: hidden;"><xar:data-output property="$properties['notes']" value="$workdetails['formatted_notes']" /></div>
+        </xar:foreach>
+    <xar:else />
+        <div class="xar-norm; background-color: #A0A080;"><xar:mlstring>No Work Recorded</xar:mlstring></div>
+    </xar:if>
 </div>

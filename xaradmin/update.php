@@ -2,6 +2,8 @@
 
 function xtasks_admin_update($args)
 {
+    extract($args);
+    
     if (!xarVarFetch('taskid', 'id', $taskid)) return;
     if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
@@ -19,13 +21,19 @@ function xtasks_admin_update($args)
     if (!xarVarFetch('date_start_actual', 'str::', $date_start_actual, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('date_end_planned', 'str::', $date_end_planned, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('date_end_actual', 'str::', $date_end_actual, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'float::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'float::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'float::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
-    extract($args);
+    if(empty($returnurl)) $returnurl = xarModURL('xtasks', 'admin', 'view');
+    
     if (!xarSecConfirmAuthKey()) return;
+    
+    if(!empty($cancel)) {
+        xarResponseRedirect($returnurl);
+    }
+    
     if(!xarModAPIFunc('xtasks',
                     'admin',
                     'update',

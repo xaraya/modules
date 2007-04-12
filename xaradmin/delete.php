@@ -29,12 +29,15 @@ function xtasks_admin_delete($args)
     if (!isset($returnurl)) {
         $returnurl = $_SERVER['HTTP_REFERER'];
     }
-    $task = xarModAPIFunc('xtasks',
+    if (empty($returnurl)) {
+        $returnurl = xarModURL('xtasks', 'admin', 'view');
+    }
+    $taskinfo = xarModAPIFunc('xtasks',
                          'user',
                          'get',
                          array('taskid' => $taskid));
 
-    if (!isset($task) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    if (!isset($taskinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if (!xarSecurityCheck('DeleteXTask',1,'Item',$taskid)) return;
 
@@ -43,10 +46,10 @@ function xtasks_admin_delete($args)
         $data = xarModAPIFunc('xtasks','admin','menu');
 
         $data['taskid'] = $taskid;
-        $data['status'] = $task['status'];
+        $data['status'] = $taskinfo['status'];
         $data['returnurl'] = $returnurl;
 
-        $data['name'] = xarVarPrepForDisplay($task['task_name']);
+        $data['name'] = xarVarPrepForDisplay($taskinfo['task_name']);
         $data['confirmbutton'] = xarML('Confirm');
 
         $data['authid'] = xarSecGenAuthKey();
@@ -74,14 +77,14 @@ function xtasks_admin_delete($args)
         xarSessionSetVar('statusmsg', xarML('Task Closed'));
     }
     
-    if($task['parentid'] > 0) { // must also check if any other open tasks to account for first
+    if($taskinfo['parentid'] > 0) { // must also check if any other open tasks to account for first
         $alltasksclosed = true;
         $siblings = xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['parentid']));
         foreach($siblings as $childtask) {
-            if($childtask['Status'] == "Open") $alltasksclosed = false;
+            if($childtask['status'] == "Active") $alltasksclosed = false;
         }
         if($alltasksclosed) {
-            xarResponseRedirect(xarModURL('xtasks', 'admin', 'delete', array('taskid' => $task['parentid'])));
+            xarResponseRedirect(xarModURL('xtasks', 'admin', 'delete', array('taskid' => $taskinfo['parentid'])));
             return true;
         }
     }

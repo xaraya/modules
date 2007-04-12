@@ -22,6 +22,7 @@ function xtasks_userapi_get($args)
                    modid,
                    itemtype,
                    parentid,
+                   dependentid,
                    projectid,
                    task_name,
                    status,
@@ -62,6 +63,7 @@ function xtasks_userapi_get($args)
          $modid,
          $itemtype,
          $parentid,
+         $dependentid,
          $projectid,
          $task_name,
          $status,
@@ -89,33 +91,44 @@ function xtasks_userapi_get($args)
     if (!xarSecurityCheck('ReadXTask', 1, 'Item', "$task_name:All:$taskid")) {
         return;
     }
+    
+    if(preg_match("/<br\\s*?\/??>/i", $description)) {
+        $formatted_desc = $description;
+    } else {
+        $formatted_desc = nl2br($description);
+    }
+    
+    $formatted_desc = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+             "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_desc);
 
-    $task = array('taskid' => $taskid,
-                'objectid' => $objectid,
-                'modid' => $modid,
-                'itemtype' => $itemtype,
-                'parentid' => $parentid,
-                'projectid' => $projectid,
-                'task_name' => $task_name,
-                'status' => $status,
-                'priority' => $priority,
-                'importance' => $importance,
-                'description' => $description,
-                'private' => $private,
-                'creator' => $creator,
-                'owner' => $owner,
-                'assigner' => $assigner,
-                'groupid' => $groupid,
-                'date_created' => $date_created == "0000-00-00" ? "" : $date_created,
-                'date_approved' => $date_approved == "0000-00-00" ? "" : $date_approved,
-                'date_changed' => $date_changed == "0000-00-00" ? "" : $date_changed,
-                'date_start_planned' => $date_start_planned == "0000-00-00" ? "" : $date_start_planned,
-                'date_start_actual' => $date_start_actual == "0000-00-00" ? "" : $date_start_actual,
-                'date_end_planned' => $date_end_planned == "0000-00-00" ? "" : $date_end_planned,
-                'date_end_actual' => $date_end_actual == "0000-00-00" ? "" : $date_end_actual,
-                'hours_planned' => $hours_planned,
-                'hours_spent' => $hours_spent,
-                'hours_remaining' => $hours_remaining);
+    $task = array('taskid'              => $taskid,
+                'objectid'              => $objectid,
+                'modid'                 => $modid,
+                'itemtype'              => $itemtype,
+                'parentid'              => $parentid,
+                'dependentid'           => $dependentid,
+                'projectid'             => $projectid,
+                'task_name'             => $task_name,
+                'status'                => $status,
+                'priority'              => $priority,
+                'importance'            => $importance,
+                'description'           => $description,
+                'formatted_desc'        => $formatted_desc,
+                'private'               => $private,
+                'creator'               => $creator,
+                'owner'                 => $owner,
+                'assigner'              => $assigner,
+                'groupid'               => $groupid,
+                'date_created'          => $date_created == "0000-00-00" ? "" : $date_created,
+                'date_approved'         => $date_approved == "0000-00-00" ? "" : $date_approved,
+                'date_changed'          => $date_changed == "0000-00-00" ? "" : $date_changed,
+                'date_start_planned'    => $date_start_planned == "0000-00-00" ? "" : $date_start_planned,
+                'date_start_actual'     => $date_start_actual == "0000-00-00" ? "" : $date_start_actual,
+                'date_end_planned'      => $date_end_planned == "0000-00-00" ? "" : $date_end_planned,
+                'date_end_actual'       => $date_end_actual == "0000-00-00" ? "" : $date_end_actual,
+                'hours_planned'         => $hours_planned,
+                'hours_spent'           => $hours_spent,
+                'hours_remaining'       => $hours_remaining);
 
     return $task;
 }

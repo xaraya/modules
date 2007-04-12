@@ -13,10 +13,14 @@
  */
 function xtasks_admin_create($args)
 {
+    extract($args);
+    
+    if (!xarVarFetch('showajax',   'str::', $showajax,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('modid',   'isset', $modid,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('itemtype',  'isset', $itemtype,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('objectid',  'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('parentid', 'id', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('dependentid', 'id', $dependentid, $dependentid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
@@ -35,12 +39,11 @@ function xtasks_admin_create($args)
     if (!xarVarFetch('date_start_actual', 'str::', $date_start_actual, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('date_end_planned', 'str::', $date_end_planned, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('date_end_actual', 'str::', $date_end_actual, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_planned', 'str::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_spent', 'str::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('hours_remaining', 'str::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_planned', 'float::', $hours_planned, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_spent', 'float::', $hours_spent, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours_remaining', 'float::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
-    extract($args);
     if (!xarSecConfirmAuthKey()) return;
     
 //    if(!$returnurl) $returnurl = $_SERVER['HTTP_REFERER'];
@@ -54,6 +57,7 @@ function xtasks_admin_create($args)
                             'modid'             => $modid,
                             'itemtype'          => $itemtype,
                             'parentid'          => $parentid,
+                            'dependentid'       => $dependentid,
                             'projectid'         => $projectid,
                             'task_name'         => $task_name,
                             'status'            => $status,
@@ -80,10 +84,15 @@ function xtasks_admin_create($args)
     if (!isset($taskid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     xarSessionSetVar('statusmsg', xarMLByKey('TASKCREATED'));
+//return "showajax: ".$showajax." - ".$returnurl;
 
-    xarResponseRedirect($returnurl);
-
-    return true;
+    if($showajax) {
+        return xarModFunc('xtasks', 'admin', 'workspace', array('modid' => $modid, 'itemtype' => $itemtype));
+    } else {
+//        xarResponseRedirect($returnurl);
+    
+        return true;
+    } 
 }
 
 ?>

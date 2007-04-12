@@ -48,10 +48,17 @@ function xtasks_adminapi_delete($args)
                        new SystemException($msg));
         return;
     }
+
+    // kill existing task hours to start the process of removing them from parent tasks and assoc project
+    xarModAPIFunc('xtasks', 'admin', 'updatehours',
+                array('taskid' => $taskid,
+                    'hours_planned_delta' => 0 - $taskinfo['hours_planned'],
+                    'hours_spent_delta' => 0 - $taskinfo['hours_spent'],
+                    'hours_remaining_delta' => 0 - $taskinfo['hours_remaining']));
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($taskinfo['owner'])) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
     }
 
     $dbconn =& xarDBGetConn();

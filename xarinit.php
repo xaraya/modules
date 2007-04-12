@@ -26,32 +26,33 @@ function xtasks_init()
     $xtasks_table = $xartable['xtasks'];
 
     $xtasks_fields = array(
-        'taskid'            =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'parentid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'projectid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'modid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'itemtype'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'objectid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'task_name'            =>array('type'=>'varchar','size'=>255,'null'=>FALSE),
-        'status'            =>array('type'=>'varchar','size'=>32, 'null'=>FALSE),
-        'priority'            =>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
-        'importance'        =>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
-        'description'        =>array('type'=>'text'),
-        'private'            =>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
-        'creator'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'owner'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'assigner'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'groupid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'date_created'        =>array('type'=>'date','null'=>TRUE),
-        'date_approved'        =>array('type'=>'date','null'=>TRUE),
-        'date_changed'        =>array('type'=>'date','null'=>TRUE),
-        'date_start_planned'=>array('type'=>'date','null'=>TRUE),
-        'date_start_actual'    =>array('type'=>'date','null'=>TRUE),
-        'date_end_planned'    =>array('type'=>'date','null'=>TRUE),
-        'date_end_actual'    =>array('type'=>'date','null'=>TRUE),
-        'hours_planned'        =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
-        'hours_spent'        =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
-        'hours_remaining'    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2));
+        'taskid'                =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'parentid'              =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'dependentid'           =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'projectid'             =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'modid'                 =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'itemtype'              =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'objectid'              =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'task_name'             =>array('type'=>'varchar','size'=>255,'null'=>FALSE),
+        'status'                =>array('type'=>'varchar','size'=>32, 'null'=>FALSE),
+        'priority'              =>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
+        'importance'            =>array('type'=>'integer','null'=>FALSE, 'size'=>'tiny', 'default'=>'1'),
+        'description'           =>array('type'=>'text'),
+        'private'               =>array('type'=>'integer','null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
+        'creator'               =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'owner'                 =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'assigner'              =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'groupid'               =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'date_created'          =>array('type'=>'date','null'=>TRUE),
+        'date_approved'         =>array('type'=>'date','null'=>TRUE),
+        'date_changed'          =>array('type'=>'date','null'=>TRUE),
+        'date_start_planned'    =>array('type'=>'date','null'=>TRUE),
+        'date_start_actual'     =>array('type'=>'date','null'=>TRUE),
+        'date_end_planned'      =>array('type'=>'date','null'=>TRUE),
+        'date_end_actual'       =>array('type'=>'date','null'=>TRUE),
+        'hours_planned'         =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'hours_spent'           =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'hours_remaining'       =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2));
 
     $sql = xarDBCreateTable($xtasks_table,$xtasks_fields);
     if (empty($sql)) return; // throw back
@@ -134,12 +135,12 @@ function xtasks_init()
     $reminders_table = $xartable['xtasks_reminders'];
 
     $reminders_fields = array(
-        'reminderid'            =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'ownerid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'eventdate'                =>array('type'=>'datetime','null'=>TRUE),
-        'warning'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'reminder'                =>array('type'=>'text'));
+        'reminderid'        =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'taskid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'ownerid'           =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'eventdate'         =>array('type'=>'datetime','null'=>TRUE),
+        'warning'           =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'reminder'          =>array('type'=>'text'));
 
     $sql = xarDBCreateTable($reminders_table,$reminders_fields);
     if (empty($sql)) return;
@@ -154,12 +155,12 @@ function xtasks_init()
     $worklog_table = $xartable['xtasks_worklog'];
 
     $worklog_fields = array(
-        'worklogid'                =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'taskid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'ownerid'                =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
-        'eventdate'                =>array('type'=>'datetime','null'=>TRUE),
-        'hours'                    =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
-        'notes'                    =>array('type'=>'text'));
+        'worklogid'         =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'taskid'            =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'ownerid'           =>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'eventdate'         =>array('type'=>'datetime','null'=>TRUE),
+        'hours'             =>array('type'=>'float', 'size' =>'decimal', 'width'=>6, 'decimals'=>2),
+        'notes'             =>array('type'=>'text'));
 
     $sql = xarDBCreateTable($worklog_table,$worklog_fields);
     if (empty($sql)) return;
@@ -185,16 +186,6 @@ function xtasks_init()
                               array('file' => 'modules/xtasks/xardata/tasks.xml'));
     if (empty($xtasks_objectid)) return;
     xarModSetVar('xtasks','xtasks_objectid',$xtasks_objectid);
-
-    $usersettings = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/xtasks/xardata/usersettings.xml'));
-    if (empty($usersettings)) return;
-    xarModSetVar('xtasks','usersettings',$usersettings);
-
-    $modulesettings = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
-    if (empty($modulesettings)) return;
-    xarModSetVar('xtasks','modulesettings',$modulesettings);
     
     $worklog_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/xtasks/xardata/worklog.xml'));
@@ -205,6 +196,16 @@ function xtasks_init()
                               array('file' => 'modules/xtasks/xardata/reminders.xml'));
     if (empty($reminders_objectid)) return;
     xarModSetVar('xtasks','reminders_objectid',$reminders_objectid);
+
+    $usersettings = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/usersettings.xml'));
+    if (empty($usersettings)) return;
+    xarModSetVar('xtasks','usersettings',$usersettings);
+
+    $modulesettings = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/xtasks/xardata/modulesettings.xml'));
+    if (empty($modulesettings)) return;
+    xarModSetVar('xtasks','modulesettings',$modulesettings);
 
     xarModSetVar('xtasks', 'dateformat', '');
     xarModSetVar('xtasks', 'autorefresh', 600);
@@ -313,6 +314,27 @@ function xtasks_upgrade($oldversion)
         xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
                         new DefaultUserException($msg));
         return;
+    }
+            
+    /* preserve importance, status and project type lists during ddata rewrite */
+    $xtasks_objectid = xarModGetVar('xtasks','xtasks_objectid');
+    $prop_data_cached = xarSessionGetVar('prop_data_cached');
+    if($xtasks_objectid && !$prop_data_cached) {
+        $fields = xarModAPIFunc('dynamicdata','user','getprop',
+                                array('objectid' => $xtasks_objectid));
+        if($fields) {
+            foreach ($fields as $name => $info) {
+                if($name == "importance") {
+                    $oldprop_importance = $info;
+                    xarSessionSetVar('oldprop_importance', $info);
+                }
+                if($name == "status") {
+                    $oldprop_status = $info;
+                    xarSessionSetVar('oldprop_status', $info);
+                }
+            }
+            xarSessionSetVar('prop_data_cached', 1);
+        }
     }
     
     switch($oldversion) {
@@ -597,6 +619,7 @@ function xtasks_upgrade($oldversion)
             $result = $datadict->addColumn($reminders_table, 'warning I(11) NotNull Default 0');
             if(xarCurrentErrorType() == 2) xarErrorFree();
         case '1.6.13':
+        case '1.7':
         
             // RELOAD USER SETTINGS
             $usersettings = xarModGetVar('xtasks','usersettings');
@@ -616,7 +639,114 @@ function xtasks_upgrade($oldversion)
             if (empty($usersettings)) return;
             xarModSetVar('xtasks','usersettings',$usersettings);
         
-        case '1.7':
+        case '1.7.1':
+            xarRemoveMasks('xtasks');
+            xarRemoveInstances('xtasks');
+
+            xarRegisterMask('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+            xarRegisterMask('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+            xarRegisterMask('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+        
+            xarRegisterPrivilege('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterPrivilege('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+            xarRegisterPrivilege('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+            xarRegisterPrivilege('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+            xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+            xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+            
+            xarRegisterPrivilege('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+            xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+            xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+        
+            xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+        case '1.7.2':
+        
+            $xtasks_table = $xartable['xtasks'];
+            $result = $datadict->addColumn($xtasks_table, 'dependentid I(11) NotNull Default 0');
+            if(xarCurrentErrorType() == 2) xarErrorFree();
+        
+        case '1.7.3':
+            xarRemoveMasks('xtasks');
+            xarRemoveInstances('xtasks');
+
+            xarRegisterMask('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterMask('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+            xarRegisterMask('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+            xarRegisterMask('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+            xarRegisterMask('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+            xarRegisterMask('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+        
+            xarRegisterPrivilege('ViewXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_OVERVIEW');
+            xarRegisterPrivilege('ReadXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_READ');
+            xarRegisterPrivilege('EditXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_EDIT');
+            xarRegisterPrivilege('AddXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADD');
+            xarRegisterPrivilege('DeleteXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_DELETE');
+            xarRegisterPrivilege('AdminXTask', 'All', 'xtasks', 'All', 'All', 'ACCESS_ADMIN');
+            
+            xarRegisterPrivilege('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('UseReminders', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+            xarRegisterPrivilege('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('ViewWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            
+            xarRegisterPrivilege('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('RecordWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+        
+            xarRegisterPrivilege('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+            xarRegisterMask('AuditWorklog', 'All', 'xtasks', 'All', 'All', 'ACCESS_COMMENT');
+        
+        
+        case '1.7.4':
+                
+            /* restore importance, status, and project type lists */
+            if($prop_data_cached) {
+                $fields = xarModAPIFunc('dynamicdata','user','getprop',
+                                        array('objectid' => $xtasks_objectid));
+                foreach ($fields as $name => $info) {
+                    if($name == "importance") {
+                        $newprop_importance = $info;
+                    }
+                    if($name == "status") {
+                        $newprop_status = $info;
+                    }
+                }
+                
+                $oldprop_status = xarSessionGetVar('oldprop_status');
+                $oldprop_importance = xarSessionGetVar('oldprop_importance');
+                $oldprop_projecttype = xarSessionGetVar('oldprop_projecttype');
+                
+                
+                if (!xarModAPIFunc('dynamicdata','admin','updateprop',
+                                  array('prop_id' => $newprop_status['id'],
+                                        'label' => $oldprop_status['label'],
+                                        'type' => $oldprop_status['type'],
+                                        'default' => $oldprop_status['default'],
+                                        'status' => $oldprop_status['status'],
+                                        'validation' => $oldprop_status['validation']))) {
+                    return;
+                }
+                
+                if (!xarModAPIFunc('dynamicdata','admin','updateprop',
+                                  array('prop_id' => $newprop_importance['id'],
+                                        'label' => $oldprop_importance['label'],
+                                        'type' => $oldprop_importance['type'],
+                                        'default' => $oldprop_importance['default'],
+                                        'status' => $oldprop_importance['status'],
+                                        'validation' => $oldprop_importance['validation']))) {
+                    return;
+                }
+                xarSessionDelVar('prop_data_cached');
+            }
             break;
 
     }
@@ -631,25 +761,28 @@ function xtasks_delete()
 
     xarDBLoadTableMaintenanceAPI();
     $sql = xarDBDropTable($xartable['xtasks']);
-    if (empty($sql)) return; // throw back
-
-    // Drop the table
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $query);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-    $sql = xarDBDropTable($xartable['xtasks_reminders']);
-    if (empty($sql)) return; // throw back
 
-    // Drop the table
+    $sql = xarDBDropTable($xartable['xtasks_reminders']);
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $query);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+
+    $sql = xarDBDropTable($xartable['xtasks_worklog']);
+    if (empty($sql)) return;
+    $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $query);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
@@ -676,16 +809,16 @@ function xtasks_delete()
     xarModDelVar('xtasks','reminders_objectid');
 
     $usersettings = xarModGetVar('xtasks','usersettings');
-    if (!empty($xtasks_objectid)) {
+    if (!empty($usersettings)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $usersettings));
     }
-    xarModDelVar('xtasks','xtasks_objectid');
+    xarModDelVar('xtasks','usersettings');
 
     $modulesettings = xarModGetVar('xtasks','modulesettings');
-    if (!empty($xtasks_objectid)) {
+    if (!empty($modulesettings)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $modulesettings));
     }
-    xarModDelVar('xtasks','xtasks_objectid');
+    xarModDelVar('xtasks','modulesettings');
     
      /* Remove any module aliases before deleting module vars */
     /* Assumes one module alias in this case */

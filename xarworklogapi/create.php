@@ -69,13 +69,13 @@ function xtasks_worklogapi_create($args)
     $worklogid = $dbconn->PO_Insert_ID($worklogtable, 'worklogid');
     
     $taskinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $taskid));
-    
+        
     if(!isset($hours_remaining)) $hours_remaining = $taskinfo['hours_remaining'];
 
     xarModAPIFunc('xtasks', 'admin', 'updatehours',
                 array('taskid' => $taskinfo['taskid'],
-                    'hours_spent' => $hours,
-                    'hours_remaining' => $hours_remaining));
+                    'hours_spent_delta' => $hours,
+                    'hours_remaining_delta' => $hours_remaining - $taskinfo['hours_remaining']));
 
     return $worklogid;
 }

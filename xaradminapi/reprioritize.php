@@ -65,7 +65,7 @@ function xtasks_adminapi_reprioritize($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($item['owner']) && $item['owner'] != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $item['owner'], 'taskid' => $taskid, 'task_name' => $item['task_name']));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $item['owner'], 'taskid' => $taskid, 'action' => "PRIORITY"));
     }
 
     return true;

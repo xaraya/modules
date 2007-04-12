@@ -42,11 +42,11 @@
       <id>54</id>
       <label>Status</label>
       <type>dropdown</type>
-      <default></default>
+      <default>Active</default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>4</order>
-      <validation>;Draft;Pending Approval;Active;Closed</validation>
+      <validation>;Draft;Active;Pending Approval;Closed</validation>
     </property>
     <property name="priority">
       <id>55</id>
@@ -76,7 +76,7 @@
       <source>dynamic_data</source>
       <status>1</status>
       <order>7</order>
-      <validation></validation>
+      <validation>:50</validation>
     </property>
     <property name="private">
       <id>58</id>

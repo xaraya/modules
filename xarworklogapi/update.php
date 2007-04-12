@@ -63,7 +63,7 @@ function xtasks_worklogapi_update($args)
 
     xarModAPIFunc('xtasks', 'admin', 'updatehours',
                 array('taskid' => $taskinfo['taskid'],
-                    'hours_spent' => $hours - $item['hours'],
+                    'hours_spent' => $hours,
                     'hours_remaining' => $hours_remaining));
 
     return true;

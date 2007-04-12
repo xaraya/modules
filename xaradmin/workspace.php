@@ -4,9 +4,10 @@ function xtasks_admin_workspace($args)
 {        
     extract($args);
     
-    if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'int::', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('orderby', 'str', $orderby, '', XARVAR_NOT_REQUIRED)) return;
-    
+    if (!xarVarFetch('showajax', 'str', $showajax, NULL, XARVAR_NOT_REQUIRED)) return;
+        
     $data = array();
 
     if (!xarSecurityCheck('AddXTask')) {
@@ -23,11 +24,23 @@ function xtasks_admin_workspace($args)
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
             $data['returnurl'] = $extrainfo['returnurl'];
         }
-    } else {
+    } elseif (isset($extrainfo)) {
         $data['returnurl'] = $extrainfo;
     }
+
+    // using AJAX we need to return to the workspace page instead of the hooked page
+    if(!isset($extrainfo)) {
+        if (!xarVarFetch('get_module', 'str', $get_module, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('get_itemtype', 'str', $get_itemtype, '', XARVAR_NOT_REQUIRED)) return;
+        $extrainfo = array('module' => $get_module,
+                            'itemtype' => $get_itemtype);
     
-    if(!strpos($data['returnurl'], "mode=tasks")) {
+        $data['returnurl'] = xarModURL('xtasks', 'admin', 'workspace',
+                                    array('get_module' => $get_module,
+                                        'get_itemtype' => $get_itemtype));
+    }
+    
+    if(!strpos($data['returnurl'], "mode")) {
         $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
     }
     
@@ -59,6 +72,8 @@ function xtasks_admin_workspace($args)
     } else {
         xarVarFetch('objectid','isset',$objectid,NULL,XARVAR_NOT_REQUIRED);
     }
+    
+    $data['showajax'] = $showajax;
     
     $data['startnum'] = $startnum;
     $data['orderby'] = $orderby ? $orderby : "status";
@@ -107,6 +122,7 @@ function xtasks_admin_workspace($args)
         } else {
             $items[$i]['deleteurl'] = '';
         }
+        $items[$i]['worklog'] = xarModAPIFunc('xtasks','worklog','getallfromtask',array('taskid'=>$item['taskid']));
     }
     
     $data['items'] = $items;
@@ -121,7 +137,8 @@ function xtasks_admin_workspace($args)
     $data['show_owner'] = xarModGetUserVar('xtasks', 'show_owner');
     $data['show_project'] = xarModGetUserVar('xtasks', 'show_project');
     $data['show_client'] = xarModGetUserVar('xtasks', 'show_client');
-        
+    $data['verbose'] = xarModGetUserVar('xtasks', 'verbose');
+    
     return $data;
 }
 

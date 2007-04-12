@@ -51,7 +51,7 @@ function xtasks_worklogapi_getallfromtask($args)
         $sql .= " WHERE ".implode(" AND ", $whereclause);
     }
     
-    $sql .= " ORDER BY eventdate";
+    $sql .= " ORDER BY eventdate DESC";
 
     $result = $dbconn->Execute($sql);
 
@@ -66,12 +66,23 @@ function xtasks_worklogapi_getallfromtask($args)
               $eventdate,
               $hours,
               $notes) = $result->fields;
-        $items[] = array('worklogid'    => $worklogid,
-                          'taskid'      => $taskid,
-                          'ownerid'     => $ownerid,
-                          'eventdate'   => $eventdate,
-                          'hours'       => $hours,
-                          'notes'       => $notes);
+    
+        if(preg_match("/<br\\s*?\/??>/i", $notes)) {
+            $formatted_notes = $notes;
+        } else {
+            $formatted_notes = nl2br($notes);
+        }
+        
+        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
+                 
+        $items[] = array('worklogid'        => $worklogid,
+                          'taskid'          => $taskid,
+                          'ownerid'         => $ownerid,
+                          'eventdate'       => $eventdate,
+                          'hours'           => $hours,
+                          'notes'           => $notes,
+                          'formatted_notes' => $formatted_notes);
     }
 
     $result->Close();
