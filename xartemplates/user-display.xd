@@ -1,0 +1,39 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="dummy">xarTplAddStyleLink('sharecontent','sharecontent')</xar:set>
+<xar:if condition="sizeof($websites) ge 1">
+<div style="margin: 4px 0">
+  <xar:mlstring>Share:</xar:mlstring>
+  <ul class="sharecontent">
+  <xar:foreach in="$websites" key="$key" value="$website">
+    <li>
+	  <a href="#$website['submiturl']#" 
+	     title="#xarML('submit to')# #$website['title']#"
+      ><img src="#$website['image']#" 
+	        title="#$website['title']#" 
+			alt="#$website['title']#" 
+	  /></a>
+	</li>
+  </xar:foreach>
+  </ul>
+</div>
+</xar:if>
+<xar:if condition="$usercansend">
+<div style="margin: 4px 0">
+  <xar:if condition="xarUserIsLoggedIn()">
+    <xar:set name="username">xarUserGetVar('name')</xar:set>
+    <xar:set name="useremail">xarUserGetVar('email')</xar:set>
+  </xar:if>
+  <input type="submit" value="#xarML('Notify by email')#" />
+  <form class="sharecontent" method="post" 
+        action="&xar-modurl-sharecontent-user-sendbymail;" 
+ 		enctype="application/x-www-form-urlencoded">
+      <xar:mlstring>Recipient:</xar:mlstring><input type="text" value="andrea@andreamoro.net" name="emails" size="30" />
+      <xar:mlstring>From:</xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
+      <xar:mlstring>Sender's mail:</xar:mlstring><input type="text" value="#$useremail#" name="authoremail" size="30" />
+      <input type="hidden" name="authid" id="authid" value="#$authid#" />
+      <input type="hidden" name="returnurl" value="#$returnurl#"/>
+      <input type="hidden" name="objectid" id="objectid" value='#$objectid#' />
+      <input type="hidden" name="extrainfo" id="extrainfo" value='#$extrainfo#' />
+  </form>
+</div>
+</xar:if>

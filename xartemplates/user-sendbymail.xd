@@ -1,0 +1,8 @@
+<xar:set name="sitename"><xar:var scope="module" module="themes" name="SiteName" /></xar:set>
+#$fromname# has visited the site #$sitename# at (&xar-baseurl;)
+and recommends you visit the following page:
+<xar:if condition="isset($extrainfo['title'])">
+  #$extrainfo['title']#
+</xar:if>
+  #$returnurl#
+

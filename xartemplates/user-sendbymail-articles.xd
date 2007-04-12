@@ -1,0 +1,14 @@
+<xar:set name="sitename"><xar:var scope="module" module="themes" name="SiteName" /></xar:set>
+#$fromname# <xar:mlstring>has visited the web site</xar:mlstring> #$sitename#
+ <xar:mlstring>and recommends you visit the following page:</xar:mlstring>
+  #$returnurl#
+
+<xar:mlstring>Here are the aricles details:</xar:mlstring>
+
+
+<xar:set name="articleinfo">xarModAPiFunc('articles','user','get',array('aid'=>$objectid))</xar:set>
+#$articleinfo['title']#
+
+
+#$articleinfo['summary']#
+

@@ -1,0 +1,3 @@
+ul.sharecontent {display:inline; list-style-type:none}
+ul.sharecontent li {display:inline;padding: 2px; margin: 2px;} 
+form.sharecontent {display:inline;}

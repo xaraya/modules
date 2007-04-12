@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="checkall.js" />
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>
+        Sharecontent Administration
+    </xar:mlstring>
+  </span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" module="sharecontent" file="admin-menu" />
+  <form id="post" name="updatewebsites" action="&xar-modurl-sharecontent-admin-updatewebconfig;" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+      <legend>
+        <xar:mlstring>Web Configuration</xar:mlstring>
+      </legend>
+      <div class="xar-form-input-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Save config')#" />
+      </div>
+      <xar:if condition="sizeof($websites) ge 1">
+        <xar:mlstring>Check the websites you want to activate</xar:mlstring>
+          <script language="JavaScript" type="text/javascript">
+            document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['updatewebsites'],true)\"> <xar:mlstring>Check All</xar:mlstring></a> | ");
+          document.write("<a href=\"javascript:xar_base_checkall(document.forms['updatewebsites'],false)\"> <xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+    </script>
+        <ul>
+        <xar:foreach in="$websites" key="$key" value="$website">
+          <li>
+            <input type="hidden" value="0" name="active[#$key#]" />
+            <xar:if condition="$website['active']">
+               <input type="checkbox" checked="checked" value="1" name="active[#$key#]" />
+            <xar:else />
+               <input type="checkbox" value="1" name="active[#$key#]" />
+            </xar:if>
+            <a href="#$website['homeurl']#" 
+               title="xarML('submit to') #$website['title']#"
+              ><img src="#$website['image']#" 
+                  title="#$website['title']#" 
+              alt="#$website['title']#" 
+            /> #$website['title']#</a>
+          </li>
+        </xar:foreach>
+        </ul>
+      </xar:if>
+      <div class="xar-form-input-after">
+        <input type="submit" value="#xarML('Save config')#" />
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+

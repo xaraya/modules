@@ -1,0 +1,7 @@
+Version 0.9 April 9, 2007
+  - First release. Included 69 sites; 
+
+Version 0.911
+  - Fixed security mask
+
+   - TO DO: allow editing and adding of sites

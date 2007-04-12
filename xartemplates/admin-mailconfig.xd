@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="checkall.js" />
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>
+        sharecontent Administration
+    </xar:mlstring>
+  </span>
+</div>
+<div class="xar-mod-body">
+  <xar:template type="module" module="sharecontent" file="admin-menu" />
+  <form id="post" name="updatewebsites" action="&xar-modurl-sharecontent-admin-updatemailconfig;" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+      <legend>
+        <xar:mlstring>Mail Configuration</xar:mlstring>
+      </legend>
+      <div class="xar-form-input-wrapper">
+	    <xar:if condition="$enablemail">
+	      <xar:set name="checked">'checked = "checked" '</xar:set>
+		<xar:else />
+		  <xar:set name="checked">' '</xar:set>
+		</xar:if>
+        <label for="enablemail" class="xar-form-label">
+            <xar:mlstring>Enable mail share</xar:mlstring>
+        </label>
+        <input type="checkbox" #$checked# value="1"  id="enablemail" name="enablemail" />
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="maxemails" class="xar-form-label">
+            <xar:mlstring>Max number of recipients</xar:mlstring>
+        </label>
+        <input type="text" size="3" id="maxemails" value="#$maxemails#" name="maxemails" />
+      </div>
+      <div class="xar-form-input-wrapper">
+	    <xar:if condition="$htmlmail">
+	      <xar:set name="checked">'checked = "checked" '</xar:set>
+		<xar:else />
+		  <xar:set name="checked">' '</xar:set>
+		</xar:if>
+        <label for="htmlmail" class="xar-form-label">
+            <xar:mlstring>Html mail</xar:mlstring>
+        </label>
+        <input type="checkbox" #$checked# value="1" id="htmlmail" name="htmlmail" />
+    </fieldset>
+    <div class="xar-form-input-after">
+       <input type="hidden" name="authid" id="authid" value="#$authid#" />
+       <input type="submit" value="#xarML('Save config')#" />
+    </div>
+  </form>
+</div>
+
+

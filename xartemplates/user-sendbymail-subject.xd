@@ -1,0 +1,2 @@
+<xar:mlstring>A recommendation from</xar:mlstring> #$fromname# <xar:if condition="isset($extrainfo['title'])"> #$extrainfo['title']# </xar:if>
+
