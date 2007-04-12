@@ -40,24 +40,31 @@ class BaseActivity extends Base
     $res = $result->fetchRow();
     switch($res['type']) {
       case 'start':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/Start.php');
         $act = new Start($this->db);
         break;
       case 'end':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/End.php');
         $act = new End($this->db);
         break;
       case 'join':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/Join.php');
         $act = new Join($this->db);
         break;
       case 'split':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/Split.php');
         $act = new Split($this->db);
         break;
       case 'standalone':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/Standalone.php');
         $act = new Standalone($this->db);
         break;
       case 'switch':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/SwitchActivity.php');
         $act = new SwitchActivity($this->db);
         break;
       case 'activity':
+        include_once (GALAXIA_LIBRARY.'/src/API/activities/Activity.php');
         $act = new Activity($this->db);
         break;
       default:
@@ -224,24 +231,14 @@ class BaseActivity extends Base
   }
 
     /**
-     * Temporary method. Once we can deliver activities as objects, this disappears
+     * Return the shape of the activity
      *
+     * @todo just a name now, could be an object later
      *
-     * @todo this belong is the derived classes.
     **/
-    static function getShape($type)
+    function getShape()
     {
-        switch($type)
-        {
-            case "start"     : return "circle";
-            case "end"       : return "doublecircle";
-            case "activity"  : return "box";
-            case "split"     : return "triangle";
-            case "switch"    : return "diamond";
-            case "join"      : return "invtriangle";
-            case "standalone": return "hexagon";
-            default          : return "egg"; // should except really
-        }
+        return $this->shape;
     }
 }
 ?>
