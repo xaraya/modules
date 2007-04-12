@@ -6,7 +6,8 @@ include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 Not yet implemented.
 */
 //\todo Implement this class
-class Role extends Base {
+class Role extends Base
+{
 
 }
 ?>

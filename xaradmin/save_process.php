@@ -30,18 +30,6 @@ function workflow_admin_save_process()
 
 include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
 
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 // The galaxia process manager PHP script.
 
 // Check if we are editing an existing process

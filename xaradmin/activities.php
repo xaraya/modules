@@ -257,8 +257,6 @@ function workflow_admin_activities()
     $data['find2'] = '';
     $data['sort_mode2'] = '';
 
-    $data['feature_help'] = $feature_help;
-    $data['direct_pagination'] = $direct_pagination;
     return $data;
 }
 

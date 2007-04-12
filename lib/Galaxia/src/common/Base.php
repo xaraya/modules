@@ -6,7 +6,8 @@ include_once(GALAXIA_LIBRARY.'/src/common/Observable.php');
 This class is derived by all the API classes so they get the
 database connection, database methods and the Observable interface.
 */
-class Base extends Observable {
+class Base extends Observable
+{
     public $db;  // The ADODB object used to access the database
     public $num_queries = 0;
 
@@ -27,7 +28,8 @@ class Base extends Observable {
     }
 
     // copied from tikilib.php
-    function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
+    function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true)
+    {
         $this->convert_query($query);
         if ($numrows == -1 && $offset == -1)
             $result = $this->db->Execute($query, $values,GALAXIA_FETCHMODE);
@@ -39,7 +41,8 @@ class Base extends Observable {
         return $result;
     }
 
-    function getOne($query, $values = null, $reporterrors = true) {
+    function getOne($query, $values = null, $reporterrors = true)
+    {
         $this->convert_query($query);
         $result = $this->db->SelectLimit($query, 1, 0,$values,GALAXIA_FETCHMODE);
         if (!$result && $reporterrors)
@@ -53,7 +56,8 @@ class Base extends Observable {
         return $value;
     }
 
-    function sql_error($query, $values, $result) {
+    function sql_error($query, $values, $result)
+    {
         global $ADODB_LASTDB;
 
         throw new Exception($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
@@ -63,7 +67,8 @@ class Base extends Observable {
     }
 
     // functions to support DB abstraction
-    function convert_query(&$query) {
+    function convert_query(&$query)
+    {
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
@@ -84,7 +89,8 @@ class Base extends Observable {
         }
     }
 
-    function convert_sortmode($sort_mode) {
+    function convert_sortmode($sort_mode)
+    {
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
@@ -107,7 +113,8 @@ class Base extends Observable {
         return $sort_mode;
     }
 
-    function convert_binary() {
+    function convert_binary()
+    {
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
@@ -130,7 +137,7 @@ class Base extends Observable {
         }
         return $this->db->qstr($string,$quoted);
     }
-    
+
     static function tbl($tbl)
     {
         return ' `'.GALAXIA_TABLE_PREFIX.$tbl.'` ';

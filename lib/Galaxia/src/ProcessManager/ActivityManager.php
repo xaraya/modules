@@ -1,5 +1,7 @@
 <?php
 include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
+include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
+
 //!! ActivityManager
 //! A class to maniplate process activities and transitions
 /*!
@@ -8,17 +10,20 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
   Activities are managed in a per-process level, each
   activity belongs to some process.
 */
-class ActivityManager extends BaseManager {
+class ActivityManager extends BaseManager
+{
   public $error='';
 
-  function get_error() {
+  function get_error()
+  {
     return $this->error;
   }
 
   /*!
    Asociates an activity with a role
   */
-  function add_activity_role($activityId, $roleId) {
+  function add_activity_role($activityId, $roleId)
+  {
     $query = "delete from ".self::tbl('activity_roles')."  where `activityId`=? and `roleId`=?";
     $this->query($query,array($activityId, $roleId));
     $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
@@ -28,7 +33,8 @@ class ActivityManager extends BaseManager {
   /*!
    Gets the roles asociated to an activity
   */
-  function get_activity_roles($activityId) {
+  function get_activity_roles($activityId)
+  {
     $query = "select activityId,roles.roleId,roles.name
               from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
               where roles.roleId = gar.roleId and activityId=?";
@@ -141,17 +147,20 @@ class ActivityManager extends BaseManager {
         return($this->getOne("select count(*) from ".self::tbl('activities')." where activityId=? and isAutoRouted=?",array($actid,'y')));
     }
 
-    /*!
-     Returns all the activities for a process as
-     an array
+    /**
+     * Returns all the activities for a process as
+     * an array of Activity Objects.
+     *
+     * @todo act on a Process object, not on the pId
     */
-    function get_process_activities($pId)
+    function &get_process_activities($pId)
     {
-        $query = "select * from ".self::tbl('activities')."where pId=?";
+        $query = "select activityId from ".self::tbl('activities')."where pId=?";
         $result = $this->query($query, array($pId));
         $ret = Array();
+        $tmp = new BaseActivity();
         while($res = $result->fetchRow()) {
-            $ret[] = $res;
+            $ret[] = $tmp->getActivity($res['activityId']);
         }
         return $ret;
     }
@@ -162,9 +171,7 @@ class ActivityManager extends BaseManager {
     //\todo build the real graph
     function build_process_graph($pId)
     {
-        $attributes = Array(
-
-    );
+        $attributes = Array();
         $graph = new Process_GraphViz(true,$attributes);
         $pm = new ProcessManager($this->db);
         $name = $pm->_get_normalized_name($pId);
@@ -173,24 +180,21 @@ class ActivityManager extends BaseManager {
         // Nodes are process activities so get
         // the activities and add nodes as needed
         $nodes = $this->get_process_activities($pId);
-
         foreach($nodes as $node)
-            {
-                if($node['isInteractive']=='y') {
-                    $color='blue';
-                } else {
-                    $color='black';
-                }
-                $auto[$node['name']] = $node['isAutoRouted'];
-                $graph->addNode($node['name'],array('URL'=>"foourl?activityId=".$node['activityId'],
-                                                    'label'=>$node['name'],
-                                                    'shape' => $this->_get_activity_shape($node['type']),
-                                                    'color' => $color,
-                                                    'fontsize' =>8,
-                                                    'fontname' => 'Windsor'
-                                                    )
-                                );
-            }
+        {
+            $auto[$node->getName()] = $node->isAutoRouted();
+            $graph->addNode(
+                $node->getName(),
+                array(
+                    'URL'=>"foourl?activityId=".$node->getActivityId(),
+                    'label'=>$node->getName(),
+                    'shape' => $node->getShape(),
+                    'color' => $node->isInteractive() ? 'blue' : 'black',
+                    'fontsize' =>8,
+                    'fontname' => 'Windsor'
+                )
+            );
+        }
 
         // Now add edges, edges are transitions,
         // get the transitions and add the edges
@@ -693,7 +697,7 @@ class ActivityManager extends BaseManager {
      \private
      Returns activity id by pid,name (activity names are unique)
     */
-    function _get_activity_id_by_name($pid,$name)
+    private function _get_activity_id_by_name($pid,$name)
     {
         if($this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and name=?",array($pid, $name))) {
             return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?",array($pid,$name)));
@@ -702,40 +706,13 @@ class ActivityManager extends BaseManager {
         }
     }
 
-    /*!
-     \private Returns the activity shape
-    */
-    // @todo this belong is the derived classes.
-    function _get_activity_shape($type)
-    {
-        switch($type) {
-        case "start":
-            return "circle";
-        case "end":
-            return "doublecircle";
-        case "activity":
-            return "box";
-        case "split":
-            return "triangle";
-        case "switch":
-            return "diamond";
-        case "join":
-            return "invtriangle";
-        case "standalone":
-            return "hexagon";
-        default:
-            return "egg";
-
-        }
-
-    }
 
 
     /*!
      \private Returns true if a list contains unvisited nodes
      list members are asoc arrays containing id and visited
     */
-    function _list_has_unvisited_nodes($list)
+    private function _list_has_unvisited_nodes($list)
     {
         foreach($list as $node) {
             if(!$node['visited']) return true;
@@ -747,7 +724,7 @@ class ActivityManager extends BaseManager {
      \private Returns true if a node is in a list
      list members are asoc arrays containing id and visited
     */
-    function _node_in_list($node,$list)
+    private function _node_in_list($node,$list)
     {
         foreach($list as $a_node) {
             if($node['id'] == $a_node['id']) return true;
@@ -759,7 +736,7 @@ class ActivityManager extends BaseManager {
      \private
      Normalizes an activity name
     */
-    function _normalize_name($name)
+    private function _normalize_name($name)
     {
         $name = str_replace(" ","_",$name);
         $name = preg_replace("/[^A-Za-z_]/",'',$name);
@@ -770,7 +747,7 @@ class ActivityManager extends BaseManager {
      \private
      Returns normalized name of an activity
     */
-    function _get_normalized_name($activityId)
+    private function _get_normalized_name($activityId)
     {
         return $this->getOne("select normalized_name from ".self::tbl('activities')." where activityId=?",array($activityId));
     }
@@ -779,7 +756,7 @@ class ActivityManager extends BaseManager {
      \private
      Labels nodes
     */
-    function _label_nodes($pId)
+    private function _label_nodes($pId)
     {
 
 

@@ -5,12 +5,13 @@ include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 /*!
 Not yet implemented
 */
-class Workitem extends Base {
+class Workitem extends Base
+{
   public $instance;
   public $properties=Array();
   public $started;
   public $ended;
   public $activity;
-  
+
 }
 ?>

@@ -31,18 +31,6 @@ function workflow_admin_instance()
 include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
 include_once (GALAXIA_LIBRARY.'/API.php');
 
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 if (!isset($_REQUEST['iid'])) {
     $tplData['msg'] =  xarML("No instance indicated");
 
@@ -154,8 +142,6 @@ $__comments = $instance->get_instance_comments();
 
 $tplData['mid'] =  'tiki-g-admin_instance.tpl';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;
 }
 

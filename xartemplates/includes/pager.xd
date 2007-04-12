@@ -7,9 +7,9 @@
     <xar:if condition="$next_offset ge 0">
       &#xA0;[<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' =&gt; $next_offset))#">#xarML('next')#</a>]
     </xar:if>
-    <xar:if condition="$direct_pagination eq 'y'"><br/>
-      #$pager#
-    </xar:if>
+    <br/>
+    #$pager#
+
   </div>
   </div>
 </xar:template>

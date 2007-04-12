@@ -54,7 +54,8 @@
 *          Dr. Volker Göbbels <vmg@arachnion.de>
 * @package Image
 */
-class Process_GraphViz {
+class Process_GraphViz
+{
     /**
     * Path to GraphViz/dot command
     *
@@ -85,7 +86,8 @@ class Process_GraphViz {
     * @param  array   Attributes of the graph
     * @access public
     */
-    function Process_GraphViz($directed = true, $attributes = array()) {
+    function __construct($directed = true, $attributes = array())
+    {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
         if (defined('GRAPHVIZ_BIN_DIR') && GRAPHVIZ_BIN_DIR) {
@@ -106,7 +108,8 @@ class Process_GraphViz {
     *                 This may be one of the formats supported by GraphViz.
     * @access public
     */
-    function image($format = 'png') {
+    function image($format = 'png')
+    {
         if ($file = $this->saveParsedGraph()) {
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
@@ -152,7 +155,8 @@ class Process_GraphViz {
         }
     }
 
-    function image_and_map($format = 'png') {
+    function image_and_map($format = 'png')
+    {
         if ($file = $this->saveParsedGraph()) {
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
@@ -181,7 +185,8 @@ class Process_GraphViz {
     }
 
 
-    function map() {
+    function map()
+    {
         if ($file = $this->saveParsedGraph()) {
             $outputfile2 = $file . '.' . 'map';
 
@@ -205,7 +210,8 @@ class Process_GraphViz {
     * @param  array   Title.
     * @access public
     */
-    function addCluster($id, $title) {
+    function addCluster($id, $title)
+    {
         $this->graph['clusters'][$id] = $title;
     }
 
@@ -217,7 +223,8 @@ class Process_GraphViz {
     * @param  string  Group of the node.
     * @access public
     */
-    function addNode($name, $attributes = array(), $group = 'default') {
+    function addNode($name, $attributes = array(), $group = 'default')
+    {
         $this->graph['nodes'][$group][$name] = $attributes;
     }
 
@@ -227,7 +234,8 @@ class Process_GraphViz {
     * @param  Name of the node to be removed.
     * @access public
     */
-    function removeNode($name, $group = 'default') {
+    function removeNode($name, $group = 'default')
+    {
         if (isset($this->graph['nodes'][$group][$name])) {
             unset($this->graph['nodes'][$group][$name]);
         }
@@ -240,7 +248,8 @@ class Process_GraphViz {
     * @param  array Attributes of the edge.
     * @access public
     */
-    function addEdge($edge, $attributes = array()) {
+    function addEdge($edge, $attributes = array())
+    {
         if (is_array($edge)) {
             $from = key($edge);
             $to   = $edge[$from];
@@ -274,7 +283,8 @@ class Process_GraphViz {
     * @param  array Start and End node of the edge to be removed.
     * @access public
     */
-    function removeEdge($edge) {
+    function removeEdge($edge)
+    {
         if (is_array($edge)) {
               $from = key($edge);
               $to   = $edge[$from];
@@ -296,7 +306,8 @@ class Process_GraphViz {
     * @param  array Attributes to be added to the graph.
     * @access public
     */
-    function addAttributes($attributes) {
+    function addAttributes($attributes)
+    {
         if (is_array($attributes)) {
             $this->graph['attributes'] = array_merge(
               $this->graph['attributes'],
@@ -311,7 +322,8 @@ class Process_GraphViz {
     * @param  array Attributes to be set for the graph.
     * @access public
     */
-    function setAttributes($attributes) {
+    function setAttributes($attributes)
+    {
         if (is_array($attributes)) {
             $this->graph['attributes'] = $attributes;
         }
@@ -323,7 +335,8 @@ class Process_GraphViz {
     * @param  boolean Directed (true) or undirected (false) graph.
     * @access public
     */
-    function setDirected($directed) {
+    function setDirected($directed)
+    {
         if (is_bool($directed)) {
             $this->graph['directed'] = $directed;
         }
@@ -335,7 +348,8 @@ class Process_GraphViz {
     * @param  string  File to load graph from.
     * @access public
     */
-    function load($file) {
+    function load($file)
+    {
         if ($serialized_graph = implode('', @file($file))) {
             $this->graph = unserialize($serialized_graph);
         }
@@ -348,7 +362,8 @@ class Process_GraphViz {
     * @return mixed   File the graph was saved to, false on failure.
     * @access public
     */
-    function save($file = '') {
+    function save($file = '')
+    {
         $serialized_graph = serialize($this->graph);
 
         if (empty($file)) {
@@ -371,7 +386,8 @@ class Process_GraphViz {
     * @return string  GraphViz markup
     * @access public
     */
-    function parse() {
+    function parse()
+    {
         $parsedGraph = "digraph G {\n";
 
         if (isset($this->graph['attributes'])) {
@@ -456,7 +472,8 @@ class Process_GraphViz {
     *                 written, false on failure.
     * @access public
     */
-    function saveParsedGraph($file = '') {
+    function saveParsedGraph($file = '')
+    {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
             $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;

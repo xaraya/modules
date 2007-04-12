@@ -30,18 +30,6 @@ function workflow_user_activities()
 
 include_once (GALAXIA_LIBRARY.'/GUI.php');
 
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'user', 'error', $tplData);
-}
-
-if ($tiki_p_use_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'user', 'error', $tplData);
-}
-
 // Filtering data to be received by request and
 // used to build the where part of a query
 // filter_active, filter_valid, find, sort_mode,
@@ -169,8 +157,6 @@ $tplData['mid'] =  'tiki-g-user_activities.tpl';
 // Missing variable
 $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],

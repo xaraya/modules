@@ -61,25 +61,14 @@ if (!function_exists('xarTimeToDHMS')) {
 global $user;
 $user = xarUserGetVar('uid');
 
-// Some other variables used inside Galaxia
-$feature_help = 'n';
-$feature_workflow = 'y';
-
 if (xarSecurityCheck('AdminWorkflow',0)) {
     $tiki_p_admin_workflow = 'y';
-    $tiki_p_use_workflow = 'y';
 } else {
     $tiki_p_admin_workflow = 'n';
-    if (xarSecurityCheck('ReadWorkflow',0)) {
-        $tiki_p_use_workflow = 'y';
-    } else {
-        $tiki_p_use_workflow = 'n';
-    }
 }
 $maxRecords = xarModGetVar('workflow','itemsperpage');
 if (empty($maxRecords)) {
     xarModSetVar('workflow','itemsperpage',20);
     $maxRecords = 20;
 }
-$direct_pagination = 'y';
 ?>
