@@ -7,6 +7,7 @@ This class handles activities of type 'end'
 */
 class End extends BaseActivity
 {
-    protected $type = 'end';
+    protected $type  = 'end';
+    protected $shape = 'doublecircle';
 }
 ?>

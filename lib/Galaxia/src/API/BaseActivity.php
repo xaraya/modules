@@ -223,5 +223,25 @@ class BaseActivity extends Base
     return $this->getOne("select count(*) from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
   }
 
+    /**
+     * Temporary method. Once we can deliver activities as objects, this disappears
+     *
+     *
+     * @todo this belong is the derived classes.
+    **/
+    static function getShape($type)
+    {
+        switch($type)
+        {
+            case "start"     : return "circle";
+            case "end"       : return "doublecircle";
+            case "activity"  : return "box";
+            case "split"     : return "triangle";
+            case "switch"    : return "diamond";
+            case "join"      : return "invtriangle";
+            case "standalone": return "hexagon";
+            default          : return "egg"; // should except really
+        }
+    }
 }
 ?>

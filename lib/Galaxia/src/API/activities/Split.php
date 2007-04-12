@@ -7,6 +7,7 @@ This class handles activities of type 'split'
 */
 class Split extends BaseActivity
 {
-    protected $type = 'split';
+    protected $type  = 'split';
+    protected $shape = 'triangle';
 }
 ?>

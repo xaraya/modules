@@ -7,6 +7,7 @@ This class handles activities of type 'standalone'
 */
 class Standalone extends BaseActivity
 {
-    protected $type = 'standalone';
+    protected $type  = 'standalone';
+    protected $shape = 'hexagon';
 }
 ?>

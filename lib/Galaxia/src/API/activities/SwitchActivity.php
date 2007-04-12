@@ -7,6 +7,7 @@ This class handles activities of type 'switch'
 */
 class SwitchActivity extends BaseActivity
 {
-    protected $type = 'switch';
+    protected $type  = 'switch';
+    protected $shape = 'diamond';
 }
 ?>

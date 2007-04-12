@@ -7,6 +7,7 @@ This class handles activities of type 'activity'
 */
 class Activity extends BaseActivity
 {
-      protected $type = 'activity';
+      protected $type  = 'activity';
+      protected $shape = 'box';
 }
 ?>

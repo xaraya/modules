@@ -7,6 +7,7 @@ This class handles activities of type 'join'
 */
 class Join extends BaseActivity
 {
-    protected $type = 'join';
+    protected $type  = 'join';
+    protected $shape = 'invtriangle';
 }
 ?>
