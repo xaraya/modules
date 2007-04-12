@@ -67,13 +67,6 @@ if ($feature_workflow != 'y') {
     return xarTplModule('workflow', 'user', 'error', $tplData);
 }
 
-if ($tiki_p_use_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'user', 'error', $tplData);
-    die;
-}
-
 $action = 0;
 
 // Filtering data to be received by request and

@@ -15,3 +15,7 @@ table names etc.
 NOTE for Xaraya Repo:
 - the config.php *is* already configured for Xaraya. (config.xaraya.php in terms of what would be sent upstream)
   the config.xaraya.php file as such is not tracked in *our* repository
+  
+As per April 2007 we are actively changing/improving
+the Galaxia library. Upstream has been silent for a while and we decided to
+move ahead. We might sent our patches upstream (or we might not).

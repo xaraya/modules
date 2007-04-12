@@ -36,12 +36,6 @@ if ($feature_workflow != 'y') {
     return xarTplModule('workflow', 'admin', 'error', $tplData);
 }
 
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 // The galaxia process manager PHP script.
 
 // Check if we are editing an existing process

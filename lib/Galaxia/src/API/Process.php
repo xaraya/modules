@@ -4,10 +4,10 @@ include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 //! A class representing a process
 /*!
 This class representes the process that is being executed when an activity
-is executed. You can access this class methods using $process from any activity.
-No need to instantiate a new object.
+is executed.
 */
-class Process extends Base {
+class Process extends Base
+{
   public $name;
   public $description;
   public $version;
@@ -17,7 +17,8 @@ class Process extends Base {
   /*!
   Loads a process form the database
   */
-  function getProcess($pId) {
+  function getProcess($pId)
+  {
     $query = "select * from ".self::tbl('processes')."where `pId`=?";
     $result = $this->query($query,array($pId));
     if(!$result->numRows()) return false;
@@ -28,25 +29,28 @@ class Process extends Base {
     $this->version = $res['version'];
     $this->pId = $res['pId'];
   }
-  
+
   /*!
   Gets the normalized name of the process
   */
-  function getNormalizedName() {
+  function getNormalizedName()
+  {
     return $this->normalizedName;
   }
-  
+
   /*!
   Gets the process name
   */
-  function getName() {
+  function getName()
+  {
     return $this->name;
   }
-  
+
   /*!
   Gets the process version
   */
-  function getVersion() {
+  function getVersion()
+  {
     return $this->version;
   }
 
@@ -57,7 +61,8 @@ class Process extends Base {
       $some_url = 'tiki-g-run_activity.php?activityId=' . $actinfo['activityId'];
     }
   */
-  function getActivityByName($actname) {
+  function getActivityByName($actname)
+  {
     // Get the activity data
     $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
     $pId = $this->pId;

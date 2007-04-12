@@ -22,12 +22,6 @@ class BaseActivity extends Base
   public $activityId;
   public $expirationTime = 0;
 
-  function setDb($db)
-  {
-    $this->db=$db;
-  }
-
-
   /*!
   Factory method returning an activity of the desired type
   loading the information from the database.
@@ -41,31 +35,31 @@ class BaseActivity extends Base
     switch($res['type']) {
       case 'start':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/Start.php');
-        $act = new Start($this->db);
+        $act = new Start();
         break;
       case 'end':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/End.php');
-        $act = new End($this->db);
+        $act = new End();
         break;
       case 'join':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/Join.php');
-        $act = new Join($this->db);
+        $act = new Join();
         break;
       case 'split':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/Split.php');
-        $act = new Split($this->db);
+        $act = new Split();
         break;
       case 'standalone':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/Standalone.php');
-        $act = new Standalone($this->db);
+        $act = new Standalone();
         break;
       case 'switch':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/SwitchActivity.php');
-        $act = new SwitchActivity($this->db);
+        $act = new SwitchActivity();
         break;
       case 'activity':
         include_once (GALAXIA_LIBRARY.'/src/API/activities/Activity.php');
-        $act = new Activity($this->db);
+        $act = new Activity();
         break;
       default:
         trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
@@ -236,7 +230,7 @@ class BaseActivity extends Base
      * @todo just a name now, could be an object later
      *
     **/
-    function getShape()
+    public function getShape()
     {
         return $this->shape;
     }

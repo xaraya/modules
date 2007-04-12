@@ -1,6 +1,7 @@
 Things TODO for workflow module:
 
 Generic:
+* Object Oriented stuff, the current style is not exactly neat. It's a port of something else, and it shows.
 * loop protection: if there is a process which has a set 
   of activities which are autorouted and non-interactive (easy to spot
   in small processes, but sometimes harder in bigger ones) there may
@@ -20,6 +21,7 @@ Generic:
   component, which both would be useful in the grander scheme of
   things for Xaraya as well.
 * the dependency on GraphViz is a bit problematic, consider adding SVG generation 
+* Add a class for Transitions
 
 Xaraya specific:
 * this module is a dream for ajax fans, let them loose on it :-)

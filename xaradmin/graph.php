@@ -37,12 +37,6 @@ function workflow_admin_graph()
         return xarTplModule('workflow', 'admin', 'error', $tplData);
     }
 
-    if ($tiki_p_admin_workflow != 'y') {
-        $tplData['msg'] =  xarML("Permission denied");
-
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
-    }
-
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.
     if (!isset($_REQUEST['pid']))

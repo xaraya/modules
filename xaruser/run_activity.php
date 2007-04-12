@@ -21,6 +21,7 @@ function workflow_user_run_activity()
 {
     xarLogMessage("Running activity");
     // Security Check
+    // CHECKME: what if an activity is Auto? (probably nothing different)
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
 // Common setup for Galaxia environment
@@ -42,14 +43,6 @@ if ($feature_workflow != 'y') {
   $tplData['msg'] =  xarML("This feature is disabled");
 
   return xarTplModule('workflow', 'user', 'error', $tplData);
-}
-
-if (!isset($_REQUEST['auto'])) {
-  if ($tiki_p_use_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'user', 'error', $tplData);
-  }
 }
 
 // Determine the activity using the activityId request

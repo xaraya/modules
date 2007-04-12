@@ -36,12 +36,6 @@ if ($feature_workflow != 'y') {
     return xarTplModule('workflow', 'admin', 'error', $tplData);
 }
 
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 if (!isset($_REQUEST['itemId'])) {
     $tplData['msg'] =  xarML("No item indicated");
 

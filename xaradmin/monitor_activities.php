@@ -36,12 +36,6 @@ if ($feature_workflow != 'y') {
     return xarTplModule('workflow', 'monitor', 'error', $tplData);
 }
 
-if ($tiki_p_admin_workflow != 'y') {
-    $tplData['msg'] =  xarML("Permission denied");
-
-    return xarTplModule('workflow', 'monitor', 'error', $tplData);
-}
-
 // Filtering data to be received by request and
 // used to build the where part of a query
 // filter_active, filter_valid, find, sort_mode,
