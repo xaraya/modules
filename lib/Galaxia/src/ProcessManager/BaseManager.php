@@ -6,7 +6,8 @@ include_once(GALAXIA_LIBRARY.'/src/common/Base.php');
 This class is derived by all the API classes so they get the
 database connection, database methods and the Observable interface.
 */
-class BaseManager extends Base {
+class BaseManager extends Base
+{
 
 } //end of class
 
