@@ -5,7 +5,8 @@ include_once(GALAXIA_LIBRARY.'/src/common/Base.php');
 /*!
 This class provides methods for use in typical user interface scripts
 */
-class GUI extends Base {
+class GUI extends Base
+{
 
   /*!
   List user processes, user processes should follow one of these conditions:
@@ -36,11 +37,11 @@ class GUI extends Base {
     if($where) {
       $mid.= " and ($where) ";
     }
-    
-    $query = "select distinct(gp.pId), 
-                     gp.isActive,                    
-                     gp.name as procname, 
-                     gp.normalized_name as normalized_name, 
+
+    $query = "select distinct(gp.pId),
+                     gp.isActive,
+                     gp.name as procname,
+                     gp.normalized_name as normalized_name,
                      gp.version as version
               from ".self::tbl('processes')." gp
                 INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
@@ -102,11 +103,11 @@ class GUI extends Base {
     if($where) {
       $mid.= " and ($where) ";
     }
-    
-    $query = "select distinct(ga.activityId),                     
+
+    $query = "select distinct(ga.activityId),
                      ga.name,
                      ga.type,
-                     gp.name as procname, 
+                     gp.name as procname,
                      ga.isInteractive,
                      ga.isAutoRouted,
                      ga.activityId,
@@ -163,8 +164,8 @@ class GUI extends Base {
     if($where) {
       $mid.= " and ($where) ";
     }
-    
-    $query = "select distinct(gi.instanceId),                     
+
+    $query = "select distinct(gi.instanceId),
                      gi.started,
                      gi.owner,
                      gia.user,
@@ -172,13 +173,13 @@ class GUI extends Base {
                      gia.status as actstatus,
                      ga.name,
                      ga.type,
-                     gp.name as procname, 
+                     gp.name as procname,
                      ga.isInteractive,
                      ga.isAutoRouted,
                      ga.activityId,
                      gp.version as version,
                      gp.pId
-              from ".self::tbl('instances')." gi 
+              from ".self::tbl('instances')." gi
                 INNER JOIN ".self::tbl('instance_activities')." gia ON gi.instanceId=gia.instanceId
                 INNER JOIN ".self::tbl('activities')." ga ON gia.activityId = ga.activityId
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gia.activityId=gar.activityId
@@ -186,7 +187,7 @@ class GUI extends Base {
                 INNER JOIN ".self::tbl('processes')." gp ON gp.pId=ga.pId
               $mid order by $sort_mode";
     $query_cant = "select count(distinct(gi.instanceId))
-              from ".self::tbl('instances')." gi 
+              from ".self::tbl('instances')." gi
                 INNER JOIN ".self::tbl('instance_activities')." gia ON gi.instanceId=gia.instanceId
                 INNER JOIN ".self::tbl('activities')." ga ON gia.activityId = ga.activityId
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gia.activityId=gar.activityId
@@ -225,7 +226,7 @@ class GUI extends Base {
     }
     unset($instance);
   }
-  
+
   /*!
   Exception handling for an instance - this sets the instance status to 'exception', but keeps all running activities.
   The instance can be resumed afterwards via gui_resume_instance().
@@ -261,7 +262,7 @@ class GUI extends Base {
     $this->query($query, array('active',$instanceId));
   }
 
-  
+
   function gui_send_instance($user,$activityId,$instanceId)
   {
     if(!
@@ -270,7 +271,7 @@ class GUI extends Base {
                       where activityId=? and instanceId=? and user=?",
                       array($activityId,$instanceId,$user)))
       ||
-      ($this->getOne("select count(*) 
+      ($this->getOne("select count(*)
                       from ".self::tbl('instance_activities')." gia
                       INNER JOIN ".self::tbl('activity_roles')."gar ON gar.activityId=gia.activityId
                       INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
@@ -281,9 +282,9 @@ class GUI extends Base {
     $instance = new Instance($this->db);
     $instance->getInstance($instanceId);
     $instance->complete($activityId,true,false);
-    unset($instance);  
+    unset($instance);
   }
-  
+
   function gui_release_instance($user,$activityId,$instanceId)
   {
     if(!$this->getOne("select count(*)
@@ -295,11 +296,11 @@ class GUI extends Base {
               where instanceId=? and activityId=?";
     $this->query($query, array('*',$instanceId,$activityId));
   }
-  
+
   function gui_grab_instance($user,$activityId,$instanceId)
   {
-    // Grab only if roles are ok  
-    if(!$this->getOne("select count(*) 
+    // Grab only if roles are ok
+    if(!$this->getOne("select count(*)
                       from ".self::tbl('instance_activities')." gia
                       INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=gia.activityId
                       INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId

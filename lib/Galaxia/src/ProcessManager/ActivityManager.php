@@ -12,23 +12,31 @@ include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 */
 class ActivityManager extends BaseManager
 {
-  public $error='';
+    private $factory;
+    public $error='';
 
-  function get_error()
-  {
-    return $this->error;
-  }
+    function __construct()
+    {
+        parent::__construct();
+        // probably rename the class later
+        $this->factory = new BaseActivity();
+    }
 
-  /*!
-   Asociates an activity with a role
-  */
-  function add_activity_role($activityId, $roleId)
-  {
-    $query = "delete from ".self::tbl('activity_roles')."  where `activityId`=? and `roleId`=?";
-    $this->query($query,array($activityId, $roleId));
-    $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
-    $this->query($query,array($activityId, $roleId));
-  }
+    function get_error()
+    {
+        return $this->error;
+    }
+
+    /**
+     * Activity getter
+     *
+     */
+    public function &getActivity($id)
+    {
+        $act = $this->factory->getActivity($id);
+        return $act;
+    }
+
 
   /*!
    Gets the roles asociated to an activity
@@ -46,14 +54,7 @@ class ActivityManager extends BaseManager
         return $ret;
     }
 
-    /*!
-     Removes a role from an activity
-    */
-    function remove_activity_role($activityId, $roleId)
-    {
-        $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
-        $this->query($query,array($activityId, $roleId));
-    }
+
 
     /*!
      Checks if a transition exists

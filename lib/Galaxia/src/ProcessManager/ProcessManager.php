@@ -6,7 +6,8 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
   This class is used to add,remove,modify and list
   processes.
 */
-class ProcessManager extends BaseManager {
+class ProcessManager extends BaseManager
+{
   public $parser;
   public $tree;
   public $current;
@@ -270,7 +271,8 @@ class ProcessManager extends BaseManager {
           $rid = $rm->get_role_id($pid,$role);
         }
         if($actid && $rid) {
-          $am->add_activity_role($actid,$rid);
+            $act = $am->getActivity($actid);
+            $act->addRole($rid);
         }
       }
     }
@@ -359,11 +361,14 @@ class ProcessManager extends BaseManager {
         $bindMarkers = '?' . str_repeat(', ?',count($newaid) -1);
         $query = "select * from ".self::tbl('activity_roles')." where activityId in ($bindMarkers)";
       $result = $this->query($query,array_keys($newaid));
-      while($res = $result->fetchRow()) {
-        if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
-          continue;
-        }
-        $am->add_activity_role($newaid[$res['activityId']],$newrid[$res['roleId']]);
+      while($res = $result->fetchRow())
+      {
+          if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']]))
+          {
+              continue;
+          }
+          $act = $am->getActivity($newaid[$res['activityId']]);
+          $act->addRole($newrid[$res['roleId']]);
       }
     }
 

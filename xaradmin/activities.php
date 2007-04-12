@@ -44,6 +44,8 @@ function workflow_admin_activities()
         $_REQUEST['activityId'] = 0;
 
     if ($_REQUEST["activityId"]) {
+        $act  = $activityManager->getActivity($_REQUEST['activityId']);
+        // @todo get rid of info, use $act
         $info = $activityManager->get_activity($data['pid'], $_REQUEST["activityId"]);
     } else {
         $info = array('name' => '',
@@ -60,7 +62,7 @@ function workflow_admin_activities()
 
     // Remove a role from the activity
     if (isset($_REQUEST['remove_role']) && $_REQUEST['activityId']) {
-        $activityManager->remove_activity_role($_REQUEST['activityId'], $_REQUEST['remove_role']);
+        $act->removeRole($_REQUEST['remove_role']);
     }
 
     $role_to_add = 0;
@@ -79,14 +81,10 @@ function workflow_admin_activities()
         $vars = array('name' => $_REQUEST['rolename'],'description' => '');
 
         if (isset($_REQUEST["userole"]) && $_REQUEST["userole"]) {
-            if ($_REQUEST['activityId']) {
-                $activityManager->add_activity_role($_REQUEST['activityId'], $_REQUEST["userole"]);
-            }
+            $act->addRole($_REQUEST['userole']);
         } else {
             $rid = $roleManager->replace_role($data['pid'], 0, $vars);
-            if ($_REQUEST['activityId']) {
-                $activityManager->add_activity_role($_REQUEST['activityId'], $rid);
-            }
+            $act->addRole($rid);
         }
     }
 
@@ -128,7 +126,8 @@ function workflow_admin_activities()
         }
 
         if ($rid) {
-            $activityManager->add_activity_role($newaid, $rid);
+            $act = $activityManager->getActivity($newaid);
+            $actaddRole($rid);
         }
 
         // Reget

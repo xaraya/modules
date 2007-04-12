@@ -26,7 +26,7 @@ class BaseActivity extends Base
   Factory method returning an activity of the desired type
   loading the information from the database.
   */
-  function getActivity($activityId)
+  function &getActivity($activityId)
   {
     $query = "select * from ".self::tbl('activities')." where `activityId`=?";
     $result = $this->query($query,array($activityId));
@@ -234,5 +234,27 @@ class BaseActivity extends Base
     {
         return $this->shape;
     }
+
+    /**
+     * Add a role to this activity
+     *
+    **/
+    function addRole($roleId)
+    {
+        $this->removeRole($roleId);
+        $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
+        $this->query($query,array($this->activityId, $roleId));
+    }
+
+    /**
+     * Remove a role from this activity
+     *
+    **/
+    function removeRole($roleId)
+    {
+        $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
+        $this->query($query,array($this->activityId, $roleId));
+    }
+
 }
 ?>
