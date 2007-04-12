@@ -255,6 +255,5 @@ class BaseActivity extends Base
         $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
         $this->query($query,array($this->activityId, $roleId));
     }
-
 }
 ?>

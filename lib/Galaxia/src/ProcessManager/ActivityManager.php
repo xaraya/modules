@@ -22,6 +22,9 @@ class ActivityManager extends BaseManager
         $this->factory = new BaseActivity();
     }
 
+    /**
+     * @todo This doesn't belong here
+    **/
     function get_error()
     {
         return $this->error;
@@ -138,14 +141,6 @@ class ActivityManager extends BaseManager
             $ret[] = $res;
         }
         return $ret;
-    }
-
-    /*!
-     Indicates if an activity is autoRouted
-    */
-    function activity_is_auto_routed($actid)
-    {
-        return($this->getOne("select count(*) from ".self::tbl('activities')." where activityId=? and isAutoRouted=?",array($actid,'y')));
     }
 
     /**
