@@ -61,10 +61,6 @@ if (!function_exists('xarTimeToDHMS')) {
 global $user;
 $user = xarUserGetVar('uid');
 
-// Some other variables used inside Galaxia
-$feature_help = 'n';
-$feature_workflow = 'y';
-
 if (xarSecurityCheck('AdminWorkflow',0)) {
     $tiki_p_admin_workflow = 'y';
 } else {
@@ -75,5 +71,4 @@ if (empty($maxRecords)) {
     xarModSetVar('workflow','itemsperpage',20);
     $maxRecords = 20;
 }
-$direct_pagination = 'y';
 ?>

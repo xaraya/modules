@@ -39,12 +39,6 @@ global $__activity_completed;
 global $__comments;
 $__activity_completed = false;
 
-if ($feature_workflow != 'y') {
-  $tplData['msg'] =  xarML("This feature is disabled");
-
-  return xarTplModule('workflow', 'user', 'error', $tplData);
-}
-
 // Determine the activity using the activityId request
 // parameter and get the activity information
 // load then the compiled version of the activity
@@ -191,8 +185,6 @@ if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_compl
   }
 }
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     return xarTplModule('workflow','user','activity',$tplData,$template);
 }
 

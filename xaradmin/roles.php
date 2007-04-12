@@ -177,8 +177,6 @@ function workflow_admin_roles()
 
     $data['errors'] =  $errors;
     $data['proc_info'] =  $proc_info;
-    $data['feature_help'] = $feature_help;
-    $data['direct_pagination'] = $direct_pagination;
     $url = xarModURL('workflow','admin','roles',array('pid' => $data['pid'],'offset' => '%%'));
     $data['pager'] = xarTplGetPager($data['offset'],$mapitems['cant'],$url,$maxRecords);
     return $data;

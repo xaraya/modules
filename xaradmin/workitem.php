@@ -30,12 +30,6 @@ function workflow_admin_workitem()
 
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 if (!isset($_REQUEST['itemId'])) {
     $tplData['msg'] =  xarML("No item indicated");
 
@@ -60,8 +54,6 @@ $sameurl_elements = array(
 
 $tplData['mid'] =  'tiki-g-view_workitem.tpl';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;
 }
 

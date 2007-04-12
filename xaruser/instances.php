@@ -60,13 +60,6 @@ function workflow_user_instances()
 
 include_once (GALAXIA_LIBRARY.'/GUI.php');
 
-// Check if feature is enabled and permissions
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'user', 'error', $tplData);
-}
-
 $action = 0;
 
 // Filtering data to be received by request and
@@ -227,8 +220,6 @@ $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_us
 $tplData['userId'] = $user;
 $tplData['user'] = xarUserGetVar('name', $user);
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],

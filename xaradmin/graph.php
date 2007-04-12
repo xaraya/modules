@@ -30,13 +30,6 @@ function workflow_admin_graph()
 
     include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
-    // The galaxia process manager PHP script.
-    if ($feature_workflow != 'y') {
-        $tplData['msg'] =  xarML("This feature is disabled");
-
-        return xarTplModule('workflow', 'admin', 'error', $tplData);
-    }
-
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.
     if (!isset($_REQUEST['pid']))
@@ -168,8 +161,6 @@ function workflow_admin_graph()
 
     $tplData['mid'] =  'tiki-g-admin_processes.tpl';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],

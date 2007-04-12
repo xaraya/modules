@@ -30,12 +30,6 @@ function workflow_admin_monitor_activities()
 
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'monitor', 'error', $tplData);
-}
-
 // Filtering data to be received by request and
 // used to build the where part of a query
 // filter_active, filter_valid, find, sort_mode,
@@ -182,8 +176,6 @@ $tplData['filter_type'] = isset($_REQUEST['filter_type']) ? $_REQUEST['filter_ty
 $tplData['filter_isInteractive'] = isset($_REQUEST['filter_isInteractive']) ? $_REQUEST['filter_isInteractive'] : '';
 $tplData['filter_isAutoRouted'] = isset($_REQUEST['filter_isAutoRouted']) ? $_REQUEST['filter_isAutoRouted'] : '';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],

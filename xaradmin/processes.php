@@ -169,8 +169,7 @@ function workflow_admin_processes()
     // Huh? why?
     $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
     $data['all_procs'] =  $items['data'];
-    $data['feature_help'] = $feature_help;
-    $data['direct_pagination'] = $direct_pagination;
+
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
     $data['pager'] = xarTplGetPager($data['offset'], $items['cant'], $url, $maxRecords);
     return $data;

@@ -30,14 +30,6 @@ function workflow_admin_shared_source()
 
 include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
-// The galaxia source editor for activities and
-// processes.
-if ($feature_workflow != 'y') {
-    $tplData['msg'] =  xarML("This feature is disabled");
-
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
-
 if (!isset($_REQUEST['pid'])) {
     $tplData['msg'] =  xarML("No process indicated");
 
@@ -139,8 +131,6 @@ $tplData['items'] = $activities['data'];
 
 $tplData['mid'] =  'tiki-g-admin_shared_source.tpl';
 
-    $tplData['feature_help'] = $feature_help;
-    $tplData['direct_pagination'] = $direct_pagination;
     return $tplData;
 }
 
