@@ -126,7 +126,7 @@
       <source>dynamic_data</source>
       <status>2</status>
       <order>12</order>
-      <validation>;Website;Print;CD;Mixed Media;Advertising;Consulting;Custom Development;Service Contract</validation>
+      <validation></validation>
     </property>
     <property name="thumbnail">
       <id>13</id>

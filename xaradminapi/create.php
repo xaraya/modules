@@ -18,7 +18,23 @@ function xproject_adminapi_create($args)
     if (!isset($clientid)) {
         $clientid = 0;
     }
-
+    
+    if(empty($planned_start_date)) $planned_start_date = date("M d, Y");
+    
+    if(empty($planned_end_date)) {
+        switch($status) {
+            case "Awaiting Proposal":
+                $planned_end_date = date("Y-m-d", time() + (7 * 24 * 3600) );
+                break;
+            case "Pending Approval":
+                $planned_end_date = date("Y-m-d", time() + (14 * 24 * 3600) );
+                break;
+            case "Active":
+                $planned_end_date = date("Y-m-d", time() + (28 * 24 * 3600) );
+                break;
+        }
+    }
+    
     $invalid = array();
     if (!isset($project_name) || !is_string($project_name) || empty($project_name)) {
         $invalid[] = 'project_name';

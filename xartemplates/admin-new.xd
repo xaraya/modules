@@ -13,7 +13,6 @@
 
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xproject')#" />
 <xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
-<input type="hidden" name="ownerid" value="#$ownerid#" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
@@ -34,7 +33,7 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['summary']" /></td>
-        <td><xar:data-input property="$properties['summary']" name="description" /></td>
+        <td><xar:data-input property="$properties['summary']" name="summary" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['description']" /></td>
@@ -42,7 +41,8 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['status']" /></td>
-        <td><xar:data-input property="$properties['status']" name="status" />
+        <xar:set name="activestatus">xarModGetVar('xproject', 'activestatus')</xar:set>
+        <td><xar:data-input property="$properties['status']" name="status" value="$activestatus" />
             <xar:data-label property="$properties['private']" />
             <xar:data-input property="$properties['private']" name="private" value="1" /></td>
     </tr>

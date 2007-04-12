@@ -2,6 +2,12 @@
 <xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
 <xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
 <xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+
+<xar:comment>Make this conditional only when addressbook is used for fields</xar:comment>
+<xar:base-include-javascript position="head" module="addressbook" filename="loadcontacts.js" /> 
+<xar:base-include-javascript position="head" module="dossier" filename="loadcontacts.js" /> 
+<xar:base-include-javascript position="head" module="xproject" filename="joomla.javascript.js" />
+
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 <xar:style scope="module" file="xproject" />

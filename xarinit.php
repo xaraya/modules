@@ -298,6 +298,7 @@ function xproject_upgrade($oldversion)
     /* preserve importance, status and project type lists during ddata rewrite */
     $projects_objectid = xarModGetVar('xproject','projects_objectid');
     $prop_data_cached = xarSessionGetVar('prop_data_cached');
+//    die("check: ".$projects_objectid." - ".$prop_data_cached." - ".serialize(xarSessionGetVar('oldprop_projecttype')));
     if($projects_objectid && !$prop_data_cached) {
         $fields = xarModAPIFunc('dynamicdata','user','getprop',
                                 array('objectid' => $projects_objectid));
@@ -670,7 +671,21 @@ function xproject_upgrade($oldversion)
         
         case '4.0':
         case '4.1':
-                
+            // add team table row and ddata form templates for memberid and getupdates
+            $team_table = $xarTables['xProject_team'];
+            $result = $datadict->addColumn($team_table, 'emailupdates I(1) NotNull Default 1');
+            if (!$result) return;
+            
+            $team_objectid = xarModGetVar('xproject','team_objectid');
+            if (!empty($team_objectid)) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $team_objectid));
+            }
+            $team_objectid = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/xproject/xardata/team.xml'));
+            if (empty($team_objectid)) return;
+            xarModSetVar('xproject','team_objectid',$team_objectid);
+            
+        case '4.2':
             /* restore importance, status, and project type lists */
             if($prop_data_cached) {
                 $fields = xarModAPIFunc('dynamicdata','user','getprop',
@@ -691,6 +706,7 @@ function xproject_upgrade($oldversion)
                 $oldprop_importance = xarSessionGetVar('oldprop_importance');
                 $oldprop_projecttype = xarSessionGetVar('oldprop_projecttype');
                 
+//                echo "<br>newprop_status: ".$newprop_status['id'];
                 
                 if (!xarModAPIFunc('dynamicdata','admin','updateprop',
                                   array('prop_id' => $newprop_status['id'],
@@ -701,6 +717,7 @@ function xproject_upgrade($oldversion)
                                         'validation' => $oldprop_status['validation']))) {
                     return;
                 }
+//                echo "<br>newprop_importance: ".$newprop_importance['id'];
                 
                 if (!xarModAPIFunc('dynamicdata','admin','updateprop',
                                   array('prop_id' => $newprop_importance['id'],
@@ -711,6 +728,7 @@ function xproject_upgrade($oldversion)
                                         'validation' => $oldprop_importance['validation']))) {
                     return;
                 }
+//                echo "<br>newprop_projecttype: ".$newprop_projecttype['id'];
                 
                 if (!xarModAPIFunc('dynamicdata','admin','updateprop',
                                   array('prop_id' => $newprop_projecttype['id'],

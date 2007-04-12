@@ -18,5 +18,25 @@
       <order>1</order>
       <validation>Account Executive;Client;Designer;Developer;Vendor</validation>
     </property>
+    <property name="memberid">
+      <id>2</id>
+      <label>Team Member</label>
+      <type>contactlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="emailupdates">
+      <id>3</id>
+      <label>Receive Email Updates</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
   </properties>
 </object>

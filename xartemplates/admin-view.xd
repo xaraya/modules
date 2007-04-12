@@ -88,6 +88,30 @@
             <xar:if condition="isset($items)">
                 <xar:foreach in="$items" value="$projectinfo">
                 
+                    <tr>
+                        <xar:if condition="$sortby eq 'importance'">
+                            <xar:if condition="$projectinfo['importance'] ne $currentsortby">
+                                <tr><td colspan="5" class="xproject-view-listsubhead"><xar:mlstring>Importance</xar:mlstring>: <xar:data-output property="$properties['importance']" value="$projectinfo['importance']" /></td></tr>
+                            </xar:if>
+                            <xar:set name="$currentsortby">$projectinfo['importance']</xar:set>
+                        <xar:elseif condition="$sortby eq 'priority'" />
+                            <xar:if condition="$projectinfo['priority'] ne $currentsortby">
+                                <tr><td colspan="6" class="xproject-view-listsubhead"><xar:mlstring>Priority</xar:mlstring>: <xar:data-output property="$properties['priority']" value="$projectinfo['priority']" /></td></tr>
+                            </xar:if>
+                            <xar:set name="$currentsortby">$projectinfo['priority']</xar:set>
+                        <xar:elseif condition="$sortby eq 'status'" />
+                            <xar:if condition="$projectinfo['status'] ne $currentsortby">
+                                <tr><td colspan="7" class="xproject-view-listsubhead"><xar:mlstring>Status</xar:mlstring>: <xar:data-output property="$properties['status']" value="$projectinfo['status']" /></td></tr>
+                            </xar:if>
+                            <xar:set name="$currentsortby">$projectinfo['status']</xar:set>
+                        <xar:elseif condition="$sortby eq 'projecttype'" />
+                            <xar:if condition="$projectinfo['projecttype'] ne $currentsortby">
+                                <tr><td colspan="7" class="xproject-view-listsubhead"><xar:mlstring>Project Type</xar:mlstring>: <xar:data-output property="$properties['projecttype']" value="$projectinfo['projecttype']" /></td></tr>
+                            </xar:if>
+                            <xar:set name="$currentsortby">$projectinfo['projecttype']</xar:set>
+                        </xar:if>
+                    </tr>
+                
                     <tr><td class="xproject-list-data">
                             <a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a>
                         </td>

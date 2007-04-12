@@ -1,3 +1,12 @@
+<xar:set name="overlib_available">xarModIsAvailable('overlib')</xar:set>
+<xar:if condition="$overlib_available">
+    <xar:comment>It still has to be able to find the template tag for overlib if we do this...</xar:comment>
+    <xar:overlib-init />
+</xar:if>
+
+<xar:set name="dummy">xarVarFetch('mode', 'str::', $mode, $mode, XARVAR_NOT_REQUIRED)</xar:set>
+
+
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$project_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
@@ -7,92 +16,142 @@
 <xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
 <xar:data-getitem name="$worklog_properties" module="xtasks" itemtype="2" itemid="$worklog_objectid" />
 
-
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
-<xar:template type="module" file="admin-menu" />
+<xar:set name="colorlist">array("#FFFFFF","#FF9933","#33FF99","#3399FF","#FF9900","#9900FF","#00FF99","#FF0099","#99FF00","#0099ff")</xar:set>
+<xar:set name="x">0</xar:set>
+<xar:set name="project_types">$project_properties['projecttype']->getOptions()</xar:set>
+<xar:foreach in="$project_types" value="$type_info">
+    <xar:set name="typevalue">$type_info['name']</xar:set>
+    <xar:set name="typecolor[$typevalue]">$colorlist[$x]</xar:set>
+    <xar:set name="x">$x+1</xar:set>
+</xar:foreach>
+
+<xar:if condition="$mode ne 'email'">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
 
 <div class="xar-mod-head"><div class="xar-mod-title" style="text-align: center;"><xar:mlstring>AGENDA</xar:mlstring>
-
-    <xar:if condition="$days gt 0">
-        &nbsp;[ for the past #$days# days ]
-    <xar:elseif condition="!empty($formatted_since)" />
-        &nbsp;[ since #$formatted_since# ]
+    <xar:if condition="$mode ne 'email'">
+        [ <a href="#xarModURL('base','user','main',array('page'=>"agendatosam"))#">send to Sam</a> ]
     </xar:if>
     
 </div></div>
 
 <div class="xar-mod-body" id="agenda" style="font-size: 10px;">
-
-    <form method="post" action="&xar-modurl-xproject-admin-agenda;" />
-        <div class="xproject-list-header">Get Agenda for the past: <input type="text name="days" value="#$days#" size="2" /> days. <input type="submit" value="GO" /></div>
-        <div class="xproject-list-header">Get Agenda since: <input type="text name="since" value="#$since#" size="16" /><input type="submit" value="GO" /></div>
-        
-    </form>
     
     <xar:set name="currentproject">""</xar:set>
     <xar:set name="currenttask">""</xar:set>
     
-    <div style="background-color: #CCCCCC;">
-        <div style="width: auto; min-width: 100px; float: left; font-weight: bold; padding: 2px;" class="xproject-list-header">Project / Task</div>
-        <div style="width: 100px; float: left; font-weight: bold; padding: 2px;" class="xproject-list-header">Project Type</div>
-        <div style="width: 100px; float: left; font-weight: bold; padding: 2px;" class="xproject-list-header">Client / Owner</div>
-        <div style="width: 100px; float: right; font-weight: bold; padding: 2px;" class="xproject-list-header">Status</div>
-        <div style="width: 100px; float: right; font-weight: bold; padding: 2px;" class="xproject-list-header">Due Date</div>
-        <div style="width: 50px; float: right; font-weight: bold; padding: 2px;" class="xproject-list-header">Hours</div>
-        <div style="width: 100px; float: right; font-weight: bold; padding: 2px;" class="xproject-list-header">Importance</div>
-        <div style="clear: both;"></div>
-    </div>
+    <table style="width: 100%; border: 0px;">
+    <tr style="background-color: #CCCCCC;">
+        <td style="width: auto; min-width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Project / Task</td>
+        <td style="width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Project Type</td>
+        <td style="width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Client / Owner</td>
+        <td style="width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Status</td>
+        <td style="width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Due Date</td>
+        <td style="width: 50px; font-weight: bold; padding: 2px;" class="xproject-list-header">Hours</td>
+        <td style="width: 100px; font-weight: bold; padding: 2px;" class="xproject-list-header">Importance</td>
+    </tr>
         
     <xar:foreach in="$projectwork" value="$projectinfo">
     
         <xar:if condition="$currentproject ne $projectinfo['project_name']">
             
-            <xar:if condition="empty($currentproject)">
-                <div style="background-color: #333333; height: 2px;">&nbsp;</div>
+            <xar:set name="activetasks">0</xar:set>
+            
+            <xar:if condition="!empty($currentproject)">
+                        </table>
+                    </div></td></tr>
+            </xar:if>   
+   
+            <tr style="background-color: #$typecolor[$projectinfo['projecttype']]#;">
+                <td style="width: auto; min-width: 120px; float: left; padding: 2px;"><div class="xproject-list-data"><strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#&amp;mode=tasks" style="text-decoration: none; color: #333333;"><xar:data-output property="$project_properties['project_name']" value="$projectinfo['project_name']" /></a></strong></div></td>
+                <td style="width: 80px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['projecttype']" value="$projectinfo['projecttype']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['clientid']" value="$projectinfo['clientid']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['status']" value="$projectinfo['status']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['planned_end_date']" value="$projectinfo['planned_end_date']" dateformat="%a, %d %b" />&nbsp;</td>
+                <td style="width: 50px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['hours_remaining']" value="$projectinfo['hours_remaining']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['importance']" value="$projectinfo['importance']" />&nbsp;</td>
+                <xar:if condition="$mode ne 'email'">
+                    <td style="width: 20px;"><xar:if condition="$projectinfo['taskid'] gt 0"><a href="javascript: void twist('project_#$projectinfo['projectid']#');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></xar:if></td>
+                </xar:if>
+            </tr>
+        </xar:if>
+    
+        <xar:if condition="$currentproject ne $projectinfo['project_name']">
+            <xar:if condition="$mode eq 'email'">
+                <xar:set name="taskstyle">""</xar:set>
+            <xar:else />
+                <xar:set name="taskstyle">"display: none;"</xar:set>
             </xar:if>
-        
-            <div style="background-color: #EEEEEE;">
-                <div style="width: auto; min-width: 120px; float: left; padding: 2px;"><div style="width: 120px;" class="xproject-list-data"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#" style="text-decoration: none;"><xar:data-output property="$project_properties['project_name']" value="$projectinfo['project_name']" /></a></div></div>
-                <div style="width: 80px; float: left; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['projecttype']" value="$projectinfo['projecttype']" />&nbsp;</div>
-                <div style="width: 100px; float: left; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['clientid']" value="$projectinfo['clientid']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['status']" value="$projectinfo['status']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['planned_end_date']" value="$projectinfo['planned_end_date']" dateformat="%a, %d %b" />&nbsp;</div>
-                <div style="width: 50px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['hours_remaining']" value="$projectinfo['hours_remaining']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$project_properties['importance']" value="$projectinfo['importance']" />&nbsp;</div>
-                <div style="clear: both;"></div>
-            </div>
-            <xar:set name="currentproject">$projectinfo['project_name']</xar:set>
+            <tr><td colspan="7" style="padding: 0px; spacing: 0px; border-spacing: 0px; margin: 0px;"><div id="project_#$projectinfo['projectid']#" style="#$taskstyle#">
+                <table style="width: 100%; border: 0px; padding: 0px; spacing: 0px; margin: 0px;">
         </xar:if>
-    
-        <xar:if condition="$currenttask ne $projectinfo['task_name']">
-            <div style="padding-left: 20px; background-color: #CCCCCC;">
-                <div style="width: auto; min-width: 180px; float: left; padding: 2px; overflow: hidden;"><div style="width: 175px;" class="xproject-list-data"><xar:mlstring>Task</xar:mlstring>: <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$projectinfo['taskid']#" style="text-decoration: none;">#$projectinfo['task_name']#</a></div></div>
-                <div style="width: 100px; float: left; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['owner']" value="$projectinfo['task_owner']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['status']" value="$projectinfo['task_status']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['date_end_planned']" value="$projectinfo['task_date_end_planned']" dateformat="%a, %d %b" />&nbsp;</div>
-                <div style="width: 50px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['hours_remaining']" value="$projectinfo['task_hours_remaining']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['importance']" value="$projectinfo['task_importance']" />&nbsp;</div>
-                <div style="clear: both;"></div>
-            </div>            
-            <xar:set name="currenttask">$projectinfo['task_name']</xar:set>
-        </xar:if>
-        
-        <xar:if condition="!empty($projectinfo['worklogid'])">
-            <div style="padding-left: 50px; background-color: #999999;">
-                <div style="width: auto; width: 150px; float: left; padding: 2px;" class="xproject-list-data"><xar:mlstring>Work</xar:mlstring>: <xar:data-output property="$worklog_properties['notes']" value="$projectinfo['work_notes']" />&nbsp;</div>
-                <div style="width: 100px; float: left; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['ownerid']" value="$projectinfo['work_ownerid']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data">&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['eventdate']" value="$projectinfo['work_eventdate']" dateformat="%a, %d %b" />&nbsp;</div>
-                <div style="width: 50px; float: right; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['hours']" value="$projectinfo['work_hours']" />&nbsp;</div>
-                <div style="width: 100px; float: right; padding: 2px;" class="xproject-list-data">&nbsp;</div>
-                <div style="clear: both;"></div>
-            </div>            
-        </xar:if>        
-    
-    </xar:foreach>
 
+        <xar:if condition="$currenttask ne $projectinfo['task_name'] and $activetasks <= 0 and !empty($projectinfo['task_name'])">
+        
+            <xar:set name="activetasks">1</xar:set>
+        
+        
+            <xar:set name="task_name">str_replace("'","\'",$projectinfo['task_name'])</xar:set>
+            <xar:set name="task_name">htmlspecialchars($task_name, ENT_QUOTES)</xar:set>
+            <xar:set name="task_desc">str_replace("'","\'",$projectinfo['formatted_desc'])</xar:set>
+            <xar:set name="task_desc">htmlspecialchars($task_desc, ENT_QUOTES)</xar:set>
+            <xar:set name="olopen">""</xar:set>
+            <xar:set name="olclose">""</xar:set>
+            <xar:if condition="xarModIsAvailable('overlib')">
+                <xar:overlib-popup-open name="$olopen" 
+                    caption="$task_name" 
+                    text="$task_desc"
+                    sticky="true" />
+                <xar:overlib-popup-close name="$olclose" />
+            </xar:if>
+            <tr style="background-color: #CCCCCC;">
+                <td colspan="2" style="width: auto; padding: 2px;"><div style="width: 200px;" class="xproject-list-data"><xar:mlstring>Task</xar:mlstring>: <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$projectinfo['taskid']#" onmouseover="#$olopen#" onmouseout="#$olclose#" style="text-decoration: none;">#$projectinfo['task_name']#</a></div></td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['owner']" value="$projectinfo['task_owner']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['status']" value="$projectinfo['task_status']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['date_end_planned']" value="$projectinfo['task_date_end_planned']" dateformat="%a, %d %b" />&nbsp;</td>
+                <td style="width: 50px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['hours_remaining']" value="$projectinfo['task_hours_remaining']" />&nbsp;</td>
+                <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$task_properties['importance']" value="$projectinfo['task_importance']" />&nbsp;</td>
+            </tr> 
+
+            <xar:if condition="!empty($projectinfo['worklogid'])">
+                <xar:set name="notes">str_replace("'","\'",$projectinfo['formatted_notes'])</xar:set>
+                <xar:set name="notes">htmlspecialchars($notes, ENT_QUOTES)</xar:set>
+                <xar:set name="caption">substr($notes, 0, 64)</xar:set>
+                <xar:set name="olopen">""</xar:set>
+                <xar:set name="olclose">""</xar:set>
+                <xar:if condition="xarModIsAvailable('overlib')">
+                    <xar:overlib-popup-open name="$olopen" 
+                        caption="Notes on Work Performed" 
+                        text="$notes"
+                        sticky="true" />
+                    <xar:overlib-popup-close name="$olclose" />
+                </xar:if>
+                <tr style="background-color: #999999;">
+                    <td colspan="2" class="xproject-list-data" style="width 100%; padding: 2px;"><div style="overflow: hidden; white-space: pre;"><em><xar:mlstring>Work</xar:mlstring>: <a href="&xar-modurl-xtasks-admin-display;&amp;taskid=#$projectinfo['taskid']#" onmouseover="#$olopen#" onmouseout="#$olclose#"><xar:data-output property="$worklog_properties['notes']" value="$caption" /></a></em></div></td>
+                    <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['ownerid']" value="$projectinfo['work_ownerid']" />&nbsp;</td>
+                    <td style="width: 100px; padding: 2px;" class="xproject-list-data">&nbsp;</td>
+                    <td style="width: 100px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['eventdate']" value="$projectinfo['work_eventdate']" dateformat="%a, %d %b" />&nbsp;</td>
+                    <td style="width: 50px; padding: 2px;" class="xproject-list-data"><xar:data-output property="$worklog_properties['hours']" value="$projectinfo['work_hours']" />&nbsp;</td>
+                    <td style="width: 100px; padding: 2px;" class="xproject-list-data">&nbsp;</td>
+                </tr>            
+            </xar:if>        
+        </xar:if>
+        
+        <xar:set name="currenttask">$projectinfo['task_name']</xar:set>
+        
+        <xar:if condition="$currentproject ne $projectinfo['project_name']">
+        </xar:if>
+        
+        <xar:set name="currentproject">$projectinfo['project_name']</xar:set>
+    </xar:foreach>
+    
+            </table>
+        </div></td></tr>
+    </table>
 
 </div>
 <div class="xar-mod-foot">&nbsp;</div>

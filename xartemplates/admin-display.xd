@@ -1,6 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
 <xar:base-include-javascript position="head" module="base" filename="calendar.js" />
+<xar:base-include-javascript position="head" module="uploads" filename="switchImport.js" />
+
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
@@ -41,17 +43,23 @@
                     </xar:if>
                     <div style="background-color: #FFFFFF; cursor: pointer; #$style_summary#" onclick="switchtabs('summary')" id="tab_summary">Summary</div> 
 
-                    <xar:set name="style_team">""</xar:set>
-                    <xar:if condition="$mode eq 'team'">
-                        <xar:set name="style_team">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    <xar:set name="style_tasklist">""</xar:set>
+                    <xar:if condition="$mode eq 'tasks'">
+                        <xar:set name="style_tasklist">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
                     </xar:if>
-                    <div style="cursor: pointer; #$style_team#" onclick="switchtabs('team')" id="tab_team">Team</div> 
+                    <div style="cursor: pointer; #$style_tasklist#" onclick="switchtabs('tasklist')" id="tab_tasklist">Task List</div> 
 
                     <xar:set name="style_details">""</xar:set>
                     <xar:if condition="$mode eq 'details'">
                         <xar:set name="style_details">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
                     </xar:if>
                     <div style="cursor: pointer; #$style_details#" onclick="switchtabs('details')" id="tab_details">Details</div> 
+
+                    <xar:set name="style_team">""</xar:set>
+                    <xar:if condition="$mode eq 'team'">
+                        <xar:set name="style_team">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
+                    </xar:if>
+                    <div style="cursor: pointer; #$style_team#" onclick="switchtabs('team')" id="tab_team">Team</div> 
 
                     <xar:set name="style_ddata">""</xar:set>
                     <xar:if condition="$mode eq 'ddata'">
@@ -78,12 +86,6 @@
                         <xar:set name="status_logs">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
                     </xar:if>
                     <div style="cursor: pointer; #$style_logs#" onclick="switchtabs('logs')" id="tab_logs">Change Log</div> 
-
-                    <xar:set name="style_tasklist">""</xar:set>
-                    <xar:if condition="$mode eq 'tasks'">
-                        <xar:set name="style_tasklist">"background-color: #FFFFFF; font-weight: bold;"</xar:set>
-                    </xar:if>
-                    <div style="cursor: pointer; #$style_tasklist#" onclick="switchtabs('tasklist')" id="tab_tasklist">Task List</div> 
 
                     <xar:set name="style_worklog">""</xar:set>
                     <xar:if condition="$mode eq 'worklog'">
@@ -114,10 +116,6 @@
                     </xar:if>
                     <div id="project_summary" style="width: auto; #$style_summary_content#">
                         <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Summary</xar:mlstring>&nbsp;[ <a href="&xar-modurl-xproject-admin-modify;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'project_summary');"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;|&nbsp;<a href="&xar-modurl-xproject-admin-proposal;&amp;projectid=#$projectid#&amp;theme=print" target="proposal"><xar:mlstring>Proposal</xar:mlstring></a> ]</div>
-
-                        <xar:if condition="!empty($item['summary'])">
-                            <p style="text-align: center;"><em><xar:data-output property="$properties['summary']" value="$item['summary']" /></em></p>
-                        </xar:if>
 
                         <table width="99%" border="0" cellspacing="1" cellpadding="2" class="xproject_info">
                             <xar:if condition="!empty($item['reference'])">
@@ -240,13 +238,14 @@
                         <xar:set name="style_team_content">"display: block;"</xar:set>
                     </xar:if>
                     <div id="project_team" style="width: auto; overflow: hidden; #$style_team_content#">
-                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</div>
+                        <div class="xar-mod-title"><xar:data-output property="$properties['project_name']" value="$item['project_name']" /> <xar:mlstring>Team</xar:mlstring>&nbsp;[&nbsp;<a href="&xar-modurl-xproject-admin-modifyteam;&amp;projectid=#$projectid#&amp;inline=1" onclick="return loadContent(this.href,'team_form')"><xar:mlstring>Edit</xar:mlstring></a>&nbsp;]</div>
+                        <div id="team_form"></div>
                         <xar:foreach in="$teamlist" value="$memberinfo" >
                             <div>#$memberinfo.membername#
                                 <xar:if condition="!empty($memberinfo.projectrole)">
                                     - <em>#$memberinfo.projectrole#</em>
                                 </xar:if>
-                                - <a href="&xar-modurl-xproject-team-delete;&amp;projectid=#$projectid#&amp;memberid=#$memberinfo.memberid#">remove</a>
+                                - <a href="&xar-modurl-xproject-team-delete;&amp;projectid=#$projectid#&amp;memberid=#$memberinfo.memberid#&amp;inline=1" onclick="return loadContent(this.href,'team_form')">remove</a>
                             </div>
                         </xar:foreach>
                     </div>

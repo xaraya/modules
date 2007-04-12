@@ -84,7 +84,7 @@ function xproject_admin_create($args)
 
     xarSessionSetVar('statusmsg', xarMLByKey('PROJECTCREATED'));
 
-    xarResponseRedirect(xarModURL('xproject', 'admin'));
+    xarResponseRedirect(xarModURL('xproject', 'admin', 'displaylong', array('projectid' => $projectid)));
 
     return true;
 }

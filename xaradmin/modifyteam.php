@@ -5,6 +5,7 @@ function xproject_admin_modifyteam($args)
     extract($args);
 
     if (!xarVarFetch('projectid',     'id',     $projectid,     $projectid,     XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('inline',     'str::',     $inline,     "",     XARVAR_NOT_REQUIRED)) return;
 
     if(!xarModLoad('addressbook', 'user')) return;
 
@@ -40,6 +41,8 @@ function xproject_admin_modifyteam($args)
     $data['authid'] = xarSecGenAuthKey();
 
     $data['item'] = $projectinfo;
+
+    $data['inline'] = $inline;
     
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
 

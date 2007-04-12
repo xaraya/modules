@@ -40,31 +40,84 @@ function xproject_teamapi_getmembers($args)
     if (!$result) return;
     
     $items = array();
+    
+    $team_objectid = xarModGetVar('xproject','team_objectid');
+    $fields = xarModAPIFunc('dynamicdata','user','getprop',
+                            array('objectid' => $team_objectid));
+    foreach ($fields as $name => $info) {
+        if($name == "memberid") {
+            $contact_type = $info['type'];
+            switch($contact_type) {
+                case 735:
+                    include_once('modules/addressbook/xarglobal.php');
+                    break;
+                case 779:
+                    include_once('modules/dossier/xarglobal.php');
+                    break;
+            }
+            // 735 -> addressbook
+            // 779 -> dossier
+        }
+    }
+    
+    if(!isset($contact_type)) $contact_type = 735;
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($memberid) = $result->fields;
         
         if($memberid > 0) {
-            $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
-            $displayName = '';
-            $displayName .= "[".xarVarPrepHTMLDisplay($item['company'])."] ";
-    
-            if ((!empty($item['fname']) && !empty($item['lname'])) ||
-                (!empty($item['fname']) || !empty($item['lname']))) {
-                if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
-                    if (!empty($prefixes) && $item['prefix'] > 0) {
-                        $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+            switch($contact_type) {
+                case 779:
+
+                    $item = xarModAPIFunc('dossier', 'user', 'get', array('contactid' => $memberid));
+                    $displayName = '';
+                    $displayName .= "[".xarVarPrepHTMLDisplay($item['company'])."] ";
+            
+                    if ((!empty($item['fname']) && !empty($item['lname'])) ||
+                        (!empty($item['fname']) || !empty($item['lname']))) {
+                        if (xarModGetVar('dossier', 'name_order')==_DOSSIER_NO_FIRST_LAST) {
+                            if (!empty($prefixes) && $item['prefix'] > 0) {
+                                $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                            }
+                            $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
+                        } else {
+                            if (!empty($item['lname'])) {
+                                $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                            }
+                            if (!empty($prefixes) && $item['prefix'] > 0) {
+                                $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                            }
+                            $displayName .= xarVarPrepHTMLDisplay($item['fname']);
+                        }
                     }
-                    $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
-                } else {
-                    if (!empty($item['lname'])) {
-                        $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                    break;
+                case 37:
+                    $displayName = xarUserGetVar('uname', $memberid);
+                    break;
+                case 735:
+                default:
+                    $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $memberid));
+                    $displayName = '';
+                    $displayName .= "[".xarVarPrepHTMLDisplay($item['company'])."] ";
+            
+                    if ((!empty($item['fname']) && !empty($item['lname'])) ||
+                        (!empty($item['fname']) || !empty($item['lname']))) {
+                        if (xarModGetVar('addressbook', 'name_order')==_AB_NO_FIRST_LAST) {
+                            if (!empty($prefixes) && $item['prefix'] > 0) {
+                                $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                            }
+                            $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
+                        } else {
+                            if (!empty($item['lname'])) {
+                                $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                            }
+                            if (!empty($prefixes) && $item['prefix'] > 0) {
+                                $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
+                            }
+                            $displayName .= xarVarPrepHTMLDisplay($item['fname']);
+                        }
                     }
-                    if (!empty($prefixes) && $item['prefix'] > 0) {
-                        $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
-                    }
-                    $displayName .= xarVarPrepHTMLDisplay($item['fname']);
-                }
+                    break;
             }
         } elseif($roleid > 0) {
             $displayName = xarUserGetVar('uname', $roleid);

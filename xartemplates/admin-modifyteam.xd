@@ -13,9 +13,8 @@
     </xar:foreach>
 
     
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Project Team</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Modify Project Team</xar:mlstring></h2>
 
 <form method="post" action="&xar-modurl-xproject-admin-updateteam;">
 
@@ -32,9 +31,9 @@
         <td colspan="2">
             <div style="float: left; width: 200px;">
                 <strong><xar:mlstring>Team</xar:mlstring> [<xar:mlstring>select company</xar:mlstring>]</strong><br />
-                <select name="teamtargetlist[]" id="teamtargetlist" size="5" style="width: 200px">
+                <select name="teamtargetlist[]" id="teamtargetlist" size="5" multiple="multiple" style="width: 200px">
                     <xar:foreach in="$teamlist" value="$option" >
-                        <option value="#$option['memberid']#"><xar:data-output type="contactlist" value="$option['memberid']" /></option>
+                        <option value="#$option['memberid']#"><xar:data-output property="$team_properties['memberid']" value="$option['memberid']" /></option>
                     </xar:foreach>
                 </select>
             </div>
@@ -44,7 +43,8 @@
                 <input class="button" type="button" value="&gt;&gt;" onclick="delSelectedFromList('teamtargetlist'); implodeListKeys('teamtargetlist','teamimplodedlist',',');" title="#xarML('Remove')#" />
             </div>
             <div style="float: left; width: 200px; height: 100%;">
-                <xar:data-input type="contactlist" name="teamsourcelist[]" size="5" value="$teamoptionkeys" multiple="yes" />
+                <xar:data-input property="$team_properties['memberid']" name="teamsourcelist[]" value="$teamoptionkeys" size="5" multiple="yes" /> 
+                <!--<xar:data-input type="contactlist" name="teamsourcelist[]" size="5" value="$teamoptionkeys" multiple="yes" />-->
                 <input type="hidden" name="teamimplodedlist" id="teamimplodedlist" value="#$teamoptionkeys#" style="width: 200px;" />
             </div>
             <div style="clear: both;"></div>
@@ -57,3 +57,4 @@
 
 </form>
 </div>
+<div class="xar-mod-foot"></div>
