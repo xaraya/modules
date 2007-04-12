@@ -18,7 +18,7 @@
  * TODO: secure pages (can this be done by chaining functions?)
  * TODO: put in some debug stuff
  * TODO: write a guide!
- * TODO: test out the custom format stuff, including custom properties
+ * TODO: test out the custom format stuff (for both forms and properties)
  *
  * Notes on user navigation (the basic concepts):
  * - the sequence can be cancelled from any page (the user can always bail out)
@@ -40,31 +40,28 @@
 function xarpages_funcapi_multiform($args)
 {
     // Get the master page for the current page.
-    // TODO: Without a master page, things get very difficult, so raise an error.
     $master_page = xarModAPIfunc('xarpages', 'multiform', 'getmasterpage', $args);
+    if (empty($master_page)) {
+        // Without a master page, things get very difficult, so raise an error.
+        $msg = xarML('No master page. A multiform sequence must sit under a type multiform_master page.');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
 
     // Get some global settings.
 
     // Debug setting. If set, then additional debug information should be displayed.
-    if (!empty($master_page['dd']['debug'])) {
-        $debug = true;
-    } else {
-        $debug = false;
-    }
-
-    // Exception page for errors, timeouts and user-cancellations.
-    // TODO: decide on what kind of page this will be, and how the details to be
-    // displayed will be passed to it. Perhaps a dedicated 'multiform_exception' page type?
-    if (!empty($master_page['dd']['exception_page']) && xarVarValidate('id', $master_page['dd']['exception_page'])) {
-        $exception_page = $master_page['dd']['exception_page'];
-    } else {
-        $exception_page = 0;
-    }
+    $debug = (!empty($master_page['dd']['debug']) ? true : false);
 
     // Inactivity timeout.
-    if (!empty($master_page['dd']['timeout_seconds']) && xarVarValidate('int:30', $master_page['dd']['timeout_seconds'])) {
+    // If empty (or zero), then we assume there is no timeout required.
+    if (empty($master_page['dd']['timeout_seconds'])) {
+        $timeout_seconds = 0;
+    } elseif (xarVarValidate('int:30', $master_page['dd']['timeout_seconds'])) {
+        // A minimum of 30 seconds, and must be an integer
         $timeout_seconds = $master_page['dd']['timeout_seconds'];
     } else {
+        // Default 300
         $timeout_seconds = 300;
     }
 
@@ -141,25 +138,17 @@ function xarpages_funcapi_multiform($args)
     // The parameter 'multiform_cancel' will trigger this - just put it into the current page URL.
     xarVarFetch('multiform_cancel', 'str::100', $multiform_cancel, '', XARVAR_NOT_REQUIRED);
     if (!empty($multiform_cancel)) {
-        // Clear the session - removes any session data we have collected so far.
-        // CHECK: can we just set $last_page_flag instead?
-        xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-
-        // TODO: Allow the redirect to go to any other page or URL we like.
-        //$redirect_pid = $entry_page_pid;
+        // Set this to be the last page, then go to the master page.
+        $last_page_flag = true;
         $redirect_pid = $master_page['pid'];
         $redirect_reason = 'cancel';
     }
 
     // Check the expiry
-    if (!empty($session_vars['expires']) && $session_vars['expires'] <= time()) {
+    if (!empty($timeout_seconds) && !empty($session_vars['expires']) && $session_vars['expires'] <= time()) {
         // We have expired.
-
-        // CHECK: can we just set $last_page_flag instead?
-        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-
+        // Set this to be the last page, then go to the master page.
+        $last_page_flag = true;
         $redirect_pid = $master_page['pid'];
         $redirect_reason = 'timeout';
     }
@@ -187,12 +176,17 @@ function xarpages_funcapi_multiform($args)
         if (!empty($dd['formobject'])) {
             $formobjectid = $dd['formobject'];
 
-            // TODO: handle the error if there is no associated object
             // Get the form object for this page
             $formobject = xarModApiFunc(
                 'dynamicdata', 'user', 'getobject',
                 array('objectid' => $formobjectid)
             );
+
+            if (empty($formobject)) {
+                $msg = xarML('Could not fetch object with id "#(1)"', $formobjectid);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                return;
+            }
         } else {
             $formobject = NULL;
         }
@@ -226,13 +220,19 @@ function xarpages_funcapi_multiform($args)
                 // Something has gone wrong, since it should
                 // have been allocated when the first form was presented (and *only* when
                 // the first form was presented, so people can't jump in halfway through).
-                // CHECK: can we just set $last_page_flag instead?
-                $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-                $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+                $last_page_flag = true;
 
                 $redirect_pid = $master_page['pid'];
-                // TODO: provide the error reason (i.e. this session has already been completed).
                 $redirect_reason = 'error';
+                // Provide the error reason
+                xarModAPIfunc(
+                    'xarpages', 'multiform', 'passdata',
+                    array(
+                        'reason_detail' => xarML(
+                            'This session has already been completed or cancelled.'
+                        )
+                    )
+                );
             } else {
                 // The session key matches. We can now process the submitted form.
                 // First, there may not be a form object to handle on this page, though
@@ -274,12 +274,18 @@ function xarpages_funcapi_multiform($args)
                         $redirect_pid = $last_history_page['pid'];
                     } else {
                         // Clear the session and raise an error (redirect to the error page).
-                        // TODO: can we just set $last_page_flag?
-                        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-                        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-                        // TODO: give a reason for the error (i.e. cannot return to this page once submitted).
-                        $redirect_pid = $master_page['pid']; //$entry_page_pid;
+                        $last_page_flag = true;
+                        $redirect_pid = $master_page['pid'];
                         $redirect_reason = 'error';
+                        // Give a reason for the error.
+                        xarModAPIfunc(
+                            'xarpages', 'multiform', 'passdata',
+                            array(
+                                'reason_detail' => xarML(
+                                    'To prevent multiple submission of data, you cannot return to this page once it has been submitted.'
+                                )
+                            )
+                        );
                     }
                 } elseif ($user_action_requested == 'none') {
                     // The user is not submitting anything, but just jumping to this page
@@ -431,19 +437,25 @@ function xarpages_funcapi_multiform($args)
                                 if (empty($process_success)) {
                                     $form_isvalid = false;
 
-                                    // TODO: if this happens to be a milestone page, then we should stop
+                                    // If this happens to be a milestone page, then we should stop
                                     // processing immediately with an 'unexpected error'. We do not want
                                     // the user being able to process this page again, so we will not be
                                     // presenting the form again for amendment.
                                     // CHECK: should we do this for all page types?
 
                                     if (!empty($dd['milestone_page'])) {
-                                        $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey', array('reset' => true));
-                                        $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
-
+                                        $last_page_flag = true;
                                         $redirect_pid = $master_page['pid'];
-                                        // TODO: provide the error reason (i.e. processing failed for some unexpected reason - with reason given).
                                         $redirect_reason = 'error';
+                                        // Provide the error reason (i.e. processing failed for some unexpected reason - with reason given).
+                                        xarModAPIfunc(
+                                            'xarpages', 'multiform', 'passdata',
+                                            array(
+                                                'reason_detail' => xarML(
+                                                    'Unexpected error: ' . $processing_object->reason_detail
+                                                )
+                                            )
+                                        );
                                     }
                                 }
 
@@ -541,6 +553,11 @@ function xarpages_funcapi_multiform($args)
         // Check the reason we are here.
         xarVarFetch('reason', 'enum:timeout:error:cancel', $reason, '', XARVAR_NOT_REQUIRED);
         $multiform['reason'] = $reason;
+
+        // Fetch any additional data passed in from the previous page (within the form sequence).
+        // It may be NULL, or it may have been set.
+        $passdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        $multiform['passdata'] = $passdata;
     } else {
         // Any other page type.
         // Although there will be no processing on any other page type,
@@ -557,10 +574,13 @@ function xarpages_funcapi_multiform($args)
 
         // TODO: update the history with this page, plus the next page (if required, same functionality as for the 'multiform' type).
         // TODO: handle 'next' and 'previous' submissions on this page (no validation or processing; just navigation).
-        if ($user_action_requested == 'next') {
+        // The history stuff here will be the same as in the multiform page.
+        if ($user_action_requested == 'next' && !empty($next_page_pid)) {
             // TODO: add to the history, set next pid
-        } elseif ($user_action_requested == 'prev') {
+            $redirect_pid = $next_page_pid;
+        } elseif ($user_action_requested == 'prev' && !empty($prev_page_pid)) {
             // TODO: check we can go back, remove current page from history, set previous pid
+            $redirect_pid = $prev_page_pid;
         }
     }
 
@@ -585,10 +605,10 @@ function xarpages_funcapi_multiform($args)
 
     // Update the expiry time.
     // Doing it here resets the clock each time a form is presented to the user.
-    if (isset($session_vars['expires'])) $session_vars['expires'] = time() + $timeout_seconds;
+    if (isset($session_vars['expires']) && !empty($timeout_seconds)) $session_vars['expires'] = time() + $timeout_seconds;
 
     // Write the session vars back to the session.
-    xarModAPIfunc('xarpages', 'multiform', 'sessionvar', $session_vars);
+    if (empty($last_page_flag)) xarModAPIfunc('xarpages', 'multiform', 'sessionvar', $session_vars);
 
     // Do the redirect, if there is one.
     if (!empty($redirect_url)) {

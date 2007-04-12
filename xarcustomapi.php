@@ -39,6 +39,9 @@ class xarpages_customapi_multiform_master
     // After this step, the session will be cleared before jumping to the last page.
     var $last_page = false;
 
+    // The reason for any errors or warnings returned by methods in this object.
+    var $reason_detail = '';
+
     /*
     * Constructor.
     * This sets up the main data that the validation and processing functions
@@ -62,6 +65,9 @@ class xarpages_customapi_multiform_master
 
         // Store the accumlative form data array.
         if (isset($args['formdata'])) $this->formdata = $args['formdata'];
+
+        // Set a default error reason detail.
+        $this->reason_detail = xarML('No reason given.');
     }
 
     // Take the values and invalids from the object,
@@ -108,13 +114,22 @@ class xarpages_customapi_multiform_master
         return $pid;
     }
 
-    // DEPRCATED
     // End the sequence.
     // This clears out the session completely. It is called in the very last
     // processing step, before the user is redirected off to a 'thankyou'
     // page or some other location.
-    function finish()
+    // Any array passed into the finish function, will be saved in the 
+    // session for use outside the form sequence. It allows, for example,
+    // final confirmation details to be passed out to a 'thankyou' page.
+    function finish($args = array())
     {
+        // Save any 'passdata'.
+        // This can be retrieved *one time only* using the API function:
+        // $passdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        if (!empty($args) && is_array($args)) {
+            xarModAPIfunc('xarpages', 'multiform', 'passdata', $args);
+        }
+
         $this->last_page = true;
         return true;
     }

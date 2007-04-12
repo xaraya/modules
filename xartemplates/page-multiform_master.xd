@@ -1,4 +1,10 @@
 
+<xar:comment>
+    This template is used to handle the starting page (though that is optional), 
+    the cancel page, the error page and the timeout page for a form sequence.
+    It is fairly simplistic, but can be customised as required.
+</xar:comment>
+
 <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
 
 <xar:comment>Add an edit link if required.</xar:comment>
@@ -16,6 +22,10 @@
     <xar:elseif condition="$multiform.reason eq 'error'" />
         <h1><xar:mlstring>Error</xar:mlstring></h1>
         <p><xar:mlstring>An unexpected error occured.</xar:mlstring></p>
+        <xar:if condition="!empty($multiform.passdata.reason_detail)">
+            <h2><xar:mlstring>Reason</xar:mlstring></h2>
+            <p>#xarVarPrepForDisplay($multiform.passdata.reason_detail)#</p>
+        </xar:if>
     <xar:elseif condition="$multiform.reason eq 'timeout'" />
         <h1><xar:mlstring>Timeout</xar:mlstring></h1>
         <p><xar:mlstring>Due to a period of inactivity, the form entry has been cancelled.</xar:mlstring></p>

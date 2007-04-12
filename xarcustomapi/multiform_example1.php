@@ -75,6 +75,11 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
             $this->set_next_page_name('ex1page3');
         }
 
+        // Save the name in the workdata.
+        // We are going to pass this out right at the end of the form sequence, so it
+        // can be displayed on a html page after the sequence is complete.
+        $this->workdata['name'] = $this->values['name'];
+
         // Return true to indicate that all is well.
         // Returning false from here will clear the session and send the user to an error page.
         // TODO: provide a method to return a global error message, that can be displayed on
@@ -100,7 +105,13 @@ class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform
         // Instead, the last page could be a static 'html' page in the same page group,
         // or $this->set_next_page_name('pagename') can be used to send the user to some
         // other page altogether (e.g. a 'thankyou' page).
-        return $this->finish();
+        //
+        // We have passed in the workdata array, which means that data will be available
+        // to the next page visited. It can be retrieved using:
+        // $workdata = xarModAPIfunc('xarpages', 'multiform', 'passdata');
+        // This connects the form sequence to the outside functionality, in a similar
+        // way to a function returning a value.
+        return $this->finish($this->workdata);
     }
 }
 

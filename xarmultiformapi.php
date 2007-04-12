@@ -162,4 +162,32 @@ function xarpages_multiformapi_getvalobject($args)
     return $object;
 }
 
+/*
+ * Pass an array of data from one page to another.
+ * This provides a one-off pass in the style of a batton.
+ * - Invoking with args will store all the args in the Xaraya session.
+ * - Invoking with empty args will return the stored args and remove them from the session
+ * This data pass uses a different session variable than the main form sequence, so
+ * can be used to pass data out at the end of a sequence (after the sequence session
+ * has been cleared).
+ */ 
+
+function xarpages_multiformapi_passdata($args = array())
+{
+    // Everything is stored under here, as an associative array.
+    $session_var_name = 'xarpages_multiform_passvars';
+
+    if (empty($args)) {
+        // No args, so return whatever is stored
+        $args = xarSessionGetVar($session_var_name);
+        if (empty($args)) $args = NULL;
+        xarSessionDelVar($session_var_name);
+    } else {
+        // Args supplied, so store it
+        xarSessionSetVar($session_var_name, $args);
+    }
+
+    return $args;
+}
+
 ?>
