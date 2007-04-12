@@ -61,7 +61,7 @@ class Process_GraphViz {
     * @var  string
     */
     public $dotCommand = 'dot';
-    
+
     public $pid;
 
     /**
@@ -93,8 +93,8 @@ class Process_GraphViz {
             $this->neatoCommand = GRAPHVIZ_BIN_DIR.'/'.$this->neatoCommand;
         }
     }
-    
-    function set_pid($pid) 
+
+    function set_pid($pid)
     {
       $this->pid = $pid;
     }
@@ -151,36 +151,36 @@ class Process_GraphViz {
             return $map;
         }
     }
-    
+
     function image_and_map($format = 'png') {
         if ($file = $this->saveParsedGraph()) {
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
-			
-			if (substr(php_uname(), 0, 7) == "Windows") {
-				$src = '"' . $file . '"';
-				$outputfile  = '"' . $outputfile   . '"';
-				$outputfile2 = '"' . $outputfile2  . '"';
-			} else {
-				$src = $file;
-			}
-			
+
+            if (substr(php_uname(), 0, 7) == "Windows") {
+                $src = '"' . $file . '"';
+                $outputfile  = '"' . $outputfile   . '"';
+                $outputfile2 = '"' . $outputfile2  . '"';
+            } else {
+                $src = $file;
+            }
+
             if(!isset($this->graph['directed'])) $this->graph['directed']=true;
-			
+
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
-            $command .= " -T$format -o $outputfile $src";			
+            $command .= " -T$format -o $outputfile $src";
             @`$command`;
 
             $command = $this->dotCommand;
-            $command.= " -Tcmap -o $outputfile2 $src";			
+            $command.= " -Tcmap -o $outputfile2 $src";
             @`$command`;
-						
+
             @unlink($file);
             return true;
         }
     }
 
-    
+
     function map() {
         if ($file = $this->saveParsedGraph()) {
             $outputfile2 = $file . '.' . 'map';
@@ -433,7 +433,7 @@ class Process_GraphViz {
                   addslashes(stripslashes($from)),
                   addslashes(stripslashes($to))
                 );
-                
+
                 if (!empty($attributeList)) {
                     $parsedGraph .= sprintf(
                       ' [ %s ]',

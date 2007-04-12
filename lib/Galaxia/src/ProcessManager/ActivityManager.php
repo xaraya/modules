@@ -10,11 +10,11 @@ include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 */
 class ActivityManager extends BaseManager {
   public $error='';
-      
+
   function get_error() {
     return $this->error;
   }
-  
+
   /*!
    Asociates an activity with a role
   */
@@ -24,7 +24,7 @@ class ActivityManager extends BaseManager {
     $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
     $this->query($query,array($activityId, $roleId));
   }
-  
+
   /*!
    Gets the roles asociated to an activity
   */
@@ -34,12 +34,12 @@ class ActivityManager extends BaseManager {
               where roles.roleId = gar.roleId and activityId=?";
         $result = $this->query($query,array($activityId));
         $ret = Array();
-        while($res = $result->fetchRow()) {  
+        while($res = $result->fetchRow()) {
             $ret[] = $res;
         }
         return $ret;
     }
-    
+
     /*!
      Removes a role from an activity
     */
@@ -48,7 +48,7 @@ class ActivityManager extends BaseManager {
         $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
         $this->query($query,array($activityId, $roleId));
     }
-            
+
     /*!
      Checks if a transition exists
     */
@@ -56,15 +56,15 @@ class ActivityManager extends BaseManager {
     {
         return($this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=? and actToId=?", array($pid, $actFromId, $actToId)));
     }
-        
+
     /*!
-     Adds a transition 
+     Adds a transition
     */
     function add_transition($pId, $actFromId, $actToId)
     {
         // No circular transitions allowed
         if($actFromId == $actToId) return false;
-        
+
         // Rule: if act is not spl-x or spl-a it can't have more than
         // 1 outbound transition.
         $a1 = $this->get_activity($pId, $actFromId);
@@ -76,23 +76,23 @@ class ActivityManager extends BaseManager {
                 return false;
             }
         }
-        
+
         // Rule: if act is standalone no transitions allowed
         if($a1['type'] == 'standalone' || $a2['type']=='standalone') return false;
         // No inbound to start
         if($a2['type'] == 'start') return false;
         // No outbound from end
         if($a1['type'] == 'end') return false;
-        
-        
+
+
         $query = "delete from ".self::tbl('transitions')."  where `actFromId`=? and `actToId`=?";
         $this->query($query,array($actFromId, $actToId));
         $query = "insert into ".self::tbl('transitions')." (`pId`,`actFromId`,`actToId`) values(?,?,?)";
         $this->query($query,array($pId, $actFromId, $actToId));
-        
+
         return true;
     }
-    
+
     /*!
      Removes a transition
     */
@@ -102,7 +102,7 @@ class ActivityManager extends BaseManager {
         $this->query($query,array($actFromId, $actToId));
         return true;
     }
-    
+
     /*!
      Removes all the activity transitions
     */
@@ -111,8 +111,8 @@ class ActivityManager extends BaseManager {
         $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
         $this->query($query, array($pId, $aid, $aid));
     }
-    
-    
+
+
     /*!
      Returns all the transitions for a process
     */
@@ -127,12 +127,12 @@ class ActivityManager extends BaseManager {
         }
         $result = $this->query($query, $bindvars);
         $ret = Array();
-        while($res = $result->fetchRow()) {  
+        while($res = $result->fetchRow()) {
             $ret[] = $res;
         }
         return $ret;
     }
-    
+
     /*!
      Indicates if an activity is autoRouted
     */
@@ -140,7 +140,7 @@ class ActivityManager extends BaseManager {
     {
         return($this->getOne("select count(*) from ".self::tbl('activities')." where activityId=? and isAutoRouted=?",array($actid,'y')));
     }
-    
+
     /*!
      Returns all the activities for a process as
      an array
@@ -150,30 +150,30 @@ class ActivityManager extends BaseManager {
         $query = "select * from ".self::tbl('activities')."where pId=?";
         $result = $this->query($query, array($pId));
         $ret = Array();
-        while($res = $result->fetchRow()) {  
+        while($res = $result->fetchRow()) {
             $ret[] = $res;
         }
         return $ret;
     }
-    
+
     /*!
-     Builds the graph 
+     Builds the graph
     */
     //\todo build the real graph
     function build_process_graph($pId)
     {
         $attributes = Array(
-                            
+
     );
         $graph = new Process_GraphViz(true,$attributes);
         $pm = new ProcessManager($this->db);
         $name = $pm->_get_normalized_name($pId);
         $graph->set_pid($name);
-        
+
         // Nodes are process activities so get
         // the activities and add nodes as needed
         $nodes = $this->get_process_activities($pId);
-        
+
         foreach($nodes as $node)
             {
                 if($node['isInteractive']=='y') {
@@ -185,13 +185,13 @@ class ActivityManager extends BaseManager {
                 $graph->addNode($node['name'],array('URL'=>"foourl?activityId=".$node['activityId'],
                                                     'label'=>$node['name'],
                                                     'shape' => $this->_get_activity_shape($node['type']),
-                                                    'color' => $color, 
-                                                    'fontsize' =>8, 
+                                                    'color' => $color,
+                                                    'fontsize' =>8,
                                                     'fontname' => 'Windsor'
                                                     )
-                                );    
+                                );
             }
-        
+
         // Now add edges, edges are transitions,
         // get the transitions and add the edges
         $edges = $this->get_process_transitions($pId);
@@ -202,17 +202,17 @@ class ActivityManager extends BaseManager {
                 } else {
                     $color = 'black';
                 }
-                $graph->addEdge(array($edge['actFromName'] => $edge['actToName']), array('color'=>$color));    
+                $graph->addEdge(array($edge['actFromName'] => $edge['actToName']), array('color'=>$color));
             }
-        
-        
+
+
         // Save the map image and the image graph
         $graph->image_and_map();
         unset($graph);
-        return true;   
+        return true;
     }
-    
-    
+
+
     /*!
      Validates if a process can be activated checking the
      process activities and transitions the rules are:
@@ -233,7 +233,7 @@ class ActivityManager extends BaseManager {
         if($cant) {
             $errors[] = tra('Circular reference found some activity has a transition leading to itself');
         }
-        
+
         // Rule 1 must have exactly one start and end activity
         $cant = $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and type=?",array($pId, 'start'));
         if($cant < 1) {
@@ -243,27 +243,27 @@ class ActivityManager extends BaseManager {
         if($cant != 1) {
             $errors[] = tra('Process does not have exactly one end activity');
         }
-        
+
         // Rule 2 end must be reachable from start
         $nodes = Array();
         $endId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?",array($pId, 'end'));
         $aux['id']=$endId;
         $aux['visited']=false;
         $nodes[] = $aux;
-        
+
         $startId = $this->getOne("select activityId from ".self::tbl('activities')."where pId=? and type=?",array($pId,'start'));
         $start_node['id']=$startId;
-        $start_node['visited']=true;    
-        
+        $start_node['visited']=true;
+
         while($this->_list_has_unvisited_nodes($nodes) && !$this->_node_in_list($start_node,$nodes)) {
             for($i=0;$i<count($nodes);$i++) {
                 $node=&$nodes[$i];
                 if(!$node['visited']) {
-                    $node['visited']=true;          
+                    $node['visited']=true;
                     $query = "select actFromId from ".self::tbl('transitions')."where actToId=?";
                     $result = $this->query($query, array($node['id']));
                     $ret = Array();
-                    while($res = $result->fetchRow()) {  
+                    while($res = $result->fetchRow()) {
                         $aux['id'] = $res['actFromId'];
                         $aux['visited']=false;
                         if(!$this->_node_in_list($aux,$nodes)) {
@@ -273,18 +273,18 @@ class ActivityManager extends BaseManager {
                 }
             }
         }
-        
+
         if(!$this->_node_in_list($start_node,$nodes)) {
             // Start node is NOT reachable from the end node
             $errors[] = tra('End activity is not reachable from start activity');
         }
-        
+
         //Rule 3: interactive activities must have a role
         //assigned.
         //Rule 5: standalone activities can't have transitions
         $query = "select * from ".self::tbl('activities')." where pId = ?";
         $result = $this->query($query, array($pId));
-        while($res = $result->fetchRow()) {  
+        while($res = $result->fetchRow()) {
             $aid = $res['activityId'];
             if($res['isInteractive'] == 'y') {
                 $cant = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?",array($res['activityId']));
@@ -304,44 +304,44 @@ class ActivityManager extends BaseManager {
                     $errors[] = tra('Activity').': '.$res['name'].tra(' is standalone but has transitions');
                 }
             }
-            
+
         }
-        
-        
+
+
         //Rule4: roles should be mapped
         $query = "select * from ".self::tbl('roles')." where pId = ?";
         $result = $this->query($query, array($pId));
-        while($res = $result->fetchRow()) {      
+        while($res = $result->fetchRow()) {
             $cant = $this->getOne("select count(*) from ".self::tbl('user_roles')." where roleId=?",array($res['roleId']));
             if(!$cant) {
                 $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
-            }        
+            }
         }
-        
-        
+
+
         // End of rules
-        
+
         // Validate process sources
         $serrors=$this->validate_process_sources($pId);
         $errors = array_merge($errors,$serrors);
-        
+
         $this->error = $errors;
-        
-        
-        
+
+
+
         $isValid = (count($errors)==0) ? 'y' : 'n';
-        
+
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
         $this->query($query, array($isValid,$pId));
-        
-        $this->_label_nodes($pId);    
-        
+
+        $this->_label_nodes($pId);
+
         return ($isValid=='y');
-        
-        
+
+
     }
-    
-    /*! 
+
+    /*!
      Validate process sources
      Rules:
      1) Interactive activities (non-standalone) must use complete()
@@ -353,10 +353,10 @@ class ActivityManager extends BaseManager {
     {
         $errors=Array();
         $procname= $this->getOne("select normalized_name from ".self::tbl('processes')." where pId=?",array($pid));
-        
+
         $query = "select * from ".self::tbl('activities')."where pId=?";
         $result = $this->query($query, array($pid));
-        while($res = $result->fetchRow()) {          
+        while($res = $result->fetchRow()) {
             $actname = $res['normalized_name'];
             $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php';
             if (!file_exists($source)) {
@@ -371,7 +371,7 @@ class ActivityManager extends BaseManager {
             if($res['type']=='standalone') {
                 if(strstr($data,'$instance')) {
                     $errors[] = tra('Activity '.$res['name'].' is standalone and is using the $instance object');
-                }    
+                }
             } else {
                 if($res['isInteractive']=='y') {
                     if(!strstr($data,'$instance->complete()')) {
@@ -383,16 +383,16 @@ class ActivityManager extends BaseManager {
                     }
                 }
                 if($res['type']=='switch') {
-                    if(!strstr($data,'$instance->setNextActivity(')) { 
-                        $errors[] = tra('Activity '.$res['name'].' is switch so it must use $instance->setNextActivity($actname) method');          
+                    if(!strstr($data,'$instance->setNextActivity(')) {
+                        $errors[] = tra('Activity '.$res['name'].' is switch so it must use $instance->setNextActivity($actname) method');
                     }
                 }
-            }    
+            }
         }
         return $errors;
     }
-    
-    /*! 
+
+    /*!
      Indicates if an activity with the same name exists
     */
     function activity_name_exists($pId,$name)
@@ -400,8 +400,8 @@ class ActivityManager extends BaseManager {
         $name = $this->_normalize_name($name);
         return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
     }
-    
-    
+
+
     /*!
      Gets a activity fields are returned as an asociative array
     */
@@ -412,7 +412,7 @@ class ActivityManager extends BaseManager {
         $res = $result->fetchRow();
         return $res;
     }
-    
+
     /*!
      Lists activities at a per-process level
     */
@@ -444,10 +444,10 @@ class ActivityManager extends BaseManager {
         $retval["cant"] = $cant;
         return $retval;
     }
-    
-    
-    
-    /*! 
+
+
+
+    /*!
      Removes a activity.
     */
     function remove_activity($pId, $activityId)
@@ -459,7 +459,7 @@ class ActivityManager extends BaseManager {
         $this->query($query, array($pId, $activityId));
         $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
         $result = $this->query($query,array($activityId, $activityId));
-        while($res = $result->fetchRow()) {  
+        while($res = $result->fetchRow()) {
             $this->remove_transition($res['actFromId'], $res['actToId']);
         }
         $query = "delete from ".self::tbl('activity_roles')." where activityId=?";
@@ -468,22 +468,22 @@ class ActivityManager extends BaseManager {
         // for this activity
         $procname = $proc_info['normalized_name'];
         if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
-            unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php'); 
+            unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php');
         }
         if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
-            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl'); 
+            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl');
         }
         if (file_exists(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php')) {
-            unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php'); 
+            unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php');
         }
         return true;
     }
-    
+
     /*!
      Updates or inserts a new activity in the database, $vars is an asociative
      array containing the fields to update or to insert as needed.
      $pId is the processId
-     $activityId is the activityId  
+     $activityId is the activityId
     */
     function replace_activity($pId, $activityId, $vars)
     {
@@ -491,11 +491,11 @@ class ActivityManager extends BaseManager {
         $now = date("U");
         $vars['lastModif']=$now;
         $vars['pId']=$pId;
-        $vars['normalized_name'] = $this->_normalize_name($vars['name']);    
-        
+        $vars['normalized_name'] = $this->_normalize_name($vars['name']);
+
         $pm = new ProcessManager($this->db);
         $proc_info = $pm->get_process($pId);
-        
+
         if($activityId) {
             $oldname = $this->_get_normalized_name($activityId);
             // update mode
@@ -511,31 +511,31 @@ class ActivityManager extends BaseManager {
             $query .= " where pId=? and activityId=? ";
             $bindvars[] = $pId; $bindvars[] = $activityId;
             $this->query($query, $bindvars);
-            
+
             $newname = $vars['normalized_name'];
             // if the activity is changing name then we
             // should rename the user_file for the activity
             // remove the old compiled file and recompile
             // the activity
-            
+
             $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$oldname.'.php';
             $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$newname.'.php';
             rename($user_file_old, $user_file_new);
-            
+
             $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$oldname.'.tpl';
             $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$newname.'.tpl';
             if ($user_file_old != $user_file_new) {
                 @rename($user_file_old, $user_file_new);
             }
-            
-            
-            $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$oldname.'.php';    
+
+
+            $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$oldname.'.php';
             unlink($compiled_file);
             $this->compile_activity($pId,$activityId);
-            
-            
+
+
         } else {
-            
+
             // When inserting activity names can't be duplicated
             if($this->activity_name_exists($pId, $vars['name'])) {
                 return false;
@@ -545,21 +545,21 @@ class ActivityManager extends BaseManager {
             $first = true;
             $query = "insert into $TABLE_NAME(";
             foreach(array_keys($vars) as $key) {
-                if(!$first) $query.= ','; 
+                if(!$first) $query.= ',';
                 $query.= "$key";
                 $first = false;
-            } 
+            }
             $query .=") values(";
             $first = true;
             foreach(array_values($vars) as $value) {
-                if(!$first) $query.= ','; 
+                if(!$first) $query.= ',';
                 if(!is_numeric($value)) $value="'".$value."'";
                 $query.= "$value";
                 $first = false;
-            } 
+            }
             $query .=")";
             $this->query($query);
-            $activityId = $this->getOne("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now"); 
+            $activityId = $this->getOne("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             $ret = $activityId;
             if(!$activityId) {
                 throw new Exception("No result from: select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
@@ -569,7 +569,7 @@ class ActivityManager extends BaseManager {
             $fw = fopen(GALAXIA_PROCESSES."/$procname/code/activities/".$vars['normalized_name'].'.php','w');
             fwrite($fw,'<'.'?'.'php'."\n".'?'.'>');
             fclose($fw);
-            
+
             if($vars['isInteractive']=='y') {
                 $fw = fopen(GALAXIA_PROCESSES."/$procname/code/templates/".$vars['normalized_name'].'.tpl','w');
                 if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
@@ -577,14 +577,14 @@ class ActivityManager extends BaseManager {
                 }
                 fclose($fw);
             }
-            
+
             $this->compile_activity($pId,$activityId);
-            
+
         }
         // Get the id
         return $activityId;
     }
-    
+
     /*!
      Sets if an activity is interactive or not
     */
@@ -595,7 +595,7 @@ class ActivityManager extends BaseManager {
         // If template does not exist then create template
         $this->compile_activity($pId,$actid);
     }
-    
+
     /*!
      Sets if an activity is auto routed or not
     */
@@ -604,8 +604,8 @@ class ActivityManager extends BaseManager {
         $query = "update ".self::tbl('activities')." set isAutoRouted=? where pId=? and activityId=?";
         $this->query($query, array($value, $pId, $actid));
     }
-    
-    
+
+
     /*!
      Compiles activity
     */
@@ -615,18 +615,18 @@ class ActivityManager extends BaseManager {
         $actname = $act_info['normalized_name'];
         $pm = new ProcessManager($this->db);
         $proc_info = $pm->get_process($pId);
-        $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$act_info['normalized_name'].'.php';    
-        $template_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';    
+        $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$act_info['normalized_name'].'.php';
+        $template_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';
         $user_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$actname.'.php';
         $pre_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pre.php';
         $pos_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pos.php';
         $fw = fopen($compiled_file,"wb");
-        
+
         // First of all add an include to to the shared code
-        $shared_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/shared.php';    
-        
+        $shared_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/shared.php';
+
         fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
-        
+
         // Before pre shared
         $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php',"rb");
         while (!feof($fp)) {
@@ -634,7 +634,7 @@ class ActivityManager extends BaseManager {
             fwrite($fw,$data);
         }
         fclose($fp);
-        
+
         // Now get pre and pos files for the activity
         $fp = fopen($pre_file,"rb");
         while (!feof($fp)) {
@@ -642,15 +642,15 @@ class ActivityManager extends BaseManager {
             fwrite($fw,$data);
         }
         fclose($fp);
-        
-        // Get the user data for the activity 
-        $fp = fopen($user_file,"rb");    
+
+        // Get the user data for the activity
+        $fp = fopen($user_file,"rb");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
             fwrite($fw,$data);
         }
         fclose($fp);
-        
+
         // Get pos and write
         $fp = fopen($pos_file,"rb");
         while (!feof($fp)) {
@@ -658,7 +658,7 @@ class ActivityManager extends BaseManager {
             fwrite($fw,$data);
         }
         fclose($fp);
-        
+
         // Shared pos
         $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php',"rb");
         while (!feof($fp)) {
@@ -666,11 +666,11 @@ class ActivityManager extends BaseManager {
             fwrite($fw,$data);
         }
         fclose($fp);
-        
+
         fclose($fw);
-        
+
         //Copy the templates
-        
+
         if($act_info['isInteractive']=='y' && !file_exists($template_file)) {
             $fw = fopen($template_file,'w');
             if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
@@ -688,7 +688,7 @@ class ActivityManager extends BaseManager {
             @copy($template_file,GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");
         }
     }
-    
+
     /*!
      \private
      Returns activity id by pid,name (activity names are unique)
@@ -696,12 +696,12 @@ class ActivityManager extends BaseManager {
     function _get_activity_id_by_name($pid,$name)
     {
         if($this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and name=?",array($pid, $name))) {
-            return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?",array($pid,$name)));    
+            return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?",array($pid,$name)));
         } else {
             return '';
         }
     }
-    
+
     /*!
      \private Returns the activity shape
     */
@@ -709,7 +709,7 @@ class ActivityManager extends BaseManager {
     function _get_activity_shape($type)
     {
         switch($type) {
-        case "start": 
+        case "start":
             return "circle";
         case "end":
             return "doublecircle";
@@ -724,25 +724,25 @@ class ActivityManager extends BaseManager {
         case "standalone":
             return "hexagon";
         default:
-            return "egg";            
-            
+            return "egg";
+
         }
-        
+
     }
-    
-    
+
+
     /*!
      \private Returns true if a list contains unvisited nodes
      list members are asoc arrays containing id and visited
     */
-    function _list_has_unvisited_nodes($list) 
+    function _list_has_unvisited_nodes($list)
     {
         foreach($list as $node) {
             if(!$node['visited']) return true;
         }
         return false;
     }
-    
+
     /*!
      \private Returns true if a node is in a list
      list members are asoc arrays containing id and visited
@@ -754,7 +754,7 @@ class ActivityManager extends BaseManager {
         }
         return false;
     }
-    
+
     /*!
      \private
      Normalizes an activity name
@@ -765,7 +765,7 @@ class ActivityManager extends BaseManager {
         $name = preg_replace("/[^A-Za-z_]/",'',$name);
         return $name;
     }
-    
+
     /*!
      \private
      Returns normalized name of an activity
@@ -774,15 +774,15 @@ class ActivityManager extends BaseManager {
     {
         return $this->getOne("select normalized_name from ".self::tbl('activities')." where activityId=?",array($activityId));
     }
-    
+
     /*!
      \private
-     Labels nodes 
-    */  
+     Labels nodes
+    */
     function _label_nodes($pId)
     {
-        
-        
+
+
         ///an empty list of nodes starts the process
         $nodes = Array();
         // the end activity id
@@ -792,10 +792,10 @@ class ActivityManager extends BaseManager {
         $nodes[] = $endId;
         $label = $cant;
         $num = $cant;
-        
+
         $query = "update ".self::tbl('activities')." set flowNum=? where pId=?";
         $this->query($query,array($cant+1,$pId));
-        
+
         $seen = array();
         while(count($nodes)) {
             $newnodes = Array();
@@ -808,16 +808,16 @@ class ActivityManager extends BaseManager {
                 $query = "select actFromId from ".self::tbl('transitions')." where actToId=?";
                 $result = $this->query($query, array($node));
                 $ret = Array();
-                while($res = $result->fetchRow()) {  
+                while($res = $result->fetchRow()) {
                     $newnodes[] = $res['actFromId'];
                 }
             }
             $num--;
             $nodes=Array();
             $nodes=$newnodes;
-            
+
         }
-        
+
         $min = $this->getOne("select min(flowNum) from ".self::tbl('activities')."where pId=?",array($pId));
         if(isset($min)) {
             $query = "update ".self::tbl('activities')." set flowNum=flowNum-$min where pId=?";
@@ -826,7 +826,7 @@ class ActivityManager extends BaseManager {
         //$query = "update ".self::tbl('activities')." set flowNum=0 where flowNum=$cant+1";
         //$this->query($query);
     }
-    
+
 }
 
 
