@@ -73,7 +73,7 @@ class ActivityManager extends BaseManager
      * @todo make the checks implicit in the Activity* Classes (like: $act->canHaveInbound(), $act->supportsMultipleTransitions() etc.)
      * @todo move this whole method into the Activity* Classes
     **/
-	function add_transition($pId, $actFromId, $actToId)
+    function add_transition($pId, $actFromId, $actToId)
     {
         // No circular transitions allowed
         if($actFromId == $actToId) return false;
@@ -82,7 +82,6 @@ class ActivityManager extends BaseManager
         $actTo   = $this->getActivity($actToId);
         if(!$actFrom || !$actTo) return false;
         if(!in_array($actFrom->getType(), array('switch','split'))) {
-        if($a1['type'] != 'switch' && $a1['type'] != 'split') {
             if($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?",array($actFromId))) {
                 $this->error = tra('Cannot add transition only split activities can have more than one outbound transition');
                 return false;
