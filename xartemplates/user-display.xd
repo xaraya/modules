@@ -27,7 +27,7 @@
   <form class="sharecontent" method="post" 
         action="&xar-modurl-sharecontent-user-sendbymail;" 
  		enctype="application/x-www-form-urlencoded">
-      <xar:mlstring>Recipient:</xar:mlstring><input type="text" value="andrea@andreamoro.net" name="emails" size="30" />
+      <xar:mlstring>Recipient:</xar:mlstring><input type="text" name="emails" size="30" />
       <xar:mlstring>From:</xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
       <xar:mlstring>Sender's mail:</xar:mlstring><input type="text" value="#$useremail#" name="authoremail" size="30" />
       <input type="hidden" name="authid" id="authid" value="#$authid#" />
