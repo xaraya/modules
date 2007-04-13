@@ -15,7 +15,7 @@
  * Handle <xar:workflow-status ...> workflow status tags
  * Format : <xar:workflow-status/>
  *       or <xar:workflow-status status="active" />
- *       or <xar:workflow-status pId="123" layout="tiny" />
+ *       or <xar:workflow-status id="123" layout="tiny" />
  *       or <xar:workflow-status template="flat" />
  *
  * @param $args array containing the item that you want to display, or fields

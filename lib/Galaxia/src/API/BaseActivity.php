@@ -18,7 +18,7 @@ class BaseActivity extends Base
   public $roles=Array();
   public $outbound=Array();
   public $inbound=Array();
-  public $pId;
+  public $id;
   public $activityId;
   public $expirationTime = 0;
 
@@ -66,7 +66,7 @@ class BaseActivity extends Base
     }
 
     $act->setName($res['name']);
-    $act->setProcessId($res['pId']);
+    $act->setProcessId($res['id']);
     $act->setNormalizedName($res['normalized_name']);
     $act->setDescription($res['description']);
     $act->setIsInteractive($res['isInteractive']);
@@ -182,13 +182,13 @@ class BaseActivity extends Base
   /*! Sets the processId for this activity */
   function setProcessId($pid)
   {
-    $this->pId=$pid;
+    $this->id=$pid;
   }
 
   /*! Gets the processId for this activity*/
   function getProcessId()
   {
-    return $this->pId;
+    return $this->id;
   }
 
   /*! Gets the activityId */

@@ -24,11 +24,15 @@ function workflow_admin_monitor_activities()
 
 // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
-    $tplData = array();
 
 // Adapted from tiki-g-monitor_activities.php
-
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+
+    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_activity', 'str',$data['filter_activity'], '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_type',  'str',$data['filter_type'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_isInteractive',  'str',$data['filter_isInteractive'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_isAutoRouted',  'str',$data['filter_isAutoRouted'],  '',XARVAR_NOT_REQUIRED)) return;
 
 // Filtering data to be received by request and
 // used to build the where part of a query
@@ -37,27 +41,18 @@ include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 $where = '';
 $wheres = array();
 
-if (isset($_REQUEST['filter_isInteractive']) && $_REQUEST['filter_isInteractive'])
-    $wheres[] = "isInteractive='" . $_REQUEST['filter_isInteractive'] . "'";
-
-if (isset($_REQUEST['filter_isAutoRouted']) && $_REQUEST['filter_isAutoRouted'])
-    $wheres[] = "isAutoRouted='" . $_REQUEST['filter_isAutoRouted'] . "'";
-
-if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
-
-if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-    $wheres[] = "activityId=" . $_REQUEST['filter_activity'] . "";
-
-if (isset($_REQUEST['filter_type']) && $_REQUEST['filter_type'])
-    $wheres[] = "type='" . $_REQUEST['filter_type'] . "'";
+if (!empty($data['filter_isInteractive'])) $wheres[] = "isInteractive='" . $data['filter_isInteractive'] . "'";
+if (!empty($data['filter_isAutoRouted'])) $wheres[] = "isAutoRouted='" . $data['filter_isAutoRouted'] . "'";
+if (!empty($data['filter_process'])) $wheres[] = "id='" . $data['filter_process'] . "'";
+if (!empty($data['filter_activity'])) $wheres[] = "activityId='" . $data['filter_activity'] . "'";
+if (!empty($data['filter_type'])) $wheres[] = "type='" . $data['filter_type'] . "'";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
     // FIXME: this string is wrongly converted by convert_sortmode
-    //$sort_mode = 'pId_asc, flowNum_asc';
-    $sort_mode = 'pId_asc';
+    //$sort_mode = 'id_asc, flowNum_asc';
+    $sort_mode = 'id_asc';
 } else {
     $sort_mode = $_REQUEST["sort_mode"];
 }
@@ -68,7 +63,7 @@ if (!isset($_REQUEST["offset"])) {
     $offset = $_REQUEST["offset"];
 }
 
-$tplData['offset'] =&  $offset;
+$data['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
     $find = $_REQUEST["find"];
@@ -76,30 +71,30 @@ if (isset($_REQUEST["find"])) {
     $find = '';
 }
 
-$tplData['find'] =  $find;
-$tplData['where'] =  $where;
-$tplData['sort_mode'] =&  $sort_mode;
+$data['find'] =  $find;
+$data['where'] =  $where;
+$data['sort_mode'] =&  $sort_mode;
 
 $items = $processMonitor->monitor_list_activities($offset - 1, $maxRecords, $sort_mode, $find, $where);
-$tplData['cant'] =  $items['cant'];
+$data['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
-$tplData['cant_pages'] =&  $cant_pages;
-$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+$data['cant_pages'] =&  $cant_pages;
+$data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-    $tplData['next_offset'] =  $offset + $maxRecords;
+    $data['next_offset'] =  $offset + $maxRecords;
 } else {
-    $tplData['next_offset'] =  -1;
+    $data['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-    $tplData['prev_offset'] =  $offset - $maxRecords;
+    $data['prev_offset'] =  $offset - $maxRecords;
 } else {
-    $tplData['prev_offset'] =  -1;
+    $data['prev_offset'] =  -1;
 }
 
-$tplData['items'] =&  $items["data"];
+$data['items'] =&  $items["data"];
 
 $maxtime = 0;
 foreach ($items['data'] as $info) {
@@ -126,34 +121,37 @@ foreach ($items['data'] as $index => $info) {
     }
 }
 
-$all_procs = $processMonitor->monitor_list_all_processes('name_asc');
-$tplData['all_procs'] =&  $all_procs;
+$allprocs = $processMonitor->monitor_list_all_processes('name_asc');
+$data['all_procs'] = array();
+foreach ($allprocs as $row) {
+    $data['all_procs'][] = array('id' => $row['id'], 'name' => $row['name'] . ' ' . $row['version']);
+}
 
 $pid2name = array();
-foreach ($tplData['all_procs'] as $info) {
-    $pid2name[$info['pId']] = $info['name'];
+foreach ($data['all_procs'] as $info) {
+    $pid2name[$info['id']] = $info['name'];
 }
-foreach (array_keys($tplData['items']) as $index) {
-    $pid = $tplData['items'][$index]['pId'];
+foreach (array_keys($data['items']) as $index) {
+    $pid = $data['items'][$index]['id'];
     if (isset($pid2name[$pid])) {
-        $tplData['items'][$index]['procname'] = $pid2name[$pid];
+        $data['items'][$index]['procname'] = $pid2name[$pid];
     } else {
-        $tplData['items'][$index]['procname'] = '?';
+        $data['items'][$index]['procname'] = '?';
     }
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-    $where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' id=' . $_REQUEST['filter_process'];
 } else {
     $where = '';
 }
 
 $all_acts = $processMonitor->monitor_list_all_activities('name_asc',$where);
-$tplData['all_acts'] =&  $all_acts;
+$data['all_acts'] =&  $all_acts;
 $types = $processMonitor->monitor_list_activity_types();
-$tplData['types'] =&  $types;
+$data['types'] =&  $types;
 
-$tplData['stats'] =  $processMonitor->monitor_stats();
+$data['stats'] =  $processMonitor->monitor_stats();
 $sameurl_elements = array(
     'offset',
     'sort_mode',
@@ -167,21 +165,14 @@ $sameurl_elements = array(
     'filter_process'
 );
 
-$tplData['mid'] =  'tiki-g-monitor_activities.tpl';
-
-// Missing variables
-$tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
-$tplData['filter_activity'] = isset($_REQUEST['filter_activity']) ? $_REQUEST['filter_activity'] : '';
-$tplData['filter_type'] = isset($_REQUEST['filter_type']) ? $_REQUEST['filter_type'] : '';
-$tplData['filter_isInteractive'] = isset($_REQUEST['filter_isInteractive']) ? $_REQUEST['filter_isInteractive'] : '';
-$tplData['filter_isAutoRouted'] = isset($_REQUEST['filter_isAutoRouted']) ? $_REQUEST['filter_isAutoRouted'] : '';
+$data['mid'] =  'tiki-g-monitor_activities.tpl';
 
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
-    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+    $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);
-    return $tplData;
+    return $data;
 }
 
 ?>

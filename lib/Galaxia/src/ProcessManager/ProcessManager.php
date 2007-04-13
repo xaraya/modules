@@ -16,33 +16,33 @@ class ProcessManager extends BaseManager
   /*!
     Sets a process as active
   */
-  function activate_process($pId)
+  function activate_process($id)
   {
-    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('y',$pId));
-    $msg = sprintf(tra('Process %d has been activated'),$pId);
+    $query = "update ".self::tbl('processes')." set isActive=? where id=?";
+    $this->query($query,array('y',$id));
+    $msg = sprintf(tra('Process %d has been activated'),$id);
     $this->notify_all(3,$msg);
   }
 
   /*!
     De-activates a process
   */
-  function deactivate_process($pId)
+  function deactivate_process($id)
   {
-    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('n',$pId));
-    $msg = sprintf(tra('Process %d has been deactivated'),$pId);
+    $query = "update ".self::tbl('processes')." set isActive=? where id=?";
+    $this->query($query,array('n',$id));
+    $msg = sprintf(tra('Process %d has been deactivated'),$id);
     $this->notify_all(3,$msg);
   }
 
   /*!
     Creates an XML representation of a process.
   */
-  function serialize_process($pId)
+  function serialize_process($id)
   {
     // <process>
     $out = '<process>'."\n";
-    $proc_info = $this->get_process($pId);
+    $proc_info = $this->get_process($id);
     $procname = $proc_info['normalized_name'];
     $out.= '  <name>'.htmlspecialchars($proc_info['name']).'</name>'."\n";
     $out.= '  <isValid>'.htmlspecialchars($proc_info['isValid']).'</isValid>'."\n";
@@ -59,8 +59,8 @@ class ProcessManager extends BaseManager
     fclose($fp);
     $out.= '  ]]></sharedCode>'."\n";
     // Now loop over activities
-    $query = "select * from ".self::tbl('activities')."where pId= ?";
-    $result = $this->query($query,array($pId));
+    $query = "select * from ".self::tbl('activities')."where id= ?";
+    $result = $this->query($query,array($id));
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
     while($res = $result->fetchRow()) {
@@ -101,7 +101,7 @@ class ProcessManager extends BaseManager
     }
     $out.='  </activities>'."\n";
     $out.='  <transitions>'."\n";
-    $transitions = $am->get_process_transitions($pId);
+    $transitions = $am->get_process_transitions($id);
     foreach($transitions as $tran) {
       $out.='     <transition>'."\n";
       $out.='       <from>'.htmlspecialchars($tran['actFromName']).'</from>'."\n";
@@ -298,10 +298,10 @@ class ProcessManager extends BaseManager
    by default a minor version of the process.
    */
   ///\todo copy process activities and so
-  function new_process_version($pId, $minor=true)
+  function new_process_version($id, $minor=true)
   {
-    $oldpid = $pId;
-    $proc_info = $this->get_process($pId);
+    $oldpid = $id;
+    $proc_info = $this->get_process($id);
     $name = $proc_info['name'];
     if(!$proc_info) return false;
     // Now update the version
@@ -316,7 +316,7 @@ class ProcessManager extends BaseManager
     $pid = $this->replace_process(0, $proc_info, false);
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
-    $query = "select * from ".self::tbl('activities')." where pId=?";
+    $query = "select * from ".self::tbl('activities')." where id=?";
     $result = $this->query($query,array($oldpid));
     $newaid = array();
     while($res = $result->fetchRow()) {
@@ -324,7 +324,7 @@ class ProcessManager extends BaseManager
       $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
     // create transitions
-    $query = "select * from ".self::tbl('transitions')." where pId=?";
+    $query = "select * from ".self::tbl('transitions')." where id=?";
     $result = $this->query($query,array($oldpid));
     while($res = $result->fetchRow()) {
       if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
@@ -334,7 +334,7 @@ class ProcessManager extends BaseManager
     }
     // create roles
     $rm = new RoleManager($this->db);
-    $query = "select * from ".self::tbl('roles')."where pId=?";
+    $query = "select * from ".self::tbl('roles')."where id=?";
     $result = $this->query($query,array($oldpid));
     $newrid = array();
     while($res = $result->fetchRow()) {
@@ -347,7 +347,7 @@ class ProcessManager extends BaseManager
     }
     // map users to roles
     if (count($newrid) > 0) {
-      $query = "select * from ".self::tbl('user_roles')."where pId=?";
+      $query = "select * from ".self::tbl('user_roles')."where id=?";
       $result = $this->query($query,array($oldpid));
       while($res = $result->fetchRow()) {
         if (empty($newrid[$res['roleId']])) {
@@ -397,12 +397,12 @@ class ProcessManager extends BaseManager
 
 
   /*!
-    Gets a process by pId. Fields are returned as an asociative array
+    Gets a process by id. Fields are returned as an asociative array
   */
-  function get_process($pId)
+  function get_process($id)
   {
-    $query = "select * from ".self::tbl('processes')." where pId=?";
-    $result = $this->query($query,array($pId));
+    $query = "select * from ".self::tbl('processes')." where id=?";
+    $result = $this->query($query,array($id));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
@@ -448,30 +448,30 @@ class ProcessManager extends BaseManager
   */
   function invalidate_process($pid)
   {
-    $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
+    $query = "update ".self::tbl('processes')." set isValid=? where id=?";
     $this->query($query,array('n',$pid));
   }
 
   /*!
-    Removes a process by pId
+    Removes a process by id
   */
-  function remove_process($pId)
+  function remove_process($id)
   {
-    $this->deactivate_process($pId);
-    $name = $this->_get_normalized_name($pId);
+    $this->deactivate_process($id);
+    $name = $this->_get_normalized_name($id);
     $aM = new ActivityManager($this->db);
     // Remove process activities
-    $query = "select activityId from ".self::tbl('activities')." where pId=?";
-    $result = $this->query($query,array($pId));
+    $query = "select activityId from ".self::tbl('activities')." where id=?";
+    $result = $this->query($query,array($id));
     while($res = $result->fetchRow()) {
-      $aM->remove_activity($pId,$res['activityId']);
+      $aM->remove_activity($id,$res['activityId']);
     }
 
     // Remove process roles
-    $query = "delete from ".self::tbl('roles')." where pId=?";
-    $this->query($query,array($pId));
-    $query = "delete from ".self::tbl('user_roles')." where pId=?";
-    $this->query($query,array($pId));
+    $query = "delete from ".self::tbl('roles')." where id=?";
+    $this->query($query,array($id));
+    $query = "delete from ".self::tbl('user_roles')." where id=?";
+    $this->query($query,array($id));
 
     // Remove the directory structure
     if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
@@ -481,8 +481,8 @@ class ProcessManager extends BaseManager
       $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
     }
     // And finally remove the proc
-    $query = "delete from ".self::tbl('processes')." where pId=?";
-    $this->query($query,array($pId));
+    $query = "delete from ".self::tbl('processes')." where id=?";
+    $this->query($query,array($id));
     $msg = sprintf(tra('Process %s removed'),$name);
     $this->notify_all(5,$msg);
 
@@ -492,18 +492,18 @@ class ProcessManager extends BaseManager
   /*!
     Updates or inserts a new process in the database, $vars is an asociative
     array containing the fields to update or to insert as needed.
-    $pId is the processId
+    $id is the processId
   */
-  function replace_process($pId, $vars, $create = true)
+  function replace_process($id, $vars, $create = true)
   {
     $TABLE_NAME = self::tbl('processes');
     $now = date("U");
     $vars['lastModif']=$now;
     $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);
 
-    if($pId) {
+    if($id) {
       // update mode
-      $old_proc = $this->get_process($pId);
+      $old_proc = $this->get_process($id);
       $first = true;
       $bindvars = array();
       $query ="update $TABLE_NAME set";
@@ -513,8 +513,8 @@ class ProcessManager extends BaseManager
         $bindvars[] = $value;
         $first = false;
       }
-      $query .= " where pId=? ";
-      $bindvars[] = $pId;
+      $query .= " where id=? ";
+      $bindvars[] = $id;
     $this->query($query,$bindvars);
       // Note that if the name is being changed then
       // the directory has to be renamed!
@@ -526,7 +526,7 @@ class ProcessManager extends BaseManager
       $msg = sprintf(tra('Process %s has been updated'),$vars['name']);
       $this->notify_all(3,$msg);
     } else {
-      unset($vars['pId']);
+      unset($vars['id']);
       // insert mode
       $name = $this->_normalize_name($vars['name'],$vars['version']);
       $this->_create_directory_structure($name);
@@ -548,7 +548,7 @@ class ProcessManager extends BaseManager
       }
       $query .=")";
       $this->query($query,$bindvars);
-      $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=?",array($now));
+      $id = $this->getOne("select max(id) from $TABLE_NAME where lastModif=?",array($now));
       // Now automatically add a start and end activity
       // unless importing ($create = false)
       if($create) {
@@ -568,23 +568,23 @@ class ProcessManager extends BaseManager
           'isAutoRouted' => 'y'
         );
 
-        $aM->replace_activity($pId,0,$vars1);
-        $aM->replace_activity($pId,0,$vars2);
+        $aM->replace_activity($id,0,$vars1);
+        $aM->replace_activity($id,0,$vars2);
       }
     $msg = sprintf(tra('Process %s has been created'),$vars['name']);
     $this->notify_all(4,$msg);
     }
     // Get the id
-    return $pId;
+    return $id;
   }
 
   /*!
    \private
    Gets the normalized name of a process by pid
   */
-  function _get_normalized_name($pId)
+  function _get_normalized_name($id)
   {
-    $info = $this->get_process($pId);
+    $info = $this->get_process($id);
     return $info['normalized_name'];
   }
 
