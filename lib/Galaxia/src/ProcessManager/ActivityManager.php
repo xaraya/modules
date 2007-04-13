@@ -728,11 +728,12 @@ class ActivityManager extends BaseManager
         return false;
     }
 
-    /*!
-     \private
-     Normalizes an activity name
-    */
-    private function _normalize_name($name)
+    /**
+     * Normalizes an activity name
+     *
+     * @todo called by ProcessManager.php line 247, so can NOT be private yet.
+    **/
+     function _normalize_name($name)
     {
         $name = str_replace(" ","_",$name);
         $name = preg_replace("/[^A-Za-z_]/",'',$name);
