@@ -58,9 +58,9 @@ if (!isset($_REQUEST['activityId']))
 $tplData['activityId'] =  $_REQUEST['activityId'];
 
 if ($_REQUEST['activityId']) {
-    $act_info = $activityManager->get_activity($_REQUEST['pid'], $_REQUEST['activityId']);
+    $act = $activityManager->getActivity($_REQUEST['activityId']);
 
-    $actname = $act_info['normalized_name'];
+    $actname = $act->getNormalizedName();
 
     if (isset($_REQUEST['template'])) {
         $tplData['template'] =  'y';
@@ -73,7 +73,9 @@ if ($_REQUEST['activityId']) {
     }
 
     // Then editing an activity
-    $tplData['act_info'] =  $act_info;
+    $tplData['act_info'] =  array(
+        'isInteractive' => $act->isInteractive() ? 'y' : 0,
+        'type'          => $act->getType());
 } else {
     $tplData['template'] =  'n';
     $tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');

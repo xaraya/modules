@@ -67,20 +67,22 @@ class ActivityManager extends BaseManager
         return($this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=? and actToId=?", array($pid, $actFromId, $actToId)));
     }
 
-    /*!
-     Adds a transition
-    */
+    /**
+     * Adds a transition between two activities
+     *
+     * @todo make the checks implicit in the Activity* Classes (like: $act->canHaveInbound(), $act->supportsMultipleTransitions() etc.)
+     * @todo move this whole method into the Activity* Classes
+    **/
     function add_transition($pId, $actFromId, $actToId)
     {
         // No circular transitions allowed
         if($actFromId == $actToId) return false;
 
-        // Rule: if act is not spl-x or spl-a it can't have more than
-        // 1 outbound transition.
-        $a1 = $this->get_activity($pId, $actFromId);
-        $a2 = $this->get_activity($pId, $actToId);
-        if(!$a1 || !$a2) return false;
-        if($a1['type'] != 'switch' && $a1['type'] != 'split') {
+        // Rule: if act is not spl-x or spl-a it can't have more than 1 outbound transition.
+        $actFrom = $this->getActivity($actFromId);
+        $actTo   = $this->getActivity($actToId);
+        if(!$actFrom || !$actTo) return false;
+        if(!in_array($actFrom->getType(), array('switch','split'))) {
             if($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?",array($actFromId))) {
                 $this->error = tra('Cannot add transition only split activities can have more than one outbound transition');
                 return false;
@@ -88,11 +90,13 @@ class ActivityManager extends BaseManager
         }
 
         // Rule: if act is standalone no transitions allowed
-        if($a1['type'] == 'standalone' || $a2['type']=='standalone') return false;
-        // No inbound to start
-        if($a2['type'] == 'start') return false;
-        // No outbound from end
-        if($a1['type'] == 'end') return false;
+        if($actFrom->getType() == 'standalone' || $actTo->getType() == 'standalone') return false;
+
+        // Rule: No inbound to start
+        if($actTo->getType() == 'start') return false;
+
+        // Rule: No outbound from end
+        if($actFrom->getType() == 'end') return false;
 
 
         $query = "delete from ".self::tbl('transitions')."  where `actFromId`=? and `actToId`=?";
@@ -154,9 +158,8 @@ class ActivityManager extends BaseManager
         $query = "select activityId from ".self::tbl('activities')."where pId=?";
         $result = $this->query($query, array($pId));
         $ret = Array();
-        $tmp = new BaseActivity();
         while($res = $result->fetchRow()) {
-            $ret[] = $tmp->getActivity($res['activityId']);
+            $ret[] = $this->getActivity($res['activityId']);
         }
         return $ret;
     }
@@ -401,18 +404,6 @@ class ActivityManager extends BaseManager
         return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
     }
 
-
-    /*!
-     Gets a activity fields are returned as an asociative array
-    */
-    function get_activity($pId, $activityId)
-    {
-        $query = "select * from ".self::tbl('activities')." where pId=? and activityId=?";
-        $result = $this->query($query, array($pId, $activityId));
-        $res = $result->fetchRow();
-        return $res;
-    }
-
     /*!
      Lists activities at a per-process level
     */
@@ -611,15 +602,16 @@ class ActivityManager extends BaseManager
     */
     function compile_activity($pId, $activityId)
     {
-        $act_info = $this->get_activity($pId,$activityId);
-        $actname = $act_info['normalized_name'];
+        $act = $this->getActivity($activityId);
+        $actname = $act->getNormalizedName();
+        $acttype = $act->getType();
         $pm = new ProcessManager($this->db);
         $proc_info = $pm->get_process($pId);
-        $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$act_info['normalized_name'].'.php';
+        $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$actname.'.php';
         $template_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';
         $user_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$actname.'.php';
-        $pre_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pre.php';
-        $pos_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pos.php';
+        $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
+        $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
         $fw = fopen($compiled_file,"wb");
 
         // First of all add an include to to the shared code
@@ -671,14 +663,14 @@ class ActivityManager extends BaseManager
 
         //Copy the templates
 
-        if($act_info['isInteractive']=='y' && !file_exists($template_file)) {
+        if($act->isInteractive() && !file_exists($template_file)) {
             $fw = fopen($template_file,'w');
             if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
                 fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
             }
             fclose($fw);
         }
-        if($act_info['isInteractive']!='y' && file_exists($template_file)) {
+        if($act->isInteractive() && file_exists($template_file)) {
             @unlink($template_file);
             if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl")) {
                 @unlink(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");

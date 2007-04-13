@@ -45,8 +45,14 @@ function workflow_admin_activities()
 
     if ($_REQUEST["activityId"]) {
         $act  = $activityManager->getActivity($_REQUEST['activityId']);
-        // @todo get rid of info, use $act
-        $info = $activityManager->get_activity($data['pid'], $_REQUEST["activityId"]);
+        $info = array('name'        => $act->getName(),
+                      'description' => $act->getDescription(),
+                      'activityId'  => $act->getActivityId(),
+                      'isInteractive' => $act->isInteractive() ? 'y' : 'n',
+                      'isAutoRouted' => $act->isAutoRouted() ? 'y' :'n',
+                      'type' => $act->getType()
+                      );
+
     } else {
         $info = array('name' => '',
                       'description' => '',
@@ -113,6 +119,7 @@ function workflow_admin_activities()
         }
 
         $newaid = $activityManager->replace_activity($data['pid'], $_REQUEST['activityId'], $vars);
+        $act = $activityManager->getActivity($newaid);
 
         $rid = 0;
         if (isset($_REQUEST['userole']) && $_REQUEST['userole'])
@@ -126,24 +133,29 @@ function workflow_admin_activities()
         }
 
         if ($rid) {
-            $act = $activityManager->getActivity($newaid);
             $actaddRole($rid);
         }
 
         // Reget
-        $info = $activityManager->get_activity($data['pid'], $newaid);
+        $info = array('name'        => $act->getName(),
+                      'description' => $act->getDescription(),
+                      'activityId'  => $act->getActivityId(),
+                      'isInteractive' => $act->isInteractive() ? 'y' : 'n',
+                      'isAutoRouted' => $act->isAutoRouted() ? 'y' :'n',
+                      'type' => $act->getType()
+                      );
+
 
         $_REQUEST['activityId'] = $newaid;
         $data['info'] =  $info;
+
         // remove transitions ????
         $activityManager->remove_activity_transitions($data['pid'], $newaid);
-
         if (isset($_REQUEST["add_tran_from"])) {
             foreach ($_REQUEST["add_tran_from"] as $actfrom) {
                 $activityManager->add_transition($data['pid'], $actfrom, $newaid);
             }
         }
-
         if (isset($_REQUEST["add_tran_to"])) {
             foreach ($_REQUEST["add_tran_to"] as $actto) {
                 $activityManager->add_transition($data['pid'], $newaid, $actto);
