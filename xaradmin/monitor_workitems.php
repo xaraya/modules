@@ -41,7 +41,7 @@ if (isset($_REQUEST['filter_instance']) && $_REQUEST['filter_instance'])
     $wheres[] = "instanceId=" . $_REQUEST['filter_instance'] . "";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gp.id=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
     $wheres[] = "ga.activityId=" . $_REQUEST['filter_activity'] . "";
@@ -121,7 +121,7 @@ $all_procs = $processMonitor->monitor_list_all_processes('name_asc');
 $tplData['all_procs'] =&  $all_procs;
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-    $where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' id=' . $_REQUEST['filter_process'];
 } else {
     $where = '';
 }

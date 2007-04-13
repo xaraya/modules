@@ -99,32 +99,32 @@ function workflow_admin_modifyconfig()
     include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
     // get all start activities that are not interactive
-    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='start' and isInteractive='n'");
+    $activities = $processMonitor->monitor_list_activities(0, -1, 'id_asc', '', "type='start' and isInteractive='n'");
 
     // get the name of all processes
-    $all_procs = $processMonitor->monitor_list_all_processes('pId_asc', "isActive='y'");
+    $all_procs = $processMonitor->monitor_list_all_processes('id_asc', "isActive='y'");
     $pid2name = array();
     foreach ($all_procs as $info) {
-        $pid2name[$info['pId']] = $info['name'] . ' ' . $info['version'];
+        $pid2name[$info['id']] = $info['name'] . ' ' . $info['version'];
     }
 
     // build a list of activity ids and names
     $data['activities'] = array();
     $data['activities'][0] = '';
     foreach ($activities['data'] as $info) {
-        if (isset($pid2name[$info['pId']])) {
-            $data['activities'][$info['activityId']] = $pid2name[$info['pId']] . ' - ' . $info['name'];
+        if (isset($pid2name[$info['id']])) {
+            $data['activities'][$info['activityId']] = $pid2name[$info['id']] . ' - ' . $info['name'];
         }
     }
 
     // get all stand-alone activities that are not interactive
-    $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='standalone' and isInteractive='n'");
+    $activities = $processMonitor->monitor_list_activities(0, -1, 'id_asc', '', "type='standalone' and isInteractive='n'");
 
     // build a list of activity ids and names
     $data['standalone'] = array();
     foreach ($activities['data'] as $info) {
-        if (isset($pid2name[$info['pId']])) {
-            $data['standalone'][$info['activityId']] = $pid2name[$info['pId']] . ' - ' . $info['name'];
+        if (isset($pid2name[$info['id']])) {
+            $data['standalone'][$info['activityId']] = $pid2name[$info['id']] . ' - ' . $info['name'];
         }
     }
 

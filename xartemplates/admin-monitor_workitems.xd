@@ -39,10 +39,10 @@
                   <option value=""><xar:mlstring>All</xar:mlstring></option>
                 </xar:if>
                 <xar:foreach in="$all_procs" key="$ix">
-                  <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
-                    <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                  <xar:if condition="$all_procs[$ix]['id'] eq $filter_process">
+                    <option selected="selected" value="#$all_procs[$ix]['id']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
                     <xar:else/>
-                    <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                    <option value="#$all_procs[$ix]['id']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
                   </xar:if>
                 </xar:foreach>
               </select>

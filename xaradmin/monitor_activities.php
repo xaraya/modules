@@ -44,7 +44,7 @@ if (isset($_REQUEST['filter_isAutoRouted']) && $_REQUEST['filter_isAutoRouted'])
     $wheres[] = "isAutoRouted='" . $_REQUEST['filter_isAutoRouted'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "id=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
     $wheres[] = "activityId=" . $_REQUEST['filter_activity'] . "";
@@ -56,8 +56,8 @@ $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
     // FIXME: this string is wrongly converted by convert_sortmode
-    //$sort_mode = 'pId_asc, flowNum_asc';
-    $sort_mode = 'pId_asc';
+    //$sort_mode = 'id_asc, flowNum_asc';
+    $sort_mode = 'id_asc';
 } else {
     $sort_mode = $_REQUEST["sort_mode"];
 }
@@ -131,10 +131,10 @@ $tplData['all_procs'] =&  $all_procs;
 
 $pid2name = array();
 foreach ($tplData['all_procs'] as $info) {
-    $pid2name[$info['pId']] = $info['name'];
+    $pid2name[$info['id']] = $info['name'];
 }
 foreach (array_keys($tplData['items']) as $index) {
-    $pid = $tplData['items'][$index]['pId'];
+    $pid = $tplData['items'][$index]['id'];
     if (isset($pid2name[$pid])) {
         $tplData['items'][$index]['procname'] = $pid2name[$pid];
     } else {
@@ -143,7 +143,7 @@ foreach (array_keys($tplData['items']) as $index) {
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-    $where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' id=' . $_REQUEST['filter_process'];
 } else {
     $where = '';
 }

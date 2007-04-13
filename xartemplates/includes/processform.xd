@@ -7,11 +7,11 @@
 </xar:if>
 <fieldset>
   <legend><xar:var name="formtitle"/></legend>
-  
+
   <!-- Show an edit form for the process -->
   <form action="&xar-modurl-workflow-admin-processes;" method="post">
     <input type="hidden" name="version" value="#$proc_info['version']#" />
-    <input type="hidden" name="pid" value="#$proc_info['pId']#" />
+    <input type="hidden" name="pid" value="#$proc_info['id']#" />
     <input type="hidden" name="offset" value="#$offset#" />
     <input type="hidden" name="where" value="#$where#" />
     <input type="hidden" name="find" value="#$find#" />
@@ -47,8 +47,8 @@
     </div>
   </form>
 </fieldset>
- 
-  
+
+
 <!-- Or an upload form -->
 <xar:if condition="$pid eq 0">
   <fieldset>

@@ -5,14 +5,14 @@ include_once(GALAXIA_LIBRARY.'/src/common/Base.php');
 /*!
 This class provides methods for use in typical monitoring scripts
 */
-class ProcessMonitor extends Base 
+class ProcessMonitor extends Base
 {
-    function monitor_stats() 
+    function monitor_stats()
     {
         $res = array();
         $res['active_processes'] = $this->getOne("SELECT count(*) FROM ".self::tbl('processes')." where `isActive`=?",array('y'));
         $res['processes'] = $this->getOne("SELECT count(*) FROM ".self::tbl('processes'));
-        $result = $this->query("SELECT distinct(`pId`) FROM ".self::tbl('instances')."where `status`=?",array('active'));
+        $result = $this->query("SELECT distinct(`id`) FROM ".self::tbl('instances')."where `status`=?",array('active'));
         $res['running_processes'] = $result->numRows();
         // get the number of instances per status
         $query = "SELECT status, count(*) as num_instances FROM ".self::tbl('instances')."group by status";
@@ -28,19 +28,19 @@ class ProcessMonitor extends Base
         return $res;
     }
 
-    function update_instance_status($iid,$status) 
+    function update_instance_status($iid,$status)
     {
         $query = "update ".self::tbl('instances')."set `status`=? where `instanceId`=?";
         $this->query($query,array($status,$iid));
     }
 
-    function update_instance_activity_status($iid,$activityId,$status) 
+    function update_instance_activity_status($iid,$activityId,$status)
     {
         $query = "update".self::tbl('instance_activities')."set `status`=? where `instanceId`=? and `activityId`=?";
         $this->query($query,array($status,$iid,$activityId));
     }
 
-    function remove_instance($iid) 
+    function remove_instance($iid)
     {
         $query = "delete FROM".self::tbl('workitems')."where `instanceId`=?";
         $this->query($query,array($iid));
@@ -50,7 +50,7 @@ class ProcessMonitor extends Base
         $this->query($query,array($iid));
     }
 
-    function remove_aborted() 
+    function remove_aborted()
     {
         $query="SELECT `instanceId` FROM ".self::tbl('instances')." where `status`=?";
         $result = $this->query($query,array('aborted'));
@@ -66,10 +66,10 @@ class ProcessMonitor extends Base
         $this->query($query,array('aborted'));
     }
 
-    function remove_all($pId) 
+    function remove_all($id)
     {
-        $query="SELECT `instanceId` FROM ".self::tbl('instances')." where `pId`=?";
-        $result = $this->query($query,array($pId));
+        $query="SELECT `instanceId` FROM ".self::tbl('instances')." where `id`=?";
+        $result = $this->query($query,array($id));
         // @todo mult queries in a loop -> prepare outside the loop
         while($res = $result->fetchRow()) {
             $iid = $res['instanceId'];
@@ -78,11 +78,11 @@ class ProcessMonitor extends Base
             $query = "delete FROM ".self::tbl('workitems')." where `instanceId`=?";
             $this->query($query,array($iid));
         }
-        $query = "delete FROM ".self::tbl('instances')." where `pId`=?";
-        $this->query($query,array($pId));
+        $query = "delete FROM ".self::tbl('instances')." where `id`=?";
+        $this->query($query,array($id));
     }
 
-    function monitor_list_processes($offset,$maxRecords,$sort_mode,$find,$where='') 
+    function monitor_list_processes($offset,$maxRecords,$sort_mode,$find,$where='')
     {
         $sort_mode = $this->convert_sortmode($sort_mode);
         if($find) {
@@ -107,7 +107,7 @@ class ProcessMonitor extends Base
         $cant = $this->getOne($query_cant,$bindvars);
         $ret = array();
         while($res = $result->fetchRow()) {
-            $pId = $res['pId'];
+            $id = $res['id'];
             // Number of active instances
             $res['active_instances'] = 0;
             // Number of exception instances
@@ -119,7 +119,7 @@ class ProcessMonitor extends Base
             $res['all_instances'] = 0;
             // Number of activities
             $res['activities'] = 0;
-            $ret[$pId] = $res;
+            $ret[$id] = $res;
         }
         if (count($ret) < 1) {
             $retval = array();
@@ -129,42 +129,42 @@ class ProcessMonitor extends Base
         }
         // get number of instances and timing statistics per process and status
         // TODO: reformulate with bindvars
-        $query = "SELECT pId, status, count(*) as num_instances,
+        $query = "SELECT id, status, count(*) as num_instances,
                 min(ended - started) as min_time, avg(ended - started) as avg_time, max(ended - started) as max_time
-                FROM ".self::tbl('instances')." where pId in (" . join(', ', array_keys($ret)) . ") group by pId, status";
+                FROM ".self::tbl('instances')." where id in (" . join(', ', array_keys($ret)) . ") group by id, status";
         $result = $this->query($query);
         while($res = $result->fetchRow()) {
-            $pId = $res['pId'];
-            if (!isset($ret[$pId])) continue;
+            $id = $res['id'];
+            if (!isset($ret[$id])) continue;
             switch ($res['status']) {
                 case 'active':
-                    $ret[$pId]['active_instances'] = $res['num_instances'];
-                    $ret[$pId]['all_instances'] += $res['num_instances'];
+                    $ret[$id]['active_instances'] = $res['num_instances'];
+                    $ret[$id]['all_instances'] += $res['num_instances'];
                     break;
                 case 'completed':
-                    $ret[$pId]['completed_instances'] = $res['num_instances'];
-                    $ret[$pId]['all_instances'] += $res['num_instances'];
-                    $ret[$pId]['duration'] = array('min' => $res['min_time'], 'avg' => $res['avg_time'], 'max' => $res['max_time']);
+                    $ret[$id]['completed_instances'] = $res['num_instances'];
+                    $ret[$id]['all_instances'] += $res['num_instances'];
+                    $ret[$id]['duration'] = array('min' => $res['min_time'], 'avg' => $res['avg_time'], 'max' => $res['max_time']);
                     break;
                 case 'exception':
-                    $ret[$pId]['exception_instances'] = $res['num_instances'];
-                    $ret[$pId]['all_instances'] += $res['num_instances'];
+                    $ret[$id]['exception_instances'] = $res['num_instances'];
+                    $ret[$id]['all_instances'] += $res['num_instances'];
                     break;
                 case 'aborted':
-                    $ret[$pId]['aborted_instances'] = $res['num_instances'];
-                    $ret[$pId]['all_instances'] += $res['num_instances'];
+                    $ret[$id]['aborted_instances'] = $res['num_instances'];
+                    $ret[$id]['all_instances'] += $res['num_instances'];
                     break;
             }
         }
         // get number of activities per process
-        $query = "SELECT pId, COUNT(*) AS num_activities
+        $query = "SELECT id, COUNT(*) AS num_activities
                   FROM ".self::tbl('activities')."
-                  WHERE pId IN (?".str_repeat(',?',count($ret)-1).")  GROUP BY pId";
+                  WHERE id IN (?".str_repeat(',?',count($ret)-1).")  GROUP BY id";
         $result = $this->query($query,array_keys($ret));
         while($res = $result->fetchRow()) {
-          $pId = $res['pId'];
-          if (!isset($ret[$pId])) continue;
-          $ret[$pId]['activities'] = $res['num_activities'];
+          $id = $res['id'];
+          if (!isset($ret[$id])) continue;
+          $ret[$id]['activities'] = $res['num_activities'];
         }
         $retval = array();
         $retval["data"] = $ret;
@@ -172,7 +172,7 @@ class ProcessMonitor extends Base
         return $retval;
     }
 
-    function monitor_list_activities($offset,$maxRecords,$sort_mode,$find,$where='') 
+    function monitor_list_activities($offset,$maxRecords,$sort_mode,$find,$where='')
     {
         $sort_mode = $this->convert_sortmode($sort_mode);
         $mid = ''; $bindvars = array();
@@ -182,7 +182,7 @@ class ProcessMonitor extends Base
             $bindvars = array($findesc,$findesc);
         }
         if($where) {
-            $where = preg_replace('/pId/', 'ga.pId', $where);
+            $where = preg_replace('/id/', 'ga.id', $where);
             if($mid) {
                 $mid.= " and ($where) ";
             } else {
@@ -191,7 +191,7 @@ class ProcessMonitor extends Base
         }
         $query = "SELECT gp.`name` AS `procname`, gp.`version`, ga.*
                   FROM ".self::tbl('activities')." ga
-                  LEFT JOIN ".self::tbl('processes')." gp ON gp.pId=ga.pId $mid ORDER BY $sort_mode";
+                  LEFT JOIN ".self::tbl('processes')." gp ON gp.id=ga.id $mid ORDER BY $sort_mode";
         $query_cant = "SELECT COUNT(*) FROM ".self::tbl('activities')." ga $mid";
         $result = $this->query($query,$bindvars,$maxRecords,$offset);
         $cant = $this->getOne($query_cant,$bindvars);
@@ -199,15 +199,15 @@ class ProcessMonitor extends Base
         while($res = $result->fetchRow()) {
             // Number of active instances
             $aid = $res['activityId'];
-            $res['active_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and pId=?",array($res['pId']));
+            $res['active_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and id=?",array($res['id']));
             // activities of completed instances are all removed FROM the instance_activities table for some reason, so we need to look at workitems
-            $res['completed_instances']=$this->getOne("SELECT count(distinct gi.instanceId) FROM ".self::tbl('instances')."gi,".self::tbl('workitems')." gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and pId=?",array($res['pId']));
+            $res['completed_instances']=$this->getOne("SELECT count(distinct gi.instanceId) FROM ".self::tbl('instances')."gi,".self::tbl('workitems')." gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and id=?",array($res['id']));
             // activities of aborted instances are all removed from the instance_activities table for some reason, so we need to look at workitems
-            $res['aborted_instances']=$this->getOne("SELECT count(distinct gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('workitems')." gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='aborted' and pId=?",array($res['pId']));
-            $res['exception_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and pId=?",array($res['pId']));
-            $res['act_running_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and pId=?",array($res['pId']));
+            $res['aborted_instances']=$this->getOne("SELECT count(distinct gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('workitems')." gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='aborted' and id=?",array($res['id']));
+            $res['exception_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and id=?",array($res['id']));
+            $res['act_running_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and id=?",array($res['id']));
             // completed activities are removed from the instance_activities table unless they're part of a split for some reason, so this won't work
-            //  $res['act_completed_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='completed' and pId=".$res['pId']);
+            //  $res['act_completed_instances']=$this->getOne("SELECT count(gi.instanceId) FROM ".self::tbl('instances')." gi,".self::tbl('instance_activities')." gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='completed' and id=".$res['id']);
             $res['act_completed_instances'] = 0;
             $ret[$aid] = $res;
         }
@@ -236,14 +236,14 @@ class ProcessMonitor extends Base
         return $retval;
     }
 
-    function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array()) 
+    function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array())
     {
         // The passed in bindvars array is linked to the order of the $where parameter, any new ones go after it
         $mid='';
         if($find) {
             $findesc = $this->qstr('%'.$find.'%');
             $mid=" WHERE (`properties` LIKE $findesc)";
-        } 
+        }
         if($where) {
             if($mid) {
                 $mid.= " AND ($where) ";
@@ -251,14 +251,14 @@ class ProcessMonitor extends Base
                 $mid.= " WHERE ($where) ";
             }
         }
-        $query = "SELECT gp.`pId`, ga.`isInteractive`, gi.`owner`, gp.`name` AS `procname`, gp.`version`, ga.`type`,";
+        $query = "SELECT gp.`id`, ga.`isInteractive`, gi.`owner`, gp.`name` AS `procname`, gp.`version`, ga.`type`,";
         $query.= " ga.`activityId`, ga.`name`, gi.`instanceId`, gi.`status`, gia.`activityId`, gia.`user`, gi.`started`, gi.`ended`, gia.`status` AS actstatus ";
         $query.=" FROM ".self::tbl('instances')." gi LEFT JOIN ".self::tbl('instance_activities')." gia ON gi.`instanceId`=gia.`instanceId` ";
         $query.= "LEFT JOIN ".self::tbl('activities')." ga ON gia.`activityId` = ga.`activityId` ";
-        $query.= "LEFT JOIN ".self::tbl('processes')." gp ON gp.`pId`=gi.`pId` $mid ORDER BY ".$this->convert_sortmode($sort_mode);
+        $query.= "LEFT JOIN ".self::tbl('processes')." gp ON gp.`id`=gi.`id` $mid ORDER BY ".$this->convert_sortmode($sort_mode);
 
         $query_cant = "SELECT COUNT(*) FROM ".self::tbl('instances')." gi LEFT JOIN ".self::tbl('instance_activities')." gia ON gi.`instanceId`=gia.`instanceId` ";
-        $query_cant.= "LEFT JOIN ".self::tbl('activities')."ga ON gia.`activityId` = ga.`activityId` LEFT JOIN ".self::tbl('processes')." gp ON gp.`pId`=gi.`pId` $mid";
+        $query_cant.= "LEFT JOIN ".self::tbl('activities')."ga ON gia.`activityId` = ga.`activityId` LEFT JOIN ".self::tbl('processes')." gp ON gp.`id`=gi.`id` $mid";
         $result = $this->query($query,$wherevars,$maxRecords,$offset);
         $cant = $this->getOne($query_cant,$wherevars);
         $ret = array();
@@ -273,24 +273,24 @@ class ProcessMonitor extends Base
         return $retval;
     }
 
-    function monitor_list_all_processes($sort_mode = 'name_asc', $where = '') 
+    function monitor_list_all_processes($sort_mode = 'name_asc', $where = '')
     {
         if (!empty($where)) $where = " where ($where) ";
-        
-        $query = "SELECT `name`,`version`,`pId` FROM ".self::tbl('processes')." $where ORDER BY ".$this->convert_sortmode($sort_mode);
+
+        $query = "SELECT `name`,`version`,`id` FROM ".self::tbl('processes')." $where ORDER BY ".$this->convert_sortmode($sort_mode);
         $result = $this->query($query);
         $ret = array();
         while($res = $result->fetchRow()) {
-            $pId = $res['pId'];
-            $ret[$pId] = $res;
+            $id = $res['id'];
+            $ret[$id] = $res;
         }
         return $ret;
     }
 
-    function monitor_list_all_activities($sort_mode = 'name_asc', $where = '') 
+    function monitor_list_all_activities($sort_mode = 'name_asc', $where = '')
     {
         if (!empty($where)) $where = " where ($where) ";
-    
+
         $query = "SELECT `name`,`activityId` FROM ".self::tbl('activities')." $where ORDER BY ".$this->convert_sortmode($sort_mode);
         $result = $this->query($query);
         $ret = array();
@@ -319,12 +319,12 @@ class ProcessMonitor extends Base
     function monitor_list_owners()          {   return $this->distinct('owner' ,'instances');          }
     function monitor_list_instances_names() {   return $this->distinct('name'  ,'instances');          }
     function monitor_list_activity_types()  {   return $this->distinct('type'  ,'activities');         }
-    
-    function monitor_get_workitem($itemId) 
+
+    function monitor_get_workitem($itemId)
     {
         $query = "SELECT gw.`orderId`,ga.`name`,ga.`type`,ga.`isInteractive`,gp.`name` as `procname`,gp.`version`,";
         $query.= "gw.`itemId`,gw.`properties`,gw.`user`,`started`,`ended`-`started` as duration ";
-        $query.= "FROM ".self::tbl('workitems')." gw,".self::tbl('activities')." ga,".self::tbl('processes')."gp where ga.`activityId`=gw.`activityId` and ga.`pId`=gp.`pId` and `itemId`=?";
+        $query.= "FROM ".self::tbl('workitems')." gw,".self::tbl('activities')." ga,".self::tbl('processes')."gp where ga.`activityId`=gw.`activityId` and ga.`id`=gp.`id` and `itemId`=?";
         $result = $this->query($query, array($itemId));
         $res = $result->fetchRow();
         $res['properties'] = unserialize($res['properties']);
@@ -332,7 +332,7 @@ class ProcessMonitor extends Base
     }
 
     // List workitems per instance, remove workitem, update_workitem
-    function monitor_list_workitems($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array()) 
+    function monitor_list_workitems($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array())
     {
         $mid = '';
         if ($where) {
@@ -345,8 +345,8 @@ class ProcessMonitor extends Base
         // TODO: retrieve instance status as well
         $query = "SELECT `itemId`,`ended`-`started` as duration,ga.`isInteractive`, ga.`type`,gp.`name` as procname,gp.`version`,ga.`name` as actname,";
         $query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` FROM ".self::tbl('workitems')." gw,".self::tbl('activities')." ga,".self::tbl('processes')." gp ";
-        $query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);
-        $query_cant = "SELECT count(*) FROM ".self::tbl('workitems')." gw,".self::tbl('activities')." ga,".self::tbl('processes')."gp where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid";
+        $query.= "where gw.`activityId`=ga.`activityId` and ga.`id`=gp.`id` $mid order by gp.`id` desc,".$this->convert_sortmode($sort_mode);
+        $query_cant = "SELECT count(*) FROM ".self::tbl('workitems')." gw,".self::tbl('activities')." ga,".self::tbl('processes')."gp where gw.`activityId`=ga.`activityId` and ga.`id`=gp.`id` $mid";
         $result = $this->query($query,$wherevars,$maxRecords,$offset);
         $cant = $this->getOne($query_cant,$wherevars);
         $ret = array();

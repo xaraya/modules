@@ -82,7 +82,7 @@ if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
     $wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gi.id=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
     $wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
@@ -175,7 +175,7 @@ $all_procs = $processMonitor->monitor_list_all_processes('name_asc');
 $tplData['all_procs'] =&  $all_procs;
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-    $where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' id=' . $_REQUEST['filter_process'];
 } else {
     $where = '';
 }

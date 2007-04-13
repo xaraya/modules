@@ -40,11 +40,11 @@ $wheres = array();
 /*
 if(isset($_REQUEST['filter_active'])&&$_REQUEST['filter_active']) $wheres[]="isActive='".$_REQUEST['filter_active']."'";
 if(isset($_REQUEST['filter_valid'])&&$_REQUEST['filter_valid']) $wheres[]="isValid='".$_REQUEST['filter_valid']."'";
-if(isset($_REQUEST['filter_process'])&&$_REQUEST['filter_process']) $wheres[]="pId=".$_REQUEST['filter_process']."";
+if(isset($_REQUEST['filter_process'])&&$_REQUEST['filter_process']) $wheres[]="id=".$_REQUEST['filter_process']."";
 $where = implode(' and ',$wheres);
 */
 if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'pId_asc';
+    $sort_mode = 'id_asc';
 } else {
     $sort_mode = $_REQUEST["sort_mode"];
 }

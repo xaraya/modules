@@ -38,20 +38,20 @@ class GUI extends Base
       $mid.= " and ($where) ";
     }
 
-    $query = "select distinct(gp.pId),
+    $query = "select distinct(gp.id),
                      gp.isActive,
                      gp.name as procname,
                      gp.normalized_name as normalized_name,
                      gp.version as version
               from ".self::tbl('processes')." gp
-                INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('activities')." ga ON gp.id=ga.id
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=ga.activityId
                 INNER JOIN ".self::tbl('roles')."gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gr.roleId
               $mid order by $sort_mode";
-    $query_cant = "select count(distinct(gp.pId))
+    $query_cant = "select count(distinct(gp.id))
               from ".self::tbl('processes')." gp
-                INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('activities')." ga ON gp.id=ga.id
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=ga.activityId
                 INNER JOIN ".self::tbl('roles')." gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gr.roleId
@@ -61,22 +61,22 @@ class GUI extends Base
     $ret = Array();
     while($res = $result->fetchRow()) {
       // Get instances per activity
-      $pId=$res['pId'];
+      $id=$res['id'];
       $res['activities']=$this->getOne("select count(distinct(ga.activityId))
               from ".self::tbl('processes')." gp
-                INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('activities')." ga ON gp.id=ga.id
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=ga.activityId
                 INNER JOIN ".self::tbl('roles')." gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')."gur ON gur.roleId=gr.roleId
-              where gp.pId=? and gur.user=?",
-              array($pId,$user));
+              where gp.id=? and gur.user=?",
+              array($id,$user));
       $res['instances']=$this->getOne("select count(distinct(gi.instanceId))
               from ".self::tbl('instances')."gi
                 INNER JOIN ".self::tbl('instance_activities')."gia ON gi.instanceId=gia.instanceId
                 INNER JOIN ".self::tbl('activity_roles')."gar ON gia.activityId=gar.activityId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gar.roleId=gur.roleId
-              where gi.pId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-              array($pId,$user,'*',$user));
+              where gi.id=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
+              array($id,$user,'*',$user));
       $ret[] = $res;
     }
     $retval = Array();
@@ -112,17 +112,17 @@ class GUI extends Base
                      ga.isAutoRouted,
                      ga.activityId,
                      gp.version as version,
-                     gp.pId,
+                     gp.id,
                      gp.isActive
               from ".self::tbl('processes')." gp
-                INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('activities')." ga ON gp.id=ga.id
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=ga.activityId
                 INNER JOIN ".self::tbl('roles')." gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gr.roleId
               $mid order by $sort_mode";
     $query_cant = "select count(distinct(ga.activityId))
               from ".self::tbl('processes')." gp
-                INNER JOIN ".self::tbl('activities')." ga ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('activities')." ga ON gp.id=ga.id
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gar.activityId=ga.activityId
                 INNER JOIN ".self::tbl('roles')." gr ON gr.roleId=gar.roleId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gr.roleId
@@ -178,13 +178,13 @@ class GUI extends Base
                      ga.isAutoRouted,
                      ga.activityId,
                      gp.version as version,
-                     gp.pId
+                     gp.id
               from ".self::tbl('instances')." gi
                 INNER JOIN ".self::tbl('instance_activities')." gia ON gi.instanceId=gia.instanceId
                 INNER JOIN ".self::tbl('activities')." ga ON gia.activityId = ga.activityId
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gia.activityId=gar.activityId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gar.roleId
-                INNER JOIN ".self::tbl('processes')." gp ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('processes')." gp ON gp.id=ga.id
               $mid order by $sort_mode";
     $query_cant = "select count(distinct(gi.instanceId))
               from ".self::tbl('instances')." gi
@@ -192,7 +192,7 @@ class GUI extends Base
                 INNER JOIN ".self::tbl('activities')." ga ON gia.activityId = ga.activityId
                 INNER JOIN ".self::tbl('activity_roles')." gar ON gia.activityId=gar.activityId
                 INNER JOIN ".self::tbl('user_roles')." gur ON gur.roleId=gar.roleId
-                INNER JOIN ".self::tbl('processes')."gp ON gp.pId=ga.pId
+                INNER JOIN ".self::tbl('processes')."gp ON gp.id=ga.id
               $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
