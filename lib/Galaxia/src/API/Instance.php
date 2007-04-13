@@ -19,12 +19,12 @@ class Instance extends Base {
   public $ended;
   /// Array of asocs(activityId,status,started,user)
   public $activities = array();
-  public $id;
+  public $pId;
   public $instanceId = 0;
   /// An array of workitem ids
-  public $workitems = array();
-
-
+  public $workitems = array(); 
+  
+ 
   /*!
   Method used to load an instance data from the database.
   */
@@ -35,36 +35,36 @@ class Instance extends Base {
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
 
-    //Populate
+    //Populate 
     $this->properties = unserialize($res['properties']);
     $this->status = $res['status'];
-    $this->id = $res['id'];
+    $this->pId = $res['pId'];
     $this->instanceId = $res['instanceId'];
     $this->owner = $res['owner'];
     $this->started = $res['started'];
-    $this->name = $res['name'];
+    $this->name = $res['name']; 
     $this->ended = $res['ended'];
     $this->nextActivity = $res['nextActivity'];
     $this->nextUser = $res['nextUser'];
     // Get the activities where the instance is (ids only is ok)
     $query = "select * from ".self::tbl('instance_activities')." where  `instanceId`=?";
-    $result = $this->query($query,array((int)$instanceId));
+    $result = $this->query($query,array((int)$instanceId));    
     while($res = $result->fetchRow()) {
       $this->activities[]=$res;
-    }
+    }    
   }
-
-  /*!
+  
+  /*! 
   Sets the next activity to be executed, if the current activity is
   a switch activity the complete() method will use the activity setted
-  in this method as the next activity for the instance.
+  in this method as the next activity for the instance. 
   Note that this method receives an activity name as argument. (Not an Id)
   */
   function setNextActivity($actname) {
-    $id = $this->id;
+    $pId = $this->pId;
     $actname=trim($actname);
-    $aid = $this->getOne("select `activityId` from ".self::tbl('activities')."where `id`=? and `name`=?",array($id,$actname));
-    if(!$this->getOne("select count(*) from ".self::tbl('activities')." where `activityId`=? and `id`=?",array($aid,$id))) {
+    $aid = $this->getOne("select `activityId` from ".self::tbl('activities')."where `pId`=? and `name`=?",array($pId,$actname));
+    if(!$this->getOne("select count(*) from ".self::tbl('activities')." where `activityId`=? and `pId`=?",array($aid,$pId))) {
       trigger_error(tra('Fatal error: setting next activity to an unexisting activity'),E_USER_WARNING);
     }
     $this->nextActivity=$aid;
@@ -73,17 +73,17 @@ class Instance extends Base {
   }
 
   /*!
-  This method can be used to set the user that must perform the next
+  This method can be used to set the user that must perform the next 
   activity of the process. this effectively "assigns" the instance to
   some user.
   */
   function setNextUser($user) {
-    $id = $this->id;
+    $pId = $this->pId;
     $this->nextUser = $user;
     $query = "update ".self::tbl('instances')."set `nextUser`=? where `instanceId`=?";
     $this->query($query,array($user,(int)$this->instanceId));
   }
-
+ 
   /*!
    \private
    Creates a new instance.
@@ -93,20 +93,20 @@ class Instance extends Base {
   function _createNewInstance($activityId,$user) {
     // Creates a new instance setting up started,ended,user
     // and status
-    $pid = $this->getOne("select `id` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));
+    $pid = $this->getOne("select `pId` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));
     $this->status = 'active';
     $this->nextActivity = 0;
     $this->setNextUser('');
-    $this->id = $pid;
+    $this->pId = $pid;
     $now = date("U");
     $this->started=$now;
     $this->owner = $user;
     $props=serialize($this->properties);
-    $query = "insert into ".self::tbl('instances')."(`started`,`ended`,`status`,`name`,`id`,`owner`,`properties`) values(?,?,?,?,?,?,?)";
+    $query = "insert into ".self::tbl('instances')."(`started`,`ended`,`status`,`name`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?,?)";
     $this->query($query,array($now,0,'active',$this->name,$pid,$user,$props));
     $this->instanceId = $this->getOne("select max(`instanceId`) from ".self::tbl('instances')." where `started`=? and `owner`=?",array((int)$now,$user));
     $iid=$this->instanceId;
-
+    
     // Now update the properties!
     $props = serialize($this->properties);
     $query = "update ".self::tbl('instances')."set `properties`=? where `instanceId`=?";
@@ -117,8 +117,8 @@ class Instance extends Base {
     $query = "insert into ".self::tbl('instance_activities')."(`instanceId`,`activityId`,`user`,`started`,`status`) values(?,?,?,?,?)";
     $this->query($query,array((int)$iid,(int)$activityId,$user,(int)$now,'running'));
   }
-
-  /*!
+  
+  /*! 
   Sets a property in this instance. This method is used in activities to
   set instance properties. Instance properties are inemdiately serialized.
   */
@@ -128,8 +128,8 @@ class Instance extends Base {
     $query = "update ".self::tbl('instances')." set `properties`=? where `instanceId`=?";
     $this->query($query,array($props,$this->instanceId));
   }
-
-  /*!
+  
+  /*! 
   Gets the value of an instance property.
   */
   function get($name) {
@@ -139,82 +139,82 @@ class Instance extends Base {
       return false;
     }
   }
-
-  /*!
+  
+  /*! 
   Returns an array of asocs describing the activities where the instance
   is present, can be more than one activity if the instance was "splitted"
   */
   function getActivities() {
     return $this->activities;
   }
-
-  /*!
+  
+  /*! 
   Gets the instance status can be
   'completed', 'active', 'aborted' or 'exception'
   */
   function getStatus() {
     return $this->status;
   }
-
-  /*!
+  
+  /*! 
   Sets the instance status , the value can be:
   'completed', 'active', 'aborted' or 'exception'
   */
   function setStatus($status) {
-    $this->status = $status;
+    $this->status = $status; 
     // and update the database
     $query = "update ".self::tbl('instances')." set `status`=? where `instanceId`=?";
-    $this->query($query,array($status,(int)$this->instanceId));
+    $this->query($query,array($status,(int)$this->instanceId));  
   }
-
+  
   /*!
   Returns the instanceId
   */
   function getInstanceId() {
     return $this->instanceId;
   }
-
-  /*!
+  
+  /*! 
   Returns the processId for this instance
   */
   function getProcessId() {
-    return $this->id;
+    return $this->pId;
   }
-
-  /*!
+  
+  /*! 
   Returns the name associated to the instance
   */
   function getName() {
     return $this->name;
   }
-
-    /*!
-  Sets the instance name user
+  
+    /*! 
+  Sets the instance name user 
   */
   function setName($name) {
     $this->name = $name;
     // save database
     $query = "update ".self::tbl('instances')." set `name`=? where `instanceId`=?";
-    $this->query($query,array($name,(int)$this->instanceId));
+    $this->query($query,array($name,(int)$this->instanceId));  
   }
-
-  /*!
+  
+  /*! 
   Returns the user that created the instance
   */
   function getOwner() {
     return $this->owner;
   }
-
-  /*!
-  Sets the instance creator user
+  
+  /*! 
+  Sets the instance creator user 
   */
   function setOwner($user) {
     $this->owner = $user;
     // save database
     $query = "update ".self::tbl('instances')."set `owner`=? where `instanceId`=?";
-    $this->query($query,array($this->owner,(int)$this->instanceId));
+    $this->query($query,array($this->owner,(int)$this->instanceId));  
   }
-
+  
   /*!
   Sets the user that must execute the activity indicated by the activityId.
   Note that the instance MUST be present in the activity to set the user,
@@ -229,26 +229,26 @@ class Instance extends Base {
 
         $this->query($query,array($theuser,(int)$activityId,(int)$this->instanceId));
       }
-    }
+    }  
   }
-
+  
   /*!
   Returns the user that must execute or is already executing an activity
   wherethis instance is present.
-  */
+  */  
   function getActivityUser($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
       if($this->activities[$i]['activityId']==$activityId) {
         return $this->activities[$i]['user'];
       }
-    }
+    }  
     return false;
   }
 
   /*!
   Sets the status of the instance in some activity, can be
   'running' or 'completed'
-  */
+  */  
   function setActivityStatus($activityId,$status) {
     for($i=0;$i<count($this->activities);$i++) {
       if($this->activities[$i]['activityId']==$activityId) {
@@ -256,10 +256,10 @@ class Instance extends Base {
         $query = "update ".self::tbl('instance_activities')."set `status`=? where `activityId`=? and `instanceId`=?";
         $this->query($query,array($status,(int)$activityId,(int)$this->instanceId));
       }
-    }
+    }  
   }
-
-
+  
+  
   /*!
   Gets the status of the instance in some activity, can be
   'running' or 'completed'
@@ -269,10 +269,10 @@ class Instance extends Base {
       if($this->activities[$i]['activityId']==$activityId) {
         return $this->activities[$i]['status'];
       }
-    }
+    }  
     return false;
   }
-
+  
   /*!
   Resets the start time of the activity indicated to the current time.
   */
@@ -284,9 +284,9 @@ class Instance extends Base {
         $query = "update ".self::tbl('instance_activities')." set `started`=? where `activityId`=? and `instanceId`=?";
         $this->query($query,array($now,(int)$activityId,(int)$this->instanceId));
       }
-    }
+    }  
   }
-
+  
   /*!
   Gets the Unix timstamp of the starting time for the given activity.
   */
@@ -295,10 +295,10 @@ class Instance extends Base {
       if($this->activities[$i]['activityId']==$activityId) {
         return $this->activities[$i]['started'];
       }
-    }
+    }  
     return false;
   }
-
+  
   /*!
   \private
   Gets an activity from the list of activities of the instance
@@ -308,42 +308,42 @@ class Instance extends Base {
       if($this->activities[$i]['activityId']==$activityId) {
         return $this->activities[$i];
       }
-    }
+    }  
     return false;
   }
 
   /*!
-  Sets the time where the instance was started.
+  Sets the time where the instance was started.    
   */
   function setStarted($time) {
     $this->started=$time;
     $query = "update ".self::tbl('instances')."set `started`=? where `instanceId`=?";
-    $this->query($query,array((int)$time,(int)$this->instanceId));
+    $this->query($query,array((int)$time,(int)$this->instanceId));    
   }
-
+  
   /*!
   Gets the time where the instance was started (Unix timestamp)
   */
   function getStarted() {
     return $this->started;
   }
-
+  
   /*!
   Sets the end time of the instance (when the process was completed)
   */
   function setEnded($time) {
     $this->ended=$time;
     $query = "update ".self::tbl('instances')." set `ended`=? where `instanceId`=?";
-    $this->query($query,array((int)$time,(int)$this->instanceId));
+    $this->query($query,array((int)$time,(int)$this->instanceId));    
   }
-
+  
   /*!
   Gets the end time of the instance (when the process was completed)
   */
   function getEnded() {
     return $this->ended;
   }
-
+  
   /*!
   Completes an activity, normally from any activity you should call this
   function without arguments.
@@ -363,25 +363,25 @@ class Instance extends Base {
   function complete($activityId=0,$force=false,$addworkitem=true) {
     global $user;
     global $__activity_completed;
-
+    
     $__activity_completed = true;
-
+  
     if(empty($user)) {$theuser='*';} else {$theuser=$user;}
-
+    
     if($activityId==0) {
       $activityId=$_REQUEST['activityId'];
-    }
-    // If we are completing a start activity then the instance must
+    }  
+    // If we are completing a start activity then the instance must 
     // be created first!
-    $type = $this->getOne("select `type` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));
+    $type = $this->getOne("select `type` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));    
     if($type=='start') {
       $this->_createNewInstance((int)$activityId,$theuser);
     }
     $now = date("U");
     $query = "update ".self::tbl('instance_activities')." set `ended`=? where `activityId`=? and `instanceId`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
-
-    //Add a workitem to the instance
+    
+    //Add a workitem to the instance 
     $iid = $this->instanceId;
     if($addworkitem) {
       $max = $this->getOne("select max(`orderId`) from ".self::tbl('workitems')."where `instanceId`=?",array((int)$iid));
@@ -401,19 +401,19 @@ class Instance extends Base {
       }
       $ended = date("U");
       $properties = serialize($this->properties);
-      $query="insert into ".self::tbl('workitems')."(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";
+      $query="insert into ".self::tbl('workitems')."(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
       $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
     }
-
+    
     //Set the status for the instance-activity to completed
     $this->setActivityStatus($activityId,'completed');
-
+    
     //If this and end actt then terminate the instance
     if($type=='end') {
       $this->terminate();
       return;
     }
-
+    
     //If the activity ending is autorouted then send to the
     //activity
     if ($type != 'end') {
@@ -424,7 +424,7 @@ class Instance extends Base {
         $candidates = array();
         while ($res = $result->fetchRow()) {
           $candidates[] = $res['actToId'];
-        }
+        }  
         if($type == 'split') {
           $first = true;
           foreach ($candidates as $cand) {
@@ -447,7 +447,7 @@ class Instance extends Base {
       }
     }
   }
-
+  
   /*!
   Aborts an activity and terminates the whole instance. We still create a workitem to keep track
   of where in the process the instance was aborted
@@ -457,24 +457,24 @@ class Instance extends Base {
       global $user;
       if (empty($user)) {$theuser='*';} else {$theuser=$user;}
     }
-
+    
     if($activityId==0) {
       $activityId=$_REQUEST['activityId'];
-    }
-
-    // If we are completing a start activity then the instance must
+    }  
+    
+    // If we are completing a start activity then the instance must 
     // be created first!
-    $type = $this->getOne("select `type` from ".self::tbl('activities')."where `activityId`=?",array((int)$activityId));
+    $type = $this->getOne("select `type` from ".self::tbl('activities')."where `activityId`=?",array((int)$activityId));    
     if($type=='start') {
       $this->_createNewInstance((int)$activityId,$theuser);
     }
-
+      
     // Now set ended
     $now = date("U");
     $query = "update ".self::tbl('instance_activities')." set `ended`=? where `activityId`=? and `instanceId`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
-
-    //Add a workitem to the instance
+    
+    //Add a workitem to the instance 
     $iid = $this->instanceId;
     if($addworkitem) {
       $max = $this->getOne("select max(`orderId`) from ".self::tbl('workitems')." where `instanceId`=?",array((int)$iid));
@@ -494,10 +494,10 @@ class Instance extends Base {
       }
       $ended = date("U");
       $properties = serialize($this->properties);
-      $query="insert into ".self::tbl('workitems')."(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";
+      $query="insert into ".self::tbl('workitems')."(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
       $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
     }
-
+    
     //Set the status for the instance-activity to aborted
 // TODO: support 'aborted' if we keep activities after termination some day
     //$this->setActivityStatus($activityId,'aborted');
@@ -505,7 +505,7 @@ class Instance extends Base {
     // terminate the instance with status 'aborted'
     $this->terminate('aborted');
   }
-
+  
   /*!
   Terminates the instance marking the instance and the process
   as completed. This is the end of a process.
@@ -522,8 +522,8 @@ class Instance extends Base {
     $this->status = $status;
     $this->activities = array();
   }
-
-
+  
+  
   /*!
   Sends the instance from some activity to another activity.
   You should not call this method unless you know very very well what
@@ -535,12 +535,12 @@ class Instance extends Base {
     //other activity if so do
     //nothing
     $type = $this->getOne("select `type` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));
-
+    
     // Verify the existance of a transition
     if(!$this->getOne("select count(*) from ".self::tbl('transitions')."where `actFromId`=? and `actToId`=?",array($from,(int)$activityId))) {
       trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'),E_USER_WARNING);
     }
-
+    
     //try to determine the user or *
     //Use the nextUser
     if ($this->nextUser) {
@@ -552,7 +552,7 @@ class Instance extends Base {
       while ($res = $result->fetchRow()) {
         $roleId = $res['roleId'];
         $query2 = "select `user` from ".self::tbl('user_roles')." where `roleId`=?";
-        $result2 = $this->query($query2, array((int)$roleId));
+        $result2 = $this->query($query2, array((int)$roleId)); 
         while ($res2 = $result2->fetchRow()) {
           $candidates[] = $res2['user'];
         }
@@ -562,7 +562,7 @@ class Instance extends Base {
       } else {
         $putuser = '*';
       }
-    }
+    }        
 
     $now = date("U");
     $iid = $this->instanceId;
@@ -570,28 +570,28 @@ class Instance extends Base {
     $this->query($query,array((int)$iid,(int)$activityId));
     $query="insert into ".self::tbl('instance_activities')."(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
     $this->query($query,array((int)$iid,(int)$activityId,$putuser,'running',(int)$now));
-
+    
     //we are now in a new activity
     $this->activities=array();
     $query = "select * from ".self::tbl('instance_activities')." where `instanceId`=?";
     $result = $this->query($query,array((int)$iid));
     while ($res = $result->fetchRow()) {
       $this->activities[]=$res;
-    }
-
+    }    
+  
     if ($type == 'join') {
       if (count($this->activities)>1) {
         // This instance will have to wait!
         return;
       }
-    }
+    }    
 
-
+     
     //if the activity is not interactive then
     //execute the code for the activity and
     //complete the activity
     $isInteractive = $this->getOne("select `isInteractive` from ".self::tbl('activities')." where `activityId`=?",array((int)$activityId));
-
+    
     if ($isInteractive == 'n') {
       // Now execute the code for the activity (function defined in lib/Galaxia/config.php)
       galaxia_execute_activity($activityId, $iid, 1);
@@ -601,9 +601,9 @@ class Instance extends Base {
       $this->complete($activityId);
     }
   }
-
-  /*!
-  Gets a comment for this instance
+  
+  /*! 
+  Gets a comment for this instance 
   */
   function get_instance_comment($cId) {
     $iid = $this->instanceId;
@@ -612,9 +612,9 @@ class Instance extends Base {
     $res = $result->fetchRow();
     return $res;
   }
-
-  /*!
-  Inserts or updates an instance comment
+  
+  /*! 
+  Inserts or updates an instance comment 
   */
   function replace_instance_comment($cId, $activityId, $activity, $user, $title, $comment) {
     if (!$user) {
@@ -632,9 +632,9 @@ class Instance extends Base {
       $now = date("U");
       $query ="insert into ".self::tbl('instance_comments')."(`instanceId`,`user`,`activityId`,`activity`,`title`,`comment`,`timestamp`,`hash`) values(?,?,?,?,?,?,?,?)";
       $this->query($query,array((int)$iid,$user,(int)$activityId,$activity,$title,$comment,(int)$now,$hash));
-    }
+    }  
   }
-
+  
   /*!
   Removes an instance comment
   */
@@ -643,16 +643,16 @@ class Instance extends Base {
     $query = "delete from ".self::tbl('instance_comments')." where `cId`=? and `instanceId`=?";
     $this->query($query,array((int)$cId,(int)$iid));
   }
-
+ 
   /*!
   Lists instance comments
   */
   function get_instance_comments() {
     $iid = $this->instanceId;
     $query = "select * from ".self::tbl('instance_comments')." where `instanceId`=? order by ".$this->convert_sortmode("timestamp_desc");
-    $result = $this->query($query,array((int)$iid));
+    $result = $this->query($query,array((int)$iid));    
     $ret = array();
-    while($res = $result->fetchRow()) {
+    while($res = $result->fetchRow()) {    
       $ret[] = $res;
     }
     return $ret;

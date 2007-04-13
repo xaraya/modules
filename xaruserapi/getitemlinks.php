@@ -32,9 +32,9 @@ function workflow_userapi_getitemlinks($args)
     include(GALAXIA_LIBRARY.'/GUI.php');
 
     // get the instances this user has access to
-    $sort = 'id_asc, instanceId_asc';
+    $sort = 'pId_asc, instanceId_asc';
     $find = '';
-    $where = "gi.id=$itemtype";
+    $where = "gi.pId=$itemtype";
     $items = $GUI->gui_list_user_instances($user, 0, -1, $sort, $find, $where);
 
 // TODO: add the instances you're the owner of (if relevant)

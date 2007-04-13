@@ -167,7 +167,7 @@ if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_compl
                 if (!empty($instance->instanceId)) {
                     // get object properties for this instance - that's a bit much :)
                     //$item = get_object_vars($instance);
-                    $props = array('id','instanceId','properties','owner','status','started','ended','nextActivity','nextUser','workitems');
+                    $props = array('pId','instanceId','properties','owner','status','started','ended','nextActivity','nextUser','workitems');
                     $item = array();
                     foreach ($props as $prop) {
                         $item[$prop] = $instance->$prop;

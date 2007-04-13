@@ -101,7 +101,7 @@ if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
     $wheres[] = "gia.status='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gi.id=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
     $wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
@@ -115,7 +115,7 @@ if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'id_asc, instanceId_asc';
+    $sort_mode = 'pId_asc, instanceId_asc';
 } else {
     $sort_mode = $_REQUEST["sort_mode"];
 }

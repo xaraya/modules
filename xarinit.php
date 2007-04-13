@@ -44,7 +44,7 @@ function workflow_init()
     activityId int(14) NOT NULL auto_increment,
     name varchar(80) default NULL,
     normalized_name varchar(80) default NULL,
-    id int(14) NOT NULL default '0',
+    pId int(14) NOT NULL default '0',
     type enum('start','end','split','switch','join','activity','standalone') default NULL,
     isAutoRouted char(1) default NULL,
     flowNum int(10) default NULL,
@@ -62,7 +62,7 @@ function workflow_init()
         $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
         $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
         $qte.'isAutoRouted'.$qte      => array('type'=>'char','size'=>1,'null'=>TRUE),
         $qte.'flowNum'.$qte           => array('type'=>'integer','null'=>TRUE),
@@ -179,7 +179,7 @@ function workflow_init()
     $queries[] =
 "CREATE TABLE $xartable[workflow_instances] (
   instanceId int(14) NOT NULL auto_increment,
-  id int(14) NOT NULL default '0',
+  pId int(14) NOT NULL default '0',
   started int(14) default NULL,
   owner varchar(200) default NULL,
   nextActivity int(14) default NULL,
@@ -196,7 +196,7 @@ function workflow_init()
 
     $fields = array(
         $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'started'.$qte           => array('type'=>'integer','null'=>TRUE),
         $qte.'owner'.$qte             => array('type'=>'varchar','size'=>200,'null'=>TRUE),
         $qte.'nextActivity'.$qte      => array('type'=>'integer','null'=>TRUE),
@@ -217,7 +217,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_processes] (
-  id int(14) NOT NULL auto_increment,
+  pId int(14) NOT NULL auto_increment,
   name varchar(80) default NULL,
   isValid char(1) default NULL,
   isActive char(1) default NULL,
@@ -225,7 +225,7 @@ function workflow_init()
   description text,
   lastModif int(14) default NULL,
   normalized_name varchar(80) default NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (pId)
 )";
     */
 
@@ -233,7 +233,7 @@ function workflow_init()
     $table = $xartable['workflow_processes'];
 
     $fields = array(
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
         $qte.'isValid'.$qte           => array('type'=>'char','size'=>1,'null'=>TRUE),
         $qte.'isActive'.$qte          => array('type'=>'char','size'=>1,'null'=>TRUE),
@@ -255,7 +255,7 @@ function workflow_init()
     $queries[] =
 "CREATE TABLE $xartable[workflow_roles] (
   roleId int(14) NOT NULL auto_increment,
-  id int(14) NOT NULL default '0',
+  pId int(14) NOT NULL default '0',
   lastModif int(14) default NULL,
   name varchar(80) default NULL,
   description text,
@@ -268,7 +268,7 @@ function workflow_init()
 
     $fields = array(
         $qte.'roleId'.$qte            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
         $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
         $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE)
@@ -285,7 +285,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_transitions] (
-  id int(14) NOT NULL default '0',
+  pId int(14) NOT NULL default '0',
   actFromId int(14) NOT NULL default '0',
   actToId int(14) NOT NULL default '0',
   PRIMARY KEY  (actFromId,actToId)
@@ -296,7 +296,7 @@ function workflow_init()
     $table = $xartable['workflow_transitions'];
 
     $fields = array(
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'actFromId'.$qte         => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
         $qte.'actToId'.$qte           => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
     );
@@ -313,7 +313,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_user_roles] (
-  id int(14) NOT NULL default '0',
+  pId int(14) NOT NULL default '0',
   roleId int(14) NOT NULL auto_increment,
   user varchar(200) NOT NULL default '',
   PRIMARY KEY  (roleId,user)
@@ -324,7 +324,7 @@ function workflow_init()
     $table = $xartable['workflow_user_roles'];
 
     $fields = array(
-        $qte.'id'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         $qte.'roleId'.$qte            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>FALSE,'default'=>'','primary_key'=>TRUE)
     );
@@ -519,13 +519,13 @@ function workflow_upgrade($oldversion)
             // Re-compile all activities with new compiler code
             include_once('modules/workflow/tiki-setup.php');
             include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
-            $all_procs = $processManager->list_processes(0, -1, 'id_asc', '', '');
+            $all_procs = $processManager->list_processes(0, -1, 'pId_asc', '', '');
             if (!empty($all_procs) && count($all_procs['data']) > 0) {
                 foreach ($all_procs['data'] as $info) {
-                    $activities = $activityManager->list_activities($info['id'], 0, -1, 'activityId_asc', '', '');
+                    $activities = $activityManager->list_activities($info['pId'], 0, -1, 'activityId_asc', '', '');
                     if (empty($activities) || count($activities['data']) < 1) continue;
                     foreach ($activities['data'] as $actinfo) {
-                        $activityManager->compile_activity($info['id'],$actinfo['activityId']);
+                        $activityManager->compile_activity($info['pId'],$actinfo['activityId']);
                     }
                 }
             }
