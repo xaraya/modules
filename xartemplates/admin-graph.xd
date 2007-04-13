@@ -26,7 +26,7 @@
         <xar:ml>
           <xar:mlstring>
             Either the process still contains errors, or #(1) is not properly installed.
-            Or if it is installed, you may need to adapt GRAPHVIZ_DIR in the modules/workflow/tiki-setup.php file...
+            Or if it is installed, you may need to adapt GRAPHVIZ_DIR in the modules/workflow/lib/Galaxia/config.php file...
           </xar:mlstring>
           <xar:mlvar>#$graphvizlink#</xar:mlvar>
         </xar:ml>
