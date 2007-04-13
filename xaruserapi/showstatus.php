@@ -45,8 +45,8 @@ function workflow_userapi_showstatus($args)
     if (!empty($args['actstatus'])) {
         $where .= " and gia.status='" . $args['actstatus'] . "'";
     }
-    if (!empty($args['pId'])) {
-        $where .= " and gp.pId='" . $args['pId'] . "'";
+    if (!empty($args['id'])) {
+        $where .= " and gp.id='" . $args['id'] . "'";
     }
     $items = $processMonitor->monitor_list_instances(0, -1, 'started_asc', '', $where, array());
 

@@ -12,22 +12,22 @@ class Process extends Base
   public $description;
   public $version;
   public $normalizedName;
-  public $pId = 0;
+  public $id = 0;
 
   /*!
   Loads a process form the database
   */
-  function getProcess($pId)
+  function getProcess($id)
   {
-    $query = "select * from ".self::tbl('processes')."where `pId`=?";
-    $result = $this->query($query,array($pId));
+    $query = "select * from ".self::tbl('processes')."where `id`=?";
+    $result = $this->query($query,array($id));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
     $this->name = $res['name'];
     $this->description = $res['description'];
     $this->normalizedName = $res['normalized_name'];
     $this->version = $res['version'];
-    $this->pId = $res['pId'];
+    $this->id = $res['id'];
   }
 
   /*!
@@ -64,9 +64,9 @@ class Process extends Base
   function getActivityByName($actname)
   {
     // Get the activity data
-    $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
-    $pId = $this->pId;
-    $result = $this->query($query,array($pId,$actname));
+    $query = "select * from ".self::tbl('activities')."where `id`=? and `name`=?";
+    $id = $this->id;
+    $result = $this->query($query,array($id,$actname));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;

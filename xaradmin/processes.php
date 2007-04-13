@@ -36,7 +36,7 @@ function workflow_admin_processes()
         'description'   => '',
         'version'       => '1.0',
         'isActive'      => 'n',
-        'pId'           => 0);
+        'id'           => 0);
 
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.

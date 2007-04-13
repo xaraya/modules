@@ -42,12 +42,12 @@ if(isset($_REQUEST['filter_active'])&&$_REQUEST['filter_active']) $wheres[]="isA
 if(isset($_REQUEST['filter_valid'])&&$_REQUEST['filter_valid']) $wheres[]="isValid='".$_REQUEST['filter_valid']."'";
 */
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gp.id=" . $_REQUEST['filter_process'] . "";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'pId_asc, flowNum_asc';
+    $sort_mode = 'id_asc, flowNum_asc';
 } else {
     $sort_mode = $_REQUEST["sort_mode"];
 }
@@ -94,7 +94,7 @@ $tplData['items'] =&  $items["data"];
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
 $tplData['all_procs'] =&  $processes['data'];
 if (count($tplData['all_procs']) == 1 && empty($_REQUEST['filter_process'])) {
-    $_REQUEST['filter_process'] = $tplData['all_procs'][0]['pId'];
+    $_REQUEST['filter_process'] = $tplData['all_procs'][0]['id'];
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
@@ -103,7 +103,7 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
         $actid2item[$tplData['items'][$index]['activityId']] = $index;
     }
     foreach ($tplData['all_procs'] as $info) {
-        if ($info['pId'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
+        if ($info['id'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
             $graph = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
             $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
             if (file_exists($graph) && file_exists($mapfile)) {
@@ -117,7 +117,7 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
                     $item = $tplData['items'][$index];
                     if ($item['instances'] > 0) {
                         $url = xarModURL('workflow','user','instances',
-                                         array('filter_process' => $info['pId']));
+                                         array('filter_process' => $info['id']));
                         $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
                         $map .= $mapline;
                     } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
