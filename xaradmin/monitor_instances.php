@@ -87,7 +87,7 @@ if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
     $wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gi.id=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
     $wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
@@ -183,7 +183,7 @@ foreach ($allprocs as $row) {
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-    $where = ' id=' . $_REQUEST['filter_process'];
+    $where = ' pId=' . $_REQUEST['filter_process'];
 } else {
     $where = '';
 }

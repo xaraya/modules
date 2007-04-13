@@ -49,7 +49,7 @@ function workflow_admin_graph()
             xarLogMessage("WORKFLOW: graph files exist");
             $map = join('',file($mapfile));
             $url = xarModURL('workflow','admin','activities',
-                             array('pid' => $info['id']));
+                             array('pid' => $info['pId']));
             $map = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $map);
             $info['map'] = $map;
         } else {
@@ -61,7 +61,7 @@ function workflow_admin_graph()
                       'description' => '',
                       'version' => '1.0',
                       'isActive' => 'n',
-                      'id' => 0
+                      'pId' => 0
                       );
     }
 

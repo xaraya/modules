@@ -24,14 +24,11 @@ function workflow_admin_monitor_processes()
 
 // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
-    $data = array();
+    $tplData = array();
 
 // Adapted from tiki-g-monitor_processes.php
-include_once(GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
-    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_active', 'str',$data['filter_active'], '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('filter_valid',  'str',$data['filter_valid'],  '',XARVAR_NOT_REQUIRED)) return;
+include_once(GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 // Filtering data to be received by request and
 // used to build the where part of a query
@@ -40,9 +37,14 @@ include_once(GALAXIA_LIBRARY.'/ProcessMonitor.php');
 $where = '';
 $wheres = array();
 
-if (!empty($data['filter_active'])) $wheres[] = "isActive='" . $data['filter_active'] . "'";
-if (!empty($data['filter_valid'])) $wheres[] = "isValid='" . $data['filter_valid'] . "'";
-if (!empty($data['filter_process'])) $wheres[] = "id='" . $data['filter_process'] . "'";
+if (isset($_REQUEST['filter_active']) && $_REQUEST['filter_active'])
+    $wheres[] = "isActive='" . $_REQUEST['filter_active'] . "'";
+
+if (isset($_REQUEST['filter_valid']) && $_REQUEST['filter_valid'])
+    $wheres[] = "isValid='" . $_REQUEST['filter_valid'] . "'";
+
+if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
+    $wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
 
 $where = implode(' and ', $wheres);
 
@@ -58,7 +60,7 @@ if (!isset($_REQUEST["offset"])) {
     $offset = $_REQUEST["offset"];
 }
 
-$data['offset'] =&  $offset;
+$tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
     $find = $_REQUEST["find"];
@@ -66,30 +68,30 @@ if (isset($_REQUEST["find"])) {
     $find = '';
 }
 
-$data['find'] =  $find;
-$data['where'] =  $where;
-$data['sort_mode'] =&  $sort_mode;
+$tplData['find'] =  $find;
+$tplData['where'] =  $where;
+$tplData['sort_mode'] =&  $sort_mode;
 
 $items = $processMonitor->monitor_list_processes($offset - 1, $maxRecords, $sort_mode, $find, $where);
-$data['cant'] =  $items['cant'];
+$tplData['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
-$data['cant_pages'] =&  $cant_pages;
-$data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+$tplData['cant_pages'] =&  $cant_pages;
+$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-    $data['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-    $data['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-    $data['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-    $data['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
-$data['items'] =&  $items["data"];
+$tplData['items'] =&  $items["data"];
 
 $maxtime = 0;
 foreach ($items['data'] as $info) {
@@ -116,11 +118,8 @@ foreach ($items['data'] as $index => $info) {
     }
 }
 
-$allprocs = $processMonitor->monitor_list_all_processes('name_asc');
-$data['all_procs'] = array();
-foreach ($allprocs as $row) {
-    $data['all_procs'][] = array('id' => $row['id'], 'name' => $row['name'] . ' ' . $row['version']);
-}
+$all_procs = $processMonitor->monitor_list_all_processes('name_asc');
+$tplData['all_procs'] =&  $all_procs;
 
 $sameurl_elements = array(
     'offset',
@@ -133,16 +132,21 @@ $sameurl_elements = array(
     'processId'
 );
 
-$data['stats'] =  $processMonitor->monitor_stats();
+$tplData['stats'] =  $processMonitor->monitor_stats();
 
-$data['mid'] =  'tiki-g-monitor_processes.tpl';
+$tplData['mid'] =  'tiki-g-monitor_processes.tpl';
+
+// Missing variables
+$tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
+$tplData['filter_active'] = isset($_REQUEST['filter_active']) ? $_REQUEST['filter_active'] : '';
+$tplData['filter_valid'] = isset($_REQUEST['filter_valid']) ? $_REQUEST['filter_valid'] : '';
 
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
-    $data['pager'] = xarTplGetPager($data['offset'],
+    $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);
-    return $data;
+    return $tplData;
 }
 
 ?>

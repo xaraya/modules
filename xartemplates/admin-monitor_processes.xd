@@ -25,27 +25,58 @@
 
             <tr>
               <td>
-                <xar:data-input type="dropdown" name="filter_process" value="$filter_process" options="$all_procs" firstline="All" />
+                <select name="filter_process">
+                  <xar:if condition="'' eq $filter_process">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:foreach in="$all_procs" key="$ix">
+                    <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+                      <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                      <xar:else/>
+                      <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                    </xar:if>
+                  </xar:foreach>
+                </select>
               </td>
               <td>
-                <xar:set name="options">
-                    array(
-                        array('id' => '', 'name' =>'All'),
-                        array('id' => 'y', 'name' =>'Active'),
-                        array('id' => 'n', 'name' =>'Inctive'),
-                    )
-                </xar:set>
-                <xar:data-input type="dropdown" name="filter_active" value="$filter_active" options="$options" />
+                <select name="filter_active">
+                  <xar:if condition="'' eq $filter_active">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'y' eq $filter_active">
+                    <option value="y" selected="selected"><xar:mlstring>Active</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="y"><xar:mlstring>Active</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'n' eq $filter_active">
+                    <option value="n" selected="selected"><xar:mlstring>Inactive</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="n"><xar:mlstring>Inactive</xar:mlstring></option>
+                  </xar:if>
+                </select>
               </td>
               <td>
-                <xar:set name="options">
-                    array(
-                        array('id' => '', 'name' =>'All'),
-                        array('id' => 'y', 'name' =>'Valid'),
-                        array('id' => 'n', 'name' =>'Invalid'),
-                    )
-                </xar:set>
-                <xar:data-input type="dropdown" name="filter_valid" value="$filter_valid" options="$options" />
+                <select name="filter_valid">
+                  <xar:if condition="'' eq $filter_valid">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'y' eq $filter_valid">
+                    <option selected="selected" value="y"><xar:mlstring>Valid</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="y"><xar:mlstring>Valid</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'n' eq $filter_valid">
+                    <option selected="selected" value="n"><xar:mlstring>Invalid</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="n"><xar:mlstring>Invalid</xar:mlstring></option>
+                  </xar:if>
+                </select>
               </td>
               <td><input size="8" type="text" name="find" value="#$find#" /></td>
               <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
@@ -71,10 +102,10 @@
               <xar:foreach in="$items" key="$ix">
                 <tr>
                   <td>
-                    <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;pid=#$items[$ix]['id']#">#$items[$ix]['name']# #$items[$ix]['version']#</a>
+                    <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;pid=#$items[$ix]['pId']#">#$items[$ix]['name']# #$items[$ix]['version']#</a>
                   </td>
                   <td style="text-align:right;">
-                    <a href="&xar-modurl-workflow-admin-monitor_activities;&amp;filter_process=#$items[$ix]['id']#" class="link">#$items[$ix]['activities']#</a>
+                    <a href="&xar-modurl-workflow-admin-monitor_activities;&amp;filter_process=#$items[$ix]['pId']#" class="link">#$items[$ix]['activities']#</a>
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isActive'] eq 'y'">
@@ -95,10 +126,10 @@
                   <td style="text-align:right;">
                     <table >
                       <tr>
-                        <td style="text-align:right;"><a style="color:green;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['id']#&amp;filter_status=active">#$items[$ix]['active_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:black;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['id']#&amp;filter_status=completed">#$items[$ix]['completed_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:grey;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['id']#&amp;filter_status=aborted">#$items[$ix]['aborted_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:red;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['id']#&amp;filter_status=exception">#$items[$ix]['exception_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:green;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=active">#$items[$ix]['active_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:black;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=completed">#$items[$ix]['completed_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:grey;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=aborted">#$items[$ix]['aborted_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:red;" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_status=exception">#$items[$ix]['exception_instances']#</a></td>
                       </tr>
                     </table>
                   </td>

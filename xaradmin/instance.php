@@ -67,15 +67,15 @@ if (!empty($ins_info['started'])) {
 $tplData['ins_info'] =&  $ins_info;
 
 // Get the process from the instance and set information
-$proc_info = $processManager->get_process($ins_info['id']);
+$proc_info = $processManager->get_process($ins_info['pId']);
 $tplData['proc_info'] =&  $proc_info;
 
 // Process activities
-$activities = $activityManager->list_activities($ins_info['id'], 0, -1, 'flowNum_asc', '', '');
+$activities = $activityManager->list_activities($ins_info['pId'], 0, -1, 'flowNum_asc', '', '');
 $tplData['activities'] =  $activities['data'];
 
 // Users
-$mapitems = $roleManager->list_mappings($ins_info['id'], 0, -1, 'name_asc', '');
+$mapitems = $roleManager->list_mappings($ins_info['pId'], 0, -1, 'name_asc', '');
 // trick : replace userid by user here !
 foreach (array_keys($mapitems['data']) as $index) {
     $role = xarModAPIFunc('roles','user','get',

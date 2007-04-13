@@ -43,8 +43,8 @@ function workflow_userapi_showinstances($args)
     if (!empty($args['actstatus'])) {
         $wheres[] = "gia.status='" . $args['actstatus'] . "'";
     }
-    if (!empty($args['id'])) {
-        $wheres[] = "gp.id='" . $args['id'] . "'";
+    if (!empty($args['pId'])) {
+        $wheres[] = "gp.pId='" . $args['pId'] . "'";
     }
     $where = implode(' and ', $wheres);
 
