@@ -19,6 +19,7 @@
  */
 function workflow_admin_processes()
 {
+    xarLogMessage('WF: workflow_admin_processes ');
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
@@ -48,7 +49,9 @@ function workflow_admin_processes()
     $data['pid'] =  $_REQUEST['pid'];
 
     //Check here for an uploaded process
+    xarLogMessage('WF: checking for uploaded process');
     if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+        xarLogMessage('WF: Found upload file');
         // move the uploaded file to some temporary wf* file in cache/templates
         $tmpdir = xarCoreGetVarDirPath();
         $tmpdir .= '/cache/templates';
@@ -76,6 +79,7 @@ function workflow_admin_processes()
             unlink($tmpfile);
         }
     }
+    xarLogMessage('WF: done with the uploading');
 
     if (isset($_REQUEST["delete"])) {
         foreach (array_keys($_REQUEST["process"])as $item) {
