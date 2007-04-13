@@ -71,7 +71,6 @@ function workflow_admin_processes()
                 $data['msg'] =  xarML("The process name already exists");
                 return xarTplModule('workflow', 'admin', 'error', $data);
             } else {
-    echo "XX";exit;
                 $processManager->import_process($process_data);
             }
             unlink($tmpfile);

@@ -690,10 +690,9 @@ class ActivityManager extends BaseManager
     }
 
     /*!
-     \private
      Returns activity id by pid,name (activity names are unique)
     */
-    private function _get_activity_id_by_name($pid,$name)
+    public function _get_activity_id_by_name($pid,$name)
     {
         if($this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and name=?",array($pid, $name))) {
             return($this->getOne("select activityId from ".self::tbl('activities')." where pId=? and name=?",array($pid,$name)));
