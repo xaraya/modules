@@ -55,7 +55,7 @@ function sharecontent_user_sendbymail($args)
         $mailmodule['fromname'] = $author;
         $mailmodule['from'] = $authoremail;
 
-        if (xarConfigGetVar('sharecontent','htmlmail') {
+        if (xarConfigGetVar('sharecontent','htmlmail')) {
             if (!xarModAPIFunc('htmlmail','admin','sendmail',$mailmodule)) {
                return;
             }

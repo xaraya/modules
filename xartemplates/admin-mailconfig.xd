@@ -40,7 +40,7 @@
         <label for="htmlmail" class="xar-form-label">
             <xar:mlstring>Html mail</xar:mlstring>
         </label>
-        <input type="checkbox" #$checked# value="1" id="htmlmail" name="htmlmail" />
+        <input type="checkbox" disabled #$checked# value="1" id="htmlmail" name="htmlmail" />
     </fieldset>
     <div class="xar-form-input-after">
        <input type="hidden" name="authid" id="authid" value="#$authid#" />

@@ -23,17 +23,17 @@
     <xar:set name="username">xarUserGetVar('name')</xar:set>
     <xar:set name="useremail">xarUserGetVar('email')</xar:set>
   </xar:if>
-  <input type="submit" value="#xarML('Notify by email')#" />
   <form class="sharecontent" method="post" 
         action="&xar-modurl-sharecontent-user-sendbymail;" 
  		enctype="application/x-www-form-urlencoded">
-      <xar:mlstring>Recipient:</xar:mlstring><input type="text" name="emails" size="30" />
-      <xar:mlstring>From:</xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
-      <xar:mlstring>Sender's mail:</xar:mlstring><input type="text" value="#$useremail#" name="authoremail" size="30" />
-      <input type="hidden" name="authid" id="authid" value="#$authid#" />
-      <input type="hidden" name="returnurl" value="#$returnurl#"/>
-      <input type="hidden" name="objectid" id="objectid" value='#$objectid#' />
-      <input type="hidden" name="extrainfo" id="extrainfo" value='#$extrainfo#' />
+    <input type="submit" value="#xarML('Notify by email')#" />
+    <xar:mlstring>Recipient:</xar:mlstring><input type="text" name="emails" size="30" />
+    <xar:mlstring>From:</xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
+    <xar:mlstring>Sender's mail:</xar:mlstring><input type="text" value="#$useremail#" name="authoremail" size="30" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="returnurl" value="#$returnurl#"/>
+    <input type="hidden" name="objectid" id="objectid" value='#$objectid#' />
+    <input type="hidden" name="extrainfo" id="extrainfo" value='#$extrainfo#' />
   </form>
 </div>
 </xar:if>
