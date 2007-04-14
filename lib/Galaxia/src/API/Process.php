@@ -1,11 +1,14 @@
 <?php
 include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
-//!! Process.php
-//! A class representing a process
-/*!
-This class representes the process that is being executed when an activity
-is executed.
-*/
+/**
+ * Workflow process class
+ *
+ * Models a workflow process and the actions ON it. In contract with the
+ * process manager which models the action WITH (sets of) it.
+ *
+ * @package default
+ * @author Marcel van der Boom
+ **/
 class Process extends Base
 {
     public $name;
@@ -30,30 +33,26 @@ class Process extends Base
     /**
      * Activate a process
      *
-    **/
-    function activate()
-    {
-        // DB
-        $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-        $this->query($query,array('y',$this->pId));
-        $msg = sprintf(tra('Process %d has been activated'),$this->pId);
-        // Object
-        $this->active = true;
-        $this->notify_all(3,$msg);
-    }
-
-    /**
-     * Deactivate a process
+     * (De-)Activating is a two step process. We update the DB first and
+     * the internal object representing the Process. The public methods refer
+     * to the private method for their implementation, since it's just the
+     * boolean value which differs.
      *
+     * @return void
+     * @see Process::SetActiveFlag
+     * @todo apply phpdoc to all three methods.
     **/
-    function deactivate()
+    function activate()   { $this->SetActiveFlag(true);  }
+    function deactivate() { $this->SetActiveFlag(false); }
+    private function SetActiveFlag($value)
     {
+        assert('$value === true or $value===false');
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-        $this->query($query,array('n',$this->pId));
-        $msg = sprintf(tra('Process %d has been deactivated'),$this->pId);
+        $this->query($query,array($value ? 'y' : 'n',$this->pId));
+        $msg = sprintf(tra('Process %d has been (de)-activated'),$this->pId);
         // Object
-        $this->active = false;
+        $this->active = $value;
         $this->notify_all(3,$msg);
     }
 
@@ -80,14 +79,14 @@ class Process extends Base
      * @todo make this phpdoc apply to all getters here (forgot how to do that)
      * @todo consider a helper like prepforstore instead of putting it in here.
     **/
-    function getName()                  // Process name
-    {   return $this->name;}
-    function getNormalizedName()        // Name for filesystem storage
-    {   return $this->normalizedName;}
-    function getVersion()               // Version string
-    {   return $this->version;}
-    function getGraph()                 // Path to process graph
-    {   return $this->graph;}
+    // Process name
+    function getName()           { return $this->name;}
+    // Name for filesystem storage
+    function getNormalizedName() { return $this->normalizedName;}
+    // Version string
+    function getVersion()        { return $this->version;}
+    // Path to process graph
+    function getGraph()          { return $this->graph;}
 
     /**
      * Gets information about an activity in this process by name,
