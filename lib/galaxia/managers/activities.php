@@ -397,8 +397,9 @@ class ActivityManager extends BaseManager
     function remove_activity($pId, $activityId)
     {
         $process = new Process($pId);
+        $act     = WorkflowActivity::get($activityId);
 
-        $actname = $this->_get_normalized_name($activityId);
+        $actname = $act->getNormalizedName();
         $query = "delete from ".self::tbl('activities')." where pId=? and activityId=?";
         $this->query($query, array($pId, $activityId));
         $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
@@ -441,7 +442,8 @@ class ActivityManager extends BaseManager
         $procNName = $process->getNormalizedName();
 
         if($activityId) {
-            $oldname = $this->_get_normalized_name($activityId);
+            $oldAct = WorkflowActivity::get($activityId);
+            $oldname = $oldAct->getNormalizedName();
             // update mode
             $first = true;
             $query ="update $TABLE_NAME set";
@@ -675,15 +677,6 @@ class ActivityManager extends BaseManager
             if($node['id'] == $a_node['id']) return true;
         }
         return false;
-    }
-
-    /**
-     \private
-     Returns normalized name of an activity
-    */
-    private function _get_normalized_name($activityId)
-    {
-        return $this->getOne("select normalized_name from ".self::tbl('activities')." where activityId=?",array($activityId));
     }
 
     /**
