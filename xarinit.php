@@ -57,11 +57,11 @@ function sharecontent_init()
 	    if (!$result)  sharecontent_delete();
 	}
 
-
     // Set up module variables
     xarModSetVar('sharecontent', 'enablemail', '0');
     xarModSetVar('sharecontent', 'maxemails', '1');
     xarModSetVar('sharecontent', 'htmlmail', '0');
+    xarModSetVar('sharecontent', 'bcc', '');
 
     // Set up module hooks
     if (!xarModRegisterHook('item',
@@ -70,13 +70,6 @@ function sharecontent_init()
             'sharecontent',
             'user',
             'display')) {
-        return false;
-    }
-
-    // when a whole module is removed, e.g. via the modules admin screen
-    // (set object ID to the module name !)
-    if (!xarModRegisterHook('module', 'remove', 'API',
-                           'sharecontent', 'admin', 'deleteall')) {
         return false;
     }
 
@@ -105,7 +98,8 @@ function sharecontent_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-	    case '0.9':
+	    case '0.9.2':
+            xarModSetVar('sharecontent', 'bcc', '');
     }
     return true;
 }
@@ -133,6 +127,7 @@ function sharecontent_delete()
     xarModDelVar('sharecontent', 'enablemail');
     xarModDelVar('sharecontent', 'maxemails');
     xarModDelVar('sharecontent', 'htmlmail');
+    xarModDelVar('sharecontent', 'bcc');
 
     // Get database information
     $dbconn =& xarDBGetConn();

@@ -20,6 +20,7 @@ function sharecontent_admin_updatemailconfig()
     xarVarFetch('enablemail', 'checkbox', $enablemail, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('maxemails', 'int:0:128', $maxemails, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('htmlmail', 'checkbox', $htmlmail,  false,XARVAR_NOT_REQUIRED);
+    xarVarFetch('bcc', 'str', $bcc,'',XARVAR_NOT_REQUIRED);
 
     if (!xarSecConfirmAuthKey()) return;
     // Security Check
@@ -28,6 +29,7 @@ function sharecontent_admin_updatemailconfig()
 	if (isset($enablemail)) xarModSetVar('sharecontent','enablemail',$enablemail);
 	if (isset($maxemails)) xarModSetVar('sharecontent','maxemails',$maxemails);
 	if (isset($htmlmail)) xarModSetVar('sharecontent','htmlmail',$htmlmail);
+	if (isset($bcc)) xarModSetVar('sharecontent','bcc',$bcc);
 
     xarResponseRedirect(xarModURL('sharecontent', 'admin', 'mailconfig'));
 

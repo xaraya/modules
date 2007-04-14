@@ -35,6 +35,9 @@ function sharecontent_admin_mailconfig()
 	if (!$data['htmlmail']=xarModGetVar('sharecontent','htmlmail')) {
 	    $data['htmlmail']=0;
 	}
+	if (!$data['bcc']=xarModGetVar('sharecontent','bcc')) {
+	    $data['bcc']='';
+	}
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;

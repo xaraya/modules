@@ -54,6 +54,9 @@ function sharecontent_user_sendbymail($args)
         $mailmodule['subject'] = xarTplModule('sharecontent','user','sendbymail-subject',$tpldata,$template);
         $mailmodule['fromname'] = $author;
         $mailmodule['from'] = $authoremail;
+		if ($bccinfo = xarModGetVar('sharecontent','bcc')) {
+		    $mailmodule['bccinfo'] = $bccinfo;
+	    }
 
         if (xarConfigGetVar('sharecontent','htmlmail')) {
             if (!xarModAPIFunc('htmlmail','admin','sendmail',$mailmodule)) {

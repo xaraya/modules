@@ -1,7 +1,10 @@
-Version 0.9 April 9, 2007
-  - First release. Included 69 sites; 
+Version 0.9.2 April 12, 2007
+  - First commit, moved from module webshare
 
-Version 0.911
-  - Fixed security mask
+Version 0.9.3
+  - Adding Bcc option to mailshare
+ 
 
-   - TO DO: allow editing and adding of sites
+IDEAS for future versions
+  - allow editing and adding of sites
+  - htmlmail
