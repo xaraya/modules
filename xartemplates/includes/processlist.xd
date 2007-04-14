@@ -96,16 +96,16 @@
                 <td class="xar-align-right">#$items[$ix]['version']#</td>
                 <td class="xar-align-center">
                   <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#" />
                   <xar:else/>
                     &#160;
                   </xar:if>
                 </td>
                 <td class="xar-align-center">
                   <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                   <xar:else/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                   </xar:if>  
                 </td>
                 <td class="xar-align-center"><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">
@@ -114,23 +114,23 @@
                     <span class="xar-accent-outline">x</span><span>.1</span></a></td>
                 <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/Activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" /></a>
+                    <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" /></a>
                 </td>
                 <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$items[$ix]['pId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" /></a>
+                    <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" /></a>
                 </td>
                 <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$items[$ix]['pId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" /></a>
+                    <img src="modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" /></a>
                 </td>
                 <td class="xar-align-center">
                   <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$items[$ix]['pId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" /></a>
+                    <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" /></a>
                 </td>
                 <td class="xar-align-center">
                   <a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$items[$ix]['pId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" /></a>
+                    <img src="modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" /></a>
                 </td>
               </tr>
             </xar:foreach>

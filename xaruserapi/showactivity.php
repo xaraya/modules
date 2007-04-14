@@ -28,7 +28,7 @@ function workflow_userapi_showactivity($args)
     include('modules/workflow/tiki-setup.php');
     $tplData = array();
 
-    include (GALAXIA_LIBRARY.'/API.php');
+    include (GALAXIA_LIBRARY.'/api.php');
 
     if (empty($args['activityId'])) {
         return xarML("No activity found");

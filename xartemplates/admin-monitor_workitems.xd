@@ -32,7 +32,20 @@
 
           <tr>
             <td>
-                <xar:data-input type="dropdown" name="filter_process" value="$filter_process" options="$all_procs" firstline="All" />
+              <select name="filter_process">
+                <xar:if condition="'' eq $filter_process">
+                  <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                  <xar:else/>
+                  <option value=""><xar:mlstring>All</xar:mlstring></option>
+                </xar:if>
+                <xar:foreach in="$all_procs" key="$ix">
+                  <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+                    <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                    <xar:else/>
+                    <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
             </td>
             <td>
               <input type="text" name="filter_instance" value="#$filter_instance#" size="4" />
@@ -112,19 +125,19 @@
 
                 <td style="text-align:left;">
                   <xar:if condition="$items[$ix]['type'] eq 'start'">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:else/>
                     #$items[$ix]['type']#
                   </xar:if>

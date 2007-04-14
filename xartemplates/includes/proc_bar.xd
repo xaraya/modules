@@ -21,7 +21,7 @@
     <xar:if condition="$proc_info['isActive'] eq 'y'">
       <dd class="#$classstring#">
         <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
-          <img border="0" src="modules/workflow/lib/Galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
+          <img border="0" src="modules/workflow/lib/galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
           <xar:mlstring>Deactivate </xar:mlstring>
         </a>
       </dd>
@@ -29,7 +29,7 @@
       <xar:if condition="$proc_info['isValid'] eq 'y'">
         <dd class="#$classstring#">
           <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;activate_proc=#$pid#">
-            <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="#xarML('activate')#" title="#xarML('activate')#" />
+            <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt="#xarML('activate')#" title="#xarML('activate')#" />
             <xar:mlstring>Activate </xar:mlstring>
           </a>
         </dd>
@@ -42,7 +42,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-processes;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#" />
         <xar:mlstring>Process Details</xar:mlstring>
       </a>
     </dd>
@@ -53,7 +53,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/Activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" />
         <xar:mlstring>Activities</xar:mlstring>
       </a>
     </dd>
@@ -64,7 +64,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" />
         <xar:mlstring>Code</xar:mlstring>
       </a>
     </dd>
@@ -75,7 +75,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
         <xar:mlstring>Roles</xar:mlstring>
       </a>        
     </dd>
@@ -86,7 +86,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/mode_tree.gif" border="0" title="#xarML('graph')#" alt="#xarML('graph')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" border="0" title="#xarML('graph')#" alt="#xarML('graph')#" />
         <xar:mlstring>Graph</xar:mlstring>
       </a>
     </dd>
@@ -94,7 +94,7 @@
     <xar:set name="classstring">''</xar:set>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/Galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" />
         <xar:mlstring>Export</xar:mlstring>
       </a>
     </dd>

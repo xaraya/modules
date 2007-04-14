@@ -28,7 +28,7 @@ function workflow_admin_save_process()
 
 // Adapted from tiki-g-save_process.php
 
-include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
+include_once (GALAXIA_LIBRARY.'/processmanager.php');
 
 // The galaxia process manager PHP script.
 

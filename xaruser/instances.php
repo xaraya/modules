@@ -58,7 +58,7 @@ function workflow_user_instances()
 
 // Adapted from tiki-g-user_instances.php
 
-include_once (GALAXIA_LIBRARY.'/GUI.php');
+include_once (GALAXIA_LIBRARY.'/gui.php');
 
 $action = 0;
 

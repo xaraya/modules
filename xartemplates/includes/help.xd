@@ -2,6 +2,6 @@
   <!-- TODO: put the page in subdata and react on it -->
   <xar:comment> the help link info </xar:comment>
   <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Admin Processes')#">
-    <img border="0" src="modules/workflow/lib/Galaxia/img/icons/help.gif" alt="help"/>
+    <img border="0" src="modules/workflow/lib/galaxia/img/icons/help.gif" alt="help"/>
   </a>
 </xar:template>

@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
+sys::import('modules.workflow.lib.galaxia.api');
   /**
    * the roles administration function
    *
@@ -27,7 +28,7 @@ function workflow_admin_roles()
     $data = array();
 
     // Adapted from tiki-g-admin_roles.php
-    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     if (!xarVarFetch('pid','id',$pid)) return;
     if (empty($pid)) {

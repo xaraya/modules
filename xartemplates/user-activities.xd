@@ -81,19 +81,19 @@
                 <td style="text-align: right;">#$items[$ix]['version']#</td>
                 <td style="text-align:left;">
                   <xar:if condition="$items[$ix]['type'] eq 'start'">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
-                    <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:else/>
                     #$items[$ix]['type']# 
                   </xar:if>
@@ -104,7 +104,7 @@
                   </xar:if>
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
                     <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
-                      <img src="modules/workflow/lib/Galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
                     </a>          
                   </xar:if>
                 </td>

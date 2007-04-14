@@ -10,7 +10,8 @@
  * @subpackage Workflow Module
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
- */
+**/
+sys::import('modules.workflow.lib.galaxia.api');
 /**
  * the shared source administration function
  *
@@ -28,7 +29,7 @@ function workflow_admin_shared_source()
 
     // Adapted from tiki-g-admin_shared_source.php
 
-    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     if (!isset($_REQUEST['pid'])) {
         $tplData['msg'] =  xarML("No process indicated");

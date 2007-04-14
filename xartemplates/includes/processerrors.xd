@@ -7,12 +7,12 @@
           <xar:set name="validtext">
             <xar:mlstring>valid</xar:mlstring>
           </xar:set>
-          <img border="0" src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
+          <img border="0" src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="#xarML('valid')#" title="#xarML('valid')#"/>
           <xar:else/>
           <xar:set name="validtext">
             <xar:mlstring>invalid</xar:mlstring>
           </xar:set>
-          <img border="0" src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
+          <img border="0" src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="#xarML('invalid')#" title="#xarML('invalid')#"/>
         </xar:if>
         <xar:mlstring>This process is: </xar:mlstring>
         <xar:var name="validtext"/>

@@ -133,7 +133,7 @@
               <tr>
                 <td>
                   <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;sort_mode=#$sort_mode#&amp;find=#$find#&amp;where=#$where#&amp;activityId=#$info['activityId']#&amp;pid=#$pid#&amp;remove_role=#$roles[$ix]['roleId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#" />
+                    <img src="modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#" />
                   </a>
                 </td>
                 <td>#$roles[$ix]['name']#</td>

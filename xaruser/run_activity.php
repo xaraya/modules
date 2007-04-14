@@ -29,7 +29,7 @@ function workflow_user_run_activity()
     $tplData = array();
 
     // Adapted from tiki-g-run_activity.php
-    include (GALAXIA_LIBRARY.'/API.php');
+    include (GALAXIA_LIBRARY.'/api.php');
 
     // TODO: evaluate why this is here
     global $__activity_completed;

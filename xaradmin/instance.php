@@ -29,8 +29,8 @@ function workflow_admin_instance()
 
     // Adapted from tiki-g-admin_instance.php
 
-    include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
-    include_once (GALAXIA_LIBRARY.'/API.php');
+    include_once (GALAXIA_LIBRARY.'/processmanager.php');
+    include_once (GALAXIA_LIBRARY.'/api.php');
 
     if (!isset($_REQUEST['iid'])) {
         $tplData['msg'] =  xarML("No instance indicated");

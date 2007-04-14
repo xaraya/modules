@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
-sys::import('modules.workflow.lib.Galaxia.API');
+sys::import('modules.workflow.lib.galaxia.api');
 /**
  * the graph administration function
  *
@@ -29,7 +29,7 @@ function workflow_admin_graph()
 
     // Adapted from tiki-g-admin_processes.php
 
-    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     // Check if we are editing an existing process
     // if so retrieve the process info and assign it.

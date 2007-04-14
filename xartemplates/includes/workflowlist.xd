@@ -46,34 +46,34 @@
               <input type="hidden" name="return_url" value="#$return_url#"/>
               <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active' and $item['userId'] eq $userId">
                 <input type="hidden" name="activityId" value="#$item['activityId']#"/>
-                <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="modules/workflow/lib/Galaxia/img/icons/next.gif"/>
+                <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="modules/workflow/lib/galaxia/img/icons/next.gif"/>
               </xar:if>
             </td>
             <td style="text-align: center;">
               <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'exception' and $item['status'] ne 'completed'">
-                <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="modules/workflow/lib/Galaxia/img/icons/stop.gif"/>
+                <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="modules/workflow/lib/galaxia/img/icons/stop.gif"/>
               </xar:if>
             </td>
             <td style="text-align: center;">
               <xar:if condition="$item['status'] eq 'exception'">
-                <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif"/>
+                <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="modules/workflow/lib/galaxia/img/icons/refresh2.gif"/>
               </xar:if>
             </td>
             <td style="text-align: center;">
               <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'completed'">
-                <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="modules/workflow/lib/Galaxia/img/icons/trash.gif"/>
+                <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="modules/workflow/lib/galaxia/img/icons/trash.gif"/>
               </xar:if>
             </td>
             <td style="text-align: center;">
               <xar:if condition="$item['user'] eq '*' and $item['status'] eq 'active'">
-                <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="modules/workflow/lib/Galaxia/img/icons/fix.gif"/>
+                <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="modules/workflow/lib/galaxia/img/icons/fix.gif"/>
                   <xar:elseif condition="$item['status'] eq 'active' and $item['userId'] eq $userId"/>
-                  <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="modules/workflow/lib/Galaxia/img/icons/float.gif"/>
+                  <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="modules/workflow/lib/galaxia/img/icons/float.gif"/>
               </xar:if>
             </td>
             <td style="text-align: center;">
               <xar:if condition="$item['status'] eq 'completed' or $item['status'] eq 'aborted'">
-                <input type="image" name="remove" value="1" title="#xarML('remove from list')#" alt="#xarML('remove from list')#" src="modules/workflow/lib/Galaxia/img/icons/select.gif"/>
+                <input type="image" name="remove" value="1" title="#xarML('remove from list')#" alt="#xarML('remove from list')#" src="modules/workflow/lib/galaxia/img/icons/select.gif"/>
               </xar:if>
             </td>
           </form>

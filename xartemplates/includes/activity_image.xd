@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <xar:set name="wf_icons">'modules/workflow/lib/Galaxia/img/icons'</xar:set>
+  <xar:set name="wf_icons">'modules/workflow/lib/galaxia/img/icons'</xar:set>
   <xar:if condition="$type eq 'start'">
     <img src="#$wf_icons#/mini_circle.gif" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'end'"/>

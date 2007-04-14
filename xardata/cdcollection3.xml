@@ -107,12 +107,12 @@ if ($actinfo) {
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="cdId" value="#$cd['cdid']#"/>
 <input type="hidden" name="status" value="#$cd['status']#"/>
-<input type="image" name="whatever" src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" title="Change Status"/>
+<input type="image" name="whatever" src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" title="Change Status"/>
 <xar:elseif condition="$cd['status'] eq 'available'"/>
 <input type="hidden" name="activityId" value="#$requestId#"/>
 <input type="hidden" name="cd" value="#$cd['cdid']#"/>
 <input type="hidden" name="request" value="1"/>
-<input type="image" name="whatever" src="modules/workflow/lib/Galaxia/img/icons/next.gif" title="Request CD"/>
+<input type="image" name="whatever" src="modules/workflow/lib/galaxia/img/icons/next.gif" title="Request CD"/>
 </xar:if>
     </td>
 </form>

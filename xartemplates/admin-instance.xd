@@ -85,7 +85,7 @@
                   <td class="odd">#$acts[$ix]['name']#
                     <xar:if condition="$acts[$ix]['isInteractive'] eq 'y'">
                       <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$acts[$ix]['activityId']#&amp;iid=#$iid#">
-                        <img src="modules/workflow/lib/Galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#" /></a>
+                        <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#" /></a>
                     </xar:if>
                   </td>
                   <td class="odd">#$acts[$ix]['actstatus']#</td>
@@ -131,7 +131,7 @@
               <input type="text" name="props[#$key#]" value="#$item#" />
             </xar:if>
             <a href="&xar-modurl-workflow-admin-instance;&amp;iid=#$iid#&amp;unsetprop=#$key#">
-              <img src="modules/workflow/lib/Galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('del')#" />
+              <img src="modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('del')#" />
             </a>
           </div>
         </xar:foreach>

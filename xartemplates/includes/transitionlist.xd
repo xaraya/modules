@@ -74,7 +74,7 @@
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$transitions[$ix]['actFromId']#">#$transitions[$ix]['actFromName']#</a>
                 </td>
                 <td>
-                  <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='to' />
+                  <img src='modules/workflow/lib/galaxia/img/icons/next.gif' alt='to' />
                 </td>
                 <td>
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$transitions[$ix]['actToId']#">#$transitions[$ix]['actToName']#</a>
@@ -90,7 +90,7 @@
                 </select>
               </td>
               <td>
-                <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='to' />
+                <img src='modules/workflow/lib/galaxia/img/icons/next.gif' alt='to' />
               </td>
               <td>
                 <select name="actToId">

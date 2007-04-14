@@ -25,27 +25,58 @@
 
             <tr>
               <td>
-                <xar:data-input type="dropdown" name="filter_process" value="$filter_process" options="$all_procs" firstline="All" />
+                <select name="filter_process">
+                  <xar:if condition="'' eq $filter_process">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:foreach in="$all_procs" key="$ix">
+                    <xar:if condition="$all_procs[$ix]['pId'] eq $filter_process">
+                      <option selected="selected" value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                      <xar:else/>
+                      <option value="#$all_procs[$ix]['pId']#">#$all_procs[$ix]['name']# #$all_procs[$ix]['version']#</option>
+                    </xar:if>
+                  </xar:foreach>
+                </select>
               </td>
               <td>
-                <xar:set name="options">
-                    array(
-                        array('id' => '', 'name' =>'All'),
-                        array('id' => 'y', 'name' =>'Active'),
-                        array('id' => 'n', 'name' =>'Inctive'),
-                    )
-                </xar:set>
-                <xar:data-input type="dropdown" name="filter_active" value="$filter_active" options="$options" />
+                <select name="filter_active">
+                  <xar:if condition="'' eq $filter_active">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'y' eq $filter_active">
+                    <option value="y" selected="selected"><xar:mlstring>Active</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="y"><xar:mlstring>Active</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'n' eq $filter_active">
+                    <option value="n" selected="selected"><xar:mlstring>Inactive</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="n"><xar:mlstring>Inactive</xar:mlstring></option>
+                  </xar:if>
+                </select>
               </td>
               <td>
-                <xar:set name="options">
-                    array(
-                        array('id' => '', 'name' =>'All'),
-                        array('id' => 'y', 'name' =>'Valid'),
-                        array('id' => 'n', 'name' =>'Invalid'),
-                    )
-                </xar:set>
-                <xar:data-input type="dropdown" name="filter_valid" value="$filter_valid" options="$options" />
+                <select name="filter_valid">
+                  <xar:if condition="'' eq $filter_valid">
+                    <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
+                    <xar:else/>
+                    <option value=""><xar:mlstring>All</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'y' eq $filter_valid">
+                    <option selected="selected" value="y"><xar:mlstring>Valid</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="y"><xar:mlstring>Valid</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="'n' eq $filter_valid">
+                    <option selected="selected" value="n"><xar:mlstring>Invalid</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="n"><xar:mlstring>Invalid</xar:mlstring></option>
+                  </xar:if>
+                </select>
               </td>
               <td><input size="8" type="text" name="find" value="#$find#" /></td>
               <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
@@ -78,16 +109,16 @@
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-                      <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#" />
                       <xar:else/>
                       &#160;
                     </xar:if>
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-                      <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                       <xar:else/>
-                      <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
+                      <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                     </xar:if>
 
                   </td>

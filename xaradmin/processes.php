@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
-sys::import('modules.workflow.lib.Galaxia.API');
+sys::import('modules.workflow.lib.galaxia.api');
 /**
  * the processes administration function
  *
@@ -29,7 +29,7 @@ function workflow_admin_processes()
     $data = array();
 
     // Adapted from tiki-g-admin_processes.php
-    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     // Initialize
     $data['proc_info'] = array(
@@ -71,7 +71,7 @@ function workflow_admin_processes()
 
             $process_data = $processManager->unserialize_process($xml);
 
-            if ($processManager->process_name_exists($process_data['name'], $process_data['version'])) {
+            if (Process::exists($process_data['name'], $process_data['version'])) {
                 $data['msg'] =  xarML("The process name already exists");
                 return xarTplModule('workflow', 'admin', 'error', $data);
             } else {
@@ -107,7 +107,7 @@ function workflow_admin_processes()
                       );
 
         // If process is known and we're not updating, error out.
-        if ($processManager->process_name_exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
+        if (Process::Exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
             $data['msg'] =  xarML("Process already exists");
             return xarTplModule('workflow', 'admin', 'error', $data);
         }

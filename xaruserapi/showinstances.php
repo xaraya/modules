@@ -28,7 +28,7 @@ function workflow_userapi_showinstances($args)
     include_once('modules/workflow/tiki-setup.php');
     $tplData = array();
 
-    include(GALAXIA_LIBRARY.'/GUI.php');
+    include(GALAXIA_LIBRARY.'/gui.php');
 
     if (empty($user)) {
         $user = xarUserGetVar('uid');

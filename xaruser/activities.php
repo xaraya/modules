@@ -28,7 +28,7 @@ function workflow_user_activities()
 
 // Adapted from tiki-g-user_activities.php
 
-include_once (GALAXIA_LIBRARY.'/GUI.php');
+include_once (GALAXIA_LIBRARY.'/gui.php');
 
 // Filtering data to be received by request and
 // used to build the where part of a query

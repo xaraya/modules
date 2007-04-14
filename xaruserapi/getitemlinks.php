@@ -29,7 +29,7 @@ function workflow_userapi_getitemlinks($args)
 
 // Common setup for Galaxia environment
     include('modules/workflow/tiki-setup.php');
-    include(GALAXIA_LIBRARY.'/GUI.php');
+    include(GALAXIA_LIBRARY.'/gui.php');
 
     // get the instances this user has access to
     $sort = 'pId_asc, instanceId_asc';

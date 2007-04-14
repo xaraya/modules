@@ -16,7 +16,7 @@
  */
 
 // Configuration of the Galaxia Workflow Engine for Xaraya
-include_once('modules/workflow/lib/Galaxia/config.php');
+include_once('modules/workflow/lib/galaxia/config.php');
 
 if (!function_exists('xarTimeToDHMS')) {
     function xarTimeToDHMS($time, $format = '')

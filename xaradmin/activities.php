@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
-sys::import('modules.workflow.lib.Galaxia.API');
+sys::import('modules.workflow.lib.galaxia.api');
 /**
  * the activities administration function
  *
@@ -28,7 +28,7 @@ function workflow_admin_activities()
     $data = array();
 
     // Adapted from tiki-g-admin_activities.php
-    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/processmanager.php');
 
     if (!isset($_REQUEST['pid'])) {
         $data['msg'] =  xarML("No process indicated");
