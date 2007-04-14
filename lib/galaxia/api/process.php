@@ -99,7 +99,7 @@ class Process extends Base
      * @todo consider a helper like prepforstore instead of putting it in here.
     **/
     // Process name
-    function getName()           { return $this->name;}
+    function getName()    { return $this->name;}
 
     // Name for filesystem storage
     function getNormalizedName()
@@ -108,14 +108,14 @@ class Process extends Base
     }
 
     // Version string
-    function getVersion()        { return $this->version;}
+    function getVersion() { return $this->version;}
     // Path to process graph
-    function getGraph()          { return $this->graph;}
+    function getGraph()   { return $this->graph;}
 
     // Process Active?
-    function isActive()         { return $this->active;}
+    function isActive()   { return $this->active;}
     // Process Valid?
-    function isValid ()         { return $this->valid; }
+    function isValid ()   { return $this->valid; }
 
     /**
      * Gets information about an activity in this process by name,
