@@ -37,8 +37,9 @@ function workflow_admin_roles()
     $data['pid'] =  $pid;
 
     // Retrieve the relevant process info
+    $process = new Process($pid);
     $proc_info = $processManager->get_process($pid);
-    $proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
+    $proc_info['graph']=$process->getGraph();
 
     // Role ID set?
     if (!xarVarFetch('roleId','id',$roleId,0,XARVAR_NOT_REQUIRED)) return;

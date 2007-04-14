@@ -487,8 +487,8 @@ class ActivityManager extends BaseManager
         $vars['pId']=$pId;
         $vars['normalized_name'] = $this->_normalize_name($vars['name']);
 
-        $pm = new ProcessManager($this->db);
-        $proc_info = $pm->get_process($pId);
+        $process = new Process($pId);
+        $procNName = $process->getNormalizedName();
 
         if($activityId) {
             $oldname = $this->_get_normalized_name($activityId);
@@ -512,18 +512,18 @@ class ActivityManager extends BaseManager
             // remove the old compiled file and recompile
             // the activity
 
-            $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$oldname.'.php';
-            $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$newname.'.php';
+            $user_file_old = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$oldname.'.php';
+            $user_file_new = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$newname.'.php';
             rename($user_file_old, $user_file_new);
 
-            $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$oldname.'.tpl';
-            $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$newname.'.tpl';
+            $user_file_old = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$oldname.'.tpl';
+            $user_file_new = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$newname.'.tpl';
             if ($user_file_old != $user_file_new) {
                 @rename($user_file_old, $user_file_new);
             }
 
 
-            $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$oldname.'.php';
+            $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$oldname.'.php';
             unlink($compiled_file);
             $this->compile_activity($pId,$activityId);
 
@@ -559,8 +559,7 @@ class ActivityManager extends BaseManager
                 throw new Exception("No result from: select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             }
             // Should create the code file
-            $procname = $proc_info["normalized_name"];
-            $fw = fopen(GALAXIA_PROCESSES."/$procname/code/activities/".$vars['normalized_name'].'.php','w');
+            $fw = fopen(GALAXIA_PROCESSES."/$procNName/code/activities/".$vars['normalized_name'].'.php','w');
             fwrite($fw,'<'.'?'.'php'."\n".'?'.'>');
             fclose($fw);
 
@@ -605,20 +604,24 @@ class ActivityManager extends BaseManager
     */
     function compile_activity($pId, $activityId)
     {
+        // Construct the Activity object
         $act = $this->getActivity($activityId);
         $actname = $act->getNormalizedName();
         $acttype = $act->getType();
-        $pm = new ProcessManager($this->db);
-        $proc_info = $pm->get_process($pId);
-        $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$actname.'.php';
-        $template_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';
-        $user_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$actname.'.php';
+
+        // Construct the Process object
+        $process = new Process($pId);
+        $procNName = $process->getNormalizedName();
+
+        $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$actname.'.php';
+        $template_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$actname.'.tpl';
+        $user_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$actname.'.php';
         $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
         $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
         $fw = fopen($compiled_file,"wb");
 
         // First of all add an include to to the shared code
-        $shared_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/shared.php';
+        $shared_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/shared.php';
 
         fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
 
@@ -675,12 +678,12 @@ class ActivityManager extends BaseManager
         }
         if($act->isInteractive() && file_exists($template_file)) {
             @unlink($template_file);
-            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl")) {
-                @unlink(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");
+            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl")) {
+                @unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
             }
         }
         if (GALAXIA_TEMPLATES && file_exists($template_file)) {
-            @copy($template_file,GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");
+            @copy($template_file,GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
         }
     }
 

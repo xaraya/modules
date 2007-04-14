@@ -22,69 +22,70 @@ class BaseActivity extends Base
   public $activityId;
   public $expirationTime = 0;
 
-  /*!
-  Factory method returning an activity of the desired type
-  loading the information from the database.
-  */
+  /**
+   * Factory method returning an activity of the desired type
+   * loading the information from the database.
+   *
+   * @todo we want this to be a static method?
+  **/
   function &getActivity($activityId)
   {
-    $query = "select * from ".self::tbl('activities')." where `activityId`=?";
-    $result = $this->query($query,array($activityId));
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow();
-    switch($res['type']) {
-      case 'start':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/Start.php');
-        $act = new Start();
-        break;
-      case 'end':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/End.php');
-        $act = new End();
-        break;
-      case 'join':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/Join.php');
-        $act = new Join();
-        break;
-      case 'split':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/Split.php');
-        $act = new Split();
-        break;
-      case 'standalone':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/Standalone.php');
-        $act = new Standalone();
-        break;
-      case 'switch':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/SwitchActivity.php');
-        $act = new SwitchActivity();
-        break;
-      case 'activity':
-        include_once (GALAXIA_LIBRARY.'/src/API/activities/Activity.php');
-        $act = new Activity();
-        break;
-      default:
-        trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
-    }
+      $query = "select * from ".self::tbl('activities')." where `activityId`=?";
+      $result = $this->query($query,array($activityId));
+      if(!$result->numRows()) return false;
+      $res = $result->fetchRow();
+      switch($res['type']) {
+          case 'start':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/Start.php');
+            $act = new Start();
+            break;
+          case 'end':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/End.php');
+            $act = new End();
+            break;
+          case 'join':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/Join.php');
+            $act = new Join();
+            break;
+          case 'split':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/Split.php');
+            $act = new Split();
+            break;
+          case 'standalone':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/Standalone.php');
+            $act = new Standalone();
+            break;
+          case 'switch':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/SwitchActivity.php');
+            $act = new SwitchActivity();
+            break;
+          case 'activity':
+            include_once (GALAXIA_LIBRARY.'/src/API/activities/Activity.php');
+            $act = new Activity();
+            break;
+          default:
+            trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
+      }
 
-    $act->setName($res['name']);
-    $act->setProcessId($res['pId']);
-    $act->setNormalizedName($res['normalized_name']);
-    $act->setDescription($res['description']);
-    $act->setIsInteractive($res['isInteractive']);
-    $act->setIsAutoRouted($res['isAutoRouted']);
-    $act->setActivityId($res['activityId']);
+      $act->setName($res['name']);
+      $act->setProcessId($res['pId']);
+      $act->setNormalizedName($res['normalized_name']);
+      $act->setDescription($res['description']);
+      $act->setIsInteractive($res['isInteractive']);
+      $act->setIsAutoRouted($res['isAutoRouted']);
+      $act->setActivityId($res['activityId']);
 
-    //Now get forward transitions
+      //Now get forward transitions
+      //Now get backward transitions
 
-    //Now get backward transitions
-
-    //Now get roles
-    $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
-    $result=$this->query($query,array($res['activityId']));
-    while($res = $result->fetchRow()) {
-      $this->roles[] = $res['roleId'];
-    }
-    $act->setRoles($this->roles);
-    return $act;
+      //Now get roles
+      $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
+      $result=$this->query($query,array($res['activityId']));
+      while($res = $result->fetchRow()) {
+          $this->roles[] = $res['roleId'];
+      }
+      $act->setRoles($this->roles);
+      return $act;
   }
 
   /*! Returns an Array of roleIds for the given user */

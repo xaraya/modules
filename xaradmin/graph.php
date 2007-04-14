@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
+sys::import('modules.workflow.lib.Galaxia.API');
 /**
  * the graph administration function
  *
@@ -38,17 +39,21 @@ function workflow_admin_graph()
     if ($_REQUEST["pid"]) {
         xarLogMessage("WORKFLOW: Getting process");
         $process = new Process($_REQUEST['pid']);
+        $procNName = $process->getNormalizedName();
 
         $info = $processManager->get_process($_REQUEST["pid"]);
-        $info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
-        $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
-        if(!file_exists($info['graph']) or !file_exists($mapfile)) {
+
+        $info['graph'] = GALAXIA_PROCESSES."/" . $procNName . "/graph/" . $procNName . ".png";
+        $mapfile = GALAXIA_PROCESSES."/" . $procNName . "/graph/" . $procNName. ".map";
+
+        if(!file_exists($process->getGraph()) or !file_exists($mapfile)) {
             // Try to build it
+            xarLogMessage("WF: need to build graph files");
             $activityManager->build_process_graph($_REQUEST['pid']);
         }
 
-        if (file_exists($info['graph']) && file_exists($mapfile)) {
-            xarLogMessage("WORKFLOW: graph files exist");
+        if (file_exists($process->getGraph()) && file_exists($mapfile)) {
+            xarLogMessage("WF: graph files exist");
             $map = join('',file($mapfile));
             $url = xarModURL('workflow','admin','activities',
                              array('pid' => $info['pId']));

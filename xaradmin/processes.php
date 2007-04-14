@@ -43,9 +43,9 @@ function workflow_admin_processes()
     // if so retrieve the process info and assign it.
     if (!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
     if ($_REQUEST['pid']) {
+        $process = new Process($_REQUEST['pid']);
         $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
-
-        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
+        $data['proc_info']['graph'] = $process->getGraph();
     }
     $data['pid'] =  $_REQUEST['pid'];
 
@@ -123,8 +123,9 @@ function workflow_admin_processes()
         if (!$valid) $process->deactivate();
 
         // Reget the process info for the UI
+        $process = new Process($pid);
         $data['proc_info'] = $processManager->get_process($pid);
-        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
+        $data['proc_info']['graph'] = $process->getGraph();
     }
 
     // Filtering by name, status or direct

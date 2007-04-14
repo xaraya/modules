@@ -39,8 +39,8 @@ function workflow_admin_activities()
     $process = new Process($data['pid']);
 
     // @todo: use the object above
+    $procNName = $process->getNormalizedName();
     $proc_info = $processManager->get_process($data['pid']);
-    $proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 
     // Retrieve activity info if we are editing, assign to
     // default values when creating a new activity
@@ -49,12 +49,12 @@ function workflow_admin_activities()
 
     if ($_REQUEST["activityId"]) {
         $act  = $activityManager->getActivity($_REQUEST['activityId']);
-        $info = array('name'        => $act->getName(),
-                      'description' => $act->getDescription(),
-                      'activityId'  => $act->getActivityId(),
-                      'isInteractive' => $act->isInteractive() ? 'y' : 'n',
-                      'isAutoRouted' => $act->isAutoRouted() ? 'y' :'n',
-                      'type' => $act->getType()
+        $info = array('name'            => $act->getName(),
+                      'description'     => $act->getDescription(),
+                      'activityId'      => $act->getActivityId(),
+                      'isInteractive'   => $act->isInteractive() ? 'y' : 'n',
+                      'isAutoRouted'    => $act->isAutoRouted() ? 'y' :'n',
+                      'type'            => $act->getType()
                       );
 
     } else {
@@ -217,17 +217,16 @@ function workflow_admin_activities()
     // If its valid and requested to activate, do so
     if ($valid && isset($_REQUEST['activate_proc'])) {
         $process->activate();
-        // @todo hide this inside $process
-        $proc_info['isActive'] = 'y';
     }
 
     // If its not valid or requested to deactivate, deactivate the process
     if (!$valid || isset($_REQUEST['deactivate_proc'])) {
         $process->deactivate();
-        // @todo hide this inside $process
-        $proc_info['isActive'] = 'n';
     }
-    $data['proc_info'] =&  $proc_info;
+
+    // @todo migrate proc_info into $process
+    $data['proc_info'] =& $proc_info;
+    $data['process'] =& $process;
 
     $data['errors'] = array();
     if (!$valid) $data['errors'] = $activityManager->get_error();

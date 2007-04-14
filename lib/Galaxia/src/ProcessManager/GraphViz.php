@@ -158,6 +158,7 @@ class Process_GraphViz
     function image_and_map($format = 'png')
     {
         if ($file = $this->saveParsedGraph()) {
+
             $outputfile = $file . '.' . $format;
             $outputfile2 = $file . '.' . 'map';
 
@@ -173,6 +174,7 @@ class Process_GraphViz
 
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o $outputfile $src";
+            xarLogMessage("WF: will run $command");
             @`$command`;
 
             $command = $this->dotCommand;
