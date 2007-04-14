@@ -12,7 +12,6 @@ include_once (GALAXIA_LIBRARY.'/common/base.php');
 class WorkflowActivity extends Base
 {
     public $name;
-    public $normalizedName;
     public $description;
     public $isInteractive;
     public $isAutoRouted;
@@ -72,7 +71,6 @@ class WorkflowActivity extends Base
 
         $act->setName($res['name']);
         $act->setProcessId($res['pId']);
-        $act->setNormalizedName($res['normalized_name']);
         $act->setDescription($res['description']);
         $act->setIsInteractive($res['isInteractive']);
         $act->setIsAutoRouted($res['isAutoRouted']);
@@ -121,13 +119,7 @@ class WorkflowActivity extends Base
     /* Returns the normalized name for the activity */
     function getNormalizedName()
     {
-        return $this->normalizedName;
-    }
-
-    /* Sets normalized name for the activity */
-    function setNormalizedName($name)
-    {
-        $this->normalizedName=$name;
+        return self::normalize($this->getName());
     }
 
     /* Various getters / setters */

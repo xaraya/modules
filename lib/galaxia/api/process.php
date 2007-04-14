@@ -16,7 +16,6 @@ class Process extends Base
     public $name;
     public $description;
     public $version;
-    public $normalizedName;
     public $pId    = 0;
     public $graph  = '';
 
@@ -88,10 +87,9 @@ class Process extends Base
         $res = $result->fetchRow();
         $this->name = $res['name'];
         $this->description = $res['description'];
-        $this->normalizedName = $res['normalized_name'];
         $this->version = $res['version'];
         $this->pId = $res['pId'];
-        $this->graph = GALAXIA_PROCESSES."/".$this->normalizedName."/graph/".$this->normalizedName.".png";
+        $this->graph = GALAXIA_PROCESSES."/".$this->getNormalizedName()."/graph/".$this->getNormalizedName().".png";
     }
 
     /**
@@ -102,8 +100,13 @@ class Process extends Base
     **/
     // Process name
     function getName()           { return $this->name;}
+
     // Name for filesystem storage
-    function getNormalizedName() { return $this->normalizedName;}
+    function getNormalizedName()
+    {
+        return self::normalize($this->getName(), $this->getVersion());
+    }
+
     // Version string
     function getVersion()        { return $this->version;}
     // Path to process graph

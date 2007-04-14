@@ -124,7 +124,7 @@ function workflow_admin_instance()
     if (isset($_REQUEST['__removecomment'])) {
         $__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
 
-        if ($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
+        if ($__comment['user'] == $user) {
             $instance->remove_instance_comment($_REQUEST['__removecomment']);
         }
     }

@@ -61,11 +61,6 @@ if (!function_exists('xarTimeToDHMS')) {
 global $user;
 $user = xarUserGetVar('uid');
 
-if (xarSecurityCheck('AdminWorkflow',0)) {
-    $tiki_p_admin_workflow = 'y';
-} else {
-    $tiki_p_admin_workflow = 'n';
-}
 $maxRecords = xarModGetVar('workflow','itemsperpage');
 if (empty($maxRecords)) {
     xarModSetVar('workflow','itemsperpage',20);

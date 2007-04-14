@@ -98,7 +98,7 @@ function workflow_user_run_activity()
     if (isset($_REQUEST['__removecomment'])) {
         $__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
 
-        if ($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
+        if ($__comment['user'] == $user or xarSecurityCheck('AdminWorkflow',0)) {
             $instance->remove_instance_comment($_REQUEST['__removecomment']);
         }
     }
