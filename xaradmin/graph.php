@@ -37,6 +37,8 @@ function workflow_admin_graph()
 
     if ($_REQUEST["pid"]) {
         xarLogMessage("WORKFLOW: Getting process");
+        $process = new Process($_REQUEST['pid']);
+
         $info = $processManager->get_process($_REQUEST["pid"]);
         $info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
         $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
@@ -139,7 +141,7 @@ function workflow_admin_graph()
         $errors = array();
 
         if (!$valid) {
-            $processManager->deactivate_process($_REQUEST['pid']);
+            $process->deactivate();
 
             $errors = $activityManager->get_error();
         }

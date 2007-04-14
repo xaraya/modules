@@ -14,28 +14,6 @@ class ProcessManager extends BaseManager
   public $buffer = '';
 
   /*!
-    Sets a process as active
-  */
-  function activate_process($pId)
-  {
-    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('y',$pId));
-    $msg = sprintf(tra('Process %d has been activated'),$pId);
-    $this->notify_all(3,$msg);
-  }
-
-  /*!
-    De-activates a process
-  */
-  function deactivate_process($pId)
-  {
-    $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
-    $this->query($query,array('n',$pId));
-    $msg = sprintf(tra('Process %d has been deactivated'),$pId);
-    $this->notify_all(3,$msg);
-  }
-
-  /*!
     Creates an XML representation of a process.
   */
   function serialize_process($pId)
@@ -457,36 +435,38 @@ class ProcessManager extends BaseManager
   */
   function remove_process($pId)
   {
-    $this->deactivate_process($pId);
-    $name = $this->_get_normalized_name($pId);
-    $aM = new ActivityManager($this->db);
-    // Remove process activities
-    $query = "select activityId from ".self::tbl('activities')." where pId=?";
-    $result = $this->query($query,array($pId));
-    while($res = $result->fetchRow()) {
-      $aM->remove_activity($pId,$res['activityId']);
-    }
+      $process = new Process($pId);
+      $process->deactivate();
 
-    // Remove process roles
-    $query = "delete from ".self::tbl('roles')." where pId=?";
-    $this->query($query,array($pId));
-    $query = "delete from ".self::tbl('user_roles')." where pId=?";
-    $this->query($query,array($pId));
+      $name = $this->_get_normalized_name($pId);
+      $aM = new ActivityManager($this->db);
+      // Remove process activities
+      $query = "select activityId from ".self::tbl('activities')." where pId=?";
+      $result = $this->query($query,array($pId));
+      while($res = $result->fetchRow()) {
+          $aM->remove_activity($pId,$res['activityId']);
+      }
 
-    // Remove the directory structure
-    if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
-      $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);
-    }
-    if (GALAXIA_TEMPLATES && !empty($name) && is_dir(GALAXIA_TEMPLATES."/$name")) {
-      $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
-    }
-    // And finally remove the proc
-    $query = "delete from ".self::tbl('processes')." where pId=?";
-    $this->query($query,array($pId));
-    $msg = sprintf(tra('Process %s removed'),$name);
-    $this->notify_all(5,$msg);
+      // Remove process roles
+      $query = "delete from ".self::tbl('roles')." where pId=?";
+      $this->query($query,array($pId));
+      $query = "delete from ".self::tbl('user_roles')." where pId=?";
+      $this->query($query,array($pId));
 
-    return true;
+      // Remove the directory structure
+      if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
+          $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);
+      }
+      if (GALAXIA_TEMPLATES && !empty($name) && is_dir(GALAXIA_TEMPLATES."/$name")) {
+          $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
+      }
+      // And finally remove the proc
+      $query = "delete from ".self::tbl('processes')." where pId=?";
+      $this->query($query,array($pId));
+      $msg = sprintf(tra('Process %s removed'),$name);
+      $this->notify_all(5,$msg);
+
+      return true;
   }
 
   /*!

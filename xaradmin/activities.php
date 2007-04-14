@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
+sys::import('modules.workflow.lib.Galaxia.API');
 /**
  * the activities administration function
  *
@@ -34,7 +35,10 @@ function workflow_admin_activities()
         return xarTplModule('workflow', 'admin', 'error', $data);
     }
     $data['pid'] =  $_REQUEST['pid'];
+    // Create a process object
+    $process = new Process($data['pid']);
 
+    // @todo: use the object above
     $proc_info = $processManager->get_process($data['pid']);
     $proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 
@@ -212,13 +216,15 @@ function workflow_admin_activities()
 
     // If its valid and requested to activate, do so
     if ($valid && isset($_REQUEST['activate_proc'])) {
-        $processManager->activate_process($data['pid']);
+        $process->activate();
+        // @todo hide this inside $process
         $proc_info['isActive'] = 'y';
     }
 
     // If its not valid or requested to deactivate, deactivate the process
     if (!$valid || isset($_REQUEST['deactivate_proc'])) {
-        $processManager->deactivate_process($data['pid']);
+        $process->deactivate();
+        // @todo hide this inside $process
         $proc_info['isActive'] = 'n';
     }
     $data['proc_info'] =&  $proc_info;

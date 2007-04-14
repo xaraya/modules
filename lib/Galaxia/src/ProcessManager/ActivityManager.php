@@ -2,14 +2,14 @@
 include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 
-//!! ActivityManager
-//! A class to maniplate process activities and transitions
-/*!
-  This class is used to add,remove,modify and list
-  activities used in the Workflow engine.
-  Activities are managed in a per-process level, each
-  activity belongs to some process.
-*/
+/**
+ * A class to maniplate process activities and transitions
+ *
+ * This class is used to add,remove,modify and list
+ * activities used in the Workflow engine.
+ * Activities are managed in a per-process level, each
+ * activity belongs to some process.
+**/
 class ActivityManager extends BaseManager
 {
     private $factory;
@@ -41,7 +41,7 @@ class ActivityManager extends BaseManager
     }
 
 
-  /*!
+  /**
    Gets the roles asociated to an activity
   */
   function get_activity_roles($activityId)
@@ -59,7 +59,7 @@ class ActivityManager extends BaseManager
 
 
 
-    /*!
+    /**
      Checks if a transition exists
     */
     function transition_exists($pid,$actFromId,$actToId)
@@ -106,7 +106,7 @@ class ActivityManager extends BaseManager
         return true;
     }
 
-    /*!
+    /**
      Removes a transition
     */
     function remove_transition($actFromId, $actToId)
@@ -116,7 +116,7 @@ class ActivityManager extends BaseManager
         return true;
     }
 
-    /*!
+    /**
      Removes all the activity transitions
     */
     function remove_activity_transitions($pId, $aid)
@@ -126,7 +126,7 @@ class ActivityManager extends BaseManager
     }
 
 
-    /*!
+    /**
      Returns all the transitions for a process
     */
     function get_process_transitions($pId,$actId=0)
@@ -163,7 +163,7 @@ class ActivityManager extends BaseManager
         return $ret;
     }
 
-    /*!
+    /**
      Builds the graph
     */
     //\todo build the real graph
@@ -215,7 +215,7 @@ class ActivityManager extends BaseManager
     }
 
 
-    /*!
+    /**
      Validates if a process can be activated checking the
      process activities and transitions the rules are:
      0) No circular activities
@@ -343,7 +343,7 @@ class ActivityManager extends BaseManager
 
     }
 
-    /*!
+    /**
      Validate process sources
      Rules:
      1) Interactive activities (non-standalone) must use complete()
@@ -394,15 +394,15 @@ class ActivityManager extends BaseManager
         return $errors;
     }
 
-    /*!
+    /**
      Indicates if an activity with the same name exists
     */
     function activity_name_exists($pId,$name)
     {
         $name = $this->_normalize_name($name);
-        return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pIid,$name));
+        return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
     }
-    /*!
+    /**
      Lists activities at a per-process level
     */
     function list_activities($pId,$offset,$maxRecords,$sort_mode,$find,$where='')
@@ -436,7 +436,7 @@ class ActivityManager extends BaseManager
 
 
 
-    /*!
+    /**
      Removes a activity.
     */
     function remove_activity($pId, $activityId)
@@ -468,7 +468,7 @@ class ActivityManager extends BaseManager
         return true;
     }
 
-    /*!
+    /**
      Updates or inserts a new activity in the database, $vars is an asociative
      array containing the fields to update or to insert as needed.
      $pId is the processId
@@ -574,7 +574,7 @@ class ActivityManager extends BaseManager
         return $activityId;
     }
 
-    /*!
+    /**
      Sets if an activity is interactive or not
     */
     function set_interactivity($pId, $actid, $value)
@@ -585,7 +585,7 @@ class ActivityManager extends BaseManager
         $this->compile_activity($pId,$actid);
     }
 
-    /*!
+    /**
      Sets if an activity is auto routed or not
     */
     function set_autorouting($pId, $actid, $value)
@@ -595,7 +595,7 @@ class ActivityManager extends BaseManager
     }
 
 
-    /*!
+    /**
      Compiles activity
     */
     function compile_activity($pId, $activityId)
@@ -695,7 +695,7 @@ class ActivityManager extends BaseManager
 
 
 
-    /*!
+    /**
      \private Returns true if a list contains unvisited nodes
      list members are asoc arrays containing id and visited
     */
@@ -707,7 +707,7 @@ class ActivityManager extends BaseManager
         return false;
     }
 
-    /*!
+    /**
      \private Returns true if a node is in a list
      list members are asoc arrays containing id and visited
     */
@@ -731,7 +731,7 @@ class ActivityManager extends BaseManager
         return $name;
     }
 
-    /*!
+    /**
      \private
      Returns normalized name of an activity
     */
@@ -740,7 +740,7 @@ class ActivityManager extends BaseManager
         return $this->getOne("select normalized_name from ".self::tbl('activities')." where activityId=?",array($activityId));
     }
 
-    /*!
+    /**
      \private
      Labels nodes
     */

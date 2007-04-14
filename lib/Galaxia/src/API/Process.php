@@ -8,27 +8,61 @@ is executed.
 */
 class Process extends Base
 {
-  public $name;
-  public $description;
-  public $version;
-  public $normalizedName;
-  public $pId = 0;
+    public $name;
+    public $description;
+    public $version;
+    public $normalizedName;
+    public $pId = 0;
 
-  /*!
-  Loads a process form the database
-  */
-  function getProcess($pId)
-  {
-    $query = "select * from ".self::tbl('processes')."where `pId`=?";
-    $result = $this->query($query,array($pId));
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow();
-    $this->name = $res['name'];
-    $this->description = $res['description'];
-    $this->normalizedName = $res['normalized_name'];
-    $this->version = $res['version'];
-    $this->pId = $res['pId'];
-  }
+    /**
+     * Construct an object for a process with specified ID
+     *
+    **/
+    function __construct($id)
+    {
+        parent::__construct();
+        $this->getProcess($id);
+    }
+
+    /**
+     * Activate a process
+     *
+    **/
+    function activate()
+    {
+        $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
+        $this->query($query,array('y',$this->pId));
+        $msg = sprintf(tra('Process %d has been activated'),$this->pId);
+        $this->notify_all(3,$msg);
+    }
+
+    /**
+     * Deactivate a process
+     *
+    **/
+    function deactivate()
+    {
+        $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
+        $this->query($query,array('n',$this->pId));
+        $msg = sprintf(tra('Process %d has been deactivated'),$this->pId);
+        $this->notify_all(3,$msg);
+    }
+
+    /**
+     * Loads a process from the database
+    **/
+    function getProcess($pId)
+    {
+        $query = "select * from ".self::tbl('processes')."where `pId`=?";
+        $result = $this->query($query,array($pId));
+        if(!$result->numRows()) return false;
+        $res = $result->fetchRow();
+        $this->name = $res['name'];
+        $this->description = $res['description'];
+        $this->normalizedName = $res['normalized_name'];
+        $this->version = $res['version'];
+        $this->pId = $res['pId'];
+    }
 
   /*!
   Gets the normalized name of the process
