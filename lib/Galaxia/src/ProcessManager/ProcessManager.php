@@ -226,7 +226,7 @@ class ProcessManager extends BaseManager
                 'isInteractive' => $activity['isInteractive'],
                 'isAutoRouted' => $activity['isAutoRouted']
             );
-            $actname=$am->_normalize_name($activity['name']);
+            $actname=ActivityManager::normalize($activity['name']);
 
             $actid = $am->replace_activity($pid,0,$vars);
             $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php',"w");
@@ -238,7 +238,7 @@ class ProcessManager extends BaseManager
                 fclose($fp);
             }
             $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['name']);
-            $actname = $am->_normalize_name($activity['name']);
+            $actname = ActivityManager::normalize($activity['name']);
             $now = date("U");
 
             foreach($activity['roles'] as $role) {
@@ -379,7 +379,7 @@ class ProcessManager extends BaseManager
   */
   function process_name_exists($name,$version)
   {
-    $name = $this->_normalize_name($name,$version);
+    $name = Process::normalize($name,$version);
     return $this->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?",array($name));
   }
 
@@ -483,7 +483,7 @@ class ProcessManager extends BaseManager
       $TABLE_NAME = self::tbl('processes');
       $now = date("U");
       $vars['lastModif']=$now;
-      $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);
+      $vars['normalized_name'] = Process::normalize($vars['name'],$vars['version']);
 
       if($pId) {
           // update mode
@@ -512,7 +512,7 @@ class ProcessManager extends BaseManager
       } else {
           unset($vars['pId']);
           // insert mode
-          $name = $this->_normalize_name($vars['name'],$vars['version']);
+          $name = Process::normalize($vars['name'],$vars['version']);
           $this->_create_directory_structure($name);
           $first = true;
           $query = "insert into $TABLE_NAME(";
@@ -560,18 +560,6 @@ class ProcessManager extends BaseManager
       // Get the id
       return $pId;
 }
-
-  /*!
-   \private
-   Normalizes a process name
-  */
-  function _normalize_name($name, $version)
-  {
-    $name = $name.'_'.$version;
-    $name = str_replace(" ","_",$name);
-    $name = preg_replace("/[^0-9A-Za-z\_]/",'',$name);
-    return $name;
-  }
 
   /*!
    \private

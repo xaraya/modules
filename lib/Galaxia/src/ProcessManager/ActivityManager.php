@@ -13,9 +13,8 @@ include_once(GALAXIA_LIBRARY.'/src/API/BaseActivity.php');
 class ActivityManager extends BaseManager
 {
     private $factory;
-    public $error='';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         // probably rename the class later
@@ -23,32 +22,24 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     * @todo This doesn't belong here
-    **/
-    function get_error()
-    {
-        return $this->error;
-    }
-
-    /**
      * Activity getter
      *
-     */
+    **/
     public function &getActivity($id)
     {
         $act = $this->factory->getActivity($id);
         return $act;
     }
 
-
-  /**
-   Gets the roles asociated to an activity
-  */
-  function get_activity_roles($activityId)
-  {
-    $query = "select activityId,roles.roleId,roles.name
-              from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
-              where roles.roleId = gar.roleId and activityId=?";
+    /**
+     * Gets the roles asociated to an activity
+     *
+    **/
+    function get_activity_roles($activityId)
+    {
+        $query = "select activityId,roles.roleId,roles.name
+                from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
+                where roles.roleId = gar.roleId and activityId=?";
         $result = $this->query($query,array($activityId));
         $ret = Array();
         while($res = $result->fetchRow()) {
@@ -57,11 +48,10 @@ class ActivityManager extends BaseManager
         return $ret;
     }
 
-
-
     /**
-     Checks if a transition exists
-    */
+     * Checks if a transition exists
+     *
+    **/
     function transition_exists($pid,$actFromId,$actToId)
     {
         return($this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=? and actToId=?", array($pid, $actFromId, $actToId)));
@@ -132,10 +122,16 @@ class ActivityManager extends BaseManager
     function get_process_transitions($pId,$actId=0)
     {
         if(!$actId) {
-            $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from ".self::tbl('transitions')."gt,".self::tbl('activities')."a1, ".self::tbl('activities')." a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ?";
+            $query = "
+            select a1.name as actFromName, a2.name as actToName, actFromId, actToId
+            from ".self::tbl('transitions')."gt,".self::tbl('activities')."a1, ".self::tbl('activities')." a2
+            where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ?";
             $bindvars = array($pId);
         } else {
-            $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from ".self::tbl('transitions')." gt,".self::tbl('activities')." a1, ".self::tbl('activities')." a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ? and (actFromId = ?)";
+            $query = "
+            select a1.name as actFromName, a2.name as actToName, actFromId, actToId
+            from ".self::tbl('transitions')." gt,".self::tbl('activities')." a1, ".self::tbl('activities')." a2
+            where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ? and (actFromId = ?)";
             $bindvars = array($pId,$actId);
         }
         $result = $this->query($query, $bindvars);
@@ -402,7 +398,7 @@ class ActivityManager extends BaseManager
     */
     function activity_name_exists($pId,$name)
     {
-        $name = $this->_normalize_name($name);
+        $name = self::normalize($name);
         return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
     }
     /**
@@ -485,7 +481,7 @@ class ActivityManager extends BaseManager
         $now = date("U");
         $vars['lastModif']=$now;
         $vars['pId']=$pId;
-        $vars['normalized_name'] = $this->_normalize_name($vars['name']);
+        $vars['normalized_name'] = self::normalize($vars['name']);
 
         $process = new Process($pId);
         $procNName = $process->getNormalizedName();
@@ -725,18 +721,6 @@ class ActivityManager extends BaseManager
             if($node['id'] == $a_node['id']) return true;
         }
         return false;
-    }
-
-    /**
-     * Normalizes an activity name
-     *
-     * @todo called by ProcessManager.php line 247, so can NOT be private yet.
-    **/
-     function _normalize_name($name)
-    {
-        $name = str_replace(" ","_",$name);
-        $name = preg_replace("/[^A-Za-z_]/",'',$name);
-        return $name;
     }
 
     /**

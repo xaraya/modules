@@ -8,7 +8,9 @@ include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
  *
  * @package default
  * @author Marcel van der Boom
- **/
+ *
+ * @todo make a distinction between a process as available for the framework and as available for the instance runtime.
+**/
 class Process extends Base
 {
     public $name;
@@ -107,10 +109,10 @@ class Process extends Base
     // Path to process graph
     function getGraph()          { return $this->graph;}
 
-
     // Process Active?
     function isActive()         { return $this->active;}
-    function isValie()          { return $this->valid; }
+    // Process Valid?
+    function isValid ()         { return $this->valid; }
 
     /**
      * Gets information about an activity in this process by name,
@@ -119,17 +121,22 @@ class Process extends Base
      * if ($actinfo) {
      *  $some_url = 'tiki-g-run_activity.php?activityId=' . $actinfo['activityId'];
      * }
+     * @todo not sure why this is here, probably just for the runtime convenience.
     **/
     function getActivityByName($actname)
     {
         // Get the activity data
         $query = "select * from ".self::tbl('activities')."where `pId`=? and `name`=?";
-        $pId = $this->pId;
-        $result = $this->query($query,array($pId,$actname));
+        $result = $this->query($query,array($this->pId,$actname));
         if(!$result->numRows()) return false;
         $res = $result->fetchRow();
         return $res;
     }
 
+    static function normalize($name, $version)
+    {
+         $name = $name.'_'.$version;
+         return parent::normalize($name);
+    }
 }
 ?>
