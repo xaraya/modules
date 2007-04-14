@@ -3,9 +3,9 @@
 // Load configuration of the Galaxia Workflow Engine
 include_once (dirname(__FILE__) . '/config.php');
 
-include_once (GALAXIA_LIBRARY.'/src/api/process.php');
-include_once (GALAXIA_LIBRARY.'/src/api/instance.php');
-include_once (GALAXIA_LIBRARY.'/src/api/activity.php');
+include_once (GALAXIA_LIBRARY.'/api/process.php');
+include_once (GALAXIA_LIBRARY.'/api/instance.php');
+include_once (GALAXIA_LIBRARY.'/api/activity.php');
 
 // This sucks a little.
 // Commented $process out. I suspect some workflows may fail, but if we

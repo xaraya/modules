@@ -1,6 +1,6 @@
 <?php
 
-include_once (GALAXIA_LIBRARY.'/src/common/base.php');
+include_once (GALAXIA_LIBRARY.'/common/base.php');
 /**
  * Class representing workitems in a workflow
  *

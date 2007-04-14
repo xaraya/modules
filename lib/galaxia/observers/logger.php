@@ -1,5 +1,5 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/common/observer.php');
+include_once(GALAXIA_LIBRARY.'/common/observer.php');
 //!! Logger
 //! Log
 /*!

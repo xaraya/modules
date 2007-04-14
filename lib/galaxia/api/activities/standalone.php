@@ -1,5 +1,5 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/api/activity.php');
+include_once(GALAXIA_LIBRARY.'/api/activity.php');
 //!! Standalone
 //! Standalone class
 /*!

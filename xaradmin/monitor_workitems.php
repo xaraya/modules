@@ -116,7 +116,7 @@ $data['items'] =&  $items["data"];
 $allprocs = $processMonitor->monitor_list_all_processes('name_asc');
 $data['all_procs'] = array();
 foreach ($allprocs as $row) {
-    $data['all_procs'][] = array('id' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version']);
+    $data['all_procs'][] = array('pId' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version'], 'version'=>$row['version']);
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {

@@ -1,5 +1,5 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/managers/base.php');
+include_once(GALAXIA_LIBRARY.'/managers/base.php');
 //!! RoleManager
 //! A class to maniplate roles.
 /*!

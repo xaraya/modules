@@ -118,7 +118,7 @@ foreach ($items['data'] as $index => $info) {
 $allprocs = $processMonitor->monitor_list_all_processes('name_asc');
 $data['all_procs'] = array();
 foreach ($allprocs as $row) {
-    $data['all_procs'][] = array('id' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version']);
+    $data['all_procs'][] = array('pId' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version'], 'version'=>$row['version']);
 }
 
 $sameurl_elements = array(

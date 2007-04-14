@@ -358,10 +358,10 @@ WARN_LOGFILE           =
 
 # The INPUT tag can be used to specify the files and/or directories that contain 
 # documented source files. You may enter file names like "myfile.cpp" or 
-# directories like "/usr/src/myproject". Separate the files or directories 
+# directories like "/usr/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = D:/backup/xaraya/html/modules/workflow/lib/galaxia/src/
+INPUT                  = D:/backup/xaraya/html/modules/workflow/lib/galaxia/
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 

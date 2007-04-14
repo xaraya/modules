@@ -1,5 +1,5 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/common/base.php');
+include_once(GALAXIA_LIBRARY.'/common/base.php');
 //!! GUI
 //! A GUI class for use in typical user interface scripts
 /*!
@@ -218,7 +218,7 @@ class GUI extends Base
                        where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
                        array($activityId,$instanceId,$user,$user)))
       return false;
-    include_once(GALAXIA_LIBRARY.'/src/api/instance.php');
+    include_once(GALAXIA_LIBRARY.'/api/instance.php');
     $instance = new Instance($this->db);
     $instance->getInstance($instanceId);
     if (!empty($instance->instanceId)) {
@@ -278,7 +278,7 @@ class GUI extends Base
                       where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
                       array($instanceId,$activityId,'*',$user)))
       ) return false;
-    include_once(GALAXIA_LIBRARY.'/src/api/instance.php');
+    include_once(GALAXIA_LIBRARY.'/api/instance.php');
     $instance = new Instance($this->db);
     $instance->getInstance($instanceId);
     $instance->complete($activityId,true,false);

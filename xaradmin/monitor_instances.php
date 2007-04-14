@@ -66,7 +66,7 @@ if (isset($_REQUEST['remove_all'])) {
 if (isset($_REQUEST['sendInstance'])) {
     //activityId indicates the activity where the instance was
     //and we have to send it to some activity to be determined
-    include_once (GALAXIA_LIBRARY.'/src/api/instance.php');
+    include_once (GALAXIA_LIBRARY.'/api/instance.php');
 
     $instance = new Instance();
     $instance->getInstance($_REQUEST['sendInstance']);

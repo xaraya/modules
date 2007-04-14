@@ -76,7 +76,7 @@ if (!function_exists('galaxia_show_error')) {
     }
 }
 
-// Specify how to execute a non-interactive activity (for use in src/api/instance.php)
+// Specify how to execute a non-interactive activity (for use in /api/instance.php)
 if (!function_exists('galaxia_execute_activity')) {
     function galaxia_execute_activity($activityId = 0, $iid = 0, $auto = 1)
     {

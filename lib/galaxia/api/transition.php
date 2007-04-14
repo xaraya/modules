@@ -6,7 +6,7 @@
  * @package modules
  * @subpackage workflow
  **/
-include_once (GALAXIA_LIBRARY.'/src/common/base.php');
+include_once (GALAXIA_LIBRARY.'/common/base.php');
 
 /**
  * Class modelling a transition between two activities

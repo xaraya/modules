@@ -1,5 +1,5 @@
 <?php
-include_once (GALAXIA_LIBRARY.'/src/common/base.php');
+include_once (GALAXIA_LIBRARY.'/common/base.php');
 //!! Abstract class representing activities
 //! An abstract class representing activities
 /*!
@@ -36,31 +36,31 @@ class WorkflowActivity extends Base
       $res = $result->fetchRow();
       switch($res['type']) {
           case 'start':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/start.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/start.php');
             $act = new StartActivity();
             break;
           case 'end':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/end.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/end.php');
             $act = new EndActivity();
             break;
           case 'join':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/join.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/join.php');
             $act = new JoinActivity();
             break;
           case 'split':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/split.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/split.php');
             $act = new SplitActivity();
             break;
           case 'standalone':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/standalone.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/standalone.php');
             $act = new StandaloneActivity();
             break;
           case 'switch':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/switch.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/switch.php');
             $act = new SwitchActivity();
             break;
           case 'activity':
-            include_once (GALAXIA_LIBRARY.'/src/api/activities/standard.php');
+            include_once (GALAXIA_LIBRARY.'/api/activities/standard.php');
             $act = new StandardActivity();
             break;
           default:

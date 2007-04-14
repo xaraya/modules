@@ -1,5 +1,5 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/common/base.php');
+include_once(GALAXIA_LIBRARY.'/common/base.php');
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
 /*!

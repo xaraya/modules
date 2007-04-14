@@ -1,6 +1,6 @@
 <?php
-include_once(GALAXIA_LIBRARY.'/src/managers/base.php');
-include_once(GALAXIA_LIBRARY.'/src/api/activity.php');
+include_once(GALAXIA_LIBRARY.'/managers/base.php');
+include_once(GALAXIA_LIBRARY.'/api/activity.php');
 
 /**
  * A class to maniplate process activities and transitions
