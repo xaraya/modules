@@ -442,7 +442,7 @@ function workflow_init()
     xarRegisterMask('AdminWorkflow', 'All', 'workflow', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
-    return workflow_upgrade('1.4.0');
+    return true;
 }
 
 /**
