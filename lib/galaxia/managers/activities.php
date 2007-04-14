@@ -88,16 +88,6 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     Removes all the activity transitions
-    */
-    function remove_activity_transitions($pId, $aid)
-    {
-        $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
-        $this->query($query, array($pId, $aid, $aid));
-    }
-
-
-    /**
      Returns all the transitions for a process
     */
     function get_process_transitions($pId,$actId=0)

@@ -200,5 +200,11 @@ class WorkflowActivity extends Base
         $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
         $this->query($query,array($this->activityId, $roleId));
     }
+
+    function removeTransitions()
+    {
+        $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
+        $this->query($query, array($this->pId, $this->activityId, $this->activityId));
+    }
 }
 ?>

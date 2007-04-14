@@ -137,7 +137,7 @@ function workflow_admin_activities()
         }
 
         if ($rid) {
-            $actaddRole($rid);
+            $act->addRole($rid);
         }
 
         // Reget
@@ -154,7 +154,7 @@ function workflow_admin_activities()
         $data['info'] =  $info;
 
         // remove transitions ????
-        $activityManager->remove_activity_transitions($data['pid'], $newaid);
+        $act->removeTransitions();
         if (isset($_REQUEST["add_tran_from"])) {
             foreach ($_REQUEST["add_tran_from"] as $actfrom) {
                 $activityManager->add_transition($data['pid'], $actfrom, $newaid);
