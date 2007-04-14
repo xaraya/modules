@@ -18,6 +18,8 @@
  */
 function workflow_init()
 {
+    if (!xarVarFetch('loadexample', 'checkbox', $loadexample, 1, XARVAR_NOT_REQUIRED)) return;
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -203,7 +205,8 @@ function workflow_init()
         $qte.'nextUser'.$qte          => array('type'=>'varchar','size'=>200,'null'=>TRUE),
         $qte.'ended'.$qte             => array('type'=>'integer','null'=>TRUE),
         $qte.'status'.$qte            => array('type'=>'varchar','size'=>20,'null'=>TRUE),
-        $qte.'properties'.$qte        => array('type'=>'blob','null'=>TRUE)
+        $qte.'properties'.$qte        => array('type'=>'blob','null'=>TRUE),
+        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>FALSE,'default'=>'')
     );
 
     // Create the table DDL
@@ -451,120 +454,7 @@ function workflow_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case '1.0':
-        case '1.0.0':
-            // Code to upgrade from version 1.0 goes here
-
-            // set default activityId for create, update and delete hooks
-            xarModSetVar('workflow','default.create',0);
-            xarModSetVar('workflow','default.update',0);
-            xarModSetVar('workflow','default.delete',0);
-
-            xarModSetVar('workflow','SupportShortURLs',0);
-
-            if (!xarModRegisterHook('item', 'create', 'API',
-                                   'workflow', 'admin', 'createhook')) {
-                return false;
-            }
-            if (!xarModRegisterHook('item', 'update', 'API',
-                                   'workflow', 'admin', 'updatehook')) {
-                return false;
-            }
-            if (!xarModRegisterHook('item', 'delete', 'API',
-                                   'workflow', 'admin', 'deletehook')) {
-                return false;
-            }
-            if (!xarModRegisterHook('module', 'remove', 'API',
-                                   'workflow', 'admin', 'removehook')) {
-                return false;
-            }
-            // fall through to next upgrade
-
-        case '1.1':
-        case '1.1.0':
-            // Code to upgrade from version 1.1 goes here
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-
-            xarDBLoadTableMaintenanceAPI();
-
-            $mytables = array(
-                              'workflow_activities',
-                              'workflow_activity_roles',
-                              'workflow_instance_activities',
-                              'workflow_instance_comments',
-                              'workflow_instances',
-                              'workflow_processes',
-                              'workflow_roles',
-                              'workflow_transitions',
-                              'workflow_user_roles',
-                              'workflow_workitems',
-                             );
-            foreach ($mytables as $mytable) {
-                $oldname = preg_replace('/^workflow_/','galaxia_',$mytable);
-                // Generate the SQL to rename the table using the API
-                $query = xarDBAlterTable($oldname,
-                                         array('command' => 'rename',
-                                               'new_name' => $xartable[$mytable]));
-                if (empty($query)) return false; // throw back
-
-                // Rename the table and send exception if returns false.
-                $result = &$dbconn->Execute($query);
-                if (!$result) return false;
-            }
-            // fall through to next upgrade
-
-        case '1.2':
-        case '1.2.0':
-            // Re-compile all activities with new compiler code
-            include_once('modules/workflow/tiki-setup.php');
-            include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
-            $all_procs = $processManager->list_processes(0, -1, 'pId_asc', '', '');
-            if (!empty($all_procs) && count($all_procs['data']) > 0) {
-                foreach ($all_procs['data'] as $info) {
-                    $activities = $activityManager->list_activities($info['pId'], 0, -1, 'activityId_asc', '', '');
-                    if (empty($activities) || count($activities['data']) < 1) continue;
-                    foreach ($activities['data'] as $actinfo) {
-                        $activityManager->compile_activity($info['pId'],$actinfo['activityId']);
-                    }
-                }
-            }
-
-            // Register BL tags
-            // show the output of a workflow activity in a template (e.g. shopping cart or whatever)
-            xarTplRegisterTag('workflow', 'workflow-activity',
-                              array(),
-                             'workflow_userapi_handleactivitytag');
-            // show the status (current activity/exception/aborted/completed) for "your" instances
-            xarTplRegisterTag('workflow', 'workflow-status',
-                              array(),
-                              'workflow_userapi_handlestatustag');
-
-            xarModSetVar('workflow','seenlist','');
-            // fall through to next upgrade
-
-        case '1.3':
-        case '1.3.0':
-            // show the instances that are assigned/accessible to you (i.e. your task list)
-            xarTplRegisterTag('workflow', 'workflow-instances',
-                              array(),
-                              'workflow_userapi_handleinstancestag');
-            // fall through to next upgrade
-        case '1.4':
-        case '1.4.0':
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-
-            xarDBLoadTableMaintenanceAPI();
-            // Add column name to workflow_instances table
-            $sql = xarDBAlterTable($xartable['workflow_instances'],
-                                     array('command' => 'add',
-                                           'field'   => 'name',
-                                           'type'    => 'varchar',
-                                           'size'    => 80,
-                                           'null'    => false,
-                                           'default' => ''));
-            $dbconn->execute($sql);
+        case '1.5':
         case '1.5.0':
             // Code to upgrade from version 1.5.0 goes here
             break;
