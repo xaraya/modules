@@ -52,7 +52,8 @@ class ProcessManager extends BaseManager
             $out.='      <isAutoRouted>'.$res['isAutoRouted'].'</isAutoRouted>'."\n";
             $out.='      <roles>'."\n";
 
-            $roles = $am->get_activity_roles($res['activityId']);
+            $act = WorkflowActivity::get($res['activityId']);
+            $roles = $am->getRoles();
             foreach($roles as $role) {
                 $out.='        <role>'.htmlspecialchars($role['name']).'</role>'."\n";
             }

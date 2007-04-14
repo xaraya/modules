@@ -15,9 +15,10 @@ class WorkflowActivity extends Base
     public $description;
     public $isInteractive;
     public $isAutoRouted;
-    public $roles=Array();
+
     public $outbound=Array();
     public $inbound=Array();
+
     public $pId;
     public $activityId;
     public $expirationTime = 0;
@@ -78,19 +79,93 @@ class WorkflowActivity extends Base
 
         //Now get forward transitions
         //Now get backward transitions
-
-        //Now get roles
-        $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
-        $result=$dummy->query($query,array($res['activityId']));
-        $roles = array();
-        while($res = $result->fetchRow()) {
-            $roles[] = $res['roleId'];
-        }
-        $act->setRoles($roles);
         return $act;
     }
 
-    /* Returns an Array of roleIds for the given user */
+    /* Returns the normalized name for the activity */
+    function getNormalizedName()
+    {
+        return self::normalize($this->getName());
+    }
+
+    /* Various getters / setters */
+    function setName($name)        { $this->name=$name; }
+    function getName()             { return $this->name;}
+
+    function setDescription($desc) { $this->description=$desc;  }
+    function getDescription()      { return $this->description; }
+
+    function getType()             { return $this->type;  }
+
+    function setIsInteractive($is) { $this->isInteractive=$is;  }
+    function isInteractive()       { return $this->isInteractive == 'y';  }
+
+    function setIsAutoRouted($is)  { $this->isAutoRouted = $is;  }
+    function isAutoRouted()        { return $this->isAutoRouted == 'y';  }
+
+    function setProcessId($pid)    { $this->pId=$pid;  }
+    function getProcessId()        { return $this->pId;  }
+
+    function setActivityId($id)    { $this->activityId=$id;  }
+    function getActivityId()       { return $this->activityId;  }
+
+    /**
+     * Return the shape of the activity
+     *
+     * @todo just a name now, could be an object later
+     *
+    **/
+    public function getShape()  {  return $this->shape; }
+
+    /**
+     * Role manipulation for this activity has the following parts:
+     * -    addRole($id)
+     * - removeRole($id)
+     * -   getRoles()
+     *
+     * @todo work with real Role objects
+     * @todo cache getRoles again.
+    **/
+    function getRoles()
+    {
+        $query = "select activityId,roles.roleId,roles.name
+                from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
+                where roles.roleId = gar.roleId and activityId=?";
+        $result = $this->query($query,array($this->activityId));
+        $ret = Array();
+        while($res = $result->fetchRow()) {
+            $ret[] = $res;
+        }
+        return $ret;
+    }
+
+    function addRole($roleId)
+    {
+        $this->removeRole($roleId);
+        $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
+        $this->query($query,array($this->activityId, $roleId));
+    }
+    function removeRole($roleId)
+    {
+        $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
+        $this->query($query,array($this->activityId, $roleId));
+    }
+    /** END role manipulation **/
+
+    function removeTransitions()
+    {
+        $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
+        $this->query($query, array($this->pId, $this->activityId, $this->activityId));
+    }
+
+    /** METHODS WHICH BELONG SOMEWHERE ELSE */
+
+    /**
+     * Returns an Array of roleIds for the given user
+     *
+     * @todo This is a method which does not belong here, but in a user object of some sort (which we dont have)
+     *
+    **/
     function getUserRoles($user)
     {
         $query = "select `roleId` from ".self::tbl('user_roles')." where `user`=?";
@@ -102,8 +177,12 @@ class WorkflowActivity extends Base
         return $ret;
     }
 
-    /* Returns an Array of asociative arrays with roleId and name
-        for the given user */
+    /**
+     *  Returns an Array of asociative arrays with roleId and name for the given user
+     *
+     * @todo This is a method which does not belong here, but in a user object of some sort (which we dont have)
+     *
+    **/
     function getActivityRoleNames()
     {
         $aid = $this->activityId;
@@ -116,95 +195,22 @@ class WorkflowActivity extends Base
         return $ret;
     }
 
-    /* Returns the normalized name for the activity */
-    function getNormalizedName()
-    {
-        return self::normalize($this->getName());
-    }
-
-    /* Various getters / setters */
-    function setName($name) { $this->name=$name; }
-    function getName()      { return $this->name;}
-    function setDescription($desc) { $this->description=$desc;  }
-    function getDescription()      { return $this->description; }
-
-    function getType()  {    return $this->type;  }
-
-    /* Sets if the activity is interactive */
-    function setIsInteractive($is)  {    $this->isInteractive=$is;  }
-
-    /* Returns if the activity is interactive */
-    function isInteractive()  {    return $this->isInteractive == 'y';  }
-
-    /* Sets if the activity is auto-routed */
-    function setIsAutoRouted($is)  {    $this->isAutoRouted = $is;  }
-
-    /* Gets if the activity is auto routed */
-    function isAutoRouted()  {    return $this->isAutoRouted == 'y';  }
-
-    /* Sets the processId for this activity */
-    function setProcessId($pid)  {    $this->pId=$pid;  }
-
-    /* Gets the processId for this activity*/
-    function getProcessId()  {    return $this->pId;  }
-
-    /* Gets the activityId */
-    function getActivityId()  {    return $this->activityId;  }
-
-    /* Sets the activityId */
-    function setActivityId($id)  {    $this->activityId=$id;  }
-
-    /* Gets array with roleIds asociated to this activity */
-    function getRoles()  {    return $this->roles;  }
-
-    /* Sets roles for this activities, shoule receive an
-    array of roleIds */
-    function setRoles($roles)  {    $this->roles = $roles;  }
-
-    /* Checks if a user has a certain role (by name) for this activity,
-      e.g. $isadmin = $activity->checkUserRole($user,'admin'); */
-    function checkUserRole($user,$rolename)
-    {
-        $aid = $this->activityId;
-        return $this->getOne("select count(*) from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
-    }
-
+     /*
     /**
-     * Return the shape of the activity
+     * Checks if a user has a certain role (by name) for this activity,
+     * e.g.
+     * $isadmin = $activity->checkUserRole($user,'admin');
      *
-     * @todo just a name now, could be an object later
+     * @todo This is a method which does not belong here, but in a user object of some sort (which we dont have)
      *
     **/
-    public function getShape()
-    {
-        return $this->shape;
-    }
-
-    /**
-     * Add a role to this activity
-     *
-    **/
-    function addRole($roleId)
-    {
-        $this->removeRole($roleId);
-        $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
-        $this->query($query,array($this->activityId, $roleId));
-    }
-
-    /**
-     * Remove a role from this activity
-     *
-    **/
-    function removeRole($roleId)
-    {
-        $query = "delete from ".self::tbl('activity_roles')." where activityId=? and roleId=?";
-        $this->query($query,array($this->activityId, $roleId));
-    }
-
-    function removeTransitions()
-    {
-        $query = "delete from ".self::tbl('transitions')."  where pId=? and (actFromId=? or actToId=?)";
-        $this->query($query, array($this->pId, $this->activityId, $this->activityId));
-    }
+     function checkUserRole($user,$rolename)
+     {
+         $aid = $this->activityId;
+         return $this->getOne("
+             select count(*)
+             from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr
+             where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
+     }
 }
 ?>

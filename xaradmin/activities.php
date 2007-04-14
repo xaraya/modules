@@ -174,7 +174,7 @@ function workflow_admin_activities()
     // Get activity roles
     $data['roles'] = array();
     if ($_REQUEST['activityId']) {
-        $data['roles'] = $activityManager->get_activity_roles($_REQUEST['activityId']);
+        $data['roles'] = $act->getRoles();
     }
 
     $where = '';

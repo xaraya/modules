@@ -13,23 +13,6 @@ include_once(GALAXIA_LIBRARY.'/api/activity.php');
 class ActivityManager extends BaseManager
 {
     /**
-     * Gets the roles asociated to an activity
-     *
-    **/
-    function get_activity_roles($activityId)
-    {
-        $query = "select activityId,roles.roleId,roles.name
-                from ".self::tbl('activity_roles')."  gar, ".self::tbl('roles')."  roles
-                where roles.roleId = gar.roleId and activityId=?";
-        $result = $this->query($query,array($activityId));
-        $ret = Array();
-        while($res = $result->fetchRow()) {
-            $ret[] = $res;
-        }
-        return $ret;
-    }
-
-    /**
      * Checks if a transition exists
      *
     **/
