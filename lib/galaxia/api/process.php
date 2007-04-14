@@ -136,6 +136,23 @@ class Process extends Base
         return $res;
     }
 
+    /**
+     * Returns all the activities for a process as
+     * an array of Activity Objects.
+     *
+     * @todo consider returning an ActivityList Object
+    */
+    function &getActivities()
+    {
+        $query = "select activityId from ".self::tbl('activities')."where pId=?";
+        $result = $this->query($query, array($this->pId));
+        $ret = Array();
+        while($res = $result->fetchRow()) {
+            $ret[] = WorkFlowActivity::get($res['activityId']);
+        }
+        return $ret;
+    }
+
     static function normalize($name, $version)
     {
          $name = $name.'_'.$version;

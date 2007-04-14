@@ -114,23 +114,6 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     * Returns all the activities for a process as
-     * an array of Activity Objects.
-     *
-     * @todo act on a Process object, not on the pId
-    */
-    function &get_process_activities($pId)
-    {
-        $query = "select activityId from ".self::tbl('activities')."where pId=?";
-        $result = $this->query($query, array($pId));
-        $ret = Array();
-        while($res = $result->fetchRow()) {
-            $ret[] = WorkFlowActivity::get($res['activityId']);
-        }
-        return $ret;
-    }
-
-    /**
      * Builds the graph
      *
      * @todo move inside Process class
@@ -147,7 +130,7 @@ class ActivityManager extends BaseManager
 
         // Nodes are process activities so get
         // the activities and add nodes as needed
-        $nodes = $this->get_process_activities($pId);
+        $nodes = $process->getActivities();
         foreach($nodes as $node)
         {
             $auto[$node->getName()] = $node->isAutoRouted();
