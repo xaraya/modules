@@ -12,13 +12,10 @@
   The Observer objects must extend the Observer class and define the
   notify($event,$msg) method.
 */
-class Observable {
+class Observable
+{
   public $_observers=Array();
-  
-  function __construct() {
-  
-  }
-  
+
   /*!
    This method can be used to attach an object to the class listening for
    some specific event. The object will be notified when the specified
@@ -27,12 +24,12 @@ class Observable {
   function attach($event, &$obj)
   {
     if (!is_object($obj)) {
-    	return false;
+        return false;
     }
     $obj->_observerId = uniqid(rand());
     $this->_observers[$event][$obj->_observerId] = &$obj;
   }
-  
+
   /*!
    Attaches an object to the class listening for any event.
    The object will be notified when any event occurs in the derived class.
@@ -40,22 +37,22 @@ class Observable {
   function attach_all(&$obj)
   {
     if (!is_object($obj)) {
-    	return false;
+        return false;
     }
     $obj->_observerId = uniqid(rand());
     $this->_observers['all'][$obj->_observerId] = &$obj;
   }
-  
+
   /*!
    Detaches an observer from the class.
   */
   function dettach(&$obj)
   {
-  	if (isset($this->_observers[$obj->_observerId])) {
-    	unset($this->_observers[$obj->_observerId]);
+    if (isset($this->_observers[$obj->_observerId])) {
+        unset($this->_observers[$obj->_observerId]);
     }
   }
-  
+
   /*!
   \protected
   Method used to notify objects of an event. This is called in the
@@ -63,19 +60,19 @@ class Observable {
   */
   function notify_all($event, $msg)
   {
-  	//reset($this->_observers[$event]);
-  	if(isset($this->_observers[$event])) {
-    	foreach ($this->_observers[$event] as $observer) {
-    		$observer->notify($event,$msg);
-    	}
+    //reset($this->_observers[$event]);
+    if(isset($this->_observers[$event])) {
+        foreach ($this->_observers[$event] as $observer) {
+            $observer->notify($event,$msg);
+        }
     }
-	if(isset($this->_observers['all'])) {
-    	foreach ($this->_observers['all'] as $observer) {
-    		$observer->notify($event,$msg);
-    	}
+    if(isset($this->_observers['all'])) {
+        foreach ($this->_observers['all'] as $observer) {
+            $observer->notify($event,$msg);
+        }
     }
-    
-  } 
+
+  }
 
 }
 ?>

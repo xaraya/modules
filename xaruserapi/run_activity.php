@@ -40,11 +40,7 @@ function workflow_userapi_run_activity($args)
         throw new Exception(xarML("No workflow activity indicated"));
     }
 
-    // @todo check where $baseActivity comes from
-    $activity = $baseActivity->getActivity($args['activityId']);
-    if (empty($activity)) {
-        throw new Exception(xarML("Invalid workflow activity specified"));
-    }
+    $activity = WorkFlowActivity::get($args['activityId']);
     $process = new Process($activity->getProcessId());
 
     if (!empty($args['iid']) && empty($instance->instanceId)) {

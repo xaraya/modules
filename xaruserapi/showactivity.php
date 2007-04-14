@@ -34,10 +34,7 @@ function workflow_userapi_showactivity($args)
         return xarML("No activity found");
     }
 
-    $activity = $baseActivity->getActivity($args['activityId']);
-    if (empty($activity)) {
-        return xarML("Invalid activity");
-    }
+    $activity = WorkFlowActivity::get($args['activityId']);
     $process = new Process($activity->getProcessId());
 
     if (empty($user)) {

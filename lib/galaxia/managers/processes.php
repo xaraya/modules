@@ -253,7 +253,7 @@ class ProcessManager extends BaseManager
                     $rid = $rm->get_role_id($pid,$role);
                 }
                 if($actid && $rid) {
-                    $act = $am->getActivity($actid);
+                    $act = WorkFlowActivity::get($actid);
                     $act->addRole($rid);
                 }
             }
@@ -356,7 +356,7 @@ class ProcessManager extends BaseManager
               {
                   continue;
               }
-              $act = $am->getActivity($newaid[$res['activityId']]);
+              $act = WorkFlowActivity::get($newaid[$res['activityId']]);
               $act->addRole($newrid[$res['roleId']]);
           }
       }

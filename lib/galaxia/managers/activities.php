@@ -12,25 +12,6 @@ include_once(GALAXIA_LIBRARY.'/api/activity.php');
 **/
 class ActivityManager extends BaseManager
 {
-    private $factory;
-
-    public function __construct()
-    {
-        parent::__construct();
-        // probably rename the class later
-        $this->factory = new WorkflowActivity();
-    }
-
-    /**
-     * Activity getter
-     *
-    **/
-    public function &getActivity($id)
-    {
-        $act = $this->factory->getActivity($id);
-        return $act;
-    }
-
     /**
      * Gets the roles asociated to an activity
      *
@@ -68,8 +49,8 @@ class ActivityManager extends BaseManager
         // No circular transitions allowed
         if($actFromId == $actToId) return false;
         // Rule: if act is not spl-x or spl-a it can't have more than 1 outbound transition.
-        $actFrom = $this->getActivity($actFromId);
-        $actTo   = $this->getActivity($actToId);
+        $actFrom = WorkFlowActivity::get($actFromId);
+        $actTo   = WorkFlowActivity::get($actToId);
         if(!$actFrom || !$actTo) return false;
         if(!in_array($actFrom->getType(), array('switch','split'))) {
             if($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?",array($actFromId))) {
@@ -154,7 +135,7 @@ class ActivityManager extends BaseManager
         $result = $this->query($query, array($pId));
         $ret = Array();
         while($res = $result->fetchRow()) {
-            $ret[] = $this->getActivity($res['activityId']);
+            $ret[] = WorkFlowActivity::get($res['activityId']);
         }
         return $ret;
     }
@@ -560,7 +541,7 @@ class ActivityManager extends BaseManager
             fclose($fw);
 
             if($vars['isInteractive']=='y') {
-                $fw = fopen(GALAXIA_PROCESSES."/$procname/code/templates/".$vars['normalized_name'].'.tpl','w');
+                $fw = fopen(GALAXIA_PROCESSES."/$procNName/code/templates/".$vars['normalized_name'].'.tpl','w');
                 if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
                     fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
                 }
@@ -601,7 +582,7 @@ class ActivityManager extends BaseManager
     function compile_activity($pId, $activityId)
     {
         // Construct the Activity object
-        $act = $this->getActivity($activityId);
+        $act = WorkFlowActivity::get($activityId);
         $actname = $act->getNormalizedName();
         $acttype = $act->getType();
 

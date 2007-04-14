@@ -58,7 +58,7 @@ function workflow_admin_shared_source()
     $tplData['activityId'] =  $_REQUEST['activityId'];
 
     if ($_REQUEST['activityId']) {
-        $act = $activityManager->getActivity($_REQUEST['activityId']);
+        $act = WorkFlowActivity::get($_REQUEST['activityId']);
 
         $actname = $act->getNormalizedName();
 

@@ -48,7 +48,7 @@ function workflow_admin_activities()
         $_REQUEST['activityId'] = 0;
 
     if ($_REQUEST["activityId"]) {
-        $act  = $activityManager->getActivity($_REQUEST['activityId']);
+        $act  = WorkFlowActivity::get($_REQUEST['activityId']);
         $info = array('name'            => $act->getName(),
                       'description'     => $act->getDescription(),
                       'activityId'      => $act->getActivityId(),
@@ -123,7 +123,7 @@ function workflow_admin_activities()
         }
 
         $newaid = $activityManager->replace_activity($data['pid'], $_REQUEST['activityId'], $vars);
-        $act = $activityManager->getActivity($newaid);
+        $act = WorkFlowActivity::get($newaid);
 
         $rid = 0;
         if (isset($_REQUEST['userole']) && $_REQUEST['userole'])

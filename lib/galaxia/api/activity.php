@@ -1,40 +1,43 @@
 <?php
 include_once (GALAXIA_LIBRARY.'/common/base.php');
-//!! Abstract class representing activities
-//! An abstract class representing activities
-/*!
-This class represents activities, and must be derived for
-each activity type supported in the system. Derived activities extending this
-class can be found in the activities subfolder.
-This class is observable.
-*/
+/**
+ * Base class for Workflow activities
+ *
+ * This class represents activities, and must be derived for
+ * each activity type supported in the system. Derived activities extending this
+ * class can be found in the activities subfolder.
+ * This class is observable.
+ *
+**/
 class WorkflowActivity extends Base
 {
-  public $name;
-  public $normalizedName;
-  public $description;
-  public $isInteractive;
-  public $isAutoRouted;
-  public $roles=Array();
-  public $outbound=Array();
-  public $inbound=Array();
-  public $pId;
-  public $activityId;
-  public $expirationTime = 0;
+    public $name;
+    public $normalizedName;
+    public $description;
+    public $isInteractive;
+    public $isAutoRouted;
+    public $roles=Array();
+    public $outbound=Array();
+    public $inbound=Array();
+    public $pId;
+    public $activityId;
+    public $expirationTime = 0;
 
-  /**
-   * Factory method returning an activity of the desired type
-   * loading the information from the database.
-   *
-   * @todo we want this to be a static method?
-  **/
-  function &getActivity($activityId)
-  {
-      $query = "select * from ".self::tbl('activities')." where `activityId`=?";
-      $result = $this->query($query,array($activityId));
-      if(!$result->numRows()) return false;
-      $res = $result->fetchRow();
-      switch($res['type']) {
+    /**
+     * Factory method returning an activity of the desired type
+     * loading the information from the database.
+     *
+    **/
+    static function &get($activityId)
+    {
+        // Get an object with a db object for now
+        $dummy = new Base();
+        $query = "select * from ".self::tbl('activities')." where `activityId`=?";
+        $result = $dummy->query($query,array($activityId));
+
+        if(!$result->numRows()) return false;
+        $res = $result->fetchRow();
+        switch($res['type']) {
           case 'start':
             include_once (GALAXIA_LIBRARY.'/api/activities/start.php');
             $act = new StartActivity();
@@ -65,165 +68,114 @@ class WorkflowActivity extends Base
             break;
           default:
             trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
-      }
+        }
 
-      $act->setName($res['name']);
-      $act->setProcessId($res['pId']);
-      $act->setNormalizedName($res['normalized_name']);
-      $act->setDescription($res['description']);
-      $act->setIsInteractive($res['isInteractive']);
-      $act->setIsAutoRouted($res['isAutoRouted']);
-      $act->setActivityId($res['activityId']);
+        $act->setName($res['name']);
+        $act->setProcessId($res['pId']);
+        $act->setNormalizedName($res['normalized_name']);
+        $act->setDescription($res['description']);
+        $act->setIsInteractive($res['isInteractive']);
+        $act->setIsAutoRouted($res['isAutoRouted']);
+        $act->setActivityId($res['activityId']);
 
-      //Now get forward transitions
-      //Now get backward transitions
+        //Now get forward transitions
+        //Now get backward transitions
 
-      //Now get roles
-      $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
-      $result=$this->query($query,array($res['activityId']));
-      while($res = $result->fetchRow()) {
-          $this->roles[] = $res['roleId'];
-      }
-      $act->setRoles($this->roles);
-      return $act;
-  }
-
-  /*! Returns an Array of roleIds for the given user */
-  function getUserRoles($user)
-  {
-    $query = "select `roleId` from ".self::tbl('user_roles')." where `user`=?";
-    $result=$this->query($query,array($user));
-    $ret = Array();
-    while($res = $result->fetchRow()) {
-      $ret[] = $res['roleId'];
+        //Now get roles
+        $query = "select `roleId` from ".self::tbl('activity_roles')." where `activityId`=?";
+        $result=$dummy->query($query,array($res['activityId']));
+        $roles = array();
+        while($res = $result->fetchRow()) {
+            $roles[] = $res['roleId'];
+        }
+        $act->setRoles($roles);
+        return $act;
     }
-    return $ret;
-  }
 
-  /*! Returns an Array of asociative arrays with roleId and name
-  for the given user */
-  function getActivityRoleNames()
-  {
-    $aid = $this->activityId;
-    $query = "select gr.`roleId`, `name` from ".self::tbl('activity_roles')." gar, ".self::tbl('roles')." gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
-    $result=$this->query($query,array($aid));
-    $ret = Array();
-    while($res = $result->fetchRow()) {
-      $ret[] = $res;
+    /* Returns an Array of roleIds for the given user */
+    function getUserRoles($user)
+    {
+        $query = "select `roleId` from ".self::tbl('user_roles')." where `user`=?";
+        $result=$this->query($query,array($user));
+        $ret = Array();
+        while($res = $result->fetchRow()) {
+            $ret[] = $res['roleId'];
+        }
+        return $ret;
     }
-    return $ret;
-  }
 
-  /*! Returns the normalized name for the activity */
-  function getNormalizedName()
-  {
-    return $this->normalizedName;
-  }
+    /* Returns an Array of asociative arrays with roleId and name
+        for the given user */
+    function getActivityRoleNames()
+    {
+        $aid = $this->activityId;
+        $query = "select gr.`roleId`, `name` from ".self::tbl('activity_roles')." gar, ".self::tbl('roles')." gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
+        $result=$this->query($query,array($aid));
+        $ret = Array();
+        while($res = $result->fetchRow()) {
+          $ret[] = $res;
+        }
+        return $ret;
+    }
 
-  /*! Sets normalized name for the activity */
-  function setNormalizedName($name)
-  {
-    $this->normalizedName=$name;
-  }
+    /* Returns the normalized name for the activity */
+    function getNormalizedName()
+    {
+        return $this->normalizedName;
+    }
 
-  /*! Sets the name for the activity */
-  function setName($name)
-  {
-    $this->name=$name;
-  }
+    /* Sets normalized name for the activity */
+    function setNormalizedName($name)
+    {
+        $this->normalizedName=$name;
+    }
 
-  /*! Gets the activity name */
-  function getName()
-  {
-    return $this->name;
-  }
+    /* Various getters / setters */
+    function setName($name) { $this->name=$name; }
+    function getName()      { return $this->name;}
+    function setDescription($desc) { $this->description=$desc;  }
+    function getDescription()      { return $this->description; }
 
-  /*! Sets the activity description */
-  function setDescription($desc)
-  {
-    $this->description=$desc;
-  }
+    function getType()  {    return $this->type;  }
 
-  /*! Gets the activity description */
-  function getDescription()
-  {
-    return $this->description;
-  }
+    /* Sets if the activity is interactive */
+    function setIsInteractive($is)  {    $this->isInteractive=$is;  }
 
-  /*! Gets the activity type */
-  function getType()
-  {
-    return $this->type;
-  }
+    /* Returns if the activity is interactive */
+    function isInteractive()  {    return $this->isInteractive == 'y';  }
 
-  /*! Sets if the activity is interactive */
-  function setIsInteractive($is)
-  {
-    $this->isInteractive=$is;
-  }
+    /* Sets if the activity is auto-routed */
+    function setIsAutoRouted($is)  {    $this->isAutoRouted = $is;  }
 
-  /*! Returns if the activity is interactive */
-  function isInteractive()
-  {
-    return $this->isInteractive == 'y';
-  }
+    /* Gets if the activity is auto routed */
+    function isAutoRouted()  {    return $this->isAutoRouted == 'y';  }
 
-  /*! Sets if the activity is auto-routed */
-  function setIsAutoRouted($is)
-  {
-    $this->isAutoRouted = $is;
-  }
+    /* Sets the processId for this activity */
+    function setProcessId($pid)  {    $this->pId=$pid;  }
 
-  /*! Gets if the activity is auto routed */
-  function isAutoRouted()
-  {
-    return $this->isAutoRouted == 'y';
-  }
+    /* Gets the processId for this activity*/
+    function getProcessId()  {    return $this->pId;  }
 
-  /*! Sets the processId for this activity */
-  function setProcessId($pid)
-  {
-    $this->pId=$pid;
-  }
+    /* Gets the activityId */
+    function getActivityId()  {    return $this->activityId;  }
 
-  /*! Gets the processId for this activity*/
-  function getProcessId()
-  {
-    return $this->pId;
-  }
+    /* Sets the activityId */
+    function setActivityId($id)  {    $this->activityId=$id;  }
 
-  /*! Gets the activityId */
-  function getActivityId()
-  {
-    return $this->activityId;
-  }
+    /* Gets array with roleIds asociated to this activity */
+    function getRoles()  {    return $this->roles;  }
 
-  /*! Sets the activityId */
-  function setActivityId($id)
-  {
-    $this->activityId=$id;
-  }
+    /* Sets roles for this activities, shoule receive an
+    array of roleIds */
+    function setRoles($roles)  {    $this->roles = $roles;  }
 
-  /*! Gets array with roleIds asociated to this activity */
-  function getRoles()
-  {
-    return $this->roles;
-  }
-
-  /*! Sets roles for this activities, shoule receive an
-  array of roleIds */
-  function setRoles($roles)
-  {
-    $this->roles = $roles;
-  }
-
-  /*! Checks if a user has a certain role (by name) for this activity,
+    /* Checks if a user has a certain role (by name) for this activity,
       e.g. $isadmin = $activity->checkUserRole($user,'admin'); */
-  function checkUserRole($user,$rolename)
-  {
-    $aid = $this->activityId;
-    return $this->getOne("select count(*) from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
-  }
+    function checkUserRole($user,$rolename)
+    {
+        $aid = $this->activityId;
+        return $this->getOne("select count(*) from ".self::tbl('activity_roles')." gar, ".self::tbl('user_roles')."gur, ".self::tbl('roles')."gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
+    }
 
     /**
      * Return the shape of the activity

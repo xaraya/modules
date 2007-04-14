@@ -44,7 +44,7 @@ function workflow_user_run_activity()
         return xarTplModule('workflow', 'user', 'error', $tplData);
     }
 
-    $activity = $baseActivity->getActivity($_REQUEST['activityId']);
+    $activity = WorkFlowActivity::get($_REQUEST['activityId']);
     if (empty($activity)) {
         $tplData['msg'] = xarML("Invalid workflow activity specified");
         return xarTplModule('workflow', 'user', 'error', $tplData);
