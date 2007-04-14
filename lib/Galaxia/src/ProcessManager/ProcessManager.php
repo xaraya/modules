@@ -431,14 +431,6 @@ class ProcessManager extends BaseManager
     return $retval;
   }
 
-  /*!
-   Marks a process as an invalid process
-  */
-  function invalidate_process($pid)
-  {
-    $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
-    $this->query($query,array('n',$pid));
-  }
 
   /*!
     Removes a process by pId

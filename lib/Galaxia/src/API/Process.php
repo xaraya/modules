@@ -19,6 +19,7 @@ class Process extends Base
     public $graph  = '';
 
     private $active = false;            // Process activated?
+    private $valid  = false;            // Process validated?
 
     /**
      * Construct an object for a process with specified ID
@@ -31,7 +32,7 @@ class Process extends Base
     }
 
     /**
-     * Activate a process
+     * Activating and Deactivating a process
      *
      * (De-)Activating is a two step process. We update the DB first and
      * the internal object representing the Process. The public methods refer
@@ -40,7 +41,7 @@ class Process extends Base
      *
      * @return void
      * @see Process::SetActiveFlag
-     * @todo apply phpdoc to all three methods.
+     * @todo apply this phpdoc to all three methods.
     **/
     function activate()   { $this->SetActiveFlag(true);  }
     function deactivate() { $this->SetActiveFlag(false); }
@@ -55,6 +56,24 @@ class Process extends Base
         $this->active = $value;
         $this->notify_all(3,$msg);
     }
+
+    /**
+     * Validating and Invalidating a process
+     *
+     * (In)validating is, much like (De)activating a two step process. We update
+     * the DB and the internal object presentation. Unlike activation, validation
+     * is more more complex, as it involves a test against a ruleset.
+    **/
+    function invalidate()
+    {
+        // Make sure we are inactive
+        $this->deactivate();;
+
+        $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
+        $this->query($query,array('n',$this->pId));
+        $this->valid = false;
+    }
+    function validate() { throw new Exception('Not implemented');}
 
     /**
      * Loads a process from the database
@@ -88,6 +107,11 @@ class Process extends Base
     // Path to process graph
     function getGraph()          { return $this->graph;}
 
+
+    // Process Active?
+    function isActive()         { return $this->active;}
+    function isValie()          { return $this->valid; }
+
     /**
      * Gets information about an activity in this process by name,
      * e.g. $actinfo = $process->getActivityByName('Approve CD Request');
@@ -107,7 +131,5 @@ class Process extends Base
         return $res;
     }
 
-    function isActive()
-    { return $this->active;}
 }
 ?>
