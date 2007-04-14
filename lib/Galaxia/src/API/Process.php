@@ -51,7 +51,7 @@ class Process extends Base
     /**
      * Loads a process from the database
     **/
-    function getProcess($pId)
+    private function getProcess($pId)
     {
         $query = "select * from ".self::tbl('processes')."where `pId`=?";
         $result = $this->query($query,array($pId));
