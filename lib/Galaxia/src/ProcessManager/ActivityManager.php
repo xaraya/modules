@@ -164,15 +164,18 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     Builds the graph
-    */
-    //\todo build the real graph
+     * Builds the graph
+     *
+     * @todo move inside Process class
+     * @todo build the real graph (dunno what this means, leftover from the past)
+    **/
     function build_process_graph($pId)
     {
         $attributes = Array();
-        $graph = new Process_GraphViz(true,$attributes);
-        $pm = new ProcessManager($this->db);
-        $name = $pm->_get_normalized_name($pId);
+        $process = new Process($pId);
+        $graph   = new Process_GraphViz(true,$attributes);
+
+        $name = $process->getNormalizedName();
         $graph->set_pid($name);
 
         // Nodes are process activities so get
@@ -437,12 +440,14 @@ class ActivityManager extends BaseManager
 
 
     /**
-     Removes a activity.
-    */
+     * Removes a activity.
+     *
+     * @todo make this a method of a process, there's no activity without a process
+    **/
     function remove_activity($pId, $activityId)
     {
-        $pm = new ProcessManager($this->db);
-        $proc_info = $pm->get_process($pId);
+        $process = new Process($pId);
+
         $actname = $this->_get_normalized_name($activityId);
         $query = "delete from ".self::tbl('activities')." where pId=? and activityId=?";
         $this->query($query, array($pId, $activityId));
@@ -455,7 +460,7 @@ class ActivityManager extends BaseManager
         $this->query($query, array($activityId));
         // And we have to remove the user and compiled files
         // for this activity
-        $procname = $proc_info['normalized_name'];
+        $procname = $process->getNormalizedName();
         if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
             unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php');
         }

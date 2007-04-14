@@ -64,21 +64,23 @@ class Process extends Base
         $this->pId = $res['pId'];
     }
 
-  /*!
-  Gets the normalized name of the process
-  */
-  function getNormalizedName()
-  {
-    return $this->normalizedName;
-  }
+    /**
+     * Gets the normalized name of the process
+     *
+    **/
+    function getNormalizedName()
+    {
+        return $this->normalizedName;
+    }
 
-  /*!
-  Gets the process name
-  */
-  function getName()
-  {
-    return $this->name;
-  }
+    /**
+     * Gets the process name
+     *
+    **/
+    function getName()
+    {
+        return $this->name;
+    }
 
   /*!
   Gets the process version
@@ -105,7 +107,6 @@ class Process extends Base
     $res = $result->fetchRow();
     return $res;
   }
-
 }
 
 ?>

@@ -279,19 +279,25 @@ class ProcessManager extends BaseManager
   function new_process_version($pId, $minor=true)
   {
     $oldpid = $pId;
+    $oldProcess = new Process($oldpid);
+
     $proc_info = $this->get_process($pId);
-    $name = $proc_info['name'];
+    $name = $oldProcess->getName();
+
     if(!$proc_info) return false;
     // Now update the version
-    $version = $this->_new_version($proc_info['version'],$minor);
+    $version = $this->_new_version($oldProcess->getVersion(),$minor);
     while($this->getOne("select count(*) from ".self::tbl('processes')." where name=? and version=?",array($name,$version))) {
       $version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
     $proc_info['version'] = $version;
     $proc_info['isActive'] = 'n';
+
     // create a new process, but don't create start/end activities
     $pid = $this->replace_process(0, $proc_info, false);
+    $newProcess = new Process($pid);
+
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
     $query = "select * from ".self::tbl('activities')." where pId=?";
@@ -352,8 +358,8 @@ class ProcessManager extends BaseManager
 
     //Now since we are copying a process we should copy
     //the old directory structure to the new directory
-    $oldname = $proc_info['normalized_name'];
-    $newname = $this->_get_normalized_name($pid);
+    $oldname = $oldProcess->getNormalizedName();
+    $newname = $newProcess->getNormalizedName();
     $this->_rec_copy(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
 
     // create a graph for the new process
@@ -437,8 +443,8 @@ class ProcessManager extends BaseManager
   {
       $process = new Process($pId);
       $process->deactivate();
+      $name = $process->getNormalizedName();
 
-      $name = $this->_get_normalized_name($pId);
       $aM = new ActivityManager($this->db);
       // Remove process activities
       $query = "select activityId from ".self::tbl('activities')." where pId=?";
@@ -556,16 +562,6 @@ class ProcessManager extends BaseManager
     }
     // Get the id
     return $pId;
-  }
-
-  /*!
-   \private
-   Gets the normalized name of a process by pid
-  */
-  function _get_normalized_name($pId)
-  {
-    $info = $this->get_process($pId);
-    return $info['normalized_name'];
   }
 
   /*!
