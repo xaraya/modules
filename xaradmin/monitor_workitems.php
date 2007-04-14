@@ -26,7 +26,7 @@ function workflow_admin_monitor_workitems()
     include_once('modules/workflow/tiki-setup.php');
 
 // Adapted from tiki-g-monitor_workitems.php
-include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
     if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('filter_activity', 'str',$data['filter_activity'], '',XARVAR_NOT_REQUIRED)) return;

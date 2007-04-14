@@ -28,7 +28,7 @@ function workflow_admin_monitor_instances()
 
 // Adapted from tiki-g-monitor_instances.php
 
-include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
 // Filtering data to be received by request and
 // used to build the where part of a query

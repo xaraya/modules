@@ -20,13 +20,14 @@
   @param $activityName the name of the activity you need an id for (required)
   @return int workflow activityid
 */
-function workflow_userapi_getActivityId($args) {
+function workflow_userapi_getActivityId($args)
+{
   extract($args);
 
   if(!isset($activityName)) return;
 
   include('modules/workflow/tiki-setup.php');
-  include(GALAXIA_LIBRARY.'/ProcessMonitor.php');
+  include(GALAXIA_LIBRARY.'/processmonitor.php');
 
 
   $items = $processMonitor->monitor_list_activities(0, -1, 'activityId_asc', $activityName, '', array());

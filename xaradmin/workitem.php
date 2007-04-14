@@ -28,7 +28,7 @@ function workflow_admin_workitem()
 
 // Adapted from tiki-g-view_workitem.php
 
-include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
 if (!isset($_REQUEST['itemId'])) {
     $tplData['msg'] =  xarML("No item indicated");

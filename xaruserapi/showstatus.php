@@ -29,7 +29,7 @@ function workflow_userapi_showstatus($args)
     include('modules/workflow/tiki-setup.php');
     $tplData = array();
 
-    include (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+    include (GALAXIA_LIBRARY.'/processmonitor.php');
 
     if (empty($user)) {
         $user = xarUserGetVar('uid');

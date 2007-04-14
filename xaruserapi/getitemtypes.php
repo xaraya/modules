@@ -22,7 +22,7 @@ function workflow_userapi_getitemtypes($args)
 
 // Common setup for Galaxia environment
     include('modules/workflow/tiki-setup.php');
-    include(GALAXIA_LIBRARY.'/ProcessMonitor.php');
+    include(GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all active processes
     $processes = $processMonitor->monitor_list_all_processes('name_asc', "isActive = 'y'");
