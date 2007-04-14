@@ -400,7 +400,7 @@ class ActivityManager extends BaseManager
     function activity_name_exists($pId,$name)
     {
         $name = $this->_normalize_name($name);
-        return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pIid,$name));
+        return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
     }
     /*!
      Lists activities at a per-process level

@@ -24,11 +24,14 @@ function workflow_admin_monitor_workitems()
 
 // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
-    $tplData = array();
 
 // Adapted from tiki-g-monitor_workitems.php
-
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+
+    if (!xarVarFetch('filter_process','int',$data['filter_process'],'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_activity', 'str',$data['filter_activity'], '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_user',  'str',$data['filter_user'],  '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter_instance',  'str',$data['filter_instance'],  '',XARVAR_NOT_REQUIRED)) return;
 
 // Filtering data to be received by request and
 // used to build the where part of a query
@@ -37,17 +40,10 @@ include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 $where = '';
 $wheres = array();
 
-if (isset($_REQUEST['filter_instance']) && $_REQUEST['filter_instance'])
-    $wheres[] = "instanceId=" . $_REQUEST['filter_instance'] . "";
-
-if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-    $wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
-
-if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-    $wheres[] = "ga.activityId=" . $_REQUEST['filter_activity'] . "";
-
-if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-    $wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+if (!empty($data['filter_instance'])) $wheres[] = "instanceId='" . $data['filter_instance'] . "'";
+if (!empty($data['filter_process'])) $wheres[] = "gp.id='" . $data['filter_process'] . "'";
+if (!empty($data['filter_activity'])) $wheres[] = "ga.activityId='" . $data['filter_activity'] . "'";
+if (!empty($data['filter_user'])) $wheres[] = "user='" . $data['filter_user'] . "'";
 
 $where = implode(' and ', $wheres);
 
@@ -63,7 +59,7 @@ if (!isset($_REQUEST["offset"])) {
     $offset = $_REQUEST["offset"];
 }
 
-$tplData['offset'] =&  $offset;
+$data['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
     $find = $_REQUEST["find"];
@@ -71,27 +67,27 @@ if (isset($_REQUEST["find"])) {
     $find = '';
 }
 
-$tplData['find'] =  $find;
-$tplData['where'] =  $where;
-$tplData['sort_mode'] =&  $sort_mode;
+$data['find'] =  $find;
+$data['where'] =  $where;
+$data['sort_mode'] =&  $sort_mode;
 
 $items = $processMonitor->monitor_list_workitems($offset - 1, $maxRecords, $sort_mode, $find, $where);
-$tplData['cant'] =  $items['cant'];
+$data['cant'] =  $items['cant'];
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
-$tplData['cant_pages'] =&  $cant_pages;
-$tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
+$data['cant_pages'] =&  $cant_pages;
+$data['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-    $tplData['next_offset'] =  $offset + $maxRecords;
+    $data['next_offset'] =  $offset + $maxRecords;
 } else {
-    $tplData['next_offset'] =  -1;
+    $data['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-    $tplData['prev_offset'] =  $offset - $maxRecords;
+    $data['prev_offset'] =  $offset - $maxRecords;
 } else {
-    $tplData['prev_offset'] =  -1;
+    $data['prev_offset'] =  -1;
 }
 
 $maxtime = 0;
@@ -115,10 +111,13 @@ foreach ($items['data'] as $index => $info) {
     if (!is_numeric($info['user'])) continue;
     $items['data'][$index]['user'] = xarUserGetVar('name',$info['user']);
 }
-$tplData['items'] =&  $items["data"];
+$data['items'] =&  $items["data"];
 
-$all_procs = $processMonitor->monitor_list_all_processes('name_asc');
-$tplData['all_procs'] =&  $all_procs;
+$allprocs = $processMonitor->monitor_list_all_processes('name_asc');
+$data['all_procs'] = array();
+foreach ($allprocs as $row) {
+    $data['all_procs'][] = array('id' => $row['pId'], 'name' => $row['name'] . ' ' . $row['version']);
+}
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
     $where = ' pId=' . $_REQUEST['filter_process'];
@@ -127,7 +126,7 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
 }
 
 $all_acts = $processMonitor->monitor_list_all_activities('name_desc', $where);
-$tplData['all_acts'] =&  $all_acts;
+$data['all_acts'] =&  $all_acts;
 
 $sameurl_elements = array(
     'offset',
@@ -143,37 +142,32 @@ $sameurl_elements = array(
 );
 
 $types = $processMonitor->monitor_list_activity_types();
-$tplData['types'] =&  $types;
+$data['types'] =&  $types;
 
-$tplData['stats'] =  $processMonitor->monitor_stats();
+$data['stats'] =  $processMonitor->monitor_stats();
 
 $users = $processMonitor->monitor_list_wi_users();
-$tplData['users'] = array();
+$data['users'] = array();
 foreach (array_keys($users) as $index) {
     if (!is_numeric($users[$index])) {
-        $tplData['users'][$index]['user'] = $users[$index];
-        $tplData['users'][$index]['userId'] = $users[$index];
+        $data['users'][$index]['user'] = $users[$index];
+        $data['users'][$index]['userId'] = $users[$index];
     } else {
-        $tplData['users'][$index]['user'] = xarUserGetVar('name',$users[$index]);
-        $tplData['users'][$index]['userId'] = $users[$index];
+        $data['users'][$index]['user'] = xarUserGetVar('name',$users[$index]);
+        $data['users'][$index]['userId'] = $users[$index];
     }
 }
 
-$tplData['mid'] =  'tiki-g-monitor_workitems.tpl';
+$data['mid'] =  'tiki-g-monitor_workitems.tpl';
 
-// Missing variables
-$tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['filter_process'] : '';
-$tplData['filter_activity'] = isset($_REQUEST['filter_activity']) ? $_REQUEST['filter_activity'] : '';
-$tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
-$tplData['filter_instance'] = isset($_REQUEST['filter_instance']) ? $_REQUEST['filter_instance'] : '';
 
 
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
-    $tplData['pager'] = xarTplGetPager($tplData['offset'],
+    $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,
                                        $maxRecords);
-    return $tplData;
+    return $data;
 }
 
 ?>
