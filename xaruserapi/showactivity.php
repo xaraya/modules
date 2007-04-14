@@ -38,7 +38,7 @@ function workflow_userapi_showactivity($args)
     if (empty($activity)) {
         return xarML("Invalid activity");
     }
-    $process->getProcess($activity->getProcessId());
+    $process = new Process($activity->getProcessId());
 
     if (empty($user)) {
         $user = xarUserGetVar('uid');
@@ -48,40 +48,40 @@ function workflow_userapi_showactivity($args)
         $instance->setActivityUser($activity->getActivityId(), $user);
     }
 
-// Get user roles
+    // Get user roles
 
-// Get activity roles
-$act_roles = $activity->getRoles();
-$user_roles = $activity->getUserRoles($user);
+    // Get activity roles
+    $act_roles = $activity->getRoles();
+    $user_roles = $activity->getUserRoles($user);
 
-// Only check roles if this is an interactive
-// activity
-if ($activity->isInteractive()) {
-    if (!count(array_intersect($act_roles, $user_roles))) {
-        return xarML("You can't execute this activity");
+    // Only check roles if this is an interactive
+    // activity
+    if ($activity->isInteractive()) {
+        if (!count(array_intersect($act_roles, $user_roles))) {
+            return xarML("You can't execute this activity");
+        }
     }
-}
 
-$act_role_names = $activity->getActivityRoleNames($user);
+    $act_role_names = $activity->getActivityRoleNames($user);
 
-// FIXME: what's this for ?
-foreach ($act_role_names as $role) {
-    $name = 'tiki-role-' . $role['name'];
+    // FIXME: what's this for ?
+    foreach ($act_role_names as $role) {
+        $name = 'tiki-role-' . $role['name'];
 
-    if (in_array($role['roleId'], $user_roles)) {
-                $tplData[$name] = 'y';
-                $$name = 'y';
-    } else {
-                $tplData[$name] = 'n';
-                $$name = 'n';
+        if (in_array($role['roleId'], $user_roles)) {
+            $tplData[$name] = 'y';
+            $$name = 'y';
+        } else {
+            $tplData[$name] = 'n';
+            $$name = 'n';
+        }
     }
-}
 
     $source = GALAXIA_PROCESSES.'/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
     $shared = GALAXIA_PROCESSES.'/' . $process->getNormalizedName(). '/code/shared.php';
 
-// Existing variables here:
-// $process, $activity, $instance (if not standalone)
+    // Existing variables here:
+    // $process, $activity, $instance (if not standalone)
 
     // Include the shared code
     include_once ($shared);
@@ -117,5 +117,4 @@ foreach ($act_role_names as $role) {
         return '';
     }
 }
-
 ?>

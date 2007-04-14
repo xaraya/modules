@@ -46,7 +46,7 @@ if (!defined('GALAXIA_LOGFILE')) {
 // Directory containing the GraphViz 'dot' and 'neato' programs, in case
 // your webserver can't find them via its PATH environment variable
 if (!defined('GRAPHVIZ_BIN_DIR')) {
-    define('GRAPHVIZ_BIN_DIR', 'c:/Program\ Files/ATT/GraphViz/bin');
+    //define('GRAPHVIZ_BIN_DIR', 'c:/Program\ Files/ATT/GraphViz/bin');
     //define('GRAPHVIZ_BIN_DIR', 'd:/wintools/ATT/GraphViz/bin');
 }
 

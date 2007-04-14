@@ -22,118 +22,116 @@ function workflow_admin_shared_source()
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
-// Common setup for Galaxia environment
+    // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
     $tplData = array();
 
-// Adapted from tiki-g-admin_shared_source.php
+    // Adapted from tiki-g-admin_shared_source.php
 
-include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+    include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
-if (!isset($_REQUEST['pid'])) {
-    $tplData['msg'] =  xarML("No process indicated");
+    if (!isset($_REQUEST['pid'])) {
+        $tplData['msg'] =  xarML("No process indicated");
+        return xarTplModule('workflow', 'admin', 'error', $tplData);
+    }
 
-    return xarTplModule('workflow', 'admin', 'error', $tplData);
-}
+    $tplData['pid'] =  $_REQUEST['pid'];
 
-$tplData['pid'] =  $_REQUEST['pid'];
+    if (isset($_REQUEST['code'])) {
+        unset ($_REQUEST['template']);
+        $_REQUEST['save'] = 'y';
+    }
 
-if (isset($_REQUEST['code'])) {
-    unset ($_REQUEST['template']);
+    $process = new Process($_REQUEST['pid']);
+    $proc_info = $processManager->get_process($_REQUEST['pid']);
+    $proc_info['graph']=$process->getGraph();
+    $tplData['proc_info'] =& $proc_info;
 
-    $_REQUEST['save'] = 'y';
-}
+    $procname = $process->getNormalizedName();
 
-$proc_info = $processManager->get_process($_REQUEST['pid']);
-$proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
-$tplData['proc_info'] =& $proc_info;
+    $tplData['warn'] =  '';
 
-$procname = $proc_info['normalized_name'];
+    if (!isset($_REQUEST['activityId']))
+        $_REQUEST['activityId'] = 0;
 
-$tplData['warn'] =  '';
+    $tplData['activityId'] =  $_REQUEST['activityId'];
 
-if (!isset($_REQUEST['activityId']))
-    $_REQUEST['activityId'] = 0;
+    if ($_REQUEST['activityId']) {
+        $act = $activityManager->getActivity($_REQUEST['activityId']);
 
-$tplData['activityId'] =  $_REQUEST['activityId'];
+        $actname = $act->getNormalizedName();
 
-if ($_REQUEST['activityId']) {
-    $act = $activityManager->getActivity($_REQUEST['activityId']);
+        if (isset($_REQUEST['template'])) {
+            $tplData['template'] =  'y';
 
-    $actname = $act->getNormalizedName();
+            $source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
+        } else {
+            $tplData['template'] =  'n';
 
-    if (isset($_REQUEST['template'])) {
-        $tplData['template'] =  'y';
+            $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
+        }
 
-        $source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
+        // Then editing an activity
+        $tplData['act_info'] =  array(
+            'isInteractive' => $act->isInteractive() ? 'y' : 0,
+            'type'          => $act->getType());
     } else {
         $tplData['template'] =  'n';
-
-        $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
+        $tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
+        // Then editing shared code
+        $source = GALAXIA_PROCESSES."/$procname/code/shared.php";
     }
 
-    // Then editing an activity
-    $tplData['act_info'] =  array(
-        'isInteractive' => $act->isInteractive() ? 'y' : 0,
-        'type'          => $act->getType());
-} else {
-    $tplData['template'] =  'n';
-    $tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
-    // Then editing shared code
-    $source = GALAXIA_PROCESSES."/$procname/code/shared.php";
-}
+    //First of all save
+    if (isset($_REQUEST['source'])) {
+        // security check on paths
+        $basedir = GALAXIA_PROCESSES . "/$procname/code/";
+        $basepath = realpath($basedir);
+        $sourcepath = realpath($_REQUEST['source_name']);
+        if (substr($sourcepath,0,strlen($basepath)) == $basepath) {
+            $fp = fopen($_REQUEST['source_name'], "wb");
 
-//First of all save
-if (isset($_REQUEST['source'])) {
-    // security check on paths
-    $basedir = GALAXIA_PROCESSES . "/$procname/code/";
-    $basepath = realpath($basedir);
-    $sourcepath = realpath($_REQUEST['source_name']);
-    if (substr($sourcepath,0,strlen($basepath)) == $basepath) {
-        $fp = fopen($_REQUEST['source_name'], "wb");
+            if (get_magic_quotes_gpc()) {
+                $_REQUEST['source'] = stripslashes($_REQUEST['source']);
+            }
+            fwrite($fp, $_REQUEST['source']);
+            fclose ($fp);
+            if ($_REQUEST['activityId']) {
+                $activityManager->compile_activity($_REQUEST['pid'], $_REQUEST['activityId']);
+            }
+        } else {
+            die('potential hack attack');
+        }
+    }
 
-        if (get_magic_quotes_gpc()) {
-            $_REQUEST['source'] = stripslashes($_REQUEST['source']);
-        }
-        fwrite($fp, $_REQUEST['source']);
-        fclose ($fp);
-        if ($_REQUEST['activityId']) {
-            $activityManager->compile_activity($_REQUEST['pid'], $_REQUEST['activityId']);
-        }
+    $tplData['source_name'] =  $source;
+
+    $fp = fopen($source, "rb");
+    $tplData['data'] = '';
+    while (!feof($fp)) {
+        $data = fread($fp, 4096);
+        $tplData['data'] .=  htmlspecialchars($data);
+    }
+    fclose ($fp);
+
+    $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
+    $errors = array();
+
+    if (!$valid) {
+        $errors = $activityManager->get_error();
+
+        $proc_info['isValid'] = 'n';
     } else {
-        die('potential hack attack');
+        $proc_info['isValid'] = 'y';
     }
-}
 
-$tplData['source_name'] =  $source;
+    $tplData['errors'] =  $errors;
 
-$fp = fopen($source, "rb");
-$tplData['data'] = '';
-while (!feof($fp)) {
-    $data = fread($fp, 4096);
-    $tplData['data'] .=  htmlspecialchars($data);
-}
-fclose ($fp);
+    $activities = $activityManager->list_activities($_REQUEST['pid'], 0, -1, 'name_asc', '');
+    $tplData['items'] = $activities['data'];
 
-$valid = $activityManager->validate_process_activities($_REQUEST['pid']);
-$errors = array();
-
-if (!$valid) {
-    $errors = $activityManager->get_error();
-
-    $proc_info['isValid'] = 'n';
-} else {
-    $proc_info['isValid'] = 'y';
-}
-
-$tplData['errors'] =  $errors;
-
-$activities = $activityManager->list_activities($_REQUEST['pid'], 0, -1, 'name_asc', '');
-$tplData['items'] = $activities['data'];
-
-$tplData['mid'] =  'tiki-g-admin_shared_source.tpl';
+    $tplData['mid'] =  'tiki-g-admin_shared_source.tpl';
 
     return $tplData;
 }
-
 ?>

@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
+sys::import('modules.workflow.lib.Galaxia.API');
 /**
  * the processes administration function
  *
@@ -42,9 +43,9 @@ function workflow_admin_processes()
     // if so retrieve the process info and assign it.
     if (!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
     if ($_REQUEST['pid']) {
+        $process = new Process($_REQUEST['pid']);
         $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
-
-        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
+        $data['proc_info']['graph'] = $process->getGraph();
     }
     $data['pid'] =  $_REQUEST['pid'];
 
@@ -116,13 +117,15 @@ function workflow_admin_processes()
         }
         // Replace the info on the process with the new values (or create them)
         $pid = $processManager->replace_process($_REQUEST['pid'], $vars);
+        $process = new Process($pid);
         // Validate the process and deactivate it if it turns out to be invalid.
         $valid = $activityManager->validate_process_activities($pid);
-        if (!$valid) $processManager->deactivate_process($pid);
+        if (!$valid) $process->deactivate();
 
         // Reget the process info for the UI
+        $process = new Process($pid);
         $data['proc_info'] = $processManager->get_process($pid);
-        $data['proc_info']['graph'] = GALAXIA_PROCESSES."/" . $data['proc_info']['normalized_name'] . "/graph/" . $data['proc_info']['normalized_name'] . ".png";
+        $data['proc_info']['graph'] = $process->getGraph();
     }
 
     // Filtering by name, status or direct
@@ -165,7 +168,8 @@ function workflow_admin_processes()
         $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
         $data['errors'] = array();
         if (!$valid) {
-            $processManager->deactivate_process($_REQUEST['pid']);
+            $process = new Process($_REQUEST['pid']);
+            $process->deactivate();
             $data['errors'] = $activityManager->get_error();
         }
     }

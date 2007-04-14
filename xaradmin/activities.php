@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
+sys::import('modules.workflow.lib.Galaxia.API');
 /**
  * the activities administration function
  *
@@ -34,9 +35,12 @@ function workflow_admin_activities()
         return xarTplModule('workflow', 'admin', 'error', $data);
     }
     $data['pid'] =  $_REQUEST['pid'];
+    // Create a process object
+    $process = new Process($data['pid']);
 
+    // @todo: use the object above
+    $procNName = $process->getNormalizedName();
     $proc_info = $processManager->get_process($data['pid']);
-    $proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 
     // Retrieve activity info if we are editing, assign to
     // default values when creating a new activity
@@ -45,12 +49,12 @@ function workflow_admin_activities()
 
     if ($_REQUEST["activityId"]) {
         $act  = $activityManager->getActivity($_REQUEST['activityId']);
-        $info = array('name'        => $act->getName(),
-                      'description' => $act->getDescription(),
-                      'activityId'  => $act->getActivityId(),
-                      'isInteractive' => $act->isInteractive() ? 'y' : 'n',
-                      'isAutoRouted' => $act->isAutoRouted() ? 'y' :'n',
-                      'type' => $act->getType()
+        $info = array('name'            => $act->getName(),
+                      'description'     => $act->getDescription(),
+                      'activityId'      => $act->getActivityId(),
+                      'isInteractive'   => $act->isInteractive() ? 'y' : 'n',
+                      'isAutoRouted'    => $act->isAutoRouted() ? 'y' :'n',
+                      'type'            => $act->getType()
                       );
 
     } else {
@@ -212,16 +216,17 @@ function workflow_admin_activities()
 
     // If its valid and requested to activate, do so
     if ($valid && isset($_REQUEST['activate_proc'])) {
-        $processManager->activate_process($data['pid']);
-        $proc_info['isActive'] = 'y';
+        $process->activate();
     }
 
     // If its not valid or requested to deactivate, deactivate the process
     if (!$valid || isset($_REQUEST['deactivate_proc'])) {
-        $processManager->deactivate_process($data['pid']);
-        $proc_info['isActive'] = 'n';
+        $process->deactivate();
     }
-    $data['proc_info'] =&  $proc_info;
+
+    // @todo migrate proc_info into $process
+    $data['proc_info'] =& $proc_info;
+    $data['process'] =& $process;
 
     $data['errors'] = array();
     if (!$valid) $data['errors'] = $activityManager->get_error();
