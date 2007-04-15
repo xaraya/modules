@@ -12,8 +12,6 @@
 -->
 <!-- Show the user navigation bar -->
     <xar:template file="user_bar"/>
-<!-- Show some help if enabled -->
-    <xar:template file="help"/>
 <!-- Construct the list of instances for this user -->
     <fieldset>
       <legend><xar:mlstring>List of instances</xar:mlstring> (#$cant#)</legend>

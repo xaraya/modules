@@ -7,8 +7,7 @@
 
 <div class="xar-mod-body">
   <xar:template file="user_bar" type="module"/>
-  
-  <xar:template file="help"/>
+
   <div style="margin: auto;">
     <fieldset>
       <legend><xar:mlstring>List of activities</xar:mlstring> (#$cant#)</legend>
@@ -20,9 +19,9 @@
           <tr>
             <td><small><xar:mlstring>process</xar:mlstring></small></td>
             <td><small><xar:mlstring>description</xar:mlstring></small></td>
-            <td>&#160;</td>    
+            <td>&#160;</td>
           </tr>
-          
+
           <tr>
             <td >
               <select onChange='javascript:getElementById("fform").submit();' name="filter_process">
@@ -43,9 +42,9 @@
             <td ><input size="8" type="text" name="find" value="#$find#" /></td>
             <td ><input type="submit" name="filter" value="#xarML('filter')#" /></td>
           </tr>
-        </table>    
+        </table>
       </form>
-      
+
       <form action="&xar-modurl-workflow-user-activities;" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
@@ -95,7 +94,7 @@
                     <xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
                     <img src="modules/workflow/lib/galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" />
                     <xar:else/>
-                    #$items[$ix]['type']# 
+                    #$items[$ix]['type']#
                   </xar:if>
                   <xar:if condition="$items[$ix]['instances'] gt 0">
                     <a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
@@ -105,7 +104,7 @@
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
                     <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
                       <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
-                    </a>          
+                    </a>
                   </xar:if>
                 </td>
                 <td style="text-align:right;">
@@ -118,14 +117,14 @@
               <td colspan="3">
                 <xar:mlstring>No activities found</xar:mlstring>
               </td>
-            </tr>    
+            </tr>
           </xar:if>
         </table>
       </form>
     </fieldset>
     <xar:template file="pager"/>
   </div>
-  
+
   <xar:if condition="!empty($graph)">
     <div align="center">
       <xar:if condition="!empty($map)">
@@ -134,13 +133,13 @@
         <xar:else/>
         <img src="#$graph#" alt="#$procname#" />
       </xar:if>
-    </div> 
+    </div>
   </xar:if>
-  
+
   <xar:template file="galaxfooter"/>
 </div>
-  
-  
+
+
 
 
 </xar:template>

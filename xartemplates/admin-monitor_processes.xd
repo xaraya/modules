@@ -6,9 +6,6 @@
   <!-- Include the monitoring navigation -->
   <xar:template file="monitor_bar" type="module"/>
 
-    <!-- Show some help if we enabled the feature -->
-    <xar:template file="help"/>
-
       <fieldset>
         <legend><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</legend>
         <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
