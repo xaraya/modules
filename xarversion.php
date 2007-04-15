@@ -3,7 +3,7 @@
  * Sharecontent Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,16 +13,18 @@
  */
 $modversion['name']           = 'Sharecontent';
 $modversion['id']             = '894';
-$modversion['version']        = '0.920';
+$modversion['version']        = '0.9.3';
 $modversion['displayname']    = xarML('Sharecontent');
-$modversion['description']    = 'Share Xaraya items in web2.0 sites and by email';
+$modversion['description']    = 'Share items in web 2.0 sites and by email';
 $modversion['changelog']      = 'xardocs/changelog.txt';
-$modversion['license']        = 'xardocs/license.txt';
-$modversion['official']       = 1;
+$modversion['license']        = 'http://www.gnu.org/licenses/gpl.html';
+$modversion['help']           = 'xartemplates/admin-main.xd';
+$modversion['credits']        = 'xartemplates/admin-main.xd';
+$modversion['official']       = 0;
 $modversion['author']         = 'Andrea Moro';
 $modversion['contact']        = 'http://www.andreamoro.net/';
 $modversion['admin']          = 1;
-$modversion['user']           = 0;
+$modversion['user']           = 1;
 $modversion['class']          = 'Utility';
-$modversion['category']       = 'Content';
+$modversion['category']       = 'Miscellaneous';
 ?>

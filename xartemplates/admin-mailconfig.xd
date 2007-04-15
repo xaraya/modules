@@ -41,6 +41,13 @@
             <xar:mlstring>Html mail</xar:mlstring>
         </label>
         <input type="checkbox" disabled #$checked# value="1" id="htmlmail" name="htmlmail" />
+      </div>
+      <div class="xar-form-input-wrapper">
+	    <label for="bcc" class="xar-form-label">
+		  <xar:mlstring>Bcc emails to:</xar:mlstring>
+	    </label>
+        <input type="text" value="#$bcc#" id="bcc" name="bcc" />
+      </div>
     </fieldset>
     <div class="xar-form-input-after">
        <input type="hidden" name="authid" id="authid" value="#$authid#" />

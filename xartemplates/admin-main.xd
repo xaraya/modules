@@ -32,7 +32,7 @@
 	    </p>
 		<p>
 		  <xar:mlstring>
-		    The administration configuration includes two sections. In the <b>Sharecontent section</b>, you
+		    The administration configuration includes two sections. In the <b>webcontent section</b>, you
 			can enable the supported social bookmarking web sites. The enabled sites' icons will
 			appear on the display hook in your hooked module's item
 	      </xar:mlstring>
