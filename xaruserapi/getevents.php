@@ -9,8 +9,8 @@
 
         $q = new xenQuery('SELECT');
         $q->addtable($xartable['calendar_event']);
-        $q->ge('start_time',$day->thisDay(TRUE));
-        $q->lt('start_time',$day->nextDay(TRUE));
+        $q->ge('start',$day->thisDay(TRUE));
+        $q->lt('start',$day->nextDay(TRUE));
 
         if (!$q->run()) return;
         return $q->output();

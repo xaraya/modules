@@ -16,13 +16,13 @@
         $day_endts = $DayEvents->getTimestamp() + xarModGetVar('calendar','day_end') + 3600;
         $events = xarModAPIFunc('icalendar','user','getevents',$args);
 
-        // Do some calculations to complete the enrties' info
+        // Do some calculations to complete the entries' info
         $slots = array();
 
         // Loop through the events
         $eventcount = count($events);
         for ($j=0;$j<$eventcount;$j++) {
-            // make sure evnets don't go past the end of the day
+            // make sure events don't go past the end of the day
             $events[$j]['end'] = min($events[$j]['end'], $day_endts);
 
             $placed = false;

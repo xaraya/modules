@@ -37,8 +37,8 @@ function calendar_init()
       itemtype        int(4) NULL,
       name            varchar(80) DEFAULT '' NOT NULL,
       description     text,
-      start_time      int(11) NULL,
-      end_time        int(11) NULL,
+      start           int(11) NULL,
+      end             int(11) NULL,
       start_location  varchar(20) NULL,
       end_location    varchar(20) NULL,
       objectid        int(4) NULL,
@@ -47,8 +47,8 @@ function calendar_init()
       timestamp       int(11) default 0 NOT NULL,
 
       PRIMARY KEY (id),
-      KEY i_start_time (start_time),
-      KEY i_end_time   (end_time)
+      KEY i_start (start),
+      KEY i_end   (end)
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
 
@@ -197,6 +197,7 @@ function calendar_init()
     $module = 'calendar';
     $objects = array(
                    'calendar_calendar',
+                   'calendar_event',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Calendar defaults
  *
  * @package unassigned

@@ -2,21 +2,23 @@
 function calendar_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminCalendar',0)) {
-        $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','view'),
-            'title'=>xarML('View calendars'),
-            'label'=>xarML('View calendars')
-            );
-        $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','viewevents'),
-            'title'=>xarML('View events'),
-            'label'=>xarML('View events')
-            );
-        $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','modifyconfig'),
-            'title'=>xarML('Modify the configuration for Calendar'),
-            'label'=>xarML('Modify Config')
-            );
+        $menulinks[] = array('url'   => xarModURL('calendar',
+                                                  'admin',
+                                                  'view',
+                                                  array('name' => 'calendar_calendar')),
+                                                                  'title' => xarML('View the calendars'),
+                                                                  'label' => xarML('Calendars'));
+        $menulinks[] = array('url'   => xarModURL('calendar',
+                                                  'admin',
+                                                  'view',
+                                                  array('name' => 'calendar_event')),
+                                                                  'title' => xarML('View the events'),
+                                                                  'label' => xarML('Events'));
+        $menulinks[] = array('url'   => xarModURL('calendar',
+                                                  'admin',
+                                                  'modifyconfig'),
+                              'title' => xarML('Modify the configuration settings'),
+                              'label' => xarML('Modify Config'));
 
     /*
         $menulinks[] = Array(

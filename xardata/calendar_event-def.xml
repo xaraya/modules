@@ -1,6 +1,6 @@
 <object name="calendar_event">
   <objectid>48</objectid>
-  <label>Calendar Events</label>
+  <label>Events</label>
   <parent>objects</parent>
   <moduleid>182</moduleid>
   <itemtype>21</itemtype>
@@ -49,22 +49,22 @@
       <order>4</order>
       <validation></validation>
     </property>
-    <property name="start_time">
+    <property name="start">
       <id>335</id>
       <label>Start Time</label>
       <type>jscalendardate</type>
       <default></default>
-      <source>xar_calendar_event.start_time</source>
+      <source>xar_calendar_event.start</source>
       <status>33</status>
       <order>5</order>
       <validation></validation>
     </property>
-    <property name="end_time">
+    <property name="end">
       <id>336</id>
       <label>End Time</label>
       <type>jscalendardate</type>
       <default></default>
-      <source>xar_calendar_event.end_time</source>
+      <source>xar_calendar_event.end</source>
       <status>33</status>
       <order>6</order>
       <validation></validation>
@@ -124,7 +124,7 @@
       <label>Timestamp</label>
       <type>jscalendardate</type>
       <default></default>
-      <source>dynamic_data</source>
+      <source>xar_calendar_event.timestamp</source>
       <status>66</status>
       <order>12</order>
       <validation></validation>
