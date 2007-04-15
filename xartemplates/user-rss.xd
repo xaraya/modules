@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:loop name="$items">
+    <item>
+        <title>
+            #$loop:item['rsstitle']#
+        </title>
+        <link>
+            #$loop:item['link']#
+        </link>
+        <pubDate>
+            #xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT", $loop:item['datetime'])#
+        </pubDate>
+        <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+        <content:encoded>
+            <![CDATA[ #$loop:item['text']# ]]>
+        </content:encoded>
+        <description>
+            #$loop:item['rsssummary']#
+        </description>
+        <guid isPermaLink="true">
+            #$loop:item['link']#
+        </guid>
+    </item>
+</xar:loop>

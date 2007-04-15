@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] </xar:comment>
+<xar:style module="comments" file="comments" scope="module" />
+<xar:sec mask="ReplyComments" >
+    <xar:template file="view-flat" type="module" />
+    <xar:template file="input-box" type="module" />
+    <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
+        <p><xar:mlstring>Return to</xar:mlstring> <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
+    </xar:if>
+</xar:sec>

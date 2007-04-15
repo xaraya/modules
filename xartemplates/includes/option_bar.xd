@@ -1,0 +1,233 @@
+<div>
+    <p class="xar-cm-note xar-sub">
+        <xar:mlstring>
+            Note: Comments are owned by the poster. We are not responsible for their content.
+        </xar:mlstring>
+    </p>
+    <xar:set name="showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
+    <xar:if condition="empty($showoptions)">
+        <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
+            <p class="xar-cm-note xar-sub">
+                <xar:mlstring>
+                    Change Your Comments Rendering Settings
+                </xar:mlstring>
+                <a href="#xarModUrl('roles', 'user', 'account')#">
+                    <xar:mlstring>
+                        here
+                    </xar:mlstring>
+                </a>.
+            </p>
+        </xar:if>
+    <xar:else />
+    <h4>
+        <xar:mlstring>
+            Comments Settings
+        </xar:mlstring>
+    </h4>
+    <div class="xar-cm-wrapper xar-accent xar-norm-outline">
+        <form action="#$receipt['returnurl']['decoded']#" method="post">
+            <div class="xar-cm-settings">
+                <label for="depth">
+                    <xar:mlstring>
+                        Depth
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="depth" id="depth">
+                    <xar:for start="$i = 1" test="$i le ($package['settings']['max_depth'] - 1)" iter="$i++">
+                        <xar:if condition="$i eq $package['settings']['depth']">
+                            <option value="#$i#" selected="selected">
+                                #$i#
+                            </option>
+                            <xar:else />
+                            <option value="#$i#">
+                                #$i#
+                            </option>
+                        </xar:if>
+                    </xar:for>
+                </select>
+            </div>
+            <div class="xar-cm-settings">
+                <label for="render">
+                    <xar:mlstring>
+                        Style
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="render" id="render">
+                    <xar:if condition="$package['settings']['render'] eq 'nested'">
+                        <option value="nested" selected="selected">
+                            <xar:mlstring>
+                                Nested
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="nested">
+                            <xar:mlstring>
+                                Nested
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['render'] eq 'flat'">
+                        <option value="flat" selected="selected">
+                            <xar:mlstring>
+                                Flat
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="flat">
+                            <xar:mlstring>
+                                Flat
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['render'] eq 'threaded'">
+                        <option value="threaded" selected="selected">
+                            <xar:mlstring>
+                                Threaded
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="threaded">
+                            <xar:mlstring>
+                                Threaded
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+<!-- thinking about omitting this setting from the theme - i caanot believe that anyone would miss this option in RL -->
+                    <xar:if condition="$package['settings']['render'] eq 'nocomments'">
+                        <option value="nocomments" selected="selected">
+                            <xar:mlstring>
+                                No Comments
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="nocomments">
+                            <xar:mlstring>
+                                No Comments
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </div>
+            <div class="xar-cm-settings">
+                <label for="sortby">
+                    <xar:mlstring>
+                        Sort by
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="sortby" id="sortby">
+                    <xar:if condition="$package['settings']['sortby'] eq 1">
+                        <option value="1" selected="selected">
+                            <xar:mlstring>
+                                Author
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="1">
+                            <xar:mlstring>
+                                Author
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['sortby'] eq 2">
+                        <option value="2" selected="selected">
+                            <xar:mlstring>
+                                Date
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="2">
+                            <xar:mlstring>
+                                Date
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['sortby'] eq 3">
+                        <option value="3" selected="selected">
+                            <xar:mlstring>
+                                Thread
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="3">
+                            <xar:mlstring>
+                                Thread
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['sortby'] eq 4">
+                        <option value="4" selected="selected">
+                            <xar:mlstring>
+                                Title
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="4">
+                            <xar:mlstring>
+                                Title
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </div>
+            <div class="xar-cm-settings">
+                <label for="order">
+                    <xar:mlstring>
+                        Order
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="order" id="order">
+                    <xar:if condition="$package['settings']['order'] eq 1">
+                        <option value="1" selected="selected">
+                            <xar:mlstring>
+                                Ascending
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="1">
+                            <xar:mlstring>
+                                Ascending
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                    <xar:if condition="$package['settings']['order'] eq 2">
+                        <option value="2" selected="selected">
+                            <xar:mlstring>
+                                Descending
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="2">
+                            <xar:mlstring>
+                                Descending
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </div>
+            <div class="xar-cm-settings">
+                    <xar:mlstring>
+                        Action
+                    </xar:mlstring>
+                <br />
+                <input type="hidden" id="header-modid" name="header[modid]" value="#$header['modid']#" />
+                <input type="hidden" id="header-objectid" name="header[objectid]" value="#$header['objectid']#" />
+                <input type="hidden" id="header-itemtype" name="header[itemtype]" value="#$header['itemtype']#" />
+                <xar:if condition="isset($header['selected_id'])">
+                    <input type="hidden" id="header-selected_id" name="header[selected_id]" value="#$header['selected_id']#" />
+                </xar:if>
+                <xar:if condition="isset($header['branchout'])">
+                    <input type="hidden" id="header-id" name="header[id]" value="#$header['id']#" />
+                    <input type="hidden" id="header-branchout" name="header[branchout]" value="#$header['branchout']#" />
+                </xar:if>
+                <input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+                <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+                <input type="submit" value="#xarML('Refresh')#" />
+            </div>
+        </form>
+    </div>
+    </xar:if>
+</div>

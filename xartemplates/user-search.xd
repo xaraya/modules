@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<h2>
+    <xar:mlstring>
+        Search in Comments
+    </xar:mlstring>
+</h2>
+<xar:if condition="!empty($package['comments'])">
+    <br />
+    <h3>
+        <xar:mlstring>
+            Comments Found
+        </xar:mlstring>
+        :
+    </h3>
+    <xar:template file="view-threaded" type="module" />
+</xar:if>
+<xar:if condition="!empty($receipt['status'])">
+    <h3>
+        <xar:mlstring>
+            No comments found matching your criteria.
+        </xar:mlstring>
+    </h3>
+</xar:if>
+<br />
+<xar:mlstring>
+    Search on
+</xar:mlstring>
+:
+<br />
+<xar:if condition="$header['title'] eq '1'">
+    <input type="checkbox" name="header[title]" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="header[title]" value="1" />
+</xar:if>
+<label for="header[title]">
+    <xar:mlstring>
+        Title
+    </xar:mlstring>
+</label>
+<br />
+<xar:if condition="$header['text'] eq '1'">
+    <input type="checkbox" name="header[text]" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="header[text]" value="1" />
+</xar:if>
+<label for="header[text]">
+    <xar:mlstring>
+        Text
+    </xar:mlstring>
+</label>
+<br />
+<xar:if condition="$header['author'] eq '1'">
+    <input type="checkbox" name="header[author]" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="header[author]" value="1" />
+</xar:if>
+<xar:mlstring>
+    Author
+</xar:mlstring>
+<br />
+<br />

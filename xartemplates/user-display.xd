@@ -1,0 +1,80 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] </xar:comment>
+<xar:style scope="module" module="comments" file="comments" />
+<xar:comment>
+    [andyv] i see that we have at least 3 possible situations here,
+    so we should deal with them in a context-sensitive manner as follows:
+
+    1. no real comments posted
+        - display 'No Comments' note
+        - hide sorting options box
+        - display 'Post New Comment' box
+
+    2. at least 1 comment exists and needs to be displayed
+        - display sorting options box (for now.. perhaps needs be simpler for a single comment?)
+        - display 'Post New Comment' box
+
+    3. comments exist - user has selected 'No Comments' in 'Style' options
+        - display 'Comments Disabled' + count of total comments
+        - hide sorting options box
+        - hide 'Post New Comment' box
+        TODO: shouldn't this option be 'sticky' from user POV?
+        If yes, a user needs a way back to display comments again.
+
+</xar:comment>
+
+<xar:sec mask="ReadComments" catch="false">
+    <xar:set name="number_of_comments">count($package['comments'])</xar:set>
+    <xar:if condition="$package['settings']['render'] ne 'nocomments'">
+        <xar:comment>
+            If pubsub is hooked to comments, allow subscribing here to be informed of new comments
+        </xar:comment>
+        <xar:comment>
+            <xar:if condition="xarModIsAvailable('pubsub') and xarModIsHooked('pubsub','comments')">
+                <xar:set name="extrainfo">array('module' => 'comments', 'id' => 0, 'extra' => $header['modid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
+                <xar:module main="false" module="pubsub" func="displayicon" extrainfo="$extrainfo" layout="text" />
+            </xar:if>
+        </xar:comment>
+        <xar:if condition="$number_of_comments eq 0">
+                <p>
+                    <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+                </p>
+            <xar:if condition="!isset($header['selected_id'])">
+                <xar:template file="input-box" type="module" />
+            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
+                <p>
+                    <xar:mlstring>Return to</xar:mlstring>
+                    <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
+                </p>
+            </xar:if>
+        <xar:else/>
+            <xar:if condition="!isset($header['selected_id'])">
+                <xar:template file="option_bar" type="module" />
+            </xar:if>
+            <xar:if condition="$package['settings']['render'] eq 'nested'">
+                <xar:template file="view-nested" type="module" />
+            <xar:elseif condition="$package['settings']['render'] eq 'threaded'" />
+                <xar:template file="view-threaded" type="module" />
+            <xar:elseif condition="$package['settings']['render'] eq 'flat'" />
+                <xar:template file="view-flat" type="module" />
+            </xar:if>
+            <xar:if condition="!isset($header['selected_id'])">
+                <xar:template file="input-box" type="module" />
+            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
+                <p>
+                    <xar:mlstring>Return to</xar:mlstring>
+                    <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
+                </p>
+            </xar:if>
+        </xar:if>
+    <xar:else />
+        <p>
+            <xar:mlstring>Comments display and submission are currently disabled.</xar:mlstring>
+            <xar:if condition="$number_of_comments ne 0">
+                <xar:mlstring>Total number of attached comments:</xar:mlstring> #$number_of_comments#
+            <xar:else />
+                <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+            </xar:if>
+        </p>
+    </xar:if>
+</xar:sec>

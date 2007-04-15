@@ -1,0 +1,136 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
+  <span class="xar-title">
+    <xar:mlstring>Showing comments n.</xar:mlstring>
+    &#160;#$first# - #$first+$howmany-1#&#160;
+    <xar:if condition="$modarray[0]!='all'">
+      <xar:mlstring>from</xar:mlstring>
+      <xar:foreach in="$modarray" key="$i">
+        #$modlist[$modarray[$i]]#
+        <xar:if condition= "($i ge 0) and ($i lt count($modarray)-1)">
+          ,
+        </xar:if>
+      </xar:foreach>
+    <xar:else />
+      <xar:mlstring>from all modules</xar:mlstring>
+    </xar:if>
+    <xar:comment> NEXT COMMENTS LINK </xar:comment>
+    (<a href="#$decoded_nexturl#"><xar:mlstring>next</xar:mlstring></a>)
+  </span>
+  <p />
+  <span class="xar-sub">
+    <xar:mlstring>
+      Comments are owned by the poster. We are not responsible for their content.
+    </xar:mlstring>
+    <br />
+  </span>
+  <p />
+  <xar:comment> DISPLAY COMMENTS </xar:comment>
+    <xar:if condition="count($commentlist)">
+      <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
+        <xar:if condition="$adddaysep=='on'">
+          <xar:if condition="$daylabel">
+            <xar:comment> DAY SEPARATOR </xar:comment>
+              <span class="xar-title"><b>#$daylabel#</b></span>
+          </xar:if>
+        </xar:if>
+        <ul>
+          <xar:foreach in="$commentsthisday" value="$comment">
+            <xar:comment> CHECK PERMISSION </xar:comment>
+            <li>
+              <span class="xar-title">
+                <a href="#xarModURL('comments','user','display',array('id' => $comment['id']))#">
+                #$comment['subject']#</a>,
+              </span>
+              <xar:if condition="!empty($comment['title'])">
+                <xar:if condition="$addobject ge 20">
+                  <xar:comment> OBJECT TITLE </xar:comment>
+                  <xar:mlstring>in</xar:mlstring>
+                  <span class="xar-title">
+                    <xar:if condition="$addobject ge 21">
+                      <a href="#$comment['objurl']####$comment['id']#">
+                        #$comment['title']#
+                      </a>
+                    <xar:else/>
+                      <a href="#$comment['objurl']#">
+                        #$comment['title']#
+                      </a>
+                    </xar:if>
+                  </span>
+                  <xar:elseif condition="$addobject eq 1" />
+                    <xar:mlstring>in</xar:mlstring>
+                    <span class="xar-title">#$comment['title']#</span>
+                  </xar:if>
+                </xar:if>
+                <span class="xar-normal">
+                  <xar:if condition="$addauthor ge 1">
+                    <xar:comment> AUTHOR NAME </xar:comment>
+                    <br /><xar:mlstring>by</xar:mlstring>
+                    <xar:if condition="$comment['postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
+                      <xar:if condition="$addauthor ge 2">
+                        <a href="#xarModURL('users','user','view')#">
+                          #$comment['author']#
+                        </a>
+                      <xar:else/>
+                        #$comment['author']#
+                      </xar:if>
+                    <xar:else />
+                      <xar:mlstring>Anonymous</xar:mlstring>
+                    </xar:if>
+                  </xar:if>
+                  <xar:if condition="$adddate=='on'">
+                    <xar:comment> DATE </xar:comment>
+                    <xar:mlstring>on</xar:mlstring> #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
+                  </xar:if>
+                </span>
+            </li>
+          </xar:foreach>
+        </ul>
+      </xar:foreach>
+    <xar:else />
+      <p><xar:mlstring>There are no comments</xar:mlstring></p>
+      <p />
+    </xar:if>
+    <p />
+    <xar:comment> FORM SELECTING DISPLAY OPTIONS (should add a module variable here) </xar:comment>
+    <br />
+      <form action="#$decoded_returnurl#" method="post">
+        <xar:comment> CHOOSE HOW MANY TO DISPLAY </xar:comment>
+        <span class="xar-normal">
+          <xar:mlstring>Show</xar:mlstring>
+        </span>
+        <input type="text" size="2" maxlength="3" name="howmany" value="#$howmany#"/>
+        <xar:mlstring>comments</xar:mlstring>
+        <xar:comment> SELECT FROM WHICH MODULES </xar:comment>
+        <xar:if condition="sizeof($modlist) ge 2">
+          <xar:mlstring>from</xar:mlstring>
+          <select name="modid[]" tabindex="3" multiple="multiple" size="3">
+            <xar:foreach in="$modlist" key="$key" value="$value">
+              <xar:if condition="in_array($key,$modarray)">
+                <option value="#$key#" selected="selected">#$value#</option>
+              <xar:else/>
+                <option value="#$key#">#$value#</option>
+              </xar:if>
+            </xar:foreach>
+          </select>
+        </xar:if>
+        <p />
+        <xar:comment> CHOOSE SORTING ORDER </xar:comment>
+        <xar:mlstring>sorted by</xar:mlstring>
+        <select name="order">
+          <xar:if condition="$order eq 'ASC'">
+            <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
+          <xar:else />
+            <option value="ASC"><xar:mlstring>Ascending</xar:mlstring></option>
+          </xar:if>
+          <xar:if condition="$order eq 'DESC'">
+            <option value="DESC" selected="selected"><xar:mlstring>Descending</xar:mlstring></option>
+          <xar:else />
+            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
+          </xar:if>
+        </select> <xar:mlstring>date</xar:mlstring>
+        &#160;&#160;
+        <input type="submit" value="#xarML('Refresh')#"/>
+        <br />
+      </form>
+  <xar:comment> END OF FORM SELECTING DISPLAY OPTIONS </xar:comment>

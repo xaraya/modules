@@ -1,0 +1,11 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="$postanon eq 1 and $isauthor eq 1">
+    <xar:set name="modifiedbyname">xarML('author')</xar:set>
+<xar:else />
+    <xar:set name="modifiedbyname">xarUserGetVar('name')</xar:set>
+</xar:if>
+<xar:ml>
+    <xar:mlstring>[Modified by: #(1) on #(2)]</xar:mlstring>
+    <xar:mlvar>#$modifiedbyname#</xar:mlvar>
+    <xar:mlvar>#xarLocaleFormatDate("%B %d, %Y %I:%M %p",time())#</xar:mlvar>
+</xar:ml>

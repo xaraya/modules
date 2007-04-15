@@ -1,0 +1,107 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Comments Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>
+            Comments Module Statistics
+        </xar:mlstring>
+    </h2>
+
+
+    <h3>
+        <xar:mlstring>Module</xar:mlstring> [<strong>#$modname#</strong>]
+    </h3>
+
+    <div class="xar-align-center">
+        <table border="0" width="100%" cellpadding="2" cellspacing="1">
+            <tr>
+                <th class="xar-align-center xar-halfwidth" valign="middle" width="50%">
+                    <xar:mlstring><strong>Item Id</strong></xar:mlstring>
+                </th>
+                <th class="xar-align-center" valign="middle" width="15%">
+                    <xar:mlstring><strong>Total Comments</strong></xar:mlstring>
+                </th>
+                <th class="xar-align-center" valign="middle" width="15%">
+                    <xar:mlstring><strong>Inactive Comments</strong></xar:mlstring>
+                </th>
+                <th class="xar-align-center" valign="middle" width="20%">
+                    <xar:mlstring><strong>Action</strong></xar:mlstring>
+                </th>
+            </tr>
+
+            <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
+                <tr>
+                    <td colspan="4" class="xar-align-center">
+                        <br />
+                        <xar:mlstring>
+                            There are currently no comments attached to this module...
+                        </xar:mlstring>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            <xar:else />
+
+                <xar:loop name="$data">
+                    <tr>
+                        <xar:if condition="!empty($loop:item['title']) and !empty($loop:item['link'])">
+                        <td valign="middle" width="50%">
+                            #$loop:item['pageid']# - <a href="#$loop:item['link']#">#$loop:item['title']#</a>
+                        </td>
+                        <xar:else/>
+                        <td class="xar-align-center" valign="middle" width="50%">
+                            #$loop:item['pageid']#
+                        </td>
+                        </xar:if>
+                        <td class="xar-align-center" valign="middle" width="15%">
+                            #$loop:item['total']#
+                        </td>
+                        <td class="xar-align-center" valign="middle" width="15%">
+                            #$loop:item['inactive']#
+                        </td>
+                        <td class="xar-align-center" valign="middle" width="20%">
+                            <a href="#$loop:item['delete_url']#"><strong><xar:mlstring>Delete</xar:mlstring></strong></a>
+                        </td>
+                    </tr>
+
+                </xar:loop>
+                <tr>
+                    <td align="right" valign="middle" width="50%">
+                        <strong><xar:mlstring>Total</xar:mlstring></strong>:
+                    </td>
+                    <td class="xar-align-center" valign="middle" width="15%">
+                        <strong>#$gt_total#</strong>
+                    </td>
+                    <td class="xar-align-center" valign="middle" width="15%">
+                        <strong>#$gt_inactive#</strong>
+                    </td>
+                    <td class="xar-align-center" valign="middle" width="20%">
+                        <a href="#$delete_all_url#"><xar:mlstring>Delete All</xar:mlstring></a>
+                    </td>
+                </tr>
+            </table>
+            </xar:if>
+            <xar:if condition="!empty($pager)">
+            <tr>
+                <td colspan="4" align="center">
+                    #$pager#
+                </td>
+            </tr>
+            </xar:if>
+
+            <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+               <xar:mlstring>
+                    By clicking on <strong>Delete</strong> you can delete all comments associated with a particular
+                    module's item.
+                </xar:mlstring>
+            </div>
+
+    </div>
+</div>
