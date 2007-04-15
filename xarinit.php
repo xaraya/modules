@@ -227,19 +227,16 @@ function comments_init()
                     );
     xarDefineInstance('comments','All',$instances);
 
-    /*
-     * Register the module components that are privileges objects
-     * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-     *
-     */
-
+# --------------------------------------------------------
+#
+# Set up masks
+#
     xarRegisterMask('ReadComments',     'All','comments', 'All','All:All:All','ACCESS_READ',      'See and Read Comments');
     xarRegisterMask('PostComments',     'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Post a new Comment');
     xarRegisterMask('ReplyComments',    'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Reply to a Comment');
     xarRegisterMask('EditComments',     'All','comments', 'All','All:All:All','ACCESS_EDIT',      'Edit Comments');
     xarRegisterMask('DeleteComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
-    xarRegisterMask('ModerateComments','All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
+    xarRegisterMask('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
     xarRegisterMask('AdminComments',    'All','comments', 'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
 
@@ -251,50 +248,6 @@ function comments_init()
 
     // Initialisation successful
     return true;
-}
-
-function comments_delete()
-{
-    //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
-
-    // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    // Delete tables
-    $query = xarDBDropTable($xartable['comments']);
-    $result =& $dbconn->Execute($query);
-
-    if(!$result)
-        return;
-
-    $query = xarDBDropTable($xartable['blacklist']);
-    $result =& $dbconn->Execute($query);
-
-    if(!$result)
-        return;
-
-    // Delete module variables
-    xarModDelAllVars('comments');
-
-    if (!xarModUnregisterHook('item', 'display', 'GUI',
-                            'comments', 'user', 'display')) {
-        return false;
-    }
-
-    // Remove Masks and Instances
-    xarRemoveMasks('comments');
-    xarRemoveInstances('comments');
-
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
-                       array('modName'  => 'comments',
-                             'blockType'=> 'latestcomments'))) return;
-
-    // Deletion successful
-    return true;
-
 }
 
 /**
@@ -316,4 +269,14 @@ function comments_upgrade($oldversion)
     }
     return true;
 }
+
+/**
+* uninstall the comments module
+*/
+function comments_delete()
+{
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'comments'));
+
+}
+
 ?>

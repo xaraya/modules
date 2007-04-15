@@ -211,7 +211,7 @@
             -->
         </fieldset>
         <fieldset>
-            <div class="xar-form-input-wrapper">
+            <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#" />
             </div>
         </fieldset>
