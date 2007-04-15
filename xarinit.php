@@ -27,7 +27,7 @@ function sharecontent_init()
         'xar_homeurl' => array('type' => 'varchar', 'size'=>128),
         'xar_submiturl' => array('type' => 'varchar', 'size'=>128,'null' => false),
         'xar_image' => array('type' => 'varchar', 'size' => 128),
-        'xar_active' => array('type' => 'boolean', 'default' => 'true')
+        'xar_active' => array('type' => 'boolean', 'null'=>false, 'default' => '1')
         );
 
     // Create the Table - the function will return the SQL is successful or

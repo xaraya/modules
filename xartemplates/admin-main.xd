@@ -66,6 +66,9 @@
 			such as the article summary. 
 	      </xar:mlstring>
 	    </p>
+	      <xar:mlstring>
+		    This functionality somewhat duplicates functionality of the recommend module. One advantage of using sharecontent is that sharecontent works as a hook, whereas recommend needs adding an extra tag in the contend module. Therefore, with sharecontent you never leave the content modules' display even after sending the email. The recommend module instead displays a link that forwards you to a mail form. One advantage of recommend  module is that it includes a dynamicdata property sot that you can pick which items should include the sendtofriend link. 
+	      </xar:mlstring>
         <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
