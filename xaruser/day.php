@@ -5,6 +5,7 @@
     sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
     sys::import("modules.calendar.class.Calendar.Decorator.event");
     sys::import("modules.calendar.class.Calendar.Decorator.dayevent");
+    sys::import("modules.xen.xarclasses.xenquery");
 
     function calendar_user_day()
     {
@@ -14,7 +15,14 @@
             'day' => &$Day,
         );
         $day_endts = $DayEvents->getTimestamp() + xarModGetVar('calendar','day_end') + 3600;
-        $events = xarModAPIFunc('icalendar','user','getevents',$args);
+//        $events = xarModAPIFunc('icalendar','user','getevents',$args);
+        $xartable =& xarDBGetTables();
+
+        // get all the events. need to improve this query
+        $q = new xenQuery('SELECT', $xartable['calendar_event']);
+//        $q->qecho();
+        if (!$q->run()) return;
+        $events = $q->output();
 
         // Do some calculations to complete the entries' info
         $slots = array();

@@ -39,6 +39,7 @@ function calendar_init()
       description     text,
       start           int(11) NULL,
       end             int(11) NULL,
+      recurring       int(4) default 0 NOT NULL,
       start_location  varchar(20) NULL,
       end_location    varchar(20) NULL,
       objectid        int(4) NULL,

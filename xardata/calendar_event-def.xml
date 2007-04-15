@@ -1,16 +1,18 @@
 <object name="calendar_event">
-  <objectid>48</objectid>
+  <objectid>25</objectid>
   <label>Events</label>
   <parent>objects</parent>
   <moduleid>182</moduleid>
-  <itemtype>21</itemtype>
+  <itemtype>13</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>331</id>
+      <id>180</id>
       <label>ID</label>
       <type>itemid</type>
       <default></default>
@@ -20,9 +22,9 @@
       <validation></validation>
     </property>
     <property name="type">
-      <id>332</id>
+      <id>181</id>
       <label>Type</label>
-      <type>itemtype</type>
+      <type>integerbox</type>
       <default></default>
       <source>xar_calendar_event.itemtype</source>
       <status>33</status>
@@ -30,7 +32,7 @@
       <validation></validation>
     </property>
     <property name="name">
-      <id>333</id>
+      <id>182</id>
       <label>Name</label>
       <type>textbox</type>
       <default></default>
@@ -40,7 +42,7 @@
       <validation></validation>
     </property>
     <property name="description">
-      <id>334</id>
+      <id>183</id>
       <label>Description</label>
       <type>textarea_medium</type>
       <default></default>
@@ -50,7 +52,7 @@
       <validation></validation>
     </property>
     <property name="start">
-      <id>335</id>
+      <id>184</id>
       <label>Start Time</label>
       <type>jscalendardate</type>
       <default></default>
@@ -60,7 +62,7 @@
       <validation></validation>
     </property>
     <property name="end">
-      <id>336</id>
+      <id>185</id>
       <label>End Time</label>
       <type>jscalendardate</type>
       <default></default>
@@ -69,64 +71,74 @@
       <order>6</order>
       <validation></validation>
     </property>
+    <property name="recurring">
+      <id>185</id>
+      <label>Recurring</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_calendar_event.recurring</source>
+      <status>34</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
     <property name="start_location">
-      <id>337</id>
+      <id>186</id>
       <label>Start Location</label>
       <type>textbox</type>
       <default></default>
       <source>xar_calendar_event.start_location</source>
       <status>34</status>
-      <order>7</order>
+      <order>8</order>
       <validation></validation>
     </property>
     <property name="end_location">
-      <id>338</id>
+      <id>187</id>
       <label>End Location</label>
       <type>textbox</type>
       <default></default>
       <source>xar_calendar_event.end_location</source>
       <status>34</status>
-      <order>8</order>
+      <order>9</order>
       <validation></validation>
     </property>
     <property name="object">
-      <id>339</id>
+      <id>188</id>
       <label>Object</label>
       <type>integerbox</type>
       <default></default>
       <source>xar_calendar_event.objectid</source>
       <status>34</status>
-      <order>9</order>
+      <order>10</order>
       <validation></validation>
     </property>
     <property name="owner">
-      <id>340</id>
+      <id>189</id>
       <label>Owner</label>
       <type>username</type>
       <default></default>
       <source>xar_calendar_event.owner</source>
       <status>34</status>
-      <order>10</order>
+      <order>11</order>
       <validation></validation>
     </property>
     <property name="status">
-      <id>341</id>
+      <id>190</id>
       <label>Status</label>
       <type>integerbox</type>
       <default></default>
       <source>xar_calendar_event.status</source>
       <status>33</status>
-      <order>11</order>
+      <order>12</order>
       <validation></validation>
     </property>
     <property name="timestamp">
-      <id>342</id>
+      <id>191</id>
       <label>Timestamp</label>
       <type>jscalendardate</type>
       <default></default>
       <source>xar_calendar_event.timestamp</source>
       <status>66</status>
-      <order>12</order>
+      <order>13</order>
       <validation></validation>
     </property>
   </properties>
