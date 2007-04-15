@@ -24,6 +24,11 @@
       <li><xar:mlstring>The running part: instances and workitems</xar:mlstring></li>
     </ol>
   </p>
+
+  <div style="overflow: hidden">
+    <img src="#xarTplGetImage('whowhatwhenhow.gif','workflow')#" alt="#xarML('Workflow overview diagram')#" />
+  </div>
+
   <p><xar:mlstring>
     So, you <em>define</em> processes with activities and you
     <em>run</em> instances to complete workitems. During the use of
