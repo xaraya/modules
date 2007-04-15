@@ -7,7 +7,6 @@
 
 <div class="xar-mod-body">
 <xar:template file="user_bar" type="module"/>
-<xar:template file="help"/>
 
 <div style="margin: auto;">
   <fieldset>
@@ -20,13 +19,13 @@
       <table>
         <tr>
           <td><small><xar:mlstring>description</xar:mlstring></small></td>
-          <td>&#160;</td>    
+          <td>&#160;</td>
         </tr>
         <tr>
           <td><input size="8" type="text" name="find" value="#$find#" /></td>
           <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
         </tr>
-      </table>    
+      </table>
     </form>
 
     <form action="&xar-modurl-workflow-user-processes;" method="post">
@@ -62,11 +61,11 @@
           </xar:foreach>
           <xar:else/>
           <tr><td colspan="3"><xar:mlstring>No processes found</xar:mlstring></td>
-          </tr>    
+          </tr>
         </xar:if>
       </table>
     </form>
-  </fieldset>  
+  </fieldset>
   <xar:template file="pager"/>
   <xar:template file="galaxfooter"/>
 </div>

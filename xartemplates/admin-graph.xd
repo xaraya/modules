@@ -9,7 +9,6 @@
 <!-- Show the navigation bar -->
     <xar:template file="proc_bar"/>
 <!-- Show some help if we enabled that feature -->
-    <xar:template file="help"/>
     <xar:if condition="!empty($info['graph'])">
       <xar:if condition="!empty($info['map'])">
         <img src="#$info['graph']#" alt="#$info['name']#" border="0" usemap="#procmap"/>
