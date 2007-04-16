@@ -59,8 +59,12 @@ function workflow_user_run_activity()
 
     // Only check roles if this is an interactive
     // activity
-    if ($activity->isInteractive() == 'y') {
-        if (!count(array_intersect($act_roles, $user_roles))) {
+    if ($activity->isInteractive()) {
+        // TODO: revisit this when roles/users is clearer
+        $canrun = false;
+        foreach ($act_roles as $candidate)
+            if (in_array($candidate["roleId"], $user_roles)) $canrun = true;
+        if (!$canrun) {
             $tplData['msg'] =  xarML("You can't execute this activity");
             return xarTplModule('workflow', 'user', 'error', $tplData);
         }
