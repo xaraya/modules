@@ -143,7 +143,7 @@ class Process extends Base
     **/
     function hasActivity($name)
     {
-        $bindvars = array($this->piD, $this->getNormalizedName());
+        $bindvars = array($this->pId, $this->getNormalizedName());
         $query    = "SELECT COUNT(*) FROM ".self::tbl('activities')." WHERE pId=? AND normalized_name=?";
         return ($this->getOne($query,$bindvars) > 0);
     }
