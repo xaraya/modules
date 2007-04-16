@@ -101,7 +101,7 @@ function workflow_admin_activities()
     // Delete activities
     if (isset($_REQUEST["delete_act"])) {
         foreach (array_keys($_REQUEST["activity"])as $item) {
-            $activityManager->remove_activity($data['pid'], $item);
+            $process->removeActivity($item);
         }
     }
 
@@ -194,6 +194,7 @@ function workflow_admin_activities()
     if (isset($_REQUEST["delete_tran"])) {
         foreach (array_keys($_REQUEST["transition"])as $item) {
             $parts = explode("_", $item);
+            // @todo replace with activity->removeTransition()
             $activityManager->remove_transition($parts[0], $parts[1]);
         }
     }

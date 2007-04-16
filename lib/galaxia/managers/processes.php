@@ -265,7 +265,8 @@ class ProcessManager extends BaseManager
         }
         // FIXME: recompile activities seems to be needed here
         foreach ($actids as $name => $actid) {
-            $am->compile_activity($pid,$actid);
+            $act = WorkflowActivity::get($actid);
+            $act->compile();
         }
         // create a graph for the new process
         $am->build_process_graph($pid);
@@ -436,14 +437,11 @@ class ProcessManager extends BaseManager
       $query = "select activityId from ".self::tbl('activities')." where pId=?";
       $result = $this->query($query,array($pId));
       while($res = $result->fetchRow()) {
-          $aM->remove_activity($pId,$res['activityId']);
+          $process->removeActivity($res['activityId']);
       }
 
       // Remove process roles
-      $query = "delete from ".self::tbl('roles')." where pId=?";
-      $this->query($query,array($pId));
-      $query = "delete from ".self::tbl('user_roles')." where pId=?";
-      $this->query($query,array($pId));
+      $process->removeRoles();
 
       // Remove the directory structure
       if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {

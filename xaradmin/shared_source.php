@@ -98,7 +98,8 @@ function workflow_admin_shared_source()
             fwrite($fp, $_REQUEST['source']);
             fclose ($fp);
             if ($_REQUEST['activityId']) {
-                $activityManager->compile_activity($_REQUEST['pid'], $_REQUEST['activityId']);
+                $act = WorkflowActivity::get($_REQUEST['activityId']);
+                $act->compile();
             }
         } else {
             die('potential hack attack');

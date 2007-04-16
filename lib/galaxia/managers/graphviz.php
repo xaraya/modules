@@ -123,7 +123,7 @@ class Process_GraphViz
             $fr = fopen($outputfile2,"r");
             $map = fread($fr,filesize($outputfile2));
             fclose($fr);
-            @unlink($file);
+            //@unlink($file);
 
             switch ($format) {
                 case 'gif':
@@ -180,7 +180,7 @@ class Process_GraphViz
             $command.= " -Tcmap -o $outputfile2 $src";
             @`$command`;
 
-            @unlink($file);
+            //@unlink($file);
             return true;
         }
     }
@@ -199,7 +199,7 @@ class Process_GraphViz
             fclose($fr);
 
             //@unlink($outputfile2);
-            @unlink($file);
+            //@unlink($file);
             return $map;
         }
     }

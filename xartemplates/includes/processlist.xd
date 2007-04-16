@@ -16,7 +16,7 @@
             <option  value="#$all_procs[$ix]['name']#">#$all_procs[$ix]['name']#</option>
           </xar:foreach>
         </select>
-        
+
         <xar:mlstring>Status</xar:mlstring>:
         <select name="filter_active">
           <option value=""><xar:mlstring>All</xar:mlstring></option>
@@ -37,12 +37,12 @@
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
-        
+
         <!-- Little trick to get the base link into a variable, save some typing ahead -->
         <xar:set name="urlbase">&xar-modurl-workflow-admin-processes;</xar:set>
-        <xar:set name="urlparam">"&amp;find=$find&amp;where=$where&amp;offset=$offset"</xar:set>
+        <xar:set name="urlparam">"&amp;amp;find=$find&amp;amp;where=$where&amp;amp;offset=$offset"</xar:set>
         <xar:set name="baselink">$urlbase . $urlparam;</xar:set>
-        
+
         <table style="border-collapse: separate; width: 99%;">
           <tr>
             <th>
@@ -80,7 +80,7 @@
             <th><xar:mlstring>Graph</xar:mlstring></th>
             <th><xar:mlstring>Export</xar:mlstring></th>
           </tr>
-          
+
           <xar:if condition="!empty($items) and count($items) gt 0">
             <xar:foreach in="$items" key="$ix">
               <xar:set name="rowclass">'xar-norm'</xar:set>
@@ -106,7 +106,7 @@
                     <img src="modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                   <xar:else/>
                     <img src="modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
-                  </xar:if>  
+                  </xar:if>
                 </td>
                 <td class="xar-align-center"><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">
                     <span>1.</span><span class="xar-accent-outline">x</span></a></td>
@@ -141,7 +141,7 @@
             <xar:else/>
             <tr>
               <td colspan="15"><xar:mlstring>No processes defined yet</xar:mlstring></td>
-            </tr>    
+            </tr>
           </xar:if>
         </table>
       </form>

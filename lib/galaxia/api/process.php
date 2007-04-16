@@ -166,5 +166,49 @@ class Process extends Base
         $name = self::normalize($name,$version);
         return $dummy->getOne("select count(*) from ".self::tbl('processes')." where normalized_name=?",array($name));
     }
+
+    function removeRoles()
+    {
+        $query = "delete from ".self::tbl('roles')." where pId=?";
+        $this->query($query,array($this->pId));
+        $query = "delete from ".self::tbl('user_roles')." where pId=?";
+        $this->query($query,array($this->pId));
+    }
+
+    function removeActivity($actId)
+    {
+        $act     = WorkflowActivity::get($actId);
+        $actname = $act->getNormalizedName();
+
+        // This removes the actual activity
+        $query = "delete from ".self::tbl('activities')." where pId=? and activityId=?";
+        $this->query($query, array($this->pId, $actId));
+
+        // @todo This is activity->removeTransitions
+        $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
+        $result = $this->query($query,array($actId, $actId));
+        while($res = $result->fetchRow()) {
+            // @todo This is activity->removeTransition(from,to)
+            $query = "delete from ".self::tbl('transitions')." where actFromId=? and actToId=?";
+            $this->query($query,array($res['actFromId'], $res['actToId']));
+        }
+
+        // @todo This is activity->removeRoles
+        $query = "delete from ".self::tbl('activity_roles')." where activityId=?";
+        $this->query($query, array($actId));
+        // And we have to remove the user and compiled files
+        // for this activity
+        $procname = $this->getNormalizedName();
+        if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
+            unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php');
+        }
+        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
+            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl');
+        }
+        if (file_exists(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php')) {
+            unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php');
+        }
+        return true;
+    }
 }
 ?>

@@ -75,19 +75,19 @@ class ActivityManager extends BaseManager
     */
     function get_process_transitions($pId,$actId=0)
     {
-        if(!$actId) {
-            $query = "
-            select a1.name as actFromName, a2.name as actToName, actFromId, actToId
-            from ".self::tbl('transitions')."gt,".self::tbl('activities')."a1, ".self::tbl('activities')." a2
-            where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ?";
-            $bindvars = array($pId);
-        } else {
-            $query = "
-            select a1.name as actFromName, a2.name as actToName, actFromId, actToId
-            from ".self::tbl('transitions')." gt,".self::tbl('activities')." a1, ".self::tbl('activities')." a2
-            where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = ? and (actFromId = ?)";
-            $bindvars = array($pId,$actId);
+        $query = "
+            SELECT a1.name AS actFromName, a2.name AS actToName, actFromId, actToId
+            FROM ".self::tbl('transitions')."gt,".self::tbl('activities')."a1, ".self::tbl('activities')." a2
+            WHERE gt.actFromId = a1.activityId AND gt.actToId = a2.activityId AND gt.pId = ? ";
+        $bindvars = array($pId);
+
+        // Filter on Activity too?
+        if($actId)
+        {
+            $query .= "AND (actFromId = ?)";
+            $bindvars[] = $actId;
         }
+
         $result = $this->query($query, $bindvars);
         $ret = Array();
         while($res = $result->fetchRow()) {
@@ -101,6 +101,7 @@ class ActivityManager extends BaseManager
      *
      * @todo move inside Process class
      * @todo build the real graph (dunno what this means, leftover from the past)
+     * @todo Make foourl something real (must be configurable as it depends on the host for the library)
     **/
     function build_process_graph($pId)
     {
@@ -120,7 +121,7 @@ class ActivityManager extends BaseManager
             $graph->addNode(
                 $node->getName(),
                 array(
-                    'URL'=>"foourl?activityId=".$node->getActivityId(),
+                    'URL'=> "foourl?activityId=".$node->getActivityId(),
                     'label'=>$node->getName(),
                     'shape' => $node->getShape(),
                     'color' => $node->isInteractive() ? 'blue' : 'black',
@@ -370,43 +371,6 @@ class ActivityManager extends BaseManager
         return $retval;
     }
 
-
-
-    /**
-     * Removes a activity.
-     *
-     * @todo make this a method of a process, there's no activity without a process
-    **/
-    function remove_activity($pId, $activityId)
-    {
-        $process = new Process($pId);
-        $act     = WorkflowActivity::get($activityId);
-
-        $actname = $act->getNormalizedName();
-        $query = "delete from ".self::tbl('activities')." where pId=? and activityId=?";
-        $this->query($query, array($pId, $activityId));
-        $query = "select actFromId,actToId from ".self::tbl('transitions')." where actFromId=? or actToId=?";
-        $result = $this->query($query,array($activityId, $activityId));
-        while($res = $result->fetchRow()) {
-            $this->remove_transition($res['actFromId'], $res['actToId']);
-        }
-        $query = "delete from ".self::tbl('activity_roles')." where activityId=?";
-        $this->query($query, array($activityId));
-        // And we have to remove the user and compiled files
-        // for this activity
-        $procname = $process->getNormalizedName();
-        if (file_exists(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php')) {
-            unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php');
-        }
-        if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
-            unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl');
-        }
-        if (file_exists(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php')) {
-            unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php');
-        }
-        return true;
-    }
-
     /**
      Updates or inserts a new activity in the database, $vars is an asociative
      array containing the fields to update or to insert as needed.
@@ -425,6 +389,7 @@ class ActivityManager extends BaseManager
         $procNName = $process->getNormalizedName();
 
         if($activityId) {
+            // Updating an existing activity.
             $oldAct = WorkflowActivity::get($activityId);
             $oldname = $oldAct->getNormalizedName();
             // update mode
@@ -460,11 +425,8 @@ class ActivityManager extends BaseManager
 
             $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$oldname.'.php';
             unlink($compiled_file);
-            $this->compile_activity($pId,$activityId);
-
-
+            $oldAct->compile();
         } else {
-
             // When inserting activity names can't be duplicated
             if($this->activity_name_exists($pId, $vars['name'])) {
                 return false;
@@ -493,23 +455,25 @@ class ActivityManager extends BaseManager
                 }
                 fclose($fw);
             }
-
-            $this->compile_activity($pId,$activityId);
-
+            $newAct = WorkflowActivity::get($activityId);
+            $newAct->compile();
         }
         // Get the id
         return $activityId;
     }
 
     /**
-     Sets if an activity is interactive or not
-    */
+     * Sets if an activity is interactive or not
+     *
+     * @todo move to method of WorkflowActivity
+    **/
     function set_interactivity($pId, $actid, $value)
     {
         $query = "update ".self::tbl('activities')."set isInteractive=? where pId=? and activityId=?";
         $this->query($query, array($value, $pId, $actid));
         // If template does not exist then create template
-        $this->compile_activity($pId,$actid);
+        $act = WorkflowActivity::get($actid);
+        $act->compile();
     }
 
     /**
@@ -519,96 +483,6 @@ class ActivityManager extends BaseManager
     {
         $query = "update ".self::tbl('activities')." set isAutoRouted=? where pId=? and activityId=?";
         $this->query($query, array($value, $pId, $actid));
-    }
-
-
-    /**
-     Compiles activity
-    */
-    function compile_activity($pId, $activityId)
-    {
-        // Construct the Activity object
-        $act = WorkFlowActivity::get($activityId);
-        $actname = $act->getNormalizedName();
-        $acttype = $act->getType();
-
-        // Construct the Process object
-        $process = new Process($pId);
-        $procNName = $process->getNormalizedName();
-
-        $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$actname.'.php';
-        $template_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$actname.'.tpl';
-        $user_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$actname.'.php';
-        $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
-        $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
-        $fw = fopen($compiled_file,"wb");
-
-        // First of all add an include to to the shared code
-        $shared_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/shared.php';
-
-        fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
-
-        // Before pre shared
-        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php',"rb");
-        while (!feof($fp)) {
-            $data = fread($fp, 4096);
-            fwrite($fw,$data);
-        }
-        fclose($fp);
-
-        // Now get pre and pos files for the activity
-        $fp = fopen($pre_file,"rb");
-        while (!feof($fp)) {
-            $data = fread($fp, 4096);
-            fwrite($fw,$data);
-        }
-        fclose($fp);
-
-        // Get the user data for the activity
-        $fp = fopen($user_file,"rb");
-        while (!feof($fp)) {
-            $data = fread($fp, 4096);
-            fwrite($fw,$data);
-        }
-        fclose($fp);
-
-        // Get pos and write
-        $fp = fopen($pos_file,"rb");
-        while (!feof($fp)) {
-            $data = fread($fp, 4096);
-            fwrite($fw,$data);
-        }
-        fclose($fp);
-
-        // Shared pos
-        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php',"rb");
-        while (!feof($fp)) {
-            $data = fread($fp, 4096);
-            fwrite($fw,$data);
-        }
-        fclose($fp);
-
-        fclose($fw);
-
-        //Copy the templates
-
-        if($act->isInteractive() && !file_exists($template_file)) {
-            $fw = fopen($template_file,'w');
-            if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
-                fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
-            }
-            fclose($fw);
-        }
-        if($act->isInteractive() && file_exists($template_file)) {
-            // remove the copy of the template, if any
-            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl")) {
-                unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
-            }
-        }
-        if (GALAXIA_TEMPLATES && file_exists($template_file)) {
-            // and make a fresh one
-            copy($template_file,GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
-        }
     }
 
     /**

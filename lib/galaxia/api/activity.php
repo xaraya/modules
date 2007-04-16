@@ -158,6 +158,92 @@ class WorkflowActivity extends Base
         $this->query($query, array($this->pId, $this->activityId, $this->activityId));
     }
 
+
+    public function compile()
+    {
+        $actname = $this->getNormalizedName();
+        $acttype = $this->getType();
+
+        // Construct the Process object
+        $process = new Process($this->pId);
+        $procNName = $process->getNormalizedName();
+
+        $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$actname.'.php';
+        $template_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$actname.'.tpl';
+        $user_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$actname.'.php';
+        $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
+        $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
+        $fw = fopen($compiled_file,"wb");
+
+        // First of all add an include to to the shared code
+        $shared_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/shared.php';
+
+        fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
+
+        // Before pre shared
+        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php',"rb");
+        while (!feof($fp)) {
+            $data = fread($fp, 4096);
+            fwrite($fw,$data);
+        }
+        fclose($fp);
+
+        // Now get pre and pos files for the activity
+        $fp = fopen($pre_file,"rb");
+        while (!feof($fp)) {
+            $data = fread($fp, 4096);
+            fwrite($fw,$data);
+        }
+        fclose($fp);
+
+        // Get the user data for the activity
+        $fp = fopen($user_file,"rb");
+        while (!feof($fp)) {
+            $data = fread($fp, 4096);
+            fwrite($fw,$data);
+        }
+        fclose($fp);
+
+        // Get pos and write
+        $fp = fopen($pos_file,"rb");
+        while (!feof($fp)) {
+            $data = fread($fp, 4096);
+            fwrite($fw,$data);
+        }
+        fclose($fp);
+
+        // Shared pos
+        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php',"rb");
+        while (!feof($fp)) {
+            $data = fread($fp, 4096);
+            fwrite($fw,$data);
+        }
+        fclose($fp);
+
+        fclose($fw);
+
+        //Copy the templates
+
+        if($this->isInteractive() && !file_exists($template_file)) {
+            $fw = fopen($template_file,'w');
+            if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
+                fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
+            }
+            fclose($fw);
+        }
+        if($this->isInteractive() && file_exists($template_file)) {
+            // remove the copy of the template, if any
+            if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl")) {
+                unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+            }
+        }
+        if (GALAXIA_TEMPLATES && file_exists($template_file)) {
+            // and make a fresh one
+            copy($template_file,GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+        }
+
+    }
+
     /** METHODS WHICH BELONG SOMEWHERE ELSE */
 
     /**
