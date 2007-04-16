@@ -54,7 +54,11 @@ function workflow_userapi_showactivity($args)
     // Only check roles if this is an interactive
     // activity
     if ($activity->isInteractive()) {
-        if (!count(array_intersect($act_roles, $user_roles))) {
+        // TODO: revisit this when roles/users is clearer
+        $canrun = false;
+        foreach ($act_roles as $candidate)
+            if (in_array($candidate["roleId"], $user_roles)) $canrun = true;
+        if (!$canrun) {
             return xarML("You can't execute this activity");
         }
     }
