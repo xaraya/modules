@@ -21,6 +21,7 @@
  * @param    string     $args['objectid']           the item id
  * @param    string     $args['returnurl']          the url to return to
  * @param    integer    [$args['selected_cid']]     optional: the cid of the comment to view (only for displaying single comments)
+ * @param    integer    [$args['thread']]           optional: display the entire thread following cid
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
  * @return  array      returns whatever needs to be parsed by the BlockLayout engine
  */
@@ -117,6 +118,12 @@ function comments_user_display($args)
         $args['selected_cid'] = $selected_cid;
         $header['selected_cid'] = $selected_cid;
     }
+	if (!isset($args['thread'])) {
+        xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
+    }
+	if (isset($thread) & $thread==1) {
+	    $header['cid'] = $cid;
+	}
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
@@ -124,7 +131,7 @@ function comments_user_display($args)
         return;
     }
 
-    if (!isset($header['selected_cid'])) {
+    if (!isset($header['selected_cid']) || isset($thread)) {
         $package['comments'] = xarModAPIFunc('comments','user','get_multiple',$header);
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
