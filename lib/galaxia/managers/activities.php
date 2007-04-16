@@ -460,20 +460,6 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     * Sets if an activity is interactive or not
-     *
-     * @todo move to method of WorkflowActivity
-    **/
-    function set_interactivity($pId, $actid, $value)
-    {
-        $query = "update ".self::tbl('activities')."set isInteractive=? where pId=? and activityId=?";
-        $this->query($query, array($value, $pId, $actid));
-        // If template does not exist then create template
-        $act = WorkflowActivity::get($actid);
-        $act->compile();
-    }
-
-    /**
      Sets if an activity is auto routed or not
     */
     function set_autorouting($pId, $actid, $value)

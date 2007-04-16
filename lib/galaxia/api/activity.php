@@ -70,10 +70,11 @@ class WorkflowActivity extends Base
             trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
         }
 
+        $act->isInteractive = $res['isInteractive'];
+
         $act->setName($res['name']);
         $act->setProcessId($res['pId']);
         $act->setDescription($res['description']);
-        $act->setIsInteractive($res['isInteractive']);
         $act->setIsAutoRouted($res['isAutoRouted']);
         $act->setActivityId($res['activityId']);
 
@@ -97,8 +98,18 @@ class WorkflowActivity extends Base
 
     function getType()             { return $this->type;  }
 
-    function setIsInteractive($is) { $this->isInteractive=$is;  }
-    function isInteractive()       { return $this->isInteractive == 'y';  }
+    function setInteractive($is)
+    {
+        // @todo cache
+        $query = "update ".self::tbl('activities')."set isInteractive=? where pId=? and activityId=?";
+        $this->query($query, array($is?'y':'n', $this->getProcessId(), $this->getActivityId()));
+        // If template does not exist then create template
+        $this->compile();
+
+        $this->isInteractive = $is;
+    }
+
+    function isInteractive()       { return $this->isInteractive; }
 
     function setIsAutoRouted($is)  { $this->isAutoRouted = $is;  }
     function isAutoRouted()        { return $this->isAutoRouted == 'y';  }

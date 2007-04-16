@@ -252,11 +252,12 @@ function workflow_admin_activities()
         for ($i=0, $na=count($activities['data']); $i < $na; $i++) {
             // Make id a bit more accessible
             $id = $activities["data"][$i]['activityId'];
+            $activity = WorkflowActivity::get($id);
 
             // Is activity interactive?
-            $ia = isset($_REQUEST['activity_inter'][$id]) ? 'y' : 'n';
-            $activities["data"][$i]['isInteractive'] = $ia;
-            $activityManager->set_interactivity($data['pid'], $id, $ia);
+            $ia = isset($_REQUEST['activity_inter'][$id]);
+            $activities["data"][$i]['isInteractive'] = $ia ? 'y' : 'n';
+            $activity->setInteractive($ia);
 
             // Is activity autorouted?
             $ar = isset($_REQUEST['activity_route'][$id]) ? 'y' : 'n';
