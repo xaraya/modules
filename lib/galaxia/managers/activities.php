@@ -15,6 +15,7 @@ class ActivityManager extends BaseManager
     /**
      * Checks if a transition exists
      *
+     * @todo this is transition->exists
     **/
     function transition_exists($pid,$actFromId,$actToId)
     {
@@ -61,7 +62,9 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     Removes a transition
+     * Removes a transition
+     *
+     * @todo this is Activity->removeTransition()
     */
     function remove_transition($actFromId, $actToId)
     {
@@ -71,7 +74,9 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     Returns all the transitions for a process
+     * Returns all the transitions for a process
+     *
+     * @todo this is Process->getTransitions()
     */
     function get_process_transitions($pId,$actId=0)
     {
@@ -332,14 +337,6 @@ class ActivityManager extends BaseManager
     }
 
     /**
-     Indicates if an activity with the same name exists
-    */
-    function activity_name_exists($pId,$name)
-    {
-        $name = self::normalize($name);
-        return $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and normalized_name=?",array($pId,$name));
-    }
-    /**
      Lists activities at a per-process level
     */
     function list_activities($pId,$offset,$maxRecords,$sort_mode,$find,$where='')
@@ -428,7 +425,7 @@ class ActivityManager extends BaseManager
             $oldAct->compile();
         } else {
             // When inserting activity names can't be duplicated
-            if($this->activity_name_exists($pId, $vars['name'])) {
+            if($process->hasActivity($vars['name'])) {
                 return false;
             }
             unset($vars['activityId']);

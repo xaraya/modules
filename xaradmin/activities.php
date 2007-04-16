@@ -117,7 +117,7 @@ function workflow_admin_activities()
                       'type' => $_REQUEST['act_type'],
                       );
 
-        if ($activityManager->activity_name_exists($data['pid'], $_REQUEST['name']) && $_REQUEST['activityId'] == 0) {
+        if ($process->hasActivity($_REQUEST['name']) && $_REQUEST['activityId'] == 0) {
             $data['msg'] =  xarML("Activity name already exists");
             return xarTplModule('workflow', 'admin', 'error', $data);
         }

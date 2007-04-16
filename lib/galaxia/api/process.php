@@ -137,6 +137,18 @@ class Process extends Base
     }
 
     /**
+     * Checks if this proces has an activity, by name
+     *
+     * @return boolean
+    **/
+    function hasActivity($name)
+    {
+        $bindvars = array($this->piD, $this->getNormalizedName());
+        $query    = "SELECT COUNT(*) FROM ".self::tbl('activities')." WHERE pId=? AND normalized_name=?";
+        return ($this->getOne($query,$bindvars) > 0);
+    }
+
+    /**
      * Returns all the activities for a process as
      * an array of Activity Objects.
      *
