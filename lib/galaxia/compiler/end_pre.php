@@ -8,8 +8,7 @@ if(empty($instance->instanceId)) {
     $instance->getInstance($_REQUEST['iid']);
   } else {
     // defined in lib/galaxia/config.php
-    galaxia_show_error("No instance indicated");
-    die;
+    throw new Exception("No instance indicated");
   }
 }
 // Set the current user for this activity

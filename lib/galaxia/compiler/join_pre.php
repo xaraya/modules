@@ -2,14 +2,13 @@
 //Code to be executed before a join activity
 // If we didn't retrieve the instance before
 if(empty($instance->instanceId)) {
-  // This activity needs an instance to be passed to 
+  // This activity needs an instance to be passed to
   // be started, so get the instance into $instance.
   if(isset($_REQUEST['iid'])) {
     $instance->getInstance($_REQUEST['iid']);
   } else {
     // defined in lib/galaxia/config.php
-    galaxia_show_error("No instance indicated");
-    die;  
+    throw new Exception("No instance indicated");
   }
 }
 // Set the current user for this activity

@@ -67,15 +67,6 @@ if (!isset($GLOBALS['dbGalaxia'])) {
 }
 assert('isset($GLOBALS[\'dbGalaxia\'])');
 
-// Specify how error messages should be shown (for use in compiler and activity code)
-if (!function_exists('galaxia_show_error')) {
-    function galaxia_show_error($msg)
-    {
-        // TODO: clean this up
-        trigger_error(xarML($msg),E_USER_ERROR);
-    }
-}
-
 // Specify how to execute a non-interactive activity (for use in /api/instance.php)
 if (!function_exists('galaxia_execute_activity')) {
     function galaxia_execute_activity($activityId = 0, $iid = 0, $auto = 1)

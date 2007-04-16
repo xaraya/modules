@@ -58,46 +58,38 @@ if (!isset($dbGalaxia)) {
     $dbGalaxia =& $dbTiki;
 }
 
-// Specify how error messages should be shown
-if (!function_exists('galaxia_show_error')) {
-    function galaxia_show_error($msg)
-    {
-        global $smarty, $style_base;
-        $smarty->assign('msg',tra($msg));
-        $smarty->display("error.tpl");
-    }
-}
-
 // Specify how to execute a non-interactive activity (for use in api/instance.php)
+// @todo Make this less clunky
 if (!function_exists('galaxia_execute_activity')) {
-    function galaxia_execute_activity($activityId = 0, $iid = 0, $auto = 1) {
-		// Now execute the code for the activity but we are in a method!
-		// so just use an fopen with http mode
-		global $tikilib;
+    function galaxia_execute_activity($activityId = 0, $iid = 0, $auto = 1)
+    {
+        // Now execute the code for the activity but we are in a method!
+        // so just use an fopen with http mode
+        global $tikilib;
 
-		$parsed = parse_url($_SERVER["REQUEST_URI"]);
-		$URI = $tikilib->httpPrefix() . $parsed["path"];
-		$parts = explode('/', $URI);
-		$parts[count($parts) - 1] = "tiki-g-run_activity.php?activityId=$activityId&iid=$iid&auto=$auto";
-		$URI = implode('/', $parts);
-		$fp = fopen($URI, "r");
-		$data = '';
+        $parsed = parse_url($_SERVER["REQUEST_URI"]);
+        $URI = $tikilib->httpPrefix() . $parsed["path"];
+        $parts = explode('/', $URI);
+        $parts[count($parts) - 1] = "tiki-g-run_activity.php?activityId=$activityId&iid=$iid&auto=$auto";
+        $URI = implode('/', $parts);
+        $fp = fopen($URI, "r");
+        $data = '';
 
-		if (!$fp) {
-			trigger_error(tra("Fatal error: cannot execute automatic activity $activityId"), E_USER_WARNING);
-			die;
-		}
+        if (!$fp) {
+            trigger_error(tra("Fatal error: cannot execute automatic activity $activityId"), E_USER_WARNING);
+            die;
+        }
 
-		while (!feof($fp)) {
-			$data .= fread($fp, 8192);
-		}
+        while (!feof($fp)) {
+            $data .= fread($fp, 8192);
+        }
 
-		/*
-		if(!empty($data)) {
-			trigger_error(tra("Fatal error: automatic activity produced some output:$data"), E_USER_WARNING);
-		}
-		*/
-		fclose($fp);
+        /*
+        if(!empty($data)) {
+            trigger_error(tra("Fatal error: automatic activity produced some output:$data"), E_USER_WARNING);
+        }
+        */
+        fclose($fp);
     }
 }
 
