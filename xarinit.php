@@ -33,29 +33,29 @@ function sharecontent_init()
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($xartable['sharecontent'], $fields);
-	if (empty($query)) return; // throw back
+    if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
     // Load the initial setup of the publication types
-	if (file_exists('modules/sharecontent/xarsetup.php')) {
-	    include 'modules/sharecontent/xarsetup.php';
-	} else {
-		// TODO: add some defaults here
-		$websites= array();
-	}
+    if (file_exists('modules/sharecontent/xarsetup.php')) {
+        include 'modules/sharecontent/xarsetup.php';
+    } else {
+        // TODO: add some defaults here
+        $websites= array();
+    }
 
     // Save  websites
     foreach ($websites as $website) {
         list($title,$homeurl,$submiturl,$image,$active) = $website;
-		$nextId = $dbconn->GenId($xartable['sharecontent']);
-		$query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
-	    $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
+        $nextId = $dbconn->GenId($xartable['sharecontent']);
+        $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
+        $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
         $result =& $dbconn->Execute($query,$bindvars);
-	    if (!$result)  sharecontent_delete();
-	}
+        if (!$result)  sharecontent_delete();
+    }
 
     // Set up module variables
     xarModSetVar('sharecontent', 'enablemail', '0');
