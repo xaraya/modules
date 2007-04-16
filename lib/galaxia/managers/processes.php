@@ -53,7 +53,7 @@ class ProcessManager extends BaseManager
             $out.='      <roles>'."\n";
 
             $act = WorkflowActivity::get($res['activityId']);
-            $roles = $am->getRoles();
+            $roles = $act->getRoles();
             foreach($roles as $role) {
                 $out.='        <role>'.htmlspecialchars($role['name']).'</role>'."\n";
             }
@@ -227,19 +227,20 @@ class ProcessManager extends BaseManager
                 'isInteractive' => $activity['isInteractive'],
                 'isAutoRouted' => $activity['isAutoRouted']
             );
-            $actname=ActivityManager::normalize($activity['name']);
 
             $actid = $am->replace_activity($pid,0,$vars);
+            $act = WorkFlowActivity::get($actid);
+            $actname = $act->getNormalizedName();
+
             $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php',"w");
             fwrite($fp,$activity['code']);
             fclose($fp);
             if($activity['isInteractive']=='y') {
                 $fp = fopen(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl',"w");
-                fwrite($fp,$activity['template']);
+                $nr = fwrite($fp,$activity['template']);
                 fclose($fp);
             }
             $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['name']);
-            $actname = ActivityManager::normalize($activity['name']);
             $now = date("U");
 
             foreach($activity['roles'] as $role) {

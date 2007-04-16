@@ -54,10 +54,10 @@ function workflow_admin_processes()
     if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
         xarLogMessage('WF: Found upload file');
         // move the uploaded file to some temporary wf* file in cache/templates
-        $tmpdir = xarCoreGetVarDirPath();
-        $tmpdir .= '/cache/templates';
+        $tmpdir = xarCoreGetVarDirPath() . '/cache/templates';
         $tmpfile = tempnam($tmpdir, 'wf');
         if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
+            xarLogMessage('WF: Temporary upload file found, reading it in.');
             $fp = fopen($tmpfile, "rb");
 
             $xml = ''; $fhash = '';

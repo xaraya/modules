@@ -454,7 +454,7 @@ class ActivityManager extends BaseManager
             $user_file_old = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$oldname.'.tpl';
             $user_file_new = GALAXIA_PROCESSES.'/'.$procNName.'/code/templates/'.$newname.'.tpl';
             if ($user_file_old != $user_file_new) {
-                @rename($user_file_old, $user_file_new);
+                rename($user_file_old, $user_file_new);
             }
 
 
@@ -471,23 +471,11 @@ class ActivityManager extends BaseManager
             }
             unset($vars['activityId']);
             // insert mode
-            $first = true;
-            $query = "insert into $TABLE_NAME(";
-            foreach(array_keys($vars) as $key) {
-                if(!$first) $query.= ',';
-                $query.= "$key";
-                $first = false;
-            }
-            $query .=") values(";
-            $first = true;
-            foreach(array_values($vars) as $value) {
-                if(!$first) $query.= ',';
-                if(!is_numeric($value)) $value="'".$value."'";
-                $query.= "$value";
-                $first = false;
-            }
-            $query .=")";
-            $this->query($query);
+            $fields = join(",",array_keys($vars));
+            $bindMarkers = '?' . str_repeat(', ?',count($vars) -1);
+            $query = "insert into $TABLE_NAME ($fields) values($bindMarkers)";
+
+            $this->query($query,array_values($vars));
             $activityId = $this->getOne("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             $ret = $activityId;
             if(!$activityId) {
@@ -612,13 +600,14 @@ class ActivityManager extends BaseManager
             fclose($fw);
         }
         if($act->isInteractive() && file_exists($template_file)) {
-            @unlink($template_file);
+            // remove the copy of the template, if any
             if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl")) {
-                @unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+                unlink(GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
             }
         }
         if (GALAXIA_TEMPLATES && file_exists($template_file)) {
-            @copy($template_file,GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
+            // and make a fresh one
+            copy($template_file,GALAXIA_TEMPLATES.'/'.$procNName."/$actname.tpl");
         }
     }
 

@@ -174,7 +174,6 @@ class Process_GraphViz
 
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o $outputfile $src";
-            xarLogMessage("WF: will run $command");
             @`$command`;
 
             $command = $this->dotCommand;
