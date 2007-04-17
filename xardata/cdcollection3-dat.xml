@@ -1,0 +1,110 @@
+<items>
+  <cdcollection itemid="3">
+    <cdid>3</cdid>
+    <title>Avalon - Roxy Music</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="4">
+    <cdid>4</cdid>
+    <title>Abacab - Genesis</title>
+    <status>not available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="5">
+    <cdid>5</cdid>
+    <title>Four Seasons - Vivaldi</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="6">
+    <cdid>6</cdid>
+    <title>Rubber Soul - Beatles</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="7">
+    <cdid>7</cdid>
+    <title>Back in Black - AC/DC</title>
+    <status>not available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="8">
+    <cdid>8</cdid>
+    <title>Kashmir - Led Zeppelin</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="9">
+    <cdid>9</cdid>
+    <title>Aqualung - Jethro Tull</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="10">
+    <cdid>10</cdid>
+    <title>Curse of the Pheromones - Startled Insects</title>
+    <status>not available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="11">
+    <cdid>11</cdid>
+    <title>Autobahm - Kraftwerk</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="12">
+    <cdid>12</cdid>
+    <title>Bolero - Ravel</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="13">
+    <cdid>13</cdid>
+    <title>Rumours - Fleetwood Mac</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="14">
+    <cdid>14</cdid>
+    <title>Come on Over - Shania Twain</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="15">
+    <cdid>15</cdid>
+    <title>Pyramid - Alan Parsons Project</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="16">
+    <cdid>16</cdid>
+    <title>Friday Night in SF - de Lucia/di Meola/McLaughlin</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="17">
+    <cdid>17</cdid>
+    <title>A Night at the Opera - Queen</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="18">
+    <cdid>18</cdid>
+    <title>Sevilla - Romero San Juan</title>
+    <status>not available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="19">
+    <cdid>19</cdid>
+    <title>Tubular Bells - Mike Oldfield</title>
+    <status>not available</status>
+    <user>3</user>
+  </cdcollection>
+  <cdcollection itemid="20">
+    <cdid>20</cdid>
+    <title>The Nutcracker - Pyotr Tschaikovsky</title>
+    <status>available</status>
+    <user>3</user>
+  </cdcollection>
+</items>

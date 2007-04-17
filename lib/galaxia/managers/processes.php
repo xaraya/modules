@@ -259,7 +259,7 @@ class ProcessManager extends BaseManager
                     $act->addRole($rid);
                 }
             }
-        }
+       }
         foreach($data['transitions'] as $tran) {
             $am->add_transition($pid,$actids[$tran['from']],$actids[$tran['to']]);
         }

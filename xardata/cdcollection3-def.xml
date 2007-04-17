@@ -1,17 +1,18 @@
 <object name="cdcollection">
-  <objectid>14</objectid>
+  <objectid>24</objectid>
   <label>CD Collection 3</label>
+  <parent>objects</parent>
   <moduleid>182</moduleid>
-  <itemtype>100</itemtype>
-  <parent>1</parent>
+  <itemtype>14</itemtype>
   <class>DataObject</class>
+  <filepath></filepath>
   <urlparam>itemid</urlparam>
-  <maxid>2</maxid>
+  <maxid>20</maxid>
   <config></config>
   <isalias>0</isalias>
   <properties>
     <property name="cdid">
-      <id>78</id>
+      <id>186</id>
       <label>CD</label>
       <type>itemid</type>
       <default></default>
@@ -21,7 +22,7 @@
       <validation></validation>
     </property>
     <property name="title">
-      <id>79</id>
+      <id>187</id>
       <label>Title</label>
       <type>textbox</type>
       <default></default>
@@ -31,7 +32,7 @@
       <validation></validation>
     </property>
     <property name="status">
-      <id>80</id>
+      <id>188</id>
       <label>Status</label>
       <type>dropdown</type>
       <default></default>
@@ -41,7 +42,7 @@
       <validation>available;not available</validation>
     </property>
     <property name="user">
-      <id>81</id>
+      <id>189</id>
       <label>User</label>
       <type>username</type>
       <default></default>
@@ -51,19 +52,4 @@
       <validation></validation>
     </property>
   </properties>
-  <items>
-    <cdcollection itemid="1">
-      <cdid>1</cdid>
-      <title>my first CD</title>
-      <status>available</status>
-      <user>0</user>
-    </cdcollection>
-    <cdcollection itemid="2">
-      <cdid>2</cdid>
-      <title>my second CD</title>
-      <status>available</status>
-      <user>0</user>
-    </cdcollection>
-  </items>
 </object>
-
