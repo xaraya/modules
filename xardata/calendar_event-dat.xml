@@ -1,0 +1,107 @@
+<items>
+  <calendar_event itemid="1">
+    <id>1</id>
+    <type>0</type>
+    <name>Important meeting</name>
+    <description></description>
+    <start>1170324000</start>
+    <end>1170342000</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="2">
+    <id>2</id>
+    <type>0</type>
+    <name>Very important meeting</name>
+    <description></description>
+    <start>1170338400</start>
+    <end>1170345600</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="3">
+    <id>3</id>
+    <type>0</type>
+    <name>Extremely important meeting</name>
+    <description></description>
+    <start>1170339600</start>
+    <end>1170349200</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="4">
+    <id>4</id>
+    <type>0</type>
+    <name>Dinner with the boss</name>
+    <description></description>
+    <start>1170363600</start>
+    <end>1170374340</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="5">
+    <id>5</id>
+    <type>0</type>
+    <name>Holidays!</name>
+    <description></description>
+    <start>1170669600</start>
+    <end>1171151940</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="6">
+    <id>6</id>
+    <type>0</type>
+    <name>Anniversary!</name>
+    <description></description>
+    <start>1171533600</start>
+    <end>1171533600</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+  <calendar_event itemid="7">
+    <id>7</id>
+    <type>0</type>
+    <name>Business Trip</name>
+    <description></description>
+    <start>1171879200</start>
+    <end>1172138400</end>
+    <recurring>0</recurring>
+    <start_location></start_location>
+    <end_location></end_location>
+    <object>0</object>
+    <owner>3</owner>
+    <status>1</status>
+    <timestamp>0</timestamp>
+  </calendar_event>
+</items>

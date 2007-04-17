@@ -16,7 +16,6 @@
             <xar:mlvar>#$object:label#</xar:mlvar>
         </xar:ml>
     </h2>
-
     <form method="post" action="&xar-modurl-dynamicdata-admin-create;">
       <fieldset>
         <legend><xar:mlstring>Item details</xar:mlstring></legend>
@@ -25,13 +24,13 @@
       <fieldset>
         <div class="xar-align-center">
           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-          <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
-          <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
+          <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
           <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
           <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
           <xar:if condition="!empty($return_url)">
             <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
           </xar:if>
+          <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL($tplmodule,'admin','view',array('name' => $object->name))#" />
           <input type="submit" value="#xarML('Create')#" class="xar-margin-thickleft" />
         </div>
       </fieldset>

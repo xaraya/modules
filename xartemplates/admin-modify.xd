@@ -5,7 +5,7 @@
         <xar:if condition="xarModGetVar('calendar','useModuleAlias')">
             #xarModGetVar('calendar','aliasname')#
         <xar:else />
-            <xar:mlstring>Modify Calendar</xar:mlstring>
+             <xar:mlstring>Calendar Administration</xar:mlstring>
         </xar:if>
     </span>
 </div>
@@ -17,7 +17,6 @@
             <xar:mlvar>#$object:label#</xar:mlvar>
         </xar:ml>
     </h2>
-
     <xar:if condition="isset($preview)">
         <fieldset>
             <legend><xar:mlstring>Preview</xar:mlstring></legend>
@@ -27,24 +26,20 @@
 
     <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
       <fieldset>
-        <legend><xar:mlstring>Modify item details</xar:mlstring></legend>
+        <legend><xar:mlstring>Modify event details</xar:mlstring></legend>
 
         <!-- this does most of the hard work :) -->
-        <xar:data-form object="$object" tplmodule="$tplmodule" />
+        <xar:data-form object="$object" tplmodule="calendar"  />
 
       </fieldset>
-      <fieldset>
-        <div class="xar-align-center">
+      <fieldset class="xar-align-center">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
-            <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
-            <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
-            <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
-            <xar:if condition="!empty($return_url)">
-              <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-            </xar:if>
+            <input type="hidden" name="object_objectid" id="objectid" value="#$object:objectid#" />
+            <input type="hidden" name="object_itemid" id="itemid" value="#$object:itemid#" />
+            <input type="hidden" name="object_tplmodule" id="tplmodule" value="#$tplmodule#" />
+            <xar:set name="return_url">isset($return_url)?$return_url:xarModURL('$tplmodule','admin','view',array('name' => $object->name))</xar:set>
+            <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
             <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
-        </div>
       </fieldset>
     </form>
 </div>

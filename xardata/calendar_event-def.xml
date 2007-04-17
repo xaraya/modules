@@ -21,7 +21,7 @@
       <order>1</order>
       <validation></validation>
     </property>
-    <property name="type">
+    <property name="itemtype">
       <id>181</id>
       <label>Type</label>
       <type>integerbox</type>

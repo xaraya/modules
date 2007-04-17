@@ -16,9 +16,9 @@
         );
         $day_endts = $DayEvents->getTimestamp() + xarModGetVar('calendar','day_end') + 3600;
 //        $events = xarModAPIFunc('icalendar','user','getevents',$args);
-        $xartable =& xarDBGetTables();
 
         // get all the events. need to improve this query
+        $xartable =& xarDBGetTables();
         $q = new xenQuery('SELECT', $xartable['calendar_event']);
 //        $q->qecho();
         if (!$q->run()) return;

@@ -46,13 +46,19 @@
         <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
         <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
         <xar:if condition="$today eq $thisday">
-            <td class="xar-accent cal-day">
+            <td class="xar-accent cal-day" style="width: 14%">
         <xar:else />
-            <td class="cal-day">
+            <td class="cal-day" style="width: 14%">
         </xar:if>
         <xar:if condition="!$Day:isEmpty()">
             <xar:comment> Display the date for this day </xar:comment>
             <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
+            <xar:set name="entries">$Day->getEntries()</xar:set>
+            <ul style="margin: 2px 2px 2px 2px">
+                <xar:foreach in="$entries" value="$entry">
+                    <li>#$entry['name']#</li>
+                </xar:foreach>
+            </ul>
         <xar:else />
             <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
             &nbsp;
