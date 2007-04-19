@@ -1,6 +1,6 @@
 <?php
 /**
- * Inserts/Updates an event.
+ * Inserts/Updates an event (handles the submitted form).
  *
  * @package modules
  * @copyright (C) 2005 by Metrostat Technologies, Inc.
@@ -25,25 +25,26 @@
 function julian_user_updateevent()
 {
     xarVarFetch('cancel', 'str', $cancel, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('return_url', 'str', $return_url, '', XARVAR_NOT_REQUIRED);
 
     // If Cancel was pressed, go back to previous page
     // TODO: use 'return_url' in the URL, rather than session variables, as session
     // variables have a habbit of hanging around and coming back to bite you.
-    if (strcmp($cancel, '')) {
-        $back_link = xarSessionGetVar('lastview');
-        xarResponseRedirect($back_link);
-    }
+    //if (strcmp($cancel, '')) {
+    //    $back_link = xarSessionGetVar('lastview');
+    //    xarResponseRedirect($back_link);
+    //}
 
-    if (!xarVarFetch('id',               'id',       $event_id,      0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cal_sdow',         'int:0:6',  $cal_sdow,      0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('title',            'str:1:',   $summary,       '')) return;
-    if (!xarVarFetch('event_month',      'int:1:',   $event_month,   0)) return;
-    if (!xarVarFetch('event_day',        'int',      $event_day,     0)) return;
-    if (!xarVarFetch('event_year',       'int',      $event_year,    0)) return;
-    if (!xarVarFetch('event_desc',       'str:1:',   $description,   '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('event_allday',     'int:1:',   $event_allday,  0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('event_starttimeh', 'int',      $event_starttimeh,0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('event_starttimem', 'int',      $event_starttimem,0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id',               'id',      $event_id,      0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cal_sdow',         'int:0:6', $cal_sdow,      0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title',            'str:1:',  $summary,       '')) return;
+    if (!xarVarFetch('event_month',      'int:1:',  $event_month,   0)) return;
+    if (!xarVarFetch('event_day',        'int',     $event_day,     0)) return;
+    if (!xarVarFetch('event_year',       'int',     $event_year,    0)) return;
+    if (!xarVarFetch('event_desc',       'str:1:',  $description,   '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_allday',     'int:1:',  $event_allday,  0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_starttimeh', 'int',     $event_starttimeh,0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('event_starttimem', 'int',     $event_starttimem,0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_startampm',  'int::',   $event_startampm,0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_dur_hours',  'int::',   $event_dur_hours,0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('event_dur_minutes','int::',   $event_dur_minutes,0, XARVAR_NOT_REQUIRED)) return;
@@ -74,20 +75,21 @@ function julian_user_updateevent()
     if (!xarVarFetch('class',            'int:1:',   $class,         0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('share_uids',       'array',    $share_uids,    array(), XARVAR_NOT_REQUIRED)) return;
 
-    if (!empty($event_id)) {
-        // Event ID supplied: update existing event.
-        if (!xarSecurityCheck('EditJulian', 1, 'Item')) return;
-    } else {
-        // Event doesn't exist yet. Create one.
-        if (!xarSecurityCheck('AddJulian', 1, 'Item')) return;
-    }
+    if (empty($cancel)) {
+        if (!empty($event_id)) {
+            // Event ID supplied: update existing event.
+            if (!xarSecurityCheck('EditJulian', 1, 'Item')) return;
+        } else {
+            // Event doesn't exist yet. Create one.
+            if (!xarSecurityCheck('AddJulian', 1, 'Item')) return;
+        }
 
-    // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+        // Confirm authorisation code.
+        if (!xarSecConfirmAuthKey()) return;
 
-    if (!empty($event_id)) {
         // If this is an event that repeats "on", the rrule is always 3 which is the representative of monthly.
         // the 'on' events are always repeated every so many months
+        // TODO: create some constants for these values.
         if($recur_count && $recur_freq1) {
             // TODO: create some constants. What does "3" mean...?
             $rrule = "3";
@@ -154,7 +156,6 @@ function julian_user_updateevent()
         // If phone1 is empty, phone2 and phone3 have to be empty
         // and we don't want to show the dashes.
         // TODO: make it possible to have a European type/custom phone field
-        // TODO/FIXME: this is only done when an event is first created. What about update? Should it be any different?
 
         $TelFieldType = xarModGetVar('julian', 'TelFieldType');
 
@@ -172,32 +173,43 @@ function julian_user_updateevent()
         } else {
             $phone = '';
         }
+
+        // Build the array to pass into the API
+        $params = compact(
+            'event_id',
+            'event_allday', 'contact', 'website',
+            'summary', 'description',
+            'class', 'location', 'share',
+            'street1', 'street2', 'city', 'state', 'zip',
+            'phone', 'email',
+            'fee', 'category',
+            'rrule', 'recur_freq', 'recur_until', 'recur_count', 'recur_interval',
+            'duration', 'eventstartdate'
+        );
+
+        if (!empty($event_id)) {
+            // Call the API to update the event.
+            xarModAPIFunc('julian', 'admin', 'update', $params);
+        } else {
+            // Call the API to create the event.
+            $event_id = xarModAPIFunc('julian', 'admin', 'create', $params);
+        }
     }
 
-    // Build the array to pass into the API
-    $params = compact(
-        'event_id',
-        'event_allday', 'contact', 'website',
-        'summary', 'description',
-        'class', 'location', 'share',
-        'street1', 'street2', 'city', 'state', 'zip',
-        'phone', 'email',
-        'fee', 'category',
-        'rrule', 'recur_freq', 'recur_until', 'recur_count', 'recur_interval',
-        'duration', 'eventstartdate'
-    );
-
-    if (!empty($event_id)) {
-        // Call the API to update the event.
-        xarModAPIFunc('julian', 'admin', 'update', $params);
+    // Go back to the view of the event or go to the return_url (if there is one).
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
     } else {
-        // Call the API to update the event.
-        $event_id = xarModAPIFunc('julian', 'admin', 'create', $params);
+        if (empty($event_id)) {
+            // No event ID - go to the general list
+            xarResponseRedirect(xarModURL('julian', 'user', 'viewevents'));
+        } else {
+            // Go to the event
+            xarResponseRedirect(xarModURL('julian', 'user', 'viewevent', array('cal_date' => $cal_date, 'event_id' => $event_id)));
+        }
     }
 
-    // Go back to the view of the event
-    // TODO: go back to the return_url if there is one.
-    xarResponseRedirect(xarModURL('julian', 'user', 'viewevent', array('cal_date'=>$cal_date, 'event_id' => $event_id)));
+    return true;
 }
 
 ?>
