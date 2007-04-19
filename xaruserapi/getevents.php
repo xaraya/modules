@@ -95,7 +95,26 @@ function julian_userapi_getevents($args)
         . ' ev.email, ev.phone, ev.location, ev.url,'
         . ' ev.contact, ev.organizer,'
         . ' ev.dtstart, ev.recur_until, ev.duration,'
-        . ' ev.rrule, ev.isallday, ev.fee';
+        . ' ev.rrule, ev.isallday, ev.fee,'
+        // Migrated from the get() API, in preparation for merging.
+        . ' ev.type,'
+        . ' ev.related_to,'
+        . ' ev.reltype,'
+        . ' ev.class,'
+        . ' ev.share_uids,'
+        . ' ev.priority,'
+        . ' ev.status,'
+        . ' ev.exdate,'
+        . ' ev.categories,'
+        . ' ev.recur_freq,'
+        . ' ev.recur_count,'
+        . ' ev.recur_interval,'
+        . ' ev.dtend,'
+        . ' ev.freebusy,'
+        . ' ev.due,'
+        . ' ev.transp,'
+        . ' ev.created,'
+        . ' ev.last_modified';
 
     // Select on categories
     if (xarModIsHooked('categories', 'julian') && !empty($catid)) {
@@ -167,7 +186,26 @@ function julian_userapi_getevents($args)
             $eEmail, $ePhone, $eLocation, $eUrl,
             $eContact, $eOrganizer,
             $eStart['timestamp'], $eRecur['timestamp'], $eDuration,
-            $eRrule, $eIsallday, $eFee
+            $eRrule, $eIsallday, $eFee,
+            // Migrated from get(), in preparation for merging.
+            $eType,
+            $eRelatedTo,
+            $eReltype,
+            $eClass,
+            $eShareUIDs,
+            $ePriority,
+            $eStatus,
+            $eExdate,
+            $eCategories,
+            $eRecurFreq,
+            $eRecurCount,
+            $eRecurInterval,
+            $eDtend,
+            $eFreebusy,
+            $eDue,
+            $eTransp,
+            $eCreated,
+            $eLastModified
         ) = $result->fields;
 
         // Security check
@@ -196,10 +234,12 @@ function julian_userapi_getevents($args)
                 $eStart['linkdate'] = date('Ymd', strtotime($eStart['timestamp']));
                 $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
 				$eStart['displaytime'] = date($timeformat, strtotime($eStart['timestamp']));
-				$eStart['starthours'] = date('H', strtotime($eStart['timestamp'])) + (date('H', strtotime($eStart['timestamp']))/60);
+				$eStart['starthours'] = date('H', strtotime($eStart['timestamp'])) + (date('i', strtotime($eStart['timestamp']))/60);
+                $eStart['unixtime'] = strtotime($eStart['timestamp']);
 
                 $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
                 $eEnd['displaytime'] = date($timeformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
+                $eEnd['unixtime'] = strtotime($eStart['timestamp']);
             }
 
             if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
@@ -239,7 +279,45 @@ function julian_userapi_getevents($args)
                 'eDurationHours' => $eDurationHours,
                 'eRrule' => $eRrule,
                 'eIsallday' => $eIsallday,
-                'eFee' => $eFee
+                'eFee' => $eFee,
+                // Migrated from get(), in preparation for merging.
+                'event_id' =>$eID,
+                'calendar_id' =>$eCalendarID,
+                'type' => $eType,
+                'organizer' => $eOrganizer,
+                'contact' => $eContact,
+                'url' => $eUrl,
+                'summary' => $eName,
+                'description' => $eDescription,
+                'related_to' => $eRelatedTo,
+                'reltype' => $eReltype,
+                'class' => $eClass,
+                'share_uids' => $eShareUIDs,
+                'priority' => $ePriority,
+                'status' => $eStatus,
+                'location' => $eLocation,
+                'street1' => $eStreet1,
+                'street2' => $eStreet2,
+                'city' => $eCity,
+                'state' => $eState,
+                'zip' => $eZip,
+                'phone' => $ePhone,
+                'email' => $eEmail,
+                'fee' => $eFee,
+                'exdate' => $eExdate,
+                'categories' => $eCategories,
+                'recur_freq' => $eRecurFreq,
+                'recur_until' => $eRecur,
+                'recur_count' => $eRecurCount,
+                'recur_interval' => $eRecurInterval,
+                'dtstart' => $eStart,
+                'dtend' => $eDtend,
+                'duration' => $eDuration,
+                'freebusy' => $eFreebusy,
+                'due' => $eDue,
+                'transp' => $eTransp,
+                'created' => $eCreated,
+                'last_modified' => $eLastModified
             );
         }
     }
@@ -328,7 +406,7 @@ function julian_userapi_getevents($args)
             } else {
                 $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
                 $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
-				$eStart['displaytime'] = date($timeformat, strtotime($eStart['timestamp']));
+                $eStart['unixtime'] = strtotime($eStart['timestamp']);
 
                 $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
                 $eEnd['displaytime'] = date($timeformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
@@ -440,4 +518,27 @@ function julian_userapi_getevents_datecompare($x, $y)
     }
 }
 
+/**
+ * TODO: PB.Create an separate event for every recursive event
+ */
+function julian_userapi_getrecur($start_date, $recur_freq, $rrule = null, $recur_count = null, $recur_freq = null, $recur_until = null) {
+
+    //Number of recursive events to fetch
+    $recur_no = 10;
+    
+    //Define vars
+    $start_date = strtotime($start_date);
+    if (!empty($recur_until)) $recur_until = strtotime($recur_until);
+
+    //First of all we need to determine if this is an 'every' or an 'on' type
+    
+
+    //Loop through the event dates.
+    $recur_dates = array();
+    $i = 1;
+    while ($i <= $no_recur) {
+        $recur_dates =
+        $i++;
+    }
+}
 ?>
