@@ -14,6 +14,8 @@
 /**
  * Delete an event
  *
+ * DEPRECATED: moved to 'delete' for consistency
+ *
  * Delete an item from the events table
  *
  * initial template: Roger Raymond
@@ -27,40 +29,7 @@
  */
 function julian_adminapi_deleteevent($args)
 {
-    extract ($args);
-    if (!xarVarFetch('event_id','isset',$event_id)) return;
-    // Get item
-    $item = xarModAPIFunc('julian',
-        'user',
-        'get',
-        array('event_id' => $event_id));
-    // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
-    if (!xarSecurityCheck('DeleteJulian', 1, 'Item', "$event_id:$item[organizer]:$item[calendar_id]:All")) {
-        return;
-    }
-
-    // establish db connection
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $event_table = $xartable['julian_events'];
-
-    //delete the event
-    $query = "DELETE
-              FROM $event_table
-              WHERE event_id = ?";
-    if (!$result = $dbconn->Execute($query,array($event_id))) {
-        return;
-    }
-
-    // Tell hooked modules that the event was deleted.
-
-    $item['module'] = 'julian';
-    $item['itemid'] = $event_id;
-    $hooks = xarModCallHooks('item', 'delete', $event_id, $item);
-    // Let the calling process know that we have finished successfully
-    return true;
+    return xarModAPIfunc('julian', 'admin', 'delete', $args);
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Update an event item
+ * Create a new event item
  *
  * @package modules
  * @copyright (C) 2006 The Digital Development Foundation
@@ -18,41 +18,25 @@
  * saves the data it the appriopriate table
  *
  * @author the Julian module development team
- * @since 17 July 2006
- * @param  $args ['event_id'] the ID of the event
+ * @since 19 April 2007
+ * @param  $args Details of the event
  * @return bool true on success of update
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function julian_adminapi_update($args)
+function julian_adminapi_create($args)
 {
     extract($args);
 
     // Validate and check arguments
     $invalid = array();
 
-    // The event ID is mandatory when updating.
-    if (!isset($event_id) || !is_numeric($event_id)) $invalid[] = 'item ID';
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1)', join(', ', $invalid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }
-
-    // Get the existing item
-    $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $event_id));
-
-    // Check for exceptions
-    // The returned item will be NULL if there was an error.
-    // CHECKME: not sure what the exception check is all about
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
-
     // Security checks
     // FIXME: organizer, calendar_id and catid are not checked and may not even be set.
     // It is likely they come from the existing item.
-    // FIXME: support multiple categories
-    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:$organizer:$calendar_id:$catid")) return;
-    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:$organizer:$calendar_id:$catid")) return;
+    // TODO: support multiple categories
+
+    $uid = xarUserGetVar('uid');
+    if (!xarSecurityCheck('AddJulian', 1, 'Item', "All:$uid:All:All")) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -88,7 +72,9 @@ function julian_adminapi_update($args)
         'dtstart' => 'eventstartdate'
     );
 
-    // The column update list is going to be generated dynamically.
+    // The column insert list is going to be generated dynamically.
+    // TODO: many of these columns are mandatory - check them and raise errors as appropriate
+    // TODO: much of this dynamic code is shared with the update API, and possibly useful in the get APIs; take out the duplication
 
     // Initialise database columns and bindvars arrays
     $colsql = array();
@@ -98,7 +84,7 @@ function julian_adminapi_update($args)
     foreach ($fields as $key => $field) {
         if (isset($$field)) {
             //Set the field name
-            $colsql[] = "$key = ?";
+            $colsql[] = $key;
 
             // Set the bind variable.
             // Some need typecasting.
@@ -121,34 +107,41 @@ function julian_adminapi_update($args)
     }
 
     // Additional fields
-    $colsql[] = 'last_modified = ?';
+    $colsql[] = 'created';
     // TODO: format this through a central function.
-    $bindvars[] = date('Y-m-d H:i:s');
+    $bindvars[] = date("Y-m-d H:i:s");
+
+    // Default calendar ID
+    // TODO: support calendar IDs
+    $colsql[] = 'calendar_id';
+    $bindvars[] = 0;
+
+    // Get the next event ID (for pre-fetch databases)
+    $next_id = $dbconn->GenId($event_table);
+    $colsql[] = 'event_id';
+    $bindvars[] = $next_id;
     
-    // Nothing to update
-    // CHECKME: would we still want to call the hooks, just in case 
-    // there are DD or category updates? It is likely we would.
-    if (!empty($bindvars)) {
-        // Create the query.
-        $bindvars[] = (int)$event_id;
-        $query = "UPDATE " . $event_table
-            . " SET " . implode(', ', $colsql)
-            . " WHERE event_id = ?";
+    // Create the query.
+    $query = 'INSERT INTO ' . $event_table
+        . ' (' . implode(', ', $colsql) . ')'
+        . ' VALUES (?' . str_repeat(', ?', count($bindvars)-1) . ')';
 
-        $result = $dbconn->Execute($query, $bindvars);
-        if (!$result) return;
-    }
+    $result = $dbconn->Execute($query, $bindvars);
+    if (!$result) return;
 
+    // Get the new event ID
+    $event_id = $dbconn->Insert_ID($event_table, 'event_id', 'serial');
+    
     // Call the hooks. Event already exists (we are just updating)
-    // TODO: pass in categories and DD items so they can be updated by API alone
+    // TODO: pass in categories and DD items so they can be added by API alone
     // TODO: pass in the itemtype
     $item = array();
     $item['module'] = 'julian';
     $item['itemid'] = $event_id;
-    $hooks = xarModCallHooks('item', 'update', $event_id, $item);
+    $hooks = xarModCallHooks('item', 'create', $event_id, $item);  
 
     // Return success
-    return true;
+    return $event_id;
 }
 
 ?>
