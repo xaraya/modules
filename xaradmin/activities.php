@@ -99,7 +99,7 @@ function workflow_admin_activities()
     }
 
     // Delete activities
-    if (isset($_REQUEST["delete_act"])) {
+    if (isset($_REQUEST["delete_act"]) && !empty($_REQUEST["activity"])) {
         foreach (array_keys($_REQUEST["activity"])as $item) {
             $process->removeActivity($item);
         }
