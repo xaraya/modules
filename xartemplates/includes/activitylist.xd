@@ -63,7 +63,7 @@
 
         <!-- Little trick to get the base link into a variable, save some typing ahead -->
         <xar:set name="urlbase">&xar-modurl-workflow-admin-activities;</xar:set>
-        <xar:set name="urlparam">"&amp;amp;where2=$where2&amp;amp;sort_mode2=$sort_mode2&amp;amp;pid=$pid&amp;amp;find=$find&amp;amp;where=$where"</xar:set>
+        <xar:set name="urlparam">"&amp;where2=$where2&amp;sort_mode2=$sort_mode2&amp;pid=$pid&amp;find=$find&amp;where=$where"</xar:set>
         <xar:set name="baselink">$urlbase . $urlparam;</xar:set>
 
         <table style="border-collapse: separate; width: 99%">
