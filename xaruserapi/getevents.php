@@ -36,6 +36,9 @@
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: rewrite some queries for pgsql
  * @todo Combine getevents and getall APIs - they are just too similar to warrent being separate
+ * @todo The linked events and the main events should be done in a more effective way, using a single query
+ *       (even if it has to be called twice). The reason is two-fold: counts need to include both main events
+ *       and linked events; and keeping the two queries in sync is error-prone.
  */
 function julian_userapi_getevents($args)
 {
@@ -52,7 +55,8 @@ function julian_userapi_getevents($args)
     if (!isset($orderby)) $orderby = 'ASC';
 
     // Default the start date to today.
-    if (!isset($startdate)) $startdate = date('Ymd');
+    // JDJ: removed. The defaults should happen in the 
+    //if (!isset($startdate)) $startdate = date('Ymd');
 
     // Argument check.
     $invalid = array();
@@ -75,7 +79,7 @@ function julian_userapi_getevents($args)
     // Load categories API.
     // Needed?
     if (!xarModAPILoad('categories', 'user')) {
-        $msg = xarML('Unable to load #(1) #(2) API','categories','user');
+        $msg = xarML('Unable to load #(1) #(2) API', 'categories', 'user');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
         return false;
     }
@@ -127,6 +131,8 @@ function julian_userapi_getevents($args)
             . ' ev.last_modified';
     }
 
+    $bindvars = array();
+
     // Select on categories
     if (xarModIsHooked('categories', 'julian') && !empty($catid)) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
@@ -154,6 +160,12 @@ function julian_userapi_getevents($args)
         $query .= " AND ev.dtstart <= '${enddate}235959'";
     }
 
+    // Selection by event ID
+    if (!empty($event_id)) {
+        $query .= ' AND ev.event_id = ?';
+        $bindvars[] = (int)$event_id;
+    }
+
     // This is double now, as the array is being sorted anyway.
     if (isset($sortby) && empty($docount)) {
         switch ($sortby) {
@@ -178,8 +190,8 @@ function julian_userapi_getevents($args)
         }
     }
 
-    // FIXME: this query does not restrict on start and end dates.
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    // Fetch the events.
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
     // Check for an error.
     if (!$result) return;
@@ -363,7 +375,7 @@ function julian_userapi_getevents($args)
     }
 
     // TODO: include all the other ordering options
-    if (isset($sortby)) {
+    if (isset($sortby) && empty($docount)) {
         switch ($sortby) {
             case 'eventDate':
                 $query_linked .= " ORDER BY el.dtstart $orderby";
