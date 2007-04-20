@@ -14,7 +14,7 @@
       <xar:mlstring>List </xar:mlstring>
     </a>
   </dd>
- 
+
   <xar:if condition="$pid gt 0">
     <!-- Show the deactivate and activate if the process is valid -->
     <xar:set name="classstring">''</xar:set>
@@ -46,7 +46,7 @@
         <xar:mlstring>Process Details</xar:mlstring>
       </a>
     </dd>
-                
+
     <xar:set name="classstring">''</xar:set>
     <xar:if condition="$func eq 'activities'">
       <xar:set name="classstring">'active'</xar:set>
@@ -68,7 +68,7 @@
         <xar:mlstring>Code</xar:mlstring>
       </a>
     </dd>
-        
+
     <xar:set name="classstring">''</xar:set>
     <xar:if condition="$func eq 'roles'">
       <xar:set name="classstring">'active'</xar:set>
@@ -77,9 +77,9 @@
       <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
         <xar:mlstring>Roles</xar:mlstring>
-      </a>        
+      </a>
     </dd>
-        
+
     <xar:set name="classstring">''</xar:set>
     <xar:if condition="$func eq 'graph'">
       <xar:set name="classstring">'active'</xar:set>
@@ -104,7 +104,7 @@
 <!-- We can only show the process if we have one -->
 <xar:if condition="$pid gt 0">
   <h2>#$proc_info['name']#: version #$proc_info['version']#</h2>
-  
+
   <!-- Show a list of errors, if any, to complete this process -->
   <xar:template file="processerrors"/>
 </xar:if>

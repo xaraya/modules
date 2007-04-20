@@ -211,27 +211,6 @@ function workflow_admin_activities()
     $data['transitions'] =&  $transitions;
     $data['filter_tran_name'] = isset($_REQUEST['filter_tran_name']) ? $_REQUEST['filter_tran_name'] : '';
 
-    // Validate the process
-    $valid = $activityManager->validate_process_activities($data['pid']);
-    $proc_info['isValid'] = $valid ? 'y' : 'n';
-
-    // If its valid and requested to activate, do so
-    if ($valid && isset($_REQUEST['activate_proc'])) {
-        $process->activate();
-    }
-
-    // If its not valid or requested to deactivate, deactivate the process
-    if (!$valid || isset($_REQUEST['deactivate_proc'])) {
-        $process->deactivate();
-    }
-
-    // @todo migrate proc_info into $process
-    $data['proc_info'] =& $proc_info;
-    $data['process'] =& $process;
-
-    $data['errors'] = array();
-    if (!$valid) $data['errors'] = $activityManager->get_error();
-
     //Now information for activities in this process
     $activities = $activityManager->list_activities($data['pid'], 0, -1,  $data['sort_mode'], $data['find'], $data['where']);
 
@@ -264,9 +243,30 @@ function workflow_admin_activities()
             $activities["data"][$i]['isAutoRouted'] = $ar;
             $activityManager->set_autorouting($data['pid'], $id, $ar);
         }
+//        $activityManager->validate_process_activities($data['pid']);
     }
     $data['items'] =& $activities['data'];
 
+    // Validate the process
+    $valid = $activityManager->validate_process_activities($data['pid']);
+    $proc_info['isValid'] = $valid ? 'y' : 'n';
+
+    // If its valid and requested to activate, do so
+    if ($valid && isset($_REQUEST['activate_proc'])) {
+        $process->activate();
+    }
+
+    // If its not valid or requested to deactivate, deactivate the process
+    if (!$valid || isset($_REQUEST['deactivate_proc'])) {
+        $process->deactivate();
+    }
+
+    // @todo migrate proc_info into $process
+    $data['proc_info'] =& $proc_info;
+    $data['process'] =& $process;
+
+    $data['errors'] = array();
+    if (!$valid) $data['errors'] = $activityManager->get_error();
     // Build the new process graph based on the changes.
     $activityManager->build_process_graph($data['pid']);
 
