@@ -422,6 +422,7 @@ class ActivityManager extends BaseManager
 
             $compiled_file = GALAXIA_PROCESSES.'/'.$procNName.'/compiled/'.$oldname.'.php';
             unlink($compiled_file);
+            $oldAct->setName($newname);
             $oldAct->compile();
         } else {
             // When inserting activity names can't be duplicated

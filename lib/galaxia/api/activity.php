@@ -186,9 +186,8 @@ class WorkflowActivity extends Base
         $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
         $fw = fopen($compiled_file,"wb");
 
-        // First of all add an include to to the shared code
+        // First of all add an include to the shared code
         $shared_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/shared.php';
-
         fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
 
         // Before pre shared
