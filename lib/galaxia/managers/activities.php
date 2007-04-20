@@ -524,10 +524,10 @@ class ActivityManager extends BaseManager
         $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=?",array($pId));
         $nodes[] = $endId;
         $label = $cant;
-        $num = $cant;
+        $num = $cant+1;
 
         $query = "update ".self::tbl('activities')." set flowNum=? where pId=?";
-        $this->query($query,array($cant+1,$pId));
+        $this->query($query,array($num,$pId));
 
         $seen = array();
         while(count($nodes)) {
