@@ -243,7 +243,6 @@ function workflow_admin_activities()
             $activities["data"][$i]['isAutoRouted'] = $ar;
             $activityManager->set_autorouting($data['pid'], $id, $ar);
         }
-//        $activityManager->validate_process_activities($data['pid']);
     }
     $data['items'] =& $activities['data'];
 
@@ -267,6 +266,7 @@ function workflow_admin_activities()
 
     $data['errors'] = array();
     if (!$valid) $data['errors'] = $activityManager->get_error();
+
     // Build the new process graph based on the changes.
     $activityManager->build_process_graph($data['pid']);
 
