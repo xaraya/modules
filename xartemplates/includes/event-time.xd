@@ -1,27 +1,35 @@
 
-<xar:comment>Display the time for an event. Requires the event ($event) to be passed in.</xar:comment>
+<xar:comment>Display the time for an event. Requires $eStart, $eEnd, $eDuration and $eIsallday to be passed in.</xar:comment>
 
-<xar:if condition="!empty($event.eIsallday)">
-    <xar:if condition="$event.eStart.starthours eq 0">
+<xar:comment>This is here for view-events as $events is the top-level array</xar:comment>
+<xar:if condition="!empty($event)">
+     <xar:set name="eStart">#$event.eStart#</xar:set>
+     <xar:set name="eEnd">#$event.eEnd#</xar:set>
+     <xar:set name="eDurationHours">#$event.eDurationHours#</xar:set>
+     <xar:set name="eIsallday">#$event.eIsallday#</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($eIsallday)">
+    <xar:if condition="$eStart.starthours eq 0">
         <xar:mlstring>All day</xar:mlstring>
     <xar:else />
         <xar:ml>
             <xar:mlstring>All day; starts #(1)</xar:mlstring>
-            <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
+            <xar:mlvar>#$eStart.displaytime#</xar:mlvar>
         </xar:ml>
     </xar:if>
 <xar:else />
-    <xar:if condition="$event.eDurationHours gt 0">
+    <xar:if condition="$eDurationHours gt 0">
         <xar:ml>
             <xar:mlstring>#(1) - #(2) (#(3) hours)</xar:mlstring>
-            <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
-            <xar:mlvar>#$event.eEnd.displaytime#</xar:mlvar>
-            <xar:mlvar>#$event.eDurationHours#</xar:mlvar>
+            <xar:mlvar>#$eStart.displaytime#</xar:mlvar>
+            <xar:mlvar>#$eEnd.displaytime#</xar:mlvar>
+            <xar:mlvar>#$eDurationHours#</xar:mlvar>
         </xar:ml>
     <xar:else />
         <xar:ml>
             <xar:mlstring>#(1)</xar:mlstring>
-            <xar:mlvar>#$event.eStart.displaytime#</xar:mlvar>
+            <xar:mlvar>#$eStart.displaytime#</xar:mlvar>
         </xar:ml>
     </xar:if>
 </xar:if>

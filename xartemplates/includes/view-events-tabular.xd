@@ -43,6 +43,7 @@
     <xar:if condition="!empty($events)">
       <tbody>
         <xar:loop name="$events">
+        
           <tr class="xar-julian-calendar-day xar-julian-days-event">
             <td>
               <xar:if condition="($loop:item.eRrule gt 0) AND (!empty($loop:item.eStart.viewdate))">
@@ -91,11 +92,8 @@
               <xar:if condition="$loop:item.eZip ne ''">
                 &nbsp;&nbsp;#$loop:item.eZip#
               </xar:if>
-              <xar:if condition="($loop:item.eCity eq '') or ($loop:item.eState eq '') or ($loop:item.eZip eq '')">
-                City, State/Province, Zip/Post Code Unknown
-              </xar:if>
-              <xar:if condition="($loop:item.eLocation eq '') and ($loop:item.eStreet1 eq '') and ($loop:item.eStreet2 eq '') and ($loop:item.eCity == '') && ($loop:item['eState'] == '')&& ($loop:item['eZip'] eq '')">
-                Location not Listed
+              <xar:if condition="($loop:item.eStreet1 eq '') and ($loop:item.eStreet2 eq '') and ($loop:item.eCity == '') and ($loop:item['eState'] == '') and ($loop:item['eZip'] eq '')">
+                Address not Listed
               </xar:if>
             </td>
             <td>

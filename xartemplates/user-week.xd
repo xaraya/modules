@@ -35,7 +35,7 @@
                     <xar:set name="$day">substr($date,-2)</xar:set>
                     <xar:set name="$dbdate">$yr."-".$mon."-".$day;</xar:set>
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
-                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') && substr($date,4,2) eq $selected_month">
+                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') and substr($date,4,2) eq $selected_month">
                         <xar:set name="$daycolor">"currentday"</xar:set>
                     <xar:elseif condition="$calendar:isWeekend($date)" />
                         <xar:set name="$daycolor">"weekend"</xar:set>

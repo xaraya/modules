@@ -283,21 +283,26 @@ function julian_user_viewevents($args)
     $bl_data['datenumber'] = $datenumber;
     $bl_data['datetype'] = $datetype;
 
+    //Create URL params
+    $urlparams = array(
+        'startnum'  => '%%',
+        'numitems'  => $numitems,
+        'sortby'    => $sortby,
+        'catid'     => $catid,
+        'orderby'   => $orderby,
+        'startdate' => $startdate,
+        'enddate'   => $enddate
+    );
+
     // Create Pagination.
     // FIXME: the count does not take dates into account; suggest modifying getevents to return a count based on main selection
     // FIXME: the pager URL does not take other selection criteria into account; suggest trying xarServerGetCurrentURL()
     $bl_data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('julian', 'user', 'countevents', array('catid' => $catid)),
-        xarModURL('julian', 'user', 'viewevents',
-            array(
-                'startnum' => '%%', 
-                'sortby'   => $sortby,
-                'catid'    => $catid,
-                'orderby'  => $orderby
-            )
-        ), $numitems
-    );
+        xarModURL('julian', 'user', 'viewevents', $urlparams), $numitems);
 
+    $urlparams['startnum'] = 1;
+    $bl_data['urlparams'] = $urlparams;
     $bl_data['catid'] = $catid;
 
     // Return the template variables defined in this function.

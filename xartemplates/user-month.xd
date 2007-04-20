@@ -3,6 +3,8 @@
 <xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
 
+    <xar:comment>** All pager-type anchors should take current URL into account, so that categories etc. are included in the pager **</xar:comment>
+
     <div class="xar-julian-cal">
         <div class="xar-julian-cal-nav">
             <div class="xar-julian-cal-nav-prev">
@@ -45,7 +47,7 @@
                     <xar:set name="$day">substr($date,-2)</xar:set>
                     <xar:set name="$dbdate">$yr."-".$mon."-".$day;</xar:set>
                     <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
-                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') && substr($date,4,2) eq $selected_month">
+                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') and substr($date,4,2) eq $selected_month">
                         <xar:set name="$daycolor">"currentday"</xar:set>
                     <xar:elseif condition="$calendar:isWeekend($date)" />
                         <xar:set name="$daycolor">"weekend"</xar:set>

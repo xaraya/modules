@@ -9,7 +9,7 @@
         <xar:comment>This selection allows the user to choose a specific date range. Comment out if not required.</xar:comment>
 
         <div>
-          <form name="date_range" method="get" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
+          <form name="date_range" method="post" action="#xarModURL('julian','user','viewevents')#" onsubmit="return validate(this)">
             <div>
               <xar:comment>
                 If not using short URLs, then use hidden values for form submission.
@@ -160,15 +160,15 @@
         <dl class="xar-tabs">
             <dt class="help"><xar:mlstring>Group by:</xar:mlstring></dt>
             <xar:if condition="empty($group)"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
-            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;null,'startnum'=&gt;1))#"><xar:mlstring>None</xar:mlstring></a></dd>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;null)))#"><xar:mlstring>None</xar:mlstring></a></dd>
             <xar:if condition="$group eq 'day'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
-            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'day','startnum'=&gt;1))#"><xar:mlstring>Day</xar:mlstring></a></dd>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'day')))#"><xar:mlstring>Day</xar:mlstring></a></dd>
             <xar:if condition="$group eq 'week'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
-            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'week','startnum'=&gt;1))#"><xar:mlstring>Week</xar:mlstring></a></dd>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'week')))#"><xar:mlstring>Week</xar:mlstring></a></dd>
             <xar:if condition="$group eq 'month'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
-            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'month','startnum'=&gt;1))#"><xar:mlstring>Month</xar:mlstring></a></dd>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'month')))#"><xar:mlstring>Month</xar:mlstring></a></dd>
             <xar:if condition="$group eq 'year'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
-            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array('group'=&gt;'year','startnum'=&gt;1))#"><xar:mlstring>Year</xar:mlstring></a></dd>
+            <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'year')))#"><xar:mlstring>Year</xar:mlstring></a></dd>
         </dl>
 
         <xar:if condition="!isset($groups)">
@@ -314,8 +314,8 @@
                         </table>
                     </xar:loop>
                 </xar:if>
-
             </div>
         </xar:if>
     </div>
+    <div>#$pager#</div>
 </div>

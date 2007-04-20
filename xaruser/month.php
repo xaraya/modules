@@ -57,9 +57,11 @@ function julian_user_month($args)
     $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
     $bl_data['calendar']=$c;
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
+
     //set the url to this page in session as the last page viewed
-    $lastview=xarModURL('julian','user','month',array('cal_date'=>$bl_data['cal_date'], 'catid' => $catid));
+    $lastview = xarModURL('julian','user','month',array('cal_date'=>$bl_data['cal_date'], 'catid' => $catid));
     xarSessionSetVar('lastview',$lastview);
+
     return $bl_data;
 }
 ?>

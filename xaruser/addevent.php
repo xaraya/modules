@@ -26,10 +26,12 @@ function julian_user_addevent($args)
 {
     extract ($args);
 
-    //This prevents users from viewing something they are not suppose to.
+    // This prevents users from viewing something they are not suppose to.
     if (!xarSecurityCheck('AddJulian')) return;
+
     // See if we get passed a date, otherwise add the date of today
-    if (!xarVarFetch('cal_date','int:18000000:20500000',$cal_date, xarLocaleFormatDate('%Y%m%d'))) return;
+    // TODO: that's a big range! What does it mean? Is that YYYYMMDD, 1800 to 2050?
+    if (!xarVarFetch('cal_date', 'int:18000000:20500000', $cal_date, xarLocaleFormatDate('%Y%m%d'))) return;
 
     // Build description for the item we want the hooks (i.e. category) for.
     $item = array();
@@ -45,12 +47,14 @@ function julian_user_addevent($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
+
     // Add bullet for header
     $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
-    $data['todays_month'] = date("n",strtotime($cal_date));
-    $data['todays_year'] = date("Y",strtotime($cal_date));
-    $data['todays_day'] = date("d",strtotime($cal_date));
+    $data['todays_month'] = date("n", strtotime($cal_date));
+    $data['todays_year'] = date("Y", strtotime($cal_date));
+    $data['todays_day'] = date("d", strtotime($cal_date));
+
     //building share options
     $share_group = xarModGetVar('julian','share_group');
     // Following is nasty thing
@@ -62,9 +66,9 @@ function julian_user_addevent($args)
             $julgroup = $group;
         }
     }
-    $data['group_validation']= 'group:'.$julgroup['name'];
+    $data['group_validation'] = 'group:' . $julgroup['name'];
     //$data['share_options'] = xarModAPIFunc('julian','user','getuseroptions',array('uids'=>''));
-    $data['cal_date']=$cal_date;
+    $data['cal_date'] = $cal_date;
 
     // TODO Turn these into API functions.
     // Building duration minute options
@@ -80,11 +84,12 @@ function julian_user_addevent($args)
         $sminend = 46;
     }
 
+    // TODO: move this to the template.
     $start_minute_options = '';
-    for($i = 0;$i < $sminend; $i = $i + $StartMinInterval) {
-        $j = str_pad($i,2,"0",STR_PAD_LEFT);
-        $start_minute_options.='<option value="'.$j.'"';
-        $start_minute_options.='>'.$j.'</option>';
+    for($i = 0; $i < $sminend; $i = $i + $StartMinInterval) {
+        $j = str_pad($i, 2, '0', STR_PAD_LEFT);
+        $start_minute_options .= '<option value="' . $j . '"';
+        $start_minute_options .= '>' . $j . '</option>';
     }
     $data['start_minute_options'] = $start_minute_options;
 
@@ -101,15 +106,19 @@ function julian_user_addevent($args)
         $minend = 46;
     }
 
+    // TODO: move this to the template.
     $dur_minute_options = '';
-    for($i = 0;$i < $minend; $i = $i + $DurMinInterval) {
-        $j = str_pad($i,2,"0",STR_PAD_LEFT);
-        $dur_minute_options.='<option value="'.$j.'"';
-        $dur_minute_options.='>'.$j.'</option>';
+    for($i = 0; $i < $minend; $i = $i + $DurMinInterval) {
+        $j = str_pad($i, 2, '0', STR_PAD_LEFT);
+        $dur_minute_options .= '<option value="' . $j . '"';
+        $dur_minute_options .= '>' . $j . '</option>';
     }
+
     $data['dur_minute_options'] = $dur_minute_options;
+
     // Add authentication
     $data['authid']=xarSecGenAuthKey();
+
     return $data;
 }
 ?>
