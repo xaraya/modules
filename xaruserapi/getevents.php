@@ -31,6 +31,7 @@
  * @param int    catid Category ID
  * @param string startdate Start date in (Ymd) YYYYMMDD format; default: current day
  * @param string enddate End date in (Ymd) YYYYMMDD format
+ * @param docount if not empty, then returns a count of rows instead of the actual rows
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  * @todo MichelV: rewrite some queries for pgsql
@@ -88,33 +89,43 @@ function julian_userapi_getevents($args)
     // Set Events Table and Column definitions.
     $event_table = $xartable['julian_events'];
 
-    // Get items.
-    $query = 'SELECT DISTINCT ev.event_id,'
-        . ' ev.calendar_id, ev.summary, ev.description,'
-        . ' ev.street1, ev.street2, ev.city, ev.state, ev.zip,'
-        . ' ev.email, ev.phone, ev.location, ev.url,'
-        . ' ev.contact, ev.organizer,'
-        . ' ev.dtstart, ev.recur_until, ev.duration,'
-        . ' ev.rrule, ev.isallday, ev.fee,'
-        // Migrated from the get() API, in preparation for merging.
-        . ' ev.type,'
-        . ' ev.related_to,'
-        . ' ev.reltype,'
-        . ' ev.class,'
-        . ' ev.share_uids,'
-        . ' ev.priority,'
-        . ' ev.status,'
-        . ' ev.exdate,'
-        . ' ev.categories,'
-        . ' ev.recur_freq,'
-        . ' ev.recur_count,'
-        . ' ev.recur_interval,'
-        . ' ev.dtend,'
-        . ' ev.freebusy,'
-        . ' ev.due,'
-        . ' ev.transp,'
-        . ' ev.created,'
-        . ' ev.last_modified';
+    // Decide whether we are going to just count items, or
+    // fetch the full details of items.
+    // CHECKME: I have a hunch the COUNT(DISTINT ...) may cause problems with some
+    // earlier versions of MySQL. Also GROUP BY or ORDER BY columns may fail if they
+    // are not present in the SELECT clause. Keep an eye on this, in particular
+    // when using categories.
+
+    if (!empty($docount)) {
+        $query = 'SELECT COUNT(DISTINCT ev.event_id)';
+    } else {
+        $query = 'SELECT DISTINCT ev.event_id,'
+            . ' ev.calendar_id, ev.summary, ev.description,'
+            . ' ev.street1, ev.street2, ev.city, ev.state, ev.zip,'
+            . ' ev.email, ev.phone, ev.location, ev.url,'
+            . ' ev.contact, ev.organizer,'
+            . ' ev.dtstart, ev.recur_until, ev.duration,'
+            . ' ev.rrule, ev.isallday, ev.fee,'
+            // Migrated from the get() API, in preparation for merging.
+            . ' ev.type,'
+            . ' ev.related_to,'
+            . ' ev.reltype,'
+            . ' ev.class,'
+            . ' ev.share_uids,'
+            . ' ev.priority,'
+            . ' ev.status,'
+            . ' ev.exdate,'
+            . ' ev.categories,'
+            . ' ev.recur_freq,'
+            . ' ev.recur_count,'
+            . ' ev.recur_interval,'
+            . ' ev.dtend,'
+            . ' ev.freebusy,'
+            . ' ev.due,'
+            . ' ev.transp,'
+            . ' ev.created,'
+            . ' ev.last_modified';
+    }
 
     // Select on categories
     if (xarModIsHooked('categories', 'julian') && !empty($catid)) {
@@ -133,6 +144,7 @@ function julian_userapi_getevents($args)
     }
 
     // FIXME: date formats should be validated
+    // TODO: format the database dates using an API (to do it properly)
     // The dtstart column is a datetime type, and takes the format 'YYYYMMDDHHMMSS'
     if ((!empty($startdate)) && (!empty($enddate))) {
         $query .= " AND ev.dtstart BETWEEN '${startdate}000000' AND '${enddate}235959'";
@@ -142,8 +154,8 @@ function julian_userapi_getevents($args)
         $query .= " AND ev.dtstart <= '${enddate}235959'";
     }
 
-    // This is double now, as the array is being sorted anyway
-    if (isset($sortby)) {
+    // This is double now, as the array is being sorted anyway.
+    if (isset($sortby) && empty($docount)) {
         switch ($sortby) {
             case 'eventDate':
                 $query .= " ORDER BY ev.dtstart $orderby";
@@ -176,6 +188,14 @@ function julian_userapi_getevents($args)
     if ($result->EOF) {
         $result->Close();
         return $items;
+    }
+
+    // If we are asking for a count, then close the result set and return
+    // immediately with that count.
+    if (!empty($docount)) {
+        list($count) = $result->fields;
+        $result->Close();
+        return $count;
     }
 
     // Put items into result array
@@ -541,4 +561,5 @@ function julian_userapi_getrecur($start_date, $recur_freq, $rrule = null, $recur
         $i++;
     }
 }
+
 ?>

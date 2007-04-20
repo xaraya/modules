@@ -140,18 +140,19 @@ function julian_user_viewevents($args)
     $bl_data['startdate'] = $startdate;
     $bl_data['enddate'] = $enddate;
 
-    // The user API Function is called: get all events for these selectors
-    $events = xarModAPIFunc('julian', 'user', 'getevents',
-        array(
+    //Create URL params
+    $urlparams = array(
             'startnum'  => $startnum,
             'numitems'  => $numitems,
             'sortby'    => $sortby,
+        'catid'     => $catid,
             'orderby'   => $orderby,
             'startdate' => $startdate,
-            'enddate'   => $enddate,
-            'catid'     => $catid
-        )
+        'enddate'   => $enddate
     );
+
+    // The user API Function is called: get all events for these selectors
+    $events = xarModAPIFunc('julian', 'user', 'getevents', $urlparams);
 
     // Check for exceptions.
     // FIXME: errors should be indicated some other way, such as a NULL return.
@@ -283,23 +284,17 @@ function julian_user_viewevents($args)
     $bl_data['datenumber'] = $datenumber;
     $bl_data['datetype'] = $datetype;
 
-    //Create URL params
-    $urlparams = array(
-        'startnum'  => '%%',
-        'numitems'  => $numitems,
-        'sortby'    => $sortby,
-        'catid'     => $catid,
-        'orderby'   => $orderby,
-        'startdate' => $startdate,
-        'enddate'   => $enddate
-    );
+    //Count the number of 
+    $count = xarModAPIFunc('julian', 'user', 'countevents', $urlparams);
 
     // Create Pagination.
     // FIXME: the count does not take dates into account; suggest modifying getevents to return a count based on main selection
     // FIXME: the pager URL does not take other selection criteria into account; suggest trying xarServerGetCurrentURL()
-    $bl_data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('julian', 'user', 'countevents', array('catid' => $catid)),
-        xarModURL('julian', 'user', 'viewevents', $urlparams), $numitems);
+    $urlparams['startnum'] = '%%';
+    $urlparams['group'] = $group;
+    $bl_data['pager'] = xarTplGetPager($startnum, $count,
+        xarModURL('julian', 'user', 'viewevents', $urlparams), $numitems
+    );
 
     $urlparams['startnum'] = 1;
     $bl_data['urlparams'] = $urlparams;
