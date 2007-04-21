@@ -75,7 +75,7 @@ function workflow_admin_processes()
                 $data['msg'] =  xarML("The process name already exists");
                 return xarTplModule('workflow', 'admin', 'error', $data);
             } else {
-                $processManager->import_process($process_data);
+                $_REQUEST['pid'] = $processManager->import_process($process_data);
             }
             unlink($tmpfile);
         }
@@ -145,6 +145,17 @@ function workflow_admin_processes()
     // Specific find text
     $data['find'] = isset($_REQUEST["find"]) ? $_REQUEST["find"] : '';
 
+    // Validate the process
+    if ($_REQUEST['pid']) {
+        $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
+        $data['errors'] = array();
+        if (!$valid) {
+            $process = new Process($_REQUEST['pid']);
+            $process->deactivate();
+            $data['errors'] = $activityManager->get_error();
+        }
+    }
+
     // MaxRecords comes from tiki-setup.php (modvar)
     $items = $processManager->list_processes($data['offset'] - 1, $maxRecords, $data['sort_mode'], $data['find'], $data['where']);
     $data['cant'] =  $items['cant'];
@@ -162,17 +173,6 @@ function workflow_admin_processes()
         $data['prev_offset'] =  $data['offset'] - $maxRecords;
     }
     $data['items'] =  $items["data"];
-
-    // Validate the process
-    if ($_REQUEST['pid']) {
-        $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
-        $data['errors'] = array();
-        if (!$valid) {
-            $process = new Process($_REQUEST['pid']);
-            $process->deactivate();
-            $data['errors'] = $activityManager->get_error();
-        }
-    }
 
     // Huh? why?
     $items = $processManager->list_processes(0, -1, 'name_desc', '', '');

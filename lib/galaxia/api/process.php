@@ -68,7 +68,7 @@ class Process extends Base
     function invalidate()
     {
         // Make sure we are inactive
-        $this->deactivate();;
+        $this->deactivate();
 
         $query = "update ".self::tbl('processes')." set isValid=? where pId=?";
         $this->query($query,array('n',$this->pId));

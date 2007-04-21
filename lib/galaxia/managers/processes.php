@@ -274,6 +274,7 @@ class ProcessManager extends BaseManager
         unset($rm);
         $msg = sprintf(tra('Process %s %s imported'),$process->getName(),$process->getVersion());
         $this->notify_all(2,$msg);
+        return $pid;
     }
 
   /*!
