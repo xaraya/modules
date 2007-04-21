@@ -18,13 +18,13 @@ function sharecontent_user_sendbymail($args)
 {
     extract($args);
     // Get parameters
-    if(!xarVarFetch('emails', 'str:1:128', $emails, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('author', 'str:1:64', $author, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('authoremail', 'str:1:64', $authoremail, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('authid', 'str', $authid, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl', 'str', $returnurl, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('objectid', 'int', $objectid, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('extrainfo', 'str', $extrainfo, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('emails', 'str:1:128', $emails,NULL, XARVAR_POST_ONLY)) {return;}
+    if(!xarVarFetch('author', 'str:1:64', $author,NULL, XARVAR_POST_ONLY)) {return;}
+    if(!xarVarFetch('senderemail', 'email', $senderemail,NULL, XARVAR_POST_ONLY)) {return;}
+    if(!xarVarFetch('authid', 'str', $authid, NULL, XARVAR_POST_ONLY)) {return;}
+    if(!xarVarFetch('returnurl', 'str', $returnurl,NULL, XARVAR_POST_ONLY)) {return;}
+    if(!xarVarFetch('objectid', 'int', $objectid, NULL,XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('extrainfo', 'str', $extrainfo, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code; need to add modname to match 
     if (!xarSecConfirmAuthKey('sharecontent')) return;
@@ -41,7 +41,7 @@ function sharecontent_user_sendbymail($args)
 	    }
 	    $extrainfo = unserialize($extrainfo);
 		$tpldata['fromname'] = $author;
-		$tpldata['fromemail'] = $authoremail;
+		$tpldata['fromemail'] = $senderemail;
 		$tpldata['objectid'] = $objectid;
 		$tpldata['returnurl'] = $returnurl;
 		$tpldata['extrainfo'] = $extrainfo;
@@ -49,11 +49,16 @@ function sharecontent_user_sendbymail($args)
         $mailmodule['message'] = xarTplModule('sharecontent','user','sendbymail',$tpldata,$template);
 		$maxemails=xarModGetVar('sharecontent','maxemails');
         $emailsarray = explode(',',$emails);
+		
+		// get recepients and check check for valid email address
 		$chunkemails = array_chunk($emailsarray,$maxemails);
+		foreach ($chunkemails[0] as $key=>$email) {
+		   if (!xarVarValidate('email',$email,true)) unset($chunkemails[0][$key]);
+		}
 		$mailmodule['recipients'] = $chunkemails[0];
         $mailmodule['subject'] = xarTplModule('sharecontent','user','sendbymail-subject',$tpldata,$template);
         $mailmodule['fromname'] = $author;
-        $mailmodule['from'] = $authoremail;
+        $mailmodule['from'] = $senderemail;
 		if ($bccinfo = xarModGetVar('sharecontent','bcc')) {
 		    $mailmodule['bccinfo'] = $bccinfo;
 	    }
@@ -68,9 +73,12 @@ function sharecontent_user_sendbymail($args)
             }
         }
     }
-    xarResponseRedirect($returnurl);
 
-    return true;
+    return xarResponseRedirect(xarModURL('sharecontent','user','mailsentmsg',
+	                      array('returnurl'=>$returnurl,
+						        'sentto'=>$mailmodule['recipients'])));
+    //xarResponseRedirect($returnurl);
+
 }
 
 ?>

@@ -35,7 +35,8 @@ function sharecontent_init()
     $query = xarDBCreateTable($xartable['sharecontent'], $fields);
     if (empty($query)) return; // throw back
 
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    // Pass the Table Create DDL to adodb to create the table and 
+	// send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
@@ -86,7 +87,12 @@ function sharecontent_init()
     xarRegisterMask('AdminSharecontent', 'All', 'sharecontent', 'All', 'All', 'ACCESS_ADMIN');
 
     // Initialisation successful
-    return true;
+	// run upgrades
+	if (sharecontent_upgrade('0.9.3')) {;
+       return true;
+	} else {
+	   return false;
+    }
 }
 
 /**
@@ -100,7 +106,31 @@ function sharecontent_upgrade($oldversion)
     switch ($oldversion) {
 	    case '0.9.2':
             xarModSetVar('sharecontent', 'bcc', '');
+		case '0.9.3':
+            // Pass the Table Create DDL to adodb to create the table and 
+        	// send exception if unsuccessful
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+        
+            // Load the initial setup of the publication types
+            if (file_exists('modules/sharecontent/xarsetup.php')) {
+                include 'modules/sharecontent/xarsetup.php';
+            } else {
+                // TODO: add some defaults here
+                $websites= array();
+            }
+        
+            // Save  websites
+            foreach ($websites2 as $website) {
+                list($title,$homeurl,$submiturl,$image,$active) = $website;
+                $nextId = $dbconn->GenId($xartable['sharecontent']);
+                $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
+                $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
+                $result =& $dbconn->Execute($query,$bindvars);
+                if (!$result)  sharecontent_delete();
+            }
     }
+
     return true;
 }
 

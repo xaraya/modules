@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Sharecontent';
 $modversion['id']             = '894';
-$modversion['version']        = '0.9.3';
+$modversion['version']        = '0.9.4';
 $modversion['displayname']    = xarML('Sharecontent');
 $modversion['description']    = 'Share items in web 2.0 sites and by email';
 $modversion['changelog']      = 'xardocs/changelog.txt';
@@ -26,5 +26,5 @@ $modversion['contact']        = 'http://www.andreamoro.net/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
-$modversion['category']       = 'Miscellaneous';
+$modversion['category']       = 'Content';
 ?>

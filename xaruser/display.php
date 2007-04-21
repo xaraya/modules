@@ -56,7 +56,9 @@ function sharecontent_user_display($args)
             
             foreach($websites as $key=>$website) {
                 $submiturl = $website['submiturl'];
-                $submiturl = preg_replace('/#URL#/',$data['returnurl'],$submiturl);
+                //$dataurl = preg_replace('/&amp;/','%2526',$data['returnurl']);
+                $dataurl = $data['returnurl'];
+                $submiturl = preg_replace('/#URL#/',$dataurl,$submiturl);
                 if (isset($extrainfo['title'])) {
       				// needs to do it twice for some sites
 				    $submiturl = preg_replace('/#TITLE#/',$extrainfo['title'],$submiturl);

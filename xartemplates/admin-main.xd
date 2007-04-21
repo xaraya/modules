@@ -9,19 +9,19 @@
         <xar:mlstring>Overview</xar:mlstring>
     </h2>
     <h3>
-            <xar:mlstring>What is it?</xar:mlstring>
+            <xar:mlstring>Description</xar:mlstring>
     </h3>
         <p>
             <em><xar:mlstring>Sharecontent is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
-                <li><xar:mlstring>Simplifying the task of bookmarking articles (or other hooked items) to the social bookmarking sites you have enabled in Sharecontent's module configuration.  The widget is inspired by Pascal Belloncle's Bookmarkit plugin for Typo, and Kaf Oseo.s excellent example for WordPress. The first release includes 69 web2.0 sites; future releases will allow administrators to include custom sites</xar:mlstring></li>
+                <li><xar:mlstring>Simplifying the task of bookmarking articles (or other hooked items) to the social bookmarking sites you have enabled in Sharecontent's module configuration.  The widget is inspired by Pascal Belloncle's Bookmarkit plugin for Typo, and Kaf Oseo's excellent example for WordPress. The first release includes 71 web2.0 sites; future releases will allow administrators to include custom sites</xar:mlstring></li>
 				<li><xar:mlstring>Providing a user interface to send the hooked item's basic information by email</xar:mlstring></li>
 				
             </ul>
         </p>
          <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
+            <xar:mlstring>How to use it</xar:mlstring>
        </h3>
         <p>
             <xar:mlstring>
@@ -36,9 +36,12 @@
 			can enable the supported social bookmarking web sites. The enabled sites' icons will
 			appear on the display hook in your hooked module's item
 	      </xar:mlstring>
-			<xar:mlstring>
+		  <xar:mlstring>
+		    Note: you might have to enable shorturls as most sites won't be able to read ampersands in the url field
+	      </xar:mlstring>
+		  <xar:mlstring>
 			Note: for best functionality, you should
-			get the latest nightly build of the articles module, otherwise the module won't be able
+			get the latest nightly build of the articles module, or the module won't be able
 			to send articles' title to any web site; alternatively, you can add the following line
 			after line 501 in articles/xaruser/display.php (a line containing  'itemtype'=>$pubtypeid):
 			'title' => $title,
@@ -67,7 +70,7 @@
 	      </xar:mlstring>
 	    </p>
 	      <xar:mlstring>
-		    This functionality somewhat duplicates functionality of the recommend module. One advantage of using sharecontent is that sharecontent works as a hook, whereas recommend needs adding an extra tag in the contend module. Therefore, with sharecontent you never leave the content modules' display even after sending the email. The recommend module instead displays a link that forwards you to a mail form. One advantage of recommend  module is that it includes a dynamicdata property sot that you can pick which items should include the sendtofriend link. 
+		    This functionality somewhat duplicates functionality of the recommend module. One advantage of using sharecontent is that sharecontent works as a hook, whereas recommend needs adding an extra tag in the content module. With sharecontent you won't have to modify your templates, and the user will never have to leave the content modules' display even after sending the email. The recommend module instead displays a link that forwards you to a mail form. One advantage of recommend  module is that it includes a dynamicdata property which wil let site administrators you can pick which items should include the sendtofriend link. 
 	      </xar:mlstring>
         <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
@@ -94,8 +97,11 @@
     </li>
     <li><xar:mlstring>Related tutorials and documentation on Sharecontent found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/sharecontent/" title="#xarML('Related documentation on sharecontent')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
+    <li>
+	  Please report bugs and suggestions <a href="http://code.google.com/p/andreamoro-code/issues/list">here</a>
+    </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Sharecontent Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0&nbsp; 2007-04-09
+    <strong>&nbsp;<xar:mlstring>Sharecontent Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.9.4 2007-04-21
   </p>
 </div>

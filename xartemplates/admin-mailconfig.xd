@@ -27,7 +27,7 @@
       </div>
       <div class="xar-form-input-wrapper">
         <label for="maxemails" class="xar-form-label">
-            <xar:mlstring>Max number of recipients</xar:mlstring>
+            <xar:mlstring>Max number of recipients (comma-separated)</xar:mlstring>
         </label>
         <input type="text" size="3" id="maxemails" value="#$maxemails#" name="maxemails" />
       </div>

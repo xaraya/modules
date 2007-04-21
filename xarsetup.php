@@ -18,6 +18,18 @@
  */
 
     // The list of currently supported websites 
+$websites2= array(
+    array('OKNO',
+	      'http://oknotizie.alice.it',
+		  'http://oknotizie.alice.it/post?title=#TITLE#&url=#URL#',
+		  'modules/sharecontent/xarimages/okno.png',
+		  true),
+    array('Segnalo',
+	      'http://segnalo.alice.it',
+		  'http://segnalo.alice.it/post.html.php?title=#TITLE#&url=#URL#',
+		  'modules/sharecontent/xarimages/segnalo.png',
+		  true)
+);
 $websites= array(
     array('del.icio.us',
 	      'http://del.icio.us',

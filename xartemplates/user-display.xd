@@ -19,17 +19,20 @@
 </xar:if>
 <xar:if condition="$usercansend">
 <div style="margin: 4px 0">
-  <xar:mlstring>Notify:</xar:mlstring>
+  <xar:mlstring>Notify by email:</xar:mlstring>
   <xar:if condition="xarUserIsLoggedIn()">
     <xar:set name="username">xarUserGetVar('name')</xar:set>
     <xar:set name="useremail">xarUserGetVar('email')</xar:set>
+  <xar:else />
+    <xar:set name="username">xarML('anonymous')</xar:set>
+    <xar:set name="useremail">xarML('enter your email')</xar:set>
   </xar:if>
   <form class="sharecontent" method="post" 
         action="&xar-modurl-sharecontent-user-sendbymail;" 
  		enctype="application/x-www-form-urlencoded">
-    <xar:mlstring>Recipient:</xar:mlstring><input type="text" name="emails" size="30" />
-    <xar:mlstring>From:</xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
-    <xar:mlstring>Sender's mail:</xar:mlstring><input type="text" value="#$useremail#" name="authoremail" size="30" />
+    <xar:mlstring>Recipient </xar:mlstring><input type="text" name="emails" size="30" />
+    <xar:mlstring>From </xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
+    <xar:mlstring>Sender's mail </xar:mlstring><input type="text" value="#$useremail#" name="senderemail" size="30" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="returnurl" value="#$returnurl#"/>
     <input type="hidden" name="objectid" id="objectid" value='#$objectid#' />
