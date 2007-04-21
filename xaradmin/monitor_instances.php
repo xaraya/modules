@@ -23,9 +23,9 @@ function workflow_admin_monitor_instances()
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
-
+$maxRecords = xarModGetVar('workflow','itemsperpage');
 // Adapted from tiki-g-monitor_instances.php
 
 include_once (GALAXIA_LIBRARY.'/processmonitor.php');
@@ -157,7 +157,7 @@ if ($maxtime > 0) {
 }
 foreach ($items['data'] as $index => $info) {
     $items['data'][$index]['timescale'] = intval( $scale * $info['duration'] );
-    $items['data'][$index]['duration'] = xarTimeToDHMS($info['duration']);
+    $items['data'][$index]['duration'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']));
     if (!empty($info['started'])) {
         $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$info['started']) . ' '
                                             . xarLocaleGetFormattedTime('short',$info['started']);

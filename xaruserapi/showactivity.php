@@ -24,8 +24,8 @@ function workflow_userapi_showactivity($args)
         return '';
     }
 
-// Common setup for Galaxia environment
-    include('modules/workflow/tiki-setup.php');
+    // Common setup for Galaxia environment
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
     include (GALAXIA_LIBRARY.'/api.php');

@@ -23,7 +23,7 @@ function workflow_userapi_run_activity($args)
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment (possibly include more than once here !)
-    include('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
     // Adapted from tiki-g-run_activity.php

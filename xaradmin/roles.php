@@ -24,8 +24,9 @@ function workflow_admin_roles()
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $data = array();
+    $maxRecords = xarModGetVar('workflow','itemsperpage');
 
     // Adapted from tiki-g-admin_roles.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');

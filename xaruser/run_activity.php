@@ -25,9 +25,9 @@ function workflow_user_run_activity()
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
     // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
-
+    $user = xarUserGetVar('uid');
     // Adapted from tiki-g-run_activity.php
     include (GALAXIA_LIBRARY.'/api.php');
 

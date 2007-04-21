@@ -23,7 +23,7 @@ function workflow_admin_workitem()
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
 // Adapted from tiki-g-view_workitem.php

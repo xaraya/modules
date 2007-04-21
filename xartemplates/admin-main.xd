@@ -52,7 +52,7 @@
   <li><xar:mlstring>
     install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a>
     if you want to generate some nice process graphs, and adapt
-    GRAPHVIZ_DIR in <code>modules/workflow/tiki-setup.php</code> if necessary;</xar:mlstring>
+    GRAPHVIZ_DIR in <code>modules/workflow/lib/galaxia/config.php</code> if necessary;</xar:mlstring>
   </li>
   <li><xar:mlstring>
     go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import

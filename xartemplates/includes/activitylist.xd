@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div>
-    <fieldset>
-      <legend><xar:mlstring>Process activities</xar:mlstring></legend>
-      <form action="&xar-modurl-workflow-admin-activities;" method="post">
+    <form action="&xar-modurl-workflow-admin-activities;" method="post">
+      <fieldset>
+        <legend><xar:mlstring>Process activities</xar:mlstring></legend>
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
         <input type="hidden" name="pid" value="#$pid#" />
         <input type="hidden" name="activityId" value="#$info['activityId']#" />
@@ -51,8 +51,10 @@
             </td>
           </tr>
         </table>
-      </form>
-      <form action="&xar-modurl-workflow-admin-activities;" method="post">
+      </fieldset>
+    </form>
+
+    <form action="&xar-modurl-workflow-admin-activities;" method="post">
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
@@ -151,7 +153,7 @@
                 </td>
               </tr>
             </xar:foreach>
-            <xar:else/>
+          <xar:else/>
             <tr>
               <td colspan="6">
                 <xar:mlstring>No activities defined yet</xar:mlstring>
@@ -166,7 +168,6 @@
           </tr>
         </table>
       </form>
-    </fieldset>
   </div>
 
 

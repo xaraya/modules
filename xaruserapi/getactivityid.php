@@ -26,7 +26,7 @@ function workflow_userapi_getActivityId($args)
 
   if(!isset($activityName)) return;
 
-  include('modules/workflow/tiki-setup.php');
+  sys::import('modules.workflow.lib.galaxia.config');
   include(GALAXIA_LIBRARY.'/processmonitor.php');
 
 

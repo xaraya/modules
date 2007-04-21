@@ -27,8 +27,8 @@ function workflow_userapi_getitemlinks($args)
         return $itemlinks;
     }
 
-// Common setup for Galaxia environment
-    include('modules/workflow/tiki-setup.php');
+    // Common setup for Galaxia environment
+    sys::import('modules.workflow.lib.galaxia.config');
     include(GALAXIA_LIBRARY.'/gui.php');
 
     // get the instances this user has access to

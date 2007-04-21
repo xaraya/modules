@@ -20,8 +20,8 @@ function workflow_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-// Common setup for Galaxia environment
-    include('modules/workflow/tiki-setup.php');
+    // Common setup for Galaxia environment
+    sys::import('modules.workflow.lib.galaxia.config');
     include(GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all active processes

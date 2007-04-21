@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <div class="mini">
-    <div align="center"><xar:if condition="$prev_offset ge 0">
+    <div style="text-align: center;"><xar:if condition="$prev_offset ge 0">
       [<a class="prevnext" href="#xarServerGetCurrentURL(array('offset' =&gt; $prev_offset))#">#xarML('prev')#</a>]&#xA0;
     </xar:if>
     #xarML('Page')#: #$actual_page#/#$cant_pages#

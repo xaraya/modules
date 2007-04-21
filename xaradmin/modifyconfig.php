@@ -95,7 +95,7 @@ function workflow_admin_modifyconfig()
     }
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     include_once (GALAXIA_LIBRARY.'/processmonitor.php');
 
     // get all start activities that are not interactive

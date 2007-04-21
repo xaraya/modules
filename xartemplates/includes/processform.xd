@@ -5,11 +5,10 @@
 <xar:else/>
   <xar:set name="formtitle"><xar:mlstring>Add process</xar:mlstring></xar:set>
 </xar:if>
-<fieldset>
-  <legend><xar:var name="formtitle"/></legend>
-  
-  <!-- Show an edit form for the process -->
-  <form action="&xar-modurl-workflow-admin-processes;" method="post">
+<form action="&xar-modurl-workflow-admin-processes;" method="post">
+  <fieldset>
+    <legend><xar:var name="formtitle"/></legend>
+
     <input type="hidden" name="version" value="#$proc_info['version']#" />
     <input type="hidden" name="pid" value="#$proc_info['pId']#" />
     <input type="hidden" name="offset" value="#$offset#" />
@@ -17,6 +16,7 @@
     <input type="hidden" name="find" value="#$find#" />
     <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 
+    <!-- Show an edit form for the process -->
     <div class="xar-form-input-wrapper">
       <label class="xar-form-label"><xar:mlstring>Version:</xar:mlstring></label>
       #$proc_info.version#
@@ -27,7 +27,7 @@
     </div>
     <div class="xar-form-input-wrapper">
       <label for="processdescription" class="xar-form-label"><xar:mlstring>Description</xar:mlstring></label>
-      <textarea rows="5" cols="55" name="description">#$proc_info['description']#</textarea>
+      <textarea id="processdescription" rows="5" cols="55" name="description">#$proc_info['description']#</textarea>
     </div>
     <div class="xar-form-input-wrapper-after">
       <xar:if condition="$proc_info['isActive'] eq 'y'">
@@ -45,10 +45,10 @@
       </xar:if>
       <input type="submit" name="save" value="#$save#" />
     </div>
-  </form>
-</fieldset>
- 
-  
+  </fieldset>
+</form>
+
+
 <!-- Or an upload form -->
 <xar:if condition="$pid eq 0">
   <fieldset>

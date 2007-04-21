@@ -23,7 +23,7 @@ function workflow_admin_save_process()
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
 // Adapted from tiki-g-save_process.php

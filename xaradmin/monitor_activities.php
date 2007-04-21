@@ -22,8 +22,9 @@ function workflow_admin_monitor_activities()
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
-// Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    // Common setup for Galaxia environment
+    sys::import('modules.workflow.lib.galaxia.config');
+    $maxRecords = xarModGetVar('workflow','itemsperpage');
 
 // Adapted from tiki-g-monitor_activities.php
 include_once (GALAXIA_LIBRARY.'/processmonitor.php');
@@ -109,9 +110,9 @@ if ($maxtime > 0) {
 }
 foreach ($items['data'] as $index => $info) {
     if (isset($info['duration'])) {
-        $items['data'][$index]['duration']['min'] = xarTimeToDHMS($info['duration']['min']);
-        $items['data'][$index]['duration']['avg'] = xarTimeToDHMS($info['duration']['avg']);
-        $items['data'][$index]['duration']['max'] = xarTimeToDHMS($info['duration']['max']);
+        $items['data'][$index]['duration']['min'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['min']));
+        $items['data'][$index]['duration']['avg'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['avg']));
+        $items['data'][$index]['duration']['max'] = xarModApiFunc('workflow','user','timetodhms',array('time'=>$info['duration']['max']));
         $info['duration']['max'] -= $info['duration']['avg'];
         $info['duration']['avg'] -= $info['duration']['min'];
         $items['data'][$index]['timescale'] = array();

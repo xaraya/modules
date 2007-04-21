@@ -1,14 +1,14 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-container">
-  <fieldset>
-    <legend>
-      <xar:if condition="$activityId gt 0">
-        <xar:mlstring>Activity details</xar:mlstring>
-        <xar:else/>
-      <xar:mlstring>Add new activity</xar:mlstring>
-      </xar:if>
-    </legend>
-    <form action="&xar-modurl-workflow-admin-activities;" method="post">
+  <form action="&xar-modurl-workflow-admin-activities;" method="post">
+    <fieldset>
+      <legend>
+        <xar:if condition="$activityId gt 0">
+          <xar:mlstring>Activity details</xar:mlstring>
+          <xar:else/>
+        <xar:mlstring>Add new activity</xar:mlstring>
+        </xar:if>
+      </legend>
       <input type="hidden" name="pid" value="#$pid#" />
       <input type="hidden" name="activityId" value="#$info['activityId']#" />
       <input type="hidden" name="where2" value="#$where2#" />
@@ -163,9 +163,7 @@
           <input type="submit" name="save_act" value="#xarML('Update')#" />
         </xar:if>
       </div>
-    </form>
-  </fieldset>
+    </fieldset>
+  </form>
 </div>
-
-
 </xar:template>

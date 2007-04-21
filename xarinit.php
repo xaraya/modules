@@ -543,7 +543,7 @@ function workflow_delete()
 
 function workflow_remove_processes()
 {
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $dir = GALAXIA_PROCESSES;
     if (!is_dir($dir)) return;
     $h = opendir($dir);

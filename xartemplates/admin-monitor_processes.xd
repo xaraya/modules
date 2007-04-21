@@ -6,9 +6,9 @@
   <!-- Include the monitoring navigation -->
   <xar:template file="monitor_bar" type="module"/>
 
+  <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
       <fieldset>
         <legend><xar:mlstring>List of processes</xar:mlstring> (#$cant#)</legend>
-        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
           <input type="hidden" name="offset" value="#$offset#" />
           <input type="hidden" name="sort_mode" value="#$sort_mode#" />
           <table>
@@ -79,13 +79,7 @@
               <td><input type="submit" name="filter" value="#xarML('filter')#" /></td>
             </tr>
           </table>
-        </form>
 
-        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_processes;" method="post">
-          <input type="hidden" name="offset" value="#$offset#" />
-          <input type="hidden" name="find" value="#$find#" />
-          <input type="hidden" name="where" value="#$where#" />
-          <input type="hidden" name="sort_mode" value="#$sort_mode#" />
           <table style="border-collapse: separate; width: 99%;">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
@@ -149,12 +143,12 @@
               </tr>
             </xar:if>
           </table>
-        </form>
       </fieldset>
+    </form>
 
-      <xar:template file="pager"/>
-      <xar:template file="monitor_stats" type="module"/>
-      <xar:template file="galaxfooter"/>
+    <xar:template file="pager"/>
+    <xar:template file="monitor_stats" type="module"/>
+    <xar:template file="galaxfooter"/>
 
 </div>
 

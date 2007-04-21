@@ -22,6 +22,11 @@ function workflow_user_instances()
     // Security Check
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
+
+    // Initialize some stuff
+    $user = xarUserGetVar('uid');
+    $maxRecords = xarModGetVar('workflow','itemsperpage');
+
     if (isset($_REQUEST['run']) || isset($_REQUEST['run_x'])) {
         return xarModFunc('workflow','user','run_activity');
     }
@@ -53,7 +58,7 @@ function workflow_user_instances()
     }
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
 // Adapted from tiki-g-user_instances.php

@@ -25,8 +25,9 @@ function workflow_admin_processes()
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
     // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $data = array();
+    $maxRecords = xarModGetVar('workflow','itemsperpage');
 
     // Adapted from tiki-g-admin_processes.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');
@@ -156,7 +157,6 @@ function workflow_admin_processes()
         }
     }
 
-    // MaxRecords comes from tiki-setup.php (modvar)
     $items = $processManager->list_processes($data['offset'] - 1, $maxRecords, $data['sort_mode'], $data['find'], $data['where']);
     $data['cant'] =  $items['cant'];
 

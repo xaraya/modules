@@ -126,7 +126,7 @@
   </div>
 
   <xar:if condition="!empty($graph)">
-    <div align="center">
+    <div style="text-align: center">
       <xar:if condition="!empty($map)">
         <img src="#$graph#" alt="#$procname#" usemap="#procmap" />
         <map name="procmap">#$map#</map>

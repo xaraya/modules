@@ -25,7 +25,7 @@ function workflow_userapi_showinstances($args)
     }
 
 // Common setup for Galaxia environment
-    include_once('modules/workflow/tiki-setup.php');
+    sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
 
     include(GALAXIA_LIBRARY.'/gui.php');
