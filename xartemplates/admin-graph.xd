@@ -11,7 +11,7 @@
 <!-- Show some help if we enabled that feature -->
     <xar:if condition="!empty($info['graph'])">
       <xar:if condition="!empty($info['map'])">
-        <img src="#$info['graph']#" alt="#$info['name']#" border="0" usemap="#procmap"/>
+        <img src="#$info['graph']#" alt="#$info['name']#" usemap="#procmap"/>
         <map name="procmap">
           #$info['map']#
         </map>

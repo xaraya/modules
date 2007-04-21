@@ -55,9 +55,12 @@ function workflow_admin_graph()
         if (file_exists($process->getGraph()) && file_exists($mapfile)) {
             xarLogMessage("WF: graph files exist");
             $map = join('',file($mapfile));
+
             $url = xarModURL('workflow','admin','activities',
                              array('pid' => $info['pId']));
             $map = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $map);
+            // Darn graphviz does not close the area tags
+            $map = preg_replace('#<area (.*[^/])>#','<area $1/>',$map);
             $info['map'] = $map;
         } else {
             $info['graph'] = '';

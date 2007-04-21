@@ -40,7 +40,7 @@ function keypresshandler(elemID,event)
               <label class="xar-form-label">
                   <xar:mlstring>Activity: </xar:mlstring>
               </label>
-              <select name="activityId" onChange="document.getElementById('editsource').submit();">
+              <select name="activityId" onchange="document.getElementById('editsource').submit();">
               <xar:if condition="$activityId eq 0">
                   <option value="" selected="selected"><xar:mlstring>Shared code</xar:mlstring></option>
               <xar:else/>

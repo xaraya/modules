@@ -10,7 +10,7 @@
   </xar:if>
   <dd class="#$classstring#">
     <a class="link" href="&xar-modurl-workflow-admin-processes;">
-      <img border="0" src="#xarTplGetImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#" />
+      <img src="#xarTplGetImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#" />
       <xar:mlstring>List </xar:mlstring>
     </a>
   </dd>
@@ -21,7 +21,7 @@
     <xar:if condition="$proc_info['isActive'] eq 'y'">
       <dd class="#$classstring#">
         <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
-          <img border="0" src="modules/workflow/lib/galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
+          <img src="modules/workflow/lib/galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
           <xar:mlstring>Deactivate </xar:mlstring>
         </a>
       </dd>
@@ -86,7 +86,7 @@
     </xar:if>
     <dd class="#$classstring#">
       <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#">
-        <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" border="0" title="#xarML('graph')#" alt="#xarML('graph')#" />
+        <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" />
         <xar:mlstring>Graph</xar:mlstring>
       </a>
     </dd>

@@ -23,7 +23,7 @@
   </xar:if>
   <dd class="#$classstring#">
     <a href="&xar-modurl-workflow-user-processes;">
-      <img border="0" src="modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#" />
+      <img src="modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#" />
         <xar:mlstring>Processes</xar:mlstring>
     </a>
   </dd>
@@ -34,7 +34,7 @@
   </xar:if>
   <dd class="#$classstring#">
     <a href="&xar-modurl-workflow-user-activities;">
-      <img border="0" src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#" />
+      <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#" />
         <xar:mlstring>Activities</xar:mlstring>
     </a>
   </dd>
@@ -45,7 +45,7 @@
   </xar:if>
   <dd class="#$classstring#">
     <a href="&xar-modurl-workflow-user-instances;">
-      <img border="0" src="modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#" />
+      <img src="modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#" />
         <xar:mlstring>Instances</xar:mlstring>
     </a>
   </dd>

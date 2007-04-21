@@ -61,37 +61,40 @@
         <input type="hidden" name="pid" value="#$pid#" />
         <input type="hidden" name="activityId" value="#$info['activityId']#" />
 
-        <!-- Little trick to get the base link into a variable, save some typing ahead -->
-        <xar:set name="urlbase">&xar-modurl-workflow-admin-activities;</xar:set>
-        <xar:set name="urlparam">"&amp;where2=$where2&amp;sort_mode2=$sort_mode2&amp;pid=$pid&amp;find=$find&amp;where=$where"</xar:set>
-        <xar:set name="baselink">$urlbase . $urlparam;</xar:set>
+        <!--
+            Yeah, this could be done smarter, but we consider BL1 and BL2 here.
+            BL1 is a bit confused on when to escape ampersands and when not
+            So, if you change these long things below keep in mind that:
+            1. it should work in BL1 and BL2 (for now)
+            2, both the template AND the resulting output should be valid XML
 
+        -->
         <table style="border-collapse: separate; width: 99%">
           <tr>
             <xar:if condition="$sort_mode eq 'flowNum_desc'">
-              <th><a href="#$baselink#&amp;sort_mode=flowNum_asc"><xar:mlstring>Nr.</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_asc"><xar:mlstring>Nr.</xar:mlstring></a></th>
             <xar:else/>
-               <th><a href="#$baselink#&amp;sort_mode=flowNum_desc"><xar:mlstring>Nr.</xar:mlstring></a></th>
+               <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=flowNum_desc"><xar:mlstring>Nr.</xar:mlstring></a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'name_desc'">
-              <th><a href="#$baselink#&amp;sort_mode=name_asc"><xar:mlstring>Name</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_asc"><xar:mlstring>Name</xar:mlstring></a></th>
               <xar:else/>
-              <th ><a href="#$baselink#&amp;sort_mode=name_desc"><xar:mlstring>Name</xar:mlstring></a></th>
+              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=name_desc"><xar:mlstring>Name</xar:mlstring></a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'type_desc'">
-              <th ><a href="#$baselink#&amp;sort_mode=type_asc"><xar:mlstring>Type</xar:mlstring></a></th>
+              <th ><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_asc"><xar:mlstring>Type</xar:mlstring></a></th>
               <xar:else/>
-              <th><a href="#$baselink#&amp;sort_mode=type_desc"><xar:mlstring>Type</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=type_desc"><xar:mlstring>Type</xar:mlstring></a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="#$baselink#&amp;sort_mode=isInteractive_asc"><xar:mlstring>Interactive</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_asc"><xar:mlstring>Interactive</xar:mlstring></a></th>
               <xar:else/>
-              <th><a href="#$baselink#&amp;sort_mode=isInteractive_desc"><xar:mlstring>Interactive</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isInteractive_desc"><xar:mlstring>Interactive</xar:mlstring></a></th>
             </xar:if>
             <xar:if condition="$sort_mode eq 'isInteractive_desc'">
-              <th><a href="#$baselink#&amp;sort_mode=isAutoRouted_asc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_asc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
               <xar:else/>
-              <th><a href="#$baselink#&amp;sort_mode=isAutoRouted_desc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
+              <th><a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=isAutoRouted_desc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
             </xar:if>
             <th><xar:mlstring>Code</xar:mlstring></th>
             <th><xar:mlstring>Template</xar:mlstring></th>
@@ -108,7 +111,7 @@
                 </td>
                 <td style="text-align:left;">
                   <input type="checkbox" name="activity[#$items[$ix]['activityId']#]" />&#160;
-                  <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
+                  <a href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                   <xar:if condition="$items[$ix]['roles'] lt 1">
                     <small><xar:mlstring>(no roles)</xar:mlstring></small>
                   </xar:if>
