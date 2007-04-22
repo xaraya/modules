@@ -1,22 +1,22 @@
 <?php
 
-include_once "modules/bkview/xarincludes/scmfile.class.php";
+include_once "modules/bkview/xarincludes/scmfile.php";
 
-class mtFile extends scmFile
+class mtnFile extends scmFile
 {
     
-    function mtFile($repo, $file)
+    function __construct($repo, $file)
     {
         $this->repo =& $repo;
         $this->file = $file;
     }
 
-    function AbsoluteName()
+    function absoluteName()
     {
         return $this->file;
     }
     
-    function History($user='')
+    function history($user='')
     {
         // We have: the filename
         // We need:
@@ -29,5 +29,4 @@ class mtFile extends scmFile
         return array();
     }
 }
-
 ?>

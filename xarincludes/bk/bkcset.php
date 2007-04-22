@@ -13,7 +13,7 @@
 /**
  * Class to model a bitkeeper changeset
  */
-include_once "modules/bkview/xarincludes/scmcset.class.php";
+include_once "modules/bkview/xarincludes/scmcset.php";
 class bkChangeSet extends bkDelta // A changeset is, in bk, basically a delta on the changeset file
 {
     var $deltas = array();   // array of file/rev combos which hold the deltas in this cset

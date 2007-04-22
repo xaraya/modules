@@ -21,14 +21,14 @@ class scmRepo
      * Construct a repository object 
      *
      */
-    public static function construct($brand ='bk', $args)
+    public static function construct($brand ='mtn', $args)
     {
-        include_once "modules/bkview/xarincludes/$brand/$brand.class.php";
+        include_once "modules/bkview/xarincludes/$brand/$brand.php";
         $className =  "$brand"."Repo";
         switch($brand) {
             case 'bk':
                 return new $className($args['repopath']);
-            case 'mt':
+            case 'mtn':
                 return new $className($args['repopath'],$args['repobranch']);
         }
     }
@@ -69,7 +69,7 @@ class scmRepo
         if(!isset($id)) return;
         switch($id) {
             case 1: return 'bk';
-            case 2: return 'mt';
+            case 2: return 'mtn';
             default: return;
         }
     }

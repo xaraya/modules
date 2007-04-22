@@ -1,10 +1,10 @@
 <?php
 
-include_once "modules/bkview/xarincludes/scmdelta.class.php";
-class mtDelta extends scmDelta
+include_once "modules/bkview/xarincludes/scmdelta.php";
+class mtnDelta extends scmDelta
 {
 
-    function mtDelta($repo, $file, $rev)
+    function __construct($repo, $file, $rev)
     {
         $this->repo =& $repo;
         $this->file = $file;
@@ -14,11 +14,11 @@ class mtDelta extends scmDelta
         $this->comments = "TBD"; // No delta comments specifically for mt
     }
     
-    function Diffs()
+    function diffs()
     {
         $filearg='';
         if($this->file != 'ChangeSet') {
-            // File diff DOESNT WORK thru mt interface, do it from the db directly
+            // File diff DOESNT WORK thru mtn interface, do it from the db directly
             $cmd="db execute \"SELECT delta FROM file_deltas WHERE base='".$this->rev."'\"";
             $result =& $this->repo->_run($cmd);
             array_shift($result);

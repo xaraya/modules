@@ -14,7 +14,7 @@
 /**
  *  Class to model a bitkeeper repository
  */
-include_once "modules/bkview/xarincludes/scmrepo.class.php";
+include_once "modules/bkview/xarincludes/scmrepo.php";
 class bkRepo extends scmRepo
 {
     var $_desc;     // what is the description of the repository

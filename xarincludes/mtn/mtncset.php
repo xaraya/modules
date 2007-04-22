@@ -1,31 +1,31 @@
 <?php
 
-include_once "modules/bkview/xarincludes/scmcset.class.php";
-class mtChangeSet // In monotone a changeset is NOT a delta on the changeset file.
+include_once "modules/bkview/xarincludes/scmcset.php";
+class mtnChangeSet // In monotone a changeset is NOT a delta on the changeset file.
 {
     var $repo = null; // To which repository object does this changeset belong?
     var $rev='';      // Changeset revision
     var $certs;
     
-    function mtChangeSet($repo, $rev='')
+    function __construct($repo, $rev = '')
     {
         $this->file = 'ChangeSet';
         $this->rev = $rev;
         $this->repo =& $repo;
         $this->certs = $repo->certs($rev);
 
-        $this->tag = $this->GetTag();
-        $this->key = $this->GetKey();
-        $this->author = $this->GetAuthor();
+        $this->tag = $this->getTag();
+        $this->key = $this->getKey();
+        $this->author = $this->getAuthor();
         $this->age = 'TDB';
         $this->comments = $this->getComments();
         
-        $this->deltas = $this->DeltaList();
+        $this->deltas = $this->deltaList();
 
     }
     
     // Retrieve the tag for this revision, if any
-    function GetTag()
+    function getTag()
     {
         return $this->getCert('tag');
     }
@@ -42,22 +42,22 @@ class mtChangeSet // In monotone a changeset is NOT a delta on the changeset fil
         return $res;
     }
     
-    function GetAuthor()
+    function getAuthor()
     {
         return $this->getCert('author');
     }
     
-    function GetComments()
+    function getComments()
     {
         return $this->getCert('changelog');
     }
     
-    function GetKey()
+    function getKey()
     {
         return $this->rev;
     }
     
-    function DeltaList()
+    function deltaList()
     {
         // TODO: Guess!
         $cmd = "automate get_revision ".$this->rev;
@@ -65,7 +65,7 @@ class mtChangeSet // In monotone a changeset is NOT a delta on the changeset fil
         $result = join("\n",$result);
 
         $deltas = array();
-        // At this point we have a larg string describing all the changes in this revision.
+        // At this point we have a large string describing all the changes in this revision.
         // Kinda lame, but we need to parse this ourselves to get the information on the deltas
         // This is the format:
         // <!-- for a normal delta -->
@@ -88,7 +88,7 @@ class mtChangeSet // In monotone a changeset is NOT a delta on the changeset fil
         $flags = PREG_SET_ORDER;
         if(preg_match_all($pattern, $result, $matches, $flags)) {
             foreach($matches as $match) {
-                $deltas[$match[3]] = new mtDelta($this->repo, $match[1], $match[3]);
+                $deltas[$match[3]] = new mtnDelta($this->repo, $match[1], $match[3]);
             }
         }
         return $deltas;

@@ -13,7 +13,7 @@
 /**
  * Class to model a file in the repository 
  */
-include_once "modules/bkview/xarincludes/scmfile.class.php";
+include_once "modules/bkview/xarincludes/scmfile.php";
 class bkFile extends scmFile
 {
     var $_repo;               // in which repository is this file?

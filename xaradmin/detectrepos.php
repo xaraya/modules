@@ -1,18 +1,13 @@
 <?php
-
 /**
- * File: $Id$
- *
- * Detect installed repositories on this server and present convenience list
- *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  *  
  * @subpackage bkview
  * @author Marcel van der Boom <marcel@xaraya.com>
-*/
+ */
 
-include_once("modules/bkview/xarincludes/scmrepo.class.php");
+include_once("modules/bkview/xarincludes/scmrepo.php");
 
 /**
  * Detect repositories installed on this server.
@@ -22,7 +17,7 @@ include_once("modules/bkview/xarincludes/scmrepo.class.php");
  * allow adding them. 
  * 
  * @access  public
-*/
+ */
 function bkview_admin_detectrepos() 
 {
     if (!xarSecurityCheck('AdminAllRepositories')) return;

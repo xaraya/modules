@@ -13,7 +13,7 @@
 /**
  * Class to model a bitkeeper delta
  */
-include_once "modules/bkview/xarincludes/scmdelta.class.php";
+include_once "modules/bkview/xarincludes/scmdelta.php";
 class bkDelta extends scmDelta
 {
     var $repo;       // which repo are we talking about?

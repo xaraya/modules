@@ -1,6 +1,6 @@
 <?php
 
-include_once "modules/bkview/xarincludes/scmrepo.class.php";
+include_once "modules/bkview/xarincludes/scmrepo.php";
 
 /**
  * Basic IO parser
@@ -45,12 +45,12 @@ class BasicIOParser
     
     
 }
-class mtRepo extends scmRepo
+class mtnRepo extends scmRepo
 {
     var $_branch;   // Which branch from this repository are we interested in.
     var $_dbconn;   // Connection to the sqlite database for this repository.
     
-    function mtRepo($root='',$branch='')
+    function __construct($root = '', $branch = '')
     {
         if($root!='' && file_exists($root)) {
             $this->_root   = $root;
@@ -133,12 +133,12 @@ class mtRepo extends scmRepo
     
     function getDelta($file, $rev)
     {
-        return new mtDelta($this, $file, $rev);
+        return new mtnDelta($this, $file, $rev);
     }
     
     function getFile($file)
     {
-        return new mtFile($this, $file);
+        return new mtnFile($this, $file);
     }
     
     // FIXME: This should be a method of a delta
@@ -201,7 +201,7 @@ class mtRepo extends scmRepo
         if($branch != '') $selector[] = 'b:'.$branch;
         // Consolidate selector conditions
         $selector = join('/',$selector);
-        xarLogMessage("MT: total selector in repo->ChangeSets ($branch) $selector");
+        xarLogMessage("MT: total selector in repo->changeSets ($branch) $selector");
 
         // Get the selected revisions
         $cmd = "automate select $selector";
@@ -372,7 +372,7 @@ class mtRepo extends scmRepo
         }
         // Limit the thing a bit
         $nrOfChanges = count($nodes);
-        xarLogMessage("BK: trying to graph $nrOfChanges changes");
+        xarLogMessage("MTN: trying to graph $nrOfChanges changes");
         // FIXME: make the 500 configurable
         if($nrOfChanges > 500 | $nrOfChanges == 0) {
             $graph['nodes'][] = array('rev' => xarML('Too many/few\nchanges (#(1))\nin range',$nrOfChanges), 'author' => 'Graph Error', 'tags' => '');

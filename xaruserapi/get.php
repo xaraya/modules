@@ -8,7 +8,7 @@
  */
 
 // This should be the only place where we include the class file
-include_once("modules/bkview/xarincludes/scmrepo.class.php");
+include_once("modules/bkview/xarincludes/scmrepo.php");
 
 /**
  * get a specific item

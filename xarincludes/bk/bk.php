@@ -12,15 +12,14 @@
  */
 
 // Include the repository class
-include_once("bkrepo.class.php");
+include_once("bkrepo.php");
 
 // Include the delta class
-include_once("bkdelta.class.php");
+include_once("bkdelta.php");
 
 // Include the changeset class
-include_once("bkcset.class.php");
+include_once("bkcset.php");
 
 // Include the repository file class
-include_once("bkfile.class.php");
-
+include_once("bkfile.php");
 ?>
