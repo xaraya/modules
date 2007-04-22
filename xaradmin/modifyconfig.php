@@ -44,15 +44,15 @@ function foo_admin_modifyconfig()
             if (!xarSecConfirmAuthKey()) return;
             switch ($data['tab']) {
                 case 'general':
-                    if (!xarVarFetch('itemsperpage', 'str:1:4:', $itemsperpage, '20', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('foo', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-					if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
 
                     xarModVars::set('foo', 'itemsperpage', $itemsperpage);
                     xarModVars::set('foo', 'SupportShortURLs', $shorturls);
-					xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
-					xarModVars::set('foo', 'aliasname', $aliasname);
+                    xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
+                    xarModVars::set('foo', 'aliasname', $aliasname);
                     break;
                 case 'tab2':
                     break;
@@ -68,7 +68,7 @@ function foo_admin_modifyconfig()
             break;
 
     }
-	$data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
 ?>

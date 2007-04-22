@@ -9,7 +9,8 @@
         <xar:mlstring>Overview</xar:mlstring>
     </h2>
 
-        <p>
-            <xar:mlstring>Dummy foo text</xar:mlstring>
-        </p>
+    <p>
+        <xar:mlstring>Dummy foo text</xar:mlstring>
+    </p>
+    <div style="clear:both">&#160;</div>
 </div>
