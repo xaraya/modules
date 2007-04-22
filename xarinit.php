@@ -30,14 +30,16 @@ function bkview_init()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     
-    $fields = "
-        xar_repoid      I       AUTO    PRIMARY,
-        xar_name        C(32)   NotNull DEFAULT '',
-        xar_path        C(254)  NotNull DEFAULT '/var/bk/repo'";
-    $result = $datadict->changeTable($bkviewtable, $fields);    
-    if (!$result) {return;}
+     $fields = array('xar_repoid'  => array('type'=>'integer' ,'null'=>false,'increment'=>true,'primary_key'=>true),
+                     'xar_name'   => array('type'=>'varchar','size'=>20   ,'null'=>false),
+                     'xar_path' => array('type'=>'varchar','size' => 254, 'null'=>false,'default'=>'/var/bk/repo'),
+     'xar_repotype' => array('type'=>'integer', 'null'=>false,'default'=>'1'),
+     'xar_lod' => array('type'=>'varchar', 'size' => 10,'null'=>false,'default'=>'')
+                    );
+
+    $query = xarDBCreateTable($bkviewtable,$fields);
+    $dbconn->Execute($query);
     
     $instancequery="SELECT DISTINCT xar_name FROM ". $xartable['bkview'];
     $instance = array (
@@ -82,12 +84,12 @@ function bkview_upgrade($oldversion)
         $xartable =& xarDBGetTables();
         $bkviewtable = $xartable['bkview'];
         // Get a data dictionary object with item create methods.
-        $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+        /*$datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
         
         $changes ="
             xar_repotype I      NotNull DEFAULT 1,
             xar_lod      C(100) NotNull DEFAULT ''";
-        $result = $datadict->ChangeTable($bkviewtable, $changes);
+        $result = $datadict->ChangeTable($bkviewtable, $changes);*/
         // Since we modified the database we're bumping the main revision number
     case '2.0.0':
         // We end with the current version, but dont do anything

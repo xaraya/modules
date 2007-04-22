@@ -1,17 +1,11 @@
 <?php
-
 /**
- * File: $Id$
- *
- * Get information on a repository
- *
- * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
  * @subpackage bkview
  * @author Marcel van der Boom <marcel@xaraya.com>
-*/
+ */
 
 // This should be the only place where we include the class file
 include_once("modules/bkview/xarincludes/scmrepo.class.php");
@@ -19,10 +13,8 @@ include_once("modules/bkview/xarincludes/scmrepo.class.php");
 /**
  * get a specific item
  *
- * @author the Bkview module development team
- * @param $args['exid'] id of bkview item to get
- * @returns array
- * @return item array, or false on failure
+ * @param int $args[repoid] id of bkview item to get
+ * @return array item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function bkview_userapi_get($args)
@@ -49,12 +41,13 @@ function bkview_userapi_get($args)
             FROM $bkviewtable
             WHERE xar_repoid = ?";
     $result = $dbconn->Execute($sql,array($repoid));
+
     if(!$result) return;
 
     // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {
         $result->Close();
-        $msg = xarML('This item does not exists:').$sql;
+        $msg = xarML('This item does not exist:').$sql;
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;

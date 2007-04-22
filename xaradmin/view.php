@@ -1,17 +1,10 @@
 <?php
-
-
 /**
- * File: $Id$
- *
- * Short description of purpose of file
- *
- * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
- * @subpackage module name
- * @author Marcel van der Boom <marcel@xaraya.com>
+ * @subpackage bkview
+ * @author Johnny Robeson
 */
 
 /**
@@ -25,7 +18,7 @@ function bkview_admin_view()
     $data['items'] = array();
   
     $items = xarModAPIFunc('bkview', 'user', 'getall',array());
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    //if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     // TODO: Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -43,5 +36,4 @@ function bkview_admin_view()
     $data['pageinfo']=xarML('View registered repositories');
     return $data;
 }
-
 ?>

@@ -33,7 +33,6 @@ class bkRepo extends scmRepo
             $this->_tagcsets = $this->_run($cmd);
             return $this;
         } else {
-            $this=false;
             return false;
         }
     }
@@ -219,7 +218,7 @@ class bkRepo extends scmRepo
         return $users;
     }
     
-    function DirList($dir='/') 
+    function dirList($dir='/') 
     {
         // First construct the array elements for directories
         $ret=array();
@@ -238,7 +237,7 @@ class bkRepo extends scmRepo
         return $ret;
     }
     
-    function FileList($dir='/') 
+    function fileList($dir='/') 
     {
         $cmd="prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);

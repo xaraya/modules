@@ -2,6 +2,49 @@
 
 include_once "modules/bkview/xarincludes/scmrepo.class.php";
 
+/**
+ * Basic IO parser
+ * 
+ * This parser parses monotone's special basic io packets from monotone
+ *
+ * @todo make it work or get rid of it
+ */
+class BasicIOParser
+{
+    
+    /**
+     * Parse a packet
+     * 
+     * Format
+     * <tbrownaw> basically, it looks like:
+     * <tbrownaw>    bare-token item [item [...]]
+     * <tbrownaw> where "item" is either a string in double-quotes, or 40 hex digits in [brackets]
+     * <tbrownaw> monotone produces basic-io broken into "stanzas", which is where there will be a blank line
+     * <njs> there might be somewhere in the manual sections on automate
+     * <tbrownaw> but it doesn't pay attention to this while reading things
+     * <njs> strings are started by a double quote, ended with a double-quote, and within them double quotes and backslashes are backslash-escaped
+     * @param string $packet
+     * @return array 
+     */
+    static public function parse($packet)
+    {
+        $lines = explode("\n",$packet);     
+
+        $stanzas = array();
+        foreach ($lines as $line) {
+            if ($line == "\n") continue;
+            
+            $pieces = explode(' ', $line);
+            
+            
+            $stanzas[] = $stanza;
+        }
+        return $stanzas;
+    }
+    
+    
+    
+}
 class mtRepo extends scmRepo
 {
     var $_branch;   // Which branch from this repository are we interested in.
@@ -12,11 +55,12 @@ class mtRepo extends scmRepo
         if($root!='' && file_exists($root)) {
             $this->_root   = $root;
             $this->_branch = $branch;
-            $this->_basecmd= "monotone --root=/ -d $root ";
+            // @todo check whether we need to keep --norc
+            $this->_basecmd= "mtn --root=/ --norc -d $root ";
         } 
     }
     
-    function GetStats($user='',$branch='') 
+    function getStats($user='',$branch='') 
     {
         // Need to get:
         // - author identification
@@ -65,7 +109,7 @@ class mtRepo extends scmRepo
 
     }
 
-    function &GetChangeSets($range='', $merge=false, $user='')
+    function &getChangeSets($range='', $merge=false, $user='')
     {
         // Only getting revision id's as output
         // TODO: take $user into account
@@ -99,7 +143,7 @@ class mtRepo extends scmRepo
     
     // FIXME: This should be a method of a delta
     // anyway, it tries to get the revision in which a certain delta appeared
-    function ChangeSet($file, $rev)
+    function changeSet($file, $rev)
     {
         // This kinda sucks in monotone. How do you get a revision from a delta?
         // the db model would force more or less to scan all revisions and look for the
@@ -134,7 +178,7 @@ class mtRepo extends scmRepo
         return $certs;
     }
 
-    function &ChangeSets($user, $range='',$flags = 0,$branch='')
+    function &changeSets($user, $range='',$flags = 0,$branch='')
     {
         xarLogMessage("MT: repo:ChangeSets($user,$range,$flags,$branch)");
         // Need to get:
@@ -203,14 +247,15 @@ class mtRepo extends scmRepo
         static $manifests = array();
         
         if(!isset($manifests[$manifest_id])) {
-            $cmd = "automate get_manifest $manifest_id";
+            $cmd = "automate get_manifest_of $manifest_id";
             $result = $this->_run($cmd);
+
             $manifests[$manifest_id] = $result;
         }
         return $manifests[$manifest_id];
     }
 
-    function DirList($dir="/",$rev='',$branch='')
+    function dirList($dir = '/',$rev = '',$branch = '')
     {
         // Determine the revision
         if($rev=='') {
@@ -218,21 +263,25 @@ class mtRepo extends scmRepo
             $result = $this->_run($cmd);
             $rev = $result[0];
         }
-        
-        // Determine the manifest
-        $cmd = "automate get_revision $rev";
-        $result = $this->_run($cmd);
-        // CHECKME: seems ok, check stdio for relevance of spacing
-        $manifest_id = substr($result[0],14,40);
-        
-        // Retrieve the manifest
-        $result =& $this->manifest($manifest_id);
 
+        $result =& $this->manifest($rev);
+
+        //debug($result);
         $ret = array();
+        // we don't want the format version
+        unset($result[0]);
+
         foreach($result as $index => $line) {
-            $ident = explode('  ',$line);
+            if (!preg_match('/^dir/',$line)) continue;
+            
+            $ident = explode(' ',$line);
+            
+            //@todo is this the best idea?
+            $ident[1] = str_replace('"','',$ident[1]);
             $file = '/'.trim($ident[1]);
+
             $part = strstr($file, $dir);
+
             if($part) {
                 // $part contains everything after $dir including $dir itself
                 $part = substr($part, strlen($dir));
@@ -243,43 +292,54 @@ class mtRepo extends scmRepo
                 $ret[$part] = $part;
             }
         }
+
         return $ret;
     }
     
-    function FileList($dir='/',$rev='',$branch)
+    public function fileList($dir = '/',$rev = '',$branch)
     {
         // Determine the revision
-        if($rev=='') {
+        if ($rev == '') {
             $cmd = "automate heads $branch";
             $result = $this->_run($cmd);
             $rev = $result[0];
         }
+
         
         // Determine the manifest
-        $cmd = "automate get_revision $rev";
-        $result = $this->_run($cmd);
+        //$cmd = "automate get_revision $rev";
+        //$result = $this->_run($cmd);
         // CHECKME: seems ok, check stdio for relevance of spacing
-        $manifest_id = substr($result[0],14,40);
+        //$manifest_id = substr($result[0],14,40);
         
         // Retrieve the manifest
-        $result =& $this->manifest($manifest_id);
+        $result =& $this->manifest($rev);
         $ret = array();
-        foreach($result as $index => $line) {
-            $ident = explode('  ',$line);
+
+        // remove format_version
+        unset($result[0]);
+        foreach ($result as $index => $line) {
+
+            $line = ltrim($line);
+            if (!preg_match('/^file/',$line)) continue;
+            $ident = explode(' ',$line);
+            $ident[1] = str_replace('"','',$ident[1]);             
             $file = '/'.trim($ident[1]);
+
             $part = strstr($file, $dir);
             if($part) {
-                $part = substr($part, strlen($dir)+1);
+                $part = substr($part, strlen($dir));
                 $firstslash = strpos($part, '/');
                 if(!$firstslash) {
                     $ret[] = "tag|$part|".$ident[0]."|age|author|comments\n";
                 }
             }
         }
+
         return $ret;
     }
 
-    function &GetGraphData($start='-3d', $end, $file, $branch='')
+    function &getGraphData($start = '-3d', $end, $file, $branch='')
     {
         xarLogMessage("MT: repo:GetGraphData($start,$end,$branch)");
         // First get the revisions in the range
@@ -323,12 +383,11 @@ class mtRepo extends scmRepo
         return $graph;
     }
 
-    function getBranches()
+    public function getBranches()
     {
         $cmd = 'ls branches';
         $result = $this->_run($cmd);
         return $result;
     }
 }
-
 ?>

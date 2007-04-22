@@ -1,11 +1,11 @@
 <div id="bkview-modbody-id" class="xar-mod-body" >
     <xar:template file="user-menu"/>
 
-    <a href="&xar-modurl-bkview-user-browserview;&amp;repoid=#$repoid#&amp;dir=/">
+    <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;branch=#$branch#&amp;dir=/">
     [<xar:mlstring>root</xar:mlstring>]</a>/
     <xar:foreach in="$dirtrace" value="$crumb">
         <xar:set name="sofar">$sofar . $crumb . '/'</xar:set>
-        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$sofar#">#$crumb#</a>/
+        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;branch=#$branch#&amp;dir=#$sofar#">#$crumb#</a>/
     </xar:foreach>
 
     <div style="float:left; margin-top: 1em;width: 100%;">
@@ -26,7 +26,7 @@
               <img src="#xarTplGetImage('dir.gif','bkview')#" alt="go into directory #$loop:item['dirname']#"/>
               <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
             </xar:if>
-            <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/" onclick="return loadContent(this.href, 'bkview-modbody-id');">
+            <a style="vertical-align: 20%;" href="#$loop:item['url']#" onclick="return loadContent(this.href, 'bkview-modbody-id');">
               #$dirtext#
             </a>
           </div>

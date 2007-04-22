@@ -1,6 +1,5 @@
 <?php
-
-  // TODO: guess ;-)
+ // TODO: guess ;-)
 define('BK_SEARCH_REPO',   8);
 define('BK_SEARCH_FILE',   4);
 define('BK_SEARCH_CSET',   1);
@@ -22,7 +21,7 @@ class scmRepo
      * Construct a repository object 
      *
      */
-    function construct($brand ='bk', $args)
+    public static function construct($brand ='bk', $args)
     {
         include_once "modules/bkview/xarincludes/$brand/$brand.class.php";
         $className =  "$brand"."Repo";
@@ -35,16 +34,18 @@ class scmRepo
     }
     
     // FIXME: protect this somehow, so no arbitrary commands can be run.
-    function &_run($cmd='echo "No command given.."', $asis = false) 
+    public function &_run($cmd='echo "No command given.."', $asis = false) 
     {
         if(function_exists('xarLogMessage')) {
             xarLogMessage("MT: ".$this->_basecmd. $cmd, XARLOG_LEVEL_DEBUG);
         }
+
         // Save the current directory
         $savedir = getcwd();
         chdir(dirname($this->_root));
-        
+        //die($this->_basecmd . $cmd);
         $out=array();$retval='';
+
         $out = shell_exec($this->_basecmd . $cmd);
 
         if(!$asis) {
@@ -58,12 +59,12 @@ class scmRepo
         return $out;
     }
 
-    function getBranches()
+    public function getBranches()
     {
         return array();
     }
 
-    function map($id)
+    public static function map($id)
     {
         if(!isset($id)) return;
         switch($id) {
@@ -73,7 +74,7 @@ class scmRepo
         }
     }
     
-    function RangeToText($range='') 
+    public static function RangeToText($range='') 
     {
       // FIXME: this is FAR FROM COMPLETE
       $text='';
@@ -122,7 +123,7 @@ class scmRepo
      * @param string $range Range specifier as in bk terms
      *
      */
-    function RangeToUtcPoints($range = '')
+    public static function RangeToUtcPoints($range = '')
     {
         $utcpoints = array(
                     'start' => '19700000000000',
@@ -176,7 +177,8 @@ function notempty($item)
     return (strlen($item)!=0);
 }
 
-function colour_from_string($str){
+function colour_from_string($str)
+{
     // PHP4 doesnt have raw output, let's roll our own
     $hash = sha1($str);
     // We need the binary equivalent of this
