@@ -58,6 +58,9 @@ function stats_userapi_getbyos($args)
             }
         }
     }
+    if(!empty($userid) && is_numeric($userid)) {
+        $query .= " AND a.xar_ua_id = $userid ";
+    }
     $query .= "GROUP BY b.xar_ua_osnam, b.xar_ua_osver
                ORDER BY axhitsum DESC";
 

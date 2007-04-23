@@ -32,8 +32,15 @@ function stats_userapi_getperyear($args)
 
     // create query
     $query = "SELECT xar_sta_year, SUM(xar_sta_hits) AS xar_sta_sum
-              FROM $statstable
-              GROUP BY xar_sta_year
+              FROM $statstable ";
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = $userid ";
+        } else {
+            $query .= " WHERE xar_ua_id = $userid ";
+        }
+    }
+    $query .= "GROUP BY xar_sta_year
               ORDER BY xar_sta_year";
     $result =& $dbconn->Execute($query);
 

@@ -42,6 +42,14 @@ function stats_userapi_getpermonth($args)
         $query .= "WHERE xar_sta_year = ? ";
         $bindvars[] = $year;
     }
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = ? ";
+        } else {
+            $query .= " WHERE xar_ua_id = ? ";
+        }
+        $bindvars[] = $userid;
+    }
     $query .= "GROUP BY xar_sta_month
                ORDER BY xar_sta_month";
     $result =& $dbconn->Execute($query, $bindvars);

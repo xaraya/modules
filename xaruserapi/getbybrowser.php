@@ -58,6 +58,9 @@ function stats_userapi_getbybrowser($args)
                 }
             }
         }
+        if(!empty($userid) && is_numeric($userid)) {
+            $query .= " AND a.xar_ua_id = $userid ";
+        }
         $query .= "GROUP BY b.xar_ua_agnam
                    ORDER BY axhitsum DESC";
         $result =& $dbconn->SelectLimit($query,10,-1,$bindvars);
@@ -65,8 +68,11 @@ function stats_userapi_getbybrowser($args)
         $query = "SELECT b.xar_ua_agnam, b.xar_ua_agver, SUM(a.xar_sta_hits) as axhitsum
                   FROM $statstable AS a, $sniffertable AS b
                   WHERE a.xar_ua_id = b.xar_ua_id
-                  AND b.xar_ua_agnam <> ''
-                  GROUP BY b.xar_ua_agnam, b.xar_ua_agver
+                  AND b.xar_ua_agnam <> ''";
+        if(!empty($userid) && is_numeric($userid)) {
+            $query .= " AND a.xar_ua_id = $userid ";
+        }
+        $query .= "GROUP BY b.xar_ua_agnam, b.xar_ua_agver
                   ORDER BY axhitsum DESC";
         $result =& $dbconn->Execute($query);
     }

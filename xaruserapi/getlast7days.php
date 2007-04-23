@@ -19,8 +19,10 @@
  * @param   none
  * @return  mixed - array of data, sum and maximum OR false
  */
-function stats_userapi_getlast7days()
+function stats_userapi_getlast7days($args)
 {
+    extract($args);
+
     // initialize variables
     $max = 0; $sum = 0;
     $data = array();
@@ -32,8 +34,11 @@ function stats_userapi_getlast7days()
 
     // create query
     $query = "SELECT xar_sta_year, xar_sta_month, xar_sta_day, SUM(xar_sta_hits) AS xar_sta_sum
-              FROM $statstable
-              GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
+              FROM $statstable ";
+    if(!empty($userid) && is_numeric($userid)) {
+        $query .= " WHERE xar_ua_id = $userid ";
+    }
+    $query .= "GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
               ORDER BY xar_sta_year DESC, xar_sta_month DESC, xar_sta_day DESC";
     $result =& $dbconn->SelectLimit($query,7);
 

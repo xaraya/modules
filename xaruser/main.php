@@ -28,6 +28,7 @@ function stats_user_main()
     xarVarFetch('year',  'int', $year,  0, XARVAR_NOT_REQUIRED);
     xarVarFetch('month', 'int', $month, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('day',   'int', $day,   0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('userid',   'isset', $userid,   '', XARVAR_NOT_REQUIRED);
 
     // load the locale data
     $localeData =& xarMLSLoadLocaleData();
@@ -42,7 +43,8 @@ function stats_user_main()
     // API function to get the total hits
     $hits['total'] = xarModAPIFunc('stats',
                                    'user',
-                                   'gettotalhits');
+                                   'gettotalhits',
+                                   array('userid' => $userid));
 
     // API function to get the hits of today
     $today = explode('-', gmdate('Y-n-j'));
@@ -51,7 +53,8 @@ function stats_user_main()
                                    'getday',
                                    array('year'  => $today[0],
                                          'month' => $today[1],
-                                         'day'   => $today[2]));
+                                         'day'   => $today[2],
+                                         'userid'   => $userid));
 
     // API function to get the hits of yesterday (respects DST jumps)
     $yesterday = explode('-', gmdate(('Y-n-j'), gmmktime(0,0,0,$today[1],$today[2]-1,$today[0])));
@@ -60,13 +63,15 @@ function stats_user_main()
                                        'getday',
                                        array('year'  => $yesterday[0],
                                              'month' => $yesterday[1],
-                                             'day'   => $yesterday[2]));
+                                             'day'   => $yesterday[2],
+                                             'userid'   => $userid));
     unset($today, $yesterday);
 
     // get hits of the last seven days
     list($l7data, $l7sum, $l7max) = xarModAPIFunc('stats',
                                                   'user',
-                                                  'getlast7days');
+                                                  'getlast7days',
+                                                 array('userid'   => $userid));
     $last7days = array();
     foreach ($l7data as $key => $val) {
     //TODO: use dateformat-medium from locales file here
@@ -75,7 +80,8 @@ function stats_user_main()
                                  'link'        => xarModURL('stats','user','main',
                                                             array('year'  => $val['year'],
                                                                   'month' => $val['month'],
-                                                                  'day'   => $val['day'])),
+                                                                  'day'   => $val['day'],
+                                                                 'userid'   => $userid)),
                                  'abs'         => $val['hits'],
                                  'rel'         => sprintf('%01.2f',(100*$val['hits']/$l7sum)),
                                  'wid'         => round($barlen*$val['hits']/$l7max));
@@ -89,7 +95,8 @@ function stats_user_main()
                                                         'gettopday',
                                                         array('type' => 'best',
                                                               'year' => $year,
-                                                              'month' => $month));
+                                                              'month' => $month,
+                                                             'userid'   => $userid));
     $topday['best'] = gmmktime(0,0,0,$bestday['month'],$bestday['day'],$bestday['year']);
     unset($bestday);
 
@@ -99,14 +106,16 @@ function stats_user_main()
                                                           'gettopday',
                                                           array('type' => 'worst',
                                                                 'year' => $year,
-                                                                'month' => $month));
+                                                                'month' => $month,
+                                                             'userid'   => $userid));
     $topday['worst'] = gmmktime(0,0,0,$worstday['month'],$worstday['day'],$worstday['year']);
     unset($worstday);
 
     // API function to get the hits per year
     list($pydata, $pysum, $pymax) = xarModAPIFunc('stats',
                                                   'user',
-                                                  'getperyear');
+                                                  'getperyear',
+                                                  array('userid'   => $userid));
     $peryear = array();
     foreach($pydata as $key => $val) {
         $pyyear = sprintf('%04d', $val['year']);
@@ -126,7 +135,8 @@ function stats_user_main()
     list($pmdata, $pmsum, $pmmax) = xarModAPIFunc('stats',
                                                   'user',
                                                   'getpermonth',
-                                                  array('year' => $year));
+                                                  array('year' => $year,
+                                                     'userid'   => $userid));
     $permonth = array();
     foreach ($pmdata as $key => $val) {
         $localeIndex = '/dateSymbols/months/'.$val['month'].'/full';
@@ -148,7 +158,8 @@ function stats_user_main()
                                                      'user',
                                                      'getperweekday',
                                                      array('year' => $year,
-                                                           'month' => $month));
+                                                           'month' => $month,
+                                                             'userid'   => $userid));
     $perweekday = array();
     foreach ($pwddata as $key => $val) {
         $localeIndex = '/dateSymbols/weekdays/'.++$val['weekday'].'/full';
@@ -171,7 +182,8 @@ function stats_user_main()
                                                       'user',
                                                       'getperday',
                                                       array('year' => $year,
-                                                            'month' => $month));
+                                                            'month' => $month,
+                                                             'userid'   => $userid));
         foreach($pddata as $key => $val) {
             $pdday = sprintf('%02d', $val['day']);
             $perday[$key] = array('name' => $pdday,
@@ -189,7 +201,8 @@ function stats_user_main()
                                                   'getperhour',
                                                   array('year'  => $year,
                                                         'month' => $month,
-                                                        'day'   => $day));
+                                                        'day'   => $day,
+                                                         'userid'   => $userid));
     $perhour = array();
     foreach($phdata as $key => $val) {
         $phhour = sprintf('%02d', $val['hour']);
@@ -207,7 +220,7 @@ function stats_user_main()
 
     // get the hits by browsers
     $top10 = true;
-    $args = compact('top10', 'picpath', 'barlen', 'year', 'month', 'day');
+    $args = compact('top10', 'picpath', 'barlen', 'year', 'month', 'day', 'userid');
     extract(xarModAPIFunc('stats','user','get_browser_data',$args));
 
     // get the hits by operating system
@@ -222,7 +235,7 @@ function stats_user_main()
     $data = compact('startdate', 'hits', 'topday', 'browsers', 'os',
                     'perhour', 'perweekday', 'last7days', 'permonth', 'topmonth',
                     'topweekday', 'tophour', 'misc', 'picpath', 'peryear', 'topyear',
-                    'perday', 'year', 'month', 'day');
+                    'perday', 'year', 'month', 'day', 'userid');
 
     // return data to BL template
     return $data;

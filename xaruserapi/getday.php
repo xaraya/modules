@@ -31,8 +31,15 @@ function stats_userapi_getday($args)
 
     // create query
     $query = "SELECT SUM(xar_sta_hits), xar_sta_year, xar_sta_month, xar_sta_day
-              FROM $statstable
-              GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
+              FROM $statstable ";
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = $userid ";
+        } else {
+            $query .= " WHERE xar_ua_id = $userid ";
+        }
+    }
+    $query .= "GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
               HAVING xar_sta_year = $year
               AND xar_sta_month = $month
               AND xar_sta_day = $day";

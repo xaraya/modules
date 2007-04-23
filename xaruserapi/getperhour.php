@@ -52,6 +52,14 @@ function stats_userapi_getperhour($args)
             }
         }
     }
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = ? ";
+        } else {
+            $query .= " WHERE xar_ua_id = ? ";
+        }
+        $bindvars[] = $userid;
+    }
     $query .= "GROUP BY xar_sta_hour
                ORDER BY xar_sta_hour";
     $result =& $dbconn->Execute($query, $bindvars);

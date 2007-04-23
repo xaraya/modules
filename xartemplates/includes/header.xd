@@ -4,6 +4,10 @@
             <xar:mlstring>#(1) access statistics</xar:mlstring>
             <xar:mlvar>#xarModGetVar('themes','SiteName')#</xar:mlvar>
         </xar:ml>
+        <xar:if condition="isset($userid)">
+            <xar:set name="username">xarUserGetVar('name', $userid)</xar:set>
+            &nbsp;for #$username#
+        </xar:if>
     </span>
 </div>
 

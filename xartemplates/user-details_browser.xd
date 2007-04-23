@@ -1,17 +1,64 @@
 <xar:template file="header" type="module" />
+
+<xar:set name="ff_ttl">0</xar:set>
+<xar:set name="ie_ttl">0</xar:set>
+<xar:set name="opera_ttl">0</xar:set>
+<xar:set name="safari_ttl">0</xar:set>
+<xar:set name="ff_icon">""</xar:set>
+<xar:set name="ie_icon">""</xar:set>
+<xar:set name="opera_icon">""</xar:set>
+<xar:set name="safari_icon">""</xar:set>
+
 <div class="xar-mod-body"><br />
     <div style="align: center;">
         <div>
             <h3><xar:mlstring>Browser details</xar:mlstring></h3>
             <table cellspacing="0" cellpadding="2">
                 <xar:loop name="$browsers">
+                    <xar:set name="browsername">$loop->item['name']</xar:set>
+                    <xar:set name="ttl">$loop->item['abs']</xar:set>
+                    <xar:if condition="ereg('Mozilla Firefox', $browsername)">
+                        <xar:set name="ff_ttl">$ff_ttl + $ttl</xar:set>
+                        <xar:set name="ff_icon">$loop->item['pic']</xar:set>
+                    <xar:elseif condition="ereg('Microsoft', $browsername)" />
+                        <xar:set name="ie_ttl">$ie_ttl + $ttl</xar:set>
+                        <xar:set name="ie_icon">$loop->item['pic']</xar:set>
+                    <xar:elseif condition="ereg('Opera', $browsername)" />
+                        <xar:set name="opera_ttl">$opera_ttl + $ttl</xar:set>
+                        <xar:set name="opera_icon">$loop->item['pic']</xar:set>
+                    <xar:elseif condition="ereg('Safari', $browsername)" />
+                        <xar:set name="safari_ttl">$safari_ttl + $ttl</xar:set>
+                        <xar:set name="safari_icon">$loop->item['pic']</xar:set>
+                    </xar:if>
+                    
                     <tr>
                         <td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
-                        <td>#$loop:item['name']#</td>
+                        <td>#$browsername#</td>
                         <td>
                             <div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
                     </tr>
                 </xar:loop>
+                <tr><td colspan="3"><hr /></td></tr>
+                <tr>
+                    <td><img src="#$picpath#/#$ie_icon#" border="0" alt="Internet Explorer" /></td>
+                    <td><xar:mlstring>Total Internet Explorer</xar:mlstring></td>
+                    <td><div class="xar-alt" style="min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$ie_ttl#</td>
+                </tr>
+                <tr>
+                    <td><img src="#$picpath#/#$ff_icon#" border="0" alt="Mozilla Firefox" /></td>
+                    <td><xar:mlstring>Total Mozilla Firefox</xar:mlstring></td>
+                    <td><div class="xar-alt" style="min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$ff_ttl#</td>
+                </tr>
+                <tr>
+                    <td><img src="#$picpath#/#$opera_icon#" border="0" alt="Opera" /></td>
+                    <td><xar:mlstring>Total Opera</xar:mlstring></td>
+                    <td><div class="xar-alt" style="min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$opera_ttl#</td>
+                </tr>
+                <tr>
+                    <td><img src="#$picpath#/#$safari_icon#" border="0" alt="Safari" /></td>
+                    <td><xar:mlstring>Total Safari</xar:mlstring></td>
+                    <td><div class="xar-alt" style="min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$safari_ttl#</td>
+                </tr>
             </table>
         </div>
     </div>

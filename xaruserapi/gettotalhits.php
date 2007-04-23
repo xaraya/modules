@@ -19,8 +19,10 @@
  * @param   none
  * @return  int $data - total amount of site hits
  */
-function stats_userapi_gettotalhits()
+function stats_userapi_gettotalhits($args)
 {
+    extract($args);
+
     // get database setup
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
@@ -29,6 +31,9 @@ function stats_userapi_gettotalhits()
     // create query
     $query = "SELECT SUM(xar_sta_hits)
               FROM $statstable";
+    if(!empty($userid) && is_numeric($userid)) {
+        $query .= " WHERE xar_ua_id = $userid ";
+    }
     $result =& $dbconn->Execute($query);
 
     // check for an error with the database code

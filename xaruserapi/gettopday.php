@@ -57,6 +57,14 @@ function stats_userapi_gettopday($args)
             //}
         }
     }
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = ? ";
+        } else {
+            $query .= " WHERE xar_ua_id = ? ";
+        }
+        $bindvars[] = $userid;
+    }
     $query .= "GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
                ORDER BY xar_sta_sum" . $sort;
     $result =& $dbconn->SelectLimit($query, 1, -1, $bindvars);

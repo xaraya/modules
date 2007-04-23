@@ -47,6 +47,14 @@ function stats_userapi_getperweekday($args)
             $bindvars[] = $month;
         }
     }
+    if(!empty($userid) && is_numeric($userid)) {
+        if(strpos("WHERE", $query)) {
+            $query .= " AND xar_ua_id = ? ";
+        } else {
+            $query .= " WHERE xar_ua_id = ? ";
+        }
+        $bindvars[] = $userid;
+    }
     $query .= "GROUP BY xar_sta_weekday
                ORDER BY xar_sta_weekday";
     $result =& $dbconn->Execute($query, $bindvars);
