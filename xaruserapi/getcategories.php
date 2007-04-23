@@ -28,7 +28,7 @@ function julian_userapi_getcategories()
 
     $categories = array();
 
-    //get all the calendar categories for display
+    // get all the calendar categories for display
     $query = "SELECT cid, color FROM $category_properties_table ";
     $result = $dbconn->Execute($query);
     while(!$result->EOF) {

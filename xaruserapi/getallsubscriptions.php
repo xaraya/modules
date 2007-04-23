@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Get all subscriptions for a category.
  *

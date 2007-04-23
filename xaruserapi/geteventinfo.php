@@ -37,19 +37,6 @@ function julian_userapi_geteventinfo($args)
     $modinfo = xarModGetInfo($modid);
     $modname = $modinfo['name'];
 
-    /*
-     * Get the event via getitemlinks
-     * @param $args['itemtype'] item type (optional)
-     * @param $args['itemids'] array of item ids to get
-     * @param $args['field'] field to return as label in the list (default 'title')
-
-        $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
-                                                                 array('ptid' => $article['pubtypeid'],
-                                                                       'aid' => $article['aid'])),
-                                            'title' => xarML('Display Article'),
-                                            'label' => xarVarPrepForDisplay($article[$field]));
-
-     */
     $event =array();
 
     $event['viewUrl']='';
@@ -58,7 +45,8 @@ function julian_userapi_geteventinfo($args)
 
     // For articles
     $field = 'title';
-    $item = xarModApiFunc($modname,'user','getitemlinks',array('itemids'=> array($iid),'field'=> $field));
+    $item = xarModApiFunc($modname, 'user', 'getitemlinks', array('itemids'=> array($iid), 'field'=> $field));
+
     // Check the output
     if (!empty($item)) {
         $event['viewURL'] = $item[$iid]['url'];
@@ -72,4 +60,5 @@ function julian_userapi_geteventinfo($args)
 
     return $event;
 }
+
 ?>

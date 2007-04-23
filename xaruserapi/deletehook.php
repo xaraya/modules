@@ -33,7 +33,7 @@ function julian_userapi_deletehook($args)
         $extrainfo = array();
     }
 
-     // Get the id of the object to delete (the id as used in the hooking module).
+    // Get the id of the object to delete (the id as used in the hooking module).
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'user', 'deletehook', 'julian');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -47,7 +47,7 @@ function julian_userapi_deletehook($args)
         $modname = $extrainfo['module'];
     }
 
-     // Convert module name into module id.
+    // Convert module name into module id.
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'user', 'deletehook', 'julian');
@@ -56,20 +56,21 @@ function julian_userapi_deletehook($args)
     }
 
     // Get item type.
-     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+    if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
     } else {
         $itemtype = 0;
     }
 
     // Delete the links to the specified object + itemtype + module.
-   $dbconn =& xarDBGetConn();
-   $xartable =& xarDBGetTables();
-   $event_linkage_table = $xartable['julian_events_linkage'];
-   $query = "DELETE FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
-   $result = $dbconn->Execute($query);
+    // TODO: do this via API
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $event_linkage_table = $xartable['julian_events_linkage'];
+    $query = "DELETE FROM $event_linkage_table WHERE ( hook_modid =$modid AND  hook_itemtype =$itemtype AND  hook_iid =$objectid)";
+    $result = $dbconn->Execute($query);
 
-   return $extrainfo;
+    return $extrainfo;
 }
 
 ?>

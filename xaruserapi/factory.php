@@ -27,7 +27,7 @@ function &julian_userapi_factory($class)
     static $alarmobject;
     static $modinfo;
 
-    if(!isset($modinfo)) {
+    if (!isset($modinfo)) {
         $modInfo = xarModGetInfo(xarModGetIDFromName('julian'));
     }
 
@@ -57,19 +57,10 @@ function &julian_userapi_factory($class)
             return $eventobject;
             break;
 
-        /*
-        case 'import':
-            break;
-
-        case 'export':
-            break;
-
-        case 'alarm':
-            break;
-        */
         default:
-            return;
             break;
     }
+
+    return;
 }
 ?>

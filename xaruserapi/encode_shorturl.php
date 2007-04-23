@@ -21,6 +21,7 @@
  * @param   array $args including func
  * @return  string URL
  * @todo    MichelV. <#> Check this function and it functioning. Include Categories
+ * @todo    JDJ: use the new method for creating short URLs (see the example module)
  */
 function julian_userapi_encode_shorturl($args)
 {
@@ -34,9 +35,11 @@ function julian_userapi_encode_shorturl($args)
     // default path is empty -> no short URL
     $path = '';
     $extra = '';
+
     // we can't rely on xarModGetName() here (yet) !
     $module = 'julian';
     $alias = xarModGetAlias($module);
+
     /* Check if we have module alias set or not */
     $aliasisset = xarModGetVar('julian', 'useModuleAlias');
     $aliasname = xarModGetVar('julian','aliasname');
@@ -50,6 +53,7 @@ function julian_userapi_encode_shorturl($args)
     } else {
         $path = '/' . $module . '/';
     }
+
     // specify some short URLs relevant to your module
     switch($func) {
         case 'main':

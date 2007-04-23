@@ -53,16 +53,18 @@ function julian_userapi_gethooked($args)
             new SystemException($msg));
         return;
     }
-   // Load up database
-   $dbconn =& xarDBGetConn();
-   $xartable =& xarDBGetTables();
-   $event_linkage_table = $xartable['julian_events_linkage'];
+
+    // Load up database
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $event_linkage_table = $xartable['julian_events_linkage'];
 
     // Try to find the link for the current module, item type and item id.
     // TODO: make this a cleaner call
-   $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid =$modid AND hook_itemtype = $itemtype AND hook_iid = $objectid)";
-   $result = $dbconn->Execute($query);
-   if (!empty($result)) {
+    $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid =$modid AND hook_itemtype = $itemtype AND hook_iid = $objectid)";
+    $result = $dbconn->Execute($query);
+
+    if (!empty($result)) {
         if (!$result->EOF) {
             $edit_obj = $result->FetchObject(false);
             // The local stored summary
@@ -123,7 +125,9 @@ function julian_userapi_gethooked($args)
         return false;
         //return xarML('There is no event hooked to this item.');
     }
+
     // Return the item array
     return $item;
 }
+
 ?>

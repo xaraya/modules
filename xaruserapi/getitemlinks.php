@@ -31,11 +31,14 @@ function julian_userapi_getitemlinks($args)
         $item = xarModAPIFunc('julian', 'user', 'get',
             array('event_id' => $itemid));
         if (!isset($item)) return;
-        $itemlinks[$itemid] = array('url' => xarModURL('julian', 'user', 'viewevent',
-                array('event_id' => $itemid)),
+        $itemlinks[$itemid] = array(
+            'url' => xarModURL('julian', 'user', 'viewevent', array('event_id' => $itemid)),
             'title' => xarML('Display Event'),
-            'label' => xarVarPrepForDisplay($item['summary']));
+            'label' => xarVarPrepForDisplay($item['summary'])
+        );
     }
+
     return $itemlinks;
 }
+
 ?>

@@ -27,6 +27,7 @@ function julian_userapi_decode_shorturl($params)
 {
     $args = array();
     $module = 'julian';
+
     /* Check and see if we have a module alias */
     $aliasisset = xarModGetVar('julian', 'useModuleAlias');
     $aliasname = xarModGetVar('julian','aliasname');
@@ -35,6 +36,7 @@ function julian_userapi_decode_shorturl($params)
     } else{
         $usealias = false;
     }
+
     /* Analyse the different parts of the virtual path
      * $params[1] contains the first part after index.php/julian
      * In general, you should be strict in encoding URLs, but as liberal
@@ -202,7 +204,6 @@ function julian_userapi_decode_shorturl($params)
         return array($func, $args);
     // default : return nothing -> no short URL
     // (e.g. for multiple category selections)
-
 }
 
 ?>

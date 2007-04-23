@@ -28,13 +28,17 @@ function julian_userapi_email_alerts()
 {
     //load the calendar class
     $c = xarModAPIFunc('julian','user','factory','calendar');
+
     // TODO possibility to configure when alerts are send (1 day before?, 1 week?)
     //get tomorrow's events
     $startdate = date("Y-m-d",strtotime("tomorrow"));
+
     // get events where to send alertmails for.
     $events = array();
+
     // get all the events from tomorrow to tomorrow
     $events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
+
     // get all subscriptions per user
     $allsubscriptions = xarModAPIFunc('julian','user','getallsubscriptions');
 
@@ -68,7 +72,7 @@ function julian_userapi_email_alerts()
         if (!empty($alertevents)) {
             //send mail
 
-            // TODO; creation of message in a template?
+            // TODO: creation of message in a template? (yes - do it)
             $message = "The following events are scheduled for ".date('m-d-Y',strtotime($startdate)).":";
             $txtmessage  = $message."<br /><br />";
             $htmlmessage = $message."\n\n";
@@ -92,18 +96,20 @@ function julian_userapi_email_alerts()
 
             // send mail with mail module
             if (!xarModAPIFunc('mail', 'admin', 'sendmail',
-                     array('from'        => $from_email,
-                           'fromname'    => $from_name,
-                           'info'        => xarUserGetVar('email'),
-                           'subject'     => xarML('Event Alert'),
-                           'message'     => $txtmessage,
-                           'htmlmessage' => $htmlmessage))) {
-                return;
-            }
+                array(
+                    'from'        => $from_email,
+                    'fromname'    => $from_name,
+                    'info'        => xarUserGetVar('email'),
+                    'subject'     => xarML('Event Alert'),
+                    'message'     => $txtmessage,
+                    'htmlmessage' => $htmlmessage
+                )
+            )) return;
         }
-
     }
 
+    // CHECKME: What does '1' mean?
     return 1;
 }
+
 ?>

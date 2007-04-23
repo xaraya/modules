@@ -22,6 +22,8 @@
  */
 function &julian_userapi_createUserDateTime($format='Ymd')
 {
+    // Checkme: should we be using gmdate?
+    // We should probably be using the offset of the server, at the very minimum.
     return gmdate($format);
 
     /*
