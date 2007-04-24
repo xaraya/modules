@@ -1,0 +1,100 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+        <h2><xar:mlstring>View Songs</xar:mlstring></h2>
+
+      <!--
+          // display a status message to the user if an action has been 
+          // taken on an item
+      -->
+      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+          <p>#xarSessionGetVar('statusmsg')#</p>
+      </xar:if>
+     <!-- the specific template for the current admin function comes here -->
+    <xar:if condition="count($items) gt 0">
+      <table class="xar-fullwidth">
+          <tr>
+              <th>
+                  <xar:mlstring>Name</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Artist</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Album</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Create Date</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Status</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Actions</xar:mlstring>
+              </th>
+          </tr>
+          <xar:foreach in="$items" value="$item">
+          <tr>
+              <td>
+                  #$item.song_name#
+              </td>
+              <td>
+                  #$item.artist_name#
+              </td>
+              <td>
+                  #$item.album_name#
+              </td>
+              <td>
+                  #xarLocaleGetFormattedDate('long',$item['createdate'])#
+              </td>
+              <td>
+                  #$status_options[$item.status]#
+              </td>
+              <td class="xar-align-center">
+                 <a href="#xarModURL('mp3jukebox', 'admin', 'displaysong', array('songid' => $item['songid']))#"><xar:mlstring>Details</xar:mlstring></a>
+                 | 
+                 <xar:if condition="empty($item['editurl'])">
+                     <xar:mlstring>Edit</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.editurl#" onclick="return loadContent(this.href,mp3jukebox'_edit_or_add');"><xar:mlstring>Edit</xar:mlstring></a>
+                 </xar:if>
+                 |
+                 <xar:if condition="empty($item['deleteurl'])">
+                     <xar:mlstring>Delete</xar:mlstring>
+                 <xar:else />
+                     <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'mp3jukebox_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
+                 </xar:if>
+              </td>
+          </tr>
+          </xar:foreach>
+      </table>
+    <xar:else />
+        <p class="xar-align-center">
+            <xar:mlstring>No songs found.</xar:mlstring>
+        </p>
+    </xar:if>
+      <!-- We could add a xar:sec here on AddMP3 Jukebox to hide this link -->
+      <p><a href="&xar-modurl-mp3jukebox-admin-new;" onclick="return loadContent(this.href,'mp3jukebox_edit_or_add');">
+        <xar:mlstring>Add new song</xar:mlstring>
+      </a></p>
+      <div class="xar-align-center xar-padding-thick">
+          <!-- add the pager here -->
+          #$pager#
+      </div>
+      
+    <div id="mp3jukebox_edit_or_add">
+      <!-- Editing area will get filled by xmlhttp requests -->
+    </div>
+</div>
+<!-- 
+    // clear the status message
+    // we put this in an if tag to prevent the function from 
+    // showing '1' in the page
+-->
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

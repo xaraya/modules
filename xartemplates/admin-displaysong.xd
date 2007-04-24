@@ -1,0 +1,65 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+<xar:template type="module" file="admin-menu" />
+
+        <h2><xar:mlstring>View Song:</xar:mlstring> #$song_name# (ID: #$songid#)</h2>
+
+        <p>
+            <strong><xar:mlstring>Artist Name:</xar:mlstring></strong>
+            #$artist_name#
+        </p>
+        <p>
+            <strong><xar:mlstring>Album Name:</xar:mlstring></strong>
+            #$album_name#
+        </p>
+        <p>
+            <strong><xar:mlstring>Create Date:</xar:mlstring></strong>
+            #xarLocaleGetFormattedDate('long',$createdate)#
+        </p>
+        <p>
+            <strong><xar:mlstring>Status:</xar:mlstring></strong>
+            #$status#
+        </p>
+        <p>
+            <strong><xar:mlstring>Filename:</xar:mlstring></strong>
+            #$song_filename#
+        </p>
+        <p>
+            <strong><xar:mlstring>File Size:</xar:mlstring></strong>
+            #$song_filesize#
+        </p>
+        <p>
+            <strong><xar:mlstring>File Type:</xar:mlstring></strong>
+            #$song_filetype#
+        </p>
+
+        <!-- if you want to extend this module with dynamic data, you can retrieve
+        //   that data in the code via APIs, or use e.g. the following BL tags here.
+        //   For the different options, see the overview of dynamicdata...
+        -->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="mp3jukebox" itemid="$songid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+    <div class="xar-align-center">
+        <a href="#xarModURL('mp3jukebox','admin','modify', array('songid' => $songid))#">Modify Song</a>
+    </div>
+</div>

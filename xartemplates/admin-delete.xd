@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete Song</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this song?</xar:mlstring></h3>
+
+    <form method="post" action="&xar-modurl-mp3jukebox-admin-delete;">
+
+            <p>
+             <strong>
+                <xar:mlstring>Song Name:</xar:mlstring>
+             </strong>
+              #$song_name#
+            </p>
+
+            <p>
+             <strong>
+                <xar:mlstring>Artist Name:</xar:mlstring>
+             </strong>
+              #$artist_name#
+            </p>
+
+            <p>
+             <strong>
+                <xar:mlstring>Album Name:</xar:mlstring>
+             </strong>
+              #$album_name#
+            </p>
+
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="songid" id="songid" value="#$songid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+             <p class="xar-align-center">
+             <a href="&xar-modurl-mp3jukebox-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </p>
+    </form>
+</div>

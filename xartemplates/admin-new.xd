@@ -1,0 +1,156 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment>
+    This tag will add the module specific style sheet to this template (empty for the moment)
+    This file is located in /xarstyles and is -as a standard- called styles.css
+    You can add other files by adding files="filename without extension" to the tag eg
+    <xar:style scope="module" file="forms" /> for forms.css in mp3jukebox/xarstyles
+</xar:comment>
+<xar:style scope="module" />
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+
+    <!-- the specific template for the current admin function comes here -->
+
+        <div id="mp3jukebox_edit_or_add">
+            <h2><xar:mlstring>New Song</xar:mlstring></h2>
+
+            <!-- This Javascript will check for required fields before the form is submitted. -->
+            <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+            <script type="text/javascript">
+            <!--
+                // Enter name of mandatory fields
+                var fieldRequired = Array("song_name", "artist_name", "album_name");
+                // Enter field description to appear in the dialog box
+                var fieldDescription = Array("Song Name", "Artist Name", "Album Name");
+            // -->
+            </script>
+    <form method="post" action="&xar-modurl-mp3jukebox-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+
+            <div class="xar-form-input-wrapper">
+                 <label for="song_name" class="xar-form-label" title="#xarML('This is the name of the song')#">
+                        <xar:mlstring>Song Name:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($song_name)">
+                 <input type="text" name="song_name" id="song_name" value="#$song_name#" maxlength="128" class="xar-form-textlong" />
+             <xar:else />
+                    <input type="text" name="song_name" id="song_name" value="#$item.song_name#" maxlength="128" class="xar-form-textlong" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['song_name'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid song name</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="artist_name" class="xar-form-label" title="#xarML('This is the artist name')#">
+                         <xar:mlstring>Artist:</xar:mlstring>
+                </label>
+
+                <xar:if condition="isset($artist_name)">
+                    <input type="text" name="artist_name" id="artist_name" value="#$artist_name#" maxlength="128" class="xar-form-textmedium" />
+                <xar:else />
+                    <input type="text" name="artist_name" id="artist_name" value="#$item.artist_name#" maxlength="128" class="xar-form-textmedium" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['artist_name'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid artist name</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="album_name" class="xar-form-label" title="#xarML('This is the album name')#">
+                         <xar:mlstring>Album:</xar:mlstring>
+                </label>
+
+                <xar:if condition="isset($album_name)">
+                    <input type="text" name="album_name" id="album_name" value="#$album_name#" maxlength="128" class="xar-form-textmedium" />
+                <xar:else />
+                    <input type="text" name="album_name" id="album_name" value="#$item.album_name#" maxlength="128" class="xar-form-textmedium" />
+                </xar:if>
+                <xar:if condition="!empty($invalid['album_name'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid album name</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="status" class="xar-form-label" title="#xarML('This is the song status')#">
+                         <xar:mlstring>Status:</xar:mlstring>
+                </label>
+
+                <xar:if condition="isset($status)">
+                    <select name="status" id="status">
+                        <xar:foreach in="$status_options" key="$value" value="$label">
+                            <xar:if condition="$value eq $status">
+                                <option value="#$value#" selected="selected">#$label#</option>
+                            <xar:else />
+                                <option value="#$value#">#$label#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                <xar:else />
+                    <select name="status" id="ststus">
+                        <xar:foreach in="$status_options" key="$value" value="$label">
+                            <xar:if condition="$value eq $item['status']">
+                                <option value="#$value#" selected="selected">#$label#</option>
+                            <xar:else />
+                                <option value="#$value#">#$label#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </xar:if>
+                <xar:if condition="!empty($invalid['status'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid song status</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <xar:if condition="xarModIsAvailable('uploads')">
+                <p>insert upload property here</p>
+
+            <xar:else />
+                <p><xar:mlstring>Uploads module not available.</xar:mlstring></p>
+
+            </xar:if>
+
+
+        <xar:if condition="!empty($hookoutput)">
+         <fieldset>
+            <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+              <!--
+                You can display individual hooks if you want using xar:if statements
+
+                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                    #$hookoutput['categories']#
+                </xar:if>
+
+                or display them all with one command as follows
+                -->
+                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+        </fieldset>
+        </xar:if>
+            <div class="xar-align-center xar-margin-thickends">
+        <!--
+            // Add an authorisation ID - this adds a hidden field in the form that
+            // contains an authorisation ID. The authorisation ID is very important in
+            // preventing certain attacks on the website
+        -->
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add Song')#" />
+            </div>
+    </form>
+</div>
+</div>

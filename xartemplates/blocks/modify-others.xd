@@ -1,0 +1,11 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- Forms sent to the blocks admin should be consistant with the blocks UI.
+  // The UI uses CSS for positioning and as such you can use this as a template.
+-->
+<div class="xar-form-input-wrapper">
+    <label for="numitems#$blockid#" title="#xarML('Enter the number of items to display.')#" class="xar-form-label">
+        <xar:mlstring>Number of Items:</xar:mlstring>
+    </label>
+    <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" maxlength="5" class="xar-form-textshort" />
+</div>
+<!-- No further action is required for this block. The blocks admin will display this form element in a consistant manner throughout Xaraya -->

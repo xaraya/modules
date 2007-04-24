@@ -1,0 +1,99 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_user_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+
+        <h2><xar:mlstring>View Songs</xar:mlstring></h2>
+
+      <!--
+          // display a status message to the user if an action has been 
+          // taken on an item
+      -->
+      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+          <p>#xarSessionGetVar('statusmsg')#</p>
+      </xar:if>
+     <!-- the specific template for the current user function comes here -->
+    <xar:if condition="count($items) gt 0">
+        <xar:if condition="count($playlists) gt 0">
+            <form method="post" action="#xarModURL('mp3jukebox','user','addsongs')#">
+        </xar:if>
+      <table class="xar-fullwidth">
+          <tr>
+              <th>
+                  <xar:mlstring>Name</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Artist</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Album</xar:mlstring>
+              </th>
+              <th>
+                  <xar:mlstring>Create Date</xar:mlstring>
+              </th>
+            <xar:if condition="count($playlists) gt 0">
+              <th>
+                  <xar:mlstring>Add to Playlist</xar:mlstring>
+              </th>
+            </xar:if>
+          </tr>
+          <xar:foreach in="$items" value="$item">
+          <tr>
+              <td>
+                  #$item.song_name#
+              </td>
+              <td>
+                  #$item.artist_name#
+              </td>
+              <td>
+                  #$item.album_name#
+              </td>
+              <td>
+                  #xarLocaleGetFormattedDate('long',$item['createdate'])#
+              </td>
+            <xar:if condition="count($playlists) gt 0">
+              <td class="xar-align-center">
+                <xar:if condition="count($playlists) gt 0">
+                    <input type="checkbox" name="addsong[]" id="addsong_#$item.songid#" value="#$item.songid#" />
+                </xar:if>
+              </td>
+            </xar:if>
+          </tr>
+          </xar:foreach>
+      </table>
+        <xar:if condition="count($playlists) gt 0">
+            <div class="xar-form-input-wrapper">
+                <label for="playlistid" title="#xarML('Add Selected songs to playlist')#" class="xar-form-label">
+                    <xar:mlstring>Add Songs to playlist:</xar:mlstring>
+                </label>
+                <select name="playlistid" id="playlistid">
+                    <xar:foreach in="$playlists" value="$playlist">
+                        <option value="#$playlist.playlistid#">#$playlist.title#</option>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Add to playlist')#" />
+
+            <div>
+
+        </xar:if>
+
+
+        </form>
+    <xar:else />
+        <p class="xar-align-center">
+            <xar:mlstring>No songs found.</xar:mlstring>
+        </p>
+    </xar:if>
+      <div class="xar-align-center xar-padding-thick">
+          <!-- add the pager here -->
+          #$pager#
+      </div>
+      
+</div>

@@ -1,0 +1,22 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>MP3 Jukebox</xar:mlstring></h2>
+
+    <!-- the variables used in this menu template  come from example_user_menu() -->
+    <xar:template type="module" file="user-menu" />
+
+    <!-- the specific template for the current function comes here -->
+    
+    <!-- some variable filled in by the function using this template -->
+
+</div>
+<div class="xar-mod-foot xar-align-center xar-padding-thick">
+    <p>
+         <xar:mlstring>Welcome to this MP3 Jukebox module.</xar:mlstring>
+    </p>
+</div>
+

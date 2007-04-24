@@ -1,0 +1,34 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_user_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+    <h2><xar:mlstring>Delete Playlist</xar:mlstring></h2>
+
+    <!-- the specific template for the current user function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this playlist?</xar:mlstring></h3>
+    <form method="post" action="&xar-modurl-mp3jukebox-user-delete;">
+            <p>
+                <strong><xar:mlstring>Playlist:</xar:mlstring></strong>
+                 #$title#
+            </p>
+
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="playlistid" id="playlistid" value="#$playlistid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+             <p class="xar-align-center">
+             <a href="&xar-modurl-mp3jukebox-user-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </p>
+    </form>
+</div>

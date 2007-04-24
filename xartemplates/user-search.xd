@@ -1,0 +1,59 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+
+<h2>
+    <xar:mlstring>
+        Search for MP3 Jukebox Items
+    </xar:mlstring>
+</h2>
+<xar:if condition="!empty($example) and count($example) gt 0">
+    <h4>
+        <xar:mlstring>
+            MP3 Jukebox Items Found
+        </xar:mlstring>
+        :
+    </h4>
+    <ul>
+        <xar:foreach in="$example" key="$key" value="$exitem">
+            <li>
+                <a href="#xarModURL('example', 'user', 'display', array('exid' => $exitem['exid']))#">
+                    #$exitem['number']# - #$exitem['name']#
+                </a>
+            </li>
+        </xar:foreach>
+    </ul>
+<xar:else/>
+    <xar:if condition="!empty($status)">
+        <p>
+            #$status#
+        </p>
+    </xar:if>
+</xar:if>
+<p>
+    <xar:mlstring>
+        Search in
+    </xar:mlstring>
+    :
+</p>
+
+<p>
+    <xar:if condition="isset($name) and $name eq '1'">
+    <input type="checkbox" name="name" id="name" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="name" id="name" value="1" />
+    </xar:if>
+    <xar:mlstring>
+        MP3 Jukebox Name
+    </xar:mlstring>
+</p>
+<p>
+    <xar:if condition="isset($number) and $number eq '1'">
+    <input type="checkbox" name="number" id="number" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="number" id="number" value="1" />
+    </xar:if>
+    <xar:mlstring>
+        MP3 Jukebox Number
+    </xar:mlstring>
+</p>

@@ -1,0 +1,147 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:comment>
+    This tag will add the module specific style sheet to this template (empty for the moment)
+    This file is located in /xarstyles and is -as a standard- called styles.css
+    You can add other files by adding files="filename without extension" to the tag eg
+    <xar:style scope="module" file="forms" /> for forms.css in mp3jukebox/xarstyles
+</xar:comment>
+<xar:style scope="module" />
+
+<!-- common user menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_user_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+ <xar:template type="module" file="user-menu" />
+
+    <!-- the specific template for the current user function comes here -->
+
+        <div id="mp3jukebox_edit_or_add">
+            <h2><xar:mlstring>New Playlist</xar:mlstring></h2>
+
+            <!-- This Javascript will check for required fields before the form is submitted. -->
+            <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+            <script type="text/javascript">
+            <!--
+                // Enter name of mandatory fields
+                var fieldRequired = Array("title");
+                // Enter field description to appear in the dialog box
+                var fieldDescription = Array("Playlist Title");
+            // -->
+            </script>
+    <form method="post" action="&xar-modurl-mp3jukebox-user-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+
+            <div class="xar-form-input-wrapper">
+                 <label for="title" class="xar-form-label" title="#xarML('This is the name of the playlist')#">
+                        <xar:mlstring>Title:</xar:mlstring>
+                 </label>
+             <xar:if condition="isset($title)">
+                 <input type="text" name="title" id="title" value="#$title#" maxlength="128" class="xar-form-textlong" />
+             <xar:else />
+                    <input type="text" name="title" id="title" value="#$item.title#" maxlength="128" class="xar-form-textlong" />
+             </xar:if>
+             <xar:if condition="!empty($invalid['title'])">
+                 <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid playlist name</xar:mlstring>
+                 </div>
+             </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="isset($private)">
+                    <xar:if condition="$private eq true">
+                        <input type="checkbox" name="private" id="private" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="private" id="private" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <xar:if condition="$item['private'] eq true">
+                        <input type="checkbox" name="private" id="private" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="private" id="private" value="1" />
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="!empty($invalid['private'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! An invalid value was caught</xar:mlstring>
+                    </div>
+                </xar:if>
+
+                 <label for="private" title="#xarML('This playlist is hidden from other users')#">
+                         <xar:mlstring>Private</xar:mlstring>
+                </label>
+            </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="isset($featured)">
+                    <xar:if condition="$featured eq true">
+                        <input type="checkbox" name="featured" id="featured" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="featured" id="featured" value="1" />
+                    </xar:if>
+                <xar:else />
+                    <xar:if condition="$item['featured'] eq true">
+                        <input type="checkbox" name="featured" id="featured" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="featured" id="featured" value="1" />                  
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="!empty($invalid['featured'])">
+                    <div class="xar-error">     
+                        <xar:mlstring>ERROR! An invalid value was caught</xar:mlstring>             
+                    </div>
+                </xar:if>
+
+                 <label for="featured" title="#xarML('This playlist is featured on the site')#">
+                         <xar:mlstring>Featured</xar:mlstring>
+                </label>
+
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                 <label for="status" class="xar-form-label" title="#xarML('This is the song status')#">
+                         <xar:mlstring>Status:</xar:mlstring>
+                </label>
+
+                <xar:if condition="isset($status)">
+                    <select name="status" id="status">
+                        <xar:foreach in="$status_options" key="$value" value="$label">
+                            <xar:if condition="$value eq $status">
+                                <option value="#$value#" selected="selected">#$label#</option>
+                            <xar:else />
+                                <option value="#$value#">#$label#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                <xar:else />
+                    <select name="status" id="ststus">
+                        <xar:foreach in="$status_options" key="$value" value="$label">
+                            <xar:if condition="$value eq $item['status']">
+                                <option value="#$value#" selected="selected">#$label#</option>
+                            <xar:else />
+                                <option value="#$value#">#$label#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </xar:if>
+                <xar:if condition="!empty($invalid['status'])">
+                    <div class="xar-error">
+                        <xar:mlstring>ERROR! This is not a valid song status</xar:mlstring>
+                    </div>
+                </xar:if>
+            </div>
+
+            <div class="xar-align-center xar-margin-thickends">
+        <!--
+            // Add an authorisation ID - this adds a hidden field in the form that
+            // contains an authorisation ID. The authorisation ID is very important in
+            // preventing certain attacks on the website
+        -->
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Create Playlist')#" />
+            </div>
+    </form>
+</div>
+</div>

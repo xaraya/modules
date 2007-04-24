@@ -1,0 +1,82 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div class="xar-mod-body"> 
+
+    <!-- the variables used in this menu templte  come from mp3jukebox_user_menu() -->
+    <xar:template type="module" file="user-menu" />
+
+    <h2><xar:mlstring>MP3 Jukebox Playlists</xar:mlstring></h2>
+
+    <!-- the specific template for the current function comes here -->
+
+    <!-- some status given by the function using this template -->
+
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    </xar:if>
+<xar:if condition="count($items) gt 0">
+
+    <xar:comment>
+        <!-- Add a navigator for categories when you have hooked categories to the mp3jukebox module -->
+        <xar:if condition="xarModIsHooked('categories','mp3jukebox')">
+            <xar:categories-navigation layout="trails" showchildren="1" module="mp3jukebox" catid="$catid" />
+        </xar:if>
+    </xar:comment>
+    <table class="xar-fullwidth">
+        <tr>
+            <th><xar:mlstring>Title</xar:mlstring></th>
+            <th><xar:mlstring>Status</xar:mlstring></th>
+            <th><xar:mlstring>Create Date</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+
+        <!-- Loop over all the items given by the function. Since $data['items']
+             is preset to an empty array, we don't need to use an if/else
+             structure like we do in user-display.xd -->
+
+        <xar:foreach in="$items" value="$item">
+        <tr>
+            <td>
+                <xar:if condition="empty($item.link)">
+                    #$item.title#
+                <xar:else />
+                    <a href="#$item.link#">#$item.title#</a>
+                </xar:if>
+            </td>
+            <td>
+                    #$item.status#
+            </td>
+            <td>
+                    #xarLocaleGetFormattedDate('long', $item['createdate'])#
+            </td>
+            <td class="xar-align-center">
+                    <a href="#xarModURL('mp3jukebox','user','delete', array('playlistid' => $item['playlistid']))#"><xar:mlstring>Delete</xar:mlstring></a>
+            </td>
+        </tr>
+        </xar:foreach>
+
+    </table>
+
+    <div class="xar-align-center xar-padding-thick">
+        <!-- add the pager here -->
+        #$pager#
+    </div>
+<xar:else />
+    <p class="xar-align-center"><xar:mlstring>No playlists found.</xar:mlstring></p>
+</xar:if>
+
+    <xar:if condition="$plperuser gt 0">
+        <p class="xar-align-center">
+            <xar:ml>
+                <xar:mlstring>#(1) of #(2) playlists.</xar:mlstring>
+                <xar:mlvar>#$playlists#</xar:mlvar>
+                <xar:mlvar>#$plperuser#</xar:mlvar>
+            </xar:ml>
+        </p>
+    </xar:if>
+
+
+</div>

@@ -1,0 +1,83 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox Administration</xar:mlstring></span>
+</div>
+<div id="notsogoodbutok" class="xar-mod-body">
+  <!-- include a standard tabbed admin menu via include file in the xartemplates/include folder -->
+  <xar:template type="module" module="mp3jukebox" file="admin-menu" />
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+  <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+  <p>
+    <em><xar:mlstring>MP3 Jukebox is the documented Xaraya MP3 Jukebox Module.</xar:mlstring></em>
+    <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
+  </p>
+  <ol>
+    <li><xar:mlstring>Providing a simple module template with standard functions, blocks, hooks, Dynamic Data properties, and templates that Developers can use as a basis for a new module.</xar:mlstring></li>
+    <li><xar:mlstring>Providing documentation in the functions and template files for those that wish to learn about standard Xaraya Module development.</xar:mlstring></li>
+
+  </ol>
+  <p><xar:mlstring>The MP3 Jukebox module demonstrates:</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Examples of standard Xaraya functions commented in plain terms, and written with Xaraya coding standards.</xar:mlstring></li>
+    <li><xar:mlstring>Templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
+    <li><xar:mlstring>Examples of hooks, blocks, dynamic data properties, and event handlers.</xar:mlstring></li>
+    <li>
+      <xar:mlstring>A simple demonstration on how to use xmlhttp requests (aka 'ajax'). The <strong>admin</strong> interface uses xml http requests to build up the
+        editing and deletion interface.
+      </xar:mlstring>
+      <xar:mlstring>For more detailed info, look in the templates (e.g. xartemplates/includes/admin-menu.xd) in this module.</xar:mlstring>
+    </li>
+  </ul>
+
+  <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+  <p>
+    <xar:mlstring>This module is intended as a reference for other modules to use. Its output is just a basic non-usable output in many cases.</xar:mlstring>
+  </p>
+
+  <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>first</xar:mlstring></li>
+    <li><xar:mlstring>example</xar:mlstring></li>
+  </ul>
+
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>Usermenu -- Allows interface with the Roles "My Account Page"</xar:mlstring></li>
+    <li><xar:mlstring>Search -- Allows interface with the Search Module.</xar:mlstring></li>
+  </ul>
+  <p>
+    <xar:mlstring>
+      In these cases, the MP3 Jukebox module provides the hook functionality.
+      To activate the hooks go to </xar:mlstring>
+    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=mp3jukebox"><xar:mlstring>Modules - Configure Hooks - MP3 Jukebox Module</xar:mlstring></a>.
+    <xar:mlstring> From there click on the checkbox in either Roles or
+      the Search module to activate the respective hooks.
+    </xar:mlstring>
+  </p>
+
+  <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+  <ul>
+    <li><xar:mlstring>MP3 Jukebox -- Provides example code and templates for an MP3 Jukebox property</xar:mlstring></li>
+
+  </ul>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the MP3 Jukebox module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>MP3 Jukebox Extension page at</xar:mlstring> <a title="#xarML('MP3 Jukebox Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>MP3 Jukebox Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2007-04-09
+  </p>
+</div>
+

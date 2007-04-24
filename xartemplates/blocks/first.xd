@@ -1,0 +1,18 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- Loop over all the items given by the function. Since $data['items']
+         is preset to an empty array, we don't need to use an if/else
+         structure like we do in user-display.xd -->
+<p>
+    <xar:if condition="count($items) ge 1">
+        <xar:foreach in="$items" value="$item">
+            <!-- we only show a link if the item link variable is not empty -->
+            <xar:if condition="empty($item.link)">
+                #xarVarPrepForDisplay($item.name)#<br />
+            <xar:else />
+               <a href="#$item.link#">#xarVarPrepForDisplay($item.name)#</a><br />
+            </xar:if>
+        </xar:foreach>
+    <xar:else/>
+        <xar:mlstring>No items to display</xar:mlstring>
+    </xar:if>
+</p>

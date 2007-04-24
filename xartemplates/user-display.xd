@@ -1,0 +1,92 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>MP3 Jukebox</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+<!-- <xar:template type="module" file="user-menu" /> -->
+
+        <h1><xar:mlstring>View Playlist:</xar:mlstring> #$title#</h1>
+
+        <p>
+            <strong><xar:mlstring>Create Date:</xar:mlstring></strong>
+            #xarLocaleGetFormattedDate('long',$createdate)#
+        </p>
+        <p>
+            <strong><xar:mlstring>Status:</xar:mlstring></strong>
+            #$status#
+        </p>
+
+        <xar:if condition="count($songs) gt 0">
+            <h2>
+                <xar:mlstring>Songs in this playlist:</xar:mlstring>
+            </h2>
+
+            <form method="post" action="#xarModURL('mp3jukebox','user','removesongs')#">
+            <table class="xar-fullwidth">
+                  <tr>
+                      <th>
+                          <xar:mlstring>Name</xar:mlstring>
+                      </th>
+                      <th>
+                          <xar:mlstring>Artist</xar:mlstring>
+                      </th>
+                      <th>
+                          <xar:mlstring>Album</xar:mlstring>
+                      </th>
+                      <th>
+                          <xar:mlstring>Remove</xar:mlstring>
+                      </th>
+                  </tr>
+                  <xar:foreach in="$songs" value="$song">
+                      <tr>
+                          <td>
+                              #$song.song_name#
+                          </td>
+                          <td>
+                              #$song.artist_name#
+                          </td>
+                          <td>
+                              #$song.album_name#
+                          </td>
+                          <td class="xar-align-center">
+                                <input type="checkbox" name="removesong[]" id="removesong_#$song.songid#" value="#$song.songid#" />
+                                
+                          </td>
+                      <tr>
+                </xar:foreach>
+            <table>
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" value="#$authid#" />
+                <input type="hidden" name="playlistid" value="#$playlistid#" />
+                <input type="submit" value="#xarML('Remove Selected Songs')#" />
+            </div>
+            </form>
+        <xar:else />
+            <p class="xar-align-center">
+                <xar:mlstring>No songs in this playlist.</xar:mlstring>
+            </p>
+        </xar:if>
+        <!-- if you want to extend this module with dynamic data, you can retrieve
+        //   that data in the code via APIs, or use e.g. the following BL tags here.
+        //   For the different options, see the overview of dynamicdata...
+        -->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="mp3jukebox" itemid="$playlistid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+</div>
