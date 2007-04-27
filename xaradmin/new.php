@@ -121,7 +121,7 @@ function xarbb_admin_new()
             $tposter = xarUserGetVar('uid');
 
             // API does create plus other setup
-            $newfid = xarModApiFunc('xarbb', 'admin', 'new',
+            $newfid = xarModApiFunc('xarbb', 'admin', 'create',
                 array(
                     'fname'    => $data['fname'],
                     'fdesc'    => $data['fdesc'],
