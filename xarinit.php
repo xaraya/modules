@@ -42,7 +42,7 @@ Site URL: %%siteurl%%';
     );
 
     /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
-    return example_upgrade('1.0.1');
+    return recommend_upgrade('1.0.1');
 }
 
 /**
@@ -55,7 +55,7 @@ function recommend_upgrade($oldversion)
             // Remove Masks and Instances
             xarRemoveMasks('recommend');
             xarRemoveInstances('recommend');
-            
+
             /* Set custom sendtofriend tag */
             xarTplRegisterTag(
                'recommend', 'recommend-sendtofriend', array(),
@@ -79,16 +79,16 @@ function recommend_upgrade($oldversion)
             /* Register Masks */
             xarRegisterMask('OverviewRecommend','All','recommend','All','All','ACCESS_OVERVIEW');
             xarRegisterMask('EditRecommend','All','recommend','All','All','ACCESS_EDIT');
-            
+
             case '1.0.0':
-            
+
             $olddate = xarModGetVar('recommend', 'date');
             $newdate = strtotime($olddate);
             xarModSetVar('recommend', 'date', $newdate);
-            
+
             case '1.0.1':
             xarRegisterMask('ReadRecommend','All','recommend','All','All','ACCESS_READ');
-      
+
             case '1.0.2': //current version
             break;
     }
