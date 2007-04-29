@@ -1,0 +1,30 @@
+<xar:comment>
+    Display a summary of an event as a 'dl' list entry.
+    Requires the following paramaters:
+    - $event
+    - $group - optional, passed in when grouping events ('day', 'week', 'month', 'year')
+</xar:comment>
+
+<xar:set name="summary_max_words">100</xar:set>
+
+<xar:if condition="!isset($group)">
+    <xar:set name="group">''</xar:set>
+</xar:if>
+
+<xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
+
+<dt id="event-summary-#$event.eid#">
+    <xar:if condition="$group eq 'day'">
+        <strong>#$dates.short.time#</strong> <a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
+    <xar:else />
+        <strong>#$dates.short.date#</strong> <a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
+        <xar:if condition="$event.duration_days eq 1">
+            #$dates.short.time#
+        </xar:if>
+    </xar:if>
+</dt>
+
+<dd class="ievent-summary">
+    #xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary,'maxwords'=&gt;$summary_max_words)))#
+</dd>
+

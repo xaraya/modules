@@ -1,0 +1,22 @@
+<xar:comment>
+    Next/previous links, displayed in the individual event page.
+</xar:comment>
+
+
+<div>
+    <ul>
+        <xar:if condition="!empty($prev_event)">
+            <li><a href="#xarServerGetCurrentURL(array('eid'=&gt;$prev_event.eid,'startnum'=&gt;$prev_event.startnum))#"><xar:mlstring>Previous Event</xar:mlstring></a></li>
+        <xar:else />
+            <li><xar:mlstring>Previous Event</xar:mlstring></li>
+        </xar:if>
+
+        <li><a href="#xarServerGetCurrentURL(array('eid'=&gt;NULL),true,'event-summary-'.$event.eid)#"><xar:mlstring>Back to list</xar:mlstring></a></li>
+
+        <xar:if condition="!empty($next_event)">
+            <li><a href="#xarServerGetCurrentURL(array('eid'=&gt;$next_event.eid,'startnum'=&gt;$next_event.startnum))#"><xar:mlstring>Next Event</xar:mlstring></a></li>
+        <xar:else />
+            <li><xar:mlstring>Next Event</xar:mlstring></li>
+        </xar:if>
+    </ul>
+</div>

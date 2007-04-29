@@ -1,0 +1,262 @@
+<object name="xar_ievents_events">
+  <objectid>10</objectid>
+  <label>xar_ievents_events</label>
+  <moduleid>9995</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>eid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="eid">
+      <id>77</id>
+      <label>Event ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_ievents_events.eid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="calendar_id">
+      <id>78</id>
+      <label>Calendar ID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_ievents_events.calendar_id</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>79</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.title</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="status">
+      <id>80</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default>ACTIVE</default>
+      <source>xar_ievents_events.status</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>DRAFT;ACTIVE;INACTIVE</validation>
+    </property>
+    <property name="created_time">
+      <id>81</id>
+      <label>Time Created</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_ievents_events.created_time</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="updated_time">
+      <id>82</id>
+      <label>Time Updated</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_ievents_events.updated_time</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="created_by">
+      <id>83</id>
+      <label>Created By</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_ievents_events.created_by</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="updated_by">
+      <id>84</id>
+      <label>Updated By</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_ievents_events.updated_by</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="all_day">
+      <id>85</id>
+      <label>All Day</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_ievents_events.all_day</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>A,All day;T,Timed event</validation>
+    </property>
+    <property name="startdate">
+      <id>86</id>
+      <label>Start Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_ievents_events.start_date</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="enddate">
+      <id>87</id>
+      <label>End Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_ievents_events.end_date</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="summary">
+      <id>88</id>
+      <label>Summary</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_ievents_events.summary</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>89</id>
+      <label>Description</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_ievents_events.description</source>
+      <status>1</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="url">
+      <id>90</id>
+      <label>URL</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.url</source>
+      <status>1</status>
+      <order>14</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="external_source">
+      <id>91</id>
+      <label>External Source</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.external_source</source>
+      <status>1</status>
+      <order>15</order>
+      <validation>0:100</validation>
+    </property>
+    <property name="external_ref">
+      <id>92</id>
+      <label>External Ref</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.external_ref</source>
+      <status>1</status>
+      <order>16</order>
+      <validation>0:100</validation>
+    </property>
+    <property name="flags">
+      <id>93</id>
+      <label>Flags</label>
+      <type>checkboxlist</type>
+      <default></default>
+      <source>xar_ievents_events.flags</source>
+      <status>1</status>
+      <order>17</order>
+      <validation>F,Featured;M,Moved location;T,Rescheduled;N,Places full;C,Cancelled</validation>
+    </property>
+    <property name="location_venue">
+      <id>101</id>
+      <label>Event Venue</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.location_venue</source>
+      <status>1</status>
+      <order>18</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="location_address">
+      <id>94</id>
+      <label>Event Address</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_ievents_events.location_address</source>
+      <status>1</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
+    <property name="location_country">
+      <id>95</id>
+      <label>Event Country</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.location_country</source>
+      <status>1</status>
+      <order>19</order>
+      <validation>0:200</validation>
+    </property>
+    <property name="location_postcode">
+      <id>96</id>
+      <label>Event Postcode</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.location_postcode</source>
+      <status>1</status>
+      <order>20</order>
+      <validation>0:20</validation>
+    </property>
+    <property name="contact_email">
+      <id>97</id>
+      <label>Contact E-mail</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.contact_email</source>
+      <status>1</status>
+      <order>21</order>
+      <validation></validation>
+    </property>
+    <property name="contact_phone">
+      <id>98</id>
+      <label>Contact Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.contact_phone</source>
+      <status>1</status>
+      <order>22</order>
+      <validation>0:60</validation>
+    </property>
+    <property name="contact_details">
+      <id>99</id>
+      <label>Contact Details</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_ievents_events.contact_details</source>
+      <status>1</status>
+      <order>23</order>
+      <validation></validation>
+    </property>
+    <property name="cost">
+      <id>100</id>
+      <label>Cost</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_events.cost</source>
+      <status>1</status>
+      <order>24</order>
+      <validation>0:255</validation>
+    </property>
+  </properties>
+</object>

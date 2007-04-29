@@ -1,0 +1,76 @@
+<xar:comment>
+    Display an event detail as a 'dl' list entry.
+    Requires the following paramaters:
+    - $event
+    - $calendar (current calendar record) - optional?
+</xar:comment>
+
+<dt><a href="#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a></dt>
+
+<xar:if condition="!empty($event.summary)">
+    <dd class="ievent-summary">
+        <h3 class="ievent-section-header"><xar:mlstring>Summary</xar:mlstring></h3>
+        <p>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary)))#</p>
+    </dd>
+</xar:if>
+
+<xar:comment>Only display the detail if the user has read privilege. The summary requires only overview privilege.</xar:comment>
+<xar:sec mask="ReadIEvent" instance="$event[calendar_id]:$event[eid]:ALL" catch="false">
+    <xar:if condition="!empty($event.description)">
+        <dd class="ievent-description">
+            <h3 class="ievent-section-header"><xar:mlstring>Detail</xar:mlstring></h3>
+            #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.description))#
+        </dd>
+    </xar:if>
+    <dd class="ievent-url">
+        <xar:if condition="!empty($event.url) && $event.url ne 'http://'">
+            <p>
+                <xar:ml>
+                    <xar:mlstring><a href="#(1)">More information</a> (<a href="#(1)" target="_blank">New window</a>)</xar:mlstring>
+                    <xar:mlvar>#xarVarPrepForDisplay($event.url)#</xar:mlvar>
+                </xar:ml>
+            </p>
+        </xar:if>
+    </dd>
+
+    <xar:comment>
+        TODO: calendar link, edit links, do something with flags, cost, full dates and times,
+        last updated, status (if admin)
+    </xar:comment>
+
+    <xar:if condition="!empty($event.location)">
+        <dd class="ievent-location">
+            <h3 class="ievent-section-header"><xar:mlstring>Location</xar:mlstring></h3>
+            <xar:if condition="!empty($event.location.venue)">
+                <p><strong><xar:mlstring>Venue:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.venue)#</p>
+            </xar:if>
+            <xar:if condition="!empty($event.location.address)">
+                <p><strong><xar:mlstring>Address:</xar:mlstring></strong></p>
+                #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.location.address))#
+            </xar:if>
+            <xar:if condition="!empty($event.location.country)">
+                <p><strong><xar:mlstring>Country:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.country)#</p>
+            </xar:if>
+            <xar:if condition="!empty($event.location.postcode)">
+                <p><strong><xar:mlstring>Postcode:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.postcode)#</p>
+                <xar:comment>TODO: use the postcode to nip off to maps and directions etc.</xar:comment>
+            </xar:if>
+        </dd>
+    </xar:if>
+
+    <xar:if condition="!empty($event.contact)">
+        <dd class="ievent-contact">
+            <h3 class="ievent-section-header"><xar:mlstring>Contact</xar:mlstring></h3>
+            <xar:if condition="!empty($event.contact.email)">
+                <p><strong><xar:mlstring>E-mail:</xar:mlstring></strong> <a href="mailto:#xarVarPrepForDisplay($event.contact.email)#">#xarVarPrepForDisplay($event.contact.email)#</a></p>
+            </xar:if>
+            <xar:if condition="!empty($event.contact.phone)">
+                <p><strong><xar:mlstring>Phone:</xar:mlstring></strong> #xarVarPrepForDisplay($event.contact.phone)#</p>
+            </xar:if>
+            <xar:if condition="!empty($event.contact.details)">
+                <p><strong><xar:mlstring>Further details:</xar:mlstring></strong></p>
+                #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.contact.details))#
+            </xar:if>
+        </dd>
+    </xar:if>
+</xar:sec>

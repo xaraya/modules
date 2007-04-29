@@ -1,0 +1,50 @@
+
+<xar:set name="summary_max_words">3</xar:set>
+
+<xar:if condition="!empty($eid)">
+    <xar:comment>An individual event was chosen</xar:comment>
+
+    <xar:comment>
+        TODO: Amount to be displayed depends on the user permissions
+    </xar:comment>
+
+    <xar:template file="event-nextprev" />
+
+    <dl class="ievent-event">
+        <xar:template file="event-display-dl" subdata="array('event'=&gt;$event)" />
+    </dl>
+
+    <xar:template file="event-nextprev" />
+
+<xar:else />
+    <xar:comment>A list of events is to be shown</xar:comment>
+
+    <xar:if condition="empty($events)">
+        <p><xar:mlstring>No events found</xar:mlstring></p>
+    <xar:else />
+        <xar:if condition="empty($groups)">
+            <xar:comment>Single listing, not grouped in any way</xar:comment>
+            <dl class="ievent-event">
+                <xar:loop name="$events">
+                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item)" />
+                </xar:loop>
+            </dl>
+        <xar:else />
+            <xar:comment>Multiple listings, grouped in some way</xar:comment>
+            <dl class="ievent-group">
+                <xar:loop id="groups" name="$groups">
+                    <xar:template file="group-header-dl" subdata="array('group'=&gt;$loop:item)" />
+                    <dd>
+                        <dl class="ievent-event">
+                            <xar:loop name="$loop:item.events">
+                                <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group)" />
+                            </xar:loop>
+                        </dl>
+                    <dd>
+                </xar:loop>
+            </dl>
+        </xar:if>
+
+        <div>#$pager#</div>
+    </xar:if>
+</xar:if>

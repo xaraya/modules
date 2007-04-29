@@ -1,0 +1,62 @@
+<object name="xar_ievents_calendars">
+  <objectid>9</objectid>
+  <label>xar_ievents_calendars</label>
+  <moduleid>9995</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>cid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="cid">
+      <id>72</id>
+      <label>Calendar ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_ievents_calendars.cid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>73</id>
+      <label>Status</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_calendars.status</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>ACTIVE;INACTIVE</validation>
+    </property>
+    <property name="short_name">
+      <id>74</id>
+      <label>Short Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_calendars.short_name</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:60</validation>
+    </property>
+    <property name="long_name">
+      <id>75</id>
+      <label>Long Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_ievents_calendars.long_name</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:200</validation>
+    </property>
+    <property name="description">
+      <id>76</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_ievents_calendars.description</source>
+      <status>2</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
