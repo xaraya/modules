@@ -1,0 +1,72 @@
+<object name="xarpages_news">
+  <objectid>0</objectid>
+  <label>Xarpages_News</label>
+  <moduleid>160</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="list_text">
+      <id>57</id>
+      <label>List Text</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="menu_title">
+      <id>58</id>
+      <label>Menu Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="page_title">
+      <id>59</id>
+      <label>Page Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="pubtype">
+      <id>62</id>
+      <label>Pubtype</label>
+      <type>itemtype</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>articles</validation>
+    </property>
+    <property name="item_text">
+      <id>63</id>
+      <label>Item Text</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="mandatory_cat">
+      <id>65</id>
+      <label>Mandatory Cat</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

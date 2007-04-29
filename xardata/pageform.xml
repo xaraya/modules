@@ -1,0 +1,122 @@
+<object name="xarpages_pageform">
+  <objectid>0</objectid>
+  <label>Xarpages_Pageform</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="body">
+      <id>126</id>
+      <label>body</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="data">
+      <id>127</id>
+      <label>data</label>
+      <type>objectref</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>objects:name:objectid</validation>
+    </property>
+    <property name="formlayout">
+      <id>128</id>
+      <label>formlayout</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="required">
+      <id>129</id>
+      <label>required</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="hide_nav">
+      <id>130</id>
+      <label>hide_nav</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="reset_php">
+      <id>131</id>
+      <label>reset_php</label>
+      <type>textarea_large</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="submit_label">
+      <id>132</id>
+      <label>submit_label</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="hide_cancel">
+      <id>133</id>
+      <label>hide_cancel</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="hide_back">
+      <id>134</id>
+      <label>hide_back</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="hide_skip">
+      <id>135</id>
+      <label>hide_skip</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="always_reset">
+      <id>136</id>
+      <label>always_reset</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

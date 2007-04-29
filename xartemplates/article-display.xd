@@ -1,0 +1,33 @@
+<xar:comment>
+    Fallback news display template.
+    This is displayed by the 'page-news' template, for publications not having
+    a more specific template.
+</xar:comment>
+
+<div class="news-item">
+    <div class="news-header">
+        <xar:template file="news-nextprev" />
+
+        <h1>News Item (#xarLocaleGetFormattedDate('short',$pubdate)#)</h1>
+        <h3>
+            <xar:comment>Add an edit link if we have the privileges</xar:comment>
+            <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
+                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
+            </xar:if>
+            #xarvarPrepForDisplay($title)#
+        </h3>
+    </div>
+
+    <xar:comment>
+        Only display the summary if there is one (assumed to be HTML).
+        If there is no body, then attempt to display teh summary instead. We would not normally link
+        direct to an article without a body, but next/previous links would still pass through them.
+    </xar:comment>
+    <xar:if condition="!empty($body)">
+        <div class="news-body">#$body#</div>
+    <xar:elseif condition="!empty($summary)" />
+        <div class="news-body">#$summary#</div>
+    </xar:if>
+</div>
+
+<xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>

@@ -1,0 +1,92 @@
+<object name="xarpages_pageaction">
+  <objectid>0</objectid>
+  <label>Xarpages_Pageaction</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="validation_php">
+      <id>118</id>
+      <label>validation_php</label>
+      <type>textarea_large</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="validation_func">
+      <id>119</id>
+      <label>validation_func</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="batch_validations">
+      <id>120</id>
+      <label>batch_validations</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="processing_php">
+      <id>121</id>
+      <label>processing_php</label>
+      <type>textarea_large</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="processing_func">
+      <id>122</id>
+      <label>processing_func</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="debug">
+      <id>123</id>
+      <label>debug</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="dont_execute">
+      <id>124</id>
+      <label>dont_execute</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="redirect_nav">
+      <id>125</id>
+      <label>redirect_nav</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>;form_url;action_url;cancel_url;back_url;nextform_url</validation>
+    </property>
+  </properties>
+</object>

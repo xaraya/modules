@@ -1,0 +1,8 @@
+This directory contains RSS theme templates.
+
+Until Xaraya can distrubute files automatically, the
+contents of this directory should be copied to:
+
+themes/rss/modules/xarpages/
+
+

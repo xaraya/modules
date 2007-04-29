@@ -1,0 +1,25 @@
+<xar:comment>
+    Fallback summary template for the 'news' page type, called up
+    for each news item displayed by the 'page-news' template, while
+    in summary mode.
+</xar:comment>
+
+<div class="news-item">
+    <div class="news-header">
+        <h3>
+            <xar:comment>Add an edit link if we have the privileges</xar:comment>
+            <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
+                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
+            </xar:if>
+            #xarvarPrepForDisplay($title)# <span>(#xarLocaleGetFormattedDate('long',$pubdate)#)</span>
+        </h3>
+    </div>
+    <xar:comment>Only display the summary if there is one (assumed to be HTML)</xar:comment>
+    <xar:if condition="!empty($summary)">
+        <div class="news-body">#$summary#</div>
+    </xar:if>
+    <xar:comment>Only display the detail link is there is further detail (assumed to be HTML)</xar:comment>
+    <xar:if condition="!empty($body)">
+        <div class="news-footer"><a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
+    </xar:if>
+</div>

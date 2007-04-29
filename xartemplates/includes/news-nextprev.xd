@@ -1,0 +1,24 @@
+
+<xar:if condition="isset($prev_url) or isset($next_url)">
+    <table class="nextprev">
+        <tr>
+            <td class="prev">
+                <xar:if condition="!empty($prev_url)">
+                    <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">&#171; Previous article</a>
+                <xar:else />
+                    <span>&#171; Previous article</span>
+                </xar:if>
+            </td>
+            <td class="back">
+                <a href="#xarServerGetCurrentURL(array('aid'=&gt;NULL))#" title="Return to the list">[Back to List]</a>
+            </td>
+            <td class="next">
+                <xar:if condition="!empty($next_url)">
+                    <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">Next article &#187;</a>
+                <xar:else />
+                    <span>Next article &#187;</span>
+                </xar:if>
+            </td>
+        </tr>
+    </table>
+</xar:if>

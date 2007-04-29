@@ -1,0 +1,35 @@
+
+<xar:comment>List of items</xar:comment>
+<xar:if condition="empty($article)">
+    <xar:comment>Different text for the summary as for an individual item?</xar:comment>
+    <xar:if condition="isset($current_page.dd.list_text)">
+        <div>#$current_page.dd.list_text#</div>
+    </xar:if>
+    <div>
+        <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
+        <xar:loop name="$articles">
+            <xar:set name="summary">#xarTplModule('xarpages', 'article', 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+            #$summary#
+        </xar:loop>
+    </div>
+</xar:if>
+
+<xar:comment>Individual item</xar:comment>
+<xar:if condition="!empty($article)">
+    <xar:comment>Different text for the summary as for an individual item?</xar:comment>
+    <xar:if condition="isset($current_page.dd.item_text)">
+        <div>#$current_page.dd.item_text#</div>
+    </xar:if>
+    <div>
+        <xar:set name="display">#xarTplModule('xarpages', 'article', 'display', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
+        #$display#
+    </div>
+</xar:if>
+
+<xar:if condition="!empty($hooks)">
+    <xar:foreach in="$hooks" key="$hookmodule">
+    <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+    <div>#$hooks[$hookmodule]#</div>
+    </xar:if>
+    </xar:foreach>
+</xar:if>
