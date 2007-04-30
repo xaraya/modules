@@ -1,6 +1,4 @@
 
-<xar:set name="summary_max_words">3</xar:set>
-
 <xar:if condition="!empty($eid)">
     <xar:comment>An individual event was chosen</xar:comment>
 

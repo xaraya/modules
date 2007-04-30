@@ -72,6 +72,9 @@ function ievents_user_view($args)
     // The user has selected an individual event ID.
     xarVarFetch('eid', 'id', $eid, 0, XARVAR_NOT_REQUIRED);
 
+    // Calendar ID
+    xarVarFetch('calendar_id', 'id', $calendar_id, 0, XARVAR_NOT_REQUIRED);
+
     // Get global parameters.
     $gparams = xarModAPIfunc('ievents', 'user', 'params');
 
@@ -264,6 +267,8 @@ function ievents_user_view($args)
         'enddate' => $uenddate,
     );
 
+    if (!empty($calendar_id)) $event_params['cid'] = $calendar_id;
+
     // Fetch the events.
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
     //echo "<pre>"; var_dump($events); echo "</pre>";
@@ -378,8 +383,11 @@ function ievents_user_view($args)
         'enddate' => $enddate,
         'group' => $group,
     );
+
+    if (!empty($calendar_id)) $url_params['calendar_id'] = $calendar_id;
     
     $event_count = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
+
     $pager = xarTplGetPager($startnum, $event_count,
         xarModURL('ievents', 'user', 'view', $url_params), $numitems
     );
@@ -412,6 +420,8 @@ function ievents_user_view($args)
         }
     }
 
+    // Get a list of calendars the user has access to.
+    $calendars = xarModAPIfunc('ievents', 'user', 'getcalendars', array('event_priv' => 'OVERVIEW'));
 
     //
     // Pass data back out to the template
@@ -427,7 +437,8 @@ function ievents_user_view($args)
         'group', 'groups',
         'next_event', 'prev_event',
         'eid', 'event',
-        'events', 'pager'
+        'events', 'pager',
+        'calendars'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
 

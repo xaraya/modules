@@ -5,14 +5,25 @@
     - $calendar (current calendar record) - optional?
 </xar:comment>
 
+<xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
+
 <dt><a href="#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a></dt>
 
-<xar:if condition="!empty($event.summary)">
-    <dd class="ievent-summary">
-        <h3 class="ievent-section-header"><xar:mlstring>Summary</xar:mlstring></h3>
+<dd class="ievent-summary">
+    <h3 class="ievent-section-header"><xar:mlstring>Summary</xar:mlstring></h3>
+    <p>
+        <strong><xar:mlstring>Date:</xar:mlstring></strong> #$dates.long.date#
+        <xar:if condition="$event.duration_days eq 1">
+            #$dates.short.time#
+        </xar:if>
+    </p>
+    <xar:if condition="!empty($event.cost)">
+        <p><strong><xar:mlstring>Cost:</xar:mlstring></strong> #xarVarPrepForDisplay($event.cost)#</p>
+    </xar:if>
+    <xar:if condition="!empty($event.summary)">
         <p>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary)))#</p>
-    </dd>
-</xar:if>
+    </xar:if>
+</dd>
 
 <xar:comment>Only display the detail if the user has read privilege. The summary requires only overview privilege.</xar:comment>
 <xar:sec mask="ReadIEvent" instance="$event[calendar_id]:$event[eid]:ALL" catch="false">
@@ -34,8 +45,8 @@
     </dd>
 
     <xar:comment>
-        TODO: calendar link, edit links, do something with flags, cost, full dates and times,
-        last updated, status (if admin)
+        TODO: calendar link, edit links, do something with flags,
+        last updated, status (if admin), links to categories
     </xar:comment>
 
     <xar:if condition="!empty($event.location)">

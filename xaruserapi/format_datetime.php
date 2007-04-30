@@ -25,7 +25,7 @@ function ievents_userapi_format_datetime($args)
         // Extract the stuff we need.
         if (isset($event['all_day'])) $all_day = $event['all_day'];
         if (isset($event['startdate'])) $startdate = $event['startdate'];
-        if (isset($event['end_date'])) $enddate = $event['end_date'];
+        if (isset($event['enddate'])) $enddate = $event['enddate'];
     }
 
     if (!xarVarValidate('enum:A:T', $all_day, true)) $all_day = 'A';
@@ -35,7 +35,7 @@ function ievents_userapi_format_datetime($args)
     // TODO: The templates to be defined centrally.
     $ml_single_date = '#(1)';
     $ml_startend_date = '#(1) to #(2)';
-    $ml_from_date = 'from #(1)';
+    $ml_from_date = '#(1) to TBC';
 
     $ml_unknown_time = '';
     $ml_allday = 'all day';

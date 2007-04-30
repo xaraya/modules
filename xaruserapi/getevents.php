@@ -22,6 +22,7 @@
  * @todo Zero is a valid date - need to ensure it is treated that way throughout. NULL is an empty date (for the DB too)
  * @todo Further date rules: single/multiple-day, fully-enclosed, overlapping etc. (perhaps as an output flag too)
  * @todo Group fields with 'location' and 'contact' prefixes.
+ * @todo Fix the calendar lookup: if we ask for a calendar, then we must stick to it
  *
  * Need to ensure the cid and cids don't interfere with the category IDs
  * ('cid' was probably a bad choice)
@@ -34,8 +35,12 @@ function ievents_userapi_getevents($args)
     $module = 'ievents';
     $itemtype = 1;
 
-    // Default return value.
-    $return = array();
+    // Default return value (array or 0, depending on whether doing a count).
+    if (empty($docount)) {
+        $return = array();
+    } else {
+        $return = 0;
+    }
 
     // Only used for some text escaping methods.
     $dbconn =& xarDBGetConn();
@@ -44,7 +49,9 @@ function ievents_userapi_getevents($args)
     // These are the calendars the user has at least OVERVIEW privilege on.
     // (more accurately, the calendars with which the user has at least overview privileges on its events)
     if (!isset($cids)) $cids = array();
+    if (!empty($cid)) $cids = array($cid);
     $calendars = xarModAPIfunc('ievents', 'user', 'getcalendars', array('event_priv' => 'OVERVIEW', 'cids' => $cids));
+
     $cids = array_keys($calendars);
 
     // Initialise the item fetch array.
@@ -61,9 +68,10 @@ function ievents_userapi_getevents($args)
     // If user is an admin, just select them all.
     // If not an admin, and cids is empty, then there are no valid calendars, so don't go any further.
     if (empty($cids) && !xarSecurityCheck('AdminIEvent', 0, 'IEvent')) {
-        // We not an administrator and we have no calendars.
+        // We are not an administrator and we have no calendars.
         // Return immediately.
         // TODO: when doing a count, this will be numeric (zero).
+
         return $return;
     }
 
@@ -217,7 +225,7 @@ function ievents_userapi_getevents($args)
 
                 // Some elements should be cast to integers.
                 // The DD fetch will eventually be able to work this kind of thing out for itself.
-                foreach(array('eid', 'calendar_id', 'created_time', 'updated_time', 'created_by', 'updated_by', 'start_date', 'end_date') as $cast) {
+                foreach(array('eid', 'calendar_id', 'created_time', 'updated_time', 'created_by', 'updated_by', 'startdate', 'enddate') as $cast) {
                     if (isset($event[$cast]) && is_numeric($event[$cast])) $event[$cast] = (int)$event[$cast];
                 }
 
@@ -234,12 +242,12 @@ function ievents_userapi_getevents($args)
                 // Include the duration, in days, as it is used a lot.
                 // Set the duration to zero if the event is open-ended.
                 // This value is 1-based, so a timed event on a single day is counted as one day duration.
-                if (!isset($event['end_date'])) {
+                if (!isset($event['enddate'])) {
                     $event['duration_days'] = 0;
                 } else {
                     // Find the days between two dates.
-                    list($s_year, $s_month, $s_day) = explode('-', date('Y-m-d', $event['start_date']));
-                    list($e_year, $e_month, $e_day) = explode('-', date('Y-m-d', $event['end_date']));
+                    list($s_year, $s_month, $s_day) = explode('-', date('Y-m-d', $event['startdate']));
+                    list($e_year, $e_month, $e_day) = explode('-', date('Y-m-d', $event['enddate']));
                     $s_jd = gregoriantojd($s_month, $s_day, $s_year);
                     $e_jd = gregoriantojd($e_month, $e_day, $e_year);
                     $event['duration_days'] = $e_jd - $s_jd + 1;
