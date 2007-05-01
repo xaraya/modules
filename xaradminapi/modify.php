@@ -1,0 +1,337 @@
+<?php
+
+/**
+ * Modify or create an event.
+ * Returns the details of an existing event if 'save' is empty.
+ *
+ * @todo Truncate the seconds from all times.
+ * @todo Round times to the nearest quota (or round down)
+ * @todo General security checks on new and update
+ * @todo Validate date range - ensure end date comes after the start date
+ * @todo Accept dates and times in other formats (separate fields) and feed them into the DD properties
+ *       (they can be overridden in the display template)
+ */
+
+function ievents_adminapi_modify($args)
+{
+    extract($args);
+
+    // If 'save' is not set, then just return data.
+    $save = (empty($save) ? false : true);
+
+    if (empty($eid)) $eid = 0;
+    if (empty($cid)) $cid = 0;
+
+    // The maximum number of categories that can be added to a event.
+    $maxcats = 12;
+
+    $itemtype_events = 1;
+    $itemtype_calendars = 2;
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+
+    // Set up initial data for passing to the template.
+    $data = array();
+    $data['module'] = $module;
+    $data['modid'] = $modid;
+    $data['itemtype_events'] = $itemtype_events;
+
+    // Assume for now that we have not succeeded.
+    // TODO: we have success, all-out failure, and warning (e.g. form items failed)
+    $data['result'] = 'FAIL';
+    $data['message'] = '';
+
+    // Get some information needed whether we are presenting the form
+    // or updating the object.
+
+    // Set properties we don't want the user to update and/or see
+    // Only do this if not an administrator
+    // Do this whether creating or modifying.
+    // We have to leave the 'jid' in otherwise DD has no primary key to use for a new object.
+    // If an administrator, then anything goes.
+    $props_hidden = array();
+    $props_display = array();
+
+    // Hide the eid if adding an event.
+    // It will automatically show as display-only when updating.
+    if (empty($eid)) $props_hidden[] = 'eid';
+
+    // If no event ID, then this is a new event, otherwise we are modifying an event.
+    if (!empty($eid)) {
+        // Updating an event.
+
+        // Get the object with the supplied item id
+        $object = xarModAPIFunc(
+            'dynamicdata', 'user', 'getobject',
+            array('modid' => $modid, 'itemid' => $eid, 'itemtype' => $itemtype_events)
+        );
+
+        // Get the item data.
+        $id = $object->getItem();
+
+        // Make a copy of the object (so we can restore missing items after an update)
+        $object_orig = $object;
+
+        // Error if object does not exist.
+        if (empty($id)) {
+            $data['message'] = 'EVENT DOES NOT EXIST';
+            return $data;
+        }
+
+        // Check this is for a calendar we have access to.
+        // The cid of the event will over-ride any cid passed in.
+        // Note: this means we can't change the calendar ID once set.
+        // *if* this functionality is needed, then check the privileges on both
+        // the new and the old cid are high enough to allow event modification.
+        $cid = $object->properties['calendar_id']->value;
+
+        // Determine which properties are hidden and/or readonly.
+
+        // Set all audit records to display-only
+        $props_display[] = 'created_by';
+        $props_display[] = 'created_time';
+        $props_display[] = 'updated_by';
+        $props_display[] = 'updated_time';
+
+        // Don't show the external reference details unless an editor
+        if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $event['calendar_id'] . ':' . $event['eid'] . ':' . $event['created_by'])) {
+            $props_hidden[] = 'external_source';
+            $props_hidden[] = 'external_ref';
+        }
+    } else {
+        // Creating a new event.
+
+        // Get the object, without an item id.
+        $object = xarModAPIFunc(
+            'dynamicdata', 'user', 'getobject',
+            array('modid' => $modid, 'itemtype' => $itemtype_events)
+        );
+
+        // Determine which properties are hidden and/or readonly.
+
+        // Don't show the event ID (since we don't have one at this stage)
+        $props_hidden[] = 'eid';
+
+        // Update audit properties will always be hidden.
+        // TODO: These will be set to the created_* values.
+        $props_hidden[] = 'updated_by';
+        $props_hidden[] = 'updated_time';
+
+        // Don't show the audit fields unless at least an editor.
+        if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', 'All:All:All')) {
+            $props_hidden[] = 'created_by';
+            $props_hidden[] = 'created_time';
+        }
+
+        // Set all other audit records to display-only
+        $props_display[] = 'created_by';
+        $props_display[] = 'created_time';
+
+        // Don't show the external reference details unless an editor
+        if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', 'All:All:All')) {
+            $props_hidden[] = 'external_source';
+            $props_hidden[] = 'external_ref';
+        }
+   }
+
+    // We need an event object at this stage.
+    // Return an error if not got one.
+    if (empty($object)) {
+        $data['message'] = 'EVENT OBJECT DOES NOT EXIST';
+        return $data;
+    }
+
+
+
+    // Check we are allowed to update this calendar at all
+/*
+    if (xarModAPIfunc('envjobs', 'user', 'checkprivs', array('rid' => $rid)) < 400) {
+        // Current recruiter not in list, or not an administrator.
+        $data['message'] = 'NO ACCESS TO THIS CALENDAR';
+        return $data;
+    }
+*/
+
+
+    if ($save) {
+        // Calendar ID supplied for new event.
+        if (empty($eid) && !empty($cid)) {
+            $object->properties['calendar_id']->value = $cid;
+        }
+
+        // Get the input from the form (or from args input) and check the values
+        $isvalid = $object->checkInput($args);
+
+        // Update the object only if it is valid.
+        if (!empty($isvalid)) {
+            // At this point we can alter some of the values 
+            // before storing (e.g. remove time from dates)
+
+            // Here we should have the calendar ID, whether creating or updating.
+            if (empty($cid)) $cid = $object->properties['calendar_id']->getValue();
+
+
+            // If we still don't have a calendar ID, then see if the user has a
+            // default calendar ID. This will be the case if the user is allowed
+            // to update just one calendar.
+
+            // TODO: check this calendar is in the list of calendars allowed.
+
+            if (empty($eid)) {
+                // Set some default values.
+                // When creating an event, the updated time/by should be the same as a the created time/by.
+                $object->properties['updated_time']->setValue($object->properties['created_time']->getValue());
+                $object->properties['updated_by']->setValue($object->properties['created_by']->getValue());
+
+                // Quantise the start and end dates.
+                $object->properties['startdate']->setValue(
+                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['startdate']->getValue))
+                );
+                $object->properties['enddate']->setValue(
+                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['enddate']->getValue))
+                );
+
+                // Create a new event
+                $eid = $object->createItem();
+
+                // Handle any create hooks
+                // Only appropriate if we have an event ID, i.e. if the create succeeded
+                // TODO: handle the catids correctly
+                if (!empty($eid)) {
+                    xarModCallHooks('item', 'create', $eid, array(
+                        'module' => $module,
+                        'itemtype' => $itemtype_events,
+                        'itemid' => $eid,
+                        'cids' => (!empty($args['catids']) ? $args['catids'] : array()),
+                    ));
+
+                    $data['message'] = 'EVENT CREATED';
+                    $data['result'] = 'SUCCESS';
+                }
+            } else {
+                // Set some override values.
+                $object->properties['updated_time']->setValue(time());
+                $object->properties['updated_by']->setValue(xarUserGetVar('uid'));
+
+                // Quantise the start and end dates.
+                $object->properties['startdate']->setValue(
+                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
+                );
+                $object->properties['enddate']->setValue(
+                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
+                );
+
+                // Update an existing event
+                $id = $object->updateItem();
+
+                // Handle any update hooks
+                // TODO: how to modify and limit the way the categories hooks are displayed
+                xarModCallHooks('item', 'update', $eid,
+                    array(
+                        'module' => $module,
+                        'itemtype' => $itemtype_events,
+                        'itemid' => $eid,
+                        'cids' => (!empty($args['catids']) ? $args['catids'] : array()),
+                    )
+                );
+
+                $data['message'] = 'EVENT UPDATED';
+                $data['result'] = 'SUCCESS';
+            }
+
+            // Check the user has not selected too many categories
+            // Get the current cids for the item.
+            $itemcats = xarModAPIfunc('categories', 'user', 'groupcount',
+                array('modid' => $modid, 'itemtype' => $itemtype_events, 'itemid' => $eid)
+            );
+
+            if (!empty($itemcats)) {
+                $itemcats = array_keys($itemcats);
+                $cat_count_before = count($itemcats);
+                //echo "<pre>"; var_dump($itemcats); echo "</pre>";
+
+                // Get the base categories
+                $catbases = xarModAPIfunc(
+                    'categories', 'user', 'getallcatbases',
+                    array('module'=>'envjobs', 'itemtype' => $itemtype_events, 'format' => 'cids')
+                );
+                //var_dump($catbases);
+
+                // Remove any of the base categories, if they have been selected.
+                $itemcats = array_diff($itemcats, $catbases);
+                //echo "<pre>"; var_dump($itemcats); echo "</pre>";
+
+                // If too many cats, strip some off
+                if (count($itemcats) > $maxcats) $itemcats = array_splice($itemcats, 0, $maxcats);
+
+                // Update the cats if we need to reduce any.
+                // Only do it if we have a jid (the create or update did not fail)
+                if ($data['result'] == 'SUCCESS' && count($itemcats) <> $cat_count_before) {
+                    xarModAPIfunc('categories', 'admin', 'linkcat',
+                        array(
+                            'modid' => $modid,
+                            'itemtype' => $itemtype_events,
+                            'iids' => array($eid),
+                            'cids' => $itemcats,
+                            'clean_first' => true,
+                        )
+                    );
+                }
+            }
+        } else {
+            // TODO: Scan the properties and extract those that
+            // are in error, for the error message
+            $data['message'] = 'INVALID FORM DATA';
+            $data['result'] = 'WARNING';
+        }
+    } else {
+        // Return successful flag, since we are not doing anything that can fail.
+        $data['result'] = 'SUCCESS';
+    }
+
+    // If creating a new event, load up some default values in the first presentation of the screen
+    if (empty($save) && empty($eid)) {
+        // Set the calendar if one was passed into this page.
+        if (!empty($cid)) {
+            $object->properties['calendar_id']->setValue($cid);
+        }
+        $object->properties['created_time']->setValue(time());
+        $object->properties['updated_time']->setValue(time());
+        $object->properties['created_by']->setValue(xarUserGetVar('uid'));
+        $object->properties['updated_by']->setValue(xarUserGetVar('uid'));
+
+        // TODO: If we don't have edit privileges then limit the status to 'DRAFT'
+    }
+
+    // If updating an event, change some of the values before it hits the form.
+    if (empty($save) && !empty($eid)) {
+    }
+
+   
+    // Pass special DD property properties into the template,
+    // so that properties can be hidden completely or set to display-only.
+    $data['properties_extra'] = array();
+    foreach($props_hidden as $prop_name) {
+        $data['properties_extra'][$prop_name]['hidden'] = true;
+    }
+    foreach($props_display as $prop_name) {
+        $data['properties_extra'][$prop_name]['displayonly'] = true;
+    }
+
+    // Pass the properties into the template.
+    $data['properties'] = $object->properties;
+    $data['eid'] = $eid;
+
+    if ($save === 'API') {
+        return array(
+            'result' => $data['result'],
+            'message' => $data['message'],
+            'eid' => $eid,
+        );
+    } else {
+        return $data;
+    }
+}
+
+
+?>

@@ -21,8 +21,8 @@
     <property name="status">
       <id>73</id>
       <label>Status</label>
-      <type>textbox</type>
-      <default></default>
+      <type>dropdown</type>
+      <default>ACTIVE</default>
       <source>xar_ievents_calendars.status</source>
       <status>1</status>
       <order>2</order>

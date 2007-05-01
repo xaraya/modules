@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Modify or add events.
+ */
+
+function ievents_user_modify($args)
+{
+   // This will tell us whether the form has been submitted.
+
+   // Save and return
+   xarVarFetch('submit', 'str', $submit, '', XARVAR_NOT_REQUIRED);
+
+   // Save and stay here
+   xarVarFetch('save', 'str', $save, '', XARVAR_NOT_REQUIRED);
+
+   // Save and view the job
+   xarVarFetch('submitview', 'str', $submitview, '', XARVAR_NOT_REQUIRED);
+
+   // Save the job as a copy
+   xarVarFetch('submitcopy', 'str', $submitcopy, '', XARVAR_NOT_REQUIRED);
+
+   // Check authid is submitting
+   if (!empty($submit) || !empty($save) || !empty($submitview) || !empty($submitcopy)) {
+      //if (!xarSecConfirmAuthKey()) return;
+   }
+
+   // Somewhere to redirect to on success.
+   xarVarFetch('return_url', 'str:1:200', $return_url, '', XARVAR_NOT_REQUIRED);
+
+   // The optional event ID
+   xarVarFetch('eid', 'id', $args['eid'], 0, XARVAR_NOT_REQUIRED);
+
+   // If we are saving as a copy, then discard the event ID and make it look
+   // like we are doing a 'save and edit'.
+   if (!empty($submitcopy)) {
+      $args['eid'] = 0;
+      $save = 'save';
+   }
+
+   // The optional calendar ID.
+   // Allows preselection of the calendar ID when creating a new event.
+   xarVarFetch('cid', 'id', $args['cid'], 0, XARVAR_NOT_REQUIRED);
+
+   // If submitting changes then signal this to the API.
+   if (!empty($submit) || !empty($save) || !empty($submitview)) $args['save'] = true;
+
+   // Call up the main API to do the processing (including update and create hooks,
+   // or just to return the current item if not saving).
+   $data = xarModAPIfunc('ievents', 'admin', 'modify', $args);
+
+   // Redirect if necessary
+   if ($data['result'] == 'SUCCESS' && (!empty($submit) || !empty($submitview))) {
+      // Now redirect to where-ever, unless just saving, or there is an error
+      // Redirect to overview if no return URL.
+      if (!empty($submitview)) {
+         xarResponseRedirect(xarModURL('ievents', 'user', 'view', array('eid' => $data['eid'])));
+      } elseif (!empty($return_url)) {
+         xarResponseRedirect($return_url);
+      } else {
+         xarResponseRedirect(xarModURL('ievents', 'user', 'view'));
+      }
+      return true;
+   }
+
+   // Some extra data for the form.
+   $data['return_url'] = $return_url;
+
+   // Call modify or update hooks preparation, depending on whether this is a new event or not.
+   // TODO: do not do this if we do not have access to the calendar.
+   if (empty($data['eid'])) {
+      $data['hooks'] = xarModCallHooks(
+         'item', 'new', '',
+         array(
+            'module' => $data['module'],
+            'itemtype' => $data['itemtype_events'],
+            'itemid' => '',
+         )
+      );
+   } else {
+      $data['hooks'] = xarModCallHooks(
+         'item', 'modify', $data['eid'],
+         array(
+            'module' => $data['module'],
+            'itemtype' => $data['itemtype_events'],
+            'itemid' => $data['eid'],
+         )
+      );
+   }
+
+   return $data;
+}
+
+?>

@@ -10,7 +10,12 @@
 <dt><a href="#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a></dt>
 
 <dd class="ievent-summary">
-    <h3 class="ievent-section-header"><xar:mlstring>Summary</xar:mlstring></h3>
+    <h3 class="ievent-section-header">
+        <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
+            [<a href="#xarModURL('ievents','user','modify',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>edit</xar:mlstring></a>]
+        </xar:if>
+        <xar:mlstring>Summary</xar:mlstring>
+    </h3>
     <p>
         <strong><xar:mlstring>Date:</xar:mlstring></strong> #$dates.long.date#
         <xar:if condition="$event.duration_days eq 1">

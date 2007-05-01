@@ -23,6 +23,7 @@
  * @todo Further date rules: single/multiple-day, fully-enclosed, overlapping etc. (perhaps as an output flag too)
  * @todo Group fields with 'location' and 'contact' prefixes.
  * @todo Fix the calendar lookup: if we ask for a calendar, then we must stick to it
+ * @todo Support date range "extends into, but starts before" to display events that range into the selected period
  *
  * Need to ensure the cid and cids don't interfere with the category IDs
  * ('cid' was probably a bad choice)

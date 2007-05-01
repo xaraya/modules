@@ -22,6 +22,10 @@
             #$dates.short.time#
         </xar:if>
     </xar:if>
+
+    <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
+        [<a href="#xarModURL('ievents','user','modify',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>edit</xar:mlstring></a>]
+    </xar:if>
 </dt>
 
 <dd class="ievent-summary">

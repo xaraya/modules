@@ -16,7 +16,16 @@ function ievents_userapi_params($args)
     if (empty($params)) {
         // Initialise the parameter list.
 
+        // First day of the week.
+        // 0=Sunday; 1=Monday
         $params['startdayofweek'] = 1;
+
+        // Time quanta.
+        // The smallest chunk of time dealt with (minutes).
+        // Make sure it is divisible into 60 by a whole number.
+        // Range is 0 to 60, where '0' disables the quantisation feature.
+        $params['quanta'] = 15;
+
     }
 
     if (!empty($name)) {
