@@ -10,6 +10,7 @@
  * @todo Validate date range - ensure end date comes after the start date
  * @todo Accept dates and times in other formats (separate fields) and feed them into the DD properties
  *       (they can be overridden in the display template)
+ * @todo Put in checks for categories hooked to events (don't assume they are hooked)
  */
 
 function ievents_adminapi_modify($args)
@@ -22,13 +23,13 @@ function ievents_adminapi_modify($args)
     if (empty($eid)) $eid = 0;
     if (empty($cid)) $cid = 0;
 
-    // The maximum number of categories that can be added to a event.
-    $maxcats = 12;
-
     $itemtype_events = 1;
     $itemtype_calendars = 2;
     $module = 'ievents';
     $modid = xarModGetIDFromName($module);
+
+    // The maximum number of categories that can be added to a event.
+    $maxcats = xarModAPIfunc($module, 'user', 'params', array('name' => 'maxcats'));
 
     // Set up initial data for passing to the template.
     $data = array();
@@ -185,11 +186,17 @@ function ievents_adminapi_modify($args)
 
                 // Quantise the start and end dates.
                 $object->properties['startdate']->setValue(
-                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['startdate']->getValue))
+                    xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
                 );
                 $object->properties['enddate']->setValue(
-                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['enddate']->getValue))
+                    xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
                 );
+
+                // If our maximum privilege is COMMENT then force the status to DRAFT.
+                if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $cid . ':All:All')) {
+                    // No moderate privilege, so we cannot create anything other than DRAFT events
+                    $object->properties['status']->setValue('DRAFT');
+                }
 
                 // Create a new event
                 $eid = $object->createItem();
@@ -215,11 +222,17 @@ function ievents_adminapi_modify($args)
 
                 // Quantise the start and end dates.
                 $object->properties['startdate']->setValue(
-                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
+                    xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
                 );
                 $object->properties['enddate']->setValue(
-                    xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
+                    xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
                 );
+
+                // If our maximum privilege is COMMENT then force the status to DRAFT.
+                if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $cid . ':All:All')) {
+                    // No moderate privilege, so we cannot create anything other than DRAFT events
+                    $object->properties['status']->setValue('DRAFT');
+                }
 
                 // Update an existing event
                 $id = $object->updateItem();
@@ -239,44 +252,17 @@ function ievents_adminapi_modify($args)
                 $data['result'] = 'SUCCESS';
             }
 
-            // Check the user has not selected too many categories
-            // Get the current cids for the item.
-            $itemcats = xarModAPIfunc('categories', 'user', 'groupcount',
-                array('modid' => $modid, 'itemtype' => $itemtype_events, 'itemid' => $eid)
-            );
-
-            if (!empty($itemcats)) {
-                $itemcats = array_keys($itemcats);
-                $cat_count_before = count($itemcats);
-                //echo "<pre>"; var_dump($itemcats); echo "</pre>";
-
-                // Get the base categories
-                $catbases = xarModAPIfunc(
-                    'categories', 'user', 'getallcatbases',
-                    array('module'=>'envjobs', 'itemtype' => $itemtype_events, 'format' => 'cids')
+            // Check the user has not selected too many categories or selected the base categories.
+            if ($data['result'] == 'SUCCESS') {
+                xarModAPIfunc('ievents', 'admin', 'limit_categories',
+                    array (
+                        'module' => $module,
+                        'itemtype' => $itemtype_events,
+                        'itemid' => $eid,
+                        'maxcats' => $maxcats,
+                        'nobase' => true,
+                    )
                 );
-                //var_dump($catbases);
-
-                // Remove any of the base categories, if they have been selected.
-                $itemcats = array_diff($itemcats, $catbases);
-                //echo "<pre>"; var_dump($itemcats); echo "</pre>";
-
-                // If too many cats, strip some off
-                if (count($itemcats) > $maxcats) $itemcats = array_splice($itemcats, 0, $maxcats);
-
-                // Update the cats if we need to reduce any.
-                // Only do it if we have a jid (the create or update did not fail)
-                if ($data['result'] == 'SUCCESS' && count($itemcats) <> $cat_count_before) {
-                    xarModAPIfunc('categories', 'admin', 'linkcat',
-                        array(
-                            'modid' => $modid,
-                            'itemtype' => $itemtype_events,
-                            'iids' => array($eid),
-                            'cids' => $itemcats,
-                            'clean_first' => true,
-                        )
-                    );
-                }
             }
         } else {
             // TODO: Scan the properties and extract those that
@@ -307,6 +293,16 @@ function ievents_adminapi_modify($args)
     if (empty($save) && !empty($eid)) {
     }
 
+    // If our maximum privilege is COMMENT then limit the status options to DRAFT.
+    if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', (empty($cid) ? 'All' : $cid) . ':All:All')) {
+        // No moderate privilege, so we cannot create anything other than DRAFT events
+        $object->properties['status']->default = 'DRAFT';
+        // Remove all non-draft options
+        foreach($object->properties['status']->options as $key => $option) {
+            if ($option['id'] != 'DRAFT') unset($object->properties['status']->options[$key]);
+        }
+    }
+
    
     // Pass special DD property properties into the template,
     // so that properties can be hidden completely or set to display-only.
@@ -318,7 +314,7 @@ function ievents_adminapi_modify($args)
         $data['properties_extra'][$prop_name]['displayonly'] = true;
     }
 
-    // Pass the properties into the template.
+    // Return the properties for passing into the template.
     $data['properties'] = $object->properties;
     $data['eid'] = $eid;
 

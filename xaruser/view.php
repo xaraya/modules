@@ -179,7 +179,7 @@ function ievents_user_view($args)
                 $enddate = "${endyear}${endmonth}" . date('d', mktime(0, 0, 0, ($endmonth + 1), 0, $endyear));
             }
         } else {
-            // Just the year (pick last day of the year)
+            // Just the year (pick last day of the year - 1231 == 31 December)
             $enddate = "${endyear}1231";
         }
     }
@@ -202,6 +202,50 @@ function ievents_user_view($args)
     if ($uenddate < $ustartdate) {
         // End date is earlier, so default it to startdate plus one month.
         $uenddate = strtotime('+1 month', $ustartdate);
+    }
+
+    // Categories
+    // Parameters accepted:
+    // 1. catid=N where N is an integer
+    // 2. catids[]=N&catids[]=M ...
+    // 2a. crule=and|or defines the rule for multiple catids (default: and)
+    // 3. cats=N+M | cats=N-M, equivalent to crule=and|or
+    // All above formats will be made available to the calling template, regardless
+    // of which was passed in. 'catid' will be set to the first in the list of catids.
+    // The 'cats' format will be used in the default URL (for pagers etc.)
+
+    // Start by fetching page parameters.
+    xarVarFetch('catid', 'id', $catid, 0, XARVAR_NOT_REQUIRED);
+    if (!empty($catid)) $catids = array($catid);
+
+    // Category joining rule.
+    xarVarFetch('crule', 'pre:lower:passthru:enum:and:or', $crule, 'and', XARVAR_NOT_REQUIRED);
+
+    // List of catids[]
+    xarVarFetch('catids', 'list:id', $catids, array(), XARVAR_NOT_REQUIRED);
+
+    // Everything in a single string.
+    // N+M+..
+    // Chose a joiner of ' ' or '+' because some servers convert all '+' chars in the URL to ' '.
+    xarVarFetch('cats', 'strlist: +:id', $cats1, '', XARVAR_NOT_REQUIRED);
+    if (!empty($cats1)) {
+        $catids = explode(' ', $cats1);
+        $crule = 'and';
+    } else {
+        xarVarFetch('cats', 'strlist:-:id', $cats2, '', XARVAR_NOT_REQUIRED);
+        if (!empty($cats2)) {
+            $catids = explode('-', $cats2);
+            $crule = 'or';
+        }
+    }
+    // Now recreate missing page parameters.
+    if (!empty($catids)) {
+        // Select the first item only.
+        $catid = reset($catids);
+        $cats = implode((($crule == 'or') ? '-' : '+'), $catids);
+    } else {
+        $catid = 0;
+        $cats = '';
     }
 
 
@@ -268,6 +312,12 @@ function ievents_user_view($args)
     );
 
     if (!empty($calendar_id)) $event_params['cid'] = $calendar_id;
+
+    // Add in the category restrictions if required.
+    if (!empty($catids)) {
+        $event_params['catids'] = $catids;
+        $event_params['crule'] = $crule;
+    }
 
     // Fetch the events.
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
@@ -383,6 +433,9 @@ function ievents_user_view($args)
         'enddate' => $enddate,
         'group' => $group,
     );
+
+    // Add the categories selection in if available.
+    if (!empty($cats)) $url_params['cats'] = $cats;
 
     if (!empty($calendar_id)) $url_params['calendar_id'] = $calendar_id;
     

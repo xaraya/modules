@@ -26,6 +26,8 @@ function ievents_userapi_params($args)
         // Range is 0 to 60, where '0' disables the quantisation feature.
         $params['quanta'] = 15;
 
+        // The maximum number of categories that can be added to an event.
+        $params['maxcats'] = 10;
     }
 
     if (!empty($name)) {

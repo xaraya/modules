@@ -174,9 +174,8 @@ function ievents_userapi_getevents($args)
     // TODO: validate the catids values (must all be numeric)
     // TODO: force the query into GROUP BY or DISTINCT mode with multiple categories.
     if (xarVarValidate('list:id', $catids, true)) {
-        if (xarVarValidate('pre:lower:passthru:enum:and:or', $catids, true)) $crule = 'and';
-
-        $params['catid'] = implode((($$crule == 'or') ? '-' : '+'), $catids);
+        if (!xarVarValidate('pre:lower:passthru:enum:and:or', $crule, true)) $crule = 'and';
+        $params['catid'] = implode((($crule == 'or') ? '-' : '+'), $catids);
     }
 
     if (!empty($docount)) {
