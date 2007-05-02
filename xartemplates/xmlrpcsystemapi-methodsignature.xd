@@ -1,0 +1,25 @@
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <xar:comment> for each signature repeat the following block </xar:comment>
+            <xar:foreach in="$signatures" value="$signature">
+              <value>
+                <array>
+                  <data>
+                    <xar:comment> for each element in the signature repeat </xar:comment>
+                    <xar:foreach in="$signature" value="$param">
+                      <value><string>#$param#</string></value>
+                    </xar:foreach>
+                  </data>
+                </array>
+              </value>
+            </xar:foreach>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>

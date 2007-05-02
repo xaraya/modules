@@ -1,0 +1,67 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>XML-RPC introspection</xar:mlstring>
+  </span>
+</div>
+
+
+<form action="&xar-modurl-xmlrpcsystemapi-admin-introspect;" method="post">
+  <div style="border: thin solid black; margin: 20pt; padding: 5pt; ">
+    <input type="submit" value="Query server"/>
+    <xar:mlstring>Show payloads: </xar:mlstring>
+    <input type="checkbox" name="payloads1" value="1" />
+    <input type="hidden" name="listmethods" value="1"/>
+  </div>
+</form>
+
+<xar:if condition="isset($listmethods)">
+  <form action="&xar-modurl-xmlrpcsystemapi-admin-introspect;" method="post">
+    <input type="hidden" name="listmethods" value="1"/>
+    <input type="hidden" name="methodhelp" value="1"/>
+    <div style="border: thin solid black; margin: 10pt; padding: 5pt;">
+      <xar:mlstring>Methods available on this server:</xar:mlstring>
+      <select name="method">
+        <xar:foreach in="$methods" value="$method">
+          <option>#$method#</option>
+       </xar:foreach>
+      </select>
+      <input type="submit" value="Show method"/> 
+      <xar:mlstring>Show payloads: </xar:mlstring>
+      <input type="checkbox" name="payloads2" value="1"/>
+    </div>
+  </form>
+</xar:if>
+
+<xar:if condition="isset($methodhelp)">
+  <h2>#$methodtoshow#</h2>
+  <h3><xar:mlstring>Description:</xar:mlstring></h3>
+  <p>
+    #$methodhelp#
+  </p>
+  <h3><xar:mlstring>Signatures:</xar:mlstring></h3>
+  <p>
+  <xar:foreach in="$sigs" value="$sig">
+    #$sig['returntype']# <b>#$methodtoshow#</b>
+    (<xar:foreach in="$sig['params']" value="$param" key="$index">
+      <xar:if condition="$index != 0">
+      ,
+      </xar:if>
+      #$param#
+     </xar:foreach>
+    )<br/>
+  </xar:foreach>
+  </p>
+</xar:if>
+
+
+<xar:if condition="isset($debugoutput)">
+<div> 
+  #$debugoutput#
+</div>
+</xar:if>
+
+<xar:if condition="isset($debugoutput2)">
+<div> 
+  #$debugoutput2#
+</div>
+</xar:if>

@@ -1,0 +1,59 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>XML-RPC system API Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p>
+              <xar:mlstring>The XML-RPC system API implements the reserved methods for a XML-RPC server.
+              These methods are always named system.something and are assumed to be reserved
+              names. This means that other apis cannot use the "system" prefix for their registered
+              methods.</xar:mlstring>
+            </p>
+            <p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
+              needed for this API functionality. This module will not function without
+              the xmlrpcserver module activated.</xar:mlstring>
+            </p>
+
+            <p>
+              <xar:mlstring>You can find the specification for the system API at:</xar:mlstring>
+              <a href="http://scripts.incutio.com/xmlrpc/introspection.html">
+                 http://scripts.incutio.com/xmlrpc/introspection.html
+              </a> 
+            </p>
+            <p>
+              <xar:mlstring>Commonly implemented methods are</xar:mlstring>:
+            </p>
+            <ul>
+              <li>system.listMethods</li>
+              <li>system.methodSignature</li>
+              <li>system.methodHelp</li>
+            </ul>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
+        </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included hooks.</xar:mlstring>
+        </p>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Xmlrpcsystemapi module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Xmlrpcsystemapi Extension page at</xar:mlstring> <a title="#xarML('Xmlrpcsystemapi Module - Xaraya Extension 744')#" href="http://www.xaraya.com/index.php/release/744.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Xmlrpcsystemapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xmlrpcsystemapi/" title="#xarML('Related documentation on Xmlrpcsystemapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+</div>
