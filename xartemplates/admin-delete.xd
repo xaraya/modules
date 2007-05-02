@@ -1,0 +1,15 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ping Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Delete Url to Ping</xar:mlstring></h2>
+  <div align="center">
+    <form method="post" action="#xarModURL('ping', 'admin', 'delete')#" enctype="application/x-www-form-urlencoded">
+      <input type="hidden" name="authid" value="#$authid#" />
+      <input type="hidden" name="id" id="id" value="#$id#" />
+      <input type="hidden" name="confirmation" id="confirmation" value="1"/>
+      <p><xar:mlstring>Confirm deletion of Ping Url</xar:mlstring></p>
+      <input type="submit" value="#$submitlabel#" /><br /><br />
+      <a href="#xarModURL('ping', 'admin', 'view')#"><xar:mlstring>Cancel deletion of Ping Url</xar:mlstring></a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ping Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/base/xarimages/admin.gif')" >
+                <img src="modules/base/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>What is it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The Ping Module will automatically ping sites to let them know that your Xaraya Website has been updated with content.  Currently, the ping module only supports the articles module via a create and update hook.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>How to use it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Simply hook the articles module with the ping module and the rest is done behind the scenes.  The Ping Module will use the specific publication type that the content is assigned to, therefore you may want to register the individual publication types that you want to notify.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The Ping Module has no blocks included at this time.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Create will ping weblogs.com on creation of an article, update will ping when an article has been updated.</xar:mlstring></p>
+        </div>
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <p><xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring></p>
+        </div>
+    </div>
+</div>

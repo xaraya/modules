@@ -1,0 +1,102 @@
+<xar:if condition="xarTplAddStyleLink('xarbb', 'navtabs')">
+    <div id="navhelp" class="help" title="#xarML('Click on a tab to perform the specific action')#">
+        <xar:mlstring>
+            Actions
+        </xar:mlstring>
+        : 
+        <div id="tabnav">
+            <ul id="navlist">
+                <xar:if condition="$action eq 1"> 
+                    <li id="active">
+                        <a href="#xarModUrl('xarbb', 'admin', 'modify', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Edit
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'delete', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Delete
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'moderate', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Moderate
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                View
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <xar:elseif condition="$action eq 2" />
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'modify', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Edit
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li id="active">
+                        <a href="#xarModUrl('xarbb', 'admin', 'delete', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Delete
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'moderate', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Moderate
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                View
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <xar:else />
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'modify', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Edit
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'admin', 'delete', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Delete
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li id="active">
+                        <a href="#xarModUrl('xarbb', 'admin', 'moderate', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                Moderate
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                            <xar:mlstring>
+                                View
+                            </xar:mlstring>
+                        </a>
+                    </li>
+                </xar:if>
+            </ul>
+            <div class="tabnav-hairline"><!-- &nbsp; --></div>
+        </div>
+    </div>
+</xar:if>
+<br /><br />

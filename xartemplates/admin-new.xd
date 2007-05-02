@@ -1,0 +1,36 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ping Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Add Ping Method</xar:mlstring></h2>
+
+  <form method="post" action="#xarModURL('ping', 'admin', 'new')#" enctype="application/x-www-form-urlencoded" >
+    <fieldset>
+        <div class="xar-form-input-wrapper">
+            <label for="maxdisplaydepth" title="#xarML('The url of the feed that you are wanting to add to your system')#" class="xar-form-label">
+                <xar:mlstring>
+                    URL:
+                </xar:mlstring>
+            </label>
+            <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="maxdisplaydepth" title="#xarML('Method of the ping.')#" class="xar-form-label">
+                <xar:mlstring>
+                    Send RSS Link?
+                </xar:mlstring>
+            </label>
+            <input type="checkbox" name="method" id="method" />
+        </div>
+
+        #$hooks#
+
+    </fieldset>
+    <fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="submit" value="#$submitlabel#"/>
+        </div>
+    </fieldset>
+  </form>
+</div>

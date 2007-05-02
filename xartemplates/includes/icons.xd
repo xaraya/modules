@@ -1,0 +1,24 @@
+<br />
+<div class="xar-norm-outline" style="padding: 0px 0px 5px 0px;">
+  <table border="0" width="100%" cellspacing="0" cellpadding="2">
+    <tr>
+      <th style="text-align: left; padding-left: 10px;">
+        <xar:mlstring>URL</xar:mlstring>
+      </th>
+      <th style="text-align: center;padding-left: 10px;" nowrap="nowrap">
+        <xar:mlstring>Actions</xar:mlstring>
+      </th>
+    </tr>
+    <xar:loop name="$items">
+      <tr>
+        <td class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+          #$loop:item['url']#
+        </td>
+        <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+          <a href="#$loop:item['editurl']#"><img src="modules/censor/xarimages/edit.gif" alt="#$loop:item['edittitle']#" /></a>    |
+          <a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#"><xar:mlstring>Delete</xar:mlstring></a>
+        </td>
+      </tr>
+    </xar:loop>
+  </table>
+</div>
