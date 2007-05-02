@@ -46,7 +46,7 @@
       <source>xar_ievents_events.status</source>
       <status>1</status>
       <order>4</order>
-      <validation>DRAFT;ACTIVE;INACTIVE</validation>
+      <validation>DRAFT,Draft;ACTIVE,Active;INACTIVE,Inactive</validation>
     </property>
     <property name="created_time">
       <id>105</id>
@@ -141,7 +141,7 @@
     <property name="url">
       <id>114</id>
       <label>URL</label>
-      <type>textbox</type>
+      <type>url</type>
       <default></default>
       <source>xar_ievents_events.url</source>
       <status>1</status>
@@ -240,7 +240,7 @@
     </property>
     <property name="contact_details">
       <id>124</id>
-      <label>Contact Details</label>
+      <label>Further Contact Details</label>
       <type>xartinymce</type>
       <default></default>
       <source>xar_ievents_events.contact_details</source>
