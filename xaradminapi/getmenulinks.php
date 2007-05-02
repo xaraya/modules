@@ -1,0 +1,34 @@
+<?php
+/**
+ * Utility function pass individual menu items to the main menu
+ *
+ * @package modules
+ * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Registration module
+ * @link http://xaraya.com/index.php/release/30205.html
+ */
+/**
+ * utility function to pass individual menu items to the main menu
+ *
+ * Registration has only one menu item for admins
+ *
+ * @author Marc Lutolf <marcinmilan@xaraya.com>
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @return array containing the menulinks for the main menu items.
+ */
+function registration_adminapi_getmenulinks()
+{
+    $menulinks = array();
+
+    if (xarSecurityCheck('AdminRegistration',0)) {
+        $menulinks[] = Array('url'   => xarModURL('registration', 'admin', 'modifyconfig'),
+                             'title' => xarML('Modify the registration module configuration'),
+                             'label' => xarML('Modify Config'));
+    }
+    return $menulinks;
+}
+
+?>

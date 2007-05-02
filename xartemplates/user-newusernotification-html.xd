@@ -1,0 +1,24 @@
+<p>
+<xar:ml>
+    <xar:mlstring>Dear #(1)</xar:mlstring>
+    <xar:mlvar>#$adminname#</xar:mlvar>
+</xar:ml>
+</p>
+<p>
+    <xar:mlstring>A user with the following details has registered at: </xar:mlstring> #$sitename#
+</p>
+<p>
+    <xar:mlstring>Status: </xar:mlstring>#$pending#<br />
+    <xar:mlstring>User ID: </xar:mlstring>#$uid#<br />
+    <xar:mlstring>Display Name: </xar:mlstring>#$userrealname#<br />
+    <xar:mlstring>User Name: </xar:mlstring>#$username#<br />
+    <xar:mlstring>User Email: </xar:mlstring>#$useremail#<br />
+</p>
+
+<xar:if condition="!empty($terms)">
+    <p>#$terms#</p>
+</xar:if>
+
+<p>
+    <xar:mlstring>When logged in, you can access this user account at </xar:mlstring> <a href="#$rolelink#">#$rolelink#</a>
+</p>
