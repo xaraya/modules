@@ -1,0 +1,21 @@
+<methodResponse>
+  <xar:if condition="empty($fault)">
+    <params>
+      <xar:foreach in="$params" value="$param">
+        <param>
+          <value>
+            <xar:template file="xmlrpc-types" subdata="$param"/>
+          </value>
+        </param>
+      </xar:foreach>
+    </params>
+  <xar:else/>
+    <fault>
+      <xar:foreach in="$params" value="$param">
+        <value>
+          <xar:template file="xmlrpc-types" subdata="$param" />
+        </value>
+      </xar:foreach>
+    </fault>
+  </xar:if>        
+</methodResponse>

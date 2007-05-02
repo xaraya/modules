@@ -1,0 +1,48 @@
+<xar:comment> Struct xmlrpc type handling (type 3) </xar:comment>
+<xar:if condition="$type == 'struct'">
+  <struct>
+    <xar:foreach in="$members" value="$member">
+      <member>
+        <name>#$member['name']#</name>
+        <value>
+          <xar:if condition="is_array($member['value'])">
+            <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:else/>
+            <xar:template file="xmlrpc-types" subdata="$member"/>
+          </xar:if>
+        </value>
+      </member>
+    </xar:foreach>
+  </struct>
+<xar:elseif condition="$type == 'array'"/>
+  <xar:comment> Array xmlrpc type handling (type 2) </xar:comment>
+  <array>
+    <data>
+      <xar:foreach in="$members" value="$member">
+        <value>
+          <xar:if condition="is_array($member['value'])">
+            <xar:template file="xmlrpc-types" subdata="$member['value']"/>
+          <xar:else/>
+            <xar:template file="xmlrpc-types" subdata="$member"/>
+          </xar:if>
+        </value>
+      </xar:foreach>
+    </data>
+  </array>
+<xar:elseif condition="$type == 'string'"/>
+  <string>#$value#</string>
+<xar:elseif condition="$type == 'boolean'"/>
+  <boolean>#$value#</boolean>
+<xar:elseif condition="$type == 'i4'"/>
+  <i4>#$value#</i4>
+<xar:elseif condition="$type == 'int'"/>
+  <int>#$value#</int>
+<xar:elseif condition="$type == 'double'"/>
+  <double>#$value#</double>
+<xar:elseif condition="$type == 'dateTime.iso8601'"/>
+  <dateTime.iso8601>#$value#</dateTime.iso8601>
+<xar:elseif condition="$type == 'base64'"/>
+  <base64>#$value#</base64>
+<xar:else/>
+  <string>ERROR: #$type# not recognized</string>
+</xar:if>

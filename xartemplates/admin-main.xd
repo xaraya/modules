@@ -1,0 +1,87 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Administration - XML-RPC</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><em><xar:mlstring>XML-RPC is a Xaraya Utility Module.</xar:mlstring></em></p>
+            <p>
+              <xar:mlstring>The XML-RPC server module is responsible for exposing certain procedure calls using XML as
+              the transport format. Each command is send as an http request in a specified format. The XML-RPC
+              server answers to that call with a properly formatted XML-RPC response.</xar:mlstring>
+            </p>
+            <p>
+              <xar:mlstring>The XML-RPC server can be extended by defining API modules to extend the functionality offered
+              by Xaraya over XML-RPC. The XML-RPC standard is defined at</xar:mlstring>: <a href="http://www.xmlrpc.org">http://www.xmlrpc.org</a>
+            </p>
+            <p>
+              <xar:mlstring>An XML-RPC enabled service can be used to</xar:mlstring>:
+              <ul>
+                <li><xar:mlstring>use Xaraya remotely</xar:mlstring></li>
+                <li><xar:mlstring>let Xaraya interoperate with other applications or other Xaraya installations</xar:mlstring></li>
+                <li><xar:mlstring>use desktop clients to manage or work with Xaraya</xar:mlstring></li>
+              </ul>
+            </p>
+            <p>
+                <xar:mlstring>
+                    The most well known usage of XML-RPC are the API's used for blogging (see below). These API's are used in Xaraya to write
+                    articles on a Xaraya site, using a desktop client. Examples of blog clients include:
+                </xar:mlstring>
+                <ol>
+                    <li><a href="http://bloggar.com">w.bloggar (windows)</a></li>
+                    <li><a href="http://ecto.kung-foo.tv">ecto (OSX)</a></li>
+                    <li><a href="http://blogtk.sourceforge.net">bLoGTK (Linux)</a></li>
+                </ol>
+            </p>
+
+            <p>
+              <xar:mlstring>The XML-RPC server can be configured to serve multiple APIs The currently supported APIs are</xar:mlstring>:
+              <ol>
+                <li>
+                  <a href="http://plant.blogger.com/api/index.html">blogger API</a> : <xar:mlstring>use Xaraya as a Blogging site installation. 
+                  (Note: the blogger.setTemplate and blogger.getTemplate functions are currently not implemented)</xar:mlstring>
+                </li>
+                <li><a href="http://validator.xmlrpc.com">validation API</a> : <xar:mlstring>used to validate XML-RPC conformance</xar:mlstring></li>
+                <li><a href="http://scripts.incutio.com/xmlrpc/introspection.html">Introspection API</a> : <xar:mlstring>Get information about the XML-RPC server and its methods</xar:mlstring></li>
+                <li>
+                    <a href="http://http://www.xmlrpc.com/metaWeblogApi">MetaWeblog API</a> : <xar:mlstring>An extension of the Blogger API which adds more rich support for the message content and the ability to upload media objects
+                    (Note: the categories support in this API is limited and the metaWeblog.newMediaObject method hasn't been implemented yet.</xar:mlstring></li>
+              </ol>
+            </p>
+
+            <p>
+              <xar:mlstring>Rough to do list(in roughly this order)</xar:mlstring>:
+              <ol>
+                <li>Finish the metaweblogapi</li>
+                <li>Adding the system.getCapabilities method, including the informal specification or errorcodes</li>
+                <li>The Moveable Type API</li>
+                <li>The Xaraya API over XML-RPC</li>
+              </ol>
+            </p>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
+        </p>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
+            <xar:mlstring>There are no included hooks.</xar:mlstring>
+        </p>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Xmlrpcserver module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Xmlrpcserver Extension page at</xar:mlstring> <a title="#xarML('Xmlrpcserver Module - Xaraya Extension 743')#" href="http://www.xaraya.com/index.php/release/743.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Xmlrpcserver found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xmlrpcserver/" title="#xarML('Related documentation on Xmlrpcserver')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+</div>

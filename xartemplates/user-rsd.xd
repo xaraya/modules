@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd"> 
+<service>
+  <engineName>Xaraya #$xar_version#</engineName> 
+  <engineLink>http://xaraya.com/index.php</engineLink> 
+  <homePageLink>#xarServerGetBaseURl()#</homePageLink> 
+  <apis>
+    <xar:foreach in="$xmlrpc_apis" key="$api_name" value="$api_params">
+        <api name="#$api_name#" preferred="#$api_params.preferred#" apiLink="#$api_params.link#" #$api_params.others# />
+    </xar:foreach>
+  </apis>
+ </service>
+</rsd>
