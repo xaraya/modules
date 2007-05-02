@@ -1,0 +1,18 @@
+#$open#
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+    <rdf:Description
+        rdf:about="#xarServerGetCurrentURL()#"
+        dc:title="#xarVarGetCached('Comments.title', 'title')#"
+        dc:identifier="#xarServerGetCurrentURL()#" 
+        trackback:ping="#$rdflink#" />
+    </rdf:RDF>
+#$close#
+
+<h3>Trackbacks</h3>
+(
+<xar:mlstring>
+    The URL to TrackBack this entry is: 
+</xar:mlstring>
+#$permalink# ) 
