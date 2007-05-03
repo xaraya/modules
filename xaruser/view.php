@@ -60,7 +60,7 @@ function ievents_user_view($args)
     xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED);
 
     // Another way of selecting a date, using text
-    xarVarFetch('range', 'pre:lower:passthru:enum:today:tomorrow:yesterday:thisweek:nextweek:lastweek:thismonth:nextmonth:lastmonth:thisyear:nextyear:lastyear', $range, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('range', 'pre:lower:passthru:enum:today:tomorrow:yesterday:thisweek:week:nextweek:lastweek:thismonth:month:nextmonth:lastmonth:thisyear:year:nextyear:lastyear', $range, '', XARVAR_NOT_REQUIRED);
 
     // Grouping of listed items.
     // Grouping should affect the sorting too, since grouping my a time period
@@ -112,6 +112,7 @@ function ievents_user_view($args)
                 $uenddate = strtotime('-1 day', $thisweekstart);
                 break;
             case 'thisweek':
+            case 'week':
                 $ustartdate = $thisweekstart;
                 $uenddate = strtotime('-1 second', strtotime('+1 week', $thisweekstart));
                 break;
@@ -124,6 +125,7 @@ function ievents_user_view($args)
                 $uenddate = strtotime('-1 second', $thismonthstart);
                 break;
             case 'thismonth':
+            case 'month':
                 $ustartdate = $thismonthstart;
                 $uenddate = strtotime('-1 second', strtotime('+1 month', $thismonthstart));
                 break;
@@ -136,6 +138,7 @@ function ievents_user_view($args)
                 $uenddate = strtotime('-1 second', $thisyearstart);
                 break;
             case 'thisyear':
+            case 'year':
                 $ustartdate = $thisyearstart;
                 $uenddate = strtotime('-1 second', strtotime('+1 year', $thisyearstart));
                 break;

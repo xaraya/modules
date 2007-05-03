@@ -16,6 +16,9 @@ function ievents_userapi_getcalendars($args)
     $module = 'ievents';
     $itemtype = 2;
 
+    // Only used for some text escaping methods.
+    $dbconn =& xarDBGetConn();
+
     // The event action privilege level for accessing the calendars returned.
     // Levels are:
     // - OVERVIEW: can see summary of events
@@ -43,6 +46,9 @@ function ievents_userapi_getcalendars($args)
     if (!empty($cids) && xarVarValidate('list:id', $cids, true)) {
         $where_arr[] = 'cid in (' . implode(',', $cids) . ')';
     }
+
+    // Short name
+    if (!empty($short_name)) $where_arr[] = 'short_name eq ' . $dbconn->qstr($short_name);
 
     // Status selection
     // TODO: fetch the status list from the DD object.

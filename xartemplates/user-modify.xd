@@ -1,0 +1,72 @@
+
+<div class="ievents-modify-event">
+
+    <xar:if condition="empty($eid)">
+       <h1>Create New Event</h1>
+    <xar:else />
+       <h1>Modify Event</h1>
+    </xar:if>
+
+    <xar:if condition="!empty($message)"><p class="xar-error">#$result#: #$message#</p></xar:if>
+
+    <form method="post" action="#xarModURL('ievents','user','modify')#">
+
+    <xar:if condition="!empty($properties)">
+        <xar:loop name="$properties">
+            <xar:set name="this_property">#$loop:item#</xar:set>
+            <xar:set name="property_name">#$this_property-&gt;name#</xar:set>
+
+            <xar:comment>
+                Given the $property_name, it is possible to replace some of the properties
+                with alternatives. For example, replace the single unix-timestamp start and end
+                dates with a group of fields, making date selection a little easier or more
+                user-friendly. The modify script behind this needs to a) provide the data
+                necessary for the extra fields; and b) accept them as input, so that they can build
+                the unix start and end timestamps from those fields. This is likely to be an 
+                extension in the near future.
+            </xar:comment>
+
+            <xar:if condition="empty($properties_extra[$property_name]['hidden'])">
+                <p style="clear: both;">
+                    <label style="display: block;"><xar:data-label property="$this_property" /></label>
+                    <xar:if condition="!empty($properties_extra[$this_property-&gt;name]['displayonly'])">
+                        <xar:comment>Changeable property</xar:comment>
+                        <xar:data-output property="$this_property" />
+                    <xar:else />
+                        <xar:comment>Read-only property</xar:comment>
+                        <xar:data-input property="$this_property" />
+                    </xar:if>
+                </p>
+            </xar:if>
+        </xar:loop>
+        <div style="clear: both;">&nbsp;</div>
+    </xar:if>
+
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+            <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+                <div>
+                    #$hooks[$hookmodule]#
+                    <div style="clear: both;"></div>
+                </div>
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
+
+    <p>
+        <input type="hidden" name="eid" value="#$eid#" />
+        <input type="hidden" name="authid" value="#xarSecGenAuthKey('ievents')#" />
+        <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+        <xar:if condition="!empty($return_url)">
+            <input type="submit" name="submit" value="#xarML('Save and Return')#" />
+        </xar:if>
+        <input type="submit" name="submitview" value="#xarML('Save and View')#" />
+        <input type="submit" name="save" value="#xarML('Save and Edit')#" />
+        <xar:if condition="!empty($eid)">
+            <input type="submit" name="submitcopy" value="#xarML('Save as Copy')#" />
+        </xar:if>
+    </p>
+
+    </form>
+
+</div>
