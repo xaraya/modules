@@ -2,6 +2,10 @@
 
 function ievents_user_main($args)
 {
+    // TODO: be a little more inteligent regarding this entry point - 
+    // provide various redirections depending on some simple parameters.
+    return xarModfunc('ievents', 'user', 'view', array($args));
+    
     echo "<h1>TESTING</h1>";
     echo "<h2>Calendars</h2>";
 

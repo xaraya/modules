@@ -15,6 +15,7 @@ function ievents_userapi_params($args)
 
     if (empty($params)) {
         // Initialise the parameter list.
+        $params = array();
 
         // First day of the week.
         // 0=Sunday; 1=Monday
@@ -28,21 +29,39 @@ function ievents_userapi_params($args)
 
         // The maximum number of categories that can be added to an event.
         $params['maxcats'] = 10;
+
+        // Standard itemtypes.
+        $params['itemtype_events'] = 1;
+        $params['itemtype_calendars'] = 2;
+
+        $module = 'ievents';
+        $params['module'] = $module;
+        $params['modid'] = xarModGetIDFromName($module);
     }
 
     if (!empty($name)) {
         // Return a single parameter
         if (isset($params[$name])) {
-            return $params[$name];
+            $return = $params[$name];
         } else {
-            return NULL;
+            $return = NULL;
+        }
+    } elseif (!empty($names)) {
+        // Multiple names as a comma-separated list
+        $return = array();
+
+        if (is_string($names)) $names = explode(',', $names);
+
+        // Loop for each name and look up its value.
+        foreach($names as $name) {
+            $return[] = ievents_userapi_params(array('name' => $name));
         }
     } else {
         // Return all parameters
-        return $params;
+        $return = $params;
     }
 
-    // Function will return before this point.
+    return $return;
 }
 
 ?>

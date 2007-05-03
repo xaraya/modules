@@ -1,0 +1,9 @@
+
+<xar:comment>
+    Standard pager.
+    Put into a template so it can be applied easily and consistently across the module.
+</xar:comment>
+
+<xar:if condition="trim($pager) ne ''">
+    <div>#$pager#</div>
+</xar:if>

@@ -1,10 +1,13 @@
 
+
+<xar:style file="ievents" scope="module" />
+
 <div class="ievents-modify-event">
 
     <xar:if condition="empty($eid)">
-       <h1>Create New Event</h1>
+       <h1><xar:mlstring>Create New Event</xar:mlstring></h1>
     <xar:else />
-       <h1>Modify Event</h1>
+       <h1><xar:mlstring>Modify Event</xar:mlstring></h1>
     </xar:if>
 
     <xar:if condition="!empty($message)"><p class="xar-error">#$result#: #$message#</p></xar:if>
@@ -42,16 +45,18 @@
         <div style="clear: both;">&nbsp;</div>
     </xar:if>
 
-    <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-            <xar:if condition="trim($hooks[$hookmodule]) ne ''">
-                <div>
-                    #$hooks[$hookmodule]#
-                    <div style="clear: both;"></div>
-                </div>
-            </xar:if>
-        </xar:foreach>
-    </xar:if>
+    <div class="ievents-hooks">
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+                    <div>
+                        #$hooks[$hookmodule]#
+                        <div style="clear: both;"></div>
+                    </div>
+                </xar:if>
+            </xar:foreach>
+        </xar:if>
+    </div>
 
     <p>
         <input type="hidden" name="eid" value="#$eid#" />

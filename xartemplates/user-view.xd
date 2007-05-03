@@ -1,48 +1,66 @@
 
-<xar:if condition="!empty($eid)">
-    <xar:comment>An individual event was chosen</xar:comment>
+<xar:comment>
+    Simple jump menu - to go in a separate template.
+    The jump menu could take into account the current selection details, or just clear them (as it does now).
+</xar:comment>
+<div>
+    <ul>
+        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thisyear'))#"><xar:mlstring>This year</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thismonth'))#"><xar:mlstring>This month</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thisweek'))#"><xar:mlstring>This week</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'today'))#"><xar:mlstring>Today</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view',array('datetype'=&gt;'days','datenumber'=&gt;28))#"><xar:mlstring>Next 28 days</xar:mlstring></a></li>
+    </ul>
+</div>
 
-    <xar:comment>
-        TODO: Amount to be displayed depends on the user permissions
-    </xar:comment>
+<div class="ievents-view">
+    <xar:if condition="!empty($eid)">
+        <xar:comment>An individual event was chosen</xar:comment>
 
-    <xar:template file="event-nextprev" />
+        <xar:comment>
+            TODO: Amount to be displayed depends on the user permissions
+        </xar:comment>
 
-    <dl class="ievent-event">
-        <xar:template file="event-display-dl" subdata="array('event'=&gt;$event)" />
-    </dl>
+        <xar:template file="event-nextprev" />
 
-    <xar:template file="event-nextprev" />
+        <dl class="ievent-event">
+            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event)" />
+        </dl>
 
-<xar:else />
-    <xar:comment>A list of events is to be shown</xar:comment>
+        <xar:template file="event-nextprev" />
 
-    <xar:if condition="empty($events)">
-        <p><xar:mlstring>No events found</xar:mlstring></p>
     <xar:else />
-        <xar:if condition="empty($groups)">
-            <xar:comment>Single listing, not grouped in any way</xar:comment>
-            <dl class="ievent-event">
-                <xar:loop name="$events">
-                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item)" />
-                </xar:loop>
-            </dl>
-        <xar:else />
-            <xar:comment>Multiple listings, grouped in some way</xar:comment>
-            <dl class="ievent-group">
-                <xar:loop id="groups" name="$groups">
-                    <xar:template file="group-header-dl" subdata="array('group'=&gt;$loop:item)" />
-                    <dd>
-                        <dl class="ievent-event">
-                            <xar:loop name="$loop:item.events">
-                                <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group)" />
-                            </xar:loop>
-                        </dl>
-                    <dd>
-                </xar:loop>
-            </dl>
-        </xar:if>
+        <xar:comment>A list of events is to be shown</xar:comment>
 
-        <div>#$pager#</div>
+        <xar:template file="list-pager" />
+
+        <xar:if condition="empty($events)">
+            <p><xar:mlstring>No events found</xar:mlstring></p>
+        <xar:else />
+            <xar:if condition="empty($groups)">
+                <xar:comment>Single listing, not grouped in any way</xar:comment>
+                <dl class="ievent-event">
+                    <xar:loop name="$events">
+                        <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item)" />
+                    </xar:loop>
+                </dl>
+            <xar:else />
+                <xar:comment>Multiple listings, grouped in some way</xar:comment>
+                <dl class="ievent-group">
+                    <xar:loop id="groups" name="$groups">
+                        <xar:template file="group-header-dl" subdata="array('group'=&gt;$loop:item)" />
+                        <dd>
+                            <dl class="ievent-event">
+                                <xar:loop name="$loop:item.events">
+                                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group)" />
+                                </xar:loop>
+                            </dl>
+                        <dd>
+                    </xar:loop>
+                </dl>
+            </xar:if>
+
+            <xar:template file="list-pager" />
+        </xar:if>
     </xar:if>
-</xar:if>
+</div>

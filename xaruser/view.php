@@ -73,7 +73,7 @@ function ievents_user_view($args)
     xarVarFetch('eid', 'id', $eid, 0, XARVAR_NOT_REQUIRED);
 
     // Calendar ID
-    xarVarFetch('calendar_id', 'id', $calendar_id, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
 
     // Get global parameters.
     $gparams = xarModAPIfunc('ievents', 'user', 'params');
@@ -251,7 +251,6 @@ function ievents_user_view($args)
         $cats = '';
     }
 
-
     //
     // Create missing parameters from the supplied parameters
     //
@@ -314,7 +313,7 @@ function ievents_user_view($args)
         'enddate' => $uenddate,
     );
 
-    if (!empty($calendar_id)) $event_params['cid'] = $calendar_id;
+    if (!empty($cid)) $event_params['cid'] = $cid;
 
     // Add in the category restrictions if required.
     if (!empty($catids)) {
@@ -440,7 +439,7 @@ function ievents_user_view($args)
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
 
-    if (!empty($calendar_id)) $url_params['calendar_id'] = $calendar_id;
+    if (!empty($cid)) $url_params['calendar_id'] = $cid;
     
     $event_count = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
 
@@ -484,7 +483,7 @@ function ievents_user_view($args)
     //
 
     // By keeping the bl data and variable names the same, passing data is a sinch.
-    $bl_data = @compact(
+    $bl_data = @compact(array(
         'ustartdate', 'uenddate',
         'startdate', 'enddate',
         'startyear', 'startmonth', 'startday',
@@ -494,8 +493,9 @@ function ievents_user_view($args)
         'next_event', 'prev_event',
         'eid', 'event',
         'events', 'pager',
-        'calendars'
-    );
+        'calendars',
+        'cats', 'catid', 'catids', 'crule',
+    ));
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
 
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";

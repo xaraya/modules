@@ -23,13 +23,9 @@ function ievents_adminapi_modify($args)
     if (empty($eid)) $eid = 0;
     if (empty($cid)) $cid = 0;
 
-    $itemtype_events = 1;
-    $itemtype_calendars = 2;
-    $module = 'ievents';
-    $modid = xarModGetIDFromName($module);
-
-    // The maximum number of categories that can be added to a event.
-    $maxcats = xarModAPIfunc($module, 'user', 'params', array('name' => 'maxcats'));
+    // Fetch all the config items we need at once.
+    list($module, $modid, $itemtype_events, $itemtype_calendars, $maxcats) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,itemtype_calendars,maxcats'));
 
     // Set up initial data for passing to the template.
     $data = array();
@@ -75,7 +71,7 @@ function ievents_adminapi_modify($args)
 
         // Error if object does not exist.
         if (empty($id)) {
-            $data['message'] = 'EVENT DOES NOT EXIST';
+            $data['message'] = xarML('Event #(1) does not exist', $eid);
             return $data;
         }
 
@@ -138,7 +134,7 @@ function ievents_adminapi_modify($args)
     // We need an event object at this stage.
     // Return an error if not got one.
     if (empty($object)) {
-        $data['message'] = 'EVENT OBJECT DOES NOT EXIST';
+        $data['message'] = xarML('Event object does not exist - itemtype #(1)', $itemtype_events);
         return $data;
     }
 
@@ -212,7 +208,7 @@ function ievents_adminapi_modify($args)
                         'cids' => (!empty($args['catids']) ? $args['catids'] : array()),
                     ));
 
-                    $data['message'] = 'EVENT CREATED';
+                    $data['message'] = xarML('Event created successfuly');
                     $data['result'] = 'SUCCESS';
                 }
             } else {
@@ -248,7 +244,7 @@ function ievents_adminapi_modify($args)
                     )
                 );
 
-                $data['message'] = 'EVENT UPDATED';
+                $data['message'] = xarML('Event updated successfuly');
                 $data['result'] = 'SUCCESS';
             }
 
@@ -265,9 +261,8 @@ function ievents_adminapi_modify($args)
                 );
             }
         } else {
-            // TODO: Scan the properties and extract those that
-            // are in error, for the error message
-            $data['message'] = 'INVALID FORM DATA';
+            // Errors will be displayed along with the original fields.
+            $data['message'] = xarML('Invalid form data');
             $data['result'] = 'WARNING';
         }
     } else {
@@ -297,9 +292,12 @@ function ievents_adminapi_modify($args)
     if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', (empty($cid) ? 'All' : $cid) . ':All:All')) {
         // No moderate privilege, so we cannot create anything other than DRAFT events
         $object->properties['status']->default = 'DRAFT';
-        // Remove all non-draft options
-        foreach($object->properties['status']->options as $key => $option) {
-            if ($option['id'] != 'DRAFT') unset($object->properties['status']->options[$key]);
+
+        // Remove all non-draft options from the drop-down
+        if (is_array($object->properties['status']->options)) {
+            foreach($object->properties['status']->options as $key => $option) {
+                if ($option['id'] != 'DRAFT') unset($object->properties['status']->options[$key]);
+            }
         }
     }
 

@@ -6,7 +6,7 @@
 
 function ievents_user_modify($args)
 {
-    // This will tell us whether the form has been submitted.
+    // These will tell us whether the form has been submitted.
 
     // Save and return
     xarVarFetch('submit', 'str', $submit, '', XARVAR_NOT_REQUIRED);
@@ -20,9 +20,10 @@ function ievents_user_modify($args)
     // Save the job as a copy
     xarVarFetch('submitcopy', 'str', $submitcopy, '', XARVAR_NOT_REQUIRED);
 
-    // Check authid is submitting
+
+    // Check authid if submitting
     if (!empty($submit) || !empty($save) || !empty($submitview) || !empty($submitcopy)) {
-        //if (!xarSecConfirmAuthKey()) return;
+        if (!xarSecConfirmAuthKey()) return;
     }
 
     // Somewhere to redirect to on success.

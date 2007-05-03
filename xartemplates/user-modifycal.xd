@@ -1,76 +1,85 @@
 
-<xar:if condition="empty($cid)">
-   <h1><xar:mlstring>Create New Calendar</xar:mlstring></h1>
-<xar:else />
-   <h1><xar:mlstring>Modify Calendar</xar:mlstring></h1>
-</xar:if>
+<xar:style file="ievents" scope="module" />
 
-<xar:comment>
-    Display recruiter selection form, but only if there are any recruiters available to this user
-</xar:comment>
-<xar:if condition="!empty($calendars)">
-<form method="post" action="#xarModURL('ievents','user','modifycal')#">
-    <div>
-        <select name="cid" id="Cid">
-           <option value="0">-- new calendar --</option>
-           <xar:if condition="!empty($calendars)">
-               <xar:loop name="$calendars">
-                   <xar:if condition="$cid eq $loop:key">
-                       <option value="#$loop:key#" selected="selected">#xarVarPrepForDisplay($loop:item.short_name)# (ID #$loop:key#)</option>
-                   <xar:else />
-                       <option value="#$loop:key#">#xarVarPrepForDisplay($loop:item.short_name)# (ID #$loop:key#)</option>
-                   </xar:if>
-               </xar:loop>
-           </xar:if>
-        </select>
-        <input type="submit" name="select" value="#xarML('Choose Calendar')#" />
-    </div>
-</form>
-</xar:if>
+<div class="ievents-modify-calendar">
 
-<xar:if condition="!empty($cid)">
-    <p>
-        <xar:mlstring>For this calendar:</xar:mlstring>
-        [<a href="#xarModURL('ievents', 'user', 'view', array('calendar_id' =&gt; $cid))#"><xar:mlstring>View events</xar:mlstring></a>]
-        [<a href="#xarModURL('ievents', 'user', 'modify', array('calendar_id' =&gt; $cid, 'return_url' =&gt; xarServergetCurrentURL(array(), false)))#"><xar:mlstring>New event</xar:mlstring></a>]
-    </p>
-</xar:if>
-
-<hr />
-
-<form method="post" action="#xarModURL('ievents','user','modifycal')#">
-
-<xar:comment>
-</xar:comment>
-
-<xar:loop name="$properties">
-    <xar:set name="this_property">#$loop:item#</xar:set>
-    <p style="clear: both;">
-        <label style="display: block;"><xar:data-label property="$this_property" /></label>
-        <xar:data-input property="$this_property" />
-    </p>
-</xar:loop>
-<div style="clear: both;">&nbsp;</div>
-
-<xar:if condition="!empty($hooks)">
-    <xar:foreach in="$hooks" key="$hookmodule">
-        <xar:if condition="trim($hooks[$hookmodule]) ne ''">
-            <div>
-                #$hooks[$hookmodule]#
-                <div style="clear: both;">&nbsp;</div>
-            </div>
-        </xar:if>
-    </xar:foreach>
-</xar:if>
-
-<p>
-    <input type="hidden" name="cid" value="#$cid#" />
-    <xar:if condition="!empty($return_url)">
-        <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+    <xar:if condition="empty($cid)">
+       <h1><xar:mlstring>Create New Calendar</xar:mlstring></h1>
+    <xar:else />
+       <h1><xar:mlstring>Modify Calendar</xar:mlstring></h1>
     </xar:if>
-    <input type="submit" name="submit" value="#xarML('Save and Return')#" />
-    <input type="submit" name="save" value="#xarML('Save')#" />
-    <input type="hidden" value="#xarSecGenAuthKey('ievents')#">
-</p>
 
-</form>
+    <xar:comment>
+        Display recruiter selection form, but only if there are any recruiters available to this user
+    </xar:comment>
+    <xar:if condition="!empty($calendars)">
+    <form method="post" action="#xarModURL('ievents','user','modifycal')#">
+        <div>
+            <select name="cid" id="cid">
+               <option value="0">-- new calendar --</option>
+               <xar:if condition="!empty($calendars)">
+                   <xar:loop name="$calendars">
+                       <xar:if condition="$cid eq $loop:key">
+                           <option value="#$loop:key#" selected="selected">#xarVarPrepForDisplay($loop:item.short_name)# (ID #$loop:key#)</option>
+                       <xar:else />
+                           <option value="#$loop:key#">#xarVarPrepForDisplay($loop:item.short_name)# (ID #$loop:key#)</option>
+                       </xar:if>
+                   </xar:loop>
+               </xar:if>
+            </select>
+            <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+            <input type="submit" name="select" value="#xarML('Choose Calendar')#" />
+        </div>
+    </form>
+    </xar:if>
+
+    <xar:if condition="!empty($cid)">
+        <p>
+            <xar:mlstring>For this calendar:</xar:mlstring>
+            [<a href="#xarModURL('ievents', 'user', 'view', array('calendar_id' =&gt; $cid))#"><xar:mlstring>View events</xar:mlstring></a>]
+            [<a href="#xarModURL('ievents', 'user', 'modify', array('cid' =&gt; $cid, 'return_url' =&gt; xarServergetCurrentURL(array(), false)))#"><xar:mlstring>New event</xar:mlstring></a>]
+        </p>
+    </xar:if>
+
+    <hr />
+
+    <form method="post" action="#xarModURL('ievents','user','modifycal')#">
+
+    <xar:comment>
+    </xar:comment>
+
+    <xar:loop name="$properties">
+        <xar:set name="this_property">#$loop:item#</xar:set>
+        <p style="clear: both;">
+            <label style="display: block;"><xar:data-label property="$this_property" /></label>
+            <xar:data-input property="$this_property" />
+        </p>
+    </xar:loop>
+    <div style="clear: both;">&nbsp;</div>
+
+    <div class="ievents-hooks">
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+                    <div>
+                        #$hooks[$hookmodule]#
+                        <div style="clear: both;">&nbsp;</div>
+                    </div>
+                </xar:if>
+            </xar:foreach>
+        </xar:if>
+    </div>
+
+    <p>
+        <input type="hidden" name="cid" value="#$cid#" />
+        <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+        <xar:if condition="!empty($return_url)">
+            <input type="submit" name="submit" value="#xarML('Save and Return')#" />
+        </xar:if>
+        <input type="submit" name="save" value="#xarML('Save')#" />
+        <input type="hidden" value="#xarSecGenAuthKey('ievents')#">
+    </p>
+
+    </form>
+
+</div>

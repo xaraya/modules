@@ -1,0 +1,33 @@
+
+<div class="ievents-view-calendars">
+
+    <h1><xar:mlstring>Calendar List</xar:mlstring></h1>
+
+    <xar:if condition="empty($calendars)">
+        <p><xar:mlstring>No calendars available</xar:mlstring></p>
+    <xar:else />
+        <dl>
+            <xar:loop name="$calendars">
+                <dt>
+                    #xarVarPrepForDisplay($loop:item.long_name)#
+                    <xar:if condition="$loop:item.status eq 'INACTIVE'">
+                        <span class="xar-error"><xar:mlstring>INACTIVE</xar:mlstring></span>
+                    </xar:if>
+                </dt>
+                <dd class="ievent-calendar">
+                    #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$loop:item.description))#
+                </dd>
+                <dd class="ievent-links">
+                    <xar:comment>Provide some links</xar:comment>
+                    <xar:if condition="xarSecurityCheck('DeleteIEventCal', 0, 'IEvent', $loop:key)">
+                        <a href="#xarModURL('ievents','user','modifycal',array('cid'=&gt;$loop:key,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#">
+                            [<xar:mlstring>Edit</xar:mlstring>]
+                        </a> |
+                    </xar:if>
+                    <a href="#xarModURL('ievents','user','view',array('datetype'=&gt;'days','datenumber'=&gt;28))#"><xar:mlstring>Next 28 days</xar:mlstring></a>
+                </dd>
+            </xar:loop>
+        </dl>
+    </xar:if>
+
+</div>

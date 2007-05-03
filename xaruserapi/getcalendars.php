@@ -7,14 +7,16 @@
  * @param status string or array the status of the calendars to be returned (null for all available)
  * @param cid int Calendar ID
  * @param cids array Calender IDs
+ * @param name string Fetches calendars (though usually just one) of a given name
  */
 
 function ievents_userapi_getcalendars($args)
 {
     extract($args);
 
-    $module = 'ievents';
-    $itemtype = 2;
+    // Fetch all the config items we need at once.
+    list($module, $modid, $itemtype) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_calendars'));
 
     // Only used for some text escaping methods.
     $dbconn =& xarDBGetConn();
@@ -48,7 +50,7 @@ function ievents_userapi_getcalendars($args)
     }
 
     // Short name
-    if (!empty($short_name)) $where_arr[] = 'short_name eq ' . $dbconn->qstr($short_name);
+    if (!empty($name)) $where_arr[] = 'short_name eq ' . $dbconn->qstr($short_name);
 
     // Status selection
     // TODO: fetch the status list from the DD object.

@@ -10,7 +10,7 @@
 function ievents_userapi_list_calendars($args)
 {
     // Get all calendars the user is allowed to submit to.
-    $calendars = xarModAPifunc('ievents', 'user','getcalendars', array('event_priv' => 'COMMENT'));
+    $calendars = xarModAPifunc('ievents', 'user','getcalendars', array('event_priv' => 'COMMENT', 'status' => 'ACTIVE'));
 
     $return = array();
 

@@ -1,0 +1,21 @@
+
+/* Move text areas to the left */
+div.ievents-modify-event div.xar-form-container-after,
+div.ievents-modify-calendar div.xar-form-container-after {
+	margin: 0.25em 0 1em;
+}
+
+/* Labels to the left */
+div.ievents-modify-event label,
+div.ievents-modify-calendar label {
+	text-align: left;
+	font-weight: bold;
+}
+
+/* Render the categories a little better */
+div.ievents-modify-event div.ievents-hooks select,
+div.ievents-modify-calendar div.ievents-hooks select {
+	clear: both;
+	height: 12em;
+}
+
