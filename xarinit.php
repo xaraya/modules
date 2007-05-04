@@ -43,31 +43,31 @@ function registration_init()
 /** --------------------------------------------------------
  * Define modvars
  */
-    xarModSetVar('registration', 'allowregistration', true);
-    xarModSetVar('registration', 'requirevalidation', true);
-    xarModSetVar('registration', 'uniqueemail', true); //move back to roles - better there
-    xarModSetVar('registration', 'askwelcomeemail', true);
-    xarModSetVar('registration', 'askvalidationemail', true); // not in reg atm, leave in roles?
-    xarModSetVar('registration', 'askdeactivationemail', true);// not in reg atm, leave in roles?
-    xarModSetVar('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
-    xarModSetVar('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
-    //xarModSetVar('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
-    xarModSetVar('registration', 'minage', 13);
+    xarModVars::set('registration', 'allowregistration', true);
+    xarModVars::set('registration', 'requirevalidation', true);
+    xarModVars::set('registration', 'uniqueemail', true); //move back to roles - better there
+    xarModVars::set('registration', 'askwelcomeemail', true);
+    xarModVars::set('registration', 'askvalidationemail', true); // not in reg atm, leave in roles?
+    xarModVars::set('registration', 'askdeactivationemail', true);// not in reg atm, leave in roles?
+    xarModVars::set('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
+    xarModVars::set('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
+    //xarModVars::set('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
+    xarModVars::set('registration', 'minage', 13);
 
     //we need these too
-    xarModSetVar('registration', 'SupportShortURLs', false);
-    xarModSetVar('registration', 'showterms', true);
-    xarModSetVar('registration', 'showprivacy', true);
-    xarModSetVar('registration', 'chooseownpassword', false);
-    xarModSetVar('registration', 'notifyemail', xarModVars::get('mail', 'adminmail'));
-    xarModSetVar('registration', 'sendnotice', false);
-    xarModSetVar('registration', 'explicitapproval', false);
-    xarModSetVar('registration', 'showdynamic', false);
-    xarModSetVar('registration', 'sendwelcomeemail', false);
-    xarModSetVar('registration', 'minpasslength', 5);
+    xarModVars::set('registration', 'SupportShortURLs', false);
+    xarModVars::set('registration', 'showterms', true);
+    xarModVars::set('registration', 'showprivacy', true);
+    xarModVars::set('registration', 'chooseownpassword', false);
+    xarModVars::set('registration', 'notifyemail', xarModVars::get('mail', 'adminmail'));
+    xarModVars::set('registration', 'sendnotice', false);
+    xarModVars::set('registration', 'explicitapproval', false);
+    xarModVars::set('registration', 'showdynamic', false);
+    xarModVars::set('registration', 'sendwelcomeemail', false);
+    xarModVars::set('registration', 'minpasslength', 5);
     $defaultregmodule= xarModVars::get('roles','defaultregmodule');
     if (!isset($defaultregmodule)) {
-        xarModSetVar('roles','defaultregmodule',xarModGetIDFromName('registration'));
+        xarModVars::set('roles','defaultregmodule',xarModGetIDFromName('registration'));
     }
 
 /** ---------------------------------------------------------------
@@ -77,20 +77,20 @@ function registration_init()
 Root
 Linux';
     $disallowednames = serialize($names);
-    xarModSetVar('registration', 'disallowednames', $disallowednames);
+    xarModVars::set('registration', 'disallowednames', $disallowednames);
 
 /* This really has to be in roles as a user can modify their email after registration
     $emails = 'none@none.com
 president@whitehouse.gov';
     $disallowedemails = serialize($emails);
-    xarModSetVar('registration', 'disallowedemails', $disallowedemails);
+    xarModVars::set('registration', 'disallowedemails', $disallowedemails);
 */
 /** ---------------------------------------------------------------
  * Set disallowed IPs
  */
     $ips = '';
     $disallowedips = serialize($ips);
-    xarModSetVar('registration', 'disallowedips', $disallowedips);
+    xarModVars::set('registration', 'disallowedips', $disallowedips);
    // Register blocks - same as authsystem but has a registration link
     $tid = xarModAPIFunc('blocks',
             'admin',
@@ -146,7 +146,7 @@ function registration_delete()
     $regid = xarModGetIDFromName('registration');
     $defaultregvalue = xarModVars::get('roles','defaultregmodule');
     if (isset($defaultregmodule) && $defaultregmodule==$regid) {
-        xarModSetVar('roles','defaultregmodule',NULL);
+        xarModVars::set('roles','defaultregmodule',NULL);
     }
 
     $module = 'registration';

@@ -18,6 +18,7 @@
 function registration_userapi_getmenulinks()
 {
 
+    $menulinks = array();
     if (xarModVars::get('registration', 'allowregistration')){
     // Security check
         if (!xarUserIsLoggedIn()){
@@ -36,11 +37,11 @@ function registration_userapi_getmenulinks()
                              'title' => xarML('Terms of Use for this website'),
                              'label' => xarML('Terms of Use'));
     }
-
-    if (empty($menulinks)){
-        $menulinks = '';
+    if (empty($menulinks)) {
+        $menulinks[] = array('url'   => xarModURL('authsystem', 'user', 'logout'),
+                             'title' => xarML('Log this user out'),
+                             'label' => xarML('Logout'));
     }
-
     return $menulinks;
 }
 

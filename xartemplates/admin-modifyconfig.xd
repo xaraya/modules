@@ -189,7 +189,7 @@
                                 Minimum Age To Be A User:
                             </xar:mlstring>
                         </label>
-                        <input type="text" name="minage" id="minage" value="#xarModVars::get('registration', 'minage')#" maxlength="3" class="xar-form-textshort" />
+                        <input type="text" name="minage" id="minage" value="#xarModGetVar('registration', 'minage')#" maxlength="3" class="xar-form-textshort" />
                         A value of 0 disables the age check.
                     </div>
                     <div class="xar-form-input-wrapper-after">
@@ -211,7 +211,7 @@
                                     Minimum Password Length:
                                 </xar:mlstring>
                             </label>
-                            <input type="text" name="minpasslength" id="minpasslength" value="#xarModVars::get('registration', 'minpasslength')#" maxlength="3" class="xar-form-textshort" />
+                            <input type="text" name="minpasslength" id="minpasslength" value="#xarModGetVar('registration', 'minpasslength')#" maxlength="3" class="xar-form-textshort" />
                         </div>
                     </xar:if>
                     <div class="xar-form-input-wrapper-after">

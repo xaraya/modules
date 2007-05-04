@@ -56,9 +56,9 @@ function registration_userapi_notifyadmin ($args)
     $themecomments = xarModVars::get('themes','ShowTemplates');
     $mailcomments = xarModVars::get('mail','ShowTemplates');
     if ($mailcomments == 1) {
-        xarModSetVar('themes','ShowTemplates',1);
+        xarModVars::set('themes','ShowTemplates',1);
     } else {
-        xarModSetVar('themes','ShowTemplates',0);
+        xarModVars::set('themes','ShowTemplates',0);
     }
 
     if ($userstatus == 4) {
@@ -102,12 +102,12 @@ function registration_userapi_notifyadmin ($args)
                                  'usetemplates' => 0))) {//use templates is set true by default if passed in var is not set
 
         /* Set the theme comments back */
-        xarModSetVar('themes','ShowTemplates',$themecomments);
+        xarModVars::set('themes','ShowTemplates',$themecomments);
         return; //what to do here - we don't want the user affected here
     }
 
    /* Set the theme comments back */
-    xarModSetVar('themes','ShowTemplates',$themecomments);
+    xarModVars::set('themes','ShowTemplates',$themecomments);
 
     // Return
     return true;

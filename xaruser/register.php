@@ -313,8 +313,6 @@ function registration_user_register()
             } else {
                 $confcode ='';
             }
-            //create user account creation time
-            $now = time();
 
             //Create the user
             $userdata = array('uname'  => $username,
@@ -323,13 +321,14 @@ function registration_user_register()
                     'itemtype' => 2,
                               'email'    => $email,
                               'pass'     => $pass,
-                              'date'     => $now,
+                              'date'     => time(),
                               'valcode'  => $confcode,
+                              'parentid' => xarModVars::get('roles', 'defaultgroup'),
                               'state'    => $state);
 
             $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
-
-            if ($uid == 0) return;
+            if (empty($uid)) return;
+            xarModVars::set('roles', 'lastuser', $uid);
 
             //Make sure the user email setting is off unless the user sets it
             xarModSetUserVar('roles','usersendemails', false, $uid);
@@ -345,12 +344,6 @@ function registration_user_register()
              // Option: If admin requires notification of a new user, and no validation required,
              // send out an email to Admin
 
-             // Get the default users group
-             $defaultgroup = xarModVars::get('roles', 'defaultgroup');
-
-             // Make the user a member of the users role
-             if(!xarMakeRoleMemberByID($uid, $defaultgroup)) return;
-             xarModSetVar('roles', 'lastuser', $uid);
 
 
             // Let's finish by sending emails to those that require it based on options - the user or the admin

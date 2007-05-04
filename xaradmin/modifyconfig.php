@@ -56,7 +56,7 @@ function registration_admin_modifyconfig()
                     $checkip = xarModVars::get('registration', 'disallowedips');
                     if (empty($checkip)) {
                         $ip = serialize('10.0.0.1');
-                        xarModSetVar('registration', 'disallowedips', $ip);
+                        xarModVars::set('registration', 'disallowedips', $ip);
                     }
                     $data['ips']    = unserialize(xarModVars::get('registration', 'disallowedips'));
                     //$data['emails'] = unserialize(xarModVars::get('registration', 'disallowedemails'));
@@ -77,9 +77,9 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('showterms',   'checkbox', $showterms,   false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('showprivacy', 'checkbox', $showprivacy, false, XARVAR_NOT_REQUIRED)) return;
 
-                    xarModSetVar('registration', 'SupportShortURLs', $shorturls);
-                    xarModSetVar('registration', 'showterms', $showterms);
-                    xarModSetVar('registration', 'showprivacy', $showprivacy);
+                    xarModVars::set('registration', 'SupportShortURLs', $shorturls);
+                    xarModVars::set('registration', 'showterms', $showterms);
+                    xarModVars::set('registration', 'showprivacy', $showprivacy);
 
                     break;
                 case 'registration':
@@ -97,31 +97,31 @@ function registration_admin_modifyconfig()
                     //if (!xarVarFetch('uniqueemail',       'checkbox', $uniqueemail,       xarModVars::get('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModVars::get('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
 
-                    xarModSetVar('registration', 'chooseownpassword', $chooseownpassword);
-                    xarModSetVar('roles', 'defaultgroup', $defaultgroup);
-                    xarModSetVar('registration', 'allowregistration', $allowregistration);
-                    xarModSetVar('registration', 'minage', $minage);
-                    xarModSetVar('registration', 'notifyemail', $notifyemail);
-                    xarModSetVar('registration', 'sendnotice', $sendnotice);
-                    xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);
-                    xarModSetVar('registration', 'requirevalidation', $requirevalidation);
-                    xarModSetVar('registration', 'showdynamic', $showdynamic);
-                    xarModSetVar('registration', 'sendwelcomeemail', $sendwelcomeemail);
-                    xarModSetVar('registration', 'minpasslength', $minpasslength);
-                    //xarModSetVar('registration', 'uniqueemail', $uniqueemail);
+                    xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
+                    xarModVars::set('roles', 'defaultgroup', $defaultgroup);
+                    xarModVars::set('registration', 'allowregistration', $allowregistration);
+                    xarModVars::set('registration', 'minage', $minage);
+                    xarModVars::set('registration', 'notifyemail', $notifyemail);
+                    xarModVars::set('registration', 'sendnotice', $sendnotice);
+                    xarModVars::set('registration', 'explicitapproval', $explicitapproval? true:false);
+                    xarModVars::set('registration', 'requirevalidation', $requirevalidation);
+                    xarModVars::set('registration', 'showdynamic', $showdynamic);
+                    xarModVars::set('registration', 'sendwelcomeemail', $sendwelcomeemail);
+                    xarModVars::set('registration', 'minpasslength', $minpasslength);
+                    //xarModVars::set('registration', 'uniqueemail', $uniqueemail);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     //if (!xarVarFetch('disallowedemails', 'str:1', $disallowedemails, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('disallowedips',    'str:1', $disallowedips,    '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     $disallowednames = serialize($disallowednames);
-                    xarModSetVar('registration', 'disallowednames', $disallowednames);
+                    xarModVars::set('registration', 'disallowednames', $disallowednames);
 
                     //$disallowedemails = serialize($disallowedemails);
-                    //xarModSetVar('registration', 'disallowedemails', $disallowedemails);
+                    //xarModVars::set('registration', 'disallowedemails', $disallowedemails);
 
                     $disallowedips = serialize($disallowedips);
-                    xarModSetVar('registration', 'disallowedips', $disallowedips);
+                    xarModVars::set('registration', 'disallowedips', $disallowedips);
                     break;
             }
 
