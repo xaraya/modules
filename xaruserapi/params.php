@@ -4,7 +4,8 @@
  * Fetch the global parameters and settings for the module.
  * @param name string The name of an individual parameter to return
  *
- * @todo Some of these parameters may have user overrides
+ * @todo Some of these parameters may have user overrides, and may
+ * ultimately be stored as module variables,
  */
 
 function ievents_userapi_params($args)
@@ -37,6 +38,20 @@ function ievents_userapi_params($args)
         $module = 'ievents';
         $params['module'] = $module;
         $params['modid'] = xarModGetIDFromName($module);
+
+        // The number of days that an event is flagged as 'new' from when it was created.
+        $params['days_new'] = 5;
+
+        // The number of days an avent is flagged as 'updated' from when it was last updated.
+        $params['days_updated'] = 3;
+
+        // Default events per page in listing.
+        $params['default_numitems'] = 10;
+        $params['max_numitems'] = 200;
+
+        // Default start and end dates, in 'strtotime' format.
+        $params['default_startdate'] = 'now';
+        $params['default_enddate'] = '+1 month';
     }
 
     if (!empty($name)) {

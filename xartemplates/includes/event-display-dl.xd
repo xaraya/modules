@@ -22,6 +22,12 @@
             #$dates.short.time#
         </xar:if>
     </p>
+    <p>
+        <strong><xar:mlstring>Calendar:</xar:mlstring></strong>
+        <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.calendar_id))#">
+            #xarVarPrepForDisplay($calendar.long_name)#
+        </a>
+    </p>
     <xar:if condition="!empty($event.cost)">
         <p><strong><xar:mlstring>Cost:</xar:mlstring></strong> #xarVarPrepForDisplay($event.cost)#</p>
     </xar:if>
@@ -50,8 +56,8 @@
     </dd>
 
     <xar:comment>
-        TODO: calendar link, edit links, do something with flags,
-        last updated, status (if admin), links to categories
+        TODO: do something with flags, last updated ('updated' flag if recent?), status (if admin - treat as a flag?),
+        links to categories, created date ('new' flag if recent)
     </xar:comment>
 
     <xar:if condition="!empty($event.location)">

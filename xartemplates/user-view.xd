@@ -9,7 +9,7 @@
         <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thismonth'))#"><xar:mlstring>This month</xar:mlstring></a></li>
         <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thisweek'))#"><xar:mlstring>This week</xar:mlstring></a></li>
         <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'today'))#"><xar:mlstring>Today</xar:mlstring></a></li>
-        <li><a href="#xarModURL('ievents','user','view',array('datetype'=&gt;'days','datenumber'=&gt;28))#"><xar:mlstring>Next 28 days</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks'))#"><xar:mlstring>Next four weeks</xar:mlstring></a></li>
     </ul>
 </div>
 
@@ -24,7 +24,7 @@
         <xar:template file="event-nextprev" />
 
         <dl class="ievent-event">
-            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event)" />
+            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id])" />
         </dl>
 
         <xar:template file="event-nextprev" />

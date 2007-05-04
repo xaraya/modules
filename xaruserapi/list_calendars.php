@@ -9,13 +9,22 @@
 
 function ievents_userapi_list_calendars($args)
 {
+    // If the user as an administrator, then allow INACTIVE calendars.
+    // TODO: this check has cropped up in a number of places now. Can they be combined?
+    if (xarSecurityCheck('AdminIEvent', 0, 'IEvent', 'All:All:All')) {
+        $status = 'ACTIVE,INACTIVE';
+    } else {
+        $status = 'ACTIVE';
+    }
+
     // Get all calendars the user is allowed to submit to.
-    $calendars = xarModAPifunc('ievents', 'user','getcalendars', array('event_priv' => 'COMMENT', 'status' => 'ACTIVE'));
+    $calendars = xarModAPifunc('ievents', 'user','getcalendars', array('event_priv' => 'COMMENT', 'status' => $status));
 
     $return = array();
 
     foreach($calendars as $calendar) {
         $return[$calendar['cid']] = $calendar['short_name'];
+        if ($calendar['status'] == 'INACTIVE') $calendar['short_name'] .= ' ' . xarML('(Inactive)');
     }
 
     return $return;

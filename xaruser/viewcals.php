@@ -26,6 +26,7 @@ function ievents_user_viewcals($args)
     xarVarPrepForDisplay('name', 'str:0:200', $name, '', XAR_VAR_NOTREQUIRED);
 
     // If we have admin privileges, then include inactive calendars.
+    // TODO: this check has cropped up in a number of places now. Can they be combined?
     if (xarSecurityCheck('AdminIEvent', 0, 'IEvent', 'All:All:All')) {
         $status = 'ACTIVE,INACTIVE';
     } else {

@@ -22,11 +22,13 @@ function ievents_user_view($args)
     // General security check.
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
+    // Get module parameters
+    list($default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek'));
+
     // Get the user parameters.
-    // TODO: make the default configurable.
-    // TODO: allow the numitems range to be 200 or the default (whichever is the larger)
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('numitems', 'int:1:200', $numitems, 20, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $default_numitems, XARVAR_NOT_REQUIRED)) return;
 
     // TODO: sorting and ordering flags and parameters
     // ...
@@ -39,8 +41,8 @@ function ievents_user_view($args)
     // These are the master start/end variables. Other parameters may override them, but all dates
     // ultimately come to these two.
     // These set the defaults also - events from today to one month ahead.
-    xarVarFetch('ustartdate', 'int', $ustartdate, time(), XARVAR_NOT_REQUIRED);
-    xarVarFetch('uenddate', 'int', $uenddate, strtotime('+1 month'), XARVAR_NOT_REQUIRED);
+    xarVarFetch('ustartdate', 'int', $ustartdate, strtotime($default_startdate), XARVAR_NOT_REQUIRED);
+    xarVarFetch('uenddate', 'int', $uenddate, strtotime($default_enddate), XARVAR_NOT_REQUIRED);
 
     // Allow selection by year/month/day parts
     xarVarFetch('startyear', 'pre:num:passthru:str:4', $startyear, '', XARVAR_NOT_REQUIRED);
@@ -55,12 +57,28 @@ function ievents_user_view($args)
     xarVarFetch('startdate', 'pre:num:passthru:str:8:8', $startdate, '', XARVAR_NOT_REQUIRED);
     xarVarFetch('enddate', 'pre:num:passthru:str:8:8', $enddate, '', XARVAR_NOT_REQUIRED);
 
+    // A combination of keywords and values can go into 'range'.
+    // This allows values such as 'next7days' and 'next12months'.
+    // We don't do anything similar for past dates, as we are dealing primarily with
+    // future events in this module.
+    xarVarFetch('range', 'regexp:/^next[0-9]{1,3}(days|weeks|months|years)$/', $range, '', XARVAR_NOT_REQUIRED);
+    if (!empty($range)) {
+        $datenumber = preg_replace('/[^0-9]/', '', $range);
+        $datetype = preg_replace('/^next[0-9]+/', '', $range);
+    }
+    // Unset the range, so it can be evaluated through a different set of rules below.
+    unset($range);
+
     // These two parameters handle "next N days/weeks/months/years" date selection.
+    // TODO: provide a combined version of this, usable through a single drop-down list.
     xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED);
 
-    // Another way of selecting a date, using text
-    xarVarFetch('range', 'pre:lower:passthru:enum:today:tomorrow:yesterday:thisweek:week:nextweek:lastweek:thismonth:month:nextmonth:lastmonth:thisyear:year:nextyear:lastyear', $range, '', XARVAR_NOT_REQUIRED);
+    // Another way of selecting a date, using a text token
+    xarVarFetch('range', 'pre:lower:passthru:enum:today:tomorrow:yesterday'
+        . ':thisweek:week:nextweek:lastweek:thismonth:month:nextmonth:lastmonth'
+        . ':thisyear:year:nextyear:lastyear', $range, '', XARVAR_NOT_REQUIRED
+    );
 
     // Grouping of listed items.
     // Grouping should affect the sorting too, since grouping my a time period
@@ -75,9 +93,6 @@ function ievents_user_view($args)
     // Calendar ID
     xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
 
-    // Get global parameters.
-    $gparams = xarModAPIfunc('ievents', 'user', 'params');
-
     //
     // Validate and process some of the date parameters.
     // Any time component is irrelevant and will be stripped off later.
@@ -88,7 +103,7 @@ function ievents_user_view($args)
         // TODO: put these range functions into an API so they can be used in display functions
 
         // Find the first day of the current week
-        $daystostartweek = date('w', time()) - $gparams['startdayofweek'];
+        $daystostartweek = date('w', time()) - $startdayofweek;
         if ($daystostartweek < 0) $daystostartweek += 7;
         // Get the period start date (unix timestamp) by counting back the appropriate number of days
         $thisweekstart = strtotime("-$daystostartweek days", strtotime(date('Y-m-d', time())));
@@ -482,7 +497,7 @@ function ievents_user_view($args)
     // Pass data back out to the template
     //
 
-    // By keeping the bl data and variable names the same, passing data is a sinch.
+    // By keeping the bl data and variable names the same, passing data is easy.
     $bl_data = @compact(array(
         'ustartdate', 'uenddate',
         'startdate', 'enddate',
@@ -499,7 +514,6 @@ function ievents_user_view($args)
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
 
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
-    //echo "DONE"; return true;
 
     return $bl_data;
 }

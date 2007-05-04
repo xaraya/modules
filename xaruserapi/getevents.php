@@ -33,8 +33,8 @@ function ievents_userapi_getevents($args)
 {
     extract($args);
 
-    $module = 'ievents';
-    $itemtype = 1;
+    list($module, $itemtype) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,itemtype_events'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
