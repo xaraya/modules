@@ -36,7 +36,7 @@
 
 <xar:if condition="xarModVars::get('registration', 'showterms')">
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="accept">#$curnum#.&nbsp;<xar:mlstring>Acceptance of Terms of Use and Amendments</xar:mlstring></h3>
+    <h3 id="accept">#$curnum#.&#160;<xar:mlstring>Acceptance of Terms of Use and Amendments</xar:mlstring></h3>
     <p> <xar:ml>
         <xar:mlstring>Each time you use or cause access to this web site, you agree to be bound by
          these <a href="#(1)">Terms of Use</a>, and as amended from time to time with or without notice to you.
@@ -57,7 +57,7 @@
         </xar:if>
         </p>
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="service">#$curnum#.&nbsp;<xar:mlstring>Our Service</xar:mlstring></h3>
+    <h3 id="service">#$curnum#.&#160;<xar:mlstring>Our Service</xar:mlstring></h3>
         <!-- **NOTE: Feel free to add in a general description of your web site. -->
          <p><xar:mlstring>Our web site and services provided to you </xar:mlstring>
         <!-- **NOTE: you may wish to soften the disclaimer -->
@@ -69,7 +69,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="responsible">#$curnum#.&nbsp;<xar:mlstring>Your Responsibilities and Registration Obligations</xar:mlstring></h3>
+    <h3 id="responsible">#$curnum#.&#160;<xar:mlstring>Your Responsibilities and Registration Obligations</xar:mlstring></h3>
         <p>
             <xar:ml>
             <xar:mlstring>In order to use this web site, you must <a href="#(1)">register</a> on our site,
@@ -88,7 +88,7 @@
 
 <xar:if condition="xarModVars::get('registration', 'showprivacy')">
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="privacy">#$curnum#.&nbsp;<xar:mlstring>Privacy Policy</xar:mlstring></h3>
+    <h3 id="privacy">#$curnum#.&#160;<xar:mlstring>Privacy Policy</xar:mlstring></h3>
     <p>
         <xar:ml>
         <xar:mlstring>Registration data and other personally identifiable information that we may collect is
@@ -99,11 +99,11 @@
 </xar:if>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="rego">#$curnum#.&nbsp;<xar:mlstring>Registration and Password</xar:mlstring></h3>
+    <h3 id="rego">#$curnum#.&#160;<xar:mlstring>Registration and Password</xar:mlstring></h3>
         <p><xar:mlstring>You are responsible to maintain the confidentiality of your password and shall be responsible for all uses via your registration and/or login, whether authorized or unauthorized by you. You agree to immediately notify us of any unauthorized use or your registration, user account or password.</xar:mlstring></p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="conduct">#$curnum#.&nbsp;<xar:mlstring>Your Conduct</xar:mlstring></h3>
+    <h3 id="conduct">#$curnum#.&#160;<xar:mlstring>Your Conduct</xar:mlstring></h3>
         <p><xar:mlstring>You agree that all information or data of any kind, whether text, software,  code, music
            or sound, photographs or graphics, video or other materials ("Content"), publicly or privately provided,
            shall be the sole responsibility of the person providing the Content or the person whose user account is
@@ -138,7 +138,7 @@
         </ul>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="submission">#$curnum#.&nbsp;<xar:mlstring>Submission of Content on this Web Site</xar:mlstring></h3>
+    <h3 id="submission">#$curnum#.&#160;<xar:mlstring>Submission of Content on this Web Site</xar:mlstring></h3>
         <p><xar:mlstring>By providing any Content to our web site:</xar:mlstring></p>
         <ul>
             <li><xar:mlstring>you agree to grant to us a worldwide, royalty-free, perpetual, non-exclusive right and
@@ -157,7 +157,7 @@
         </ul>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="thirdparty">#$curnum#.&nbsp;<xar:mlstring>Third Party Services.</xar:mlstring></h3>
+    <h3 id="thirdparty">#$curnum#.&#160;<xar:mlstring>Third Party Services.</xar:mlstring></h3>
         <p><xar:mlstring>Goods and services of third parties may be advertised and/or made available on or through this
             web site. Representations made regarding products and services provided by third parties are governed by the
             policies and representations made by these third parties. We shall not be liable for or responsible in any
@@ -165,7 +165,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="indemnify">#$curnum#.&nbsp;<xar:mlstring>Indemnification</xar:mlstring></h3>
+    <h3 id="indemnify">#$curnum#.&#160;<xar:mlstring>Indemnification</xar:mlstring></h3>
         <p><xar:ml>
             <xar:mlstring>You agree to indemnify and hold us harmless, our subsidiaries, affiliates, related parties,
             officers, directors, employees, agents, independent contractors, advertisers,   partners, and co-branders from
@@ -179,7 +179,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-        <h3 id="disclaimer">#$curnum#.&nbsp;<xar:mlstring>DISCLAIMER OF WARRANTIES</xar:mlstring></h3>
+        <h3 id="disclaimer">#$curnum#.&#160;<xar:mlstring>DISCLAIMER OF WARRANTIES</xar:mlstring></h3>
         <p><xar:mlstring>YOU UNDERSTAND AND AGREE THAT YOUR USE OF THIS WEB SITE AND ANY SERVICES OR CONTENT PROVIDED
             (THE "SERVICE") IS MADE AVAILABLE AND PROVIDED TO YOU AT YOUR OWN RISK. IT IS PROVIDED TO YOU "AS IS" AND
             WE EXPRESSLY DISCLAIM ALL WARRANTIES OF ANY KIND, IMPLIED OR EXPRESS, INCLUDING BUT NOT LIMITED TO THE
@@ -194,7 +194,7 @@
         <p><xar:mlstring>Some jurisdictions may not allow disclaimers of implied warranties and the above disclaimer may not apply to you only as it relates to implied warranties.</xar:mlstring></p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="limits">#$curnum#.&nbsp;<xar:mlstring>LIMITATION OF LIABILITY</xar:mlstring></h3>
+    <h3 id="limits">#$curnum#.&#160;<xar:mlstring>LIMITATION OF LIABILITY</xar:mlstring></h3>
         <p><xar:mlstring>YOU EXPRESSLY UNDERSTAND AND AGREE THAT WE SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT,
             SPECIAL, INDICENTAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOSS OF
             PROFITS, GOODWILL, USE, DATA OR OTHER INTANGIBLE LOSS (EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF
@@ -209,7 +209,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="rights">#$curnum#.&nbsp;<xar:mlstring>Reservation of Rights</xar:mlstring></h3>
+    <h3 id="rights">#$curnum#.&#160;<xar:mlstring>Reservation of Rights</xar:mlstring></h3>
         <p><xar:mlstring> We reserve all of our rights, including but not limited to any and all copyrights,
             trademarks, patents, trade secrets, and any other proprietary right that we may have in our web site,
             its content, and the goods and services that may be provided. The use of our rights and property requires
@@ -219,14 +219,14 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="copyrights">#$curnum#.&nbsp;<xar:mlstring>Notification of Copyright Infringement</xar:mlstring></h3>
+    <h3 id="copyrights">#$curnum#.&#160;<xar:mlstring>Notification of Copyright Infringement</xar:mlstring></h3>
         <p><xar:mlstring>If you believe that your property has been used in any way that would be considered copyright
              infringement or a violation of your intellectual property rights, our copyright agent may be contacted at
              the following address: </xar:mlstring><a href="mailto:#$contmail#">#$contmail#</a>.
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="law">#$curnum#.&nbsp;<xar:mlstring>Applicable Law</xar:mlstring></h3>
+    <h3 id="law">#$curnum#.&#160;<xar:mlstring>Applicable Law</xar:mlstring></h3>
         <p>
             <xar:ml>
             <xar:mlstring>You agree that this <a href="#(1)">Terms of Use</a> and any dispute arising out of your
@@ -240,7 +240,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="misc">#$curnum#.&nbsp;<xar:mlstring>Miscellaneous Information</xar:mlstring></h3>
+    <h3 id="misc">#$curnum#.&#160;<xar:mlstring>Miscellaneous Information</xar:mlstring></h3>
         <p><xar:ml>
             <xar:mlstring>In the event that this <a href="#(1)">Terms of Use</a> conflicts with any law under which
             any provision may be held invalid by a court with jurisdiction over the parties, such provision will be

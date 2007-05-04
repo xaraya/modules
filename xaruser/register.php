@@ -344,8 +344,6 @@ function registration_user_register()
              // Option: If admin requires notification of a new user, and no validation required,
              // send out an email to Admin
 
-
-
             // Let's finish by sending emails to those that require it based on options - the user or the admin
             // and redirecting to appropriate pages that depend on user state and options set in the registration config
             // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
@@ -353,7 +351,7 @@ function registration_user_register()
                 array(  'username'  => $username,
                         'realname'  => $realname,
                         'email'     => $email,
-                        'pass'      => (xarModVars::get('registration', 'chooseownpassword')) ? '' : $pass,
+                        'pass'      => xarModVars::get('registration', 'chooseownpassword') ? '' : $pass,
                         'uid'       => $uid,
                         'ip'        => $ip,
                         'state'     => $state));

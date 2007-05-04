@@ -18,7 +18,7 @@
         <xar:mlstring>The Registration module handles management of User Registration on your site, and options for user registration. </xar:mlstring>
     </p>
     <p>
-        <xar:mlstring>The Registration module is useful when used in conjunction with:</xar:mlstring></p>
+        <xar:mlstring>The Registration module is useful when used in conjunction with:</xar:mlstring>
         <ul>
            <li><xar:mlstring>an authentication module (in a default installation this is <strong>Authsystem</strong> in Core) that handles the users' login and authentication process.</xar:mlstring></li>
            <li><xar:mlstring>the <strong>Roles</strong> module that manages Roles on your site. Registered users can be assigned to roles that you setup and configure on your site.</xar:mlstring></li>
@@ -33,7 +33,7 @@
          <li><xar:mlstring><strong>Install and activate</strong> the Registration module via the Module module.</xar:mlstring></li>
          <li><xar:mlstring><strong>Configure options </strong>through the Admin Panel Modify Config link. General, registration and filter options are available.</xar:mlstring></li>
          <li><xar:mlstring><strong>Check user privileges</strong>. Depending on choices you made at installation time, and additional privilege setups, you may need to create
-         additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</xar:mlstring></p>
+         additional privileges and assign to your Anonymous users so they can view the Registration module menu link and login block.</xar:mlstring></li>
     </ol>
     <h4><xar:mlstring>A. Configurations Options for Administrators</xar:mlstring></h4>
     <p><xar:mlstring>The following options are available through the Modify Config link in the Admin Panel Registration menu.</xar:mlstring></p>
@@ -47,7 +47,7 @@
             display of Roles module dynamic data fields, and requirement for unique email address.</xar:mlstring>
         </li>
         <li><xar:mlstring><strong>Filtering Options tab :</strong>Enables you to control registrations by blocking
-            registrations on the basis of User Names, IP address or email address.</strong></xar:mlstring>
+            registrations on the basis of User Names, IP address or email address.</xar:mlstring>
         </li>
      </ol>
      <h4><xar:mlstring>B. User Menu Options</xar:mlstring></h4>
@@ -84,17 +84,17 @@
       <xar:mlstring>Further information on the Registration module can be found at:</xar:mlstring>
    </p>
    <ul>
-      <li><xar:mlstring>Registration Module Extension page at</xar:mlstring> <a title="#xarML('Registration Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/30205.html">Xaraya Extension and Releases</a>.
+      <li><xar:mlstring>Registration Module Extension page at</xar:mlstring>&#160;<a title="#xarML('Registration Module - Xaraya Extension 30205')#" href="http://www.xaraya.com/index.php/release/30205.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
       </li>
-      <li><xar:mlstring>Related tutorials and documentation on Registration module at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+      <li><xar:mlstring>Related tutorials and documentation on Registration module at</xar:mlstring>&#160;<a href="http://www.xaraya.com/index.php/keywords/registration/" title="#xarML('Related documentation on Registration')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
       </li>
-      <li><xar:mlstring>Extended information for Developers at</xar:mlstring> <a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#"><xar:mlstring>Xaraya RFC-30</xar:mlstring></a>
+      <li><xar:mlstring>Extended information for Developers at</xar:mlstring>&#160;<a href="http://www.xaraya.com/documentation/rfcs/rfc0030.html" title="#xarML('RFC 30')#"><xar:mlstring>Xaraya RFC-30</xar:mlstring></a>
       </li>
 
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Registration Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-02-04
+    <strong>&#160;<xar:mlstring>Registration Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.1&#160; 2006-02-04
   </p>
 </div>
 </xar:template>

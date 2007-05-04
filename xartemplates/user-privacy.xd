@@ -53,7 +53,7 @@
         </xar:if>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="collection">#$curnum#.&nbsp;<xar:mlstring>Collection of Data</xar:mlstring></h3>
+    <h3 id="collection">#$curnum#.&#160;<xar:mlstring>Collection of Data</xar:mlstring></h3>
         <p>
             <xar:mlstring>
                 Our registration process requires only a valid e-mail address and a unique user ID and
@@ -67,7 +67,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-        <h3 id="datause">#$curnum#.&nbsp;<xar:mlstring>Use of Data</xar:mlstring></h3>
+        <h3 id="datause">#$curnum#.&#160;<xar:mlstring>Use of Data</xar:mlstring></h3>
         <p>
             <xar:mlstring>We may use Data to customize and improve your user experience on this site.
                 We will make efforts so that your Data will not be provided to third parties unless (i)
@@ -85,7 +85,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="cookies">#$curnum#.&nbsp;<xar:mlstring>Cookies</xar:mlstring></h3>
+    <h3 id="cookies">#$curnum#.&#160;<xar:mlstring>Cookies</xar:mlstring></h3>
         <p>
             <xar:mlstring>Like many web sites, we set and use cookies to enhance your user experience,
             such as retaining your personal settings. Advertisements may appear on our web site and, if so,
@@ -115,7 +115,7 @@
 
     <xar:if condition="xarModVars::get('registration', 'minage') gt '0'" >
         <xar:set name="curnum">++$curnum</xar:set>
-        <h3 id="children">#$curnum#.&nbsp;<xar:mlstring>Children</xar:mlstring></h3>
+        <h3 id="children">#$curnum#.&#160;<xar:mlstring>Children</xar:mlstring></h3>
             <p><xar:ml>
             <xar:mlstring>We do not allow persons who are aged #(1) (#(2)) or younger to become members of this site.</xar:mlstring>
             <xar:mlvar>#$minagewords[$mina-1]#</xar:mlvar>
@@ -131,7 +131,7 @@
     </xar:if>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="account">#$curnum#.&nbsp;<xar:mlstring>Editing or Deleting Your Account Information</xar:mlstring></h3>
+    <h3 id="account">#$curnum#.&#160;<xar:mlstring>Editing or Deleting Your Account Information</xar:mlstring></h3>
         <p> <xar:set name="personalarea">xarModURL('roles','user','main')</xar:set>
             <xar:ml>
                 <xar:mlstring>We provide you with the ability to edit the information in your user account information
@@ -149,7 +149,7 @@
             discretion even though your user account is deleted.</xar:mlstring>
         </p>
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="changes">#$curnum#.&nbsp;
+    <h3 id="changes">#$curnum#.&#160;
         <xar:mlstring>Changes to this Privacy Policy</xar:mlstring></h3>
         <p>
             <xar:mlstring>We may make changes to this Policy from time to time. We will notify you of substantial
@@ -158,7 +158,7 @@
         </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="guarantee">#$curnum#.&nbsp;
+    <h3 id="guarantee">#$curnum#.&#160;
         <xar:mlstring>NO GUARANTEES</xar:mlstring></h3>
           <p>
               <xar:mlstring>While this Privacy Policy states our standards for maintenance of Data and we will make
@@ -168,7 +168,7 @@
           </p>
 
     <xar:set name="curnum">++$curnum</xar:set>
-    <h3 id="contact">#$curnum#.&nbsp;
+    <h3 id="contact">#$curnum#.&#160;
         <xar:mlstring>Contact Information</xar:mlstring></h3>
         <p>
             <xar:ml>
