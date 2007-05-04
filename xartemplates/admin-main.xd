@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -96,4 +97,5 @@
     <strong>&nbsp;<xar:mlstring>Registration Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-02-04
   </p>
 </div>
+</xar:template>
 

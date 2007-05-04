@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:mlstring>Dear</xar:mlstring> #$adminname#,
 
 
@@ -20,3 +21,4 @@
 <xar:mlstring>When logged in, you can access this user account at </xar:mlstring>#$rolelink#
 
 -------------------------------------------------------------
+</xar:template>
