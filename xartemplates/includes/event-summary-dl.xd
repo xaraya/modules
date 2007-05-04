@@ -13,7 +13,7 @@
 
 <xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
 
-<dt id="event-summary-#$event.eid#">
+<dt class="ievents-event" id="event-summary-#$event.eid#">
     <xar:if condition="$group eq 'day'">
         <strong>#$dates.short.time#</strong> <a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
     <xar:else />
@@ -28,7 +28,7 @@
     </xar:if>
 </dt>
 
-<dd class="ievent-summary">
+<dd class="ievents-event-summary">
     #xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary,'maxwords'=&gt;$summary_max_words)))#
 </dd>
 

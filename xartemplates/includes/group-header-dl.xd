@@ -5,7 +5,7 @@
     - $group - details for the group
 </xar:comment>
 
-<dt>
+<dt class="ievents-group">
     <xar:if condition="$group.periodtype eq 'day'">
         <xar:ml>
             <xar:mlstring>#(1) #(2)</xar:mlstring>

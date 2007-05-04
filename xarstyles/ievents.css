@@ -19,3 +19,36 @@ div.ievents-modify-calendar div.ievents-hooks select {
 	height: 12em;
 }
 
+/* Flat Events listing */
+div.ievents-view dl.ievents-events {
+	margin: 0.5em 0;
+}
+div.ievents-view dl.ievents-events dt, div.ievents-view dl.ievents-events dd {
+	margin-left: 0;
+}
+div.ievents-view dl.ievents-events dt {
+	margin-top: 0.5em;
+	clear: both;
+	border-top: 1px solid #eeeeee;
+	clear: both;
+}
+div.ievents-view dl.ievents-events dd {
+	margin-left: 12em;
+}
+div.ievents-view dl.ievents-events dt strong {
+	width: 12em;
+	display: block;
+	float: left;
+}
+
+/* Grouping lists */
+
+div.ievents-view dt.ievents-group {
+	font-weight: bold;
+	font-style: italic;
+	font-size: 120%;
+	color: #666666;
+	margin-top: 1.6em;
+	clear: both;
+}
+
