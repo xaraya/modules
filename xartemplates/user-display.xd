@@ -1,0 +1,26 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+            <xar:mlstring>Member Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Display #(1) in #(2)</xar:mlstring>
+            <xar:mlvar>#$object:itemid#</xar:mlvar>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <xar:template module="members" file="admin-menu" />
+    <div style="clear:both">&#160;</div>
+    <xar:data-display object="$object" tplmodule="$tplmodule" />
+    <div style="clear:both">&#160;</div>
+</div>
+</xar:template>

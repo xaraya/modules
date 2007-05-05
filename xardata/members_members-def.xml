@@ -1,0 +1,205 @@
+<object name="members_members">
+  <objectid>27</objectid>
+  <label>Members</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>15</itemtype>
+  <class>Member</class>
+  <filepath>modules/members/class/member.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="roles_id">
+      <id>197</id>
+      <label>Roles ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_roles.id</source>
+      <status>97</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>198</id>
+      <label>Title</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_members_members.title</source>
+      <status>34</status>
+      <order>2</order>
+      <validation>0,;1,Mr;2,Mrs;3,Miss;4,Ms;5,Dr;6,Cpt</validation>
+    </property>
+    <property name="position">
+      <id>233</id>
+      <label>Position</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.position</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="first_name">
+      <id>199</id>
+      <label>First Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.firstname</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="middle_name">
+      <id>200</id>
+      <label>Middle Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.middlename</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="last_name">
+      <id>201</id>
+      <label>Last Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.lastname</source>
+      <status>33</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="xaraya_username">
+      <id>202</id>
+      <label>Xaraya Username</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_roles.uname</source>
+      <status>99</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="members_id">
+      <id>203</id>
+      <label>Members ID</label>
+      <type>hidden</type>
+      <default></default>
+      <source>xar_members_members.id</source>
+      <status>67</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="address">
+      <id>204</id>
+      <label>Address</label>
+      <type>address</type>
+      <default></default>
+      <source>xar_members_members.address</source>
+      <status>34</status>
+      <order>8</order>
+      <validation>a:6:{s:10:&quot;objectname&quot;;s:17:&quot;members_addresses&quot;;s:5:&quot;style&quot;;s:6:&quot;itemid&quot;;s:5:&quot;title&quot;;s:0:&quot;&quot;;s:5:&quot;input&quot;;s:1:&quot;1&quot;;s:9:&quot;fieldlist&quot;;a:6:{i:0;s:2:&quot;id&quot;;i:1;s:8:&quot;location&quot;;i:2;s:4:&quot;city&quot;;i:3;s:5:&quot;state&quot;;i:4;s:10:&quot;postalcode&quot;;i:5;s:7:&quot;country&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;1&quot;;}</validation>
+    </property>
+    <property name="phone">
+      <id>205</id>
+      <label>Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.phone</source>
+      <status>33</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="mobile_phone">
+      <id>206</id>
+      <label>Mobile Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.mobilephone</source>
+      <status>34</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="fax">
+      <id>207</id>
+      <label>Fax</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_members.fax</source>
+      <status>34</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="email">
+      <id>208</id>
+      <label>Email</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_roles.email</source>
+      <status>33</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="profile">
+      <id>209</id>
+      <label>Profile</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_members_members.profile</source>
+      <status>34</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="photo">
+      <id>210</id>
+      <label>Photo</label>
+      <type>image</type>
+      <default></default>
+      <source>xar_members_members.photo</source>
+      <status>34</status>
+      <order>14</order>
+      <validation>a:3:{s:9:&quot;inputtype&quot;;s:6:&quot;upload&quot;;s:7:&quot;basedir&quot;;s:27:&quot;var/uploads/memberheadshots&quot;;s:10:&quot;extensions&quot;;s:20:&quot;gif,jpg,jpeg,png,bmp&quot;;}</validation>
+    </property>
+    <property name="roles_type">
+      <id>211</id>
+      <label>Roles Type</label>
+      <type>integerbox</type>
+      <default>2</default>
+      <source>xar_roles.type</source>
+      <status>67</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="roles_state">
+      <id>212</id>
+      <label>Roles State</label>
+      <type>integerbox</type>
+      <default>3</default>
+      <source>xar_roles.state</source>
+      <status>67</status>
+      <order>16</order>
+      <validation></validation>
+    </property>
+    <property name="categories">
+      <id>213</id>
+      <label>Categories</label>
+      <type>categories</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>17</order>
+      <validation></validation>
+    </property>
+    <property name="roles_authmodid">
+      <id>214</id>
+      <label>Roles Authmodid</label>
+      <type>integerbox</type>
+      <default>xarMod::getID('members')</default>
+      <source>xar_roles.auth_modid</source>
+      <status>67</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

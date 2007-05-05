@@ -1,0 +1,126 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+            <xar:mlstring>Members Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <xar:template module="members" file="admin-menu" />
+    <div>
+        <xar:template file="headerconfig" type="module"/>
+    </div>
+
+    <xar:comment> Begin General Options
+    </xar:comment>
+
+    <form method="post" action="&xar-modurl-members-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="$tab eq 'members_general'">
+            <h3>
+                <xar:mlstring>
+                    General Options
+                </xar:mlstring>
+            </h3>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Page Layout
+                    </xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Items Per Page:
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('members', 'itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLs for Members module')#">
+                        <xar:mlstring>
+                            Enable Short URLs
+                        </xar:mlstring>
+                    </label>
+                    <xar:if condition="xarModGetVar('members', 'supportshorturls')">
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                    </xar:if>
+
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                        <xar:mlstring>
+                            Use a module alias
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="checked">xarModGetVar('members','useModuleAlias')</xar:set>
+                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                        <xar:mlstring>
+                            Module Alias Name
+                        </xar:mlstring>
+                    </label>
+                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('members', 'aliasname')#" size="32" maxlength="100" />
+                </div>
+            </fieldset>
+        <xar:else />
+            <h3>
+                <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                <xar:ml>
+                    <xar:mlstring>
+                        Module Defaults for #(1)
+                    </xar:mlstring>
+                    <xar:mlvar>#$ucname#</xar:mlvar>
+                </xar:ml>
+            </h3>
+        </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Defaults
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="defaults" />
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Display
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="display" />
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Categories
+                    </xar:mlstring>
+                </legend>
+                <xar:data-input type="categorypicker" name="basecid"  module="$tabmodule" />
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                    <input type="submit" value="#xarML('Update Members Configuration')#" />
+                </div>
+            </fieldset>
+    </form>
+</div>
+</xar:template>

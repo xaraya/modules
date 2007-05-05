@@ -1,0 +1,49 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:if condition="$tabmodule ne 'members'">
+    <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+<xar:else />
+    <xar:set name="regid">0</xar:set>
+</xar:if>
+<div class="xar-form-input-wrapper">
+    <label for="defaultviewtype" title="#xarML('Define what members are shown by default')#" class="xar-form-label">
+        <xar:mlstring>
+            Default View Type
+        </xar:mlstring>
+    </label>
+    <xar:set name="options">
+        array(
+            array('id' => 'viewall', 'name' => 'View All'),
+            array('id' => 'active', 'name' => 'View Active'),
+        )
+    </xar:set>
+    <xar:set name="value">xarModGetUserVar('members', 'defaultviewtype', $regid)</xar:set>
+    <xar:data-input type="dropdown" name="defaultviewtype" id="defaultviewtype" options="$options" value="$value" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showalltab" title="#xarML('Show an \'All\' tab in the user list')#" class="xar-form-label">
+        <xar:mlstring>
+            Show 'All' tab:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'showalltab', $regid)</xar:set>
+    <xar:data-input type="checkbox" name="showalltab" id="showalltab" value="$value" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showothertab" title="#xarML('Show an \'Other\' tab in the user list')#" class="xar-form-label">
+        <xar:mlstring>
+            Show 'Other' tab:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'showothertab', $regid)</xar:set>
+    <xar:data-input type="checkbox" name="showothertab" id="showothertab" value="$value" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="showactiveall" title="#xarML('Display an option to show members currently online')#" class="xar-form-label">
+        <xar:mlstring>
+            Show Active and All members:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'showactiveall', $regid)</xar:set>
+    <xar:data-input type="checkbox" name="showactiveall" id="showactiveall" value="$value" />
+</div>
+</xar:template>

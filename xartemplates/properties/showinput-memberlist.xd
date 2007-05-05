@@ -1,0 +1,374 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="url">xarServerGetCurrentURL($params)</xar:set>
+<xar:set name="search">isset($search)?$search:'';</xar:set>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:style scope="module" module="members" file="alphapager" />
+<xar:set name="filecall">isset($filetype)?$filetype:'';</xar:set>
+
+<!-- omit if pdf - only want member listing output-->
+<xar:if condition="$filecall ne 'pdf'">
+<div class="members-alphapager-wrapper">
+<div class="members-alphapager xar-padding-thick xar-border-thin">
+    <span>
+        <xar:mlstring>Filter By Letter</xar:mlstring>:
+    </span>
+    <ul>
+        <xar:if condition="xarModGetUserVar('members','showalltab',$regid) and $filecall ne 'pdf'">
+            <xar:if condition="$letter eq ''">
+                <xar:set name="class">'members-letter-active'</xar:set>
+            <xar:else />
+                <xar:set name="class">''</xar:set>
+            </xar:if>
+            <li class="#$class#">
+                <!-- Want to know if this is a letter search as opposed to a generic search-->
+                <a href="#xarServerGetCurrentURL(array('phase' => $phase, 'letter' =>'All'))#">
+                    <xar:mlstring>All</xar:mlstring>
+                </a>
+            </li>
+        </xar:if>
+        <xar:foreach in="$alphabet" value="$ltr">
+            <xar:if condition="$letter eq $ltr">
+                <xar:set name="class">'members-letter-active'</xar:set>
+            <xar:else />
+                <xar:set name="class">''</xar:set>
+            </xar:if>
+            <li class="#$class#">
+                <a href="#xarServerGetCurrentURL(array('phase' => $phase, 'letter' => $ltr))#">#$ltr#</a>
+            </li>
+        </xar:foreach>
+        <xar:if condition="xarModGetUserVar('members','showothertab',$regid)">
+            <xar:if condition="$letter eq 'Other'">
+                <xar:set name="class">'members-letter-active'</xar:set>
+            <xar:else />
+                <xar:set name="class">''</xar:set>
+            </xar:if>
+            <li class="#$class#">
+                <a href="#xarServerGetCurrentURL(array('phase' => $phase, 'letter' => 'Other'))#">
+                    <xar:mlstring>Other</xar:mlstring>
+                </a>
+            </li>
+        </xar:if>
+    </ul>
+</div>
+</div>
+
+<!--
+<dl class="xar-tabs">
+    <dt class="help">
+        <xar:mlstring>
+            Sort
+        </xar:mlstring>
+        :
+    </dt>
+    <xar:if condition="xarModGetUserVar('members','showalltab',$regid)">
+        <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' =>'All'))</xar:set>
+        <xar:if condition="$letter eq ''">
+            <dd class="active">
+                <a href="#$url#">
+                    <xar:mlstring>All</xar:mlstring>
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="#$url#">
+                    <xar:mlstring>All</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+    </xar:if>
+    <xar:foreach in="$alphabet" value="$ltr">
+        <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' => $ltr))</xar:set>
+        <xar:if condition="$letter eq $ltr">
+            <dd class="active">
+                <a href="#$url#">
+                    #$ltr#
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="#$url#">
+                    #$ltr#
+                </a>
+            </dd>
+        </xar:if>
+    </xar:foreach>
+    <xar:if condition="xarModGetUserVar('members','showothertab',$regid)">
+        <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' => 'Other'))</xar:set>
+        <xar:if condition="$letter eq 'Other'">
+            <dd class="active">
+                <a href="#$url#">
+                    <xar:mlstring>Other</xar:mlstring>
+                </a>
+            </dd>
+        <xar:else />
+            <dd>
+                <a href="#$url#">
+                    <xar:mlstring>Other</xar:mlstring>
+                </a>
+            </dd>
+        </xar:if>
+    </xar:if>
+</dl>
+-->
+<xar:if condition="xarModGetUserVar('members','showactiveall',$regid)">
+    <div>
+        <dl class="xar-tabs xar-clearleft">
+            <dt class="help">
+                <xar:mlstring>
+                    Show
+                </xar:mlstring>
+                :
+            </dt>
+            <xar:set name="url">xarServerGetCurrentURL(array('phase' => 'viewall', 'letter' => $letter, 'search' => $search))</xar:set>
+            <xar:if condition="$phase ne 'active'">
+                <dd class="active">
+                    <a href="#$url#">
+                    <xar:mlstring>All</xar:mlstring>
+                    </a>
+                </dd>
+            <xar:else />
+                <dd>
+                    <a href="#$url#">
+                    <xar:mlstring>All</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+            <xar:set name="url">xarServerGetCurrentURL(array('phase' => 'active', 'letter' => $letter, 'search' => $search))</xar:set>
+            <xar:if condition="$phase eq 'active'">
+                <dd class="active">
+                    <a href="#$url#">
+                    <xar:mlstring>Online</xar:mlstring>
+                    </a>
+                </dd>
+            <xar:else />
+                <dd>
+                    <a href="#$url#">
+                    <xar:mlstring>Online</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+        </dl>
+    </div>
+</xar:if>
+<br />
+<form method="post" action="#xarServerGetCurrentURL()#">
+    <div class="xar-form-input-wrapper">
+        <xar:if condition="count($basecats) gt 0">
+            <xar:set name="searchclass">'xar-floatleft xar-halfwidth'</xar:set>
+        <xar:else />
+            <xar:set name="searchclass">'xar-floatleft xar-fullwidth xar-align-center'</xar:set>
+        </xar:if>
+        <xar:if condition="count($basecats) gt 0">
+            <div class="xar-floatright" style="width:48%;padding-right:10px;">
+            <fieldset style="min-height:100px;padding-left:padding:0 10px;margin:0 5px 0 0;">
+                <legend><xar:mlstring>Alternative filters</xar:mlstring></legend>
+                <xar:data-input type="categories" name="mycats" bases="0" layout="usermembers" value="$cids"/>
+            </fieldset>
+            </div>
+       </xar:if>
+
+        <div class="#$searchclass#">
+            <fieldset style="height:50px;padding:0 10px;margin:0 5px 0 0;">
+                <legend><xar:mlstring>Search:</xar:mlstring></legend>
+                    <input type="hidden" name="phase" id="phase" value="#xarVarPrepForDisplay($phase)#" />
+
+                    <input type="hidden" name="letter" id="letter" value="" />
+                    <input type="hidden" name="cids" id="cids" value="#$cids#" />
+
+                    <input type="text" name="search" id="search" value="" size="40" maxlength="255" tabindex="1" />
+                    <input type="submit" value="#xarML('Go')#" />
+            </fieldset>
+            <fieldset style="height:auto;margin:0 0;">
+                <legend><xar:mlstring>Selected on:</xar:mlstring></legend>
+                    <p style="padding: 0 0 5px 5px; margin: 0 ;font-weight:bold;">#xarVarPrepForDisplay($msg)#</p>
+           </fieldset>
+        </div>
+    </div>
+</form>
+</xar:if>
+<!-- end of pdf omit-->
+
+<xar:comment>
+  Useability - show the same table headers and selection criteria even if no members
+</xar:comment>
+
+<xar:set name="thispageno">count($items);</xar:set>
+<div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth" style="padding-top:1em;">
+<xar:if condition="$total gt $itemsperpage">
+  <xar:ml>
+      <xar:mlstring>Displaying #(1) of #(2) selected</xar:mlstring>
+  <xar:mlvar>#$thispageno#</xar:mlvar>
+    <xar:mlvar>#$total#</xar:mlvar>
+  </xar:ml>
+<xar:else />
+   Total selected: #$total#
+</xar:if>
+</div>
+
+<div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
+<xar:sec mask="AddMembers" catch="false">
+ <xar:set name="returnurl">xarModURL('members','user','view')</xar:set>
+    <a style="font-weight:bold;" href ="#xarModURL('dynamicdata','admin','new',array('name'=>'members_members', 'tplmodule'=>'members'))#">Add A New Member</a>
+</xar:sec>
+</div>
+<table style="clear:left;" width="100%" border="0">
+    <tr>
+        <xar:if condition="$phase eq 'active' and xarSecurityCheck('AdminMembers',0)">
+
+            <xar:foreach in="$fields" key="$column" value="$field">
+                <xar:if condition="$column eq 'r_id'">
+                    <xar:continue />
+                </xar:if>
+                <th>
+                    <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' => $letter, 'search' => $search, 'order' => $column))</xar:set>
+                    <a href="#$url#" alt="Click to order by this field" title="Order by #$field#">
+                        #$field#
+                    </a>
+                    <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
+                    <xar:template module="members" file="sortarrows" subdata="$subdata" />
+                </th>
+            </xar:foreach>
+            <th>
+                <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' => $letter, 'search' => $search, 'order' => 'uname'))</xar:set>
+                <a href="#$url#">
+                    <xar:mlstring>IP Address</xar:mlstring>
+                </a>
+                    <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
+                    <xar:template module="members" file="sortarrows" subdata="$subdata" />
+            </th>
+        <xar:else />
+            <xar:foreach in="$fields" key="$column" value="$field">
+                <xar:if condition="$column eq 'r_id'">
+                    <xar:continue />
+                </xar:if>
+                <th>
+                    <xar:set name="url">xarServerGetCurrentURL(array('phase' => $phase, 'letter' => $letter, 'search' => $search, 'order' => $column))</xar:set>
+                    <a href="#$url#">
+                        #$field#
+                    </a>
+                    <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
+                    <xar:template module="members" file="sortarrows" subdata="$subdata" />
+                </th>
+            </xar:foreach>
+        </xar:if>
+        <xar:if condition="xarModGetVar('roles', 'usersendemails')">
+            <th>
+                <xar:mlstring>Email</xar:mlstring>
+            </th>
+        </xar:if>
+
+    </tr>
+    <xar:loop name="$items">
+        <xar:if condition="(($loop:index + 1) % 2)">
+            <xar:set name="item_class">'xar-norm'</xar:set>
+        <xar:else/>
+            <xar:set name="item_class">'xar-alt'</xar:set>
+        </xar:if>
+        <xar:if condition="xarUserIsLoggedIn()">
+            <xar:set name="currentuserid">xarUserGetVar('uid');</xar:set>
+        </xar:if>
+        <xar:set name="thisuserid">$loop->item['r_id']</xar:set>
+
+        <tr class="#$item_class#">
+        <xar:if condition="$phase eq 'active' AND xarSecurityCheck('AdminMembers',0) ">
+            <xar:if condition="!empty($loop:item['ipaddr'])">
+                <xar:foreach in="$fields" key="$field">
+                    <xar:set name="value">$loop->item[$field]</xar:set>
+                    <xar:set name="column">$columns[$field]</xar:set>
+                    <td>
+                        <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias">
+                            <a href="#xarModURL($localmodule,'admin','modify',array('itemid' =>$loop->item['r_id']))#">
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                            </a>
+                        <xar:else />
+                            <xar:if condition="$field eq $keyfieldalias">
+                                <a href="#xarModURL($localmodule,'user','display',array('itemid' =>$loop->item['r_id']))#">
+                                    <xar:data-output property="$properties[$column]" value="$value" />
+                                </a>
+                            <xar:else />
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                            </xar:if>
+                        </xar:if>
+                    </td>
+                    <td class="xar-align-center">
+                        <!-- TODO: add link to working whois service -->
+                        #xarVarPrepForDisplay($loop:item['ipaddr'])#
+                    </td>
+                </xar:foreach>
+            <xar:else />
+                <xar:foreach in="$fields" key="$field">
+                    <xar:set name="value">$loop->item[$field]</xar:set>
+                    <xar:set name="column">$columns[$field]</xar:set>
+                    <td>
+                        <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND (xarSecurityCheck('EditMembers',0) OR $currentuserid eq $thisuserid)">
+                            <a href="#xarModURL($localmodule,'admin','modify',array('itemid' =>$loop->item['r_id']))#">
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                           </a>
+                        <xar:else />
+                            <xar:if condition="$field eq $keyfieldalias">
+                                <a href="#xarModURL($localmodule,'user','display',array('itemid' =>$loop->item['r_id']))#">
+                                    <xar:data-output property="$properties[$column]" value="$value" />
+                                </a>
+                            <xar:else />
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                            </xar:if>
+                        </xar:if>
+                    </td>
+                </xar:foreach>
+                <td class="xar-align-center">
+                    &#160;
+                </td>
+            </xar:if>
+        <xar:else />
+            <xar:foreach in="$fields" key="$field">
+                <xar:set name="value">$loop->item[$field]</xar:set>
+                <xar:set name="column">$columns[$field]</xar:set>
+                <xar:if condition="$field eq 'r_id'">
+                    <xar:continue />
+                </xar:if>
+                <td>
+                    <!-- TODO: This works within members module but needs to be adjusted in the
+                    DD for modify function to consider the user, or adjust for member module instance to match.
+                    Leaving as display only until this is addressed
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND (xarSecurityCheck('EditMembers',0) OR $currentuserid eq $thisuserid)">
+                    -->
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditMembers',0)">
+                        <a href="#xarModURL($localmodule,'admin','modify',array('itemid' =>$loop->item['r_id']))#">
+                            <xar:data-output property="$properties[$column]" value="$value" />
+                        </a>
+                    <xar:else />
+                        <xar:if condition="$field eq $keyfieldalias">
+                            <a href="#xarModURL($localmodule,'user','display',array('itemid' =>$loop->item['r_id']))#">
+                                <xar:data-output property="$properties[$column]" value="$value" />
+                            </a>
+                        <xar:else />
+                            <xar:data-output property="$properties[$column]" value="$value" filecall="$filecall" layout="members" />
+                        </xar:if>
+                    </xar:if>
+                </td>
+            </xar:foreach>
+        </xar:if>
+        <xar:if condition="xarModGetVar('roles', 'usersendemails')">
+            <td class="xar-align-center">
+                <xar:if condition="empty($loop:item['emailurl']) || !xarUserIsLoggedIn()">
+                    <img src="#xarTplGetImage('emailicon.gif')#" alt="#xarML('Email')#" title="#xarML('Email')#"/>
+                <xar:else />
+                    <a href="#$loop:item['emailurl']#"><img src="#xarTplGetImage('emailicon.gif')#" alt="#xarML('Email')#" title="#xarML('Email')#"/></a>
+                </xar:if>
+            </td>
+        </xar:if>
+        </tr>
+    </xar:loop>
+</table>
+<xar:if condition="empty($total)">
+          <p class="xar-align-center">There are no members selected</p>
+</xar:if>
+<xar:if condition="$filecall ne 'pdf'">
+    <xar:set name="url">xarServerGetCurrentURL($params)</xar:set>
+    <div class="xar-align-center">
+        <xar:data-input type="pager" url="$url" startnum="$startnum" itemstotal="$total" />
+    </div>
+</xar:if>
+<!--</xar:if>-->
+</xar:template>

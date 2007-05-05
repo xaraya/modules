@@ -1,0 +1,18 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+            <xar:mlstring>Members</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Member List</xar:mlstring></h2>
+    <xar:set name="groups">"groups: " . $defaultgroup</xar:set>
+    <xar:data-input type="memberlist" validation="$groups" />
+</div>
+</xar:template>

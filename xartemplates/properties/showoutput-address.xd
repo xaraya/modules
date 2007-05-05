@@ -1,0 +1,22 @@
+<div>
+    <xar:if condition="!empty($fields['location'])">
+        #$fields.location:value#
+        <br />
+    </xar:if>
+    <xar:if condition="!empty($fields['city'])">
+        #$fields.city:value#
+        <br />
+    </xar:if>
+    <xar:if condition="!empty($fields['state'])">
+        #$fields.state:value#
+        <br />
+    </xar:if>
+    <xar:if condition="!empty($fields['postalcode'])">
+        #$fields.postalcode:value#
+        <br />
+    </xar:if>
+    <xar:if condition="!empty($fields['country'])">
+        <xar:set name="value">$fields['country']->value</xar:set>
+        <xar:data-output type="countrylisting" value="$value" />
+    </xar:if>
+</div>

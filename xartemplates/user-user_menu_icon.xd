@@ -1,0 +1,26 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:set name="stub">basename(xarServerGetCurrentURL())</xar:set>
+
+<xar:set name="tabclass">'inactive'</xar:set>
+<xar:if condition="$compare eq $stub">
+    <xar:set name="tabclass">'active'</xar:set>
+</xar:if>
+
+<dd class="#$tabclass#">
+    <a href="#$current#&amp;tab=form">
+        <xar:mlstring>
+            Edit Profile
+        </xar:mlstring>
+    </a>
+</dd>
+
+<dd class="#$tabclass#">
+    <a href="#$current#&amp;tab=tab2">
+        <xar:mlstring>
+            Tab 2
+        </xar:mlstring>
+    </a>
+</dd>
+</xar:template>

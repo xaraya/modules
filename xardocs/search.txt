@@ -1,0 +1,44 @@
+Search and Sort Implementation
+==============================
+
+Search is conducted on either one of the following :
+
+1. Alphakeys
+2. General search box
+3. Categories
+
+In addition there is sorting of fields according to asc or desc alpha order
+on a given active field (4).
+
+1. Alphakeys
+-------------
+Click on any alpha key, and all items with the nominated default key field
+as first letter will display.
+
+Users can sort asc or desc on any active field on the result set.
+
+2. General Search
+----------------
+Any string entered into the general search box will return a result set
+of items containing that string in any of the nominated active fields.
+
+Users can sort asc or desc on any active field on the result set.
+
+3. Categories
+--------------
+Users can select one or more categories to 'or' then in selection of a member.
+A member item is returned if it is allocated to one or more of the selected categories.
+
+Base categories are not considered in the search and deemed 'empty' category selection.
+
+Users can sort asc or desc on any active field on the result set.
+
+
+4.Sort function:
+--------------
+1. Sort order is implemented by clicking on field header of table
+2. The search result set will remain selected when sort order is changed.
+3. If and only if the field is the same on the next click, the sort order will change on that field
+4. If an alpha key is selected, the sort order and field for sorting will remain the same
+   until another field header is clicked
+5. Sort order will be retained over multiple pages if pager is implemented

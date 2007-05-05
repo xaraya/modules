@@ -1,0 +1,53 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:set name="callername">xarSession::getVar('Members.referer');</xar:set>
+<xar:if condition="isset($callername) and $callername eq 'user'">
+    <xar:set name="return_url">xarModURL('members','user','view',array('name' => $object->name))</xar:set>
+</xar:if>
+<xar:set name="dummy">xarSession::delVar('Members.referer');</xar:set>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+            <xar:mlstring>Create Item</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Create New Item in #(1)</xar:mlstring>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <xar:template module="members" file="admin-menu" />
+    <br />
+
+    <xar:set name="isupload">#$object:upload#</xar:set>
+    <xar:if condition="!empty($isupload)">
+        <xar:set name="enc_type">'multipart/form-data'</xar:set>
+    <xar:else/>
+        <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-dynamicdata-admin-create;" enctype="#$enc_type#">
+      <fieldset>
+        <legend><xar:mlstring>Item details</xar:mlstring></legend>
+        <xar:data-form object="$object" />
+      </fieldset>
+      <fieldset>
+        <div class="xar-align-center">
+          <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
+          <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+          <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+           <xar:set name="return_url">isset($return_url)?$return_url:xarModURL('members','admin','view',array('name' => $object->name))</xar:set>
+           <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+           <input type="submit" value="#xarML('Create')#" class="xar-margin-thickleft" />
+        </div>
+      </fieldset>
+    </form>
+    
+</div>
+</xar:template>

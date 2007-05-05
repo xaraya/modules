@@ -1,0 +1,13 @@
+* DONE: paging - work with the pager.
+  
+* DONE: auto creation of xaraya roles username - needs more work
+    
+* DONE: category search works but sorting needed on result set. Carry to view and allow
+  sorting to work on the result set, only if no other search conducted.
+
+* DONE: Editing via a link from user view returns to admin view - needs to go back to user view.
+
+* DONE: Specialized drop down links need work - basedir. 
+*
+* Admin view template needs further work for useability.
+  

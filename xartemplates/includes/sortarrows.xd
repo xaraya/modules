@@ -1,0 +1,9 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:if condition="$order eq $column">
+    <xar:if condition="$sort eq 'ASC'">
+        <img src="#xarTplGetImage('s_asc.png','members')#" alt="Sorted Ascending" title="Sorted Ascending" />
+    <xar:else />
+        <img src="#xarTplGetImage('s_desc.png','members')#" alt="Sorted Descending" title="Sorted Descending" />
+    </xar:if>
+</xar:if>
+</xar:template>

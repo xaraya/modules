@@ -1,0 +1,55 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:if condition="$tabmodule ne 'members'">
+    <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+<xar:else />
+    <xar:set name="regid">0</xar:set>
+</xar:if>
+<div class="xar-form-input-wrapper">
+    <label for="defaultgroup" title="#xarML('New members automatically get assigned to this group')#" class="xar-form-label">
+        <xar:mlstring>
+            Default group for new members:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'defaultgroup', $regid)</xar:set>
+    <xar:data-input type="grouplist" name="defaultgroup" id="defaultgroup" value="$value" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="alphabet" title="#xarML('The alphabet used in the user list display')#" class="xar-form-label">
+        <xar:mlstring>
+            Alphabet:
+        </xar:mlstring>
+    </label>
+    <xar:set name="alphabetarray">unserialize(xarModGetUserVar('members', 'alphabet', $regid))</xar:set>
+    <xar:set name="value">implode(',', $alphabetarray)</xar:set>
+    <xar:data-input type="textarea" name="alphabet" id="alphabet" value="$value" />
+</div>
+
+<div class="xar-form-input-wrapper">
+    <label for="defaultselectkey" title="#xarML('Object to display in the user vire page')#" class="xar-form-label">
+        <xar:mlstring>
+            Members Object:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'object', $regid)</xar:set>
+    <xar:data-input type="objectref" name="object" id="object" value="$value" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="defaultselectkey" title="#xarML('Member field that is used for alpha list and edit/display link')#" class="xar-form-label">
+        <xar:mlstring>
+            Default alphaselect &#38; action field:
+        </xar:mlstring>
+    </label>
+    <xar:set name="defaultselectkey">xarModGetUserVar('members', 'defaultselectkey', $regid)</xar:set>
+    <xar:data-input type="dropdown" firstline="Please select a field" name="defaultselectkey" id="defaultselectkey" options="$keyfields" value="$defaultselectkey" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="usernamevars" title="#xarML('List of fields separated by . to use for username field')#" class="xar-form-label">
+        <xar:mlstring>
+            Default roles username value:
+        </xar:mlstring>
+    </label>
+    <xar:set name="value">xarModGetUserVar('members', 'usernamevars', $regid)</xar:set>
+    <xar:data-input type="textbox" name="usernamevars" id="usernamevars" size="40" maxlength="100" value="$value" />
+    Separate field names by a dot (.)
+</div>
+</xar:template>

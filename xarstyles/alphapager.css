@@ -1,0 +1,44 @@
+div.members-alphapager-wrapper:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+    font-size: 0;
+}
+
+div.members-alphapager {
+    float: left;
+    margin-bottom: 1em;
+}
+div.members-alphapager span {
+    font-weight: bold;
+    float: left;
+}
+div.members-alphapager ul, div.members-alphapager li {
+    float: left;
+    list-style: none;
+}
+div.members-alphapager ul {
+    margin: 0 0 0 .5em;
+    padding: 0;
+}
+div.members-alphapager li {
+    margin: 0 0 0 -1px;
+    padding: 0 .4em;
+    background: none;
+    background-color: #eee;
+    border: 1px solid;
+    float: left;
+    position: relative;
+}
+
+div.members-alphapager li.members-letter-active {
+    background-color: #fff;
+}
+div.members-alphapager a {
+    text-decoration: none;
+}
+div.members-alphapager li.members-letter-active a {
+    font-weight: bold;
+}

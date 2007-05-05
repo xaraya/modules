@@ -1,0 +1,29 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+            <xar:mlstring>Members Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <h2>
+        <xar:ml>
+            <xar:mlstring>View #(1)</xar:mlstring>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <xar:template module="members" file="admin-menu" />
+    <div class="xar-alt-outline">
+
+<!--
+        <xar:set name="whereclause">"roles_type eq " . ROLES_USERTYPE . " and roles_state ne " . ROLES_STATE_DELETED . " and xaraya_username ne 'anonymous' and xaraya_username ne 'myself'"</xar:set>
+        <xar:set name="result">$object->getItems(array('where' => $whereclause))</xar:set>
+-->
+        <xar:data-list object="$object" layout="members" tplmodule="members" total="$total" params="$params" />
+    </div>
+</div>
+</xar:template>

@@ -1,0 +1,32 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div>
+        <xar:ml>
+            <xar:mlstring>
+                The following settings can be changed at a later time either in the #(1) modifyconfig page.
+            </xar:mlstring>
+            <xar:mlvar>#$displayname#</xar:mlvar>
+        </xar:ml>
+    </div>
+<fieldset>
+    <legend>
+        <xar:mlstring>
+            Default Roles
+        </xar:mlstring>
+    </legend>
+    <br />
+    <div class="xar-form-input-wrapper">
+        <label for="createdefaultgroup" title="#xarML('Create a default group for members')#" class="xar-form-label">
+            <xar:mlstring>
+                Create a default group for members
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="createdefaultgroup" id="createdefaultgroup" checked="1" />
+        &#160;
+        <xar:mlstring>
+            Name:
+        </xar:mlstring>
+        <input type="text" name="defaultgroupname" id="defaultgroupname" value="MembersGroup" />
+    </div>
+</fieldset>
+</xar:template>

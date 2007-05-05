@@ -1,0 +1,33 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="activetab">$_bl_module_func</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform on the selected user">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <xar:set name="tabclass">$activetab=='display'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-members-user-display;&amp;uid=#$uid#">
+        <xar:mlstring>Display</xar:mlstring>
+      </a>
+    </dd>
+
+    <xar:set name="tabclass">($activetab == 'modify') ? 'active' : ''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-members-admin-modify;&amp;uid=#$uid#">
+        <xar:mlstring>Modify</xar:mlstring>
+      </a>
+    </dd>
+
+    <xar:set name="tabclass">$activetab=='delete'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-members-admin-delete;&amp;uid=#$uid#">
+        <xar:mlstring>Delete</xar:mlstring>
+      </a>
+    </dd>
+
+  </dl>
+</div>
+</xar:template>

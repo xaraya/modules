@@ -1,0 +1,73 @@
+<object name="members_addresses">
+  <objectid>32</objectid>
+  <label>Addresses</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>13</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>282</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_members_addresses.id</source>
+      <status>67</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="location">
+      <id>283</id>
+      <label>Location</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_members_addresses.location</source>
+      <status>34</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="city">
+      <id>284</id>
+      <label>City</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_addresses.city</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="state">
+      <id>285</id>
+      <label>State</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_addresses.state</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="postalcode">
+      <id>286</id>
+      <label>Postalcode</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_members_addresses.postalcode</source>
+      <status>34</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="country">
+      <id>287</id>
+      <label>Country</label>
+      <type>countrylisting</type>
+      <default></default>
+      <source>xar_members_addresses.country_id</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

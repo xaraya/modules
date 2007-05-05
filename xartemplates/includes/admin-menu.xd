@@ -1,0 +1,43 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:set name="name">isset($name)?$name:''</xar:set>
+<xar:set name="viewname">isset($object->name)?$object->name:null;</xar:set>
+<xar:set name="viewname">isset($viewname)?$viewname:$name;</xar:set>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+    <xar:sec mask="DeleteMembers" catch="false">
+        <xar:set name="tabclass">(($activetab=='view' or $activetab=='display' or $activetab=='delete' or $activetab=='modify' or $activetab=='new') and ($viewname=='members_members'))?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-members-admin-view;&amp;name=members_members">
+            <xar:mlstring>View Members</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+
+    <xar:sec mask="AdminMembers" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-members-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    <!--
+    <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-members-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    -->
+  </xar:sec>
+
+  </dl>
+</div>
+</xar:template>

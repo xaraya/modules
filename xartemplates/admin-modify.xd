@@ -1,0 +1,64 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModGetVar('members','useModuleAlias')">
+            #xarModGetVar('members','aliasname')#
+        <xar:else />
+             <xar:mlstring>Members Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+       <xar:if condition="$object:name eq 'members_members'">
+       <xar:ml>
+           <xar:mlstring>Edit Member Profile for  #(1) #(2)</xar:mlstring>
+                <xar:mlvar>#$object->properties['first_name']->value#</xar:mlvar>
+                <xar:mlvar>#$object->properties['last_name']->value#</xar:mlvar>
+            </xar:ml>
+       <xar:else />
+       <xar:ml>
+            <xar:mlstring>Modify Item #(1) in #(2)</xar:mlstring>
+            <xar:mlvar>#$object:itemid#</xar:mlvar>
+            <xar:mlvar>#$object:label#</xar:mlvar>
+        </xar:ml>
+        </xar:if>
+    </h2>
+    <xar:template module="members" file="admin-menu" />
+    <br />
+    <xar:if condition="isset($preview)">
+        <fieldset>
+            <legend><xar:mlstring>Preview</xar:mlstring></legend>
+            <xar:data-display object="$object" />
+        </fieldset>
+    </xar:if>
+
+    <xar:set name="isupload">#$object:upload#</xar:set>
+    <xar:if condition="!empty($isupload)">
+        <xar:set name="enc_type">'multipart/form-data'</xar:set>
+    <xar:else/>
+        <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-dynamicdata-admin-update;" enctype="#$enc_type#">
+      <fieldset>
+        <legend><xar:mlstring>Modify member details</xar:mlstring></legend>
+
+        <!-- this does most of the hard work :) -->
+        <xar:data-form object="$object" tplmodule="members"  />
+
+      </fieldset>
+      <fieldset class="xar-align-center">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="object_objectid" id="objectid" value="#$object:objectid#" />
+        <input type="hidden" name="object_itemid" id="itemid" value="#$object:itemid#" />
+        <input type="hidden" name="object_tplmodule" id="tplmodule" value="#$tplmodule#" />
+        <xar:set name="return_url">isset($return_url)?$return_url:xarModURL('members','admin','view',array('name' => $object->name))</xar:set>
+        <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+        <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
+      </fieldset>
+    </form>
+</div>
+</xar:template>
