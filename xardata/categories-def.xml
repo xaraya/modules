@@ -1,0 +1,85 @@
+<object name="categories">
+  <objectid>46</objectid>
+  <label>Categories</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>13</itemtype>
+  <class>Category</class>
+  <filepath>modules/categories/class/category.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>288</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_categories.id</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>289</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_categories.name</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>290</id>
+      <label>Description</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_categories.description</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="image">
+      <id>291</id>
+      <label>Image</label>
+      <type>image</type>
+      <default></default>
+      <source>xar_categories.image</source>
+      <status>34</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="parent_id">
+      <id>292</id>
+      <label>Parent</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_categories.parent_id</source>
+      <status>33</status>
+      <order>6</order>
+      <validation>xarModAPIFunc('categories','user','getcat',array('dropdown' => true))</validation>
+    </property>
+    <property name="left_id">
+      <id>293</id>
+      <label>Left</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_categories.left_id</source>
+      <status>35</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="right_id">
+      <id>294</id>
+      <label>Right</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_categories.right_id</source>
+      <status>35</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

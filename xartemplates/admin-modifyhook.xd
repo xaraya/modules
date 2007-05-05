@@ -1,0 +1,11 @@
+<xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" itemid="$itemid" />
+
+<!--  TODO: Remove
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('Select the categories for this item.')#">
+        <xar:var name="$labels['categories']" />
+    </label>
+    <xar:loop name="$items">#$loop:item['select']#</xar:loop>
+</div>
+
+-->

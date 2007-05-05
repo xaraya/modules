@@ -1,0 +1,98 @@
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Image</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:set name="class">"xar-normal"</xar:set>
+    <xar:foreach in="$trees" value="$categories">
+        <xar:foreach in="$categories" value="$node">
+            <xar:set name="cid">$node->id</xar:set>
+            <xar:set name="name">$node->name</xar:set>
+            <xar:set name="image">$node->image</xar:set>
+            <!--<xar:set name="map">$node->map</xar:set>-->
+            <xar:set name="description">$node->description</xar:set>
+            <xar:set name="level">$node->getLevel()</xar:set>
+            <xar:if condition="$class == 'xar-accent'">
+                <xar:set name="class">"xar-normal"</xar:set>
+            <xar:else />
+                <xar:set name="class">"xar-accent"</xar:set>
+            </xar:if>
+            <tr>
+                <td class="#$class#" style="text-align: left; margin-left: 5px">
+                <!--
+                    <xar:set name="subdata">array('map' => $map)</xar:set>
+                    <xar:template file="connectors" subdata="$subdata" />
+                     -->
+                    <xar:for start="$i = 1" test="$i le $level" iter="$i++">
+                        <img src="#xarTplGetImage('blank.png','categories')#" />
+                    </xar:for>
+                   #$name#
+                </td>
+                <td class="#$class#" style="text-align: left; margin-left: 5px;">#$description#</td>
+                <td class="#$class#"><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
+                <td class="#$class#" style="text-align: center;">
+                    <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $cid))#">
+                        <xar:mlstring>Modify</xar:mlstring>
+                    </a>
+                    &#160;|&#160;
+                    <a href="#xarModURL('categories', 'admin', 'deletecat', array('cid' => $cid))#">
+                        <xar:mlstring>Delete</xar:mlstring>
+                    </a>
+                </td>
+            </tr>
+        </xar:foreach>
+    </xar:foreach>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
+<tr>
+    <td>
+        <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#-#$i+$catsperpage-1#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#-#$i+$catsperpage-1#
+                </a>
+            </xar:if>
+            <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
+                <br />
+            <xar:else />
+                &#160;|&#160;
+            </xar:if>
+        </xar:for>
+        <xar:if condition="$i eq $pagertotal">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#
+                </a>
+            </xar:if>
+        </xar:if>
+        <xar:if condition="$i lt $pagertotal">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#-#$pagertotal#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#-#$pagertotal#
+                </a>
+            </xar:if>
+        </xar:if>
+    </td>
+</tr>
+<tr>
+    <td>
+        <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
+            <xar:mlstring>Categories per page:</xar:mlstring>&#160;&#160;
+<!--            <input type="hidden" name="activetab" id="activetab" value="#$activetab#" /> -->
+            <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+            <input type="submit" value="#xarML('Reload')#" />
+        </form>
+    </td>
+</tr>
+<tr><td><xar:mlstring>Categories Total:</xar:mlstring>&#160;&#160;#$pagertotal#</td></tr>
+</table>
+

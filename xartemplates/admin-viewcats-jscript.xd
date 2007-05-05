@@ -1,0 +1,56 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Categories</xar:mlstring></h2>
+<div style="margin: auto;">
+<a href="#xarModURL('categories','admin','modifycat')#"><xar:mlstring>Add Category</xar:mlstring></a><br /><br />
+<script src="modules/categories/xarincludes/HTML_TreeMenu-1.1.5/treemenu.js" type="text/javascript"></script>
+#$cats#
+
+<br />
+<table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
+<tr>
+    <td>
+        <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#-#$i+$catsperpage#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#-#$i+$catsperpage#
+                </a>
+            </xar:if>
+            <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
+                <br />
+            <xar:else />
+                &#160;|&#160;
+            </xar:if>
+        </xar:for>
+        <xar:if condition="$i eq $pagertotal">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#
+                </a>
+            </xar:if>
+        </xar:if>
+        <xar:if condition="$i lt $pagertotal">
+            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+                #$i#-#$pagertotal#
+            <xar:else />
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i, 'catsperpage' => $catsperpage))#">
+                    #$i#-#$pagertotal#
+                </a>
+            </xar:if>
+        </xar:if>
+    </td>
+</tr>
+<form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
+<tr><td><xar:mlstring>Categories per page:</xar:mlstring>&#160;&#160;
+    <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+    <input type="submit" value="#$reloadlabel#" />
+</td></tr>
+</form>
+<tr><td><xar:mlstring>Categories Total:</xar:mlstring>&#160;&#160;#$pagertotal#</td></tr>
+</table>
+<br />
+</div>
+</div>
