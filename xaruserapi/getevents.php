@@ -33,8 +33,8 @@ function ievents_userapi_getevents($args)
 {
     extract($args);
 
-    list($module, $itemtype) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,itemtype_events'));
+    list($module, $modid, $itemtype) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -71,7 +71,7 @@ function ievents_userapi_getevents($args)
     if (empty($cids) && !xarSecurityCheck('AdminIEvent', 0, 'IEvent')) {
         // We are not an administrator and we have no calendars.
         // Return immediately.
-        // TODO: when doing a count, this will be numeric (zero).
+        // When doing a count, this will be numeric (zero).
 
         return $return;
     }
@@ -127,7 +127,8 @@ function ievents_userapi_getevents($args)
     // Select a single event
     if (xarVarValidate('id', $eid, true)) $where_arr[] = 'eid = ' . $eid;
 
-    // created_by
+    // Created_by - either specify the user id, or the keyword 'myself' to return
+    // all events created by the current user.
     if (!empty($created_by)) {
         if ($created_by == 'myself' && xarUserIsLoggedIn()) $created_by = xarUserGetVar('uid');
         if (xarVarValidate('id', $created_by, true)) {
@@ -212,6 +213,26 @@ function ievents_userapi_getevents($args)
 
         $events = xarModAPIfunc('dynamicdata', 'user', 'getitems', $params);
 
+        // Some fields are grouped. We need to prepare an array of grouped
+        // fields. Start by getting a list of all the fields available in the
+        // events object.
+        $object = xarModAPIFunc(
+            'dynamicdata', 'user', 'getobject',
+            array('modid' => $modid, 'itemtype' => $itemtype)
+        );
+        $fields = array_keys($object->properties);
+        $group_prefixes = 'location,contact';
+        $group_prefixes = explode(',', $group_prefixes);
+        $field_groups = array();
+        foreach ($group_prefixes as $group_prefix) {
+            foreach($fields as $field) {
+                if (preg_match('/^'.$group_prefix.'_.+/', $field)) {
+                    list($part1, $part2) = explode('_', $field, 2);
+                    $field_groups[$field] = array('prefix' => $group_prefix, 'suffix' => $part2);
+                }
+            }
+        }
+
         // Move the events to the result array. While doing this:
         // - Do a security check
         // - Add a reference to the calendar details
@@ -253,16 +274,14 @@ function ievents_userapi_getevents($args)
                     $event['duration_days'] = $e_jd - $s_jd + 1;
                 }
 
-                // Group 'location' and 'contact' [prefix] fields together.
-                $event['location'] = array();
-                $event['contact'] = array();
-                reset($event);
-                while(list($key,$value) = each($event)) {
-                    if (isset($value) && $value != '' && preg_match('/^(location|contact)_.+/', $key)) {
-                        list($part1, $part2) = explode('_', $key, 2);
-                        $event[$part1][$part2] = $value;
-                    }
-                    next($event);
+                // Group various fields together.
+                // TODO: make these a customisable list.
+                // TODO: we can avoid the loop over *all* fields by building the loop of
+                // actual fields outside the main events loop.
+                foreach($field_groups as $field => $field_group) {
+                    if (!isset($event[$field_group['prefix']])) $event[$field_group['prefix']] = array();
+                    // Note the '&' reference, in case there are further transforms on the values of these fields.
+                    if (isset($event[$field]) && $event[$field] != '') $event[$field_group['prefix']][$field_group['suffix']] =& $event[$field];
                 }
 
                 // Add the position in the list.
@@ -271,6 +290,18 @@ function ievents_userapi_getevents($args)
                 // The complete [updated] event is then added to the result array.
                 $return[$event['eid']] = $event;
                 $position += 1;
+            }
+
+            // Get all the category linkages
+            $catids = xarModAPIFunc('categories', 'user', 'getlinks',
+                array('iids' => array_keys($events), 'reverse' => 1, 'modid' => $modid)
+            );
+
+            // Distribute the categories over the events array.
+            // TODO: summarise the categories in various groupings.
+            if (!empty($catids)) {
+                // catid is actually an array.
+                foreach ($catids as $key => $catid) $events[$key]['catids'] = $catid;
             }
         }
     }

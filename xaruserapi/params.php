@@ -52,6 +52,24 @@ function ievents_userapi_params($args)
         // Default start and end dates, in 'strtotime' format.
         $params['default_startdate'] = 'now';
         $params['default_enddate'] = '+1 month';
+
+        // Output transform fields.
+        // Only these fields will be passed through the output transform.
+        // They will generally just be the HTML fields.
+        // TODO: perhaps the output transforms and filters should converge, e.g. a field that
+        // is declared 'html' will always have the 'html' filter applied, and will always be
+        // passed through the output transforms. The 'html' filter should happen *before* the
+        // transform and not afterwards in the template.
+        // TODO: depracate
+        //$params['output_transform'] = 'address,description';
+
+        // See notes above. We are probably going to go with this one.
+        $params['html_fields'] = 'description,contact_details';
+
+        // Summary max words (for text fields in summary mode).
+        // This is really a display thing, and deserves to live in the templates.
+        // TODO: it may not actually be used yet.
+        $params['summary_max_words'] = 100;
     }
 
     if (!empty($name)) {

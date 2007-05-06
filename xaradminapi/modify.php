@@ -17,8 +17,9 @@ function ievents_adminapi_modify($args)
 {
     extract($args);
 
-    // If 'save' is not set, then just return data.
-    $save = (empty($save) ? false : true);
+    // If 'save' is not set, then assume we DO want to save.
+    // If set to false, then we just return data.
+    $save = (!isset($save) || !empty($save) ? true : false);
 
     if (empty($eid)) $eid = 0;
     if (empty($cid)) $cid = 0;
@@ -230,7 +231,7 @@ function ievents_adminapi_modify($args)
                     $object->properties['status']->setValue('DRAFT');
                 }
 
-                // Update an existing event
+                // Update the existing event
                 $id = $object->updateItem();
 
                 // Handle any update hooks
@@ -316,6 +317,8 @@ function ievents_adminapi_modify($args)
     $data['properties'] = $object->properties;
     $data['eid'] = $eid;
 
+    // TODO: just return the same data regardless
+    // TODO: make a 'create' API that just extracts the eid to return.
     if ($save === 'API') {
         return array(
             'result' => $data['result'],

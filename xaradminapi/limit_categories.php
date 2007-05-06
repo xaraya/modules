@@ -28,7 +28,7 @@ function ievents_adminapi_limit_categories($args)
 
     $nobase = (empty($nobase) ? false : true);
 
-    if (xarModIsHooked('categories', $module)) { // categories is hooked
+    if (xarModIsHooked('categories', $module, $itemtype)) { // categories is hooked
         // Check the user has not selected too many categories.
         // Get the current cids for the item.
         // TODO: this should be a core feature of the categories module. Remove this
@@ -55,7 +55,7 @@ function ievents_adminapi_limit_categories($args)
             if ($nobase) $itemcats = array_diff($itemcats, $catbases);
 
             // If too many cats, strip some off
-            if ($maxats > 0 && count($itemcats) > $maxcats) $itemcats = array_splice($itemcats, 0, $maxcats);
+            if ($maxcats > 0 && count($itemcats) > $maxcats) $itemcats = array_splice($itemcats, 0, $maxcats);
 
             // Update the cats if we need to reduce any.
             // Only do it if we have a item id (the create or update did not fail)

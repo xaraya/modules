@@ -23,8 +23,10 @@ function ievents_user_view($args)
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
     // Get module parameters
-    list($default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek'));
+    list($module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek, $html_fields, $itemtype_events) =
+        xarModAPIfunc('ievents', 'user', 'params',
+            array('names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,html_fields,itemtype_events')
+        );
 
     // Get the user parameters.
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
@@ -365,7 +367,7 @@ function ievents_user_view($args)
             $event_params['enddate'] = NULL;
             $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
             if (isset($events[$eid])) {
-                $event = $events[$eid];
+                $event =& $events[$eid];
             } else {
                 // Still not found the event - probably does not exist.
                 $event = array();
@@ -377,7 +379,7 @@ function ievents_user_view($args)
             // A handy value in the list helps us there.
             $eventcount = count($events);
             $position = $events[$eid]['position'];
-            $event = $events[$eid];
+            $event =& $events[$eid];
 
             // If we are at the start of a page:
             // - if on the first page, then there is no previous event
@@ -493,12 +495,57 @@ function ievents_user_view($args)
     // Get a list of calendars the user has access to.
     $calendars = xarModAPIfunc('ievents', 'user', 'getcalendars', array('event_priv' => 'OVERVIEW'));
 
+    // Do the output transforms.
+    if (!empty($html_fields)) {
+        $html_fields = explode(',', $html_fields);
+
+        foreach($events as $eventkey => $eventvalue) {
+            // Make sure the field is HTML
+            foreach($html_fields as $html_field) {
+                if (!empty($eventvalue[$html_field])) {
+                    $events[$eventkey][$html_field] = xarModAPIfunc('ievents','user','transform',
+                        array('html' => $eventvalue[$html_field])
+                    );
+                }
+            }
+
+            // Transform hooks.
+            // If the fields have been limited for transform, then pass those
+            // fields into the transform hook too.
+            $events[$eventkey]['transform'] = $html_fields;
+
+            // Set the itemtype for the transform hook system.
+            $events[$eventkey]['itemtype'] = $itemtype_events;
+
+            // The vast majority of the data will not need transforming, but all fields will
+            // be passed in just in case.
+            $transformed = xarModCallHooks('item', 'transform', $events[$eventkey]['eid'], $events[$eventkey], $module);
+
+            // Merge just the transformed fields back into the event.
+            // We must do them individually, as some could be linked from grouped fields.
+            foreach($html_fields as $html_field) {
+                $events[$eventkey][$html_field] = $transformed[$html_field];
+            }
+        }
+    }
+
+    // Display hook for the current event, but only if there is a current event.
+    if (!empty($eid)) {
+        $item = $event;
+        $item['module'] = $module;
+        $item['itemtype'] = $itemtype_events;
+        $item['itemid'] = $eid;
+        $item['returnurl'] = xarServerGetCurrentURL(array(),'false');
+        // Get the display hook stuff.
+        $hooks = xarModCallHooks('item', 'display', $eid, $item);
+    }
+
     //
     // Pass data back out to the template
     //
 
     // By keeping the bl data and variable names the same, passing data is easy.
-    $bl_data = @compact(array(
+    $bl_data = @compact(
         'ustartdate', 'uenddate',
         'startdate', 'enddate',
         'startyear', 'startmonth', 'startday',
@@ -510,9 +557,9 @@ function ievents_user_view($args)
         'events', 'pager',
         'calendars',
         'cats', 'catid', 'catids', 'crule',
-    ));
+        'hooks'
+    );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
-
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
 
     return $bl_data;

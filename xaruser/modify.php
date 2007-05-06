@@ -43,8 +43,10 @@ function ievents_user_modify($args)
     // Allows preselection of the calendar ID when creating a new event.
     xarVarFetch('cid', 'id', $args['cid'], 0, XARVAR_NOT_REQUIRED);
 
-    // If submitting changes then signal this to the API.
-    if (!empty($submit) || !empty($save) || !empty($submitview)) $args['save'] = true;
+    // If NOT submitting changes then signal this to the API.
+    // We will then get the event returned without anything being updated
+    // in the database.
+    if (empty($submit) && empty($save) && empty($submitview)) $args['save'] = false;
 
     // Call up the main API to do the processing (including update and create hooks,
     // or just to return the current item if not saving).
@@ -95,7 +97,7 @@ function ievents_user_modify($args)
         );
 
         // If the result is not SUCCESS then assume we have been thrown into preview mode.
-        if ($data['result'] == 'SUCCESS' && xarModIsHooked('categories', $data['module'])) {
+        if ($data['result'] == 'SUCCESS' && xarModIsHooked('categories', $data['module'], $data['itemtype_events'])) {
             $links = xarModAPIFunc('categories', 'user', 'getlinks',
                 array(
                     'iids' => array($data['eid']),

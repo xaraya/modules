@@ -23,12 +23,13 @@ div.ievents-modify-calendar div.ievents-hooks select {
 div.ievents-view dl.ievents-events {
 	margin: 0.5em 0;
 }
-div.ievents-view dl.ievents-events dt, div.ievents-view dl.ievents-events dd {
+div.ievents-view dl.ievents-events dt,
+div.ievents-view dl.ievents-events dd,
+div.ievents-view dl.ievents-groups dd {
 	margin-left: 0;
 }
 div.ievents-view dl.ievents-events dt {
 	margin-top: 0.5em;
-	clear: both;
 	border-top: 1px solid #eeeeee;
 	clear: both;
 }
@@ -50,5 +51,22 @@ div.ievents-view dt.ievents-group {
 	color: #666666;
 	margin-top: 1.6em;
 	clear: both;
+}
+
+/* Single event */
+
+div.ievents-view dl.ievents-event dt {
+	margin-left: 0;
+}
+div.ievents-view dl.ievents-event dd {
+	margin-left: 2em;
+}
+div.ievents-view dl.ievents-event dt {
+	font-weight: bold;
+	font-style: italic;
+	font-size: 120%;
+	color: #666666;
+	border-bottom: 1px solid #eeeeee;
+	margin-top: 1em;
 }
 
