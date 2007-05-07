@@ -6,13 +6,28 @@
     The jump menu could take into account the current selection details, or just clear them (as it does now).
 </xar:comment>
 <div>
-    <ul>
-        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thisyear'))#"><xar:mlstring>This year</xar:mlstring></a></li>
-        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thismonth'))#"><xar:mlstring>This month</xar:mlstring></a></li>
-        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'thisweek'))#"><xar:mlstring>This week</xar:mlstring></a></li>
-        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'today'))#"><xar:mlstring>Today</xar:mlstring></a></li>
-        <li><a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks'))#"><xar:mlstring>Next four weeks</xar:mlstring></a></li>
-    </ul>
+    <form method="get" action="#xarModURL('ievents','user','view')#">
+        <p>
+            <xar:set name="daterangelist">array(''=>xarML('-- Preset --'), 'thisyear'=>xarML('This year'), 'thismonth'=>xarML('This month'), 'thisweek'=>xarML('This week'), 'today'=>xarML('Today'), 'next4weeks'=>xarML('Next four weeks'))</xar:set>
+            <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
+
+            <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
+            <xar:if condition="!empty($calendarlist) && count($calendarlist) gt 1">
+                <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
+            </xar:if>
+
+            <xar:comment>TODO: only include these three hidden values if short URLs are not being used</xar:comment>
+            <input type="hidden" name="module" value="ievents" />
+            <input type="hidden" name="type" value="user" />
+            <input type="hidden" name="func" value="view" />
+   
+            <xar:comment>Reset a few values if the jump menu is used</xar:comment>
+            <input type="hidden" name="eid" value="" />
+            <input type="hidden" name="startnum" value="1" />
+
+            <input type="submit" value="#xarML('Go')#" />
+        </p>
+    </form>
 </div>
 
 <div class="ievents-view">

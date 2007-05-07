@@ -561,7 +561,8 @@ function ievents_user_view($args)
         'events', 'pager',
         'calendars',
         'cats', 'catid', 'catids', 'crule',
-        'hooks', 'categories'
+        'hooks', 'categories',
+        'cid'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
