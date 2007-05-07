@@ -301,7 +301,7 @@ function ievents_userapi_getevents($args)
             // TODO: summarise the categories in various groupings.
             if (!empty($catids)) {
                 // catid is actually an array.
-                foreach ($catids as $key => $catid) $events[$key]['catids'] = $catid;
+                foreach ($catids as $key => $catid) $return[$key]['catids'] = $catid;
             }
         }
     }

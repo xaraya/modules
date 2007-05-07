@@ -157,6 +157,10 @@ function ievents_adminapi_modify($args)
             $object->properties['calendar_id']->value = $cid;
         }
 
+        // TODO: If alternative date parameters have been passed in, then decode them
+        // here and set them in the args array.
+        // e.g. time in 12-hour clock format, and dates as individual fields.
+
         // Get the input from the form (or from args input) and check the values
         $isvalid = $object->checkInput($args);
 

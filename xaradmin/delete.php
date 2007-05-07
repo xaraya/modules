@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Modify an event or calendar.
+ * Delete an event or calendar.
  */
 
-function ievents_admin_modify($args)
+function ievents_admin_delete($args)
 {
     // Can be called up using the itemtype and itemid
     list($itemtype_calendars, $itemtype_events) = 
@@ -21,19 +21,20 @@ function ievents_admin_modify($args)
             }
         }
     } else {
-        // Assume we are modifying an event.
+        // Assume we are deleting an event.
         $itemtype = $itemtype_events;
     }
 
     // Pass control over to the main GUI.
     if ($itemtype == $itemtype_events) {
-        // Modifying an event
+        // Deleting an event
         if (isset($args['itemid']) && empty($args['eid'])) $args['eid'] = $args['itemid'];
-        return xarModfunc('ievents', 'user', 'modify', $args);
+        return xarModfunc('ievents', 'user', 'delete', $args);
     } else {
-        // Modifying a calendar
-        if (isset($args['itemid']) && empty($args['cid'])) $args['cid'] = $args['itemid'];
-        return xarModfunc('ievents', 'user', 'modifycal', $args);
+        // Deleting a calendar
+        // TODO: implement delete-calendars function.
+        //if (isset($args['itemid']) && empty($args['cid'])) $args['cid'] = $args['itemid'];
+        //return xarModfunc('ievents', 'user', 'delete', $args);
     }
 }
 

@@ -540,6 +540,10 @@ function ievents_user_view($args)
         $hooks = xarModCallHooks('item', 'display', $eid, $item);
     }
 
+    // Get all category information
+    $categories = xarModAPIfunc('ievents', 'user', 'getallcategories');
+    //echo "<pre>"; var_dump($categories); echo "</pre>";
+
     //
     // Pass data back out to the template
     //
@@ -557,7 +561,7 @@ function ievents_user_view($args)
         'events', 'pager',
         'calendars',
         'cats', 'catid', 'catids', 'crule',
-        'hooks'
+        'hooks', 'categories'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";

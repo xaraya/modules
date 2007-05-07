@@ -2,7 +2,8 @@
     Display an event detail as a 'dl' list entry.
     Requires the following paramaters:
     - $event
-    - $calendar (current calendar record) - optional?
+    - $calendar (current calendar record)
+    - $categories (full list of available categories)
 </xar:comment>
 
 <xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
@@ -11,6 +12,9 @@
     <h2><a href="#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a></h2>
     <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
         [<a href="#xarModURL('ievents','user','modify',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>edit</xar:mlstring></a>]
+    </xar:if>
+    <xar:if condition="xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
+        [<a href="#xarModURL('ievents','user','delete',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array('eid'=&gt;NULL),false)))#"><xar:mlstring>delete</xar:mlstring></a>]
     </xar:if>
 </dt>
 
@@ -36,6 +40,16 @@
     </xar:if>
     <xar:if condition="!empty($event.summary)">
         <p>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary)))#</p>
+    </xar:if>
+    <xar:if condition="!empty($event.catids)">
+        <p><xar:mlstring>Categories:</xar:mlstring>
+            <xar:loop name="$event.catids">
+                <xar:if condition="$loop:index gt 0"> | </xar:if>
+                <a href="#xarServerGetCurrentURL(array('cats'=&gt;$loop:item,'eid'=&gt;NULL))#">
+                    #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
+                </a>
+            </xar:loop>
+        </p>
     </xar:if>
 </dd>
 

@@ -30,7 +30,7 @@ function ievents_adminapi_delete($args)
     if (empty($event)) return true;
 
     // Check privileges.
-    if (!xarSecurityCheck('OverviewIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])) {
+    if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])) {
         // Event ID is mandatory.
         $msg = xarML('No privilege to delete event #(1)', $eid);
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));

@@ -70,3 +70,41 @@ div.ievents-view dl.ievents-event dt {
 	margin-top: 1em;
 }
 
+/* Next/previous links in an event detail */
+div.ievents-nextprev {
+	margin: 0.25em 0;
+	padding: 0.25wm 0;
+	border: solid #bbbbbb;
+	border-width: 1px 0;
+}
+div.ievents-nextprev ul {
+	list-style: none;
+	height: 1em;
+	padding: 0;
+	margin: 0;
+}
+div.ievents-nextprev li {
+	width: 33%;
+	float: left;
+	margin: 0;
+	padding: 0;
+	background-image: none; /* For Xaraya_Classic */
+}
+div.ievents-nextprev li a {
+	text-decoration: none;
+	font-weight: bold;
+}
+div.ievents-nextprev li span {
+	color: #dddddd;
+	font-weight: bold;
+}
+div.ievents-nextprev li.ievents-nextprev-prev {
+	text-align: left;
+}
+div.ievents-nextprev li.ievents-nextprev-list {
+	text-align: center;
+}
+div.ievents-nextprev li.ievents-nextprev-next {
+	text-align: right;
+}
+

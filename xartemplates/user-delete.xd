@@ -1,0 +1,26 @@
+
+<form method="post" action="#xarModURL('ievents','user','delete')#">
+
+<xar:if condition="!empty($message)">
+    <p class="xar-error">#$message#</p>
+</xar:if>
+
+<xar:if condition="empty($error_message) and !empty($event)">
+    <p>
+        <xar:ml>
+            <xar:mlstring>Confirm delete of event number #(1) (#(2))</xar:mlstring>
+            <xar:mlvar>#$event.eid#</xar:mlvar>
+            <xar:mlvar>#xarVarPrepForDisplay($event.title)#</xar:mlvar>
+        </xar:ml>
+    </p>
+
+    <p>
+        <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+        <input type="hidden" name="eid" value="#$event.eid#" />
+        <xar:if condition="!empty($return_url)">
+            <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
+        </xar:if>
+    </p>
+</xar:if>
+
+</form>

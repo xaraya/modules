@@ -26,7 +26,7 @@
         <xar:template file="event-nextprev" />
 
         <dl class="ievents-event">
-            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id])" />
+            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id],'categories'=&gt;$categories)" />
             <xar:if condition="!empty($hooks)">
                 <dd class="ievents-hooks">
                     <xar:foreach in="$hooks" key="$hookmodule">
