@@ -1,17 +1,15 @@
 <?php
 /**
- * Modify configuration
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Registration module
+ * @subpackage registration
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
- * modify configuration
+ * Modify configuration
  */
 function registration_admin_modifyconfig()
 {
@@ -46,10 +44,10 @@ function registration_admin_modifyconfig()
                         }
                     }
                     $data['groups'] = $groups;
-                    //Use the same modvar here. It is now putback in Roles again so Roles can use the var too without mod dependencies.
+\
                     $data['defaultgroup'] = xarModVars::get('roles', 'defaultgroup');
                     $notifyemail = xarModVars::get('registration','notifyemail');
-                    if (!isset($notifyemail) || trim ($notifyemail)=='')$notifyemail = xarModVars::get('mail','adminmail');
+                    if (!isset($notifyemail) || trim ($notifyemail)== '') $notifyemail = xarModVars::get('mail','adminmail');
                     $data['notifyemail']=$notifyemail;
                     break;
                 case 'filtering':
@@ -90,11 +88,9 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('explicitapproval',  'checkbox', $explicitapproval,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('showdynamic',       'checkbox', $showdynamic,       false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendwelcomeemail',  'checkbox', $sendwelcomeemail,  false, XARVAR_NOT_REQUIRED)) return;
+                    // @todo <johnny> how should we handle minpasslength now ?
                     if (!xarVarFetch('minpasslength',     'int:1',    $minpasslength,     5, XARVAR_NOT_REQUIRED)) return;
-                    //jojodee - the following is better kept in roles - reduces unwanted dependencies of core on noncore modules among other reasons
-                    //if (!xarVarFetch('uniqueemail',       'checkbox', $uniqueemail,       xarModVars::get('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModVars::get('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
 
                     xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
@@ -105,10 +101,8 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'sendnotice', $sendnotice);
                     xarModVars::set('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModVars::set('registration', 'requirevalidation', $requirevalidation);
-                    xarModVars::set('registration', 'showdynamic', $showdynamic);
                     xarModVars::set('registration', 'sendwelcomeemail', $sendwelcomeemail);
                     xarModVars::set('registration', 'minpasslength', $minpasslength);
-                    //xarModVars::set('registration', 'uniqueemail', $uniqueemail);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -126,7 +120,6 @@ function registration_admin_modifyconfig()
             }
 
             xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
-            // Return
             return true;
             break;
     }

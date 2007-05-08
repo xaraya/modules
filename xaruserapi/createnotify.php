@@ -1,22 +1,23 @@
 <?php
 /**
- * create notify- send out email notifications during user create based on state
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Registration module
+ * @subpackage registration
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
+ * Create notification for new users
+ *
+ * Send out email notifications during user create based on state
+ *
  * @access public
  * @author Jonathan Linowes
  * @author jojodee
  * @author Damien Bonvillain
  * @author Gregor J. Rothfuss
- * @since 1.23 - 2002/02/01
  * @param 'username'
  * @param 'realname'
  * @param 'email'

@@ -1,7 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -250,18 +248,6 @@
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModVars::get('registration', 'showdynamic')">
-                            <input type="checkbox" name="showdynamic" id="showdynamic" value="1" checked="checked" />
-                            <xar:else />
-                            <input type="checkbox" name="showdynamic" id="showdynamic" value="1" />
-                        </xar:if>
-                        <label for="showdynamic" title="#xarML('Allow users to enter dynamic property values during account creation process')#">
-                            <xar:mlstring>
-                                Show Dynamic Properties On Registration (if enabled)
-                            </xar:mlstring>
-                        </label>
-                    </div>
-                    <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModVars::get('registration', 'sendwelcomeemail')">
                             <input type="checkbox" name="sendwelcomeemail" id="sendwelcomeemail" value="1" checked="checked" />
                             <xar:else />
@@ -273,34 +259,6 @@
                             </xar:mlstring>
                         </label>
                     </div>
-                    <xar:comment> Moved back to Roles to reduce core dependencies on noncore mods, and other reasons
-                    <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModVars::get('registration', 'uniqueemail')">
-                            <input type="checkbox" name="uniqueemail" id="uniqueemail" value="1" checked="checked" />
-                            <xar:else />
-                            <input type="checkbox" name="uniqueemail" id="uniqueemail" value="1" />
-                        </xar:if>
-                        <label for="uniqueemail" title="#xarML('Require each user account to have a distinct email address')#">
-                            <xar:mlstring>
-                                Email Address Must Be Unique To Each Registered User
-                            </xar:mlstring>
-                        </label>
-                    </div>
-                    </xar:comment>
-                    <xar:comment>
-                        <div class="xar-form-input-wrapper-after">
-                            <xar:if condition="xarModVars::get('registration', 'allowinvisible')">
-                                <input type="checkbox" name="allowinvisible" id="allowinvisible" value="1" checked="checked" tabindex="1" />
-                                <xar:else />
-                                <input type="checkbox" name="allowinvisible" id="allowinvisible" value="1" tabindex="1" />
-                            </xar:if>
-                            <label for="allowinvisible" title="#xarML('Allow users to be hidden in user list')#">
-                                <xar:mlstring>
-                                    Allow Users To Be Invisible In Users List
-                                </xar:mlstring>
-                            </label>
-                        </div>
-                    </xar:comment>
                 </xar:if>
 
                 <div class="xar-form-input-wrapper-after xar-padding-thick">
@@ -311,7 +269,7 @@
                 </div>
                 <div class="xar-form-input-wrapper-before">
                 <p>
-                    <xar:set name="mailconfigure">xarModUrl('roles','admin','modifynotice')</xar:set>
+                    <xar:set name="mailconfigure">xarModURL('roles','admin','modifynotice')</xar:set>
                     <xar:ml>
                         <xar:mlstring>
                             Further email notifications for user role changes made specifically by Administrators (not this Registration process) can be made

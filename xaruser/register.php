@@ -1,13 +1,11 @@
 <?php
 /**
- * Register a new user
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Registration module
+ * @subpackage registration
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
@@ -35,13 +33,12 @@
  */
 function registration_user_register()
 {
-    // Security check
     if (!xarSecurityCheck('ViewRegistration')) return;
 
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-        xarResponseRedirect(xarModURL('registration', 'user', 'terms'));
+        xarResponseRedirect(xarModURL('roles', 'user', 'account'));
        return true;
     }
     $allowregistration = xarModVars::get('registration', 'allowregistration');
@@ -82,77 +79,40 @@ function registration_user_register()
 
         case 'registerform': //Make this default now login is handled by authsystem
         default:
-            // authorisation code
             $authid = xarSecGenAuthKey();
 
-            // current values (none)
-            $values = array('username' => '',
-                            'realname' => '',
-                            'email'    => '',
-                            'pass1'    => '',
-                            'pass2'    => '');
+            $object = xarModAPIFunc('dynamicdata','user','getobject',
+                                         array('name' => 'roles_users'));
+            if(empty($object)) return;
 
-            // invalid fields (none)
-            $invalid = array();
+            // dont want to show this to the user
+            $object->properties['state']->status = 33;
+            $object->properties['state']->value = 3;
 
-            // dynamic properties (if any)
-
-            $properties = null;
-            $withupload = (int) FALSE;
-            if (xarModIsAvailable('dynamicdata')) {
-                // get the Dynamic Object defined for this module (and itemtype, if relevant)
-                $object = xarModAPIFunc('dynamicdata','user','getobject',
-                                         array('module' => 'roles'));
-                if (isset($object) && !empty($object->objectid)) {
-                    // get the Dynamic Properties of this object
-                    $properties =& $object->getProperties();
-                }
-                if (isset($properties)) {
-                    foreach ($properties as $key => $prop) {
-                        if (isset($prop->upload) && $prop->upload == TRUE) {
-                            $withupload = (int) TRUE;
-                        }
-                    }
-                }
-            }
             /* Call hooks here, others than just dyn data
              * We pass the phase in here to tell the hook it should check the data
              */
             $item['module'] = 'registration';
             $item['itemid'] = '';
-            $item['values'] = $values;
+            $item['values'] = $object->getFieldValues();
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new', '', $item);
 
             if (empty($hooks)) {
                 $hookoutput = array();
             } else {
-                /* You can use the output from individual hooks in your template too, e.g. with
-                 * $hookoutput['categories'], $hookoutput['dynamicdata'], $hookoutput['keywords'] etc.
-                 */
                 $hookoutput = $hooks;
             }
 
             $data = xarTplModule('registration','user', 'registerform',
                            array('authid'     => $authid,
-                                 'values'     => $values,
-                                 'invalid'    => $invalid,
-                                 'properties' => $properties,
-                                 'hookoutput' => $hookoutput,
-                                 'withupload' => isset($withupload) ? $withupload : (int) FALSE,
-                                 'userlabel'  => xarML('New User')));
+                                 'object'    => $object,
+                                 'hookoutput' => $hookoutput));
             break;
 
         case 'checkregistration':
-
-            if (!xarVarFetch('username',     'str:1:100', $username,     '',    XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('realname',     'str:1:100', $realname,     '',    XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass1',        'str:4:100', $pass1,        '',    XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass2',        'str:4:100', $pass2,        '',    XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('email',        'str:1:100', $email,        '',    XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('agreetoterms', 'checkbox',  $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
 
-            // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 
             $ip = xarServerGetVar('REMOTE_ADDR');
@@ -162,13 +122,9 @@ function registration_user_register()
                 return;
             }
 
-            // current values (in case some field is invalid, we'll return to the previous template)
-            // Pass back all values again so the user only has to type in incorrect values that are highlighted
-            $values = array('username' => $username,
-                            'realname' => $realname,
-                            'email'    => $email,
-                            'pass1'    => $pass1,
-                            'pass2'    => $pass2);
+            $object = xarModAPIFunc('dynamicdata','user','getobject',array('name' => 'roles_users'));
+
+            $isvalid = $object->checkInput();
 
             /* Call hooks here, others than just dyn data
              * We pass the phase in here to tell the hook it should check the data
@@ -176,7 +132,7 @@ function registration_user_register()
             $item = array();
             $item['module'] = 'registration';
             $item['itemid'] = '';
-            $item['values'] = $values; // TODO: this includes the password. Do we want this?
+            $item['values'] = $object->getFieldValues(); // TODO: this includes the password. Do we want this?
             $item['phase']  = $phase;
             $hooks = xarModCallHooks('item', 'new','', $item);
 
@@ -189,92 +145,69 @@ function registration_user_register()
             // invalid fields (we'll check this below)
             $invalid = array();
 
-            // check username
-            $invalid['username'] = xarModApiFunc('registration','user','checkvar', array('type'=>'username', 'var'=>$username));
+            $values = $object->getFieldValues();
+            $uname  = $values['uname'];
+            $email  = $values['email'];
+            $name   = $values['name'];
+            $pass   = $values['password'];
 
-            // check real name
-            $invalid['realname'] = xarModApiFunc('registration','user','checkvar', array('type'=>'realname', 'var'=>$realname));
+            // check for duplicate username// check for duplicate username
+            $user = xarModAPIFunc('roles', 'user','get',
+                            array('uname' => $uname));
 
-            // check email
-            $invalid['email'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email', 'var'=>$email));
+            if ($user) {
+                throw new DuplicateException(array('user',$uname));
+            }
+
+            if (xarModGetVar('roles','uniqueemail')) {
+                $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
+                if ($user) throw new DuplicateException(array('email',$email));
+            }
 
             // agree to terms (kind of dumb, but for completeness)
             $invalid['agreetoterms'] = xarModApiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));
 
             // Check password and set
-            $pass = '';
+            // @todo find a better way to turn choose own password on and off that works nicely with dd objects
+            //$pass = '';
             if (xarModVars::get('registration', 'chooseownpassword')) {
-                $invalid['pass1'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
+                /*$invalid['pass1'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass1', 'var'=>$pass1 ));
                 if (empty($invalid['pass1'])) {
                     $invalid['pass2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'pass2', 'var'=>array($pass1,$pass2) ));
                 }
                 if (empty($invalid['pass1']) && empty($invalid['pass2']))   {
                     $pass = $pass1;
-                }
+                }*/
             }
 
-            // dynamic properties
-            $checkdynamic = xarModVars::get('registration', 'showdynamic');
-            if ($checkdynamic){
-                // dynamic properties (if any)
-                $properties = null;
-                $isvalid = true;
-                if (xarModIsAvailable('dynamicdata')) {
-                    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-                    $object = xarModAPIFunc('dynamicdata','user','getobject',
-                                              array('module' => 'roles'));
-                    if (isset($object) && !empty($object->objectid)) {
-
-                        // check the input values for this object !
-                        $isvalid = $object->checkInput();
-
-                        // get the Dynamic Properties of this object
-                        $properties =& $object->getProperties();
-                    }
-                }
-            } else {
-                $properties = array();
-                $isvalid = true;
+            $count = 0;
+            foreach ($invalid as $k => $v) if (!empty($v)) $count + 1;
+            // @todo add preview?
+            if (!$isvalid || ($count > 0)) {
+                $data = array();
+                $data['authid'] = xarSecGenAuthKey();
+                $data['object'] = & $object;
+                $data['invalid'] = $invalid;
+                //$data['preview'] = $preview;
+                $item = array();
+                $item['module'] = 'registration';
+                $item['phase'] = $phase;
+                $data['hookoutput'] = xarModCallHooks('item','new','',$item);
+                return xarTplModule('registration','user','registerform', $data);
             }
 
-            // new authorisation code
-            $authid = xarSecGenAuthKey();
-
-            // check if any of the fields (or dynamic properties) were invalid
-            $a = array_count_values($invalid); // $a[''] will be the count of null values
-            $countInvalid = count($invalid) - $a[''];
-            if ($countInvalid > 0 || !$isvalid) {
-                // if so, return to the previous template
-                return xarTplModule('registration','user', 'registerform',
-                                 array('authid'      => $authid,
-                                       'values'      => $values,
-                                       'invalid'     => $invalid,
-                                       'properties'  => $properties,
-                                       'hookoutput'  => $hookoutput,
-                                       'createlabel' => xarML('Create Account'),
-                                       'userlabel'   => xarML('New User')));
-            }
-
+            xarSessionSetVar('Registration.UserInfo',$values);
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration',
-                                 array('username'    => $username,
-                                       'email'       => $email,
-                                       'realname'    => $realname,
-                                       'pass'        => $pass,
-                                       'ip'          => $ip,
-                                       'authid'      => $authid,
-                                       'properties'  => $properties,
-                                       'hookoutput'  => $hookoutput,
-                                       'createlabel' => xarML('Create Account')));
+                                 array('object'      => $object,
+                                       'authid'      => xarSecGenAuthKey(),
+                                       'hookoutput'  => $hookoutput));
 
             break;
 
         case 'createuser':
-            if (!xarVarFetch('username',  'str:1:100', $username, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('realname',  'str:1:100', $realname, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pass',      'str:4:100', $pass,     '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('ip',        'str:4:100', $ip,       '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('email',     'str:1:100', $email,    '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarSecConfirmAuthKey()) return;
+            $values = xarSessionGetVar('Registration.UserInfo');
 
             //Set some general vars that we need in various registration options
             $pending = xarModVars::get('registration', 'explicitapproval'); //Require admin approval for account
@@ -296,37 +229,27 @@ function registration_user_register()
             $tplvars['pending']   = $pending;
 
 
-            // Confirm authorisation code.
-            if (!xarSecConfirmAuthKey()) return;
-
             // determine state of this create user
-            $state = xarModAPIFunc('registration','user','createstate' );
+            $state = xarModAPIFunc('registration','user','createstate');
 
             // need a password
-            if (empty($pass)){
+            if (empty($password)){
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
+                $values['password'] = $pass;
             }
 
             // Create confirmation code if required
             if ($requireValidation) {
                 $confcode = xarModAPIFunc('roles', 'user', 'makepass');
             } else {
-                $confcode ='';
+                $confcode = '';
             }
 
-            //Create the user
-            $userdata = array('uname'  => $username,
-                              'realname' => $realname,
-                    //FIXME...
-                    'itemtype' => 2,
-                              'email'    => $email,
-                              'pass'     => $pass,
-                              'date'     => time(),
-                              'valcode'  => $confcode,
-                              'parentid' => xarModVars::get('roles', 'defaultgroup'),
-                              'state'    => $state);
-
+            $userdata = $values;
+            $userdata['parentid'] = xarModVars::get('roles', 'defaultgroup');
+            $userdata['itemtype'] = 2;
             $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
+            $values['id'] = $uid;
             if (empty($uid)) return;
             xarModVars::set('roles', 'lastuser', $uid);
 
@@ -344,27 +267,28 @@ function registration_user_register()
              // Option: If admin requires notification of a new user, and no validation required,
              // send out an email to Admin
 
+             $uname = $values['uname'];
+             $pass  = $values['password'];
+
+
             // Let's finish by sending emails to those that require it based on options - the user or the admin
             // and redirecting to appropriate pages that depend on user state and options set in the registration config
             // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
-            $ret = xarModApiFunc('registration','user','createnotify',
-                array(  'username'  => $username,
-                        'realname'  => $realname,
-                        'email'     => $email,
-                        'pass'      => xarModVars::get('registration', 'chooseownpassword') ? '' : $pass,
-                        'uid'       => $uid,
-                        'ip'        => $ip,
-                        'state'     => $state));
+            $emailargs = array();
+            $emailargs['pass'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $pass;
+            $emailargs['ip'] = $ip;
+            $emailargs['state'] = $state;
+            $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
             if (!$ret) return;
 
             // go to appropriate page, based on state
             if ($state == ROLES_STATE_ACTIVE) {
                 // log in and redirect
                 xarModAPIFunc('authsystem', 'user', 'login',
-                    array(  'uname'      => $username,
-                            'pass'       => $pass,
-                            'rememberme' => 0));
-                $redirect=xarServerGetBaseURL();
+                        array('uname'      => $uname,
+                              'pass'       => $pass,
+                              'rememberme' => 0));
+                $redirect = xarServerGetBaseURL();
                 xarResponseRedirect($redirect);
 
             } else if ($state == ROLES_STATE_PENDING) {

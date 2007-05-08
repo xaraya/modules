@@ -1,46 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset>
-            <legend><xar:mlstring>Confirm Registration</xar:mlstring></legend>
-            <div class="xar-form-input-wrapper">
-                <label for="username" class="xar-form-label" title="#xarML('Select a unique login name - no spaces')#">
-                       <xar:mlstring>Login name</xar:mlstring>:
-                </label>
-                #xarVarPrepForDisplay($username)#
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="realname" class="xar-form-label" title="#xarML('Enter the name you would like displayed to other site users')#">
-                       <xar:mlstring>Display Name</xar:mlstring>:
-                </label>
-                #xarVarPrepForDisplay($realname)#
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="email" class="xar-form-label" title="#xarML('Enter your email address')#">
-                       <xar:mlstring>E-mail Address</xar:mlstring>:
-                </label>
-                #xarVarPrepForDisplay($email)#
-            </div>
-        </fieldset>
-        <xar:if condition="xarModVars::get('registration', 'showdynamic')" >
-            <xar:if condition="isset($properties)">
-                <fieldset>
-                    <legend><xar:mlstring>User Details</xar:mlstring></legend>
-                        <xar:foreach in="$properties" key="$name">
-                            <xar:set name="formlabel">$properties[$name]->id</xar:set>
-                            <div class="xar-form-input-wrapper">
-                                <label for="dd_#$formlabel#" class="xar-form-label" title="#xarML('Please enter required information')#">
-                                    <xar:data-label property="$properties[$name]" />:
-                                </label>
-                                <xar:data-input property="$properties[$name]" />
-                            </div>
-                        </xar:foreach>
-                </fieldset>
-            </xar:if>
-        </xar:if>
-        <xar:comment>Call the hooks here, loop over each one of them</xar:comment>
+        <xar:data-display object="$object" />
+
+        <!-- all the hooks here, loop over each one of them -->
         <xar:if condition="!empty($hookoutput)">
             <fieldset>
                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
@@ -58,25 +23,15 @@
                     </xar:foreach>
             </fieldset>
         </xar:if>
-
+        <div style="clear: both;"></div>
         <fieldset>
             <p class="xar-form-input-wrapper-before">
                 <xar:mlstring>Please review the above information and check it for correctness. Click Create Account to continue.</xar:mlstring>
             </p>
             <div class="xar-form-input-wrapper-after xar-padding-thick">
-                <input type="submit" value="#$createlabel#" />
+                <input type="submit" value="#xarML('Create Account')#" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="createuser" />
-                <input type="hidden" name="username" id="username" value="#xarVarPrepForDisplay($username)#" />
-                <input type="hidden" name="realname" id="realname" value="#xarVarPrepForDisplay($realname)#" />
-                <input type="hidden" name="email" id="email" value="#xarVarPrepForDisplay($email)#" />
-                <input type="hidden" name="pass" id="pass" value="#xarVarPrepForDisplay($pass)#" />
-                <input type="hidden" name="ip" id="ip" value="#$ip#" />
-                <xar:if condition="isset($properties)" >
-                    <xar:foreach in="$properties" key="$name">
-                        <xar:data-input property="$properties[$name]" hidden="true" />
-                    </xar:foreach>
-                </xar:if>
             </div>
 
         </fieldset>
