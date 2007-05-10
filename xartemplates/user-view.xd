@@ -8,6 +8,14 @@
 <div>
     <form method="get" action="#xarModURL('ievents','user','view')#">
         <p>
+            <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
+            <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
+            <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
+            <xar:mlstring>to</xar:mlstring>
+            <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
+            <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthshort']" value="$endmonth" />
+            <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
+
             <xar:set name="daterangelist">array(''=>xarML('-- Preset --'), 'thisyear'=>xarML('This year'), 'thismonth'=>xarML('This month'), 'thisweek'=>xarML('This week'), 'today'=>xarML('Today'), 'next4weeks'=>xarML('Next four weeks'))</xar:set>
             <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
 
@@ -26,6 +34,38 @@
             <input type="hidden" name="startnum" value="1" />
 
             <input type="submit" value="#xarML('Go')#" />
+        </p>
+
+        <p>
+            <xar:comment>
+                TODO: check for categories hook before displaying this section
+                TODO: offer separate lists for each base category
+                TODO: use the title of each base category
+            </xar:comment>
+            <label for="catids"><xar:mlstring>Categories:</xar:mlstring></label>
+            <select name="catids[]" id="catids" multiple="multiple" style="vertical-align: top; height: 6em;">
+                <xar:loop name="$categories['flatlist']">
+                    <xar:if condition="in_array($loop:item.cid, $catids)">
+                        <option value="#$loop:item.cid#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
+                    <xar:else />
+                        <option value="#$loop:item.cid#">#xarVarPrepForDisplay($loop:item.name)#</option>
+                    </xar:if>
+                </xar:loop>
+            </select>
+
+            <xar:if condition="$crule eq 'or'">
+                <input type="radio" name="crule" id="crule1" value="or" checked="checked" />
+            <xar:else />
+                <input type="radio" name="crule" id="crule1" value="or" />
+            </xar:if>
+            <label for="crule1"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
+
+            <xar:if condition="$crule eq 'and'">
+                <input type="radio" name="crule" id="crule2" value="and" checked="checked" />
+            <xar:else />
+                <input type="radio" name="crule" id="crule2" value="and" />
+            </xar:if>
+            <label for="crule2"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
         </p>
     </form>
 </div>

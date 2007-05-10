@@ -41,6 +41,9 @@ div.ievents-view dl.ievents-events dt strong {
 	display: block;
 	float: left;
 }
+div.ievents-view dl.ievents-events dt span {
+	padding-left: 12em;
+}
 
 /* Grouping lists */
 

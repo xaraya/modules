@@ -70,6 +70,11 @@ function ievents_userapi_params($args)
         // This is really a display thing, and deserves to live in the templates.
         // TODO: it may not actually be used yet.
         $params['summary_max_words'] = 100;
+
+        // Default year range in drop-downs
+        // TODO: the year ranges should come from actual dates
+        $params['year_range_min'] = -3;
+        $params['year_range_max'] = +5;
     }
 
     if (!empty($name)) {

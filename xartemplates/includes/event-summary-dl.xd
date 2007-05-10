@@ -15,11 +15,12 @@
 
 <dt class="ievents-event" id="event-summary-#$event.eid#">
     <xar:if condition="$group eq 'day'">
-        <strong>#$dates.short.time#</strong> <a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
+        <xar:comment>Display only the time if grouping by day</xar:comment>
+        <strong>#$dates.short.time# </strong><a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
     <xar:else />
-        <strong>#$dates.short.date#</strong> <a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
+        <strong>#$dates.short.date# </strong><a href="#xarServerGetCurrentURL(array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a>
         <xar:if condition="$event.duration_days eq 1">
-            #$dates.short.time#
+            <br /><span>#$dates.short.time#</span>
         </xar:if>
     </xar:if>
 

@@ -23,9 +23,9 @@ function ievents_user_view($args)
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
     // Get module parameters
-    list($module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek, $html_fields, $itemtype_events) =
+    list($module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek, $html_fields, $itemtype_events, $year_range_min, $year_range_max) =
         xarModAPIfunc('ievents', 'user', 'params',
-            array('names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,html_fields,itemtype_events')
+            array('names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,html_fields,itemtype_events,year_range_min,year_range_max')
         );
 
     // Get the user parameters.
@@ -100,6 +100,48 @@ function ievents_user_view($args)
     // Any time component is irrelevant and will be stripped off later.
     //
 
+    // Check the start date individual components.
+    // Input can consist of year, year/month or year/month/day
+    if (!empty($startyear)) {
+        if (!empty($startmonth)) {
+            // Pad the month out to two characters.
+            $startmonth = str_pad($startmonth, 2, '0', STR_PAD_LEFT);
+            if (!empty($startday)) {
+                // Year month and day
+                $startday = str_pad($startday, 2, '0', STR_PAD_LEFT);
+                $startdate = "${startyear}${startmonth}${startday}";
+            } else {
+                // Just year and month (pick first day of the month)
+                $startdate = "${startyear}${startmonth}01";
+            }
+        } else {
+            // Just the year (pick first day of the year)
+            $startdate = "${startyear}0101";
+        }
+    }
+
+    // Check the end date individual components.
+    if (!empty($endyear)) {
+        if (!empty($endmonth)) {
+            $endmonth = str_pad($endmonth, 2, '0', STR_PAD_LEFT);
+            if (!empty($endday)) {
+                // Year month and day
+                $endday = str_pad($endday, 2, '0', STR_PAD_LEFT);
+                $enddate = "${endyear}${endmonth}${endday}";
+            } else {
+                // Just year and month (pick last day of the month)
+                $enddate = "${endyear}${endmonth}" . date('d', mktime(0, 0, 0, ($endmonth + 1), 0, $endyear));
+            }
+        } else {
+            // Just the year (pick last day of the year - 1231 == 31 December)
+            $enddate = "${endyear}1231";
+        }
+    }
+
+    // If the start and end date strings have got this far, then treat them as valid dates.
+    if (!empty($startdate)) $ustartdate = strtotime($startdate);
+    if (!empty($enddate)) $uenddate = strtotime($enddate);
+
     // Textual ranges
     if (!empty($range)) {
         // TODO: put these range functions into an API so they can be used in display functions
@@ -166,51 +208,9 @@ function ievents_user_view($args)
         }
     }
 
-    // Check the start date individual components.
-    // Input can consist of year, year/month or year/month/day
-    if (!empty($startyear)) {
-        if (!empty($startmonth)) {
-            // Pad the month out to two characters.
-            $startmonth = str_pad($startmonth, 2, '0', STR_PAD_LEFT);
-            if (!empty($startday)) {
-                // Year month and day
-                $startday = str_pad($startday, 2, '0', STR_PAD_LEFT);
-                $startdate = "${startyear}${startmonth}${startday}";
-            } else {
-                // Just year and month (pick first day of the month)
-                $startdate = "${startyear}${startmonth}01";
-            }
-        } else {
-            // Just the year (pick first day of the year)
-            $startdate = "${startyear}0101";
-        }
-    }
-
-    // Check the end date individual components.
-    if (!empty($endyear)) {
-        if (!empty($endmonth)) {
-            $endmonth = str_pad($endmonth, 2, '0', STR_PAD_LEFT);
-            if (!empty($endday)) {
-                // Year month and day
-                $endday = str_pad($endday, 2, '0', STR_PAD_LEFT);
-                $enddate = "${endyear}${endmonth}${endday}";
-            } else {
-                // Just year and month (pick last day of the month)
-                $enddate = "${endyear}${endmonth}" . date('d', mktime(0, 0, 0, ($endmonth + 1), 0, $endyear));
-            }
-        } else {
-            // Just the year (pick last day of the year - 1231 == 31 December)
-            $enddate = "${endyear}1231";
-        }
-    }
-
     // Validate the start and end date, and default if not valid (in YYYYMMDD format).
     if (!empty($startdate) && !checkdate(substr($startdate,2,2), substr($startdate,4,2), substr($startdate,0,4))) $startdate = '';
     if (!empty($enddate) && !checkdate(substr($enddate,2,2), substr($enddate,4,2), substr($enddate,0,4))) $enddate = '';
-
-    // If the start and end date strings have got this far, then treat them as valid dates.
-    if (!empty($startdate)) $ustartdate = strtotime($startdate);
-    if (!empty($enddate)) $uenddate = strtotime($enddate);
 
     // The user hay have selected a date range measured in other units (days, weeks, months)
     if (!empty($datenumber) && !empty($datetype)) {
@@ -544,6 +544,29 @@ function ievents_user_view($args)
     $categories = xarModAPIfunc('ievents', 'user', 'getallcategories');
     //echo "<pre>"; var_dump($categories); echo "</pre>";
 
+
+    // Create some arrays useful for date drop-downs
+    // TODO: move this to an API
+    // TODO: add days of the week etc.
+    $lists = array();
+    $lists['daynum'] = array('');
+    for($i = 1; $i <= 31; $i++) $lists['daynum'][$i] = $i;
+    $localeData = xarMLSLoadLocaleData();
+    $lists['monthnum'] = array('');
+    $lists['monthshort'] = array('');
+    $lists['monthlong'] = array('');
+    for($i = 1; $i <= 12; $i++) {
+        $lists['monthnum'][$i] = $i;
+        $lists['monthshort'][$i] = $localeData["/dateSymbols/months/${i}/short"];
+        $lists['monthlong'][$i] = $localeData["/dateSymbols/months/${i}/full"];
+    }
+    $thisyear = (int)date('Y');
+    $lists['yearnum'] = array('');
+    for($i = $thisyear + $year_range_min; $i <= $thisyear + $year_range_max; $i++) {
+        $lists['yearnum'][$i] = $i;
+    }
+
+
     //
     // Pass data back out to the template
     //
@@ -562,7 +585,8 @@ function ievents_user_view($args)
         'calendars',
         'cats', 'catid', 'catids', 'crule',
         'hooks', 'categories',
-        'cid'
+        'cid',
+        'lists'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
