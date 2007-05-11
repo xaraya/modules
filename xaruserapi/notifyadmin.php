@@ -1,19 +1,18 @@
 <?php
 /**
- * Notification of new user registrations
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Registration module
+ * @subpackage registration
  * @author Jo Dalle Nogare
  */
 /**
  * Send new user notification to admin
  *
- * Send notification to the nominated admin of a new user Registration
+ * Send notification to the nominated admin of a new user registration
+ *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @param admin email - the email of administrator to receive the notification
  * @param admin name - the name of the administrator(optional)
@@ -26,26 +25,22 @@
  */
 function registration_userapi_notifyadmin ($args)
 {
-    // Get parameters
     extract ($args);
 
-    if (!xarVarFetch('adminemail',   'str:1:', $adminemail,    xarModVars::get('mail','adminname'))) return; //user the admin email if it's not set by now
-    if (!xarVarFetch('adminname',    'str:1:', $adminname,    'Administrator', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('userrealname', 'str:1:', $userrealname, 'New User', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('username',     'str:1:', $username,     '', XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useremail',    'str:1:', $useremail,    '', XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('terms',        'str:1:', $terms,        '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('uid',          'int:1:', $uid )) return;
-    if (!xarVarFetch('userstatus',   'int:0:', $userstatus,    0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('adminemail', 'str:1:', $adminemail, xarModVars::get('mail','adminemail'))) return;
+    if (!xarVarFetch('adminname',  'str:1:', $adminname,  'Administrator', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('terms',      'str:1:', $terms,      '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     //set a title and link to the user role
+    $uid = $values['id'];
+    $state = $values['state'];
     $requireapproval = xarModVars::get('registration','explicitapproval');
     if ($requireapproval) {
-        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$username);
+        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$values['uname']);
     } else {
-        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $username, $userrealname);
+        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $values['uname'], $values['name']);
     }
-    $rolelink = xarModURL('roles','admin','modifyrole',array('uid'=>$uid),false);
+    $rolelink = xarModURL('roles','admin','modifyrole',array('uid' => $uid), false);
 
     /*
        TODO: can we do this more centrally instead of every function with email
@@ -61,12 +56,12 @@ function registration_userapi_notifyadmin ($args)
         xarModVars::set('themes','ShowTemplates',0);
     }
 
-    if ($userstatus == 4) {
-       $pending = xarML('PENDING and requiring approval');
-    } elseif ($userstatus == 3) {
-       $pending=xarML('ACTIVE');
-    } elseif ($userstatus == 2) {
-       $pending=xarML('NON VALIDATED'); // not available in this registration mailing scenario
+    if ($state == 4) {
+       $state = xarML('PENDING and requiring approval');
+    } elseif ($state == 3) {
+       $state = xarML('ACTIVE');
+    } elseif ($state == 2) {
+       $state = xarML('NON VALIDATED'); // not available in this registration mailing scenario
     }
     $siteadminemail = xarModVars::get('mail','adminmail');
     $siteadminname  = xarModVars::get('mail','adminname');
@@ -74,15 +69,11 @@ function registration_userapi_notifyadmin ($args)
 
     $emailvars = array('adminemail'  => $adminemail,
                        'adminname'    => $adminname,
-                       'userrealname' => $userrealname,
-                       'username'     => $username,
                        'terms'        => $terms,
-                       'uid'          => $uid,
-                       'useremail'    => $useremail,
                        'messagetitle' => $messagetitle,
                        'rolelink'     => $rolelink,
                        'sitename'     => $sitename,
-                       'pending'      => $pending
+                       'values'      => $values
                       );
 
     //Prepare the text message

@@ -1,13 +1,11 @@
 <?php
 /**
- * Check a user variable
- *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Registration module
+ * @subpackage registration
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
@@ -23,7 +21,6 @@
     'ip' (no var required),
     'email', email str
     'username', username str
-    'realname', realname str
     'agreetoterms', not empty (checkbox)
     'pass1', password str
     'pass2', password str
@@ -62,18 +59,9 @@ function registration_userapi_checkvar($args)
             if (empty($username)) {
                 $invalid = xarML('You must provide a preferred username to continue.');
 
-            // check for spaces in the username
-            } elseif (preg_match("/[[:space:]]/",$username)) {
-                $invalid = xarML('There is a space in the username');
-
             // check the length of the username
             } elseif (strlen($username) > 255) {
                 $invalid = xarML('Your username is too long.');
-
-            // check for spaces in the username (again ?)
-            } elseif (strrpos($username,' ') > 0) {
-                $invalid = xarML('There is a space in your username');
-
             } else {
                 // check for duplicate usernames
                 $user = xarModAPIFunc('roles', 'user', 'get',
@@ -94,16 +82,6 @@ function registration_userapi_checkvar($args)
                         }
                     }
                 }
-            }
-            break;
-
-        case 'realname':
-            $realname = $var;
-            if (empty($realname)){
-                $invalid = xarML('You must provide your display name to continue.');
-
-            } else {
-                // TODO: add some other limitations ?
             }
             break;
 
@@ -137,16 +115,9 @@ function registration_userapi_checkvar($args)
             if (empty($email)){
                 $invalid = xarML('You must provide a valid email address to continue.');
             } else {
-                //use the roles validatevar function - no need to duplicate
-                $emailcheck = xarModAPIFunc('registration', 'user', 'validatevar',
-                                            array('var' => $email,
-                                                 'type' => 'email'));
+                $invalid = '';
 
-                if ($emailcheck == false) {
-                    $invalid = xarML('There is an error in your email address');
-                }
-
-                if (empty($invalid) && xarModVars::get('registration','uniqueemail')) {
+                if (xarModVars::get('registration','uniqueemail')) {
                     // check for duplicate email address
                     $user = xarModAPIFunc('roles', 'user', 'get',
                                array('email' => $email));

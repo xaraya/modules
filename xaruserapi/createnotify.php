@@ -31,7 +31,9 @@ function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    if ($state==ROLES_STATE_NOTVALIDATED) {
+    $uid = $values['id'];
+    $pass = $values['password'];
+    if ($state == ROLES_STATE_NOTVALIDATED) {
         if (empty($ip)) {
             $ip = xarServerGetVar('REMOTE_ADDR');
         }
@@ -48,7 +50,7 @@ function registration_userapi_createnotify($args)
         }
     }
 
-    if ($state==ROLES_STATE_PENDING || $state==ROLES_STATE_ACTIVE) {
+    if ($state == ROLES_STATE_PENDING || $state == ROLES_STATE_ACTIVE) {
         // Send an e-mail to the admin if notification of new user registration is required,
         // Same  email is added to the 'getvalidation' new users in Roles module
 
@@ -62,12 +64,8 @@ function registration_userapi_createnotify($args)
             $emailargs = array(
                             'adminname'     => xarModVars::get('mail', 'adminname'),
                             'adminemail'    => xarModVars::get('registration', 'notifyemail'),
-                            'userrealname'  => $realname,
-                            'username'      => $username,
-                            'useremail'     => $email,
-                            'terms'         => $terms,
-                            'uid'           => $uid,
-                            'userstatus'    => $state );
+                            'values'  => $values,
+                            'terms'         => $terms);
 
             if (!xarModAPIFunc('registration', 'user', 'notifyadmin', $emailargs)) {
                return; // TODO ...something here if the email is not sent..
@@ -75,7 +73,7 @@ function registration_userapi_createnotify($args)
         }
     }
 
-    if ($state==ROLES_STATE_ACTIVE) {
+    if ($state == ROLES_STATE_ACTIVE) {
          // send welcome email to user(option)
          // This template is used in options for user validation, user validation and user pending, and user pending alone
         if (xarModVars::get('registration', 'sendwelcomeemail')) {
