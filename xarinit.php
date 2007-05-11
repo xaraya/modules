@@ -26,7 +26,8 @@ function registration_init()
  * Set up masks
  */
     xarRegisterMask('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadRegistration','All','registration','All','All','ACCESS_READ');
+    xarRegisterMask('ViewRegistrationLogin','All','registration','BlockItem','All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRegistration','All','registration','All','All','ACCESS_EDIT');
     xarRegisterMask('AdminRegistration','All','registration','All','All','ACCESS_ADMIN');
 
@@ -34,10 +35,12 @@ function registration_init()
  * Set up privileges
  */
     xarRegisterPrivilege('AdminRegistration','All','registration','All','All','ACCESS_ADMIN','Admin the Registration module');
-    xarRegisterPrivilege('ViewRegistrationLogin','All','registration','Block','rlogin:Login:All','ACCESS_OVERVIEW','View the User Access block');
-    xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View the User Access block');
+    xarRegisterPrivilege('ViewRegistrationLogin','All','registration','BlockItem','All','ACCESS_OVERVIEW','View the User Access block');
+    xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View access to the registration module');
+    xarRegisterPrivilege('ReadRegistration','All','registration','All','All','ACCESS_READ','Read access to the registration module');
     xarMakePrivilegeRoot('ViewRegistrationLogin');
     xarMakePrivilegeRoot('ViewRegistration');
+    xarMakePrivilegeRoot('ReadRegistration');
     xarMakePrivilegeRoot('AdminRegistration');
 
 /** --------------------------------------------------------

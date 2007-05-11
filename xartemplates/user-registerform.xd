@@ -49,8 +49,8 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
-                    <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a> <xar:mlstring>and</xar:mlstring> <a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    <xar:mlstring>I agree to be bound by this website's&#160;</xar:mlstring>
+                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>&#160;<xar:mlstring>and</xar:mlstring>&#160;<a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                  </label>
             </div>
                  <xar:if condition="!empty($invalid['agreetoterms'])">
