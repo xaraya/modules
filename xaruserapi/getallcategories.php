@@ -47,6 +47,8 @@ function ievents_userapi_getallcategories($args)
             foreach($basecatslist[$basecat['cid']] as $key2 => $cat) {
                 $cat['basecid'] = $key1;
                 $flatcatlist[$cat['cid']] = $cat;
+                if (!isset($basecats[$key1]['catlist'])) $basecats[$key1]['catlist'] = array();
+                $basecats[$key1]['catlist'][$cat['cid']] =& $flatcatlist[$cat['cid']];
             }
         }
 

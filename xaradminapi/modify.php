@@ -11,6 +11,9 @@
  * @todo Accept dates and times in other formats (separate fields) and feed them into the DD properties
  *       (they can be overridden in the display template)
  * @todo Put in checks for categories hooked to events (don't assume they are hooked)
+ * @todo It is important to ensure the 'html' fields are encoded as HTML when saving, otherwise going back
+ *       to edit with TinyMCE will be a problem, since TinyMCE cannot take text as its input without
+ *       treating it as a single paragraph of unformatted text.
  */
 
 function ievents_adminapi_modify($args)

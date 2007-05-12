@@ -75,6 +75,9 @@ function ievents_userapi_params($args)
         // TODO: the year ranges should come from actual dates
         $params['year_range_min'] = -3;
         $params['year_range_max'] = +5;
+
+        // Fields included in query-text searches
+        $params['q_fields'] = 'title,summary,location_venue,location_postcode,external_ref';
     }
 
     if (!empty($name)) {

@@ -15,7 +15,7 @@
       <default></default>
       <source>xar_ievents_calendars.cid</source>
       <status>1</status>
-      <order>1</order>
+      <order>10</order>
       <validation></validation>
     </property>
     <property name="status">
@@ -25,7 +25,7 @@
       <default>ACTIVE</default>
       <source>xar_ievents_calendars.status</source>
       <status>1</status>
-      <order>2</order>
+      <order>20</order>
       <validation>ACTIVE;INACTIVE</validation>
     </property>
     <property name="short_name">
@@ -35,7 +35,7 @@
       <default></default>
       <source>xar_ievents_calendars.short_name</source>
       <status>1</status>
-      <order>3</order>
+      <order>30</order>
       <validation>0:60</validation>
     </property>
     <property name="long_name">
@@ -45,7 +45,7 @@
       <default></default>
       <source>xar_ievents_calendars.long_name</source>
       <status>1</status>
-      <order>4</order>
+      <order>40</order>
       <validation>0:200</validation>
     </property>
     <property name="description">
@@ -55,7 +55,27 @@
       <default></default>
       <source>xar_ievents_calendars.description</source>
       <status>2</status>
-      <order>5</order>
+      <order>50</order>
+      <validation></validation>
+    </property>
+    <property name="event_header">
+      <id>125</id>
+      <label>Event Header</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>60</order>
+      <validation></validation>
+    </property>
+    <property name="event_footer">
+      <id>124</id>
+      <label>Event Footer</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>70</order>
       <validation></validation>
     </property>
   </properties>

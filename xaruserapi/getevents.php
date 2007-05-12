@@ -17,11 +17,12 @@
  * @param external_source string Matches the extrnal source
  * @param external_ref string Matches the external reference
  * @param flags string or array Various flags to match on (flags are 'OR'ed). Flags are single letters.
+ * @param q string Query text, accepts space-separated keywords
  *
  * @todo Fetch matching categories into each event.
  * @todo Zero is a valid date - need to ensure it is treated that way throughout. NULL is an empty date (for the DB too)
  * @todo Further date rules: single/multiple-day, fully-enclosed, overlapping etc. (perhaps as an output flag too)
- * @todo Group fields with 'location' and 'contact' prefixes.
+ * @todo Group fields with 'location' and 'contact' prefixes. [done]
  * @todo Fix the calendar lookup: if we ask for a calendar, then we must stick to it
  * @todo Support date range "extends into, but starts before" to display events that range into the selected period
  *
@@ -33,8 +34,8 @@ function ievents_userapi_getevents($args)
 {
     extract($args);
 
-    list($module, $modid, $itemtype) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events'));
+    list($module, $modid, $itemtype, $q_fields) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -155,6 +156,30 @@ function ievents_userapi_getevents($args)
         $flag_tests = array();
         foreach($flags as $flag) $flag_tests[] = 'flags LIKE ' . $dbconn->qstr("%${flag}%");
         $where_arr[] = '( ' . implode(' OR ', $flag_tests) . ' )';
+    }
+
+    // Query text (keywords)
+    if (!empty($q) && !empty($q_fields)) {
+        xarVarValidate('pre:trim:left:200:passthru:strlist: :pre:trim:passthru:str::30', $q, true);
+        // Remove duplicate runs of spaces, then split into words
+        // We don't support "quoted phrases" in this simple keyword search.
+        $q = preg_replace('/ +/', ' ', $q);
+
+        $q_fields_arr = explode(',', $q_fields);
+
+        $q_where = array();
+        foreach(explode(' ', $q) as $q_word) {
+            $q_where_words = array();
+            foreach($q_fields_arr as $q_field) {
+                $q_where_words[] = $q_field . ' LIKE ' . $dbconn->qstr("%${q_word}%");
+            }
+            $q_where[] = ' (' . implode(' OR ', $q_where_words) . ') ';
+        }
+        if (empty($qrule) || $qrule == 'and') {
+            $where_arr[] = implode(' AND ', $q_where);
+        } else {
+            $where_arr[] = ' (' . implode(' OR ', $q_where) . ') ';
+        }
     }
 
 

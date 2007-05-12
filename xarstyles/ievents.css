@@ -72,12 +72,22 @@ div.ievents-view dl.ievents-event dt {
 	border-bottom: 1px solid #eeeeee;
 	margin-top: 1em;
 }
+div.ievents-view dl.ievents-event dd.ievents-event-calfooter {
+	margin: 1em 0;
+	padding: 0.5em 1em;
+	border: 1px solid #eeeeee;
+}
+div.ievents-view dl.ievents-event dd.ievents-event-calheader {
+	margin: 1em 0;
+	padding: 0.5em 1em;
+	border: 1px solid #eeeeee;
+}
 
 /* Next/previous links in an event detail */
 div.ievents-nextprev {
 	margin: 0.25em 0;
 	padding: 0.25wm 0;
-	border: solid #bbbbbb;
+	border: dotted #bbbbbb;
 	border-width: 1px 0;
 }
 div.ievents-nextprev ul {
@@ -111,3 +121,9 @@ div.ievents-nextprev li.ievents-nextprev-next {
 	text-align: right;
 }
 
+/* Jump menu formatting */
+
+select.ievents-jump-catids {
+	vertical-align: top;
+	height: 6em;
+}

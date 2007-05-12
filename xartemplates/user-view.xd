@@ -13,10 +13,21 @@
             <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
             <xar:mlstring>to</xar:mlstring>
             <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-            <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthshort']" value="$endmonth" />
+            <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
             <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
 
-            <xar:set name="daterangelist">array(''=>xarML('-- Preset --'), 'thisyear'=>xarML('This year'), 'thismonth'=>xarML('This month'), 'thisweek'=>xarML('This week'), 'today'=>xarML('Today'), 'next4weeks'=>xarML('Next four weeks'))</xar:set>
+            <xar:set name="daterangelist">array(
+                ''=>xarML('-- Preset --'),
+                'thisyear'=>xarML('This year'),
+                'nextyear'=>xarML('Next year'),
+                'thismonth'=>xarML('This month'),
+                'nextmonth'=>xarML('Next month'),
+                'thisweek'=>xarML('This week'),
+                'nextweek'=>xarML('Next week'),
+                'today'=>xarML('Today'),
+                'next4weeks'=>xarML('Next four weeks'),
+                'next6months'=>xarML('Next six months')
+            )</xar:set>
             <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
 
             <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
@@ -30,8 +41,12 @@
             <input type="hidden" name="func" value="view" />
    
             <xar:comment>Reset a few values if the jump menu is used</xar:comment>
-            <input type="hidden" name="eid" value="" />
-            <input type="hidden" name="startnum" value="1" />
+            <xar:if condition="!empty($startnum)">
+                <input type="hidden" name="startnum" value="1" />
+            </xar:if>
+            <xar:if condition="!empty($numitems) && $numitems ne $default_numitems">
+                <input type="hidden" name="numitems" value="#$numitems#" />
+            </xar:if>
 
             <input type="submit" value="#xarML('Go')#" />
         </p>
@@ -42,30 +57,44 @@
                 TODO: offer separate lists for each base category
                 TODO: use the title of each base category
             </xar:comment>
-            <label for="catids"><xar:mlstring>Categories:</xar:mlstring></label>
-            <select name="catids[]" id="catids" multiple="multiple" style="vertical-align: top; height: 6em;">
-                <xar:loop name="$categories['flatlist']">
-                    <xar:if condition="in_array($loop:item.cid, $catids)">
-                        <option value="#$loop:item.cid#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
-                    <xar:else />
-                        <option value="#$loop:item.cid#">#xarVarPrepForDisplay($loop:item.name)#</option>
+            <label for="catids_0"><xar:mlstring>Categories:</xar:mlstring></label>
+            <xar:if condition="!empty($categories.basecats)">
+                <xar:loop name="$categories['basecats']" id="basecats">
+                    <xar:if condition="!empty($loop:item.catlist)">
+                        <select class="ievents-jump-catids" name="catids[]" id="catids_#$loop:index#" multiple="multiple">
+                            <optgroup label="#xarVarPrepForDisplay($loop:basecats:item.catname)#">
+                            <xar:loop name="$loop:item.catlist">
+                                <xar:if condition="in_array($loop:item.cid, $catids)">
+                                    <option value="#$loop:item.cid#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                <xar:else />
+                                    <option value="#$loop:item.cid#">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                </xar:if>
+                            </xar:loop>
+                            </optgroup>
+                        </select>
                     </xar:if>
                 </xar:loop>
-            </select>
-
-            <xar:if condition="$crule eq 'or'">
-                <input type="radio" name="crule" id="crule1" value="or" checked="checked" />
-            <xar:else />
-                <input type="radio" name="crule" id="crule1" value="or" />
             </xar:if>
-            <label for="crule1"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
+            
+            <xar:if condition="$crule eq 'or'">
+                <input type="radio" name="crule" id="crule_1" value="or" checked="checked" />
+            <xar:else />
+                <input type="radio" name="crule" id="crule_1" value="or" />
+            </xar:if>
+            <label for="crule_1"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
 
             <xar:if condition="$crule eq 'and'">
-                <input type="radio" name="crule" id="crule2" value="and" checked="checked" />
+                <input type="radio" name="crule" id="crule_2" value="and" checked="checked" />
             <xar:else />
-                <input type="radio" name="crule" id="crule2" value="and" />
+                <input type="radio" name="crule" id="crule_2" value="and" />
             </xar:if>
-            <label for="crule2"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
+            <label for="crule_2"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
+        </p>
+        <p>
+            <xar:if condition="!empty($q_fields)">
+                <label for="q"><xar:mlstring>Keywords:</xar:mlstring></label>
+                <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
+            </xar:if>
         </p>
     </form>
 </div>
@@ -86,7 +115,7 @@
                 <dd class="ievents-hooks">
                     <xar:foreach in="$hooks" key="$hookmodule">
                         <xar:if condition="trim($hooks[$hookmodule]) ne ''">
-                        <div>#$hooks[$hookmodule]#</div>
+                            <div class="ievents-hooks-#$hookmodule#">#$hooks[$hookmodule]#</div>
                         </xar:if>
                     </xar:foreach>
                 </dd>

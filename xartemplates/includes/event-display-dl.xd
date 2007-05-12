@@ -18,6 +18,10 @@
     </xar:if>
 </dt>
 
+<xar:if condition="!empty($calendar.event_header)">
+    <dd class="ievents-event-calheader">#$calendar.event_header#</dd>
+</xar:if>
+
 <dt>
     <xar:mlstring>Summary</xar:mlstring>
 </dt>
@@ -111,3 +115,7 @@
         </dd>
     </xar:if>
 </xar:sec>
+
+<xar:if condition="!empty($calendar.event_header)">
+    <dd class="ievents-event-calfooter">#$calendar.event_footer#</dd>
+</xar:if>

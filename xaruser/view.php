@@ -23,10 +23,15 @@ function ievents_user_view($args)
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
     // Get module parameters
-    list($module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek, $html_fields, $itemtype_events, $year_range_min, $year_range_max) =
-        xarModAPIfunc('ievents', 'user', 'params',
-            array('names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,html_fields,itemtype_events,year_range_min,year_range_max')
-        );
+    list(
+        $module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek,
+        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields
+    ) = xarModAPIfunc('ievents', 'user', 'params',
+        array(
+            'names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,'
+            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields'
+        )
+    );
 
     // Get the user parameters.
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
@@ -67,6 +72,7 @@ function ievents_user_view($args)
     if (!empty($range)) {
         $datenumber = preg_replace('/[^0-9]/', '', $range);
         $datetype = preg_replace('/^next[0-9]+/', '', $range);
+        $startdate = date('Ymd');
     }
     // Unset the range, so it can be evaluated through a different set of rules below.
     unset($range);
@@ -95,6 +101,12 @@ function ievents_user_view($args)
     // Calendar ID
     xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
 
+    // Query text
+    xarVarFetch('q', 'pre:trim:left:200:passthru:strlist: :pre:trim:passthru:str::30', $q, '', XARVAR_NOT_REQUIRED);
+    // Remove duplicate runs of spaces, then split into words
+    // We don't support "quoted phrases" in this simple keyword search.
+    $q = preg_replace('/ +/', ' ', $q);
+
     //
     // Validate and process some of the date parameters.
     // Any time component is irrelevant and will be stripped off later.
@@ -102,7 +114,7 @@ function ievents_user_view($args)
 
     // Check the start date individual components.
     // Input can consist of year, year/month or year/month/day
-    if (!empty($startyear)) {
+    if (empty($startdate) && !empty($startyear)) {
         if (!empty($startmonth)) {
             // Pad the month out to two characters.
             $startmonth = str_pad($startmonth, 2, '0', STR_PAD_LEFT);
@@ -121,7 +133,7 @@ function ievents_user_view($args)
     }
 
     // Check the end date individual components.
-    if (!empty($endyear)) {
+    if (empty($enddate) && !empty($endyear)) {
         if (!empty($endmonth)) {
             $endmonth = str_pad($endmonth, 2, '0', STR_PAD_LEFT);
             if (!empty($endday)) {
@@ -331,6 +343,7 @@ function ievents_user_view($args)
     );
 
     if (!empty($cid)) $event_params['cid'] = $cid;
+    if (!empty($q) && !empty($q_fields)) $event_params['q'] = $q;
 
     // Add in the category restrictions if required.
     if (!empty($catids)) {
@@ -374,17 +387,19 @@ function ievents_user_view($args)
             }
             $prev_event = array();
             $next_event = array();
+            $page_position = 1;
+            $list_position = 1;
         } else {
             // Count which element it is, i.e. the position on the page.
             // A handy value in the list helps us there.
-            $eventcount = count($events);
-            $position = $events[$eid]['position'];
+            $page_eventcount = count($events);
+            $page_position = $events[$eid]['position'];
             $event =& $events[$eid];
 
             // If we are at the start of a page:
             // - if on the first page, then there is no previous event
             // - if not on the first page, then the previous event is on the previous page
-            if ($position == 1) {
+            if ($page_position == 1) {
                 // At the start of a page.
                 if ($startnum > 1) {
                     // We are not on the first page.
@@ -403,7 +418,7 @@ function ievents_user_view($args)
                 // Not at the start of the page, so the previous event should be easily
                 // available in the events array.
                 // -1: previous element; -1: zero-based offset for array_slice
-                $prev_event_arr = array_slice($events, $position - 1 - 1, 1);
+                $prev_event_arr = array_slice($events, $page_position - 1 - 1, 1);
                 $prev_event = reset($prev_event_arr);
                 $prev_event['startnum'] = $startnum;
             }
@@ -411,16 +426,16 @@ function ievents_user_view($args)
             // If we are at the end of a page:
             // - if on the last page, then there is no next event
             // - if not on the last page, then the next event is on the next page
-            if ($position == $eventcount) {
+            if ($page_position == $page_eventcount) {
                 // Last event on the page
                 // If we are on the last page, then there are no more events.
                 // We won't know that unless we try fetching the next event.
                 // Note: a shortcut is to look at the position on the page - if less than
                 // numitems, then we are almost certainly on the last page OR privileges
                 // have chopped a few out of the list (we cannot tell which).
-                //if ($position == $numitems) {
+                //if ($page_position == $numitems) {
                     $next_event = xarModAPIfunc('ievents', 'user', 'getevent',
-                        array_merge($event_params, array('startnum' => $startnum + $eventcount, 'numitems' => 1))
+                        array_merge($event_params, array('startnum' => $startnum + $page_eventcount, 'numitems' => 1))
                     );
                 //}
                 if (!empty($next_event)) {
@@ -430,18 +445,23 @@ function ievents_user_view($args)
             } else {
                 // Not the last on the page.
                 // +1: next element; -1: zero-based offset for array_slice
-                $next_event_arr = array_slice($events, $position, 1);
+                $next_event_arr = array_slice($events, $page_position, 1);
                 $next_event = reset($next_event_arr);
                 $next_event['startnum'] = $startnum;
             }
+
+            // The position of the current event in the total matched list.
+            $list_position = $page_position + $startnum - 1;
         }
     } else {
         $prev_event = array();
         $next_event = array();
         $event = array();
+        $page_position = 0;
+        $list_position = 0;
     }
 
-    
+
     // Create pagination.
     // The url params would be slightly different to the event params (no unix timestamps
     // for a start, and possibly different category parameter formats).
@@ -455,12 +475,14 @@ function ievents_user_view($args)
 
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
-
     if (!empty($cid)) $url_params['calendar_id'] = $cid;
+    if (!empty($q) && !empty($q_fields)) $event_params['q'] = $q;
     
-    $event_count = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
+    // Count of all matching events.
+    $total_events = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
 
-    $pager = xarTplGetPager($startnum, $event_count,
+    // The pager is a block of HTML
+    $pager = xarTplGetPager($startnum, $total_events,
         xarModURL('ievents', 'user', 'view', $url_params), $numitems
     );
 
@@ -518,7 +540,7 @@ function ievents_user_view($args)
             $events[$eventkey]['itemtype'] = $itemtype_events;
 
             // The vast majority of the data will not need transforming, but all fields will
-            // be passed in just in case.
+            // be passed in just in case they are needed somewhere.
             $transformed = xarModCallHooks('item', 'transform', $events[$eventkey]['eid'], $events[$eventkey], $module);
 
             // Merge just the transformed fields back into the event.
@@ -573,20 +595,35 @@ function ievents_user_view($args)
 
     // By keeping the bl data and variable names the same, passing data is easy.
     $bl_data = @compact(
+        // Dates
         'ustartdate', 'uenddate',
         'startdate', 'enddate',
         'startyear', 'startmonth', 'startday',
         'endyear', 'endmonth', 'endday',
         'datenumber', 'datetype',
+
+        // Groups and grouping
         'group', 'groups',
+
+        // Navigation within the matched event list
         'next_event', 'prev_event',
-        'eid', 'event',
-        'events', 'pager',
-        'calendars',
+        'eid', 'event', 'page_position', 'list_position', 'total_events',
+
+        // Pager
+        'pager',
+        'startnum', 'numitems', 'default_numitems',
+
+        // Lists (data and lookup)
+        'events', 'calendars',
+        'categories',
+        'lists', // TODO: move to an API, for use directly in templates
+
+        // Categories
         'cats', 'catid', 'catids', 'crule',
-        'hooks', 'categories',
         'cid',
-        'lists'
+
+        // Other
+        'hooks', 'q', 'q_fields'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
