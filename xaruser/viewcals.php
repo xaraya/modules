@@ -25,6 +25,19 @@ function ievents_user_viewcals($args)
     xarVarPrepForDisplay('cid', 'id', $cid, 0, XAR_VAR_NOTREQUIRED);
     xarVarPrepForDisplay('name', 'str:0:200', $name, '', XAR_VAR_NOTREQUIRED);
 
+    // Get module variables.
+    list($cal_subscribe_range, $cal_subscribe_numitems) = xarModAPIfunc('ievents', 'user', 'params',
+        array('names' => 'cal_subscribe_range,cal_subscribe_numitems')
+    );
+
+    // Get details of the export handlers available.
+    $export_object = xarModAPIfunc('ievents', 'export', 'new_export');
+    if (!empty($export_object)) {
+        $export_handlers = $export_object->handlers;
+    } else {
+        $export_handlers = array();
+    }
+
     // If we have admin privileges, then include inactive calendars.
     // TODO: this check has cropped up in a number of places now. Can they be combined?
     if (xarSecurityCheck('AdminIEvent', 0, 'IEvent', 'All:All:All')) {
@@ -46,6 +59,9 @@ function ievents_user_viewcals($args)
 
     $return = array(
         'calendars' => $calendars,
+        'cal_subscribe_range' => $cal_subscribe_range,
+        'export_handlers' => $export_handlers,
+        'cal_subscribe_numitems' => $cal_subscribe_numitems,
     );
 
     return $return;

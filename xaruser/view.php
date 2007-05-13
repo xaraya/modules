@@ -568,6 +568,26 @@ function ievents_user_view($args)
     //echo "<pre>"; var_dump($categories); echo "</pre>";
 
 
+    // Get details of exports available.
+    $export_object = xarModAPIfunc('ievents', 'export', 'new_export');
+    if (!empty($export_object)) {
+        $export_handlers = $export_object->handlers;
+
+        // Check if the user has asked for an export.
+        xarVarFetch('export', 'enum:' . implode(':', array_keys($export_handlers)), $export, '', XARVAR_NOT_REQUIRED);
+
+        if (!empty($export)) {
+            // Set the export handler.
+            $export_object->set_handler($export);
+
+            // Stream the export (or redirect to an error page)
+            return $export_object->stream_export($events);
+        }
+    } else {
+        $export_handlers = array();
+    }
+
+
     // Create some arrays useful for date drop-downs
     // TODO: move this to an API
     // TODO: add days of the week etc.
@@ -588,6 +608,7 @@ function ievents_user_view($args)
     for($i = $thisyear + $year_range_min; $i <= $thisyear + $year_range_max; $i++) {
         $lists['yearnum'][$i] = $i;
     }
+
 
 
     //
@@ -624,7 +645,7 @@ function ievents_user_view($args)
         'cid',
 
         // Other
-        'hooks', 'q', 'q_fields'
+        'hooks', 'q', 'q_fields', 'export_handlers'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";

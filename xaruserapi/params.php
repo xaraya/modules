@@ -82,6 +82,10 @@ function ievents_userapi_params($args)
         // Default group type.
         // Options are: none or '', day, week, month, year
         $params['default_group'] = 'week';
+
+        // Default date range for calendar subscriptions.
+        $params['cal_subscribe_range'] = 'next2months';
+        $params['cal_subscribe_numitems'] = 100;
     }
 
     if (!empty($name)) {

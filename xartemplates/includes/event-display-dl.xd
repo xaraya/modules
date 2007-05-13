@@ -120,6 +120,16 @@
     </xar:if>
 </xar:sec>
 
+<xar:if condition="!empty($export_handlers)">
+    <dt><xar:mlstring>Download to your calendar</xar:mlstring></dt>
+    <dd class="ievent-export-links">
+        <xar:loop name="$export_handlers">
+            <xar:if condition="$loop:index gt 0"> | </xar:if>
+            <a href="#xarModURL('ievents','user','view',array('export'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+        </xar:loop>
+    </dd>
+</xar:if>
+
 <xar:if condition="!empty($calendar.event_header)">
     <dd class="ievents-event-calfooter">#$calendar.event_footer#</dd>
 </xar:if>

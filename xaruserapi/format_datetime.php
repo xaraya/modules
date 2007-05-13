@@ -133,7 +133,7 @@ function ievents_userapi_format_datetime($args)
     return $return;
 }
 
-// Format durations (within a day)
+// Format durations (only works within a day)
 
 function ievents_userapi_format_datetime_duration($startdate, $enddate)
 {

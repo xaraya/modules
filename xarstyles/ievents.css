@@ -69,7 +69,7 @@ div.ievents-view dl.ievents-event dt {
 	font-style: italic;
 	font-size: 120%;
 	color: #666666;
-	border-bottom: 1px solid #eeeeee;
+	border-bottom: 2px solid #dddddd;
 	margin-top: 1em;
 }
 div.ievents-view dl.ievents-event dd.ievents-event-calfooter {
@@ -122,8 +122,24 @@ div.ievents-nextprev li.ievents-nextprev-next {
 }
 
 /* Jump menu formatting */
-
 select.ievents-jump-catids {
 	vertical-align: top;
 	height: 6em;
+}
+
+/* Calendar view screen */
+div.ievents-view-calendars dl,
+div.ievents-view-calendars dl dt,
+div.ievents-view-calendars dl dd {
+	margin-left: 0;
+	padding-left: 0;
+}
+div.ievents-view-calendars dl dt {
+	font-weight: bold;
+	font-style: italic;
+	font-size: 120%;
+	color: #666666;
+	border-bottom: 2px solid #dddddd;
+	margin-top: 2em;
+	clear: both;
 }

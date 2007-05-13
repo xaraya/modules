@@ -27,7 +27,7 @@ function ievents_user_modify($args)
     }
 
     // Somewhere to redirect to on success.
-    xarVarFetch('return_url', 'str:1:200', $return_url, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED);
 
     // The optional event ID
     xarVarFetch('eid', 'id', $args['eid'], 0, XARVAR_NOT_REQUIRED);
