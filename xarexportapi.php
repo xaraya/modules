@@ -73,6 +73,7 @@ class ievents_exportapi_export_master
         $this->handler->product_id = $this->product_id;
         $this->handler->input_encoding = $this->input_encoding;
         $this->handler->output_encoding = $this->output_encoding;
+        $this->handler->categories = xarModAPIfunc('ievents', 'user', 'getallcategories');
 
         // Success.
         return true;
@@ -137,6 +138,8 @@ class ievents_exportapi_handler_master
 
     var $file_extension = 'txt';
 
+    var $categories = array();
+
     // Constructor.
     function ievents_exportapi_handler_master($args)
     {
@@ -183,7 +186,13 @@ class ievents_exportapi_handler_master
     // CHECKME: if the encoding is 'utf8' then does setting a limit still make sense?
     // i.e. limits to line lengths are usually what the 'quotedprintable' encoding is
     // all about.
-    function fold_lines($string, $encoding = "none", $limit = 76)
+    // TODO: fix the line length, since the original script took the field name into account.
+    // (the 'offset' parameter takes care of this.
+    // CHECKME: what happens if the line folds in the middle of a multibyte UTF8 character?
+    // TODO: separate the encoding from the folding. We could encode an entire line, then fold it.
+    // We need to be able to encode separate parts of a line (e.g. a list) and then fold the whole thing.
+    // The current technique of encoding one character at a time does ensure we don't fold mid-character.
+    function fold_lines($string, $encoding = 'none', $limit = 76, $offset = 0)
     {
         $len = strlen($string);
         $fold = $limit; 
@@ -192,7 +201,17 @@ class ievents_exportapi_handler_master
         $enc = '';
         $lwsp = 0; // position of the last linear whitespace (where to fold)
         $res_ind = 0; // row index
-        $start_encode = 0; // we start encoding only after the ":" caracter is encountered
+
+        // Certain characters must be escaped before we do any folding or
+        // quotedprintable encoding. From RFC 2445:
+        // ESCAPED-CHAR = "\\" / "\;" / "\," / "\N" / "\n")
+        // ; \\ encodes \, \N or \n encodes newline
+        // ; \; encodes ;, \, encodes ,
+        if ($encoding != 'none') {
+            $string = preg_replace('/(\n\r|\r)/', "\n", $string);
+            // FIXME: the escaping of the '\' character does not work correctly.
+            $string = str_replace(array('\\', ';', ',', "\n"), array('\\\\', '\\;', '\\,', '\\n'), $string);
+        }
 
         // Must take into account the soft line break
         if ($encoding == 'quotedprintable') $fold--;
@@ -201,23 +220,25 @@ class ievents_exportapi_handler_master
         for ($i = 0; $i < $len; $i++) {
             $enc = $string[$i];
 
-            if ($start_encode) {
-                if ($encoding == 'quotedprintable') {
-                    $enc = $this->quoted_printable_encode_char($string[$i]);
-                } elseif ($encoding == 'utf8') {
-                    // FIXME: this assumes the input string is not already utf8
-                    if ($this->input_encoding != $this->output_encoding) {
-                        $enc = utf8_encode($string[$i]);
-                    } else {
-                        $enc = $string[$i];
-                    }
+            // Encoding may convert a single byte into a multi-byte sequence.
+            if ($encoding == 'quotedprintable') {
+                $enc = $this->quoted_printable_encode_char($string[$i]);
+            } elseif ($encoding == 'utf8') {
+                // FIXME: this assumes the input string is not already utf8
+                if ($this->input_encoding != $this->output_encoding) {
+                    $enc = utf8_encode($string[$i]);
+                } else {
+                    $enc = $string[$i];
                 }
+            } else {
+                $enc = $string[$i];
             }
 
-            if ($string[$i] == ':') $start_encode = 1;
-
-            if ((strlen($row) + strlen($enc)) > $fold) {
+            if ((strlen($row) + $offset + strlen($enc)) > $fold) {
                 $delta = 0;
+
+                // The offset should be reset at the first fold.
+                $offset = 0;
 
                 // The folding will occur in the middle of a word
                 if ($lwsp == 0) $lwsp = $fold - 1;
@@ -255,7 +276,6 @@ class ievents_exportapi_handler_master
         $res[$res_ind] = $row;
 
         // Return the result as a string.
-        // CHECKME: should we add an extra newline on the end, or leave that for the caller to decide?
         return implode($this->line_ending, $res);
     }
 
