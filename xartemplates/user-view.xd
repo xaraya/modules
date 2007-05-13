@@ -1,111 +1,11 @@
 
 <xar:style file="ievents" scope="module" />
 
-<xar:comment>
-    Simple jump menu - to go in a separate template.
-    The jump menu could take into account the current selection details, or just clear them (as it does now).
-</xar:comment>
-<div>
-    <form method="get" action="#xarModURL('ievents','user','view')#">
-        <p>
-            <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
-            <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
-            <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
-            <xar:mlstring>to</xar:mlstring>
-            <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-            <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
-            <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
-
-            <xar:set name="daterangelist">array(
-                ''=>xarML('-- Preset --'),
-                'thisyear'=>xarML('This year'),
-                'nextyear'=>xarML('Next year'),
-                'thismonth'=>xarML('This month'),
-                'nextmonth'=>xarML('Next month'),
-                'thisweek'=>xarML('This week'),
-                'nextweek'=>xarML('Next week'),
-                'today'=>xarML('Today'),
-                'next4weeks'=>xarML('Next four weeks'),
-                'next6months'=>xarML('Next six months')
-            )</xar:set>
-            <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
-
-            <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
-            <xar:if condition="!empty($calendarlist) && count($calendarlist) gt 1">
-                <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
-            </xar:if>
-
-            <xar:comment>TODO: only include these three hidden values if short URLs are not being used</xar:comment>
-            <input type="hidden" name="module" value="ievents" />
-            <input type="hidden" name="type" value="user" />
-            <input type="hidden" name="func" value="view" />
-   
-            <xar:comment>Reset a few values if the jump menu is used</xar:comment>
-            <xar:if condition="!empty($startnum)">
-                <input type="hidden" name="startnum" value="1" />
-            </xar:if>
-            <xar:if condition="!empty($numitems) && $numitems ne $default_numitems">
-                <input type="hidden" name="numitems" value="#$numitems#" />
-            </xar:if>
-
-            <input type="submit" value="#xarML('Go')#" />
-        </p>
-
-        <p>
-            <xar:comment>
-                TODO: check for categories hook before displaying this section
-                TODO: offer separate lists for each base category
-                TODO: use the title of each base category
-            </xar:comment>
-            <label for="catids_0"><xar:mlstring>Categories:</xar:mlstring></label>
-            <xar:if condition="!empty($categories.basecats)">
-                <xar:loop name="$categories['basecats']" id="basecats">
-                    <xar:if condition="!empty($loop:item.catlist)">
-                        <select class="ievents-jump-catids" name="catids[]" id="catids_#$loop:index#" multiple="multiple">
-                            <optgroup label="#xarVarPrepForDisplay($loop:basecats:item.catname)#">
-                            <xar:loop name="$loop:item.catlist">
-                                <xar:if condition="in_array($loop:item.cid, $catids)">
-                                    <option value="#$loop:item.cid#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
-                                <xar:else />
-                                    <option value="#$loop:item.cid#">#xarVarPrepForDisplay($loop:item.name)#</option>
-                                </xar:if>
-                            </xar:loop>
-                            </optgroup>
-                        </select>
-                    </xar:if>
-                </xar:loop>
-            </xar:if>
-            
-            <xar:if condition="$crule eq 'or'">
-                <input type="radio" name="crule" id="crule_1" value="or" checked="checked" />
-            <xar:else />
-                <input type="radio" name="crule" id="crule_1" value="or" />
-            </xar:if>
-            <label for="crule_1"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
-
-            <xar:if condition="$crule eq 'and'">
-                <input type="radio" name="crule" id="crule_2" value="and" checked="checked" />
-            <xar:else />
-                <input type="radio" name="crule" id="crule_2" value="and" />
-            </xar:if>
-            <label for="crule_2"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
-        </p>
-        <p>
-            <xar:if condition="!empty($q_fields)">
-                <label for="q"><xar:mlstring>Keywords:</xar:mlstring></label>
-                <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
-            </xar:if>
-        </p>
-    </form>
-</div>
+<xar:template file="jump-menu" />
 
 <div class="ievents-view">
     <xar:if condition="!empty($eid)">
         <xar:comment>An individual event was chosen</xar:comment>
-
-        <xar:comment>
-            TODO: Amount to be displayed depends on the user permissions
-        </xar:comment>
 
         <xar:template file="event-nextprev" />
 
@@ -125,7 +25,7 @@
         <xar:template file="event-nextprev" />
 
     <xar:else />
-        <xar:comment>A list of events is to be shown</xar:comment>
+        <xar:comment>A list of event summaries is to be shown</xar:comment>
 
         <xar:template file="list-pager" />
 
@@ -136,7 +36,7 @@
                 <xar:comment>Single listing, not grouped in any way</xar:comment>
                 <dl class="ievents-events">
                     <xar:loop name="$events">
-                        <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item)" />
+                        <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item,'calendar'=&gt;$calendars[$loop:item.calendar_id])" />
                     </xar:loop>
                 </dl>
             <xar:else />
@@ -147,7 +47,7 @@
                         <dd>
                             <dl class="ievents-events">
                                 <xar:loop name="$loop:item.events">
-                                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group)" />
+                                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group,'calendar'=&gt;$calendars[$events[$loop:item]['calendar_id']])" />
                                 </xar:loop>
                             </dl>
                         <dd>

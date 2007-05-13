@@ -78,6 +78,10 @@ function ievents_userapi_params($args)
 
         // Fields included in query-text searches
         $params['q_fields'] = 'title,summary,location_venue,location_postcode,external_ref';
+
+        // Default group type.
+        // Options are: none or '', day, week, month, year
+        $params['default_group'] = 'week';
     }
 
     if (!empty($name)) {

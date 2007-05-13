@@ -25,11 +25,11 @@ function ievents_user_view($args)
     // Get module parameters
     list(
         $module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek,
-        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields
+        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields, $default_group
     ) = xarModAPIfunc('ievents', 'user', 'params',
         array(
             'names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,'
-            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields'
+            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields,default_group'
         )
     );
 
@@ -91,8 +91,9 @@ function ievents_user_view($args)
     // Grouping of listed items.
     // Grouping should affect the sorting too, since grouping my a time period
     // would imply sorting by that time period too.
-    // TODO: make the default grouping configurable (with no grouping - '' - being an option)
-    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year:', $group, '', XARVAR_NOT_REQUIRED);
+    // The default grouping is configurable (with no grouping - '' - being an option)
+    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year:none', $group, $default_group, XARVAR_NOT_REQUIRED);
+    if ($group == 'none') $group = '';
 
     // Event ID.
     // The user has selected an individual event ID.

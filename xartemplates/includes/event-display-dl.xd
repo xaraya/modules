@@ -57,7 +57,11 @@
     </xar:if>
 </dd>
 
-<xar:comment>Only display the detail if the user has read privilege. The summary requires only overview privilege.</xar:comment>
+<xar:comment>
+    Amount to be displayed depends on the user permissions.
+    Only display the detail if the user has read privilege. The summary requires only overview privilege.
+</xar:comment>
+
 <xar:sec mask="ReadIEvent" instance="$event[calendar_id]:$event[eid]:ALL" catch="false">
     <xar:if condition="!empty($event.description)">
         <dt><xar:mlstring>Detail</xar:mlstring></dt>
