@@ -24,7 +24,7 @@ class ievents_exportapi_export_master
     // The supported handlers
     var $handlers = array(
         'iCal' => array('short' => 'iCal', 'long' => 'iCalendar', 'class' => 'ical', 'extension' => 'ics'),
-        //'vCal' => array('short' => 'vCal', 'long' => 'vCalendar', 'class' => 'vcal', 'extension' => 'vcs'),
+        'vCal' => array('short' => 'vCal', 'long' => 'vCalendar', 'class' => 'vcal', 'extension' => 'vcs'),
         //'pilot_csv' => array('short' => 'Pilot CSV', 'long' => 'Palm Pilot CSV', 'class' => 'pilotcsv', 'extension' => 'csv'),
         //'pilot_text' => array('short' => 'Pilot CSV', 'long' => 'Palm Pilot text', 'class' => 'pilottext', 'extension' => 'txt'),
     );
