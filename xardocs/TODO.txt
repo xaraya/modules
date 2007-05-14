@@ -1,0 +1,31 @@
+
+General TODO
+============
+
+o Installer:
+- Create tables
+- Create DD objects
+- Create module variables (or use config file)
+
+o Add 'contact name' to events
+o Add 'locking flags' to events to lock them from external updates
+o Create config page for settings, or perhaps just drive settings from a config file?
+
+o Display flags on events, where relevant:
+- Cancelled
+- New
+- Recently updated
+- Featured
+- Sold out/No places left
+
+o When updating events, transform html and text fields to ensure they are the right format
+
+o Complete export types
+- Fix iCal export encoding
+- Create vCal export
+- CSV export
+- Text export
+- iCal XML export
+
+o Complete privileges (I suspect some bits are not fully protected)
+
