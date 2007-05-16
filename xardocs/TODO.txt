@@ -17,6 +17,7 @@ o Display flags on events, where relevant:
 - Recently updated
 - Featured
 - Sold out/No places left
+- Provisional dates flag
 
 o When updating events, transform html and text fields to ensure they are the right format
 
@@ -28,4 +29,6 @@ o Complete export types
 - iCal XML export
 
 o Complete privileges (I suspect some bits are not fully protected)
+
+o RSS template (to copy to the RSS theme)
 
