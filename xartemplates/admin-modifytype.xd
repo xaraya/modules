@@ -26,6 +26,10 @@
                 <p class="param">
                     <label for="name"><xar:mlstring>Name</xar:mlstring></label>
                     <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64" />
+
+                    <xar:if condition="empty($ptid) and !empty($files)">
+                        <xar:data-input name="name_list" id="name_list" type="6" validation="$files" value="" />
+                    </xar:if>
                 </p>
 
                 <p class="param">

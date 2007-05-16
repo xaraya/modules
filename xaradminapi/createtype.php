@@ -66,6 +66,49 @@ function xarpages_adminapi_createtype($args)
 
     $ptid = $dbconn->PO_Insert_ID($tablename, 'xar_ptid');
 
+    // If there is a suitable XML definition file available, then
+    // use it to create the DD hook object.
+    $files = array();
+    $basedir = 'modules/xarpages/xardata';
+    $xml_files = xarModAPIFunc(
+        'dynamicdata', 'admin', 'browse',
+        array('basedir' => $basedir, 'filetype' => 'xml')
+    );
+    if (!empty($xml_files)) {
+        foreach($xml_files as $xml_file) {
+            $type_name = preg_replace('/-def\.xml$/', '', $xml_file);
+            $files[$type_name] = $xml_file;
+        }
+
+        if (isset($files[$name])) {
+            // There is an XML file to import.
+            $objectid = xarModAPIFunc(
+                'dynamicdata', 'util', 'import',
+                array('file' => $basedir . '/' . $files[$name], 'keepitemid' => false)
+            );
+
+            // If the object was created correctly, then update its itemtype.
+            // We also need to change the itemtype of all its properties.
+            if (!empty($objectid)) {
+                Dynamic_Object_Master::updateObject(
+                    array('objectid' => $objectid, 'itemtype' => $ptid)
+                );
+
+                // Synchronise the object properties with the change in itemtype.
+                // TODO: either this needs to be done automatically when the object is
+                // updated, or the need for keeping an itemtype on the properties should
+                // be removed.
+                xarModAPIFunc('dynamicdata', 'admin', 'syncprops',
+                    array(
+                        'objectid' => $objectid,
+                        'moduleid' => xarModGetIDFromName('xarpages'),
+                        'itemtype' => $ptid
+                    )
+                );
+            }
+        }
+    }
+
     // Hooks: we have created an instance of the 'page type' type.
 
     // Get the itemtype of the page type.

@@ -17,7 +17,12 @@ function xarpages_admin_updatetype()
 {
     if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('name', 'pre:lower:ftoken:str:0:100', $name)) return;
+    // Allow the optional pre-selected drop-downs to take precedence.
+    xarVarFetch('name_list', 'pre:lower:ftoken:str:1:100', $name, '', XARVAR_NOT_REQUIRED);
+    if (empty($name)) unset($name);
+
+    if (!xarVarFetch('name', 'pre:lower:ftoken:str:1:100', $name)) return;
+
     if (!xarVarFetch('desc', 'str:0:255', $desc)) return;
 
     // Confirm authorisation code

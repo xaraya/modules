@@ -1,0 +1,42 @@
+<object name="xarpages_html">
+  <objectid>0</objectid>
+  <label>Xarpages_HTML</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="body">
+      <id>1</id>
+      <label>Body (HTML)</label>
+      <type>textarea_large</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="menu_title">
+      <id>2</id>
+      <label>Menu Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>20</order>
+      <validation></validation>
+    </property>
+    <property name="page_title">
+      <id>3</id>
+      <label>Page Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>30</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

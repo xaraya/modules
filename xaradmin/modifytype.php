@@ -62,6 +62,22 @@ function xarpages_admin_modifytype()
     } else {
         // Adding a new page type.
 
+        // Get some example page types from the xardata directory.
+        $files = array();
+        $xml_files = xarModAPIFunc(
+            'dynamicdata', 'admin', 'browse',
+            array('basedir' => 'modules/xarpages/xardata', 'filetype' => 'xml')
+        );
+        if (!empty($xml_files)) {
+            $files[''] = xarML('-- Predefined --');
+
+            foreach($xml_files as $xml_file) {
+                $type_name = preg_replace('/-def\.xml$/', '', $xml_file);
+                $files[$type_name] = $type_name;
+            }
+        }
+        $data['files'] = $files;
+
         // Security: allowed to create page types?
         if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
             return;
