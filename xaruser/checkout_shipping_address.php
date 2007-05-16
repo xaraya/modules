@@ -280,11 +280,11 @@ $data['BLOCK_ADDRESS'] = $address_content;
 
   }
   $data['BUTTON_CONTINUE'] =
-  <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+  <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
 
   if ($process == true) {
   $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL') . '">' .
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),
         'alt' => IMAGE_BUTTON_BACK);
 . '</a>';
 

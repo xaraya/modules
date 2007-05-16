@@ -58,33 +58,33 @@ function carts_shopping_cartblock_display($blockinfo)
 
 
     include_once 'modules/carts/xarclasses/shopping_cart.php';
- 	include_once 'modules/carts/xarclasses/shopping_cart_anonymous.php';
+    include_once 'modules/carts/xarclasses/shopping_cart_anonymous.php';
 
 
-    	$user = xarModAPIFunc('roles', 'user', 'get', array ('uid' => xarSessionGetVar('uid')));
-	if ($user['uname'] == 'anonymous'){
-		$cart = new shoppingCartAnonymous();
-		$link = "shopping_cart_anonymous";
-	}
-	else{        
+        $user = xarModAPIFunc('roles', 'user', 'get', array ('uid' => xarSession::getVar('uid')));
+    if ($user['uname'] == 'anonymous'){
+        $cart = new shoppingCartAnonymous();
+        $link = "shopping_cart_anonymous";
+    }
+    else{
         //Test if we transfer anonymous basket to login
-        if (xarSessionGetVar('basket')){
-            $cart = xarModAPIFunc('carts', 'user', 'savebasket_anonymous_to_login'); 
+        if (xarSession::getVar('basket')){
+            $cart = xarModAPIFunc('carts', 'user', 'savebasket_anonymous_to_login');
         }
         else{
             //$cart = new shoppingCart();
             $cart = new shoppingCart();
-            $link = "shopping_cart_login";		
+            $link = "shopping_cart_login";
         }
     }
 
      if ($cart->count_contents() > 0) {
-	//We get all products in the basket
+    //We get all products in the basket
         $products_in_cart = $cart->get_products();
-        
+
         //We get the total of the basket
         $total = $cart->calculate();
-        
+
 
         $data['products'] = $products_in_cart;
         $data['total'] = $cart->show_total();

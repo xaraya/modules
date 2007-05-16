@@ -24,7 +24,7 @@ function carts_admin_main()
    // Security Check
 //    if(!xarSecurityCheck('EditCommerce')) return;
 
-    xarSessionSetVar('carts_statusmsg', xarML('Carts Main Menu',
+    xarSession::setVar('carts_statusmsg', xarML('Carts Main Menu',
                     'carts'));
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}

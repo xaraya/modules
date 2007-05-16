@@ -161,10 +161,10 @@ $data['ADDRESS_LABEL'] = xarModAPIFunc('commerce','user','address_label',array(
     'boln' =>' ',
     'eoln' =>'<br>'));
 $data['BUTTON_ADDRESS'] = '<a href="' . xarModURL('commerce','user',(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL') . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_change_address.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_change_address.gif'),
         'alt' => IMAGE_BUTTON_CHANGE_ADDRESS);
 . '</a>';
-$data['BUTON_CONTINUE'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+$data['BUTON_CONTINUE'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
 
 
 

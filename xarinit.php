@@ -26,7 +26,7 @@ xarDBLoadTableMaintenanceAPI();
 function carts_init()
 {
     $q = new xenQuery();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_carts_configuration";
     if (!$q->run($query)) return;
@@ -227,7 +227,7 @@ function carts_delete()
 #
 # Remove database tables
 #
-    $tablenameprefix = xarDBGetSiteTablePrefix() . '_carts_';
+    $tablenameprefix = xarDB::getPrefix() . '_carts_';
     $tables = xarDBGetTables();
     $q = new xenQuery();
         foreach ($tables as $table) {

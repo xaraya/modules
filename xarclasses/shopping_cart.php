@@ -26,8 +26,8 @@
         function __construct($args=null)
         {
             $this->reset(false);
-            $this->userid = xarSessionGetVar('uid');
-            $this->carttable = xarDBGetSiteTablePrefix() . '_carts_basket';
+            $this->userid = xarSession::getVar('uid');
+            $this->carttable = xarDB::getPrefix() . '_carts_basket';
             $this->restore_contents();
         }
 
@@ -316,7 +316,7 @@
         function in_stock($item_id)
         {
             //The query
-            $this->prefix = xarDBGetSiteTablePrefix();
+            $this->prefix = xarDB::getPrefix();
             $q = new xenQuery('SELECT', $this->prefix . '_products_products', 'products_quantity');
             $q->eq('item_id', $item_id);
             $q->run();
