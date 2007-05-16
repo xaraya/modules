@@ -17,8 +17,8 @@ function comments_xartables()
     $xartable = array();
 
     // Name for template database entities
-    $comments_table     = xarDBGetSiteTablePrefix() . '_comments';
-    $blacklist_table    = xarDBGetSiteTablePrefix() . '_blacklist';
+    $comments_table     = xarDB::getPrefix() . '_comments';
+    $blacklist_table    = xarDB::getPrefix() . '_blacklist';
 
     // Table name
     $xartable['comments']   = $comments_table;

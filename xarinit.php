@@ -60,7 +60,7 @@ function comments_init()
     if (!$result)
         return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_left',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_left',
                    'fields'    => array('cleft'),
                    'unique'    => FALSE);
 
@@ -69,7 +69,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_right',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_right',
                    'fields'    => array('cright'),
                    'unique'    => FALSE);
 
@@ -78,7 +78,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_pid',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_pid',
                    'fields'    => array('pid'),
                    'unique'    => FALSE);
 
@@ -87,7 +87,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_modid',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_modid',
                    'fields'    => array('modid'),
                    'unique'    => FALSE);
 
@@ -96,7 +96,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_itemtype',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_itemtype',
                    'fields'    => array('itemtype'),
                    'unique'    => FALSE);
 
@@ -105,7 +105,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_objectid',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_objectid',
                    'fields'    => array('objectid'),
                    'unique'    => FALSE);
 
@@ -114,7 +114,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_status',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_status',
                    'fields'    => array('status'),
                    'unique'    => FALSE);
 
@@ -123,7 +123,7 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_author',
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_comments_author',
                    'fields'    => array('author'),
                    'unique'    => FALSE);
 
