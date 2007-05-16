@@ -128,7 +128,7 @@ function articles_admin_view($args)
                       'status' => $status,
                       'pubdate' => $pubdate,
                       'startnum' => $startnum > 1 ? $startnum : null);
-    xarSessionSetVar('Articles.LastView',serialize($lastview));
+    xarSession::setVar('Articles.LastView',serialize($lastview));
 
     $labels = array();
     if (!empty($ptid)) {

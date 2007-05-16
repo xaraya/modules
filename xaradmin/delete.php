@@ -87,7 +87,7 @@ function articles_admin_delete()
     }
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Deleted'));
+    xarSession::setVar('statusmsg', xarML('Article Deleted'));
 
     // Return return_url
     if (!empty($return_url)) {
@@ -96,7 +96,7 @@ function articles_admin_delete()
     }
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

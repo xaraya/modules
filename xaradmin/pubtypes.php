@@ -35,7 +35,7 @@ function articles_admin_pubtypes()
         if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
     }
     if (!isset($action)) {
-        xarSessionSetVar('statusmsg', '');
+        xarSession::setVar('statusmsg', '');
     }
     // Initialise the template variables
     $data = array();
@@ -114,7 +114,7 @@ function articles_admin_pubtypes()
                 xarModSetVar('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
-                xarSessionSetVar('statusmsg',
+                xarSession::setVar('statusmsg',
                                 xarML('Publication type created'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
@@ -149,7 +149,7 @@ function articles_admin_pubtypes()
                 return; // throw back
             } else {
                 // Redirect back to the admin modify page to continue editing publication type
-                xarSessionSetVar('statusmsg',
+                xarSession::setVar('statusmsg',
                                 xarML('Publication type updated'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
@@ -172,7 +172,7 @@ function articles_admin_pubtypes()
                 }
 
                 // Redirect to the admin view page
-                xarSessionSetVar('statusmsg',
+                xarSession::setVar('statusmsg',
                                 xarML('Publication type deleted'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));

@@ -163,7 +163,7 @@ function articles_admin_update()
     unset($article);
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Updated'));
+    xarSession::setVar('statusmsg', xarML('Article Updated'));
 
     // Save and continue editing via feature request.
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
@@ -178,7 +178,7 @@ function articles_admin_update()
     }
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
