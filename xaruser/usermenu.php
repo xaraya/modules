@@ -59,8 +59,7 @@ function courses_user_usermenu($args)
                  'user',
                  'getall_enrolled',
                  array('startnum' => $startnum,
-                    'numitems' => xarModGetUserVar('courses','itemsperpage', $uid)));
-             //      if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+                       'numitems' => xarModGetUserVar('courses','itemsperpage', $uid)));
 
             // Count teaching activities: TODO Where is the error?
             //$numteaching = xarModAPIFunc('courses', 'userapi', 'countteaching',
@@ -68,6 +67,7 @@ function courses_user_usermenu($args)
 
          // Transform display
          // TODO define SecCheck
+             $data1['has_extreg'] = 1;
              if (count($items > 0)) {
                  foreach ($items as $item) {
                     if (xarSecurityCheck('ReadCourses', 0, 'Course', "All:All:All")) {
@@ -87,7 +87,15 @@ function courses_user_usermenu($args)
                     $item['startdate'] = $item['startdate'];
                     $item['statusname'] = xarModAPIFunc('courses', 'user', 'getstatus',
                                           array('status' => $item['studstatus']));
-
+                    // See if this course is handled internally
+                    $planned = xarModAPIFunc('courses', 'user', 'getplanned',
+                                          array('planningid' => $item['planningid']));
+                    $item['is_extreg'] = 0;
+                    if ($planned['extreg'] == 1) {
+                        $item['is_extreg'] = 1;
+                        $item['statusname'] = xarML('External registration');
+                        $data1['has_extreg'] = 1;
+                    }
                     // Add this item to the list of items to be displayed
                     $data1['items'][] = $item;
                  }

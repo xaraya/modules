@@ -13,26 +13,57 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="4"><xar:mlstring>You are enrolled in the courses</xar:mlstring>:</th>
+                <th colspan="3"><xar:mlstring>You are enrolled in the courses:</xar:mlstring></th>
                 </tr>
             </thead>
             <xar:foreach in="$data1['items']" value="$item">
-                <tr align="center">
-                    <xar:if condition="$item['hideplanning'] eq 1">
-                        <td style="background-color:#FF0000">
-                    <xar:else />
-                        <td>
-                    </xar:if>
-                        <xar:if condition="empty($item['link'])">
-                            #$item['name']#
+                <xar:if condition="$item.is_extreg eq 0">
+                    <tr align="center">
+                        <xar:if condition="$item['hideplanning'] eq 1">
+                            <td style="background-color:#FF0000">
                         <xar:else />
-                            <a href="#$item['link']#">#$item['name']#</a>
+                            <td>
                         </xar:if>
-                     </td>
-                    <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
-                    <td>#$item['statusname']#</td>
-                    <td>#$item['planningid']#</td>
+                            <xar:if condition="empty($item['link'])">
+                                #$item['name']#
+                            <xar:else />
+                                <a href="#$item['link']#">#$item['name']#</a>
+                            </xar:if>
+                         </td>
+                        <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
+                        <td>#$item['statusname']#</td>
+                    </tr>
+                </xar:if>
+            </xar:foreach>
+        </table>
+    <xar:else />
+        <strong><xar:mlstring>You are not enrolled in any course</xar:mlstring></strong>
+    </xar:if>
+    <xar:if condition="$data1.has_extreg eq 1">
+        <table>
+            <thead>
+                <tr>
+                <th colspan="3"><xar:mlstring>You have clicked through these external courses:</xar:mlstring></th>
                 </tr>
+            </thead>
+            <xar:foreach in="$data1['items']" value="$item">
+                <xar:if condition="$item.is_extreg eq 1">
+                    <tr align="center">
+                        <xar:if condition="$item['hideplanning'] eq 1">
+                            <td style="background-color:#FF0000">
+                        <xar:else />
+                            <td>
+                        </xar:if>
+                            <xar:if condition="empty($item['link'])">
+                                #$item['name']#
+                            <xar:else />
+                                <a href="#$item['link']#">#$item['name']#</a>
+                            </xar:if>
+                         </td>
+                        <td>#xarlocalegetformatteddate('medium',$item['startdate'])#</td>
+                        <td>#$item['statusname']#</td>
+                    </tr>
+                </xar:if>
             </xar:foreach>
         </table>
     <xar:else />
