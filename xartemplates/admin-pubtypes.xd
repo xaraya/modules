@@ -13,7 +13,7 @@
             Publication Types
         </xar:mlstring>
     </h2>
-    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+    <xar:set name="statusmsg">xarSession::getVar('statusmsg')</xar:set>
     <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
         <p class="xar-error">#$statusmsg#</p>
     </xar:if>
@@ -438,5 +438,5 @@
                 </xar:mlstring>
             </a></h3>
     </xar:if>
-    <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
+    <xar:set name="dummy">xarSession::setVar('statusmsg','')</xar:set>
 </div>

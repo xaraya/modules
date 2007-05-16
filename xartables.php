@@ -21,7 +21,7 @@ function articles_xartables()
     // Initialise table array
     $xartable = array();
     // Get Site Prefix
-    $sitePrefix = xarDBGetSiteTablePrefix();
+    $sitePrefix = xarDB::getPrefix();
     // Name for articles database entities
     $articles = $sitePrefix . '_articles';
 

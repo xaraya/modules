@@ -158,7 +158,7 @@ function articles_admin_create()
     }
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Created'));
+    xarSession::setVar('statusmsg', xarML('Article Created'));
 
     // Save and continue editing via feature request.
     if (isset($save)){

@@ -80,7 +80,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_authorid',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_authorid',
         'fields'    => array('xar_authorid'),
         'unique'    => false
     );
@@ -89,7 +89,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubtypeid',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubtypeid',
         'fields'    => array('xar_pubtypeid'),
         'unique'    => false
     );
@@ -98,7 +98,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubdate',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubdate',
         'fields'    => array('xar_pubdate'),
         'unique'    => false
     );
@@ -107,7 +107,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_status',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_status',
         'fields'    => array('xar_status'),
         'unique'    => false
     );
@@ -116,7 +116,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
         'fields'    => array('xar_language'),
         'unique'    => false
     );
@@ -439,7 +439,7 @@ function articles_upgrade($oldversion)
             $articlestable = $xartable['articles'];
 
             $index = array(
-                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+                'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
                 'fields'    => array('xar_language'),
                 'unique'    => false
             );

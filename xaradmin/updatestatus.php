@@ -97,7 +97,7 @@ function articles_admin_updatestatus()
     unset($article);
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
