@@ -3,13 +3,13 @@
     class WeekEvent_Decorator extends Calendar_Decorator
     {
         //Calendar engine
-        var $cE;
-        var $tableHelper;
+        public $cE;
+        public $tableHelper;
 
-        var $year;
-        var $month;
-        var $day =1;
-        var $firstDay = false;
+        public $year;
+        public $month;
+        public $day =1;
+        public $firstDay = false;
 
         function build($events=array())
         {

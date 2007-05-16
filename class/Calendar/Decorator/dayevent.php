@@ -3,13 +3,13 @@
     class DayEvent_Decorator extends Calendar_Decorator
     {
         //Calendar engine
-        var $cE;
-        var $tableHelper;
+        public $cE;
+        public $tableHelper;
 
-        var $year;
-        var $month;
-        var $day;
-        var $firstDay = false;
+        public $year;
+        public $month;
+        public $day;
+        public $firstDay = false;
 
         function build($events=array())
         {

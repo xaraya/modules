@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="adminIcon">xarTplGetImage('admin.gif', 'calendar')</xar:set>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -65,9 +66,10 @@
         <br />
         <xar:comment>
         <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found at</xar:mlstring> 
+            <xar:mlstring>Extended information about this module can be found at</xar:mlstring>
             <a href="http://www.xarcalendar.com">http://www.xarcalendar.com</a>
         </div>
         </xar:comment>
     </div>
 </div>
+</xar:template>

@@ -34,7 +34,7 @@ function calendar_userapi_getUserDateTimeInfo()
 
     sys::import('xaraya.structures.datetime');
     $today = new XarDateTime();
-    $usertz = xarModGetUserVar('roles','usertimezone',xarSessionGetVar('uid'));
+    $usertz = xarModGetUserVar('roles','usertimezone',xarSession::getVar('uid'));
     $useroffset = $today->getTZOffset($usertz);
     $data['now'] = getdate(time() + $useroffset);
     return $data;

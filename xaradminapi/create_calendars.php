@@ -8,14 +8,14 @@
  * @subpackage calendar
  * @author andrea.m
  */
- 
+
  /**
  * @returns int (calendar id on success, false on failure)
  */
 function calendar_adminapi_create_calendars($args)
 {
-    extract($args);    
-    
+    extract($args);
+
     // argument check
     if (!isset($calname)) {
         $msg = xarML('Calendar name not specified','admin','create','calendar');
@@ -33,9 +33,9 @@ function calendar_adminapi_create_calendars($args)
         $mod_id = xarModGetIDFromName($module[0]);
     }
     if (!isset($role_id)) {
-        $role_id = xarSessionGetVar('uid');
+        $role_id = xarSession::getVar('uid');
     }
-        
+
     // Load up database details.
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -55,21 +55,21 @@ function calendar_adminapi_create_calendars($args)
             $nextId, $role_id, $mod_id, $calname
         )
     );
-    if (!$result) {return;}    
+    if (!$result) {return;}
 
     // Get ID of row inserted.
     $calendid = $dbconn->PO_Insert_ID($caltable, 'xar_id');
 
     // If not database type also add file info
-    
+
     // Allow duplicate files here, to make it easier to delete them
-    // WARNING: if somebody changes this you should also change the 
+    // WARNING: if somebody changes this you should also change the
     // delete function to avoid major dataloss!!! --amoro
     if ($addtype != 'db') {
-        
-        $filestable = $xartable['calfiles'];    
-        $cal_filestable = $xartable['calendars_files'];    
-        
+
+        $filestable = $xartable['calfiles'];
+        $cal_filestable = $xartable['calendars_files'];
+
         $nextID = $dbconn->GenId($filestable);
         $query = 'INSERT INTO ' . $filestable . ' (
                   xar_id,
@@ -82,7 +82,7 @@ function calendar_adminapi_create_calendars($args)
         );
 
         // Get ID of row inserted.
-        $fileid = $dbconn->PO_Insert_ID($filestable, 'xar_id');      
+        $fileid = $dbconn->PO_Insert_ID($filestable, 'xar_id');
 
         $query = 'INSERT INTO ' . $cal_filestable . ' (
                       xar_calendars_id,
@@ -95,6 +95,6 @@ function calendar_adminapi_create_calendars($args)
         );
     }
     return $calendid;
-} 
+}
 
 ?>

@@ -15,7 +15,7 @@ function calendar_init()
 # Set up tables
 #
     $q = new xarQuery();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_calendar";
     if (!$q->run($query)) return;
@@ -241,7 +241,7 @@ function calendar_upgrade($oldversion)
             if (!$result) return;
 
             $index = array(
-                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_calendars_files_calendars_id',
+                'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_calendars_id',
                 'fields'    => array('xar_calendars_id'),
                 'unique'    => false
             );
@@ -250,7 +250,7 @@ function calendar_upgrade($oldversion)
             if (!$result) return;
 
             $index = array(
-                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_calendars_files_files_id',
+                'name'      => 'i_' . xarDB::getPrefix() . '_calendars_files_files_id',
                 'fields'    => array('xar_files_id'),
                 'unique'    => false
             );

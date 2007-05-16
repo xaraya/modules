@@ -71,10 +71,10 @@ function calendar_admin_delete_calendar()
     }
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Calendar Deleted'));
+    xarSession::setVar('statusmsg', xarML('Calendar Deleted'));
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Calendar.LastView');
+    $lastview = xarSession::getVar('Calendar.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

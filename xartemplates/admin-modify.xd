@@ -37,7 +37,7 @@
             <input type="hidden" name="object_objectid" id="objectid" value="#$object:objectid#" />
             <input type="hidden" name="object_itemid" id="itemid" value="#$object:itemid#" />
             <input type="hidden" name="object_tplmodule" id="tplmodule" value="#$tplmodule#" />
-            <xar:set name="return_url">isset($return_url)?$return_url:xarModURL('$tplmodule','admin','view',array('name' => $object->name))</xar:set>
+            <xar:set name="return_url">isset($return_url)?$return_url:xarModURL($tplmodule,'admin','view',array('name' => $object->name))</xar:set>
             <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
             <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
       </fieldset>

@@ -10,24 +10,26 @@
 <xar:calendar-decorator object="$Week" decorator="Xaraya" name="$WeekURI" />
 
 <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="prevYearURL">#$WeekURI->prev('year')#</xar:set>
+<xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
 
 <xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
-<xar:set name="prevWeekURL">#$WeekURI->prev('week')#</xar:set>
+<xar:set name="prevWeekURL">$WeekURI->prev('week')</xar:set>
 
 <xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
-<xar:set name="nextWeekURL">#$WeekURI->next('week')#</xar:set>
+<xar:set name="nextWeekURL">$WeekURI->next('week')</xar:set>
 
 <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="nextYearURL">#$WeekURI->next('year')#</xar:set>
+<xar:set name="nextYearURL">$WeekURI->next('year')</xar:set>
 
+<xar:set name="startts">$Week->children[1]->getTimeStamp()</xar:set>
+<xar:set name="endts">$Week->children[7]->getTimeStamp()</xar:set>
 <table id="cal-calendar">
     <tr>
         <th class="cal-navigation" colspan="7">
             <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
             <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
-            #xarLocaleFormatDate('%B %d %Y',$Week->children[1]->getTimeStamp())# -
-            #xarLocaleFormatDate('%B %d %Y',$Week->children[7]->getTimeStamp())#
+            #xarLocaleFormatDate('%B %d %Y',$startts)# -
+            #xarLocaleFormatDate('%B %d %Y',$endts)#
             <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
             <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
         </th>
@@ -72,5 +74,9 @@
     </xar:while>
     </tr>
 </table>
+
+<xar:set name="eventcutoff">$endts + 86400</xar:set>
+<xar:data-input type="eventlist" start="$startts" end="$eventcutoff" />
+
 <xar:comment> include the calendar footer </xar:comment>
 <xar:template file="todayfooter" />
