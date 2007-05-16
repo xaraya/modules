@@ -80,7 +80,7 @@ function workflow_admin_roles()
     } else {
         $selection = '';
         if (!empty($data['find_users'])) {
-            $dbconn =& xarDBGetConn();
+            $dbconn = xarDB::getConn();
             $selection = " AND xar_name LIKE " . $dbconn->qstr('%'.$data['find_users'].'%');
         }
         $data['users'] = xarModAPIFunc('roles','user','getall',

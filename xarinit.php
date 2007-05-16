@@ -20,7 +20,7 @@ function workflow_init()
 {
     if (!xarVarFetch('loadexample', 'checkbox', $loadexample, 1, XARVAR_NOT_REQUIRED)) return;
 
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
@@ -471,7 +471,7 @@ function workflow_upgrade($oldversion)
  */
 function workflow_delete()
 {
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
     $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();

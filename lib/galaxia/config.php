@@ -56,8 +56,8 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 
 // Database handler
 if (!isset($GLOBALS['dbGalaxia'])) {
-    if(defined('XARCORE_GENERATION') && XARCORE_GENERATION == 2) {
-        $GLOBALS['dbGalaxia'] =& xarDBGetConn();
+    if(defined('xarCore::GENERATION') && xarCore::GENERATION == 2) {
+        $GLOBALS['dbGalaxia'] = xarDB::getConn();
 
         // This means we're in the 2 series of Xaraya
         define('GALAXIA_FETCHMODE',ResultSet::FETCHMODE_ASSOC);
