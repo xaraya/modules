@@ -33,7 +33,7 @@ function products_userapi_get_category_tree($args)
         $q = new xenQuery('SELECT',
                           $xartables['products_categories_description'],'categories_name');
         $q->eq('language_id',$currentlang['id']);
-        $q->eq('categories_id',$parent_id);
+        $q->eq('id',$parent_id);
         if(!$q->run()) return;
         $category = $q->row();
         $category_tree_array[] = array('id' => $parent_id, 'text' => $category['categories_name']);
@@ -42,15 +42,15 @@ function products_userapi_get_category_tree($args)
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['categories'],'c');
     $q->addtable($xartables['products_categories_description'],'cd');
-    $q->addfields(array('c.xar_cid', 'cd.categories_name', 'c.xar_parent', 'cd.categories_id'));
-    $q->join('c.xar_cid','cd.categories_id');
+    $q->addfields(array('c.xar_cid', 'cd.categories_name', 'c.xar_parent', 'cd.id'));
+    $q->join('c.xar_cid','cd.id');
     $q->eq('language_id',$currentlang['id']);
     $q->eq('c.xar_parent',$parent_id);
 //    $q->addorder('c.sort_order');
     $q->addorder('cd.categories_name');
     if(!$q->run()) return;
     foreach ($q->output() as $categories) {
-        if ($exclude != $categories['categories_id']) $category_tree_array[] = array('id' => $categories['categories_id'], 'text' => $spacing . $categories['categories_name']);
+        if ($exclude != $categories['categories_id']) $category_tree_array[] = array('id' => $categories['id'], 'text' => $spacing . $categories['categories_name']);
         $category_tree_array = xarModAPIFunc('products','user','get_category_tree', array(
                                     'parent_id' => $categories['categories_id'],
                                     'spacing' => $spacing . '&#160;&#160;&#160;',

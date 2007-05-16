@@ -26,7 +26,7 @@ xarDBLoadTableMaintenanceAPI();
 function products_init()
 {
     $q = new xenQuery();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_products_categories";
     if (!$q->run($query)) return;

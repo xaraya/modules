@@ -59,7 +59,7 @@ function commerce_add_a_quickieblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
 $box_content='<form name="quick_add" method="post" action="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=add_a_quickie', 'NONSSL') . '"><div align="center"><input type="text" name="quickie" size="10">&#160;' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_add_quick.gif')#" border="0" alt=BOX_HEADING_ADD_PRODUCT_ID>
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_add_quick.gif')#" border="0" alt=BOX_HEADING_ADD_PRODUCT_ID>
 . '</div>' . BOX_ADD_PRODUCT_ID_TEXT.'</form>';
 
 

@@ -28,7 +28,7 @@ foreach ($blocks as $block) {
         $blockarray[] = $block['bid'];
     }
 }
-xarSessionSetVar('inactivated', serialize($blockarray));
+xarSession::setVar('inactivated', serialize($blockarray));
 
 
     // Show the configmenu block

@@ -60,7 +60,7 @@ function commerce_user_exit()
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
 
-/*    $blockarray = unserialize(xarSessionGetVar('inactivated'));
+/*    $blockarray = unserialize(xarSession::getVar('inactivated'));
     foreach ($blockarray as $block) {
         if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $block['bid']))) return;
     }

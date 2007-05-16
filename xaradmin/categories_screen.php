@@ -90,9 +90,9 @@ function products_admin_categories_screen()
                     if(!xarVarFetch('categories_name',    'array',  $categories_name, NULL, XARVAR_DONT_SET)) {return;}
                     if(!xarVarFetch('categories_heading_title',    'array',  $categories_heading_title, NULL, XARVAR_DONT_SET)) {return;}
                     if(!xarVarFetch('categories_description',    'array',  $categories_description, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('categories_meta_title',    'array',  $categories_meta_title, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('categories_meta_description',    'array',  $categories_meta_description, NULL, XARVAR_DONT_SET)) {return;}
-                    if(!xarVarFetch('categories_meta_keywords',    'array',  $categories_meta_keywords, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('categories_meta_title',    'array',  $categories_display_title, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('categories_meta_description',    'array',  $categories_display_description, NULL, XARVAR_DONT_SET)) {return;}
+                    if(!xarVarFetch('categories_meta_keywords',    'array',  $categories_display_keywords, NULL, XARVAR_DONT_SET)) {return;}
 
                     for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
                         $language_id = $languages[$i]['id'];
@@ -101,9 +101,9 @@ function products_admin_categories_screen()
                             if ($configuration['allow_category_descriptions'] == true) {
                                 $q1->addfield('categories_heading_title',$categories_heading_title[$language_id]);
                                 $q1->addfield('categories_description',$categories_description[$language_id]);
-                                $q1->addfield('categories_meta_title',$categories_meta_title[$language_id]);
-                                $q1->addfield('categories_meta_description',$categories_meta_description[$language_id]);
-                                $q1->addfield('categories_meta_keywords',$categories_meta_keywords[$language_id]);
+                                $q1->addfield('categories_display_title',$categories_display_title[$language_id]);
+                                $q1->addfield('categories_display_description',$categories_display_description[$language_id]);
+                                $q1->addfield('categories_display_keywords',$categories_display_keywords[$language_id]);
                             }
                             if ($action == 'insert_category') {
                                 $q->addfield('xar_cid',$q->nextid($xartables['categories'],'xar_cid'));
@@ -147,13 +147,13 @@ function products_admin_categories_screen()
     $q->addtable($xartables['products_categories_description'],'cd');
     $q->addfield('cd.categories_name');
     $q->eq('cd.language_id',$data['langid']);
-    $q->eq('cd.categories_id',$data['cID']);
+    $q->eq('cd.id',$data['cID']);
     if(!$q->run()) return;
 
     if($q->row() == array()) {
         $q1 = new xenQuery('INSERT',$xartables['products_categories_description']);
         $q1->addfield('language_id',$data['langid']);
-        $q1->addfield('categories_id',$data['cID']);
+        $q1->addfield('id',$data['cID']);
         if(!$q1->run()) return;
     }
 
@@ -161,19 +161,19 @@ function products_admin_categories_screen()
     $q->addtable($xartables['products_categories'],'c');
     $q->addfields(array('cd.categories_heading_title',
                         'cd.categories_description',
-                        'cd.categories_meta_title',
-                        'cd.categories_meta_description',
-                        'cd.categories_meta_keywords',
-                        'c.categories_id',
-                        'c.categories_image',
-                        'c.parent_id',
+                        'cd.categories_display_title',
+                        'cd.categories_display_description',
+                        'cd.categories_display_keywords',
+                        'c.id',
+//                        'c.categories_image',
+//                        'c.parent_id',
                         'c.sort_order',
                         'c.date_added',
                         'c.last_modified',
-                        'c.categories_status',
+                        'c.status',
                         ));
 //TODO cInfo is apparently taking care of the table names. xarQuery can do the same an then cInfo no longer needs to be an object?
-/*    $q->addfields(array('c.categories_id AS categories_id',
+/*    $q->addfields(array('c.id AS id',
         'cd.categories_name AS categories_id',
         'xc.xar_image AS categories_image',
         'c.parent_id AS parent_id',
@@ -182,8 +182,8 @@ function products_admin_categories_screen()
         'c.last_modified AS categories_id',
         'c.categories_status AS categories_status'));
 */
-    $q->join('c.categories_id','cd.categories_id');
-    $q->join('xc.xar_cid','c.categories_id');
+    $q->join('c.id','cd.id');
+    $q->join('xc.xar_cid','c.id');
 //    $q->qecho();
     if(!$q->run()) return;
     $cInfo = $q->row();

@@ -25,7 +25,7 @@
 function products_xartables()
 {
     $xartables = array();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     $xartable['products_categories'] = $prefix . '_products_categories';
     $xartable['products_categories_description'] = $prefix . '_products_categories_description';

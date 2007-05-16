@@ -433,14 +433,14 @@ if (isset($action)) {
     $q->addtable($xartables['categories'],'xc');
     $q->addfields(array('xc.xar_cid AS categories_id',
                         'cd.categories_name',
-                        'c.categories_image',
+//                        'c.categories_image',
                         'xc.xar_parent',
                         'c.sort_order',
                         'c.date_added',
                         'c.last_modified ',
-                        'c.categories_status'));
-    $q->join('c.categories_id','cd.categories_id');
-    $q->join('c.categories_id','xc.xar_cid');
+                        'c.status'));
+    $q->join('c.id','cd.id');
+    $q->join('c.id','xc.xar_cid');
     $q->eq('cd.language_id',$currentlang['id']);
     $q->setorder('c.sort_order');
     $q->addorder('cd.categories_name');
