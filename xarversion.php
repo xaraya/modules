@@ -15,9 +15,10 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Commerce';
-$modversion['dependency']     = array(147,3005);
+$modversion['dependency']     = array(147,3005, 30032);
 $modversion['securityschema'] = array();
 $modversion['dependencyinfo'] = array(147 => 'categories',
                                       3005 => 'xen',
+                                      30032 => 'members'
                                       );
 ?>

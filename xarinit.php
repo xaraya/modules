@@ -10,7 +10,7 @@ sys::import('modules.xen.xarclasses.xenquery');
 # Set up tables
 #
     $q = new xenQuery();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
 $query = "DROP TABLE IF EXISTS " . $prefix . "_vendors_vendors";
 if (!$q->run($query)) return;
@@ -79,8 +79,13 @@ if (!$q->run($query)) return;
     if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'vendors', 'user', 'usermenu')) return false;
     xarModAPIFunc('modules', 'admin', 'enablehooks', array('callerModName' => 'roles', 'hookModName' => 'vendors'));
 
-    xarModRegisterHook('module', 'getconfig', 'API','vendors', 'admin', 'getconfighook');
-    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'vendors'));
+    sys::import('xaraya.structures.hooks.observer');
+    $observer = new BasicObserver('vendors','admin','getconfighook');
+    $observer->register('module', 'getconfig', 'API');
+    $subject = new HookSubject('members');
+    $subject->attach($observer);
+
+//    xarModAPIFunc('modules','admin','enablehooks',array('callerModName' => 'commerce', 'hookModName' => 'vendors'));
 
 # --------------------------------------------------------
 #
@@ -178,7 +183,7 @@ function vendors_delete()
 #
 # Purge all the roles created by this module
 #
-    $role = xarRoles::getRole(xarModVars::get('vendors','defaultgroup'));
+    $role = xarRoles::get(xarModVars::get('vendors','defaultgroup'));
     $descendants = $role->getDescendants();
     foreach ($descendants as $item)
         if (!$item->purge()) return;

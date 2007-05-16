@@ -10,5 +10,6 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Supplier List</xar:mlstring></h2>
-    <xar:data-input type="memberlist" validation="groups: SupplierGroup" />
+    <xar:set name="validation">"groups: " . $defaultgroup</xar:set>
+    <xar:data-input type="memberlist" object="vendors_vendors" validation="$validation" />
 </div>

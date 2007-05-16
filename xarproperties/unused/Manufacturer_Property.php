@@ -41,7 +41,7 @@ class ManufacturerProperty extends SelectProperty
         $this->filepath   = 'modules/vendors/xarproperties';
 
         if (count($this->options) == 0) {
-            include_once 'modules/xen/xarclasses/xenobject.class.php';
+            sys::import('modules.xen.xarclasses.xenobject');
             $q = new xenQuery();
             if (!empty($this->grouplist)) {
                 foreach ($this->grouplist as $group) {

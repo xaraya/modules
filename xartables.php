@@ -9,7 +9,7 @@ function vendors_xartables()
     // Initialise table array
     $xartable = array();
 
-    $vendors = xarDBGetSiteTablePrefix() . '_vendors_vendors';
+    $vendors = xarDB::getPrefix() . '_vendors_vendors';
 
     // Set the table name
     $xartable['vendors_vendors'] = $vendors;

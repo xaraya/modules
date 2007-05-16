@@ -1,18 +1,20 @@
 <object name="vendors_vendors">
-  <objectid>142</objectid>
+  <objectid>48</objectid>
   <label>Suppliers</label>
   <parent>objects</parent>
   <moduleid>182</moduleid>
-  <itemtype>23</itemtype>
+  <itemtype>30</itemtype>
+  <class>Member</class>
+  <filepath>modules/members/class/member.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>1160</id>
+      <id>437</id>
       <label>ID</label>
-      <type>itemid</type>
+      <type>integerbox</type>
       <default></default>
       <source>xar_vendors_vendors.id</source>
       <status>67</status>
@@ -20,7 +22,7 @@
       <validation></validation>
     </property>
     <property name="code">
-      <id>1161</id>
+      <id>438</id>
       <label>Code</label>
       <type>textbox</type>
       <default></default>
@@ -30,7 +32,7 @@
       <validation></validation>
     </property>
     <property name="name">
-      <id>1162</id>
+      <id>439</id>
       <label>Name</label>
       <type>textbox</type>
       <default></default>
@@ -40,17 +42,17 @@
       <validation></validation>
     </property>
     <property name="address">
-      <id>1163</id>
+      <id>440</id>
       <label>Address</label>
-      <type>static</type>
+      <type>address</type>
       <default></default>
       <source>xar_vendors_vendors.address</source>
       <status>34</status>
       <order>4</order>
-      <validation></validation>
+      <validation>a:6:{s:10:&quot;objectname&quot;;s:17:&quot;members_addresses&quot;;s:5:&quot;style&quot;;s:6:&quot;itemid&quot;;s:5:&quot;title&quot;;s:0:&quot;&quot;;s:5:&quot;input&quot;;s:1:&quot;1&quot;;s:9:&quot;fieldlist&quot;;a:6:{i:0;s:2:&quot;id&quot;;i:1;s:8:&quot;location&quot;;i:2;s:4:&quot;city&quot;;i:3;s:5:&quot;state&quot;;i:4;s:10:&quot;postalcode&quot;;i:5;s:7:&quot;country&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;1&quot;;}</validation>
     </property>
     <property name="contact">
-      <id>1164</id>
+      <id>441</id>
       <label>Contact</label>
       <type>textbox</type>
       <default></default>
@@ -60,7 +62,7 @@
       <validation></validation>
     </property>
     <property name="phone">
-      <id>1165</id>
+      <id>442</id>
       <label>Phone</label>
       <type>textbox</type>
       <default></default>
@@ -70,7 +72,7 @@
       <validation></validation>
     </property>
     <property name="fax">
-      <id>1166</id>
+      <id>443</id>
       <label>Fax</label>
       <type>textbox</type>
       <default></default>
@@ -80,7 +82,7 @@
       <validation></validation>
     </property>
     <property name="email">
-      <id>1167</id>
+      <id>444</id>
       <label>Email</label>
       <type>textbox</type>
       <default></default>
@@ -90,9 +92,9 @@
       <validation></validation>
     </property>
     <property name="terms">
-      <id>1168</id>
+      <id>445</id>
       <label>Terms</label>
-      <type>static</type>
+      <type>integerbox</type>
       <default></default>
       <source>xar_vendors_vendors.terms</source>
       <status>34</status>
@@ -100,7 +102,7 @@
       <validation></validation>
     </property>
     <property name="taxincluded">
-      <id>1169</id>
+      <id>446</id>
       <label>Taxincluded</label>
       <type>textbox</type>
       <default></default>
@@ -110,7 +112,7 @@
       <validation></validation>
     </property>
     <property name="notes">
-      <id>1170</id>
+      <id>447</id>
       <label>Notes</label>
       <type>textarea_medium</type>
       <default></default>
@@ -120,7 +122,7 @@
       <validation></validation>
     </property>
     <property name="description">
-      <id>1171</id>
+      <id>448</id>
       <label>Description</label>
       <type>textarea_large</type>
       <default></default>
@@ -130,7 +132,7 @@
       <validation></validation>
     </property>
     <property name="keywords">
-      <id>1172</id>
+      <id>449</id>
       <label>Keywords</label>
       <type>textarea_medium</type>
       <default></default>
@@ -140,7 +142,7 @@
       <validation></validation>
     </property>
     <property name="currency_code">
-      <id>1173</id>
+      <id>450</id>
       <label>Currency Code</label>
       <type>textbox</type>
       <default></default>
@@ -150,7 +152,7 @@
       <validation></validation>
     </property>
     <property name="state">
-      <id>1174</id>
+      <id>451</id>
       <label>State</label>
       <type>integerbox</type>
       <default></default>
@@ -160,7 +162,7 @@
       <validation></validation>
     </property>
     <property name="url">
-      <id>1175</id>
+      <id>452</id>
       <label>URL</label>
       <type>url</type>
       <default></default>
@@ -169,8 +171,28 @@
       <order>15</order>
       <validation></validation>
     </property>
+    <property name="roles_type">
+      <id>123</id>
+      <label>Roles Type</label>
+      <type>integerbox</type>
+      <default>2</default>
+      <source>xar_roles.type</source>
+      <status>67</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="roles_state">
+      <id>456</id>
+      <label>Roles State</label>
+      <type>integerbox</type>
+      <default>3</default>
+      <source>xar_roles.state</source>
+      <status>67</status>
+      <order>16</order>
+      <validation></validation>
+    </property>
     <property name="url_clicks">
-      <id>1176</id>
+      <id>453</id>
       <label>URL Clicks</label>
       <type>integerbox</type>
       <default></default>
@@ -179,24 +201,54 @@
       <order>17</order>
       <validation></validation>
     </property>
+    <property name="categories">
+      <id>457</id>
+      <label>Categories</label>
+      <type>categories</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <order>17</order>
+      <validation></validation>
+    </property>
     <property name="last_clicked">
-      <id>1177</id>
+      <id>454</id>
       <label>Last Clicked</label>
-      <type>calendar</type>
+      <type>jscalendardate</type>
       <default></default>
       <source>dynamic_data</source>
       <status>66</status>
       <order>18</order>
       <validation></validation>
     </property>
+    <property name="roles_authmodid">
+      <id>458</id>
+      <label>Roles Authmodid</label>
+      <type>integerbox</type>
+      <default>xarModAPIFunc('members','user','getsystemid',array('module' =&gt; 'vendors'))</default>
+      <source>xar_roles.auth_modid</source>
+      <status>67</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
     <property name="roles_id">
-      <id>1307</id>
+      <id>455</id>
       <label>Roles_ID</label>
       <type>itemid</type>
       <default></default>
       <source>xar_roles.id</source>
       <status>65</status>
       <order>19</order>
+      <validation></validation>
+    </property>
+    <property name="xaraya_username">
+      <id>459</id>
+      <label>xaraya_username</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_roles.uname</source>
+      <status>67</status>
+      <order>23</order>
       <validation></validation>
     </property>
   </properties>

@@ -1,7 +1,9 @@
 <?php
 function vendors_user_view($args)
 {
-    return array();
+    $role = xarRoles::get(xarModGetUserVar('members','defaultgroup',xarMod::getRegID('vendors')));
+    $data['defaultgroup'] = $role->getName();
+    return $data;
 }
 
 ?>
