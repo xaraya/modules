@@ -7,7 +7,7 @@ xarDBLoadTableMaintenanceAPI();
 function customers_init()
 {
     $q = new xenQuery();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     $query = "DROP TABLE IF EXISTS " . $prefix . "_customers_address_book";
     if (!$q->run($query)) return;

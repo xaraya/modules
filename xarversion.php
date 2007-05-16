@@ -14,10 +14,10 @@ $modversion['contact']        = 'http://www.netspan.ch/';
 $modversion['admin']          = 1;
 $modversion['user']           = 0;
 $modversion['class']          = 'Complete';
-$modversion['category']       = 'Content';
+$modversion['category']       = 'Commerce';
 $modversion['dependency']     = array(147,3005,3006);
 $modversion['securityschema'] = array();
 $modversion['dependencyinfo'] = array(147 => 'categories',
-									  3005 => 'xen',
-									  3006 => 'commerce');
+                                      3005 => 'xen',
+                                      3006 => 'commerce');
 ?>

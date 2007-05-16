@@ -30,7 +30,7 @@
                                 #order_total##$order_data.order_total#&#160;&#160;#order_status##$order_data.order_status#
                                 #$order_data.order_button#
                                 <a href="#xarModURL('commerce','user','account_history_info', array('order_id' => $orders['orders_id']))#">
-                                    <img src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'small_view.gif')#" alt="#xarML('View')#">
+                                    <img src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'small_view.gif')#" alt="#xarML('View')#">
                                 </a>
                             </td>
                         </tr>

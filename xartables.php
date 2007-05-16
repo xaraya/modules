@@ -7,10 +7,10 @@
 function customers_xartables()
 {
     $xartable = array();
-    $xartable['customers_address_book'] = xarDBGetSiteTablePrefix() . '_customers_address_book';
-    $xartable['customers_customers_ip'] = xarDBGetSiteTablePrefix() . '_customers_customers_ip';
-    $xartable['customers_customers_status'] = xarDBGetSiteTablePrefix() . '_customers_customers_status';
-    $xartable['customers_customers_status_history'] = xarDBGetSiteTablePrefix() . '_customers_customers_status_history';
+    $xartable['customers_address_book'] = xarDB::getPrefix() . '_customers_address_book';
+    $xartable['customers_customers_ip'] = xarDB::getPrefix() . '_customers_customers_ip';
+    $xartable['customers_customers_status'] = xarDB::getPrefix() . '_customers_customers_status';
+    $xartable['customers_customers_status_history'] = xarDB::getPrefix() . '_customers_customers_status_history';
     return $xartable;
 }
 

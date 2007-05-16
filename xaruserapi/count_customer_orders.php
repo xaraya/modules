@@ -17,7 +17,7 @@ function customers_userapi_count_customer_orders($args)
     extract($args);
 
     $q = new xenQuery('SELECT',$xartables['commerce_orders'],'count(*) as total');
-    $q->eq('customers_id', xarSessionGetVar('uid'));
+    $q->eq('customers_id', xarSession::getVar('uid'));
     if(!$q->run()) return;
     $orders_check = $q->row();
     return $orders_check['total'];
