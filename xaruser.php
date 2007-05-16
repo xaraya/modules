@@ -22,7 +22,7 @@ function commerce_user_main()
    // Security Check
 //    if(!xarSecurityCheck('ViewCommerce')) return;
 
-    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main Menu',
+    xarSession::setVar('commerce_statusmsg', xarML('Commerce Main Menu',
                     'commerce'));
 
     if (xarModVars::get('modules', 'disableoverview') == 0 && !isset($branch)) {

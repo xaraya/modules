@@ -118,7 +118,7 @@
        $data['action'] = 'send';
        $data['message'] = sprintf(TEXT_EMAIL_SUCCESSFUL_SENT, stripslashes($_POST['products_name']), $_POST['friendemail']);
        $data['BUTTON_CONTINUE'] = '<a href="' . xarModURL('commerce','user','product_info', 'products_id=' . $_GET['products_id']) . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
        . '</a>';
 
@@ -147,12 +147,12 @@ $data['INPUT_FRIENDNAME'] = $input_friendname;
 $data['INPUT_FRIENDEMAIL'] = $input_friendemail;
 
 $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user','product_info', 'products_id=' . $_GET['products_id']) . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),
         'alt' => IMAGE_BUTTON_BACK);
 . '</a>';
 $data['BUTTON_SUBMIT'] =
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
     }
   }
 

@@ -27,8 +27,8 @@
 
   $product_info_query = new xenQuery("select p.products_discount_allowed,p.products_id, pd.products_name, pd.products_description, p.products_model, p.products_quantity,p.products_weight, p.products_image,p.products_status,p.products_ordered, pd.products_url, p.products_tax_class_id, p.products_date_added, p.products_date_available, p.manufacturers_id,p.product_template,p.product_template from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_status = '1' and p.products_id = '" . (int)$_GET['products_id'] . "' and pd.products_id = p.products_id and pd.language_id = '" . $_SESSION['languages_id'] . "'");
   if (!$product_info_query->getrows()) { // product not found in database
-  $info_smarty->assign('TEXT_NOT_FOUND','<tr><td class="main"><br>'. TEXT_PRODUCT_NOT_FOUND.'</td></tr><tr><td align="right"><br><a href="'. xarModURL('commerce','user','default').'">'. xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),'alt' => IMAGE_BUTTON_CONTINUE)
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),'alt' => IMAGE_BUTTON_CONTINUE).'</a></td></tr>');
+  $info_smarty->assign('TEXT_NOT_FOUND','<tr><td class="main"><br>'. TEXT_PRODUCT_NOT_FOUND.'</td></tr><tr><td align="right"><br><a href="'. xarModURL('commerce','user','default').'">'. xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),'alt' => IMAGE_BUTTON_CONTINUE)
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),'alt' => IMAGE_BUTTON_CONTINUE).'</a></td></tr>');
 
   } else {
     new xenQuery("update " . TABLE_PRODUCTS_DESCRIPTION . " set products_viewed = products_viewed+1 where products_id = '" . (int)$_GET['products_id'] . "' and language_id = '" . $_SESSION['languages_id'] . "'");
@@ -41,7 +41,7 @@
     // check if customer is allowed to add to cart
     if ($_SESSION['customers_status']['customers_status_show_price']!='0') {
     $info_smarty->assign('ADD_CART_BUTTON',xtc_draw_input_field('products_qty', '1','size="3"') . ' ' . xtc_draw_hidden_field('products_id', $product_info['products_id']) .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_in_cart.gif')#" border="0" alt=IMAGE_BUTTON_IN_CART>.
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_in_cart.gif')#" border="0" alt=IMAGE_BUTTON_IN_CART>.
     );
     }
 

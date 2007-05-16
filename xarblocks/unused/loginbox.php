@@ -79,7 +79,7 @@ function commerce_loginboxblock_display($blockinfo)
       </tr>
       <tr>
         <td class="main" align="center">
-        <input type="image" src="'. xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/' . 'button_login.gif') . '" border="0" alt=IMAGE_BUTTON_LOGIN>
+        <input type="image" src="'. xarTplGetImage('buttons/' . xarSession::getVar('language') . '/' . 'button_login.gif') . '" border="0" alt=IMAGE_BUTTON_LOGIN>
         </td>
       </tr>
     </form></table>';

@@ -59,7 +59,7 @@
   if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
   $data['success'] = '1';
   $data['BUTTON_CONTINUE'] = '<a href="'.xarModURL('commerce','user','default').'">'.
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
 .'</a>';
 
@@ -77,7 +77,7 @@ $data['CONTACT_CONTENT'] = $contact_content;
 $data['INPUT_NAME'] = xtc_draw_input_field('name', ($error ? $_POST['name'] : $first_name));
 $data['INPUT_EMAIL'] = xtc_draw_input_field('email', ($error ? $_POST['email'] : $email_address));
 $data['INPUT_TEXT'] = xtc_draw_textarea_field('message_body', 'soft', 50, 15, $_POST['']);
-$data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+$data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
   }
 
   $data['language'] = $_SESSION['language'];

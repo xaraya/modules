@@ -64,7 +64,7 @@ $module_content='';
                             'PRODUCTS_LINK' => xarModURL('commerce','user','product_info', 'products_id=' . $products_new['products_id']),
                             'PRODUCTS_IMAGE' => xarTplGetImage('product_images/thumbnail_images/' . $products_new['products_image']),
                             'BUTTON_BUY_NOW'=>'<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=buy_now&BUYproducts_id=' . $products_new['products_id'], 'NONSSL') . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_buy_now.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_buy_now.gif'),
         'alt' => TEXT_BUY . $products_new['products_name'] . TEXT_NOW));
 
 

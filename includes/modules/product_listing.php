@@ -25,7 +25,7 @@
       $rows++;
       if ($_SESSION['customers_status']['customers_status_show_price'] != '0') {
         $price=xarModAPIFunc('commerce','user','get_products_price',array('products_id' =>$listing['products_id'],'price_special' =>$price_special=1,'quantity' =>$quantity=1));
-        $buy_now='<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=buy_now&BUYproducts_id=' . $listing['products_id'], 'NONSSL') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_buy_now.gif'),'alt' => TEXT_BUY . $listing['products_name'] . TEXT_NOW);;
+        $buy_now='<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=buy_now&BUYproducts_id=' . $listing['products_id'], 'NONSSL') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_buy_now.gif'),'alt' => TEXT_BUY . $listing['products_name'] . TEXT_NOW);;
       }
       $image='';
       if ($listing['products_image']!='') {

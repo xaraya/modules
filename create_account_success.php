@@ -62,7 +62,7 @@
         </table></td>
       </tr>
       <tr>
-        <td align="right"><br><?php echo '<a href="' . $origin_href . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+        <td align="right"><br><?php echo '<a href="' . $origin_href . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
         . '</a>'; ?></td>
       </tr>

@@ -174,10 +174,10 @@
                 <table border="0" width="100%" cellpadding="0" cellspacing="2">
                   <tr>
                     <td>
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif')#" border="0" alt=IMAGE_BACK>
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif')#" border="0" alt=IMAGE_BACK>
                     </td>
-                    <td align="right"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_MAIL) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a> ' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_send_mail.gif')#" border="0" alt=IMAGE_SEND_EMAIL>
+                    <td align="right"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_MAIL) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a> ' .
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send_mail.gif')#" border="0" alt=IMAGE_SEND_EMAIL>
                     </td>
                   </tr>
                 </table></td>
@@ -245,7 +245,7 @@
               </tr>
               <tr>
                 <td colspan="2" align="right">
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_send_mail.gif')#" border="0" alt=IMAGE_SEND_EMAIL>
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send_mail.gif')#" border="0" alt=IMAGE_SEND_EMAIL>
                 </td>
               </tr>
             </table></td>

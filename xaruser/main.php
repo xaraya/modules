@@ -24,7 +24,7 @@ function commerce_user_main()
    // Security Check
 //    if(!xarSecurityCheck('EditCommerce')) return;
 
-    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main User Menu',
+    xarSession::setVar('commerce_statusmsg', xarML('Commerce Main User Menu',
                     'commerce'));
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}

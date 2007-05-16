@@ -643,7 +643,7 @@
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
       <tr>
-        <td align="right" class="main"><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CUSTOMERS, xtc_get_all_get_params(array('action'))) .'">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+        <td align="right" class="main"><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CUSTOMERS, xtc_get_all_get_params(array('action'))) .'">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
       </tr></form>
       </table></td>
       </tr>

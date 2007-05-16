@@ -311,7 +311,7 @@ function popupImageWindow(url) {
         <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
           <tr>
             <td class="main"><?php echo TEXT_BANNERS_BANNER_NOTE . '<br>' . TEXT_BANNERS_INSERT_NOTE . '<br>' . TEXT_BANNERS_EXPIRCY_NOTE . '<br>' . TEXT_BANNERS_SCHEDULE_NOTE; ?></td>
-            <td class="main" align="right" valign="top" nowrap><?php echo (($form_action == 'insert') ? <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> : <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>). '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+            <td class="main" align="right" valign="top" nowrap><?php echo (($form_action == 'insert') ? <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT> : <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>). '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
           </tr>
         </table></td>
       </form></tr>
@@ -378,7 +378,7 @@ function popupImageWindow(url) {
                     <td class="smallText" align="right"><?php echo $banners_split->display_links($banners_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, MAX_DISPLAY_PAGE_LINKS, $_GET['page']); ?></td>
                   </tr>
                   <tr>
-                    <td align="right" colspan="2"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'action=new') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_banner.gif'),'alt' => IMAGE_NEW_BANNER); . '</a>'; ?></td>
+                    <td align="right" colspan="2"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'action=new') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_banner.gif'),'alt' => IMAGE_NEW_BANNER); . '</a>'; ?></td>
                   </tr>
                 </table></td>
               </tr>
@@ -395,15 +395,15 @@ function popupImageWindow(url) {
       $contents[] = array('text' => '<br><b>' . $bInfo->banners_title . '</b>');
       if ($bInfo->banners_image) $contents[] = array('text' => '<br>' . xtc_draw_checkbox_field('delete_image', 'on', true) . ' ' . TEXT_INFO_DELETE_IMAGE);
       $contents[] = array('align' => 'center', 'text' => '<br>' .
-      <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE>
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE>
-. '&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+      <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE>
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE>
+. '&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
       break;
     default:
       if (is_object($bInfo)) {
         $heading[] = array('text' => '<b>' . $bInfo->banners_title . '</b>');
 
-        $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $bInfo->banners_id . '&action=new') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $bInfo->banners_id . '&action=delete') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a>');
+        $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $bInfo->banners_id . '&action=new') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $bInfo->banners_id . '&action=delete') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a>');
         $contents[] = array('text' => '<br>' . TEXT_BANNERS_DATE_ADDED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$bInfo->date_added)));
 
         if ( (function_exists('imagecreate')) && ($dir_ok) && ($banner_extension) ) {

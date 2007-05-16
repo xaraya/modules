@@ -59,7 +59,7 @@ function commerce_shopping_cartblock_display($blockinfo)
 
     include_once 'modules/commerce/xarclasses/shopping_cart.php';
 
-    $cart = xarSessionGetVar('cart');
+    $cart = xarSession::getVar('cart');
     if (!is_object($cart)) {
         $cart = new shoppingCart();
     }

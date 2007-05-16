@@ -143,6 +143,6 @@
         <td class="main" align="right">
 <input type="hidden" name="categories_date_added" value="#(($cInfo->date_added) ? $cInfo->date_added : date('Y-m-d'))#">
 <input type="hidden" name="parent_id" value="#$cInfo->parent_id#">
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onClick="return confirm(\''.SAVE_ENTRY.'\')">.
-        . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $_GET['cID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onClick="return confirm(\''.SAVE_ENTRY.'\')">.
+        . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $_GET['cID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
       </form></tr>

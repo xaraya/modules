@@ -53,7 +53,7 @@ function commerce_admin_products_expected()
   if (is_object($pInfo)) {
     $heading[] = array('text' => '<b>' . $pInfo->products_name . '</b>');
 
-    $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'pID=' . $pInfo->products_id . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a>');
+    $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'pID=' . $pInfo->products_id . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a>');
     $contents[] = array('text' => '<br>' . TEXT_INFO_DATE_EXPECTED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$pInfo->products_date_available)));
   }
 

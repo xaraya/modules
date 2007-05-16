@@ -41,7 +41,7 @@ $module_smarty->assign('tpl_path','templates/'.CURRENT_TEMPLATE.'/');
                             'PRODUCTS_LINK' => xarModURL('commerce','user','product_info', 'products_id=' . $orders['products_id']),
                             'PRODUCTS_IMAGE' => xarTplGetImage('product_images/thumbnail_images/' . $orders['products_image']),
                             'BUTTON_BUY_NOW'=>'<a href="' . xarModURL('commerce','user',(basename($PHP_SELF), xtc_get_all_get_params(array('action')) . 'action=buy_now&BUYproducts_id=' . $orders['products_id'], 'NONSSL') . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_buy_now.gif'),'alt' => TEXT_BUY . $orders['products_name'] . TEXT_NOW)                            );
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_buy_now.gif'),'alt' => TEXT_BUY . $orders['products_name'] . TEXT_NOW)                            );
   } else {
     $module_content[]=array(
                             'PRODUCTS_NAME' => $orders['products_name'],

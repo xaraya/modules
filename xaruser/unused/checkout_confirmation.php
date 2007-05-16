@@ -231,7 +231,7 @@ $payment_info .=
   }
   $data['MODULE_BUTTONS'] = $payment_button;
   $data['CHECKOUT_BUTTON'] =
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_confirm_order.gif')#" border="0" alt=IMAGE_BUTTON_CONFIRM_ORDER>
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_confirm_order.gif')#" border="0" alt=IMAGE_BUTTON_CONFIRM_ORDER>
 </form>' . "\n";
 
 

@@ -34,7 +34,7 @@ xtc_hide_session_id();
   $data['CHECKBOX_DESCRIPTION'] = xtc_draw_checkbox_field('search_in_description', '1');
   $data['HELP_LINK'] = 'javascript:popupWindow(\'' . xarModURL('commerce','user',(FILENAME_POPUP_SEARCH_HELP) . '\')';
   $data['BUTTON_SUBMIT'] =
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_search.gif')#" border="0" alt=IMAGE_BUTTON_SEARCH>
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_search.gif')#" border="0" alt=IMAGE_BUTTON_SEARCH>
   $options_box = '<table border="0" width="100%" cellspacing="0" cellpadding="2">' . "\n" .
                  '  <tr>' . "\n" .
                  '    <td class="fieldKey">' . ENTRY_CATEGORIES . '</td>' . "\n" .

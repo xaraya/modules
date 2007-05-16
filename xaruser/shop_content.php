@@ -59,7 +59,7 @@ $content_body = $shop_content_data['content_text'];
  $data['CONTENT_BODY'] = $content_body;
 
   $data['BUTTON_CONTINUE'] = '<a href="' . xarModURL('commerce','user','default') . '">' .
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
 . '</a>';
   $data['language'] = $_SESSION['language'];

@@ -66,7 +66,7 @@
   }
 
   $module_smarty->assign('BUTTON_WRITE','<a href="' . xarModURL('commerce','user','product_reviews'_WRITE, 'products_id=' . $_GET['products_id']) . '">' .
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_write_review.gif'),'alt' => IMAGE_BUTTON_WRITE_REVIEW);
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_write_review.gif'),'alt' => IMAGE_BUTTON_WRITE_REVIEW);
 </a>');
 
 

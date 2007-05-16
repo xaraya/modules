@@ -43,11 +43,11 @@
  $data['RATING'] = xtc_image(xarTplGetImage(DIR_WS_IMAGES . 'stars_' . $reviews['reviews_rating'] . '.gif'), sprintf(TEXT_OF_5_STARS, $reviews['reviews_rating']));
  $data['PRODUCTS_LINK'] = xarModURL('commerce','user','product_info', 'products_id=' . $reviews['products_id']);
  $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user','product_reviews', $get_params) . '">' .
- xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
+ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),
         'alt' => IMAGE_BUTTON_BACK);
 . '</a>';
  $data['BUTTON_BUY_NOW'] = '<a href="' . xarModURL('commerce','user','default', 'action=buy_now&products_id=' . $reviews['products_id']) . '">' .
- xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_in_cart.gif'),
+ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_in_cart.gif'),
          'alt' => IMAGE_BUTTON_IN_CART);
 
  $data['IMAGE'] = '<a href="javascript:popupImageWindow(\''. xarModURL('commerce','user',(FILENAME_POPUP_IMAGE, 'pID=' . $reviews['products_id']).'\')">'. xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $reviews['products_image']), $reviews['products_name'], PRODUCT_IMAGE_THUMBNAIL_WIDTH, PRODUCT_IMAGE_THUMBNAIL_HEIGHT, 'align="center" hspace="5" vspace="5"').'<br></a>';

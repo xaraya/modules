@@ -86,13 +86,13 @@
 $data['info_message'] = $info_message;
 $data['account_option'] = ACCOUNT_OPTIONS;
 $data['BUTTON_NEW_ACCOUNT'] = '<a href="' . xarModURL('commerce','user','create_account', '', 'SSL') . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
 . '</a>';
 $data['BUTTON_LOGIN'] =
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_login.gif')#" border="0" alt=IMAGE_BUTTON_LOGIN>;
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_login.gif')#" border="0" alt=IMAGE_BUTTON_LOGIN>;
 $data['BUTTON_GUEST'] = '<a href="' . xarModURL('commerce','user',(FILENAME_CREATE_GUEST_ACCOUNT, '', 'SSL') . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif'),
         'alt' => IMAGE_BUTTON_CONTINUE);
 . '</a>';
 $data['FORM_ACTION'] = xarModURL('commerce','user','login', 'action=process', 'SSL');

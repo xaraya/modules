@@ -49,7 +49,7 @@ function commerce_user_account()
 
         );
         $q->eq('s.language_id', $currentlang['id']);
-        $q->eq('o.customers_id', xarSessionGetVar('uid'));
+        $q->eq('o.customers_id', xarSession::getVar('uid'));
         $q->eq('ot.class', 'ot_total');
         $q->join('o.orders_status','s.orders_status_id');
         $q->join('o.orders_id','ot.orders_id');
@@ -71,7 +71,7 @@ function commerce_user_account()
                             'order_total' =>$orders['order_total'],
                             'order_link' => xarModURL('commerce','user','account_history_info', array('order_id' => $orders['orders_id'])) ,
                             'order_button' => '<a href="'. xarModURL('commerce','user','account_history_info, array('order_id' => $orders['orders_id'])) . '">' .
-                            xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'small_view.gif'),'alt' => SMALL_IMAGE_BUTTON_VIEW);
+                            xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'small_view.gif'),'alt' => SMALL_IMAGE_BUTTON_VIEW);
                         . '</a>');
         }
 

@@ -78,10 +78,10 @@
     $data['INPUT_TEXT'] = xtc_draw_textarea_field('review', 'soft', 60, 15;
     $data['INPUT_RATING'] = xtc_draw_radio_field('rating', '1') . ' ' . xtc_draw_radio_field('rating', '2') . ' ' . xtc_draw_radio_field('rating', '3') . ' ' . xtc_draw_radio_field('rating', '4') . ' ' . xtc_draw_radio_field('rating', '5');
     $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user','product_reviews', $get_params_back) . '">' .
-    xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
+    xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),
         'alt' => IMAGE_BUTTON_BACK);
 . '</a>';
-    $data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>.
+    $data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>.
 
 }
   $data['language'] = $_SESSION['language'];

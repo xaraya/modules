@@ -83,7 +83,7 @@
   }
  $data['NOTIFICATION_BLOCK'] = $notifications;
 
- $data['BUTTON_CONTINUE'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+ $data['BUTTON_CONTINUE'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
  $data['BUTTON_PRINT'] = '<img src="'$language .'/buttons/button_print.gif" style="cursor:hand" onClick="window.open(\''. xarModURL('commerce','user',(FILENAME_PRINT_ORDER,'oID='.$orders['orders_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">';
 
 // if (DOWNLOAD_ENABLED == 'true') include(DIR_WS_MODULES . 'downloads.php');

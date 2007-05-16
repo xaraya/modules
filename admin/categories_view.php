@@ -187,9 +187,9 @@
                 <td colspan="3"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                   <tr>
                     <td class="smallText"><?php echo TEXT_CATEGORIES . '&#160;' . $categories_count . '<br>' . TEXT_PRODUCTS . '&#160;' . $products_count; ?></td>
-                    <td align="right" class="smallText"><?php if ($cPath) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, $cPath_back . '&cID=' . $current_category_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>&#160;'; if (!$_GET['search']) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_category') . '">' .
-         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_category.gif'),'alt' => IMAGE_NEW_CATEGORY);
-                    </a>&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_product.gif'),'alt' => IMAGE_NEW_PRODUCT); . '</a>'; ?>&#160;</td>
+                    <td align="right" class="smallText"><?php if ($cPath) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, $cPath_back . '&cID=' . $current_category_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>&#160;'; if (!$_GET['search']) echo '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_category') . '">' .
+         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_category.gif'),'alt' => IMAGE_NEW_CATEGORY);
+                    </a>&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_product.gif'),'alt' => IMAGE_NEW_PRODUCT); . '</a>'; ?>&#160;</td>
                   </tr>
                 </table></td>
               </tr>
@@ -213,7 +213,7 @@
         $contents[] = array('text' => '<br>' . TEXT_CATEGORIES_NAME . $category_inputs_string);
         $contents[] = array('text' => '<br>' . TEXT_CATEGORIES_IMAGE . '<br>' . xtc_draw_file_field('categories_image'));
         $contents[] = array('text' => '<br>' . TEXT_SORT_ORDER . '<br>' . xtc_draw_input_field('sort_order', '', 'size="2"'));
-        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'edit_category':
@@ -234,7 +234,7 @@
         $contents[] = array('text' => '<br>' . TEXT_EDIT_CATEGORIES_IMAGE . '<br>' . xtc_draw_file_field('categories_image'));
         $contents[] = array('text' => '<br>' . TEXT_EDIT_SORT_ORDER . '<br>' . xtc_draw_input_field('sort_order', $cInfo->sort_order, 'size="2"'));
         $contents[] = array('text' => '<br>' . TEXT_EDIT_STATUS . '<br>' . xtc_draw_input_field('categories_status', $cInfo->categories_status, 'size="2"') . '1=Enabled 0=Disabled');
-        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'delete_category':
@@ -246,7 +246,7 @@
         $contents[] = array('text' => '<br><b>' . $cInfo->categories_name . '</b>');
         if ($cInfo->childs_count > 0) $contents[] = array('text' => '<br>' . sprintf(TEXT_DELETE_WARNING_CHILDS, $cInfo->childs_count));
         if ($cInfo->products_count > 0) $contents[] = array('text' => '<br>' . sprintf(TEXT_DELETE_WARNING_PRODUCTS, $cInfo->products_count));
-        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'move_category':
@@ -257,8 +257,8 @@
         $contents[] = array('text' => sprintf(TEXT_MOVE_CATEGORIES_INTRO, $cInfo->categories_name));
         $contents[] = array('text' => '<br>' . sprintf(TEXT_MOVE, $cInfo->categories_name) . '<br>' . commerce_userapi_draw_pull_down_menu('move_to_category_id', xtc_get_category_tree('0', '', $cInfo->categories_id), $current_category_id));
         $contents[] = array('align' => 'center', 'text' => '<br>' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_move.gif')#" border="0" alt=IMAGE_MOVE>
-        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_move.gif')#" border="0" alt=IMAGE_MOVE>
+        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'delete_product':
@@ -282,7 +282,7 @@
         $product_categories_string = substr($product_categories_string, 0, -4);
 
         $contents[] = array('text' => '<br>' . $product_categories_string);
-        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+        $contents[] = array('align' => 'center', 'text' => '<br>' . <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif')#" border="0" alt=IMAGE_DELETE> . ' <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'move_product':
@@ -294,8 +294,8 @@
         $contents[] = array('text' => '<br>' . TEXT_INFO_CURRENT_CATEGORIES . '<br><b>' . xtc_output_generated_category_path($pInfo->products_id, 'product') . '</b>');
         $contents[] = array('text' => '<br>' . sprintf(TEXT_MOVE, $pInfo->products_name) . '<br>' . commerce_userapi_draw_pull_down_menu('move_to_category_id', xtc_get_category_tree(), $current_category_id));
         $contents[] = array('align' => 'center', 'text' => '<br>' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_move.gif')#" border="0" alt=IMAGE_MOVE>.
-        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_move.gif')#" border="0" alt=IMAGE_MOVE>.
+        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       case 'copy_to':
@@ -308,8 +308,8 @@
         $contents[] = array('text' => '<br>' . TEXT_CATEGORIES . '<br>' . commerce_userapi_draw_pull_down_menu('categories_id', xtc_get_category_tree(), $current_category_id));
         $contents[] = array('text' => '<br>' . TEXT_HOW_TO_COPY . '<br>' . xtc_draw_radio_field('copy_as', 'link', true) . ' ' . TEXT_COPY_AS_LINK . '<br>' . xtc_draw_radio_field('copy_as', 'duplicate') . ' ' . TEXT_COPY_AS_DUPLICATE);
         $contents[] = array('align' => 'center', 'text' => '<br>' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_copy.gif')#" border="0" alt=IMAGE_COPY>
-        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_copy.gif')#" border="0" alt=IMAGE_COPY>
+        <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>');
         break;
 
       default:
@@ -317,8 +317,8 @@
           if (is_object($cInfo)) { // category info box contents
             $heading[] = array('text' => '<b>' . $cInfo->categories_name . '</b>');
 
-            $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=edit_category') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=delete_category') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=move_category') . '">' .
-         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_move.gif'),'alt' => IMAGE_MOVE);
+            $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=edit_category') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=delete_category') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&cID=' . $cInfo->categories_id . '&action=move_category') . '">' .
+         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_move.gif'),'alt' => IMAGE_MOVE);
             </a>');
             $contents[] = array('text' => '<br>' . TEXT_DATE_ADDED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$cInfo->date_added)));
             if (xarModAPIFunc('commerce','user','not_null',array('arg' => $cInfo->last_modified))) $contents[] = array('text' => TEXT_LAST_MODIFIED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$cInfo->last_modified)));
@@ -327,15 +327,15 @@
           } elseif (is_object($pInfo)) { // product info box contents
             $heading[] = array('text' => '<b>' . xarModAPIFunc('commerce','user','get_products_name',array('id' =>$pInfo->products_id, $_SESSION['languages_id'])) . '</b>');
 
-            $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=delete_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=move_product') . '">' .
-         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_move.gif'),'alt' => IMAGE_MOVE);
+            $contents[] = array('align' => 'center', 'text' => '<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=new_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_EDIT); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=delete_product') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=move_product') . '">' .
+         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_move.gif'),'alt' => IMAGE_MOVE);
             </a> <a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=copy_to') . '">' .
-         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_copy_to.gif'),'alt' => IMAGE_COPY_TO);
+         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_copy_to.gif'),'alt' => IMAGE_COPY_TO);
             </a><form action="' . FILENAME_NEW_ATTRIBUTES . '" name="edit_attributes" method="post">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="current_product_id" value="#$pInfo->products_id#">
             <input type="hidden" name="cpath" value="#$cPath#">' .
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit_attributes.gif')#" border="0" alt='edit_attributes'>
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit_attributes.gif')#" border="0" alt='edit_attributes'>
             </form>');
 
             $contents[] = array('text' => '<br>' . TEXT_DATE_ADDED . ' ' . xarModAPIFunc('commerce','user','date_short',array('raw_date' =>$pInfo->products_date_added)));

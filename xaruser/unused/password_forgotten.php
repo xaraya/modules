@@ -67,7 +67,7 @@
  include(DIR_WS_INCLUDES . 'header.php');
 
  $data['INPUT_EMAIL'] = xtc_draw_input_field('email_address', '', 'maxlength="96"');
- $data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
+ $data['BUTTON_SUBMIT'] = <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_continue.gif')#" border="0" alt=IMAGE_BUTTON_CONTINUE>;
 
     if (isset($_GET['email']) && ($_GET['email'] == 'nonexistent')) {
     $data['error'] = '1';

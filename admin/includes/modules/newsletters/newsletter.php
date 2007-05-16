@@ -127,7 +127,7 @@ function selectAll(FormName, SelectBox) {
                         '    <td>' . xtc_draw_separator('pixel_trans.gif', '1', '10') . '</td>' . "\n" .
                         '  </tr>' . "\n" .
                         '  <tr>' . "\n" .
-                        '    <td align="right"><a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID'] . '&action=confirm_send') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_send.gif'),'alt' => IMAGE_SEND); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a></td>' . "\n" .
+                        '    <td align="right"><a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID'] . '&action=confirm_send') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send.gif'),'alt' => IMAGE_SEND); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a></td>' . "\n" .
                         '  </tr>' . "\n" .
                         '</table>';
 

@@ -59,11 +59,11 @@ $data_reviews=array();
   }
   $data['module_content'] = $data_reviews;
   $data['BUTTON_BACK'] = '<a href="' . xarModURL('commerce','user','product_info', $get_params_back) . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),
         'alt' =>IMAGE_BUTTON_BACK );
   . '</a>';
   $data['BUTTON_WRITE'] = '<a href="' . xarModURL('commerce','user','product_reviews'_WRITE, $get_params) . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_write_review.gif'),
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_write_review.gif'),
         'alt' => IMAGE_BUTTON_WRITE_REVIEW);
   . '</a>';
 

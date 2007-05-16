@@ -70,7 +70,7 @@ function commerce_currenciesblock_display($blockinfo)
     $hidden_get_variables = array();
     reset($_GET);
     while (list($key, $value) = each($_GET)) {
-      if ( ($key != 'currency') && ($key != xarSessionGetVar('name')) && ($key != 'x') && ($key != 'y') ) {
+      if ( ($key != 'currency') && ($key != xarSession::getVar('name')) && ($key != 'x') && ($key != 'y') ) {
         $hidden_get_variables[] = array('name' => $key, 'value' =>$value);
       }
     }
@@ -82,7 +82,7 @@ function commerce_currenciesblock_display($blockinfo)
     $dropdown = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
             'name' =>'currency',
             'values' => $currencies_array,
-            'default' => xarSessionGetVar('currency'),
+            'default' => xarSession::getVar('currency'),
             'parameters' => 'onChange="this.form.submit();" style="width: 100%"'
         )
     );

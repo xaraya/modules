@@ -31,7 +31,7 @@
     <td width="<?php echo SMALL_IMAGE_WIDTH + 10; ?>" valign="top" class="main"><a href="<?php echo xarModURL('commerce','user','product_info', 'products_id=' . $products_new_array[$i]['id']) . '">' . xtc_image(xarTplGetImage('product_images/thumbnail_images/' . $products_new_array[$i]['image']), $products_new_array[$i]['name'], SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT); ?></a></td>
     <td valign="top" class="main"><a href="<?php echo xarModURL('commerce','user','product_info', 'products_id=' . $products_new_array[$i]['id']) . '"><b><u>' . $products_new_array[$i]['name'] . '</u></b></a><br>' . TEXT_DATE_ADDED . ' ' . $products_new_array[$i]['date_added'] . '<br>' . TEXT_MANUFACTURER . ' ' . $products_new_array[$i]['manufacturer'] . '<br><br>' . TEXT_PRICE . ' ' . $products_price; ?></td>
     <td align="right" valign="middle" class="main"><a href="<?php echo xarModURL('commerce','user','products_new', xtc_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $products_new_array[$i]['id']) . '">' .
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_in_cart.gif'),'alt' => IMAGE_BUTTON_IN_CART);
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_in_cart.gif'),'alt' => IMAGE_BUTTON_IN_CART);
     </a></td>
   </tr>
 <?php

@@ -566,8 +566,8 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
 
     <tr>
         <td colspan="2" align="right" class="main">
-<input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>
-<a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a></td>
+<input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>
+<a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a></td>
    </tr>
 </table>
 </form>
@@ -716,7 +716,7 @@ echo xtc_draw_textarea_field('cont','','100','35',$content['content_text']);
 }
 ?>
        <tr>
-        <td colspan="2" align="right" class="main"><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>; ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a></td>
+        <td colspan="2" align="right" class="main"><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>; ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a></td>
    </tr>
    </form>
    </table>
@@ -733,7 +733,7 @@ if (!$_GET['action']) {
 ?>
 
 <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=new'); ?>">
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_content.gif'))
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_content.gif'))
 </a>
 <?php
 }
@@ -926,7 +926,7 @@ echo '</table></td></tr>';
 
  </table>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=new_products_content'); ?>">
-         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_content.gif'));
+         xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_content.gif'));
 </a>
  <?php
 } // if !$_GET['action']

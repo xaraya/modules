@@ -12,7 +12,7 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-include_once 'modules/xen/xarclasses/xenobject.class.php';
+sys::import('modules.xen.xarclasses.xenobject');
 
 class xenCommerceObject extends xenObject
 {
@@ -57,7 +57,7 @@ class xenCommerceObject extends xenObject
     function post($args,$op,$logop='')
 //    function post($args,$query,$op,$logop='')
     {
-        $userid = xarSessionGetVar('uid');
+        $userid = xarSession::getVar('uid');
         $date = date("Ymd") ;
         $time = date("H:i:s") ;
         sys::import('modules.roles.class.xarQuery');
@@ -188,7 +188,7 @@ class xenCommerceObject extends xenObject
         header('Expires: ' . $now);
         // lem9 & loic1: IE need specific headers
         $sniff = xarModAPIFunc('sniffer','user','sniff');
-        if (xarSessionGetVar('browsername') == 'Microsoft Internet Explorer') {
+        if (xarSession::getVar('browsername') == 'Microsoft Internet Explorer') {
             header('Content-Disposition: inline; filename="' . $filename . '.' . $ext . '"');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Pragma: public');

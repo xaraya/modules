@@ -24,7 +24,7 @@
 
 <!--
 <xar:if condition="xarUserIsLoggedIn()">
-    <xar:set name="currentuser">xarModAPIFunc('roles','user','get',array('uid' => xarSessionGetVar('uid')))</xar:set>
+    <xar:set name="currentuser">xarModAPIFunc('roles','user','get',array('uid' => xarSession::getVar('uid')))</xar:set>
     <xar:ml>
         <xar:mlstring>Nice to see you again <span class="greetUser">#(1)</span>. Would you like to visit our <a href="' . xarModURL('products','user','products_new') . '"><u>new products</u></a>?</xar:mlstring>
         <xar:mlvar>$currentuser['name']</xar:mlvar>

@@ -134,7 +134,7 @@ function commerce_admin_product_attributes()
                     <td colspan="3" class="main"><br><?php echo TEXT_WARNING_OF_DELETE; ?></td>
                   </tr>
                   <tr>
-                    <td align="right" colspan="3" class="main"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
+                    <td align="right" colspan="3" class="main"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
                   </tr>
 <?php
     } else {
@@ -145,7 +145,7 @@ function commerce_admin_product_attributes()
                   <tr>
                     <td class="main" align="right" colspan="3"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_option&option_id=' . $_GET['option_id'], 'NONSSL') . '">'; ?>
 
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => ' delete ')                                                                                        </a>&#160;&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&order_by=' . $order_by . '&page=' . $page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => ' delete ')                                                                                        </a>&#160;&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&order_by=' . $order_by . '&page=' . $page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
                   </tr>
 <?php
     }
@@ -245,7 +245,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 ?>
                 <td align="center" class="smallText">&#160;<?php echo $options_values['products_options_id']; ?><input type="hidden" name="option_id" value="<?php echo $options_values['products_options_id']; ?>">&#160;</td>
                 <td class="smallText"><?php echo $inputs; ?></td>
-                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>; ?>&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '', 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL);; ?></a>&#160;</td>
+                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>; ?>&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '', 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL);; ?></a>&#160;</td>
 <?php
         echo '</form>' . "\n";
       } else {
@@ -253,8 +253,8 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                 <td align="center" class="smallText">&#160;<?php echo $options_values["products_options_id"]; ?>&#160;</td>
                 <td class="smallText">&#160;<?php echo $options_values["products_options_name"]; ?>&#160;</td>
                 <td align="center" class="smallText">&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=update_option&option_id=' . $options_values['products_options_id'] . '&option_order_by=' . $option_order_by . '&option_page=' . $option_page, 'NONSSL') . '">'; ?>
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_UPDATE)
-</a>&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_product_option&option_id=' . $options_values['products_options_id'], 'NONSSL') , '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a>&#160;</td>
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_UPDATE)
+</a>&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_product_option&option_id=' . $options_values['products_options_id'], 'NONSSL') , '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a>&#160;</td>
 <?php
       }
 ?>
@@ -283,7 +283,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 ?>
                 <td align="center" class="smallText">&#160;<?php echo $next_id; ?>&#160;</td>
                 <td class="smallText"><?php echo $inputs; ?></td>
-                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>; ?>&#160;</td>
+                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>; ?>&#160;</td>
 <?php
       echo '</form>';
 ?>
@@ -349,7 +349,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                     <td class="main" colspan="3"><br><?php echo TEXT_WARNING_OF_DELETE; ?></td>
                   </tr>
                   <tr>
-                    <td class="main" align="right" colspan="3"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
+                    <td class="main" align="right" colspan="3"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
                   </tr>
 <?php
     } else {
@@ -359,8 +359,8 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                   </tr>
                   <tr>
                     <td class="main" align="right" colspan="3"><br><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_value&value_id=' . $_GET['value_id'], 'NONSSL') . '">'; ?><?php echo
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => ' delete ')
-</a>&#160;&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&option_page=' . $option_page . '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => ' delete ')
+</a>&#160;&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '&option_page=' . $option_page . '&value_page=' . $_GET['value_page'] . '&attribute_page=' . $attribute_page, 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => ' cancel '); ?></a>&#160;</td>
                   </tr>
 <?php
     }
@@ -472,7 +472,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 ?>
                 </select>&#160;</td>
                 <td class="smallText"><?php echo $inputs; ?></td>
-                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>; ?>&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '', 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL);; ?></a>&#160;</td>
+                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_update.gif')#" border="0" alt=IMAGE_UPDATE>; ?>&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, '', 'NONSSL') . '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL);; ?></a>&#160;</td>
 <?php
         echo '</form>';
       } else {
@@ -481,8 +481,8 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
                 <td align="center" class="smallText">&#160;<?php echo $options_name; ?>&#160;</td>
                 <td class="smallText">&#160;<?php echo $values_name; ?>&#160;</td>
                 <td align="center" class="smallText">&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=update_option_value&value_id=' . $values_values['products_options_values_id'] . '&value_page=' . $_GET['value_page'], 'NONSSL') . '">'; ?>
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_UPDATE)
-</a>&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_option_value&value_id=' . $values_values['products_options_values_id'], 'NONSSL') , '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a>&#160;</td>
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'alt' => IMAGE_UPDATE)
+</a>&#160;&#160;<?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_PRODUCTS_ATTRIBUTES, 'action=delete_option_value&value_id=' . $values_values['products_options_values_id'], 'NONSSL') , '">'; ?><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a>&#160;</td>
 <?php
       }
       $max_values_id_query = new xenQuery("select max(products_options_values_id) + 1 as next_id from " . TABLE_PRODUCTS_OPTIONS_VALUES);
@@ -520,7 +520,7 @@ xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/'
 ?>
                 </select>&#160;</td>
                 <td class="smallText"><input type="hidden" name="value_id" value="<?php echo $next_id; ?>"><?php echo $inputs; ?></td>
-                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>; ?>&#160;</td>
+                <td align="center" class="smallText">&#160;<?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>; ?>&#160;</td>
 <?php
       echo '</form>';
 ?>

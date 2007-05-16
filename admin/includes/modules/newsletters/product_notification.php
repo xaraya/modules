@@ -157,10 +157,10 @@ function selectAll(FormName, SelectBox) {
             $confirm_string .= xtc_draw_hidden_field('chosen[]', $chosen[$i]);
           }
         }
-        $confirm_string .= <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_send.gif')#" border="0" alt=IMAGE_SEND> . ' ';
+        $confirm_string .= <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send.gif')#" border="0" alt=IMAGE_SEND> . ' ';
 
       }
-      $confirm_string .= '<a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID'] . '&action=send') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a></td>' . "\n" .
+      $confirm_string .= '<a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID'] . '&action=send') . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a> <a href="' . xarModURL('commerce','admin',(FILENAME_NEWSLETTERS, 'page=' . $_GET['page'] . '&nID=' . $_GET['nID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a></td>' . "\n" .
                          '  </tr>' . "\n" .
                          '</table>';
 

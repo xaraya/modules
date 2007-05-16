@@ -12,7 +12,7 @@ function commerce_userapi_getitemtypes($args)
 
 // TODO: remove unused tables / objects + update URLs to whatever commerce GUI is relevant
 
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
     $modid = xarModGetIDFromName('commerce');
 
     $itemtypes[1] = array('label' => xarML('Address book'),

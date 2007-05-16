@@ -171,7 +171,7 @@
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
       <tr>
-        <td class="main" align="right"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>'; ?></td>
+        <td class="main" align="right"><?php echo '<a href="' . xarModURL('commerce','admin',(FILENAME_BANNER_MANAGER, 'page=' . $_GET['page'] . '&bID=' . $_GET['bID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK); . '</a>'; ?></td>
       </tr>
     </table></td>
 <!-- body_text_eof //-->

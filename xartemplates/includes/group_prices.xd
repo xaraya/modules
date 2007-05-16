@@ -109,7 +109,7 @@ echo ' <br>'.TEXT_NETTO .'<b>'. $currencies->format(round($staffel_values['perso
                     </td>
                     <td width="80" align="left">
                         <img src="#xarTplGetImage('pixel_trans.gif')#" width="10" height="1">
-                    <a href=" echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&function=delete&quantity=' . $staffel_values['quantity'] . '&statusID=' . $loop:item['status_id'] . '&action=new_product&pID=' . $_GET['pID']); "> echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?>
+                    <a href=" echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&function=delete&quantity=' . $staffel_values['quantity'] . '&statusID=' . $loop:item['status_id'] . '&action=new_product&pID=' . $_GET['pID']); "> echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?>
                     </a>
                     </td>
                 </tr>
@@ -126,7 +126,7 @@ echo ' <br>'.TEXT_NETTO .'<b>'. $currencies->format(round($staffel_values['perso
           <xar:mlstring>a</xar:mlstring>:
           <input type="text" name="products_price_staffel#$loop:item['status_id']#" value="0">
             <img src="#xarTplGetImage('pixel_trans.gif')#" width="10" height="10">
-            <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt="#xarML('Insert')#">;
+            <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt="#xarML('Insert')#">;
                 <br>
             </td>
         </tr>

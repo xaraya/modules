@@ -312,7 +312,7 @@ for ($i=0,$n=sizeof($customer_group); $i<$n; $i++) {
       </table></td>
     <td width="30%" align="right" valign="top""><?php
     echo '<a href="'.xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=new').'">'.
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_new_newsletter.gif'));
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_new_newsletter.gif'));
     </a>';
 
 
@@ -379,14 +379,14 @@ $total_data=$q->output();
 <td class="dataTableContent" valign="top" style="border-bottom: 1px solid; border-color: #f1f1f1;" align="left">
   <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
   <?php
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'' => '',''=>'','parameters' => 'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'' => '',''=>'','parameters' => 'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a><br>';
   ?>
 <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=edit&ID='.$news_data[$i]['id']); ?>">
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_edit.gif'),'' => '',''=>'','parameters' => 'Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'' => '',''=>'','parameters' => 'Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a>'; ?>
 <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=send&ID='.$news_data[$i]['id']); ?>"><br><br><hr noshade>
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_send.gif'),'' => '',''=>'','parameters' => 'style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send.gif'),'' => '',''=>'','parameters' => 'style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a>'; ?>
 
 </td>
@@ -567,8 +567,8 @@ $sw->show();
         ?></td>
    </tr>
    </table>
-   <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a>
-   <right><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>; ?></right>
+   <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_back.gif'),'alt' => IMAGE_NEW_BACK);; ?></a>
+   <right><?php echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE>; ?></right>
   </form>
   <?php
 

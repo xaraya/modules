@@ -184,7 +184,7 @@
 
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     if (xarUserIsLoggedIn()) {
-    $currentuser = xarModAPIFunc('roles','user','get',array('uid' => xarSessionGetVar('uid')));
+    $currentuser = xarModAPIFunc('roles','user','get',array('uid' => xarSession::getVar('uid')));
         $greeting_string = xarML('Nice to see you again #(1). ',
         '<span class="greetUser">' . $currentuser['name'] . '</span>');
         if (xarModIsAvailable('products')) {

@@ -89,7 +89,7 @@ function commerce_manufacturersblock_display($blockinfo)
         $dropdown = xarModAPIFunc('commerce','user','draw_pull_down_menu',array(
                 'name' =>'manufacturers_id',
                 'values' => $manufacturers_array,
-                'default' => xarSessionGetVar('currency'),
+                'default' => xarSession::getVar('currency'),
                 'parameters' => 'onChange="this.form.submit();" size="' . $configuration['max_manufacturers_list'] . '" style="width: 100%"'
             )
         );

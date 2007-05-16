@@ -133,7 +133,7 @@ echo ' <br>'.TEXT_NETTO .'<b>'. $currencies->format(xtc_round($staffel_values['p
 
  ?>
  </td>
-                <td width="80" align="left"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&function=delete&quantity=' . $staffel_values['quantity'] . '&statusID=' . $group_data[$col]['STATUS_ID'] . '&action=new_product&pID=' . $_GET['pID']); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a></td>
+                <td width="80" align="left"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?><a href="<?php echo xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&function=delete&quantity=' . $staffel_values['quantity'] . '&statusID=' . $group_data[$col]['STATUS_ID'] . '&action=new_product&pID=' . $_GET['pID']); ?>"><?php echo xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'alt' => IMAGE_DELETE);; ?></a></td>
               </tr>
               <tr>
                 <td colspan="3" height="5"></td>
@@ -147,7 +147,7 @@ echo ' <br>'.TEXT_NETTO .'<b>'. $currencies->format(xtc_round($staffel_values['p
       echo TXT_PRICE;
       echo xtc_draw_input_field('products_price_staffel_'.$group_data[$col]['STATUS_ID'], 0);
       echo xtc_draw_separator('pixel_trans.gif', '10', '10');
-      echo <input type="image" src="#xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>;
+      echo <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_insert.gif')#" border="0" alt=IMAGE_INSERT>;
 ?><br></td>
           </tr>
 <?php

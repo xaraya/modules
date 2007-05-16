@@ -84,14 +84,14 @@ $content_query=new xenQuery("SELECT
 
 
      $button = '<a style="cursor:hand" onClick="javascript:window.open(\''.xarModURL('commerce','user',(FILENAME_MEDIA_CONTENT,'coID='.$content_data['content_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">
-     xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW).'
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW);
+     xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW).'
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW);
      </a>';
 
     } else {
 
     $button= '<a href="'.xarModURL('commerce','user',('media/products/'.$content_data['content_file']).'">'.
-xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSessionGetVar('language') . '/'.'button_view.gif'),'alt' => TEXT_DOWNLOAD)    </a>';
+xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_view.gif'),'alt' => TEXT_DOWNLOAD)    </a>';
 
     }
     }
