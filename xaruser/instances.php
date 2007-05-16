@@ -43,11 +43,11 @@ function workflow_user_instances()
                     xarModSetUserVar('workflow','seenlist',$seenlist.';'.$iid);
                 }
             } else {
-                $seenlist = xarSessionGetVar('workflow.seenlist');
+                $seenlist = xarSession::getVar('workflow.seenlist');
                 if (empty($seenlist)) {
-                    xarSessionSetVar('workflow.seenlist',$iid);
+                    xarSession::setVar('workflow.seenlist',$iid);
                 } else {
-                    xarSessionSetVar('workflow.seenlist',$seenlist.';'.$iid);
+                    xarSession::setVar('workflow.seenlist',$seenlist.';'.$iid);
                 }
             }
             if (!empty($return_url)) {

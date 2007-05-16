@@ -25,7 +25,7 @@ function workflow_xartables()
     // Initialise table array
     $xarTables = array();
 
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     // Get the name for the workflow tables.
     $xarTables['workflow_activities'] = $prefix . '_workflow_activities';

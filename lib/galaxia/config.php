@@ -6,7 +6,7 @@
 
 // Common prefix used for all database table names, e.g. xar_workflow_
 if (!defined('GALAXIA_TABLE_PREFIX')) {
-    define('GALAXIA_TABLE_PREFIX', xarDBGetSiteTablePrefix() . '_workflow_');
+    define('GALAXIA_TABLE_PREFIX', xarDB::getPrefix() . '_workflow_');
 }
 
 // Directory containing the Galaxia library, e.g. lib/galaxia

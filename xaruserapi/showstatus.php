@@ -53,7 +53,7 @@ function workflow_userapi_showstatus($args)
     if (xarUserIsLoggedIn()) {
         $seenlist = xarModGetUserVar('workflow','seenlist');
     } else {
-        $seenlist = xarSessionGetVar('workflow.seenlist');
+        $seenlist = xarSession::getVar('workflow.seenlist');
     }
     if (!empty($seenlist)) {
         $seen = explode(';',$seenlist);

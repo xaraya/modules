@@ -174,8 +174,6 @@ function workflow_admin_processes()
     }
     $data['items'] =  $items["data"];
 
-    // Huh? why?
-    $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
     $data['all_procs'] =  $items['data'];
 
     $url = xarServerGetCurrentURL(array('offset' => '%%'));
