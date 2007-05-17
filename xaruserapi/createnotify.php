@@ -16,23 +16,18 @@
  * @access public
  * @author Jonathan Linowes
  * @author jojodee
- * @author Damien Bonvillain
- * @author Gregor J. Rothfuss
- * @param 'username'
- * @param 'realname'
- * @param 'email'
- * @param 'pass'  password
- * @param 'uid'  user id
- * @param 'ip'  user ip (optional)
- * @param 'state'  one of ROLES_STATE_NOTVALIDATED, ROLES_STATE_PENDING, ROLES_STATE_ACTIVE
- * @return true if ok
+ * @param object 'object'
+ * @param string 'pass'  password
+ * @param string 'ip'  user ip (optional)
+ * @return bool
  */
 function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    $uid = $values['id'];
-    $pass = $values['password'];
+    $uid = $object->properties['id']->value;
+    $state = $object->properties['state']->value;
+
     if ($state == ROLES_STATE_NOTVALIDATED) {
         if (empty($ip)) {
             $ip = xarServerGetVar('REMOTE_ADDR');
@@ -42,7 +37,7 @@ function registration_userapi_createnotify($args)
         $emailargs = array( 'uid'           => array($uid => '1'),
                             'mailtype'      => 'confirmation',
                             'ip'            => $ip,
-                            'pass'          => $pass );
+                            'pass'          => $pass);
 
         if (!xarModAPIFunc('roles', 'admin', 'senduseremail', $emailargs)) {
             $msg = xarML('Problem sending confirmation email');
@@ -61,11 +56,10 @@ function registration_userapi_createnotify($args)
                 $terms = xarML('This user has agreed to the site terms and conditions.');
             }
 
-            $emailargs = array(
-                            'adminname'     => xarModVars::get('mail', 'adminname'),
-                            'adminemail'    => xarModVars::get('registration', 'notifyemail'),
-                            'values'  => $values,
-                            'terms'         => $terms);
+            $emailargs = $args;
+            $emailargs['adminname']  = xarModVars::get('mail', 'adminname');
+            $emailargs['adminemail'] = xarModVars::get('registration', 'notifyemail');
+            $emailargs['terms']      = $terms;
 
             if (!xarModAPIFunc('registration', 'user', 'notifyadmin', $emailargs)) {
                return; // TODO ...something here if the email is not sent..

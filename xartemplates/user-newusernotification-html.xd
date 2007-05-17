@@ -8,13 +8,19 @@
 <p>
     <xar:mlstring>A user with the following details has registered at: </xar:mlstring> #$sitename#
 </p>
-<p>
-    <xar:mlstring>Status: </xar:mlstring>#$pending#<br />
-    <xar:mlstring>User ID: </xar:mlstring>#$uid#<br />
-    <xar:mlstring>Display Name: </xar:mlstring>#$userrealname#<br />
-    <xar:mlstring>User Name: </xar:mlstring>#$username#<br />
-    <xar:mlstring>User Email: </xar:mlstring>#$useremail#<br />
-</p>
+<table>
+    <xar:data-getitem name="$properties" object="$object" />
+    <xar:foreach in="$properties" key="$field">
+   <tr style="valign: top;">
+       <td>
+           <xar:data-label property="$properties[$field]" />:
+       </td>
+       <td>
+           <xar:data-output property="$properties[$field]" />
+       </td>
+   </tr>
+</xar:foreach>
+</table>
 
 <xar:if condition="!empty($terms)">
     <p>#$terms#</p>

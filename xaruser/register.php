@@ -221,7 +221,7 @@ function registration_user_register()
             $authmodule          = $defaultauthdata['defaultauthmodname'];
 
             //jojo - should just use authsystem now as we used to pre 1.1 merge
-            $loginlink =xarModURL($defaultloginmodname,'user','main');
+            $loginlink = xarModURL($defaultloginmodname,'user','main');
 
             //variables required for display of correct validation template to users, depending on registration options
             $tplvars = array();
@@ -233,7 +233,7 @@ function registration_user_register()
             $state = xarModAPIFunc('registration','user','createstate');
 
             // need a password
-            if (empty($password)){
+            if (empty($values['password'])){
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
                 $values['password'] = $pass;
             }
@@ -248,13 +248,21 @@ function registration_user_register()
             $userdata = $values;
             $userdata['parentid'] = xarModVars::get('roles', 'defaultgroup');
             $userdata['itemtype'] = 2;
-            $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
+            $userdata['role_type'] = 2;
+
+            $object = xarModAPIFunc('dynamicdata', 'user', 'getobject', array('name' => 'roles_users'));
+
+           /* $object->properties['password']->validation = '';
+            $isvalid = $object->checkInput($userdata);
+            debug($userdata);
+            if (!$isvalid) return;*/
+            $uid = $object->createItem($userdata);
+
             $values['id'] = $uid;
             if (empty($uid)) return;
             xarModVars::set('roles', 'lastuser', $uid);
 
-            //Make sure the user email setting is off unless the user sets it
-            xarModSetUserVar('roles','usersendemails', false, $uid);
+            // @todo we prolly shouldn't need to call this if roles create returned the object
 
             /* Call hooks in here
              * This might be double as the roles hook will also call the create,
@@ -270,14 +278,12 @@ function registration_user_register()
              $uname = $values['uname'];
              $pass  = $values['password'];
 
-
             // Let's finish by sending emails to those that require it based on options - the user or the admin
             // and redirecting to appropriate pages that depend on user state and options set in the registration config
             // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
             $emailargs = array();
             $emailargs['pass'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $pass;
-            $emailargs['ip'] = $ip;
-            $emailargs['state'] = $state;
+            $emailargs['object'] = $object;
             $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
             if (!$ret) return;
 
