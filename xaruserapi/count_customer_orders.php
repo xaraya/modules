@@ -13,7 +13,7 @@
 function customers_userapi_count_customer_orders($args)
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
 
     $q = new xenQuery('SELECT',$xartables['commerce_orders'],'count(*) as total');

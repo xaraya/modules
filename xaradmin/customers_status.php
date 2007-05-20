@@ -15,7 +15,7 @@ function commerce_admin_customers_status()
     sys::import('modules.xen.xarclasses.xenquery');
     include_once 'modules/commerce/xarclasses/object_info.php';
     include_once 'modules/commerce/xarclasses/split_page_results.php';
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
 

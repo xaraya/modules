@@ -16,7 +16,7 @@ function customers_userapi_getall($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
+    $xartable = xarDB::getTables();
     if (isset($conditions)) {
         $conditions->addtable($xartable['roles'],'r');
         $q = $conditions;
