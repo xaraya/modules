@@ -15,7 +15,7 @@ function commerce_adminapi_remove_category($args)
 //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if(!isset($category_id)) $category_id = 0;

@@ -19,7 +19,7 @@
   {
 
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $localeinfo['lang'] . "_" . $localeinfo['country']));

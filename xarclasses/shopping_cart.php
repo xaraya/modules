@@ -430,7 +430,7 @@
                 if ($this->contents[$item_id]['attributes']) {
                     reset($this->contents[$item_id]['attributes']);
                     sys::import('modules.xen.xarclasses.xenquery');
-                    $xartables = xarDBGetTables();
+                    $xartables = xarDB::getTables();
                     while (list($option, $value) = each($this->contents[$item_id]['attributes'])) {
                         $q = new xenQuery('SELECT', $this->prefix . '_carts_products_attributes']);
                         $q->addfields(array('options_values_price', 'price_prefix'));

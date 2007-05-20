@@ -14,7 +14,7 @@ function commerce_userapi_get_products_description($args)
 {
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if(!isset($product_id)) {

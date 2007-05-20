@@ -13,7 +13,7 @@
   function commerce_userapi_get_zone_name($args)
   {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
     $q = new xenQuery("SELECT",$xartables['commerce_zones']);
     if (!isset($zone_id)) $zone_id = 1;

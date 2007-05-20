@@ -14,7 +14,7 @@ function commerce_userapi_get_customer_status($args)
 {
     sys::import('modules.xen.xarclasses.xenquery');
 //    xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     $q = new xenQuery('SELECT',

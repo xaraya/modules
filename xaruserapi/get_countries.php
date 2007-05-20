@@ -15,7 +15,7 @@ function commerce_userapi_get_countries($args)
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if(!isset($value)) $value = '';

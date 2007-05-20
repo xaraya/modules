@@ -228,7 +228,7 @@ function carts_delete()
 # Remove database tables
 #
     $tablenameprefix = xarDB::getPrefix() . '_carts_';
-    $tables = xarDBGetTables();
+    $tables = xarDB::getTables();
     $q = new xenQuery();
         foreach ($tables as $table) {
         if (strpos($table,$tablenameprefix) === 0) {

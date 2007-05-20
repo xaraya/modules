@@ -13,7 +13,7 @@
 function commerce_userapi_get_languages()
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $q = new xenQuery('SELECT',
                       $xartables['commerce_languages'],
