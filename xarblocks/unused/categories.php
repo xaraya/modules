@@ -60,7 +60,7 @@ function commerce_categoriesblock_display($blockinfo)
     if(!xarVarFetch('cPath',  'str',  $cPath, '', XARVAR_NOT_REQUIRED)) {return;}
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

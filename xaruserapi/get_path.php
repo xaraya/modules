@@ -16,7 +16,7 @@ function commerce_userapi_get_path($args)
     global $cPath_array;
 
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if ($nodeid != '') {

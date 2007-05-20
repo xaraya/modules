@@ -57,7 +57,7 @@ function commerce_informationblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];

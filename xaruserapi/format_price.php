@@ -15,7 +15,7 @@ require_once(DIR_FS_INC . 'xtc_precision.inc.php');
 function commerce_userapi_format_price ($args)
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
 
     $q = new xenQuery('SELECT', $xartables['commerce_currencies']);

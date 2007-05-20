@@ -21,7 +21,7 @@ function commerce_admin_categories()
     include_once 'modules/commerce/xarclasses/object_info.php';
     include_once 'modules/commerce/xarclasses/split_page_results.php';
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
 

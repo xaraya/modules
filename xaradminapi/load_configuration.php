@@ -18,7 +18,7 @@
 function commerce_adminapi_load_configuration() {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $q = new xenQuery('SELECT',$xartables['commerce_configuration'], array('configuration_key AS cfgKey','configuration_value AS cfgValue'));
     if(!$q->run()) return;
     $configuration_array = array();

@@ -14,7 +14,7 @@ function commerce_admin_remove_product($args) {
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if(!isset($id)) $id = '';

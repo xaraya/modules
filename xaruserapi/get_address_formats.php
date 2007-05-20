@@ -14,7 +14,7 @@ function commerce_userapi_get_address_formats($args)
 {
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $q = new xenQuery('SELECT',
                       $xartables['commerce_address_format'],
                       array('address_format_id AS id','address_format_id AS text')

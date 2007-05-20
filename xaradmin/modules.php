@@ -14,7 +14,7 @@
 function commerce_admin_modules($args)
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     if (!xarVarFetch('set', 'str', $set, "", XARVAR_NOT_REQUIRED)) {return;}
     switch ($set) {

@@ -13,7 +13,7 @@
 function commerce_user_account()
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];

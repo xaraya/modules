@@ -58,7 +58,7 @@ function commerce_adminblock_display($blockinfo)
 
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];

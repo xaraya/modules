@@ -20,7 +20,7 @@ class currencies extends xenCommerceObject
     // class constructor
     function currencies() {
         parent::xenCommerceObject();
-        $xartables =& xarDBGetTables();
+        $xartables = xarDB::getTables();
         $this->currencies = array();
         $currency_fields =  array('code', 'title', 'symbol_left', 'symbol_right', 'decimal_point', 'thousands_point', 'decimal_places', 'value');
         $q = new xenQuery("SELECT",$xartables['commerce_currencies'],$currency_fields);

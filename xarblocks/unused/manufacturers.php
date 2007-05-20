@@ -57,7 +57,7 @@ function commerce_manufacturersblock_display($blockinfo)
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     if(!xarVarFetch('manufacturers_id',    'int',  $manufacturers_id, 0, XARVAR_NOT_REQUIRED)) {return;}
 

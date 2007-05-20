@@ -18,7 +18,7 @@
 function commerce_adminapi_get_languages_directory($args) {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
         extract($args);
         if(!isset($code)) $code = '';
         $q = new xenQuery('SELECT',

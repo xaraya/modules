@@ -15,7 +15,7 @@
 function commerce_userapi_findtitle($args) {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
 

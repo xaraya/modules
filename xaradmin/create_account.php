@@ -14,7 +14,7 @@ function commerce_admin_create_account()
 {
     sys::import('modules.xen.xarclasses.xenquery');
     include_once 'modules/commerce/xarclasses/object_info.php';
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $data['configuration'] = $configuration;
 

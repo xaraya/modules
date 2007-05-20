@@ -17,7 +17,7 @@ function commerce_userapi_get_countries($args)
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     //xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     // Get the object info
     $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo',array('name' => 'ice_countries'));

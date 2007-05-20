@@ -19,7 +19,7 @@
 //  require_once(DIR_FS_INC . 'xtc_get_path.inc.php');
 
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     if(!xarVarFetch('manufacturers_id',   'int',  $manufacturers_id, 0, XARVAR_DONT_SET)) {return;}
 

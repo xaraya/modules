@@ -21,7 +21,7 @@ function commerce_user_default()
 
     xarModAPILoad('categories');
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];

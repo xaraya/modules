@@ -13,7 +13,7 @@
 function commerce_adminapi_get_group_price($args) {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
 
     // well, first try to get group price from database

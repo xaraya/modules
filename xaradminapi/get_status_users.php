@@ -13,7 +13,7 @@
 function commerce_adminapi_get_status_users($args) {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
     if(!isset($status_id)) $status_id = 0;
     $q = new xenQuery('SELECT',$xartables['commerce_customers']);

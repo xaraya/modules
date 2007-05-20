@@ -13,7 +13,7 @@
 function commerce_adminapi_get_user_info($args) {
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     extract($args);
     $q = new xenQuery('SELECT',$xartables['commerce_customers_ip']);
     $q->addfields(array('customers_ip', 'customers_ip_date', 'customers_host', 'customers_advertiser', 'customers_referer_url'));

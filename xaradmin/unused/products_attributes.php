@@ -15,7 +15,7 @@ function commerce_admin_products_attributes()
     sys::import('modules.xen.xarclasses.xenquery');
     include_once 'modules/commerce/xarclasses/object_info.php';
     include_once 'modules/commerce/xarclasses/split_page_results.php';
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());

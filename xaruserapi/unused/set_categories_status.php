@@ -13,7 +13,7 @@
 // Sets the status of a categories
 function commerce_userapi_set_categories_status($args) {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if (!isset($status)) $status = 0;

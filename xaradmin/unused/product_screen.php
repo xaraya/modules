@@ -19,7 +19,7 @@ function commerce_admin_product_screen()
     if(!xarVarFetch('cPath',  'int',  $data['cPath'], 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('products_tax_class_id',  'int',  $products_tax_class_id, '', XARVAR_NOT_REQUIRED)) {return;}
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $languages = xarModAPIFunc('commerce','user','get_languages');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
