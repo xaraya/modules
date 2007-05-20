@@ -16,7 +16,7 @@ function vendors_userapi_getallsuppliers($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
+    $xartable = xarDB::getTables();
     if (isset($conditions)) {
         $conditions->addtable($xartable['roles'],'r');
         $q = $conditions;

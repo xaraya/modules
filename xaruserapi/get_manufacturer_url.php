@@ -14,7 +14,7 @@ function commerce_userapi_get_manufacturer_url($args)
 {
     extract($args);
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
     $q = new xenQuery('SELECT', $xartables['commerce_manufacturers_info'], array('manufacturers_url'));
     $q->eq('manufacturers_id', $manufacturers_id);
     $q->eq('languages_id', $language_id);
