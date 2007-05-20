@@ -15,7 +15,7 @@ function commerce_admin_manufacturers()
     sys::import('modules.xen.xarclasses.xenquery');
     include_once 'modules/commerce/xarclasses/object_info.php';
     include_once 'modules/commerce/xarclasses/split_page_results.php';
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     if(!xarVarFetch('action', 'str',  $action, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('page',   'int',  $page, 1, XARVAR_NOT_REQUIRED)) {return;}

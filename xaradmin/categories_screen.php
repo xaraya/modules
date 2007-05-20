@@ -45,7 +45,7 @@ function products_admin_categories_screen()
     if(!xarVarFetch('langid',    'int',  $data['langid'], $currentlang['id'], XARVAR_NOT_REQUIRED)) {return;}
 
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     if (isset($action)) {
         $q = new xenQuery();

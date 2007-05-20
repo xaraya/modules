@@ -15,7 +15,7 @@ function products_userapi_get_category_tree($args)
 //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('categories');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     if(!isset($parent_id)) $parent_id = 0;

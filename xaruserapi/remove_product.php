@@ -13,7 +13,7 @@
 function commerce_userapi_remove_product($args)
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     extract($args);
     $q = new xenQuery('SELECT',$xartables['commerce_products'],'product_image');

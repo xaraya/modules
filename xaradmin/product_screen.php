@@ -19,7 +19,7 @@ function products_admin_product_screen()
     if(!xarVarFetch('cPath',  'int',  $data['cPath'], 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('product_tax_class_id',  'int',  $product_tax_class_id, '', XARVAR_NOT_REQUIRED)) {return;}
     $configuration = xarModAPIFunc('commerce','admin','load_configuration');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $currentlang = xarModAPIFunc('math','user','getcurrentlanguage',array('module' => 'products'));
     $languages = xarModAPIFunc('math','user','getlanguages');
@@ -329,7 +329,7 @@ function products_admin_product_screen()
 */
     if (xarModIsAvailable('customers')) {
         xarModLoad('customers');
-        $xartables = xarDBGetTables();
+        $xartables = xarDB::getTables();
         $q = new xenQuery('SELECT',$xartables['customers_customers_status']);
         $q->addfields(array('customers_status_image AS status_image',
                                        'customers_status_id AS status_id',

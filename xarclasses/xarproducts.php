@@ -47,7 +47,7 @@ class xarProducts
   function xarProducts( )
   {
 
-      $xartable =& xarDBGetTables();
+      $xartable = xarDB::getTables();
       $this->productsTable = $xartable['products_products'];
       $this->productsAttributesTable = $xartable['products_products_attributes'];
 

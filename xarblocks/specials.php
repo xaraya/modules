@@ -61,7 +61,7 @@ function commerce_specialsblock_display($blockinfo)
     //FIXME: create an API function for this stuff
     sys::import('modules.xen.xarclasses.xenquery');
     xarModAPILoad('commerce');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
     $selectfields = array('p.product_id', 'pd.product_name', 'p.product_price', 'p.product_tax_class_id', 'p.product_image','s.specials_new_product_price');
     $q = new xenQuery("SELECT",$xartables['commerce_products'],$selectfields);

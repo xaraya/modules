@@ -13,7 +13,7 @@
 function products_admin_configuration()
 {
     sys::import('modules.xen.xarclasses.xenquery');
-    $table =& xarDBGetTables();
+    $table = xarDB::getTables();
 
     if(!xarVarFetch('action',   'str',  $action, "", XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('gID',      'int',  $gID,    1,  XARVAR_NOT_REQUIRED)) {return;}

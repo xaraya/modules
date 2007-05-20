@@ -13,7 +13,7 @@
   function products_user_start()
   {
     sys::import('modules.xen.xarclasses.xenquery');
-    $xartables = xarDBGetTables();
+    $xartables = xarDB::getTables();
 
 //      include( 'includes/application_top.php');
       // the following cPath references come from application_top.php

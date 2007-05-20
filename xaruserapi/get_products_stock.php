@@ -13,7 +13,7 @@
     function commerce_userapi_get_products_stock($args)
     {
         sys::import('modules.xen.xarclasses.xenquery');
-        $xartables = xarDBGetTables();
+        $xartables = xarDB::getTables();
         extract($args);
         if (!isset($products_quantity)) $products_quantity = 0;
         $q = new xenQuery('SELECT',
