@@ -4,64 +4,39 @@
 }
 
 .xtasks {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 12pt;
 }
 
 .xtasks-norm-row {
-    background-color: #FFFFFF;
 }
 
 .xtasks-alt-row {
-    background-color: #CCCCCC;
 }
 
 .xtasks-menu {
-    background-color: #CCCCCC;
 }
 
 .xtasks-menu-content {
-    background-color: #FFFFFF;
 }
 
 .xtasks-menu table, .xtasks-menu td {
-    padding: 0px;
-    margin: 0px;
-    cell-padding: 0px;
-    cell-spacing: 0px;
-    border-spacing: 0px;
 }
 
 .xtasks-menu-title {
-    font-size: 24px;
-    font-weight: bold;
     padding: 4px 0;
 }
 
 .xtasks-menu-item {
-    font-family: "Trebuchet MS", "Luxi Sans", Verdana, Helvetica, sans-serif;
-    color: #FFFFFF;
-    background-color: #666666;
-    font-size: 12px;
     height: 18px;
-    line-height: auto;
     margin: 0px 4px;
     white-space: nowrap;
 }
 
 .xtasks-menu-item-hover {
-    font-family: "Trebuchet MS", "Luxi Sans", Verdana, Helvetica, sans-serif;
-    color: #000000;
-    background-color: #CCCCCC;
-    font-size: 12px;
     height: 18px;
-    line-height: auto;
     margin: 0px 4px;
 }
 
 a.xtasks-menu-link {
-    color: #FFFFFF;
-    text-decoration: none;
 }
 
 a.xtasks-menu-link:hover {
@@ -71,73 +46,61 @@ a.xtasks-menu-link:hover {
 }
 
 a.xtasks-menu-link:visited {
-    color: #FFFFFF;
-    text-decoration: none;
 }
 
 .xtasks-tasklist-data {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
     vertical-align: top;
 }
 
 .xtasks-tasklist-data a {
-    text-decoration: none;
-    color: #000000;
-    font-weight: normal;
 }
 
 .xtasks-tasklist-taskname {
-    font-size: 12px;
-    text-decoration: none;
-    color: #000000;
 }
 
 .xtasks-tasklist-taskname a {
-    text-decoration: none;
-    color: #000000;
 }
 
 .xtasks-tasklist-header {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
 }
 
 .xtasks-display-label {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    
 }
 
 .xtasks-display-data {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    font-weight: bold;
 }
-
 .xtasks-display-input {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
 }
 
 .xtasks-display-input select, 
 .xtasks-display-input textarea, 
 .xtasks-display-input input {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
 }
+/*
 .xtasks-display-input:xar-form-textshort {
     width: 10px;
-    background-color: #444444;
 }
-
+*/
 xtasks.xar-form-label {
     width: 200px;
 }
 
 td.xtasks-workspace-listsubhead {
-    font-size: 14px;
-    font-weight: bold;
     padding: 5px;
+}
+dl.xtasks-display {
+}
+dl.xtasks-display dt {
+    font-weight: bold;
+    padding-bottom: .5em;
+}
+dl.xtasks-display dd {
+    margin-left: 15em;
+    padding-bottom: .5em;
+}
+a.xtasks-twist {
+    margin-left: 1em;
+}
+a.xtasks-twist img {
+    vertical-align: middle;
 }

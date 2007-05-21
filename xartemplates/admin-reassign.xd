@@ -5,7 +5,7 @@
 <div class="xar-mod-body">
 <div align="center">
 
-<form method="post" action="&xar-modurl-xtasks-admin-updateassign;">
+<form method="post" action="#xarModUrl('xtasks','admin','updateassign')#">
 
 <input type="hidden" name="authid" value="#$authid#" />
 <input type="hidden" name="taskid" value="#$item.taskid#" />

@@ -5,6 +5,7 @@ function xtasks_worklog_new($args)
     extract($args);
 
     if (!xarVarFetch('taskid',     'id',     $taskid)) return;
+    if (!xarVarFetch('inline',     'bool',     $inline, 0)) return;
     if (!xarVarFetch('returnurl',     'str::',     $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarModAPILoad('xtasks', 'user')) return;
@@ -22,10 +23,9 @@ function xtasks_worklog_new($args)
 
     $data['authid'] = xarSecGenAuthKey();
     $data['taskid'] = $taskid;
+    $data['inline'] = $inline;
     $data['taskinfo'] = $taskinfo;
     $data['returnurl'] = $returnurl;
-
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Submit Work'));
 
     return $data;
 }

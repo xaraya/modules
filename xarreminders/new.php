@@ -3,7 +3,7 @@
 function xtasks_reminders_new()
 {
     if (!xarVarFetch('taskid',     'id',     $taskid)) return;
-
+    if (!xarVarFetch('inline',     'bool',     $inline, 0)) return;
     if (!xarModAPILoad('xtasks', 'user')) return;
     
     $data = xarModAPIFunc('xtasks','admin','menu');
@@ -19,9 +19,8 @@ function xtasks_reminders_new()
 
     $data['authid'] = xarSecGenAuthKey();
     $data['taskid'] = $taskid;
+    $data['inline'] = $inline;
     $data['taskinfo'] = $taskinfo;
-
-    $data['addbutton'] = xarVarPrepForDisplay(xarML('Add Reminder'));
 
     return $data;
 }

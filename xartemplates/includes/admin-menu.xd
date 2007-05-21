@@ -3,138 +3,109 @@
 <xar:base-include-javascript position="body" module="base" filename="calendar.js" />
 <xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
 <xar:style scope="module" file="xtasks" />
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
 
 <xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+
 <xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
 <xar:set name="dummy">xarVarFetch('type', 'str::', $currentmodtype, '', XARVAR_NOT_REQUIRED)</xar:set>
 <xar:set name="dummy">xarVarFetch('func', 'str::', $currentmodfunc, '', XARVAR_NOT_REQUIRED)</xar:set>
 
-<table border="0" width="100%" class="xtasks-menu">
-    
-    <tr><td align="center" colspan="2" class="xtasks-menu-content xtasks-menu-title">#$menutitle#</td></tr>
-    <tr>
-        <td width="70" rowspan="2" class="xtasks-menu-content" style="text-align: center;"><img src="modules/xtasks/xarimages/admin.jpg" align="center" /></td>
-        <td class="xtasks-menu-content"><table style="width: 100%; border: 0px; border-collapse: collapse;"><tr align="center" valign="middle">
+<div>
+	<dl class="xar-tabs">
+	    <dt class="help" title="#xarML('Choose an action to perform')#">
+			<xar:mlstring>Actions:</xar:mlstring>
+    	</dt>
+		<xar:if condition="$mymemberid gt 0">
+		    <xar:sec mask="ViewXTask" catch="false">
+		        <xar:set name="tabclass">$activetab=='mytasks'?'active':''</xar:set>
+		        <dd class="#$tabclass#">
+		        	<a href="#xarModUrl('xtasks','user','mytasks')#">
+		            	<xar:mlstring>My Tasks</xar:mlstring>
+					</a>
+		        </dd>
+		    </xar:sec>
+        </xar:if>
+	    <xar:sec mask="ReadXTask" catch="false">
+			<xar:if condition="$currentmodname eq 'xtasks' 
+                    and $currentmodtype eq 'admin'
+                    and $currentmodfunc eq 'view'">
+	        	<xar:set name="tabclass">'active'</xar:set>
+			<xar:else />
+				<xar:set name="tabclass">''</xar:set>
+			</xar:if>
+	        <dd class="#$tabclass#">
+				<a href="#xarModUrl('xtasks','admin','view')#">
+					<xar:mlstring>Open Tasks</xar:mlstring>
+				</a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="AddXTask" catch="false">
+			<xar:if condition="$currentmodname eq 'xtasks' 
+                    and $currentmodtype eq 'admin'
+                    and $currentmodfunc eq 'new'">
+	        	<xar:set name="tabclass">'active'</xar:set>
+			<xar:else />
+				<xar:set name="tabclass">''</xar:set>
+			</xar:if>
 
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
-                                and  ( $currentmodfunc eq 'main' or empty($currentmodfunc) )">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Overview</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-user-main;" class="xtasks-menu-link"><xar:mlstring>Overview</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-            <xar:if condition="$mymemberid gt 0">
-                <xar:if condition="$currentmodname eq 'xtasks' 
-                                    and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
-                                    and  $currentmodfunc eq 'mytasks'">
-                    <td width="25%"><div class="xtasks-menu-item-hover">
-                        <strong><xar:mlstring>My Tasks</xar:mlstring></strong>
-                    </div></td>
-                <xar:else />
-                    <td width="25%"><div class="xtasks-menu-item" 
-                                        onmouseover="this.className='xtasks-menu-item-hover'" 
-                                        onmouseout="this.className='xtasks-menu-item'">
-                        <a href="&xar-modurl-xtasks-user-mytasks;" class="xtasks-menu-link"><xar:mlstring>My Tasks</xar:mlstring></a>
-                    </div></td>
-                </xar:if>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item">&nbsp;</div></td>
-            </xar:if>
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and ( $currentmodtype eq 'admin' ) 
-                                and  $currentmodfunc eq 'view'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Open Tasks</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-admin-view;" class="xtasks-menu-link"><xar:mlstring>Open Tasks</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
-                                and  $currentmodfunc eq 'settings'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Preferences</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-user-settings;" class="xtasks-menu-link"><xar:mlstring>Preferences</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-        </tr></table>
-    </td></tr>
-    <tr><td class="xtasks-menu-content"><table style="width: 100%; border: 0px; border-collapse: collapse;"><tr align="center" valign="middle">
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and $currentmodtype eq 'admin' 
-                                and $currentmodfunc eq 'new'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>New Task</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-admin-new;" class="xtasks-menu-link"><xar:mlstring>New Task</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and ( $currentmodtype eq 'user' or empty($currentmodtype) ) 
-                                and $currentmodfunc eq 'taskarchive'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Task Archive</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-user-taskarchive;" class="xtasks-menu-link"><xar:mlstring>Task Archive</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and $currentmodtype eq 'worklog'
-                                and $currentmodfunc eq 'view'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Worklog</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-worklog-view;" class="xtasks-menu-link"><xar:mlstring>Worklog</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-            <xar:if condition="$currentmodname eq 'xtasks' 
-                                and $currentmodtype eq 'admin' 
-                                and $currentmodfunc eq 'modifyconfig'">
-                <td width="25%"><div class="xtasks-menu-item-hover">
-                    <strong><xar:mlstring>Setup</xar:mlstring></strong>
-                </div></td>
-            <xar:else />
-                <td width="25%"><div class="xtasks-menu-item" 
-                                    onmouseover="this.className='xtasks-menu-item-hover'" 
-                                    onmouseout="this.className='xtasks-menu-item'">
-                    <a href="&xar-modurl-xtasks-admin-modifyconfig;" class="xtasks-menu-link"><xar:mlstring>Setup</xar:mlstring></a>
-                </div></td>
-            </xar:if>
-        
-        </tr></table>
-    </td></tr>
-        
-</table>
+	        <dd class="#$tabclass#">
+	          <a href="#xarModUrl('xtasks','admin','new')#">
+	            <xar:mlstring>New Task</xar:mlstring>
+	          </a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="ReadXTask" catch="false">
+	        <xar:set name="tabclass">$activetab=='settings'?'active':''</xar:set>
+	        <dd class="#$tabclass#">
+				<a href="#xarModUrl('xtasks','user','settings')#">
+					<xar:mlstring>Preferences</xar:mlstring>
+				</a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="ReadXTask" catch="false">
+	        <xar:set name="tabclass">$activetab=='taskarchive'?'active':''</xar:set>
+	        <dd class="#$tabclass#">
+				<a href="#xarModUrl('xtasks','user','taskarchive')#">
+					<xar:mlstring>Task Archive</xar:mlstring>
+				</a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="ViewWorklog" catch="false">
+			<xar:if condition="$currentmodname eq 'xtasks' 
+                    and $currentmodtype eq 'worklog'
+                    and $currentmodfunc eq 'view'">
+	        	<xar:set name="tabclass">'active'</xar:set>
+			<xar:else />
+				<xar:set name="tabclass">''</xar:set>
+			</xar:if>
+	        <dd class="#$tabclass#">
+				<a href="#xarModUrl('xtasks','worklog','view')#">
+					<xar:mlstring>Worklog</xar:mlstring>
+				</a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="AdminXTask" catch="false">
+	        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+	        <dd class="#$tabclass#">
+	          <a href="#xarModUrl('xtasks','admin','modifyconfig')#">
+	            <xar:mlstring>Modify Config</xar:mlstring>
+	          </a>
+	        </dd>
+	    </xar:sec>
+	    <xar:sec mask="ViewXTask" catch="false">
+	    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+	    <dd class="#$tabclass#">
+	      <a href="#xarModUrl('xtasks','user','main')#">
+	        <xar:mlstring>Overview</xar:mlstring>
+	      </a>
+	    </dd>
+	    </xar:sec>
+	</dl>
+</div>
 
 <xar:if condition="!empty($statusmsg)">
     <div>#$statusmsg#</div>
 </xar:if>
-
-<br />

@@ -7,7 +7,7 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Task</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <form method="post" action="&xar-modurl-xtasks-admin-update;">
+    <form method="post" action="#xarModUrl('xtasks','admin','update')#">
     
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="taskid" value="#$item.taskid#" />

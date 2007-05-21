@@ -1,0 +1,4 @@
+<?xar type="page" ?>
+<xar:blocklayout version="1.0" content="text/html" xmlns:xar="http://xaraya.com/2004/blocklayout" dtd="xhtml1-strict">
+    <xar:module class="modulespace" main="true" />
+</xar:blocklayout>

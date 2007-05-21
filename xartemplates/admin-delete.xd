@@ -8,7 +8,7 @@
 
 <h3><xar:mlstring>Close/Delete Task?</xar:mlstring></h3>
 
-<form method="post" action="&xar-modurl-xtasks-admin-delete;">
+<form method="post" action="#xarModUrl('xtasks','admin','delete')#">
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="confirm" value="true" />
     <input type="hidden" name="taskid" value="#$taskid#" />
