@@ -1,6 +1,6 @@
 <?php
 /**
- * Articles module
+ * Admin view of articles
  *
  * @package modules
  * @copyright (C) 2002-2007 The Digital Development Foundation
@@ -12,7 +12,17 @@
  * @author mikespub
  */
 /**
- * view items
+ * View articles for an administrator. This function shows a page from which articles can be managed
+ *
+ * @param int startnum Defaults to 1
+ * @param int ptid OPTIONAL
+ * @param status OPTIONAL
+ * @param int itemtype OPTIONAL
+ * @param catid OPTIONAL
+ * @param int authorid OPTIONAL
+ * @param lang OPTIONAL
+ * @param pubdate OPTIONAL
+ * @return mixed. Calls the template function to show the article listing.
  */
 function articles_admin_view($args)
 {
@@ -154,8 +164,8 @@ function articles_admin_view($args)
     $data['showdate'] = $showdate;
     // only show the status if this publication type has one
     $showstatus = !empty($labels['status']);
-                  // and if we're not selecting on it already
-                  //&& (!is_array($status) || !isset($status[0]));
+    // and if we're not selecting on it already
+    //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
 
     $data['states'] = xarModAPIFunc('articles','user','getstates');
