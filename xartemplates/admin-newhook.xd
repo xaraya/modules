@@ -8,16 +8,24 @@
             <label for="poll_title" title="#xarML('The name of the new poll')#" class="xar-form-label">
                 <xar:mlstring>Poll title</xar:mlstring>
             </label>
-            <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value=""/>
+            <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value= "#$poll['title']#" />
         </div>
         <div class="xar-form-input-wrapper">
             <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
                 <xar:mlstring>Poll type</xar:mlstring>
             </label>
-            <input type="radio" id="polltype" name="poll[type]" value="single" checked="checked"/>
+            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'single'">
+                <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
+            <xar:else />
+                <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
+            </xar:if>
             &nbsp;
             <xar:mlstring>Single Choice</xar:mlstring>
-            <input type="radio" id="polltype" name="poll[type]" value="multi"/>
+            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
+                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
+            <xar:else />
+                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
+            </xar:if>
             &nbsp;
             <xar:mlstring>Multiple Choice</xar:mlstring>
         </div>
@@ -35,7 +43,7 @@
                     <xar:mlstring>Option</xar:mlstring>
                     #$i#
                 </label>
-                <input type="text" id="option_#$i#" name="poll[options][#$i#]" value="" size="50" maxlength="50"/>
+                <input type="text" id="option_#$i#" name="poll[options][#$i#]" value="#$poll['options'][$i]#" size="50" maxlength="50"/>
             </div>
         </xar:for>
     </fieldset>
