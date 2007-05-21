@@ -1,0 +1,27 @@
+
+<xar:if condition="xarSecurityCheck('CommentIEvent', 0, 'IEvent')">
+    <ul>
+        <li><a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Calendars</xar:mlstring></a></li>
+        <li><a href="#xarModURL('ievents','user','view')#"><xar:mlstring>Events</xar:mlstring></a></li>
+
+        <xar:if condition="xarSecurityCheck('DeleteIEventCal', 0, 'IEventCal')">
+            <xar:if condition="!empty($cid) and xarSecurityCheck('DeleteIEventCal', 0, 'IEventCal', $cid)">
+                <li>
+                    <a href="#xarModURL('ievents','user','modifycal', array('cid'=&gt;$cid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#">
+                        <xar:mlstring>Modify calendar</xar:mlstring>
+                    </a>
+                </li>
+            <xar:else />
+                <li><a href="#xarModURL('ievents','user','modifycal')#"><xar:mlstring>Manage calendars</xar:mlstring></a></li>
+            </xar:if>
+        </xar:if>
+
+        <xar:if condition="xarSecurityCheck('CommentIEvent', 0, 'IEvent')">
+            <xar:if condition="!empty($cid) and xarSecurityCheck('CommentIEvent', 0, 'IEvent', $cid . ':All:All')">
+                <li><a href="#xarModURL('ievents','user','modify',array('cid'=&gt;$cid))#"><xar:mlstring>New event</xar:mlstring></a></li>
+            <xar:else />
+                <li><a href="#xarModURL('ievents','user','modify')#"><xar:mlstring>New event</xar:mlstring></a></li>
+            </xar:if>
+        </xar:if>
+    </ul>
+</xar:if>

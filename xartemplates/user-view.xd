@@ -4,6 +4,8 @@
 <xar:template file="jump-menu" />
 
 <div class="ievents-view">
+    <xar:template file="admin-mini" />
+
     <xar:if condition="!empty($eid)">
         <xar:comment>An individual event was chosen</xar:comment>
 
@@ -58,4 +60,5 @@
             <xar:template file="list-pager" />
         </xar:if>
     </xar:if>
+
 </div>

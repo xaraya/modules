@@ -2,10 +2,18 @@
 
 /**
  * Delete an event or calendar.
+ *
+ * @todo Support deleting a calendar, when the GUI is available.
  */
 
 function ievents_admin_delete($args)
 {
+    extract($args);
+
+    xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('eid', 'id', $eid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
+
     // Can be called up using the itemtype and itemid
     list($itemtype_calendars, $itemtype_events) = 
         xarModAPIfunc('ievents', 'user', 'params', 
@@ -13,12 +21,11 @@ function ievents_admin_delete($args)
         );
 
     if (!empty($itemtype)) {
-        if ($itemtype != $itemtype_events && $itemtype != $itemtype_calendars) {
+        if ($itemtype != $itemtype_events /* && $itemtype != $itemtype_calendars*/) {
             // Unknown itemtype - raise an error.
-            if (empty($object)) {
-                $data['message'] = xarML('Unknown or invalid itemtype #(1)', $args['itemtype']);
-                return $data;
-            }
+            // FIXME: raise a xar error as there is no template to display this message in
+            $data['message'] = xarML('Unknown or invalid itemtype #(1)', $args['itemtype']);
+            return $data;
         }
     } else {
         // Assume we are deleting an event.
@@ -28,7 +35,7 @@ function ievents_admin_delete($args)
     // Pass control over to the main GUI.
     if ($itemtype == $itemtype_events) {
         // Deleting an event
-        if (isset($args['itemid']) && empty($args['eid'])) $args['eid'] = $args['itemid'];
+        if (isset($itemid) && empty($eid)) $eid = $itemid;
         return xarModfunc('ievents', 'user', 'delete', $args);
     } else {
         // Deleting a calendar

@@ -20,6 +20,15 @@ function ievents_user_modifycal($args)
     // The calendar ID
     xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
 
+    // Check privileges.
+    if (empty($cid)) {
+        // Check we can create a new calendar.
+        if (!xarSecurityCheck('DeleteIEventCal', 1, 'IEventCal')) return;
+    } else {
+        // Check we can update this calendar.
+        if (!xarSecurityCheck('DeleteIEventCal', 1, 'IEventCal', "$cid")) return;
+    }
+
     // Get module parameters
     list($module, $modid, $itemtype_calendars) =
         xarModAPIfunc('ievents', 'user', 'params',
@@ -68,20 +77,6 @@ function ievents_user_modifycal($args)
    }
    */
 
-    // Remove properties we don't want the user to update
-    // Only do this if not an administrator
-/*
-   if (xarModAPIfunc('envjobs', 'user', 'checkprivs', array('rid' => $rid)) < 800) {
-      $object = xarModAPIfunc(
-         'envjobs', 'user', 'hideproperties',
-         array(
-            'object' => $object,
-            'properties' => 'job_icon,micro_icon,button2_icon,advert_icon,'
-               . 'join_date,expiry_date,status,featured,options,quota',
-         )
-      );
-   }
-*/
 
     // Pass the properties into the template.
     $data['properties'] = $object->properties;

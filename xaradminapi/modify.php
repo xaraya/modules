@@ -142,18 +142,36 @@ function ievents_adminapi_modify($args)
         return $data;
     }
 
-
-
-    // Check we are allowed to update this calendar at all
-/*
-    if (xarModAPIfunc('envjobs', 'user', 'checkprivs', array('rid' => $rid)) < 400) {
-        // Current recruiter not in list, or not an administrator.
-        $data['message'] = 'NO ACCESS TO THIS CALENDAR';
-        return $data;
+    // Check we are allowed to update events on this calendar at all.
+    // If a calendar ID is supplied, then check against that.
+    if (!empty($cid)) {
+        // Different privileges depending whether we are submitting a new event
+        // or updating an existing event.
+        if (!empty($eid)) {
+            // Updating an event.
+            if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $cid . ':' . $eid . ':' . xarUserGetVar('uid'))) {
+                $data['message'] = xarML('No permissions to update this event');
+                return $data;
+            }
+        } else {
+            // Creating a new event.
+            if (!xarSecurityCheck('CommentIEvent', 0, 'IEvent', $cid . ':All:All:' . xarUserGetVar('uid'))) {
+                $data['message'] = xarML('No permissions to update this event');
+                return $data;
+            }
+        }
+    } else {
+        // No calendar ID supplied.
+        // Are there any calendars we are able to update?
+        $calendars = xarModAPIfunc('ievents', 'user', 'list_calendars');
+        if (empty($calendars)) {
+            $data['message'] = xarML('There are no calendars you are permitted to submit to');
+            return $data;
+        }
     }
-*/
 
 
+    // If we are submitting a form.
     if ($save) {
         // Calendar ID supplied for new event.
         if (empty($eid) && !empty($cid)) {

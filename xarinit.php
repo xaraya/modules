@@ -25,117 +25,148 @@ function ievents_init()
     $eventstable = $xartable[$module . '_events'];
     $calendarstable = $xartable[$module . '_calendars'];
 
-    // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    // Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
 
     /*
-        CREATE TABLE `xar_xarpages_pages` (
-          `xar_pid` int(11) NOT NULL auto_increment,
-          `xar_name` varchar(100) NOT NULL default '',
-          `xar_desc` text,
-          `xar_itemtype` int(11) NOT NULL default '0',
-          `xar_parent` int(11) NOT NULL default '0',
-          `xar_left` int(11) NOT NULL default '0',
-          `xar_right` int(11) NOT NULL default '0',
-          `xar_template` varchar(100) default NULL,
-          `xar_page_template` varchar(100) default NULL,
-          `xar_theme` varchar(100) default NULL,
-          `xar_encode_url` varchar(100) default NULL,
-          `xar_decode_url` varchar(100) default NULL,
-          `xar_function` varchar(100) default NULL,
-          `xar_status` varchar(20) NOT NULL default 'ACTIVE',
-          `xar_alias` tinyint(4) NOT NULL default '0',
-          PRIMARY KEY  (`xar_pid`)
-        ) ;
+        CREATE TABLE `xar_ievents_calendars` (
+            `cid` int(11) NOT NULL auto_increment,
+            `status` varchar(10) NOT NULL default 'ACTIVE',
+            `short_name` varchar(60) NOT NULL default '',
+            `long_name` varchar(200) default NULL,
+            `description` text,
+            PRIMARY KEY  (`cid`)
+        );
     */
-/*
-    $fields = "
-        xar_pid             I           AUTO    PRIMARY,
-        xar_name            C(100)      NotNull DEFAULT '',
-        xar_desc            X           Null,
-        xar_itemtype        I           NotNull DEFAULT 0,
-        xar_parent          I           NotNull DEFAULT 0,
-        xar_left            I           NotNull DEFAULT 0,
-        xar_right           I           NotNull DEFAULT 0,
-        xar_template        C(100)      Null,
-        xar_page_template   C(100)      Null,
-        xar_theme           C(100)      Null,
-        xar_encode_url      C(100)      Null,
-        xar_decode_url      C(100)      Null,
-        xar_function        C(100)      Null,
-        xar_status          C(20)       NotNull DEFAULT 'ACTIVE',
-        xar_alias           I1          NotNull DEFAULT 0
-    ";
-*/
-    // Create or alter the table as necessary.
-/*
-    $result = $datadict->changeTable($eventsstable, $fields);
-    if (!$result) {return;}
-*/
+
+    // Calendars
+    $fields = array(
+        'cid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'status' => array('type' => 'varchar', 'size' => 10, 'null' => false, 'default' => 'ACTIVE'),
+        'short_name' => array('type' => 'varchar', 'size' => 60, 'null' => true),
+        'long_name' => array('type' => 'varchar', 'size' => 200, 'null' => true),
+        'description' => array('type' => 'text', 'null' => true),
+    );
+
+    // Create the calendar table.
+    $query = xarDBCreateTable($calendarstable, $fields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    /*
+        CREATE TABLE `xar_ievents_events` (
+            `eid` int(11) NOT NULL auto_increment,
+            `calendar_id` int(11) NOT NULL default '0',
+            `title` varchar(255) NOT NULL default '',
+            `status` varchar(10) NOT NULL default 'DRAFT',
+            `created_time` int(11) NOT NULL default '0',
+            `updated_time` int(11) NOT NULL default '0',
+            `created_by` int(11) NOT NULL default '0',
+            `updated_by` int(11) NOT NULL default '0',
+            `all_day` char(1) NOT NULL default 'A',
+            `start_date` int(11) NOT NULL default '0',
+            `end_date` int(11) default NULL,
+            `summary` text,
+            `description` text,
+            `url` varchar(255) default NULL,
+            `external_source` varchar(100) default NULL,
+            `external_ref` varchar(100) default NULL,
+            `flags` varchar(100) default NULL,
+            `location_venue` varchar(255) default NULL,
+            `location_address` text,
+            `location_country` varchar(200) default NULL,
+            `location_postcode` varchar(20) default NULL,
+            `contact_email` varchar(200) default NULL,
+            `contact_phone` varchar(60) default NULL,
+            `contact_details` text,
+            `cost` varchar(255) default NULL,
+            PRIMARY KEY  (`eid`),
+            KEY `calendar_id` (`calendar_id`)
+        );
+    */
+
+    // Events
+    $fields = array(
+        'eid' => array('type' => 'integer', 'null' => FALSE, 'increment' => TRUE, 'primary_key' => TRUE),
+        'calendar_id' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'title' => array('type' => 'varchar', 'size' => 255),
+        'status' => array('type' => 'varchar', 'size' => 10, 'null' => FALSE, 'default' => 'DRAFT'),
+        'created_time' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'updated_time' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'created_by' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'updated_by' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'all_day' => array('type' => 'varchar', 'size' => 1, 'null' => FALSE, 'default' => 'A'),
+        'start_date' => array('type' => 'integer', 'size' => 11, 'null' => FALSE, 'default' => '0'),
+        'end_date' => array('type' => 'integer', 'size' => 11),
+        'summary' => array('type' => 'text'),
+        'description' => array('type' => 'text'),
+        'url' => array('type' => 'varchar', 'size' => 255),
+        'external_source' => array('type' => 'varchar', 'size' => 100),
+        'external_ref' => array('type' => 'varchar', 'size' => 100),
+        'flags' => array('type' => 'varchar', 'size' => 100),
+        'location_venue' => array('type' => 'varchar', 'size' => 255),
+        'location_address' => array('type' => 'text'),
+        'location_country' => array('type' => 'varchar', 'size' => 200),
+        'location_postcode' => array('type' => 'varchar', 'size' => 20),
+        'contact_name' => array('type' => 'varchar', 'size' => 200),
+        'contact_email' => array('type' => 'varchar', 'size' => 200),
+        'contact_phone' => array('type' => 'varchar', 'size' => 60),
+        'contact_details' => array('type' => 'text'),
+        'cost' => array('type' => 'text'),
+    );
+
+    // Create the calendar table.
+    $query = xarDBCreateTable($eventstable, $fields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     // Create indexes.
-/*
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_left',
-        $pagestable,
-        'xar_left'
+    $indexes = array();
+    $indexes[] = array(
+        'name' => 'i_' . xarDBGetSiteTablePrefix() . '_calendar_id',
+        'fields'    => array('calendar_id'),
+        'unique'    => false
     );
-    if (!$result) {return;}
+    $indexes[] = array(
+        'name' => 'i_' . xarDBGetSiteTablePrefix() . '_title',
+        'fields'    => array('title'),
+        'unique'    => false
+    );
+    $indexes[] = array(
+        'name' => 'i_' . xarDBGetSiteTablePrefix() . '_location_venue',
+        'fields'    => array('location_venue'),
+        'unique'    => false
+    );
+    $indexes[] = array(
+        'name' => 'i_' . xarDBGetSiteTablePrefix() . '_location_postcode',
+        'fields'    => array('location_postcode'),
+        'unique'    => false
+    );
+    $indexes[] = array(
+        'name' => 'i_' . xarDBGetSiteTablePrefix() . '_external_ref',
+        'fields'    => array('external_source', 'external_ref'),
+        'unique'    => false
+    );
 
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_name',
-        $pagestable,
-        'xar_name'
-    );
-    if (!$result) {return;}
+    // Create indexes on events table
+    foreach($indexes as $index) {
+        $query = xarDBCreateIndex($eventstable, $index);
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+    }
 
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
-        $pagestable,
-        'xar_itemtype'
-    );
-    if (!$result) {return;}
-*/
-    /*
-        CREATE TABLE `xar_xarpages_types` (
-          `xar_ptid` int(11) NOT NULL auto_increment,
-          `xar_name` varchar(100) NOT NULL default '',
-          `xar_desc` varchar(200) default NULL,
-          PRIMARY KEY  (`xar_ptid`)
-        ) ;
-    */
-/*
-    $fields = "
-        xar_ptid            I           AUTO    PRIMARY,
-        xar_name            C(100)      NotNull DEFAULT '',
-        xar_desc            C(200)      Null
-    ";
-*/
-    // Create or alter the table as necessary.
-/*
-    $result = $datadict->changeTable($typestable, $fields);
-    if (!$result) {return;}
-*/
-    // The page type name must be unique.
-/*
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
-        $typestable,
-        'xar_name',
-        array('UNIQUE' => true)
-    );
-    if (!$result) {return;}
-*/
+    // FULLTEXT indexes for MySQL only, since xarDBCreateIndex() does not support full text indexes
+    if (preg_match('/^mysql/', $dbconn->databaseType)) {
+        $fulltext_columns = array('summary', 'description', 'location_address', 'contact_details');
+        foreach($fulltext_columns as $fulltext_column) {
+            $query = "ALTER TABLE ${eventstable} ADD FULLTEXT (${fulltext_column})";
+            $result =& $dbconn->Execute($query);
+        }
+    }
 
     // Set up module variables.
-/*
-    xarModSetVar('xarpages', 'defaultpage', 0);
-    xarModSetVar('xarpages', 'errorpage', 0);
-    xarModSetVar('xarpages', 'notfoundpage', 0);
-    xarModSetVar('xarpages', 'noprivspage', 0);
-    xarModSetVar('xarpages', 'shortestpath', 1);
-    xarModSetVar('xarpages', 'transformref', 1);
-    xarModSetVar('xarpages', 'transformfields', 'body');
-*/
+    //xarModSetVar($module, 'foo', 'bar');
+
     // Switch short URL support on by default.
     xarModSetVar($module, 'SupportShortURLs', 1);
 
@@ -225,38 +256,33 @@ function ievents_init()
         xarML('Administer module')
     );
 
-    // TODO: Create some default types and DD objects.
-    // NOTE: This would probably best be done via an import after
-    // the module is installed.
-
-    // Switch on all hooks from DD.
+    // Switch on all hooks from categories.
+    // Do *not* hook dynamicdata (DD) to this module, since it uses DD directly.
     if (xarModIsAvailable('dynamicdata')) {
         xarModAPIFunc('modules', 'admin', 'enablehooks',
-            array('callerModName' => $module, 'hookModName' => 'dynamicdata')
+            array('callerModName' => $module, 'hookModName' => 'categories')
         );
     }
 
 
     // Register block types.
-/*
-    foreach(array('menu', 'crumb') as $blocktype) {
-        if (!xarModAPIFunc(
-            'blocks', 'admin', 'register_block_type',
-            array(
-                'modName' => $module,
-                'blockType'=> $blocktype
-            )
-        )) return;
-    }
-*/
+    // None.
 
     // Set up module hooks
-/*
-    if (!xarModRegisterHook(
-            'item', 'transform', 'API',
-            $module, 'user', 'transformhook')
-    ) {return;}
-*/
+    // None.
+
+    // Create the DD objects.
+    // TODO: these will work only if the database prefix is 'xar'. For any other
+    // prefixes, the data files should be modified by hand and imported.
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/ievents/xardata/ievents_calendars-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/ievents/xardata/ievents_events-def.xml', 'keepitemid' => false)
+    );
+
     // Initialisation successful.
     return true;
 }
@@ -278,130 +304,17 @@ function ievents_upgrade($oldversion)
     $eventstable = $xartable[$module . '_events'];
     $typestable = $xartable[$module . '_calendars'];
 
-    // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
     // Upgrade dependent on old version number.
-/*
     switch ($oldversion) {
         case '0.1.0':
             // Upgrading from 0.1.0
-            // Check these indexes exist before attempting to
-            // drop and/or create them.
-
-            // Get a list of indexes for the pages table.
-            $indexes = $datadict->getIndexes($pagestable);
-
-            // Drop an erroneous unique index and recreate it non-unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type';
-            if (isset($indexes[$indexname])) {
-                $result = $datadict->dropIndex($indexname, $pagestable);
-            }
-
-            // Create the non-unique index of the same name.
-            $result = $datadict->createIndex($indexname, $pagestable, 'xar_itemtype');
-            if (!$result) {return;}
-
-            // Create a new index.
-
-            // Get a list of indexes for the page types table.
-            $indexes = $datadict->getIndexes($typestable);
-
-            // The page type name must be unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name';
-            if (!isset($indexes[$indexname])) {
-                $result = $datadict->createIndex(
-                    $indexname, $typestable, 'xar_name', array('UNIQUE' => true)
-                );
-                if (!$result) {return;}
-            }
 
         case '0.1.1':
             // Upgrading from 0.1.1
-            // An extra page property is introduced in 0.1.2
-
-            $result = $datadict->ChangeTable(
-                $pagestable, 'xar_page_template C(100) Null'
-            );
-            if (!$result) {return;}
-
-        case '0.1.2':
-            // Upgrading from 0.1.2
-            // Register a 'menu' block type.
-
-            // Register block types.
-            if (!xarModAPIFunc(
-                'blocks', 'admin', 'register_block_type',
-                array(
-                    'modName' => 'xarpages',
-                    'blockType'=> 'menu'
-                )
-            )) return;
-
-        case '0.2.1':
-        case '0.2.2':
-            // Upgrading from 0.2.1 or 0.2.2 to 0.2.3
-            // This upgrade concerns the renaming of the privilege masks.
-            // The masks are renamed directly in the privilege tables in the
-            // absence of an API to do the job.
-
-            // Update the sucurity masks table.
-            $query_masks = 'UPDATE ' . $xartable['security_masks']
-                . ' SET xar_name = ?'
-                . ' WHERE xar_module = ? AND xar_name = ?';
-
-            // Loop for each mask to change.
-            $masks = array(
-                'ReadPage' => 'ReadXarpagesPage',
-                'ModeratePage' => 'ModerateXarpagesPage',
-                'EditPage' => 'EditXarpagesPage',
-                'AddPage' => 'AddXarpagesPage',
-                'DeletePage' => 'DeleteXarpagesPage',
-                'AdminPage' => 'AdminXarpagesPage',
-                'ModeratePagetype' => 'ModerateXarpagesPagetype',
-                'EditPagetype' => 'EditXarpagesPagetype',
-                'AdminPagetype' => 'AdminXarpagesPagetype'
-            );
-
-            foreach($masks as $old_mask => $new_mask) {
-                // Update the mask.
-                // TODO: not sure what affect this has cross-realm.
-                $dbconn->execute($query_masks, array($new_mask, 'xarpages', $old_mask));
-            }
-
-        case '0.2.3':
-        case '0.2.4':
-            // Upgrade from 0.2.3 or 0.2.4 to 0.2.5
-            xarModSetVar('xarpages', 'shortestpath', 1);
-
-        case '0.2.5':
-            // Upgrade to 0.2.6 - new crumbtrail block added.
-
-            // Register block types.
-            if (!xarModAPIFunc(
-                'blocks', 'admin', 'register_block_type',
-                array(
-                    'modName' => 'xarpages',
-                    'blockType'=> 'crumb'
-                )
-            )) return;
-
-        case '0.2.6':
-            // Upgrade to 0.2.7 - new transform hook.
-
-            // Set up module hooks
-            if (!xarModRegisterHook(
-                    'item', 'transform', 'API',
-                    'xarpages', 'user', 'transformhook')
-            ) {return;}
-
-            // New module variables.
-            xarModSetVar('xarpages', 'transformfields', 'body');
-            xarModSetVar('xarpages', 'transformref', 1);
 
         break;
     }
-*/
+
     // Update successful.
     return true;
 }
@@ -419,21 +332,6 @@ function ievents_delete()
     $module = 'ievents';
     $eventstable = $xartable[$module . '_events'];
     $calendarstable = $xartable[$module . '_calendars'];
-
-    // Get a data dictionary object with item create methods.
-/*
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-*/
-    // TODO: delete module aliases.
-    // Probably have to loop through all pages and check whether they
-    // are module aliases to drop. This should be done in the core.
-
-    // Drop tables
-/*
-    $result = $datadict->dropTable($pagestable);
-    $result = $datadict->dropTable($typestable);
-*/
-    // TODO: remove blocks
 
     // Delete module variables
     xarModDelAllVars($module);

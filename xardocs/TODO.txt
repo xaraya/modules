@@ -7,7 +7,7 @@ o Installer:
 - Create DD objects
 - Create module variables (or use config file)
 
-o Add 'contact name' to events
+o Add 'contact name' to events [done]
 o Add 'locking flags' to events to lock them from external updates
 o Create config page for settings, or perhaps just drive settings from a config file?
 
@@ -31,4 +31,9 @@ o Complete export types
 o Complete privileges (I suspect some bits are not fully protected)
 
 o RSS template (to copy to the RSS theme)
+
+o On modify/create event screen, display the appropriate buttons
+- No buttons if nothing to submit (but do provide 'cancel' if there is a return URL)
+- If only have comment privileges, then there is no point redirecting to the 'edit' or 'show'
+  pages because the event will not be available to that user
 
