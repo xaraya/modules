@@ -63,8 +63,8 @@ function articles_userapi_leftjoin($args)
     // Note : no security checks here
 
     // Table definition
-    $xartable =& xarDBGetTables();
-    $dbconn   =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn   = xarDB::getConn();
     $articlestable = $xartable['articles'];
 
     $leftjoin = array();

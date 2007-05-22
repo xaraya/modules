@@ -26,11 +26,11 @@ function articles_init()
     }
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
 // TODO: Somewhere in the future, status should be managed by a workflow module
 
@@ -330,7 +330,7 @@ function articles_init()
     *********************************************************************/
     $info = xarMod::getBaseInfo('articles');
     $sysid = $info['systemid'];
-    $xartable =& xarDBGetTables();
+    $xartable = xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('articles', 'admin', 'privileges'),
@@ -430,11 +430,11 @@ function articles_upgrade($oldversion)
 
 /* skip for now...
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             //Load Table Maintainance API
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
 
             $articlestable = $xartable['articles'];
 
@@ -467,11 +467,11 @@ function articles_upgrade($oldversion)
 function articles_delete()
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['articles']);
