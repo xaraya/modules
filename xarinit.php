@@ -18,7 +18,7 @@
 
 sys::import('modules.xen.xarclasses.xenquery');
 //Load Table Maintainance API
-xarDBLoadTableMaintenanceAPI();
+sys::import('xaraya.tableddl');
 
 /**
  * initialise the commerce module
