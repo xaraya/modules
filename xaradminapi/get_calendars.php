@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Standard function to generate the common admin menu configuration
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -16,11 +16,11 @@
  * generate the common admin menu configuration
  */
 function calendar_adminapi_get_calendars()
-{ 
+{
     // Initialise the array that will hold the menu configuration
-    $cals = array(); 
-    
-    $curdir = xarCoreGetVarDirPath() . '/calendar';
+    $cals = array();
+
+    $curdir = sys::varpath() . '/calendar';
 
     $ics_array = array();
 
@@ -37,6 +37,6 @@ function calendar_adminapi_get_calendars()
 
     // Return the array containing the menu configuration
     return $cals;
-} 
+}
 
 ?>

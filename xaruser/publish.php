@@ -43,7 +43,7 @@ function calendar_user_publish($args)
                  // TODO: retrieve entries from database and create ics file
 
              } else {
-                 $curdir = xarCoreGetVarDirPath() . '/calendar';
+                 $curdir = sys::varpath() . '/calendar';
                  $curfile = $curdir . '/' . $calendars[0]['cpath'];
                  if (file_exists($curfile) && filesize($curfile) > 0) {
 
@@ -75,7 +75,7 @@ function calendar_user_publish($args)
                          } else {
                              xarLogMessage('failed opening standard input');
                          }
-        
+
                          if(!empty($data))
                          {
                              //xarLogMessage($data);

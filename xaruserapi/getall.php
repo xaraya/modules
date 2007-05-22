@@ -11,7 +11,7 @@
  */
 
 
-function calendar_userapi_getall($args) 
+function calendar_userapi_getall($args)
 {
     extract($args);
     // Optional arguments
@@ -20,27 +20,27 @@ function calendar_userapi_getall($args)
     }
 
     $calendars = array();
-    
+
     // Security check
 //    if (!xarSecurityCheck('ViewCalendars')) return;
-    
-    $dbconn =& xarDBGetConn();  
-    $xartable =& xarDBGetTables();
+
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $caltable = $xartable['calendars'];
-    $cal_filestable = $xartable['calendars_files'];    
-    $filestable = $xartable['calfiles'];    
-    
+    $cal_filestable = $xartable['calendars_files'];
+    $filestable = $xartable['calfiles'];
+
     // TODO: cleanup query? --amoro
     $query = " SELECT DISTINCT $caltable.xar_id,
                                $caltable.xar_name,
-                               $filestable.xar_path        
-                FROM $caltable  
-                LEFT JOIN $cal_filestable 
-                    ON $caltable.xar_id = $cal_filestable.xar_calendars_id 
-                LEFT JOIN $filestable 
+                               $filestable.xar_path
+                FROM $caltable
+                LEFT JOIN $cal_filestable
+                    ON $caltable.xar_id = $cal_filestable.xar_calendars_id
+                LEFT JOIN $filestable
                     ON $cal_filestable.xar_files_id = $filestable.xar_id ";
 
-    // Run the query 
+    // Run the query
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     } else {
@@ -57,7 +57,7 @@ function calendar_userapi_getall($args)
                        ,'cpath' => $cpath
                      );
     }
-    $result->Close();             
-    return $calendars;             
+    $result->Close();
+    return $calendars;
 }
 ?>

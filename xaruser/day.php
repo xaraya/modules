@@ -18,7 +18,7 @@
 //        $events = xarModAPIFunc('icalendar','user','getevents',$args);
 
         // get all the events. need to improve this query
-        $xartable =& xarDBGetTables();
+        $xartable = xarDB::getTables();
         $q = new xenQuery('SELECT', $xartable['calendar_event']);
 //        $q->qecho();
         if (!$q->run()) return;

@@ -37,8 +37,8 @@ function calendar_adminapi_create_calendars($args)
     }
 
     // Load up database details.
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $caltable = $xartable['calendars'];
 
     // Insert instance details.

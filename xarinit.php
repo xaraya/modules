@@ -216,10 +216,10 @@ function calendar_upgrade($oldversion)
         case '0.1.0':
             // Start creating the tables
 
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
             $calfilestable = $xartable['calendars_files'];
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
             $fields = array(
                 'xar_calendars_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true),
                 'xar_files_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true)
@@ -230,7 +230,7 @@ function calendar_upgrade($oldversion)
             if (!$result) return;
 
             $filestable = $xartable['calfiles'];
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
             $fields = array(
                 'xar_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                 'xar_path' => array('type' => 'varchar', 'size' => '255', 'null' => true)
@@ -273,9 +273,9 @@ function calendar_delete()
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
 /*
     // Remove all tables (see example module for comments)
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    xarDBLoadTableMaintenanceAPI();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+    sys::import('xaraya.tableddl');
 
     $query = xarDBDropTable($xartable['calendars']);
     if (empty($query)) return;

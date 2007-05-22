@@ -8,7 +8,7 @@
  * @subpackage calendar
  * @author andrea.m
  */
- 
+
 /**
  * Delete a calendar from database
  * Usage : if (xarModAPIFunc('calendar', 'admin', 'delete', $calendar)) {...}
@@ -54,8 +54,8 @@ function calendar_adminapi_delete_calendar($args)
     xarModCallHooks('item', 'delete', $calid, $args);
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $calendarstable = $xartable['calendars'];
     $cal_filestable = $xartable['calendars_files'];
     $calfiles = $xartable['calfiles'];
@@ -65,7 +65,7 @@ function calendar_adminapi_delete_calendar($args)
              WHERE xar_calendars_id = ? LIMIT 1 ";
     $result =& $dbconn->Execute($query, array($calid));
     if (!$result) return;
-    
+
     for (; !$result->EOF; $result->MoveNext()) {
         // there should be only one result
         list($file_id) = $result -> fields;
@@ -89,7 +89,7 @@ function calendar_adminapi_delete_calendar($args)
     $result =& $dbconn->Execute($query, array($calid));
     if (!$result) return;
 
-    $result -> Close();    
+    $result -> Close();
 
     return true;
 }

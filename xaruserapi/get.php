@@ -18,7 +18,7 @@
  */
 
 
-function calendar_userapi_get($args) 
+function calendar_userapi_get($args)
 {
     extract($args);
     // Optional arguments
@@ -31,15 +31,15 @@ function calendar_userapi_get($args)
 
     // Security check
 //    if (!xarSecurityCheck('ViewCalendars')) return;
-    
-    $calendars = array();
-    $dbconn =& xarDBGetConn();  
-    $xartable =& xarDBGetTables();
-    $caltable = $xartable['calendars'];
-    $cal_filestable = $xartable['calendars_files'];    
-    $filestable = $xartable['calfiles'];    
 
-    // defaults to getting $calname    
+    $calendars = array();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+    $caltable = $xartable['calendars'];
+    $cal_filestable = $xartable['calendars_files'];
+    $filestable = $xartable['calfiles'];
+
+    // defaults to getting $calname
     if (isset($calname)) {
         $where = " $caltable.xar_name = \"$calname\" ";
     } else {
@@ -49,15 +49,15 @@ function calendar_userapi_get($args)
     // TODO: cleanup query? --amoro
     $query = " SELECT DISTINCT $caltable.xar_id,
                                $caltable.xar_name,
-                               $filestable.xar_path        
-                FROM $caltable  
-                LEFT JOIN $cal_filestable 
-                    ON $caltable.xar_id = $cal_filestable.xar_calendars_id 
-                LEFT JOIN $filestable 
-                    ON $cal_filestable.xar_files_id = $filestable.xar_id 
+                               $filestable.xar_path
+                FROM $caltable
+                LEFT JOIN $cal_filestable
+                    ON $caltable.xar_id = $cal_filestable.xar_calendars_id
+                LEFT JOIN $filestable
+                    ON $cal_filestable.xar_files_id = $filestable.xar_id
                 WHERE $where ";
 
-    // Run the query 
+    // Run the query
     $result =& $dbconn->Execute($query);
 
     if (!$result) return;
@@ -71,7 +71,7 @@ function calendar_userapi_get($args)
                        ,'cpath' => $cpath
                      );
     }
-    $result->Close();   
-    return $calendars;             
+    $result->Close();
+    return $calendars;
 }
 ?>

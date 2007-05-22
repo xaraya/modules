@@ -44,7 +44,7 @@ class EventList extends DataProperty
             $data['localmodule'] = $this->localmodule;
         }
 
-        $xartable =& xarDBGetTables();
+        $xartable = xarDB::getTables();
         $q = new xenQuery('SELECT', $xartable['calendar_event']);
 
         if (empty($data¨['fields'])) {
