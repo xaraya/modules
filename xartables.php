@@ -26,7 +26,7 @@ function foo_xartables()
     // Initialise table array
     $xartable = array();
 
-//    $foo = xarDBGetSiteTablePrefix() . '_foo';
+//    $foo = xarDB::getPrefix() . '_foo';
 
     // Set the table name
 //    $xartable['foo'] = $foo;

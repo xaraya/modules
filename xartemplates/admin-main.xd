@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Foo Administration</xar:mlstring></span>
@@ -14,3 +15,4 @@
     </p>
     <div style="clear:both">&#160;</div>
 </div>
+</xar:template>

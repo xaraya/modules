@@ -76,10 +76,10 @@ function foo_delete()
 # Remove database tables
 #
     // Load table maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
     $table = $prefix . "_" . $this_module;
     $query = xarDBDropTable($table);
     if (empty($query)) return; // throw back

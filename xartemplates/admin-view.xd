@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:if condition="xarModGetVar('foo','useModuleAlias')">
@@ -12,3 +13,4 @@
         <xar:data-list object="$object" tplmodule="foo" />
     </div>
 </div>
+</xar:template>

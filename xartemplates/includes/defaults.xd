@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="$tabmodule ne 'foo'">
     <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
 <xar:else />
@@ -12,3 +13,4 @@
     <xar:set name="value">xarModGetUserVar('foo', 'bar', $regid)</xar:set>
     <input type="text" name="bar" id="bar" value="#$value#" />
 </div>
+</xar:template>
