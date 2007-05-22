@@ -32,8 +32,8 @@ function comments_userapi_get_childcountlist($args)
         return false;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $ctable = &$xartable['comments_column'];
 
     $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$objectid, (int)$itemtype);

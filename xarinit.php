@@ -28,10 +28,10 @@ sys::import('modules.comments.xarincludes.defines');
 function comments_init()
 {
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Create tables
     $ctable = $xartable['comments'];

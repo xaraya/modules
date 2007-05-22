@@ -29,8 +29,8 @@ function comments_userapi_deactivate( $args )
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // First grab the objectid and the modid so we can
     // then find the root node.

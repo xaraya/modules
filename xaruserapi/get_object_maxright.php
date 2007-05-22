@@ -48,8 +48,8 @@ function comments_userapi_get_object_maxright( $args )
         $itemtype = 0;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $ctable = &$xartable['comments_column'];
 
     // grab the root node's id, left and right values

@@ -32,8 +32,8 @@ function comments_userapi_get_childcount($id)
     }
 
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $ctable = &$xartable['comments_column'];
 
     $nodelr = xarModAPIFunc('comments',

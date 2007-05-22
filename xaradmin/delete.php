@@ -107,8 +107,8 @@ function comments_admin_delete( )
                                          'objectid' => $objectid));
                     break;
                 case 'all':
-                    $dbconn =& xarDBGetConn();
-                    $xartable =& xarDBGetTables();
+                    $dbconn = xarDB::getConn();
+                    $xartable = xarDB::getTables();
 
                     $ctable = &$xartable['comments_column'];
 

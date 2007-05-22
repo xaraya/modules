@@ -37,8 +37,8 @@ function comments_userapi_get_multipleall($args)
         $order = 'ASC';
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $ctable = &$xartable['comments_column'];
     $commentlist = array();

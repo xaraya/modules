@@ -23,8 +23,8 @@
 function comments_adminapi_celko_reconstruct()
 {
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $ctable = &$xartable['comments_column'];
 

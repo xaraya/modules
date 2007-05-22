@@ -24,8 +24,8 @@
 function comments_userapi_get_table_maxright(/* VOID */)
 {
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $ctable = &$xartable['comments_column'];
 
 

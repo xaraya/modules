@@ -23,8 +23,8 @@ function comments_userapi_get_blacklist($args)
     }
     $items = array();
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $btable = $xartable['blacklist'];
     $query = "SELECT id,
                      domain

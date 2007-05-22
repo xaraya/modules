@@ -44,8 +44,8 @@ function comments_userapi_remove_gap( $args )
         $endpoint = NULL;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $sql_left  = "UPDATE $xartable[comments]
                      SET cleft = (cleft - $gapsize)

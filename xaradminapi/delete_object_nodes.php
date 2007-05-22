@@ -41,8 +41,8 @@ function comments_adminapi_delete_object_nodes( $args )
         $itemtype = 0;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $ctable = &$xartable['comments_column'];
 

@@ -22,9 +22,9 @@
 function comments_adminapi_import_blacklist( $args )
 {
     extract($args);
-    xarDBLoadTableMaintenanceAPI();
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    sys::import('xaraya.tableddl');
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $btable = $xartable['blacklist'];
     $bbtable = &$xartable['blacklist_column'];
     $feedfile = 'http://www.jayallen.org/comment_spam/blacklist.txt';

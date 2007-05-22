@@ -53,8 +53,8 @@ function comments_adminapi_delete_node( $args )
     xarModCallHooks('item', 'delete', $node, $args);
 
     //Now delete the item ....
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $ctable = &$xartable['comments_column'];
 

@@ -32,8 +32,8 @@ function comments_userapi_get_object_list( $args )
         return;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $ctable = &$xartable['comments_column'];
 
     $sql     = "SELECT DISTINCT $ctable[objectid] AS pageid

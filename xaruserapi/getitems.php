@@ -64,8 +64,8 @@ function comments_userapi_getitems($args)
     if (!xarSecurityCheck($mask)) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $commentstable = $xartable['comments'];
     $ctable = $xartable['comments_column'];
 

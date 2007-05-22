@@ -28,8 +28,8 @@ sys::import('modules.comments.xarincludes.defines');
 function comments_adminapi_count_comments( $args )
 {
     extract($args);
-    $dbconn         =& xarDBGetConn();
-    $xartable       =& xarDBGetTables();
+    $dbconn         = xarDB::getConn();
+    $xartable       = xarDB::getTables();
     $ctable         = &$xartable['comments_column'];
     $total          = 0;
     $status         = strtolower($status);

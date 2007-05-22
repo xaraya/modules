@@ -5,8 +5,8 @@
     {
         function get(int $id)
         {
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             $SQLquery = "SELECT id,
                                 pid,
@@ -57,8 +57,8 @@
 
         function getChildren()
         {
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             $SQLquery = "SELECT id,
                                 pid,
@@ -102,8 +102,8 @@
 
         function getChildCount()
         {
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             $SQLquery = "SELECT COUNT(*) FROM " . $xartable['comments'] . " WHERE pid = ? ORDER BY left";
             $bindvars = array($this->id);
@@ -117,8 +117,8 @@
 
         function isDescendant(CommentTreeNode $n)
         {
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             $query = '
                 SELECT  P1.id

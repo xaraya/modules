@@ -24,8 +24,8 @@ function comments_userapi_search($args)
 
     extract($args);
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $ctable = &$xartable['comments_column'];
     $where = '';
