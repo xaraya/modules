@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="calendar" file="user-month" />
 <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
 
@@ -41,8 +42,8 @@
         <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
 
         <xar:if condition="$Day:isFirst()">
-        <xar:comment> Start a new row </xar:comment>
-        <tr><td>&nbsp;<xar:comment> week info goes here </xar:comment></td>
+            <xar:comment> Start a new row </xar:comment>
+            <tr><td>&#160;<xar:comment> week info goes here </xar:comment></td>
         </xar:if>
         <xar:comment> populate the day </xar:comment>
         <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
@@ -63,7 +64,7 @@
             </ul>
         <xar:else />
             <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
-            &nbsp;
+            &#¦60;
         </xar:if>
         </td>
         <xar:if condition="$Day:isLast()">
@@ -80,3 +81,4 @@
 
 <xar:comment> include the calendar footer </xar:comment>
 <xar:template file="todayfooter" />
+</xar:template>

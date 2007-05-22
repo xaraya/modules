@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="calendar" file="user-week" />
 <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
 <xar:style scope="module" module="julian" />
@@ -16,7 +17,7 @@
             <div class="xar-julian-cal-nav-current">
                 <xar:set name="$startdate">date("F d, Y",$Week->children[1]->getTimeStamp())</xar:set>
                 <xar:set name="$enddate">date("F d, Y", $Week->children[7]->getTimeStamp())</xar:set>
-                #$startdate#&nbsp;-&nbsp;#$enddate#
+                #$startdate#&#¦60;-&#¦60;#$enddate#
             </div>
         </div>
 
@@ -148,7 +149,7 @@
 
         <xar:if condition="$Day:isFirst()">
         <xar:comment> Start a new row </xar:comment>
-        <tr><td>&nbsp;<xar:comment> week info goes here </xar:comment></td>
+        <tr><td>&#¦60;<xar:comment> week info goes here </xar:comment></td>
         </xar:if>
         <xar:comment> populate the day </xar:comment>
 
@@ -165,7 +166,7 @@
                     <a href="#$DayURI:current('day')#">#$Day:thisDay()#</a>
             <xar:else />
                 <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
-                &nbsp;
+                &#¦60;
             </xar:if>
             <div class="cal-icons">
                 <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
@@ -227,3 +228,4 @@
 </table>
 <xar:comment> include the calendar footer </xar:comment>
 <xar:template file="todayfooter" />
+</xar:template>

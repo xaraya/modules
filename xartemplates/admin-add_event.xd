@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
@@ -44,7 +45,7 @@
     <tr>
       <td><label for="allDayEvent"><xar:mlstring>This event lasts all day</xar:mlstring></label></td>
       <td><input type="checkbox" name="allDayEvent" id="allDayEvent" value="1"/></td>
-    </tr>    
+    </tr>
     <tr>
         <td><label for="note"><xar:mlstring>Note</xar:mlstring></label></td>
         <td><textarea name="note" id="note" rows="2" cols="40"></textarea></td>
@@ -63,7 +64,7 @@
             <option value="day"><xar:mlstring>Day</xar:mlstring></option>
           </xar:if>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td><label for="title"><xar:mlstring>Event status</xar:mlstring></label></td>
       <td>
@@ -73,15 +74,15 @@
           <option value="cancelled"><xar:mlstring>Cancelled</xar:mlstring></option>
         </select>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td><label for="default_cal"><xar:mlstring>Calendar</xar:mlstring></label>
-      </td>       
-      <td>          
+      </td>
+      <td>
         <xar:if condition="$thereAreIcs eq 0">
           <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
-        <xar:else />  
-          <select multiple size="3" name="default_cal[]" id="default_cal">           
+        <xar:else />
+          <select multiple size="3" name="default_cal[]" id="default_cal">
             <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
               <xar:if condition="in_array($filename,$default_cal)">
                 <option value= "#$filename#" selected="selected">#$filename#</option>
@@ -92,9 +93,9 @@
           </select>
         </xar:if>
       </td>
-    </tr> 
-  </table>  
-</fieldset>  
+    </tr>
+  </table>
+</fieldset>
 <fieldset>
   <legend>Recurrence</legend>
   <table>
@@ -102,16 +103,17 @@
       <td><input type="checkbox" name="repeatEvery" id="repeatEvery" value="1"/></td>
       <td>
         <label for="repeatEvery"><xar:mlstring>Repeat Every</xar:mlstring></label>
-        <input name="howManyRepeats" id="howManyRepeats" size="2"/>     
+        <input name="howManyRepeats" id="howManyRepeats" size="2"/>
         <select name="eventStatus" id="eventStatus">
           <option value="repEveryDay" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
           <option value="repEveryDay"><xar:mlstring>we need some javascript here</xar:mlstring></option>
         </select>
-      </td>      
-    </tr>    
+      </td>
+    </tr>
   </table>
-</fieldset>  
- 
+</fieldset>
+
 </form>
 </div>
 </div>
+</xar:template>

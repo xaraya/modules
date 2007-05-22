@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <form name="cal-user-modify" action="#xarModURL('calendar','user','updateconfig')#" method="post">
 
 <p>
@@ -76,3 +77,4 @@
 
 <input type="submit" name="submit" value="Submit" />
 </form>
+</xar:template>

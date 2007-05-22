@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:template file="navheader" />
 <xar:style scope="module" module="calendar" file="user-month" />
 <xar:style scope="module" module="calendar" file="default" />
@@ -92,3 +93,4 @@
 
 <xar:comment> include the calendar footer </xar:comment>
 <xar:template file="todayfooter" />
+</xar:template>

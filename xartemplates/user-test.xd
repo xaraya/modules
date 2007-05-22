@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h2>iCal_Parser's benchmarks</h2>
 #$profile#
 
@@ -5,3 +6,4 @@
 <pre>
 #$ical#
 </pre>
+</xar:template>

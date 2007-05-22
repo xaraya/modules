@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Calendar Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Delete Calendar</xar:mlstring></h2>
 <div style="margin: auto;text-align: center;">
@@ -20,3 +21,4 @@
   </div>
 </xar:if>
 </div>
+</xar:template>

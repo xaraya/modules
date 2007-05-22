@@ -1,6 +1,8 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-sub">
 <xar:set name="current_view">xarModAPIFunc('calendar','user','currentView')</xar:set>
 <a href="#xarModAPIFunc('calendar','user','current'.$current_view.'URL')#">
 <xar:mlstring>Today is </xar:mlstring> #xarLocaleFormatDate('%c %z',$now[0])#
 </a>
 </div>
+</xar:template>

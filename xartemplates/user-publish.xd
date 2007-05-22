@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($calendars)">
     <ul>
     <xar:foreach in="$calendars" value="$calendar">
@@ -7,4 +8,5 @@
 <xar:else/>
     <xar:mlstring>No calendars available</xar:mlstring>
 </xar:if>
+</xar:template>
 

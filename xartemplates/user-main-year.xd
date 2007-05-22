@@ -1,12 +1,13 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <center>
     <!-- START :: LOOP THROUGH EACH MONTH OF THE YEAR -->
     <table border="0" cellpadding="0" cellspacing="5" style="border: 1px solid red;">
     <?php $maxCols = 4; ?>
     <?php $colNum = 1; ?>
     <?php foreach($year as $monthNum=>$month) : ?>
-        
-        <?php if($colNum == 1) : ?> 
-        <tr> 
+
+        <?php if($colNum == 1) : ?>
+        <tr>
         <?php endif; ?>
             <td valign="top">
                 <table border="0" cellpadding="0" cellspacing="0">
@@ -31,7 +32,7 @@
                     <!-- START :: LOOP THROUGH EACH DAY OF THE WEEK -->
                     <?php foreach($week as $day) : ?>
                         <?php $class1='inset'; $class2='outset';
-                              if($c->dayIs(0,$day) || $c->dayIs(6,$day)) { 
+                              if($c->dayIs(0,$day) || $c->dayIs(6,$day)) {
                                   $class1='insetWeekend';
                                 $class2='outsetWeekend';
                               }
@@ -59,3 +60,4 @@
     <!-- END :: LOOP THROUGH EACH MONTH OF THE YEAR -->
 </center>
 <br />
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="calendar" file="user-year" />
 <xar:template file="navheader" />
 
@@ -98,7 +99,7 @@
                             <a href="#$DayUrl#">#$Day->thisDay()#</a>
                         <xar:else />
                             <xar:comment> Hide this day because it's not part of the Year we are viewing </xar:comment>
-                            &nbsp;
+                            &#¦60;
                         </xar:if>
                         </td>
                         <xar:if condition="$Day:isLast()">
@@ -118,3 +119,4 @@
 
 <xar:comment> END :: LOOP THROUGH EACH Year OF THE YEAR </xar:comment>
 <xar:template file="todayfooter" />
+</xar:template>

@@ -1,14 +1,15 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <br />
 <dl class="xar-tabs">
     <dt class="help">
         <xar:mlstring>
-            Actions: 
+            Actions:
         </xar:mlstring>
     </dt>
     <xar:if condition="$tab eq 'dataserve_general'">
         <xar:set name="class">"active"</xar:set>
-    <xar:else/>    
+    <xar:else/>
         <xar:set name="class">""</xar:set>
     </xar:if>
     <dd class="#$class#">
@@ -20,7 +21,7 @@
         <xar:set name="configtab">$thistab['module'] . "_" . $thistab['configarea']</xar:set>
         <xar:if condition="$tab eq $configtab">
             <xar:set name="class">"active"</xar:set>
-        <xar:else/>    
+        <xar:else/>
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
@@ -30,3 +31,4 @@
         </dd>
     </xar:foreach>
 </dl>
+</xar:template>

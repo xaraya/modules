@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="calendar" file="user-month" />
 
 <xar:template file="navheader" />
@@ -76,7 +77,7 @@
                 </xar:foreach>
             </ul>
         <xar:else />
-            &nbsp;
+            &#¦60;
         </xar:if>
         </td>
         <xar:if condition="$Day:isLast()">
@@ -88,3 +89,4 @@
 </table>
 <xar:comment> include the calendar footer </xar:comment>
 <xar:template file="todayfooter" />
+</xar:template>

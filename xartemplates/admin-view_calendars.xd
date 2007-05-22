@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
@@ -5,9 +6,9 @@
 
 <h2>Calendars</h2>
 <form method="post" action="&xar-modurl-calendar-admin-view_calendars;">
-  <input type="hidden" name="authid" id="authid" value="#$authid#" />  
+  <input type="hidden" name="authid" id="authid" value="#$authid#" />
   <table>
-    <tr> 
+    <tr>
       <th><xar:mlstring>ID</xar:mlstring>
       <th><xar:mlstring>Name</xar:mlstring></th>
       <th><xar:mlstring>Location</xar:mlstring></th>
@@ -26,10 +27,10 @@
         </td>
         <td>
           <xar:mlstring> View </xar:mlstring>
-          <xar:mlstring> Edit </xar:mlstring>          
+          <xar:mlstring> Edit </xar:mlstring>
           <a href="&xar-modurl-calendar-admin-delete_calendar;&amp;calid=#$calendar['cid']#">
             <xar:mlstring> Delete </xar:mlstring>
-          </a>            
+          </a>
         </td>
       </tr>
     </xar:foreach>
@@ -37,3 +38,4 @@
 </form>
 </div>
 </div>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="$tabmodule ne 'calendar'">
     <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
 <xar:else />
@@ -96,4 +97,5 @@
     <xar:set name="value">xarModGetVar('calendar', 'twentyfourhourformat')</xar:set>
     <xar:data-input type="radio" name="twentyfourhourformat" id="twentyfourhourformat" value="$value" options="$options" />
 </div>
+</xar:template>
 

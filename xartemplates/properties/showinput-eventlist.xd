@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <table id="cal-calendar">
     <tr>
         <xar:foreach in="$fields" key="$column" value="$field">
@@ -37,3 +38,4 @@
         </tr>
     </xar:loop>
 </table>
+</xar:template>
