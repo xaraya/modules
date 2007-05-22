@@ -149,7 +149,7 @@ function articles_userapi_getall($args)
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
     // Database information
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
 
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for

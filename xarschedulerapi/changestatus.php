@@ -35,8 +35,8 @@ do that directly via SQL :
 */
 
 /*
-    $dbconn =& xarDBGetConn();
-    $xartables =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartables = xarDB::getTables();
 
     // articles of publication type 1 (= news or whatever)
     $pubtypeid = 1;

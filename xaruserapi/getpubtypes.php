@@ -22,7 +22,7 @@
 function articles_userapi_getpubtypes($args)
 {
     $bindvars = array();
-    
+
     //if we're doing a simple retrieval, use same results as last time
     //otherwise we need to re-query the database
     if (count($args) == 0) {
@@ -48,10 +48,10 @@ function articles_userapi_getpubtypes($args)
     if (isset($args['ptid']) && is_numeric($args['ptid'])) {
         $ptid = $args['ptid'];
     }
-    
+
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Get item
@@ -60,7 +60,7 @@ function articles_userapi_getpubtypes($args)
                    xar_pubtypedescr,
                    xar_pubtypeconfig
             FROM $pubtypestable";
-            
+
     //WHERE clause begins
     if(isset($name)) {
         $query .= " WHERE xar_pubtypename = ? ";
@@ -69,7 +69,7 @@ function articles_userapi_getpubtypes($args)
         $query .= " WHERE xar_pubtypeid = ? ";
         $bindvars[] = $ptid;
     }
-            
+
     //different sort options
     switch ($sort) {
         case 'name':
