@@ -6,8 +6,8 @@
  */
 function ping_userapi_countitems()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     // Security Check
     if(!xarSecurityCheck('Readping')) return;
     $table = $xartable['ping'];

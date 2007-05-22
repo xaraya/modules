@@ -23,8 +23,8 @@ function ping_adminapi_update($args)
     // Security Check
     if(!xarSecurityCheck('Adminping')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $pingtable = $xartable['ping'];
     // Update the link
     $query = "UPDATE $pingtable

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Ping initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,7 +13,7 @@
 
 /**
  *
- * @author  John Cox 
+ * @author  John Cox
  * @access  public
  * @param   none
  * @return  $xartable array
@@ -24,7 +24,7 @@ function ping_xartables()
 {
     // Initialise table array
     $xartable = array();
-    $ping = xarDBGetSiteTablePrefix() . '_ping';
+    $ping = xarDB::getPrefix() . '_ping';
     // Set the table name
     $xartable['ping'] = $ping;
     // Return the table information

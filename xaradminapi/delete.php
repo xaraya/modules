@@ -25,8 +25,8 @@ function ping_adminapi_delete($args)
     // Security Check
     if(!xarSecurityCheck('Adminping')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $pingtable = $xartable['ping'];
     // Delete the item
     $query = "DELETE FROM $pingtable

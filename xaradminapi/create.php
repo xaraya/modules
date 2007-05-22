@@ -18,8 +18,8 @@ function ping_adminapi_create($args)
     // Security Check
     if(!xarSecurityCheck('Adminping')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $pingtable = $xartable['ping'];
     // Get next ID in table
     $nextId = $dbconn->GenId($pingtable);

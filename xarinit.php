@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Ping initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -12,7 +12,7 @@
  */
 
 // Load Table Maintaince API
-xarDBLoadTableMaintenanceAPI();
+sys::import('xaraya.tableddl');
 
 /**
  * initialise the ping module
@@ -22,8 +22,8 @@ xarDBLoadTableMaintenanceAPI();
 function ping_init()
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     // Create tables
     $table = $xartable['ping'];
     $query = xarDBCreateTable($table,
@@ -50,7 +50,7 @@ function ping_init()
     if (!xarModRegisterHook('item', 'create', 'API',
                            'ping', 'admin', 'createhook')) {
         return false;
-    } 
+    }
 
     $links = array(
         array('http://rpc.weblogs.com/RPC2', 0),
@@ -58,7 +58,7 @@ function ping_init()
         array('http://rpc.technorati.com/rpc/ping', 0),
         array('http://rssrpc.weblogs.com/RPC2', 1),
         array('http://ping.blo.gs/', 1));
-    
+
     foreach ($links as $link){
         // Get next ID in table
         $nextId = $dbconn->GenId($table);
@@ -83,8 +83,8 @@ function ping_delete()
 
     // need to drop the module tables too
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['ping']);
@@ -104,11 +104,11 @@ function ping_delete()
 
     // Remove Masks and Instances
     xarRemoveMasks('ping');
-    xarRemoveInstances('ping'); 
+    xarRemoveInstances('ping');
 
     // Deletion successful
     return true;
-} 
+}
 
 /**
  * upgrade the ping module from an old version
@@ -122,12 +122,12 @@ function ping_upgrade($oldVersion)
         if (!xarModRegisterHook('item', 'create', 'API',
                                'ping', 'admin', 'createhook')) {
             return false;
-        } 
+        }
         continue;
         case '1.0.1':
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
             // Create tables
             $table = $xartable['ping'];
             $query = xarDBCreateTable($table,
@@ -149,8 +149,8 @@ function ping_upgrade($oldVersion)
         continue;
         case '1.0.2':
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
             // Create tables
             $table = $xartable['ping'];
 
