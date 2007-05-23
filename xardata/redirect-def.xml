@@ -1,0 +1,31 @@
+<object name="xarpages_redirect">
+  <objectid>0</objectid>
+  <label>Xarpages_Redirect</label>
+  <moduleid>160</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="url">
+      <id>1</id>
+      <label>Redirect URL (remember to set the custom function to 'redirect')</label>
+      <type>url</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="menu_title">
+      <id>2</id>
+      <label>Menu Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>20</order>
+      <validation></validation>
+    </property>
+</object>
