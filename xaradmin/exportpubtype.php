@@ -136,7 +136,7 @@ function articles_admin_exportpubtype($args)
 
     if (isset($object) && count($object->properties) > 0) {
         $proptypes = DataPropertyMaster::getPropertyTypes();
-        $prefix = xarDBGetSystemTablePrefix();
+        $prefix = xarDB::getPrefix();
         $prefix .= '_';
         $keys = array('id','label','type','default','source','status','order','validation');
 
