@@ -75,16 +75,16 @@ function commerce_categoriesblock_display($blockinfo)
     $q->addtable($xartables['categories'],'xc');
     $q->addtable($xartables['commerce_categories'],'c');
     $q->addtable($xartables['commerce_categories_description'],'cd');
-    $q->addfields(array('xc.xar_cid AS cid',
+    $q->addfields(array('xc.id AS cid',
                         'cd.categories_name AS categories_name',
-                        'xc.xar_parent AS parent'));
+                        'xc.parent_id AS parent'));
 //    if ($configuration['group_check'] == true) {
 //        $q->like('c.group_ids', "'%c_".$_SESSION['customers_status']['customers_status_id']."_group%'");
 //    }
     $q->eq('c.categories_status', 1);
-    $q->eq('xc.xar_parent', 0);
+    $q->eq('xc.parent_id', 0);
     $q->eq('cd.language_id', $currentlang['id']);
-    $q->join('c.categories_id', 'xc.xar_cid');
+    $q->join('c.categories_id', 'xc.id');
     $q->join('c.categories_id', 'cd.categories_id');
     $q->setorder('c.sort_order');
     $q->addorder('cd.categories_name');
@@ -132,13 +132,13 @@ function commerce_categoriesblock_display($blockinfo)
             $q->addtable($xartables['categories'],'xc');
             $q->addtable($xartables['commerce_categories'],'c');
             $q->addtable($xartables['commerce_categories_description'],'cd');
-            $q->addfields(array('xc.xar_cid AS cid',
+            $q->addfields(array('xc.id AS cid',
                                 'cd.categories_name AS categories_name',
-                                'xc.xar_parent AS parent'));
+                                'xc.parent_id AS parent'));
             $q->eq('c.categories_status', 1);
-            $q->eq('xc.xar_parent', $value);
+            $q->eq('xc.parent_id', $value);
             $q->eq('cd.language_id', $currentlang['id']);
-            $q->join('c.categories_id', 'xc.xar_cid');
+            $q->join('c.categories_id', 'xc.id');
             $q->join('c.categories_id', 'cd.categories_id');
             $q->setorder('c.sort_order');
             $q->addorder('cd.categories_name');

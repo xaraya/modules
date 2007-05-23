@@ -52,7 +52,7 @@ function products_admin_categories_screen()
         $q1 = new xenQuery();
         $q2 = new xenQuery();
         if(!xarVarFetch('categories_image',    'str',  $categories_image, '', XARVAR_NOT_REQUIRED)) {return;}
-        $q->addfield('xar_image',$categories_image);
+        $q->addfield('image',$categories_image);
         switch ($action) {
             case 'insert_category':
             case 'update_category':
@@ -76,7 +76,7 @@ function products_admin_categories_screen()
                         $q->settype('INSERT');
                         $q1->settype('INSERT');
                         $q2->settype('INSERT');
-                        $q->addfield('xar_parent',$categories_id);
+                        $q->addfield('parent_id',$categories_id);
                         $q2->addfield('date_added',time());
                     }
                     elseif ($action == 'update_category') {
@@ -84,7 +84,7 @@ function products_admin_categories_screen()
                         $q1->settype('UPDATE');
                         $q2->settype('UPDATE');
                         $q2->addfield('last_modified',time());
-                        $q->eq('xar_cid',$categories_id);
+                        $q->eq('id',$categories_id);
                     }
 
                     if(!xarVarFetch('categories_name',    'array',  $categories_name, NULL, XARVAR_DONT_SET)) {return;}
@@ -106,12 +106,12 @@ function products_admin_categories_screen()
                                 $q1->addfield('categories_display_keywords',$categories_display_keywords[$language_id]);
                             }
                             if ($action == 'insert_category') {
-                                $q->addfield('xar_cid',$q->nextid($xartables['categories'],'xar_cid'));
+                                $q->addfield('id',$q->nextid($xartables['categories'],'id'));
                                 $q->run();
-                                $q1->addfield('categories_id',$q->lastid($xartables['categories'],'xar_cid'));
+                                $q1->addfield('categories_id',$q->lastid($xartables['categories'],'id'));
                                 $q1->addfield('language_id',$language_id);
-                                $categories_id = $q->lastid($xartables['categories'],'xar_cid');
-                                $q2->addfield('categories_id',$q->nextid($xartables['categories'],'xar_cid'));
+                                $categories_id = $q->lastid($xartables['categories'],'id');
+                                $q2->addfield('categories_id',$q->nextid($xartables['categories'],'id'));
                             }
                             elseif ($action == 'update_category') {
                                 $q->run();
@@ -175,7 +175,7 @@ function products_admin_categories_screen()
 //TODO cInfo is apparently taking care of the table names. xarQuery can do the same an then cInfo no longer needs to be an object?
 /*    $q->addfields(array('c.id AS id',
         'cd.categories_name AS categories_id',
-        'xc.xar_image AS categories_image',
+        'xc.image AS categories_image',
         'c.parent_id AS parent_id',
         'c.sort_order AS sort_order',
         'c.date_added AS date_added',
@@ -183,7 +183,7 @@ function products_admin_categories_screen()
         'c.categories_status AS categories_status'));
 */
     $q->join('c.id','cd.id');
-    $q->join('xc.xar_cid','c.id');
+    $q->join('xc.id','c.id');
 //    $q->qecho();
     if(!$q->run()) return;
     $cInfo = $q->row();

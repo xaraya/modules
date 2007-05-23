@@ -144,8 +144,8 @@ if (isset($action)) {
             case 'move_category_confirm':
                 if ( ($cID) && ($cID != $move_to_category_id) ) {
                     $q = new xenQuery('UPDATE',$xartables['categories']);
-                    $q->addfield('xar_parent',$move_to_category_id);
-                    $q->eq('xar_cid',$cID);
+                    $q->addfield('parent_id',$move_to_category_id);
+                    $q->eq('id',$cID);
                     if(!$q->run()) return;
                 }
 
@@ -431,16 +431,16 @@ if (isset($action)) {
     $q->addtable($xartables['products_categories_description'],'cd');
     $q->addtable($xartables['products_categories'],'c');
     $q->addtable($xartables['categories'],'xc');
-    $q->addfields(array('xc.xar_cid AS categories_id',
+    $q->addfields(array('xc.id AS categories_id',
                         'cd.categories_name',
 //                        'c.categories_image',
-                        'xc.xar_parent',
+                        'xc.parent_id',
                         'c.sort_order',
                         'c.date_added',
                         'c.last_modified ',
                         'c.status'));
     $q->join('c.id','cd.id');
-    $q->join('c.id','xc.xar_cid');
+    $q->join('c.id','xc.id');
     $q->eq('cd.language_id',$currentlang['id']);
     $q->setorder('c.sort_order');
     $q->addorder('cd.categories_name');
@@ -448,7 +448,7 @@ if (isset($action)) {
         $q->like('cd.categories_name','%' . $search . '%');
     }
     else {
-        $q->eq('xc.xar_parent',$cPath);
+        $q->eq('xc.parent_id',$cPath);
     }
 
 //    $q->qecho();

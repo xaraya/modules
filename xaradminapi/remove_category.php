@@ -21,8 +21,8 @@ function commerce_adminapi_remove_category($args)
     if(!isset($category_id)) $category_id = 0;
 
     $q = new xenQuery('SELECT',
-                      $xartables['categories'],'xar_image as image');
-    $q->eq('xar_cid',$category_id);
+                      $xartables['categories'],'image as image');
+    $q->eq('id',$category_id);
     if(!$q->run()) return;
     $category = $q->row();
     $category_image = $category['image'];
@@ -41,7 +41,7 @@ function commerce_adminapi_remove_category($args)
     }
 
     $q = new xenQuery('DELETE',$xartables['categories']);
-    $q->eq('xar_cid',$category_id);
+    $q->eq('id',$category_id);
     if(!$q->run()) return;
     $q = new xenQuery('DELETE',$xartables['commerce_categories']);
     $q->eq('categories_id',$category_id);

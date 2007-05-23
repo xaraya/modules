@@ -37,10 +37,10 @@ function products_userapi_generate_category_path($args)
                     $q = new xenQuery('SELECT');
                     $q->addtable($xartables['categories'],'xc');
                     $q->addtable($xartables['products_categories_description'],'cd');
-                    $q->addfields(array('xc.xar_parent AS parent',
+                    $q->addfields(array('xc.parent_id AS parent',
                                         'cd.categories_name AS name'));
-                    $q->join('xc.xar_cid','cd.categories_id');
-                    $q->eq('xc.xar_cid',$categories['categories_id']);
+                    $q->join('xc.id','cd.categories_id');
+                    $q->eq('xc.id',$categories['categories_id']);
                     $q->eq('cd.language_id',$currentlang['id']);
                     if(!$q->run()) return;
                     $category = $q->row();
@@ -60,10 +60,10 @@ function products_userapi_generate_category_path($args)
         $q = new xenQuery('SELECT');
         $q->addtable($xartables['categories'],'xc');
         $q->addtable($xartables['products_categories_description'],'cd');
-        $q->addfields(array('xc.xar_parent AS parent',
+        $q->addfields(array('xc.parent_id AS parent',
                             'cd.categories_name AS name'));
-        $q->eq('xc.xar_cid',$id);
-        $q->join('xc.xar_cid','cd.categories_id');
+        $q->eq('xc.id',$id);
+        $q->join('xc.id','cd.categories_id');
         $q->eq('cd.language_id',$currentlang['id']);
         if(!$q->run()) return;
         $category = $q->row();

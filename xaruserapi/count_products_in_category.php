@@ -34,8 +34,8 @@ function products_userapi_count_product_in_category($args)
     $product_count += $products['count'];
 
     if (isset($cid)) {
-        $q = new xenQuery('SELECT', $xartables['categories'], 'xar_cid as cid');
-        $q->eq('xar_parent',$cid);
+        $q = new xenQuery('SELECT', $xartables['categories'], 'id as cid');
+        $q->eq('parent_id',$cid);
         if(!$q->run()) return;
         foreach ($q->output() as $child_categories) {
             $product_count += xarModAPIFunc('products','user','count_product_in_category', array('cid' => $child_categories['cid'], 'include_active' => $include_inactive));

@@ -42,10 +42,10 @@ function products_userapi_get_category_tree($args)
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['categories'],'c');
     $q->addtable($xartables['products_categories_description'],'cd');
-    $q->addfields(array('c.xar_cid', 'cd.categories_name', 'c.xar_parent', 'cd.id'));
-    $q->join('c.xar_cid','cd.id');
+    $q->addfields(array('c.id', 'cd.categories_name', 'c.parent_id', 'cd.id'));
+    $q->join('c.id','cd.id');
     $q->eq('language_id',$currentlang['id']);
-    $q->eq('c.xar_parent',$parent_id);
+    $q->eq('c.parent_id',$parent_id);
 //    $q->addorder('c.sort_order');
     $q->addorder('cd.categories_name');
     if(!$q->run()) return;

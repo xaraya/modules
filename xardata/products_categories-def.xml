@@ -14,7 +14,7 @@
       <label>ID</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_categories.xar_cid</source>
+      <source>xar_categories.id</source>
       <status>65</status>
       <order>1</order>
       <validation></validation>
@@ -24,7 +24,7 @@
       <label>Name</label>
       <type>textbox</type>
       <default></default>
-      <source>xar_categories.xar_name</source>
+      <source>xar_categories.name</source>
       <status>33</status>
       <order>2</order>
       <validation></validation>
@@ -34,7 +34,7 @@
       <label>Description</label>
       <type>textarea_medium</type>
       <default></default>
-      <source>xar_categories.xar_description</source>
+      <source>xar_categories.description</source>
       <status>34</status>
       <order>3</order>
       <validation></validation>
@@ -44,7 +44,7 @@
       <label>Image</label>
       <type>image</type>
       <default></default>
-      <source>xar_categories.xar_image</source>
+      <source>xar_categories.image</source>
       <status>34</status>
       <order>4</order>
       <validation></validation>
@@ -54,7 +54,7 @@
       <label>Parent</label>
       <type>categories</type>
       <default></default>
-      <source>xar_categories.xar_parent</source>
+      <source>xar_categories.parent_id</source>
       <status>33</status>
       <order>5</order>
       <validation></validation>

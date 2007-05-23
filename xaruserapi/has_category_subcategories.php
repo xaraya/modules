@@ -17,7 +17,7 @@ function commerce_userapi_has_category_subcategories($args)
     $xartables = xarDB::getTables();
     extract($args);
     $q = new xenQuery('SELECT', $xartables['categories'], 'count(*) as count');
-    $q->eq('xar_parent',$cid);
+    $q->eq('parent_id',$cid);
     if(!$q->run()) return;
     $child_category = $q->row();
     return $child_category['count'] > 0;

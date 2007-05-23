@@ -49,7 +49,7 @@ function products_user_default()
         else {
             $q = new xenQuery('SELECT',$xartables['categories']);
             $q->addfield('count(*) AS total');
-            $q->eq('xar_parent',$current_category_id);
+            $q->eq('parent_id',$current_category_id);
             if(!$q->run()) return;
             $category_parent = $q->row();
             if ($category_parent['total'] > 0) {
@@ -79,7 +79,7 @@ function products_user_default()
         //    }
             $q->eq('c.categories_id', $current_category_id);
             $q->eq('cd.language_id', $currentlang['id']);
-            $q->join('xc.xar_cid', 'cd.categories_id');
+            $q->join('xc.id', 'cd.categories_id');
             $q->join('c.categories_id', 'cd.categories_id');
             if(!$q->run()) return;
 
@@ -91,19 +91,19 @@ function products_user_default()
                 $q->addtable($xartables['categories'],'xc');
                 $q->addtable($xartables['products_categories'],'c');
                 $q->addtable($xartables['products_categories_description'],'cd');
-                $q->addfields(array('xc.xar_cid AS cid',
+                $q->addfields(array('xc.id AS cid',
                                     'cd.categories_name AS categories_name',
-                                    'xc.xar_parent AS parent',
+                                    'xc.parent_id AS parent',
                                     'cd.categories_description AS categories_description',
                                     'c.categories_image AS categories_image'));
             //    if ($configuration['group_check'] == true) {
             //        $q->like('c.group_ids', "'%c_".$_SESSION['customers_status']['customers_status_id']."_group%'");
             //    }
                 $q->eq('c.categories_status', 1);
-                $q->join('c.categories_id', 'xc.xar_cid');
+                $q->join('c.categories_id', 'xc.id');
                 $q->join('c.categories_id', 'cd.categories_id');
-                $q->eq('xc.xar_parent', $current_category_id);
-                $q->eq('xc.xar_parent', $category_links[$i]);
+                $q->eq('xc.parent_id', $current_category_id);
+                $q->eq('xc.parent_id', $category_links[$i]);
                 $q->eq('cd.language_id', $currentlang['id']);
                 $q->setorder('c.sort_order');
                 $q->addorder('cd.categories_name');
@@ -201,18 +201,18 @@ function products_user_default()
                     $q->addtable($xartables['categories'],'xc');
                     $q->addtable($xartables['products_categories'],'c');
                     $q->addtable($xartables['products_categories_description'],'cd');
-                    $q->addfields(array('xc.xar_cid AS cid',
+                    $q->addfields(array('xc.id AS cid',
                                         'cd.categories_name AS categories_name',
-                                        'xc.xar_parent AS parent',
+                                        'xc.parent_id AS parent',
                                         'd.categories_image AS categories_image'));
                 //    if ($configuration['group_check'] == true) {
                 //        $q->like('c.group_ids', "'%c_".$_SESSION['customers_status']['customers_status_id']."_group%'");
                 //    }
                     $q->eq('c.categories_status', 1);
-                    $q->join('c.categories_id', 'xc.xar_cid');
+                    $q->join('c.categories_id', 'xc.id');
                     $q->join('c.categories_id', 'cd.categories_id');
                     $q->eq('c.categories_id', $current_category_id);
-                    $q->eq('xc.xar_parent', $category_links[$i]);
+                    $q->eq('xc.parent_id', $category_links[$i]);
                     $q->eq('cd.language_id', $currentlang['id']);
                     $q->setorder('c.sort_order');
                     $q->addorder('cd.categories_name');
@@ -408,8 +408,8 @@ function products_user_default()
                     $q->eq('pd.language_id', (int)$currentlang['id']);
                     $q->eq('p.manufacturers_id', $manufacturers_id);
                     $q->setorder('cd.categories_name');
-                    $q->addfields(array('xc.xar_cid AS id',
-                                       'xc.xar_name AS name',
+                    $q->addfields(array('xc.id AS id',
+                                       'xc.name AS name',
                                 ));
                 } else {
                     $q = new xenQuery('SELECT');
@@ -455,11 +455,11 @@ function products_user_default()
                 $image = $image['manufacturers_image'];
             }
             elseif ($current_category_id) {
-                $q = new xenQuery('SELECT', $xartables['categories'], 'xar_image');
-                $q->eq('xar_cid', $current_category_id);
+                $q = new xenQuery('SELECT', $xartables['categories'], 'image');
+                $q->eq('id', $current_category_id);
                 if(!$q->run()) return;
                 $image = $q->row();
-                $image = $image['xar_image'];
+                $image = $image['image'];
             }
 
 // include(DIR_WS_MODULES . FILENAME_PRODUCT_LISTING);
