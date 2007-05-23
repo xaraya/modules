@@ -37,7 +37,7 @@ function articles_adminapi_importpubtype($args)
         $name2id[$proptype['name']] = $propid;
     }
 
-    $prefix = xarDBGetSystemTablePrefix();
+    $prefix = xarDB::getPrefix();
     $prefix .= '_';
 
     if (!empty($file)) {
