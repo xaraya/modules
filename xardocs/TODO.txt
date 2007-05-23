@@ -37,3 +37,7 @@ o On modify/create event screen, display the appropriate buttons
 - If only have comment privileges, then there is no point redirecting to the 'edit' or 'show'
   pages because the event will not be available to that user
 
+o Easy plug-in system for handling hooks to events (e.g. links to travel organisers based on postcode)
+
+o Short URLs! Can't forget short URLs.
+
