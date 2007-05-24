@@ -6,138 +6,246 @@
 <xar:set name="uid">xarSessionGetVar('uid')</xar:set>
 <xar:set name="currentdate">date("Y-m-d H:i:s")</xar:set>
 
+<div class="xar-mod-head">
+	<span class="xar-mod-title"><xar:mlstring>xTasks Worklog</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xtasks_info">
-        <tr valign="top">
-            <td class="xar-title xar-align-right" style="width: 200px;"><xar:data-label property="$taskproperties['task_name']" /></td>
-            <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['task_name']" value="$taskinfo['task_name']" /></td>
-        </tr>
+
+    <h2><xar:mlstring>Quick Worklog Entry</xar:mlstring></h2>
+
+	<xar:template type="module" file="admin-menu" />
+
+	<dl class="xtasks-display">
+	    <dt class="xar-form-label">
+	        <xar:data-label property="$taskproperties['task_name']" />
+	    </dt>
+		<dd>
+	    	<xar:data-output property="$taskproperties['task_name']" value="$taskinfo['task_name']" />
+		</dd>
+
         <xar:if condition="!empty($taskinfo['parentname'])">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:mlstring>Parent Task</xar:mlstring></td>
-                <td class="xar-norm xar-align-left"><xar:if condition="empty($parenturl)">#$parentname#<xar:else /><a href="#$parenturl#">#$parentname#</a></xar:if></td>
-            </tr>
+		    <dt class="xar-form-label">
+		        <xar:mlstring>Parent Task</xar:mlstring>
+		    </dt>
+			<dd>
+				<xar:if condition="empty($parenturl)">
+					#$parentname#
+				<xar:else />
+					<a href="#$parenturl#">#$parentname#</a>
+				</xar:if>
+			</dd>
         </xar:if>
-        <tr valign="top">
-            <td class="xar-title xar-align-right"><xar:mlstring>Assigned To</xar:mlstring></td>
-            <td class="xar-norm xar-align-left"><xar:if condition="!empty($taskinfo['owner'])"><xar:data-output property="$taskproperties['owner']" value="$taskinfo['owner']" /><xar:else /><xar:mlstring>Open/Available</xar:mlstring></xar:if></td>
-        </tr>
+
+	    <dt class="xar-form-label">
+	        <xar:mlstring>Assigned To</xar:mlstring>
+	    </dt>
+		<dd>
+			<xar:if condition="!empty($taskinfo['owner'])">
+				<xar:data-output property="$taskproperties['owner']" value="$taskinfo['owner']" />
+			<xar:else />
+				<xar:mlstring>Open/Available</xar:mlstring>
+			</xar:if>
+		</dd>
+
         <xar:if condition="$taskinfo['assigner'] gt 0">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:mlstring>Assigned By</xar:mlstring></td>
-                <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['assigner']" value="$taskinfo['assigner']" /></td>
-            </tr>
+		    <dt class="xar-form-label">
+		        <xar:mlstring>Assigned By</xar:mlstring>
+		    </dt>
+			<dd>
+				<xar:data-output property="$taskproperties['assigner']" value="$taskinfo['assigner']" />
+			</dd>
         </xar:if>
+
         <xar:if condition="$taskinfo['creator'] gt 0">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:mlstring>Created By</xar:mlstring></td>
-                <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['creator']" value="$taskinfo['creator']" /></td>
-            </tr>
+		    <dt class="xar-form-label">
+		        <xar:mlstring>Created By</xar:mlstring>
+		    </dt>
+			<dd>
+				<xar:data-output property="$taskproperties['creator']" value="$taskinfo['creator']" />
+			</dd>
         </xar:if>
-        <tr valign="top">
-            <td class="xar-title xar-align-right"><xar:data-label property="$taskproperties['status']" /></td>
-            <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['status']" value="$taskinfo['status']" />
-                <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$taskproperties['private']" /></span>
-                <xar:data-output property="$taskproperties['private']" value="$taskinfo['private']" /></td>
-        </tr>
-        <tr valign="top">
-            <td class="xar-title xar-align-right"><xar:data-label property="$taskproperties['priority']" /></td>
-            <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['priority']" value="$taskinfo['priority']" />
-                <span class="xar-title" style="padding-left: 20px;"><xar:data-label property="$taskproperties['importance']" /></span>
-                <xar:data-output property="$taskproperties['importance']" value="$taskinfo['importance']" /></td>
-        </tr>
-        <xar:if condition="$taskinfo['date_approved'] gt 0">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:data-label property="$taskproperties['date_approved']" /></td>
-                <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['date_approved']" value="$taskinfo['date_approved']" /></td>
-            </tr>
-        </xar:if>
-        <xar:if condition="$taskinfo['date_start_planned'] gt 0 OR $taskinfo['date_end_planned'] gt 0">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:mlstring>Planned Timeframe</xar:mlstring></td>
-                <td class="xar-norm xar-align-left">
-                    <xar:if condition="$taskinfo['date_start_planned'] gt 0">
-                        <xar:data-output property="$taskproperties['date_start_planned']" value="$taskinfo['date_start_planned']" />
-                    </xar:if>
-                    <xar:if condition="$taskinfo['date_end_planned'] gt 0">
-                        <span class="xar-title"><xar:mlstring> through </xar:mlstring></span>
-                        <xar:data-output property="$taskproperties['date_end_planned']" value="$taskinfo['date_end_planned']" />
-                    </xar:if>
-                </td>
-            </tr>
-        </xar:if>
-        <xar:if condition="$taskinfo['date_start_actual'] gt 0 OR $taskinfo['date_end_actual'] gt 0">
-            <tr valign="top">
-                <td class="xar-title xar-align-right"><xar:mlstring>Actual Dates</xar:mlstring></td>
-                <td class="xar-norm xar-align-left">
-                <xar:if condition="$taskinfo['date_start_actual'] gt 0">
-                    <xar:data-output property="$taskproperties['date_start_actual']" value="$taskinfo['date_start_actual']" />
-                </xar:if>
-                    <xar:if condition="$taskinfo['date_end_actual'] gt 0">
-                        <span class="xar-title"><xar:mlstring> through </xar:mlstring></span>
-                        <xar:data-output property="$taskproperties['date_end_actual']" value="$taskinfo['date_end_actual']" />
-                    </xar:if>
-                </td>
-            </tr>
-        </xar:if>
-        <tr valign="top">
-            <td class="xar-title xar-align-right"><xar:mlstring>Hours</xar:mlstring></td>
-            <td class="xar-norm xar-align-left">
-                <xar:set name="hours_planned">(float)$taskinfo['hours_planned']</xar:set>
-                <xar:if condition="$hours_planned gt 0">
-                    <span><xar:mlstring>Planned: </xar:mlstring><xar:data-output property="$taskproperties['hours_planned']" value="$taskinfo['hours_planned']" /></span>
-                </xar:if>
-                <xar:set name="hours_spent">(float)$taskinfo['hours_spent']</xar:set>
-                <xar:if condition="$hours_spent gt 0">
-                    <span style="padding-left: 20px;"><xar:mlstring>Spent: </xar:mlstring><xar:data-output property="$taskproperties['hours_spent']" value="$taskinfo['hours_spent']" /></span>
-                </xar:if>
-                <xar:set name="hours_remaining">(float)$taskinfo['hours_remaining']</xar:set>
-                <xar:if condition="$hours_remaining gt 0">
-                    <span style="padding-left: 20px;"><xar:mlstring>Remaining: </xar:mlstring><xar:data-output property="$taskproperties['hours_remaining']" value="$taskinfo['hours_remaining']" /></span>
-                </xar:if>
-            </td>
-        </tr>
-        <tr valign="top">
-            <td class="xar-title xar-align-right"><xar:data-label property="$taskproperties['description']" /></td>
-            <td class="xar-norm xar-align-left"><xar:data-output property="$taskproperties['description']" value="$taskinfo['description']" /></td>
-        </tr>
-    </table>
+
+	    <dt class="xar-form-label">
+			<xar:data-label property="$taskproperties['status']" />
+		</dt>
+	    <dd>
+			<xar:data-output property="$taskproperties['status']" value="$taskinfo['status']" />
+		</dd>
+
+	    <dt class="xar-form-label">
+	        <xar:data-label property="$taskproperties['private']" />
+		</dt>
+		<dd>
+	        <xar:data-output property="$taskproperties['private']" value="$taskinfo['private']" />
+		</dd>
+
+	    <dt class="xar-form-label">
+			<xar:data-label property="$taskproperties['priority']" />
+		</dt>
+	    <dd>
+			<xar:data-output property="$taskproperties['priority']" value="$taskinfo['priority']" />
+		</dd>
+
+	    <dt class="xar-form-label">
+	        <xar:data-label property="$taskproperties['importance']" />
+		</dt>
+		<dd>
+	        <xar:data-output property="$taskproperties['importance']" value="$taskinfo['importance']" />
+		</dd>
+
+	    <xar:if condition="$taskinfo['date_approved'] gt 0">
+		    <dt class="xar-form-label">
+				<xar:data-label property="$taskproperties['date_approved']" />
+			</dt>
+		    <dd>
+				<xar:data-output property="$taskproperties['date_approved']" value="$taskinfo['date_approved']" />
+			</dd>
+		</xar:if>
+
+	    <xar:if condition="$taskinfo['date_start_planned'] gt 0 OR $taskinfo['date_end_planned'] gt 0">
+		    <dt class="xar-form-label">
+				<xar:mlstring>Planned Timeframe</xar:mlstring>
+			</dt>
+	        <dd>
+	            <xar:if condition="$taskinfo['date_start_planned'] gt 0">
+	                <xar:data-output property="$taskproperties['date_start_planned']" value="$taskinfo['date_start_planned']" />
+	            </xar:if>
+	            <xar:if condition="$taskinfo['date_end_planned'] gt 0">
+	                <span style="font-weight: bold;"><xar:mlstring> through </xar:mlstring></span>
+	                <xar:data-output property="$taskproperties['date_end_planned']" value="$taskinfo['date_end_planned']" />
+	            </xar:if>
+	        </dd>
+	    </xar:if>
+
+	    <xar:if condition="$taskinfo['date_start_actual'] gt 0 OR $taskinfo['date_end_actual'] gt 0">
+	        <dt class="xar-form-label">
+				<xar:mlstring>Actual Dates</xar:mlstring>
+			</dt>
+	        <dd>
+	            <xar:if condition="$taskinfo['date_start_actual'] gt 0">
+	                <xar:data-output property="$taskproperties['date_start_actual']" value="$taskinfo['date_start_actual']" />
+	            </xar:if>
+	            <xar:if condition="$taskinfo['date_end_actual'] gt 0">
+	                <span style="font-weight: bold;"><xar:mlstring> through </xar:mlstring></span>
+	                <xar:data-output property="$taskproperties['date_end_actual']" value="$taskinfo['date_end_actual']" />
+	            </xar:if>
+	        </dd>
+	    </xar:if>
+
+	    <dt class="xar-form-label">
+			<xar:mlstring>Hours</xar:mlstring>
+		</dt>
+	    <dd>
+	        <xar:set name="hours_planned">(float)$taskinfo['hours_planned']</xar:set>
+	        <xar:if condition="$hours_planned gt 0">
+	            <span style="font-weight: bold;"><xar:mlstring>Planned: </xar:mlstring></span>
+				<xar:data-output property="$taskproperties['hours_planned']" value="$taskinfo['hours_planned']" />
+	        </xar:if>
+
+	        <xar:set name="hours_spent">(float)$taskinfo['hours_spent']</xar:set>
+	        <xar:if condition="$hours_spent gt 0">
+				<span style="font-weight: bold;margin-left: 3em;">
+					<xar:mlstring>Spent: </xar:mlstring>
+				</span>
+				<xar:data-output property="$taskproperties['hours_spent']" value="$taskinfo['hours_spent']" />
+				</span>
+	        </xar:if>
+
+	        <xar:set name="hours_remaining">(float)$taskinfo['hours_remaining']</xar:set>
+	        <xar:if condition="$hours_remaining gt 0">
+	            <span style="font-weight: bold;margin-left: 3em;">
+					<xar:mlstring>Remaining: </xar:mlstring>
+				</span>
+				<xar:data-output property="$taskproperties['hours_remaining']" value="$taskinfo['hours_remaining']" />
+	        </xar:if>
+	    </dd>
+
+	    <dt class="xar-form-label">
+			<xar:data-label property="$taskproperties['description']" />
+		</dt>
+	    <dd style="display: block;">
+			<xar:data-output property="$taskproperties['description']" value="$taskinfo['formatted_desc']" />
+		</dd>
+
+	</dl>
+
     
-    <h2><xar:mlstring>Log Work Performed</xar:mlstring></h2>
+    <h2>
+		<xar:mlstring>Log Work Performed</xar:mlstring>
+	</h2>
     
     <form method="post" action="&xar-modurl-xtasks-worklog-create;">
     
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="hidden" name="returnurl" value="#$returnurl#" />
-        <input type="hidden" name="taskid" value="#$taskid#" />
+		<div class="xar-form-input-wrapper">
+		    <label for="eventdate_input" class="xar-form-label">
+		        <xar:mlstring>Work Date</xar:mlstring>
+		    </label>
+		    <xar:data-input property="$properties['eventdate']" name="eventdate" value="$currentdate" />
+		</div>
         
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
-            <tr>
-                <td><xar:mlstring>Work Date</xar:mlstring></td>
-                <td><xar:data-input property="$properties['eventdate']" name="eventdate" value="$currentdate" /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Performed By</xar:mlstring></td>
-                <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$uid" /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Hours Worked</xar:mlstring></td>
-                <td><xar:data-input property="$properties['hours']" name="hours" /></td>
-            </tr>
-            <tr>
-                <td><xar:mlstring>Notes</xar:mlstring></td>
-                <td><xar:data-input property="$properties['notes']" name="notes" /></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center"><br /><input type="submit" value="Log" /></td>
-            </tr>
-        </table>
+		<div class="xar-form-input-wrapper">
+		    <label for="ownerid" class="xar-form-label">
+		        <xar:mlstring>Performed By</xar:mlstring>
+		    </label>
+		    <xar:data-input property="$properties['ownerid']" name="ownerid" value="$uid" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="hours" class="xar-form-label">
+		        <xar:mlstring>Hours Worked</xar:mlstring>
+		    </label>
+		    <input type="text" name="hours" id="hours" class="xar-form-text-short" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="notes" class="xar-form-label">
+		        <xar:mlstring>Notes</xar:mlstring>
+		    </label>
+		    <xar:data-input property="$properties['notes']" name="notes" />
+		</div>
+
+
         
-        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xtasks')#" />
+		<div class="xar-align-center xar-margin-thickends">
+	        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xtasks')#" />
+	        <input type="hidden" name="taskid" value="#$taskid#" />
+	        <input type="hidden" name="returnurl" value="#$returnurl#" />
+			<input type="submit" name="submit" value="#xarML('Submit Work')#" />
+		</div>
     
     </form>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <xar:if condition="is_array($worklog)">
+	<h2>
+		<xar:mlstring>Work Log</xar:mlstring>
+	</h2>
+
     <xar:template type="module" file="worklog" subdata="array('worklog'=&gt;$worklog)" />
 </xar:if>
+</div>

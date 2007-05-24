@@ -46,7 +46,6 @@ function xtasks_admin_create($args)
 
     if (!xarSecConfirmAuthKey()) return;
     
-//    if(!$returnurl) $returnurl = $_SERVER['HTTP_REFERER'];
     if(!$returnurl) $returnurl = xarServerGetVar('HTTP_REFERER');
     if(!$returnurl) $returnurl = xarModURL('xtasks', 'admin', 'view');
 

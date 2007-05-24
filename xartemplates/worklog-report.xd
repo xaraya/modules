@@ -3,55 +3,96 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
-<xar:template type="module" file="admin-menu" />
-
 <div class="xar-mod-head">
-    <span class="xar-mod-title">Work Log</span>
+    <span class="xar-mod-title">xTasks Work Log</span>
 </div>
 <div class="xar-mod-body">    
+
+	<h2>
+		<xar:mlstring>Work Log Report</xar:mlstring>
+	</h2>
+
+	<xar:template type="module" file="admin-menu" />
+
     <form method="post" action="#xarModURL('xtasks','worklog','report')#">
-        <strong>Filter Results: </strong><input type="submit" value="Go" />
-        <div>By Project: <select name="projectid">
-            <xar:set name="projectlist">xarModAPIFunc('xproject','user','getall',array('sortby'=>"project_name"))</xar:set>
-            <xar:foreach in="$projectlist" value="$projectinfo">
-                <xar:if condition="$projectinfo['projectid'] eq $projectid">
-                    <option value="#$projectinfo['projectid']#" selected>#$projectinfo['project_name']#</option>
-                <xar:else />
-                    <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
-                </xar:if>
-            </xar:foreach>
-            </select>
-        </div>
-        <div>By Staff member: <xar:data-input type="userlist" name="ownerid" value="$ownerid" /></div>
-        <div>From <xar:data-input type="calendar" name="mindate" value="$mindate" />
-             to <xar:data-input type="calendar" name="maxdate" value="$maxdate" />
-        </div>
+		<fieldset>
+	        <legend>Filter Results </legend>
+
+			<div style="float: right;width: 20%;text-align: right;">
+				<input type="submit" value="#xarML('Go')#" />
+			</div>
+
+			<div class="xar-form-input-wrapper">
+			    <label for="projectid" class="xar-form-label">
+			        <xar:mlstring>By Project:</xar:mlstring>
+			    </label>
+	            <xar:set name="projectlist">xarModAPIFunc('xproject','user','getall',array('sortby'=>"project_name"))</xar:set>
+				<select name="projectid" id="projectid">
+		            <xar:foreach in="$projectlist" value="$projectinfo">
+		                <xar:if condition="$projectinfo['projectid'] eq $projectid">
+		                    <option value="#$projectinfo['projectid']#" selected>#$projectinfo['project_name']#</option>
+		                <xar:else />
+		                    <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
+		                </xar:if>
+		            </xar:foreach>
+	            </select>
+			</div>
+
+			<div class="xar-form-input-wrapper">
+			    <label for="ownerid" class="xar-form-label">
+			        <xar:mlstring>By Staff Member:</xar:mlstring>
+			    </label>
+			    <xar:data-input type="userlist" name="ownerid" value="$ownerid" />
+			</div>
+
+			<div class="xar-form-input-wrapper">
+			    <label for="mindate_input" style="margin-right: 1em;">
+			        <xar:mlstring>From</xar:mlstring>
+			    </label>
+			    <xar:data-input type="calendar" name="mindate" value="$mindate" />
+
+			    <label for="maxdate_input" style="margin: 0 1em 0 3em;">
+			        <xar:mlstring>To</xar:mlstring>
+				</label>
+            	<xar:data-input type="calendar" name="maxdate" value="$maxdate" />
+			</div>
+		</fieldset>
     </form>
     
-    <div style="width: 100%;">
-        <div>
-            <div class="xtasks-tasklist-header" style="float: left; width: 60px;"><strong><xar:mlstring>Date</xar:mlstring></strong></div>
-            <div class="xtasks-tasklist-header" style="float: left; width: 60px; text-align: center;"><strong><xar:mlstring>Hours</xar:mlstring></strong></div>
-            <div style="clear: both;"></div>
-        </div>
-        
-        <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
-        <xar:foreach in="$worksummary" key="$workdate" value="$workdetails">
-            <xar:if condition="$rowclass eq 'xtasks-norm-row'">
-                <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
-            <xar:else />
-                <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
-            </xar:if>
-            
-            <xar:set name="workdetails">sprintf("%.02f", $workdetails)</xar:set>
-            
-            <div class="#$rowclass#">
-                <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
-                <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workdetails" />&nbsp;hrs</div>
-                <div style="clear: both;"></div>
-            </div>
-        </xar:foreach>
-    </div>
-    <br />
+	<xar:if condition="count($worksummary) gt 0">
+		<table>
+	        <tr>
+	            <th>
+					<xar:mlstring>Date</xar:mlstring>
+				</th>
+	            <th>
+					<xar:mlstring>Hours</xar:mlstring>
+				</th>
+	        </tr>
+	        
+	
+	        <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
+	
+	        <xar:foreach in="$worksummary" key="$workdate" value="$workdetails">
+	            <xar:if condition="$rowclass eq 'norm'">
+	                <xar:set name="rowclass">"alt"</xar:set>
+	            <xar:else />
+	                <xar:set name="rowclass">"norm"</xar:set>
+	            </xar:if>
+	            
+	            <xar:set name="workdetails">sprintf("%.02f", $workdetails)</xar:set>
+	            
+	            <tr class="xar-#$rowclass#">
+	                <td>
+						<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d %b %Y" />
+					</td>
+	                <td>
+						<xar:data-output property="$properties['hours']" value="$workdetails" /> hrs
+					</td>
+	            </tr>
+	        </xar:foreach>
+		</table>
+	<xar:else />
+		<p><xar:mlstring>No work log entries found.</xar:mlstring>
+	</xar:if>
 </div>
-<div class="xar-mod-foot"></div>

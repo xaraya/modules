@@ -91,7 +91,7 @@
                 <br />
                 <input type="submit" value="#$updatebutton#">
                 <xar:if condition="!isset($inline)">
-                    <input type="submit" name="cancel" value="#$cancelbutton#">
+                    <input type="submit" name="cancel" value="#$cancelbutton#" />
                 </xar:if>
             </td>
         </tr>

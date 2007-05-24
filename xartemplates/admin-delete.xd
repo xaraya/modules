@@ -2,50 +2,45 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Task</xar:mlstring></span></div>
-<div class="xar-mod-body">
-<div align="center">
-
-<h3><xar:mlstring>Close/Delete Task?</xar:mlstring></h3>
-
-<form method="post" action="#xarModUrl('xtasks','admin','delete')#">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" value="true" />
-    <input type="hidden" name="taskid" value="#$taskid#" />
-    <input type="hidden" name="returnurl" value="#$returnurl#" />
-
-    <table border="0" cellpadding="2" cellspacing="0">
-        <tr>
-            <td align="right" width="30%">
-                <xar:mlstring>Task</xar:mlstring>
-            </td>
-            <td><strong>#$name#</strong> (ID: #$taskid#)</td>
-        </tr>
-        <tr>
-            <td align="right" width="20%">
-                <xar:mlstring>Actual Close Date</xar:mlstring>
-            </td>
-            <td>
-                <xar:set name="currentdate">date("Y-m-d")</xar:set>
-                <xar:data-input property="$properties['date_end_actual']" value="$currentdate" />
-            </td>
-        </tr>
-        <tr>
-            <td align="right" width="20%">
-                <xar:mlstring>Action</xar:mlstring>
-            </td>
-            <td>
-                <xar:data-input type="radio" name="action" validation="close,Close;delete,Delete" value="close" />
-                <br />
-                <em><xar:mlstring>(close task when completed. do not delete tasks unless you are sure that it is not needed.)</xar:mlstring></em>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="xar-mod-head">
+	<span class="xar-mod-title"><xar:mlstring>xTasks Administration</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+
+    <h2><xar:mlstring>Close/Delete Task?</xar:mlstring></h2>
+
+	<xar:template type="module" file="admin-menu" />
+
+	<form method="post" action="#xarModUrl('xtasks','admin','delete')#">
+
+		<div class="xar-form-input-wrapper">
+		    <label class="xar-form-label">
+		        <xar:mlstring>Task:</xar:mlstring>
+		    </label>
+		    <strong>#$name#</strong> (ID: #$taskid#)
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="dd_#$properties['date_end_actual']->id#_input" class="xar-form-label">
+		        <xar:mlstring>Actual Close Date</xar:mlstring>
+		    </label>
+			<xar:set name="currentdate">date("Y-m-d")</xar:set>
+		    <xar:data-input property="$properties['date_end_actual']" value="$currentdate" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label class="xar-form-label">
+		        <xar:mlstring>Action</xar:mlstring>
+		    </label>
+		    <xar:data-input type="radio" name="action" validation="close,Close;delete,Delete" value="close" />
+		</div>
+
+		<div class="xar-align-center xar-margin-thickends">
+		    <input type="hidden" name="authid" value="#$authid#" />
+		    <input type="hidden" name="confirm" value="true" />
+		    <input type="hidden" name="taskid" value="#$taskid#" />
+		    <input type="hidden" name="returnurl" value="#$returnurl#" />
+		    <input type="submit" value="#xarML('Confirm')#" />
+		</div>
+	</form>
 </div>

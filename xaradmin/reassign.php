@@ -8,7 +8,7 @@ function xtasks_admin_reassign($args)
     if (!xarVarFetch('returnurl',     'str::',     $returnurl,     '',     XARVAR_NOT_REQUIRED)) return;
     
     if (empty($returnurl)) {
-        $returnurl = $_SERVER['HTTP_REFERER'];
+        $returnurl = xarServerGetVar('HTTP_REFERER');
     }
     $item = xarModAPIFunc('xtasks',
                          'user',
@@ -33,8 +33,6 @@ function xtasks_admin_reassign($args)
     
     $data['authid'] = xarSecGenAuthKey();
     
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
-
     $item['module'] = 'xtasks';
 
     $data['item'] = $item;

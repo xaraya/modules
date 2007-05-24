@@ -30,7 +30,7 @@
 					</td>
 				</tr>
 				<tr>
-	                <td colspan="3">
+	                <td colspan="3" class="xtasks-desc">
 						<xar:data-output property="$properties['reminder']" value="$reminderdetails['reminder']" />
 					</td>
 	            </tr>

@@ -166,7 +166,7 @@
 	        <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
             
 	        <tr>
-				<td colspan="#$tablecols#" style="padding-left: 3em;">
+				<td colspan="#$tablecols#" class="xtasks-desc">
 					#$taskinfo['formatted_desc']#
 			        <xar:if condition="!empty($planned_start_date) or !empty($planned_end_date)">
 			            <p>

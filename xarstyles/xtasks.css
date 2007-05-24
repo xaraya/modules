@@ -104,3 +104,6 @@ a.xtasks-twist {
 a.xtasks-twist img {
     vertical-align: middle;
 }
+td.xtasks-desc {
+    padding-left: 3em;
+}

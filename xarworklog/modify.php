@@ -30,8 +30,6 @@ function xtasks_worklog_modify($args)
     
     $data['authid'] = xarSecGenAuthKey();
     
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update'));
-
     $data['item'] = $item;
 
     $data['taskinfo'] = $taskinfo;
