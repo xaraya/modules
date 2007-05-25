@@ -74,6 +74,9 @@ function xarpages_funcapi_multiform($args)
     $current_page = $args['current_page'];
     $dd = $current_page['dd'];
 
+    // Determine if the current page is readonly or not.
+    $readonly = (!empty($dd['readonly']) ? true : false);
+
     // Get the current session key.
     $session_key = xarModAPIfunc('xarpages', 'multiform', 'sessionkey');
 
@@ -344,7 +347,8 @@ function xarpages_funcapi_multiform($args)
                     }
                 } else {
                     // The user is submitting actual form data.
-                    if (!empty($formobject)) {
+                    // If the page is 'readonly' then we do not attempt to handle submitted data.
+                    if (!empty($formobject) && empty($readonly)) {
                         // There is form data to handle.
                         $form_isvalid = $formobject->checkInput();
 
@@ -482,11 +486,14 @@ function xarpages_funcapi_multiform($args)
                     }
 
                     // Store the current form values in the session data array.
-                    if (!empty($formobject)) {
-                        foreach($formobject->properties as $name => $property) {
-                            // TODO: some values could be too big to store in the session (eg FileTextUpload property)
-                            // raise an error rather than crashing the session.
-                            $session_vars['formdata'][$name] = $property->getValue();
+                    // Only store this data if the page is not 'readonly'.
+                    if (empty($readonly)) {
+                        if (!empty($formobject)) {
+                            foreach($formobject->properties as $name => $property) {
+                                // TODO: some values could be too big to store in the session (eg FileTextUpload property)
+                                // raise an error rather than crashing the session.
+                                $session_vars['formdata'][$name] = $property->getValue();
+                            }
                         }
                     }
 
@@ -658,6 +665,7 @@ function xarpages_funcapi_multiform($args)
 
     if (isset($form_isvalid)) $multiform['form_isvalid'] = $form_isvalid;
     if (isset($debug)) $multiform['debug'] = $debug;
+    if (isset($readonly)) $multiform['readonly'] = $readonly;
 
     // Other always-set data for the template.
     $multiform['multiform_key_name'] = $multiform_key_name;

@@ -4,7 +4,9 @@
     <xar:if condition="!empty($multiform.prev_page_pid)">
         <input type="submit" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
     </xar:if>
-    <input type="submit" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
+    <xar:if condition="empty($multiform.readonly)">
+        <input type="submit" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
+    </xar:if>
     <input type="submit" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
     <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#"><xar:mlstring>Cancel</xar:mlstring></a>
 </div>

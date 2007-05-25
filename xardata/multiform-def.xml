@@ -15,7 +15,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>1</order>
+      <order>10</order>
       <validation></validation>
     </property>
     <property name="formobject">
@@ -25,7 +25,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>2</order>
+      <order>20</order>
       <validation>objects:name:objectid</validation>
     </property>
     <property name="formlayout">
@@ -35,7 +35,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>3</order>
+      <order>30</order>
       <validation></validation>
     </property>
     <property name="required_fields">
@@ -45,7 +45,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>4</order>
+      <order>40</order>
       <validation></validation>
     </property>
     <property name="milestone_page">
@@ -55,7 +55,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>5</order>
+      <order>50</order>
       <validation></validation>
     </property>
     <property name="menu_title">
@@ -65,7 +65,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>6</order>
+      <order>60</order>
       <validation></validation>
     </property>
     <property name="submit_labels">
@@ -75,8 +75,18 @@
       <default>&lt;&lt; Previous,Save,Next &gt;&gt;</default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>7</order>
+      <order>70</order>
       <validation></validation>
+    </property>
+    <property name="readonly">
+      <id>161</id>
+      <label>Read-only Page</label>
+      <type>checkbox</type>
+      <default>0</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>80</order>
+      <validation>1</validation>
     </property>
   </properties>
 </object>

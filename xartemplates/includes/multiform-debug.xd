@@ -1,5 +1,5 @@
 
-<xar:if condition="!empty($debug)">
+<xar:if condition="!empty($multiform.debug)">
     <hr />
     <div class="xarpages-multiform-debug">
         <xar:if condition="!empty($multiform.formdata)">
