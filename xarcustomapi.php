@@ -89,10 +89,11 @@ class xarpages_customapi_multiform_master
     // and place them back into the form object.
     function compact_formobject()
     {
+        $property_names = array();
         if (!empty($this->formobject->properties)) {
             foreach($this->formobject->properties as $name => $property) {
                 if (isset($this->invalids[$name])) $this->formobject->properties[$name]->invalid = $this->invalids[$name];
-                if (isset($this->values[$name])) $this->formobject->properties[$name]->setValue($this->values[$name]);
+                if (isset($this->values[$name])) {$this->formobject->properties[$name]->setValue($this->values[$name]);}
             }
         }
 

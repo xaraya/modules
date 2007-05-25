@@ -657,6 +657,7 @@ function xarpages_funcapi_multiform($args)
     if (!empty($session_vars['workdata'])) $multiform['workdata'] = $session_vars['workdata'];
 
     if (isset($form_isvalid)) $multiform['form_isvalid'] = $form_isvalid;
+    if (isset($debug)) $multiform['debug'] = $debug;
 
     // Other always-set data for the template.
     $multiform['multiform_key_name'] = $multiform_key_name;

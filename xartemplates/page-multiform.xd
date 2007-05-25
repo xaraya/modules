@@ -52,15 +52,13 @@
         </xar:if>
 
         <xar:comment>Display the form buttons</xar:comment>
-        <div class="xarpages-multiform-buttons">
-            <xar:if condition="!empty($multiform.prev_page_pid)">
-                <input type="submit" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
-            </xar:if>
-            <input type="submit" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
-            <input type="submit" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
-            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#"><xar:mlstring>Cancel</xar:mlstring></a>
-        </div>
+        <xar:template file="multiform-buttons" />
     </form>
+
+    <xar:comment>Display footer content for the form.</xar:comment>
+    <xar:if condition="isset($current_page.dd.footer)">
+        <div>#$current_page.dd.footer#</div>
+    </xar:if>
 
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
@@ -70,4 +68,8 @@
         </xar:foreach>
     </xar:if>
 
+    <xar:comment>Dislay any debug information</xar:comment>
+    <xar:if condition="!empty($debug)">
+        <xar:template file="multiform-progress" />
+    </xar:if>
 </xar:if>

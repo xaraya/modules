@@ -1,0 +1,36 @@
+
+<xar:if condition="!empty($debug)">
+    <hr />
+    <div class="xarpages-multiform-debug">
+        <xar:if condition="!empty($multiform.formdata)">
+            <h2><xar:mlstring>Form data</xar:mlstring></h2>
+            <table>
+                <tr>
+                    <th><xar:mlstring>Name</xar:mlstring></th>
+                    <th><xar:mlstring>value</xar:mlstring></th>
+                </tr>
+                <xar:loop name="$multiform.formdata">
+                    <tr>
+                        <td>#xarVarPrepForDisplay($loop:key)#</td>
+                        <td>#xarVarPrepForDisplay($loop:item)#</td>
+                    </tr>
+                </xar:loop>
+            </table>
+        </xar:if>
+        <xar:if condition="!empty($multiform.workdata)">
+            <h2><xar:mlstring>Work data</xar:mlstring></h2>
+            <table>
+                <tr>
+                    <th><xar:mlstring>Name</xar:mlstring></th>
+                    <th><xar:mlstring>value</xar:mlstring></th>
+                </tr>
+                <xar:loop name="$multiform.workdata">
+                    <tr>
+                        <td>#xarVarPrepForDisplay($loop:key)#</td>
+                        <td>#xarVarPrepForDisplay($loop:item)#</td>
+                    </tr>
+                </xar:loop>
+            </table>
+        </xar:if>
+    </div>
+</xar:if>
