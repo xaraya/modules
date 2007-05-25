@@ -484,6 +484,8 @@ function xarpages_funcapi_multiform($args)
                     // Store the current form values in the session data array.
                     if (!empty($formobject)) {
                         foreach($formobject->properties as $name => $property) {
+                            // TODO: some values could be too big to store in the session (eg FileTextUpload property)
+                            // raise an error rather than crashing the session.
                             $session_vars['formdata'][$name] = $property->getValue();
                         }
                     }
@@ -653,6 +655,8 @@ function xarpages_funcapi_multiform($args)
     if (!empty($session_vars['history'])) $multiform['history'] = $session_vars['history'];
     if (!empty($session_vars['formdata'])) $multiform['formdata'] = $session_vars['formdata'];
     if (!empty($session_vars['workdata'])) $multiform['workdata'] = $session_vars['workdata'];
+
+    if (isset($form_isvalid)) $multiform['form_isvalid'] = $form_isvalid;
 
     // Other always-set data for the template.
     $multiform['multiform_key_name'] = $multiform_key_name;

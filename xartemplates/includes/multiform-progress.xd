@@ -1,0 +1,27 @@
+
+<xar:comment>Display the history crumbtrail/progress bar</xar:comment>
+<xar:if condition="!empty($multiform.history)">
+    <div class="xarpages-multiform-history">
+        <xar:mlstring>Progress:</xar:mlstring>
+        <xar:loop name="$multiform.history">
+            <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
+                <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
+            <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
+                <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
+            <xar:else />
+                <xar:set name="page_name">
+                    <xar:ml>
+                        <xar:mlstring>Page #(1)</xar:mlstring>
+                        <xar:mlvar>#$loop:index + 1#</xar:mlvar>
+                    </xar:ml>
+                </xar:set>
+            </xar:if>
+            <xar:if condition="$loop:index gt 0">&gt;</xar:if>
+            <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
+                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:key,$multiform.multiform_key_name=&gt;$multiform.multiform_key))#">#xarVarPrepForDisplay($page_name)#</a>
+            <xar:else />
+                <span>#xarVarPrepForDisplay($page_name)#</span>
+            </xar:if>
+        </xar:loop>
+    </div>
+</xar:if>
