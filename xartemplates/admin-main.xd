@@ -1,0 +1,87 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Administration - SiteSearch</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div class="xar-floatright xar-padding-thick"><img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" /></div>
+    
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p>
+        <em><xar:mlstring>SiteSearch is a Xaraya Search Module.</xar:mlstring></em>
+        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+    </p>
+    <ul>
+        <li><xar:mlstring>Interfaces with xapian search library.</xar:mlstring></li>
+        <li><xar:mlstring>Provides basic indexers for articles and julian to create xapian databases</xar:mlstring></li>
+        <li><xar:mlstring>Provides basic interface to search xapian database.</xar:mlstring></li>
+    </ul>
+        
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>First you must have <a href="http://www.xapian.org/">Xapian</a> library and php extension installed. Currently xapian only comes with php4 bindings. Although we have written and included php 5 bindings with this module.  So Sitesearch should work with php4 and php5. Note that sitesearch was mainly developed on php5 with our custom bindings. php5 is the recommend version for sitesearch.</xar:mlstring>
+    </p>
+   
+    <p>
+        <xar:ml>
+            <xar:mlstring>
+        Now you need to Modify the SiteSearch config <a href="#(1)">here</a>.  After you are done with that you will need to specify  the various databases your content is in or will be in.        
+            </xar:mlstring>
+            <xar:mlvar>#xarModURL('sitesearch', 'admin', 'modifyconfig')#</xar:mlvar>
+        </xar:ml>
+    </p>
+    <p>
+        To Specify your databases click on the Sitesearch->Databases link in the admin menu. There you will let Site Search know what databases to use. This allows you to seperate your content out into different databases so that search can be done on one or all of your databases depending on what you need.
+    </p>
+    <p>
+        The basic syntax for an entry is this:
+        <pre>
+        database_dir:indexer_name:database_display_name
+        </pre>
+        
+        <p>There are currently only two indexers: articles and julian.  But you can write you own if needed. Or you can use omega that you can get from xapian.org.</p>
+        
+        <p>The simplest configuration for a one database system is this:</p>
+        <pre>
+        articles:articles:Articles Database
+        </pre>
+        
+        <p>
+          But you may want seperate your content out a bit more like have all different pubtypes in different databases. Here is an example:
+        </p>
+        <pre>
+        news:articles:News Database
+        =args
+            =itemtype:news
+        business:articles:Businesses
+        =args
+            =itemtype:business    
+        </pre>
+        
+        <p>
+          But what if you are not using the articles summary field for the summary. What if you were using summary for something else and the summary was really in the body of the article. By default the articles indexer just uses the xar_summary database field for the summary.  But the indexer allows you to override the default like this:
+        </p>
+        <pre>
+        news:articles:News Database
+        =args
+            =itemtype:news
+        =mappings
+            =xar_body:summary
+        </pre>
+    </p>
+    <p>
+        Once you specify your databases you can start indexing your data by clicking on Admin Menu->Sitesearch->Index Database. Then just click run indexer for each database/indexer pair. Once you do this you should be really to go.
+    </p>
+    <p>
+        NOTE: If you are using sitesearching web-based indexing mechanism you need to make sure that the Database path you specified is writable by the web server.
+    </p>
+    
+            
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <xar:mlstring>Search - Basic search block.</xar:mlstring>
+    
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <xar:mlstring>There are no included hooks at this time.</xar:mlstring>
+
+</div>

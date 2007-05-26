@@ -1,0 +1,23 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>SiteSearch - Index Databases</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <table width="100%">
+        <tr>
+            <th><xar:mlstring>Database Name</xar:mlstring></th>
+            <th><xar:mlstring>Indexer Type</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$databases" value="$database">
+            <tr>
+                <td><xar:var name="$database.display_name" /></td>
+                <td><xar:var name="$database.indexer_type" /></td>
+                <td>
+                    <a href="#xarModURL('sitesearch', 'admin', 'indexer', array('db' => $database.database_name))#">Run Indexer</a>
+                </td>
+            </tr>
+        </xar:foreach>
+    </table>
+
+</div>

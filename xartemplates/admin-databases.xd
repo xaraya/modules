@@ -1,0 +1,42 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>SiteSearch - Databases</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+
+    <form method="post" action="#xarModURL('sitesearch', 'admin', 'databases')#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <p>
+            Databases allow you to seperate you content allowing for searching to be done on any one or all of the databases.  This allows for directed searches.
+        </p>
+        <p>
+            For each database you must specify a indexer to get content to be inserted into the database.  Currently there are 3 indexers provided. Indexers normally match up to a module.  There are indexers for articles, julian, and movies modules.  You can also specify arguments and mapping for each database indexer pair.
+        </p>
+        <p>
+            Here is an example:
+            <pre>
+                articles:articles:Articles DB
+                =args
+                    =itemtype:news
+                =mappings
+            </pre>
+        </p>
+        
+        <fieldset>
+            <legend>Databases</legend>        
+            
+            <div class="xar-form-wrapper">        
+                <label class="xar-form-label"><xar:mlstring>Databases:</xar:mlstring></label>
+                <textarea name="limits" class="xar-form-textareaxlarge"><xar:var name="limits" /></textarea>
+            </div>
+    
+            <div class="xar-form-wrapper-after">
+                <input type="submit" name="update" value="#xarML('Update')#" />
+            </div>
+        </fieldset>
+                
+    </form>  
+           
+</div>

@@ -1,0 +1,44 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>SiteSearch - QTrack</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Query Tracker</xar:mlstring></h2>
+    
+    <div class="xar-align-right" style="padding: 4px;">
+        <xar:ml>
+            <xar:mlstring>#(1) Queries Performed</xar:mlstring>
+            <xar:mlvar><xar:var name="NumQueries" /></xar:mlvar>
+        </xar:ml>
+    </div>
+    <div class="xar-norm-outline">
+    <table width="100%">
+        <tr>
+            <th><xar:mlstring>Word</xar:mlstring></th>
+            <th><xar:mlstring>Times Queried</xar:mlstring></th>
+            <th><xar:mlstring>Last Queried</xar:mlstring></th>
+        </tr>
+        <xar:set name="counter">0</xar:set>
+        <xar:foreach in="$qtracks" value="$qtrack">
+            <xar:if condition="$counter % 2 eq 0">
+                <xar:set name="class">'xar-norm'</xar:set>
+            <xar:else />
+                <xar:set name="class">'xar-alt'</xar:set>
+            </xar:if>
+            <tr class="#$class#">
+                <td><xar:var name="qtrack.word" /></td>
+                <td><xar:var name="qtrack.count" /></td>
+                <td>
+                    #xarLocaleGetFormattedDate('long', $qtrack.qtime)#
+                    #xarLocaleGetFormattedTime('long', $qtrack.qtime)#
+                </td>
+            </tr>
+            <xar:set name="counter">$counter+1</xar:set>
+        </xar:foreach>
+    </table>
+    </div>
+    <div class="xar-align-center">
+        <xar:var name="pager" />
+    </div>
+</div>

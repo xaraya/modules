@@ -1,0 +1,66 @@
+<div class="xar-mod-head"><span class="xar-mod-title">Search</span></div>
+<div class="xar-mod-body">
+    <div class="xar-align-center" style="padding: 5px; margin: 10px 0px 5px 0px;">
+        <form action="#xarModURL('sitesearch', 'user', 'main')#" method="POST">
+            <input type="text" name="keywords" value="#$keywords#" />
+            
+            <xar:if condition="!empty($databases)">
+                <select name="database">
+                    <option value=""><xar:mlstring>All Sections</xar:mlstring></option>
+                    <xar:foreach in="$databases" value="$db">
+                        <xar:if condition="$database eq $db['database_name']">
+                            <option value="#$db.database_name#" selected="selected"><xar:var name="$db.display_name" /></option>
+                        <xar:else />
+                            <option value="#$db.database_name#"><xar:var name="$db.display_name" /></option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </xar:if>
+            
+            <div style="padding:5px;">
+                <input type="submit" name="search" value="#xarML('Search')#" />
+            </div>
+        </form>
+    </div>
+    
+    <xar:if condition="!empty($search)">
+        <div class="xar-norm-outline xar-alt" style="margin-bottom: 10px; padding: 4px;">
+             <div class="xar-floatright">
+            Results: <xar:var name="firstRow" /> - <xar:var name="lastRow" /> of <xar:var name="totalMatches" /> &nbsp;
+            </div>
+    
+            Search took: <xar:var name="searchTime" />
+       </div>
+    </xar:if>
+    
+    <xar:if condition="!empty($results)">
+        <xar:foreach in="$results" key="$key" value="$result">
+            <p>
+            <h2><a href="#$result.url#"><xar:var name="result.title" /></a></h2>
+            <xar:if condition="!empty($result['text'])">
+                <xar:var name="result.text" /><br />
+            </xar:if>
+            <span style="font-size: 95%;"><a href="#$result.url#"><xar:var name="result.display_url" /></a></span><br />
+            Relevancy: <xar:var name="result.relevancy" />%
+            </p>
+        </xar:foreach>
+    <xar:else />
+        <xar:if condition="!empty($search)">
+        <div class="xar-title xar-align-center">
+            <xar:mlstring>No Documents were found</xar:mlstring>
+        </div>
+        </xar:if>
+    </xar:if>
+    
+    <xar:if condition="!empty($pager)">
+        <div class="xar-align-center" style="margin-top: 10px;">
+            <xar:var name="pager" />
+        </div>
+    </xar:if>
+    
+    <xar:if condition="!empty($totalPages)">
+        <div class="xar-norm-outline xar-alt" style="margin-bottom: 10px; padding: 4px;">
+            Total Documents: <xar:var name="totalPages" />
+       </div>
+    </xar:if>
+</div>

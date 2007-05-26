@@ -1,0 +1,18 @@
+* Version 1.0.1 October 29 2005
+- Moved to xapian back-end from mnogosearch. (Huge speed improvement.)
+- Added two web-based indexers for articles and the julian module. 
+
+* Version 0.9.5 May 21 2005
+- Added query tracking
+- Added url search limits
+- Added caching option
+- Added create/update hooks for indexing
+- Added extra config options
+
+* Version 0.9.1  May 8 2005
+- Fix several typos 
+- Fix keyword highlighting code
+- Added basic user docs (Thanks to baraboom)
+
+* Version 0.9.0  April 24 2005
+- Initial release of SiteSearch

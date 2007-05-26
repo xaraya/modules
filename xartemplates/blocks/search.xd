@@ -1,0 +1,7 @@
+<div class="xar-align-center xar-padding-thick">
+    <form name="search_block" action="#xarModURL('sitesearch', 'user', 'main')#" method="POST">
+        <input name="keywords" type="text" value="" class="xar-form-textlong" />
+        <input name="database" type="hidden" value="#$database#" />
+        <input name="submit" type="submit" value="Search !" class="xar-form-textshort" />
+    </form>
+</div>
