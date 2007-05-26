@@ -35,6 +35,10 @@
 		    <xar:data-input type="radio" name="action" validation="close,Close;delete,Delete" value="close" />
 		</div>
 
+		<p>
+			<xar:mlstring>Close task when completed. Do not delete tasks unless you are sure that it is not needed.</xar:mlstring>
+		</p>
+
 		<div class="xar-align-center xar-margin-thickends">
 		    <input type="hidden" name="authid" value="#$authid#" />
 		    <input type="hidden" name="confirm" value="true" />

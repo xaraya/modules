@@ -22,4 +22,12 @@ function twist_open(sid)
     return true;
 }
 
-    
+
+function confirmSubmit()
+{
+    var agree=confirm("This will update task status, but will not indicate that any work was completed. Continue?");
+    if (agree)
+    	return true ;
+    else
+    	return false ;
+}

@@ -11,7 +11,7 @@ function xtasks_worklog_create($args)
     if (!xarVarFetch('hours', 'float::', $hours, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hours_remaining', 'float::', $hours_remaining, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('close', 'str::', $close, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('taskstatus', 'str::', $taskstatus, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl', 'str::', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
                                             
     if (!xarSecConfirmAuthKey()) return;
@@ -35,16 +35,16 @@ function xtasks_worklog_create($args)
     $taskinfo = xarModAPIFunc('xtasks', 'user', 'get', array('taskid' => $taskid));
     if(!$taskinfo && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     
-    if($close) { // affects dates only
+    if($taskstatus) { // affects dates only
         $taskinfo['date_end_actual'] = $eventdate;
-        $taskinfo['status'] = "Closed";
+        $taskinfo['status'] = $taskstatus;
         
         if(!xarModAPIFunc('xtasks', 'admin', 'update', $taskinfo)) return;
-        if($taskinfo['parentid'] > 0) { // must also check if any other open tasks to account for first
+        if($taskstatus == "Closed" && $taskinfo['parentid'] > 0) { // must also check if any other open tasks to account for first
             $alltasksclosed = true;
             $siblings = xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['parentid']));
             foreach($siblings as $childtask) {
-                if($childtask['status'] == "Open") $alltasksclosed = false;
+                if($childtask['status'] != "Closed") $alltasksclosed = false;
             }
             if($alltasksclosed) {
                 xarResponseRedirect(xarModURL('xtasks', 'admin', 'delete', array('taskid' => $taskinfo['parentid'])));

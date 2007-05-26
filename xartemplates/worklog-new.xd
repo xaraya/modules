@@ -26,7 +26,7 @@
 	    <xar:template type="module" file="admin-menu" />
 	</xar:if>
 
-    <form method="post" action="&xar-modurl-xtasks-worklog-create;">
+    <form method="post" action="#xarModUrl('xtasks','worklog','create')#">
     
 		<div class="xar-form-input-wrapper">
 		    <label for="eventdate_input" class="xar-form-label">

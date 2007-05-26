@@ -1,102 +1,168 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
-<xar:if condition="!isset($inline)">
+<xar:if condition="isset($inline) and $inline eq 1">
+	<h3>
+		<xar:mlstring>Modify Task</xar:mlstring>
+	</h3>
+<xar:else />
+	<div class="xar-mod-head">
+		<span class="xar-mod-title"><xar:mlstring>xTasks</xar:mlstring></span>
+	</div>
+
+	<h2>
+		<xar:mlstring>Modify Task</xar:mlstring>
+	</h2>
+
     <xar:template type="module" file="admin-menu" />
 </xar:if>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Task</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <form method="post" action="#xarModUrl('xtasks','admin','update')#">
     
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="taskid" value="#$item.taskid#" />
-    <input type="hidden" name="returnurl" value="#$returnurl#" />
-    
-    <table width="100%" border="0" cellspacing="0" cellpadding="2">
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['task_name']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['task_name']" name="task_name" value="$item['task_name']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['status']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['status']" name="status" value="$item['status']" />
-                <xar:data-input property="$properties['private']" name="private" value="$item['private']" />
-                <xar:data-label property="$properties['private']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['priority']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" />
-                <xar:data-label property="$properties['importance']" />
-                <xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['description']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['owner']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" /></td>
-        </tr>
+		<div class="xar-form-input-wrapper">
+		    <label for="task_name" class="xar-form-label">
+		        <xar:data-label property="$properties['task_name']" />
+		    </label>
+		    <xar:data-input property="$properties['task_name']" name="task_name" value="$item['task_name']" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="status" class="xar-form-label">
+		        <xar:data-label property="$properties['status']" />
+		    </label>
+		    <xar:data-input property="$properties['status']" name="status" value="$item['status']" />
+		</div>
+
+		<div class="xar-form-input-wrapper-after">
+		    <xar:data-input property="$properties['private']" name="private" value="$item['private']" />
+		    <label for="private">
+		        <xar:data-label property="$properties['private']" />
+		    </label>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="priority" class="xar-form-label">
+		        <xar:data-label property="$properties['priority']" />
+		    </label>
+		    <xar:data-input property="$properties['priority']" name="priority" value="$item['priority']" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="importance" class="xar-form-label">
+		        <xar:data-label property="$properties['importance']" />
+		    </label>
+		    <xar:data-input property="$properties['importance']" name="importance" value="$item['importance']" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="description" class="xar-form-label">
+		        <xar:data-label property="$properties['description']" />
+		    </label>
+		    <xar:data-input property="$properties['description']" name="description" value="$item['description']" />
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="owner" class="xar-form-label">
+		        <xar:data-label property="$properties['owner']" />
+		    </label>
+		    <xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" />
+		</div>
+
         <xar:if condition="$item['assigner']">
-            <tr>
-                <td class="xtasks-display-label"><xar:data-label property="$properties['assigner']" /></td>
-                <td class="xtasks-display-input"><xar:data-output property="$properties['assigner']" name="assigner" value="$item['assigner']" /></td>
-            </tr>
+			<div class="xar-form-input-wrapper">
+			    <label class="xar-form-label">
+			        <xar:data-label property="$properties['assigner']" />
+			    </label>
+			    <xar:data-output property="$properties['assigner']" name="assigner" value="$item['assigner']" />
+			</div>
         </xar:if>
+
         <xar:if condition="$item['creator']">
-            <tr>
-                <td class="xtasks-display-label"><xar:data-label property="$properties['creator']" /></td>
-                <td class="xtasks-display-input"><xar:data-output property="$properties['creator']" name="creator" value="$item['creator']" /></td>
-            </tr>
+			<div class="xar-form-input-wrapper">
+			    <label class="xar-form-label">
+			        <xar:data-label property="$properties['creator']" />
+			    </label>
+			    <xar:data-output property="$properties['creator']" name="creator" value="$item['creator']" />
+			</div>
         </xar:if>
-        <tr>
-            <td class="xtasks-display-label"><xar:data-label property="$properties['date_approved']" /></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:mlstring>Planned Timeframe</xar:mlstring></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" size="10" value="$item['date_start_planned']" />
-                <xar:mlstring> through </xar:mlstring>
-                <xar:data-input property="$properties['date_end_planned']" name="date_end_planned" size="10" value="$item['date_end_planned']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:mlstring>Actual Dates</xar:mlstring></td>
-            <td class="xtasks-display-input"><xar:data-input property="$properties['date_start_actual']" name="date_start_actual" size="10" value="$item['date_start_actual']" />
-                <xar:mlstring> through </xar:mlstring>
-                <xar:data-input property="$properties['date_end_actual']" name="date_end_actual" size="10" value="$item['date_end_actual']" /></td>
-        </tr>
-        <tr>
-            <td class="xtasks-display-label"><xar:mlstring>Hours</xar:mlstring></td>
-            <td class="xtasks-display-input">
-                <div>
-                    <div style="float: left; width: 33%;" class="xtasks-display-input">
-                        <xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" />
-                        <xar:mlstring>Planned</xar:mlstring>
-                    </div>
-                    <div style="float: left; width: 33%;" class="xtasks-display-input">
-                        <xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" />
-                        <xar:mlstring>Spent</xar:mlstring>
-                    </div>
-                    <div style="float: left; width: 33%;" class="xtasks-display-input">
-                        <xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" />
-                        <xar:mlstring>Remaining</xar:mlstring>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center" class="xtasks-display-input">
-                <br />
-                <input type="submit" value="#$updatebutton#">
-                <xar:if condition="!isset($inline)">
-                    <input type="submit" name="cancel" value="#$cancelbutton#" />
-                </xar:if>
-            </td>
-        </tr>
-    </table>
-    
+
+		<div class="xar-form-input-wrapper">
+		    <label for="date_approved_input" class="xar-form-label">
+		        <xar:data-label property="$properties['date_approved']" />
+		    </label>
+		    <xar:data-input property="$properties['date_approved']" name="date_approved" value="$item['date_approved']" />
+		</div>
+
+		<fieldset>
+			<legend>
+				<xar:mlstring>Planned Timeframe</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper">
+			    <label for="date_start_planned_input" class="xar-form-label">
+			        <xar:mlstring>Start:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['date_start_planned']" name="date_start_planned" value="$item['date_start_planned']" />
+			</div>
+			<div class="xar-form-input-wrapper">
+			    <label for="date_end_planned_input" class="xar-form-label">
+			        <xar:mlstring>Through:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['date_end_planned']" name="date_end_planned" value="$item['date_end_planned']" />
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>
+				<xar:mlstring>Actual Dates</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper">
+			    <label for="date_start_actual_input" class="xar-form-label">
+			        <xar:mlstring>Begun:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['date_start_actual']" name="date_start_actual" value="$item['date_start_actual']" />
+			</div>
+			<div class="xar-form-input-wrapper">
+			    <label for="date_end_actual_input" class="xar-form-label">
+			        <xar:mlstring>Ended:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['date_end_actual']" name="date_end_actual" value="$item['date_end_actual']" />
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>
+				<xar:mlstring>Hours</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper">
+			    <label for="hours_planned" class="xar-form-label">
+			        <xar:mlstring>Planned:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['hours_planned']" name="hours_planned" value="$item['hours_planned']" />
+			</div>
+			<div class="xar-form-input-wrapper">
+			    <label for="hours_spent" class="xar-form-label">
+			        <xar:mlstring>Spent:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['hours_spent']" name="hours_spent" value="$item['hours_spent']" />
+			</div>
+			<div class="xar-form-input-wrapper">
+			    <label for="hours_remaining" class="xar-form-label">
+			        <xar:mlstring>Remaining:</xar:mlstring>
+			    </label>
+			    <xar:data-input property="$properties['hours_remaining']" name="hours_remaining" value="$item['hours_remaining']" />
+			</div>
+		</fieldset>
+
+		<div class="xar-margin-thickends xar-align-center">
+		    <input type="hidden" name="authid" value="#$authid#" />
+		    <input type="hidden" name="taskid" value="#$item.taskid#" />
+		    <input type="hidden" name="returnurl" value="#$returnurl#" />
+	        <input type="submit" value="#xarML('Update')#" class="xar-margin-thicksides">
+	        <xar:if condition="isset($inline) and $inline eq 1">
+	            <input type="submit" name="cancel" value="#xarML('Cancel')#" class="xar-margin-thicksides" />
+	        </xar:if>
+		</div>
+
     </form>
 </div>
-<div class="xar-mod-foot">#$hooks#&nbsp;</div>

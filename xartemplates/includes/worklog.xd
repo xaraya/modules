@@ -35,11 +35,14 @@
 						&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#" title="#xarML('Delete')#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" alt=""></a>
 					</td>
 				</tr>
-	            <tr>
-					<td colspan="4" class="xtasks-desc">
-						<xar:data-output property="$properties['notes']" value="$workdetails['formatted_notes']" />
-					</td>
-				</tr>
+				<xar:set name="notes">$workdetails['formatted_notes']</xar:set>
+				<xar:if condition="trim($notes) ne ''">
+		            <tr>
+						<td colspan="4" class="xtasks-desc">
+							<xar:data-output property="$properties['notes']" value="$workdetails['formatted_notes']" />
+						</td>
+					</tr>
+				</xar:if>
 	        </xar:foreach>
 		</table>
     <xar:else />

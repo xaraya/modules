@@ -130,14 +130,14 @@ function xtasks_userapi_notify($args)
     if(!isset($member_email)) $member_email = "";
 
     $messagetext = "Project: ".$projectinfo['project_name']." ("
-                    ."<a href='".xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid))."&amp;mode=tasks'>click here</a>)\n\n";
+                    ."<a href='".xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid))."&amp;mode=tasks'>click here</a>)";
     if($component == "TASK" || $component == "WORK") {
-        $messagetext .= "Task: ".$taskinfo['task_name']."\n"
+        $messagetext .= "<hr>Task: ".$taskinfo['task_name']."\n"
                     .$taskinfo['formatted_desc']."\n"
-                    .($taskinfo['date_end_planned'] ? "Due: ".$taskinfo['date_end_planned']."\n\n" : "");
+                    .($taskinfo['date_end_planned'] ? "Due: ".$taskinfo['date_end_planned'] : "");
     }
     if($component == "WORK") {
-        $messagetext .= "Work Performed: ".$workloginfo['formatted_notes'];
+        $messagetext .= "<hr>Work Performed: ".$workloginfo['formatted_notes'];
     }
     
     switch($action) {

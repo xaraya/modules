@@ -72,14 +72,14 @@
                     
                     <div>
                         <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this project.</xar:mlstring></div>           
-                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" /></div>          
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>          
                         <div style="clear: both;"></div>        
                     </div>
                 <xar:else />
                     
                     <div>
                         <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this item.</xar:mlstring></div>           
-                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" /></div>         
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>         
                         <div style="clear: both;"></div>        
                     </div>
                 </xar:if>

@@ -68,7 +68,7 @@
 				<xar:mlstring>Client</xar:mlstring>
 			</dt>
 	        <dd>
-				<a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$proj_properties['clientid']" value="$projectinfo['clientid']" /></a>
+				<a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$projectinfo['clientid']#"><xar:data-output property="$proj_properties['clientid']" value="$projectinfo['clientid']" /></a>&nbsp;
 			</dd>
 		</xar:if>
 
@@ -102,7 +102,7 @@
 				<xar:data-output property="$properties['owner']" value="$item['owner']" />
 			<xar:else />
 				<xar:mlstring>Open/Available</xar:mlstring>
-			</xar:if>
+			</xar:if>&nbsp;
 		</dd>
 
 	    <xar:if condition="$item['assigner'] gt 0">
@@ -195,27 +195,22 @@
 		</dt>
 	    <dd>
 	        <xar:set name="hours_planned">(float)$item['hours_planned']</xar:set>
-	        <xar:if condition="$hours_planned gt 0">
-	            <span style="font-weight: bold;"><xar:mlstring>Planned: </xar:mlstring></span>
-				<xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" />
-	        </xar:if>
+            <span style="font-weight: bold;">
+				<xar:mlstring>Planned: </xar:mlstring>
+			</span>
+			<xar:data-output property="$properties['hours_planned']" value="$item['hours_planned']" />
 
 	        <xar:set name="hours_spent">(float)$item['hours_spent']</xar:set>
-	        <xar:if condition="$hours_spent gt 0">
-				<span style="font-weight: bold;margin-left: 3em;">
-					<xar:mlstring>Spent: </xar:mlstring>
-				</span>
-				<xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" />
-				</span>
-	        </xar:if>
+			<span style="font-weight: bold;margin-left: 3em;">
+				<xar:mlstring>Spent: </xar:mlstring>
+			</span>
+			<xar:data-output property="$properties['hours_spent']" value="$item['hours_spent']" />
 
 	        <xar:set name="hours_remaining">(float)$item['hours_remaining']</xar:set>
-	        <xar:if condition="$hours_remaining gt 0">
-	            <span style="font-weight: bold;margin-left: 3em;">
-					<xar:mlstring>Remaining: </xar:mlstring>
-				</span>
-				<xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" />
-	        </xar:if>
+            <span style="font-weight: bold;margin-left: 3em;">
+				<xar:mlstring>Remaining: </xar:mlstring>
+			</span>
+			<xar:data-output property="$properties['hours_remaining']" value="$item['hours_remaining']" />
 	    </dd>
 
 	    <dt class="xar-form-label">
