@@ -51,14 +51,14 @@ function articles_userapi_getpubcatcount($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
     // Get count
-    $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['cid']
+    $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['id']
            .', COUNT(*)
             FROM '. $articlesdef['table'] . '
             LEFT JOIN ' . $categoriesdef['table'] .'
             ON '. $categoriesdef['field'] . ' = ' . $articlesdef['field'] .
             $categoriesdef['more'] . '
             WHERE '. $categoriesdef['where'] .' AND '. $articlesdef['where'] .'
-            GROUP BY '. $articlesdef['pubtypeid'] .', '. $categoriesdef['cid'];
+            GROUP BY '. $articlesdef['pubtypeid'] .', '. $categoriesdef['id'];
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
