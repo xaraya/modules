@@ -4,7 +4,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 #include "php.h"
 #include "ext/standard/info.h"
 #include "php_xapian.h"
@@ -54,7 +54,7 @@ static function_entry xapian_functions[] = {
 	ZEND_FE(document_add_posting, NULL)
 	ZEND_FE(document_add_value, NULL)
 	ZEND_FE(document_get_value, NULL)
-	
+
 	{NULL, NULL, NULL}
 };
 
@@ -100,13 +100,13 @@ static int le_Xapian_BM25Weight=0; /* handle for BM25Weight */
 */
 zend_module_entry xapian_module_entry = {
 	STANDARD_MODULE_HEADER,
-	"xapian", 
-	xapian_functions, 
-	PHP_MINIT(xapian), 
-	PHP_MSHUTDOWN(xapian), 
-	PHP_RINIT(xapian), 
+	"xapian",
+	xapian_functions,
+	PHP_MINIT(xapian),
+	PHP_MSHUTDOWN(xapian),
+	PHP_RINIT(xapian),
 	NULL,
-	PHP_MINFO(xapian), 
+	PHP_MINFO(xapian),
     NO_VERSION_YET,
 	STANDARD_MODULE_PROPERTIES
 };
@@ -119,47 +119,47 @@ ZEND_GET_MODULE(xapian)
 /*
     Define the destructors for the xapian resources
 */
-void delete_Database(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_Database(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::Database *my_rsrc = (Xapian::Database *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_WritableDatabase(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_WritableDatabase(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::WritableDatabase *my_rsrc = (Xapian::WritableDatabase *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_Stem(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_Stem(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::Stem *my_rsrc = (Xapian::Stem *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_Query(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_Query(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::Query *my_rsrc = (Xapian::Query *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_QueryParser(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_QueryParser(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::QueryParser *my_rsrc = (Xapian::QueryParser *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_Enquire(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_Enquire(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::Enquire *my_rsrc = (Xapian::Enquire *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_MSet(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_MSet(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::MSet *my_rsrc = (Xapian::MSet *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_MSetIterator(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_MSetIterator(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::MSetIterator *my_rsrc = (Xapian::MSetIterator *) rsrc->ptr;
     delete my_rsrc;
 }
-void delete_Document(zend_rsrc_list_entry *rsrc TSRMLS_DC) 
+void delete_Document(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
     Xapian::Document *my_rsrc = (Xapian::Document *) rsrc->ptr;
     delete my_rsrc;
@@ -172,59 +172,59 @@ PHP_MINIT_FUNCTION(xapian)
 {
 
     le_Xapian_Database = zend_register_list_destructors_ex(
-        delete_Database, 
-        NULL, 
-        le_Xapian_Database_name, 
+        delete_Database,
+        NULL,
+        le_Xapian_Database_name,
         module_number
     );
-    
+
     le_Xapian_WritableDatabase = zend_register_list_destructors_ex(
-        delete_WritableDatabase, 
-        NULL, 
-        le_Xapian_WritableDatabase_name, 
+        delete_WritableDatabase,
+        NULL,
+        le_Xapian_WritableDatabase_name,
         module_number
     );
 
     le_Xapian_Stem = zend_register_list_destructors_ex(
-        delete_Stem, 
-        NULL, 
-        le_Xapian_Stem_name, 
+        delete_Stem,
+        NULL,
+        le_Xapian_Stem_name,
         module_number
     );
     le_Xapian_Query = zend_register_list_destructors_ex(
-        delete_Query, 
-        NULL, 
-        le_Xapian_Query_name, 
+        delete_Query,
+        NULL,
+        le_Xapian_Query_name,
         module_number
     );
     le_Xapian_QueryParser = zend_register_list_destructors_ex(
-        delete_QueryParser, 
-        NULL, 
-        le_Xapian_QueryParser_name, 
+        delete_QueryParser,
+        NULL,
+        le_Xapian_QueryParser_name,
         module_number
     );
     le_Xapian_Enquire = zend_register_list_destructors_ex(
-        delete_Enquire, 
-        NULL, 
-        le_Xapian_Enquire_name, 
+        delete_Enquire,
+        NULL,
+        le_Xapian_Enquire_name,
         module_number
     );
     le_Xapian_MSet = zend_register_list_destructors_ex(
-        delete_MSet, 
-        NULL, 
-        le_Xapian_MSet_name, 
+        delete_MSet,
+        NULL,
+        le_Xapian_MSet_name,
         module_number
     );
     le_Xapian_MSetIterator = zend_register_list_destructors_ex(
-        delete_MSetIterator, 
-        NULL, 
-        le_Xapian_MSetIterator_name, 
+        delete_MSetIterator,
+        NULL,
+        le_Xapian_MSetIterator_name,
         module_number
     );
     le_Xapian_Document = zend_register_list_destructors_ex(
-        delete_Document, 
-        NULL, 
-        le_Xapian_Document_name, 
+        delete_Document,
+        NULL,
+        le_Xapian_Document_name,
         module_number
     );
 
@@ -265,7 +265,7 @@ PHP_MSHUTDOWN_FUNCTION(xapian)
 
 PHP_RINIT_FUNCTION(xapian)
 {
-        
+
 	return SUCCESS;
 }
 
@@ -273,10 +273,10 @@ PHP_RINIT_FUNCTION(xapian)
 PHP_MINFO_FUNCTION(xapian)
 {
 	char buf[32];
-	
+
 	php_info_print_table_start();
 	php_info_print_table_row(2, "Xapian Support", "enabled" );
-	
+
 	sprintf(buf,"%d", XAPIAN_VERSION_ID);
 	php_info_print_table_row(2, "Xapian library version", buf );
 	php_info_print_table_end();
@@ -307,16 +307,16 @@ ZEND_FUNCTION(new_database)
 
     // Convert a char pointer to a string
     arg1 = std::string(s);
-    
-    try 
+
+    try
     {
         result = (Xapian::Database *)new Xapian::Database(arg1);
     }
-    catch ( const Xapian::Error &e ) 
+    catch ( const Xapian::Error &e )
     {
-        zend_error(E_ERROR, e.get_msg().c_str());            
+        zend_error(E_ERROR, e.get_msg().c_str());
     }
-    
+
     ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Database);
 }
 /*
@@ -329,17 +329,17 @@ ZEND_FUNCTION(database_add_database)
     Xapian::Database *arg2 = 0;
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rr", &r1, &r2) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::Database*, &r1, -1, le_Xapian_Database_name, le_Xapian_Database)
     ZEND_FETCH_RESOURCE(arg2, Xapian::Database*, &r2, -1, le_Xapian_Database_name, le_Xapian_Database)
-        
-    try 
+
+    try
     {
         arg1->add_database(*arg2);
     }
-    catch ( const Xapian::Error &e ) 
+    catch ( const Xapian::Error &e )
     {
-        zend_error(E_ERROR, e.get_msg().c_str());            
+        zend_error(E_ERROR, e.get_msg().c_str());
     }
 }
 
@@ -350,18 +350,18 @@ ZEND_FUNCTION(database_get_doccount)
     Xapian::doccount result;
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &r1) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::Database*, &r1, -1, le_Xapian_Database_name, le_Xapian_Database)
-        
-    try 
+
+    try
     {
-        result = (Xapian::doccount)arg1->get_doccount();    
+        result = (Xapian::doccount)arg1->get_doccount();
     }
-    catch ( const Xapian::Error &e ) 
+    catch ( const Xapian::Error &e )
     {
-        zend_error(E_ERROR, e.get_msg().c_str());            
+        zend_error(E_ERROR, e.get_msg().c_str());
     }
-    
+
     ZVAL_LONG(return_value, result);
 }
 
@@ -378,20 +378,20 @@ ZEND_FUNCTION(new_writabledatabase)
     std::string arg1;
     int arg2 = 1;
     Xapian::WritableDatabase *result;
-    
+
     if( ZEND_NUM_ARGS() != 2 ){ WRONG_PARAM_COUNT; }
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sl", &s, &s_len, &arg2) == FAILURE ){ return; }
-    
+
     arg1 = std::string(s);
-    
+
     try {
         result = (Xapian::WritableDatabase *)new Xapian::WritableDatabase(arg1,arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
-    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_WritableDatabase);   
+    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_WritableDatabase);
 }
 
 ZEND_FUNCTION(writabledatabase_replace_document)
@@ -401,16 +401,16 @@ ZEND_FUNCTION(writabledatabase_replace_document)
 	Xapian::WritableDatabase *database = 0;
 	Xapian::docid docid;
 	const Xapian::Document *document;
-	
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rlr", &z_database, &docid, &z_document) == FAILURE ){ return; }
 
     ZEND_FETCH_RESOURCE(database, Xapian::WritableDatabase*, &z_database, -1, le_Xapian_WritableDatabase_name, le_Xapian_WritableDatabase)
     ZEND_FETCH_RESOURCE(document, Xapian::Document*, &z_document, -1, le_Xapian_Document_name, le_Xapian_Document)
-    
+
     try {
         database->replace_document(docid, *document);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -422,11 +422,11 @@ ZEND_FUNCTION(writabledatabase_flush)
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &z_database) == FAILURE ){ return; }
 
     ZEND_FETCH_RESOURCE(database, Xapian::WritableDatabase*, &z_database, -1, le_Xapian_WritableDatabase_name, le_Xapian_WritableDatabase)
-    
+
     try {
         database->flush();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -442,20 +442,20 @@ ZEND_FUNCTION(new_stem)
     int s_len;
     std::string arg1;
     Xapian::Stem *result;
-    
+
     if( ZEND_NUM_ARGS() != 1 ){ WRONG_PARAM_COUNT; }
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &s, &s_len) == FAILURE ){ return; }
-    
+
     arg1 = std::string(s);
-    
+
     try {
         result = (Xapian::Stem *)new Xapian::Stem(arg1);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
-    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Stem);   
+    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Stem);
 }
 
 ZEND_FUNCTION(stem_stem_word)
@@ -466,18 +466,18 @@ ZEND_FUNCTION(stem_stem_word)
     int term_len;
     std::string arg2;
     std::string result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs", &stemmer, &term, &term_len) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Stem*, &stemmer, -1, le_Xapian_Stem_name, le_Xapian_Stem)
-    
+
     arg2 = std::string(term);
-    
+
     try {
         result = arg1->stem_word(arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
-	
+
 	RETURN_STRING((char *)result.c_str(), 1);
 }
 
@@ -491,16 +491,16 @@ ZEND_FUNCTION(stem_stem_word)
 ZEND_FUNCTION(new_queryparser)
 {
     Xapian::QueryParser *result;
-    
+
     if( ZEND_NUM_ARGS() != 0 ){ WRONG_PARAM_COUNT; }
 
     try {
         result = (Xapian::QueryParser *)new Xapian::QueryParser();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
-    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_QueryParser);   
+    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_QueryParser);
 }
 
 ZEND_FUNCTION(queryparser_add_prefix)
@@ -513,18 +513,18 @@ ZEND_FUNCTION(queryparser_add_prefix)
     int prefix_len;
     std::string arg2;
     std::string arg3;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rss", &queryparser, &term, &term_len, &prefix, &prefix_len) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
 
     arg2 = std::string(term);
     arg3 = std::string(prefix);
-    
+
     try {
         arg1->add_prefix(arg2, arg3);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -534,16 +534,16 @@ ZEND_FUNCTION(queryparser_set_stemmer)
     zval *stemmer;
     Xapian::QueryParser *arg1 = 0;
     Xapian::Stem *arg2 = 0;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rr", &queryparser, &stemmer) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
     ZEND_FETCH_RESOURCE(arg2, Xapian::Stem*, &stemmer, -1, le_Xapian_Stem_name, le_Xapian_Stem)
 
     try {
         arg1->set_stemmer(*arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -553,15 +553,15 @@ ZEND_FUNCTION(queryparser_set_stemming_strategy)
     zval *queryparser;
     Xapian::QueryParser *arg1;
     int arg2;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rl", &queryparser, &arg2) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
 
     try {
         arg1->set_stemming_strategy((Xapian::QueryParser::stem_strategy)arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -572,18 +572,18 @@ ZEND_FUNCTION(queryparser_set_database)
     zval *database;
     Xapian::QueryParser *arg1;
     Xapian::Database *arg2;
-    
+
     if( ZEND_NUM_ARGS() != 2 ){ WRONG_PARAM_COUNT; }
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rr", &queryparser, &database) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
     ZEND_FETCH_RESOURCE(arg2, Xapian::Database*, &database, -1, le_Xapian_Database_name, le_Xapian_Database)
 
     try {
         arg1->set_database(*arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -593,15 +593,15 @@ ZEND_FUNCTION(queryparser_set_default_op)
     zval *queryparser;
     Xapian::QueryParser *arg1;
     int arg2;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rl", &queryparser, &arg2) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
 
     try {
         arg1->set_default_op((Xapian::Query::op)arg2);
     } catch (const Xapian::Error &e) {
-        zend_error(E_ERROR, e.get_msg().c_str());             
+        zend_error(E_ERROR, e.get_msg().c_str());
     }
 }
 
@@ -615,22 +615,22 @@ ZEND_FUNCTION(queryparser_parse_query)
     std::string arg2;
     Xapian::Query result;
     int flag;
-     
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rs|l", &queryparser, &query, &query_len, &flag) == FAILURE ){ return; }
-    
+
     ZEND_FETCH_RESOURCE(arg1, Xapian::QueryParser*, &queryparser, -1, le_Xapian_QueryParser_name, le_Xapian_QueryParser)
 
     arg2 = std::string(query);
-    
+
     try {
         result = arg1->parse_query((std::string const &)arg2, flag);
     } catch (const Xapian::Error &e) {
-        zend_error(E_NOTICE, e.get_msg().c_str());             
-//        zend_printf("%s", e.get_msg().c_str());             
+        zend_error(E_NOTICE, e.get_msg().c_str());
+//        zend_printf("%s", e.get_msg().c_str());
     }
-    
-    Xapian::Query * resultobj = new Xapian::Query((Xapian::Query &) result);    
-    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_Query);   
+
+    Xapian::Query * resultobj = new Xapian::Query((Xapian::Query &) result);
+    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_Query);
 }
 
 /*
@@ -640,31 +640,31 @@ ZEND_FUNCTION(queryparser_parse_query)
 */
 ZEND_FUNCTION(new_enquire)
 {
-    zval *database;    
+    zval *database;
     Xapian::Database *arg1;
     Xapian::Enquire *result;
-    
+
     if( ZEND_NUM_ARGS() != 1 ){ WRONG_PARAM_COUNT; }
 
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &database) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Database*, &database, -1, le_Xapian_Database_name, le_Xapian_Database)
-    
+
     try {
         result = (Xapian::Enquire *)new Xapian::Enquire(*arg1);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
-    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Enquire);   
+    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Enquire);
 }
 
 ZEND_FUNCTION(enquire_set_query)
 {
     zval *enquire;
-    zval *query;    
+    zval *query;
     Xapian::Enquire *arg1;
     Xapian::Query *arg2;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rr", &enquire, &query) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Enquire*, &enquire, -1, le_Xapian_Enquire_name, le_Xapian_Enquire)
     ZEND_FETCH_RESOURCE(arg2, Xapian::Query*, &query, -1, le_Xapian_Query_name, le_Xapian_Query)
@@ -672,7 +672,7 @@ ZEND_FUNCTION(enquire_set_query)
     try {
         arg1->set_query(*arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -683,20 +683,21 @@ ZEND_FUNCTION(enquire_get_mset)
     Xapian::Enquire *arg1;
     Xapian::doccount arg2;
     Xapian::doccount arg3;
+    Xapian::doccount arg4;
     Xapian::MSet result;
-    
-    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rll", &enquire, &arg2, &arg3) == FAILURE ){ return; }
+
+    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rlll", &enquire, &arg2, &arg3, &arg4) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Enquire*, &enquire, -1, le_Xapian_Enquire_name, le_Xapian_Enquire)
- 
+
     try {
-        result = arg1->get_mset(arg2,arg3);
+        result = arg1->get_mset(arg2,arg3,arg4);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     Xapian::MSet * resultobj = new Xapian::MSet((Xapian::MSet &) result);
-    
-    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSet);   
+
+    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSet);
 }
 
 /*
@@ -709,19 +710,19 @@ ZEND_FUNCTION(mset_begin)
     zval *mset;
     Xapian::MSet *arg1;
     Xapian::MSetIterator result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &mset) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSet*, &mset, -1, le_Xapian_MSet_name, le_Xapian_MSet)
- 
+
     try {
         result = arg1->begin();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     Xapian::MSetIterator * resultobj = new Xapian::MSetIterator(result);
-    
-    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSetIterator);   
+
+    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSetIterator);
 }
 
 ZEND_FUNCTION(mset_end)
@@ -729,19 +730,19 @@ ZEND_FUNCTION(mset_end)
     zval *mset;
     Xapian::MSet *arg1;
     Xapian::MSetIterator result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &mset) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSet*, &mset, -1, le_Xapian_MSet_name, le_Xapian_MSet)
- 
+
     try {
         result = arg1->end();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     Xapian::MSetIterator * resultobj = new Xapian::MSetIterator(result);
-    
-    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSetIterator);   
+
+    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_MSetIterator);
 }
 
 ZEND_FUNCTION(mset_size)
@@ -749,16 +750,16 @@ ZEND_FUNCTION(mset_size)
     zval *mset;
     Xapian::MSet *arg1;
     Xapian::doccount result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &mset) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSet*, &mset, -1, le_Xapian_MSet_name, le_Xapian_MSet)
- 
+
     try {
         result = arg1->size();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
-    
+
     ZVAL_LONG(return_value, result);
 }
 
@@ -767,14 +768,14 @@ ZEND_FUNCTION(mset_get_matches_estimated)
     zval *mset;
     Xapian::MSet *arg1;
     Xapian::doccount result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &mset) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSet*, &mset, -1, le_Xapian_MSet_name, le_Xapian_MSet)
- 
+
     try {
         result = arg1->get_matches_estimated();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     ZVAL_LONG(return_value, result);
@@ -784,14 +785,14 @@ ZEND_FUNCTION(msetiterator_next)
 {
     zval *msetiterator;
     Xapian::MSetIterator *arg1;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &msetiterator) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSetIterator*, &msetiterator, -1, le_Xapian_MSetIterator_name, le_Xapian_MSetIterator)
- 
+
     try {
         ++(*arg1);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
 }
@@ -803,15 +804,15 @@ ZEND_FUNCTION(msetiterator_equals)
     Xapian::MSetIterator *arg1;
     Xapian::MSetIterator *arg2;
     bool result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rr", &msetiterator1, &msetiterator2) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSetIterator*, &msetiterator1, -1, le_Xapian_MSetIterator_name, le_Xapian_MSetIterator)
     ZEND_FETCH_RESOURCE(arg2, Xapian::MSetIterator*, &msetiterator2, -1, le_Xapian_MSetIterator_name, le_Xapian_MSetIterator)
- 
+
     try {
         result = (bool)(*arg1 == *arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     ZVAL_BOOL(return_value,(result)?1:0);
@@ -822,18 +823,18 @@ ZEND_FUNCTION(msetiterator_get_document)
     zval *msetiterator1;
     Xapian::MSetIterator *arg1;
     Xapian::Document result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &msetiterator1) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSetIterator*, &msetiterator1, -1, le_Xapian_MSetIterator_name, le_Xapian_MSetIterator)
- 
+
     try {
         result = arg1->get_document();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
-    
+
     Xapian::Document * resultobj = new Xapian::Document(result);
-    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_Document);    
+    ZEND_REGISTER_RESOURCE(return_value, resultobj, le_Xapian_Document);
 }
 
 ZEND_FUNCTION(msetiterator_get_percent)
@@ -841,16 +842,16 @@ ZEND_FUNCTION(msetiterator_get_percent)
     zval *msetiterator1;
     Xapian::MSetIterator *arg1;
     Xapian::percent result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "r", &msetiterator1) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::MSetIterator*, &msetiterator1, -1, le_Xapian_MSetIterator_name, le_Xapian_MSetIterator)
- 
+
     try {
         result = arg1->get_percent();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
-    
+
     ZVAL_LONG(return_value, result);
 }
 
@@ -863,14 +864,14 @@ ZEND_FUNCTION(msetiterator_get_percent)
 ZEND_FUNCTION(new_document)
 {
     Xapian::Document *result;
-    
+
     try {
         result = (Xapian::Document *)new Xapian::Document();
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
-    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Document);   
+    ZEND_REGISTER_RESOURCE(return_value, result, le_Xapian_Document);
 }
 
 ZEND_FUNCTION(document_add_posting)
@@ -882,17 +883,17 @@ ZEND_FUNCTION(document_add_posting)
 	std::string arg2;
     Xapian::termpos arg3;
     Xapian::termcount arg4;
-    
-    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rsll", 
+
+    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rsll",
 		&document, &term, &term_len, &arg3, &arg4) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Document*, &document, -1, le_Xapian_Document_name, le_Xapian_Document)
- 
+
     arg2 = std::string(term);
-		
+
     try {
         arg1->add_posting(arg2, arg3, arg4);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     //ZVAL_STRINGL(return_value, (char*)result.c_str(), result.length(), 1);
@@ -906,15 +907,15 @@ ZEND_FUNCTION(document_add_value)
 	Xapian::valueno valueno;
 	char *value;
 	int value_len;
-    
-    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rls", 
+
+    if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rls",
 		&document, &valueno, &value, &value_len) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Document*, &document, -1, le_Xapian_Document_name, le_Xapian_Document)
- 
+
     try {
         arg1->add_value(valueno, std::string(value));
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 }
 
@@ -924,14 +925,14 @@ ZEND_FUNCTION(document_get_value)
     Xapian::Document *arg1;
     Xapian::valueno arg2;
     std::string result;
-    
+
     if( zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rl", &document, &arg2) == FAILURE ){ return; }
     ZEND_FETCH_RESOURCE(arg1, Xapian::Document*, &document, -1, le_Xapian_Document_name, le_Xapian_Document)
- 
+
     try {
         result = arg1->get_value(arg2);
     } catch (const Xapian::Error &e) {
-        zend_printf("%s", e.get_msg().c_str());             
+        zend_printf("%s", e.get_msg().c_str());
     }
 
     ZVAL_STRINGL(return_value, (char*)result.c_str(), result.length(), 1);
