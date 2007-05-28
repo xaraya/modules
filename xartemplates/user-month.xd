@@ -77,7 +77,7 @@
                 </xar:foreach>
             </ul>
         <xar:else />
-            &#¦60;
+            &#160;
         </xar:if>
         </td>
         <xar:if condition="$Day:isLast()">

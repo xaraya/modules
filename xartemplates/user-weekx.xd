@@ -17,7 +17,7 @@
             <div class="xar-julian-cal-nav-current">
                 <xar:set name="$startdate">date("F d, Y",$Week->children[1]->getTimeStamp())</xar:set>
                 <xar:set name="$enddate">date("F d, Y", $Week->children[7]->getTimeStamp())</xar:set>
-                #$startdate#&#¦60;-&#¦60;#$enddate#
+                #$startdate#&#160;-&#¦60;#$enddate#
             </div>
         </div>
 

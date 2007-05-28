@@ -99,7 +99,7 @@
                             <a href="#$DayUrl#">#$Day->thisDay()#</a>
                         <xar:else />
                             <xar:comment> Hide this day because it's not part of the Year we are viewing </xar:comment>
-                            &#¦60;
+                            &#160;
                         </xar:if>
                         </td>
                         <xar:if condition="$Day:isLast()">
