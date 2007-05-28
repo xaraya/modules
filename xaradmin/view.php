@@ -1,9 +1,9 @@
 <?php
-function members_admin_view($args)
+function foo_admin_view($args)
 {
-    if (!xarSecurityCheck('EditMembers')) return;
+    if (!xarSecurityCheck('EditFoo')) return;
 
-    $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'members_members'));
+    $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'roles_users'));
     $data['object']->getItems();
     return $data;
 }

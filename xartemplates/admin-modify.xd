@@ -2,8 +2,8 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('members','useModuleAlias')">
-            #xarModGetVar('members','aliasname')#
+        <xar:if condition="xarModGetVar('foo','useModuleAlias')">
+            #xarModGetVar('foo','aliasname')#
         <xar:else />
             <xar:mlstring>Modify Item</xar:mlstring>
         </xar:if>

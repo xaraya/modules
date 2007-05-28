@@ -62,15 +62,19 @@ function foo_admin_modifyconfig()
             if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('bar', 'str:1', $bar, 'Bar', XARVAR_NOT_REQUIRED)) return;
 
+            $modvars = array(
+                            'bar',
+                            );
+
             if ($data['tab'] == 'foo_general') {
                 xarModVars::set('foo', 'itemsperpage', $itemsperpage);
                 xarModVars::set('foo', 'supportshorturls', $shorturls);
                 xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
                 xarModVars::set('foo', 'aliasname', $aliasname);
-                xarModVars::set('foo', 'bar', $bar);
+                foreach ($modvars as $var)  xarModVars::set('foo', $var, $$var);
             }
             $regid = xarModGetIDFromName($tabmodule);
-            xarModSetUserVar('foo', 'bar', $bar, $regid);
+            foreach ($modvars as $var)  xarModItemVars::set('foo', $var, $$var, $regid);
 
             xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
