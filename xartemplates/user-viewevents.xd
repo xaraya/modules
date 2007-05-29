@@ -147,7 +147,7 @@
                     <input type="submit" name="submit" value="Get Events" />
                 </div>
             </form>
-		</div>
+        </div>
 
         <xar:comment> Add the category browser to play with</xar:comment>
         <xar:if condition="xarModIsHooked('categories','julian')">
@@ -159,15 +159,15 @@
         It just seems so clumsy and wasteful, where-ever tabs are used.</xar:comment>
         <dl class="xar-tabs">
             <dt class="help"><xar:mlstring>Group by:</xar:mlstring></dt>
-            <xar:if condition="empty($group)"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <xar:if condition="empty($group)"><xar:set name="active">'active'</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
             <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;null)))#"><xar:mlstring>None</xar:mlstring></a></dd>
-            <xar:if condition="$group eq 'day'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <xar:if condition="$group eq 'day'"><xar:set name="active">'active'</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
             <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'day')))#"><xar:mlstring>Day</xar:mlstring></a></dd>
-            <xar:if condition="$group eq 'week'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <xar:if condition="$group eq 'week'"><xar:set name="active">'active'</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
             <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'week')))#"><xar:mlstring>Week</xar:mlstring></a></dd>
-            <xar:if condition="$group eq 'month'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <xar:if condition="$group eq 'month'"><xar:set name="active">'active'</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
             <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'month')))#"><xar:mlstring>Month</xar:mlstring></a></dd>
-            <xar:if condition="$group eq 'year'"><xar:set name="active">active</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
+            <xar:if condition="$group eq 'year'"><xar:set name="active">'active'</xar:set><xar:else/><xar:set name="active">''</xar:set></xar:if>
             <dd class="#$active#"><a href="#xarServerGetCurrentURL(array_merge($urlparams,array('group'=&gt;'year')))#"><xar:mlstring>Year</xar:mlstring></a></dd>
         </dl>
 
