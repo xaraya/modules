@@ -7,7 +7,7 @@ function trackback_admin_main()
     if(!xarSecurityCheck('Addtrackback')){
         return;
     }
-    if (xarModGetVar('adminpanels', 'overview') == 0){
+    if (xarModVars::get('modules', 'disableoverview') == 0){
         // Return the output
         return array();
     } else {
