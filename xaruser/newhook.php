@@ -158,13 +158,15 @@ function julian_user_newhook($args)
        // is allday
        $data['allday_checked'][1] = '';
        $data['allday_checked'][0] = 'checked';
+       $item['isallday']=1;
        $data['timeddisabled'] = 'disabled';
    } else {
        $data['allday_checked'][0] = '';
        $data['allday_checked'][1] = 'checked';
+       $item['isallday']=0;
        $data['timeddisabled'] = '';
    }
-
+   $data['item']=$item;
    //Setting repeat on day selection
    for ($i = 1; $i < 8; $i++) {
      $data['repeat_on_day_selection'][$i] = '';
