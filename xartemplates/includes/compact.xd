@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> Legend </xar:comment>
 <div class="xar-accent-outline xar-sub" style="margin-top:5px;margin-bottom:5px;padding:3px;text-align:center;">
     <xar:mlstring>
@@ -19,7 +20,7 @@
                                 R
                             </xar:mlstring>
                         </a>
-                    ] 
+                    ]
                 </div>
                 #$loop:item['url']#
             </div>
@@ -35,10 +36,11 @@
                                 R
                             </xar:mlstring>
                         </a>
-                    ] 
+                    ]
                 </div>
                 #$loop:item['url']#
             </div>
             </xar:if>
     </xar:loop>
 </div>
+</xar:template>

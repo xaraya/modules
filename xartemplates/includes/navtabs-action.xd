@@ -1,12 +1,13 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="xarTplAddStyleLink('xarbb', 'navtabs')">
     <div id="navhelp" class="help" title="#xarML('Click on a tab to perform the specific action')#">
         <xar:mlstring>
             Actions
         </xar:mlstring>
-        : 
+        :
         <div id="tabnav">
             <ul id="navlist">
-                <xar:if condition="$action eq 1"> 
+                <xar:if condition="$action eq 1">
                     <li id="active">
                         <a href="#xarModUrl('xarbb', 'admin', 'modify', array('fid' => $fid))#">
                             <xar:mlstring>
@@ -100,3 +101,4 @@
     </div>
 </xar:if>
 <br /><br />
+</xar:template>

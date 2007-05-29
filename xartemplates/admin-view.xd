@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ping Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -32,8 +33,9 @@
        <xar:elseif condition="$selstyle eq 'plain'"/>
         <xar:template file="plain" type="module"/>
     <xar:else/>
-        <xar:template file="icons" type="module"/>    
+        <xar:template file="icons" type="module"/>
     </xar:if>
         </div>
     </form>
 </div>
+</xar:template>
