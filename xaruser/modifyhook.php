@@ -284,12 +284,16 @@ function julian_user_modifyhook($args)
    $data['allday_checked'][0] = '';
    $data['allday_checked'][1] = 'checked';
    $data['timeddisabled'] = '';
+   $item['isallday']=0;
+
    if ($item['event_allday'] == 1) {
      $data['allday_checked'][0] = 'checked';
      $data['allday_checked'][1] = '';
      $data['timeddisabled'] = 'disabled';
+     $item['isallday']=1;
    }
 
+   $data['item']=$item;
     return xarTplModule('julian','user','edithook',$data);
 }
 
