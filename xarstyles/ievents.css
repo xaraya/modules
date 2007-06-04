@@ -143,3 +143,17 @@ div.ievents-view-calendars dl dt {
 	margin-top: 2em;
 	clear: both;
 }
+
+/* Mini admin menu */
+ul.admin-mini {
+	list-style: none;
+	height: 1em;
+	padding: 0;
+	margin: 0.5em 0;
+}
+ul.admin-mini li {
+	float: left;
+	margin: 0 1em 0 0;
+	padding: 0;
+	background-image: none; /* For Xaraya_Classic */
+}

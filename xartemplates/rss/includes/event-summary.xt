@@ -1,0 +1,28 @@
+<xar:comment>
+    Display a summary of an event as a 'dl' list entry.
+    Requires the following paramaters:
+    - $event
+    - $group - optional, passed in when grouping events ('day', 'week', 'month', 'year')
+</xar:comment>
+
+<xar:set name="summary_max_words">100</xar:set>
+
+<xar:if condition="!isset($group)">
+    <xar:set name="group">''</xar:set>
+</xar:if>
+
+<xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
+
+<item>
+    <title>#xarVarPrepForDisplay($event.title)#</title>
+    <link>#xarServerGetCurrentURL(array('eid'=&gt;$event.eid,'theme'=&gt;null))#</link>
+    <pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$event.startdate)#</pubDate>
+    <description>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary,'maxwords'=&gt;1000)))#</description>
+    <guid isPermaLink="true">#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#</guid>
+    <xar:loop name="$event.catids">
+        <category domain="#xarModURL('ievents','user','view',array('cats'=&gt;$loop:item))#">
+            #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
+        </category>
+    </xar:loop>
+</item>
+

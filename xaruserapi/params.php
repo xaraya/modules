@@ -5,7 +5,7 @@
  * @param name string The name of an individual parameter to return
  *
  * @todo Some of these parameters may have user overrides, and may
- * ultimately be stored as module variables,
+ * ultimately be stored as module variables.
  */
 
 function ievents_userapi_params($args)

@@ -3,12 +3,13 @@ General TODO
 ============
 
 o Installer:
-- Create tables
-- Create DD objects
+- Create tables [done]
+- Create DD objects [done]
 - Create module variables (or use config file)
 
 o Add 'contact name' to events [done]
 o Add 'locking flags' to events to lock them from external updates
+o Show warning when editing if an event is managed externally
 o Create config page for settings, or perhaps just drive settings from a config file?
 
 o Display flags on events, where relevant:
@@ -20,6 +21,10 @@ o Display flags on events, where relevant:
 - Provisional dates flag
 
 o When updating events, transform html and text fields to ensure they are the right format
+
+o Provide administration screens for viewing submitted events (for approving or rejecting)
+
+o Provide some kind of subscription service
 
 o Complete export types
 - Fix iCal export encoding

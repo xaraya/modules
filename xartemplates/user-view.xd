@@ -38,7 +38,7 @@
                 <xar:comment>Single listing, not grouped in any way</xar:comment>
                 <dl class="ievents-events">
                     <xar:loop name="$events">
-                        <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item,'calendar'=&gt;$calendars[$loop:item.calendar_id])" />
+                        <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item,'calendar'=&gt;$calendars[$loop:item.calendar_id],'categories'=&gt;$categories)" />
                     </xar:loop>
                 </dl>
             <xar:else />
@@ -49,7 +49,7 @@
                         <dd>
                             <dl class="ievents-events">
                                 <xar:loop name="$loop:item.events">
-                                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group,'calendar'=&gt;$calendars[$events[$loop:item]['calendar_id']])" />
+                                    <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group,'calendar'=&gt;$calendars[$events[$loop:item]['calendar_id']],'categories'=&gt;$categories)" />
                                 </xar:loop>
                             </dl>
                         <dd>
