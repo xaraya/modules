@@ -37,26 +37,28 @@
     <form method="post" name="post" id="post" action="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid))#" enctype='multipart/form-data'>
         <xar:comment>There may not be a form object - this could just be an information page in the sequence</xar:comment>
         <xar:if condition="!empty($multiform.formobject)">
-            <div class="xarpages-multiform-input">
-                <xar:if condition="empty($multiform.readonly)">
-                    <xar:if condition="!empty($multiform.formlayout)">
-                        <xar:data-form object="$multiform['formobject']" layout="$multiform['formlayout']" />
+            <xar:if condition="!empty($multiform['formobject']-&gt;properties)">
+                <div class="xarpages-multiform-input">
+                    <xar:if condition="empty($multiform.readonly)">
+                        <xar:if condition="!empty($multiform.formlayout)">
+                            <xar:data-form object="$multiform['formobject']" layout="$multiform['formlayout']" />
+                        <xar:else />
+                            <xar:data-form object="$multiform['formobject']" />
+                        </xar:if>
                     <xar:else />
-                        <xar:data-form object="$multiform['formobject']" />
+                        <xar:if condition="!empty($multiform.formlayout)">
+                            <xar:data-display object="$multiform['formobject']" layout="$multiform['formlayout']" />
+                        <xar:else />
+                            <xar:data-display object="$multiform['formobject']" />
+                        </xar:if>
                     </xar:if>
-                <xar:else />
-                    <xar:if condition="!empty($multiform.formlayout)">
-                        <xar:data-display object="$multiform['formobject']" layout="$multiform['formlayout']" />
-                    <xar:else />
-                        <xar:data-display object="$multiform['formobject']" />
-                    </xar:if>
-                </xar:if>
 
-                <xar:if condition="!empty($multiform.multiform_key)">
-                    <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
-                </xar:if>
-                <div style="clear: both;"></div>
-            </div>
+                    <xar:if condition="!empty($multiform.multiform_key)">
+                        <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
+                    </xar:if>
+                    <div style="clear: both;"></div>
+                </div>
+            </xar:if>
         </xar:if>
 
         <xar:comment>Display the form buttons</xar:comment>

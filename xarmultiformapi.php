@@ -190,4 +190,57 @@ function xarpages_multiformapi_passdata($args = array())
     return $args;
 }
 
+/**
+ * Get a propulated form object.
+ * The object will be returned, populated with any existing form data.
+ * Useful in summary pages where you want to display the content of
+ * several forms.
+ * Alternatively, the object ID or the module/itemtype can be supplied,
+ * as the object may not be used in any pages, and my exist just to display
+ * summary information.
+ *
+ * @param pagename string The name of the page that the object is defined on.
+ * @param objectid integer The ID of the object.
+ * @return object The DD object, populated with data, or NULL in the event of any error.
+ * @todo Support module+itemtype identification of an object
+ */
+
+function xarpages_multiformapi_get_object_populated($args)
+{
+    extract($args);
+
+    // Page name
+    if (!empty($pagename)) {
+        $page = xarModAPIfunc('xarpages', 'user', 'getpage', array('name' => $pagename));
+
+        // No page found.
+        if (empty($page)) return;
+
+        // No object id found.
+        if (empty($page['dd']['formobject'])) return;
+
+        $objectid = (int)$page['dd']['formobject'];
+    }
+
+    // No object ID, after the above checks.
+    if (empty($objectid)) return;
+
+    // Attempt to get the DD object.
+    $object = xarModApiFunc(
+        'dynamicdata', 'user', 'getobject',
+        array('objectid' => $objectid)
+    );
+
+    // No object found
+    if (empty($object)) return;
+
+    // Populate the object from the session.
+    $session_vars = xarModAPIfunc('xarpages', 'multiform', 'sessionvar');
+    foreach($object->properties as $name => $property) {
+        if (isset($session_vars['formdata'][$name])) $object->properties[$name]->setValue($session_vars['formdata'][$name]);
+    }
+
+    return $object;
+}
+
 ?>
