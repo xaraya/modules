@@ -9,18 +9,7 @@
             <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
             <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
 
-            <xar:set name="daterangelist">array(
-                ''=>xarML('-- Preset --'),
-                'thisyear'=>xarML('This year'),
-                'nextyear'=>xarML('Next year'),
-                'thismonth'=>xarML('This month'),
-                'nextmonth'=>xarML('Next month'),
-                'thisweek'=>xarML('This week'),
-                'nextweek'=>xarML('Next week'),
-                'today'=>xarML('Today'),
-                'next4weeks'=>xarML('Next four weeks'),
-                'next6months'=>xarML('Next six months')
-            )</xar:set>
+            <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
             <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
 
             <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
@@ -42,11 +31,11 @@
             </xar:if>
 
             <xar:set name="grouplist">array(
-                'none'=>xarML('No group'),
-                'day'=>xarML('Daily'),
-                'week'=>xarML('Weekly'),
-                'month'=>xarML('Monthly'),
-                'year'=>xarML('Annual'),
+                'none' => xarML('No group'),
+                'day' => xarML('Daily'),
+                'week' => xarML('Weekly'),
+                'month' => xarML('Monthly'),
+                'year' => xarML('Annual'),
             )</xar:set>
             <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
 
@@ -61,11 +50,18 @@
                     <xar:if condition="!empty($loop:item.catlist)">
                         <select class="ievents-jump-catids" name="catids[]" id="catids_#$loop:index#" multiple="multiple">
                             <optgroup label="#xarVarPrepForDisplay($loop:basecats:item.catname)#">
+                            <xar:set name="max_cat_depth">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'max_cat_depth'))#</xar:set>
                             <xar:loop name="$loop:item.catlist">
-                                <xar:if condition="in_array($loop:item.cid, $catids)">
-                                    <option value="#$loop:item.cid#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
-                                <xar:else />
-                                    <option value="#$loop:item.cid#">#xarVarPrepForDisplay($loop:item.name)#</option>
+                                <xar:if condition="$loop:item.level le $max_cat_depth">
+                                    <xar:if condition="in_array($loop:item.cid, $catids)">
+                                        <option value="#$loop:item.cid#" selected="selected">
+                                            #xarVarPrepForDisplay(str_repeat('---', $loop:item.level-1))##xarVarPrepForDisplay($loop:item.name)#
+                                        </option>
+                                    <xar:else />
+                                        <option value="#$loop:item.cid#">
+                                            #xarVarPrepForDisplay(str_repeat('---', $loop:item.level-1))##xarVarPrepForDisplay($loop:item.name)#
+                                        </option>
+                                    </xar:if>
                                 </xar:if>
                             </xar:loop>
                             </optgroup>
@@ -96,7 +92,7 @@
         <xar:comment>Keyword search is optional</xar:comment>
         <xar:if condition="!empty($q_fields)">
             <p>
-                <label for="q"><xar:mlstring>Search:</xar:mlstring></label>
+                <label for="q" id="q_label"><xar:mlstring>Search:</xar:mlstring></label>
                 <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
                 <input type="submit" value="#xarML('Go')#" />
             </p>

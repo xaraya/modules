@@ -553,12 +553,13 @@ function ievents_user_view($args)
     }
 
     // Display hook for the current event, but only if there is a current event.
-    if (!empty($eid)) {
+    if (!empty($eid) && !empty($event)) {
         $item = $event;
         $item['module'] = $module;
         $item['itemtype'] = $itemtype_events;
         $item['itemid'] = $eid;
         $item['returnurl'] = xarServerGetCurrentURL(array(),'false');
+
         // Get the display hook stuff.
         $hooks = xarModCallHooks('item', 'display', $eid, $item);
     }

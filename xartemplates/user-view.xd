@@ -60,6 +60,7 @@
             <xar:template file="list-pager" />
         </xar:if>
     <xar:else />
+        <xar:template file="jump-menu" />
         <p><xar:mlstring>No events found</xar:mlstring></p>
     </xar:if>
 </div>

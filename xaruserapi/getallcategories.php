@@ -44,14 +44,24 @@ function ievents_userapi_getallcategories($args)
 
         // To determine which base category each of the event categories are under,
         // we need a list of categories with their bases.
+        // It is necessary to do some trickery to get the nesting 'level' of each category.
+        // The 'indentation' value on each category is an absolute value, and will depend
+        // on where the root is in the overall category tree. The 'level' is calculated
+        // with respect to the root category (the root being zero).
 
         $flatcatlist = array();
         foreach($basecats as $key1 => $basecat) {
+            $base_indent = 2;
             foreach($basecatslist[$basecat['cid']] as $key2 => $cat) {
+                if ($cat['parent'] == $key1) {$base_indent = (int)$cat['indentation'];}
+
                 $cat['basecid'] = $key1;
                 $flatcatlist[$cat['cid']] = $cat;
                 if (!isset($basecats[$key1]['catlist'])) $basecats[$key1]['catlist'] = array();
                 $basecats[$key1]['catlist'][$cat['cid']] =& $flatcatlist[$cat['cid']];
+
+                // Set the 'level' - starting at level 0 for the root category.
+                $flatcatlist[$cat['cid']]['level'] = ((int)$flatcatlist[$cat['cid']]['indentation'] - $base_indent + 1);
             }
         }
 

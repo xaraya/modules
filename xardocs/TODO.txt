@@ -48,3 +48,7 @@ o Easy plug-in system for handling hooks to events (e.g. links to travel organis
 
 o Short URLs! Can't forget short URLs.
 
+o Implement proper fulltext search when MySQL is detected.
+
+o Show categories as proper hierarchy in jump menu.
+

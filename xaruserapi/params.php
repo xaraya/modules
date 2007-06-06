@@ -91,10 +91,28 @@ function ievents_userapi_params($args)
         // Fields are surrounded by {curly brackets} with contents matching the DD property names.
         // {LB} is an optional line break (these will be collapsed)
         // {NL} is a forced line break (will always appear)
-        $params['address_format'] = "{location_venue}{LB}{location_address}{LB}{location_postcode}{LB}{location_country}";
+        $params['address_format'] = '{location_venue}{LB}{location_address}{LB}{location_postcode}{LB}{location_country}';
 
         // The prefixes of properties that will be grouped into arrays
         $params['group_prefixes'] = 'location,contact';
+
+        // Date range list, used to provide a handy set of date ranges in various places
+        $params['daterangelist'] = array(
+            '' => xarML('-- Preset --'),
+            'thisyear' => xarML('This year'),
+            'nextyear' => xarML('Next year'),
+            'thismonth' => xarML('This month'),
+            'nextmonth' => xarML('Next month'),
+            'thisweek' => xarML('This week'),
+            'nextweek' => xarML('Next week'),
+            'today' => xarML('Today'),
+            'next4weeks' => xarML('Next four weeks'),
+            'next6months' => xarML('Next six months')
+        );
+
+        // Maximum category depth shown in the jump menu.
+        // 1 is just a single level (the root cat, shown as an option group, and one level below that)
+        $params['max_cat_depth'] = 2;
     }
 
     if (!empty($name)) {

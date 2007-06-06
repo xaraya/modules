@@ -1,0 +1,22 @@
+<xar:comment>
+    This template can be used to display optional directions for the venue.
+    Data passed in is the same as the event-display-dl include template.
+</xar:comment>
+
+<xar:if condition="!empty($event.location_postcode)">
+    <dd class="ievents-directions">
+        <xar:comment>Google maps</xar:comment>
+        <xar:set name="postcode">#xarVarPrepForDisplay(rawurlencode($event.location_postcode))#</xar:set>
+        <a href="http://maps.google.co.uk/maps?ie=UTF-8&amp;q=#$postcode#" target="_blank" class="external">Locate with Google</a>
+
+        <xar:comment>Transport direct</xar:comment>
+        <xar:set name="startdate">#xarLocaleFormatDate('%d%m%Y',$event.startdate)#</xar:set>
+        <xar:if condition="$event.all_day eq 'A'">
+            <xar:set name="starttime">''</xar:set>
+        <xar:else />
+            <xar:set name="starttime">#xarLocaleFormatDate('%H%M',$event.startdate)#</xar:set>
+        </xar:if>
+
+        | <a href="http://www.transportdirect.info/transportdirect/en/journeyplanning/jplandingpage.aspx?id=#xarServerGetBaseURL()#&amp;oo=p&amp;on=&amp;o=&amp;do=p&amp;dn=#$postcode#&amp;d=#$postcode#&amp;dt=#$startdate#&amp;t=#$starttime#&amp;da=a&amp;p=0" target="_blank" class="external">Plan with Transport Direct</a>
+    </dd>
+</xar:if>

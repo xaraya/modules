@@ -8,7 +8,7 @@
 
 <xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
 
-<dt class="ievents-event">
+<dt class="ievents-event" style="border: none;">
     <h2><a href="#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#">#xarVarPrepForDisplay($event.title)#</a></h2>
     <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
         [<a href="#xarModURL('ievents','user','modify',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>edit</xar:mlstring></a>]
@@ -106,7 +106,12 @@
                     <p><strong><xar:mlstring>Postcode:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.postcode)#</p>
                 </xar:if>
             </xar:comment>
-            <xar:comment>TODO: use the postcode to nip off to maps and directions etc. Could do this by hooks.</xar:comment>
+
+            <xar:comment>
+                Use the postcode to nip off to maps and directions etc. Could do this by hooks, but we'll call up
+                a sub-template to do it.
+            </xar:comment>
+            <xar:template file="event-directions-dl" />
         </dd>
     </xar:if>
 
