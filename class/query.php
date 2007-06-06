@@ -215,7 +215,7 @@ class Query
 
     function createto($newtablename=null)
     {
-        if (!isset($newtablename)) $newtablename = "temp" . xarSession::getVar('uid') . time();
+        if (!isset($newtablename)) $newtablename = "temp" . xarSession::getVar('role_id') . time();
         $this->createtablename = $newtablename;
         $this->settype("CREATE");
         return true;
