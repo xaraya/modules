@@ -1,8 +1,6 @@
 
 <xar:style file="ievents" scope="module" />
 
-<xar:template file="jump-menu" />
-
 <div class="ievents-view">
     <xar:template file="admin-mini" />
 
@@ -28,6 +26,8 @@
 
     <xar:elseif condition="!empty($events)" />
         <xar:comment>A list of event summaries is to be shown</xar:comment>
+
+        <xar:template file="jump-menu" />
 
         <xar:template file="list-pager" />
 
@@ -62,5 +62,4 @@
     <xar:else />
         <p><xar:mlstring>No events found</xar:mlstring></p>
     </xar:if>
-
 </div>

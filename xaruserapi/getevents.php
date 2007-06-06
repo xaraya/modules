@@ -34,8 +34,8 @@ function ievents_userapi_getevents($args)
 {
     extract($args);
 
-    list($module, $modid, $itemtype, $q_fields) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields'));
+    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -241,19 +241,20 @@ function ievents_userapi_getevents($args)
         // Some fields are grouped. We need to prepare an array of grouped
         // fields. Start by getting a list of all the fields available in the
         // events object.
-        $object = xarModAPIFunc(
-            'dynamicdata', 'user', 'getobject',
-            array('modid' => $modid, 'itemtype' => $itemtype)
-        );
-        $fields = array_keys($object->properties);
-        $group_prefixes = 'location,contact';
-        $group_prefixes = explode(',', $group_prefixes);
-        $field_groups = array();
-        foreach ($group_prefixes as $group_prefix) {
-            foreach($fields as $field) {
-                if (preg_match('/^'.$group_prefix.'_.+/', $field)) {
-                    list($part1, $part2) = explode('_', $field, 2);
-                    $field_groups[$field] = array('prefix' => $group_prefix, 'suffix' => $part2);
+        if (!empty($group_prefixes)) {
+            $object = xarModAPIFunc(
+                'dynamicdata', 'user', 'getobject',
+                array('modid' => $modid, 'itemtype' => $itemtype)
+            );
+            $fields = array_keys($object->properties);
+            $group_prefixes = explode(',', $group_prefixes);
+            $field_groups = array();
+            foreach ($group_prefixes as $group_prefix) {
+                foreach($fields as $field) {
+                    if (preg_match('/^'.$group_prefix.'_.+/', $field)) {
+                        list($part1, $part2) = explode('_', $field, 2);
+                        $field_groups[$field] = array('prefix' => $group_prefix, 'suffix' => $part2);
+                    }
                 }
             }
         }
@@ -300,17 +301,22 @@ function ievents_userapi_getevents($args)
                 }
 
                 // Group various fields together.
-                // TODO: make these a customisable list.
-                // TODO: we can avoid the loop over *all* fields by building the loop of
-                // actual fields outside the main events loop.
-                foreach($field_groups as $field => $field_group) {
-                    if (!isset($event[$field_group['prefix']])) $event[$field_group['prefix']] = array();
-                    // Note the '&' reference, in case there are further transforms on the values of these fields.
-                    if (isset($event[$field]) && $event[$field] != '') $event[$field_group['prefix']][$field_group['suffix']] =& $event[$field];
+                if (!empty($field_groups)) {
+                    foreach($field_groups as $field => $field_group) {
+                        if (!isset($event[$field_group['prefix']])) $event[$field_group['prefix']] = array();
+                        // Note the '&' reference, in case there are further transforms on the values of these fields.
+                        if (isset($event[$field]) && $event[$field] != '') $event[$field_group['prefix']][$field_group['suffix']] =& $event[$field];
+                    }
                 }
 
                 // Add the position in the list.
                 $event['position'] = $position;
+
+                // Format the address.
+                $event['address_formatted'] = xarModAPIfunc(
+                    'ievents', 'user', 'format_address',
+                    array('event' => $event, 'format' => $address_format)
+                );
 
                 // The complete [updated] event is then added to the result array.
                 $return[$event['eid']] = $event;

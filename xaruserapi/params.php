@@ -86,6 +86,15 @@ function ievents_userapi_params($args)
         // Default date range for calendar subscriptions.
         $params['cal_subscribe_range'] = 'next2months';
         $params['cal_subscribe_numitems'] = 100;
+
+        // Format of the full address.
+        // Fields are surrounded by {curly brackets} with contents matching the DD property names.
+        // {LB} is an optional line break (these will be collapsed)
+        // {NL} is a forced line break (will always appear)
+        $params['address_format'] = "{location_venue}{LB}{location_address}{LB}{location_postcode}{LB}{location_country}";
+
+        // The prefixes of properties that will be grouped into arrays
+        $params['group_prefixes'] = 'location,contact';
     }
 
     if (!empty($name)) {

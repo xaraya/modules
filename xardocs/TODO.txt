@@ -33,7 +33,9 @@ o Complete export types
 - Text export
 - iCal XML export
 
-o Complete privileges (I suspect some bits are not fully protected)
+o Create a 'build yourself a feed' page, with a URL that can be copied and pasted (iCal, vCal, RSS).
+
+o Complete privileges (I suspect some bits are not fully protected) [done - I think]
 
 o RSS template (to copy to the RSS theme)
 

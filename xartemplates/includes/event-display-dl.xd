@@ -32,9 +32,8 @@
         <xar:if condition="$event.duration_days eq 1">
             #$dates.short.time#
         </xar:if>
-    </p>
-    <p>
-        <strong><xar:mlstring>Calendar:</xar:mlstring></strong>
+
+        <strong style="margin-left: 2em;"><xar:mlstring>Calendar:</xar:mlstring></strong>
         <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
             #xarVarPrepForDisplay($calendar.long_name)#
         </a>
@@ -89,17 +88,25 @@
             <xar:if condition="!empty($event.location.venue)">
                 <p><strong><xar:mlstring>Venue:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.venue)#</p>
             </xar:if>
-            <xar:if condition="!empty($event.location.address)">
+
+            <xar:if condition="!empty($event.address_formatted)">
                 <p><strong><xar:mlstring>Address:</xar:mlstring></strong></p>
-                #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.location.address))#
+                #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.address_formatted))#
             </xar:if>
-            <xar:if condition="!empty($event.location.country)">
-                <p><strong><xar:mlstring>Country:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.country)#</p>
-            </xar:if>
-            <xar:if condition="!empty($event.location.postcode)">
-                <p><strong><xar:mlstring>Postcode:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.postcode)#</p>
-                <xar:comment>TODO: use the postcode to nip off to maps and directions etc.</xar:comment>
-            </xar:if>
+
+            <xar:comment>
+                <xar:if condition="!empty($event.location.address)">
+                    <p><strong><xar:mlstring>Address:</xar:mlstring></strong></p>
+                    #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.location.address))#
+                </xar:if>
+                <xar:if condition="!empty($event.location.country)">
+                    <p><strong><xar:mlstring>Country:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.country)#</p>
+                </xar:if>
+                <xar:if condition="!empty($event.location.postcode)">
+                    <p><strong><xar:mlstring>Postcode:</xar:mlstring></strong> #xarVarPrepForDisplay($event.location.postcode)#</p>
+                </xar:if>
+            </xar:comment>
+            <xar:comment>TODO: use the postcode to nip off to maps and directions etc. Could do this by hooks.</xar:comment>
         </dd>
     </xar:if>
 
@@ -121,12 +128,14 @@
 </xar:sec>
 
 <xar:if condition="!empty($export_handlers)">
-    <dt><xar:mlstring>Download to your calendar</xar:mlstring></dt>
+    <dt><xar:mlstring>Download this event</xar:mlstring></dt>
     <dd class="ievent-export-links">
-        <xar:loop name="$export_handlers">
-            <xar:if condition="$loop:index gt 0"> | </xar:if>
-            <a href="#xarModURL('ievents','user','view',array('export'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
-        </xar:loop>
+        <p>
+            <xar:loop name="$export_handlers">
+                <xar:if condition="$loop:index gt 0"> | </xar:if>
+                <a href="#xarModURL('ievents','user','view',array('export'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+            </xar:loop>
+        </p>
     </dd>
 </xar:if>
 

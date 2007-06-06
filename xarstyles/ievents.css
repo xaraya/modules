@@ -168,3 +168,11 @@ span#crule_1_wrapper, span#crule_2_wrapper {
 	white-space: nowrap;
 }
 
+/* Normalise paragraphs */
+div.ievents-view-calendars p,
+div.ievents-view p {
+	line-height: 120%;
+	margin: 0.5em 0;
+}
+
+
