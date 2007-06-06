@@ -223,7 +223,7 @@ function articles_admin_importpictures()
                              'cids' => $cids,
                           // for preview
                              'pubtypeid' => $data['ptid'],
-                             'authorid' => xarUserGetVar('uid'),
+                             'authorid' => xarUserGetVar('id'),
                              'aid' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;

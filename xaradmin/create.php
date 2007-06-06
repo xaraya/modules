@@ -98,7 +98,7 @@ function articles_admin_create()
         }
     }
 
-    $article['authorid'] = xarUserGetVar('uid');
+    $article['authorid'] = xarUserGetVar('id');
     if (empty($article['authorid'])) {
         $article['authorid'] = _XAR_ID_UNREGISTERED;
     }
