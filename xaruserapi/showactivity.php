@@ -38,7 +38,7 @@ function workflow_userapi_showactivity($args)
     $process = new Process($activity->getProcessId());
 
     if (empty($user)) {
-        $user = xarUserGetVar('uid');
+        $user = xarUserGetVar('id');
     }
     if (!empty($args['instanceId'])) {
         $instance->getInstance($args['instanceId']);

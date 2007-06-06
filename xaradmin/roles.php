@@ -81,7 +81,7 @@ function workflow_admin_roles()
         $selection = '';
         if (!empty($data['find_users'])) {
             $dbconn = xarDB::getConn();
-            $selection = " AND xar_name LIKE " . $dbconn->qstr('%'.$data['find_users'].'%');
+            $selection = " AND name LIKE " . $dbconn->qstr('%'.$data['find_users'].'%');
         }
         $data['users'] = xarModAPIFunc('roles','user','getall',
                                        array('selection' => $selection,
@@ -103,15 +103,15 @@ function workflow_admin_roles()
     if (isset($_REQUEST['mapg'])) {
         if ($_REQUEST['op'] == 'add') {
             $users = xarModAPIFunc('roles','user','getusers',
-                                   array('uid' => $_REQUEST['group']));
+                                   array('id' => $_REQUEST['group']));
             foreach ($users as $a_user) {
-                $roleManager->map_user_to_role($pid, $a_user['uid'], $_REQUEST['role']);
+                $roleManager->map_user_to_role($pid, $a_user['id'], $_REQUEST['role']);
             }
         } else {
             $users = xarModAPIFunc('roles','user','getusers',
-                                   array('uid' => $_REQUEST['group']));
+                                   array('id' => $_REQUEST['group']));
             foreach ($users as $a_user) {
-                $roleManager->remove_mapping($a_user['uid'], $_REQUEST['role']);
+                $roleManager->remove_mapping($a_user['id'], $_REQUEST['role']);
             }
         }
     }
@@ -138,9 +138,9 @@ function workflow_admin_roles()
     // trick : replace userid by user here !
     foreach (array_keys($mapitems['data']) as $index) {
         $role = xarModAPIFunc('roles','user','get',
-                              array('uid' => $mapitems['data'][$index]['user']));
+                              array('id' => $mapitems['data'][$index]['user']));
         if (!empty($role)) {
-            $mapitems['data'][$index]['userId'] = $role['uid'];
+            $mapitems['data'][$index]['userId'] = $role['id'];
             $mapitems['data'][$index]['user'] = $role['name'];
             $mapitems['data'][$index]['login'] = $role['uname'];
         } else {

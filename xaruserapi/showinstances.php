@@ -31,7 +31,7 @@ function workflow_userapi_showinstances($args)
     include(GALAXIA_LIBRARY.'/gui.php');
 
     if (empty($user)) {
-        $user = xarUserGetVar('uid');
+        $user = xarUserGetVar('id');
     }
 
 // TODO: keep track of instances from anonymous visitors via session ?
@@ -83,9 +83,9 @@ function workflow_userapi_showinstances($args)
             continue;
         }
         $role = xarModAPIFunc('roles','user','get',
-                              array('uid' => $info['user']));
+                              array('id' => $info['user']));
         if (!empty($role)) {
-            $items['data'][$index]['userId'] = $role['uid'];
+            $items['data'][$index]['userId'] = $role['id'];
             $items['data'][$index]['user'] = $role['name'];
             $items['data'][$index]['login'] = $role['uname'];
         }

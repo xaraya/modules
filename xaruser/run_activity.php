@@ -27,7 +27,7 @@ function workflow_user_run_activity()
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $tplData = array();
-    $user = xarUserGetVar('uid');
+    $user = xarUserGetVar('id');
     // Adapted from tiki-g-run_activity.php
     include (GALAXIA_LIBRARY.'/api.php');
 

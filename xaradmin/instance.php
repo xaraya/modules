@@ -79,9 +79,9 @@ function workflow_admin_instance()
     // trick : replace userid by user here !
     foreach (array_keys($mapitems['data']) as $index) {
         $role = xarModAPIFunc('roles','user','get',
-                              array('uid' => $mapitems['data'][$index]['user']));
+                              array('id' => $mapitems['data'][$index]['user']));
         if (!empty($role)) {
-            $mapitems['data'][$index]['userId'] = $role['uid'];
+            $mapitems['data'][$index]['userId'] = $role['id'];
             $mapitems['data'][$index]['user'] = $role['name'];
             $mapitems['data'][$index]['login'] = $role['uname'];
         }

@@ -32,7 +32,7 @@ function workflow_userapi_showstatus($args)
     include (GALAXIA_LIBRARY.'/processmonitor.php');
 
     if (empty($user)) {
-        $user = xarUserGetVar('uid');
+        $user = xarUserGetVar('id');
     }
 
 // TODO: keep track of instances from anonymous visitors via session ?

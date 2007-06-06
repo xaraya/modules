@@ -26,9 +26,9 @@
                 <option value="">"<xar:mlstring>Anonymous</xar:mlstring>"</option>
                 <xar:foreach in="$users" key="$ix">
                   <xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
-                    <option value="#$users[$ix]['uid']#">#$users[$ix]['name']#</option>
+                    <option value="#$users[$ix]['id']#">#$users[$ix]['name']#</option>
                     <xar:else/>
-                    <option value="#$users[$ix]['uid']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
+                    <option value="#$users[$ix]['id']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
                   </xar:if>
                 </xar:foreach>
               </select>
@@ -38,9 +38,9 @@
                 <xar:foreach in="$roles" key="$ix">
                   <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
                 </xar:foreach>
-              </select>              
+              </select>
             </td>
-          </tr>          
+          </tr>
         </table>
       </div>
       <div class="xar-form-input-wrapper-after">

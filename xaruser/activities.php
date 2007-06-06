@@ -30,7 +30,7 @@ function workflow_user_activities()
     include_once (GALAXIA_LIBRARY.'/gui.php');
 
     // Initialize some stuff
-    $user = xarUserGetVar('uid');
+    $user = xarUserGetVar('id');
     $maxRecords = xarModGetVar('workflow','itemsperpage');
 
     // Filtering data to be received by request and

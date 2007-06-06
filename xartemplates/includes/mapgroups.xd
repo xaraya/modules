@@ -25,7 +25,7 @@
           <td>
             <select name="group">
               <xar:foreach in="$groups" key="$ix">
-                <option value="#$groups[$ix]['uid']#">#$groups[$ix]['name']#</option>
+                <option value="#$groups[$ix]['id']#">#$groups[$ix]['name']#</option>
               </xar:foreach>
             </select>
           </td>

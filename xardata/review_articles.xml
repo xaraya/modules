@@ -26,7 +26,7 @@
     if (empty($args['itemid'])) $args['itemid'] = 0;
     $instance->set('itemid',$args['itemid']);
 // save the current user
-    $instance->set('user',xarUserGetVar('uid'));
+    $instance->set('user',xarUserGetVar('id'));
 ?>      ]]></code>    </activity>
     <activity>
       <name>Review Article</name>
@@ -87,7 +87,7 @@ if (!empty($edit)) {
     return true;
 } elseif (!empty($approve)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewer', xarUserGetVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'approved');
@@ -96,7 +96,7 @@ if (!empty($edit)) {
     $instance->complete();
 } elseif (!empty($reject)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewer', xarUserGetVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'rejected');
@@ -105,7 +105,7 @@ if (!empty($edit)) {
     $instance->complete();
 } elseif (!empty($frontpage)) {
     // Save the reviewer information
-    $instance->set('reviewer', xarUserGetVar('uid'));
+    $instance->set('reviewer', xarUserGetVar('id'));
     $instance->set('reviewed', time());
     // Save the new status
     $instance->set('status', 'frontpage');

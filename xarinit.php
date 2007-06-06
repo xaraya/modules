@@ -21,9 +21,9 @@ function workflow_init()
     if (!xarVarFetch('loadexample', 'checkbox', $loadexample, 1, XARVAR_NOT_REQUIRED)) return;
 
     $dbconn = xarDB::getConn();
-    $xartable =& xarDBGetTables();
+    $xartable = xarDB::getTables();
 
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Galaxia developers use quotes around column names.
     // Since PostgreSQL creates column names in lowercase by
@@ -472,9 +472,9 @@ function workflow_upgrade($oldversion)
 function workflow_delete()
 {
     $dbconn = xarDB::getConn();
-    $xartable =& xarDBGetTables();
+    $xartable = xarDB::getTables();
 
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     $mytables = array(
                       'workflow_activities',

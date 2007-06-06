@@ -24,7 +24,7 @@ function workflow_user_instances()
 
 
     // Initialize some stuff
-    $user = xarUserGetVar('uid');
+    $user = xarUserGetVar('id');
     $maxRecords = xarModGetVar('workflow','itemsperpage');
 
     if (isset($_REQUEST['run']) || isset($_REQUEST['run_x'])) {
@@ -177,9 +177,9 @@ foreach ($items['data'] as $index => $info) {
         continue;
     }
     $role = xarModAPIFunc('roles','user','get',
-                          array('uid' => $info['user']));
+                          array('id' => $info['user']));
     if (!empty($role)) {
-        $items['data'][$index]['userId'] = $role['uid'];
+        $items['data'][$index]['userId'] = $role['id'];
         $items['data'][$index]['user'] = $role['name'];
         $items['data'][$index]['login'] = $role['uname'];
     }
