@@ -25,7 +25,7 @@ function products_admin_main()
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
 
-    if (xarModVars::get('adminpanels', 'overview') == 0) {
+    if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
     }
     else {
