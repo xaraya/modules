@@ -1,6 +1,6 @@
 
 <xar:if condition="xarSecurityCheck('CommentIEvent', 0, 'IEvent')">
-    <ul>
+    <ul class="admin-mini">
         <li><a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Calendars</xar:mlstring></a></li>
         <li><a href="#xarModURL('ievents','user','view')#"><xar:mlstring>Events</xar:mlstring></a></li>
 

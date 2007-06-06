@@ -20,12 +20,12 @@ function ievents_userapi_getitemtypes($args)
         $itemtype_events => array(
             'name' => 'events',
             'desc' => xarML('Events'),
-            xarModURL('ievents', 'user', 'view')
+            'url' => xarModURL('ievents', 'user', 'view')
         ),
         $itemtype_calendars => array(
             'name' => 'calendars',
             'desc' => xarML('Calendars'),
-            xarModURL('ievents', 'user', 'viewcal')
+            'url' => xarModURL('ievents', 'user', 'viewcal')
         ),
     );
 

@@ -61,7 +61,6 @@ function ievents_userapi_getevents($args)
     $params = array(
         'module' => $module,
         'itemtype' => $itemtype,
-        'sort' => $sort,
     );
 
     $where_arr = array();
@@ -231,6 +230,7 @@ function ievents_userapi_getevents($args)
         // Note also that some property names do not match the table column names.
         // TODO: validate the sort columns.
         if (empty($sort)) $sort = 'start_date DESC';
+        $params['sort'] = $sort;
 
         // startnum and numitems (used by the pager)
         $params['startnum'] = (isset($startnum) ? $startnum : 1);

@@ -22,8 +22,8 @@ function ievents_user_viewcals($args)
     extract($args);
 
     // The user may want to display the details of a single calendar.
-    xarVarPrepForDisplay('cid', 'id', $cid, 0, XAR_VAR_NOTREQUIRED);
-    xarVarPrepForDisplay('name', 'str:0:200', $name, '', XAR_VAR_NOTREQUIRED);
+    xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('name', 'str:0:200', $name, '', XARVAR_NOT_REQUIRED);
 
     // Get module variables.
     list($cal_subscribe_range, $cal_subscribe_numitems) = xarModAPIfunc('ievents', 'user', 'params',

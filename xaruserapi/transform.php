@@ -30,7 +30,7 @@ function ievents_userapi_transform($args)
     // keeps code size down in templates.
     if (isset($text) && is_string($text)) {
         $text_in = $text;
-        if (!isset($format) && $format != 'html') $format = 'text';
+        if (!isset($format) || $format != 'html') $format = 'text';
     }
     if (isset($html) && is_string($html)) {
         $text_in = $html;

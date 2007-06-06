@@ -95,7 +95,7 @@ function ievents_adminapi_modify($args)
         $props_display[] = 'updated_time';
 
         // Don't show the external reference details unless an editor
-        if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $event['calendar_id'] . ':' . $event['eid'] . ':' . $event['created_by'])) {
+        if (!xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $cid . ':' . $eid . ':All')) {
             $props_hidden[] = 'external_source';
             $props_hidden[] = 'external_ref';
         }

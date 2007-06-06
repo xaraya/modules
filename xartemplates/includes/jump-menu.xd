@@ -56,7 +56,7 @@
         <xar:comment>The categories are optional</xar:comment>
         <xar:if condition="!empty($categories.basecats)">
             <p>
-                <label for="catids_0"><xar:mlstring>Categories:</xar:mlstring></label>
+                <label for="catids_0" id="catids_0_label"><xar:mlstring>Categories:</xar:mlstring></label>
                 <xar:loop name="$categories['basecats']" id="basecats">
                     <xar:if condition="!empty($loop:item.catlist)">
                         <select class="ievents-jump-catids" name="catids[]" id="catids_#$loop:index#" multiple="multiple">
@@ -73,26 +73,30 @@
                     </xar:if>
                 </xar:loop>
             
-                <xar:if condition="$crule eq 'or'">
-                    <input type="radio" name="crule" id="crule_1" value="or" checked="checked" />
-                <xar:else />
-                    <input type="radio" name="crule" id="crule_1" value="or" />
-                </xar:if>
-                <label for="crule_1"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
+                <span id="crule_1_wrapper">
+                    <xar:if condition="$crule eq 'or'">
+                        <input type="radio" name="crule" id="crule_1" value="or" checked="checked" />
+                    <xar:else />
+                        <input type="radio" name="crule" id="crule_1" value="or" />
+                    </xar:if>
+                    <label for="crule_1" id="crule_1_label"><xar:mlstring>Match <em>any</em> selected category</xar:mlstring></label>
+                </span>
 
-                <xar:if condition="$crule eq 'and'">
-                    <input type="radio" name="crule" id="crule_2" value="and" checked="checked" />
-                <xar:else />
-                    <input type="radio" name="crule" id="crule_2" value="and" />
-                </xar:if>
-                <label for="crule_2"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
+                <span id="crule_2_wrapper">
+                    <xar:if condition="$crule eq 'and'">
+                        <input type="radio" name="crule" id="crule_2" value="and" checked="checked" />
+                    <xar:else />
+                        <input type="radio" name="crule" id="crule_2" value="and" />
+                    </xar:if>
+                    <label for="crule_2" id="crule_2_label"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
+                </span>
             </p>
         </xar:if>
 
         <xar:comment>Keyword search is optional</xar:comment>
         <xar:if condition="!empty($q_fields)">
             <p>
-                <label for="q"><xar:mlstring>Keywords:</xar:mlstring></label>
+                <label for="q"><xar:mlstring>Search:</xar:mlstring></label>
                 <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
                 <input type="submit" value="#xarML('Go')#" />
             </p>

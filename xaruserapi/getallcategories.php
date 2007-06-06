@@ -27,6 +27,9 @@ function ievents_userapi_getallcategories($args)
             array('module' => $module, 'itemtype' => $itemtype_events, 'format' => 'flat')
         );
 
+        // We may not have any categories set up yet.
+        if (empty($catbases)) return;
+
         $basecats = array();
         $basecatslist = array();
 

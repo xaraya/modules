@@ -6,7 +6,7 @@
 <div class="ievents-view">
     <xar:template file="admin-mini" />
 
-    <xar:if condition="!empty($eid)">
+    <xar:if condition="!empty($eid) and !empty($event)">
         <xar:comment>An individual event was chosen</xar:comment>
 
         <xar:template file="event-nextprev" />
@@ -26,7 +26,7 @@
 
         <xar:template file="event-nextprev" />
 
-    <xar:else />
+    <xar:elseif condition="!empty($events)" />
         <xar:comment>A list of event summaries is to be shown</xar:comment>
 
         <xar:template file="list-pager" />
@@ -59,6 +59,8 @@
 
             <xar:template file="list-pager" />
         </xar:if>
+    <xar:else />
+        <p><xar:mlstring>No events found</xar:mlstring></p>
     </xar:if>
 
 </div>

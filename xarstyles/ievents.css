@@ -157,3 +157,14 @@ ul.admin-mini li {
 	padding: 0;
 	background-image: none; /* For Xaraya_Classic */
 }
+
+/* Put the category selection menu label on a line of its own */
+label#catids_0_label {
+	display: block;
+	font-weight: bold;
+}
+label#crule_1_label, label#crule_2_label,
+span#crule_1_wrapper, span#crule_2_wrapper {
+	white-space: nowrap;
+}
+

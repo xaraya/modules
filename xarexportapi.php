@@ -90,7 +90,7 @@ class ievents_exportapi_export_master
             $result[] = $this->handler->format_event($event);
         }
 
-        return $this->handler->wrap_export(implode($this->handler->line_endings, $result));
+        return $this->handler->wrap_export(implode($this->handler->line_ending, $result));
     }
 
     // Stream the export to the output and exit.

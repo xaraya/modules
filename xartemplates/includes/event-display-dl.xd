@@ -35,7 +35,7 @@
     </p>
     <p>
         <strong><xar:mlstring>Calendar:</xar:mlstring></strong>
-        <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.calendar_id))#">
+        <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
             #xarVarPrepForDisplay($calendar.long_name)#
         </a>
     </p>
