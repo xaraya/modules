@@ -34,7 +34,7 @@
             <input type="hidden" name="uname" id="uname" value="#$uname#" />
             <input type="hidden" name="emailaddress" id="emailaddress" value="#$emailaddress#" />
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="uid" id="uid" value="#$uid#" />
+            <input type="hidden" name="id" id="id" value="#$id#" />
             <input type="hidden" name="phase" id="phase" value="updatebasic" />
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarVarPrepForDisplay($submitlabel)#" />
