@@ -196,7 +196,7 @@ function articles_user_search($args)
         $q = null;
     }
 
-    // Find the uid of the author we're looking for
+    // Find the id of the author we're looking for
     if (!empty($author)) {
         // Load API
         if (!xarModAPILoad('roles', 'user')) return;

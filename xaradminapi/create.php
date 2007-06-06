@@ -56,7 +56,7 @@ function articles_adminapi_create($args)
 
     // Default author ID is the current user, or Anonymous (1) otherwise
     if (empty($authorid) || !is_numeric($authorid)) {
-        $authorid = xarUserGetVar('uid');
+        $authorid = xarUserGetVar('id');
         if (empty($authorid)) {
             $authorid = _XAR_ID_UNREGISTERED;
         }

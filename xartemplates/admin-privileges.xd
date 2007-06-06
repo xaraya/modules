@@ -59,7 +59,7 @@
                                     <xar:mlstring>All / Other --&gt;</xar:mlstring>
                                 </option>
                                 <xar:foreach in="$authorlist" key="$id">
-                                    <xar:if condition="$id eq $uid">
+                                    <xar:if condition="$auth eq $id">
                                         <option value="#$id#" selected="selected">#xarVarPrepForDisplay($authorlist[$id])#</option>
                                         <xar:else />
                                         <option value="#$id#">#xarVarPrepForDisplay($authorlist[$id])#</option>

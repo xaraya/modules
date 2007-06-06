@@ -202,7 +202,7 @@ function articles_admin_importpages()
                              'cids' => $cids,
                           // for preview
                              'pubtypeid' => $data['ptid'],
-                             'authorid' => xarUserGetVar('uid'),
+                             'authorid' => xarUserGetVar('id'),
                              'aid' => 0);
             if (!empty($data['title']) && !empty($title)) {
                 $article[$data['title']] = $title;
