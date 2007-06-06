@@ -266,7 +266,7 @@
             <xar:set name="item_class">'xar-alt'</xar:set>
         </xar:if>
         <xar:if condition="xarUserIsLoggedIn()">
-            <xar:set name="currentuserid">xarUserGetVar('uid');</xar:set>
+            <xar:set name="currentuserid">xarUserGetVar('id');</xar:set>
         </xar:if>
         <xar:set name="thisuserid">$loop->item['r_id']</xar:set>
 

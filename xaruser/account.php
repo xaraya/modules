@@ -24,12 +24,12 @@ function members_user_account()
                                       'register'));
     }
 
-    $data['uid'] = xarUserGetVar('uid');
+    $data['id'] = xarUserGetVar('id');
     $data['name'] = xarUserGetVar('name');
-    if ($data['uid'] == XARUSER_LAST_RESORT) {
+    if ($data['id'] == XARUSER_LAST_RESORT) {
         $data['message'] = xarML('You are logged in as the last resort administrator.');
     } else  {
-        $data['current'] = xarModURL('members', 'user', 'display', array('itemid' => xarUserGetVar('uid')));
+        $data['current'] = xarModURL('members', 'user', 'display', array('itemid' => xarUserGetVar('id')));
 
         $output = array();
         $output = xarModCallHooks('item', 'usermenu', '', array('module' => 'members'));

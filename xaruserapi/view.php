@@ -379,26 +379,26 @@ function members_userapi_view($args)
     // get the records to be displayed
     $items = $q->output();
 
-    // keep track of the selected uid's
-    $data['uidlist'] = array();
+    // keep track of the selected id's
+    $data['idlist'] = array();
 
     // Check individual privileges for Edit / Delete
     // still can't do without this step, so we run the loop
     for ($i = 0, $max = count($items); $i < $max; $i++) {
         $item = $items[$i];
-        $data['uidlist'][] = $item['r_id'];
+        $data['idlist'][] = $item['r_id'];
 
         // Grab the list of groups this role belongs to
-        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('uid' => $item['r_id']));
+        $groups = xarModAPIFunc('roles', 'user', 'getancestors', array('id' => $item['r_id']));
         foreach ($groups as $group) {
-            $items[$i]['groups'][$group['uid']] = $group['name'];
+            $items[$i]['groups'][$group['id']] = $group['name'];
         }
 
         // Change email to a human readible entry.  Anti-Spam protection.
         if (xarUserIsLoggedIn()) {
             $items[$i]['emailurl'] = xarModURL(
                 'roles', 'user', 'email',
-                array('uid' => $item['r_id'])
+                array('id' => $item['r_id'])
             );
         } else {
             $items[$i]['emailurl'] = '';

@@ -43,7 +43,7 @@ function members_user_usermenu($args)
                     // get some roles properties, might be useful
                     $uname = xarUserGetVar('uname');
                     $name = xarUserGetVar('name');
-                    $uid = xarUserGetVar('uid');
+                    $id = xarUserGetVar('id');
                     $email = xarUserGetVar('email');
                     $role = xarUFindRole($uname);
                     $home = $role->getHome();
@@ -51,7 +51,7 @@ function members_user_usermenu($args)
                     $submitlabel = xarML('Submit');
                     $item['module'] = 'roles';
 
-                    $hooks = xarModCallHooks('item','modify',$uid,$item);
+                    $hooks = xarModCallHooks('item','modify',$id,$item);
                     if (isset($hooks['dynamicdata'])) {
                         unset($hooks['dynamicdata']);
                     }
@@ -65,7 +65,7 @@ function members_user_usermenu($args)
                                           'hooks'        => $hooks,
                                           'emailaddress' => $email,
                                           'submitlabel'  => $submitlabel,
-                                          'uid'          => $uid));
+                                          'id'          => $id));
                     break;
 
                 case 'tab2':
@@ -75,7 +75,7 @@ function members_user_usermenu($args)
             break;
 
         case 'updatebasic':
-            if(!xarVarFetch('uid',   'isset', $uid,     NULL, XARVAR_DONT_SET)) return;
+            if(!xarVarFetch('id',   'isset', $id,     NULL, XARVAR_DONT_SET)) return;
             if(!xarVarFetch('name',  'isset', $name,    NULL, XARVAR_DONT_SET)) return;
             if(!xarVarFetch('email', 'isset', $email,   NULL, XARVAR_DONT_SET)) return;
             if(!xarVarFetch('home',  'isset', $home,    NULL, XARVAR_DONT_SET)) return;
@@ -104,7 +104,7 @@ function members_user_usermenu($args)
                 if(!xarModAPIFunc('roles',
                                   'admin',
                                   'update',
-                                   array('uid' => $uid,
+                                   array('id' => $id,
                                          'uname' => $uname,
                                          'name' => $name,
                                          'home' => $home,
@@ -164,7 +164,7 @@ function members_user_usermenu($args)
                     if(!xarModAPIFunc('roles',
                                       'admin',
                                       'update',
-                                       array('uid' => $uid,
+                                       array('id' => $id,
                                              'uname' => $uname,
                                              'name' => $name,
                                              'home' => $home,
@@ -184,7 +184,7 @@ function members_user_usermenu($args)
                     if(!xarModAPIFunc('roles',
                                       'admin',
                                       'update',
-                                       array('uid'      => $uid,
+                                       array('id'      => $id,
                                              'uname'    => $uname,
                                              'name'     => $name,
                                              'home'     => $home,
@@ -196,7 +196,7 @@ function members_user_usermenu($args)
                     if (!xarModAPIFunc( 'roles',
                                         'admin',
                                         'senduseremail',
-                                        array('uid' => array($uid => '1'), 'mailtype' => 'validation'))) {
+                                        array('id' => array($id => '1'), 'mailtype' => 'validation'))) {
                         $msg = xarML('Problem sending confirmation email');
                         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
                     }
@@ -210,7 +210,7 @@ function members_user_usermenu($args)
                 if(!xarModAPIFunc('roles',
                                   'admin',
                                   'update',
-                                   array('uid' => $uid,
+                                   array('id' => $id,
                                          'uname' => $uname,
                                          'name' => $name,
                                          'home' => $home,

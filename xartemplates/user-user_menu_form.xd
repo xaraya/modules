@@ -102,7 +102,7 @@
                 <input type="password" name="pass2" id="pass2" value="" size="20" maxlength="40" />
             </div>
             <div class="xar-form-input-wrapper">
-                <xar:data-getitem name="$properties" module="roles" itemid="$uid" />
+                <xar:data-getitem name="$properties" module="roles" itemid="$id" />
             </div>
             <xar:if condition="isset($properties) and count($properties) gt 0">
                 <xar:foreach in="$properties" key="$name">
@@ -122,7 +122,7 @@
         </fieldset>
         <fieldset>
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="uid" id="uid" value="#$uid#" />
+            <input type="hidden" name="id" id="id" value="#$id#" />
             <input type="hidden" name="phase" id="phase" value="updatebasic" />
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarVarPrepForDisplay($submitlabel)#" />
