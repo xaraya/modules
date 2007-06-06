@@ -10,7 +10,7 @@
 </p>
 <p>
     <xar:mlstring>Status: </xar:mlstring>#$pending#<br />
-    <xar:mlstring>User ID: </xar:mlstring>#$uid#<br />
+    <xar:mlstring>User ID: </xar:mlstring>#$id#<br />
     <xar:mlstring>Display Name: </xar:mlstring>#$userrealname#<br />
     <xar:mlstring>User Name: </xar:mlstring>#$username#<br />
     <xar:mlstring>User Email: </xar:mlstring>#$useremail#<br />

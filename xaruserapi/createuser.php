@@ -23,7 +23,7 @@
  * @param 'email'
  * @param 'pass'   password
  * @param 'state' one of ROLES_STATE_NOTVALIDATED, ROLES_STATE_PENDING, ROLES_STATE_ACTIVE
- * @return $uid or null if failed
+ * @return $id or null if failed
  */
 function registration_userapi_createuser($args)
 {
@@ -50,34 +50,34 @@ function registration_userapi_createuser($args)
                     'state'    => $state);
 
     // Create user - this will also create the dynamic properties (if any) via the create hook
-    $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata );
+    $id = xarModAPIFunc('roles', 'admin', 'create', $userdata );
 
     // Check for user creation failure
-    if ($uid == 0) return;
+    if ($id == 0) return;
 
     //Make sure the user email setting is off unless the user sets it
-    xarModSetUserVar('roles','usersendemails', false, $uid);
+    xarModSetUserVar('roles','usersendemails', false, $id);
 
     /* Call hooks in here
      * This might be double as the roles hook will also call the create,
      * but the new hook wasn't called there, so no data is passed
      */
     $userdata['module'] = 'registration';
-    $userdata['itemid'] = $uid;
-    xarModCallHooks('item', 'create', $uid, $userdata);
+    $userdata['itemid'] = $id;
+    xarModCallHooks('item', 'create', $id, $userdata);
 
     // Insert the user into the default users group
     $defaultgroup = xarModVars::get('roles', 'defaultgroup');
     if (empty($defaultgroup)) return;
 
     // Make the user a member of the users role
-    if(!xarMakeRoleMemberByID($uid, $defaultgroup)) return;
+    if(!xarMakeRoleMemberByID($id, $defaultgroup)) return;
 
     // remember to congratulate this new user!
     if ($state != ROLES_STATE_NOTVALIDATED) {
-        xarModVars::set('roles', 'lastuser', $uid);
+        xarModVars::set('roles', 'lastuser', $id);
     }
 
-    return $uid;
+    return $id;
 }
 ?>

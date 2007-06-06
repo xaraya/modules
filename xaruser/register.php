@@ -248,21 +248,21 @@ function registration_user_register()
             $userdata = $values;
             $userdata['parentid'] = xarModVars::get('roles', 'defaultgroup');
             $userdata['itemtype'] = 2;
-            $uid = xarModAPIFunc('roles', 'admin', 'create', $userdata);
-            $values['id'] = $uid;
-            if (empty($uid)) return;
-            xarModVars::set('roles', 'lastuser', $uid);
+            $id = xarModAPIFunc('roles', 'admin', 'create', $userdata);
+            $values['id'] = $id;
+            if (empty($id)) return;
+            xarModVars::set('roles', 'lastuser', $id);
 
             //Make sure the user email setting is off unless the user sets it
-            xarModSetUserVar('roles','usersendemails', false, $uid);
+            xarModSetUserVar('roles','usersendemails', false, $id);
 
             /* Call hooks in here
              * This might be double as the roles hook will also call the create,
              * but the new hook wasn't called there, so no data is passed
              */
              $userdata['module'] = 'registration';
-             $userdata['itemid'] = $uid;
-             xarModCallHooks('item', 'create', $uid, $userdata);
+             $userdata['itemid'] = $id;
+             xarModCallHooks('item', 'create', $id, $userdata);
 
              // Option: If admin requires notification of a new user, and no validation required,
              // send out an email to Admin

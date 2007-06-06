@@ -20,7 +20,7 @@
  * @param username - the username of the user
  * @param useremail - the email of the user
  * @param terms - agreement to user terms (optional) - may not be activated
- * @param uid - the users uid
+ * @param id - the users id
  * @return bool true on success
  */
 function registration_userapi_notifyadmin ($args)
@@ -32,7 +32,7 @@ function registration_userapi_notifyadmin ($args)
     if (!xarVarFetch('terms',      'str:1:', $terms,      '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     //set a title and link to the user role
-    $uid = $values['id'];
+    $id = $values['id'];
     $state = $values['state'];
     $requireapproval = xarModVars::get('registration','explicitapproval');
     if ($requireapproval) {
@@ -40,7 +40,7 @@ function registration_userapi_notifyadmin ($args)
     } else {
         $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $values['uname'], $values['name']);
     }
-    $rolelink = xarModURL('roles','admin','modify',array('uid'=>$uid),false);
+    $rolelink = xarModURL('roles','admin','modify',array('id'=>$id),false);
 
     /*
        TODO: can we do this more centrally instead of every function with email

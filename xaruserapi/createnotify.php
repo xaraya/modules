@@ -22,7 +22,7 @@
  * @param 'realname'
  * @param 'email'
  * @param 'pass'  password
- * @param 'uid'  user id
+ * @param 'id'  user id
  * @param 'ip'  user ip (optional)
  * @param 'state'  one of ROLES_STATE_NOTVALIDATED, ROLES_STATE_PENDING, ROLES_STATE_ACTIVE
  * @return true if ok
@@ -31,7 +31,7 @@ function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    $uid = $values['id'];
+    $id = $values['id'];
     $pass = $values['password'];
     if ($state == ROLES_STATE_NOTVALIDATED) {
         if (empty($ip)) {
@@ -39,7 +39,7 @@ function registration_userapi_createnotify($args)
         }
 
         // TODO: make sending mail configurable too, depending on the other options ?
-        $emailargs = array( 'uid'           => array($uid => '1'),
+        $emailargs = array( 'id'           => array($id => '1'),
                             'mailtype'      => 'confirmation',
                             'ip'            => $ip,
                             'pass'          => $pass );
@@ -78,7 +78,7 @@ function registration_userapi_createnotify($args)
          // This template is used in options for user validation, user validation and user pending, and user pending alone
         if (xarModVars::get('registration', 'sendwelcomeemail')) {
             $emailargs = array(
-                            'uid'      => array($uid => '1'),
+                            'id'      => array($id => '1'),
                             'mailtype' => 'welcome' );
 
             if (!xarModAPIFunc('roles',  'admin', 'senduseremail', $emailargs)) {

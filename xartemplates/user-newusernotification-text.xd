@@ -7,7 +7,7 @@
 
 <xar:mlstring>Status: </xar:mlstring>#$pending#
 
-<xar:mlstring>User ID: </xar:mlstring>#$uid#
+<xar:mlstring>User ID: </xar:mlstring>#$id#
 
 <xar:mlstring>User Display Name: </xar:mlstring>#$userrealname#
 
