@@ -225,7 +225,7 @@
       <id>458</id>
       <label>Roles Authmodid</label>
       <type>integerbox</type>
-      <default>xarModAPIFunc('members','user','getsystemid',array('module' =&gt; 'vendors'))</default>
+      <default>xarMod::getID('vendors')</default>
       <source>xar_roles.auth_modid</source>
       <status>67</status>
       <order>18</order>

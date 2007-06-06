@@ -1,9 +1,11 @@
 <?php
 
+sys::import('modules.xen.xarclasses.xenquery');
+
 function vendors_init()
 {
-
-sys::import('modules.xen.xarclasses.xenquery');
+    if (!xarVarFetch('createdefaultgroup', 'bool', $createdefaultgroup, true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroupname', 'str:1:', $defaultgroupname, 'MembersGroup', XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 #
@@ -149,16 +151,23 @@ if (!$q->run($query)) return;
 #
 # Create roles
 #
-    $role = xarFindRole('VendorGroup');
-    if (empty($role)) {
-        $parent = xarFindRole('Everybody');
-        $new = array('name' => 'VendorGroup',
-                     'itemtype' => ROLES_GROUPTYPE,
-                     'parentid' => $parent->getID(),
-                    );
-        $uid = xarModAPIFunc('roles','admin','create',$new);
+    if ($createdefaultgroup) {
+        $role = xarFindRole('VendorGroup');
+        $role = xarFindRole($defaultgroupname);
+        if (empty($role)) {
+            $everybody = xarFindRole('Everybody');
+            $rolefields['role_type'] = ROLES_GROUPTYPE;
+            $rolefields['name'] = $defaultgroupname;
+            $rolefields['uname'] = $defaultgroupname;
+            $rolefields['parentid'] = $everybody->getID();
+            $defaultgroup = $group->createItem($rolefields);
+        } else {
+            $defaultgroup = $role->getID();
+        }
+        xarModVars::set('vendors','defaultgroup',$defaultgroup);
+    } else {
+        $defaultgroup = xarModVars::get('vendors', 'defaultgroup');
     }
-    xarModVars::set('vendors','defaultgroup',$uid);
 
 # --------------------------------------------------------
 #

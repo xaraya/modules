@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Vendors Administration</xar:mlstring>
@@ -12,6 +13,7 @@
                 <input type="submit" name="update" value="#xarML('Update Configuration')#" align="middle" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
             </div>
-        </fieldset>       
+        </fieldset>
     </form>
 </div>
+</xar:template>

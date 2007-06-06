@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="lang_search">
     <xar:mlstring>
         Start Search
@@ -58,3 +59,4 @@
         </div>
     </form>
 </div>
+</xar:template>
