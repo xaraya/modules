@@ -1,10 +1,9 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="php">
     <xar:if condition="empty($version)">
         <xar:set name="version">'unknown'</xar:set>
     </xar:if>
-    <div class="keyword">
-        Extension #$name# version #$version#
-    </div>
+    <div class="keyword">Extension #$name# version #$version#</div>
     <xar:foreach in="$constants" key="$name" value="$value">
         <xar:set name="cparams">array('name'=>$name,'value'=>$value)</xar:set>
         <xar:template file="constantinfo" subdata="$cparams"/>
@@ -17,7 +16,7 @@
             </xar:if>
             <span class="function">#$method.name#</span>
             <span>(</span>
-            <xar:template file="paraminfo" subdata="$method.params"/>
+            <xar:template file="paraminfo" subdata="$method"/>
             <span>)</span>
         </div>
     </xar:foreach>
@@ -41,5 +40,6 @@
 </div>
 
 <xar:if condition="isset($includeraw) and $includeraw">
-<pre>#$raw#</raw>
+<pre>#$raw#</pre>
 </xar:if>
+</xar:template>

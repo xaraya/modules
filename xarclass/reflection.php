@@ -16,7 +16,7 @@
  *
  * @author Marcel van der Boom <mrb@hsdev.com>
  **/
-class ReflectionInfo
+class ReflectionInfo extends Object
 {
     const FNC = 1;
     const CLS = 2;
@@ -34,23 +34,23 @@ class ReflectionInfo
     {
         switch($type) {
             case ReflectionInfo::FNC: // Function
-                include_once(self::fromhere('function'));
+                sys::import(self::fromhere('function'));
                 $clazz = 'ad_ReflectionFunction';
                 break;
             case ReflectionInfo::CLS: // Class
-                include_once(self::fromhere('class'));
+                sys::import(self::fromhere('class'));
                 $clazz = 'ad_ReflectionClass';
                 break;
             case ReflectionInfo::INT: // Interface
-                include_once(self::fromhere('interface'));
+                sys::import(self::fromhere('interface'));
                 $clazz = 'ad_ReflectionInterface';
                 break;
             case ReflectionInfo::EXT: // Extension
-                include_once(self::fromhere('extension'));
+                sys::import(self::fromhere('extension'));
                 $clazz = 'ad_ReflectionExtension';
                 break;
             case ReflectionInfo::CON: // Constants
-                include_once(self::fromhere('constant'));
+                sys::import(self::fromhere('constant'));
                 $clazz = 'ad_ReflectionConstant';
                 break;
         }
@@ -76,7 +76,7 @@ class ReflectionInfo
      **/
     static function fromhere($type)
     {
-        return dirname(__FILE__).'/reflection'.$type.'.php';
+        return 'modules.autodoc.xarclass.reflection'.$type;
     }
 }
 

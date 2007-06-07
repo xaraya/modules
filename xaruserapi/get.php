@@ -7,7 +7,7 @@
  * @param modscope - only things from this module
  * @returns array with items 
  */
-include_once 'modules/autodoc/xarclass/reflection.php';
+sys::import('modules.autodoc.xarclass.reflection');
 function autodoc_userapi_get($args)
 {
     extract($args);

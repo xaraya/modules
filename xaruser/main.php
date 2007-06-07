@@ -1,5 +1,5 @@
 <?php
-include_once 'modules/autodoc/xarclass/reflection.php';
+sys::import('modules.autodoc.xarclass.reflection');
 function autodoc_user_main($args)
 {
     $data = array();

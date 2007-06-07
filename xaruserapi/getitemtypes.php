@@ -1,6 +1,6 @@
 <?php
 
-include_once 'modules/autodoc/xarclass/reflection.php';
+sys::import('modules.autodoc.xarclass.reflection');
 function autodoc_userapi_getitemtypes($args)
 {
     $itemtypes = array();

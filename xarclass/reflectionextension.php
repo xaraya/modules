@@ -36,7 +36,7 @@ class ad_ReflectionExtension extends ReflectionExtension
     {
         $funcs = parent::getFunctions();
         $functions = array();
-        include_once(ReflectionInfo::fromhere('function'));
+        sys::import(ReflectionInfo::fromhere('function'));
         foreach($funcs as $index => $function) {
             $functions[] = new ad_ReflectionFunction($function->getName());
         }
@@ -47,7 +47,7 @@ class ad_ReflectionExtension extends ReflectionExtension
     {
         $classs = parent::getClasses();
         $classes = array();
-        include_once(ReflectionInfo::fromhere('class'));
+        sys::import(ReflectionInfo::fromhere('class'));
         foreach($classs as $index => $class) {
             $classes[] = new ad_ReflectionClass($class->getName());
         }

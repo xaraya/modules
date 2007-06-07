@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <form action="&xar-modurl-autodoc-admin-main;" method="get">
     <input type="hidden" name="module" value="autodoc"/>
     <fieldset>
@@ -16,3 +17,6 @@
 </xar:foreach>
 
 <xar:template type="system" file="user-display.xd"/>
+
+
+</xar:template>

@@ -1,8 +1,8 @@
-<span class="keyword">
-    <xar:if condition="isset($final) and $final">final </xar:if>
-    <xar:if condition="isset($abstract) and $abstract">abstract </xar:if>
-    <xar:if condition="isset($public) and $public">public </xar:if>
-    <xar:if condition="isset($protected) and $protected">protected </xar:if>
-    <xar:if condition="isset($private) and $private">private </xar:if>
-    <xar:if condition="isset($static) and $static">static </xar:if>
-</span>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="isset($final) and $final"><span class="keyword">final</span></xar:if>
+    <xar:if condition="isset($abstract) and $abstract"><span class="keyword">abstract</span></xar:if>
+    <xar:if condition="isset($public) and $public"><span class="keyword">public</span></xar:if>
+    <xar:if condition="isset($protected) and $protected"><span class="keyword">protected</span></xar:if>
+    <xar:if condition="isset($private) and $private"><span class="keyword">private</span></xar:if>
+    <xar:if condition="isset($static) and $static"><span class="keyword">static</span></xar:if>
+</xar:template>

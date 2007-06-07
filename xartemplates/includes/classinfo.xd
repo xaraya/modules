@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="php">
     <xar:if condition="!empty($extension)">
         <xar:set name="extlink">xarServerGetCurrentUrl(array('itemtype'=>3,'scope'=>1,'itemid'=>$extensionid))</xar:set>
@@ -9,14 +10,12 @@
         </div>
     </xar:if>
     <div>
-        <span class="keyword">
-            <xar:if condition="$interface">
-                interface
-            <xar:else/>
-                <xar:template file="visibility" />
-                class
-            </xar:if>
-        </span>
+          <xar:if condition="$interface">
+              <span class="keyword">interface</span>
+          <xar:else/>
+              <xar:template file="visibility" />
+              <span class="keyword">class</span>
+          </xar:if>
         <span class="class">#$name#</span>
         <xar:if condition="$parent">
             <span class="keyword">extends</span>
@@ -24,7 +23,7 @@
             <span class="class"><a class="class" href="#$parentitem#">#$parent#</a></span>
         </xar:if>
         <xar:if condition="$interfaces">
-            <span class="keyword">implements </span>
+            <span class="keyword">implements</span>
             <xar:foreach in="$interfaces" key="$index" value="$ifInfo">
                 <xar:if condition="$index gt 0"><span>,</span></xar:if>
                 <!-- TODO: get rid of itemtype here -->
@@ -83,7 +82,7 @@
             <xar:if condition="#$method.returnsref#">&amp;</xar:if>
             <span class="function">#$method.name#</span>
             <span>(</span>
-            <xar:template file="paraminfo" subdata="$method.params"/>
+            <xar:template file="paraminfo" subdata="$method"/>
             <span>)</span>
         </div>
     </xar:foreach>
@@ -94,5 +93,8 @@
 <div>File: #$file# Lines: #$start# - #$end#</div>
 
 <xar:if condition="isset($includeraw) and $includeraw">
-<pre>#$raw#</raw>
+<pre>#$raw#</pre>
 </xar:if>
+
+
+</xar:template>

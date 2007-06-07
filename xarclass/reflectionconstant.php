@@ -1,6 +1,6 @@
 <?php
 
-class ad_ReflectionConstant 
+class ad_ReflectionConstant extends Object
 {
     private $name = '';
 

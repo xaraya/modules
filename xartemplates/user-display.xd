@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div id="reflectioninfo">
     <fieldset>
         <legend>
@@ -11,7 +12,7 @@
             <xar:comment>
                 .php       { font-family: monospace;}
                 .indent    { margin-left: 4em;}
-                .keyword   { color: inherit; font-weight: bold;}
+                .keyword   { color: inherit; font-weight: bold; margin-right: 0.5em;}
                 .function  { color: blue;}
                 .class     { color: green;}
                 .comment   { color: purple;}
@@ -37,3 +38,6 @@
         </xar:if>
     </fieldset>
 </div>
+
+
+</xar:template>

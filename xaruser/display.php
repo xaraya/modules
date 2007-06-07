@@ -1,7 +1,7 @@
 <?php
 
 // Display one reflection item, based on the id
-include_once 'modules/autodoc/xarclass/reflection.php';
+sys::import('modules.autodoc.xarclass.reflection');
 function autodoc_user_display($args=array())
 {
     $data = array();
