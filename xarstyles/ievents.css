@@ -41,7 +41,7 @@ div.ievents-view dl.ievents-events dt strong {
 	display: block;
 	float: left;
 }
-div.ievents-view dl.ievents-events dt span {
+div.ievents-view dl.ievents-events dt span.ievents-time {
 	padding-left: 12em;
 }
 
@@ -126,6 +126,9 @@ select.ievents-jump-catids {
 	vertical-align: top;
 	height: 6em;
 }
+div.ievents-jump-menu span.ievents-date-parts {
+	white-space: nowrap;
+}
 
 /* Calendar view screen */
 div.ievents-view-calendars dl,
@@ -184,3 +187,27 @@ dl.ievents-event dt.ievents-event {
 dl.ievents-event {
 	border: none;
 }
+
+/* Flags wrapper */
+span.ievents-flags-wrapper {
+}
+span.ievents-flags-wrapper span.ievents-flag {
+	margin-left: 0 1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	border: 1px solid #666666;
+	font-weight: bold;
+	color: #ffffff;
+	background-color: #999999;
+}
+span.ievents-flags-wrapper span.ievents-cancelled {
+	background-color: #ff9999;
+}
+span.ievents-flags-wrapper span.ievents-full {
+	background-color: #ff9999;
+}
+span.ievents-flags-wrapper span.ievents-provisional {
+	background-color: #ff9900;
+}
+
+

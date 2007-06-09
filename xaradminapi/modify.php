@@ -202,7 +202,10 @@ function ievents_adminapi_modify($args)
 
             if (empty($eid)) {
                 // Set some default values.
+
                 // When creating an event, the updated time/by should be the same as a the created time/by.
+                $object->properties['created_time']->setValue(time());
+                $object->properties['created_by']->setValue(xarUserGetVar('uid'));
                 $object->properties['updated_time']->setValue($object->properties['created_time']->getValue());
                 $object->properties['updated_by']->setValue($object->properties['created_by']->getValue());
 

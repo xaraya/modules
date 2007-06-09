@@ -98,7 +98,9 @@ function ievents_userapi_params($args)
 
         // Date range list, used to provide a handy set of date ranges in various places
         $params['daterangelist'] = array(
-            '' => xarML('-- Preset --'),
+            '' => xarML('-- Preset range --'),
+            'next4weeks' => xarML('Next four weeks'),
+            'next6months' => xarML('Next six months'),
             'thisyear' => xarML('This year'),
             'nextyear' => xarML('Next year'),
             'thismonth' => xarML('This month'),
@@ -106,8 +108,6 @@ function ievents_userapi_params($args)
             'thisweek' => xarML('This week'),
             'nextweek' => xarML('Next week'),
             'today' => xarML('Today'),
-            'next4weeks' => xarML('Next four weeks'),
-            'next6months' => xarML('Next six months')
         );
 
         // Maximum category depth shown in the jump menu.

@@ -1,16 +1,24 @@
 <div class="ievents-jump-menu">
     <form method="get" action="#xarModURL('ievents','user','view')#">
         <p>
-            <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
-            <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
-            <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
-            <xar:mlstring>to</xar:mlstring>
-            <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-            <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
-            <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
+            <span class="ievents-date-parts">
+                <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
+                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
+                <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
+            </span>
+            <xar:mlstring> to </xar:mlstring>
+            <span class="ievents-date-parts">
+                <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
+                <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
+                <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
+            </span>
+
+            <xar:mlstring> or </xar:mlstring>
 
             <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
             <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
+
+            <br />
 
             <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
             <xar:if condition="!empty($calendarlist) && count($calendarlist) gt 1">

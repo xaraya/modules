@@ -241,11 +241,11 @@ function ievents_userapi_getevents($args)
         // Some fields are grouped. We need to prepare an array of grouped
         // fields. Start by getting a list of all the fields available in the
         // events object.
+        $object = xarModAPIFunc(
+            'dynamicdata', 'user', 'getobject',
+            array('modid' => $modid, 'itemtype' => $itemtype)
+        );
         if (!empty($group_prefixes)) {
-            $object = xarModAPIFunc(
-                'dynamicdata', 'user', 'getobject',
-                array('modid' => $modid, 'itemtype' => $itemtype)
-            );
             $fields = array_keys($object->properties);
             $group_prefixes = explode(',', $group_prefixes);
             $field_groups = array();
@@ -256,6 +256,15 @@ function ievents_userapi_getevents($args)
                         $field_groups[$field] = array('prefix' => $group_prefix, 'suffix' => $part2);
                     }
                 }
+            }
+        }
+
+        // Get an array of possible flag values.
+        $flag_values= array();
+        if (!empty($object->properties['flags']->options)) {
+            // The flags are stored as an array of (id,name) arrays.
+            foreach($object->properties['flags']->options as $flag_value) {
+                $flag_values[$flag_value['id']] = $flag_value['name'];
             }
         }
 
@@ -276,12 +285,14 @@ function ievents_userapi_getevents($args)
                     if (isset($event[$cast]) && is_numeric($event[$cast])) $event[$cast] = (int)$event[$cast];
                 }
 
-                // Expand the flags (array of 'flag'=>'flag' pairs) - just for convenience
+                // Expand the flags (array of 'flag'=>'name' pairs) - just for convenience
                 if (isset($event['flags'])) {
                     $flags_arr = explode(',', $event['flags']);
                     if (!empty($flags_arr)) {
                         $flags_arr = array_flip($flags_arr);
-                        foreach($flags_arr as $key => $value) $flags_arr[$key] = $key;
+                        foreach($flags_arr as $key => $value) {
+                            $flags_arr[$key] = isset($flag_values[$key]) ? $flag_values[$key] : $key;
+                        }
                     }
                     $event['flags_arr'] = $flags_arr;
                 }

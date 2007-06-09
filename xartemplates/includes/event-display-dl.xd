@@ -27,6 +27,7 @@
 </dt>
 
 <dd class="ievents-event-summary">
+    <xar:template file="event-flags" subdata="array('event'=&gt;$event)" />
     <p>
         <strong><xar:mlstring>Date:</xar:mlstring></strong> #$dates.long.date#
         <xar:if condition="$event.duration_days eq 1">
@@ -44,17 +45,19 @@
     <xar:if condition="!empty($event.summary)">
         <p>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary)))#</p>
     </xar:if>
-    <xar:if condition="!empty($event.catids)">
-        <p><xar:mlstring>Categories:</xar:mlstring>
-            <xar:loop name="$event.catids">
-                <xar:if condition="$loop:index gt 0"> | </xar:if>
-                <a href="#xarServerGetCurrentURL(array('cats'=&gt;$loop:item,'eid'=&gt;NULL))#">
-                    #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
-                </a>
-            </xar:loop>
-        </p>
-    </xar:if>
 </dd>
+
+<xar:if condition="!empty($event.catids)">
+    <dd class="ievents-event-categories">
+        <xar:mlstring>Categories:</xar:mlstring>
+        <xar:loop name="$event.catids">
+            <xar:if condition="$loop:index gt 0"> | </xar:if>
+            <a href="#xarServerGetCurrentURL(array('cats'=&gt;$loop:item,'eid'=&gt;NULL))#">
+                #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
+            </a>
+        </xar:loop>
+    </dd>
+</xar:if>
 
 <xar:comment>
     Amount to be displayed depends on the user permissions.

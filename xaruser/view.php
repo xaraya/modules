@@ -494,8 +494,15 @@ function ievents_user_view($args)
     // Now create a reference array of these event IDs, allowing events to be grouped.
     // Loop though each event to put them into a group (day, week, month or year), if required.
     $groups = array();
-    if (!empty($group)) {
-        foreach($events as $eventkey => $eventvalue) {
+    foreach($events as $eventkey => $eventvalue) {
+        // Add some other details to each event, that will be useful.
+        // Add the detail URL, taking into account the current search criteria.
+        $events[$eventkey]['detail_url'] = xarModURL(
+            'ievents', 'user', 'view',
+            array_merge($url_params, array('eid' => $eventvalue['eid']))
+        );
+
+        if (!empty($group)) {
             list($periodtype, $periodnumber, $period1start, $periodstart, $periodend) =
                 xarModAPIfunc('ievents', 'user', 'calc_period',
                     array('startdate' => $ustartdate, 'eventdate' => $eventvalue['startdate'], 'group' => $group)
@@ -633,7 +640,7 @@ function ievents_user_view($args)
         'eid', 'event', 'page_position', 'list_position', 'total_events',
 
         // Pager
-        'pager',
+        'pager', 'url_params',
         'startnum', 'numitems', 'default_numitems',
 
         // Lists (data and lookup)
