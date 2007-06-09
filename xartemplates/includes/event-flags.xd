@@ -1,0 +1,24 @@
+<xar:comment>
+    Show the flags for an event.
+    The nested spans allow the text to be hidden and replaced by an image, if desired.
+    TODO: also display new, old and updated flags.
+</xar:comment>
+
+<xar:if condition="!empty($event.flags_arr)">
+    <span class="ievents-flags-wrapper">
+        <xar:loop name="$event.flags_arr">
+            <xar:if condition="$loop:key eq 'T'">
+                <span class="ievents-rescheduled ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'P'" />
+                <span class="ievents-provisional ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'N'" />
+                <span class="ievents-full ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'C'" />
+                <span class="ievents-cancelled ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'V'" />
+                <span class="ievents-newvenue ievents-flag"><span>#$loop:item#</span></span>
+            </xar:if>
+        </xar:loop>
+    </span>
+</xar:if>
+
