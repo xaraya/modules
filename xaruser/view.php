@@ -584,7 +584,7 @@ function ievents_user_view($args)
         // Check if the user has asked for an export.
         xarVarFetch('export', 'enum:' . implode(':', array_keys($export_handlers)), $export, '', XARVAR_NOT_REQUIRED);
 
-        if (!empty($export)) {
+        if (!empty($export) && $export != 'rss') {
             // Set the export handler.
             $export_object->set_handler($export);
 
@@ -657,6 +657,9 @@ function ievents_user_view($args)
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
+
+    // RSS
+    if ($export == 'rss' && xarThemeIsAvailable('rss')) xarTplSetThemeName('rss');
 
     return $bl_data;
 }
