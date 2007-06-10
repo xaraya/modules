@@ -75,7 +75,7 @@ class DDQuery extends Query
         // Add the next line so we only get data from the encyclopedia object
         // TODO: use this line to subclass the rest of the code, which can
         // be left as a generic DynamicDataQuery
-        parent::in('prop_objectid', $this->object);
+        parent::in('prop_objectid', $object);
 
         // Only include active fields
         // TODO: adjust the query for property status
