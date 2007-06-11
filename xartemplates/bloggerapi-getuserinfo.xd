@@ -1,38 +1,36 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<methodResponse>
-  <params>
-    <param>
-      <value>
-        <struct>
-          <member>
-            <name>nickname</name>
-            <value><string>#$nickname#</string></value>
-          </member>
-          <member>
-            <name>userid</name>
-            <value><string>#$userid#</string></value>
-          </member>
-          <member>
-            <name>email</name>
-            <value><string>#$email#</string></value>
-          </member>
-          <member>
-            <name>lastname</name>
-            <value><string>#$lastname#</string></value>
-          </member>
-          <member>
-            <name>firstname</name>
-            <value><string>#$firstname#</string></value>
-          </member>
-          <member>
-            <name>url</name>
-            <value><string>#$url#</string></value>
-          </member>
-        </struct>
-      </value>
-    </param>
-  </params>
-</methodResponse>
-
-
+  <methodResponse>
+    <params>
+      <param>
+        <value>
+          <struct>
+            <member>
+              <name>nickname</name>
+              <value><string><xar:var name="nickname"/></string></value>
+            </member>
+            <member>
+              <name>userid</name>
+              <value><string><xar:var name="userid"/></string></value>
+            </member>
+            <member>
+              <name>email</name>
+              <value><string><xar:var name="email"/></string></value>
+            </member>
+            <member>
+              <name>lastname</name>
+              <value><string><xar:var name="lastname"/></string></value>
+            </member>
+            <member>
+              <name>firstname</name>
+              <value><string><xar:var name="firstname"/></string></value>
+            </member>
+            <member>
+              <name>url</name>
+              <value><string><xar:var name="url"/></string></value>
+            </member>
+          </struct>
+        </value>
+      </param>
+    </params>
+  </methodResponse>
 </xar:template>

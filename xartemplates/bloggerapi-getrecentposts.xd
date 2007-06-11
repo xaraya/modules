@@ -1,41 +1,40 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<methodResponse>
-  <params>
-    <param>
-      <value>
-        <array>
-          <data>
-            <xar:if condition="!empty($articlelist)">
-                <xar:loop name="$articlelist">
-                  <value>
-                    <struct>
-                      <member>
-                        <name>userid</name>
-                        <value><string>#$loop:item['authorid']#</string></value>
-                      </member>
-                      <member>
-                        <name>dateCreated</name>
-                        <value>
-                          <dateTime.iso8601>#$loop:item['dateCreated']#</dateTime.iso8601>
-                        </value>
-                      </member>
-                      <member>
-                        <name>content</name>
-                        <value><string>#$loop:item['content']#</string></value>
-                      </member>
-                      <member>
-                        <name>postid</name>
-                        <value><string>#$loop:item['postid']#</string></value>
-                      </member>
-                    </struct>
-                  </value>
-                </xar:loop>
-            </xar:if>
-          </data>
-        </array>
-      </value>
-    </param>
-  </params>
-</methodResponse>
-
+  <methodResponse>
+    <params>
+      <param>
+        <value>
+          <array>
+            <data>
+              <xar:if condition="!empty($articlelist)">
+                  <xar:loop name="$articlelist">
+                    <value>
+                      <struct>
+                        <member>
+                          <name>userid</name>
+                          <value><string>#$loop:item.authorid#</string></value>
+                        </member>
+                        <member>
+                          <name>dateCreated</name>
+                          <value>
+                            <dateTime.iso8601>#$loop:item.dateCreated.#</dateTime.iso8601>
+                          </value>
+                        </member>
+                        <member>
+                          <name>content</name>
+                          <value><string>#$loop:item.content#</string></value>
+                        </member>
+                        <member>
+                          <name>postid</name>
+                          <value><string>#$loop:item.postid#</string></value>
+                        </member>
+                      </struct>
+                    </value>
+                  </xar:loop>
+              </xar:if>
+            </data>
+          </array>
+        </value>
+      </param>
+    </params>
+  </methodResponse>
 </xar:template>

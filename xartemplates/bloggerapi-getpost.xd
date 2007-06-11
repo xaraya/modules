@@ -1,31 +1,30 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<methodResponse>
-  <params>
-    <param>
-      <value>
-        <struct>
-          <member>
-            <name>userid</name>
-            <value><string>#$userid#</string></value>
-          </member>
-          <member>
-            <name>dateCreated</name>
-            <value>
-              <dateTime.iso8601>#$dateCreated#</dateTime.iso8601>
-            </value>
-          </member>
-          <member>
-            <name>content</name>
-            <value><string>#$content#</string></value>
-          </member>
-          <member>
-            <name>postid</name>
-            <value><string>#$postid#</string></value>
-          </member>
-        </struct>
-      </value>
-    </param>
-  </params>
-</methodResponse>
-
+  <methodResponse>
+    <params>
+      <param>
+        <value>
+          <struct>
+            <member>
+              <name>userid</name>
+              <value><string><xar:var name="userid"/></string></value>
+            </member>
+            <member>
+              <name>dateCreated</name>
+              <value>
+                <dateTime.iso8601><xar:var name="dateCreated"/></dateTime.iso8601>
+              </value>
+            </member>
+            <member>
+              <name>content</name>
+              <value><string><xar:var name="content"/></string></value>
+            </member>
+            <member>
+              <name>postid</name>
+              <value><string><xar:var name="postid"/></string></value>
+            </member>
+          </struct>
+        </value>
+      </param>
+    </params>
+  </methodResponse>
 </xar:template>
