@@ -18,7 +18,7 @@
  * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   none
- * @return  true on success or void or false on failure
+ * @return  bool true on success or void or false on failure
  * @throws  'DATABASE_ERROR'
  * @todo    nothing
 */
@@ -283,7 +283,7 @@ function categories_init()
  *
  * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
- * @param   $oldVersion
+ * @param   string $oldVersion
  * @return  true on success or false on failure
  * @throws  no exceptions
  * @todo    nothing

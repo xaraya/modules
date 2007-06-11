@@ -15,9 +15,9 @@
  * update linkage for an item - hook for ('item','update','API')
  * Needs $extrainfo['cids'] from arguments, or 'cids' from input
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @return array extrainfo
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function categories_adminapi_updatehook($args)

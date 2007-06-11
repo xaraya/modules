@@ -31,7 +31,7 @@
  *       @param $args['rightorleft'] Where the new category should be: RIGHT or LEFT
  *
  *  -- OUTPUT --
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
 
  */
 function categories_adminapi_updatecat($args)

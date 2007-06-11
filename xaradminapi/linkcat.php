@@ -12,17 +12,18 @@
  * @author Categories module development team
  */
 /**
- * link items to categories
- * @param $args['cids'] Array of IDs of the category
- * @param $args['iids'] Array of IDs of the items
- * @param $args['modid'] ID of the module
- * @param $args['itemtype'] item type
+ * Link items to categories
+ * @param array $args['cids'] Array of IDs of the category
+ * @param array $args['iids'] Array of IDs of the items
+ * @param int $args['modid'] ID of the module
+ * @param int $args['itemtype'] item type
 
  * Links each cid in cids to each iid in iids
 
- * @param $args['clean_first'] If is set to true then any link of the item IDs
+ * @param bool $args['clean_first'] If is set to true then any link of the item IDs
  *                             at iids will be removed before inserting the
  *                             new ones
+ * @return bool true on success
  */
 function categories_adminapi_linkcat($args)
 {

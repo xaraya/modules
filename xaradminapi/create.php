@@ -21,8 +21,7 @@
  * @param $args['parent_id'] Parent Category ID (0 if root)
  *
  *  -- OUTPUT --
- * @returns int
- * @return category ID on success, false on failure
+ * @return mixed category ID on success, false on failure
  */
 function categories_adminapi_create ($args)
 {
