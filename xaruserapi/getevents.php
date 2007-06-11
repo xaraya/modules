@@ -34,6 +34,8 @@ function ievents_userapi_getevents($args)
 {
     extract($args);
 
+    static $static_object = NULL;
+
     list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format) =
         xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format'));
 
@@ -241,10 +243,17 @@ function ievents_userapi_getevents($args)
         // Some fields are grouped. We need to prepare an array of grouped
         // fields. Start by getting a list of all the fields available in the
         // events object.
-        $object = xarModAPIFunc(
-            'dynamicdata', 'user', 'getobject',
-            array('modid' => $modid, 'itemtype' => $itemtype)
-        );
+        if (!empty($static_object)) {
+            $object = $static_object;
+        } else {
+            $object = xarModAPIFunc(
+                'dynamicdata', 'user', 'getobject',
+                array('modid' => $modid, 'itemtype' => $itemtype)
+            );
+            // Cache the object, useful when doing imports.
+            $static_object = $object;
+        }
+
         if (!empty($group_prefixes)) {
             $fields = array_keys($object->properties);
             $group_prefixes = explode(',', $group_prefixes);

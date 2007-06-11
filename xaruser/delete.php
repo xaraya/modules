@@ -19,7 +19,7 @@ function ievents_user_delete($args)
     // Confirm text.
     xarVarFetch('confirm', 'str:0:30', $confirm, '', XARVAR_NOT_REQUIRED);
 
-    // Confirm text.
+    // Return URL.
     xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_NOT_REQUIRED);
     $return['return_url'] = $return_url;
     
@@ -43,7 +43,7 @@ function ievents_user_delete($args)
             } else {
                 // If confirmed, then do the delete
                 if (!empty($confirm)) {
-                    // TODO: do the delete
+                    // Do the delete
                     $result = xarModAPIfunc('ievents', 'admin', 'delete', array('eid' => $eid));
 
                     if (empty($result)) {

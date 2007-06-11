@@ -73,7 +73,7 @@
         <xar:if condition="!empty($event.url) && $event.url ne 'http://'">
             <p>
                 <xar:ml>
-                    <xar:mlstring><a href="#(1)">More information</a> (<a href="#(1)" target="_blank">New window</a>)</xar:mlstring>
+                    <xar:mlstring><a href="#(1)">More information and to book a place</a> (<a href="#(1)" target="_blank">New window</a>)</xar:mlstring>
                     <xar:mlvar>#xarVarPrepForDisplay($event.url)#</xar:mlvar>
                 </xar:ml>
             </p>

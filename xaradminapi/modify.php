@@ -57,6 +57,10 @@ function ievents_adminapi_modify($args)
     // It will automatically show as display-only when updating.
     if (empty($eid)) $props_hidden[] = 'eid';
 
+    // Some items passed in may need casting to more appropriate types.
+    // Cast an array of flags to a string.
+    if (isset($args['flags']) && is_array($args['flags'])) $args['flags'] = implode(',', $args['flags']);
+
     // If no event ID, then this is a new event, otherwise we are modifying an event.
     if (!empty($eid)) {
         // Updating an event.

@@ -18,6 +18,7 @@
         <input type="submit" name="confirm" value="#xarML('Confirm')#" />
         <input type="hidden" name="eid" value="#$event.eid#" />
         <xar:if condition="!empty($return_url)">
+            <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
             <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
         </xar:if>
     </p>
