@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -35,7 +35,7 @@ function articles_userapi_getpubcatcount($args)
     $pubcatcount = array();
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
@@ -51,14 +51,14 @@ function articles_userapi_getpubcatcount($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
     // Get count
-    $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['cid']
+    $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['category_id']
            .', COUNT(*)
             FROM '. $articlesdef['table'] . '
             LEFT JOIN ' . $categoriesdef['table'] .'
             ON '. $categoriesdef['field'] . ' = ' . $articlesdef['field'] .
             $categoriesdef['more'] . '
             WHERE '. $categoriesdef['where'] .' AND '. $articlesdef['where'] .'
-            GROUP BY '. $articlesdef['pubtypeid'] .', '. $categoriesdef['cid'];
+            GROUP BY '. $articlesdef['pubtypeid'] .', '. $categoriesdef['category_id'];
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

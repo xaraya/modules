@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,9 +38,7 @@ function articles_admin_create()
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'admin', 'create',
                     'Articles');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
 // TODO: switch to DD object style
@@ -100,7 +98,7 @@ function articles_admin_create()
         }
     }
 
-    $article['authorid'] = xarUserGetVar('uid');
+    $article['authorid'] = xarUserGetVar('id');
     if (empty($article['authorid'])) {
         $article['authorid'] = _XAR_ID_UNREGISTERED;
     }
@@ -160,7 +158,7 @@ function articles_admin_create()
     }
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Created'));
+    xarSession::setVar('statusmsg', xarML('Article Created'));
 
     // Save and continue editing via feature request.
     if (isset($save)){

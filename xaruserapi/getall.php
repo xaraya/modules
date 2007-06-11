@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,38 +12,38 @@
  * @author mikespub
  */
 /**
- * Get a selection of all articles
+ * get overview of all articles
  * Note : the following parameters are all optional
  *
- * @param int    $args['numitems'] number of articles to get
- * @param string $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes',...)
- * @param int    $args['startnum'] starting article number
- * @param array  $args['aids'] array of article ids to get
- * @param int    $args['authorid'] the ID of the author
- * @param int    $args['ptid'] publication type ID (for news, sections, reviews, ...)
- * @param array  $args['status'] array of requested status(es) for the articles
- * @param string $args['search'] search parameter(s)
- * @param array  $args['searchfields'] array of fields to search in (TODO)
- * @param string $args['searchtype'] start, end, like, eq, gt, ... (TODO)
- * @param array  $args['cids'] array of category IDs for which to get articles (OR/AND)
+ * @param $args['numitems'] number of articles to get
+ * @param $args['sort'] sort order ('pubdate','title','hits','rating','author','aid','summary','notes',...)
+ * @param $args['startnum'] starting article number
+ * @param $args['aids'] array of article ids to get
+ * @param $args['authorid'] the ID of the author
+ * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
+ * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['search'] search parameter(s)
+ * @param $args['searchfields'] array of fields to search in
+ * @param $args['searchtype'] start, end, like, eq, gt, ... (TODO)
+ * @param $args['cids'] array of category IDs for which to get articles (OR/AND)
  *                      (for all categories don?t set it)
- * @param bool   $args['andcids'] true means AND-ing categories listed in cids
- * @param string $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
- * @param int    $args['startdate'] articles published at startdate or later
+ * @param $args['andcids'] true means AND-ing categories listed in cids
+ * @param $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
+ * @param $args['startdate'] articles published at startdate or later
  *                           (unix timestamp format)
- * @param int    $args['enddate'] articles published before enddate
+ * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
- * @param array $args['fields'] array with all the fields to return per article
+ * @param $args['fields'] array with all the fields to return per article
  *                        Default list is : 'aid','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
- * @param array $args['extra'] array with extra fields to return per article (in addition
+ * @param $args['extra'] array with extra fields to return per article (in addition
  *                       to the default list). So you can EITHER specify *all* the
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
- * @param string $args['where'] additional where clauses (e.g. myfield gt 1234)
- * @param string $args['wheredd'] where clauses for hooked dd fields (e.g. myddfield gt 1234) [requires 'ptid' is defined]
- * @param string $args['language'] language/locale (if not using multi-sites, categories etc.)
+ * @param $args['where'] additional where clauses (e.g. myfield gt 1234)
+ * @param $args['wheredd'] where clauses for hooked dd fields (e.g. myddfield gt 1234) [requires 'ptid' is defined]
+ * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @return array Array of articles, or false on failure
  */
 function articles_userapi_getall($args)
@@ -149,7 +149,7 @@ function articles_userapi_getall($args)
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
     // Database information
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
 
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for
@@ -167,6 +167,9 @@ function articles_userapi_getall($args)
         if (empty($usersdef)) return;
     }
 
+    $info = xarMod::getBaseInfo('articles');
+    $sysid = $info['systemid'];
+
     if (!empty($required['cids'])) {
         // Load API
         if (!xarModAPILoad('categories', 'user')) return;
@@ -176,8 +179,7 @@ function articles_userapi_getall($args)
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
                                             'itemtype' => isset($ptid) ? $ptid : null,
-                                            'modid' =>
-                                              xarModGetIDFromName('articles')));
+                                            'modid' => $sysid));
         if (empty($categoriesdef)) return;
     }
 
@@ -187,8 +189,7 @@ function articles_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
         $hitcountdef = xarModAPIFunc('hitcount','user','leftjoin',
-                                    array('modid' =>
-                                            xarModGetIDFromName('articles'),
+                                    array('modid' => $sysid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -198,8 +199,7 @@ function articles_userapi_getall($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
         $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
-                                    array('modid' =>
-                                            xarModGetIDFromName('articles'),
+                                    array('modid' => $sysid,
                                           'itemtype' => isset($ptid) ? $ptid : null));
     }
 
@@ -420,7 +420,7 @@ function articles_userapi_getall($args)
                              array('iids' => $aids,
                                    'reverse' => 1,
                                // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
-                                   'modid' => xarModGetIDFromName('articles')));
+                                   'modid' => $sysid));
 
         // Inserting the corresponding Category ID in the Article Description
         $delete = array();

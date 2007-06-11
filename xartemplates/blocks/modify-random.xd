@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
     <label class="xar-form-label help" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems#$blockid#">
         <xar:mlstring>
@@ -218,3 +219,6 @@
 <xar:comment>
     Add include children to categories 
 </xar:comment>
+
+
+</xar:template>

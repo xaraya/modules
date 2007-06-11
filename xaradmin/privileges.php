@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,6 @@ function articles_admin_privileges($args)
     // fixed params
     if (!xarVarFetch('ptid',         'isset', $ptid,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('aid',          'isset', $aid,          NULL, XARVAR_DONT_SET)) {return;}
@@ -35,6 +34,10 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+
+    sys::import('modules.dynamicdata.class.properties.master');
+    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $cids = $categories->returnInput('privcategories');
 
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);
@@ -53,7 +56,7 @@ function articles_admin_privileges($args)
 
 // TODO: do something with cid for security check
 
-// TODO: figure out how to handle more than 1 category in instances
+    // TODO: figure out how to handle more than 1 category in instances
     if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
         $cid = 0;
     }
@@ -183,13 +186,8 @@ function articles_admin_privileges($args)
 
     $catlist = array();
     if (!empty($ptid)) {
-        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
-        if (!empty($cidstring)) {
-            $rootcats = explode (';', $cidstring);
-            foreach ($rootcats as $catid) {
-                $catlist[$catid] = 1;
-            }
-        }
+        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
+        foreach ($basecats as $catid) $catlist[$catid['cid']] = 1;
         if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
             $data['showauthor'] = 0;
         } else {
@@ -197,12 +195,9 @@ function articles_admin_privileges($args)
         }
     } else {
         foreach (array_keys($data['pubtypes']) as $pubid) {
-            $cidstring = xarModGetVar('articles', 'mastercids.'.$pubid);
-            if (!empty($cidstring)) {
-                $rootcats = explode (';', $cidstring);
-                foreach ($rootcats as $catid) {
-                    $catlist[$catid] = 1;
-                }
+            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
+            foreach ($basecats as $catid) {
+                $catlist[$catid['cid']] = 1;
             }
         }
         $data['showauthor'] = 1;
@@ -211,29 +206,12 @@ function articles_admin_privileges($args)
     $seencid = array();
     if (!empty($cid)) {
         $seencid[$cid] = 1;
-/*
-        $data['catinfo'] = xarModAPIFunc('categories',
-                                         'user',
-                                         'getcatinfo',
-                                         array('cid' => $cid));
-*/
     }
 
-    $data['cats'] = array();
-    foreach (array_keys($catlist) as $catid) {
-        $data['cats'][] = xarModAPIFunc('categories',
-                                        'visual',
-                                        'makeselect',
-                                        Array('cid' => $catid,
-                                              'return_itself' => true,
-                                              'values' => &$seencid,
-                                              'multiple' => 0,
-                                              'javascript' => 'onchange="submit()"'));
-    }
-
+    $data['cids'] = $cids;
+    $data['cats'] = $catlist;
     $data['refreshlabel'] = xarML('Refresh');
     $data['applylabel'] = xarML('Finish and Apply to Privilege');
-
     return $data;
 }
 

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,9 +23,7 @@ function articles_adminapi_browse($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'base directory', 'admin', 'browse',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     $filelist = array();

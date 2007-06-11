@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,16 +38,12 @@ function articles_adminapi_update($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'update',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     } elseif (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'update',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
 // Note : this will take care of checking against the current article values
@@ -60,14 +56,12 @@ function articles_adminapi_update($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to update #(1) items',
                     'Article');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return false;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $articlestable = $xartable['articles'];
     $bindvars = array();
     // Update the item
@@ -138,6 +132,12 @@ function articles_adminapi_update($args)
     if (xarVarIsCached('Hooks.all','noupdate')){
         $args['statusflag'] = true; // legacy support for old method - remove later on
     }
+
+/* ---------------------------- TODO: Remove
+    sys::import('modules.dynamicdata.class.properties.master');
+    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
+    $categories->checkInput('categories',$aid);
+------------------------------- */
 
     $args['module'] = 'articles';
     if (isset($ptid)) {

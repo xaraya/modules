@@ -1,5 +1,6 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($cattrees) and is_array($cattrees)">
-<ul><span>You Are Here: &nbsp;</span>
+<ul><span>You Are Here: &#160;</span>
 <xar:foreach in="$cattrees" value="$cattree">
 
     <xar:if condition="isset($cattree['catparents']) and is_array($cattree['catparents']) and sizeof($cattree['catparents']) gt 0">
@@ -24,3 +25,6 @@
 </xar:foreach>
 </ul>
 </xar:if>
+
+
+</xar:template>

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,26 +14,26 @@
 /**
  * get a specific article by aid, or by a combination of other fields
  *
- * @param id     $args['aid'] id of article to get, or
- * @param id     $args['pubtypeid'] pubtype id of article to get, and optional
+ * @param id $args['aid'] id of article to get, or
+ * @param id $args['pubtypeid'] pubtype id of article to get, and optional
  * @param string $args['title'] title of article to get, and optional
  * @param string $args['summary'] summary of article to get, and optional
  * @param string $args['body'] body of article to get, and optional
- * @param int    $args['authorid'] id of the author of article to get, and optional
- * @param        $args['pubdate'] pubdate of article to get, and optional
+ * @param int $args['authorid'] id of the author of article to get, and optional
+ * @param $args['pubdate'] pubdate of article to get, and optional
  * @param string $args['notes'] notes of article to get, and optional
- * @param int    $args['status'] status of article to get, and optional
+ * @param int $args['status'] status of article to get, and optional
  * @param string $args['language'] language of article to get
- * @param bool   $args['withcids'] (optional) if we want the cids too (default false)
- * @param array  $args['fields'] array with all the fields to return per article
+ * @param bool $args['withcids'] (optional) if we want the cids too (default false)
+ * @param array $args['fields'] array with all the fields to return per article
  *                        Default list is : 'aid','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
- * @param array  $args['extra'] array with extra fields to return per article (in addition
+ * @param array $args['extra'] array with extra fields to return per article (in addition
  *                       to the default list). So you can EITHER specify *all* the
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
- * @param id     $args['ptid'] same as 'pubtypeid'
+ * @param id $args['ptid'] same as 'pubtypeid'
  * @return array article array, or false on failure
  */
 function articles_userapi_get($args)
@@ -46,9 +46,7 @@ function articles_userapi_get($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'user', 'get',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // allow ptid instead of pubtypeid, like getall and other api's (if both specified, ptid wins)
@@ -111,8 +109,8 @@ function articles_userapi_get($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $articlestable = $xartable['articles'];
 
     // Get item
@@ -157,13 +155,14 @@ function articles_userapi_get($args)
         $article['cids'] = array();
         if (!xarModAPILoad('categories', 'user')) return;
 
+        $info = xarMod::getBaseInfo('articles');
+        $sysid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),
                                           'itemtype' => $pubtypeid,
-                                          'modid' =>
-                                               xarModGetIDFromName('articles'),
+                                          'modid' => $sysid,
                                           'reverse' => 0
                                          )
                                    );

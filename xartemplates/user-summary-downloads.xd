@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-norm xar-standard-box-padding">
     <h3>
@@ -35,3 +36,6 @@
         </xar:loop></xar:if>
     </div>
 </div>
+
+
+</xar:template>

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,9 +28,7 @@ function articles_admin_exportpubtype($args)
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',
                      xarVarPrepForDisplay($ptid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
     $pubtype = $pubtypes[$ptid];
 
@@ -137,8 +135,8 @@ function articles_admin_exportpubtype($args)
                                    'config'   => $unsettings));
 
     if (isset($object) && count($object->properties) > 0) {
-        $proptypes = xarModAPIFunc('dynamicdata','user','getproptypes');
-        $prefix = xarDBGetSystemTablePrefix();
+        $proptypes = DataPropertyMaster::getPropertyTypes();
+        $prefix = xarDB::getPrefix();
         $prefix .= '_';
         $keys = array('id','label','type','default','source','status','order','validation');
 

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -111,7 +112,11 @@
                                 </td>
                                 <td class="xar-norm">
                                     <xar:if condition="!empty($item['editurl'])">
-                                        <input type="checkbox" name="aids[#$item['aid']#]" id="aids[#$item['aid']#]" value="1" #$item['selected']# />
+                                      <xar:if condition="$item.selected eq 'checked'">
+                                        <input type="checkbox" name="aids[#$item['aid']#]" id="aids[#$item['aid']#]" value="1" checked="#$item.selected#" />
+                                      <xar:else/>
+                                        <input type="checkbox" name="aids[#$item['aid']#]" id="aids[#$item['aid']#]" value="1" />
+                                      </xar:if>
                                     </xar:if>
                                 </td>
                             </xar:if>
@@ -150,7 +155,7 @@
                             <xar:mlstring>
                                 Change checked article status to
                             </xar:mlstring>
-                            :</label>&nbsp;
+                            :</label>&#160;
                         <select name="status" id="status">
                         <xar:if condition="xarSecurityCheck('DeleteArticles',0,'Article',$ptid.':All:All:All')">
                             <option value="-1">
@@ -180,9 +185,11 @@
                         </xar:foreach>
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
+<![CDATA[
     document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
     document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+]]>
 </script>
                     </p>
                 </xar:if>
@@ -191,3 +198,6 @@
         #$pager#
     </div>
 </div>
+
+
+</xar:template>

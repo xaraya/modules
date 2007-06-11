@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -68,9 +68,8 @@ function articles_user_display($args)
     }
 
     if (!is_array($article)) {
-        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'userapi', 'get', 'articles');
+        throw new DataNotFoundException(null, $msg);
     }
 
     // Get publication types
@@ -499,7 +498,6 @@ function articles_user_display($args)
         $data['hooks'] = xarModCallHooks('item', 'display', $aid,
                                          array('module'    => 'articles',
                                                'itemtype'  => $pubtypeid,
-											   'title'     => $title,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',

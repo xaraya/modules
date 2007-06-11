@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -98,8 +98,7 @@ function articles_user_viewmap($args)
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $cidstring = xarModGetVar('articles','mastercids');
-        $rootcats = explode (';', $cidstring);
+        $rootcats = unserialize(xarModVars::get('articles','basecids'));
 
         $catlist = array();
         if (!empty($rootcats) && is_array($rootcats)) {

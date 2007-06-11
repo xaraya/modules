@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,9 +29,7 @@ function articles_admin_showpropval($args)
 
     if (empty($pubtypes[$ptid]['config'][$field])) {
         $msg = xarML('Invalid item id');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Get current configuration

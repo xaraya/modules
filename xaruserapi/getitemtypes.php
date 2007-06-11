@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,6 +20,10 @@ function articles_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
+    $itemtypes[300] = array('label' => xarML('Bare Article'),
+                          'title' => xarML('View Bare Article'),
+                          'url'   => xarModURL('articles','user','view')
+                         );
     // Get publication types
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
@@ -29,7 +33,19 @@ function articles_userapi_getitemtypes($args)
                                 'url'   => xarModURL('articles','user','view',array('ptid' => $id))
                                );
     }
-    return $itemtypes;
+
+    $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 151, 'native' =>false));
+
+    /* TODO: activate this code when we move to php5
+    $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
+    $values = array_merge(array_values($itemtypes),array_values($extensionitemtypes));
+    return array_combine($keys,$values);
+    */
+
+    $types = array();
+    foreach ($itemtypes as $key => $value) $types[$key] = $value;
+    foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+    return $types;
 }
 
 ?>

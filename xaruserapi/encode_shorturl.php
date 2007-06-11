@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 /**
  * return the path for a short URL to xarModURL for this module
  *
- * @param array $args the function and arguments passed to xarModURL
+ * @param $args the function and arguments passed to xarModURL
  * @return string path to be added to index.php for a short URL, or empty if failed
  */
 function articles_userapi_encode_shorturl($args)

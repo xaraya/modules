@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
     <label class="help xar-form-label" title="#xarML('Enter the number of items that you wish to display.')#" for="numitems_#$bid#"> 
         <xar:mlstring>
@@ -17,3 +18,5 @@
         </xar:mlstring>
     </label> 
 </div>
+
+</xar:template>

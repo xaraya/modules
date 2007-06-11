@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($nextlevel)">
     <xar:set name="curlevel">$nextlevel</xar:set>
 </xar:if>
@@ -83,3 +84,6 @@
     </xar:foreach>
 </ul>
 
+
+
+</xar:template>

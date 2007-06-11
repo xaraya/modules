@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -63,8 +63,8 @@ function articles_userapi_leftjoin($args)
     // Note : no security checks here
 
     // Table definition
-    $xartable =& xarDBGetTables();
-    $dbconn   =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn   = xarDB::getConn();
     $articlestable = $xartable['articles'];
 
     $leftjoin = array();
@@ -116,24 +116,24 @@ function articles_userapi_leftjoin($args)
     if (!empty($pubdate)) {
         // published in a certain year
         if (preg_match('/^(\d{4})$/',$pubdate,$matches)) {
-            $startdate = gmmktime(0,0,0,1,1,$matches[1],0);
-            $enddate = gmmktime(0,0,0,1,1,$matches[1]+1,0);
+            $startdate = gmmktime(0,0,0,1,1,$matches[1]);
+            $enddate = gmmktime(0,0,0,1,1,$matches[1]+1);
             if ($enddate > time()) {
                 $enddate = time();
             }
         // published in a certain month
         } elseif (preg_match('/^(\d{4})-(\d+)$/',$pubdate,$matches)) {
-            $startdate = gmmktime(0,0,0,$matches[2],1,$matches[1],0);
+            $startdate = gmmktime(0,0,0,$matches[2],1,$matches[1]);
             // PHP allows month > 12 :-)
-            $enddate = gmmktime(0,0,0,$matches[2]+1,1,$matches[1],0);
+            $enddate = gmmktime(0,0,0,$matches[2]+1,1,$matches[1]);
             if ($enddate > time()) {
                 $enddate = time();
             }
         // published in a certain day
         } elseif (preg_match('/^(\d{4})-(\d+)-(\d+)$/',$pubdate,$matches)) {
-            $startdate = gmmktime(0,0,0,$matches[2],$matches[3],$matches[1],0);
+            $startdate = gmmktime(0,0,0,$matches[2],$matches[3],$matches[1]);
             // PHP allows day > 3x :-)
-            $enddate = gmmktime(0,0,0,$matches[2],$matches[3]+1,$matches[1],0);
+            $enddate = gmmktime(0,0,0,$matches[2],$matches[3]+1,$matches[1]);
             if ($enddate > time()) {
                 $enddate = time();
             }

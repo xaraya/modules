@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -159,15 +159,9 @@ function articles_user_archive($args)
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
-        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
-        if (!empty($cidstring)) {
-            $rootcats = explode(';',$cidstring);
-        }
+        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
     } else {
-        $cidstring = xarModGetVar('articles', 'mastercids');
-        if (!empty($cidstring)) {
-            $rootcats = explode (';', $cidstring);
-        }
+        $rootcats = unserialize(xarModVars::get('articles','basecids'));
     }
     $catlist = array();
     $catinfo = array();
@@ -238,8 +232,7 @@ function articles_user_archive($args)
                                 );
         if (!is_array($articles)) {
             $msg = xarML('Failed to retrieve articles in #(3)_#(1)_#(2).php', 'user', 'getall', 'articles');
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
+            throw new DataNotFoundException(null, $msg);
         }
     } else {
         $articles = array();
@@ -340,7 +333,7 @@ function articles_user_archive($args)
         $catlist[] = array('cid' => 0,
                            'name' => xarML('Date'),
                            'link' => $link);
-        $catsel[] = '&nbsp;';
+        $catsel[] = '&#160;';
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.

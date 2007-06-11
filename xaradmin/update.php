@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,18 +36,14 @@ function articles_admin_update()
     if (empty($aid) || !is_numeric($aid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item id', 'admin', 'update', 'Articles');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'publication type', 'admin', 'update', 'Articles');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     // Get original article information
@@ -60,9 +56,7 @@ function articles_admin_update()
     if (!isset($article)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'article', 'admin', 'update', 'Articles');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException(null, $msg);
     }
 
 // TODO: switch to DD object style
@@ -169,7 +163,7 @@ function articles_admin_update()
     unset($article);
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Updated'));
+    xarSession::setVar('statusmsg', xarML('Article Updated'));
 
     // Save and continue editing via feature request.
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
@@ -184,7 +178,7 @@ function articles_admin_update()
     }
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

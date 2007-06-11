@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,7 +26,7 @@ function articles_userapi_getpubfieldformats($args)
     $fieldlist=array(
         'static'          => xarML('Static Text'),
         'textbox'         => xarML('Text Box'),
-        'textarea_small'  => xarML('Small Text Area'),
+        'textarea'  => xarML('Small Text Area'),
         'textarea_medium' => xarML('Medium Text Area'),
         'textarea_large'  => xarML('Large Text Area'),
         'dropdown'        => xarML('Dropdown List'),
@@ -49,7 +49,7 @@ function articles_userapi_getpubfieldformats($args)
     // Add  'text' dd properites that are dependent on module availability
     $extrafields=array();
     if (xarModIsAvailable('tinymce')) {
-        $extrafields=array('xartinymce'=> xarML('xarTinyMCE GUI'));
+        $extrafields=array('tinymce'=> xarML('TinyMCE GUI'));
         $fieldlist=array_merge($fieldlist,$extrafields);
     }
 

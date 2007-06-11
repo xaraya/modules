@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,15 +31,9 @@ function articles_userapi_getrootcats($args)
     // see which root categories we need to handle
     $rootcats = array();
     if (!empty($ptid)) {
-        $cidstring = xarModGetVar('articles','mastercids.'.$ptid);
-        if (!empty($cidstring)) {
-            $rootcats = explode(';',$cidstring);
-        }
+        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
     } elseif (empty($all)) {
-        $cidstring = xarModGetVar('articles','mastercids');
-        if (!empty($cidstring)) {
-            $rootcats = explode(';',$cidstring);
-        }
+        $rootcats = unserialize(xarModVars::get('articles','basecids'));
     } else {
         // Get publication types
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
@@ -51,21 +45,24 @@ function articles_userapi_getrootcats($args)
         $catlist = array();
         foreach ($publist as $pubid) {
             if (empty($pubid)) {
-                $cidstring = xarModGetVar('articles','mastercids');
+                $cidstring = xarModVars::get('articles','basecids');
             } else {
-                $cidstring = xarModGetVar('articles','mastercids.'.$pubid);
+                $cidstring = xarModGetUserVar('articles','basecids',$pubid);
             }
             if (!empty($cidstring)) {
-                $rootcats = explode(';',$cidstring);
+                $rootcats = unserialize($cidstring);
+            } else {
+                $rootcats = array();
+            }
                 foreach ($rootcats as $cid) {
                     $catlist[$cid] = 1;
                 }
-            }
         }
         if (count($catlist) > 0) {
             $rootcats = array_keys($catlist);
         }
     }
+    if (empty($rootcats)) $rootcats = array();
 
     if (count($rootcats) < 1) {
         return array();

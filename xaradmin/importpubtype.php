@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -52,9 +52,7 @@ function articles_admin_importpubtype($args)
             }
             if (empty($found) || !file_exists($basedir . '/' . $file)) {
                 $msg = xarML('File not found');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                               new SystemException($msg));
-                return;
+                throw new BadParameterException(null,$msg);
             }
             $ptid = xarModAPIFunc('articles','admin','importpubtype',
                                   array('file' => $basedir . '/' . $file));

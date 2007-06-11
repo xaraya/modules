@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,7 +21,7 @@ function articles_xartables()
     // Initialise table array
     $xartable = array();
     // Get Site Prefix
-    $sitePrefix = xarDBGetSiteTablePrefix();
+    $sitePrefix = xarDB::getPrefix();
     // Name for articles database entities
     $articles = $sitePrefix . '_articles';
 

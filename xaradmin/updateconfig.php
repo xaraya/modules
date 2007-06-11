@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * Update configuration for this module
+ * Update configuration
  */
 function articles_admin_updateconfig()
 {
@@ -63,11 +63,11 @@ function articles_admin_updateconfig()
         if (xarDBGetType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModGetVar('articles', 'fulltextsearch');
-            $index = 'i_' . xarDBGetSiteTablePrefix() . '_articles_fulltext';
+            $index = 'i_' . xarDB::getPrefix() . '_articles_fulltext';
             if (empty($fulltext) && !empty($oldval)) {
                 // Get database setup
-                $dbconn =& xarDBGetConn();
-                $xartable =& xarDBGetTables();
+                $dbconn = xarDB::getConn();
+                $xartable = xarDB::getTables();
                 $articlestable = $xartable['articles'];
                 // Drop fulltext index on xar_articles table
                 $query = "ALTER TABLE $articlestable DROP INDEX $index";
@@ -78,8 +78,8 @@ function articles_admin_updateconfig()
                 //$searchfields = array('title','summary','body','notes');
                 $searchfields = explode(',',$fulltext);
                 // Get database setup
-                $dbconn =& xarDBGetConn();
-                $xartable =& xarDBGetTables();
+                $dbconn = xarDB::getConn();
+                $xartable = xarDB::getTables();
                 $articlestable = $xartable['articles'];
                 // Add fulltext index on xar_articles table
                 $query = "ALTER TABLE $articlestable ADD FULLTEXT $index (xar_" . join(', xar_', $searchfields) . ")";
@@ -142,6 +142,7 @@ function articles_admin_updateconfig()
         xarModCallHooks('module','updateconfig','articles',
                         array('module' => 'articles'));
     }
+
     if (empty($ptid)) {
         $ptid = null;
     }

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -35,8 +35,8 @@ do that directly via SQL :
 */
 
 /*
-    $dbconn =& xarDBGetConn();
-    $xartables =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartables = xarDB::getTables();
 
     // articles of publication type 1 (= news or whatever)
     $pubtypeid = 1;

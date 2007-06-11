@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <table border="0" cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -17,12 +18,15 @@
             </xar:if>
             <xar:if condition="!empty($counter)">
                 <xar:if condition="$counter eq 1">
-                    (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
+                    (#$counter#&#160;<xar:mlstring>read</xar:mlstring>)
                 <xar:else />
-                    (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
+                    (#$counter#&#160;<xar:mlstring>reads</xar:mlstring>)
                 </xar:if>
             </xar:if>
             | <a href="#$link#"><xar:mlstring>Rate / Comment</xar:mlstring></a>
         </td>
     </tr>
 </table>
+
+
+</xar:template>

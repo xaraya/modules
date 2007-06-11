@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,7 +25,7 @@ function articles_userapi_getfieldformatnums($args)
     $fieldnames= array(
         'static'          => 1,
         'textbox'         => 2,
-        'textarea_small'  => 3,
+        'textarea'        => 3,
         'textarea_medium' => 4,
         'textarea_large'  => 5,
         'dropdown'        => 6,
@@ -49,7 +49,7 @@ function articles_userapi_getfieldformatnums($args)
     $fielditem=array();
 
     if (xarModIsAvailable('tinymce')) {
-        $fielditems=array('xartinymce' => 205);
+        $fielditems=array('tinymce' => 205);
         $fieldnames=array_merge($fieldnames,$fielditems);
     }
 

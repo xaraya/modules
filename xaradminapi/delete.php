@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,9 +29,7 @@ function articles_adminapi_delete($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'delete',
                     'Articles');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // Security check
@@ -41,9 +39,7 @@ function articles_adminapi_delete($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Article');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
 
     // Call delete hooks for categories, hitcount etc.
@@ -57,8 +53,8 @@ function articles_adminapi_delete($args)
     xarModCallHooks('item', 'delete', $aid, $args);
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $articlestable = $xartable['articles'];
 
     // Delete item

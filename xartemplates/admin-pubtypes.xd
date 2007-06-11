@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -13,7 +14,7 @@
             Publication Types
         </xar:mlstring>
     </h2>
-    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+    <xar:set name="statusmsg">xarSession::getVar('statusmsg')</xar:set>
     <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
         <p class="xar-error">#$statusmsg#</p>
     </xar:if>
@@ -204,7 +205,7 @@
                         <tr>
                             <td class="xar-align-left">
                             <xar:comment>Add validation link here - for those fields that already have it plus allowable textarea fields</xar:comment>
-                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea_small' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
+                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
                                 <xar:set name="editvalidation">
                                     xarML('Edit validation for property "#(1)"',$field['name'])
                                 </xar:set>
@@ -438,5 +439,8 @@
                 </xar:mlstring>
             </a></h3>
     </xar:if>
-    <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
+    <xar:set name="dummy">xarSession::setVar('statusmsg','')</xar:set>
 </div>
+
+
+</xar:template>

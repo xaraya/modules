@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,7 +31,7 @@ function articles_userapi_getpubcount($args)
     $pubcount = array();
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
+    $dbconn = xarDB::getConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);

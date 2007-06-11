@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -77,13 +77,10 @@ function articles_admin_importpages()
             }
         }
 
-        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
         $catlist = array();
-        if (!empty($cidstring)) {
-            $rootcats = explode (';', $cidstring);
-            foreach ($rootcats as $catid) {
-                $catlist[$catid] = 1;
-            }
+        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        foreach ($rootcats as $catid) {
+            $catlist[$catid] = 1;
         }
         $seencid = array();
         if (isset($cids) && is_array($cids)) {
@@ -205,7 +202,7 @@ function articles_admin_importpages()
                              'cids' => $cids,
                           // for preview
                              'pubtypeid' => $data['ptid'],
-                             'authorid' => xarUserGetVar('uid'),
+                             'authorid' => xarUserGetVar('id'),
                              'aid' => 0);
             if (!empty($data['title']) && !empty($title)) {
                 $article[$data['title']] = $title;

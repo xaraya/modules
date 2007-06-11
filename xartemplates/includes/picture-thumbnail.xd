@@ -1,1 +1,5 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:image-resize src="$file[fileId]" label="$title" width="150px" height="150px" constrain="true" />
+
+
+</xar:template>

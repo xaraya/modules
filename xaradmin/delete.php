@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,9 +30,7 @@ function articles_admin_delete()
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
                      'Article', xarVarPrepForDisplay($aid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                        new SystemException($msg));
-        return;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     $ptid = $article['pubtypeid'];
@@ -45,9 +43,7 @@ function articles_admin_delete()
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         $msg = xarML('You have no permission to delete #(1) item #(2)',
                      $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
+        throw new ForbiddenOperationException(null, $msg);
     }
 
     // Check for confirmation
@@ -91,7 +87,7 @@ function articles_admin_delete()
     }
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('Article Deleted'));
+    xarSession::setVar('statusmsg', xarML('Article Deleted'));
 
     // Return return_url
     if (!empty($return_url)) {
@@ -100,7 +96,7 @@ function articles_admin_delete()
     }
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

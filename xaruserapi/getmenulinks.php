@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -58,7 +58,7 @@ function articles_userapi_getmenulinks()
                                                           'new',
                                                           array('ptid' => $ptid)),
                                      'title' => xarML('Submit #(1)',$pubitem['pubtitle']),
-                                     'label' => '&nbsp;' . xarML('Submit Now'));
+                                     'label' => '&#160;' . xarML('Submit Now'));
             }
 
             $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
@@ -68,7 +68,7 @@ function articles_userapi_getmenulinks()
                                                           'archive',
                                                           array('ptid' => $ptid)),
                                      'title' => xarML('View #(1) Archive',$pubitem['pubtitle']),
-                                     'label' => '&nbsp;' . xarML('Archives'));
+                                     'label' => '&#160;' . xarML('Archives'));
             }
 
 /*
@@ -77,7 +77,7 @@ function articles_userapi_getmenulinks()
                                                       'viewmap',
                                                       array('ptid' => $ptid)),
                                  'title' => xarML('Displays a map of all published content'),
-                                 'label' => '&nbsp;' . xarML('Article Map'));
+                                 'label' => '&#160;' . xarML('Article Map'));
 */
         }
     }

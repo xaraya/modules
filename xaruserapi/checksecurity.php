@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -106,29 +106,26 @@ function articles_userapi_checksecurity($args)
 
     // Get root categories for this publication type
     if (!empty($ptid)) {
-        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
-        if (!empty($cidstring)) {
-            $rootcids = explode (';', $cidstring);
-        }
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
     } else {
         $ptid = null;
     }
     if (!isset($rootcids)) {
     // TODO: handle cross-pubtype views better
-        $cidstring = xarModGetVar('articles', 'mastercids');
-        $rootcids = explode (';', $cidstring);
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
     }
 
     // Get category information for this article
     if (!isset($article['cids']) && !empty($aid)) {
         if (!xarModAPILoad('categories', 'user')) return;
+        $info = xarMod::getBaseInfo('articles');
+        $sysid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),
                                           'itemtype' => $ptid,
-                                          'modid' =>
-                                               xarModGetIDFromName('articles'),
+                                          'modid' => $sysid,
                                           'reverse' => 0
                                          )
                                    );
@@ -181,13 +178,14 @@ function articles_userapi_checksecurity($args)
     }
 
     // Loop over all categories and check the different combinations
+    $result = false;
     foreach (array_keys($jointcids) as $cid) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
-        if (!xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
-            return false;
+        if (xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
+            $result = true;
         }
     }
-    return true;
+    return $result;
 }
 
 ?>

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,16 +28,12 @@ function articles_admin_updatestatus()
 
     if (!isset($aids) || count($aids) == 0) {
         $msg = xarML('No articles selected');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
-                       new DefaultUserException($msg));
-        return;
+        throw new DataNotFoundException(null, $msg);
     }
     $states = xarModAPIFunc('articles','user','getstates');
     if (!isset($status) || !is_numeric($status) || $status < -1 || ($status != -1 && !isset($states[$status]))) {
         $msg = xarML('Invalid status');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA',
-                       new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(null,$msg);
     }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
@@ -66,9 +62,7 @@ function articles_admin_updatestatus()
         if (!isset($article) || !is_array($article)) {
             $msg = xarML('Unable to find #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
-            return;
+            throw new BadParameterException(null,$msg);
         }
         $article['ptid'] = $article['pubtypeid'];
         // Security check
@@ -82,9 +76,7 @@ function articles_admin_updatestatus()
         if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                           new SystemException($msg));
-            return;
+            throw new ForbiddenOperationException(null, $msg);
         }
 
         if ($status < 0) {
@@ -105,7 +97,7 @@ function articles_admin_updatestatus()
     unset($article);
 
     // Return to the original admin view
-    $lastview = xarSessionGetVar('Articles.LastView');
+    $lastview = xarSession::getVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

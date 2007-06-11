@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -56,9 +56,7 @@ function articles_admin_new($args)
     // TODO: check by category too ?
         if (!xarSecurityCheck('SubmitArticles')) {
                $msg = xarML('You have no permission to submit Articles');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                            new SystemException($msg));
-                return;
+                throw new ForbiddenOperationException(null, $msg);
         }
     } else {
         if (isset($article['cids']) && count($article['cids']) > 0) {
@@ -71,18 +69,14 @@ function articles_admin_new($args)
                     }
                     $msg = xarML('You have no permission to submit #(1) in category #(2)',
                                  $pubtypes[$ptid]['descr'],$catinfo['name']);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                                    new SystemException($msg));
-                    return;
+                    throw new ForbiddenOperationException(null, $msg);
                 }
             }
         } else {
             if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:All:All:All")) {
                 $msg = xarML('You have no permission to submit #(1)',
                              $pubtypes[$ptid]['descr']);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                                new SystemException($msg));
-                return;
+                throw new ForbiddenOperationException(null, $msg);
             }
         }
         if (xarModIsHooked('uploads', 'articles', $ptid)) {

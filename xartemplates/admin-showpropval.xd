@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -74,10 +75,13 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="submit" name="preview" value="#xarML('Preview')#" /> &nbsp;&nbsp;&nbsp; <input type="submit" name="confirm" value="#xarML('Update')#" />
+                        <input type="submit" name="preview" value="#xarML('Preview')#" /> &#160;&#160;&#160; <input type="submit" name="confirm" value="#xarML('Update')#" />
                     </td>
                 </tr>
             </table>
         </div>
     </form>
 </div>
+
+
+</xar:template>

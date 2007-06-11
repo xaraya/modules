@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -814,11 +814,11 @@ function articles_user_view($args)
         }
         foreach ($sortlist as $sname => $stitle) {
             if (empty($sort) && $sname == $defaultsort) {
-                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
+                $data['pager'] .= '&#160;' . $stitle . '&#160;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             } elseif ($sname == $sort) {
-                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
+                $data['pager'] .= '&#160;' . $stitle . '&#160;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             }
@@ -835,8 +835,8 @@ function articles_user_view($args)
                                            'authorid' => $authorid,
                                            'sort' => $sname));
             }
-            $data['pager'] .= '&nbsp;<a href="' . $sortlink . '">' .
-                              $stitle . '</a>&nbsp;';
+            $data['pager'] .= '&#160;<a href="' . $sortlink . '">' .
+                              $stitle . '</a>&#160;';
             $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => $sortlink);
         }
     }

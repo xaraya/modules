@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,12 +14,8 @@
 /**
  * search articles (called as hook from search module, or directly with pager)
  *
- * @param id $args['objectid'] could be the query ? (currently unused)
- * @param array $args['extrainfo'] all other parameters ? (currently unused)
- * @param string andcids
- * @param string catid
- * @param id ptid Publication type id
- * @param array ptids Array of publication type ids
+ * @param $args['objectid'] could be the query ? (currently unused)
+ * @param $args['extrainfo'] all other parameters ? (currently unused)
  * @return array output
  */
 function articles_user_search($args)
@@ -200,7 +196,7 @@ function articles_user_search($args)
         $q = null;
     }
 
-    // Find the uid of the author we're looking for
+    // Find the id of the author we're looking for
     if (!empty($author)) {
         // Load API
         if (!xarModAPILoad('roles', 'user')) return;
@@ -537,7 +533,7 @@ function articles_user_search($args)
                     if (!isset($othersort)) {
                         $othersort = 'date';
                     }
-                    $pager .= '&nbsp;&nbsp;<a href="' . $sortlink . '">' .
+                    $pager .= '&#160;&#160;<a href="' . $sortlink . '">' .
                               xarML('sort by') . ' ' . xarML($othersort) . '</a>';
                 }
 

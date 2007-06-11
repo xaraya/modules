@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,11 +13,10 @@
  */
 /**
  * initialise the articles module
- * @param void
- * @return bool true
  */
 function articles_init()
 {
+
     //Not needed anymore with the dependency checks.
     if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
@@ -27,11 +26,11 @@ function articles_init()
     }
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
 // TODO: Somewhere in the future, status should be managed by a workflow module
 
@@ -81,7 +80,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_authorid',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_authorid',
         'fields'    => array('xar_authorid'),
         'unique'    => false
     );
@@ -90,7 +89,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubtypeid',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubtypeid',
         'fields'    => array('xar_pubtypeid'),
         'unique'    => false
     );
@@ -99,7 +98,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_pubdate',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubdate',
         'fields'    => array('xar_pubdate'),
         'unique'    => false
     );
@@ -108,7 +107,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_status',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_status',
         'fields'    => array('xar_status'),
         'unique'    => false
     );
@@ -117,7 +116,7 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+        'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
         'fields'    => array('xar_language'),
         'unique'    => false
     );
@@ -305,9 +304,9 @@ function articles_init()
     }
 
     // Enable categories hooks for articles
-    xarModAPIFunc('modules','admin','enablehooks',
+/*    xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'articles', 'hookModName' => 'categories'));
-
+*/
     // Enable comments hooks for articles
     if (xarModIsAvailable('comments')) {
         xarModAPIFunc('modules','admin','enablehooks',
@@ -329,7 +328,9 @@ function articles_init()
     * Format is
     * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-    $xartable =& xarDBGetTables();
+    $info = xarMod::getBaseInfo('articles');
+    $sysid = $info['systemid'];
+    $xartable = xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('articles', 'admin', 'privileges'),
@@ -338,7 +339,7 @@ function articles_init()
                     );
     xarDefineInstance('articles', 'Article', $instances);
 
-    $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_module = 'articles'";
+    $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_modid = $sysid";
     $instances = array(
                         array('header' => 'Article Block Title:',
                                 'query' => $query,
@@ -375,8 +376,6 @@ function articles_init()
 
 /**
  * upgrade the articles module from an old version
- * @param string $oldversion The former version number to upgrade from
- * @return bool
  */
 function articles_upgrade($oldversion)
 {
@@ -431,16 +430,16 @@ function articles_upgrade($oldversion)
 
 /* skip for now...
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             //Load Table Maintainance API
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
 
             $articlestable = $xartable['articles'];
 
             $index = array(
-                'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_articles_language',
+                'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
                 'fields'    => array('xar_language'),
                 'unique'    => false
             );
@@ -468,11 +467,11 @@ function articles_upgrade($oldversion)
 function articles_delete()
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['articles']);
