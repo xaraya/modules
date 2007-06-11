@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
@@ -62,3 +63,5 @@
     <!-- add the pager here -->
     #$pager#
 </div>
+
+</xar:template>

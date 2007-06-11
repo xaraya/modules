@@ -1,50 +1,65 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+  <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Administration - HTML</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
+  </div>
+  <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-        <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-            <p>
-                <xar:mlstring>The HTML module is a utility module for setting allowed HTML tags.</xar:mlstring>
-            </p>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <p><xar:mlstring>The HTML module is a utility module for setting allowed HTML tags.</xar:mlstring></p>
 
-        <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>Using the administration menu, you are allowed to view and set allowed HTML tags.  You can also add new tags, edit current tags and delete tags from the system.</xar:mlstring>
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <p>
+      <xar:mlstring>
+        Using the administration menu, you are allowed to view and set allowed
+        HTML tags.  You can also add new tags, edit current tags and delete
+        tags from the system.
+      </xar:mlstring>
+    </p>
 
-        </p>
-        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-            <p>
-                <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
-            </p>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <p>
+      <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
+    </p>
 
-        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-            <p>
-            <xar:mlstring>
-                Two types of Transform hooks are provided. These are for generating linebreaks. Either use the simple, or smart linebreak transform. This will transform text with linebreaks in the text into html text with &lt;br /&gt; tags.
-                <strong>
-                    Please note, if you do not want linebreaks, do not hook this module to another.  The transform hook only affects linebreaks and not the allowed HTML of the module.
-                </strong>
-            </xar:mlstring>
-            <p />
-        <h3><xar:mlstring>TODO:</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>The core tag registration needs to be completely re-thought to allow this module to act as a transform rather than just a matter of setting a configuration variable.</xar:mlstring>
-        </p>
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <p>
+      <xar:mlstring>
+        Two types of Transform hooks are provided. These are for generating
+        linebreaks. Either use the simple, or smart linebreak transform. This
+        will transform text with linebreaks in the text into html text with
+        &lt;br /&gt; tags. <strong>Please note, if you do not want linebreaks,
+        do not hook this module to another.  The transform hook only affects
+        linebreaks and not the allowed HTML of the module.</strong>
+      </xar:mlstring>
+    </p>
 
-        <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-        <p><xar:mlstring>Further information on the HTML module can be found at</xar:mlstring></p>
-            <ul>
-               <li><xar:mlstring>HTML Extension page at</xar:mlstring> <a title="#xarML('HTML Module - Xaraya Extension 779')#" href="http://www.xaraya.com/index.php/release/779.html">Xaraya Extension and Releases</a>.
-                   <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-               </li>
-               <li><xar:mlstring>Related tutorials and documentation on HTML module found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/html/" title="#xarML('Related documentation on HTML')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-               </li>
-            </ul>
-        <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>HTML Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; 2006-08-28
-        </p>
-</div>
+    <h3><xar:mlstring>TODO:</xar:mlstring></h3>
+    <p>
+      <xar:mlstring>
+        The core tag registration needs to be completely re-thought to allow
+        this module to act as a transform rather than just a matter of setting
+        a configuration variable.
+      </xar:mlstring>
+    </p>
+
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p><xar:mlstring>Further information on the HTML module can be found at</xar:mlstring></p>
+    <ul>
+      <li>
+        <xar:mlstring>HTML Extension page at</xar:mlstring>
+        <a title="#xarML('HTML Module - Xaraya Extension 779')#" href="http://www.xaraya.com/index.php/release/779.html">Xaraya Extension and Releases</a>.
+        <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>Related tutorials and documentation on HTML module found at</xar:mlstring>
+        <a href="http://www.xaraya.com/index.php/keywords/html/" title="#xarML('Related documentation on HTML')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+      </li>
+    </ul>
+    <p class="xar-sub">
+      <strong>&nbsp;<xar:mlstring>HTML Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; 2006-08-28
+    </p>
+  </div>
+</xar:template>
