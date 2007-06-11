@@ -1,65 +1,64 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Blogger API Administration</xar:mlstring></span></div>
-<div class="xar-mod-body">
-
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Blogger API Administration</xar:mlstring></span>
+  </div>
+  <div class="xar-mod-body">
     <xar:template type="module" module="bloggerapi" file="admin-menu" />
-    <h2><xar:mlstring>Modify Blogger API Configuration</xar:mlstring></h2><br />
+    <h2><xar:mlstring>Modify Blogger API Configuration</xar:mlstring></h2>
 
     <form method="post" action="&xar-modurl-bloggerapi-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
-    <fieldset>
+      <fieldset>
         <legend><xar:mlstring>Configuration Options</xar:mlstring></legend>
-    </fieldset>
+        <div class="xar-form-input-wrapper">
+          <label for="bloggerpubtype" class="xar-form-label">
+            <xar:mlstring>Blogger API publication type</xar:mlstring>
+          </label>
+          <select id="bloggerpubtype" name="bloggerpubtype" tabindex="1">
+            <xar:loop name="$pubtypes">
+              <xar:if condition="xarModGetVar('bloggerapi','bloggerpubtype') eq $loop:item['ptid']">
+                <option value="#$loop:item['ptid']#" selected="selected">#$loop:item['name']# : #$loop:item['descr']#</option>
+              <xar:else/>
+                <option value="#$loop:item['ptid']#">#$loop:item['name']# : #$loop:item['descr']#</option>
+              </xar:if>
+            </xar:loop>
+          </select>
+        </div>
 
-         <div class="xar-form-input-wrapper">
-             <label for="bloggerpubtype" class="xar-form-label">
-                 <xar:mlstring>Blogger API publication type</xar:mlstring>
-             </label>
-             <select id="bloggerpubtype" name="bloggerpubtype" tabindex="1">
-                  <xar:loop name="$pubtypes">
-                    <xar:if condition="xarModGetVar('bloggerapi','bloggerpubtype') eq $loop:item['ptid']">
-                      <option value="#$loop:item['ptid']#" selected="selected">#$loop:item['name']# : #$loop:item['descr']#</option>
-                    <xar:else/>
-                      <option value="#$loop:item['ptid']#">#$loop:item['name']# : #$loop:item['descr']#</option>
-                    </xar:if>
-                  </xar:loop>
-             </select>
-         </div>
-
-         <xar:if condition="!empty($states)">
-         <div class="xar-form-input-wrapper">
-             <label for="draftstatus" class="xar-form-label">
-                <xar:mlstring>'Draft' entry mapped to state:</xar:mlstring>
-             </label>
-             <select id="draftstatus" name="draftstatus" tabindex="2">
-                  <xar:foreach in="$states" key="$state_id" value="$state_name">
-                    <xar:if condition="xarModGetVar('bloggerapi','draftstatus') eq $state_id">
-                      <option value="#$state_id#" selected="selected">#$state_name#</option>
-                    <xar:else/>
-                      <option value="#$state_id#">#$state_name#</option>
-                    </xar:if>
-                  </xar:foreach>
-             </select>
-         </div>
-         <div class="xar-form-input-wrapper">
-             <label for="draftstatus" class="xar-form-label">
-                <xar:mlstring>'Published' entry mapped to state:</xar:mlstring>
-              </label>
-              <select id="publishstatus" name="publishstatus" tabindex="2">
-                  <xar:foreach in="$states" key="$state_id" value="$state_name">
-                    <xar:if condition="xarModGetVar('bloggerapi','publishstatus') eq $state_id">
-                      <option value="#$state_id#" selected="selected">#$state_name#</option>
-                    <xar:else/>
-                      <option value="#$state_id#">#$state_name#</option>
-                    </xar:if>
-                  </xar:foreach>
-              </select>
-         </div>
-         </xar:if>
-    </fieldset>
-    <div class="xar-form-input-wrapper-before">
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="submit" value="Update bloggerapi Configuration"  tabindex="3" />
-    </div>
-</form>
-
-</div>
-
+        <xar:if condition="!empty($states)">
+          <div class="xar-form-input-wrapper">
+            <label for="draftstatus" class="xar-form-label">
+              <xar:mlstring>'Draft' entry mapped to state:</xar:mlstring>
+            </label>
+            <select id="draftstatus" name="draftstatus" tabindex="2">
+              <xar:foreach in="$states" key="$state_id" value="$state_name">
+                <xar:if condition="xarModGetVar('bloggerapi','draftstatus') eq $state_id">
+                  <option value="#$state_id#" selected="selected">#$state_name#</option>
+                <xar:else/>
+                  <option value="#$state_id#">#$state_name#</option>
+                </xar:if>
+              </xar:foreach>
+            </select>
+          </div>
+          <div class="xar-form-input-wrapper">
+            <label for="draftstatus" class="xar-form-label">
+              <xar:mlstring>'Published' entry mapped to state:</xar:mlstring>
+            </label>
+            <select id="publishstatus" name="publishstatus" tabindex="2">
+              <xar:foreach in="$states" key="$state_id" value="$state_name">
+                <xar:if condition="xarModGetVar('bloggerapi','publishstatus') eq $state_id">
+                  <option value="#$state_id#" selected="selected">#$state_name#</option>
+                <xar:else/>
+                  <option value="#$state_id#">#$state_name#</option>
+                </xar:if>
+              </xar:foreach>
+            </select>
+          </div>
+        </xar:if>
+        <div class="xar-form-input-wrapper-before">
+          <input type="hidden" name="authid" value="#$authid#" />
+          <input type="submit" value="Update bloggerapi Configuration"  tabindex="3" />
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</xar:template>

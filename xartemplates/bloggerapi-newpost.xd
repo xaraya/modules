@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <methodResponse>
   <params>
     <param>
@@ -5,3 +6,5 @@
     </param>
   </params>
 </methodResponse>
+
+</xar:template>

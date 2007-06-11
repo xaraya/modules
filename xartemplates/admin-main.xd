@@ -1,86 +1,102 @@
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Blogger API Administration</xar:mlstring>
-  </span>
-</div>
-    <xar:template type="module" module="bloggerapi" file="admin-menu" />
-   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-
-    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-
-        <p>
-              <xar:mlstring>The Blogger API is a XML-RPC API used for blogging. The API is very simple and is
-              basically a way to exchange strings between xmlrpc clients and servers.</xar:mlstring>
-            </p>
-            <p><xar:mlstring>In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
-              needed for the Blogger API functionality. This module will not function without
-              that module activated.</xar:mlstring>
-            </p>
-      <p>
-        <xar:mlstring>In addition to that, the xmlrpcserver module needs one or more API modules
-        activated to actually do anything. The bloggerAPI is one such module. It is advised that the
-        xmlrpcsystemAPI module is also activated.</xar:mlstring>
-      </p>
-            <p>
-              <xar:mlstring>You can find the specification of the Blogger API at </xar:mlstring>
-              <a href="http://plant.blogger.com/api/index.html">http://plant.blogger.com/api/index.html</a>
-            </p>
-
-            <h3><xar:mlstring>Little survival guide for using Blogging tools with Xaraya</xar:mlstring></h3>
-            <p>
-              <xar:mlstring>Make sure you have enabled the following modules</xar:mlstring>:
-            </p>
-            <ul>
-              <li><xar:mlstring>XmlRpcServer</xar:mlstring></li>
-              <li><xar:mlstring>Categories</xar:mlstring></li>
-              <li><xar:mlstring>Articles</xar:mlstring></li>
-            </ul>
-
-            <p>
-              <xar:mlstring>When these modules are activated, configure the categories modules and create some
-              categories which should hold the postings made from Blogs. While not necessary, it 
-              is advised to create a publication type for blog postings specifically and link this
-              type to the category-tree you created for blog postings.</xar:mlstring>
-            </p>
-            <p>
-              <xar:mlstring>Go into the config section of the BloggerAPI module and configure the publication type
-              to use for blog postings. Select either News articles or your publication type which 
-              you created.</xar:mlstring>
-            </p>
-            <p>
-              <xar:mlstring>Basically you're all set now to start blogging. Use your favorite tool for managing your
-              blog postings. For windows we recommend</xar:mlstring> <a href="http://www.bloggar.com">w.bloggar</a> <xar:mlstring>and
-              for other operating systems</xar:mlstring> <a href="http://mozblog.mozdev.org">The mozilla blogger</a>. 
-              <xar:mlstring>These two are the ones we test the API with and make sure that it at least works with those.</xar:mlstring>
-            </p>
-            <p>
-              <xar:mlstring>Point your blogging client to the url: http://www.yourxaraya.com/ws.php?type=xmlrpc and use
-              your Xaraya account for authentication. The rest should be self-explanatory.</xar:mlstring>
-            </p>
-        
-      <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-      <p>
-        <xar:mlstring>There are no included blocks.</xar:mlstring>
-      </p>
-        
-      <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-      <p>
-        <xar:mlstring>There are no included hooks.</xar:mlstring>
-      </p>
- <h3>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      <xar:mlstring>Blogger API Administration</xar:mlstring>
+    </span>
+  </div>
+  <xar:template type="module" module="bloggerapi" file="admin-menu"/>
+  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96"/>
+  <h2>
+    <xar:mlstring>Overview</xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>
+      The Blogger API is a XML-RPC API used for blogging. The API is very simple and is
+      basically a way to exchange strings between xmlrpc clients and servers.
+    </xar:mlstring>
+  </p>
+  <p>
+    <xar:mlstring>
+      In Xaraya the xmlrpcserver module is responsible for providing the xmlrpc transport
+      needed for the Blogger API functionality. This module will not function without
+      that module activated.
+    </xar:mlstring>
+  </p>
+  <p>
+    <xar:mlstring>
+      In addition to that, the xmlrpcserver module needs one or more API modules
+      activated to actually do anything. The bloggerAPI is one such module. It is advised that the
+      xmlrpcsystemAPI module is also activated.
+    </xar:mlstring>
+  </p>
+  <p>
+    <xar:mlstring>You can find the specification of the Blogger API at </xar:mlstring>
+    <a href="http://plant.blogger.com/api/index.html">http://plant.blogger.com/api/index.html</a>
+  </p>
+  <h3>
+    <xar:mlstring>Little survival guide for using Blogging tools with Xaraya</xar:mlstring>
+  </h3>
+  <p><xar:mlstring>Make sure you have enabled the following modules</xar:mlstring>:
+  </p>
+  <ul>
+    <li>
+      <xar:mlstring>XmlRpcServer</xar:mlstring>
+    </li>
+    <li>
+      <xar:mlstring>Categories</xar:mlstring>
+    </li>
+    <li>
+      <xar:mlstring>Articles</xar:mlstring>
+    </li>
+  </ul>
+  <p>
+    <xar:mlstring>When these modules are activated, configure the categories modules and create some
+    categories which should hold the postings made from Blogs. While not necessary, it
+    is advised to create a publication type for blog postings specifically and link this
+    type to the category-tree you created for blog postings.</xar:mlstring>
+  </p>
+  <p>
+    <xar:mlstring>Go into the config section of the BloggerAPI module and configure the publication type
+    to use for blog postings. Select either News articles or your publication type which
+    you created.</xar:mlstring>
+  </p>
+  <p><xar:mlstring>Basically you're all set now to start blogging. Use your favorite tool for managing your
+    blog postings. For windows we recommend</xar:mlstring><a href="http://www.bloggar.com">w.bloggar</a><xar:mlstring>and
+    for other operating systems</xar:mlstring><a href="http://mozblog.mozdev.org">The mozilla blogger</a>.
+    <xar:mlstring>These two are the ones we test the API with and make sure that it at least works with those.</xar:mlstring></p>
+  <p>
+    <xar:mlstring>Point your blogging client to the url: http://www.yourxaraya.com/ws.php?type=xmlrpc and use
+    your Xaraya account for authentication. The rest should be self-explanatory.</xar:mlstring>
+  </p>
+  <h3>
+    <xar:mlstring>Included Blocks</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>There are no included blocks.</xar:mlstring>
+  </p>
+  <h3>
+    <xar:mlstring>Included Hooks</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>There are no included hooks.</xar:mlstring>
+  </p>
+  <h3>
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
   <p>
     <xar:mlstring>Further information on the Bloggerapi module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Bloggerapi Extension page at</xar:mlstring> <a title="#xarML('Bloggerapi Module - Xaraya Extension 745')#" href="http://www.xaraya.com/index.php/release/745.html">Xaraya Extension and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-    </li>
-    <li><xar:mlstring>Related tutorials and documentation on Bloggerapi found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/bloggerapi/" title="#xarML('Related documentation on Bloggerapi')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li><xar:mlstring>Bloggerapi Extension page at</xar:mlstring><a title="#xarML('Bloggerapi Module - Xaraya Extension 745')#" href="http://www.xaraya.com/index.php/release/745.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring></li>
+    <li>
+      <xar:mlstring>Related tutorials and documentation on Bloggerapi found at</xar:mlstring>
+      <a href="http://www.xaraya.com/index.php/keywords/bloggerapi/" title="#xarML('Related documentation on Bloggerapi')#">
+        <xar:mlstring>Xaraya Documentation.</xar:mlstring>
+      </a>
     </li>
   </ul>
-
-</div>
+</xar:template>
