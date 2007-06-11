@@ -34,10 +34,11 @@ o Complete export types
 - iCal XML export
 
 o Create a 'build yourself a feed' page, with a URL that can be copied and pasted (iCal, vCal, RSS).
+  The feed will use only the predefined date ranges to keep the URL short.
 
 o Complete privileges (I suspect some bits are not fully protected) [done - I think]
 
-o RSS template (to copy to the RSS theme)
+o RSS template (to copy to the RSS theme) [done]
 
 o On modify/create event screen, display the appropriate buttons
 - No buttons if nothing to submit (but do provide 'cancel' if there is a return URL)
@@ -50,5 +51,8 @@ o Short URLs! Can't forget short URLs.
 
 o Implement proper fulltext search when MySQL is detected.
 
-o Show categories as proper hierarchy in jump menu.
+o Show categories as proper hierarchy in jump menu. [done]
 
+o Keep running total of event counts over various date ranges (days, weeks, months, years)
+  for easy and faset use in calendar displays. Needs to be kept regularly refreshed, without
+  adding substantial extra load to a page.
