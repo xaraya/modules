@@ -14,13 +14,10 @@
  * Send notification to the nominated admin of a new user registration
  *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- * @param admin email - the email of administrator to receive the notification
- * @param admin name - the name of the administrator(optional)
- * @param userrealname - the real name of the user (optional) - may not be set, or empty
- * @param username - the username of the user
- * @param useremail - the email of the user
- * @param terms - agreement to user terms (optional) - may not be activated
- * @param id - the users id
+ * @param string  adminemail - the email of administrator to receive the notification
+ * @param string  adminname - the name of the administrator(optional)
+ * @param object  object - role object
+ * @param bool    terms - agreement to user terms (optional) - may not be activated
  * @return bool true on success
  */
 function registration_userapi_notifyadmin ($args)
@@ -32,15 +29,18 @@ function registration_userapi_notifyadmin ($args)
     if (!xarVarFetch('terms',      'str:1:', $terms,      '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     //set a title and link to the user role
-    $id = $values['id'];
-    $state = $values['state'];
+    $id = $object->properties['id']->getValue();
+    $state = $object->properties['state']->getValue();
+    $uname = $object->properties['uname']->getValue();
+    $name = $object->properties['name']->getValue();
+
     $requireapproval = xarModVars::get('registration','explicitapproval');
     if ($requireapproval) {
-        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$values['uname']);
+        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$uname);
     } else {
-        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $values['uname'], $values['name']);
+        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $uname, $name);
     }
-    $rolelink = xarModURL('roles','admin','modify',array('id'=>$id),false);
+    $rolelink = xarModURL('roles','admin','modify',array('uid'=>$uid),false);
 
     /*
        TODO: can we do this more centrally instead of every function with email
@@ -67,13 +67,13 @@ function registration_userapi_notifyadmin ($args)
     $siteadminname  = xarModVars::get('mail','adminname');
     $sitename = xarModVars::get('themes','SiteName');
 
-    $emailvars = array('adminemail'  => $adminemail,
+    $emailvars = array('adminemail'   => $adminemail,
                        'adminname'    => $adminname,
                        'terms'        => $terms,
                        'messagetitle' => $messagetitle,
                        'rolelink'     => $rolelink,
                        'sitename'     => $sitename,
-                       'values'      => $values
+                       'object'       => $object
                       );
 
     //Prepare the text message
