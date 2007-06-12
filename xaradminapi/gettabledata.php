@@ -23,7 +23,7 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
 
     if (($dbname='') || (empty($dbname))){
         $dbconn =& xarDBGetConn();
-        $dbname= xarDBGetName();
+        $dbname= xarDB::getName();
     }
 
     $items =array();
@@ -33,7 +33,7 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
     default:
             $dbtables=array();
             $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+            $dbname= xarDB::getName();
             $tables = mysql_list_tables($dbname);
             $i=0;
             if ($tables) {

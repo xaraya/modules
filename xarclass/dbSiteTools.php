@@ -34,7 +34,7 @@ class dbSiteTools
             $this->dbtype =$dbtype;
         }
         if (empty($this->dbname)) {
-            $this->dbname = xarDBGetName();
+            $this->dbname = xarDB::getName();
         } else {
             $this->dbname=$dbname;
         }

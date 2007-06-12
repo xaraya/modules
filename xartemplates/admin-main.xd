@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
         <xar:mlstring>Administration - SiteTools</xar:mlstring>
@@ -33,14 +34,14 @@
         <li><xar:mlstring>SiteTools only provides Administration, options and thus requires administration priviledges.</xar:mlstring></li>
         <li><xar:mlstring>Start by checking settings in the SiteTools configuration options.</xar:mlstring></li>
         <li><xar:mlstring>Warning: Default cache and backup directory paths  should only be changed if alternative cache or backup paths have already been created
-            and are writeable - chmod 777. At this time, backup paths are configurable, but cache paths are not 
-            configurable from within Xaraya administration.</xar:mlstring>
+            and are writeable - chmod 777. At this time, backup paths are configurable, but cache paths are not
+            configurable from within Xaraya administration.</xar:mlstring></li>
         </ol>
-        
+
     <h4>
         <xar:mlstring>Using Scheduler with Sitetools</xar:mlstring>
     </h4>
-     <p><xar:mlstring>A number of SiteTool functions also work in conjunction with the Scheduler module to schedule 
+     <p><xar:mlstring>A number of SiteTool functions also work in conjunction with the Scheduler module to schedule
      regular maintenance activies. At the present time the following functions are supported with Scheduler:</xar:mlstring></p>
      <ol>
          <li><xar:mlstring>Backup Database</xar:mlstring></li>
@@ -49,7 +50,7 @@
      </ol>
      <p>
          <xar:mlstring>You must have the Scheduler module installed and active to see further scheduler options
-          in your Sitetools Module. Once Scheduler is installed, you can choose to set the interval for these 
+          in your Sitetools Module. Once Scheduler is installed, you can choose to set the interval for these
           functions. See the Scheduler Module for more details.</xar:mlstring></p>
 
     <h3>
@@ -78,8 +79,11 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitetools Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2005-11-08
+             <strong>&#160;<xar:mlstring>Sitetools Module - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.1&#160; 2005-11-08
          </p>
       </div>
 
 
+
+
+</xar:template>

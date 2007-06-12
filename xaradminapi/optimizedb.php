@@ -30,7 +30,7 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 
     if (($dbname='') || (empty($dbname))){
         $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+            $dbname= xarDB::getName();
     }
 
     $rowinfo=array();//bug #2595

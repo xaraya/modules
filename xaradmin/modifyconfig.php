@@ -51,9 +51,9 @@ function sitetools_admin_modifyconfig()
     $data['ftppw']         = xarModGetVar('sitetools','ftppw');
     $data['ftpdir']        = xarModGetVar('sitetools','ftpdir');
 
-    $data['defadopath']   = xarCoreGetVarDirPath()."/cache/adodb";
-    $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
-    $data['deftemplpath'] = xarCoreGetVarDirPath()."/cache/templates";
+    $data['defadopath']   = sys::varpath()."/cache/adodb";
+    $data['defrsspath']   = sys::varpath()."/cache/rss";
+    $data['deftemplpath'] = sys::varpath()."/cache/templates";
 
     /* scheduler functions available in sitetools at the moment */
     $schedulerapi = array('optimize','backup');

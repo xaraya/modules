@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:set name="optibutton"><xar:mlstring>Optimize Now!</xar:mlstring></xar:set>
 <xar:set name="optinote"><xar:mlstring>Click to optimize your MySQL database tables.</xar:mlstring></xar:set>
@@ -38,7 +39,7 @@
 
     <xar:elseif condition="$optimized eq true" />
            <div class="xar-form-input-wrapper-after">
-                    #$optititle#&nbsp;#$dbname#
+                    #$optititle#&#160;#$dbname#
            </div>
 
         <table style="width:100%; border:0; cellspacing:1; cellpadding:1;">
@@ -104,3 +105,6 @@
         </p>
     </xar:if>
 </div>
+
+
+</xar:template>

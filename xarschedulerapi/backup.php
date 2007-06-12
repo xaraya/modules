@@ -24,7 +24,7 @@ function sitetools_schedulerapi_backup($args)
 
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
         $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+            $dbname= xarDB::getName();
             $dbtype= xarDBGetType();
     }
     $SelectedTables=''; //Todo: setup a default array of selected tables for partial backups

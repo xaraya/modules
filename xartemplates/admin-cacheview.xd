@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -10,7 +11,7 @@
         <xar:mlstring>View Template Cache Files</xar:mlstring>
     </h2>
     <xar:set name="goback"><xar:mlstring>Go back</xar:mlstring></xar:set>
-    <xar:set name="$cacheurltxt"><xar:mlstring>Click to browse this file</xar:mlstring></xar:set>
+    <xar:set name="cacheurltxt"><xar:mlstring>Click to browse this file</xar:mlstring></xar:set>
 
     <xar:if condition="$showfiles eq false">
         <table class="xar-fullwidth xar-border-thin" cellspacing="0" cellpadding="4">
@@ -52,17 +53,17 @@
         <div style="overflow:auto;">
         <table class="xar-full-width xar-border-thin" cellspacing="2" cellpadding="0" valign="top">
             <tr>
-                <td colspan="2" style="font-weight:bold;"><xar:mlstring>Browsing:&nbsp;</xar:mlstring>#$hashfile#
+                <td colspan="2" style="font-weight:bold;"><xar:mlstring>Browsing:&#160;</xar:mlstring>#$hashfile#
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="font-weight:bold;"><xar:mlstring>Cache file for:&nbsp;</xar:mlstring>#$templn#
+                <td colspan="2" style="font-weight:bold;"><xar:mlstring>Cache file for:&#160;</xar:mlstring>#$templn#
                 </td>
             </tr>
             <xar:foreach in="$items" key="$key" value="$line">
             <tr>
                 <td class="xar-align-left" valign="top" style="font-size:smaller; color:red">
-                    #$line.lineno#:&nbsp;&nbsp;
+                    #$line.lineno#:&#160;&#160;
                 </td>
                 <td class="xar-align-left" valign="top" style="font-size:smaller">
                    #$line.linetxt#
@@ -79,3 +80,6 @@
            </p>
     </xar:if>
 </div>
+
+
+</xar:template>

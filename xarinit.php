@@ -133,10 +133,10 @@ function sitetools_init()
         $backupdir = 'var/uploads/backup';
     }
     */
-    $backupdir=xarCoreGetVarDirPath()."/uploads";
-    xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
-    xarModSetVar('sitetools','rsscachepath', xarCoreGetVarDirPath()."/cache/rss");
-    xarModSetVar('sitetools','templcachepath', xarCoreGetVarDirPath()."/cache/templates");
+    $backupdir=sys::varpath()."/uploads";
+    xarModSetVar('sitetools','adocachepath',sys::varpath()."/cache/adodb");
+    xarModSetVar('sitetools','rsscachepath', sys::varpath()."/cache/rss");
+    xarModSetVar('sitetools','templcachepath', sys::varpath()."/cache/templates");
     xarModSetVar('sitetools','backuppath', $backupdir);
     xarModSetVar('sitetools','lineterm','\n');
     xarModSetVar('sitetools','timestamp',1);
@@ -259,7 +259,7 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
         case '0.2':
-        case '0.2.0':        
+        case '0.2.0':
             xarModSetVar('sitetools','useftpbackup', false);
             xarModSetVar('sitetools','ftpserver', '');
             xarModSetVar('sitetools','ftpuser', '');

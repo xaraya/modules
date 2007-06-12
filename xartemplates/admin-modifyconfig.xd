@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:set name="updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 <xar:set name="adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
 <xar:set name="rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>
@@ -33,7 +34,7 @@
 <xar:set name="schedulingoptions"><xar:mlstring>Scheduling Options</xar:mlstring></xar:set>
 <xar:set name="schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
-<xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
+<xar:set name="schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it is not triggered, these jobs will not be executed.</xar:mlstring></xar:set>
 <xar:comment>FTP options</xar:comment>
 <xar:set name="useftpbackuplabel"><xar:mlstring>Should the scheduler FTP the created back-up file to another server?</xar:mlstring></xar:set>
 <xar:set name="useftpbackuphelp"><xar:mlstring>You will need to have an FTP server to place the file.</xar:mlstring></xar:set>
@@ -257,3 +258,6 @@
         </fieldset>
     </form>
 </div>
+
+
+</xar:template>

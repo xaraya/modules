@@ -26,7 +26,7 @@ function sitetools_schedulerapi_optimize($args)
      */
     if (empty($dbname)){
         $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+            $dbname= xarDB::getName();
     }
 
     /*   It may return true (or some logging text) if it succeeds, and null if it fails

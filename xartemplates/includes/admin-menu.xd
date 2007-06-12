@@ -1,9 +1,10 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
-<xar:set name="activetype">$_bl_module_type</xar:set>
+<xar:set name="activetab"><xar:var scope="request" name="func"/></xar:set>
+<xar:set name="activetype"><xar:var scope="request" name="type"/></xar:set>
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
@@ -66,3 +67,6 @@
   </xar:sec>
   </dl>
 </div>
+
+
+</xar:template>

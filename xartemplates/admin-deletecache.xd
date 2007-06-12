@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
@@ -16,9 +17,9 @@
         <xar:set name="rsscache"><xar:mlstring>RSS Cache?</xar:mlstring></xar:set>
         <xar:set name="templcache"><xar:mlstring>Template Cache?</xar:mlstring></xar:set>
         <xar:set name="confirmtxt"><xar:mlstring>Please choose the cache files you wish to delete and check directory paths.</xar:mlstring></xar:set>
-        <xar:set name="$adopathc">$adopath</xar:set>
-        <xar:set name="$rsspathc">$rsspath</xar:set>
-        <xar:set name="$templpathc">$templpath</xar:set>
+        <xar:set name="adopathc">$adopath</xar:set>
+        <xar:set name="rsspathc">$rsspath</xar:set>
+        <xar:set name="templpathc">$templpath</xar:set>
         <xar:set name="allfiles"><xar:mlstring>All files and subdirs in </xar:mlstring></xar:set>
         <xar:set name="configpage"><xar:mlstring>CLICK to set cache paths in SiteTools Configuration</xar:mlstring></xar:set>
         <xar:set name="response"><xar:mlstring>Check your selection before continuing.</xar:mlstring></xar:set>
@@ -86,3 +87,6 @@
         </div>
     </xar:if>
 </div>
+
+
+</xar:template>

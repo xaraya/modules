@@ -55,16 +55,16 @@ function sitetools_admin_updateconfig()
             $pathvar = substr($varname,0,3);
             switch ($pathvar) {
              case 'ado':
-                 xarModSetVar('sitetools', 'adocachepath', xarCoreGetVarDirPath()."/cache/adodb");
+                 xarModSetVar('sitetools', 'adocachepath', sys::varpath()."/cache/adodb");
                  break;
              case 'tem':
-                 xarModSetVar('sitetools', 'templcachepath', xarCoreGetVarDirPath()."/cache/templates");
+                 xarModSetVar('sitetools', 'templcachepath', sys::varpath()."/cache/templates");
                  break;
              case 'rss':
-                 xarModSetVar('sitetools', 'rsscachepath', xarCoreGetVarDirPath()."/cache/templates");
+                 xarModSetVar('sitetools', 'rsscachepath', sys::varpath()."/cache/templates");
                  break;
              case 'bac':
-                 xarModSetVar('sitetools', 'backuppath', xarCoreGetVarDirPath()."/uploads");
+                 xarModSetVar('sitetools', 'backuppath', sys::varpath()."/uploads");
                  break;
             }
 
@@ -80,7 +80,7 @@ function sitetools_admin_updateconfig()
             } else {
                 $match = array('/^\.\/var\//','/^var\//');
                     //replace any ./var or /var or var at the beginning of the path with the real var path
-                   $pathname=preg_replace($match, xarCoreGetVarDirPath().'/',$pathname);
+                   $pathname=preg_replace($match, sys::varpath().'/',$pathname);
 
                 xarModSetVar('sitetools', $varname, $pathname);
             }
