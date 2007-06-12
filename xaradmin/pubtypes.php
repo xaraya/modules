@@ -245,7 +245,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? 'checked="checked" ' : '');
+                                      'input'  => !empty($value['input']) ? true : false);
         }
     } elseif ($action == 'modify') {
         $data['item'] = $pubtypes[$ptid];
@@ -267,7 +267,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? 'checked="checked" ' : '');
+                                      'input'  => !empty($value['input']) ? true : false);
         }
     } elseif ($action == 'delete') {
         $data['item'] = $pubtypes[$ptid];

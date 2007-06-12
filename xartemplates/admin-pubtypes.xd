@@ -105,7 +105,12 @@
                                 <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
-                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# />
+                                <xar:if condition="$field.input == true">
+                                  <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" checked="checked" />
+                                <xar:else/>
+                                  <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" />
+                                </xar:if>
+
                             </td>
                             <td class="xar-norm">
                                 #$field['type']#
@@ -115,7 +120,7 @@
                 </table>
                 <p>
                     <xar:mlstring>
-                        <strong>Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
+                        <strong>Note:</strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
                         <br />
                         Don't forget to provide those templates before trying to add new articles...
                     </xar:mlstring>
@@ -223,7 +228,11 @@
                                 <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
-                                <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" #$field['input']# />
+                                <xar:if condition="$field.input == true">
+                                  <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" checked="checked"/>
+                                <xar:else/>
+                                  <input type="checkbox" name="input[#$field['name']#]" id="input_#$field['name']#" />
+                                </xar:if>
                             </td>
                             <td class="xar-norm">
                                 #$field['type']#

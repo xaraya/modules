@@ -133,8 +133,10 @@ function articles_admin_importpictures()
 
         $catlist = array();
         $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
-        foreach ($rootcats as $catid) {
-            $catlist[$catid] = 1;
+        if(!empty($rootcats)) {
+            foreach ($rootcats as $catid) {
+                $catlist[$catid] = 1;
+            }
         }
         $seencid = array();
         if (isset($cids) && is_array($cids)) {
