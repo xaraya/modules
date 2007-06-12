@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>File Uploads Administration</xar:mlstring>
@@ -59,12 +60,12 @@
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">
                                                     <td width="65%" class="xar-norm">
-                                                        &nbsp;
+                                                        &#160;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 <xar:else />
                                                     <td width="65%" class="xar-accent">
-                                                        &nbsp;
+                                                        &#160;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 </xar:if>                                                
@@ -110,12 +111,12 @@
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">
                                                     <td width="65%" class="xar-norm">
-                                                        &nbsp;
+                                                        &#160;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 <xar:else />
                                                     <td width="65%" class="xar-accent">
-                                                        &nbsp;
+                                                        &#160;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 </xar:if>                                                
@@ -142,7 +143,7 @@
                     Add Files
                 </xar:mlstring>
             </a>
-            &nbsp;|&nbsp;
+            &#160;|&#160;
             <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
                 <xar:mlstring>
                     View files
@@ -152,3 +153,5 @@
     </tr>
 </table>
 </div>
+
+</xar:template>

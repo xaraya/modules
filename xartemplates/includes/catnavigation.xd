@@ -1,5 +1,9 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!isset($catid)">
   <xar:set name="catid">''</xar:set>
 </xar:if>
 <xar:categories-navigation layout="trails" showchildren="1" module="uploads" type="admin" func="view" itemtype="1" itemid="0" catid="$catid" showcatcount="0" />
 
+
+
+</xar:template>

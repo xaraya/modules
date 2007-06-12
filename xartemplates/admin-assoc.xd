@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Adapted from categories admin-stats.xd - same clean-up required :-)
 </xar:comment>
@@ -32,6 +33,7 @@
             <li><a href="#xarModURL('uploads','admin','assoc',array('fileId' => $id))#"><xar:ml><xar:mlstring>File #(1) - #(2) association(s)</xar:mlstring><xar:mlvar>#$id#</xar:mlvar><xar:mlvar>#$num#</xar:mlvar></xar:ml></a></li>
         </xar:foreach>
         </ul>
+        </p>
     </xar:if>
 
     <div style="margin: auto;">
@@ -167,7 +169,7 @@
 
             <tr>
                 <td colspan="3">
-                    &nbsp;
+                    &#160;
                 </td>
             </tr>
 
@@ -254,3 +256,6 @@
     </xar:if>
     </div>
 </div>
+
+
+</xar:template>

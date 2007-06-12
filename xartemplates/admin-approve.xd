@@ -1,28 +1,30 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>File Uploads Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-   <xar:template type="module" file="admin-menu" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>File Uploads Administration</xar:mlstring></span></div>
+  <!-- common admin menu for this module - remove link to the current function -->
+  <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Uploads Module Overview</xar:mlstring></h2>
 
-        <form action="#xarModURL('uploads','admin','approvefinal')#" method="post">
-        <fieldset>
-            <legend>
-                <xar:mlstring>Approval</xar:mlstring>
-            </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="approval" class="xar-form-label"">
-                        <xar:mlstring>Are you sure?</xar:mlstring>
-                    </label>
-                         <xar:set name="$MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>                    
-        </fieldset>
-        
+    <form action="#xarModURL('uploads','admin','approvefinal')#" method="post">
+      <fieldset>
+        <legend>
+          <xar:mlstring>Approval</xar:mlstring>
+        </legend>
         <div class="xar-form-input-wrapper">
-            <input type="hidden" name="authid" value="#$authid#"/>
-            <input type="hidden" name="ulid" value="#$ulid#"/>
-            <input type="hidden" name="ulhash" value="#$ulhash#"/>
-
-
-        <input type="submit" value="#$MLApprove#"/>
+          <label for="approval" class="xar-form-label">
+            <xar:mlstring>Are you sure?</xar:mlstring>
+          </label>
+          <xar:set name="MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>
         </div>
-        </form>
-</div>
+
+        <div class="xar-form-input-wrapper">
+          <input type="hidden" name="authid" value="#$authid#"/>
+          <input type="hidden" name="ulid" value="#$ulid#"/>
+          <input type="hidden" name="ulhash" value="#$ulhash#"/>
+
+          <input type="submit" value="#$MLApprove#"/>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</xar:template>

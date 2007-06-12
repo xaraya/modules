@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <xar:blockgroup name="header" id="header" />
@@ -65,7 +66,7 @@
                 </td>
             </tr>
             </xar:if>
-            <tr><td class="xar-accent"><p style="height: 12px;">&nbsp;</p></td></tr>
+            <tr><td class="xar-accent"><p style="height: 12px;">&#160;</p></td></tr>
             <tr>
                 <td align="center">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
@@ -75,7 +76,7 @@
                                     File ID
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['fileId']#
                             </td>
                         </tr>
@@ -85,7 +86,7 @@
                                     Type
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['fileType']#
                             </td>
                         </tr>
@@ -95,7 +96,7 @@
                                     Location
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['fileHashName']#
                             </td>
                         </tr>
@@ -105,7 +106,7 @@
                                     Store Type
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['storeType']['long']# (#$fileInfo['storeType']['short']#)
                             </td>
                         </tr>
@@ -115,7 +116,7 @@
                                     Uploaded By
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['userName']# (#$fileInfo['userId']#)
                             </td>
                         </tr>
@@ -125,7 +126,7 @@
                                     File Size
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 #$fileInfo['size']['short']# (#$fileInfo['size']['long']# bytes)
                             </td>
                         </tr>
@@ -135,7 +136,7 @@
                                     Reference String
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-norm" width="80%">&nbsp;
+                            <td class="xar-norm" width="80%">&#160;
                                 file:#$fileInfo['fileId']# 
                             </td>
                         </tr>
@@ -145,7 +146,7 @@
                                     Known Associations
                                 </xar:mlstring>
                             </td>
-                            <td class="xar-accent" width="80%">&nbsp;
+                            <td class="xar-accent" width="80%">&#160;
                                 #$fileInfo['numassoc']# 
                                 <xar:if condition="!empty($fileInfo['numassoc']) and xarSecurityCheck('AdminUploads',0)">
                                     [<a target="main" href="#xarModURL('uploads','admin','assoc',array('fileId' => $fileInfo['fileId']))#">
@@ -161,7 +162,7 @@
                                     <td class="xar-norm" width="20%">
                                         <xar:data-label property="$ddprops[$ddname]" />
                                     </td>
-                                    <td class="xar-norm" width="80%">&nbsp;
+                                    <td class="xar-norm" width="80%">&#160;
                                         <xar:data-output property="$ddprops[$ddname]" />
                                     </td>
                                 </xar:foreach>
@@ -170,7 +171,7 @@
                     </table>
                 </td>
             </tr>
-            <tr><td class="xar-accent"><p style="height: 12px;">&nbsp;</p></td></tr>
+            <tr><td class="xar-accent"><p style="height: 12px;">&#160;</p></td></tr>
             <tr>
                 <td align="center">
                     <xar:if condition="isset($fileInfo['image'])">
@@ -203,7 +204,7 @@
                                 <td width="100%">
                                     <xar:mlstring>
                                         Download File:
-                                    </xar:mlstring>&nbsp;
+                                    </xar:mlstring>&#160;
                                     <a href="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
                                        alt="#xarMl('Download this file.')#">#$fileInfo['fileName']#
                                     </a>
@@ -229,3 +230,6 @@
     </td></tr></table>
 </body>
 </html>
+
+
+</xar:template>

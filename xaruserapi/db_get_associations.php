@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -88,7 +88,7 @@ function uploads_userapi_db_get_associations( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $fileAssoc['fileId']   = $row['xar_fileentry_id'];
+        $fileAssoc['fileId']   = $row['xar_fileEntry_id'];
         $fileAssoc['modid']    = $row['xar_modid'];
         $fileAssoc['itemtype'] = $row['xar_itemtype'];
         $fileAssoc['itemid']   = $row['xar_objectid'];

@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,8 +24,13 @@ include_once "modules/dynamicdata/class/properties.php";
  *
  * @package dynamicdata
  */
-class Dynamic_Upload_Property extends Dynamic_Property
+class UploadProperty extends DataProperty
 {
+    public $id         = 105;
+    public $name       = 'uploads';
+    public $desc       = 'Upload';
+    public $reqmodules = array('uploads');
+
     var $size = 40;
     var $maxsize = 1000000;
     var $multiple = TRUE;
@@ -36,15 +41,18 @@ class Dynamic_Upload_Property extends Dynamic_Property
     var $basedir = null;
     var $importdir = null;
 
-    // this is used by Dynamic_Property_Master::addProperty() to set the $object->upload flag
+    // this is used by DataPropertyMaster::addProperty() to set the $object->upload flag
     var $upload = true;
     /**
      * Initiate the Upload property
      * Constructor
      */
-    function Dynamic_Upload_Property($args)
+    function __construct(ObjectDescriptor $descriptor)
     {
-        $this->Dynamic_Property($args);
+        parent::__construct($descriptor);
+        $this->tplmodule =  'uploads';
+        $this->template =  'uploads';
+        $this->filepath   = 'modules/uploads/xarproperties';
 
         if (!isset($this->validation)) {
             $this->validation = '';
@@ -169,7 +177,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
     /**
      * Show the input form
      */
-    function showInput($args = array())
+    function showInput(Array $args = array())
     {
         extract($args);
 
@@ -211,7 +219,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
     /**
      * Show the output: a link to the file
      */
-    function showOutput($args = array())
+    function showOutput(Array $args = array())
     {
         extract($args);
 
@@ -268,30 +276,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         $this->maxsize = xarModGetVar('uploads', 'file.maxsize');
     }
 
-    /**
-     * Get the base information for this property.
-     *
-     * @return array base information for this property
-     **/
-     function getBasePropertyInfo()
-     {
-         $baseInfo = array(
-                            'id'         => 105,
-                            'name'       => 'uploads',
-                            'label'      => 'Upload',
-                            'format'     => '105',
-                            'validation' => '',
-                            'source'     => 'hook module',
-                            'dependancies' => '',
-                            'requiresmodule' => 'uploads',
-                            'aliases' => '',
-                            'args'         => '',
-                            // ...
-                           );
-        return $baseInfo;
-     }
-
-    function showValidation($args = array())
+    function showValidation(Array $args = array())
     {
         extract($args);
 
@@ -322,7 +307,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         return xarTplProperty('uploads', 'upload', 'validation', $data);
     }
 
-    function updateValidation($args = array())
+    function updateValidation(Array $args = array())
     {
         extract($args);
 

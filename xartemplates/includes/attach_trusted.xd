@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:mlstring>Attach from Trusted directory:</xar:mlstring><br />
 
 <xar:set name="$multiple"> 
@@ -17,3 +18,6 @@
         </xar:loop>
     </select>
 </xar:if>
+
+
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <table width="100%" border="0" class="xar-norm xar-accent-outline">
     <tr>
         <th colspan="6">
@@ -121,3 +122,6 @@
     </xar:if>
 </table>
 <br />
+
+
+</xar:template>

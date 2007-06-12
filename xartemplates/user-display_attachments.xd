@@ -1,17 +1,21 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="uploads" file="uploads" />
 <xar:base-include-javascript filename="openDialog.js" /> 
 <div class="xar-uploads-attachment-wrapper xar-accent-outline">
     <h2>
-        &nbsp;<xar:mlstring>List of Attachments:</xar:mlstring>
+        &#160;<xar:mlstring>List of Attachments:</xar:mlstring>
     </h2>
     <a name="Attachments"/>
     <xar:template file="attachment-list" type="module" />
 </div>
 
-<div class="xar-uploads-clearer">&nbsp;</div>
+<div class="xar-uploads-clearer">&#160;</div>
 <br />
 <xar:sec mask="AddUploads" catch="false">
     <a name="set_attachments" onClick="AttachmentsDialog('#$local_import_post_url#', '#xarML('Add / Remove Attachments')#'); return false;" >
         #xarML('Add / Remove Attachments')#
     </a>
 </xar:sec>
+
+
+</xar:template>

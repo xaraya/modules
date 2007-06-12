@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -146,7 +146,7 @@ function uploads_userapi_db_getall_files( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $fileInfo['fileId']        = $row['xar_fileentry_id'];
+        $fileInfo['fileId']        = $row['xar_fileEntry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
             $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);

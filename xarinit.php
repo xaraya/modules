@@ -27,13 +27,6 @@
  */
 function uploads_init()
 {
-    //Not needed anymore with the dependency checks.
-    if (!xarModIsAvailable('mime')) {
-        $msg = xarML('The mime module should be activated first');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
-        return;
-    }
-
     // load the predefined constants
     xarModAPILoad('uploads', 'user');
 
@@ -180,12 +173,14 @@ function uploads_init()
     }
 */
 
-    if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+//    if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
         // if there was an error, make sure to remove the tables
         // so the user can try the install again
-        uploads_delete();
-        return;
-    }
+        // <mrb>: good idea, do this in the method that calls this func and
+        // give user a choice to do so or not
+//        uploads_delete();
+//        return;
+//    }
 
     return true;
 }
