@@ -41,7 +41,7 @@
                             <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
                             <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
                             <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
-        <xar:comment>
+        <!--
                         <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
                             <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
                             <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
@@ -50,7 +50,7 @@
                             <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
                             <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
                             <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
-        </xar:comment>
+        -->
                         </xar:if>
                     <xar:else />
                         <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" disabled="true" /> GD
