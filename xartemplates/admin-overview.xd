@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Search Administration</xar:mlstring></span>
@@ -56,7 +57,9 @@
     </p>
 
   <p class="xar-sub">
-        <xar:mlstring>Search Module Overview</xar:mlstring></strong>&nbsp;<xar:mlstring>Version</xar:mlstring> 0.3.0&nbsp; 2005-09-10</p>
-
-    </p>
+    <strong><xar:mlstring>Search Module Overview</xar:mlstring></strong>&#160;<xar:mlstring>Version</xar:mlstring> 0.3.0&#160; 2005-09-10
+  </p>
 </div>
+
+
+</xar:template>

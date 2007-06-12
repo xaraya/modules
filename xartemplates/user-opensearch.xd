@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
   An implementation of http://www.opensearch.org/Specifications/OpenSearch/1.1
   Pitfalls:
@@ -11,3 +12,5 @@
   <Tags>opensearch</Tags>
   <Url type="text/html" template="&xar-modurl-search-user-main;&amp;q={searchTerms}"/>
 </OpenSearchDescription>
+
+</xar:template>

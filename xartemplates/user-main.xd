@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Search Module</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Search</xar:mlstring></h2>
@@ -58,8 +59,8 @@
     <input type="hidden" name="func" value="main" />
     <p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
         <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
-    &nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
-    &nbsp;&nbsp;&nbsp;<a href="&xar-modurl-search-user-main;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
+    &#160;&#160;&#160; <input type="submit" value="#$search#" />
+    &#160;&#160;&#160;<a href="&xar-modurl-search-user-main;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
     <p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
 
     <xar:if condition="!empty($query)">
@@ -76,3 +77,6 @@
 </xar:if>
 </div>
 </div>
+
+
+</xar:template>
