@@ -26,4 +26,5 @@ $modversion['admin']          = 0;
 $modversion['user']           = 0;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
+$modversion['securityschema'] = array();
 ?>
