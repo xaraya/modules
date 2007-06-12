@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <methodResponse>
   <params>
     <param>
@@ -10,7 +11,7 @@
                 <array>
                   <data>
                     <xar:loop name="$categories">
-                      <value><string>#$loop:item.name#</string></value>
+                      <value><string><xar:var name="loop:item.name"/></string></value>
                     </xar:loop>
                   </data>
                 </array>
@@ -20,47 +21,47 @@
           <member>
             <name>dateCreated</name>
             <value>
-              <dateTime.iso8601>#$dateCreated#</dateTime.iso8601>
+              <dateTime.iso8601><xar:var name="dateCreated"/></dateTime.iso8601>
             </value>
           </member>
           <member>
             <name>description</name>
-            <value><string>#$content#</string></value>
+            <value><string><xar:var name="content"/></string></value>
           </member>
           <xar:if condition="isset($body)">
             <member>
               <name>mt_text_more</name>
-              <value><string>#$body#</string></value>
+              <value><string><xar:var name="body"/></string></value>
             </member>
           </xar:if>
           <xar:if condition="isset($keywords)">
             <member>
               <name>mt_keywords</name>
-              <value><string>#$keywords#</string></value>
+              <value><string><xar:var name="keywords"/></string></value>
             </member>
           </xar:if>
           <member>
             <name>postid</name>
             <value>
-              <string>#$postid#</string>
+              <string><xar:var name="postid"/></string>
             </value>
           </member>
           <member>
             <name>title</name>
-            <value><string>#$title#</string></value>
+            <value><string><xar:var name="title"/></string></value>
           </member>
           <member>
             <name>link</name>
-            <value><string>#$link#</string></value>
+            <value><string><xar:var name="link"/></string></value>
           </member>
           <member>
             <name>permaLink</name>
-            <value><string>#$link#</string></value>
+            <value><string><xar:var name="link"/></string></value>
           </member>
           <member>
             <name>userid</name>
             <value>
-              <string>#$userid#</string>
+              <string><xar:var name="userid"/></string>
             </value>
           </member>
         </struct>
@@ -68,3 +69,6 @@
     </param>
   </params>
 </methodResponse>
+
+
+</xar:template>

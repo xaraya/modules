@@ -1,5 +1,4 @@
 /**
-* File: $Id$
  *
  * Initialisation of metaweblog module
  *
@@ -18,18 +17,18 @@
  * it uses no database tables yet.
  *
  */
-function metaweblogapi_init() 
+function metaweblogapi_init()
 {
-    return metaweblogapi_upgrade('0.1.0'); // initial version was 0.1.0 
+    return metaweblogapi_upgrade('0.1.0'); // initial version was 0.1.0
 }
 
 /**
 * upgrade the metaweblogapi module from an old version
  * This function can be called multiple times
  */
-function metaweblogapi_upgrade($oldversion) 
-{ 
-    return true; 
+function metaweblogapi_upgrade($oldversion)
+{
+    return true;
 }
 
 /**
