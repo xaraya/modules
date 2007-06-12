@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <input type="hidden" value="1" name="refreshrandom" />
   <!--
                 <div style="clear: both; padding-top: 10px;">
@@ -28,3 +29,6 @@
                 </span>
                 </div>
 
+
+
+</xar:template>

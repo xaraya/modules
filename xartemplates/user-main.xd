@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title">
@@ -13,61 +14,26 @@
     </xar:if>
     <!-- <div class="xar-form-input-wrapper"> -->
     <xar:if condition="empty($items)">
+        <h4><xar:mlstring>No keywords found !</xar:mlstring></h4>
+    <xar:else />
       <div class="xar-form-input-wrapper">
-        <h4>
-          <xar:mlstring>No keywords found !</xar:mlstring>
-        </h4>
-    <xar:else /> 
-      <xar:comment>Start the list column output</xar:comment>
-      <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>
-      <xar:set name="divwidth">round(95/$displaycolumns)</xar:set>
-      <xar:comment> Begin the column wrapping div </xar:comment>
-      <div class="xar-form-input-wrapper">
-        <xar:set name="i">1</xar:set>
-        <xar:set name="j">0</xar:set>
-        <xar:comment> Begin first list column div </xar:comment>
-        <xar:comment> TODO: well, what can i say, does the author still know what happens here? </xar:comment>
         <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
           <ul>
             <xar:foreach in="$items" value="$item">
-              <xar:set name="j">++$j</xar:set>
-              <xar:if condition="$i++ lt $totitemspercol">
                 <li class="xar-list-nostyle">
                   <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
                 </li>
-              <xar:elseif condition="($j eq $totitems)" />
-                <li class="xar-list-nostyle">
-                  <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                </li>
-                <xar:set name="i">1</xar:set>
-              <xar:else />
-                <li class="xar-list-nostyle">
-                  <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                </li>
+            </xar:foreach>
           </ul>
-        </div> 
-        <xar:comment> end list column </xar:comment>
-        <xar:comment> begin list column </xar:comment>
-        <div class="xar-floatleft xar-align-left" style="width: #$divwidth#%;">
-          <ul>
-            <xar:set name="i">1</xar:set>
-        </xar:if>
-        </xar:foreach>
-        </ul>
-        </div>              
-        <!-- end last column div 
-             </div> -->
-      <xar:comment> End all column wrapping div </xar:comment>
+        </div>
+      </div>
     </xar:if>
-    </div>    
-    <xar:comment>da qui sicuramene buono. c'e una chiusura di div direy xat body</xar:comment>    
-    <xar:comment> End div for wrapping whole if section </xar:comment>
-    <xar:elseif condition="$status eq 1 and !empty($keyword)" />
+  <xar:elseif condition="$status eq 1 and !empty($keyword)" />
     <h4>
       <xar:ml>
         <xar:mlstring>Keyword : #(1)</xar:mlstring>
         <xar:mlvar>
-          #$keyword# 
+          #$keyword#
         </xar:mlvar>
       </xar:ml>
     </h4>
@@ -76,11 +42,11 @@
         <xar:foreach in="$items" key="$id" value="$item">
           <li>
             <xar:if condition="!empty($item['modname'])">
-              [#$item['modname']#] 
+              [#$item['modname']#]
             </xar:if>
             <xar:if condition="!empty($item['url']) and !empty($item['label'])">
               <a href="#$item['url']#">
-                #$item['label']# 
+                #$item['label']#
               </a>
               <xar:elseif condition="!empty($item['url'])" />
               <xar:comment>you could skip these items </xar:comment>
@@ -88,14 +54,14 @@
                 <xar:ml>
                   <xar:mlstring>item #(1) </xar:mlstring>
                   <xar:mlvar>
-                    #$item['itemid']# 
+                    #$item['itemid']#
                   </xar:mlvar>
                                 </xar:ml>
                             </a>
                         <xar:else />
                             <xar:comment>you could skip these items </xar:comment>
                             <xar:mlstring>item </xar:mlstring>
-                            #$item['moduleid']# #$item['itemtype']# #$item['itemid']# 
+                            #$item['moduleid']# #$item['itemtype']# #$item['itemid']#
                             <!-- </a> -->
                         </xar:if>
                     </li>
@@ -126,3 +92,6 @@
             <xar:mlstring>Unknown status</xar:mlstring>
     </xar:if>
 </div>
+
+
+</xar:template>

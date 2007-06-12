@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html
 Global variables : itemid, itemtype, modid
 Available variables for each related articles (items) :
@@ -9,7 +10,7 @@ $item['title'],$item['summary'],$item['authorid'],$item['pubdate'],$item['pubtyp
 
     <div class="xar-block-title"><xar:mlstring>Keywords related articles</xar:mlstring>:</div>
     <xar:foreach in="$items" value="$item">
-        &bull;#xarVarPrepForDisplay($item['title'])#&nbsp;
+        &bull;#xarVarPrepForDisplay($item['title'])#&#160;
         <xar:if condition="!empty($item['pubdate'])">(#xarLocaleGetFormattedDate('medium',$item['pubdate'])#)</xar:if><br />
         <xar:if condition="!empty($item['summary'])">
             #xarVarPrepForDisplay($item['summary'])#<br />
@@ -18,3 +19,5 @@ $item['title'],$item['summary'],$item['authorid'],$item['pubdate'],$item['pubtyp
     <br /><br />
     </xar:foreach>
 </xar:if>
+
+</xar:template>

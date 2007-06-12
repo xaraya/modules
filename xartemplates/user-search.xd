@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <h2><xar:mlstring>Search in Keywords</xar:mlstring></h2>
 <xar:if condition="!empty($keys) and count($keys) gt 0">
@@ -12,3 +13,6 @@
         <p>#$status#</p>
     </xar:if>
 </xar:if>
+
+
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <h2><xar:mlstring>Display Keyword Assignment</xar:mlstring></h2>
 <xar:if condition="!empty($id) and is_numeric($id)">
@@ -14,3 +15,6 @@
     <xar:mlstring>Unable to find corresponding item</xar:mlstring>
 </xar:if>
 
+
+
+</xar:template>
