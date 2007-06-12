@@ -1,19 +1,17 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Count the entities validation
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xmlrpcvalidator api
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcvalidatorapi_userapi_counttheentities($args) 
+function xmlrpcvalidatorapi_userapi_counttheentities($args)
 {
     extract($args);
     $sno=$msg->getParam(0);
@@ -50,7 +48,7 @@ function xmlrpcvalidatorapi_userapi_counttheentities($args)
                                               "ctApostrophes" =>
                                               new xmlrpcval($ap, "int"),
                                               "ctQuotes" =>
-                                              new xmlrpcval($qu, "int")), 
+                                              new xmlrpcval($qu, "int")),
                                         "struct"));
 }
 ?>

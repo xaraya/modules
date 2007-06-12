@@ -1,20 +1,18 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Validate a simple struct return
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xmlrpcvalidatorapi
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
 
-function xmlrpcvalidatorapi_userapi_simplestructreturn($args) 
+function xmlrpcvalidatorapi_userapi_simplestructreturn($args)
 {
     extract($args);
     $sno=$msg->getParam(0);
@@ -25,7 +23,7 @@ function xmlrpcvalidatorapi_userapi_simplestructreturn($args)
                                               "times100" =>
                                               new xmlrpcval($v*100, "int"),
                                               "times1000" =>
-                                              new xmlrpcval($v*1000, "int")), 
+                                              new xmlrpcval($v*1000, "int")),
                                         "struct"));
 }
 ?>

@@ -1,19 +1,17 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Validate an array of structs
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xmlrpcvalidatorapi
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcvalidatorapi_userapi_arrayofstructs($args) 
+function xmlrpcvalidatorapi_userapi_arrayofstructs($args)
 {
     extract($args);
     $sno=$msg->getParam(0);

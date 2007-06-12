@@ -1,24 +1,22 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Validate a nested struct
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xmlrpcvalidatorapi
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
 
-function xmlrpcvalidatorapi_userapi_nestedstruct($args) 
+function xmlrpcvalidatorapi_userapi_nestedstruct($args)
 {
     extract($args);
     $sno=$msg->getParam(0);
-    
+
     $twoK=$sno->structmem("2000");
     $april=$twoK->structmem("04");
     $fools=$april->structmem("01");
@@ -28,6 +26,6 @@ function xmlrpcvalidatorapi_userapi_nestedstruct($args)
     return new xmlrpcresp(new xmlrpcval($curly->scalarval()+
                                         $larry->scalarval()+
                                         $moe->scalarval(), "int"));
-    
+
 }
 ?>

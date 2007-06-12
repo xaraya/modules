@@ -1,14 +1,12 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Validate many types
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xmlrpcvalidatorapi
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
