@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Images Administration</xar:mlstring>
@@ -25,9 +26,9 @@
         <xar:elseif condition="!empty($action) and $action eq 'resize'"/>
         <form method="post" action="&xar-modurl-images-admin-browse;">
             <p><strong><xar:mlstring>Specify the width and/or height you want :</xar:mlstring></strong></p>
-            <label for="width"><xar:mlstring>Width</xar:mlstring></label> 
+            <label for="width"><xar:mlstring>Width</xar:mlstring></label>
                 <input type="text" name="width" id="width" size="5" value="#$width#" />
-            <label for="height"><xar:mlstring>Height</xar:mlstring></label> 
+            <label for="height"><xar:mlstring>Height</xar:mlstring></label>
                 <input type="text" name="height" id="height" size="5" value="#$height#" />
             <label for="replace"><xar:mlstring>Replace</xar:mlstring></label>
             <select name="replace" id="replace">
@@ -55,13 +56,13 @@
             </legend>
             <div class="xar-form-input-wrapper">
             <p class="xar-align-center">
-                <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&nbsp;&nbsp;&nbsp;
+                <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&#160;&#160;&#160;
                 <xar:if condition="!empty($width) or !empty($height)">
                     <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
                 <xar:else/>
                     <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt="" />
                </xar:if>
-               &nbsp;&nbsp; &nbsp;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
+               &#160;&#160; &#160;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
              </p>
            </div>
         </fieldset>
@@ -91,7 +92,7 @@
                     <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :</label>
                      #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
                 </div>
-  
+
             </fieldset>
             <fieldset>
                 <legend>
@@ -134,7 +135,7 @@
                 </th>
                 <xar:if condition="!empty($cacheExpire)">
                 <th>
-                    &nbsp;
+                    &#160;
                 </th>
                 </xar:if>
             </tr>
@@ -350,3 +351,6 @@
         </form>
 
 </div>
+
+
+</xar:template>

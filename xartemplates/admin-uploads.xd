@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Images Administration</xar:mlstring>
@@ -320,3 +321,6 @@
         </form>
 
 </div>
+
+
+</xar:template>

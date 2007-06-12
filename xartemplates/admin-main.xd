@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Images Administration</xar:mlstring></span>
@@ -91,6 +92,9 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
+         <strong>&#160;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.0&#160; #xarLocaleGetFormattedDate('short','1130972400')#
   </p>
 </div>
+
+
+</xar:template>
