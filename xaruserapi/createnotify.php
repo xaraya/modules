@@ -25,7 +25,7 @@ function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    id = $object->properties['id']->value;
+    $id = $object->properties['id']->value;
     $state = $object->properties['state']->value;
 
     if ($state == ROLES_STATE_NOTVALIDATED) {

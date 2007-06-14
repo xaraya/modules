@@ -8,9 +8,6 @@
     <xar:data-getitem name="$properties" object="$object" />
     <xar:foreach in="$properties" key="$field">
         #$properties.$field:label#: #$properties.$field:value# #$lineend#
-
-<xar:mlstring>Status: </xar:mlstring>#$pending#
-
     </xar:foreach>
 
 #$terms#

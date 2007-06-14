@@ -48,7 +48,7 @@ function registration_user_register()
         return;
     }
 
-    //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
+     //Check for site lock . We don't want people  registering during this period
      $lockvars = unserialize(xarModVars::get('roles','lockdata'));
      if ($lockvars['locked'] ==1) {
         xarErrorSet(XAR_SYSTEM_MESSAGE,
@@ -58,17 +58,10 @@ function registration_user_register()
      }
 
     xarTplSetPageTitle(xarML('New Account'));
-    if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase','str:1:100',$phase,'registerform',XARVAR_NOT_REQUIRED)) return;
 
 
     switch(strtolower($phase)) {
-
-        case 'choices':
-            xarTplSetPageTitle(xarML('Log In'));
-            $loginlabel = xarML('Sign In');
-            $data       = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
-            break;
-
         case 'checkage':
             $minage     = xarModVars::get('registration', 'minage');
             $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
@@ -77,7 +70,7 @@ function registration_user_register()
                                        'submitlink' => $submitlink));
             break;
 
-        case 'registerform': //Make this default now login is handled by authsystem
+        case 'registerform':
         default:
             $authid = xarSecGenAuthKey();
 
@@ -86,7 +79,7 @@ function registration_user_register()
             if(empty($object)) return;
 
             // dont want to show this to the user
-            $object->properties['state']->status = 33;
+            $object->properties['state']->status = 35;
             $object->properties['state']->value = 3;
 
             /* Call hooks here, others than just dyn data
@@ -256,11 +249,11 @@ function registration_user_register()
             $isvalid = $object->checkInput($userdata);
             debug($userdata);
             if (!$isvalid) return;*/
-            $uid = $object->createItem($userdata);
+            $id = $object->createItem($userdata);
 
-            $values['id'] = $uid;
-            if (empty($uid)) return;
-            xarModVars::set('roles', 'lastuser', $uid);
+            $values['id'] = $id;
+
+            xarModVars::set('roles', 'lastuser', $id);
 
             // @todo we prolly shouldn't need to call this if roles create returned the object
 
@@ -269,8 +262,8 @@ function registration_user_register()
              * but the new hook wasn't called there, so no data is passed
              */
              $userdata['module'] = 'registration';
-             $userdata['itemid'] = $uid;
-             xarModCallHooks('item', 'create', $uid, $userdata);
+             $userdata['itemid'] = $id;
+             xarModCallHooks('item', 'create', $id, $userdata);
 
              // Option: If admin requires notification of a new user, and no validation required,
              // send out an email to Admin

@@ -40,7 +40,7 @@ function registration_userapi_notifyadmin ($args)
     } else {
         $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $uname, $name);
     }
-    $rolelink = xarModURL('roles','admin','modify',array('uid'=>$uid),false);
+    $rolelink = xarModURL('roles','admin','modify',array('uid'=>$id),false);
 
     /*
        TODO: can we do this more centrally instead of every function with email
