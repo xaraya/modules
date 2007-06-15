@@ -36,9 +36,9 @@
         </xar:if>
 
         <xar:if condition="!empty($multiform.next_page_pid)">
-            <p>
+            <p class="multiform-start">
                 <xar:ml>
-                    <xar:mlstring>To start, click <a href="#(1)">here</a></xar:mlstring>
+                    <xar:mlstring>To start, <a href="#(1)">click here</a></xar:mlstring>
                     <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
                 </xar:ml>
             </p>
@@ -46,7 +46,7 @@
     </xar:if>
 
     <xar:if condition="!empty($multiform.next_page_pid) and !empty($multiform.reason)">
-        <p>
+        <p class="multiform-start">
             <xar:ml>
                 <xar:mlstring>To start again, <a href="#(1)">click here</a></xar:mlstring>
                 <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
