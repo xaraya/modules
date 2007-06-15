@@ -1,0 +1,88 @@
+
+This HOWTO describes what to set up to allow an autolink so that
+links between xarpages pages can be used. The format of a link
+is:
+
+[page:{page-name}]
+
+or
+
+[page:{page-name}:{link-text}]
+
+where:
+
+{page-name} is the name of a xarpage, or a partial path to that
+xarpage (e.g. 'mypage' or 'thissection/mypage')
+
+{link-text} is optional text to display in the link instead of
+the page menu title.
+
+1. Link autolinks to xarpages. Make sure the 'body' property of
+xarpages is included in the list of hooked fields.
+
+2. Create the following autolink type and autolink:
+
+    <autolink-type tid="2" itemtype="1" itemid="2">
+        <tid>2</tid>
+        <dynamic_replace>1</dynamic_replace>
+        <template_name>page</template_name>
+        <type_name>xarpages</type_name>
+        <itemtype>12</itemtype>
+        <type_desc>Page links for xarpages</type_desc>
+        <item-hooks itemtype="1" itemid="2">
+        </item-hooks>
+        <itemtype-hooks itemtype="12">
+        </itemtype-hooks>
+        <autolinks>
+            <autolink lid="3" module="autolinks" itemtype="12" itemid="3">
+                <lid>3</lid>
+                <keyword>\[page:([^:\]]+)(:([^\]]+)){0,1}\]</keyword>
+                <title>$4</title>
+                <url>$2</url>
+                <comment></comment>
+                <enabled>1</enabled>
+                <match_re>1</match_re>
+                <sample>[page:projects/flagship/fcasestudies]</sample>
+                <name>page_link</name>
+                <tid>2</tid>
+                <dynamic_replace>1</dynamic_replace>
+                <template_name>page</template_name>
+                <type_name>xarpages</type_name>
+                <type_desc>Page links for xarpages</type_desc>
+                <itemtype>12</itemtype>
+                <itemid>3</itemid>
+                <item-hooks>
+                </item-hooks>
+            </autolink>
+        </autolinks>
+    </autolink-type>
+
+Sorry - there is no import utility in autolinks yet, but once set up, it should
+look something like this in the autolinks admin list:
+
++----------+-----------+------------------------------------+----+--------------------------------+
+| xarpages | page_link | \[page:([^:\]]+)(:([^\]]+)){0,1}\] | $2 | Disable | Edit | Move | Delete |
++----------+-----------+------------------------------------+----+--------------------------------+
+
+3. Create the following autolink template in your theme:
+
+<!-- themes/{your-theme}/modules/autolinks/link-page.xt -->
+<xar:comment>Provide links to other xarpages using the format [page:path] or [page:path:title]</xar:comment>
+<xar:set name="page">xarModAPIfunc('xarpages','user','getpagebypath',array('path'=>$url,'dd_flag'=>true))</xar:set>
+<xar:if condition="!empty($page)">
+    <xar:set name="pageurl">$page['url']</xar:set>
+    <xar:if condition="!empty($title)">
+        <a href="#$pageurl#">#xarVarPrepForDisplay($title)#</a>
+    <xar:else />
+        <xar:if condition="!empty($page.dd.menu_title)">
+            <a href="#$pageurl#">#xarVarPrepForDisplay($page.dd.menu_title)#</a>
+        <xar:else />
+            <a href="#$pageurl#">[page]</a>
+        </xar:if>
+    </xar:if>
+<xar:else />
+    #$match#
+</xar:if>
+
+4. Now try the links in your pages!
+
