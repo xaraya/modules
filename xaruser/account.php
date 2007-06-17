@@ -19,7 +19,7 @@ function members_user_account()
 {
     if(!xarVarFetch('moduleload','str', $data['moduleload'], '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarUserIsLoggedIn()){
-        xarResponseRedirect(xarModURL(xarModGetNameFromID(xarModGetVar('roles','defaultauthmodule')),
+        xarResponseRedirect(xarModURL(xarModGetVar('roles','defaultauthmodule'),
                                       'user',
                                       'register'));
     }

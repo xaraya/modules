@@ -18,7 +18,9 @@
             <xar:mlvar>#$object:label#</xar:mlvar>
         </xar:ml>
     </h2>
-    <xar:template module="members" file="admin-menu" />
+    <xar:if condition="xarSecurityCheck('EditMembers',0)">
+        <xar:template module="members" file="admin-menu" />
+    </xar:if>
     <div style="clear:both">&#160;</div>
     <xar:data-display object="$object" tplmodule="$tplmodule" />
     <div style="clear:both">&#160;</div>
