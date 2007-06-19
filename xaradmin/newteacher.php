@@ -18,7 +18,7 @@
  * @param  $args an array of arguments (if called by other modules)
  * @param int userid the uid of the role to be treated as a teacher
  * @param int planningid the planned course ID that the teacher will get attached to
- * @return bool true
+ * @return bool true if successful
  * @todo Create automatic privilege?
  */
 function courses_admin_newteacher($args)
@@ -32,10 +32,10 @@ function courses_admin_newteacher($args)
     $check = xarModAPIFunc('courses',
                            'admin',
                            'check_teacher',
-                           array('userid' => $userid,
+                           array('userid'     => $userid,
                                  'planningid' => $planningid));
 
-    if (!$check) {
+    if ($check == true) {
     $msg = xarML('This teacher has already been assigned to this course');
         xarErrorSet(XAR_USER_EXCEPTION, 'ALREADY_TEACHER',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));

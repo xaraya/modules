@@ -15,7 +15,7 @@
  * Check for the case that the user (entered with a userid) is already
     registered as a teacher for the planned course
  * @author MichelV <michelv@xarayahosting.nl>
- * @param int planningid
+ * @param int planningid The id of the planned course
  * @param int userid id of the user placed in as a teacher
  * @return bool true if the combination is encountered, false if not.
  * @todo use a privilege check in here?
@@ -33,27 +33,25 @@ function courses_adminapi_check_teacher($args)
     $xartable =& xarDBGetTables();
     $teacherstable = $xartable['courses_teachers'];
 
-    $sql = "SELECT xar_tid
+    $sql = "SELECT COUNT(xar_tid)
     FROM $teacherstable
     WHERE xar_userid = $userid
     AND xar_planningid = $planningid";
     $result = $dbconn->Execute($sql);
     // check for a result
     if (!$result) {
-        return false;
+        // No result: return false
+        echo false;
     }
-    $tids = array();
-    // Get the courseid
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($tid) = $result->fields;
-        $tids[] = $tid;
-    }
+    list($tid) = $result->fields;
+    
     $result->Close();
-    if (count($tids) == 0) {
-        return false;
-    } else {
-        // this user is a teacher: return true
+    // Create result
+    if ($tid > 0) {
         return true;
+    } else {
+        // this user is not a teacher: return false
+        return false;
     }
 }
 ?>
