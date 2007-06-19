@@ -115,22 +115,28 @@ function categories_adminapi_linkcat($args)
 
     foreach ($args['iids'] as $iid)
     {
-       foreach ($args['cids'] as $cid)
-       {
-          // Security check
-          if(!xarSecurityCheck('SubmitCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:$cid")) return;
+        foreach ($args['cids'] as $cid)
+        {
+            // Security check
+            if (!xarSecurityCheck('SubmitCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:$cid")) continue;
 
-          // Insert the link
-          $sql = "INSERT INTO $categorieslinkagetable (
-                    xar_cid,
-                    xar_iid,
-                    xar_itemtype,
-                    xar_modid)
-                  VALUES(?,?,?,?)";
-          $bindvars = array($cid, $iid, $itemtype, $args['modid']);
-          $result =& $dbconn->Execute($sql,$bindvars);
-          if (!$result) return;
-       }
+            // Insert the link
+            $bindvars = array((int)$args['modid'], (int)$itemtype, (int)$iid, (int)$cid);
+
+            // Make sure the linkage does not exist first.
+            $sql = "SELECT 1 FROM $categorieslinkagetable"
+                . " WHERE xar_modid = ? AND xar_itemtype = ? AND xar_iid = ? AND xar_cid = ?";
+
+            $result =& $dbconn->Execute($sql, $bindvars);
+
+            if ($result->EOF) {
+                $sql = "INSERT INTO $categorieslinkagetable"
+                    . " (xar_modid, xar_itemtype, xar_iid, xar_cid)"
+                    . " VALUES(?,?,?,?)";
+                $result =& $dbconn->Execute($sql,$bindvars);
+                if (!$result) return;
+            }
+        }
     }
 
     return true;
