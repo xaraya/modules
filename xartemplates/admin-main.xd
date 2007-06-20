@@ -92,10 +92,15 @@
         <br />
 
         <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+        <p>
             <xar:mlstring>The Uploads module does provide a transform hook. You can activate the uploads hook for a module or itemtype by going to </xar:mlstring>
                  <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
-             <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the uploads module hooks.</xar:mlstring>
+             <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the uploads module hooks.</xar:mlstring><br />
+             <xar:mlstring>If you combine the hook with the upload property, then you can add parameters to the dynamic property. Set the options with:</xar:mlstring>
+             <em>single;methods(-trusted,+external,+upload,+stored);basedir(/tothedir/uploads/{user});importdir(/tothedir/uploads/{user})</em><br />
+             <xar:mlstring>This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.</xar:mlstring>
 
+        </p>
     <h3><xar:mlstring>Further Information</xar:mlstring></h3>
     <p>
          <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>

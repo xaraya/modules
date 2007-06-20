@@ -10,12 +10,12 @@
  * @subpackage Uploads Module
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
- *//**
+ */
+/**
  * Primarily used by Articles as a transform hook to turn "upload tags" into various display formats
  *
- * @param  $args ['extrainfo']
- * @return
- * @return
+ * @param array $args ['extrainfo']
+ * @return result
  */
 function & uploads_userapi_transformhook ( $args )
 {
@@ -38,7 +38,10 @@ function & uploads_userapi_transformhook ( $args )
     }
     return $result;
 }
-
+/**
+ * Transform the $body parameter
+ * @param $body
+ */
 function & uploads_userapi_transform ( $body )
 {
     while(eregi('#(ulid|file|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {

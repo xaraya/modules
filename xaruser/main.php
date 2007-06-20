@@ -11,7 +11,11 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-/*FUNC*/function uploads_user_main($args)
+/**
+ * Return to the download function
+ * @param array $args
+ */
+function uploads_user_main($args)
 {
     return xarModFunc('uploads','user','download',$args);
 }
