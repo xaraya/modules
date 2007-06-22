@@ -113,7 +113,10 @@ function recommend_user_sendfriend()
                              'fromname'     => $username))) return;
 
 
-
+//
+//    $object = xarModAPIFunc('dynamicdata','user','getobject',
+//                             array('module' => 'recommend'));
+//    echo "<pre>"; print_r($object); die("</pre>");
 
     /* endnew */
     /* lets update status and display updated configuration */

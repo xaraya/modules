@@ -62,12 +62,14 @@ function recommend_admin_modifyconfig()
             if (!xarVarFetch('title', 'str:1:', $title)) return;
             if (!xarVarFetch('usernote', 'checkbox', $usernote, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('storerecommendations', 'checkbox', $storerecommendations, false, XARVAR_NOT_REQUIRED)) return;
             /* Confirm authorisation code */
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetVar('recommend', 'template', $template);
             xarModSetVar('recommend', 'title', $title);
             xarModSetVar('recommend', 'usernote', $usernote);
+            xarModSetVar('recommend', 'storerecommendations', $storerecommendations);
             xarModSetVar('recommend', 'SupportShortURLs', $shorturls);
 
             xarResponseRedirect(xarModURL('recommend', 'admin', 'modifyconfig'));

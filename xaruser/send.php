@@ -21,10 +21,7 @@ function recommend_user_send($args)
     if (!xarVarFetch('info', 'str:1:', $info)) return; 
     if (!xarVarFetch('usernote', 'str:1:', $usernote, '', XARVAR_NOT_REQUIRED)) return;
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
-    /* Security Check */
-    if(!xarSecurityCheck('OverviewRecommend')) return;
-
+    
     /* Statistics */
     /*$date = date('Y-m-d G:i:s'); */
     $date = time();
@@ -79,6 +76,16 @@ function recommend_user_send($args)
                              'from'         => $useremail,
                              'fromname'     => $fromname))) return;
     
+    if(xarUserIsLoggedIn()) {
+        if (!xarModAPIFunc('recommend',
+                            'admin',
+                            'create',
+                            array('sentby_uid' => xarSessionGetVar('uid'), 
+                                'senddate' => time(),
+                                'recipient_email' => $info,
+                                'extradata' => array() ))) return;
+    }
+        
     /* lets update status and display updated configuration */
     xarResponseRedirect(xarModURL('recommend', 'user', 'main', array('message' => '1')));
     /* Return */

@@ -64,6 +64,18 @@
           <div class="xar-form-input-wrapper-after">
             <xar:mlstring>This is the template for the mail to be sent.  If you have HTML mail enabled in your Mail Module, then HTML tags are usable.</xar:mlstring>
           </div>
+            <div class="xar-form-input-wrapper">
+                <label for="storerecommendations" class="xar-form-label" title="#xarML('Store recipient info for later use in hooks')#">
+                      <xar:mlstring>Store recommendations?</xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('recommend', 'storerecommendations')">
+                    <input type="checkbox" name="storerecommendations" id="storerecommendations" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="storerecommendations" id="storerecommendations" value="1" />
+                </xar:if>
+           </div>
+
+
     </fieldset>
     <fieldset>
         <div class="xar-form-input-wrapper-after">
