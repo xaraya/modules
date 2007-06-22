@@ -200,7 +200,7 @@ class ievents_exportapi_handler_master
     // TODO: separate the encoding from the folding. We could encode an entire line, then fold it.
     // We need to be able to encode separate parts of a line (e.g. a list) and then fold the whole thing.
     // The current technique of encoding one character at a time does ensure we don't fold mid-character.
-    function fold_lines($string, $encoding = 'none', $limit = 76, $offset = 0)
+    function old_fold_lines($string, $encoding = 'none', $limit = 76, $offset = 0)
     {
         $len = strlen($string);
         $fold = $limit; 
@@ -287,6 +287,14 @@ class ievents_exportapi_handler_master
         return implode($this->line_ending, $res);
     }
 
+    // Fold lines at some maximum size.
+    // Different folding methods are supported: ical
+    // $line can be a string or an array of strings.
+    function fold_lines($line, $maxlen = 0, $method = 'ical')
+    {
+        // TODO
+    }
+
     // Format a local datetime in utc string format (iCal and vCal)
     function utc_datetime($datetime)
     {
@@ -294,6 +302,22 @@ class ievents_exportapi_handler_master
         $utc_hour = gmdate('His', $datetime);
 
         return sprintf ('%sT%sZ', $utc_date, $utc_hour);
+    }
+
+    // Transform to quoted-printable.
+    // This does not fold lines - that is dealt with separately.
+    function quoted_printable_encode($text)
+    {
+        // TODO: if there is nothing in the string to encode, then return
+        // straight away to save time.
+        $return = '';
+
+        $len = strlen($text);
+        for ($i = 0; $i < $len; $i++) {
+            $return .= $this->quoted_printable_encode_char($text[$i]);
+        }
+
+        return $return;
     }
 }
 

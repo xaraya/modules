@@ -18,6 +18,8 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
     var $cal_version = '2.0';
     var $max_line_length = 75;
 
+    var $type = 'ical';
+
     // Constructor
     function ievents_exportapi_handler_ical($args)
     {
@@ -59,8 +61,6 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
     // support multiple values (and an array of values is passed in)
     function format_line($name, $value, $params = array())
     {
-        //return "$name:$value";
-
         // TODO: if the value is an array, and the name is one that does not
         // support mulitple values, then return multiple lines through
         // recursive calling.
@@ -166,15 +166,26 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
 
         // The 'title' is the summary.
         if (!xarVarValidate('str:1', $title, true)) $title = xarML('Unknown');
-        // Checkme: 'quotedprintable' may be required.
-        $lines[] = $this->format_line('SUMMARY', $title);
+
+        if ($this->type == 'ical') {
+            $lines[] = $this->format_line('SUMMARY', $title);
+        } elseif ($this->type == 'vcal') {
+            $lines[] = $this->format_line('SUMMARY', $this->quoted_printable_encode($title), array('ENCODING' => 'QUOTED-PRINTABLE'));
+        }
 
         // The description is everything else we have - the summary and the main description.
         // We may just stick with the summary for now.
         // We need to ensure it consists of text only (not HTML).
         if (!xarVarValidate('str:1:', $summary, true)) $summary = '';
         if (!xarVarValidate('str:1:', $description, true)) $description = '';
-        $lines[] = $this->format_line('DESCRIPTION', xarModAPIfunc('ievents', 'user', 'transform', array('text' =>$summary)));
+        if ($this->type == 'ical') {
+            $lines[] = $this->format_line('DESCRIPTION', xarModAPIfunc('ievents', 'user', 'transform', array('text' =>$summary)));
+        } elseif ($this->type == 'vcal') {
+            $lines[] = $this->format_line('DESCRIPTION',
+                $this->quoted_printable_encode(xarModAPIfunc('ievents', 'user', 'transform', array('text' =>$summary))),
+                array('ENCODING' => 'QUOTED-PRINTABLE')
+            );
+        }
 
         // Only public events will be listed
         $lines[] = $this->format_line('CLASS', 'PUBLIC');
@@ -190,12 +201,20 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         if ($all_day == 'A' || !isset($enddate) || date('Ymd', $startdate) != date('Ymd', $enddate)) {
             // All day event (or no end date, or start/end dates more than one day apart).
             // Q: what timezone is this? A: it is just a date, so the timezone is irrelevant.
-            $lines[] = $this->format_line('DTSTART', date('Ymd', $startdate), array('VALUE' => 'DATE'));
+            if ($this->type == 'ical') {
+                $lines[] = $this->format_line('DTSTART', date('Ymd', $startdate), array('VALUE' => 'DATE'));
+            } elseif ($this->type == 'vcal') {
+                $lines[] = $this->format_line('DTSTART', date('Ymd', $startdate));
+            }
 
             // If we have no end date, then assume it will end in 24 hours?
             // CHECKME: can we just leave the end date open?
             if (!isset($enddate)) {
-                $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)), array('VALUE' => 'DATE'));
+                if ($this->type == 'ical') {
+                    $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)), array('VALUE' => 'DATE'));
+                } elseif ($this->type == 'vcal') {
+                    $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)));
+                }
                 $duration_days = 1;
             } else {
                 // Find duration, in days.
@@ -204,7 +223,11 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
                 } else {
                     $duration_days = ceil(($enddate - $startdate) / 86400);
                 }
-                $lines[] = $this->format_line('DTEND', date('Ymd', $enddate), array('VALUE' => 'DATE'));
+                if ($this->type == 'ical') {
+                    $lines[] = $this->format_line('DTEND', date('Ymd', $enddate), array('VALUE' => 'DATE'));
+                } elseif ($this->type == 'vcal') {
+                    $lines[] = $this->format_line('DTEND', date('Ymd', $enddate));
+                }
             }
 
             $lines[] = $this->format_line('DURATION', "P${duration_days}D");
@@ -274,6 +297,9 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         // TODO: lines must be folded between any two CHARACTERS, but we are
         // going to fold at BYTE boundaries. This may inadvertently split a
         // UTF-8 character in internally.
+        // Similarly we need to avoid splitting quoted-printable sequences.
+        // CHECK: there should be an RE that will split a string up into UTF-8
+        // and quoted-printable characters.
         foreach($lines as $linekey => $line) {
             if (strlen($line) <= $line_length) continue;
 
