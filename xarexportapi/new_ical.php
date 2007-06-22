@@ -15,6 +15,8 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
     // Definitions (generally read-only).
     var $content_type = 'text/calendar';
     var $file_extension = 'ics';
+    var $cal_version = '2.0';
+    var $max_line_length = 75;
 
     // Constructor
     function ievents_exportapi_handler_ical($args)
@@ -30,29 +32,134 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
     function wrap_export($content)
     {
         $header = array(
-            'BEGIN:VCALENDAR',
-            'PRODID:' . $this->product_id,
-            'VERSION:2.0',
-            'METHOD:PUBLISH',
+            $this->format_line('BEGIN', 'VCALENDAR'),
+            $this->format_line('PRODID', $this->product_id),
+            $this->format_line('VERSION', $this->cal_version),
+            $this->format_line('METHOD', 'PUBLISH'),
         );
 
         $footer = array(
-            'END:VCALENDAR',
+            $this->format_line('END', 'VCALENDAR'),
         );
 
-        return implode($this->line_ending, $header)
-            . $this->line_ending
+        return implode($this->line_ending, $header) . $this->line_ending
             . $content
-            . implode($this->line_ending, $footer)
-            . $this->line_ending;
+            . implode($this->line_ending, $footer) . $this->line_ending;
+    }
+
+    // Format a single iCal line.
+    // We do not deal with encoding or wrapping or line endings in any way here,
+    // we just want to put the fields together, with some escaping
+    // of certain characters where required.
+    // The format of a line is:
+    //  name *(";" param ) ":" value
+    // Parameters come in name/value pairs, where the value could be a string or
+    // a list of strings (passed as an array).
+    // Returns a string, or possibly an array of strings for line types that do not
+    // support multiple values (and an array of values is passed in)
+    function format_line($name, $value, $params = array())
+    {
+        //return "$name:$value";
+
+        // TODO: if the value is an array, and the name is one that does not
+        // support mulitple values, then return multiple lines through
+        // recursive calling.
+
+        // Start with the name, assuming that it contains nothing that requires
+        // any encoding.
+        $line = strtoupper($name);
+
+        if (!empty($params)) {
+            foreach($params as $pname => $pvalue) {
+                // Parameter names are case-insensitive, so make it upper-case
+                // for consistency.
+                $pname = strtoupper($pname);
+
+                $line .= ';' . $pname . '=';
+
+                if (is_string($pvalue)) {
+                    // Just a single string value.
+                    $p_value = $this->escape_parameter($pvalue, $pname);
+
+                    // Plug the single parameter value into the line
+                    $line .= $pvalue;
+                } elseif (is_array($pvalue)) {
+                    // Value is an array.
+                    $plist = array();
+                    foreach($pvalue as $plistkey => $plistvalue) {
+                        $pvalue[$plistkey] = $this->escape_parameter($pvalue[$plistkey], $pname);
+                    }
+
+                    // Implode the paramater values into a comma-separated list
+                    $line .= implode(',', $pvalue);
+                }
+
+            }
+        }
+
+        // Set the value.
+        // TODO: look at various ways of escaping it.
+        // TODO: can the value also be a list?
+        // The answer to that one is yes: either through multiple lines or comma-separating the values.
+        // If we get this far, then assume we are comma-separating the values.
+        // TODO: different escaping for values: they don't need quoting, and some chars don't need escaping.
+        if (is_string($value)) {
+            $line .= ':' . $this->escape_value($value);
+        } elseif (is_array($value)) {
+            foreach($value as $valuekey => $valuevalue) {
+                $value[$valuekey] = $this->escape_value($valuevalue);
+            }
+            $line .= ':' . implode(',', $value);
+        }
+
+        return $line;
+    }
+
+    // Escape a single value string.
+    // These are simpler than parameters
+    // TODO: check whether commas need escaping *only* for certain types of lines.
+    function escape_value($value, $name = '')
+    {
+        $value = str_replace(
+            array(',', "\n"),
+            array('\\,', '\\n'),
+            $value
+        );
+
+        return $value;
+    }
+
+    // Escape a single parameter value.
+    // TODO: check whether escaping in a quoted string is different to escaping in
+    // a non-quoted string, e.g. commas may not need escaping when in a quoted string.
+    function escape_parameter($pvalue, $pname = '')
+    {
+        // Escape special characters in the string
+        // ESCAPED-CHAR = ("\\" / "\;" / "\," / "\N" / "\n")
+        $pvalue = str_replace(
+            array('\\', ';', ',', "\n"),
+            array('\\\\', '\\;', '\\,', '\\n'),
+            $pvalue
+        );
+
+        // If the string contains lower-case characters, then we will
+        // quote it to preserve the case.
+        // TODO: There are also specific parameter names that are always quoted.
+        // TOOD: Some parameter names (e.g. LANGUAGE) do not need quoting since they are
+        // treated as case-insensitive anyway, e.g. us-EN, US-EN and Us-En are equivalent.
+        if (preg_match('/[a-z:]/', $pvalue)) {
+            $pvalue = '"' . str_replace('"', '\\"', $pvalue) . '"';
+        }
+
+        return $pvalue;
     }
 
     // Format a single event entry.
     // Looping over events is handled externally.
     function format_event($args)
     {
-        $header = array('BEGIN:VEVENT');
-        $footer = array('END:VEVENT');
+        $header = array($this->format_line('BEGIN', 'VEVENT'));
+        $footer = array($this->format_line('END', 'VEVENT'));
         $lines = array();
 
         extract($args);
@@ -60,17 +167,17 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         // The 'title' is the summary.
         if (!xarVarValidate('str:1', $title, true)) $title = xarML('Unknown');
         // Checkme: 'quotedprintable' may be required.
-        $lines[] = 'SUMMARY:' . parent::fold_lines($title, 'utf8', 76, 8);
+        $lines[] = $this->format_line('SUMMARY', $title);
 
         // The description is everything else we have - the summary and the main description.
         // We may just stick with the summary for now.
         // We need to ensure it consists of text only (not HTML).
         if (!xarVarValidate('str:1:', $summary, true)) $summary = '';
         if (!xarVarValidate('str:1:', $description, true)) $description = '';
-        $lines[] = 'DESCRIPTION:' . parent::fold_lines(xarModAPIfunc('ievents', 'user', 'transform', array('text' =>$summary)), 'utf8', 76, 12);
+        $lines[] = $this->format_line('DESCRIPTION', xarModAPIfunc('ievents', 'user', 'transform', array('text' =>$summary)));
 
         // Only public events will be listed
-        $lines[] = 'CLASS:PUBLIC';
+        $lines[] = $this->format_line('CLASS', 'PUBLIC');
 
         // Dates and times.
         // Untimed event: DTSTART;VALUE=DATE:Ymd and DURATION:P1D and DTEND;VALUE=DATE:Ymd (24 hours later)
@@ -83,12 +190,12 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         if ($all_day == 'A' || !isset($enddate) || date('Ymd', $startdate) != date('Ymd', $enddate)) {
             // All day event (or no end date, or start/end dates more than one day apart).
             // Q: what timezone is this? A: it is just a date, so the timezone is irrelevant.
-            $lines[] = 'DTSTART;VALUE=DATE:' . date('Ymd', $startdate);
+            $lines[] = $this->format_line('DTSTART', date('Ymd', $startdate), array('VALUE' => 'DATE'));
 
             // If we have no end date, then assume it will end in 24 hours?
             // CHECKME: can we just leave the end date open?
             if (!isset($enddate)) {
-                $lines[] = 'DTEND;VALUE=DATE:' . date('Ymd', $startdate + (3600*24));
+                $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)), array('VALUE' => 'DATE'));
                 $duration_days = 1;
             } else {
                 // Find duration, in days.
@@ -97,26 +204,26 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
                 } else {
                     $duration_days = ceil(($enddate - $startdate) / 86400);
                 }
-                $lines[] = 'DTEND;VALUE=DATE:' . date('Ymd', $enddate);
+                $lines[] = $this->format_line('DTEND', date('Ymd', $enddate), array('VALUE' => 'DATE'));
             }
 
-            $lines[] = "DURATION:P${duration_days}D";
+            $lines[] = $this->format_line('DURATION', "P${duration_days}D");
         } else {
             // Quantise the times (to nearest block of minutes)
             $startdate = xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $startdate));
             $enddate = xarModAPIfunc('ievents', 'user', 'quantise', array('time' => $enddate));
 
             // Timed event, lasting one day or less.
-            $lines[] = 'DTSTART:' . parent::utc_datetime($startdate);
-            $lines[] = 'DTEND:' . parent::utc_datetime($enddate);
+            $lines[] = $this->format_line('DTSTART', $this->utc_datetime($startdate));
+            $lines[] = $this->format_line('DTEND', $this->utc_datetime($enddate));
 
             // TODO: use relevant time components, e.g. 'PTnDmHxM'
             $duration_minutes = (int)(date('G', $enddate)*60 + date('i', $enddate) - date('G', $startdate)*60 - date('i', $startdate));
-            $lines[] = "DURATION:PT${duration_minutes}M";
+            $lines[] = $this->format_line('DURATION', "PT${duration_minutes}M");
         }
 
         if (isset($updated_time)) {
-            $lines[] = 'DTSTAMP:' . parent::utc_datetime($updated_time);;
+            $lines[] = $this->format_line('DTSTAMP', $this->utc_datetime($updated_time));
         }
 
         // Send the contact.
@@ -125,7 +232,7 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         if (!empty($contact_email)) $contact_arr[] = xarML('E-mail: #(1)', $contact_email);
         if (!empty($contact_phone)) $contact_arr[] = xarML('Phone: #(1)', $contact_phone);
         if (!empty($contact_arr)) {
-            $lines[] = 'CONTACT:' . parent::fold_lines(implode('; ', $contact_arr), 'utf8', 76, 8);
+            $lines[] = $this->format_line('CONTACT', implode('; ', $contact_arr));
         }
 
         // Send the location.
@@ -135,36 +242,48 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
         if (!empty($location_postcode)) $location_arr[] = xarML('#(1)', $location_postcode);
         if (!empty($location_country)) $location_arr[] = xarML('#(1)', $location_country);
         if (!empty($location_arr)) {
-            $lines[] = 'LOCATION:' . parent::fold_lines(implode('; ', $location_arr), 'utf8', 76, 9);
+            $lines[] = $this->format_line('LOCATION', implode('; ', $location_arr));
         }
 
         // The URL back to this event.
-        $lines[] = 'URL:' . xarModURL('ievents', 'user', 'view', array('eid' => $eid), false);
+        $lines[] = $this->format_line('URL', xarModURL('ievents', 'user', 'view', array('eid' => $eid), false));
 
         // Unique ID
-        $lines[] = 'UID:' . parent::utc_datetime($startdate) . '-' . $eid . '@' . getenv('SERVER_NAME');
+        $lines[] = $this->format_line('UID', $this->utc_datetime($startdate) . '-' . $eid . '@' . getenv('SERVER_NAME'));
 
         // Categories
         if (!empty($catids)) {
             $cat_arr = array();
             foreach($catids as $catid) {
                 if (isset($this->categories['flatlist'][$catid])) {
-                    $cat_arr[] = parent::fold_lines($this->categories['flatlist'][$catid]['name'], 'utf8', 200, 0);
+                    $cat_arr[] = $this->categories['flatlist'][$catid]['name'];
                 }
             }
-            $lines[] = 'CATEGORIES:' . parent::fold_lines(implode(',', $cat_arr), 'none', 76, 0);
+            $lines[] = $this->format_line('CATEGORIES', $cat_arr);
         }
 
         // Also to include:
         // ORGANIZER;CN="John Smith":MAILTO:jsmith@host.com
         // status
 
-        return implode($this->line_ending, $header)
-            . $this->line_ending
-            . implode($this->line_ending, $lines)
-            . $this->line_ending
-            . implode($this->line_ending, $footer)
-            . $this->line_ending;
+        // TODO: fold the lines and ensure it is properly content-encoded.
+        // Line length of chars without the line terminators.
+        $line_length = $this->max_line_length - strlen($this->line_ending);
+        // Just fold the lines, assuming the header and footer are going to
+        // be short enough already.
+        // TODO: lines must be folded between any two CHARACTERS, but we are
+        // going to fold at BYTE boundaries. This may inadvertently split a
+        // UTF-8 character in internally.
+        foreach($lines as $linekey => $line) {
+            if (strlen($line) <= $line_length) continue;
+
+            // Line needs folding.
+            $lines[$linekey] = wordwrap($line, $line_length, $this->line_ending . ' ', true);
+        }
+
+        return implode($this->line_ending, $header) . $this->line_ending
+            . implode($this->line_ending, $lines) . $this->line_ending
+            . implode($this->line_ending, $footer) . $this->line_ending;
     }
 }
 

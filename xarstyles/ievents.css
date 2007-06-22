@@ -51,7 +51,8 @@ div.ievents-view dt.ievents-group {
 	font-weight: bold;
 	font-style: italic;
 	font-size: 120%;
-	color: #666666;
+	color: #333333;
+	background-color: #eeeeee;
 	margin-top: 1.6em;
 	clear: both;
 }
