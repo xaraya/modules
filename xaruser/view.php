@@ -77,6 +77,18 @@ function ievents_user_view($args)
     // Unset the range, so it can be evaluated through a different set of rules below.
     unset($range);
 
+    // Window range.
+    // e.g. 'window2months' will be the current date plus or minus two months.
+    xarVarFetch('range', 'regexp:/^window[0-9]{1,3}(days|weeks|months|years)$/', $range, '', XARVAR_NOT_REQUIRED);
+    if (!empty($range)) {
+        $windowsize = preg_replace('/[^0-9]/', '', $range);
+        $datenumber = $windowsize * 2;
+        $datetype = preg_replace('/^window[0-9]+/', '', $range);
+        $startdate = date('Ymd', strtotime("-${windowsize} ${datetype}"));
+    }
+    // Unset the range, so it can be evaluated through a different set of rules below.
+    unset($range);
+
     // These two parameters handle "next N days/weeks/months/years" date selection.
     // TODO: provide a combined version of this, usable through a single drop-down list.
     xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED);
