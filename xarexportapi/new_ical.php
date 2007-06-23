@@ -208,12 +208,15 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
             }
 
             // If we have no end date, then assume it will end in 24 hours?
-            // CHECKME: can we just leave the end date open?
+            // CHECKME: can we just leave the end date open? [answer: yes, we should]
+            // Some research done here here: https://bugs.launchpad.net/schooltool/+bug/80161
             if (!isset($enddate)) {
                 if ($this->type == 'ical') {
-                    $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)), array('VALUE' => 'DATE'));
+                    // No DTEND for a single day all-day event.
+                    //$lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)), array('VALUE' => 'DATE'));
                 } elseif ($this->type == 'vcal') {
-                    $lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)));
+                    // CHECKME: should vCal be treated the same way?
+                    //$lines[] = $this->format_line('DTEND', date('Ymd', $startdate + (3600*24)));
                 }
                 $duration_days = 1;
             } else {
@@ -223,9 +226,12 @@ class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
                 } else {
                     $duration_days = ceil(($enddate - $startdate) / 86400);
                 }
-                if ($this->type == 'ical') {
+                if ($this->type == 'ical' && $duration_days > 1) {
+                    // No end date if the duration is one day, since the DTEND *must* be *later*
+                    // than the DTSTART according to the specs (so they cannot be the same, and some
+                    // calendars fail to import the event if they are).
                     $lines[] = $this->format_line('DTEND', date('Ymd', $enddate), array('VALUE' => 'DATE'));
-                } elseif ($this->type == 'vcal') {
+                } elseif ($this->type == 'vcal' && $duration_days > 1) {
                     $lines[] = $this->format_line('DTEND', date('Ymd', $enddate));
                 }
             }
