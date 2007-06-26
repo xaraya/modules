@@ -18,10 +18,14 @@ function members_user_view($args)
 {
     if (!xarSecurityCheck('ReadMembers')) return;
     if(!xarVarFetch('filetype', 'str:1', $filetype, '', XARVAR_NOT_REQUIRED)) {return;}
-    $role = xarRoles::get(xarModVars::get('members','defaultgroup'));
+    if(!xarVarFetch('group', 'str:1', $group, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (empty($group)) {
+		$role = xarRoles::get(xarModVars::get('members','defaultgroup'));
+		$role->getName();
+	}
     $return_url = xarServerGetCurrentURL();
 
-    return array('defaultgroup' => $role->getName(), 'return_url'=>$return_url, 'filetype'=>$filetype);
+    return array('defaultgroup' => $group, 'return_url'=>$return_url, 'filetype'=>$filetype);
 }
 
 ?>

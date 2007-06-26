@@ -212,7 +212,8 @@
     <a style="font-weight:bold;" href ="#xarModURL('dynamicdata','admin','new',array('name'=>'members_members', 'tplmodule'=>'members'))#">Add A New Member</a>
 </xar:sec>
 </div>
-<table style="clear:left;" width="100%" border="0">
+<xar:if condition="!empty($total)">
+<table style="clear:left; width: 100%" border="0">
     <tr>
         <xar:if condition="$phase eq 'active' and xarSecurityCheck('AdminMembers',0)">
 
@@ -361,7 +362,7 @@
         </tr>
     </xar:loop>
 </table>
-<xar:if condition="empty($total)">
+<xar:else />
           <p class="xar-align-center">There are no members selected</p>
 </xar:if>
 <xar:if condition="$filecall ne 'pdf'">

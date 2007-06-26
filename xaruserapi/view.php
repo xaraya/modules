@@ -355,7 +355,7 @@ function members_userapi_view($args)
     $q->setorder($order,$sort);
 
     // display the query if I need to
- //   $q->qecho();
+//    $q->qecho();
 //    exit;
 
       if (isset($filetype) && $filetype == 'pdf')
