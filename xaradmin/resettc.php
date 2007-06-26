@@ -1,7 +1,7 @@
 <?php
 function netquery_admin_resettc($args)
 {
-    if (!xarSecurityCheck('EditRole')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $GeoccTable = $xartable['netquery_geocc'];

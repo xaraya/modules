@@ -1,7 +1,6 @@
 <xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
 
-<xar:sec mask="OverviewNetquery" catch="false">
-  <xar:if condition="$vars['blockquery'] eq 'nqmonitor'">
+<xar:if condition="$vars['blockquery'] eq 'nqmonitor'">
     <xar:if condition="$bbsettings.running">
         <xar:mlstring>Running</xar:mlstring>
         <xar:if condition="$bbsettings.verbose">
@@ -17,7 +16,7 @@
         <xar:mlstring>NOT Running</xar:mlstring>
     </xar:if>
     <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
-  <xar:elseif condition="$vars['blockquery'] eq 'clientinfo'" />
+<xar:elseif condition="$vars['blockquery'] eq 'clientinfo'" />
     <xar:if condition="!empty($geoip.cn)">
       <xar:if condition="!empty($geoip.geoflag)">
         <img class="geoflag" src="#$geoip.geoflag#" alt="" /><br />
@@ -34,7 +33,7 @@
     &para; <xar:mlstring>OS</xar:mlstring> : #$browserinfo->property("platform")# #$browserinfo->property("os")#<br />
     &para; <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("long_name")# #$browserinfo->property("version")#<br />
     &para; <xar:mlstring>User Agent</xar:mlstring> : #$browserinfo->property("ua")#<br />
-  <xar:elseif condition="$vars['blockquery'] eq 'countries'" />
+<xar:elseif condition="$vars['blockquery'] eq 'countries'" />
     <xar:foreach in="$countries" value="$country">
         <xar:if condition="!empty($country.cn)">
           <xar:if condition="$mapping_site eq 1">
@@ -46,7 +45,7 @@
           </xar:if>
         </xar:if>
     </xar:foreach>
-  <xar:elseif condition="$vars['blockquery'] eq 'whois'" />
+<xar:elseif condition="$vars['blockquery'] eq 'whois'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="whois" />
     <label for="domain_1"><xar:mlstring>Whois Domain</xar:mlstring></label>
@@ -65,66 +64,63 @@
     </select>
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'whoisip'" />
+<xar:elseif condition="$vars['blockquery'] eq 'whoisip'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="whoisip" />
     <label for="host"><xar:mlstring>Whois IP/AS</xar:mlstring></label>
     <br /><input type="text" name="host" id="host" value="#$clientip#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'lookup'" />
+<xar:elseif condition="$vars['blockquery'] eq 'lookup'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="lookup" />
     <label for="host"><xar:mlstring>DNS Lookup Host</xar:mlstring></label>
     <br /><input type="text" name="host" id="host" value="#$clientip#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'dig'" />
+<xar:elseif condition="$vars['blockquery'] eq 'dig'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="dig" />
     <label for="host"><xar:mlstring>DNS Dig Host</xar:mlstring></label>
     <br /><input type="text" name="host" id="host" value="#$clientip#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'email'" />
+<xar:elseif condition="$vars['blockquery'] eq 'email'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="email" />
     <label for="host"><xar:mlstring>Validate Email</xar:mlstring></label>
     <br /><input type="text" name="email" id="email" value="#$email#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'port'" />
+<xar:elseif condition="$vars['blockquery'] eq 'port'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="port" />
     <label for="portnum"><xar:mlstring>Services Port #</xar:mlstring></label>
     <br /><input type="text" name="portnum" id="portnum" value="80" size="10" maxlength="10" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'http'" />
+<xar:elseif condition="$vars['blockquery'] eq 'http'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="http" />
     <label for="httpurl"><xar:mlstring>HTTP Request URL</xar:mlstring></label>
     <br /><input type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'ping'" />
+<xar:elseif condition="$vars['blockquery'] eq 'ping'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="ping" />
     <label for="host"><xar:mlstring>Ping Host</xar:mlstring></label>
     <br /><input type="text" name="host" id="host" value="#$clientip#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  <xar:elseif condition="$vars['blockquery'] eq 'trace'" />
+<xar:elseif condition="$vars['blockquery'] eq 'trace'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="trace" />
     <label for="host"><xar:mlstring>Traceroute Host</xar:mlstring></label>
     <br /><input type="text" name="host" id="host" value="#$clientip#" size="18" maxlength="100" />
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
-  </xar:if>
-<xar:else />
-  <xar:mlstring>Sorry - You do not have access to Netquery</xar:mlstring>
-</xar:sec>
+</xar:if>
 
 <script type="text/javascript">
 function newwindow(link)

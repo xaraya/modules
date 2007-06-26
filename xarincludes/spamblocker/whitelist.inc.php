@@ -16,7 +16,6 @@ function bb2_whitelist($package)
         "172.16.0.0/12",
         "192.168.0.0/16",
 //      "127.0.0.1",
-//      "208.54.95.129",
     );
 
     // DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER!
@@ -34,7 +33,7 @@ function bb2_whitelist($package)
     // Includes one example of whitelisting by user agent.
     // All are commented out.
     $bb2_whitelist_user_agents = array(
-    //    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) It's me, let me in",
+    //  "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) It's me, let me in",
     );
 
     // DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER! DANGER!

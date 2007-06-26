@@ -1,7 +1,7 @@
 <?php
 $modversion['name']           = 'Netquery';
 $modversion['id']             = '91';
-$modversion['version']        = '4.1.0';
+$modversion['version']        = '4.1.1';
 $modversion['displayname']    = xarML('Netquery');
 $modversion['description']    = 'MultiWhois, DNS, Email, Ports, HTTP, Ping, Traceroute, Looking Glass';
 $modversion['credits']        = 'xardocs/credits.txt';

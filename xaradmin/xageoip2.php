@@ -1,7 +1,7 @@
 <?php
 function netquery_admin_xageoip2()
 {
-    if (!xarSecurityCheck('EditRole')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('step', 'int:1:10', $step, '0', XARVAR_NOT_REQUIRED)) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

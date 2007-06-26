@@ -29,19 +29,19 @@ function bb2_misc_headers($settings, $package)
     }
 
     // Broken spambots send URLs with various invalid characters
+    // Some broken browsers send the #vector in the referer field :(
+    // if (strpos($package['request_uri'], "#") !== FALSE || strpos($package['headers_mixed']['Referer'], "#") !== FALSE) {
     if (strpos($package['request_uri'], "#") !== FALSE) {
         return "dfd9b1ad";
     }
-    // Not compatible with Xaraya module admin page use of # character
-//  if (!empty($package['headers_mixed']['Referer']) && strpos($package['headers_mixed']['Referer'], "#") !== FALSE) {
-//      return "dfd9b1ad";
-//  }
 
     // Range: field exists and begins with 0
     // Real user-agents do not start ranges at 0
     // NOTE: this blocks the whois.sc bot. No big loss.
+    // Exceptions: MT (not fixable); LJ (refuses to fix; may be
+    // blocked again in the future)
     if (array_key_exists('Range', $package['headers_mixed']) && strpos($package['headers_mixed']['Range'], "=0-") !== FALSE) {
-        if (strncmp($ua, "MovableType", 11)) {
+        if (strncmp($ua, "MovableType", 11) && strncmp($ua, "URI::Fetch", 10)) {
             return "7ad04a8a";
         }
     }
@@ -52,7 +52,10 @@ function bb2_misc_headers($settings, $package)
     }
 
     // Lowercase via is used by open proxies/referrer spammers
-    if (array_key_exists('via', $package['headers'])) {
+    // Exceptions: Clearswift uses lowercase via (refuses to fix;
+    // may be blocked again in the future)
+    if (array_key_exists('via', $package['headers']) &&
+        !strstr($package['headers']['via'],'Clearswift Web Policy Engine')) {
         return "9c9e4979";
     }
 
@@ -113,4 +116,5 @@ function bb2_misc_headers($settings, $package)
 
     return false;
 }
+
 ?>

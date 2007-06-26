@@ -34,9 +34,9 @@ function bb2_insert_stats($force = false)
         $query = "SELECT COUNT(*) FROM $SpamblockerTable WHERE bb_key NOT LIKE '00000000' ";
         if ($result =& $dbconn->Execute($query))
         {
-            list($numitems) = $result->fields;
+            list($count) = $result->fields;
             $result->Close();
-            echo sprintf('<a href="http://www.homelandstupidity.us/software/bad-behavior/">%1$s</a> %2$s <strong>%3$s</strong> %4$s</p>', 'Bad Behavior', 'has blocked', $numitems, 'access attempts in the last 7 days.');
+            echo sprintf('<a href="http://www.bad-behavior.ioerror.us/">%1$s</a> %2$s <strong>%3$s</strong> %4$s %5$s %6$s</p>', 'Bad Behavior', 'has blocked', $count, 'access attempts in the last', $settings['log_retain'], 'days.');
         }
     }
 }
@@ -124,7 +124,8 @@ function match_cidr($addr, $cidr)
         }
     } else {
         list($ip, $mask) = explode('/', $cidr);
-        $mask = 0xffffffff << (32 - $mask);
+        if (!$mask) $mask = 32;
+        $mask = pow(2,32) - pow(2, (32 - $mask));
         $output = ((ip2long($addr) & $mask) == (ip2long($ip) & $mask));
     }
     return $output;

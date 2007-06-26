@@ -167,6 +167,7 @@ function netquery_upgrade($oldversion)
             xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
             return netquery_upgrade('4.1.0');
         case '4.1.0':
+        case '4.1.1':
         default:
             break;
     }

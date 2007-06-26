@@ -1,7 +1,7 @@
 <?php
 function netquery_admin_config()
 {
-    if (!xarSecurityCheck('EditRole')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED)) return;
     switch(strtolower($phase))

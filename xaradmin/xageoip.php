@@ -1,7 +1,7 @@
 <?php
 function netquery_admin_xageoip()
 {
-    if (!xarSecurityCheck('EditRole')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('step', 'int:1:100', $step, '1', XARVAR_NOT_REQUIRED)) return;
     $data = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');

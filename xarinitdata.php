@@ -442,7 +442,7 @@ function create_spamblockertable()
     $SpamblockerFields = "
         id                I          PRIMARY     AUTO,
         ip                C(20)      NOTNULL     DEFAULT '',
-        date              T          NOTNULL     DEFAULT '0000-00-00 00:00:00',
+        date              T          NOTNULL     DEFAULT 0,
         request_method    C(20)      NOTNULL     DEFAULT '',
         request_uri       C(100)     NOTNULL     DEFAULT '',
         server_protocol   C(20)      NOTNULL     DEFAULT '',

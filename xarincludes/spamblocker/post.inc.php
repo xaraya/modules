@@ -23,7 +23,7 @@ function bb2_post($settings, $package)
 
     // Catch a few completely broken spambots
     foreach ($request_entity as $key => $value) {
-    $pos = strpos($key, "	document.write");
+        $pos = strpos($key, "	document.write");
         if ($pos !== FAlSE) {
             return "dfd9b1ad";
         }
@@ -43,7 +43,7 @@ function bb2_post($settings, $package)
         // Posting too fast? 5 sec
         // FIXME: even 5 sec is too intrusive
         // if ($screener + 5 > time())
-        //    return "408d7e72";
+        //  return "408d7e72";
         // Posting too slow? 48 hr
         if ($screener + 172800 < time())
             return "b40c8ddc";
@@ -51,16 +51,16 @@ function bb2_post($settings, $package)
         // Screen by IP address
         $ip = ip2long($package['ip']);
         $ip_screener = ip2long($screener[1]);
-//        FIXME: This is b0rked, but why?
-//        if ($ip && $ip_screener && abs($ip_screener - $ip) > 256)
-//            return "c1fa729b";
+//      FIXME: This is b0rked, but why?
+//      if ($ip && $ip_screener && abs($ip_screener - $ip) > 256)
+//          return "c1fa729b";
 
         // Screen for user agent changes
         // User connected previously with blank user agent
-//        $q = bb2_db_query("SELECT `ip` FROM " . $settings['log_table'] . " WHERE (`ip` = '" . $package['ip'] . "' OR `ip` = '" . $screener[1] . "') AND `user_agent` = '' AND `date` > DATE_SUB('" . bb2_db_date() . "', INTERVAL 1 MINUTE)");
+//      $q = bb2_db_query("SELECT `ip` FROM " . $settings['log_table'] . " WHERE (`ip` = '" . $package['ip'] . "' OR `ip` = '" . $screener[1] . "') AND `user_agent` != '" . $package['user_agent'] . "' AND `date` > DATE_SUB('" . bb2_db_date() . "', INTERVAL 5 MINUTE)");
         // Damnit, too many ways for this to fail :(
-//        if ($q !== FALSE && $q != NULL && bb2_db_num_rows($q) > 0)
-//            return "799165c2";
+//      if ($q !== FALSE && $q != NULL && bb2_db_num_rows($q) > 0)
+//          return "799165c2";
     }
 
     return false;
