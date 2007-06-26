@@ -177,7 +177,7 @@ function xtaskToggleView(id){
             <xar:foreach in="$hooks" key="$hookmodule">
                 <xar:if condition="trim($hookmodule) eq 'xtasks'">
 
-                    <xar:if condition="$mode eq 'tasks'">
+                    <xar:if condition="$mode eq 'tasklist'">
                         <xar:set name="tasks_style">"display: block;"</xar:set>
                     <xar:else />
                         <xar:set name="tasks_style">"display: none;"</xar:set>

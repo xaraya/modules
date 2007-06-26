@@ -3,39 +3,63 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
     
-<div class="xar-mod-title">Work Log</div>
+<h3>
+	<xar:mlstring>Work Log</xar:mlstring>
+</h3>
 
-<div style="width: auto;">
-    <div style="xar-title">
-        <div class="xtasks-tasklist-header" style="float: left; width: 100px;"><strong><xar:mlstring>Date</xar:mlstring></strong></div>
-        <div class="xtasks-tasklist-header" style="float: left; width: 150px; text-align: center;"><strong><xar:mlstring>Hours</xar:mlstring></strong></div>
-        <div class="xtasks-tasklist-header" style="float: right; width: 50px; text-align: center;"><strong><xar:mlstring>Options</xar:mlstring></strong></div>
-        <div style="clear: both;"></div>
-    </div>
-    <xar:set name="prevflagdate">""</xar:set>
-    <xar:set name="rowclass">"xar-norm"</xar:set>
-    <xar:foreach in="$worklog" value="$workdetails">
-        <xar:set name="flagdate">strftime("%d-%b-%Y", strtotime($workdetails['eventdate']))</xar:set>
-        <xar:if condition="$prevflagdate ne $flagdate">
-            <xar:if condition="$rowclass eq 'xar-norm'">
-                <xar:set name="rowclass">"xar-alt"</xar:set>
-            <xar:else />
-                <xar:set name="rowclass">"xar-norm"</xar:set>
-            </xar:if>
-            <xar:set name="prevflagdate">$flagdate</xar:set>
-        </xar:if>
-        
-        <div class="#$rowclass#">
-            <div><strong><xar:mlstring>Task</xar:mlstring>: <a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$workdetails.taskid#">#$workdetails['taskname']#</a></strong></div>
-            <div>
-                <div class="xtasks-tasklist-data" style="float: left; width: 100px;"><xar:data-output property="$properties['eventdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" />&nbsp;</div>
-                <div class="xtasks-tasklist-data" style="float: left; width: 150px;"><xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs&nbsp;[<xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" />]</div>
-                <div class="xtasks-tasklist-data" style="float: right; width: 50px; text-align: center; word-wrap: nowrap;"><a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a><a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></div>
-                <div style="clear: both;"></div>
-            </div>
-            <xar:if condition="!empty($workdetails['notes'])">
-                <div class="xar-tiny" style="margin-left: 50px;"><em><xar:data-output property="$properties['notes']" value="$workdetails['notes']" /></em></div>
-            </xar:if>
-        </div>
-    </xar:foreach>
+<div>
+	<xar:if condition="count($worklog) gt 0">
+		<table class="xar-fullwidth">
+		    <tr>
+		        <th>
+					<xar:mlstring>Date</xar:mlstring>
+				</th>
+		        <th>
+					<xar:mlstring>Hours</xar:mlstring>
+				</th>
+		        <th>
+					<xar:mlstring>Options</xar:mlstring>
+				</th>
+	        </tr>
+		    <xar:set name="prevflagdate">""</xar:set>
+		    <xar:foreach in="$worklog" value="$workdetails">
+		        <xar:set name="flagdate">strftime("%d-%b-%Y", strtotime($workdetails['eventdate']))</xar:set>
+		        <xar:if condition="$prevflagdate ne $flagdate">
+		            <xar:set name="prevflagdate">$flagdate</xar:set>
+		        </xar:if>
+	        
+		        <tr>
+		            <td class="xar-alt" colspan="3">
+						<strong>
+							<xar:mlstring>Task</xar:mlstring>: 
+							<a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$workdetails.taskid#">#$workdetails['taskname']#</a>
+						</strong>
+					</td>
+				</tr>
+				<tr>
+	                <td>
+						<xar:data-output property="$properties['eventdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" />
+					</td>
+	                <td>
+						<xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs&nbsp;[<xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" />]
+					</td>
+	                <td class="xar-align-center">
+						<a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#" title="#xarML('Edit')#"><img src="modules/xtasks/xarimages/button.edit.gif" alt="" /></a>
+						<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#" title="#xarML('Delete')#"><img src="modules/xtasks/xarimages/button.delete.gif" alt="" /></a>
+					</td>
+				</tr>
+	            <xar:if condition="!empty($workdetails['notes'])">
+					<tr>
+		                <td colspan="3">
+							<xar:data-output property="$properties['notes']" value="$workdetails['notes']" />
+						</td>
+					</tr>
+	            </xar:if>
+		    </xar:foreach>
+		</table>
+	<xar:else />
+		<p>
+			<xar:mlstring>No worklog entries available.</xar:mlstring>
+		</p>
+	</xar:if>
 </div>

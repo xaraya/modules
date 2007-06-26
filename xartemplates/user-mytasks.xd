@@ -50,7 +50,7 @@
                 <xar:if condition="$taskinfo['projectinfo']['projectid'] gt 0">
                     <tr>
                         <td class="xtasks-tasklist-data" colspan="6">
-                            <xar:if condition="isset($taskinfo['projectinfo']['project_name']) and !empty($taskinfo['projectinfo']['project_name'])">Project: <strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#&amp;mode=tasks" style="font-size: 130%; font-weight: bold;">#$taskinfo['projectinfo']['project_name']#</a></strong></xar:if>
+                            <xar:if condition="isset($taskinfo['projectinfo']['project_name']) and !empty($taskinfo['projectinfo']['project_name'])">Project: <strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#&amp;mode=tasklist" style="font-size: 130%; font-weight: bold;">#$taskinfo['projectinfo']['project_name']#</a></strong></xar:if>
                             <xar:if condition="isset($taskinfo['projectinfo']['clientid']) and !empty($taskinfo['projectinfo']['clientid'])">&nbsp;[ <a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a> ]</xar:if>
                         </td>
                     </tr>

@@ -41,7 +41,7 @@ function xtasks_admin_workspace($args)
     }
     
     if(!strpos($data['returnurl'], "mode")) {
-        $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
+        $data['returnurl'] = $data['returnurl']."&amp;mode=tasklist";
     }
     
     if (isset($args['modid'])) {

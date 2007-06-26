@@ -33,7 +33,7 @@ function xtasks_admin_search($args)
                             'max_priority' => $max_priority,
                             'max_importance' => $max_importance));
     
-    $data['returnurl'] = $returnurl."&amp;mode=tasks";
+    $data['returnurl'] = $returnurl."&amp;mode=tasklist";
     
     $data['q'] = $q;
     $data['depth'] = 0;

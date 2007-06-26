@@ -17,7 +17,7 @@
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
 <xar:set name="dummy">xarVarFetch('mode', 'str::', $mode, '', XARVAR_NOT_REQUIRED)</xar:set>
-<xar:if condition="$mode eq 'tasks' or empty($mode) or $showajax">
+<xar:if condition="$mode eq 'tasklist' or empty($mode) or $showajax">
     <xar:set name="tasks_style">"display: block;"</xar:set>
 <xar:else />
     <xar:set name="tasks_style">"display: none;"</xar:set>

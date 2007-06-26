@@ -77,7 +77,7 @@
 				<xar:mlstring>Project</xar:mlstring>
 			</dt>
 	        <dd>
-				<a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectid#&amp;mode=tasks">#$project_name#</a>
+				<a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectid#&amp;mode=tasklist">#$project_name#</a>
 			</dd>
 	    </xar:if>
 

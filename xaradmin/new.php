@@ -32,7 +32,7 @@ function xtasks_admin_new($args)
     
     
     if(!strpos($data['returnurl'], "mode")) {
-        $data['returnurl'] = $data['returnurl']."&amp;mode=tasks#tasklist";
+        $data['returnurl'] = $data['returnurl']."&amp;mode=tasklist#tasklist";
     }
 
     $data['authid'] = xarSecGenAuthKey();
