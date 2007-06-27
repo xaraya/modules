@@ -53,9 +53,6 @@
                         </xar:if>
                     </xar:if>
 
-                    <xar:if condition="!empty($multiform.multiform_key)">
-                        <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
-                    </xar:if>
                     <div style="clear: both;"></div>
                 </div>
             </xar:if>

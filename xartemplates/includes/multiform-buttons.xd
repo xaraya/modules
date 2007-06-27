@@ -2,6 +2,9 @@
 
 <xar:comment>Display the form buttons</xar:comment>
 <div class="xarpages-multiform-buttons">
+    <xar:if condition="!empty($multiform.multiform_key)">
+        <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
+    </xar:if>
     <xar:if condition="!empty($multiform.prev_page_pid)">
         <input type="submit" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
     </xar:if>
