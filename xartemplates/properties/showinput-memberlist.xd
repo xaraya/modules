@@ -163,7 +163,7 @@
             <div class="xar-floatright" style="width:48%;padding-right:10px;">
             <fieldset style="min-height:100px;padding-left:padding:0 10px;margin:0 5px 0 0;">
                 <legend><xar:mlstring>Alternative filters</xar:mlstring></legend>
-                <xar:data-input type="categories" name="mycats" bases="0" layout="usermembers" value="$cids"/>
+                <xar:data-input type="categories" name="mycats" bases="0" layout="usermembers" itemtype="$itemtype" value="$cids"/>
             </fieldset>
             </div>
        </xar:if>

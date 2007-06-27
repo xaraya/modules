@@ -17,7 +17,7 @@
     *   option-type:option-value;
     * option-types:
     *   group:name[,name] - select only members in certain group(s)
-    *   member:name[,name] - select only certain customer(s)
+    *   member:name[,name] - select only certain member(s)
     */
 
 class MemberList extends DataProperty
@@ -50,6 +50,7 @@ class MemberList extends DataProperty
             $this->localmodule = $info[0];
             $data['localmodule'] = $this->localmodule;
         }
+        if (empty($data['itemtype'])) $data['itemtype'] = 0;
         $data['regid'] = xarModGetIDFromName($data['localmodule']);
         $this->parsevalidation();
         if (!isset($data['object'])) $data['object'] = $this->object;
@@ -59,7 +60,7 @@ class MemberList extends DataProperty
         return parent::showInput($data);
     }
 
-    
+
 
 public function parseValidation($validation = '')
     {
