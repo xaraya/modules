@@ -1,3 +1,4 @@
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <xar:comment>Display the form buttons</xar:comment>
 <div class="xarpages-multiform-buttons">
@@ -8,5 +9,9 @@
         <input type="submit" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
     </xar:if>
     <input type="submit" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
-    <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#"><xar:mlstring>Cancel</xar:mlstring></a>
+    <span style="margin-left: 5em;">
+        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onClick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
+            <xar:mlstring>Cancel</xar:mlstring>
+        </a>
+    </span>
 </div>
