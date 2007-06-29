@@ -1,4 +1,6 @@
 
+<xar:style file="multiform" scope="module" />
+
 <xar:if condition="!empty($multiform.debug)">
     <hr />
     <div class="xarpages-multiform-debug">
@@ -6,13 +8,18 @@
             <h2><xar:mlstring>Form data</xar:mlstring></h2>
             <table>
                 <tr>
-                    <th><xar:mlstring>Name</xar:mlstring></th>
-                    <th><xar:mlstring>value</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Name</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>value</xar:mlstring></th>
                 </tr>
                 <xar:loop name="$multiform.formdata">
                     <tr>
-                        <td>#xarVarPrepForDisplay($loop:key)#</td>
-                        <td>#xarVarPrepForDisplay($loop:item)#</td>
+                        <th scope="row">#xarVarPrepForDisplay($loop:key)#</th>
+                        <xar:if condition="is_string($loop:item)">
+                            <td>#xarVarPrepForDisplay($loop:item)#</td>
+                        <xar:else />
+                            <xar:set name="loop_item">#$loop:item#</xar:set>
+                            <td><pre><xar:set name="dummy">var_dump($loop_item)</xar:set></pre></td>
+                        </xar:if>
                     </tr>
                 </xar:loop>
             </table>
@@ -21,13 +28,18 @@
             <h2><xar:mlstring>Work data</xar:mlstring></h2>
             <table>
                 <tr>
-                    <th><xar:mlstring>Name</xar:mlstring></th>
-                    <th><xar:mlstring>value</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Name</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>value</xar:mlstring></th>
                 </tr>
                 <xar:loop name="$multiform.workdata">
                     <tr>
-                        <td>#xarVarPrepForDisplay($loop:key)#</td>
-                        <td>#xarVarPrepForDisplay($loop:item)#</td>
+                        <th scope="row">#xarVarPrepForDisplay($loop:key)#</th>
+                        <xar:if condition="is_string($loop:item)">
+                            <td>#xarVarPrepForDisplay($loop:item)#</td>
+                        <xar:else />
+                            <xar:set name="loop_item">#$loop:item#</xar:set>
+                            <td><pre><xar:set name="dummy">var_dump($loop_item)</xar:set></pre></td>
+                        </xar:if>
                     </tr>
                 </xar:loop>
             </table>

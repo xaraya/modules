@@ -1,0 +1,18 @@
+/*
+    Styles for xarpages/multiform.
+*/
+
+div.xarpages-multiform-debug table {
+    border: 1px solid #999999;
+    border-collapse: collapse;
+}
+
+div.xarpages-multiform-debug th, div.xarpages-multiform-debug td {
+    border: 1px solid #aaaaaa;
+    padding: 0.25em;
+	vertical-align: top;
+}
+
+div.xarpages-multiform-debug pre {
+    /* white-space: normal; */
+}
