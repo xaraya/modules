@@ -1,40 +1,36 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
-// FIXME: simplify all this header, package, receipt stuff
+
 
 /**
  * include module constants and definitions
  *
  */
-
 include_once('modules/comments/xarincludes/defines.php');
 
-/***
+/**
  *
  * These functions are being saved in the event that I actually decide to use them at
  * some point - currently however, this functionality is being done using css.
  *
  ***
- *
+ */
 
- **
+ /**
  * Collapse a comment branch and store the parent where
  * the collapsing begins in a uservar
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
- * @returns mixed description of return
  *
 function comments_userapi_collapse( )
 {
@@ -139,5 +135,4 @@ function comments_userapi_expand( )
 }
 
 */
-
 ?>

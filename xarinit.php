@@ -1,23 +1,14 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
-/**
- * Comments API
- * @package Xaraya
- * @subpackage Comments_API
- */
-
-include_once('modules/comments/xarincludes/defines.php');
 
 /**
  * Comments Initialization Function
@@ -27,8 +18,6 @@ include_once('modules/comments/xarincludes/defines.php');
  */
 function comments_init()
 {
-
-    //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
     $dbconn =& xarDBGetConn();
@@ -146,10 +135,9 @@ function comments_init()
     $query = xarDBCreateTable($xartable['blacklist'], $fields);
 
     $result =& $dbconn->Execute($query);
-    if (!$result)
-        return;
+    if (!$result) return;
 
-    // Set up module variables
+    include_once('modules/comments/xarincludes/defines.php');
     xarModSetVar('comments','render',_COM_VIEW_THREADED);
     xarModSetVar('comments','sortby',_COM_SORTBY_THREAD);
     xarModSetVar('comments','order',_COM_SORT_ASC);
@@ -160,7 +148,6 @@ function comments_init()
     xarModSetVar('comments','CollapsedBranches',serialize(array()));
     xarModSetVar('comments','editstamp',1);
     xarModSetVar('comments','usersetrendering',false);
-    // TODO: add delete hook
 
     // display hook
     if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display'))
@@ -214,13 +201,6 @@ function comments_init()
                     );
     xarDefineInstance('comments','All',$instances);
 
-    /*
-     * Register the module components that are privileges objects
-     * Format is
-     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-     *
-     */
-
     xarRegisterMask('Comments-Read',     'All','comments',
                     'All','All:All:All','ACCESS_READ',      'See and Read Comments');
     xarRegisterMask('Comments-Post',     'All','comments',
@@ -236,40 +216,31 @@ function comments_init()
     xarRegisterMask('Comments-Admin',    'All','comments',
                     'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
-
-    // Register blocks
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                        array('modName'  => 'comments',
                              'blockType'=> 'latestcomments'))) return;
     // TODO: define blocks mask & instances here, or re-use some common one ?
 
-    // Initialisation successful
     return true;
 }
 
 function comments_delete()
 {
-    //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    // Get database information
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     // Delete tables
     $query = xarDBDropTable($xartable['comments']);
     $result =& $dbconn->Execute($query);
-
-    if(!$result)
-        return;
+    if(!$result) return;
 
     $query = xarDBDropTable($xartable['blacklist']);
     $result =& $dbconn->Execute($query);
+    if(!$result) return;
 
-    if(!$result)
-        return;
-
-    // Delete module variables
     xarModDelAllVars('comments');
 
     if (!xarModUnregisterHook('item', 'display', 'GUI',
@@ -277,23 +248,18 @@ function comments_delete()
         return false;
     }
 
-    // Remove Masks and Instances
     xarRemoveMasks('comments');
     xarRemoveInstances('comments');
 
-    // UnRegister blocks
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                        array('modName'  => 'comments',
                              'blockType'=> 'latestcomments'))) return;
-
-    // Deletion successful
     return true;
-
 }
 
 /**
-* upgrade the comments module from an old version
-*/
+ * Upgrade the comments module from an old version
+ */
 function comments_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
@@ -316,7 +282,6 @@ function comments_upgrade($oldversion)
                 if (!xarModAPILoad('articles','user')) return;
             }
 
-            // Get database information
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $commentstable = $xartable['comments'];
@@ -371,7 +336,6 @@ function comments_upgrade($oldversion)
             // fall through to the next upgrade
         case '1.2':
         case '1.2.0':
-            // Get database information
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             xarDBLoadTableMaintenanceAPI();

@@ -1,20 +1,20 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
+ * @author Andrea Moro
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
- * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
- * Original Author of file: Andrea Moro
- * Purpose of file: Show latest posted comments
- * initialise block
+ * Initialize latest comments block
+ *
+ * This block will show the latest comments from a specified module/itemtype
+ *
+ * @return array
  */
 function comments_latestcommentsblock_init()
 {
@@ -34,7 +34,9 @@ function comments_latestcommentsblock_init()
 }
 
 /**
- * get information on block
+ * Get information on block
+ *
+ * @return array
  */
 function comments_latestcommentsblock_info()
 {
@@ -49,12 +51,14 @@ function comments_latestcommentsblock_info()
 }
 
 /**
- * display block
+ * Display block
+ *
+ * @param array blockinfo
+ * @return array template data
  */
 function comments_latestcommentsblock_display($blockinfo)
 {
-    // Security check
-// TODO: use some blocks mask & instance for security check
+    // TODO: use some blocks mask & instance for security check
     if (!xarSecurityCheck('Comments-Read')) {
         return;
     }
@@ -66,9 +70,9 @@ function comments_latestcommentsblock_display($blockinfo)
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
 
-    $vars['block_is_calling']=1;
-    $vars['first']=1;
-    $vars['order']='DESC';
+    $vars['block_is_calling'] = 1;
+    $vars['first'] = 1;
+    $vars['order'] = 'DESC';
 
 
     $blockinfo['content']=xarModFunc('comments', 'user', 'displayall', $vars) ;
@@ -78,14 +82,16 @@ function comments_latestcommentsblock_display($blockinfo)
 
 
 /**
- * modify block settings
+ * Modify block settings
+ *
+ * @param array blockinfo
+ * @return array
  */
 function comments_latestcommentsblock_modify($blockinfo)
 {
     // Get current content
     $vars = @unserialize($blockinfo['content']);
 
-    // get the list of modules+itemtypes that comments is hooked to
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'comments'));
 
@@ -120,7 +126,6 @@ function comments_latestcommentsblock_modify($blockinfo)
         }
     }
 
-    // Send content to template
     $output = xarTplBlock('comments','latestcommentsblockadmin',
                           array(
                                 'howmany' => $vars['howmany'],
@@ -136,12 +141,14 @@ function comments_latestcommentsblock_modify($blockinfo)
                                 'addprevious' => $vars['addprevious']
                                 ));
 
-    // Return output
     return $output;
 }
 
 /**
- * update block settings
+ * Update block settings
+ *
+ * @param array
+ * @return array
  */
 function comments_latestcommentsblock_update($blockinfo)
 {

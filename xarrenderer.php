@@ -1,27 +1,22 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
-/**
- * Comments API
- * @package Xaraya
- * @subpackage Comments_API
- */
 
+/**
+ * Set/Load important constants for use throughout the renderer
+ *
+ * defines set here are thread view specific and should be here
+ */
 include_once('modules/comments/xarincludes/defines.php');
 
-
-// These defines are threaded view specific and should be here
-// Used for creation of the visual (threaded) tree
 define('_COM_NO_CONNECTOR',0);
 define('_COM_O_CONNECTOR', 1);
 define('_COM_P_CONNECTOR', 2);
@@ -75,10 +70,8 @@ define('_COM_CUTOFF_CONNECTOR', 8);
  * @author Carl P. Corliss (aka rabbitt)
  * @access public
  * @param array &$comments_list  A reference (pointer) to an array or related items in parent -> child order (see above)
- * @returns bool true on success, false otherwise
- *
+ * @return bool
  */
-
 function comments_renderer_array_markdepths_bychildren(&$comments_list)
 {
     // check to make sure we got passed an array,
@@ -118,8 +111,9 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
 }
 
 /**
- * Takes a an array of related (parent -> child) values and assigns a depth to
- * each one -- requires that each node in the array has the 'pid' (parent id) field
+ * Takes a an array of related (parent -> child) values and assigns a depth to each one
+ *
+ * Requires that each node in the array has the 'pid' (parent id) field
  * List passed as argument MUST be an ordered list - in the order of
  * Parent1 -> child2-> child3 -> child4 -> subchild5 -> sub-subchild6-> subchild7-> child8-> child9-> subchild10 -> Parent11 ->....
  * This function is exactly like comments_display_array_markdepths but tailored for
@@ -128,7 +122,7 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list)
  * @author Carl P. Corliss (aka rabbitt)
  * @access public
  * @param array   &$comments_list    an array of related (array) items - each item -must- contain a parent id field
- * @returns bool True on success, False otherwise
+ * @return bool
  */
 function comments_renderer_array_markdepths_bypid(&$comments_list)
 {
@@ -236,7 +230,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
  * @author Carl P. Corliss (aka rabbitt)
  * @param array      $args['array_list']    list of comments to check
  * @param integer    $args['cutoff']        depth cutoff point
- * @returns void if no array is passed or the array has no nodes return void
+ * @return mixed void if no array is passed or the array has no nodes return void
  */
 function comments_renderer_array_prune_excessdepth($args)
 {
@@ -313,12 +307,11 @@ function comments_renderer_array_prune_excessdepth($args)
  *
  * @access private
  * @author Carl P. Corliss (aka rabbitt)
- * @param string     $action    get or set
- * @param integer    $depth     the depth to set or get
- * @param bool       $value     true if the depth is set or false if unset
- * @returns bool true if the specified depth is set, false otherwise
+ * @param string  $action    get or set
+ * @param integer $depth     the depth to set or get
+ * @param bool    $value     true if the depth is set or false if unset
+ * @return bool
  */
-
 function comments_renderer_array_depthbuoy($action, $depth, $value=true)
 {
     static $matrix = array();
@@ -346,10 +339,9 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true)
  * @access  public
  * @param   array   $CommentList    List of related comments
  * @param   string  $modName        the name of the module to use when pulling thread images (defaults to comments module)
- * @returns array   an array of comments with an extra field ('map') for each comment
+ * @return array   an array of comments with an extra field ('map') for each comment
  *                  that's contains the visual representation for that particular node
  */
-
 function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
 {
 
@@ -469,7 +461,6 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
     return $CommentList;
 }
 
-
 /**
  * Used internally by comments_renderer_array_maptree(). Takes the nodes in a matrix created for
  * a particular comment and translates them into the visual (html'ified) segments of the full map.
@@ -478,9 +469,8 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
  * @access  private
  * @param   array   $matrix  The current node's tree matrix
  * @param   string  $modName (optional) the module name to use when grabbing the image location
- * @returns array   an list of the images needed for displaying this particular node in the tree
+ * @return array   an list of the images needed for displaying this particular node in the tree
  */
-
 function comments_renderer_array_image_substitution($matrix, $modName = NULL)
 {
     $map = array();
@@ -529,7 +519,7 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL)
  * @author Carl P. Corliss (aka rabbitt)
  * @param string    $a     Lineage to compare
  * @param string    $b     Lineage to compare
- * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
+ * @return integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
 function comments_renderer_array_fieldrelation_compare ($a, $b)
@@ -613,7 +603,7 @@ function comments_renderer_array_fieldrelation_compare ($a, $b)
  * @access  private
  * @author  Carl P. Corliss (aka rabbitt)
  * @param   string  $value  'ASC' for Ascending, 'DESC' for descending sort order
- * @returns  string  The current sort value
+ * @return  string  The current sort value
  *
  */
 function comments_renderer_array_sortvalue($value=NULL)
@@ -752,9 +742,10 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
  * @access public
  * @param    string  &$str  the string to perform word wrapping on
  * @param    integer $chars the amount of characters to word wrap at
- * @returns   string the word-wrapped string
+ * @return   string the word-wrapped string
+ * @todo do we need this function? \
+ * @todo is this the correct place for wrap modvar checking?
  */
-
 function comments_renderer_wrap_words(&$str, $chars)
 {
     if (xarModGetVar('comments','wrap')){
@@ -768,5 +759,4 @@ function comments_renderer_wrap_words(&$str, $chars)
     }
     //$str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
-
 ?>

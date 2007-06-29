@@ -1,25 +1,25 @@
 <?php
 /**
- * Comments module - Allows users to post comments on items
- *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
 /**
- * Modify a comment, dependant on the following criteria:
+ * Modify a comment
+ *
+ * This is dependant on the following criteria:
  * 1. user is the owner of the comment, or
  * 2. user has a minimum of moderator permissions for the
  *    specified comment
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
- * @returns mixed description of return
+ * @return mixed description of return
  */
 function comments_user_modify()
 {
@@ -195,7 +195,7 @@ function comments_user_modify()
     $output['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
     $output['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
     $output['receipt']            = $receipt;
-    return $output;
 
+    return $output;
 }
 ?>
