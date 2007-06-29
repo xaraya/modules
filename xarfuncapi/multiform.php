@@ -339,6 +339,12 @@ function xarpages_funcapi_multiform($args)
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
                                 if ($init_result) $formobject = $init_object->compact_formobject();
+
+                                // Write any work data back to the session.
+                                // This allows us to set work data at the start of a page, e.g. set set state.
+                                if (!empty($init_object->workdata)) {
+                                    $session_vars['workdata'] = $init_object->workdata;
+                                }
                             }
 
                             // We have finished with the validation object now.
@@ -594,7 +600,10 @@ function xarpages_funcapi_multiform($args)
     }
 
     // If redirect data has been set up, then deal with that.
-    if (!empty($redirect_pid) && empty($redirect_url)) {
+    // If we are redirecting to another URL, then include the next normal
+    // page in the history so we can come back to it later, for example after
+    // visiting an online payment gateway.
+    if (!empty($redirect_pid)) {
         // A page ID has been set somewhere above.
         // We must include the session key if it is set, otherwise the page
         // at the other end will fail its session check.
@@ -603,7 +612,8 @@ function xarpages_funcapi_multiform($args)
         if (!empty($redirect_reason)) $redirect_args['reason'] = $redirect_reason;
 
         // Strictly, when we do a redirect, we should not be encoding the URL (so we don't).
-        $redirect_url = xarModURL('xarpages', 'user', 'display', $redirect_args, false);
+        // Do not over-write a redirect URL that has already been set.
+        if (empty($redirect_url)) $redirect_url = xarModURL('xarpages', 'user', 'display', $redirect_args, false);
 
         // Put an entry onto the end of the history, so we are allowed to come into that page.
         // This is a simple entry, more a stub, ready to hold the full page details when we get to it.
