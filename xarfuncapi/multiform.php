@@ -326,6 +326,7 @@ function xarpages_funcapi_multiform($args)
                                 'formobject' => $formobject,
                                 'workdata' => $session_vars['workdata'],
                                 'formdata' => $session_vars['formdata'],
+                                'multiform_key_name' => $multiform_key_name,
                             )
                         );
                         if (!empty($init_object)) {
@@ -345,6 +346,10 @@ function xarpages_funcapi_multiform($args)
                                 if (!empty($init_object->workdata)) {
                                     $session_vars['workdata'] = $init_object->workdata;
                                 }
+
+                                // The init function can stop the process here by setting the 'last page' flag
+                                // and jumping off to another page.
+                                if (!empty($processing_object->last_page)) $last_page_flag = true;
                             }
 
                             // We have finished with the validation object now.

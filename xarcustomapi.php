@@ -42,6 +42,9 @@ class xarpages_customapi_multiform_master
     // The reason for any errors or warnings returned by methods in this object.
     var $reason_detail = '';
 
+    // Copy of the multiform key name
+    var $multiform_key_name = 'mk';
+
     /*
     * Constructor.
     * This sets up the main data that the validation and processing functions
@@ -65,6 +68,9 @@ class xarpages_customapi_multiform_master
 
         // Store the accumlative form data array.
         if (isset($args['formdata'])) $this->formdata = $args['formdata'];
+
+        // Store the multiform_key_name.
+        if (isset($args['multiform_key_name'])) $this->multiform_key_name = $args['multiform_key_name'];
 
         // Set a default error reason detail.
         $this->reason_detail = xarML('No reason given.');
