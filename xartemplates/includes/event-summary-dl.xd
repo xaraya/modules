@@ -16,14 +16,11 @@
 <dt class="ievents-event" id="event-summary-#$event.eid#">
     <xar:if condition="$group eq 'day'">
         <xar:comment>Display only the time if grouping by day</xar:comment>
-        <strong>#$dates.short.time# </strong><a href="#$event.detail_url#">#xarVarPrepForDisplay($event.title)#</a>
+        <strong>#$dates.short.time# </strong><a href="#$event.detail_url#" class="title">#xarVarPrepForDisplay($event.title)#</a>
         <xar:template file="event-flags" subdata="array('event'=&gt;$event)" />
     <xar:else />
-        <strong>#$dates.short.date# </strong><a href="#$event.detail_url#">#xarVarPrepForDisplay($event.title)#</a>
+        <strong>#$dates.short.date# </strong><a href="#$event.detail_url#" class="title">#xarVarPrepForDisplay($event.title)#</a>
         <xar:template file="event-flags" subdata="array('event'=&gt;$event)" />
-        <xar:if condition="$event.duration_days eq 1">
-            <br /><span class="ievents-time">#$dates.short.time#</span>
-        </xar:if>
     </xar:if>
 
     <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
@@ -34,8 +31,15 @@
     </xar:if>
 </dt>
 
+<xar:if condition="$group ne 'day'">
+    <xar:if condition="$event.duration_days eq 1">
+        <dd class="ievents-time"><span>#$dates.short.time#</span></dd>
+    </xar:if>
+</xar:if>
+
 <xar:if condition="!empty($event.catids)">
     <dd class="ievents-event-categories">
+    <span>
         <xar:comment><xar:mlstring>Categories:</xar:mlstring></xar:comment>
         <xar:loop name="$event.catids">
             <xar:if condition="$loop:index gt 0"> | </xar:if>
@@ -43,6 +47,7 @@
                 #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
             </a>
         </xar:loop>
+    </span>
     </dd>
 </xar:if>
 

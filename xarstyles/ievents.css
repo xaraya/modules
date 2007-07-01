@@ -51,8 +51,7 @@ div.ievents-view dt.ievents-group {
 	font-weight: bold;
 	font-style: italic;
 	font-size: 120%;
-	color: #333333;
-	background-color: #eeeeee;
+	color: #666666;
 	margin-top: 1.6em;
 	clear: both;
 }
@@ -193,22 +192,61 @@ dl.ievents-event {
 span.ievents-flags-wrapper {
 }
 span.ievents-flags-wrapper span.ievents-flag {
-	margin-left: 0 1em;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	border: 1px solid #666666;
+	margin: 0 1em;
+	padding: 0.1em 0.5em;
 	font-weight: bold;
 	color: #ffffff;
 	background-color: #999999;
 }
 span.ievents-flags-wrapper span.ievents-cancelled {
-	background-color: #ff9999;
+	background-color: #ba0000;
 }
 span.ievents-flags-wrapper span.ievents-full {
-	background-color: #ff9999;
+	background-color: #ba0000;
 }
 span.ievents-flags-wrapper span.ievents-provisional {
-	background-color: #ff9900;
+	background-color: #ba0000;
 }
 
-
+/* Search Styles */
+div.ievents-search {
+    padding: 1px;
+}
+div.ievents-search-inner {
+    margin: 1em;
+}
+div.ievents-search input#q {
+    width: 20em;
+}
+div.ievents-search-simple {
+    padding-bottom: 0.7em;
+}
+div.ievents-search-box-first {
+    padding: 0.7em 0;
+    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+}
+div.ievents-search-box {
+    padding: 0.7em 0;
+    border-bottom: 1px solid #ffffff;
+}
+div.ievents-search-box-bottom {
+   padding-top: 0.7em;
+}
+table.simple-search tr td,
+table.daterange-group tr td {
+    vertical-align: bottom;
+    padding-right: 1em;
+}
+table.simple-search tr td input,
+table.simple-search tr td select,
+table.simple-search tr td label,
+table.daterange-group tr td div.ievents-date-parts-all,
+table.daterange-group tr td select#group,
+table.daterange-group tr td label {
+    clear: both;
+    display: block;
+}
+span.ievents-date-divider {
+    margin: 0 0.5em;
+}

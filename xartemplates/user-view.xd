@@ -2,7 +2,7 @@
 <xar:style file="ievents" scope="module" />
 
 <div class="ievents-view">
-    <xar:template file="admin-mini" />
+    <xar:comment><xar:template file="admin-mini" /></xar:comment>
 
     <xar:if condition="!empty($eid) and !empty($event)">
         <xar:comment>An individual event was chosen</xar:comment>

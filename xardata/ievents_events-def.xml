@@ -176,7 +176,7 @@
       <source>xar_ievents_events.flags</source>
       <status>1</status>
       <order>170</order>
-      <validation>F,Featured;V,Changed venue;T,Rescheduled;N,Places full;C,Cancelled;P,Provisional;L,Details locked</validation>
+      <validation>F,Featured;V,Changed venue;T,Rescheduled;N,Places full;C,Cancelled;P,Provisional;L,Details locked;W,Postponed</validation>
     </property>
     <property name="location_venue">
       <id>118</id>

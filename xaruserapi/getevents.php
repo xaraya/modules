@@ -231,7 +231,7 @@ function ievents_userapi_getevents($args)
         // TODO: create 'sort' by combining some easier-to-handle parameters.
         // Note also that some property names do not match the table column names.
         // TODO: validate the sort columns.
-        if (empty($sort)) $sort = 'start_date DESC';
+        if (empty($sort)) $sort = 'startdate DESC';
         $params['sort'] = $sort;
 
         // startnum and numitems (used by the pager)
