@@ -46,10 +46,11 @@ function ievents_userapi_params($args)
         $params['days_updated'] = 3;
 
         // Default events per page in listing.
-        $params['default_numitems'] = 10;
+        $params['default_numitems'] = 20;
         $params['max_numitems'] = 200;
 
         // Default start and end dates, in 'strtotime' format.
+        // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = 'now';
         $params['default_enddate'] = '+1 month';
 
