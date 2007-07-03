@@ -45,8 +45,13 @@ function simplepie_userapi_newfeed($args)
     $pie = new SimplePie($feed_url, $cache_location, $cache_max_minutes);
 
     // Set some properties of the parser object.
-    $pie->enable_caching($enable_cache);
-    $pie->enable_xmldump(false);
+    // Check the methods exist before trying to use them, as SimplePie have rather
+    // dynamic public methods.
+    if (method_exists($pie, 'enable_caching')) $pie->enable_caching($enable_cache);
+    if (method_exists($pie, 'enable_cache')) $pie->enable_cache($enable_cache);
+
+    if (method_exists($pie, 'enable_xmldump')) $pie->enable_xmldump(false);
+    if (method_exists($pie, 'enable_xml_dump')) $pie->enable_xml_dump(false);
 
     return $pie;
 }

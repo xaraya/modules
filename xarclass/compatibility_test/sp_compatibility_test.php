@@ -16,23 +16,22 @@ else if (isset($_GET['background']))
 
 function get_curl_version()
 {
-	$curl = 0;
-	if (is_array(curl_version()))
+	if (is_array($curl = curl_version()))
 	{
-		$curl = curl_version();
 		$curl = $curl['version'];
+	}
+	else if (preg_match('/curl\/(\S+)(\s|$)/', $curl, $match))
+	{
+		$curl = $match[1];
 	}
 	else
 	{
-		$curl = curl_version();
-		$curl = explode(' ', $curl);
-		$curl = explode('/', $curl[0]);
-		$curl = $curl[1];
+		$curl = 0;
 	}
 	return $curl;
 }
 
-$php_ok = (function_exists('version_compare') && ((version_compare(phpversion(), '4.3.2', '>=') && version_compare(phpversion(), '5', '<')) || version_compare(phpversion(), '5.0.3', '>=')));
+$php_ok = (function_exists('version_compare') && version_compare(phpversion(), '4.1.0', '>='));
 $xml_ok = extension_loaded('xml');
 $pcre_ok = extension_loaded('pcre');
 $curl_ok = (extension_loaded('curl') && version_compare(get_curl_version(), '7.10.5', '>='));
@@ -43,7 +42,7 @@ $iconv_ok = extension_loaded('iconv');
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
-<title>SimplePie: Server Compatibility Test (Beta 3)</title>
+<title>SimplePie: Server Compatibility Test 1.0</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 <style type="text/css">
@@ -201,7 +200,7 @@ function fnLoadPngs() {
 	<div id="content">
 
 		<div class="chunk">
-			<h2 style="text-align:center;"><img src="?logopng" alt="SimplePie Compatibility Test" title="SimplePie Compatibility Test" /></h2>
+			<h2 style="text-align:center;"><img src="sp_compatibility_test.php?logopng" alt="SimplePie Compatibility Test" title="SimplePie Compatibility Test" /></h2>
 			<table cellpadding="0" cellspacing="0" border="0" width="100%" id="chart">
 				<thead>
 					<tr>
@@ -213,7 +212,7 @@ function fnLoadPngs() {
 				<tbody>
 					<tr class="<?php echo ($php_ok) ? 'enabled' : 'disabled'; ?>">
 						<td>PHP</td>
-						<td>4.3.2&ndash;4.4.x or 5.0.3&ndash;5.1.x</td>
+						<td>4.1.0 or higher</td>
 						<td><?php echo phpversion(); ?></td>
 					</tr>
 					<tr class="<?php echo ($xml_ok) ? 'enabled' : 'disabled'; ?>">
@@ -228,8 +227,8 @@ function fnLoadPngs() {
 					</tr>
 					<tr class="<?php echo ($curl_ok) ? 'enabled' : 'disabled'; ?>">
 						<td><a href="http://php.net/curl">cURL</a></td>
-						<td>7.10.5</td>
-						<td><?php echo get_curl_version(); ?></td>
+						<td>7.10.5 or higher</td>
+						<td><?php echo (extension_loaded('curl')) ? get_curl_version() : 'Disabled'; ?></td>
 					</tr>
 					<tr class="<?php echo ($zlib_ok) ? 'enabled' : 'disabled'; ?>">
 						<td><a href="http://php.net/zlib">Zlib</a></td>
@@ -297,17 +296,17 @@ function fnLoadPngs() {
 		</div>
 
 		<div class="chunk">
-			<?php if ($php_ok && $xml_ok && $mbstring_ok && $iconv_ok) { ?>
+			<?php if ($php_ok && $xml_ok && $pcre_ok && $mbstring_ok && $iconv_ok) { ?>
 				<h3>Bottom Line: Yes, you can!</h3>
 				<p><em>Your webhost has its act together!</em></p>
 				<p>You can download the latest version of SimplePie from <a href="http://simplepie.org/downloads/">SimplePie.org</a> and install it by <a href="http://simplepie.org/docs/installing/">following the instructions</a>.  You can find example uses with <a href="http://simplepie.org/ideas/">SimplePie Ideas</a>.</p>
 				<p class="footnote">**NOTE** Passing this test does not guarantee that SimplePie will run on your webhost &mdash; it only ensures that the basic requirements have been addressed.</p>
-			<?php } else if ($php_ok && $xml_ok && !$mbstring_ok && !$iconv_ok) { ?>
+			<?php } else if ($php_ok && $xml_ok && $pcre_ok && !$mbstring_ok && !$iconv_ok) { ?>
 				<h3>Bottom Line: Yes, but it's crippled.</h3>
 				<p><em>You're limited to essentially english, spanish, italian, and other western-european languages.</em>  Even then you might still have some problems.  We'd recommend that you stick to publishing specific feeds on your site where you know that they're UTF-8 or ISO-8859-1.</p>
 				<p>You can download the latest version of SimplePie from <a href="http://simplepie.org/downloads/">SimplePie.org</a> and install it by <a href="http://simplepie.org/docs/installing/">following the instructions</a>.  You can find example uses with <a href="http://simplepie.org/ideas/">SimplePie Ideas</a>.</p>
 				<p class="footnote">**NOTE** Passing this test does not guarantee that SimplePie will run on your webhost &mdash; it only ensures that the basic requirements have been addressed.</p>
-			<?php } else if ($php_ok && $xml_ok && (!$mbstring_ok || !$iconv_ok)) { ?>
+			<?php } else if ($php_ok && $xml_ok && $pcre_ok && (!$mbstring_ok || !$iconv_ok)) { ?>
 				<h3>Bottom Line: Yes, you can!</h3>
 				<p><em>For most feeds, it'll run with no problems.</em>  There are certain languages that you'll have a hard time with though.</p>
 				<p>You can download the latest version of SimplePie from <a href="http://simplepie.org/downloads/">SimplePie.org</a> and install it by <a href="http://simplepie.org/docs/installing/">following the instructions</a>.  You can find example uses with <a href="http://simplepie.org/ideas/">SimplePie Ideas</a>.</p>

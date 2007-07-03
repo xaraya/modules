@@ -36,7 +36,9 @@ function simplepie_userapi_process($args)
     $rss = xarModAPIfunc('simplepie', 'user', 'newfeed', $rss_args);
 
     // Set the output encoding.
-    $rss->output_encoding(xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()));
+    // SimplePie public methods seem to change in each version.
+    if (method_exists($rss, 'output_encoding')) $rss->output_encoding(xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()));
+    if (method_exists($rss, 'set_output_encoding')) $rss->set_output_encoding(xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()));
 
     // Fetch the feed.
     $rss->init();
@@ -44,11 +46,17 @@ function simplepie_userapi_process($args)
     $data = array();
 
     // Channel properties.
-    $data['chantitle'] = $rss->get_feed_title();
-    $data['chandesc'] = $rss->get_feed_description();
-    $data['chanlink'] = htmlspecialchars_decode($rss->get_feed_link());
+    if (method_exists($rss, 'get_feed_title')) $data['chantitle'] = $rss->get_feed_title();
+    if (method_exists($rss, 'get_title')) $data['chantitle'] = $rss->get_title();
 
-    if ($rss->get_image_exist()) {
+    if (method_exists($rss, 'get_feed_description')) $data['chandesc'] = $rss->get_feed_description();
+    if (method_exists($rss, 'get_description')) $data['chandesc'] = $rss->get_description();
+
+    if (method_exists($rss, 'get_feed_link')) $data['chanlink'] = htmlspecialchars_decode($rss->get_feed_link());
+    if (method_exists($rss, 'get_link')) $data['chanlink'] = htmlspecialchars_decode($rss->get_link());
+
+    $image_url_check = $rss->get_image_url();
+    if (!empty($image_url_check)) {
         $data['image'] = array();
         $data['image']['title'] = $rss->get_image_title();
         $data['image']['url'] = $rss->get_image_url();
@@ -60,6 +68,8 @@ function simplepie_userapi_process($args)
     // TODO: allow number of items to be selected.
     $items = $rss->get_items();
     $feed_items = array();
+
+    if (empty($items)) $items = array();
 
     foreach($items as $item) {
         $feed_item = array();

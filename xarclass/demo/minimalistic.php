@@ -19,12 +19,13 @@ include('../simplepie.inc');
 
 // Parse it
 $feed = new SimplePie();
-if (!empty($_GET['feed'])) {
+if (!empty($_GET['feed']))
+{
 	if (get_magic_quotes_gpc())
 	{
 		$_GET['feed'] = stripslashes($_GET['feed']);
 	}
-	$feed->feed_url($_GET['feed']);
+	$feed->set_feed_url($_GET['feed']);
 	$feed->init();
 }
 $feed->handle_content_type();
@@ -33,7 +34,7 @@ $feed->handle_content_type();
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo (empty($_GET['feed'])) ? 'SimplePie' : 'SimplePie: ' . $feed->get_feed_title(); ?></title>
+<title><?php echo (empty($_GET['feed'])) ? 'SimplePie' : 'SimplePie: ' . $feed->get_title(); ?></title>
 
 <!-- META HTTP-EQUIV -->
 <meta http-equiv="content-type" content="text/html; charset=<?php echo ($feed->get_encoding()) ? $feed->get_encoding() : 'UTF-8'; ?>" />
@@ -104,7 +105,7 @@ form#sp_form input.text {
 </head>
 
 <body>
-	<h1><?php echo (empty($_GET['feed'])) ? 'SimplePie' : 'SimplePie: ' . $feed->get_feed_title(); ?></h1>
+	<h1><?php echo (empty($_GET['feed'])) ? 'SimplePie' : 'SimplePie: ' . $feed->get_title(); ?></h1>
 
 	<form action="" method="get" name="sp_form" id="sp_form">
 		<p><input type="text" name="feed" value="<?php echo ($feed->subscribe_url()) ? htmlspecialchars($feed->subscribe_url()) : 'http://'; ?>" class="text" id="feed_input" />&nbsp;<input type="submit" value="Read" class="button" /></p>
@@ -117,7 +118,7 @@ form#sp_form input.text {
 			<?php foreach($items as $item): ?>
 				<div class="chunk" style="padding:0 5px;">
 					<h4><a href="<?php echo $item->get_permalink(); ?>"><?php echo $item->get_title(); ?></a> <?php echo $item->get_date('j M Y'); ?></h4>
-					<?php echo $item->get_description(); ?>
+					<?php echo $item->get_content(); ?>
 					<?php
 					if ($enclosure = $item->get_enclosure(0))
 						echo '<p><a href="' . $enclosure->get_link() . '" class="download"><img src="./for_the_demo/mini_podcast.png" alt="Podcast" title="Download the Podcast" border="0" /></a></p>';
@@ -129,7 +130,7 @@ form#sp_form input.text {
 	</div>
 
 	<div id="footer">
-		Powered by <?php echo $feed->linkback; ?>, a product of <a href="http://www.skyzyx.com">Skyzyx Technologies</a>.<br />
+		Powered by <?php echo SIMPLEPIE_LINKBACK; ?>, a product of <a href="http://www.skyzyx.com">Skyzyx Technologies</a>.<br />
 		Page created in <?php echo round(microtime_float()-$start, 3); ?> seconds.
 	</div>
 </body>
