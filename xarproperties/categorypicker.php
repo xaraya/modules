@@ -47,7 +47,7 @@ class CategoryPickerProperty extends DataProperty
         xarMod::loadDbInfo('categories');
         $xartable = xarDB::getTables();
         for($i=0;$i<$numberofbasecats;$i++) {
-            $thiscid = isset($basecid[$i]) ? $basecid[$i] : 0;
+            $thiscid = isset($basecid[$i]) && is_numeric($basecid[$i]) ? $basecid[$i] : 0;
             $thisname = (isset($basename[$i]) && !empty($basename[$i])) ? $basename[$i] : xarML('Base Category #(1)',$i+1);
             $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $name));
             if (!empty($thisbasecat)) {
