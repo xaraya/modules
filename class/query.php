@@ -712,7 +712,7 @@ class Query
                 return $condition['field1'] . " IS NULL";
         }
 
-        if (in_array(strtolower($condition['op']),array('in','notin'))) {
+        if (in_array(strtolower($condition['op']),array('in','not in'))) {
             if (is_array($condition['field2'])) {
                 $elements = array();
                 if ($this->usebinding) {
