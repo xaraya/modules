@@ -132,7 +132,6 @@ class CategoriesProperty extends SelectProperty
 
         if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
         if (empty($modname)) $modname = xarModGetName();
-        $info = xarMod::getBaseInfo($modname);
         if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
@@ -144,13 +143,13 @@ class CategoriesProperty extends SelectProperty
         $result = xarModAPIFunc('categories', 'admin', 'unlink',
                           array('iid' => $itemid,
                                 'itemtype' => $itemtype,
-                                'modid' => $info['systemid']));
+                                'modid' => xarMod::getID($modname)));
         if (count($categories) > 0) {
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
                                 array('cids'  => $categories,
                                       'iids'  => array($itemid),
                                       'itemtype' => $itemtype,
-                                      'modid' => $info['systemid'],
+                                      'modid' => xarMod::getID($modname),
                                       'basecids'  => $basecats,
                                       'clean_first' => true));
         }
@@ -169,7 +168,8 @@ class CategoriesProperty extends SelectProperty
             $data['categories_localmodule'] = $data['module'];
             unset($data['module']);
         }
-        if (empty($data['itemtype'])) {
+
+if (empty($data['itemtype'])) {
             $data['categories_localitemtype'] = 0;
         } else {
             $data['categories_localitemtype'] = $data['itemtype'];

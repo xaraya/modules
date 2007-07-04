@@ -53,13 +53,13 @@ class CategoryPickerProperty extends DataProperty
             if (!empty($thisbasecat)) {
                 $currentbaseids[] = $thisbasecat['id'];
                 $q = new xarQuery('UPDATE', $xartable['categories_basecategories']);
-                $q->eq('module_id',$info['systemid']);
+                $q->eq('module_id',xarMod::getID($localmodule));
                 $q->eq('name',$thisname);
                 $q->addfield('category_id',$thiscid);
                 if (!$q->run()) return;
             } else {
                 $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
-                $q->addfield('module_id',$info['systemid']);
+                $q->addfield('module_id',xarMod::getID($localmodule));
                 $q->addfield('itemtype',$localitemtype);
                 $q->addfield('name',$thisname);
                 $q->addfield('category_id',$thiscid);
@@ -68,7 +68,7 @@ class CategoryPickerProperty extends DataProperty
             }
         }
         $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
-        $q->eq('module_id',$info['systemid']);
+        $q->eq('module_id',xarMod::getID($localmodule));
         if (!empty($localitemtype)) $q->eq('itemtype',$localitemtype);
         if (!empty($currentbaseids)) $q->notin('id',$currentbaseids);
         if (!$q->run()) return;
@@ -114,6 +114,7 @@ class CategoryPickerProperty extends DataProperty
             $item['num'] = $i;
             $item['category_id'] = isset($basecats[$i]['category_id']) ? $basecats[$i]['category_id']: 0;
             $item['name'] = isset($basecats[$i]['name']) ? $basecats[$i]['name']: xarML('Base Category #(1)',$i);
+            $item['itemtype'] = isset($basecats[$i]['itemtype']) ? $basecats[$i]['itemtype']: 0;
             // preserve order of root categories if possible - do not use this for multi-select !
             if (isset($cleancids[$i])) $seencid = array($cleancids[$i] => 1);
             // TODO: improve memory usage

@@ -32,6 +32,8 @@
              (#$cidindex#)
          </label>
         <xar:data-input type="categories" name="$cidname" value="$item['category_id']" bases="none" onchange="$evt_change" style="$style" />
+        &#160;Itemtype:
+        <input type="text" name="#$name#_categories_basecatitemtype[#$item['num']#]" value="#$item['itemtype']#" style="width: 50px" />
         &#160;Name:
         <input type="text" name="#$name#_categories_basecatname[#$item['num']#]" value="#$item['name']#" />
     </div>

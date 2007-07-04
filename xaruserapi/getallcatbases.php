@@ -33,8 +33,7 @@ function categories_userapi_getallcatbases($args)
     //FIXME: needs to be unique
     $q = new xarQuery('SELECT', $xartable['categories_basecategories']);
     if (!empty($module)) {
-        $info = xarMod::getBaseInfo($module);
-        $q->eq('module_id',$info['systemid']);
+        $q->eq('module_id',xarMod::getID($module));
     }
     if (!empty($itemtype)) $q->eq('itemtype',$itemtype);
 //    $q->qecho();
