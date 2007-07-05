@@ -6,12 +6,12 @@
         <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
     </xar:if>
     <xar:if condition="!empty($multiform.prev_page_pid)">
-        <input type="submit" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
+        <input type="submit" id="multiform_submit_prev" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
     </xar:if>
     <xar:if condition="empty($multiform.readonly)">
-        <input type="submit" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
+        <input type="submit" id="multiform_submit_cont" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
     </xar:if>
-    <input type="submit" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
+    <input type="submit" id="multiform_submit_next" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
     <span style="margin-left: 5em;">
         <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onClick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
             <xar:mlstring>Cancel</xar:mlstring>
