@@ -2,7 +2,7 @@
 $modversion['name'] = 'query';
 $modversion['id'] = '30049';
 $modversion['version'] = '1.0.0';
-$modversion['displayname'] = 'Xen';
+$modversion['displayname'] = 'Query';
 $modversion['description'] = 'Query Abstraction Module for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
