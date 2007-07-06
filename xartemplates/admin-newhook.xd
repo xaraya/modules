@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:data-input type="categories" name="hookedcategories" module="$module" itemtype="$itemtype" />
 
 <!-- TODO: Remove
@@ -8,5 +9,6 @@
     <xar:loop name="$items">#$loop:item['select']#</xar:loop>
 </div>
 -->
+</xar:template>
 
 

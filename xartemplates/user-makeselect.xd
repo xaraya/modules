@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($size)">
     <xar:set name="sizestring">'size="'.$size.'"'</xar:set>
 <xar:else/>
@@ -66,4 +67,6 @@
         </a> ]
     </xar:sec>
 </xar:if>
+</xar:template>
+
 

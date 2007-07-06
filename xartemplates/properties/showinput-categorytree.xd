@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>
@@ -95,4 +96,5 @@
 </tr>
 <tr><td><xar:mlstring>Categories Total:</xar:mlstring>&#160;&#160;#$pagertotal#</td></tr>
 </table>
+</xar:template>
 

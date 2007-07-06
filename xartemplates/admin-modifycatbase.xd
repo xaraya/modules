@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript module="base" filename="orderitem.js" position="head" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
@@ -66,3 +67,4 @@
         </form>
     </div>
 </div>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <p>
     #$cattitle# : [ 
     <xar:loop name="$catitems">
@@ -12,3 +13,4 @@
     </xar:loop>
     ] 
 </p>
+</xar:template>

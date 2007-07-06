@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <xar:if condition="$extcomponent eq 'Link'">
@@ -132,3 +133,4 @@ should use the 'Article' component of articles.
 
 </div>
 </div>
+</xar:template>

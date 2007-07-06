@@ -26,6 +26,8 @@
 						$args['parent_id'] = 0;
 					}
 				}
+				$args['left_id'] = null;
+				$args['right_id'] = null;
 			}
 
             // we have all the values, do it

@@ -40,8 +40,8 @@ function categories_init()
      *  description  varchar(255) NOT NULL,
      *  image        varchar(255) NOT NULL,
      *  parent_id       int(11) NOT NULL default 0,
-     *  left_id         int(11) unsigned NOT NULL,
-     *  right_id        int(11) unsigned NOT NULL,
+     *  left_id         int(11) unsigned default NULL,
+     *  right_id        int(11) unsigned default NULL,
      *  PRIMARY KEY (id),
      *  KEY left_id (left_id),
      *  KEY right_id (right_id),
@@ -55,8 +55,8 @@ function categories_init()
         'description' => array('type'=>'varchar','size'=>255,'null'=>false),
         'image'       => array('type'=>'varchar','size'=>255,'null'=>false),
         'parent_id'      => array('type'=>'integer','null'=>false,'default'=>'0'),
-        'left_id'        => array('type'=>'integer','null'=>false,'unsigned'=>true),
-        'right_id'       => array('type'=>'integer','null'=>false,'unsigned'=>true)
+        'left_id'        => array('type'=>'integer','null'=>true,'unsigned'=>true),
+        'right_id'       => array('type'=>'integer','null'=>true,'unsigned'=>true)
     );
     $query = xarDBCreateTable($xartable['categories'],$fields);
 

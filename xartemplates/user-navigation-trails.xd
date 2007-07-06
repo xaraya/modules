@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($catdescr)">
 <div class="xar-mod-head"><span class="xar-mod-title">#$catdescr#<xar:if condition="!empty($cathooks) and !empty($cathooks['pubsub'])"> #$cathooks['pubsub']#</xar:if></span></div>
 </xar:if>
@@ -100,3 +101,4 @@ The 'baseflag' variable allows you to skip certain categories in the trail :
 </xar:if>
 
 <br />
+</xar:template>
